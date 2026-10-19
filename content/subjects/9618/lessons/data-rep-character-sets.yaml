@@ -1,0 +1,254 @@
+id: data-rep-character-sets
+subject: "9618"
+topic: "1.1"
+title: "Character sets: ASCII, extended ASCII and Unicode"
+summary: How text is stored as binary character codes, and how ASCII, extended ASCII and Unicode differ in size, coverage and storage.
+order: 9
+minutes: 5
+kind: core
+objectives: ["1.1.5"]
+prerequisites: [data-rep-binary-denary]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1, fifth learning outcome and its
+    guidance (ASCII, extended ASCII and Unicode; no particular codes to be memorised, so every
+    question supplies a reference code). Character codes and Unicode figures (code points U+0000
+    to U+10FFFF; UTF-8, UTF-16 and UTF-32 sizes) follow the ASCII and Unicode standards and were
+    checked with Python. Questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can write text in its internal binary form for a given character set, and compare **ASCII**, **extended ASCII** and **Unicode**.
+
+  - type: explain
+    title: Text is just numbers
+    body: |
+      A computer can't store the letter "A" as a shape. Instead, every character is given a unique number, its **character code**, and text is stored as a sequence of those codes in binary.
+
+      Type a character, and its code is what gets stored. Display text, and the computer looks up which symbol each code stands for. Like two spies sharing a codebook, both sides must use the same table: the **character set**.
+
+  - type: definition
+    term: Character set
+    body: |
+      The complete set of characters that a computer can represent, together with the unique binary code assigned to each one.
+
+  - type: explain
+    title: The three character sets you need
+    body: |
+      | | ASCII | Extended ASCII | Unicode |
+      | --- | --- | --- | --- |
+      | Bits per character | 7 | 8 | up to 32 (1 to 4 bytes, depending on the encoding) |
+      | Number of codes | $2^7 = 128$ | $2^8 = 256$ | over a million possible (1 114 112) |
+      | Covers | English letters, digits, punctuation, control codes | ASCII plus 128 more: accented letters, symbols | virtually every writing system, plus maths symbols and emoji |
+
+      - ASCII's first 32 codes (and code 127) are **control characters** that don't print, such as line feed and carriage return.
+      - 7-bit ASCII is usually stored in a byte with the MSB set to 0.
+      - Extended ASCII and Unicode both keep the original 128 ASCII codes unchanged.
+
+  - type: explain
+    title: Why Unicode was needed
+    body: |
+      - **ASCII is too small.** 128 codes cover English, but not é, ñ, Ω, 中 or 😀.
+      - **Extended ASCII is inconsistent.** Its extra 128 codes vary between versions (called *code pages*). The same code can be é on one computer and a completely different symbol on another, so text arrives garbled.
+      - **Unicode fixes both.** It gives every character in every language one unique **code point**, written in hex as `U+` and the number: `U+0041` is A, `U+00E9` is é.
+
+      The cost: Unicode characters can take more storage than ASCII ones (up to 4 bytes instead of 1).
+
+  - type: check
+    title: Compare the sets
+    questions: [ascii-count, extended-ascii]
+
+  - type: explain
+    title: Codes run in order
+    body: |
+      You won't be asked to memorise codes; a question gives you one and you count from it. That works because the letters and digits are **consecutive**:
+
+      - `A` to `Z` follow each other, as do `a` to `z`, and `0` to `9`.
+      - In ASCII, each lower-case letter is exactly **32 more** than its capital.
+      - The character `7` is **not** stored as the number 7. It has its own code (55 in ASCII), because it's a symbol, not a value.
+
+  - type: example
+    title: A word in binary
+    problem: |
+      In ASCII, `A` is 65 and `a` is 97. Show how the word **Cab** is stored in 8-bit ASCII.
+    steps:
+      - |
+        `C` is two letters after `A`: $65 + 2 = 67$.
+      - |
+        `a` is given: 97. `b` is one after it: 98.
+      - |
+        Convert each code to 8 bits. $67 = 64 + 2 + 1$ → `0100 0011`.
+      - |
+        $97 = 64 + 32 + 1$ → `0110 0001`. $98 = 64 + 32 + 2$ → `0110 0010`.
+    answer: |
+      **Cab** is stored as `0100 0011  0110 0001  0110 0010`: one byte per character.
+
+  - type: check
+    title: Quick check
+    questions: [code-for-h, code-for-e, digit-character]
+
+  - type: misconceptions
+    items:
+      - wrong: ASCII is an 8-bit code.
+        right: |
+          Standard ASCII is **7-bit** (128 characters). It's usually stored in an 8-bit byte with a leading 0. The 8-bit version with 256 characters is *extended* ASCII.
+      - wrong: The digit character `5` is stored as `0000 0101`.
+        right: |
+          That's the *number* 5. The *character* `5` has its own code: 53 in ASCII, stored as `0011 0101`.
+      - wrong: Unicode always uses 16 bits per character.
+        right: |
+          It depends on the **encoding**: UTF-8 uses 1 to 4 bytes, UTF-16 uses 2 or 4, UTF-32 always uses 4. What all Unicode encodings share is the same code point for each character.
+
+  - type: exam
+    body: |
+      - Writing text in binary: you'll be given at least one code. Count on from it, convert each code, and keep a fixed number of bits per character (8 for ASCII stored in bytes).
+      - "**Explain** why Unicode is used instead of ASCII" is worth a few marks, roughly one per linked point. Chain them: more bits per character → far more characters → all languages and symbols → each code means the same character on every system. If asked for a drawback: more storage per character.
+      - A common slip is converting a digit character as a number: the character `7` is 55 in ASCII, not 7.
+
+  - type: check
+    title: Exam-style
+    questions: [decode-word, why-unicode]
+
+  - type: takeaways
+    items:
+      - A character set gives every character a unique binary code; text is stored as a sequence of codes.
+      - ASCII is 7-bit (128 characters); extended ASCII is 8-bit (256); Unicode uses up to 32 bits and has room for over a million.
+      - Codes are consecutive, so you can count on from any code you're given.
+      - Unicode covers all languages and keeps one meaning per code, at the cost of more storage per character.
+
+  - type: deeper
+    title: Unicode encodings in a bit more detail
+    body: |
+      Unicode code points run from `U+0000` to `U+10FFFF`. How they become bytes depends on the encoding:
+
+      | Encoding | Bytes per character | Notes |
+      | --- | --- | --- |
+      | UTF-8 | 1 to 4 | ASCII characters take 1 byte and are identical to ASCII. The most common encoding on the web. |
+      | UTF-16 | 2 or 4 | Most common characters take 2 bytes. |
+      | UTF-32 | 4 | Fixed size: simple to process but uses the most space. |
+
+      Why lower case is "32 more" in ASCII: $32 = 2^5$, so `A` (`100 0001`) and `a` (`110 0001`) differ in just one bit.
+
+questions:
+  - id: code-for-h
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.5"]
+    prompt: |
+      The ASCII code for `A` is 65. What is the denary ASCII code for `H`?
+    fields:
+      - answer: 72
+    explanation: |
+      `H` is the 8th letter, seven places after `A`: $65 + 7 = 72$.
+
+  - id: code-for-e
+    format: cloze
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |
+      In 8-bit ASCII, `a` is stored as `0110 0001`. The letter `e` is stored as {{1}}
+    blanks:
+      - accept: ["01100101", "0110 0101"]
+    explanation: |
+      `e` is four letters after `a`, so add 4: `0110 0001` + `0100` = `0110 0101` (97 + 4 = 101).
+
+  - id: digit-character
+    format: mcq
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |
+      In ASCII the character `0` (zero) has code 48. A user types the character `7`. Which byte is stored?
+    options:
+      - text: "`0011 0111` (55)"
+        correct: true
+        why: |
+          Digit characters are consecutive from 48, so `7` is $48 + 7 = 55$ = `0011 0111`.
+      - text: "`0000 0111` (7)"
+        why: |
+          That's the *number* 7. Typed text is stored as character codes, not as numeric values.
+      - text: "`0011 0000` (48)"
+        why: |
+          48 is the code for the character `0`, not `7`.
+      - text: "`0100 0111` (71)"
+        why: |
+          71 is the code for the letter `G`; that comes from counting on from `A` (65), not from `0`.
+    explanation: |
+      Characters are stored by their code. That's why a program has to convert the text "7" before it can do arithmetic with it.
+
+  - id: decode-word
+    format: mcq
+    difficulty: 3
+    objectives: ["1.1.5"]
+    prompt: |
+      In ASCII, `A` is 65 and `a` is 97. Which word is stored as the bytes `0100 0100  0110 1111  0110 0111`?
+    options:
+      - text: Dog
+        correct: true
+        why: |
+          The codes are 68, 111 and 103. 68 is 3 after `A`, so `D`. 111 is 14 after `a`, so `o`. 103 is 6 after `a`, so `g`.
+      - text: dog
+        why: |
+          The first code is 68. Lower case starts at 97, so 68 is a capital. Capitals and lower-case letters have different codes.
+      - text: DOG
+        why: |
+          Only the first code, 68, is a capital (capitals run from 65 to 90). 111 and 103 are above 97, so they're lower case.
+      - text: Cnf
+        why: |
+          Every letter is one too early. 3 after `A` is `D` (A, B, C, D); counting `A` itself as the first step gives `C`.
+    explanation: |
+      Convert each byte to denary: $64 + 4 = 68$, $64 + 32 + 8 + 4 + 2 + 1 = 111$ and $64 + 32 + 4 + 2 + 1 = 103$. Then decide capital (65 to 90) or lower case (97 to 122), and count on.
+
+  - id: ascii-count
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.5"]
+    prompt: |
+      How many different characters can standard 7-bit ASCII represent?
+    fields:
+      - answer: 128
+        unit: characters
+    explanation: |
+      7 bits give $2^7 = 128$ patterns, numbered 0 to 127, so 128 characters (including the control characters).
+
+  - id: extended-ascii
+    format: mcq
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |
+      Which statement about **extended ASCII** is correct?
+    options:
+      - text: It uses 8 bits per character, keeps the original 128 ASCII codes and adds 128 more.
+        correct: true
+        why: |
+          The extra bit doubles the codes to 256. Codes 0 to 127 are standard ASCII; 128 to 255 are the additions.
+      - text: It can represent every character in every language.
+        why: |
+          256 codes is nowhere near enough. That's what Unicode is for.
+      - text: Its extra characters are the same on every computer.
+        why: |
+          The upper 128 codes vary between code pages, which is why text can appear garbled when moved between systems.
+      - text: It uses 16 bits per character.
+        why: |
+          Extended ASCII is 8-bit. 16-bit units belong to UTF-16, a Unicode encoding that uses 2 or 4 bytes per character.
+    explanation: |
+      Extended ASCII = 8 bits = 256 characters, with the top half varying by code page.
+
+  - id: why-unicode
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |
+      A company's software is used in many countries. Explain why it should store text using Unicode rather than ASCII, and give one drawback.
+    model: |
+      ASCII has only 128 codes (7 bits), enough for English letters, digits and punctuation, but not for other alphabets or symbols. Unicode uses more bits per character (up to 32), so it can represent over a million characters, covering virtually all languages, as well as symbols and emoji. Every character has one unique code point, so text appears correctly on any system. The drawback is that Unicode text can need more storage (and bandwidth) per character than ASCII.
+    keyPoints:
+      - ASCII has only 128 characters, enough for English but not other languages
+      - Unicode uses more bits per character (up to 32), so it has far more codes
+      - Unicode can represent characters from virtually every language, plus symbols
+      - Each character has one unique code, so text displays the same on any system
+      - "Drawback: more storage per character than ASCII"
+    explanation: |
+      A full answer links the number of bits to the number of characters, then to the languages covered, and doesn't forget the cost.

@@ -1,0 +1,166 @@
+/*
+ * Design tokens. Light is the default; dark applies when the system prefers
+ * it (unless the user chose light) or when the user chose dark explicitly.
+ * The theme choice is rendered server-side as data-theme on <html>, so there
+ * is no flash and no inline script.
+ */
+:root {
+  color-scheme: light;
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --surface-2: #f1f1ee;
+  --surface-3: #e8e8e4;
+  --border: rgba(20, 20, 15, 0.09);
+  --border-strong: rgba(20, 20, 15, 0.16);
+  --text: #19191c;
+  --text-2: #55555d;
+  --text-3: #63636b;
+  --accent: #3355d1;
+  --accent-hover: #2a48b8;
+  --accent-soft: rgba(51, 85, 209, 0.1);
+  --accent-ink: #ffffff;
+  --focus: #3355d1;
+
+  --good: #18794e;
+  --good-soft: rgba(24, 121, 78, 0.1);
+  --bad: #c2324a;
+  --bad-soft: rgba(194, 50, 74, 0.09);
+  --warn: #9a5b00;
+  --warn-soft: rgba(196, 122, 0, 0.12);
+
+  /* Progress states (always paired with a text label, never colour alone). */
+  --st-not-started: #8b8b94;
+  --st-learning: #3a6fd8;
+  --st-practising: #b86e00;
+  --st-secure: #18794e;
+  --st-revision: #c2324a;
+
+  /* Subject hues, used sparingly for identity (icon tile, accents). */
+  --sub-9709: #5a54d6;
+  --sub-9618: #0b8a7a;
+  --sub-9702: #cc5a12;
+  --sub-9701: #2f8a3c;
+
+  --shadow-sm: 0 1px 2px rgba(20, 20, 15, 0.05);
+  --shadow-md: 0 1px 2px rgba(20, 20, 15, 0.04), 0 6px 20px rgba(20, 20, 15, 0.06);
+  --shadow-lg: 0 2px 6px rgba(20, 20, 15, 0.05), 0 18px 48px rgba(20, 20, 15, 0.1);
+  --material: rgba(250, 250, 248, 0.78);
+  --scrim: rgba(10, 10, 12, 0.32);
+
+  /* Diagrams */
+  --dg-ink: var(--text);
+  --dg-muted: #8b8b94;
+  --dg-grid: rgba(20, 20, 15, 0.1);
+  --dg-accent: #3355d1;
+  --dg-accent-soft: rgba(51, 85, 209, 0.14);
+  --dg-accent-2: #cc5a12;
+  --dg-accent-2-soft: rgba(204, 90, 18, 0.14);
+  --dg-fill-muted: rgba(20, 20, 15, 0.06);
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, monospace;
+
+  /* Motion: critically damped feel, short. Reduced-motion collapses these. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur: 220ms;
+  --dur-slow: 360ms;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0d0d0f;
+  --surface: #17171a;
+  --surface-2: #1f1f23;
+  --surface-3: #2a2a2f;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --text: #f2f2f4;
+  --text-2: #b4b4bd;
+  --text-3: #8e8e98;
+  --accent: #7d9bff;
+  --accent-hover: #98b0ff;
+  --accent-soft: rgba(125, 155, 255, 0.14);
+  --accent-ink: #0d0d0f;
+  --focus: #98b0ff;
+  --good: #4cc38a;
+  --good-soft: rgba(76, 195, 138, 0.13);
+  --bad: #ff7b8f;
+  --bad-soft: rgba(255, 123, 143, 0.12);
+  --warn: #f0b252;
+  --warn-soft: rgba(240, 178, 82, 0.13);
+  --st-not-started: #8e8e98;
+  --st-learning: #7d9bff;
+  --st-practising: #f0b252;
+  --st-secure: #4cc38a;
+  --st-revision: #ff7b8f;
+  --sub-9709: #a19cff;
+  --sub-9618: #3fd0bd;
+  --sub-9702: #ff9a5c;
+  --sub-9701: #6fd17d;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.4), 0 20px 56px rgba(0, 0, 0, 0.5);
+  --material: rgba(23, 23, 26, 0.74);
+  --scrim: rgba(0, 0, 0, 0.55);
+  --dg-muted: #8e8e98;
+  --dg-grid: rgba(255, 255, 255, 0.1);
+  --dg-accent: #7d9bff;
+  --dg-accent-soft: rgba(125, 155, 255, 0.2);
+  --dg-accent-2: #ff9a5c;
+  --dg-accent-2-soft: rgba(255, 154, 92, 0.2);
+  --dg-fill-muted: rgba(255, 255, 255, 0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0d0d0f;
+    --surface: #17171a;
+    --surface-2: #1f1f23;
+    --surface-3: #2a2a2f;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --text: #f2f2f4;
+    --text-2: #b4b4bd;
+    --text-3: #8e8e98;
+    --accent: #7d9bff;
+    --accent-hover: #98b0ff;
+    --accent-soft: rgba(125, 155, 255, 0.14);
+    --accent-ink: #0d0d0f;
+    --focus: #98b0ff;
+    --good: #4cc38a;
+    --good-soft: rgba(76, 195, 138, 0.13);
+    --bad: #ff7b8f;
+    --bad-soft: rgba(255, 123, 143, 0.12);
+    --warn: #f0b252;
+    --warn-soft: rgba(240, 178, 82, 0.13);
+    --st-not-started: #8e8e98;
+    --st-learning: #7d9bff;
+    --st-practising: #f0b252;
+    --st-secure: #4cc38a;
+    --st-revision: #ff7b8f;
+    --sub-9709: #a19cff;
+    --sub-9618: #3fd0bd;
+    --sub-9702: #ff9a5c;
+    --sub-9701: #6fd17d;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.4), 0 20px 56px rgba(0, 0, 0, 0.5);
+    --material: rgba(23, 23, 26, 0.74);
+    --scrim: rgba(0, 0, 0, 0.55);
+    --dg-muted: #8e8e98;
+    --dg-grid: rgba(255, 255, 255, 0.1);
+    --dg-accent: #7d9bff;
+    --dg-accent-soft: rgba(125, 155, 255, 0.2);
+    --dg-accent-2: #ff9a5c;
+    --dg-accent-2-soft: rgba(255, 154, 92, 0.2);
+    --dg-fill-muted: rgba(255, 255, 255, 0.07);
+  }
+}

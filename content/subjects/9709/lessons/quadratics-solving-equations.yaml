@@ -1,0 +1,251 @@
+id: quadratics-solving-equations
+subject: "9709"
+topic: "1.1"
+title: "Solving quadratic equations: three methods"
+summary: Solve ax² + bx + c = 0 by factorising, by completing the square or with the quadratic formula, and pick the quickest method.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.1.3"]
+prerequisites: [quadratics-completing-the-square]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025; update notice checked): topic 1.1 outcome "solve
+    quadratic equations ... in one unknown" and its note (by factorising, completing the square
+    and using the formula); section 4 rules on degrees of accuracy (3 s.f.) and on unsupported
+    calculator answers; the MF19 formula list (which includes the quadratic formula). Examples
+    and questions are original; all arithmetic checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve any quadratic equation $ax^2 + bx + c = 0$ in three ways (factorising, completing the square, the formula) and choose the quickest one for the job.
+
+  - type: explain
+    title: First, get a zero
+    body: |-
+      Every method starts the same way: rearrange so one side is **0**.
+
+      Why? If two things multiply to give 0, at least one of them **must** be 0. That only works for zero. If $AB = 6$, then $A$ could be any non-zero number at all.
+
+      | Method | Reach for it when |
+      | --- | --- |
+      | Factorising | it factorises with whole numbers (spot it in about 20 seconds, or move on) |
+      | Completing the square | the question says *hence* after a completed-square part |
+      | The formula | always works; your go-to when the roots are surds or decimals |
+
+  - type: example
+    title: Factorising when a is not 1
+    problem: |-
+      Solve $2x^2 + 5x - 3 = 0$.
+    steps:
+      - |-
+        It's already $= 0$. Multiply $a \times c$: $2 \times (-3) = -6$.
+      - |-
+        Find two numbers with product $-6$ and sum $b = 5$: they are $6$ and $-1$.
+      - |-
+        Split the middle term with them: $2x^2 + 6x - x - 3 = 0$.
+      - |-
+        Factorise in pairs: $2x(x + 3) - 1(x + 3) = 0$, so $(2x - 1)(x + 3) = 0$.
+      - |-
+        One bracket must be zero: $2x - 1 = 0$ or $x + 3 = 0$.
+    answer: |-
+      $x = \tfrac12$ or $x = -3$
+
+  - type: check
+    questions: [solve-factorise, zero-product-spot]
+
+  - type: explain
+    title: Completing the square
+    body: |-
+      Use the completed-square form, then undo the square with a square root:
+
+      $$x^2 + 6x - 2 = 0 \;\Rightarrow\; (x + 3)^2 - 11 = 0 \;\Rightarrow\; (x + 3)^2 = 11$$
+
+      $$x + 3 = \pm\sqrt{11} \;\Rightarrow\; x = -3 \pm \sqrt{11}$$
+
+      The $\pm$ is not decoration. A positive number has **two** square roots, so you get two roots.
+
+  - type: definition
+    term: The quadratic formula
+    body: |-
+      The roots of $ax^2 + bx + c = 0$, where $a \neq 0$, are
+
+      $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+      It's printed in the formula list (MF19), but learn it anyway: it's quicker than looking it up.
+
+  - type: example
+    title: Using the formula
+    problem: |-
+      Solve $2x^2 - 3x - 4 = 0$, giving your answers correct to 3 significant figures.
+    steps:
+      - |-
+        Identify $a = 2$, $b = -3$, $c = -4$. Write the signs in; that's where most errors live.
+      - |-
+        $b^2 - 4ac = (-3)^2 - 4(2)(-4) = 9 + 32 = 41$.
+      - |-
+        $x = \dfrac{3 \pm \sqrt{41}}{4}$, because $-b = 3$ and $2a = 4$.
+      - |-
+        $x = \dfrac{3 + 6.403\ldots}{4} = 2.3507\ldots$ or $x = \dfrac{3 - 6.403\ldots}{4} = -0.8507\ldots$
+      - |-
+        Round only at the end: $x = 2.35$ or $x = -0.851$.
+    answer: |-
+      $x = 2.35$ or $x = -0.851$ (3 s.f.). Exact form: $x = \dfrac{3 \pm \sqrt{41}}{4}$.
+
+  - type: deeper
+    title: Where the formula comes from
+    body: |-
+      It's just completing the square on the general quadratic. Divide by $a$, then complete the square:
+
+      $$\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a^2} + \frac{c}{a} = 0 \;\Rightarrow\; \left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}$$
+
+      Square-root both sides (the $\pm$ also takes care of the sign of $a$):
+
+      $$x + \frac{b}{2a} = \pm\frac{\sqrt{b^2 - 4ac}}{2a} \;\Rightarrow\; x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+      Notice the square root is only real if $b^2 - 4ac \geqslant 0$. That quantity gets its own lesson next.
+
+  - type: check
+    questions: [cts-solve, plus-minus-mcq]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $x^2 = 5x$, so divide both sides by $x$: $x = 5$.
+        right: |-
+          Dividing by $x$ throws away the root $x = 0$. Rearrange instead: $x^2 - 5x = 0$, so $x(x - 5) = 0$, giving $x = 0$ or $x = 5$.
+      - wrong: |-
+          With $b = -3$: $-b = -3$ and $b^2 = -9$.
+        right: |-
+          $-b = 3$ and $b^2 = (-3)^2 = 9$. Put negative values in brackets when you substitute.
+      - wrong: |-
+          Only the square root is divided by $2a$.
+        right: |-
+          The **whole** numerator $-b \pm \sqrt{b^2 - 4ac}$ is divided by $2a$. On a calculator, use brackets or the fraction key.
+
+  - type: exam
+    body: |-
+      - Give non-exact answers to **3 significant figures** unless the question says otherwise, and don't round until the end. (That's the syllabus rule.)
+      - **Exact** means keep surds: $x = -3 \pm \sqrt{11}$, not $0.317$ and $-6.32$.
+      - The syllabus says no marks are given for unsupported answers from a calculator. Even if your calculator solves quadratics, show the factorisation or the substituted formula.
+      - If a question says *hence* after completing the square, solve using that completed-square form.
+
+  - type: check
+    questions: [formula-3sf]
+
+  - type: takeaways
+    items:
+      - |-
+        Always rearrange to $= 0$ first; never divide through by $x$.
+      - |-
+        Factorise if it's quick; otherwise use the formula $x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+      - |-
+        Undoing a square gives $\pm$: two roots.
+      - |-
+        Exact answers keep surds; otherwise give 3 s.f., rounding only at the end.
+
+questions:
+  - id: solve-factorise
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.3"]
+    prompt: |-
+      Solve $3x^2 - 10x - 8 = 0$ by factorising. Enter the smaller root first (fractions are fine).
+    fields:
+      - label: "smaller root x ="
+        answer: -0.6666666666666666
+        tolerance: { abs: 0.0005 }
+      - label: "larger root x ="
+        answer: 4
+    explanation: |-
+      $ac = -24$, and $-12$ and $2$ multiply to $-24$ and add to $-10$:
+
+      $$3x^2 - 12x + 2x - 8 = 3x(x - 4) + 2(x - 4) = (3x + 2)(x - 4) = 0$$
+
+      So $x = -\tfrac23$ or $x = 4$.
+
+  - id: zero-product-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |-
+      A student solves $(x - 1)(x + 2) = 4$. Which line contains the first error?
+    lines:
+      - |-
+        $(x - 1)(x + 2) = 4$
+      - |-
+        So $x - 1 = 4$ or $x + 2 = 4$
+      - |-
+        So $x = 5$ or $x = 2$
+    errorLine: 2
+    fix: |-
+      Make one side zero first: $x^2 + x - 2 = 4$, so $x^2 + x - 6 = 0$, $(x + 3)(x - 2) = 0$, giving $x = -3$ or $x = 2$.
+    explanation: |-
+      "One bracket must be zero" only works when the product is **0**. Here $x = 2$ happens to work by luck, but $x = 5$ gives $4 \times 7 = 28$, and the real root $x = -3$ is missed.
+
+  - id: cts-solve
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |-
+      Solve $x^2 - 4x - 1 = 0$ by completing the square. Give exact answers: you can type surds such as `2+sqrt(5)` or `2+√5`. Enter the smaller root first.
+    fields:
+      - label: "smaller root x ="
+        answer: -0.2360679774997898
+      - label: "larger root x ="
+        answer: 4.23606797749979
+    explanation: |-
+      $x^2 - 4x - 1 = (x - 2)^2 - 4 - 1$, so the equation is $(x - 2)^2 = 5$.
+
+      Then $x - 2 = \pm\sqrt5$, so $x = 2 - \sqrt5 \approx -0.236$ or $x = 2 + \sqrt5 \approx 4.24$.
+
+  - id: plus-minus-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.3"]
+    prompt: |-
+      A student solves $(x - 3)^2 = 7$ and writes only $x = 3 + \sqrt7$. What is the best comment?
+    explanation: |-
+      Both $\sqrt7$ and $-\sqrt7$ square to 7, so $x - 3$ can be either. The full answer is $x = 3 \pm \sqrt7$.
+    options:
+      - text: |-
+          Correct: square roots are positive.
+        why: |-
+          $\sqrt7$ means the positive root, but the *equation* $(x - 3)^2 = 7$ is satisfied by $x - 3 = \sqrt7$ **and** by $x - 3 = -\sqrt7$.
+      - text: |-
+          Incomplete: $x - 3$ could also be $-\sqrt7$, so $x = 3 \pm \sqrt7$.
+        correct: true
+        why: |-
+          Both values square to 7, so there are two roots: $3 + \sqrt7$ and $3 - \sqrt7$.
+      - text: |-
+          Wrong: it should be $x = 3 \pm 7$.
+        why: |-
+          Undoing a square needs a square root; the square root of 7 is not 7.
+      - text: |-
+          Wrong: it should be $x = -3 \pm \sqrt7$.
+        why: |-
+          Adding 3 to both sides of $x - 3 = \pm\sqrt7$ gives $x = 3 \pm \sqrt7$. The "sign flip" belongs to reading a vertex, not to solving.
+
+  - id: formula-3sf
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |-
+      Solve $3x^2 + x - 5 = 0$, giving your answers correct to 3 significant figures. Enter the smaller root first.
+    fields:
+      - label: "smaller root x ="
+        answer: -1.4683749459844424
+        sigFigs: 3
+      - label: "larger root x ="
+        answer: 1.135041612651109
+        sigFigs: 3
+    explanation: |-
+      $a = 3$, $b = 1$, $c = -5$, so $b^2 - 4ac = 1 + 60 = 61$ and
+
+      $$x = \frac{-1 \pm \sqrt{61}}{6} = -1.468\ldots \text{ or } 1.135\ldots$$
+
+      To 3 s.f.: $x = -1.47$ or $x = 1.14$.

@@ -1,0 +1,218 @@
+id: units-adding-vectors
+subject: "9702"
+topic: "1.4"
+title: Adding and subtracting vectors
+summary: Add coplanar vectors tip to tail and calculate the resultant; subtract a vector by adding its reverse.
+order: 2
+minutes: 5
+objectives: ["1.4.2"]
+prerequisites: [units-scalars-and-vectors]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 1.4.2, and the mathematical requirements: Pythagoras, sin/cos/tan,
+    the sine and cosine rules, and finding the resultant of two coplanar vectors). The diagram is
+    drawn to scale and its values (7.0 N at 21.8°, 4.36 N at 36.6°) were checked with Python. All
+    questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can add and subtract **coplanar** vectors (vectors in the same plane) using a vector triangle, by scale drawing or by calculation.
+
+  - type: explain
+    title: Tip to tail
+    body: |
+      To add vectors, you can't just add their sizes: 3 N + 4 N could be anything from 1 N to 7 N, depending on the directions. Instead:
+
+      1. Draw the first vector as an arrow, to scale and in the right direction.
+      2. Start the second vector at the **tip** of the first.
+      3. The **resultant** runs from the **start of the first** to the **tip of the last**.
+
+      The order doesn't matter: $\mathbf{A} + \mathbf{B} = \mathbf{B} + \mathbf{A}$. The same method works for three or more vectors, chained tip to tail.
+
+  - type: diagram
+    diagram: phys-vector-triangle
+    alt: >-
+      Two vector triangles drawn to scale. Left, "Adding: A + B": a horizontal arrow A of 5.0 N
+      to the right, then from its tip an arrow B of 3.0 N pointing up and to the right at 60° to
+      the direction of A (a dashed line continues A's direction to show the 60° angle). The
+      resultant R of 7.0 N runs from the start of A to the tip of B, at 21.8° above A. Right,
+      "Subtracting: A − B = A + (−B)": the same arrow A of 5.0 N, then from its tip the arrow −B
+      of 3.0 N pointing down and to the left, opposite to B. The resultant A − B of 4.4 N runs
+      from the start of A to the tip of −B, at 36.6° below A.
+    caption: Both triangles are drawn to the same scale. Reversing B to subtract it gives a much shorter resultant.
+
+  - type: explain
+    title: Calculating the resultant
+    body: |
+      | The vectors are… | Use |
+      | --- | --- |
+      | along the same line | add with signs: $+5\ \text{N} + (-3\ \text{N}) = +2\ \text{N}$ |
+      | at right angles | Pythagoras for the size, $\tan$ for the angle |
+      | at any other angle | an accurate scale drawing, or the cosine rule (and sine rule for the angle) |
+
+  - type: example
+    title: A plane in a crosswind
+    problem: |
+      A plane flies with a velocity of $120\ \text{m s}^{-1}$ due north relative to the air. A wind blows the air due east at $50\ \text{m s}^{-1}$. Find the plane's resultant velocity.
+    steps:
+      - |
+        Draw $120\ \text{m s}^{-1}$ north, then $50\ \text{m s}^{-1}$ east from its tip. The two are at right angles.
+      - |
+        Magnitude by Pythagoras: $v = \sqrt{120^2 + 50^2} = \sqrt{16\,900} = 130\ \text{m s}^{-1}$.
+      - |
+        Direction: the angle east of north is $\tan^{-1}\left(\dfrac{50}{120}\right) = 22.6°$.
+    answer: |
+      $130\ \text{m s}^{-1}$ at $22.6°$ east of north. A velocity needs both parts: size **and** direction.
+
+  - type: check
+    questions: [perpendicular-forces, impossible-resultant]
+
+  - type: explain
+    title: Subtracting vectors
+    body: |
+      To find $\mathbf{A} - \mathbf{B}$, add $-\mathbf{B}$: the same size as $\mathbf{B}$, pointing the **opposite** way.
+
+      $$\mathbf{A} - \mathbf{B} = \mathbf{A} + (-\mathbf{B})$$
+
+      You'll use this most for a **change in velocity**: $\Delta \mathbf{v} = \mathbf{v} - \mathbf{u} = \mathbf{v} + (-\mathbf{u})$.
+
+  - type: example
+    title: Turning a corner
+    problem: |
+      A car travelling east at $15\ \text{m s}^{-1}$ turns a corner and then travels north at $15\ \text{m s}^{-1}$. Find its change in velocity.
+    steps:
+      - |
+        $\Delta \mathbf{v} = \mathbf{v} + (-\mathbf{u})$: that is $15\ \text{m s}^{-1}$ north **plus** $15\ \text{m s}^{-1}$ west.
+      - |
+        These are at right angles: $\Delta v = \sqrt{15^2 + 15^2} = 21.2\ \text{m s}^{-1}$.
+      - |
+        The two parts are equal, so the direction is exactly halfway between north and west.
+    answer: |
+      $21\ \text{m s}^{-1}$ towards the north-west. The **speed** didn't change, but the **velocity** did, because its direction changed.
+
+  - type: check
+    questions: [rebound-change, corner-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: The resultant of 3 N and 4 N is always 7 N.
+        right: Only if they point the same way. It can be anything from 1 N (opposite) to 7 N (same direction); at right angles it is 5 N.
+      - wrong: If the speed stays the same, the change in velocity is zero.
+        right: Velocity is a vector. A change of direction alone is a change in velocity.
+      - wrong: To add vectors, join them tail to tail and draw the resultant between the tips.
+        right: Join them **tip to tail**. If you draw two vectors tail to tail, the line joining their tips is their **difference**; the sum is the diagonal of the parallelogram they make.
+
+  - type: exam
+    body: |
+      - For a **scale drawing**: state your scale, make the diagram large (at least half a page), and measure the length and angle carefully. A drawing accurate to a few per cent earns full marks.
+      - Always give a resultant's **direction** as well as its magnitude, e.g. "at 22.6° east of north" or "at 30° to the horizontal".
+      - Change in velocity questions (a ball bouncing, a car turning) are classic traps. Use $\mathbf{v} - \mathbf{u}$ as vectors, with signs along a line.
+
+  - type: deeper
+    title: Non-perpendicular vectors by calculation
+    body: |
+      In the diagram, $\mathbf{A} = 5.0\ \text{N}$ and $\mathbf{B} = 3.0\ \text{N}$ act at $60°$ to each other. In the tip-to-tail triangle, the angle **between the sides** A and B is $180° - 60° = 120°$. The cosine rule gives
+
+      $$R^2 = 5.0^2 + 3.0^2 - 2(5.0)(3.0)\cos 120° = 25 + 9 + 15 = 49$$
+
+      so $R = 7.0\ \text{N}$. The sine rule gives the direction: $\sin\alpha = \dfrac{3.0 \sin 120°}{7.0}$, so $\alpha = 21.8°$ to A. Watch the angle: use the angle **inside the triangle**, not the angle between the arrows' directions.
+
+  - type: check
+    questions: [angled-forces]
+
+  - type: takeaways
+    items:
+      - Add vectors tip to tail; the resultant runs from the first tail to the last tip.
+      - At right angles, Pythagoras for the size and tan for the angle; otherwise, scale drawing or cosine rule.
+      - A − B = A + (−B), with −B the same size as B but reversed.
+      - Change in velocity is v − u, worked out as vectors.
+      - Always state the direction of a resultant.
+
+questions:
+  - id: perpendicular-forces
+    format: numeric
+    difficulty: 1
+    objectives: ["1.4.2"]
+    prompt: |
+      Two forces act on an object: $6.0\ \text{N}$ due east and $8.0\ \text{N}$ due north. Find the magnitude of the resultant force (with its unit) and its angle north of east, to 3 significant figures.
+    fields:
+      - label: "magnitude ="
+        answer: 10
+        tolerance: { abs: 0.05 }
+        acceptUnits: ["N"]
+      - label: "angle north of east ="
+        answer: 53.13
+        sigFigs: 3
+        unit: °
+    explanation: |
+      Magnitude: $\sqrt{6.0^2 + 8.0^2} = \sqrt{100} = 10\ \text{N}$. Angle: $\tan^{-1}\left(\dfrac{8.0}{6.0}\right) = 53.1°$ north of east.
+
+  - id: impossible-resultant
+    format: mcq
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |
+      Two forces of $4.0\ \text{N}$ and $7.0\ \text{N}$ act at the same point, at any angle to each other in the same plane. Which of these could **not** be the magnitude of their resultant?
+    options:
+      - text: 2.0 N
+        correct: true
+        why: Correct. The smallest possible resultant is 7.0 − 4.0 = 3.0 N, when they act in opposite directions.
+      - text: 3.0 N
+        why: Possible, when the forces act in opposite directions.
+      - text: 8.1 N
+        why: Possible. At right angles the resultant is √(4.0² + 7.0²) = 8.1 N.
+      - text: 11 N
+        why: Possible, when both forces act in the same direction.
+    explanation: |
+      The resultant of two vectors always lies between the difference and the sum of their magnitudes: here from 3.0 N to 11 N.
+
+  - id: rebound-change
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |
+      A ball travels towards a wall at $8.0\ \text{m s}^{-1}$ and rebounds along the same line at $6.0\ \text{m s}^{-1}$. What is the **magnitude** of its change in velocity? Give your answer with its unit.
+    fields:
+      - answer: 14
+        tolerance: { abs: 0.05 }
+        acceptUnits: ["m s⁻¹"]
+    explanation: |
+      Take towards the wall as positive: $u = +8.0\ \text{m s}^{-1}$ and $v = -6.0\ \text{m s}^{-1}$. Then $\Delta v = v - u = -6.0 - 8.0 = -14\ \text{m s}^{-1}$: $14\ \text{m s}^{-1}$ directed away from the wall. Answering $2\ \text{m s}^{-1}$ means the direction was ignored.
+
+  - id: corner-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |
+      A cyclist rides at $5.0\ \text{m s}^{-1}$ due south, then turns and rides at $5.0\ \text{m s}^{-1}$ due east. A student works out the change in velocity. Which line contains the error?
+    lines:
+      - |
+        Initial velocity $\mathbf{u} = 5.0\ \text{m s}^{-1}$ south; final velocity $\mathbf{v} = 5.0\ \text{m s}^{-1}$ east.
+      - |
+        Change in velocity $\Delta \mathbf{v} = \mathbf{v} - \mathbf{u}$
+      - |
+        $\Delta v = 5.0 - 5.0 = 0$, so the velocity has not changed.
+      - |
+        So the cyclist has no acceleration while turning.
+    errorLine: 3
+    fix: |
+      Subtract as vectors: $\mathbf{v} + (-\mathbf{u})$ is $5.0\ \text{m s}^{-1}$ east plus $5.0\ \text{m s}^{-1}$ north, so $\Delta v = \sqrt{5.0^2 + 5.0^2} = 7.1\ \text{m s}^{-1}$ towards the north-east.
+    explanation: |
+      Subtracting the magnitudes treats velocity as a scalar. The speed is unchanged, but the direction changed, so the velocity changed (and the cyclist did accelerate). Line 4 is wrong only because it follows from line 3.
+
+  - id: angled-forces
+    format: numeric
+    difficulty: 3
+    objectives: ["1.4.2"]
+    prompt: |
+      Forces of $4.0\ \text{N}$ and $6.0\ \text{N}$ act at the same point. The angle between their directions is $50°$. Find the magnitude of the resultant, by scale drawing or by calculation. Give your answer to 2 significant figures, with its unit.
+    fields:
+      - answer: 9.10
+        tolerance: { rel: 0.02 }
+        sigFigs: 2
+        acceptUnits: ["N"]
+    explanation: |
+      Tip to tail, the angle inside the triangle is $180° - 50° = 130°$. Cosine rule: $R^2 = 4.0^2 + 6.0^2 - 2(4.0)(6.0)\cos 130° = 52 + 30.9 = 82.9$, so $R = 9.1\ \text{N}$. A careful scale drawing should give between about 8.9 N and 9.3 N.

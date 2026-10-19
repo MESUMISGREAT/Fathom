@@ -1,0 +1,202 @@
+id: units-homogeneity
+subject: "9702"
+topic: "1.2"
+title: Checking equations are homogeneous
+summary: An equation is homogeneous when every term has the same SI base units; a failed check proves it wrong, but a pass does not prove it right.
+order: 2
+minutes: 4
+objectives: ["1.2.3", "1.2.2"]
+prerequisites: [units-si-base-and-derived]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 1.2.3, with 1.2.2 for the base units used; the mathematical
+    requirements also ask candidates to check the dimensional consistency of equations). Equations
+    used (v² = u² + 2as, p = ρgh, F = kv²) are syllabus or standard textbook results. All questions
+    are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use SI base units to check whether an equation is **homogeneous**, find the base units of an unknown constant, and explain why a homogeneous equation can still be wrong.
+
+  - type: definition
+    term: Homogeneous equation
+    body: |
+      An equation in which **every term**, on both sides, has the **same SI base units**.
+
+  - type: explain
+    title: What counts as a "term"?
+    body: |
+      Terms are the chunks that are **added**, **subtracted** or set **equal**. In
+
+      $$s = ut + \tfrac{1}{2}at^2$$
+
+      there are three terms: $s$, $ut$ and $\tfrac{1}{2}at^2$. Each one must come out in metres.
+
+      Inside a term, quantities **multiply**, so their units multiply too: $ut$ has units $\text{m s}^{-1} \times \text{s} = \text{m}$.
+
+  - type: intuition
+    title: You can't add apples to seconds
+    body: |
+      $3\ \text{m} + 2\ \text{s}$ is meaningless, like adding 3 apples to 2 bus timetables. Nature doesn't do that, so a correct physics equation can never contain it. Homogeneity checking is just hunting for apples-plus-timetables.
+
+  - type: example
+    title: Checking v² = u² + 2as
+    problem: |
+      Show that $v^2 = u^2 + 2as$ is homogeneous.
+    steps:
+      - |
+        Left-hand side: $v^2$ has units $(\text{m s}^{-1})^2 = \text{m}^2\ \text{s}^{-2}$.
+      - |
+        First term on the right: $u^2$ also has units $\text{m}^2\ \text{s}^{-2}$.
+      - |
+        Second term on the right: $2as$. The 2 is a pure number with no unit. $a \times s$ has units $\text{m s}^{-2} \times \text{m} = \text{m}^2\ \text{s}^{-2}$.
+      - |
+        All three terms have units $\text{m}^2\ \text{s}^{-2}$, so the equation is homogeneous.
+
+  - type: check
+    questions: [not-homogeneous]
+
+  - type: explain
+    title: Homogeneous does not mean correct
+    body: |
+      A failed check **proves** an equation is wrong. A passed check only says it **might** be right, because units can't detect:
+
+      - **Wrong pure numbers.** $\tfrac{1}{2}$, $2$ and $\pi$ have no units, so $s = ut + at^2$ (missing the $\tfrac{1}{2}$) still passes.
+      - **Missing or extra terms** that happen to have the right units.
+      - **Wrong signs**: $v^2 = u^2 - 2as$ passes too, even where the physics needs $+$.
+
+  - type: check
+    questions: [homogeneity-logic, homogeneous-but-wrong]
+
+  - type: example
+    title: Finding the unit of a constant
+    problem: |
+      At high speeds, the drag force on a car is $F = kv^2$. Find the SI base units of $k$.
+    steps:
+      - |
+        Make $k$ the subject: $k = \dfrac{F}{v^2}$.
+      - |
+        Base units of $F$: $\text{kg m s}^{-2}$. Base units of $v^2$: $\text{m}^2\ \text{s}^{-2}$.
+      - |
+        Divide: $\dfrac{\text{kg m s}^{-2}}{\text{m}^2\ \text{s}^{-2}} = \text{kg m}^{-1}$.
+    answer: |
+      $k$ has base units $\text{kg m}^{-1}$.
+
+  - type: misconceptions
+    items:
+      - wrong: Constants such as $\tfrac{1}{2}$ or $2\pi$ have units.
+        right: Pure numbers have **no units**. That is exactly why a homogeneity check can't catch a wrong one.
+      - wrong: '"Both sides are in joules", so I''ve shown it is homogeneous.'
+        right: Reduce every term to **base units** and show the working. Named units such as J and N hide the detail the examiner wants to see.
+      - wrong: An equation that passes the check must be correct.
+        right: It **may** be correct. Only a failed check is conclusive.
+
+  - type: exam
+    body: |
+      - "Show that the equation is homogeneous": write the base units of **each term** separately, then state that they are the same.
+      - "Determine the SI base units of $k$": rearrange for $k$ first, then substitute base units.
+      - Paper 1 favourite: "Which equation is **not** homogeneous?" Check each option quickly by reducing every term to base units.
+
+  - type: check
+    questions: [drag-constant, pendulum-spot-error]
+
+  - type: enrichment
+    title: Using units to guess an equation
+    body: |
+      Suppose the period $T$ of a pendulum depends only on its length $l$ and on $g$. Try $T = C\,l^{x} g^{y}$ with $C$ a pure number. Base units give $\text{s} = \text{m}^{x}(\text{m s}^{-2})^{y}$. Matching powers: metres $x + y = 0$; seconds $-2y = 1$. So $y = -\tfrac{1}{2}$ and $x = \tfrac{1}{2}$, giving $T = C\sqrt{l/g}$. (Experiment shows $C = 2\pi$, which units alone could never tell you.)
+
+  - type: takeaways
+    items:
+      - Homogeneous = every term has the same SI base units.
+      - Check term by term; units multiply within a term.
+      - Not homogeneous ⇒ definitely wrong. Homogeneous ⇒ possibly right.
+      - Pure numbers ($\tfrac{1}{2}$, $2\pi$) have no units and can't be checked this way.
+      - To find the unit of a constant, rearrange for it and substitute base units.
+
+questions:
+  - id: not-homogeneous
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |
+      Which equation is **not** homogeneous? ($P$ is power, $F$ force, $v$ speed, $p$ pressure, $\rho$ density, $g$ acceleration of free fall, $h$ height, $E$ energy, $m$ mass, $a$ acceleration, $s$ displacement.)
+    options:
+      - text: $P = Fv$
+        why: "Homogeneous: both sides are $\\text{kg m}^2\\ \\text{s}^{-3}$ (a force times a speed is a rate of doing work)."
+      - text: $p = \rho g h$
+        why: "Homogeneous: $\\text{kg m}^{-3} \\times \\text{m s}^{-2} \\times \\text{m} = \\text{kg m}^{-1}\\ \\text{s}^{-2}$, the units of pressure."
+      - text: $E = \tfrac{1}{2}mv$
+        correct: true
+        why: "Correct: the right-hand side is $\\text{kg m s}^{-1}$ (momentum), but energy is $\\text{kg m}^2\\ \\text{s}^{-2}$."
+      - text: $v^2 = 2as$
+        why: "Homogeneous: both sides are $\\text{m}^2\\ \\text{s}^{-2}$."
+    explanation: |
+      Reduce each term to base units. Only $E = \tfrac{1}{2}mv$ has different units on the two sides, so it cannot be correct. (The correct kinetic energy equation is $E = \tfrac{1}{2}mv^2$.)
+
+  - id: homogeneity-logic
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.3"]
+    prompt: |
+      If an equation is **not** homogeneous, it must be {{1}}. If it **is** homogeneous, it {{2}} be correct, but this is not guaranteed.
+    blanks:
+      - accept: [wrong, incorrect, "false", invalid]
+      - accept: [may, might, could, can]
+    explanation: |
+      A failed check proves an equation wrong. A passed check is necessary but not sufficient: wrong pure numbers, missing terms and wrong signs all slip through.
+
+  - id: homogeneous-but-wrong
+    format: explain
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |
+      A student writes $s = ut + at^2$ for uniformly accelerated motion. Show that it is homogeneous, and explain how it can still be wrong.
+    model: |
+      Each term has units of metres: $s$ is m; $ut$ is $\text{m s}^{-1} \times \text{s} = \text{m}$; $at^2$ is $\text{m s}^{-2} \times \text{s}^2 = \text{m}$. So the equation is homogeneous. It is still wrong because the correct equation has $\tfrac{1}{2}at^2$. The factor $\tfrac{1}{2}$ is a pure number with no units, so a units check cannot detect that it is missing.
+    keyPoints:
+      - "Each term reduces to metres: s (m), ut (m), at² (m)"
+      - So the equation is homogeneous
+      - The correct equation has ½at², so a numerical factor is missing
+      - Pure numbers have no units, so a homogeneity check can't detect them
+    explanation: |
+      Homogeneity is a necessary condition for an equation to be correct, not a sufficient one.
+
+  - id: drag-constant
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.3", "1.2.2"]
+    prompt: |
+      For a small sphere moving slowly through oil, the drag force is $F = bv$, where $v$ is the speed. Write the SI base units of $b$ as $\text{kg}^{x}\ \text{m}^{y}\ \text{s}^{z}$. Find $x$, $y$ and $z$.
+    fields:
+      - label: "$x =$"
+        answer: 1
+      - label: "$y =$"
+        answer: 0
+      - label: "$z =$"
+        answer: -1
+    explanation: |
+      $b = \dfrac{F}{v}$, so its units are $\dfrac{\text{kg m s}^{-2}}{\text{m s}^{-1}} = \text{kg s}^{-1}$. The metres cancel, so $y = 0$.
+
+  - id: pendulum-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["1.2.3"]
+    prompt: |
+      A student checks whether $T = 2\pi\sqrt{l/g}$ is homogeneous, where $T$ is a period, $l$ a length and $g$ the acceleration of free fall. Which line contains the first error?
+    lines:
+      - |
+        Left-hand side: the unit of $T$ is $\text{s}$.
+      - |
+        Unit of $l/g$: $\text{m} \div \text{m s}^{-2} = \text{s}^{-2}$
+      - |
+        So the unit of $\sqrt{l/g}$ is $\text{s}^{-1}$.
+      - |
+        $2\pi$ has no unit, so the right-hand side has unit $\text{s}^{-1}$, which is not $\text{s}$. The equation is not homogeneous.
+    errorLine: 2
+    fix: |
+      Dividing by $\text{s}^{-2}$ is multiplying by $\text{s}^2$: $\text{m} \div \text{m s}^{-2} = \text{s}^{2}$. Then $\sqrt{l/g}$ has unit $\text{s}$, matching the left-hand side, so the equation **is** homogeneous.
+    explanation: |
+      Dividing by a negative power flips its sign. That slip turned a homogeneous equation into an apparently "wrong" one, so the conclusion in line 4 is wrong too.

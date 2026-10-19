@@ -1,0 +1,237 @@
+id: quadratics-inequalities
+subject: "9709"
+topic: "1.1"
+title: Quadratic inequalities
+summary: Solve quadratic inequalities by finding the critical values, sketching the parabola and choosing the right region.
+order: 4
+minutes: 5
+kind: core
+objectives: ["1.1.3"]
+prerequisites: [quadratics-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025; update notice checked): topic 1.1 outcome "solve
+    quadratic equations, and quadratic inequalities, in one unknown". Inequality symbols follow
+    the Cambridge notation (⩽, ⩾). Examples and questions are original; all arithmetic and sign
+    regions checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve quadratic inequalities such as $x^2 - x - 6 > 0$ by finding the **critical values** and reading the answer off a quick sketch.
+
+  - type: explain
+    title: The three-step method
+    body: |-
+      1. **Rearrange** so one side is 0 (a positive $x^2$ coefficient makes life easier).
+      2. **Find the critical values**: solve the equation $= 0$ by factorising, completing the square or the formula.
+      3. **Sketch** the parabola through those roots and read off where it's **above** the $x$-axis ($> 0$) or **below** it ($< 0$).
+
+      The sketch is 5 seconds of work and it's what stops you picking the wrong region.
+
+  - type: example
+    title: Outside or between?
+    problem: |-
+      Solve $x^2 - x - 6 > 0$.
+    steps:
+      - |-
+        It's already 0 on the right. Factorise: $(x + 2)(x - 3) > 0$.
+      - |-
+        Critical values: $x = -2$ and $x = 3$.
+      - |-
+        Sketch $y = (x + 2)(x - 3)$: ∪-shaped, crossing the $x$-axis at $-2$ and $3$.
+      - |-
+        We want $y > 0$: the parts of the curve **above** the axis. That's the two outer pieces.
+      - |-
+        Strict inequality, so the critical values themselves are not included.
+    answer: |-
+      $x < -2$ or $x > 3$. (For $x^2 - x - 6 < 0$ you'd take the middle piece instead: $-2 < x < 3$.)
+
+  - type: diagram
+    diagram: quadratic-inequality
+    alt: >-
+      Graph of y = (x + 2)(x − 3) crossing the x-axis at −2 and 3, marked with open circles. The two
+      outer arms, where x < −2 and x > 3, are above the axis and labelled y > 0. The middle section
+      between −2 and 3 dips below the axis to about −6.25 and is shaded and labelled y < 0. Below
+      the graph a sign diagram on the same scale shows plus for x < −2, minus for −2 < x < 3 and
+      plus for x > 3.
+    caption: |-
+      For a ∪-shaped curve: **$> 0$ is outside the roots**, **$< 0$ is between them**. The sign diagram underneath is the same information in one line.
+
+  - type: intuition
+    title: Why outside-or-between always works
+    body: |-
+      When there are two distinct critical values $\alpha < \beta$, a ∪-shaped parabola comes down from above, dips below the axis between its roots, and goes back up. So with a positive $x^2$ coefficient:
+
+      - $> 0$ (or $\geqslant 0$): **two** separate intervals, outside the roots.
+      - $< 0$ (or $\leqslant 0$): **one** interval, a "sandwich" $\alpha < x < \beta$ (or $\alpha \leqslant x \leqslant \beta$).
+
+      Don't memorise that blindly, though. One sketch and you can *see* it. (No critical values, or only one? See the "go deeper" note below.)
+
+  - type: check
+    questions: [ineq-between]
+
+  - type: explain
+    title: Two things that change the answer
+    body: |-
+      **Strict or not.** $<$ and $>$ exclude the critical values; $\leqslant$ and $\geqslant$ include them. So $x^2 - 2x - 8 \leqslant 0$, i.e. $(x + 2)(x - 4) \leqslant 0$, gives $-2 \leqslant x \leqslant 4$.
+
+      **A negative $x^2$ coefficient.** Multiply through by $-1$ and **reverse the inequality sign**:
+
+      $$12 + x - x^2 > 0 \iff x^2 - x - 12 < 0 \iff (x - 4)(x + 3) < 0 \iff -3 < x < 4$$
+
+      (Or sketch the ∩ shape directly. Same answer, as it should be.)
+
+  - type: check
+    questions: [ineq-closed, ineq-negative-a]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $x^2 > 9$, so $x > \pm 3$.
+        right: |-
+          "$x > \pm3$" means nothing. $x^2 - 9 > 0$ is outside the roots: $x < -3$ or $x > 3$.
+      - wrong: |-
+          $x(x - 2) > 3$, so $x > 3$ or $x - 2 > 3$.
+        right: |-
+          Rearrange to 0 first: $x^2 - 2x - 3 > 0$, $(x + 1)(x - 3) > 0$, so $x < -1$ or $x > 3$.
+      - wrong: |-
+          Answer: $x < -2$ and $x > 3$ (or $-2 > x > 3$).
+        right: |-
+          No number is both less than $-2$ and greater than $3$. Write "$x < -2$ or $x > 3$" (a comma is fine too). A sandwich only works for the middle region.
+      - wrong: |-
+          Divide $x^2 < 5x$ by $x$ to get $x < 5$.
+        right: |-
+          If $x$ is negative, dividing flips the sign, so you can't safely divide by $x$. Rearrange: $x(x - 5) < 0$, so $0 < x < 5$.
+
+  - type: deeper
+    title: When there are no critical values (or just one)
+    body: |-
+      If $b^2 - 4ac < 0$ the curve never meets the axis:
+
+      - $x^2 + 2x + 5 > 0$ is true for **all** real $x$, because $(x + 1)^2 + 4 \geqslant 4$.
+      - $x^2 + 2x + 5 < 0$ has **no** real solutions.
+
+      With a repeated root, the curve just touches the axis:
+
+      - $(x - 2)^2 > 0$ for every $x$ except $x = 2$.
+      - $(x - 2)^2 \leqslant 0$ only when $x = 2$.
+
+  - type: exam
+    body: |-
+      - Usual wording: *Find the set of values of $x$ for which …*
+      - The sketch or a sign diagram is your working, so show it.
+      - Marks are typically lost for the wrong region, $<$ vs $\leqslant$ mix-ups, and writing "and" for a two-part answer.
+      - Quadratic inequalities also turn up at the end of discriminant questions: "find the set of values of $k$ for which … has two distinct real roots" ends with an inequality in $k$.
+
+  - type: check
+    questions: [ineq-spot, ineq-square]
+
+  - type: takeaways
+    items:
+      - |-
+        Rearrange to 0, find the critical values, sketch, choose the region.
+      - |-
+        ∪-shaped: $> 0$ is outside the roots (two intervals joined by "or"); $< 0$ is between them ($\alpha < x < \beta$).
+      - |-
+        Multiplying or dividing by a negative number reverses the inequality.
+      - |-
+        $\leqslant$ and $\geqslant$ include the critical values; $<$ and $>$ don't.
+
+questions:
+  - id: ineq-between
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.3"]
+    prompt: |-
+      Solve $(x - 1)(x - 5) < 0$.
+    explanation: |-
+      The critical values are 1 and 5. The graph is ∪-shaped, so it is below the axis between them: $1 < x < 5$.
+    options:
+      - text: |-
+          $1 < x < 5$
+        correct: true
+        why: |-
+          $< 0$ means below the axis, which for a ∪ shape is between the roots.
+      - text: |-
+          $x < 1$ or $x > 5$
+        why: |-
+          That's where the product is **positive**, i.e. the answer to $(x - 1)(x - 5) > 0$.
+      - text: |-
+          $x < 5$
+        why: |-
+          Too much: $x = 0$ satisfies $x < 5$ but $(0 - 1)(0 - 5) = 5$, which is not negative.
+      - text: |-
+          $-5 < x < -1$
+        why: |-
+          Sign slip. The brackets are zero at $x = 1$ and $x = 5$, not at $-1$ and $-5$.
+
+  - id: ineq-closed
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.3"]
+    prompt: |-
+      Solve $x^2 + 2x - 15 \leqslant 0$. The answer has the form $a \leqslant x \leqslant b$. Enter $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: -5
+      - label: "b ="
+        answer: 3
+    explanation: |-
+      $(x + 5)(x - 3) \leqslant 0$, with critical values $-5$ and $3$. A ∪-shaped curve is $\leqslant 0$ between the roots, including them: $-5 \leqslant x \leqslant 3$.
+
+  - id: ineq-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |-
+      A student finds the set of values of $x$ for which $2x^2 - 5x - 3 > 0$. Which line contains the first error?
+    lines:
+      - |-
+        $2x^2 - 5x - 3 = (2x + 1)(x - 3)$
+      - |-
+        Critical values: $x = -\tfrac12$ and $x = 3$
+      - |-
+        The graph of $y = 2x^2 - 5x - 3$ is ∪-shaped
+      - |-
+        So $2x^2 - 5x - 3 > 0$ when $-\tfrac12 < x < 3$
+    errorLine: 4
+    fix: |-
+      $> 0$ is outside the roots: $x < -\tfrac12$ or $x > 3$.
+    explanation: |-
+      Lines 1 to 3 are right. A quick test catches line 4: $x = 0$ is in the student's region, but $2(0)^2 - 5(0) - 3 = -3$, which is not $> 0$.
+
+  - id: ineq-negative-a
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |-
+      Solve $6 + x - 2x^2 \geqslant 0$. The answer has the form $a \leqslant x \leqslant b$. Enter $a$ and $b$ (fractions are fine).
+    fields:
+      - label: "a ="
+        answer: -1.5
+      - label: "b ="
+        answer: 2
+    explanation: |-
+      Multiply by $-1$ and reverse the sign: $2x^2 - x - 6 \leqslant 0$, so $(2x + 3)(x - 2) \leqslant 0$.
+
+      Critical values $-\tfrac32$ and $2$; $\leqslant 0$ is between them: $-\tfrac32 \leqslant x \leqslant 2$.
+
+  - id: ineq-square
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |-
+      A student solves $x^2 < 25$ by writing $x < 5$. Explain what's wrong, and give the correct solution.
+    explanation: |-
+      Square-rooting an inequality silently ignores negative values of $x$. Treat it like any other quadratic inequality: critical values, sketch, region.
+    model: |-
+      Square-rooting both sides ignores negative $x$. For example $x = -6$ satisfies $x < 5$, but $(-6)^2 = 36$ is not less than 25. Instead, rearrange to $x^2 - 25 < 0$, i.e. $(x + 5)(x - 5) < 0$. The critical values are $\pm 5$ and the ∪-shaped graph is below the axis between them, so $-5 < x < 5$.
+    keyPoints:
+      - Square-rooting both sides ignores negative values of x
+      - A counter-example such as x = −6 (it satisfies x < 5 but x² = 36 > 25)
+      - Rearranging to (x + 5)(x − 5) < 0 with critical values ±5
+      - The correct answer −5 < x < 5

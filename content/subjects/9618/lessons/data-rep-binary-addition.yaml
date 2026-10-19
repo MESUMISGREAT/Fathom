@@ -1,0 +1,216 @@
+id: data-rep-binary-addition
+subject: "9618"
+topic: "1.1"
+title: Binary addition and overflow
+summary: Add binary integers column by column with carries, and recognise when the result overflows the bits available.
+order: 7
+minutes: 4
+kind: core
+objectives: ["1.1.3"]
+prerequisites: [data-rep-binary-denary]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1, third learning outcome (binary
+    addition and subtraction with positive and negative integers; how overflow can occur). This
+    lesson covers addition and unsigned overflow; subtraction, negative operands and two's
+    complement overflow follow in data-rep-binary-subtraction. Every sum checked with Python.
+    Questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can add two binary integers, showing the carries, and say when the answer has **overflowed**.
+
+  - type: explain
+    title: Four rules are all you need
+    body: |
+      Binary addition is column addition, just like in denary, except you carry when a column reaches **2** instead of 10.
+
+      | In the column | Sum | Write | Carry |
+      | --- | --- | --- | --- |
+      | 0 + 0 | 0 | 0 | 0 |
+      | 0 + 1 | 1 | 1 | 0 |
+      | 1 + 1 | 2 (`10`) | 0 | 1 |
+      | 1 + 1 + 1 (with a carry in) | 3 (`11`) | 1 | 1 |
+
+      Work from the **right**, and write each carry above the next column so you don't lose it.
+
+  - type: example
+    title: Adding two bytes
+    problem: |
+      Add the unsigned bytes `0101 1011` (91) and `0011 0110` (54).
+    steps:
+      - |
+        Column 1 (the 1s): $1 + 0 = 1$. Write 1, no carry.
+      - |
+        Column 2: $1 + 1 = 10$. Write 0, carry 1.
+      - |
+        Column 3: $0 + 1 + \text{carry } 1 = 10$. Write 0, carry 1.
+      - |
+        Column 4: $1 + 0 + 1 = 10$. Write 0, carry 1.
+      - |
+        Column 5: $1 + 1 + 1 = 11$. Write 1, carry 1.
+      - |
+        Columns 6 and 7: each is $0 + 1 + 1$ or $1 + 0 + 1$, so write 0 and carry 1 both times.
+      - |
+        Column 8 (the MSB): $0 + 0 + 1 = 1$. Write 1, no carry out. Result: `1001 0001`.
+      - |
+        Check in denary: `1001 0001` $= 128 + 16 + 1 = 145$, and $91 + 54 = 145$ ✓
+    answer: |
+      `0101 1011 + 0011 0110 = 1001 0001` (145)
+
+  - type: check
+    title: Quick check
+    questions: [three-ones, add-bytes, spot-carry]
+
+  - type: definition
+    term: Overflow
+    body: |
+      When the result of a calculation is **too large (or too small) to be represented** in the number of bits available.
+
+  - type: explain
+    title: When the answer won't fit
+    body: |
+      An 8-bit unsigned register holds 0 to 255. If a sum is bigger than 255, there is a **carry out of the MSB**: a ninth bit with nowhere to go. It is lost, and the 8 bits that remain hold the wrong answer.
+
+      The processor detects this and sets a flag in the **Status Register**, so software can notice and deal with it.
+
+  - type: example
+    title: An overflow
+    problem: |
+      Add the unsigned bytes `1100 1000` (200) and `0110 0100` (100).
+    steps:
+      - |
+        Add column by column as usual. The true answer is 300, which is `1 0010 1100`: **nine** bits.
+      - |
+        The register only has 8 bits, so the carry out of the MSB is lost.
+      - |
+        What's left is `0010 1100` $= 32 + 8 + 4 = 44$.
+      - |
+        Notice $300 - 256 = 44$: losing the ninth bit throws away exactly 256.
+    answer: |
+      Overflow: the stored result is `0010 1100` (44), not 300.
+
+  - type: intuition
+    title: The car odometer
+    body: |
+      A 4-digit odometer that reaches 9999 rolls over to 0000. The car didn't teleport home; the counter just ran out of digits. Overflow is the same thing in binary. (The analogy breaks down in one way: a processor *knows* it happened and sets a flag.)
+
+  - type: misconceptions
+    items:
+      - wrong: Overflow makes the computer crash.
+        right: |
+          Usually it just produces a wrong result, silently, unless the program checks the flag the processor set in the Status Register (for unsigned addition, the carry flag). That's what makes it dangerous.
+      - wrong: "1 + 1 in binary is 2."
+        right: |
+          There's no digit 2 in binary. $1 + 1 = 10$: write 0 and carry 1.
+
+  - type: exam
+    body: |
+      - A binary addition is usually worth 1 or 2 marks. Show the **carries**: a row of small carry digits above the sum makes your method clear and lets you check each column.
+      - A common follow-up asks you to **identify** or **explain** the problem with a result. Name it, **overflow**, then say why: the true answer needs more bits than the register has, so the carry out of the MSB is lost.
+      - Marks slip away when a carry is dropped, or when you give 9 bits where the question asks for an 8-bit result.
+
+  - type: check
+    title: Overflow
+    questions: [stored-after-overflow, max-addable, explain-overflow]
+
+  - type: takeaways
+    items:
+      - "Binary addition rules: 1 + 1 = 10 (write 0, carry 1) and 1 + 1 + 1 = 11 (write 1, carry 1)."
+      - Work from the right and show every carry.
+      - Overflow is a result too large (or too small) for the bits available.
+      - In unsigned 8-bit addition, a carry out of the MSB means overflow; the stored result is 256 too small.
+
+questions:
+  - id: three-ones
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.3"]
+    prompt: |
+      In one column of a binary addition you have 1 + 1 and a carry of 1 coming in. What happens?
+    options:
+      - text: Write 1, carry 1
+        correct: true
+        why: |
+          $1 + 1 + 1 = 3$, which is `11` in binary: a 1 in this column and a 1 carried to the next.
+      - text: Write 0, carry 1
+        why: |
+          That's the rule for 1 + 1 with no carry in. Here there are three 1s.
+      - text: Write 1, carry 0
+        why: |
+          That would only make 1, but three 1s add to 3.
+      - text: Write 11 in the column
+        why: |
+          A column can hold only one bit. The second 1 must be carried.
+    explanation: |
+      Three 1s make 3 = `11`: write 1, carry 1.
+
+  - id: add-bytes
+    format: cloze
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      Add the unsigned bytes `0011 1010` and `0100 1111`. The 8-bit result is {{1}}
+    blanks:
+      - accept: ["10001001", "1000 1001"]
+    explanation: |
+      `0011 1010` is 58 and `0100 1111` is 79; $58 + 79 = 137$ = `1000 1001` ($128 + 8 + 1$). There's no carry out of the MSB, so no overflow.
+
+  - id: stored-after-overflow
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      The unsigned bytes `1011 0100` and `0110 0001` are added in an 8-bit register. What denary value is actually **stored** in the register?
+    fields:
+      - answer: 21
+    explanation: |
+      $180 + 97 = 277$, which is `1 0001 0101` and needs 9 bits. The carry out of the MSB is lost, leaving `0001 0101` = 21 (that is, $277 - 256$). This is overflow.
+
+  - id: max-addable
+    format: numeric
+    difficulty: 3
+    objectives: ["1.1.3"]
+    prompt: |
+      An 8-bit register holds the unsigned value `1101 0010`. What is the **largest** denary value that can be added to it without causing overflow?
+    fields:
+      - answer: 45
+    explanation: |
+      `1101 0010` $= 128 + 64 + 16 + 2 = 210$. An unsigned byte holds at most 255, so you can add up to $255 - 210 = 45$. Adding 46 would make 256, which needs a ninth bit. (If you said 46, you aimed for 256, but 256 is the first value that *doesn't* fit.)
+
+  - id: spot-carry
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      A student adds the unsigned 4-bit numbers `0111` and `0011`, working from the right. Which line contains the first error?
+    lines:
+      - "Column 1: 1 + 1 = 10, so write 0 and carry 1"
+      - "Column 2: 1 + 1 + carry 1 = 11, so write 1 and carry 1"
+      - "Column 3: 1 + 0 + carry 1 = 10, so write 0 and carry 0"
+      - "Column 4: 0 + 0 = 0, so write 0"
+      - "Answer: 0010"
+    errorLine: 3
+    fix: |
+      $1 + 0 + 1 = 10$, so write 0 and **carry 1**. Then column 4 is $0 + 0 + 1 = 1$, and the answer is `1010` (10).
+    explanation: |
+      The student dropped a carry. A quick denary check exposes it: $7 + 3 = 10$, but `0010` is only 2.
+
+  - id: explain-overflow
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      Explain what is meant by **overflow**, and how it can occur when two unsigned 8-bit numbers are added.
+    model: |
+      Overflow happens when the result of a calculation is too large to be represented in the number of bits available. An unsigned 8-bit register can hold only 0 to 255. If the sum is greater than 255, there is a carry out of the most significant bit; it cannot be stored, so it is lost and the 8 bits left hold an incorrect result.
+    keyPoints:
+      - The result is too large to fit in the number of bits available
+      - 8 bits unsigned can hold at most 255
+      - A sum over 255 produces a carry out of the most significant bit
+      - The carry is lost, so the stored result is wrong
+    explanation: |
+      A good answer defines overflow and then ties it to the specific case: the range of 8 bits and the lost carry.

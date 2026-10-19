@@ -1,0 +1,211 @@
+id: units-uncertainty-products
+subject: "9702"
+topic: "1.3"
+title: Uncertainty in products, quotients and powers
+summary: When quantities are multiplied or divided, add their percentage uncertainties; a power multiplies the percentage uncertainty by the power.
+order: 4
+minutes: 5
+objectives: ["1.3.3"]
+prerequisites: [units-uncertainty-sums]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 1.3.3, "simple addition of absolute or percentage uncertainties";
+    the Paper 5 expectations on calculating uncertainty estimates in derived quantities). All
+    worked values recomputed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can find the uncertainty in a quantity calculated by **multiplying**, **dividing** or **raising to a power**, and turn it back into an absolute uncertainty.
+
+  - type: explain
+    title: "Rule 2: multiplying or dividing? Add the percentage uncertainties"
+    body: |
+      If $y = ab$ **or** $y = \dfrac{a}{b}$, then
+
+      $$\%\,y = \%\,a + \%\,b$$
+
+      (Fractional uncertainties add in exactly the same way.) As with sums, you **add** for a quotient too, never subtract.
+
+  - type: explain
+    title: "Rule 3: powers multiply the percentage"
+    body: |
+      If $y = a^n$, then $\%\,y = n \times \%\,a$.
+
+      - $a^2$ is just $a \times a$, so its percentage uncertainty is $\%a + \%a = 2\%a$.
+      - $\sqrt{a} = a^{1/2}$ has **half** the percentage uncertainty of $a$.
+      - A negative power works the same way: $\dfrac{1}{a^2}$ still has $2\%a$.
+      - **Pure numbers** such as $\pi$, $2$ or $\tfrac{1}{2}$ are exact and add **no** uncertainty.
+
+  - type: intuition
+    title: Why percentages?
+    body: |
+      If $a$ is 2% too big and $b$ is 3% too big, then $ab$ is $1.02 \times 1.03 = 1.0506$ times too big: about **5%** out. For a quotient, the worst case is the top too big and the bottom too small: $\dfrac{1.02}{0.97} = 1.052$, again about 5%. Absolute uncertainties can't combine like this in a product, because $a$ and $b$ may not even have the same unit.
+
+  - type: check
+    questions: [cube-volume, power-percentage]
+
+  - type: example
+    title: Density of a metal cube, with its uncertainty
+    problem: |
+      A cube has mass $m = (48.0 \pm 0.5)\ \text{g}$ and side $L = (2.00 \pm 0.02)\ \text{cm}$. Find its density with the absolute uncertainty.
+    steps:
+      - |
+        Density: $\rho = \dfrac{m}{L^3} = \dfrac{48.0}{2.00^3} = \dfrac{48.0}{8.00} = 6.00\ \text{g cm}^{-3}$.
+      - |
+        Percentage uncertainties of the measurements: $\%m = \dfrac{0.5}{48.0} \times 100\% = 1.04\%$ and $\%L = \dfrac{0.02}{2.00} \times 100\% = 1.0\%$.
+      - |
+        $L$ is cubed, so $\%(L^3) = 3 \times 1.0\% = 3.0\%$.
+      - |
+        Quotient, so add: $\%\rho = 1.04\% + 3.0\% = 4.04\% \approx 4\%$.
+      - |
+        Back to absolute: $\Delta\rho = 0.0404 \times 6.00 = 0.24 \approx 0.2\ \text{g cm}^{-3}$.
+      - |
+        Round the value to match the uncertainty's decimal place.
+    answer: |
+      $\rho = (6.0 \pm 0.2)\ \text{g cm}^{-3}$
+
+  - type: check
+    questions: [resistance-uncertainty, circle-spot-error]
+
+  - type: explain
+    title: Summary of the rules
+    body: |
+      | Calculation | What to add |
+      | --- | --- |
+      | $a + b$ or $a - b$ | absolute uncertainties: $\Delta a + \Delta b$ |
+      | $ab$ or $a / b$ | percentage uncertainties: $\%a + \%b$ |
+      | $a^n$ | $n \times \%a$ |
+      | $k a$ ($k$ an exact number) | $\%a$ (the number adds nothing) |
+
+  - type: misconceptions
+    items:
+      - wrong: For a product, add the absolute uncertainties.
+        right: For products and quotients, add **percentage** (or fractional) uncertainties.
+      - wrong: The uncertainty in $r^2$ is the same as the uncertainty in $r$.
+        right: Squaring **doubles** the percentage uncertainty; cubing triples it.
+      - wrong: π, 2 and ½ in a formula add their own uncertainty.
+        right: Exact numbers have no uncertainty. (A value of g taken from the data sheet is normally treated as exact too.)
+
+  - type: exam
+    body: |
+      - Paper 1 loves formulas with powers, such as $\%$ uncertainty in $\tfrac{1}{2}mv^2$ (answer: $\%m + 2\%v$).
+      - In a longer formula, write out the percentage of each measured quantity, multiply by its power, then add. For resistivity $\rho = \dfrac{RA}{l}$ with $A = \tfrac{\pi d^2}{4}$: $\%\rho = \%R + 2\%d + \%l$.
+      - Finish by converting back to an absolute uncertainty if the question asks for "the value with its uncertainty", and quote it to 1 or 2 significant figures.
+
+  - type: deeper
+    title: Mixed formulas, such as (a − b) / c
+    body: |
+      Work from the inside out. First find the absolute uncertainty of $(a - b)$ by adding $\Delta a + \Delta b$. Turn **that** into a percentage of $(a - b)$, then add $\%c$. You can't skip straight to percentages, because the subtraction rule only works with absolute uncertainties.
+
+  - type: check
+    questions: [sphere-volume, pendulum-g]
+
+  - type: takeaways
+    items:
+      - Products and quotients, add **percentage** uncertainties.
+      - Powers, multiply the percentage uncertainty by the power (½ for a square root).
+      - Exact numbers (π, 2, ½) add no uncertainty.
+      - Convert back with Δy = (%y ÷ 100) × y, then round the value to match.
+
+questions:
+  - id: cube-volume
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      The side of a cube has a percentage uncertainty of 1.5%. What is the percentage uncertainty in the cube's volume?
+    options:
+      - text: 4.5%
+        correct: true
+        why: "Correct: $V = L^3$, so $\\%V = 3 \\times 1.5\\% = 4.5\\%$."
+      - text: 1.5%
+        why: This ignores the power. $L$ appears three times in $L \times L \times L$.
+      - text: 3.4%
+        why: This cubes the uncertainty ($1.5^3 \approx 3.4$). The rule is to **multiply** by the power.
+      - text: 0.5%
+        why: This divides by the power. Raising to a power makes the percentage uncertainty bigger, not smaller.
+    explanation: |
+      For $y = a^n$, $\%y = n \times \%a$. Cubing triples the percentage uncertainty.
+
+  - id: power-percentage
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      The power dissipated in a resistor is calculated using $P = I^2R$. The current $I$ has a percentage uncertainty of 2% and the resistance $R$ has 3%. What is the percentage uncertainty in $P$?
+    fields:
+      - answer: 7
+        unit: "%"
+    explanation: |
+      $\%P = 2 \times \%I + \%R = 2 \times 2\% + 3\% = 7\%$. The current is squared, so its contribution is doubled.
+
+  - id: resistance-uncertainty
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      The potential difference across a resistor is $(6.0 \pm 0.1)\ \text{V}$ and the current in it is $(0.50 \pm 0.02)\ \text{A}$. Calculate its resistance $R = V / I$ and the absolute uncertainty in $R$.
+    fields:
+      - label: "$R =$"
+        answer: 12
+        unit: Ω
+      - label: "uncertainty = ±"
+        answer: 0.68
+        tolerance: { abs: 0.03 }
+        unit: Ω
+    explanation: |
+      $R = 6.0 / 0.50 = 12\ \Omega$. Percentages: $\%V = \dfrac{0.1}{6.0} \times 100\% = 1.7\%$ and $\%I = \dfrac{0.02}{0.50} \times 100\% = 4.0\%$. Quotient, so add: $\%R = 5.7\%$. Then $\Delta R = 0.057 \times 12 = 0.68\ \Omega$, which rounds to $0.7\ \Omega$. Result: $R = (12.0 \pm 0.7)\ \Omega$.
+
+  - id: circle-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A student finds the uncertainty in the area of a circle of radius $r = (4.0 \pm 0.1)\ \text{cm}$. Which line contains the first error?
+    lines:
+      - |
+        Percentage uncertainty in $r$: $\dfrac{0.1}{4.0} \times 100\% = 2.5\%$
+      - |
+        $A = \pi r^2$, so the percentage uncertainty in $A$ is also $2.5\%$
+      - |
+        $A = \pi \times 4.0^2 = 50.3\ \text{cm}^2$
+      - |
+        $\Delta A = 2.5\% \times 50.3 = 1.3\ \text{cm}^2$, so $A = (50 \pm 1)\ \text{cm}^2$
+    errorLine: 2
+    fix: |
+      $r$ is squared, so the percentage uncertainty doubles: $2 \times 2.5\% = 5\%$. Then $\Delta A = 0.05 \times 50.3 = 2.5\ \text{cm}^2$ and $A = (50 \pm 3)\ \text{cm}^2$.
+    explanation: |
+      Line 2 ignores the power. ($\pi$ is exact, so it adds no uncertainty; that part was fine.) Line 4 is wrong only because it carries the error forward.
+
+  - id: sphere-volume
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |
+      The radius of a sphere is $(3.00 \pm 0.03)\ \text{cm}$. Using $V = \tfrac{4}{3}\pi r^3$, calculate the volume and its absolute uncertainty.
+    fields:
+      - label: "$V =$"
+        answer: 113.1
+        tolerance: { abs: 0.6 }
+        unit: cm³
+      - label: "uncertainty = ±"
+        answer: 3.4
+        tolerance: { abs: 0.45 }
+        unit: cm³
+    explanation: |
+      $V = \tfrac{4}{3}\pi (3.00)^3 = 113.1\ \text{cm}^3$. $\%r = \dfrac{0.03}{3.00} \times 100\% = 1\%$, so $\%V = 3 \times 1\% = 3\%$ ($\tfrac{4}{3}$ and $\pi$ are exact). $\Delta V = 0.03 \times 113.1 = 3.4\ \text{cm}^3$, so $V = (113 \pm 3)\ \text{cm}^3$.
+
+  - id: pendulum-g
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |
+      An experiment finds $g$ using $g = \dfrac{4\pi^2 l}{T^2}$. The length $l$ has a percentage uncertainty of 0.5% and the period $T$ has 1%. What is the percentage uncertainty in $g$?
+    fields:
+      - answer: 2.5
+        unit: "%"
+    explanation: |
+      $\%g = \%l + 2 \times \%T = 0.5\% + 2 \times 1\% = 2.5\%$. $4\pi^2$ is exact, and $T^2$ in the denominator still counts with a factor of 2 (you add, not subtract, for division).

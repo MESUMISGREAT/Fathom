@@ -1,0 +1,233 @@
+id: quadratics-simultaneous-equations
+subject: "9709"
+topic: "1.1"
+title: "Simultaneous equations: one linear, one quadratic"
+summary: Solve a linear and a quadratic equation together by substitution, and pair each x with its own y.
+order: 5
+minutes: 5
+kind: core
+objectives: ["1.1.4"]
+prerequisites: [quadratics-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025; update notice checked): topic 1.1 outcome "solve by
+    substitution a pair of simultaneous equations of which one is linear and one is quadratic" and
+    its examples (a line with a circle; a pair with an xy term). The worked examples use different
+    equations from the syllabus examples. Examples and questions are original; all solutions
+    checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve a pair of simultaneous equations where one is **linear** and one is **quadratic**, by substitution, and give the solutions as matching pairs.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Make $x$ or $y$ the subject of the **linear** equation. Pick whichever avoids fractions.
+      2. **Substitute** it into the quadratic equation. Now there's only one variable.
+      3. Rearrange to $= 0$ and **solve** the quadratic.
+      4. Put each value back into the **linear** equation to find its partner.
+      5. Write the answers as **pairs**: coordinates, or "$x = \ldots, y = \ldots$".
+
+  - type: intuition
+    title: What you're actually finding
+    body: |-
+      Each equation is a graph. A solution pair is a point on **both** graphs: an intersection point.
+
+      Substitution hands you a quadratic, which has at most two roots, so a straight line can meet a parabola or a circle at most twice. The algebra and the picture agree.
+
+  - type: example
+    title: A line and a circle
+    problem: |-
+      Solve the simultaneous equations $y = 2x - 5$ and $x^2 + y^2 = 10$.
+    steps:
+      - |-
+        The linear equation already gives $y$: $y = 2x - 5$.
+      - |-
+        Substitute: $x^2 + (2x - 5)^2 = 10$.
+      - |-
+        Expand carefully: $(2x - 5)^2 = 4x^2 - 20x + 25$, so $5x^2 - 20x + 25 = 10$.
+      - |-
+        Rearrange and divide by 5: $x^2 - 4x + 3 = 0$, so $(x - 1)(x - 3) = 0$.
+      - |-
+        Partners from the **linear** equation: $x = 1$ gives $y = 2(1) - 5 = -3$; $x = 3$ gives $y = 2(3) - 5 = 1$.
+    answer: |-
+      $x = 1, y = -3$ or $x = 3, y = 1$: the points $(1, -3)$ and $(3, 1)$.
+
+  - type: diagram
+    diagram: line-circle-intersection
+    alt: >-
+      The circle x² + y² = 10, centred at the origin with radius about 3.16, drawn to scale, and the
+      straight line y = 2x − 5 with gradient 2. The line cuts the circle at two marked points,
+      (1, −3) and (3, 1).
+    caption: |-
+      The two solution pairs are the two points where the line cuts the circle.
+
+  - type: check
+    questions: [sim-pairs, sim-first-step]
+
+  - type: example
+    title: Choosing the subject to dodge fractions
+    problem: |-
+      Solve $x - 2y = 1$ and $x^2 - 3xy + y^2 = -1$.
+    steps:
+      - |-
+        Making $y$ the subject gives $y = \frac{x - 1}{2}$ (fractions, yuck). Make $x$ the subject instead: $x = 1 + 2y$.
+      - |-
+        Substitute: $(1 + 2y)^2 - 3(1 + 2y)y + y^2 = -1$.
+      - |-
+        Expand: $1 + 4y + 4y^2 - 3y - 6y^2 + y^2 = -1$, which simplifies to $1 + y - y^2 = -1$.
+      - |-
+        Rearrange: $y^2 - y - 2 = 0$, so $(y - 2)(y + 1) = 0$, giving $y = 2$ or $y = -1$.
+      - |-
+        Back into $x = 1 + 2y$: $y = 2$ gives $x = 5$; $y = -1$ gives $x = -1$.
+      - |-
+        Check one pair in the quadratic: $5^2 - 3(5)(2) + 2^2 = 25 - 30 + 4 = -1$ ✓
+    answer: |-
+      $x = 5, y = 2$ or $x = -1, y = -1$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Find $x$, then substitute it into the **quadratic** to get $y$.
+        right: |-
+          Use the linear equation. The quadratic can give extra $y$ values that aren't on the line: in the circle example, $x = 1$ in $x^2 + y^2 = 10$ gives $y = \pm 3$, but only $(1, -3)$ is on $y = 2x - 5$.
+      - wrong: |-
+          $(2x - 5)^2 = 4x^2 + 25$
+        right: |-
+          $(2x - 5)^2 = 4x^2 - 20x + 25$. The middle term is $2 \times 2x \times (-5)$.
+      - wrong: |-
+          Answer: $x = 1$ or $3$, $y = -3$ or $1$.
+        right: |-
+          Pair them up: $(1, -3)$ and $(3, 1)$. A mix such as $(1, 1)$ is not a solution.
+
+  - type: exam
+    body: |-
+      - Usually around 4–5 marks: substituting to get a quadratic in one variable, solving it, then finding **both** pairs.
+      - Often the opening part of a coordinate geometry question (then: the midpoint or length of the chord, a perpendicular bisector…).
+      - Give final answers as coordinates or clearly paired values.
+
+  - type: deeper
+    title: "Preview: when the line just touches"
+    body: |-
+      Look at the quadratic you get after substituting. If its discriminant is **zero**, there's one repeated root: the line touches the curve at a single point and is a **tangent**. If the discriminant is **negative**, the line and curve don't meet at all.
+
+      That idea, with an unknown constant thrown in, is the next lesson.
+
+  - type: check
+    questions: [sim-substitute, sim-spot, sim-explain]
+
+  - type: takeaways
+    items:
+      - |-
+        Rearrange the **linear** equation (avoid fractions), substitute into the quadratic, solve.
+      - |-
+        Find each partner from the **linear** equation, never the quadratic.
+      - |-
+        Answers come in pairs: each solution is an intersection point.
+      - |-
+        Expand squared brackets carefully: $(px + q)^2$ has a middle term $2pqx$.
+
+questions:
+  - id: sim-pairs
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.4"]
+    prompt: |-
+      Solve the simultaneous equations $y = x - 1$ and $x^2 + y^2 = 13$. Enter the solution with the smaller $x$ first.
+    fields:
+      - label: "first solution: x ="
+        answer: -2
+      - label: "first solution: y ="
+        answer: -3
+      - label: "second solution: x ="
+        answer: 3
+      - label: "second solution: y ="
+        answer: 2
+    explanation: |-
+      $x^2 + (x - 1)^2 = 13 \Rightarrow 2x^2 - 2x + 1 = 13 \Rightarrow x^2 - x - 6 = 0 \Rightarrow (x - 3)(x + 2) = 0$.
+
+      From $y = x - 1$: $x = -2$ gives $y = -3$; $x = 3$ gives $y = 2$.
+
+  - id: sim-first-step
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.4"]
+    prompt: |-
+      For the pair $3x + y = 7$ and $x^2 + xy = 6$, which is the neatest first step?
+    explanation: |-
+      $y = 7 - 3x$ needs no fractions. Substituting gives $x^2 + x(7 - 3x) = 6$, i.e. $2x^2 - 7x + 6 = 0$, so $x = \tfrac32$ or $x = 2$, with $y = \tfrac52$ or $y = 1$.
+    options:
+      - text: |-
+          Write $y = 7 - 3x$ and substitute into $x^2 + xy = 6$.
+        correct: true
+        why: |-
+          Clean, no fractions, and it leaves a quadratic in $x$ alone.
+      - text: |-
+          Write $x = \dfrac{7 - y}{3}$ and substitute into $x^2 + xy = 6$.
+        why: |-
+          It works, but the fractions make the algebra slower and easier to get wrong.
+      - text: |-
+          Square the linear equation to get $9x^2 + y^2 = 49$.
+        why: |-
+          $(3x + y)^2 = 9x^2 + 6xy + y^2$, and squaring doesn't remove a variable anyway.
+      - text: |-
+          Subtract one equation from the other to eliminate $y$.
+        why: |-
+          Subtracting only helps when a variable cancels. Here nothing cancels ($y$ appears as $y$ in one equation and as $xy$ in the other); use substitution.
+
+  - id: sim-substitute
+    format: expression
+    difficulty: 2
+    objectives: ["1.1.4"]
+    prompt: |-
+      Substitute $y = 2x - 1$ into $y^2 - xy$ and simplify fully. Give the result as a polynomial in $x$.
+    answer: 2x^2 - 3x + 1
+    variables: [x]
+    display: |-
+      $2x^2 - 3x + 1$
+    explanation: |-
+      $(2x - 1)^2 - x(2x - 1) = 4x^2 - 4x + 1 - 2x^2 + x = 2x^2 - 3x + 1$.
+
+  - id: sim-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.4"]
+    prompt: |-
+      A student solves $y = 2x - 5$ and $x^2 + y^2 = 10$. Which line contains the first error?
+    lines:
+      - |-
+        $x^2 + (2x - 5)^2 = 10$
+      - |-
+        $5x^2 - 20x + 15 = 0$, so $x^2 - 4x + 3 = 0$
+      - |-
+        $(x - 1)(x - 3) = 0$, so $x = 1$ or $x = 3$
+      - |-
+        For $x = 1$, use $x^2 + y^2 = 10$: $1 + y^2 = 10$, so the solutions with $x = 1$ are $y = 3$ and $y = -3$
+      - |-
+        Similarly for $x = 3$. Solutions: $(1, 3)$, $(1, -3)$, $(3, 1)$, $(3, -1)$
+    errorLine: 4
+    fix: |-
+      Find $y$ from the linear equation: $x = 1$ gives $y = 2(1) - 5 = -3$ only, and $x = 3$ gives $y = 1$.
+    explanation: |-
+      Substituting into the circle finds every point on the circle with that $x$-coordinate, not just the one on the line. $(1, 3)$ and $(3, -1)$ are on the circle but not on $y = 2x - 5$.
+
+  - id: sim-explain
+    format: explain
+    difficulty: 3
+    objectives: ["1.1.4"]
+    prompt: |-
+      Using the algebra of substitution, explain why a straight line can never meet a circle at three points.
+    explanation: |-
+      The algebra and the picture agree: substitution turns "where do they meet?" into "what are the roots of this quadratic?", and a quadratic can't have more than two roots.
+    model: |-
+      Substituting the line's equation into the circle's equation gives a quadratic equation in one variable. A quadratic equation has at most two real roots. Each root gives exactly one partner value from the linear equation, so each root is exactly one intersection point. Therefore there are at most two intersection points (two, one or none, depending on the discriminant).
+    keyPoints:
+      - Substitution produces a quadratic equation in one variable
+      - A quadratic equation has at most two real roots
+      - Each root gives exactly one partner value from the linear equation
+      - So there are at most two intersection points (0, 1 or 2, depending on the discriminant)

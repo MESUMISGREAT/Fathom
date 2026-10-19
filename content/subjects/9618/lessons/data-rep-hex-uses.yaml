@@ -1,0 +1,126 @@
+id: data-rep-hex-uses
+subject: "9618"
+topic: "1.1"
+title: Where hexadecimal is used
+summary: Why people write binary in hex, and the practical applications to describe in an exam, from memory dumps and colour codes to MAC addresses.
+order: 4
+minutes: 4
+kind: core
+objectives: ["1.1.4"]
+prerequisites: [data-rep-hexadecimal]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1: the hexadecimal part of the
+    fourth learning outcome (practical applications of BCD and hexadecimal). Split from
+    data-rep-hexadecimal, which covers the conversions. The & prefix for hex follows the syllabus
+    notation in the 4.2 instruction set table. Uses of hex (memory dumps, colour codes, MAC and
+    IPv6 addresses, machine code and error codes) are standard practice. Questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe practical applications of **hexadecimal**, and explain why hex, not binary, is used in each one.
+
+  - type: intuition
+    title: Spot the difference
+    body: |
+      Copy this colour code: `1111 1111 1000 0000 0000 0000`. Now this one: `FF8000`.
+
+      They're the same 24 bits. The hex version has 6 characters to get right instead of 24, and a slip in it is far easier to spot.
+
+  - type: explain
+    title: Where hex is used
+    body: |
+      Computers never store "hex". It is a **human-friendly way of writing binary**: a quarter of the length and much harder to misread. So it appears wherever people have to read or type raw binary values.
+
+      | Use | Example | Why hex helps |
+      | --- | --- | --- |
+      | Memory addresses and memory dumps | `7FFE 0A3C` | Programmers debugging can scan memory contents quickly |
+      | HTML and CSS colour codes | `#FF8000` (orange) | Two hex digits per byte: red `FF`, green `80`, blue `00` |
+      | MAC addresses | `00:1A:2B:3C:4D:5E` | 48 bits become just 12 characters |
+      | Machine code, assembly language, error codes | `&4A`, `0x0000007B` | Byte values are short and easy to copy correctly |
+      | IPv6 addresses | `2001:0db8:…` | 128 bits written as eight groups of four hex digits |
+
+  - type: check
+    title: Quick check
+    questions: [why-hex-mac, colour-green]
+
+  - type: misconceptions
+    items:
+      - wrong: Computers store data in hexadecimal.
+        right: |
+          Everything is stored in **binary**. Hex is only a shorter way for *people* to write it down.
+      - wrong: Using hex saves memory.
+        right: |
+          Exactly the same bits are stored either way. Hex saves human effort and errors, not storage space.
+
+  - type: exam
+    body: |
+      - "**Describe** a practical application of hexadecimal" is typically 2 marks: one for a genuine use and one for why hex helps there. For example: "MAC addresses are written in hex because 48 bits become 12 characters, which a technician can read and type with fewer errors."
+      - Asked for two applications? Give two different ones, each with its own reason.
+      - "Because the computer stores data in hex" earns nothing. It stores binary.
+
+  - type: check
+    title: Exam-style
+    questions: [hex-uses]
+
+  - type: takeaways
+    items:
+      - Computers store binary. Hex is a shorthand for people, a quarter of the length.
+      - Each hex digit is exactly four bits, so hex is quick to convert and slips are easy to spot.
+      - Uses include memory dumps, colour codes, MAC and IPv6 addresses, machine code and error codes.
+      - To describe an application, give the use **and** why hex helps there.
+
+questions:
+  - id: why-hex-mac
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.4"]
+    prompt: |
+      Network technicians write MAC addresses in hexadecimal. What is the main reason?
+    options:
+      - text: Hex is shorter and easier for people to read and copy than the 48-bit binary pattern.
+        correct: true
+        why: |
+          Each hex digit stands for four bits, so 48 bits become 12 characters, with far fewer chances to slip.
+      - text: The MAC address takes up less memory when it is stored in hex.
+        why: |
+          The device stores the same 48 bits whatever notation people use to write them down.
+      - text: Network hardware processes hexadecimal faster than binary.
+        why: |
+          Hardware only ever processes binary. Hex exists purely for human readers.
+      - text: Denary cannot represent a number as large as 48 bits.
+        why: |
+          Denary can represent any whole number. It just doesn't line up neatly with groups of bits the way hex does.
+    explanation: |
+      Hex is a human-friendly shorthand for binary. That is the "why" in every hex application.
+
+  - id: colour-green
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.4"]
+    prompt: |
+      A web page uses the colour code `#00A0FF`. The digits are pairs for red, green and blue, in that order. What is the denary value of the **green** component?
+    fields:
+      - answer: 160
+    explanation: |
+      Green is the middle pair, `A0`: $10 \times 16 + 0 = 160$. (Red is `00` = 0 and blue is `FF` = 255, so this is a sky blue.)
+
+  - id: hex-uses
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.4"]
+    prompt: |
+      Describe **two** practical applications of hexadecimal, saying for each one why hex is used.
+    model: |
+      1. **Memory dumps**: when debugging, a programmer views the contents of memory in hex because it is far shorter than binary, so values are quicker to read and errors easier to spot.
+      2. **HTML colour codes**: a colour such as `#FF8000` is three bytes (red, green, blue); each byte is exactly two hex digits, so the code is short and easy to type.
+    keyPoints:
+      - Names a genuine application (e.g. memory dumps or addresses, colour codes, MAC addresses, machine code or error codes, IPv6)
+      - Names a second, different application
+      - Hex is shorter than binary, so easier for people to read, write and remember
+      - Fewer errors when reading or copying, because each hex digit maps to exactly four bits
+    explanation: |
+      Examiners want the application *and* the reason. "Because the computer uses hex" earns nothing: the computer uses binary.

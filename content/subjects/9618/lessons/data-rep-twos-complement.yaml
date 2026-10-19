@@ -1,0 +1,241 @@
+id: data-rep-twos-complement
+subject: "9618"
+topic: "1.1"
+title: "Negative numbers: one's and two's complement"
+summary: Represent negative integers in one's complement and two's complement, convert them to and from denary, and compare the two schemes.
+order: 6
+minutes: 5
+kind: core
+objectives: ["1.1.2"]
+prerequisites: [data-rep-binary-denary, data-rep-hexadecimal]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1: the one's and two's complement
+    part of the second learning outcome (representation and conversion of integers). Ranges and
+    worked conversions checked with Python. Questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can write a negative integer in 8-bit **one's complement** and **two's complement**, and turn either back into denary.
+
+  - type: explain
+    title: There's no minus sign in a register
+    body: |
+      A register holds only bits, so "negative" has to be encoded in the bits themselves. In both schemes below:
+
+      - **Positive numbers are stored exactly as normal**, with the most significant bit (MSB) 0.
+      - **Negative numbers have the MSB set to 1.**
+
+      The schemes differ in how the remaining bits are worked out.
+
+  - type: definition
+    term: One's complement
+    body: |
+      A representation in which the negative of a number is formed by **inverting every bit** of its positive form (each 0 becomes 1 and each 1 becomes 0).
+
+  - type: definition
+    term: Two's complement
+    body: |
+      A representation in which the **MSB has a negative place value** (−128 in 8 bits) and all other bits keep their usual positive values. The negative of a number is formed by inverting every bit and then **adding 1**.
+
+  - type: example
+    title: Denary to one's and two's complement
+    problem: |
+      Represent −42 in 8-bit one's complement and in 8-bit two's complement.
+    steps:
+      - |
+        Write **+42** in 8 bits first: $32 + 8 + 2$, so `0010 1010`. Always fill all 8 bits before doing anything else.
+      - |
+        Invert every bit: `1101 0101`. That is −42 in **one's complement**.
+      - |
+        Add 1 to the one's complement: `1101 0101 + 1 = 1101 0110`. That is −42 in **two's complement**.
+      - |
+        Check with the place values: $-128 + 64 + 16 + 4 + 2 = -42$ ✓
+    answer: |
+      One's complement `1101 0101`; two's complement `1101 0110`
+
+  - type: diagram
+    diagram: cs-twos-complement-weights
+    alt: >-
+      The 8-bit two's complement pattern 1101 0110 in eight boxes. The leftmost column is labelled
+      sign bit and has place value −128; the other columns have the usual values 64, 32, 16, 8, 4,
+      2 and 1. Arrows from the 1 bits point to −128, 64, 16, 4 and 2, and the sum below reads
+      −128 + 64 + 16 + 4 + 2 = −42. A note at the bottom gives the 8-bit range: 1000 0000 is −128
+      and 0111 1111 is +127.
+    caption: |
+      Two's complement in one picture: the MSB is worth −128, everything else is ordinary binary.
+
+  - type: check
+    title: Quick check
+    questions: [den-to-twos, twos-to-den]
+
+  - type: example
+    title: Back to denary
+    problem: |
+      What denary value is `1110 0011` (a) in two's complement, (b) in one's complement?
+    steps:
+      - |
+        The MSB is 1, so in both schemes the number is negative.
+      - |
+        (a) Two's complement, using place values: $-128 + 64 + 32 + 2 + 1 = -29$.
+      - |
+        (a) Or reverse the process: invert (`0001 1100`) and add 1 (`0001 1101` = 29), so the value is −29.
+      - |
+        (b) One's complement: invert to find the size, `0001 1100` = 28, so the value is −28.
+    answer: |
+      (a) −29 (b) −28. Same bits, different scheme, different number.
+
+  - type: check
+    title: Read it back
+    questions: [ones-to-den, hex-twos]
+
+  - type: explain
+    title: Side by side (8 bits)
+    body: |
+      | | One's complement | Two's complement |
+      | --- | --- | --- |
+      | To negate | invert all bits | invert all bits, then add 1 |
+      | Zero | two zeros: `0000 0000` (+0) and `1111 1111` (−0) | one zero: `0000 0000` |
+      | Range | −127 to +127 | −128 to +127 |
+      | `1111 1111` means | −0 | −1 |
+
+      Two's complement wins in real processors: it has only one zero, and the same adder circuit handles positive and negative numbers (next lessons).
+
+  - type: misconceptions
+    items:
+      - wrong: To make a number negative, just change the MSB to 1.
+        right: |
+          That gives a different scheme (sign and magnitude). In two's complement `1010 1010` is $-128 + 32 + 8 + 2 = -86$, not −42. Invert and add 1.
+      - wrong: The 8-bit two's complement range is −127 to +128.
+        right: |
+          It's **−128 to +127**. `1000 0000` is −128, and there's no room for +128 because positive numbers need MSB 0.
+      - wrong: You can invert first and pad with zeros afterwards.
+        right: |
+          Pad to the full width **first**. +5 is `0000 0101`; inverting gives `1111 1010`, and adding 1 gives `1111 1011` = −5.
+
+  - type: exam
+    body: |
+      - Conversions to and from two's complement are usually 1 mark each, often as rows of a table to **complete**. The mark is for the answer, so check it by adding the place values (MSB worth −128).
+      - Read the question for which scheme it wants. One's and two's complement give **different** patterns for the same negative number.
+      - Not every register is 8 bits. Pad to the width the question gives; with $n$ bits the MSB is worth $-2^{n-1}$ (−2048 for 12 bits).
+      - Know the 8-bit ranges: one's complement −127 to +127, two's complement −128 to +127.
+
+  - type: check
+    title: Ranges and traps
+    questions: [twos-range, minus-one, spot-padding]
+
+  - type: takeaways
+    items:
+      - Positive numbers look the same in both schemes; negatives have MSB 1.
+      - "One's complement: invert every bit. Two's complement: invert every bit, then add 1."
+      - In two's complement the MSB is worth −128 (8 bits); add up the place values to read it.
+      - One's complement has two zeros and a range of −127 to +127; two's complement has one zero and a range of −128 to +127.
+
+  - type: deeper
+    title: Shortcuts and the general rule
+    body: |
+      - **Copy-then-flip shortcut** for two's complement: from the right, copy every bit up to and including the first 1, then invert the rest. +42 = `0010 1010` → copy `10`, invert `001010` to `110101` → `1101 0110` ✓
+      - **One's complement place values**: the MSB is worth $-(2^7 - 1) = -127$. So `1110 0011` $= -127 + 64 + 32 + 2 + 1 = -28$, matching the example.
+      - For $n$ bits, two's complement covers $-2^{n-1}$ to $2^{n-1} - 1$. For 16 bits: −32 768 to +32 767.
+
+questions:
+  - id: den-to-twos
+    format: cloze
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      Write −20 in 8-bit two's complement. +20 is `0001 0100`. Inverting gives {{1}}. Adding 1 gives {{2}}.
+    blanks:
+      - accept: ["11101011", "1110 1011"]
+      - accept: ["11101100", "1110 1100"]
+    explanation: |
+      Invert `0001 0100` to get `1110 1011` (that is −20 in one's complement), then add 1 to get `1110 1100`. Check: $-128 + 64 + 32 + 8 + 4 = -20$ ✓
+
+  - id: twos-to-den
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      Convert the 8-bit two's complement number `1011 0001` to denary.
+    fields:
+      - answer: -79
+    explanation: |
+      MSB is worth −128: $-128 + 32 + 16 + 1 = -79$. Or invert (`0100 1110`) and add 1 (`0100 1111` = 79), so −79.
+
+  - id: ones-to-den
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      The byte `1111 0101` holds an 8-bit **one's complement** integer. What is its denary value?
+    fields:
+      - answer: -10
+    explanation: |
+      MSB 1, so negative. Invert every bit to find the size: `0000 1010` = 10. So the value is −10. (There's no "+1" step in one's complement; adding 1 would give the two's complement reading, −11.)
+
+  - id: twos-range
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      What is the range of integers that can be stored in **8-bit two's complement**?
+    options:
+      - text: −128 to +127
+        correct: true
+        why: |
+          `1000 0000` = −128 is the most negative; `0111 1111` = +127 is the most positive.
+      - text: −127 to +127
+        why: |
+          That's the range of 8-bit **one's** complement, which wastes a pattern on −0.
+      - text: −127 to +128
+        why: |
+          +128 would need the MSB to be 1, but MSB 1 always means negative in two's complement.
+      - text: 0 to 255
+        why: |
+          That's 8-bit **unsigned** binary, with no negative numbers at all.
+    explanation: |
+      For $n$ bits two's complement runs from $-2^{n-1}$ to $2^{n-1} - 1$. There is one more negative value than positive because zero takes one of the MSB-0 patterns.
+
+  - id: minus-one
+    format: text
+    style: one-line
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      Write −1 as an 8-bit two's complement number.
+    accept: ["11111111", "1111 1111"]
+    model: |
+      `1111 1111`: $-128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = -1$
+    explanation: |
+      +1 is `0000 0001`. Invert: `1111 1110`. Add 1: `1111 1111`. All ones is always −1 in two's complement (but −0 in one's complement).
+
+  - id: spot-padding
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      A student writes −6 in 8-bit two's complement. Which line contains the first error?
+    lines:
+      - 6 in binary is 110
+      - "Invert the bits: 001"
+      - "Add 1: 010"
+      - "Pad to 8 bits: 0000 0010"
+    errorLine: 2
+    fix: |
+      Pad to 8 bits **before** inverting: 6 is `0000 0110`, inverting gives `1111 1001`, and adding 1 gives `1111 1010`.
+    explanation: |
+      Line 1 is true (110 is 6). The mistake is inverting only three bits: the five leading zeros must be inverted too. The student's answer `0000 0010` is +2, not even negative.
+
+  - id: hex-twos
+    format: numeric
+    difficulty: 3
+    objectives: ["1.1.2"]
+    prompt: |
+      A memory dump shows a byte as hex `F6`. The byte holds an 8-bit two's complement integer. What is its denary value?
+    fields:
+      - answer: -10
+    explanation: |
+      `F6` → `1111 0110`. MSB is 1, so negative: $-128 + 64 + 32 + 16 + 4 + 2 = -10$. Or invert (`0000 1001`), add 1 (`0000 1010` = 10), so −10.

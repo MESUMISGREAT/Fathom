@@ -1,0 +1,143 @@
+# Content guide
+
+How syllabus trees, lessons and recall questions are written, checked and published.
+The schema is the contract: `src/content/schema.ts`. Run `npm run content:check` after
+every change; it must report **0 errors** before content is imported.
+
+```
+content/subjects/<code>/syllabus.yaml        # the official syllabus tree
+content/subjects/<code>/lessons/<id>.yaml    # one lesson (= one concept, 2-5 min)
+src/components/diagrams/<code>/*.tsx          # SVG diagrams, registered in <code>/index.ts
+```
+
+## 1. Syllabus files
+
+A syllabus file is a transcription of the official Cambridge syllabus document, checked
+against that document. It is not written from memory.
+
+* **Hierarchy:** `sections` → `topics` → `objectives`.
+  * 9709 Mathematics: sections are the components (1 Pure Mathematics 1 … 6 Probability &
+    Statistics 2); topics are 1.1, 1.2 …
+  * 9618, 9702, 9701: sections are the numbered top-level topics (e.g. "1 Physical
+    quantities and units"); topics are the sub-topics (1.1, 1.2 …).
+* **Level:** `AS` if the section is assessed at AS Level, `A` if it is A Level only.
+* **Objective codes** are `<topic>.<n>`, where *n* is the 1-based position of the learning
+  outcome under "Candidates should be able to". 9702 and 9701 number their outcomes
+  officially, so the code matches the official reference. 9709 and 9618 use unnumbered
+  bullets, so *n* is the bullet's position. Sub-bullets ("including: …") are folded into
+  the parent objective's `guidance`, not split out.
+* **Wording:** objective `text` is a faithful paraphrase (`wording: paraphrased`), not a
+  verbatim copy, unless the platform has a licence to reproduce the syllabus. Keep every
+  technical term, condition and limit from the original. Put the "Notes and examples" /
+  guidance column in `guidance`, also paraphrased.
+* `sourceUrl`, `sourceVersion` and `checkedAt` record exactly which document was used.
+
+## 2. Lessons
+
+One lesson teaches **one main concept** in **2–5 minutes**. If it runs longer, split it.
+The validator warns when reading time exceeds `minutes`.
+
+### Blocks (use what the concept needs, in a sensible order)
+
+| `type` | Purpose |
+| --- | --- |
+| `objective` | First block. "By the end you can …" in one or two lines. |
+| `explain` | Plain-language explanation. Short paragraphs, bullets, tables. |
+| `definition` | The precise wording examiners expect (`term` + `body`). |
+| `intuition` | *Why* it works: an analogy, a picture in words, a reason. |
+| `example` | Worked example. `problem`, then `steps` (revealed one at a time), optional `answer`. |
+| `diagram` | A registered SVG diagram, with `alt` text that describes what it shows. |
+| `misconceptions` | `items` of `wrong` → `right`. Real mistakes students make. |
+| `exam` | How this is assessed: command words, typical marks, what loses marks. |
+| `takeaways` | 3–5 bullets. The things to remember. |
+| `check` | Active-recall checkpoint: ids of questions defined in `questions`. |
+| `deeper` | Collapsed "go deeper" detail that is still examinable (progressive disclosure). |
+| `enrichment` | Beyond the syllabus. Shown with a "Not examinable" label. |
+
+Rules:
+
+* Put a `check` **immediately after** the material it tests. A typical lesson has 2–3
+  checks with 1–3 questions each. Don't save all the questions for the end.
+* Every question appears in exactly one `check` block.
+* `deeper` is for detail a strong student needs but that would interrupt the main flow
+  (an extra derivation, an edge case). Do not hide required content in `enrichment`.
+
+### Writing style
+
+* Conversational, warm, occasionally funny. Never at the expense of accuracy.
+* Lead with the idea, not a preamble. No "In this lesson we will…" filler.
+* Short paragraphs (≤ 3 sentences), bullets, tables, numbered steps.
+* **Bold** key terms the first time they appear. Use exact Cambridge terminology.
+* Analogies only when they genuinely clarify; say where the analogy breaks down.
+* State conditions and limits precisely ("for $a \neq 0$", "at constant temperature").
+* British spelling (ionisation, colour, analyse), SI units with the Cambridge style
+  `m s⁻¹` written in KaTeX as `$\text{m s}^{-1}$`.
+
+### Maths and markdown
+
+* Inline maths `$...$`, display maths `$$...$$`. Use YAML block scalars (`|`) for any
+  field containing backslashes so they don't need escaping.
+* A literal dollar sign must be escaped as `\$`.
+* GFM tables are supported. Raw HTML is not (it is stripped).
+
+## 3. Recall questions
+
+Each question has `id` (unique in the lesson), `format`, `prompt`, `explanation`
+(why the answer is right, shown after answering), `difficulty` (1 recall, 2 apply,
+3 stretch) and `objectives`. The checker is deterministic, so write questions whose
+answers it can check reliably.
+
+| `format` | Use for | Checked by |
+| --- | --- | --- |
+| `mcq` | Concept discrimination. 3–5 options, exactly one `correct: true`, a `why` on every option. | Exact choice. |
+| `numeric` | Calculations. `fields` (1–4); each has `answer`, optional `tolerance`, `sigFigs`, `unit` (shown, not typed) or `acceptUnits` (typed and checked dimensionally). Multi-field questions need a `label` per field (e.g. "a ="). | Value within tolerance; units by dimensional analysis; s.f. if specified. Exact forms like `7/2` and `2√5` are accepted. |
+| `expression` | Algebra (e.g. a derivative). `answer` in plain text maths (`3x^2 - 4/x^2`), `variables`, `display` in KaTeX. | Numerical equivalence at many sample points. |
+| `text` | One-line answers and definition recall. `style` one-line / definition / short; `accept` lists every acceptable answer; `model` is shown afterwards. | Normalised exact match (case, spacing, articles, apostrophes). No match → the student compares with `model` and self-marks. |
+| `cloze` | Fill in the blank. `{{1}}`, `{{2}}` in the prompt; `blanks[i].accept`. | Normalised exact match per blank. |
+| `spot-error` | Identify the error. `lines` of a solution, `errorLine` (1-based), `fix`. | Exact line. |
+| `explain` | Explain in your own words. `model` answer and 2–6 `keyPoints`. | Student ticks the key points they covered (self-assessed). |
+
+Guidance:
+
+* Prefer formats the checker can mark. Use `text` only for genuinely short answers, and
+  list every reasonable variant in `accept` (singular/plural, symbol and word).
+* For "write in the form $a(x+p)^2+q$" use a multi-field `numeric` question, not
+  `expression` (which would also accept the expanded form).
+* MCQ distractors should be the actual mistakes students make, each with a `why`.
+* Self-assessed answers count for less in mastery than auto-marked ones.
+
+## 4. Diagrams
+
+Diagrams are React components returning one `<svg>` built with the helpers in
+`src/components/diagrams/primitives.tsx` (`Svg`, `Arrow`, `Label`, `plotPath`, `axes`).
+
+* Use only the `dg-*` classes for colour (listed in `primitives.tsx`). No hard-coded
+  colours, so diagrams work in dark mode.
+* File: `src/components/diagrams/<code>/<name>.tsx`; register it in
+  `src/components/diagrams/<code>/index.ts` under a kebab-case key.
+* The lesson's `alt` must describe what the diagram shows for a screen-reader user. The
+  svg itself is `aria-hidden`.
+* Diagrams must be mathematically and physically accurate: plot real functions with
+  `plotPath`, draw to scale where scale matters, and label axes and units.
+
+## 5. Provenance and review status
+
+Every lesson records where it came from and how it has been checked:
+
+| `status` | Meaning | Shown to students as |
+| --- | --- | --- |
+| `draft` | Not checked. | Not imported in production. |
+| `ai-checked` | Passed the validator and an independent AI accuracy review. | "AI-drafted · not yet teacher-reviewed" |
+| `human-reviewed` | Checked by a qualified teacher (`reviewedBy`, `reviewedAt` required). | "Teacher-reviewed" |
+
+AI-drafted content is never labelled as teacher-reviewed. Review happens in code review
+(pull requests); the reviewer updates `provenance` in the same change.
+
+## 6. Copyright
+
+* Do not copy Cambridge past-paper questions, mark schemes, examiner reports or textbook
+  text. Write original questions that test the same skills.
+* Changing the numbers in a past-paper question does not make it original. Change the
+  context, structure and wording, too, or write it from scratch.
+* Syllabus text is paraphrased unless a reproduction licence is in place (see
+  `docs/PLAN.md`, Risks).

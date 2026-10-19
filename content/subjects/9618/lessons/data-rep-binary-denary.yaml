@@ -1,0 +1,241 @@
+id: data-rep-binary-denary
+subject: "9618"
+topic: "1.1"
+title: Binary and denary
+summary: Read binary place values and convert whole numbers between binary and denary in both directions.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.1.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1, second learning outcome
+    (binary and denary number bases; converting an integer between bases). The other parts of
+    that outcome (hexadecimal, BCD, one's and two's complement) are taught in the following
+    lessons. All conversions checked with Python. Questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can convert any whole number between **binary** and **denary**, both ways, without a calculator.
+
+  - type: explain
+    title: Same idea, different base
+    body: |
+      You already use a **place value** system. In **denary** (base 10) each digit is 0 to 9, and the columns are worth 1, 10, 100, 1000, each ten times the one to its right.
+
+      **Binary** (base 2) works exactly the same way with only two digits, 0 and 1. So each column is worth **double** the one to its right: 1, 2, 4, 8, 16, 32, 64, 128 …
+
+  - type: definition
+    term: Number base
+    body: |
+      The number of different digits a place value system uses. Each column is worth the base times the column to its right. **Denary** is base 10 (digits 0 to 9); **binary** is base 2 (digits 0 and 1).
+
+  - type: diagram
+    diagram: cs-binary-place-value
+    alt: >-
+      The 8-bit binary number 1011 0101 drawn as eight boxes. Above the boxes are the column values
+      from left to right: 128, 64, 32, 16, 8, 4, 2 and 1, which are 2 to the power 7 down to 2 to
+      the power 0. The boxes holding a 1 (the 128, 32, 16, 4 and 1 columns) have arrows down to
+      their values, and below them the sum 128 + 32 + 16 + 4 + 1 = 181. The leftmost bit is
+      labelled most significant bit (MSB) and the rightmost least significant bit (LSB).
+    caption: |
+      Binary to denary: add up the column values wherever there's a 1.
+
+  - type: example
+    title: Binary to denary
+    problem: |
+      Convert `0110 1101` to denary.
+    steps:
+      - |
+        Write the column values over the bits: 128, 64, 32, 16, 8, 4, 2, 1 over `0 1 1 0 1 1 0 1`.
+      - |
+        Pick out the columns holding a 1: 64, 32, 8, 4 and 1.
+      - |
+        Add them: $64 + 32 = 96$, then $96 + 8 = 104$, $104 + 4 = 108$, $108 + 1 = 109$.
+    answer: |
+      `0110 1101` = 109
+
+  - type: check
+    title: Quick check
+    questions: [bin-to-den, msb-meaning]
+
+  - type: intuition
+    title: How much fits in n bits?
+    body: |
+      Each extra bit **doubles** the number of patterns. With $n$ bits there are $2^n$ patterns, so an unsigned $n$-bit integer runs from 0 to $2^n - 1$.
+
+      For a byte: $2^8 = 256$ patterns, so 0 to 255. The "minus 1" is there because one of the patterns is used up by zero.
+
+  - type: check
+    title: How big can it get?
+    questions: [max-8-bit, min-bits]
+
+  - type: explain
+    title: Denary to binary, biggest column first
+    body: |
+      Start at the left-hand column and ask one question each time: **does this column value fit into what's left?**
+
+      - Yes: write **1** and subtract it.
+      - No: write **0** and move on.
+
+      Stop at the 1s column. If you've done it right, nothing is left over.
+
+  - type: example
+    title: Denary to binary
+    problem: |
+      Convert 201 to an 8-bit binary number.
+    steps:
+      - |
+        Does 128 fit into 201? Yes, so **1**. Left: $201 - 128 = 73$.
+      - |
+        Does 64 fit into 73? Yes, so **1**. Left: $73 - 64 = 9$.
+      - |
+        Does 32 fit into 9? No, **0**. Does 16? No, **0**.
+      - |
+        Does 8 fit into 9? Yes, **1**. Left: 1.
+      - |
+        4? No, **0**. 2? No, **0**. 1? Yes, **1**. Left: 0, so we're done.
+      - |
+        Read the bits in order: `1100 1001`. Check by adding back: $128 + 64 + 8 + 1 = 201$ ✓
+    answer: |
+      201 = `1100 1001`
+
+  - type: deeper
+    title: "Another way: keep dividing by 2"
+    body: |
+      Divide by 2 over and over, writing down each remainder. Here is 201:
+
+      | Division | Quotient | Remainder |
+      | --- | --- | --- |
+      | 201 ÷ 2 | 100 | 1 |
+      | 100 ÷ 2 | 50 | 0 |
+      | 50 ÷ 2 | 25 | 0 |
+      | 25 ÷ 2 | 12 | 1 |
+      | 12 ÷ 2 | 6 | 0 |
+      | 6 ÷ 2 | 3 | 0 |
+      | 3 ÷ 2 | 1 | 1 |
+      | 1 ÷ 2 | 0 | 1 |
+
+      The **first** remainder is the **least** significant bit, so read the remainders from the bottom up: `1100 1001`. Same answer as before. Use whichever method you trust more.
+
+  - type: check
+    title: Convert it
+    questions: [den-to-bin, spot-remainders]
+
+  - type: misconceptions
+    items:
+      - wrong: The biggest number you can store in 8 bits is 256.
+        right: |
+          There are 256 *patterns*, but one of them is zero, so the biggest value is 255 (`1111 1111`).
+      - wrong: Leading zeros don't matter, so `1001011` is fine for "75 as an 8-bit binary number".
+        right: |
+          If the question asks for 8 bits, give 8 bits: `0100 1011`. The register really does hold those leading zeros.
+      - wrong: In the division method, read the remainders from top to bottom.
+        right: |
+          The first remainder is the 1s column (the LSB), so read from the **bottom up**.
+
+  - type: exam
+    body: |
+      - Conversions often come as a table to **complete**, about 1 mark per value. The mark is for the answer alone, so one wrong bit loses it: convert back to check.
+      - If the question gives a number of bits, give exactly that many, padding with leading zeros.
+      - Write the column headings first and group long numbers in fours (`0100 1011`). It takes five seconds and stops most slips.
+
+  - type: takeaways
+    items:
+      - Binary column values double from right to left; 8-bit columns are 128, 64, 32, 16, 8, 4, 2, 1.
+      - "Binary to denary: add the column values wherever there's a 1."
+      - "Denary to binary: from the left, write 1 and subtract wherever the column value fits."
+      - $n$ bits give $2^n$ patterns, so unsigned values 0 to $2^n - 1$ (0 to 255 for a byte).
+
+questions:
+  - id: bin-to-den
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      Convert the unsigned binary number `1001 1100` to denary.
+    fields:
+      - answer: 156
+    explanation: |
+      The 1s sit in the 128, 16, 8 and 4 columns: $128 + 16 + 8 + 4 = 156$.
+
+  - id: msb-meaning
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      What does **MSB** stand for?
+    accept: ["most significant bit", "most-significant bit", "the most significant bit", "most significant binary digit", "most significant bit (MSB)"]
+    model: |
+      **Most significant bit**: the leftmost bit, which has the largest place value (128 in a byte).
+    explanation: |
+      The MSB carries the biggest place value; the LSB (least significant bit) is the 1s column on the right.
+
+  - id: max-8-bit
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      What is the largest denary value an 8-bit **unsigned** binary integer can hold?
+    options:
+      - text: "255"
+        correct: true
+        why: |
+          `1111 1111` $= 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255$, which is $2^8 - 1$.
+      - text: "256"
+        why: |
+          256 is the number of different *patterns* ($2^8$). One pattern is zero, so the top value is 255.
+      - text: "128"
+        why: |
+          128 is just the value of the MSB column on its own.
+      - text: "127"
+        why: |
+          127 is the largest *positive* value in 8-bit two's complement, where the MSB is used for the sign. Unsigned numbers use all 8 bits for magnitude.
+    explanation: |
+      With $n$ bits the unsigned range is 0 to $2^n - 1$. For 8 bits that's 0 to 255.
+
+  - id: den-to-bin
+    format: cloze
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      Convert denary 75 to an 8-bit binary number: {{1}}
+    blanks:
+      - accept: ["01001011", "0100 1011"]
+    explanation: |
+      128 doesn't fit, 64 does (11 left), 32 and 16 don't, 8 does (3 left), 4 doesn't, 2 does (1 left), 1 does. So `0100 1011`: $64 + 8 + 2 + 1 = 75$. Don't drop the leading 0.
+
+  - id: min-bits
+    format: numeric
+    difficulty: 3
+    objectives: ["1.1.2"]
+    prompt: |
+      A ticket machine numbers its tickets from 0 to 1000. What is the **minimum** number of bits needed to store a ticket number as an unsigned binary integer?
+    fields:
+      - answer: 10
+        unit: bits
+    explanation: |
+      9 bits reach only $2^9 - 1 = 511$, which is too small. 10 bits reach $2^{10} - 1 = 1023$, which covers 1000. So 10 bits. (If you wrote 1024, that's the number of *patterns* 10 bits give, not the number of bits.)
+
+  - id: spot-remainders
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      A student converts 150 to binary using repeated division by 2. Which line contains the first error?
+    lines:
+      - 150 ÷ 2 = 75 remainder 0
+      - 75 ÷ 2 = 37 r 1, then 37 ÷ 2 = 18 r 1, then 18 ÷ 2 = 9 r 0
+      - 9 ÷ 2 = 4 r 1, then 4 ÷ 2 = 2 r 0, then 2 ÷ 2 = 1 r 0, then 1 ÷ 2 = 0 r 1
+      - "Reading the remainders from first to last gives 0110 1001"
+      - "So 150 in binary is 0110 1001"
+    errorLine: 4
+    fix: |
+      The first remainder is the least significant bit, so read from last to first: `1001 0110`. Check: $128 + 16 + 4 + 2 = 150$.
+    explanation: |
+      Every division is right; only the reading order is wrong. A quick check catches it: `0110 1001` is $64 + 32 + 8 + 1 = 105$, not 150.

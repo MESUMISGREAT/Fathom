@@ -1,0 +1,246 @@
+id: data-rep-binary-subtraction
+subject: "9618"
+topic: "1.1"
+title: Subtraction and overflow in two's complement
+summary: Subtract by adding the two's complement, add negative numbers, and spot overflow when a signed result falls outside the range.
+order: 8
+minutes: 5
+kind: core
+objectives: ["1.1.3"]
+prerequisites: [data-rep-twos-complement, data-rep-binary-addition]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1, third learning outcome (binary
+    addition and subtraction using positive and negative integers; how overflow can occur).
+    Covers subtraction by two's complement addition, addition of negative values, direct
+    subtraction with borrowing (deeper) and signed overflow. Every calculation checked with
+    Python. Questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can subtract binary integers using two's complement, add negative numbers, and tell when a signed result has **overflowed**.
+
+  - type: explain
+    title: Subtracting is adding a negative
+    body: |
+      $A - B$ is the same as $A + (-B)$. In two's complement that turns every subtraction into an addition, so the processor needs only one adder circuit.
+
+      1. Write $B$ in binary, then find its **two's complement** (invert, add 1). That's $-B$.
+      2. **Add** it to $A$ using the normal rules.
+      3. **Discard** any carry out of the MSB. Keep the 8 bits that are left.
+
+  - type: example
+    title: 83 − 29
+    problem: |
+      Calculate `0101 0011` − `0001 1101` (83 − 29) in 8-bit two's complement.
+    steps:
+      - |
+        Find −29: invert `0001 1101` to get `1110 0010`, then add 1: `1110 0011`.
+      - |
+        Add: `0101 0011 + 1110 0011 = 1 0011 0110`.
+      - |
+        There's a carry out of the MSB. In two's complement we **discard** it, leaving `0011 0110`.
+      - |
+        Check: `0011 0110` $= 32 + 16 + 4 + 2 = 54$, and $83 - 29 = 54$ ✓
+    answer: |
+      `0011 0110` (54)
+
+  - type: check
+    title: Quick check
+    questions: [subtract-bytes, carry-out-rule]
+
+  - type: explain
+    title: Negative numbers, negative answers
+    body: |
+      Negatives need no special treatment. For $(-20) + (-30)$:
+
+      - −20 is `1110 1100` and −30 is `1110 0010`.
+      - Adding gives `1 1100 1110`. Discard the carry out: `1100 1110`.
+      - Check: $-128 + 64 + 8 + 4 + 2 = -50$ ✓
+
+      When the answer is negative, its MSB is 1. Read it back with the MSB worth −128, not as an unsigned number.
+
+  - type: check
+    title: Your turn
+    questions: [negative-result]
+
+  - type: explain
+    title: Overflow with signed numbers
+    body: |
+      8-bit two's complement holds **−128 to +127**. If the true answer is outside that range, the result overflows and the bits you get mean something else entirely.
+
+      The quick test:
+
+      - Two **positives** give a **negative** result (MSB 1)? Overflow.
+      - Two **negatives** give a **positive** result (MSB 0)? Overflow.
+      - A positive plus a negative **can never overflow**: the answer always lies between them.
+
+  - type: diagram
+    diagram: cs-twos-complement-wheel
+    alt: >-
+      A circle of the sixteen 4-bit patterns, with 0000 at the top and counting upwards clockwise.
+      Outside the circle are the bit patterns; inside are their two's complement values. 0000 to
+      0111 on the right half are 0 to +7; 1000 to 1111 on the left half are −8 to −1. A dashed line
+      between 0111 and 1000 at the bottom is labelled overflow: +7 + 1 lands on −8. A dashed line
+      between 1111 and 0000 at the top is labelled carry out discarded: −1 + 1 = 0, which is correct.
+    caption: |
+      Adding a positive number moves you clockwise one step per unit; adding a negative number moves you anticlockwise. Crossing the bottom line between +7 and −8, in either direction, is overflow. Crossing the top line between −1 and 0 is harmless: the answer is correct, and any carry out of the MSB is simply discarded.
+
+  - type: example
+    title: An overflow
+    problem: |
+      Add `0110 0100` (+100) and `0101 0000` (+80) in 8-bit two's complement.
+    steps:
+      - |
+        Add normally: `0110 0100 + 0101 0000 = 1011 0100`. No carry out this time.
+      - |
+        The MSB is 1, so as two's complement this reads $-128 + 32 + 16 + 4 = -76$.
+      - |
+        Two positives can't add up to a negative: the true answer, 180, is bigger than +127.
+    answer: |
+      Overflow. The register holds `1011 0100`, which means −76, not 180.
+
+  - type: misconceptions
+    items:
+      - wrong: A carry out of the MSB always means overflow.
+        right: |
+          In two's complement the carry out is simply discarded, and the answer can be perfectly correct (83 − 29 above). Overflow is about the result being out of **range**, which you spot from the signs.
+      - wrong: To subtract B, subtract its two's complement.
+        right: |
+          You **add** the two's complement of B. That's the whole point: subtraction becomes addition.
+      - wrong: Overflow only happens when there's a carry out.
+        right: |
+          +100 + +80 overflowed with no carry out at all. Always check the signs.
+
+  - type: exam
+    body: |
+      - For a subtraction, show $-B$ in two's complement, the addition with carries, and the final 8 bits. **State** what happens to the carry out of the MSB: it is discarded.
+      - "Has overflow occurred? **Justify** your answer": say yes or no **and** give the reason, e.g. "yes: two positive numbers gave a negative result, because the true answer, 180, is above the maximum of +127". A bare "yes" earns little.
+      - Marks slip away when a carry out is called overflow, or when a negative result is read as an unsigned number.
+
+  - type: check
+    title: Signed overflow
+    questions: [which-overflows, overflow-value, detect-overflow]
+
+  - type: takeaways
+    items:
+      - "$A - B = A + (-B)$: find the two's complement of B, then add."
+      - Discard any carry out of the MSB in two's complement arithmetic.
+      - 8-bit two's complement holds −128 to +127; a true result outside that range overflows.
+      - "Overflow test: same signs in, opposite sign out. Mixed signs never overflow."
+
+  - type: deeper
+    title: Direct subtraction with borrowing
+    body: |
+      You can also subtract column by column, borrowing like in denary. In binary, borrowing makes the column worth **2** more: $0 - 1$ becomes $10 - 1 = 1$.
+
+      Example: `1101` − `0110` (13 − 6):
+
+      - Column 1: $1 - 0 = 1$.
+      - Column 2: $0 - 1$ needs a borrow from column 3 (which drops from 1 to 0): $10 - 1 = 1$.
+      - Column 3: now $0 - 1$, so borrow from column 4 (1 to 0): $10 - 1 = 1$.
+      - Column 4: $0 - 0 = 0$. Result: `0111` = 7 ✓
+
+      Borrowing is fine for a larger positive number minus a smaller one. Two's complement addition also copes with negative values and needs no separate subtractor circuit, which is why processors use it.
+
+questions:
+  - id: subtract-bytes
+    format: cloze
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      Calculate `0110 0100` − `0010 1000` (100 − 40) using 8-bit two's complement. The two's complement of `0010 1000` is {{1}}. The 8-bit result, after discarding any carry, is {{2}}.
+    blanks:
+      - accept: ["11011000", "1101 1000"]
+      - accept: ["00111100", "0011 1100"]
+    explanation: |
+      Invert `0010 1000` to `1101 0111` and add 1: `1101 1000` (−40). Then `0110 0100 + 1101 1000 = 1 0011 1100`. Discard the carry: `0011 1100` = 60 ✓
+
+  - id: negative-result
+    format: cloze
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      Calculate `0001 1001` − `0010 1101` (25 − 45) using 8-bit two's complement. The two's complement of `0010 1101` is {{1}}. The 8-bit result is {{2}}, which is {{3}} in denary.
+    blanks:
+      - accept: ["11010011", "1101 0011"]
+      - accept: ["11101100", "1110 1100"]
+      - accept: ["-20", "minus 20", "negative 20"]
+    explanation: |
+      Invert `0010 1101` to `1101 0010` and add 1: `1101 0011` (−45). Then `0001 1001 + 1101 0011 = 1110 1100`. There's no carry out this time, and that's fine too. The MSB is 1, so the answer is negative: $-128 + 64 + 32 + 8 + 4 = -20$ ✓. If you wrote 236, you read the result as unsigned.
+
+  - id: carry-out-rule
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.3"]
+    prompt: |
+      You subtract two 8-bit two's complement numbers by adding the two's complement, and a ninth bit carries out of the MSB. What should you do with it?
+    options:
+      - text: Discard it; the remaining 8 bits are the answer.
+        correct: true
+        why: |
+          In two's complement arithmetic the carry out of the MSB is ignored. The 8 bits left give the correct result unless the signs show overflow.
+      - text: Keep it as the new MSB, making a 9-bit answer.
+        why: |
+          The register only has 8 bits, and keeping the bit would give the wrong value (`1 0011 0110` would read as 310, not 54).
+      - text: It always means overflow, so the answer is invalid.
+        why: |
+          A carry out happens in many correct subtractions, like 83 − 29. Overflow is detected from the signs, not the carry.
+      - text: Add it back on to the least significant bit.
+        why: |
+          That "end-around carry" is a feature of one's complement arithmetic, not two's complement.
+    explanation: |
+      Discard the carry out, then use the sign test to decide whether overflow has occurred.
+
+  - id: which-overflows
+    format: mcq
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      Which of these 8-bit two's complement additions causes **overflow**?
+    options:
+      - text: "`0100 0000` + `0100 0000`"
+        correct: true
+        why: |
+          $64 + 64 = 128$, which is above +127. The result `1000 0000` would read as −128: two positives giving a negative.
+      - text: "`0111 1111` + `1000 0000`"
+        why: |
+          $127 + (-128) = -1$. A positive plus a negative can never overflow.
+      - text: "`1111 1111` + `1111 1111`"
+        why: |
+          $(-1) + (-1) = -2$ = `1111 1110`. There's a carry out, but it's discarded and the answer is in range.
+      - text: "`0011 1111` + `0100 0000`"
+        why: |
+          $63 + 64 = 127$, exactly the maximum. It fits: `0111 1111`.
+    explanation: |
+      Overflow means the true answer lies outside −128 to +127. Only 64 + 64 = 128 does.
+
+  - id: overflow-value
+    format: numeric
+    difficulty: 3
+    objectives: ["1.1.3"]
+    prompt: |
+      `0111 0000` (+112) and `0011 0000` (+48) are added in an 8-bit two's complement register. What denary value does the stored 8-bit result **represent**?
+    fields:
+      - answer: -96
+    explanation: |
+      The bits add to `1010 0000`. Read as two's complement: $-128 + 32 = -96$. The true answer is 160, above +127, so this is overflow: two positives gave a negative.
+
+  - id: detect-overflow
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.3"]
+    prompt: |
+      Explain how you can tell whether overflow has occurred when two 8-bit two's complement numbers are added.
+    model: |
+      Overflow occurs when the true result is outside the range −128 to +127. It can only happen when both numbers have the same sign. If two positive numbers (MSB 0) give a result with MSB 1, or two negative numbers (MSB 1) give a result with MSB 0, the sign is wrong, so overflow has occurred. A carry out of the MSB on its own does not mean overflow; it is discarded.
+    keyPoints:
+      - The true result is outside the range −128 to +127
+      - Only possible when both numbers have the same sign
+      - Two positives giving a negative (or two negatives giving a positive) shows overflow
+      - A carry out of the MSB on its own is discarded and is not the test
+    explanation: |
+      The sign test is the reliable check. Carries out of the MSB happen in plenty of correct two's complement sums.

@@ -1,0 +1,114 @@
+id: fixture-squares
+subject: "9709"
+topic: "1.1"
+title: Fixture lesson on squares
+summary: A fixture lesson exercising every block type and question format.
+order: 1
+minutes: 3
+objectives: ["1.1.1", "1.1.2"]
+provenance:
+  origin: human
+  status: human-reviewed
+  reviewedBy: Test Fixture
+  reviewedAt: "2026-10-19"
+blocks:
+  - type: objective
+    body: Complete the square.
+  - type: explain
+    title: The idea
+    body: |
+      Write $x^2 + 6x + 5$ as $(x+3)^2 - 4$.
+  - type: definition
+    term: Discriminant
+    body: The value $b^2 - 4ac$.
+  - type: check
+    questions: [q-mcq, q-numeric]
+  - type: example
+    problem: Complete the square for $x^2 + 4x$.
+    steps:
+      - Halve 4 to get 2.
+      - Write $(x+2)^2 - 4$.
+    answer: $(x+2)^2 - 4$
+  - type: misconceptions
+    items:
+      - wrong: Forgetting to subtract the square.
+        right: Subtract $(b/2)^2$.
+  - type: check
+    questions: [q-expr, q-text, q-cloze]
+  - type: takeaways
+    items: [Halve, square, subtract.]
+  - type: deeper
+    title: Why halve?
+    body: Because $(x+p)^2 = x^2 + 2px + p^2$.
+  - type: check
+    questions: [q-spot, q-explain]
+questions:
+  - id: q-mcq
+    format: mcq
+    prompt: Which is $x^2+6x+5$ in completed-square form?
+    explanation: Halve 6 to get 3, then subtract 9.
+    difficulty: 1
+    objectives: ["1.1.1"]
+    options:
+      - text: $(x+3)^2 - 4$
+        correct: true
+        why: Expands back correctly.
+      - text: $(x+6)^2 - 31$
+        why: That uses 6, not half of 6.
+  - id: q-numeric
+    format: numeric
+    prompt: Write $x^2 + 6x + 5$ as $(x+a)^2 + b$.
+    explanation: $a = 3$, $b = 5 - 9 = -4$.
+    difficulty: 2
+    objectives: ["1.1.1"]
+    fields:
+      - label: $a =$
+        answer: 3
+      - label: $b =$
+        answer: -4
+  - id: q-expr
+    format: expression
+    prompt: Expand $(x+2)^2 - 4$.
+    explanation: $(x+2)^2 = x^2 + 4x + 4$.
+    difficulty: 1
+    objectives: ["1.1.1"]
+    answer: x^2 + 4x
+    variables: [x]
+    display: $x^2 + 4x$
+  - id: q-text
+    format: text
+    style: definition
+    prompt: What is $b^2 - 4ac$ called?
+    explanation: It discriminates between the cases.
+    difficulty: 1
+    objectives: ["1.1.2"]
+    accept: [discriminant, the discriminant]
+    model: The discriminant.
+  - id: q-cloze
+    format: cloze
+    prompt: If the discriminant is negative there are {{1}} real roots.
+    explanation: A negative discriminant means no real roots.
+    difficulty: 1
+    objectives: ["1.1.2"]
+    blanks:
+      - accept: ["no", "0", "zero", "none"]
+  - id: q-spot
+    format: spot-error
+    prompt: Find the error.
+    explanation: Line 2 should subtract 9.
+    difficulty: 2
+    objectives: ["1.1.1"]
+    lines:
+      - $x^2 + 6x + 5$
+      - $= (x+3)^2 + 5$
+      - $= (x+3)^2 + 5$
+    errorLine: 2
+    fix: $(x+3)^2 - 9 + 5$
+  - id: q-explain
+    format: explain
+    prompt: Explain why completing the square finds the vertex.
+    explanation: The squared term is never negative.
+    difficulty: 3
+    objectives: ["1.1.1"]
+    model: The squared term is smallest (zero) when the bracket is zero.
+    keyPoints: [Squared term is never negative, Minimum when bracket is zero]

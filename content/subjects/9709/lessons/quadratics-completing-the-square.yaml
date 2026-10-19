@@ -1,0 +1,278 @@
+id: quadratics-completing-the-square
+subject: "9709"
+topic: "1.1"
+title: Completing the square and the vertex
+summary: Rewrite ax² + bx + c as a(x + p)² + q, then read off the vertex, the line of symmetry and the minimum or maximum value.
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.1.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025; update notice checked): topic 1.1 learning outcome
+    "carry out the process of completing the square ... and use a completed square form" and its
+    note (locating the vertex, sketching the graph). Examples and questions are original; all
+    arithmetic checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write any quadratic $ax^2 + bx + c$ in **completed-square form** $a(x + p)^2 + q$, and use it to find the vertex of the graph and sketch it.
+
+  - type: explain
+    title: The trick in one line
+    body: |-
+      Expand a perfect square and look at the pattern:
+
+      $$(x + 3)^2 = x^2 + 6x + 9$$
+
+      The $6x$ came from *doubling* the 3. So run it backwards. To "complete" $x^2 + 6x$:
+
+      1. **Halve** the coefficient of $x$ and put it in a bracket: $(x + 3)^2$.
+      2. **Subtract** the extra square you just sneaked in: $(x + 3)^2 - 9$.
+
+      In general: $x^2 + bx = \left(x + \tfrac{b}{2}\right)^2 - \left(\tfrac{b}{2}\right)^2$.
+
+  - type: example
+    title: When the coefficient of x² is 1
+    problem: |-
+      Express $x^2 - 6x + 11$ in the form $(x + p)^2 + q$.
+    steps:
+      - |-
+        Halve the coefficient of $x$: half of $-6$ is $-3$, so the bracket is $(x - 3)^2$.
+      - |-
+        $(x - 3)^2 = x^2 - 6x + 9$. That's 9 too many, so $x^2 - 6x = (x - 3)^2 - 9$.
+      - |-
+        Bring the constant along: $x^2 - 6x + 11 = (x - 3)^2 - 9 + 11$.
+      - |-
+        Tidy up: $(x - 3)^2 + 2$. So $p = -3$ and $q = 2$.
+    answer: |-
+      $x^2 - 6x + 11 = (x - 3)^2 + 2$
+
+  - type: check
+    questions: [cts-monic]
+
+  - type: explain
+    title: When a is not 1
+    body: |-
+      Take the factor $a$ out of the $x^2$ and $x$ terms **only**. Leave the constant outside.
+
+      Then complete the square inside the bracket, and multiply $a$ back through **everything** in it. That last bit is where most marks go missing.
+
+  - type: example
+    title: Taking out a factor first
+    problem: |-
+      Express $2x^2 - 8x + 5$ in the form $a(x + p)^2 + q$.
+    steps:
+      - |-
+        Factor 2 out of the first two terms only: $2(x^2 - 4x) + 5$.
+      - |-
+        Complete the square inside: $x^2 - 4x = (x - 2)^2 - 4$.
+      - |-
+        Substitute: $2\left[(x - 2)^2 - 4\right] + 5$.
+      - |-
+        Multiply the 2 through **both** terms in the square bracket: $2(x - 2)^2 - 8 + 5$.
+      - |-
+        Tidy up: $2(x - 2)^2 - 3$.
+    answer: |-
+      $2x^2 - 8x + 5 = 2(x - 2)^2 - 3$, so $a = 2$, $p = -2$, $q = -3$. Quick check: $2(x^2 - 4x + 4) - 3 = 2x^2 - 8x + 5$ ✓
+
+  - type: check
+    questions: [cts-spot-error, cts-non-monic]
+
+  - type: explain
+    title: Reading the graph from the form
+    body: |-
+      For $y = a(x + p)^2 + q$:
+
+      | Feature | What you read off |
+      | --- | --- |
+      | Vertex | $(-p,\ q)$ — note the sign flip on $p$ |
+      | Line of symmetry | $x = -p$ |
+      | $a > 0$ | ∪-shaped, **minimum** point, minimum value $q$ |
+      | $a < 0$ | ∩-shaped, **maximum** point, maximum value $q$ |
+      | $y$-intercept | put $x = 0$ (in the original form it's just $c$) |
+
+  - type: diagram
+    diagram: quadratic-vertex
+    alt: >-
+      Graph of y = 2x² − 8x + 5 on an integer grid. The U-shaped curve crosses the y-axis at (0, 5)
+      and the x-axis at about 0.78 and 3.22. Its lowest point, the vertex, is at (2, −3). A dashed
+      vertical line x = 2 through the vertex is labelled as the line of symmetry.
+    caption: |-
+      $y = 2x^2 - 8x + 5 = 2(x - 2)^2 - 3$. The completed-square form hands you the vertex $(2, -3)$ and the line of symmetry $x = 2$. The roots, $x = 2 \pm \sqrt{\tfrac32}$, sit symmetrically either side.
+
+  - type: intuition
+    title: Why the vertex jumps out
+    body: |-
+      $(x - 2)^2$ is a square, so it's **never negative**. Its smallest value is 0, and that happens at exactly one place: $x = 2$.
+
+      So $2(x - 2)^2 - 3$ is "$-3$ plus something that can't be negative". Smallest possible value: $-3$, at $x = 2$. No calculus needed, just the fact that squares can't go below zero.
+
+  - type: deeper
+    title: Negative a, and the form q − (x + p)²
+    body: |-
+      Take $7 + 4x - x^2$. Factor $-1$ out of the $x^2$ and $x$ terms:
+
+      $$-(x^2 - 4x) + 7 = -\left[(x - 2)^2 - 4\right] + 7 = 11 - (x - 2)^2$$
+
+      Now $(x - 2)^2 \geqslant 0$ is being *subtracted*, so $y \leqslant 11$. The curve is ∩-shaped with **maximum** point $(2, 11)$.
+
+      Exam questions often ask for this as $a - (x + b)^2$. The letters in the requested form are new constants, not the $a$, $b$, $c$ you started with, so match the form exactly: here $a = 11$, $b = -2$.
+
+      Handy check (not a replacement for the working): the vertex of $y = ax^2 + bx + c$ is always at $x = -\dfrac{b}{2a}$.
+
+  - type: check
+    questions: [vertex-max, vertex-fractions, min-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $y = (x + 3)^2 - 5$ has its vertex at $(3, -5)$.
+        right: |-
+          The bracket is zero when $x = -3$, so the vertex is $(-3, -5)$. The $x$-coordinate has the opposite sign to the number in the bracket.
+      - wrong: |-
+          For $2x^2 + 12x$, halve 12 to get $(x + 6)^2$.
+        right: |-
+          Take the 2 out first: $2(x^2 + 6x)$, then halve 6. You get $2(x + 3)^2 - 18$.
+      - wrong: |-
+          $2\left[(x - 2)^2 - 4\right] + 5 = 2(x - 2)^2 - 4 + 5$
+        right: |-
+          The 2 multiplies everything in the square bracket: $2(x - 2)^2 - 8 + 5 = 2(x - 2)^2 - 3$.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Express $2x^2 - 8x + 5$ in the form $a(x + b)^2 + c$, where $a$, $b$ and $c$ are constants.* Usually 2–3 marks.
+      - It's very often followed by *hence* (state the vertex, sketch the graph, or find the range of a function in topic 1.2). *Hence* means use your completed-square form. That's where the marks are.
+      - Expand your answer in your head before moving on. Ten seconds, and it catches most slips.
+      - Keep fractions as fractions: $\left(x - \tfrac52\right)^2 - \tfrac{21}{4}$ is perfect.
+
+  - type: takeaways
+    items:
+      - |-
+        Halve the coefficient of $x$, then subtract its square: $x^2 + bx = \left(x + \tfrac{b}{2}\right)^2 - \left(\tfrac{b}{2}\right)^2$.
+      - |-
+        If $a \neq 1$, factor $a$ out of the $x^2$ and $x$ terms only, and multiply it back through **everything** in the bracket.
+      - |-
+        $y = a(x + p)^2 + q$ has vertex $(-p, q)$ and line of symmetry $x = -p$.
+      - |-
+        $a > 0$ gives a minimum value $q$; $a < 0$ gives a maximum value $q$.
+
+questions:
+  - id: cts-monic
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.1"]
+    prompt: |-
+      Write $x^2 + 10x + 7$ in the form $(x + p)^2 + q$.
+    fields:
+      - label: "p ="
+        answer: 5
+      - label: "q ="
+        answer: -18
+    explanation: |-
+      Half of 10 is 5, and $(x + 5)^2 = x^2 + 10x + 25$. That's 25 too many, so
+
+      $$x^2 + 10x + 7 = (x + 5)^2 - 25 + 7 = (x + 5)^2 - 18.$$
+
+  - id: cts-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.1"]
+    prompt: |-
+      A student completes the square on $2x^2 + 12x + 1$. Which line contains the first error?
+    lines:
+      - |-
+        $2x^2 + 12x + 1 = 2(x^2 + 6x) + 1$
+      - |-
+        $= 2\left[(x + 3)^2 - 9\right] + 1$
+      - |-
+        $= 2(x + 3)^2 - 9 + 1$
+      - |-
+        $= 2(x + 3)^2 - 8$
+    errorLine: 3
+    fix: |-
+      The 2 multiplies the $-9$ too: $2(x + 3)^2 - 18 + 1 = 2(x + 3)^2 - 17$.
+    explanation: |-
+      Line 3 multiplied only the bracket by 2 and forgot the $-9$. Expanding the student's answer exposes it: $2(x + 3)^2 - 8 = 2x^2 + 12x + 10$, not $2x^2 + 12x + 1$.
+
+  - id: cts-non-monic
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.1"]
+    prompt: |-
+      Express $3x^2 + 12x + 5$ in the form $a(x + p)^2 + q$.
+    fields:
+      - label: "a ="
+        answer: 3
+      - label: "p ="
+        answer: 2
+      - label: "q ="
+        answer: -7
+    explanation: |-
+      $3x^2 + 12x + 5 = 3(x^2 + 4x) + 5 = 3\left[(x + 2)^2 - 4\right] + 5 = 3(x + 2)^2 - 12 + 5 = 3(x + 2)^2 - 7.$
+
+  - id: vertex-max
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.1"]
+    prompt: |-
+      Which statement about the vertex of $y = 4 - (x + 1)^2$ is correct?
+    explanation: |-
+      This is the form $q - (x + p)^2$ with $p = 1$, $q = 4$. The square is never negative and it's subtracted, so $y$ is at most 4, reached when $x + 1 = 0$. Maximum point $(-1, 4)$.
+    options:
+      - text: |-
+          It is a maximum point at $(-1, 4)$.
+        correct: true
+        why: |-
+          $(x + 1)^2 \geqslant 0$ is subtracted from 4, so $y \leqslant 4$, with equality when $x = -1$. The curve is ∩-shaped.
+      - text: |-
+          It is a minimum point at $(-1, 4)$.
+        why: |-
+          The squared term is subtracted, so 4 is the *largest* value of $y$, not the smallest. The curve is ∩-shaped.
+      - text: |-
+          It is a maximum point at $(1, 4)$.
+        why: |-
+          Sign slip: $(x + 1)$ is zero when $x = -1$, not $x = 1$.
+      - text: |-
+          It is a minimum point at $(1, -4)$.
+        why: |-
+          Both coordinates have the wrong sign, and the shape is wrong too: subtracting a square gives a maximum.
+
+  - id: vertex-fractions
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.1"]
+    prompt: |-
+      By completing the square, find the coordinates of the vertex of $y = x^2 - 5x + 1$. Fractions or decimals are fine.
+    fields:
+      - label: "x ="
+        answer: 2.5
+      - label: "y ="
+        answer: -5.25
+    explanation: |-
+      Half of $-5$ is $-\tfrac52$:
+
+      $$x^2 - 5x + 1 = \left(x - \tfrac52\right)^2 - \tfrac{25}{4} + 1 = \left(x - \tfrac52\right)^2 - \tfrac{21}{4}.$$
+
+      So the vertex is $\left(\tfrac52, -\tfrac{21}{4}\right)$, i.e. $(2.5, -5.25)$.
+
+  - id: min-explain
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.1"]
+    prompt: |-
+      Without expanding, explain why $3(x - 2)^2 + 5 \geqslant 5$ for every real $x$, and say when it equals 5.
+    explanation: |-
+      The whole argument rests on one fact: a real number squared is never negative. Everything else (multiplying by a positive 3, adding 5) keeps that inequality pointing the same way.
+    model: |-
+      $(x - 2)^2$ is a square, so it is at least 0 for every real $x$. Multiplying by the positive number 3 keeps it at least 0, so adding 5 gives at least 5. It equals 5 only when $(x - 2)^2 = 0$, that is when $x = 2$. So the minimum value is 5, at the vertex $(2, 5)$.
+    keyPoints:
+      - A square such as (x − 2)² is never negative
+      - Multiplying by the positive constant 3 keeps it non-negative
+      - So the expression is 5 plus something ≥ 0, hence at least 5
+      - It equals 5 only when x = 2, the minimum point (2, 5)

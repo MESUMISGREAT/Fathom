@@ -1,0 +1,231 @@
+id: quadratics-hidden-quadratics
+subject: "9709"
+topic: "1.1"
+title: Equations that are quadratic in a function of x
+summary: Spot hidden quadratics such as x⁴ − 13x² + 36 = 0 or x − √x − 6 = 0, substitute, solve, convert back and reject impossible values.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.1.5"]
+prerequisites: [quadratics-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025; update notice checked): topic 1.1 outcome "recognise
+    and solve equations in x which are quadratic in some function of x" and its examples (a
+    quartic in x², an equation in x and √x, and a quadratic in tan x). The worked examples use
+    different equations from the syllabus examples. Solving tan x = value in an interval is taught
+    in topic 1.5, so the trig case is a short "deeper" note. Examples and questions are original;
+    all roots checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can spot an equation that is **quadratic in some function of $x$** (like $x^2$, $\sqrt{x}$ or $\tan x$), solve it with a substitution, and convert back to $x$, rejecting any impossible values.
+
+  - type: explain
+    title: Spot the disguise
+    body: |-
+      A quadratic in $u$ looks like $au^2 + bu + c = 0$. If one term contains the **square** of what another term contains, you've got a quadratic in that thing.
+
+      | Equation | Let | It becomes |
+      | --- | --- | --- |
+      | $x^4 - 13x^2 + 36 = 0$ | $u = x^2$ | $u^2 - 13u + 36 = 0$ |
+      | $x - \sqrt{x} - 6 = 0$ | $u = \sqrt{x}$ | $u^2 - u - 6 = 0$ |
+      | $\dfrac{2}{x^2} - \dfrac{3}{x} + 1 = 0$ | $u = \dfrac{1}{x}$ | $2u^2 - 3u + 1 = 0$ |
+      | $x^6 - 7x^3 - 8 = 0$ | $u = x^3$ | $u^2 - 7u - 8 = 0$ |
+      | $2\tan^2 x + \tan x - 3 = 0$ | $u = \tan x$ | $2u^2 + u - 3 = 0$ |
+
+      The tell: powers in the ratio **2 : 1**, such as $x^4$ and $x^2$, or $x$ and $x^{\frac12}$.
+
+  - type: example
+    title: A quartic in disguise
+    problem: |-
+      Solve $x^4 - 13x^2 + 36 = 0$.
+    steps:
+      - |-
+        Let $u = x^2$, so $x^4 = u^2$: $\;u^2 - 13u + 36 = 0$.
+      - |-
+        Factorise: $(u - 4)(u - 9) = 0$, so $u = 4$ or $u = 9$.
+      - |-
+        Convert back, because the question is about $x$: $x^2 = 4$ or $x^2 = 9$.
+      - |-
+        Each gives two values: $x = \pm 2$ or $x = \pm 3$.
+    answer: |-
+      $x = -3, -2, 2, 3$ (four solutions).
+
+  - type: check
+    questions: [hidden-count, hidden-four]
+
+  - type: example
+    title: When one value has to go
+    problem: |-
+      Solve $x - \sqrt{x} - 6 = 0$.
+    steps:
+      - |-
+        Let $u = \sqrt{x}$, so $x = u^2$: $\;u^2 - u - 6 = 0$.
+      - |-
+        $(u - 3)(u + 2) = 0$, so $u = 3$ or $u = -2$.
+      - |-
+        $\sqrt{x} = 3$ gives $x = 9$.
+      - |-
+        $\sqrt{x} = -2$ is impossible: $\sqrt{x}$ means the **non-negative** square root. Reject it, and say why.
+      - |-
+        Check in the original: $9 - \sqrt9 - 6 = 9 - 3 - 6 = 0$ ✓
+    answer: |-
+      $x = 9$ only.
+
+  - type: intuition
+    title: Why the substitution works
+    body: |-
+      Substitution is just renaming. The equation never stopped being a quadratic; it was wearing a hat.
+
+      The only new job is the last step, translating each $u$ back into $x$. One value of $u$ might give **two** values of $x$ ($x^2 = 4$), **one** ($\sqrt{x} = 3$) or **none** ($x^2 = -4$, $\sqrt{x} = -2$).
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Final answer: $u = 4$ or $u = 9$.
+        right: |-
+          The question asked for $x$. Convert back: $x^2 = 4$ or $9$, so $x = \pm 2$ or $\pm 3$.
+      - wrong: |-
+          $x^2 = 9$, so $x = 3$.
+        right: |-
+          $x = \pm 3$: both square to 9.
+      - wrong: |-
+          $\sqrt{x} = -2$, so $x = 4$.
+        right: |-
+          Squaring hides the problem: $\sqrt4 = 2$, not $-2$. In the original, $4 - 2 - 6 = -4 \neq 0$. Reject it.
+      - wrong: |-
+          $\sqrt{x} = 4$, so $x = 2$.
+        right: |-
+          Undo a square root by **squaring**: $x = 16$.
+
+  - type: deeper
+    title: Trig in disguise
+    body: |-
+      Solve $2\tan^2 x + \tan x - 3 = 0$ for $0^\circ \leqslant x \leqslant 180^\circ$.
+
+      Let $u = \tan x$: $(2u + 3)(u - 1) = 0$, so $\tan x = 1$ or $\tan x = -\tfrac32$.
+
+      - $\tan x = 1$ gives $x = 45^\circ$.
+      - $\tan x = -\tfrac32$: the calculator gives $-56.3^\circ$, which is outside the interval; add $180^\circ$ to get $x = 123.7^\circ$ (1 d.p.).
+
+      Finding every angle in an interval is covered in Trigonometry (topic 1.5). The quadratic part is exactly what you've just done.
+
+  - type: exam
+    body: |-
+      - Often signposted: *By using a suitable substitution, solve …* or *Show that the equation can be written as a quadratic in $\tan x$ and hence solve it.*
+      - State your substitution clearly ("Let $u = \sqrt{x}$").
+      - Marks are lost for not converting back, for missing the $\pm$, and for keeping impossible values. When you reject one, give the reason (e.g. "$\sqrt{x} \geqslant 0$").
+
+  - type: check
+    questions: [hidden-spot, hidden-sqrt, hidden-reject]
+
+  - type: takeaways
+    items:
+      - |-
+        If one term is the square of another (powers in the ratio 2 : 1), it's a hidden quadratic: let $u$ be the thing that gets squared, e.g. $u = x^2$, $u = \sqrt{x}$, $u = \tfrac{1}{x}$.
+      - |-
+        Solve for $u$, then **convert back to $x$**. Each $u$ can give two, one or no values of $x$.
+      - |-
+        $x^2 = 9$ gives $x = \pm 3$, but $x^2 = -4$ and $\sqrt{x} = -2$ give no real solutions.
+      - |-
+        Check your answers in the original equation.
+
+questions:
+  - id: hidden-count
+    format: mcq
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |-
+      How many real solutions does $x^4 + 3x^2 - 4 = 0$ have?
+    explanation: |-
+      With $u = x^2$: $(u + 4)(u - 1) = 0$. $x^2 = 1$ gives $x = \pm 1$; $x^2 = -4$ has no real solutions. So there are 2.
+    options:
+      - text: "4"
+        why: |-
+          Only one value of $u$ is usable: $x^2 = -4$ has no real solutions, because no real number squares to a negative.
+      - text: "2"
+        correct: true
+        why: |-
+          $x^2 = 1$ gives $x = 1$ or $x = -1$, and $x^2 = -4$ gives nothing.
+      - text: "1"
+        why: |-
+          $x^2 = 1$ has two solutions, $1$ and $-1$.
+      - text: "0"
+        why: |-
+          $u = 1$ is perfectly fine: it gives $x = \pm 1$.
+
+  - id: hidden-four
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |-
+      Solve $x^4 - 10x^2 + 9 = 0$. Enter the four solutions in increasing order.
+    fields:
+      - label: "smallest x ="
+        answer: -3
+      - label: "second x ="
+        answer: -1
+      - label: "third x ="
+        answer: 1
+      - label: "largest x ="
+        answer: 3
+    explanation: |-
+      Let $u = x^2$: $u^2 - 10u + 9 = 0$, so $(u - 1)(u - 9) = 0$. Then $x^2 = 1$ or $x^2 = 9$, giving $x = -3, -1, 1, 3$.
+
+  - id: hidden-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |-
+      A student solves $x - 5\sqrt{x} + 4 = 0$. Which line contains the first error?
+    lines:
+      - |-
+        Let $u = \sqrt{x}$, so $x = u^2$
+      - |-
+        $u^2 - 5u + 4 = 0$
+      - |-
+        $(u - 1)(u - 4) = 0$, so $u = 1$ or $u = 4$
+      - |-
+        So $x = 1$ or $x = 2$
+    errorLine: 4
+    fix: |-
+      $\sqrt{x} = 4$ means $x = 4^2 = 16$. So $x = 1$ or $x = 16$.
+    explanation: |-
+      The student square-rooted $u$ instead of squaring it. Check: $16 - 5(4) + 4 = 0$ ✓, but $2 - 5\sqrt2 + 4 \neq 0$.
+
+  - id: hidden-sqrt
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |-
+      Solve $2x - 5\sqrt{x} + 2 = 0$. Enter the smaller solution first (fractions are fine).
+    fields:
+      - label: "smaller x ="
+        answer: 0.25
+      - label: "larger x ="
+        answer: 4
+    explanation: |-
+      Let $u = \sqrt{x}$: $2u^2 - 5u + 2 = 0$, so $(2u - 1)(u - 2) = 0$ and $u = \tfrac12$ or $u = 2$.
+
+      Both are positive, so both are allowed: $x = \tfrac14$ or $x = 4$.
+
+  - id: hidden-reject
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.5"]
+    prompt: |-
+      Solving $x - \sqrt{x} - 6 = 0$ gives $\sqrt{x} = 3$ or $\sqrt{x} = -2$. Explain why only one of these leads to a solution, and state the solution.
+    explanation: |-
+      The symbol $\sqrt{x}$ always means the non-negative root, so a negative value for it must be rejected, with the reason stated.
+    model: |-
+      $\sqrt{x}$ denotes the non-negative square root, so $\sqrt{x}$ can never equal $-2$; that value is rejected. (Squaring it would suggest $x = 4$, but $\sqrt4 = 2$ and $4 - 2 - 6 \neq 0$.) From $\sqrt{x} = 3$ we get $x = 9$, which checks: $9 - 3 - 6 = 0$. So $x = 9$ is the only solution.
+    keyPoints:
+      - √x means the non-negative square root, so √x ≥ 0
+      - √x = −2 is impossible and must be rejected
+      - √x = 3 gives x = 9
+      - Checking x = 4 in the original equation fails (4 − 2 − 6 ≠ 0)

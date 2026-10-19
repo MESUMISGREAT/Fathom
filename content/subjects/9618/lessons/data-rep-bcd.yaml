@@ -1,0 +1,212 @@
+id: data-rep-bcd
+subject: "9618"
+topic: "1.1"
+title: Binary Coded Decimal (BCD)
+summary: Encode and decode Binary Coded Decimal one digit at a time, and explain why clocks, calculators and money calculations use it.
+order: 5
+minutes: 4
+kind: core
+objectives: ["1.1.2", "1.1.4"]
+prerequisites: [data-rep-binary-denary]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1: the BCD part of the second
+    learning outcome and the BCD part of the fourth (practical applications of BCD and
+    hexadecimal). Packed and unpacked BCD are given as background; BCD arithmetic is marked as
+    enrichment because the syllabus does not list it. All values checked with Python. Questions
+    are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can write a denary number in **BCD**, read BCD back, and explain where and why BCD is used.
+
+  - type: definition
+    term: Binary Coded Decimal (BCD)
+    body: |
+      A representation in which **each denary digit** is stored separately as its own **4-bit binary code** (a nibble), from `0000` for 0 to `1001` for 9.
+
+  - type: explain
+    title: One digit, one nibble
+    body: |
+      Pure binary converts the **whole value** at once. BCD refuses to: it takes the denary digits one at a time.
+
+      - Only 10 of the 16 possible nibbles are used: `0000` to `1001`.
+      - The six codes `1010` to `1111` are never valid in BCD.
+      - So the same number usually has a **different** bit pattern in BCD and in pure binary.
+
+  - type: diagram
+    diagram: cs-bcd-vs-binary
+    alt: >-
+      Two ways to store denary 59. On the left, BCD: the digit 5 becomes the nibble 0101 and the
+      digit 9 becomes the nibble 1001, giving 0101 1001. On the right, pure binary: the whole value
+      59 becomes 0011 1011, which is 32 + 16 + 8 + 2 + 1. A note underneath says BCD never uses
+      1010 to 1111, because each nibble only holds 0 to 9.
+    caption: |
+      Same number, two different bit patterns.
+
+  - type: example
+    title: Encoding and decoding
+    problem: |
+      (a) Write 738 in BCD. (b) What denary number is the BCD value `1001 0010 0101`?
+    steps:
+      - |
+        (a) Take each digit on its own: 7 → `0111`, 3 → `0011`, 8 → `1000`.
+      - |
+        Put the nibbles side by side: `0111 0011 1000`.
+      - |
+        (b) Split into nibbles from the left: `1001`, `0010`, `0101`.
+      - |
+        Convert each one to a single digit: 9, 2, 5.
+    answer: |
+      (a) `0111 0011 1000` (b) 925
+
+  - type: check
+    title: Quick check
+    questions: [den-to-bcd, bcd-to-den, invalid-bcd]
+
+  - type: explain
+    title: Where BCD is used
+    body: |
+      BCD spends extra bits so that **each denary digit stays separate and exact**. That pays off when:
+
+      - **Digits are displayed one at a time.** Digital clocks, calculators and meters drive one display (often a 7-segment display) per digit. With BCD each nibble goes straight to the display for its own digit, with no binary-to-denary conversion.
+      - **Decimal values must be exact, such as money.** Many denary fractions, like 0.1, have no exact binary equivalent, so storing them in binary introduces tiny rounding errors. Financial and banking software can store amounts digit by digit in BCD so that every penny is exact.
+      - **Clock chips keep the time.** The real-time clock chip in many computers stores hours, minutes and the date in BCD.
+
+      The price: more bits than pure binary needs, and slightly more complicated arithmetic circuits.
+
+  - type: misconceptions
+    items:
+      - wrong: "`0101 1001` in BCD is the same number as `0101 1001` in binary."
+        right: |
+          In BCD it means 59. Read as pure binary it is $64 + 16 + 8 + 1 = 89$. The bits can't tell you which; the question (or the program) has to.
+      - wrong: BCD is more compact than binary.
+        right: |
+          It uses **more** bits. 0 to 999 needs 12 bits in BCD (three nibbles) but only 10 bits in binary, because $2^{10} = 1024$.
+      - wrong: BCD of 59 is `111011`.
+        right: |
+          That's 59 in pure binary. BCD converts each digit: `0101 1001`.
+
+  - type: exam
+    body: |
+      - "**Describe** a practical application of BCD" is typically 2 marks: one for the application and one for linking it to BCD's strength. For example: "a digital clock, because each digit of the time is held in its own nibble and sent straight to its own display".
+      - Conversions: write each nibble separately and keep the leading zeros in every nibble (5 is `0101`, not `101`). Starting from hex or binary? Go to denary first, then encode the digits.
+
+  - type: check
+    title: Put it together
+    questions: [bcd-bits, hex-to-bcd, bcd-money]
+
+  - type: takeaways
+    items:
+      - BCD stores each denary digit as its own 4-bit nibble, `0000` (0) to `1001` (9).
+      - The codes `1010` to `1111` are never valid BCD.
+      - BCD uses more bits than pure binary, but keeps every denary digit exact and separate.
+      - Uses include digital displays (clocks, calculators, meters), exact money calculations and clock chips.
+
+  - type: deeper
+    title: Packed and unpacked BCD
+    body: |
+      - **Packed BCD** puts two digits in each byte: 59 is the single byte `0101 1001`.
+      - **Unpacked BCD** puts one digit in each byte, with the upper nibble zero: 59 is `0000 0101 0000 1001`.
+
+      Packed BCD halves the storage; unpacked is simpler to process one digit at a time. The syllabus doesn't use these names, but it helps to know a byte can hold one BCD digit or two.
+
+  - type: enrichment
+    title: Adding BCD numbers
+    body: |
+      Add BCD nibbles as ordinary binary. If a nibble's sum comes out bigger than 9 (or produces a carry), add `0110` (6) to skip over the six unused codes.
+
+      Example: 5 + 7. `0101 + 0111 = 1100`, which is not a valid BCD digit. Add `0110`: `1100 + 0110 = 1 0010`, which is BCD `0001 0010` = 12 ✓
+
+questions:
+  - id: den-to-bcd
+    format: cloze
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      Denary 46 in BCD is {{1}}
+    blanks:
+      - accept: ["01000110", "0100 0110"]
+    explanation: |
+      4 → `0100` and 6 → `0110`, so `0100 0110`. (In pure binary 46 would be `0010 1110`, a different pattern.)
+
+  - id: bcd-to-den
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      What denary number does the BCD value `0110 0001 0111` represent?
+    fields:
+      - answer: 617
+    explanation: |
+      Convert each nibble on its own: `0110` = 6, `0001` = 1, `0111` = 7, giving 617.
+
+  - id: invalid-bcd
+    format: mcq
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      Each byte below is meant to hold two BCD digits. Which one **cannot** be valid BCD?
+    options:
+      - text: "`1001 0011`"
+        why: |
+          `1001` = 9 and `0011` = 3, so this is a valid BCD 93.
+      - text: "`0101 1010`"
+        correct: true
+        why: |
+          `1010` is 10, and no single denary digit is 10. This pattern can never appear in BCD.
+      - text: "`0000 0001`"
+        why: |
+          `0000` = 0 and `0001` = 1, so this is BCD 01, a perfectly valid 1.
+      - text: "`1000 1000`"
+        why: |
+          `1000` = 8 twice, so this is BCD 88.
+    explanation: |
+      Every nibble in BCD must be in the range `0000` to `1001` (0 to 9). Anything from `1010` to `1111` is invalid.
+
+  - id: bcd-bits
+    format: numeric
+    difficulty: 3
+    objectives: ["1.1.2"]
+    prompt: |
+      A meter must show any whole number from 0 to 9999. What is the **minimum** number of bits needed to store the reading in each form?
+    fields:
+      - label: "BCD:"
+        answer: 16
+        unit: bits
+      - label: "Pure binary:"
+        answer: 14
+        unit: bits
+    explanation: |
+      BCD needs one nibble per digit: 4 digits × 4 bits = 16 bits. In pure binary, $2^{13} = 8192$ is too few patterns but $2^{14} = 16\,384$ is enough, so 14 bits. BCD costs 2 extra bits here.
+
+  - id: hex-to-bcd
+    format: cloze
+    difficulty: 3
+    objectives: ["1.1.2"]
+    prompt: |
+      Convert hex `2F` to BCD. First, `2F` in denary is {{1}}. So in BCD it is {{2}}.
+    blanks:
+      - accept: ["47"]
+      - accept: ["01000111", "0100 0111"]
+    explanation: |
+      $2 \times 16 + 15 = 47$. Then encode each denary digit: 4 → `0100`, 7 → `0111`. Notice you **can't** just copy the hex nibbles (`0010 1111`): that's binary, and `1111` isn't valid BCD.
+
+  - id: bcd-money
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.4"]
+    prompt: |
+      A bank's software stores account balances in BCD rather than as binary fractions. Explain why.
+    model: |
+      Many denary fractions, such as 0.1, cannot be represented exactly in binary, so binary storage gives small rounding errors that build up over many calculations. In BCD each denary digit is stored exactly as its own 4-bit code, so amounts like £0.10 are held precisely and every penny is accounted for.
+    keyPoints:
+      - Some denary fractions (e.g. 0.1) have no exact binary representation
+      - Binary storage leads to rounding errors that can accumulate
+      - BCD stores each denary digit exactly, in its own 4-bit code
+      - Money must be exact to the penny, so BCD avoids the errors
+    explanation: |
+      The key idea is exactness. BCD keeps the denary digits that humans (and auditors) care about, at the cost of some extra storage.

@@ -1,0 +1,238 @@
+id: data-rep-binary-prefixes
+subject: "9618"
+topic: "1.1"
+title: Binary prefixes and magnitudes
+summary: Why a kibibyte is 1024 bytes but a kilobyte is 1000, and how to convert between binary and decimal prefixes without a calculator.
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.1.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1, first learning outcome and its
+    guidance (kibi/kilo, mebi/mega, gibi/giga, tebi/tera). Prefix values follow the SI decimal
+    prefixes and the IEC binary prefixes. All arithmetic checked with Python. Questions are
+    original, not taken from past papers.
+blocks:
+  - type: objective
+    body: |
+      By the end you can tell a **kibibyte** from a **kilobyte** (and mebi from mega, gibi from giga, tebi from tera), and convert between them in your head.
+
+  - type: explain
+    title: Bits, nibbles and bytes
+    body: |
+      Everything a computer stores is a pattern of **bits** (binary digits), each one a 0 or a 1.
+
+      | Unit | Size |
+      | --- | --- |
+      | bit (b) | one binary digit |
+      | nibble | 4 bits |
+      | byte (B) | 8 bits |
+
+      Real files run to millions of bytes, so we need prefixes. The catch: there are **two families** of prefix, and they don't agree.
+
+  - type: definition
+    term: Decimal prefix
+    body: |
+      A prefix that multiplies by a power of **10**: kilo (k) $= 10^3$, mega (M) $= 10^6$, giga (G) $= 10^9$, tera (T) $= 10^{12}$. Each step up multiplies by 1000.
+
+  - type: definition
+    term: Binary prefix
+    body: |
+      A prefix that multiplies by a power of **2**: kibi (Ki) $= 2^{10}$, mebi (Mi) $= 2^{20}$, gibi (Gi) $= 2^{30}$, tebi (Ti) $= 2^{40}$. Each step up multiplies by $2^{10} = 1024$.
+
+  - type: explain
+    title: The two ladders, side by side
+    body: |
+      | Decimal unit | Bytes | Binary unit | Bytes |
+      | --- | --- | --- | --- |
+      | 1 kB (kilobyte) | 1 000 | 1 KiB (kibibyte) | 1 024 |
+      | 1 MB (megabyte) | 1 000 000 | 1 MiB (mebibyte) | 1 048 576 |
+      | 1 GB (gigabyte) | 1 000 000 000 | 1 GiB (gibibyte) | 1 073 741 824 |
+      | 1 TB (terabyte) | 1 000 000 000 000 | 1 TiB (tebibyte) | 1 099 511 627 776 |
+
+      - The "bi" in kibi, mebi, gibi and tebi stands for **binary**. See "bi", think 1024.
+      - Watch the symbols: kilo is a lower-case **k**; kibi is **Ki**.
+      - The only number you must know cold is $2^{10} = 1024$. Every other step is "times 1024 again".
+
+  - type: check
+    title: Quick check
+    questions: [name-2-to-20, tebi-prefix]
+
+  - type: example
+    title: Climbing down the binary ladder
+    problem: |
+      A video clip is 5 MiB. How big is it in KiB, and in bytes?
+    steps:
+      - |
+        One step down the binary ladder multiplies by 1024: 1 MiB = 1024 KiB.
+      - |
+        So 5 MiB $= 5 \times 1024 = 5120$ KiB.
+      - |
+        One more step: 1 KiB = 1024 bytes, so we need $5120 \times 1024$.
+      - |
+        No calculator, so split the 1024: $5120 \times 1000 = 5\,120\,000$ and $5120 \times 24 = 122\,880$.
+      - |
+        Add them: $5\,120\,000 + 122\,880 = 5\,242\,880$ bytes. Check: $5 \times 2^{20} = 5 \times 1\,048\,576$ gives the same.
+    answer: |
+      5120 KiB, which is 5 242 880 bytes. Going **up** the ladder you divide by 1024 instead: 3072 KiB $= 3072 \div 1024 = 3$ MiB.
+
+  - type: misconceptions
+    items:
+      - wrong: A kilobyte is 1024 bytes.
+        right: |
+          A **kilobyte** (kB) is exactly 1000 bytes. 1024 bytes is a **kibibyte** (KiB). Lots of software still blurs the two. The syllabus keeps them apart, so your answers can too.
+      - wrong: 1 MiB is 1000 × 1024 bytes.
+        right: |
+          Stay on one ladder: 1 MiB $= 1024 \times 1024 = 2^{20} = 1\,048\,576$ bytes. Mixing a 1000 with a 1024 gives a number that is neither unit.
+      - wrong: Mb and MB mean the same thing.
+        right: |
+          Lower-case **b** is bits, upper-case **B** is bytes. 8 Mb (megabits) is 1 MB (megabyte).
+
+  - type: check
+    title: Convert it
+    questions: [kib-vs-kb, kib-to-mib, spot-mixed-ladders]
+
+  - type: intuition
+    title: Why are there two ladders at all?
+    body: |
+      **Memory is addressed in binary.** With $n$ address bits you can number exactly $2^n$ locations, so memory comes in powers of two. A "16 GB" memory module really holds 16 GiB.
+
+      **Storage makers and network speeds use powers of ten**, like the rest of science. A "1 TB" drive holds $10^{12}$ bytes.
+
+      Then your operating system divides by $2^{30}$ (and some, such as Windows, still print "GB"): $10^{12} \div 2^{30} \approx 931$. The new drive "shrinks" to 931 GB. No bytes went missing; the unit quietly changed ladders.
+
+  - type: diagram
+    diagram: cs-prefix-gap
+    alt: >-
+      Bar chart of how many per cent larger each binary prefix is than its decimal partner. Kibi is
+      2.4% bigger than kilo, mebi is 4.9% bigger than mega, gibi is 7.4% bigger than giga and tebi
+      is 10.0% bigger than tera, so the bars rise steadily from left to right.
+    caption: |
+      The gap grows at every step because each step multiplies by 1024 rather than 1000. By tera it is about 10%.
+
+  - type: check
+    title: Explain it
+    questions: [missing-space]
+
+  - type: exam
+    body: |
+      - Paper 1 usually tests this in short items worth 1 or 2 marks: **state** how many bytes are in a unit, **calculate** a size in another unit, or **explain the difference** between a pair such as kibibyte and kilobyte.
+      - For "explain the difference", give both values: 1 KiB $= 2^{10} = 1024$ bytes and 1 kB $= 10^3 = 1000$ bytes. "A kibibyte is bigger" on its own won't earn the marks.
+      - **No calculators** in any 9618 paper, so the numbers are friendly. Write each step of the ladder, and answer in the unit asked for: MiB and MB are different quantities.
+
+  - type: takeaways
+    items:
+      - Decimal prefixes (k, M, G, T) are powers of 10; each step is ×1000.
+      - Binary prefixes (Ki, Mi, Gi, Ti) are powers of 2; each step is ×1024, and 1 KiB = 1024 bytes.
+      - Never mix 1000 and 1024 in the same conversion.
+      - Lower-case b is a bit, upper-case B is a byte (8 bits).
+
+  - type: deeper
+    title: Bits per second, and the powers worth knowing
+    body: |
+      - Network speeds use **decimal** prefixes and **bits**: 100 Mbps is 100 000 000 bits per second, which is $100\,000\,000 \div 8 = 12\,500\,000$ bytes per second.
+      - The binary prefixes were standardised by the IEC in the late 1990s, precisely because "kilobyte" had been used for both 1000 and 1024 bytes.
+      - Handy powers: $2^{10} = 1024$, $2^{20} = 1\,048\,576$, $2^{30} = 1\,073\,741\,824$, $2^{40} = 1\,099\,511\,627\,776$. Writing the power next to a long number shows the examiner where it came from.
+
+questions:
+  - id: name-2-to-20
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.1"]
+    prompt: |
+      A memory chip stores exactly $2^{20}$ bytes. Which label is correct?
+    options:
+      - text: 1 MiB
+        correct: true
+        why: |
+          Mebi means $2^{20}$, so $2^{20}$ bytes is exactly 1 MiB.
+      - text: 1 MB
+        why: |
+          A megabyte is $10^6 = 1\,000\,000$ bytes, which is 48 576 bytes short of $2^{20}$.
+      - text: 1 KiB
+        why: |
+          1 KiB is only $2^{10} = 1024$ bytes.
+      - text: 1 GiB
+        why: |
+          1 GiB is $2^{30}$ bytes, 1024 times bigger.
+    explanation: |
+      Binary prefixes climb in steps of $2^{10}$: kibi $2^{10}$, mebi $2^{20}$, gibi $2^{30}$, tebi $2^{40}$.
+
+  - id: tebi-prefix
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.1.1"]
+    prompt: |
+      Which binary prefix means $2^{40}$?
+    accept: ["tebi", "Ti", "tebi (Ti)", "tebi-", "tebibyte", "tebibytes", "TiB"]
+    model: |
+      **tebi** (symbol Ti). 1 TiB $= 2^{40} = 1\,099\,511\,627\,776$ bytes.
+    explanation: |
+      Count the powers in tens: kibi $2^{10}$, mebi $2^{20}$, gibi $2^{30}$, tebi $2^{40}$. Tera is the *decimal* prefix for $10^{12}$.
+
+  - id: kib-vs-kb
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.1"]
+    prompt: |
+      Give each size in bytes.
+    fields:
+      - label: "3 KiB ="
+        answer: 3072
+        unit: bytes
+      - label: "3 kB ="
+        answer: 3000
+        unit: bytes
+    explanation: |
+      1 KiB = 1024 bytes, so 3 KiB $= 3 \times 1024 = 3072$ bytes. 1 kB = 1000 bytes, so 3 kB = 3000 bytes. Same digit, 72 bytes apart.
+
+  - id: kib-to-mib
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.1"]
+    prompt: |
+      A document is 3584 KiB. How big is it in MiB?
+    fields:
+      - answer: 3.5
+        unit: MiB
+    explanation: |
+      Going up the binary ladder divides by 1024. $3 \times 1024 = 3072$, leaving $3584 - 3072 = 512$, which is half of 1024. So it is 3.5 MiB.
+
+  - id: spot-mixed-ladders
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.1.1"]
+    prompt: |
+      A student works out how many bytes there are in 2 MB. Which line contains the first error?
+    lines:
+      - 1 MB = 1000 kB
+      - 1 kB = 1024 bytes
+      - So 1 MB = 1000 × 1024 = 1 024 000 bytes
+      - So 2 MB = 2 × 1 024 000 = 2 048 000 bytes
+    errorLine: 2
+    fix: |
+      1 kB = 1000 bytes (1024 bytes is 1 KiB). So 1 MB = 1 000 000 bytes and 2 MB = 2 000 000 bytes.
+    explanation: |
+      MB lives on the decimal ladder, where every step is ×1000. The student jumped to the binary ladder halfway, giving a number that is neither 2 MB nor 2 MiB (2 MiB is 2 097 152 bytes).
+
+  - id: missing-space
+    format: explain
+    difficulty: 3
+    objectives: ["1.1.1"]
+    prompt: |
+      Maya buys an external drive labelled 1 TB. Her computer reports its capacity as about 931 GB. Explain why no storage is actually missing.
+    model: |
+      The manufacturer uses a decimal prefix: 1 TB $= 10^{12}$ bytes. The operating system counts in binary units of $2^{30}$ bytes (gibibytes) but labels them "GB". Because $2^{30}$ is bigger than $10^9$, dividing the same number of bytes by it gives a smaller number: $10^{12} \div 2^{30} \approx 931$. The drive still holds $10^{12}$ bytes; only the unit has changed.
+    keyPoints:
+      - "The label uses a decimal prefix: 1 TB = 10¹² bytes"
+      - "The computer counts in binary units of 2³⁰ bytes (GiB), even if it shows 'GB'"
+      - "A GiB is bigger than a GB, so the same bytes give a smaller number"
+      - "The number of bytes is unchanged; only the unit differs"
+    explanation: |
+      This is the kilo/kibi difference three steps up the ladder. The computer divides by $2^{30}$, which is about 7.4% bigger than $10^9$, so the number it shows is about 7% smaller: 931 rather than 1000.

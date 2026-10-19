@@ -1,0 +1,181 @@
+id: data-rep-hexadecimal
+subject: "9618"
+topic: "1.1"
+title: Hexadecimal
+summary: Convert between hexadecimal, binary and denary in every direction, using nibbles as the shortcut.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.1.2"]
+prerequisites: [data-rep-binary-denary]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.1: the hexadecimal part of the
+    second learning outcome and the hexadecimal part of the fourth (practical applications of BCD
+    and hexadecimal). The & prefix for hex follows the syllabus notation in the 4.2 instruction
+    set table. Uses of hex (memory dumps, colour codes, MAC and IPv6 addresses, machine code and
+    error codes) are standard practice. All conversions checked with Python. Questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can convert between **hexadecimal**, binary and denary, in any direction, without a calculator.
+
+  - type: explain
+    title: Base 16
+    body: |
+      **Hexadecimal** (hex) needs sixteen digits. After 0 to 9 we run out of symbols, so letters step in:
+
+      | Denary | 10 | 11 | 12 | 13 | 14 | 15 |
+      | --- | --- | --- | --- | --- | --- | --- |
+      | Hex | A | B | C | D | E | F |
+      | Binary | `1010` | `1011` | `1100` | `1101` | `1110` | `1111` |
+
+      Hex columns are powers of 16: 1, 16, 256, 4096 … You'll see hex written as `&4A` (the Cambridge style in assembly language), `0x4A` or `4A₁₆`. They all mean the same number.
+
+  - type: intuition
+    title: Why hex and binary get on so well
+    body: |
+      $16 = 2^4$, so **one hex digit is exactly four bits** (a nibble). Converting between them is a lookup, not a sum.
+
+      Denary can't do this: 10 isn't a power of 2, so its digits don't line up with groups of bits. That's why people write binary in hex: it's a quarter of the length. (Where that helps is the next lesson.)
+
+  - type: diagram
+    diagram: cs-hex-nibbles
+    alt: >-
+      The 16-bit binary number 1011 0110 1111 0001 split into four groups of four bits, each with
+      column values 8, 4, 2 and 1 above it. Each group points down to one hex digit: 1011 is
+      8 + 2 + 1 = 11 which is B, 0110 is 4 + 2 = 6, 1111 is 8 + 4 + 2 + 1 = 15 which is F, and 0001
+      is 1. The result reads 1011 0110 1111 0001 in binary equals B6F1 in hex.
+    caption: |
+      Every nibble becomes one hex digit, so 16 bits shrink to 4 characters.
+
+  - type: example
+    title: Binary to hex (and back)
+    problem: |
+      Convert `1011011110` to hex.
+    steps:
+      - |
+        Group in fours **from the right**: `10 1101 1110`.
+      - |
+        The leftmost group is short, so pad it with zeros on the left: `0010 1101 1110`.
+      - |
+        Look up each nibble: `0010` = 2, `1101` = D, `1110` = E.
+      - |
+        Going the other way is the same in reverse: each hex digit becomes four bits, so `A7` is `1010 0111`.
+    answer: |
+      `1011011110` = `2DE` in hex
+
+  - type: check
+    title: Quick check
+    questions: [bin-to-hex, hex-to-bin]
+
+  - type: example
+    title: Hex and denary
+    problem: |
+      Convert hex `3C` to denary. Then convert denary 200 to hex.
+    steps:
+      - |
+        In `3C`, the 3 is in the 16s column and C (= 12) is in the 1s column.
+      - |
+        $3 \times 16 + 12 = 48 + 12 = 60$.
+      - |
+        For 200, ask how many 16s fit: $16 \times 12 = 192$, so twelve 16s with 8 left over.
+      - |
+        Twelve is C, so 200 is `C8`. Check: $12 \times 16 + 8 = 200$ ✓
+      - |
+        Not keen on dividing by 16? Go via binary: 200 = `1100 1000`, and `1100` = C, `1000` = 8.
+    answer: |
+      `3C` = 60, and 200 = `C8`
+
+  - type: deeper
+    title: Three-digit hex
+    body: |
+      The third column from the right is worth $16^2 = 256$. So `1F4` is $1 \times 256 + 15 \times 16 + 4 = 256 + 240 + 4 = 500$.
+
+      Via binary it's just as quick: `1F4` → `0001 1111 0100` → $256 + 128 + 64 + 32 + 16 + 4 = 500$.
+
+  - type: check
+    title: Hex and denary
+    questions: [hex-to-den, den-to-hex, hex-three-digit]
+
+  - type: misconceptions
+    items:
+      - wrong: Group the bits into fours starting from the left.
+        right: |
+          Group from the **right** (the least significant end), then pad the leftmost group with zeros. `110101` is `0011 0101` = `35`, not `1101 0100` = `D4`.
+      - wrong: "`1010 1100` in hex is `1012`."
+        right: |
+          Each nibble becomes **one** hex digit. `1010` is 10, which is the single digit `A`, and `1100` is 12, which is `C`. So the answer is `AC`.
+
+  - type: exam
+    body: |
+      - Conversions often come as a table to **complete**, about 1 mark per value, marked on the answer alone. Show the nibbles, or the 16s and 1s columns, and convert back to check.
+      - Values 10 to 15 must be written as the letters A to F. A "12" inside a hex answer is two digits, not one.
+
+  - type: takeaways
+    items:
+      - Hex is base 16, digits 0 to 9 then A (10) to F (15); columns are 1, 16, 256 …
+      - One hex digit = one nibble = four bits, so binary ↔ hex is a direct lookup.
+      - Group bits from the right and pad on the left.
+      - For hex ↔ denary, use the 16s and 1s columns, or go via binary.
+
+questions:
+  - id: bin-to-hex
+    format: cloze
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      `1011 1110` in hexadecimal is {{1}}
+    blanks:
+      - accept: ["BE", "0xBE", "BE16", "BEh"]
+    explanation: |
+      `1011` = 8 + 2 + 1 = 11 = B and `1110` = 8 + 4 + 2 = 14 = E, giving `BE`.
+
+  - id: hex-to-bin
+    format: cloze
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      Hex `5C` as an 8-bit binary number is {{1}}
+    blanks:
+      - accept: ["01011100", "0101 1100"]
+    explanation: |
+      Each hex digit becomes four bits: 5 → `0101` and C (12) → `1100`. Keep the leading 0 of the first nibble, or you only have 7 bits.
+
+  - id: hex-to-den
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |
+      Convert hex `7F` to denary.
+    fields:
+      - answer: 127
+    explanation: |
+      $7 \times 16 + 15 = 112 + 15 = 127$. Or via binary: `0111 1111` = 127.
+
+  - id: den-to-hex
+    format: text
+    style: one-line
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |
+      Convert denary 172 to hexadecimal.
+    accept: ["AC", "0xAC", "ACh", "AC16"]
+    model: |
+      `AC`: $172 = 10 \times 16 + 12$, and 10 is A, 12 is C.
+    explanation: |
+      $16 \times 10 = 160$ leaves 12. Ten sixteens and twelve ones gives `AC`. Via binary: 172 = `1010 1100` = A, C.
+
+  - id: hex-three-digit
+    format: numeric
+    difficulty: 3
+    objectives: ["1.1.2"]
+    prompt: |
+      Convert hex `2B7` to denary.
+    fields:
+      - answer: 695
+    explanation: |
+      The columns are 256, 16 and 1: $2 \times 256 + 11 \times 16 + 7 = 512 + 176 + 7 = 695$. If you got 247, you doubled the column value to 32; each hex column is **16 times** the one to its right, so it's 256. Via binary: `0010 1011 0111` $= 512 + 128 + 32 + 16 + 4 + 2 + 1 = 695$.

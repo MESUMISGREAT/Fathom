@@ -1,0 +1,264 @@
+id: quadratics-unknown-constants
+subject: "9709"
+topic: "1.1"
+title: Finding the set of values of k
+summary: Turn a condition on the roots into an inequality in k with the discriminant, then solve it, including when a line meets a curve.
+order: 6
+minutes: 5
+kind: core
+objectives: ["1.1.2", "1.1.3"]
+prerequisites: [quadratics-discriminant, quadratics-inequalities, quadratics-simultaneous-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025; update notice checked): topic 1.1 outcomes on using
+    the discriminant and solving quadratic inequalities. The line-meets-curve application is also
+    named in the note to topic 1.3 (set of values of k for which a line intersects, touches or does
+    not meet a quadratic curve); this lesson teaches the 1.1 toolkit behind it. Examples and
+    questions are original; all values checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the values of an unknown constant $k$ that give a quadratic two distinct, equal or no real roots. That usually means solving a quadratic inequality **in $k$**.
+
+  - type: explain
+    title: The recipe
+    body: |-
+      1. Get the equation into the form $ax^2 + bx + c = 0$ and write down $a$, $b$ and $c$ **in terms of $k$**. Use brackets.
+      2. Translate the wording into a condition on $b^2 - 4ac$: $> 0$, $= 0$, $\geqslant 0$ or $< 0$.
+      3. Simplify. You'll usually get a quadratic in $k$.
+      4. Solve it: an equation if the condition is $= 0$, an inequality (sketch!) otherwise.
+
+      Same skills as before, just stacked. Like a lasagne.
+
+  - type: example
+    title: Two distinct real roots
+    problem: |-
+      Find the set of values of $k$ for which $x^2 + kx + k + 3 = 0$ has two distinct real roots.
+    steps:
+      - |-
+        $a = 1$, $b = k$, $c = k + 3$.
+      - |-
+        Two distinct real roots: $b^2 - 4ac > 0$, so $k^2 - 4(k + 3) > 0$.
+      - |-
+        Simplify: $k^2 - 4k - 12 > 0$, so $(k - 6)(k + 2) > 0$.
+      - |-
+        Critical values $k = -2$ and $k = 6$. Sketch: a ∪-shaped graph in $k$ is positive **outside** them.
+    answer: |-
+      $k < -2$ or $k > 6$.
+
+  - type: check
+    questions: [k-disc-expression, k-no-real]
+
+  - type: explain
+    title: Does a line meet a curve?
+    body: |-
+      Same idea, one extra step at the start: **substitute** the line into the curve to get a single quadratic in $x$. Each real root is an intersection point, so its discriminant counts them:
+
+      | $b^2 - 4ac$ | The line… |
+      | --- | --- |
+      | $> 0$ | meets the curve at two distinct points |
+      | $= 0$ | touches the curve at one point: it's a **tangent** |
+      | $< 0$ | doesn't meet the curve |
+
+      Plain "meets" (with no mention of two distinct points) includes the tangent case, so it means $\geqslant 0$. If the question says "at two distinct points", or sets *intersects* against *touches* (as in "intersects, touches or does not meet"), it means $> 0$.
+
+  - type: definition
+    term: Tangent condition
+    body: |-
+      When a line is substituted into a quadratic curve, a **repeated root** ($b^2 - 4ac = 0$) means the line touches the curve at exactly one point without crossing it: the line is a **tangent** to the curve. The repeated root is the $x$-coordinate of the point of contact.
+
+  - type: diagram
+    diagram: line-curve-pivot
+    alt: >-
+      The curve y = x² − 2x + 2, a U shape with its vertex at (1, 1), and four straight lines
+      y = kx − 2 that all pass through the point (0, −2). The line with k = 3 crosses the curve at
+      (1, 1) and (4, 10). The lines with k = 2 and k = −6 are tangents, touching the curve at
+      (2, 2) and (−2, 10). The dashed horizontal line with k = 0 passes below the curve and misses it.
+    caption: |-
+      Swing the line $y = kx - 2$ round the point $(0, -2)$. It's a tangent at $k = -6$ and $k = 2$, misses the curve for $-6 < k < 2$, and cuts it twice for $k < -6$ or $k > 2$.
+
+  - type: check
+    questions: [k-tangent-name, k-wording]
+
+  - type: example
+    title: The set of values for which a line meets a curve
+    problem: |-
+      Find the set of values of $k$ for which the line $y = kx - 2$ meets the curve $y = x^2 - 2x + 2$.
+    steps:
+      - |-
+        Set the $y$'s equal: $x^2 - 2x + 2 = kx - 2$.
+      - |-
+        Rearrange: $x^2 - (k + 2)x + 4 = 0$. So $a = 1$, $b = -(k + 2)$, $c = 4$.
+      - |-
+        "Meets" means one or two points: $b^2 - 4ac \geqslant 0$, so $(k + 2)^2 - 16 \geqslant 0$.
+      - |-
+        Expand: $k^2 + 4k - 12 \geqslant 0$, so $(k + 6)(k - 2) \geqslant 0$.
+      - |-
+        Critical values $-6$ and $2$. $\geqslant 0$ is outside them, endpoints included.
+      - |-
+        Sense check with the diagram: $k = 2$ and $k = -6$ give the tangents, and $k = 0$ (between them) misses ✓
+    answer: |-
+      $k \leqslant -6$ or $k \geqslant 2$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          From $x^2 - (k + 2)x + 4 = 0$: $b = -k + 2$.
+        right: |-
+          $b = -(k + 2) = -k - 2$. Keep the bracket; then $b^2 = (k + 2)^2$.
+      - wrong: |-
+          "The line meets the curve" means $b^2 - 4ac > 0$.
+        right: |-
+          A tangent meets the curve too, so it's $\geqslant 0$. Only "at two distinct points" gives $> 0$.
+      - wrong: |-
+          $-4k^2 + 12k + 16 \geqslant 0$; divide by $-4$: $k^2 - 3k - 4 \geqslant 0$.
+        right: |-
+          Dividing by a negative number reverses the inequality: $k^2 - 3k - 4 \leqslant 0$.
+
+  - type: deeper
+    title: When k is the coefficient of x²
+    body: |-
+      In $kx^2 + 4x + k - 3 = 0$, $a = k$. For real roots:
+
+      $$16 - 4k(k - 3) \geqslant 0 \iff k^2 - 3k - 4 \leqslant 0 \iff (k - 4)(k + 1) \leqslant 0 \iff -1 \leqslant k \leqslant 4$$
+
+      But if $k = 0$ the equation isn't quadratic at all: it's $4x - 3 = 0$, which still has a real root. So for "the equation has real roots" the answer $-1 \leqslant k \leqslant 4$ stands. If a question insists on a *quadratic* equation, exclude $k = 0$. Always ask: can $a$ be zero?
+
+  - type: exam
+    body: |-
+      - A Paper 1 favourite, often phrased as *intersects*, *touches* or *does not meet*. Translate the wording into $>$, $=$, $\geqslant$ or $<$ before doing anything else.
+      - Marks typically go on: the substituted quadratic, the discriminant condition, the critical values, and the final set.
+      - The final set needs the right shape: "$k < -2$ or $k > 6$" (two pieces) or "$-3 < k < 5$" (a sandwich). Check it with one test value.
+
+  - type: check
+    questions: [k-tangent, k-sign-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        Write $a$, $b$, $c$ in terms of $k$ with brackets, then translate the wording into a condition on $b^2 - 4ac$.
+      - |-
+        Line and curve: substitute first; the discriminant counts intersection points ($= 0$ means tangent).
+      - |-
+        "Meets" is $\geqslant 0$; "two distinct points" is $> 0$; "does not meet" is $< 0$.
+      - |-
+        Solve the inequality in $k$ with a sketch, and flip the sign if you divide by a negative.
+
+questions:
+  - id: k-disc-expression
+    format: expression
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |-
+      For the equation $x^2 + (k - 1)x + 4 = 0$, find the discriminant in terms of $k$.
+    answer: (k - 1)^2 - 16
+    variables: [k]
+    display: |-
+      $(k - 1)^2 - 16$, which expands to $k^2 - 2k - 15$
+    explanation: |-
+      $a = 1$, $b = k - 1$, $c = 4$, so $b^2 - 4ac = (k - 1)^2 - 16$. Any equivalent form, such as $k^2 - 2k - 15$, is fine.
+
+  - id: k-no-real
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.2", "1.1.3"]
+    prompt: |-
+      Hence find the set of values of $k$ for which $x^2 + (k - 1)x + 4 = 0$ has no real roots. The answer has the form $a < k < b$. Enter $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: -3
+      - label: "b ="
+        answer: 5
+    explanation: |-
+      No real roots: $(k - 1)^2 - 16 < 0$, i.e. $k^2 - 2k - 15 < 0$, so $(k - 5)(k + 3) < 0$.
+
+      Critical values $-3$ and $5$; $< 0$ is between them: $-3 < k < 5$.
+
+  - id: k-tangent-name
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |-
+      You substitute a line into the equation of a curve, and the resulting quadratic has $b^2 - 4ac = 0$. What is the line called, in relation to the curve?
+    accept:
+      - tangent
+      - a tangent
+      - tangent line
+      - tangent to the curve
+      - a tangent to the curve
+      - the tangent
+    model: |-
+      A **tangent** to the curve: it touches the curve at exactly one point.
+    explanation: |-
+      A zero discriminant means one repeated root, so one point of contact where the line touches without crossing: a tangent.
+
+  - id: k-wording
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |-
+      A question asks for the values of $k$ for which a line **does not meet** a curve. After substituting, which condition do you need?
+    explanation: |-
+      "Does not meet" means no intersection points, so the quadratic must have no real roots: $b^2 - 4ac < 0$.
+    options:
+      - text: |-
+          $b^2 - 4ac < 0$
+        correct: true
+        why: |-
+          No real roots means no intersection points.
+      - text: |-
+          $b^2 - 4ac = 0$
+        why: |-
+          That's the tangent case: the line touches the curve once.
+      - text: |-
+          $b^2 - 4ac \geqslant 0$
+        why: |-
+          That's the condition for the line to **meet** the curve (once or twice), the exact opposite.
+      - text: |-
+          $b^2 - 4ac > 0$
+        why: |-
+          That's two distinct intersection points.
+
+  - id: k-tangent
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |-
+      Find the value of the constant $k$ for which the line $y = 3x + k$ is a tangent to the curve $y = x^2 + x + 4$.
+    fields:
+      - label: "k ="
+        answer: 3
+    explanation: |-
+      $x^2 + x + 4 = 3x + k \Rightarrow x^2 - 2x + (4 - k) = 0$.
+
+      Tangent: $(-2)^2 - 4(1)(4 - k) = 0 \Rightarrow 4 - 16 + 4k = 0 \Rightarrow k = 3$.
+
+      Then $x^2 - 2x + 1 = (x - 1)^2 = 0$, so the point of contact is $(1, 6)$.
+
+  - id: k-sign-spot
+    format: spot-error
+    difficulty: 3
+    objectives: ["1.1.2", "1.1.3"]
+    prompt: |-
+      A student finds the set of values of $k$ for which $kx^2 + 4x + k - 3 = 0$ has real roots. Which line contains the first error?
+    lines:
+      - |-
+        $a = k$, $b = 4$, $c = k - 3$
+      - |-
+        Real roots: $16 - 4k(k - 3) \geqslant 0$
+      - |-
+        $16 - 4k^2 + 12k \geqslant 0$
+      - |-
+        Divide by $-4$: $k^2 - 3k - 4 \geqslant 0$
+      - |-
+        $(k - 4)(k + 1) \geqslant 0$, so $k \leqslant -1$ or $k \geqslant 4$
+    errorLine: 4
+    fix: |-
+      Dividing by $-4$ reverses the inequality: $k^2 - 3k - 4 \leqslant 0$, so $(k - 4)(k + 1) \leqslant 0$ and $-1 \leqslant k \leqslant 4$.
+    explanation: |-
+      Test a value: $k = 1$ gives $x^2 + 4x - 2 = 0$, with $b^2 - 4ac = 16 + 8 = 24 > 0$, so it has real roots. But the student's answer excludes $k = 1$. Multiplying or dividing an inequality by a negative number always flips the sign.

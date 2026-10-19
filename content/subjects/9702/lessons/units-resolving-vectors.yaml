@@ -1,0 +1,234 @@
+id: units-resolving-vectors
+subject: "9702"
+topic: "1.4"
+title: Resolving vectors into components
+summary: Any vector can be replaced by two perpendicular components, F cos θ and F sin θ, which together have exactly the same effect.
+order: 3
+minutes: 5
+objectives: ["1.4.3"]
+prerequisites: [units-adding-vectors]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 1.4.3, and the mathematical requirement to obtain expressions for
+    components of a vector in perpendicular directions). The diagram is drawn to scale (35° force;
+    30° slope). All component values recomputed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **resolve** a vector into two perpendicular components, including along and at right angles to a slope, and recombine components into a single vector.
+
+  - type: explain
+    title: One vector, two components
+    body: |
+      Resolving is vector addition run backwards. A vector $F$ at angle $\theta$ to the horizontal can be **replaced** by two perpendicular vectors that add up to it:
+
+      $$F_x = F\cos\theta \qquad F_y = F\sin\theta$$
+
+      $F$ is the hypotenuse of a right-angled triangle; the components are the other two sides. The two components together have **exactly the same effect** as $F$, so you can use them instead of it, never as well as it.
+
+  - type: diagram
+    diagram: phys-vector-components
+    alt: >-
+      Left, "Resolving a force": an arrow F at angle θ (35°) above the horizontal. A horizontal
+      arrow labelled F cos θ runs from the start of F to a point directly below its tip, and a
+      vertical arrow labelled F sin θ runs up from there to the tip of F, with a right-angle mark
+      between them. A note says the component next to θ gets cos θ. Right, "Weight on a slope": a
+      block on a slope inclined at θ (30°) to the horizontal. Its weight W points vertically down
+      from its centre. Two components start from the same point: W sin θ pointing down the slope
+      and W cos θ pointing into the slope at right angles to it, with a right-angle mark between
+      them. The angle between W and the W cos θ component is marked θ. Dashed lines complete the
+      rectangle whose diagonal is W.
+    caption: The component **next to** the angle is the cos one. On a slope, the angle between W and the perpendicular to the slope equals the slope angle θ.
+
+  - type: definition
+    term: Component of a vector
+    body: |
+      The effective part of a vector in a given direction. A vector of magnitude $F$ at angle $\theta$ to a direction has a component $F\cos\theta$ in that direction and $F\sin\theta$ at right angles to it.
+
+  - type: example
+    title: Pulling a sledge
+    problem: |
+      A child pulls a sledge with a rope at $30°$ above the horizontal. The tension in the rope is $40\ \text{N}$. Find the horizontal and vertical components of the tension.
+    steps:
+      - |
+        The angle is measured from the horizontal, so the horizontal component is the one **next to** it: $40\cos 30° = 34.6\ \text{N}$.
+      - |
+        Vertical component: $40\sin 30° = 20.0\ \text{N}$.
+      - |
+        Check: $\sqrt{34.6^2 + 20.0^2} = 40.0\ \text{N}$. ✓
+    answer: |
+      34.6 N horizontally (pulling the sledge along) and 20.0 N vertically (lifting it slightly, which reduces its push on the snow).
+
+  - type: check
+    questions: [kick-components, cos-sin-cloze]
+
+  - type: explain
+    title: On a slope, tilt your axes
+    body: |
+      For an object on a slope it is easiest to resolve **parallel** and **perpendicular** to the slope. For a slope at angle $\theta$ to the horizontal, the weight $W$ splits into:
+
+      - $W\sin\theta$ **down the slope** (this is what makes things slide);
+      - $W\cos\theta$ **perpendicular to the slope**, into it (balanced by the normal contact force if the object stays on the surface).
+
+      Sanity check: when $\theta = 0$ (flat ground), $W\sin 0 = 0$, so nothing pulls the object along. That's right.
+
+  - type: example
+    title: A box on a ramp
+    problem: |
+      A box of weight $50\ \text{N}$ rests on a ramp inclined at $25°$ to the horizontal. Find the components of its weight parallel and perpendicular to the ramp.
+    steps:
+      - |
+        Down the ramp: $W\sin\theta = 50\sin 25° = 21.1\ \text{N}$.
+      - |
+        Perpendicular to the ramp: $W\cos\theta = 50\cos 25° = 45.3\ \text{N}$.
+    answer: |
+      21.1 N down the slope and 45.3 N into the slope.
+
+  - type: check
+    questions: [slope-component]
+
+  - type: explain
+    title: Putting components back together
+    body: |
+      Going the other way, two perpendicular components $F_x$ and $F_y$ combine into
+
+      $$F = \sqrt{F_x^2 + F_y^2} \qquad \theta = \tan^{-1}\left(\frac{F_y}{F_x}\right)$$
+
+      This is also the neatest way to add **several** vectors: resolve each one, add all the horizontal components, add all the vertical components, then recombine.
+
+  - type: check
+    questions: [recombine-components]
+
+  - type: misconceptions
+    items:
+      - wrong: The horizontal component is always F cos θ.
+        right: It is $F\cos\theta$ only if $\theta$ is measured **from the horizontal**. If $\theta$ is measured from the vertical, the horizontal component is $F\sin\theta$.
+      - wrong: A component can be bigger than the vector itself.
+        right: Never. $\cos\theta$ and $\sin\theta$ are at most 1, and the vector is the hypotenuse.
+      - wrong: On a slope, W cos θ acts down the slope.
+        right: $W\sin\theta$ acts down the slope; $W\cos\theta$ acts into it. Check with $\theta = 0$, where the down-slope part must be zero.
+
+  - type: exam
+    body: |
+      - Sketch the right-angled triangle and mark the angle before choosing sin or cos. It takes five seconds and saves marks.
+      - Resolving appears everywhere: forces in equilibrium (topic 4), projectiles (topic 2) and work done by a force at an angle (topic 5).
+      - Give both components with units, and say which direction each one is in.
+
+  - type: check
+    questions: [lamp-spot-error, component-limit]
+
+  - type: takeaways
+    items:
+      - Components at right angles, F cos θ and F sin θ, replace the vector exactly.
+      - The component **next to** the angle uses cos; the one opposite uses sin.
+      - "On a slope: W sin θ down the slope, W cos θ perpendicular to it."
+      - "Recombine with Pythagoras and tan⁻¹."
+      - Use the components instead of the vector, never as well as it.
+
+questions:
+  - id: kick-components
+    format: numeric
+    difficulty: 1
+    objectives: ["1.4.3"]
+    prompt: |
+      A ball is kicked at $18\ \text{m s}^{-1}$ at $40°$ above the horizontal. Find the horizontal and vertical components of its initial velocity. Give each to 3 significant figures, with its unit.
+    fields:
+      - label: "horizontal ="
+        answer: 13.79
+        sigFigs: 3
+        acceptUnits: ["m s⁻¹"]
+      - label: "vertical ="
+        answer: 11.57
+        sigFigs: 3
+        acceptUnits: ["m s⁻¹"]
+    explanation: |
+      Horizontal: $18\cos 40° = 13.8\ \text{m s}^{-1}$. Vertical: $18\sin 40° = 11.6\ \text{m s}^{-1}$. Check: $\sqrt{13.8^2 + 11.6^2} = 18\ \text{m s}^{-1}$.
+
+  - id: cos-sin-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.4.3"]
+    prompt: |
+      A vector of magnitude $F$ at angle $\theta$ to the $x$-direction has an $x$-component of $F$ {{1}} $\theta$ and a $y$-component of $F$ {{2}} $\theta$.
+    blanks:
+      - accept: [cos, cosine]
+      - accept: [sin, sine]
+    explanation: |
+      The component next to (adjacent to) the angle is $F\cos\theta$; the one opposite the angle is $F\sin\theta$.
+
+  - id: slope-component
+    format: mcq
+    difficulty: 2
+    objectives: ["1.4.3"]
+    prompt: |
+      A crate of weight $W$ rests on a ramp inclined at angle $\theta$ to the horizontal. What is the component of its weight **down the ramp**?
+    options:
+      - text: $W\sin\theta$
+        correct: true
+        why: Correct. It is zero on flat ground ($\theta = 0$) and equal to $W$ for a vertical drop ($\theta = 90°$), as it should be.
+      - text: $W\cos\theta$
+        why: This is the component perpendicular to the ramp. It would be all of $W$ on flat ground, where nothing pulls the crate along.
+      - text: $W\tan\theta$
+        why: A component is never $W\tan\theta$; that could even exceed $W$, which no component can.
+      - text: $W$
+        why: Only part of the weight acts along the ramp. All of it acts vertically.
+    explanation: |
+      The angle between $W$ and the perpendicular to the ramp equals $\theta$, so the perpendicular component is $W\cos\theta$ and the component down the ramp is $W\sin\theta$. Test with $\theta = 0$.
+
+  - id: lamp-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.4.3"]
+    prompt: |
+      A cable supporting a lamp has a tension of $20\ \text{N}$ and makes an angle of $60°$ with the **vertical**. A student resolves the tension. Which line contains the first error?
+    lines:
+      - |
+        Tension $T = 20\ \text{N}$, at $60°$ to the vertical.
+      - |
+        Horizontal component $= T\cos 60° = 20 \times 0.50 = 10\ \text{N}$
+      - |
+        Vertical component $= T\sin 60° = 20 \times 0.866 = 17.3\ \text{N}$
+      - |
+        Check: $\sqrt{10^2 + 17.3^2} = 20\ \text{N}$, so the components are correct.
+    errorLine: 2
+    fix: |
+      The angle is measured from the vertical, so the **vertical** component is next to it: vertical $= T\cos 60° = 10\ \text{N}$ and horizontal $= T\sin 60° = 17.3\ \text{N}$.
+    explanation: |
+      The student swapped the components. Notice that the Pythagoras check in line 4 still "works": it can't detect a swap. Always draw the triangle and see which side is next to the angle.
+
+  - id: recombine-components
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.3"]
+    prompt: |
+      A force has a horizontal component of $5.0\ \text{N}$ and a vertical component of $12\ \text{N}$. Find the magnitude of the force (with its unit) and its angle above the horizontal, to 3 significant figures.
+    fields:
+      - label: "magnitude ="
+        answer: 13
+        tolerance: { abs: 0.05 }
+        acceptUnits: ["N"]
+      - label: "angle above horizontal ="
+        answer: 67.38
+        sigFigs: 3
+        unit: °
+    explanation: |
+      $F = \sqrt{5.0^2 + 12^2} = \sqrt{169} = 13\ \text{N}$. $\theta = \tan^{-1}\left(\dfrac{12}{5.0}\right) = 67.4°$ above the horizontal.
+
+  - id: component-limit
+    format: explain
+    difficulty: 2
+    objectives: ["1.4.3"]
+    prompt: |
+      Explain why a component of a vector can never be larger than the vector itself.
+    model: |
+      A component is $F\cos\theta$ (or $F\sin\theta$), and $\cos\theta$ and $\sin\theta$ are never more than 1, so the component is at most $F$. Geometrically, the two perpendicular components form the shorter sides of a right-angled triangle whose hypotenuse is the vector, and the hypotenuse is always the longest side. The component equals the vector only when the vector points along that direction ($\theta = 0$).
+    keyPoints:
+      - A component is F cos θ (or F sin θ)
+      - cos θ and sin θ are never greater than 1
+      - The vector is the hypotenuse of the right-angled triangle formed with its components
+      - The component equals the vector only when θ = 0
+    explanation: |
+      If you ever calculate a component bigger than the original vector, you have used tan, divided instead of multiplied, or had your calculator in radians.

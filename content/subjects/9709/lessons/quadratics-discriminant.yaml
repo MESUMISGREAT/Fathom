@@ -1,0 +1,266 @@
+id: quadratics-discriminant
+subject: "9709"
+topic: "1.1"
+title: The discriminant and the nature of roots
+summary: Use b² − 4ac to decide whether ax² + bx + c = 0 has two distinct real roots, a repeated root or no real roots.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.1.2"]
+prerequisites: [quadratics-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025; update notice checked): topic 1.1 outcome "find the
+    discriminant of a quadratic polynomial ax² + bx + c and use the discriminant" and its note
+    (number of real roots; knowledge of the term 'repeated root' included). Examples and questions
+    are original; all arithmetic checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the discriminant of $ax^2 + bx + c$ and use it to say how many real roots $ax^2 + bx + c = 0$ has, including when there's a **repeated root**.
+
+  - type: explain
+    title: The bit under the square root
+    body: |-
+      Look at the formula again:
+
+      $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+      Everything hinges on $b^2 - 4ac$:
+
+      - **Positive:** $\pm$ a positive square root gives two different answers.
+      - **Zero:** $\pm 0$ changes nothing, so both "answers" are the same.
+      - **Negative:** there's no real square root, so no real roots at all.
+
+  - type: definition
+    term: Discriminant
+    body: |-
+      The **discriminant** of the quadratic $ax^2 + bx + c$ (where $a \neq 0$) is $b^2 - 4ac$. Its sign determines the **nature of the roots** of $ax^2 + bx + c = 0$.
+
+  - type: explain
+    title: Three cases
+    body: |-
+      | $b^2 - 4ac$ | Roots of $ax^2 + bx + c = 0$ | Graph of $y = ax^2 + bx + c$ |
+      | --- | --- | --- |
+      | $> 0$ | two distinct real roots | crosses the $x$-axis twice |
+      | $= 0$ | one repeated root (two equal real roots) | touches the $x$-axis at its vertex |
+      | $< 0$ | no real roots | doesn't meet the $x$-axis |
+
+  - type: diagram
+    diagram: discriminant-cases
+    alt: >-
+      Three graphs side by side at the same scale. Left: y = x² − 2x − 3, discriminant 16, crosses
+      the x-axis at −1 and 3, labelled two distinct real roots. Middle: y = x² − 2x + 1,
+      discriminant 0, touches the x-axis at x = 1, labelled one repeated root. Right:
+      y = x² − 2x + 3, discriminant −8, lies entirely above the x-axis, labelled no real roots.
+    caption: |-
+      Same curve, slid upwards: as $c$ increases, $b^2 - 4ac$ goes from $16$ to $0$ to $-8$, and the curve goes from crossing the axis, to touching it, to missing it.
+
+  - type: definition
+    term: Repeated root
+    body: |-
+      When $b^2 - 4ac = 0$ the two roots coincide: $ax^2 + bx + c = a(x - \alpha)^2$, and $x = \alpha = -\dfrac{b}{2a}$ is called a **repeated root**. Questions also say **equal roots**.
+
+      Example: $4x^2 - 12x + 9 = (2x - 3)^2$ has the repeated root $x = \tfrac32$.
+
+  - type: check
+    questions: [disc-name, repeated-cloze]
+
+  - type: intuition
+    title: Why the sign is all that matters
+    body: |-
+      Complete the square on $ax^2 + bx + c = 0$ (as in the formula's derivation) and you get
+
+      $$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}$$
+
+      The left side is a square. A square can equal a positive number in two ways ($\pm$), zero in exactly one way, and a negative number in **no** way. Since $4a^2 > 0$, the right side always has the same sign as $b^2 - 4ac$.
+
+  - type: check
+    questions: [disc-value, nature-mcq]
+
+  - type: explain
+    title: Mind the wording
+    body: |-
+      "Real roots" includes a repeated root. Translate carefully:
+
+      | The question says… | You need |
+      | --- | --- |
+      | two distinct real roots | $b^2 - 4ac > 0$ |
+      | equal roots / a repeated root | $b^2 - 4ac = 0$ |
+      | real roots | $b^2 - 4ac \geqslant 0$ |
+      | no real roots | $b^2 - 4ac < 0$ |
+
+  - type: example
+    title: Finding a constant
+    problem: |-
+      Find the values of $k$ for which $x^2 + kx + 9 = 0$ has a repeated root, and find the root in each case.
+    steps:
+      - |-
+        $a = 1$, $b = k$, $c = 9$. A repeated root means $b^2 - 4ac = 0$.
+      - |-
+        $k^2 - 4(1)(9) = 0$, so $k^2 = 36$.
+      - |-
+        $k = 6$ or $k = -6$. Don't lose the negative one.
+      - |-
+        $k = 6$: $x^2 + 6x + 9 = (x + 3)^2$, so the repeated root is $x = -3$.
+      - |-
+        $k = -6$: $x^2 - 6x + 9 = (x - 3)^2$, so the repeated root is $x = 3$.
+    answer: |-
+      $k = \pm 6$, with repeated roots $x = -3$ (for $k = 6$) and $x = 3$ (for $k = -6$).
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          For $x^2 + 3 = 5x$, take $a = 1$, $b = 3$, $c = 5$.
+        right: |-
+          Rearrange to $= 0$ first: $x^2 - 5x + 3 = 0$. So $a = 1$, $b = -5$, $c = 3$, and $b^2 - 4ac = 25 - 12 = 13$.
+      - wrong: |-
+          With $b = -5$, $b^2 = -25$.
+        right: |-
+          $(-5)^2 = 25$. $b^2$ is never negative, so a negative discriminant can only come from $-4ac$.
+      - wrong: |-
+          "Real roots" means $b^2 - 4ac > 0$.
+        right: |-
+          A repeated root is a real root, so the condition is $\geqslant 0$. Only "two **distinct** real roots" needs $> 0$.
+      - wrong: |-
+          $b^2 - 4ac < 0$ means the equation has no roots.
+        right: |-
+          It has no **real** roots. Say "real" every time.
+
+  - type: deeper
+    title: Quadratics that are always positive
+    body: |-
+      If $a > 0$ and $b^2 - 4ac < 0$, the ∪-shaped graph never reaches the $x$-axis, so $ax^2 + bx + c > 0$ for **every** real $x$.
+
+      Example: $x^2 - 4x + 7$ has $a = 1 > 0$ and $b^2 - 4ac = 16 - 28 = -12 < 0$, so it's always positive. Completing the square says it even more clearly: $x^2 - 4x + 7 = (x - 2)^2 + 3 \geqslant 3$.
+
+      Similarly, $a < 0$ with $b^2 - 4ac < 0$ means always negative.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Find the values of the constant $k$ for which the equation has equal roots*, or *Show that the equation has no real roots*.
+      - For a "show that", write the discriminant with the numbers substituted, its value, **and** a conclusion: "$b^2 - 4ac = 16 - 28 = -12 < 0$, so there are no real roots."
+      - The discriminant often turns up inside bigger questions: tangents, intersections and "find the set of values of $k$" (later in this topic).
+
+  - type: check
+    questions: [disc-expression, k-repeated, no-real-roots-explain]
+
+  - type: takeaways
+    items:
+      - |-
+        The discriminant of $ax^2 + bx + c$ is $b^2 - 4ac$.
+      - |-
+        $> 0$: two distinct real roots. $= 0$: a repeated (equal) root. $< 0$: no real roots.
+      - |-
+        "Real roots" means $\geqslant 0$; "distinct" means strictly $> 0$.
+      - |-
+        Rearrange to $= 0$ and bracket negative values before you read off $a$, $b$, $c$.
+
+questions:
+  - id: disc-name
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |-
+      What is the name of the quantity $b^2 - 4ac$ for the quadratic $ax^2 + bx + c$?
+    accept:
+      - discriminant
+      - the discriminant
+      - discriminant of the quadratic
+      - discriminant of the quadratic polynomial
+    model: |-
+      The **discriminant**.
+    explanation: |-
+      $b^2 - 4ac$ is the **discriminant**: it discriminates (tells apart) the three kinds of roots.
+
+  - id: repeated-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |-
+      If $b^2 - 4ac = 0$, the equation $ax^2 + bx + c = 0$ has a {{1}} root, and the graph of $y = ax^2 + bx + c$ {{2}} the $x$-axis at its vertex.
+    blanks:
+      - accept: [repeated, double, equal, repeated real]
+      - accept: [touches, just touches, touch, meets, is tangent to, is a tangent to]
+    explanation: |-
+      A zero discriminant means the two roots are equal: a **repeated** root. The vertex sits exactly on the $x$-axis, so the curve **touches** it without crossing.
+
+  - id: disc-value
+    format: numeric
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |-
+      Find the value of the discriminant of $3x^2 - 5x + 4$.
+    fields:
+      - label: "b² − 4ac ="
+        answer: -23
+    explanation: |-
+      $a = 3$, $b = -5$, $c = 4$: $\;(-5)^2 - 4(3)(4) = 25 - 48 = -23$.
+
+      It's negative, so $3x^2 - 5x + 4 = 0$ has no real roots.
+
+  - id: nature-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.1.2"]
+    prompt: |-
+      What is the nature of the roots of $4x^2 - 12x + 9 = 0$?
+    explanation: |-
+      $b^2 - 4ac = (-12)^2 - 4(4)(9) = 144 - 144 = 0$, so there is a repeated root. Indeed $4x^2 - 12x + 9 = (2x - 3)^2$, giving $x = \tfrac32$.
+    options:
+      - text: Two distinct real roots
+        why: |-
+          That needs $b^2 - 4ac > 0$, but here it's $144 - 144 = 0$.
+      - text: One repeated root
+        correct: true
+        why: |-
+          $b^2 - 4ac = 0$. The quadratic is the perfect square $(2x - 3)^2$.
+      - text: No real roots
+        why: |-
+          That needs $b^2 - 4ac < 0$. If you got $-288$, check the sign of $b^2$: $(-12)^2 = +144$.
+
+  - id: disc-expression
+    format: expression
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |-
+      Find, in terms of $k$, the discriminant of $kx^2 + 6x + k$.
+    answer: 36 - 4k^2
+    variables: [k]
+    display: |-
+      $36 - 4k^2$
+    explanation: |-
+      $a = k$, $b = 6$, $c = k$, so $b^2 - 4ac = 36 - 4(k)(k) = 36 - 4k^2$.
+
+  - id: k-repeated
+    format: numeric
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |-
+      Find the value of the constant $k$ for which $2x^2 - 3x + k = 0$ has a repeated root. A fraction is fine.
+    fields:
+      - label: "k ="
+        answer: 1.125
+    explanation: |-
+      Repeated root: $b^2 - 4ac = 0$, so $(-3)^2 - 4(2)(k) = 0$, i.e. $9 - 8k = 0$ and $k = \tfrac98$.
+
+  - id: no-real-roots-explain
+    format: explain
+    difficulty: 2
+    objectives: ["1.1.2"]
+    prompt: |-
+      Show that $x^2 - 4x + 7 = 0$ has no real roots, and describe what this means for the graph of $y = x^2 - 4x + 7$.
+    explanation: |-
+      A "show that" needs the substituted discriminant, its sign and a written conclusion. Linking it to the graph shows you understand what "no real roots" means.
+    model: |-
+      Here $a = 1$, $b = -4$, $c = 7$, so $b^2 - 4ac = 16 - 28 = -12$. This is negative, so the equation has no real roots. The graph is ∪-shaped (since $a > 0$) and never meets the $x$-axis: it lies entirely above it, with its vertex at $(2, 3)$.
+    keyPoints:
+      - Correct a, b and c, with b = −4
+      - b² − 4ac = 16 − 28 = −12
+      - A conclusion that it is negative, so there are no real roots
+      - The graph does not meet the x-axis (it lies entirely above it, as a > 0)

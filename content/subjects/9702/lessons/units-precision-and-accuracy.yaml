@@ -1,0 +1,185 @@
+id: units-precision-and-accuracy
+subject: "9702"
+topic: "1.3"
+title: Precision versus accuracy
+summary: Accuracy is closeness to the true value, precision is closeness of repeated readings to each other, and a result can have either without the other.
+order: 2
+minutes: 4
+objectives: ["1.3.2", "1.3.1"]
+prerequisites: [units-systematic-and-random-errors]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 1.3.2, linked to 1.3.1; the data sheet value g = 9.81 m s⁻² is used
+    as the accepted value). Diagram data sets are illustrative, with means and ranges computed
+    exactly. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can state precisely what **accuracy** and **precision** mean, tell them apart in a set of readings, and link each one to the type of error that spoils it.
+
+  - type: definition
+    term: Accuracy
+    body: |
+      How close a measured value (or the mean of repeated measurements) is to the **true value**.
+
+  - type: definition
+    term: Precision
+    body: |
+      How close **repeated measurements** of the same quantity are **to each other**: a small spread means high precision.
+
+  - type: diagram
+    diagram: phys-accuracy-precision
+    alt: >-
+      Four dot plots of eight repeated measurements of g on an axis from 9.0 to 11.0 metres per
+      second squared, each with a dashed line at the true value of 9.81 and a triangle at the mean
+      of the readings. Top left, accurate and precise: the dots form a tight stack centred on 9.81.
+      Top right, precise but not accurate: an equally tight stack centred on about 10.36, well away
+      from the true value. Bottom left, accurate but not precise: the dots are spread out from 9.3
+      to 10.35, but their mean is 9.81. Bottom right, neither: the dots are spread out from about
+      9.85 to 10.9 and their mean is about 10.36.
+    caption: Precision is about the spread of the dots. Accuracy is about where their mean sits compared with the true value.
+
+  - type: check
+    questions: [define-precision, classify-readings]
+
+  - type: explain
+    title: Link each one to an error
+    body: |
+      | Readings are… | Spread | Mean | Usual culprit |
+      | --- | --- | --- | --- |
+      | precise | small | anywhere | small random errors |
+      | not precise | large | anywhere | large random errors |
+      | accurate | anywhere | close to the true value | no significant systematic error |
+      | not accurate | anywhere | shifted | a systematic error (e.g. a zero error) |
+
+      So: **random errors spoil precision; systematic errors spoil accuracy.**
+
+      "Precision" is also used for an **instrument**: the smallest change its scale can show. A micrometer (0.01 mm) is more precise than a metre rule (1 mm). A finer scale gives more precise readings, but not necessarily more accurate ones. A miscalibrated digital thermometer can show 0.01 °C and still be 2 °C out.
+
+  - type: check
+    questions: [errors-link, stopwatch-precision]
+
+  - type: intuition
+    title: The darts picture, and where it breaks
+    body: |
+      Think of darts. A tight cluster is **precise**. A cluster centred on the bullseye is **accurate**. A tight cluster in the wrong place is precise but inaccurate: a systematic error.
+
+      The analogy breaks in one important way. On a dartboard you can **see** the bullseye. In an experiment the true value is usually what you are trying to find. You can judge precision from your own data, but you can only judge accuracy by comparing with an accepted value or by calibrating your instruments.
+
+  - type: misconceptions
+    items:
+      - wrong: Precise and accurate mean the same thing.
+        right: Precise is about spread (agreement between readings). Accurate is about closeness to the true value.
+      - wrong: My readings all agree, so my answer must be right.
+        right: Agreement shows precision only. A systematic error shifts every reading equally and leaves them agreeing perfectly.
+      - wrong: A reading with more decimal places is more accurate.
+        right: More decimal places means a more precise reading at best. Accuracy depends on the true value.
+
+  - type: exam
+    body: |
+      - Learn the two definitions word for word. "Close to the **true value**" (accuracy) and "close to **each other**" (precision) are the phrases that score.
+      - "Distinguish between precision and accuracy" needs **both** definitions, not just one.
+      - Data-set questions: look at the **spread** for precision and the **mean versus the accepted value** for accuracy.
+
+  - type: check
+    questions: [agreeing-readings]
+
+  - type: takeaways
+    items:
+      - Accuracy = closeness of a value (or mean) to the true value.
+      - Precision = closeness of repeated readings to each other (small spread).
+      - Random errors reduce precision; systematic errors reduce accuracy.
+      - You can see precision in your data; checking accuracy needs an accepted value or calibration.
+
+questions:
+  - id: classify-readings
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |
+      A student measures the acceleration of free fall five times and gets 9.52, 9.53, 9.51, 9.52 and 9.53 m s⁻². The accepted value is 9.81 m s⁻². How would you describe the results?
+    options:
+      - text: precise but not accurate
+        correct: true
+        why: Correct. The spread is only 0.02 m s⁻², but the mean (9.52 m s⁻²) is about 0.3 m s⁻² below the accepted value.
+      - text: accurate but not precise
+        why: The readings agree very closely, so they are precise. Their mean is well away from 9.81 m s⁻², so they are not accurate.
+      - text: both accurate and precise
+        why: The readings are precise, but every one of them is about 0.3 m s⁻² too low, so they are not accurate.
+      - text: neither accurate nor precise
+        why: A spread of 0.02 m s⁻² is very small, so the readings are precise.
+    explanation: |
+      Small spread means precise; mean far from the accepted value means not accurate. A pattern like this points to a systematic error in the method or apparatus.
+
+  - id: errors-link
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.2", "1.3.1"]
+    prompt: |
+      Random errors mainly reduce the {{1}} of a set of readings, while systematic errors reduce their {{2}}.
+    blanks:
+      - accept: [precision]
+      - accept: [accuracy]
+    explanation: |
+      Random errors increase the spread (lower precision). Systematic errors shift every reading the same way, moving the mean away from the true value (lower accuracy).
+
+  - id: define-precision
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |
+      Define **precision** as applied to a set of measurements.
+    accept:
+      - how close repeated measurements are to each other
+      - how close repeated readings are to each other
+      - how close repeated measurements of the same quantity are to each other
+      - how close the readings are to each other
+      - how close the measurements are to each other
+      - closeness of repeated measurements to each other
+      - closeness of repeated readings to each other
+      - how close repeated measurements are to one another
+      - how close repeated readings are to one another
+    model: |
+      Precision is how close **repeated measurements** of the same quantity are **to each other** (how small their spread is).
+    explanation: |
+      Precision says nothing about the true value. A definition that mentions the true value is describing accuracy instead.
+
+  - id: stopwatch-precision
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |
+      A student times a single swing of a pendulum by hand with a stopwatch that reads to 0.01 s, and records 1.27 s. Which comment is best?
+    options:
+      - text: The stopwatch reads to 0.01 s, but human reaction time (about 0.1 s to 0.2 s) means the real uncertainty is much larger.
+        correct: true
+        why: Correct. The instrument's precision is not the limiting factor here; the person pressing the button is.
+      - text: The reading is accurate to 0.01 s, because that is what the stopwatch shows.
+        why: The display's resolution is not the accuracy of the time. Reaction time varies by far more than 0.01 s.
+      - text: The time is inaccurate because a digital stopwatch always has a systematic error.
+        why: There is no reason to assume a systematic error. The main problem is the random variation in reaction time.
+      - text: Timing one swing is fine as long as the stopwatch is precise enough.
+        why: Timing many swings (say 20) and dividing makes the reaction-time error much smaller compared with the measured time.
+    explanation: |
+      How finely an instrument reads (its precision) is only part of the story. Here reaction time dominates, so you would time many swings and divide by the number of swings.
+
+  - id: agreeing-readings
+    format: explain
+    difficulty: 2
+    objectives: ["1.3.2", "1.3.1"]
+    prompt: |
+      A student's five readings of a length agree to within 0.1 mm. She says her result must therefore be accurate. Explain why she could be wrong.
+    model: |
+      Readings that agree closely are **precise**, which shows that the random errors are small. Accuracy is about how close the value is to the true value. A systematic error, such as a zero error or a badly calibrated scale, shifts every reading by the same amount in the same direction, so the readings still agree with each other but are all wrong. To check accuracy she would need to compare with an accepted value, check for a zero error or calibrate the instrument.
+    keyPoints:
+      - Close agreement means the readings are precise (small random error)
+      - Accuracy means closeness to the true value
+      - A systematic error (e.g. zero error) shifts every reading by the same amount
+      - Such an error doesn't change the spread, so it can't be seen from the agreement
+      - Checking accuracy needs an accepted value, a zero check or calibration
+    explanation: |
+      Precision can be judged from the data alone; accuracy cannot.

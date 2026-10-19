@@ -1,0 +1,214 @@
+id: units-systematic-and-random-errors
+subject: "9702"
+topic: "1.3"
+title: Systematic errors, random errors and zero errors
+summary: Random errors scatter readings both ways and shrink with averaging; systematic errors, such as zero errors, shift every reading the same way and don't.
+order: 1
+minutes: 5
+objectives: ["1.3.1"]
+prerequisites: [units-quantities-and-estimates]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 1.3.1, and the Paper 3 practical expectations on identifying
+    sources of uncertainty, which ask candidates to name the quantity and the reason). Diagram data
+    are illustrative values for a 10 Ω resistor. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain how **random errors** and **systematic errors** (including **zero errors**) affect measurements, recognise each from a description or a graph, and correct a zero error.
+
+  - type: explain
+    title: Two very different kinds of error
+    body: |
+      The **error** in a reading is how far it is from the true value. Errors come in two flavours, and they behave completely differently.
+
+  - type: definition
+    term: Random error
+    body: |
+      An error that makes repeated readings **scatter unpredictably** above and below the true value, by a different amount each time.
+
+  - type: definition
+    term: Systematic error
+    body: |
+      An error that makes **every** reading differ from the true value by the **same amount** (or the same proportion) in the **same direction**.
+
+  - type: definition
+    term: Zero error
+    body: |
+      A systematic error in which an instrument gives a **non-zero reading when the true value is zero**, for example a balance that reads 0.4 g with nothing on it.
+
+  - type: explain
+    title: Side by side
+    body: |
+      | | Random error | Systematic error |
+      | --- | --- | --- |
+      | Effect | readings scatter both ways | all readings shifted one way |
+      | Typical causes | reaction time on a stopwatch; judging a scale between marks; readings that fluctuate | zero error; a wrongly calibrated scale; reading a scale from the same wrong angle every time (parallax) |
+      | Repeat and average? | **reduces** it | **no help at all** |
+      | Fix | repeat readings and average; plot a graph with a best-fit line | recalibrate; correct for the zero error; improve the technique |
+
+  - type: diagram
+    diagram: phys-error-graphs
+    alt: >-
+      Two graphs of current I in amperes, from 0 to 0.8, against potential difference V in volts,
+      from 0 to 6, each with a dashed true line through the origin with gradient 0.1 A per volt.
+      Left, titled "Zero error (systematic)": six readings lie exactly on a straight line parallel
+      to the true line but 0.10 A higher, crossing the current axis at 0.10 A; this intercept is
+      labelled as equal to the zero error, and the line has the same gradient as the true line.
+      Right, titled "Random error": six readings lie slightly above or below the true line by
+      different amounts, scattered either side of it.
+    caption: A zero error moves the whole line (same gradient, wrong intercept). Random errors scatter points either side of the line.
+
+  - type: check
+    questions: [balance-zero-error, random-error-source, name-zero-error]
+
+  - type: example
+    title: Correcting a zero error
+    problem: |
+      Two micrometer screw gauges, X and Y, are used to measure the same wire.
+
+      - X reads $+0.03\ \text{mm}$ with its jaws closed, and $0.48\ \text{mm}$ across the wire.
+      - Y reads $-0.02\ \text{mm}$ with its jaws closed (so it reads slightly below zero), and $0.43\ \text{mm}$ across the wire.
+
+      Find the corrected diameter from each gauge.
+    steps:
+      - |
+        Corrected reading $=$ reading $-$ zero reading. Keep the **sign** of the zero reading.
+      - |
+        X reads too high: $0.48 - (+0.03) = 0.45\ \text{mm}$.
+      - |
+        Y reads too low: $0.43 - (-0.02) = 0.43 + 0.02 = 0.45\ \text{mm}$.
+      - |
+        Both gauges now agree. Before correction they differed by $0.05\ \text{mm}$, and repeating the readings would never have fixed that.
+    answer: |
+      Both give $0.45\ \text{mm}$. Find the zero reading first, then subtract it, sign and all.
+
+  - type: check
+    questions: [newton-meter, micrometer-negative]
+
+  - type: misconceptions
+    items:
+      - wrong: Repeating readings and averaging gets rid of all errors.
+        right: Averaging reduces **random** errors only. A systematic error shifts every reading, so it shifts the average by exactly the same amount.
+      - wrong: '"Human error" is a good enough answer.'
+        right: Name the actual cause and its effect, e.g. "reaction time when starting and stopping the stopwatch makes the time readings vary".
+      - wrong: A zero error is random because it is a small mistake.
+        right: A zero error is **systematic**. It is the same size and direction for every reading.
+
+  - type: exam
+    body: |
+      - Paper 1 often describes an instrument or technique and asks whether the error is random or systematic.
+      - "Explain" questions want **cause + effect**: what goes wrong, and which way it moves the readings.
+      - In practical papers, check instruments for zero errors **before** measuring, and say how you corrected for one.
+
+  - type: check
+    questions: [why-averaging]
+
+  - type: takeaways
+    items:
+      - Random errors scatter readings both ways; averaging and best-fit lines reduce their effect.
+      - Systematic errors shift every reading the same way; averaging does nothing.
+      - A zero error is a systematic error; correct it by subtracting the zero reading, keeping its sign.
+      - On a graph, a zero error shows up as an unexpected intercept with the gradient unchanged.
+
+questions:
+  - id: balance-zero-error
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.1"]
+    prompt: |
+      A digital balance shows 0.6 g with nothing on it. A student doesn't notice and weighs ten samples. Which statement is correct?
+    options:
+      - text: Every reading is 0.6 g too large. This is a systematic error (a zero error).
+        correct: true
+        why: Correct. The offset is the same size and direction for every reading.
+      - text: The readings scatter by up to 0.6 g either way. This is a random error.
+        why: A zero error doesn't scatter readings. It pushes every one of them up by the same amount.
+      - text: Averaging all ten readings removes the error.
+        why: Every reading is 0.6 g too large, so the average is 0.6 g too large too.
+      - text: There is no error as long as the readings agree with each other.
+        why: Readings can agree closely with each other and still all be wrong by the same amount.
+    explanation: |
+      A non-zero reading when the true value is zero is a **zero error**, a type of systematic error. Fix it by taring the balance or subtracting 0.6 g from every reading.
+
+  - id: random-error-source
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |
+      Which of these is most likely to cause a **random** error?
+    options:
+      - text: Starting and stopping a stopwatch by hand as a pendulum passes its lowest point
+        correct: true
+        why: Correct. Reaction time differs each time, so the timings scatter both ways.
+      - text: Measuring lengths from the end of a metre rule whose first 2 mm have worn away
+        why: Every length is read about 2 mm too large. That is the same each time, so it is systematic.
+      - text: Using an ammeter whose needle points to 0.02 A when there is no current
+        why: This is a zero error. Every reading is 0.02 A too high, so it is systematic.
+      - text: Always reading a measuring cylinder from slightly above the liquid level
+        why: Parallax in the same direction every time shifts all readings the same way. That is systematic.
+    explanation: |
+      Random errors change in size and direction from one reading to the next. A consistent technique fault or a faulty instrument gives a systematic error.
+
+  - id: name-zero-error
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.3.1"]
+    prompt: |
+      What name is given to the error when an instrument shows a reading although the true value is zero?
+    accept:
+      - zero error
+      - zero errors
+      - zero-error
+      - a zero error
+      - zero offset
+      - offset error
+    model: |
+      A **zero error** (a type of systematic error).
+    explanation: |
+      A zero error is the reading an instrument gives when it should read zero. It adds the same offset to every reading, so it is systematic.
+
+  - id: newton-meter
+    format: numeric
+    difficulty: 1
+    objectives: ["1.3.1"]
+    prompt: |
+      A newton-meter reads 0.3 N with nothing hanging from it. When a load is hung from it, it reads 4.7 N. What is the true weight of the load? Give your answer with its unit.
+    fields:
+      - answer: 4.4
+        acceptUnits: ["N"]
+    explanation: |
+      The zero error is $+0.3\ \text{N}$, so every reading is 0.3 N too high: $4.7 - 0.3 = 4.4\ \text{N}$.
+
+  - id: micrometer-negative
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |
+      A micrometer reads $-0.03\ \text{mm}$ when its jaws are closed. It reads $2.47\ \text{mm}$ across a ball bearing. What is the true diameter? Give your answer with its unit.
+    fields:
+      - answer: 2.50
+        acceptUnits: ["mm"]
+    explanation: |
+      Corrected reading $=$ reading $-$ zero reading $= 2.47 - (-0.03) = 2.50\ \text{mm}$. A negative zero error means the instrument reads too **low**, so the correction adds.
+
+  - id: why-averaging
+    format: explain
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |
+      Explain why taking several readings and averaging them reduces the effect of random errors but not of systematic errors.
+    model: |
+      Random errors make readings scatter above and below the true value by different amounts, so when you average them the positive and negative errors partly cancel and the mean is closer to the true value. A systematic error shifts every reading by the same amount in the same direction, so the mean is shifted by that same amount. Averaging cannot remove it. It has to be removed by calibrating the instrument, correcting for the zero error or changing the technique.
+    keyPoints:
+      - Random errors are equally likely to be above or below the true value
+      - In the mean, positive and negative random errors partly cancel
+      - A systematic error shifts every reading by the same amount in the same direction
+      - So the mean is shifted by the same amount and averaging can't remove it
+      - Systematic errors are removed by calibration, zero correction or better technique
+    explanation: |
+      The key idea is direction: random errors point both ways, systematic errors point one way.
