@@ -9,6 +9,7 @@ import {
   ChartIcon,
   ChatIcon,
   ClockIcon,
+  FlagIcon,
   GridIcon,
   HomeIcon,
   InfoIcon,
@@ -85,6 +86,11 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
           <NavLink href="/about" className="nav-item">
             <InfoIcon /> How it works
           </NavLink>
+          {user && (user.role === 'editor' || user.role === 'admin') && (
+            <NavLink href="/reports" className="nav-item">
+              <FlagIcon /> Content reports
+            </NavLink>
+          )}
           {user ? (
             <>
               <NavLink href="/settings" className="nav-item">

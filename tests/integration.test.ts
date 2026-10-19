@@ -29,6 +29,7 @@ const t = await import('@/server/db/schema');
 const auth = await import('@/server/actions/auth');
 const study = await import('@/server/actions/study');
 const settings = await import('@/server/actions/settings');
+const editor = await import('@/server/actions/editor');
 const { getSessionUser } = await import('@/server/auth/session');
 const { listSubjects } = await import('@/server/queries/catalog');
 const { getSubjectProgress } = await import('@/server/queries/progress');
@@ -189,6 +190,21 @@ describe('student flow', () => {
     expect(await study.toggleBookmark({ kind: 'lesson', targetId: 'fixture-squares' })).toEqual({ bookmarked: true });
     expect(await study.toggleBookmark({ kind: 'lesson', targetId: 'fixture-squares' })).toEqual({ bookmarked: false });
     expect((await study.toggleBookmark({ kind: 'lesson', targetId: 'missing' })).error).toBeTruthy();
+  });
+
+  it('accepts content reports and lets only editors triage them', async () => {
+    const bad = await study.reportProblem({ kind: 'question', targetId: 'fixture-squares/q-mcq', reason: 'wrong-answer', message: '' });
+    expect(bad.ok).toBe(false);
+    expect(await study.reportProblem({ kind: 'question', targetId: 'nope', reason: 'other', message: 'Something odd' })).toMatchObject({ ok: false });
+    expect(await study.reportProblem({ kind: 'question', targetId: 'fixture-squares/q-mcq', reason: 'wrong-answer', message: 'Option B looks right to me' })).toEqual({ ok: true });
+    const db = await getDb();
+    const [report] = await db.select().from(t.contentReports);
+    expect(report).toMatchObject({ status: 'open', reason: 'wrong-answer' });
+    expect(await editor.setReportStatus({ id: report!.id, status: 'fixed' })).toEqual({ ok: false }); // students can't
+    const user = (await getSessionUser())!;
+    await db.update(t.users).set({ role: 'editor' }).where(eq(t.users.id, user.id));
+    expect(await editor.setReportStatus({ id: report!.id, status: 'fixed' })).toEqual({ ok: true });
+    await db.update(t.users).set({ role: 'student' }).where(eq(t.users.id, user.id));
   });
 
   it('archives removed content instead of deleting it, keeping attempts', async () => {

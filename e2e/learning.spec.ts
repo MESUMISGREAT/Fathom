@@ -102,6 +102,7 @@ test('lessons can be shown in full and the choice is remembered', async ({ page 
 test('questions can be answered with the keyboard alone', async ({ page }) => {
   await page.goto(LESSON);
   const mcq = page.locator('.question').first();
+  await expect(mcq.locator('form[data-hydrated]')).toBeAttached();
   await mcq.locator('input[type=radio]').first().focus();
   await page.keyboard.press('Space');
   await expect(mcq.locator('input[type=radio]').first()).toBeChecked();

@@ -14,6 +14,10 @@ export const LIMITS = {
   login: { max: 10, windowMs: 15 * 60_000 },
   loginIp: { max: 60, windowMs: 15 * 60_000 },
   signup: { max: 8, windowMs: 60 * 60_000 },
+  /** For clients whose IP is unknown: a platform-wide ceiling, not a per-person one. */
+  signupUnknownIp: { max: 300, windowMs: 60 * 60_000 },
+  answerUnknownIp: { max: 3000, windowMs: 60_000 },
+  report: { max: 10, windowMs: 60 * 60_000 },
   answer: { max: 90, windowMs: 60_000 },
   write: { max: 120, windowMs: 60_000 },
 } satisfies Record<string, Limit>;

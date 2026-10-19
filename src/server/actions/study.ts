@@ -52,7 +52,10 @@ export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise
   const { questionId, response, self, context } = parsed.data;
 
   const user = await getSessionUser();
-  const limit = hit(`answer:${user?.id ?? await clientIp()}`, LIMITS.answer);
+  const ip = user ? null : await clientIp();
+  const limit = user
+    ? hit(`answer:${user.id}`, LIMITS.answer)
+    : hit(ip ? `answer:${ip}` : 'answer:unknown-ip', ip ? LIMITS.answer : LIMITS.answerUnknownIp);
   if (!limit.ok) return { ...invalid(`You're answering very fast. Take a breath and try again in ${limit.retryAfterS}s.`), signedIn: !!user };
 
   const db = await getDb();
@@ -185,4 +188,29 @@ export async function toggleBookmark(input: z.input<typeof BookmarkSchema>): Pro
   await db.insert(t.bookmarks).values({ userId: user.id, kind, targetId });
   revalidatePath('/saved');
   return { bookmarked: true };
+}
+
+const ReportSchema = z.object({
+  kind: z.enum(['lesson', 'question']),
+  targetId: z.string().min(1).max(200),
+  reason: z.enum(['wrong-answer', 'error-in-content', 'unclear', 'other']),
+  message: z.string().trim().min(3, 'Tell us a little about the problem.').max(2000),
+});
+
+/** Report a problem with a lesson or question. Works for guests too. */
+export async function reportProblem(input: z.input<typeof ReportSchema>): Promise<{ ok: boolean; error?: string }> {
+  const parsed = ReportSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? 'Check the form.' };
+  const user = await getSessionUser();
+  const ip = user ? null : await clientIp();
+  const key = user ? `report:${user.id}` : ip ? `report:${ip}` : 'report:unknown-ip';
+  if (!hit(key, user || ip ? LIMITS.report : { max: 200, windowMs: 60 * 60_000 }).ok) {
+    return { ok: false, error: 'Thanks. You have sent a lot of reports recently; please try again later.' };
+  }
+  const db = await getDb();
+  const table = parsed.data.kind === 'lesson' ? t.lessons : t.questions;
+  const exists = await db.select({ id: table.id }).from(table).where(eq(table.id, parsed.data.targetId));
+  if (!exists.length) return { ok: false, error: 'Unknown item.' };
+  await db.insert(t.contentReports).values({ ...parsed.data, userId: user?.id ?? null });
+  return { ok: true };
 }

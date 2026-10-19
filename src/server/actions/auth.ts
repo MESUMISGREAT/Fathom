@@ -42,7 +42,8 @@ export async function signUp(_prev: AuthState, form: FormData): Promise<AuthStat
     ageConfirmed: form.get('ageConfirmed') ?? undefined,
   };
   const fields = { email: raw.email, displayName: raw.displayName };
-  if (!hit(`signup:${await clientIp()}`, LIMITS.signup).ok) {
+  const ip = await clientIp();
+  if (!hit(ip ? `signup:${ip}` : 'signup:unknown-ip', ip ? LIMITS.signup : LIMITS.signupUnknownIp).ok) {
     return { error: 'Too many sign-ups from this network. Please try again later.', fields };
   }
   const parsed = SignUpSchema.safeParse(raw);
@@ -70,7 +71,8 @@ export async function logIn(_prev: AuthState, form: FormData): Promise<AuthState
   const password = String(form.get('password') ?? '');
   const fields = { email };
   const ip = await clientIp();
-  if (!hit(`login-ip:${ip}`, LIMITS.loginIp).ok || !hit(`login:${email}`, LIMITS.login).ok) {
+  // Per-email limits always apply; per-IP limits only when the IP is known.
+  if ((ip && !hit(`login-ip:${ip}`, LIMITS.loginIp).ok) || !hit(`login:${email}`, LIMITS.login).ok) {
     return { error: 'Too many attempts. Wait a few minutes and try again.', fields };
   }
   if (!email || !password || password.length > PASSWORD_MAX) return { error: 'Enter your email and password.', fields };

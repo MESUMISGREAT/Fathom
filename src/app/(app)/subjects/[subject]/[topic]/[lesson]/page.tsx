@@ -10,6 +10,7 @@ import { BlockView } from '@/components/lesson/Blocks';
 import { LessonPlayer, type PlayerStep } from '@/components/lesson/LessonPlayer';
 import { QuestionCard } from '@/components/questions/QuestionCard';
 import { BookmarkButton } from '@/components/study/BookmarkButton';
+import { ReportProblem } from '@/components/study/ReportProblem';
 import { ClockIcon, TargetIcon } from '@/components/icons';
 import { Crumbs, LevelBadge, ProvenanceLabel } from '@/components/ui';
 
@@ -126,7 +127,10 @@ export default async function LessonPage({ params }: { params: Params }) {
                 </span>
               ))}
             </div>
+            <div className="row" style={{ ['--gap' as string]: '16px' }}>
             <ProvenanceLabel provenance={lesson.provenance} />
+            <ReportProblem kind="lesson" targetId={lesson.id} />
+          </div>
           </header>
         }
         bookmark={user ? <BookmarkButton kind="lesson" targetId={lesson.id} initial={savedSet.has(`lesson:${lesson.id}`)} label="Save lesson" /> : null}

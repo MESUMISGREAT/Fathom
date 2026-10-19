@@ -81,12 +81,17 @@ export async function setThemeCookie(theme: User['theme']) {
   (await cookies()).set(THEME_COOKIE, theme, { httpOnly: false, sameSite: 'lax', secure, path: '/', maxAge: 400 * DAY / 1000 });
 }
 
-/** Best-effort client IP for rate limiting. Only trust X-Forwarded-For behind a proxy you control. */
-export async function clientIp(): Promise<string> {
+/**
+ * Best-effort client IP for rate limiting, or null if unknown. X-Forwarded-For
+ * is trusted only when TRUST_PROXY=1 (set it behind a proxy you control).
+ * Callers must not lump all unknown clients into one bucket with a per-person
+ * limit, or one busy proxy would lock everyone out.
+ */
+export async function clientIp(): Promise<string | null> {
   const h = await headers();
   if (process.env.TRUST_PROXY === '1') {
     const fwd = h.get('x-forwarded-for')?.split(',')[0]?.trim();
     if (fwd) return fwd;
   }
-  return h.get('x-real-ip') ?? 'local';
+  return h.get('x-real-ip');
 }

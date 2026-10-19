@@ -263,3 +263,20 @@ export type User = typeof users.$inferSelect;
 export type Lesson = typeof lessons.$inferSelect;
 export type QuestionRow = typeof questions.$inferSelect;
 export type Attempt = typeof attempts.$inferSelect;
+
+/** Problems students report with content (wrong answer key, typo, unclear). Reviewed by editors. */
+export const contentReports = pgTable(
+  'content_reports',
+  {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    /** Null for guests, and set null if the reporter deletes their account. */
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+    kind: text('kind', { enum: ['lesson', 'question'] }).notNull(),
+    targetId: text('target_id').notNull(),
+    reason: text('reason', { enum: ['wrong-answer', 'error-in-content', 'unclear', 'other'] }).notNull(),
+    message: text('message').notNull(),
+    status: text('status', { enum: ['open', 'fixed', 'dismissed'] }).notNull().default('open'),
+    createdAt: createdAt(),
+  },
+  (t) => [index('content_reports_status_idx').on(t.status, t.createdAt)],
+);

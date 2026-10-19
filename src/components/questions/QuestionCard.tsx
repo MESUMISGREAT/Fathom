@@ -5,13 +5,14 @@
  * can always try again.
  */
 import Link from 'next/link';
-import { useContext, useId, useRef, useState, useTransition, type FormEvent } from 'react';
+import { useContext, useEffect, useId, useRef, useState, useTransition, type FormEvent } from 'react';
 import type { QuestionView } from '@/content/rendered';
 import type { StudentResponse } from '@/domain/answers/check';
 import { submitAnswer, type SubmitResult } from '@/server/actions/study';
 import { AlertIcon, CheckCircleIcon, HalfCircleIcon, RefreshIcon, XCircleIcon } from '@/components/icons';
 import { BookmarkButton } from '@/components/study/BookmarkButton';
 import { LessonCheckContext } from '@/components/lesson/context';
+import { ReportProblem } from '@/components/study/ReportProblem';
 
 const LETTERS = 'ABCDEF';
 
@@ -51,6 +52,9 @@ export function QuestionCard({
   const [attempt, setAttempt] = useState(0);
   const [pending, start] = useTransition();
   const lesson = useContext(LessonCheckContext);
+  // Lets tests (and styles) tell when the form is interactive rather than server-rendered HTML.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
 
   const outcome = result?.result.outcome;
   const locked = !!outcome && outcome !== 'invalid';
@@ -137,7 +141,7 @@ export function QuestionCard({
         {signedIn && <BookmarkButton kind="question" targetId={view.id} initial={!!bookmarked} label="Save question" />}
       </div>
 
-      <form ref={formRef} onSubmit={onSubmit} key={attempt}>
+      <form ref={formRef} onSubmit={onSubmit} key={attempt} data-hydrated={hydrated || undefined}>
         <fieldset className="q-fieldset" disabled={locked || pending} aria-labelledby={promptId}>
           {/* For cloze questions the prompt HTML contains the blank inputs. */}
           <div id={promptId} className="q-prompt prose" dangerouslySetInnerHTML={{ __html: view.promptHtml }} />
@@ -147,11 +151,11 @@ export function QuestionCard({
               <div className="options" role="radiogroup" aria-labelledby={promptId}>
                 {view.options!.map((html, i) => (
                   <label key={i} className="option" data-mark={markFor(i)}>
-                    <input type="radio" name="choice" value={i} />
+                    <input type="radio" name="choice" value={i} aria-label={`Option ${LETTERS[i]}`} aria-describedby={`${promptId}-o${i}`} />
                     <span className="option-key" aria-hidden="true">
                       {LETTERS[i]}
                     </span>
-                    <span className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    <span id={`${promptId}-o${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
                     {locked && reveal?.whyHtml?.[i] && <span className="option-why" dangerouslySetInnerHTML={{ __html: reveal.whyHtml[i]! }} />}
                   </label>
                 ))}
@@ -163,11 +167,11 @@ export function QuestionCard({
                 <p className="small muted">Which line contains the first error?</p>
                 {view.lines!.map((html, i) => (
                   <label key={i} className="option line-option" data-mark={markFor(i)}>
-                    <input type="radio" name="line" value={i + 1} />
+                    <input type="radio" name="line" value={i + 1} aria-label={`Line ${i + 1}`} aria-describedby={`${promptId}-l${i}`} />
                     <span className="option-key" aria-hidden="true">
                       {i + 1}
                     </span>
-                    <span className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    <span id={`${promptId}-l${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
                   </label>
                 ))}
               </div>
@@ -393,6 +397,11 @@ function Feedback({
               <Link href="/signup">Create an account</Link> to save your progress.
             </span>
           )}
+        </div>
+      )}
+      {!selfPending && (
+        <div style={{ marginTop: 10 }}>
+          <ReportProblem kind="question" targetId={view.id} />
         </div>
       )}
     </div>
