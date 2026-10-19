@@ -8,6 +8,8 @@
  */
 import { Label, Svg, axes } from '../primitives';
 
+export const diagramKey = 'cs-prefix-gap';
+
 const W = 560;
 const H = 320;
 const PAD = 56;
@@ -72,3 +74,5 @@ export function PrefixGap() {
     </Svg>
   );
 }
+
+export default PrefixGap;

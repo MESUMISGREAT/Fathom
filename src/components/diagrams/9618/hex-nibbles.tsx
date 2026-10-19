@@ -5,6 +5,8 @@
  */
 import { Arrow, Label, Svg } from '../primitives';
 
+export const diagramKey = 'cs-hex-nibbles';
+
 const W = 600;
 const H = 232;
 const CELL = 30;
@@ -66,3 +68,5 @@ export function HexNibbles() {
     </Svg>
   );
 }
+
+export default HexNibbles;

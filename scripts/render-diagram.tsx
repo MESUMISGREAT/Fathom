@@ -8,14 +8,16 @@ import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { chromium } from '@playwright/test';
-import { diagrams } from '@/components/diagrams';
+import { scanDiagrams } from './diagram-scan';
 
 const args = process.argv.slice(2);
 const outIdx = args.indexOf('--out');
 const out = outIdx >= 0 ? args[outIdx + 1]! : path.join(process.cwd(), 'data', 'diagram-previews');
 const keys = args.filter((a, i) => a !== '--out' && i !== outIdx + 1);
+// Imports only the requested files, so a compile error elsewhere doesn't block previews.
+const byKey = new Map(scanDiagrams().files.map((f) => [f.key, f.file]));
 if (keys.length === 0) {
-  console.log('Registered diagrams:\n  ' + Object.keys(diagrams).sort().join('\n  '));
+  console.log('Diagrams:\n  ' + [...byKey.keys()].sort().join('\n  '));
   process.exit(0);
 }
 await mkdir(out, { recursive: true });
@@ -25,7 +27,8 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PAT
 );
 const page = await browser.newPage({ viewport: { width: 760, height: 600 }, deviceScaleFactor: 2 });
 for (const key of keys) {
-  const D = diagrams[key];
+  const file = byKey.get(key);
+  const D = file ? ((await import(file)) as { default: () => React.ReactElement }).default : undefined;
   if (!D) {
     console.error(`unknown diagram "${key}"`);
     process.exitCode = 1;

@@ -7,6 +7,8 @@
  */
 import { Arrow, Label, Svg } from '../primitives';
 
+export const diagramKey = 'chem-electrons-in-boxes';
+
 const W = 640;
 const H = 350;
 const BOX = 28;
@@ -179,3 +181,5 @@ export function ElectronsInBoxes() {
     </Svg>
   );
 }
+
+export default ElectronsInBoxes;

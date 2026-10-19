@@ -7,6 +7,8 @@
  */
 import { Label, Svg, axes, graph } from '../primitives';
 
+export const diagramKey = 'chem-successive-ionisation-sodium';
+
 const W = 640;
 const H = 420;
 const PAD = 64;
@@ -85,3 +87,5 @@ export function SuccessiveIonisationSodium() {
     </Svg>
   );
 }
+
+export default SuccessiveIonisationSodium;

@@ -6,6 +6,8 @@
 import { Label, Svg, graph } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
+export const diagramKey = 'line-curve-pivot';
+
 const W = 560;
 const H = 440;
 const X: [number, number] = [-3, 5];

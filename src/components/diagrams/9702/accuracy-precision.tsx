@@ -12,6 +12,8 @@
  */
 import { Label, Svg } from '../primitives';
 
+export const diagramKey = 'phys-accuracy-precision';
+
 const W = 640;
 const H = 448;
 const TRUE_G = 9.81;
@@ -123,3 +125,5 @@ export function AccuracyPrecision() {
     </Svg>
   );
 }
+
+export default AccuracyPrecision;

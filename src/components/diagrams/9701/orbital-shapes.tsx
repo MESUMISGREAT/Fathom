@@ -10,6 +10,8 @@
 import type { ReactNode } from 'react';
 import { Label, Svg } from '../primitives';
 
+export const diagramKey = 'chem-orbital-shapes';
+
 const W = 600;
 const H = 470;
 const RY = 362; // centre line of the p-orbital row
@@ -124,3 +126,5 @@ export function OrbitalShapes() {
     </Svg>
   );
 }
+
+export default OrbitalShapes;

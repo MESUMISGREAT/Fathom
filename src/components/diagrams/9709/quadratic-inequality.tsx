@@ -7,6 +7,8 @@
 import { Label, Svg, graph } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
+export const diagramKey = 'quadratic-inequality';
+
 const W = 560;
 const H = 470;
 const X: [number, number] = [-4, 5];

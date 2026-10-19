@@ -12,6 +12,8 @@
  */
 import { Arrow, Label, Svg, plotPath } from '../primitives';
 
+export const diagramKey = 'chem-beams-electric-field';
+
 const W = 640;
 const H = 340;
 const X0 = 170; // plates start
@@ -106,3 +108,5 @@ export function BeamsInElectricField() {
     </Svg>
   );
 }
+
+export default BeamsInElectricField;

@@ -6,6 +6,8 @@
 import { Label, Svg, graph } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
+export const diagramKey = 'quadratic-vertex';
+
 const W = 560;
 const H = 400;
 const X: [number, number] = [-1.5, 5.5];

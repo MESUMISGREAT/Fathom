@@ -8,6 +8,8 @@
  */
 import { Label, Svg } from '../primitives';
 
+export const diagramKey = 'phys-prefix-ladder';
+
 const W = 620;
 const H = 560;
 const AX = 330;
@@ -93,3 +95,5 @@ export function PrefixLadder() {
     </Svg>
   );
 }
+
+export default PrefixLadder;

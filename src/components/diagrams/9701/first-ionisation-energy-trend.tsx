@@ -7,6 +7,8 @@
  */
 import { Label, Svg, axes, graph } from '../primitives';
 
+export const diagramKey = 'chem-first-ionisation-energy-trend';
+
 const W = 640;
 const H = 420;
 const PAD = 64;
@@ -136,3 +138,5 @@ export function FirstIonisationEnergyTrend() {
     </Svg>
   );
 }
+
+export default FirstIonisationEnergyTrend;

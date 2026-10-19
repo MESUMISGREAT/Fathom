@@ -7,6 +7,8 @@
  */
 import { Arrow, Label, Svg } from '../primitives';
 
+export const diagramKey = 'chem-subshell-energy-levels';
+
 const W = 600;
 const H = 450;
 const BOX = 24;
@@ -101,3 +103,5 @@ export function SubshellEnergyLevels() {
     </Svg>
   );
 }
+
+export default SubshellEnergyLevels;

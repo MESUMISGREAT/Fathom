@@ -5,6 +5,8 @@
 import { Label, Svg, graph } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
+export const diagramKey = 'line-circle-intersection';
+
 const W = 520;
 const H = 400;
 const PAD = 32;

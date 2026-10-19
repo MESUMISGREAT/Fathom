@@ -6,6 +6,8 @@
 import { Label, Svg, graph } from '../primitives';
 import { makePlot } from './kit';
 
+export const diagramKey = 'discriminant-cases';
+
 const PW = 200;
 const W = PW * 3;
 const H = 318;

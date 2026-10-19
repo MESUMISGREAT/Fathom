@@ -5,6 +5,8 @@
  */
 import { Arrow, Label, Svg } from '../primitives';
 
+export const diagramKey = 'cs-bcd-vs-binary';
+
 const W = 600;
 const H = 252;
 const CELL = 24;
@@ -84,3 +86,5 @@ export function BcdVsBinary() {
     </Svg>
   );
 }
+
+export default BcdVsBinary;

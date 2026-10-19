@@ -10,6 +10,8 @@
  */
 import { Arrow, Label, Svg } from '../primitives';
 
+export const diagramKey = 'phys-vector-components';
+
 const W = 640;
 const H = 290;
 const DEG = Math.PI / 180;
@@ -127,3 +129,5 @@ export function VectorComponents() {
     </Svg>
   );
 }
+
+export default VectorComponents;

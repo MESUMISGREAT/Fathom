@@ -6,6 +6,8 @@
 import { Label, Svg } from '../primitives';
 import { BitColumns, bitCentre } from './bit-columns';
 
+export const diagramKey = 'cs-twos-complement-weights';
+
 const W = 600;
 const H = 266;
 const X0 = 40;
@@ -37,3 +39,5 @@ export function TwosComplementWeights() {
     </Svg>
   );
 }
+
+export default TwosComplementWeights;

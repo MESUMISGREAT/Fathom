@@ -6,6 +6,8 @@
 import { Label, Svg } from '../primitives';
 import { BitColumns, bitCentre } from './bit-columns';
 
+export const diagramKey = 'cs-binary-place-value';
+
 const W = 600;
 const H = 252;
 const X0 = 40; // (600 - (8 * 58 + 7 * 8)) / 2
@@ -33,3 +35,5 @@ export function BinaryPlaceValue() {
     </Svg>
   );
 }
+
+export default BinaryPlaceValue;

@@ -7,6 +7,8 @@
  */
 import { Arrow, Label, Svg } from '../primitives';
 
+export const diagramKey = 'phys-vector-triangle';
+
 const W = 640;
 const H = 250;
 const S = 38; // px per newton
@@ -106,3 +108,5 @@ export function VectorTriangle() {
     </Svg>
   );
 }
+
+export default VectorTriangle;

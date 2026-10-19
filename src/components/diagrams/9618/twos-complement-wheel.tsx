@@ -7,6 +7,8 @@
  */
 import { Label, Svg } from '../primitives';
 
+export const diagramKey = 'cs-twos-complement-wheel';
+
 const W = 600;
 const H = 430;
 const CX = 300;
@@ -85,3 +87,5 @@ export function TwosComplementWheel() {
     </Svg>
   );
 }
+
+export default TwosComplementWheel;

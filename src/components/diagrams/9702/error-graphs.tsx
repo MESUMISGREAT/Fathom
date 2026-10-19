@@ -10,6 +10,8 @@
  */
 import { Arrow, Label, Svg, axes, graph } from '../primitives';
 
+export const diagramKey = 'phys-error-graphs';
+
 const W = 640;
 const H = 300;
 const GW = 310; // one graph's box
@@ -119,3 +121,5 @@ export function ErrorGraphs() {
     </Svg>
   );
 }
+
+export default ErrorGraphs;
