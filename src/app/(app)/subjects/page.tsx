@@ -30,40 +30,40 @@ export default async function SubjectsPage({ searchParams }: { searchParams: Pro
         {subjects.map((s) => {
           const e = mine.find((m) => m.subjectCode === s.code);
           return (
-            <article key={s.code} className="card card-pad">
-              <div className="row row-between" style={{ alignItems: 'flex-start', ['--gap' as string]: '16px' }}>
-                <div className="row row-nowrap grow" style={{ alignItems: 'flex-start', ['--gap' as string]: '16px' }}>
-                  <SubjectTile code={s.code} large />
-                  <div className="stack stack-xs grow">
-                    <h2 className="h2">
-                      <Link href={`/subjects/${s.slug}`} style={{ color: 'inherit' }}>
-                        {s.name}
-                      </Link>
-                    </h2>
-                    <p className="small faint">
-                      Cambridge International AS &amp; A Level {s.name} ({s.code}) · syllabus for {s.version.label}
-                    </p>
-                    <p className="small muted" style={{ marginTop: 4 }}>
-                      {s.description}
-                    </p>
-                    <p className="tiny faint" style={{ marginTop: 4 }}>
-                      {s.counts.topics} topics · {s.counts.objectives} objectives · {s.counts.lessons} lessons so far
-                    </p>
+            <article key={s.code} className="card card-pad subject-card subject-row" data-subject={s.code}>
+              <div className="subject-row-main">
+                <SubjectTile code={s.code} size="xl" />
+                <div className="stack stack-xs grow">
+                  <h2 className="h2">
+                    <Link href={`/subjects/${s.slug}`} style={{ color: 'inherit' }}>
+                      {s.name}
+                    </Link>
+                  </h2>
+                  <p className="small faint">
+                    Cambridge International AS &amp; A Level {s.name} ({s.code}) · syllabus for {s.version.label}
+                  </p>
+                  <p className="small muted" style={{ marginTop: 4 }}>
+                    {s.description}
+                  </p>
+                  <div className="row" style={{ ['--gap' as string]: '6px', marginTop: 8 }}>
+                    <span className="chip">{s.counts.topics} topics</span>
+                    <span className="chip">{s.counts.objectives} objectives</span>
+                    <span className="chip">{s.counts.lessons} lessons so far</span>
                   </div>
                 </div>
-                <div className="stack stack-sm" style={{ alignItems: 'flex-end' }}>
-                  <EnrollControl subjectCode={s.code} subjectName={s.shortName} enrolledLevel={e?.targetLevel ?? null} signedIn={!!user} />
-                  <Link href={`/subjects/${s.slug}`} className="small row" style={{ ['--gap' as string]: '4px' }}>
-                    View syllabus <ArrowRightIcon width={16} height={16} />
-                  </Link>
-                </div>
+              </div>
+              <div className="subject-row-side">
+                <EnrollControl subjectCode={s.code} subjectName={s.shortName} enrolledLevel={e?.targetLevel ?? null} signedIn={!!user} />
+                <Link href={`/subjects/${s.slug}`} className="small row hue-text" style={{ ['--gap' as string]: '4px' }}>
+                  View syllabus <ArrowRightIcon width={16} height={16} />
+                </Link>
               </div>
             </article>
           );
         })}
       </div>
       {welcome && (
-        <div className="row" style={{ marginTop: 24, justifyContent: 'flex-end' }}>
+        <div className="continue-bar" style={{ justifyContent: 'flex-end' }}>
           <Link href="/" className="btn btn-primary btn-lg">
             Done, take me to my dashboard
           </Link>

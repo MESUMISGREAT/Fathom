@@ -1,0 +1,230 @@
+id: functions-range-of-a-quadratic
+subject: "9709"
+topic: "1.2"
+title: The range of a quadratic function
+summary: Complete the square to find the vertex, then check whether it lies inside the domain before reading off the range.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.2.2"]
+prerequisites: [functions-domain-and-range, quadratics-completing-the-square]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.2 learning outcome "identify the range of a
+    given function in simple cases", applied to quadratic functions on all of ℝ and on restricted
+    domains, using the completed-square form from topic 1.1. All examples and questions are
+    original; every value checked in Python. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the range of a quadratic function, on all of $\mathbb{R}$ or on a restricted domain, without falling into the "just plug in the endpoints" trap.
+
+  - type: explain
+    title: The vertex is the boss
+    body: |-
+      A quadratic graph is a ∪ or a ∩, so its most extreme output is at the **vertex**. Completing the square hands you the vertex for free.
+
+      | Form | Vertex | Range on $\mathbb{R}$ |
+      | --- | --- | --- |
+      | $a(x + p)^2 + q$, $a > 0$ | $(-p, q)$, minimum | $f(x) \geqslant q$ |
+      | $q - a(x + p)^2$, $a > 0$ | $(-p, q)$, maximum | $f(x) \leqslant q$ |
+
+  - type: example
+    title: Domain is every real number
+    problem: |-
+      Find the range of $f(x) = x^2 - 6x + 11$ for $x \in \mathbb{R}$.
+    steps:
+      - |-
+        Complete the square: $x^2 - 6x + 11 = (x - 3)^2 - 9 + 11 = (x - 3)^2 + 2$.
+      - |-
+        $(x - 3)^2 \geqslant 0$, so $f(x) \geqslant 2$, with equality at $x = 3$.
+      - |-
+        The ∪ goes up forever on both sides, so there's no upper limit.
+    answer: |-
+      Range: $f(x) \geqslant 2$.
+
+  - type: check
+    questions: [rq-all-reals]
+
+  - type: explain
+    title: Restricted domain? Three quick checks
+    body: |-
+      When the domain is an interval, the graph is only a **piece** of the parabola. Check:
+
+      1. **Is the vertex inside the domain?** If yes, its $y$-value is the minimum (or maximum).
+      2. **Evaluate both ends** of the domain. The bigger one is the other extreme.
+      3. **Is each end included?** $\leqslant$ in the domain gives $\leqslant$ in the range; $<$ gives $<$.
+
+  - type: example
+    title: The endpoint trap
+    problem: |-
+      Find the range of $f(x) = x^2 - 4x + 1$ for $0 \leqslant x \leqslant 5$.
+    steps:
+      - |-
+        Complete the square: $f(x) = (x - 2)^2 - 4 + 1 = (x - 2)^2 - 3$. Vertex $(2, -3)$.
+      - |-
+        Is $x = 2$ in $0 \leqslant x \leqslant 5$? Yes. So the least value is $-3$.
+      - |-
+        Ends: $f(0) = 1$ and $f(5) = 25 - 20 + 1 = 6$. The greatest value is 6.
+      - |-
+        Both ends are included ($\leqslant$), and so is the vertex.
+    answer: |-
+      Range: $-3 \leqslant f(x) \leqslant 6$. Plugging in only the endpoints gives $1 \leqslant f(x) \leqslant 6$, which misses the dip.
+
+  - type: diagram
+    diagram: functions-quadratic-range
+    alt: >-
+      Graph of y = (x − 2)² − 3 drawn solid for 0 ≤ x ≤ 5 and dashed outside that domain. The
+      solid piece starts at (0, 1), dips to the vertex (2, −3), then rises to (5, 6). Dashed
+      horizontal lines run from the vertex and from (5, 6) to the y-axis, where the interval from
+      −3 to 6 is shaded and labelled range: −3 ≤ f(x) ≤ 6.
+    caption: |-
+      The lowest point of the solid piece is the vertex, not an endpoint. Squash the solid piece onto the $y$-axis and you cover $-3$ to $6$.
+
+  - type: check
+    questions: [rq-endpoint-trap, rq-restricted]
+
+  - type: example
+    title: Vertex outside the domain
+    problem: |-
+      Find the range of $f(x) = 2x^2 + 8x - 1$ for $x \geqslant 0$.
+    steps:
+      - |-
+        $2x^2 + 8x - 1 = 2(x^2 + 4x) - 1 = 2\left[(x + 2)^2 - 4\right] - 1 = 2(x + 2)^2 - 9$.
+      - |-
+        The vertex is at $x = -2$, which is **not** in the domain $x \geqslant 0$.
+      - |-
+        To the right of the vertex the ∪ only goes up, so $f$ is increasing for $x \geqslant 0$. The least value is at the end: $f(0) = -1$.
+    answer: |-
+      Range: $f(x) \geqslant -1$. (Writing $f(x) \geqslant -9$ would claim outputs this domain never produces.)
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The range of $f(x) = x^2 - 4x + 1$ for $0 \leqslant x \leqslant 5$ is $f(0) \leqslant f(x) \leqslant f(5)$, i.e. $1 \leqslant f(x) \leqslant 6$.
+        right: |-
+          The vertex $(2, -3)$ is inside the domain, so the curve dips below both ends. The range is $-3 \leqslant f(x) \leqslant 6$.
+      - wrong: |-
+          The range of a quadratic is always "$f(x) \geqslant$ the $y$-coordinate of the vertex".
+        right: |-
+          Only when the vertex is in the domain (and $a > 0$). If the domain stops short of the vertex, the extreme value is at an end of the domain.
+      - wrong: |-
+          $f(x) = 11 - (x - 2)^2$ has minimum value 11.
+        right: |-
+          A square is being **subtracted**, so 11 is the **maximum**: $f(x) \leqslant 11$ on $\mathbb{R}$.
+
+  - type: exam
+    body: |-
+      - A Paper 1 favourite: part (a) "Express $f(x)$ in the form $a(x + b)^2 + c$", part (b) "Hence state the range of $f$". The *hence* is a gift: the vertex is sitting in your answer to (a).
+      - Later parts often ask for the inverse, which needs this range as the new domain. Get it right once, use it twice.
+      - Insider hack: sketch the parabola, then shade the domain on the $x$-axis before you think about the range. You'll *see* whether the vertex is in or out.
+
+  - type: check
+    questions: [rq-vertex-outside, rq-maximum]
+
+  - type: takeaways
+    items:
+      - |-
+        Complete the square to get the vertex: the most extreme output of a quadratic.
+      - |-
+        On $\mathbb{R}$: range is $f(x) \geqslant q$ (∪-shaped) or $f(x) \leqslant q$ (∩-shaped).
+      - |-
+        On an interval: check whether the vertex is inside, then evaluate both ends.
+      - |-
+        Matching ends: an end included in the domain gives $\leqslant$ in the range.
+
+questions:
+  - id: rq-all-reals
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.2"]
+    prompt: |-
+      The function $f$ is defined by $f(x) = x^2 + 8x + 20$ for $x \in \mathbb{R}$. Its range is $f(x) \geqslant k$. Find $k$.
+    fields:
+      - label: "k ="
+        answer: 4
+    explanation: |-
+      $x^2 + 8x + 20 = (x + 4)^2 - 16 + 20 = (x + 4)^2 + 4$. The square is at least 0, so $f(x) \geqslant 4$, reached at $x = -4$.
+
+  - id: rq-endpoint-trap
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      Find the range of $f(x) = x^2 - 6x + 5$ for $1 \leqslant x \leqslant 6$.
+    explanation: |-
+      $f(x) = (x - 3)^2 - 4$. The vertex $x = 3$ is inside the domain, so the least value is $-4$. The ends give $f(1) = 0$ and $f(6) = 5$, so the greatest value is 5. Range: $-4 \leqslant f(x) \leqslant 5$.
+    options:
+      - text: |-
+          $-4 \leqslant f(x) \leqslant 5$
+        correct: true
+        why: |-
+          Least value at the vertex $(3, -4)$, which is in the domain; greatest at the end $x = 6$.
+      - text: |-
+          $0 \leqslant f(x) \leqslant 5$
+        why: |-
+          That's the endpoint trap: $f(1) = 0$ and $f(6) = 5$, but the curve dips to $-4$ at $x = 3$ in between.
+      - text: |-
+          $f(x) \geqslant -4$
+        why: |-
+          That's the range on all of $\mathbb{R}$. This domain stops at $x = 6$, so the outputs stop at 5.
+      - text: |-
+          $1 \leqslant f(x) \leqslant 6$
+        why: |-
+          That's the domain copied across. The range is about outputs, not inputs.
+
+  - id: rq-restricted
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      The function $g$ is defined by $g(x) = x^2 - 2x - 3$ for $-2 \leqslant x \leqslant 5$. Its range is $a \leqslant g(x) \leqslant b$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: -4
+      - label: "b ="
+        answer: 12
+    explanation: |-
+      $g(x) = (x - 1)^2 - 4$. The vertex $x = 1$ is in the domain, so the least value is $-4$.
+
+      Ends: $g(-2) = 4 + 4 - 3 = 5$ and $g(5) = 25 - 10 - 3 = 12$. The greatest value is 12.
+
+      Range: $-4 \leqslant g(x) \leqslant 12$.
+
+  - id: rq-vertex-outside
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      The function $f$ is defined by $f(x) = x^2 + 4x + 7$ for $x \geqslant 1$. Its range is $f(x) \geqslant m$. Find $m$.
+    fields:
+      - label: "m ="
+        answer: 12
+    explanation: |-
+      $f(x) = (x + 2)^2 + 3$, so the vertex is at $x = -2$, outside the domain. For $x \geqslant 1$ the graph is increasing, so the least value is at the end: $f(1) = 1 + 4 + 7 = 12$.
+
+      If you wrote 3, that's the vertex value, which this domain never reaches.
+
+  - id: rq-maximum
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.2"]
+    prompt: |-
+      The function $h$ is defined by $h(x) = 5 + 6x - x^2$ for $0 \leqslant x \leqslant 4$. Its range is $a \leqslant h(x) \leqslant b$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: 5
+      - label: "b ="
+        answer: 14
+    explanation: |-
+      $h(x) = -(x^2 - 6x) + 5 = -\left[(x - 3)^2 - 9\right] + 5 = 14 - (x - 3)^2$.
+
+      This is ∩-shaped with **maximum** 14 at $x = 3$, which is in the domain.
+
+      Ends: $h(0) = 5$ and $h(4) = 5 + 24 - 16 = 13$. The smaller end value is 5, so that's the least value.
+
+      Range: $5 \leqslant h(x) \leqslant 14$.

@@ -1560,6 +1560,105 @@ a.card:hover .subject-tile,
   outline-color: #fff;
 }
 
+.home-top {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 1180px) {
+  .home-top {
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+.home-week-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (min-width: 720px) and (max-width: 1179px) {
+  .home-week-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.hero-next {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+}
+.hero-next-art {
+  align-self: start;
+  padding: 4px 4px 0 0;
+}
+.hero-next-art .subject-tile,
+.hero-next-glyph {
+  rotate: 8deg;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.35), 0 0 0 4px rgba(255, 255, 255, 0.9), 0 18px 30px -10px rgba(10, 0, 60, 0.55);
+}
+.hero-next-glyph {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 22px;
+  background: linear-gradient(155deg, var(--xp-hi), var(--xp));
+  color: var(--xp-ink);
+}
+.hero-next-glyph svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 2;
+}
+@media (max-width: 520px) {
+  .hero-next-art {
+    display: none;
+  }
+  .hero-next {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero-next .btn {
+    width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------ subjects -- */
+.subject-row {
+  display: grid;
+  gap: 20px;
+}
+.subject-row-main {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.subject-row-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+@media (min-width: 820px) {
+  .subject-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 28px;
+  }
+  .subject-row-side {
+    align-items: flex-end;
+  }
+}
+@media (max-width: 560px) {
+  .subject-row-main .subject-tile.xl {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+  }
+  .subject-row-main .subject-tile.xl svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
 /* ------------------------------------------------------------- syllabus -- */
 .section-block + .section-block {
   margin-top: 30px;
@@ -1652,9 +1751,9 @@ a.topic-row:active {
 .lesson-path::before {
   content: '';
   position: absolute;
-  left: 39px;
-  top: 30px;
-  bottom: 30px;
+  left: 40px;
+  top: 32px;
+  bottom: 32px;
   width: 4px;
   border-radius: 4px;
   background: repeating-linear-gradient(180deg, var(--border-strong) 0 8px, transparent 8px 14px);
@@ -2444,6 +2543,11 @@ fieldset:disabled .option:not([data-mark]) {
 }
 .lesson-end .ring {
   margin: 0 auto 12px;
+}
+.review-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .continue-bar {
   display: flex;

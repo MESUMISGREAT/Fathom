@@ -9,8 +9,8 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import type { Outcome } from '@/domain/answers/check';
 import { recordLessonStep } from '@/server/actions/study';
 import { updatePreferences } from '@/server/actions/settings';
-import { ArrowRightIcon, CheckCircleIcon, ChevronLeftIcon } from '@/components/icons';
-import { Ring } from '@/components/ui';
+import { ArrowRightIcon, CheckCircleIcon, ChevronLeftIcon, SparkIcon, TargetIcon, TrophyIcon } from '@/components/icons';
+import { CelebrationCard } from '@/components/fun';
 import { LessonCheckContext } from './context';
 
 export interface PlayerStep {
@@ -122,11 +122,9 @@ export function LessonPlayer({
             <ChevronLeftIcon />
           </Link>
           <div className="grow stack stack-xs" style={{ minWidth: 0 }}>
-            <span className="tiny faint" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {title}
-            </span>
+            <span className="lesson-top-title">{title}</span>
             <div
-              className="meter meter-thin"
+              className="meter meter-lesson"
               role="progressbar"
               aria-label="Lesson progress"
               aria-valuemin={0}
@@ -220,32 +218,33 @@ export function LessonPlayer({
         )}
 
         {completed && (
-          <section className="card card-pad lesson-end" aria-live="polite" aria-label="Lesson complete">
-            {answeredFirst.length > 0 ? (
-              <>
-                <Ring value={(100 * firstCorrect) / allQuestions.length} label="Correct first time" size={72} color="var(--good)" />
-                <h2>Lesson complete</h2>
-                <p className="muted" style={{ marginTop: 6 }}>
-                  {firstCorrect} of {allQuestions.length} right first time.{' '}
-                  {firstCorrect === allQuestions.length
-                    ? 'Lovely. These will come back for a quick review in a few days to make them stick.'
-                    : 'The ones you missed will come back in your review tomorrow, which is exactly how this is meant to work.'}
-                </p>
-              </>
-            ) : (
-              <>
-                <h2>Lesson complete</h2>
-                <p className="muted" style={{ marginTop: 6 }}>
-                  {initiallyCompleted ? 'You finished this one before. Answer the checks again any time.' : 'Nice work.'}
-                </p>
-              </>
-            )}
-            {!signedIn && (
-              <p className="small" style={{ marginTop: 10 }}>
-                <Link href="/signup">Create a free account</Link> to save progress and get spaced review.
-              </p>
-            )}
-            <div className="row" style={{ justifyContent: 'center', marginTop: 18 }}>
+          <div className="lesson-end">
+            <CelebrationCard
+              label="Lesson complete"
+              headingId="lesson-complete-title"
+              title="Lesson complete"
+              icon={answeredFirst.length > 0 && firstCorrect === allQuestions.length ? <TrophyIcon /> : <CheckCircleIcon />}
+              tone={answeredFirst.length > 0 && firstCorrect === allQuestions.length ? 'gold' : 'good'}
+              stats={
+                answeredFirst.length > 0
+                  ? [
+                      { label: 'Right first time', value: `${firstCorrect}/${allQuestions.length}`, hue: 'good', icon: <CheckCircleIcon /> },
+                      { label: 'Accuracy', value: `${Math.round((100 * firstCorrect) / Math.max(1, allQuestions.length))}%`, hue: 'accent', icon: <TargetIcon /> },
+                    ]
+                  : []
+              }
+              subtitle={
+                answeredFirst.length > 0 ? (
+                  <p>
+                    {firstCorrect === allQuestions.length
+                      ? 'Lovely. These will come back for a quick review in a few days to make them stick.'
+                      : 'The ones you missed will come back in your review tomorrow, which is exactly how this is meant to work.'}
+                  </p>
+                ) : (
+                  <p>{initiallyCompleted ? 'You finished this one before. Answer the checks again any time.' : 'Nice work.'}</p>
+                )
+              }
+            >
               {next ? (
                 <Link href={next.href} className="btn btn-primary btn-lg">
                   Next: {next.title} <ArrowRightIcon />
@@ -254,8 +253,16 @@ export function LessonPlayer({
               <Link href={topicHref} className="btn btn-lg">
                 Back to {topicLabel}
               </Link>
-            </div>
-          </section>
+            </CelebrationCard>
+            {!signedIn && (
+              <p className="notice small" style={{ marginTop: 16, textAlign: 'left' }}>
+                <SparkIcon />
+                <span>
+                  <Link href="/signup">Create a free account</Link> to save progress and get spaced review.
+                </span>
+              </p>
+            )}
+          </div>
         )}
       </div>
     </LessonCheckContext.Provider>

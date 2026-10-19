@@ -32,7 +32,7 @@ blocks:
   - type: definition
     term: Vector graphic
     body: |
-      An image made up of drawing objects, each defined by its properties, and stored as a drawing list. The image is calculated from these instructions when it is displayed, so it can be scaled without losing quality.
+      An image made up of drawing objects, each defined by geometric data (such as coordinates and sizes) and other properties, and stored as a drawing list. The image is calculated from these instructions when it is displayed, so it can be scaled without losing quality.
 
   - type: definition
     term: Drawing object
@@ -99,12 +99,20 @@ blocks:
     answer: |
       One drawing object, five properties. Real formats (such as SVG) write this differently, but every vector format stores objects plus their properties.
 
+  - type: check
+    title: What gets stored
+    questions: [line-data, spot-vector-pixels]
+
   - type: intuition
     title: Scaling is just multiplying
     body: |
       To make the whole graphic 3 times bigger, multiply every coordinate and size by 3: centre (40, 30) becomes (120, 90), and radius 10 becomes 30.
 
       The edges are then recalculated at the new size, so they stay perfectly sharp. It's like reading a recipe out to a friend: they can bake it in a cupcake tin or a wedding-cake tin. (Where the analogy breaks: your friend estimates; the computer calculates exactly.)
+
+  - type: check
+    title: Scale it
+    questions: [scale-circle, enlarge-both]
 
   - type: misconceptions
     items:
@@ -123,10 +131,6 @@ blocks:
       - Use the three terms exactly: "the **drawing list** holds a command for each **drawing object**, and each object's **properties** (e.g. centre coordinates, radius, fill colour) define how it is drawn".
       - Give **concrete** example properties tied to their object: "a circle's radius", "a line's thickness". "Its colour" on its own is weak.
       - If asked how the data are encoded, contrast with bitmaps: a vector stores *instructions*; a bitmap stores *pixels*.
-
-  - type: check
-    title: Objects and properties
-    questions: [line-data, spot-vector-pixels, scale-circle, enlarge-both]
 
   - type: takeaways
     items:

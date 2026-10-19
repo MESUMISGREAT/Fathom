@@ -11,7 +11,7 @@ export const diagramKey = 'coordinate-geometry-circle-properties';
 
 const PW = 210;
 const W = PW * 3;
-const H = 300;
+const H = 282;
 const O = { x: PW / 2, y: 160 };
 const R = 70;
 const at = (deg: number) => ({ x: O.x + R * Math.cos((deg * Math.PI) / 180), y: O.y - R * Math.sin((deg * Math.PI) / 180) });

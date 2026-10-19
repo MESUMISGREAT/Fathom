@@ -4,8 +4,8 @@ import { useState } from 'react';
 import type { QuestionView } from '@/content/rendered';
 import type { Outcome } from '@/domain/answers/check';
 import { QuestionCard } from './QuestionCard';
-import { ArrowRightIcon } from '@/components/icons';
-import { Ring } from '@/components/ui';
+import { ArrowRightIcon, CheckCircleIcon, TargetIcon } from '@/components/icons';
+import { CelebrationCard } from '@/components/fun';
 
 /** Due questions one at a time: answer, read the feedback, move on. */
 export function ReviewSession({ items }: { items: Array<{ view: QuestionView; sourceHref: string; sourceTitle: string }> }) {
@@ -17,30 +17,46 @@ export function ReviewSession({ items }: { items: Array<{ view: QuestionView; so
   if (!item) {
     const correct = [...results.values()].filter((o) => o === 'correct').length;
     return (
-      <section className="card card-pad lesson-end" aria-live="polite">
-        <Ring value={results.size ? (100 * correct) / results.size : 0} label="Correct" size={72} color="var(--good)" />
-        <h2>Review done</h2>
-        <p className="muted" style={{ marginTop: 6 }}>
-          {correct} of {results.size} correct. Right answers move further apart; anything you missed comes back tomorrow.
-        </p>
-        <div className="row" style={{ justifyContent: 'center', marginTop: 18 }}>
-          <Link href="/" className="btn btn-primary btn-lg">
-            Back to home
-          </Link>
-        </div>
-      </section>
+      <CelebrationCard
+        headingId="review-done-title"
+        title="Review done"
+        tone="good"
+        icon={<CheckCircleIcon />}
+        stats={[
+          { label: 'Correct', value: `${correct}/${results.size}`, hue: 'good', icon: <CheckCircleIcon /> },
+          { label: 'Accuracy', value: `${results.size ? Math.round((100 * correct) / results.size) : 0}%`, hue: 'accent', icon: <TargetIcon /> },
+        ]}
+        subtitle={<p>Right answers move further apart; anything you missed comes back tomorrow.</p>}
+      >
+        <Link href="/" className="btn btn-primary btn-lg">
+          Back to home
+        </Link>
+      </CelebrationCard>
     );
   }
 
   return (
     <div className="stack">
-      <div className="row row-between">
-        <p className="small muted tabular">
-          Question {index + 1} of {items.length}
-        </p>
-        <Link href={item.sourceHref} className="tiny">
-          From: {item.sourceTitle}
-        </Link>
+      <div className="review-progress">
+        <div className="row row-between">
+          <p className="small tabular" style={{ fontWeight: 750 }}>
+            Question {index + 1} of {items.length}
+          </p>
+          <Link href={item.sourceHref} className="tiny">
+            From: {item.sourceTitle}
+          </Link>
+        </div>
+        <div
+          className="meter meter-lesson"
+          role="progressbar"
+          aria-label="Review progress"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round((100 * index) / items.length)}
+          style={{ ['--value' as string]: Math.round((100 * index) / items.length) }}
+        >
+          <span />
+        </div>
       </div>
       <QuestionCard
         key={item.view.id}
@@ -50,8 +66,8 @@ export function ReviewSession({ items }: { items: Array<{ view: QuestionView; so
         sourceHref={item.sourceHref}
         onFinal={(id, o) => setResults((m) => (m.has(id) ? m : new Map(m).set(id, o)))}
       />
-      <div className="row" style={{ justifyContent: 'flex-end' }}>
-        <button type="button" className={`btn ${answered ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setIndex((i) => i + 1)}>
+      <div className="continue-bar" style={{ justifyContent: 'flex-end', marginTop: 4 }}>
+        <button type="button" className={`btn btn-lg ${answered ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setIndex((i) => i + 1)}>
           {answered ? (index + 1 < items.length ? 'Next question' : 'See summary') : 'Skip'} <ArrowRightIcon />
         </button>
       </div>

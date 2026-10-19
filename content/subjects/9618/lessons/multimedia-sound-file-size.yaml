@@ -1,0 +1,234 @@
+id: multimedia-sound-file-size
+subject: "9618"
+topic: "1.2"
+title: Calculating sound file size
+summary: Calculate the size of an uncompressed sound file from its sampling rate, sampling resolution and length, and predict how changes affect it.
+order: 9
+minutes: 5
+kind: core
+objectives: ["1.2.7"]
+prerequisites: [multimedia-sampling-accuracy, data-rep-binary-prefixes]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, seventh learning outcome (the
+    impact of changing the sampling rate and the sampling resolution, including on file size). The
+    effect on accuracy is taught in multimedia-sampling-accuracy. Recording settings are
+    illustrative and chosen to work without a calculator, apart from the CD example, which uses the
+    standard CD audio values; every calculation and answer key checked with Python. All questions
+    are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can calculate the size of an uncompressed sound file, and predict how changing the sampling rate, the sampling resolution or the length changes it.
+
+  - type: explain
+    title: The bitmap formula, wearing headphones
+    body: |
+      A sound file is a long list of samples. Count the samples, multiply by the bits in each one, and that's the file size.
+
+      If you can do bitmap file sizes, you can already do this. Only the names change.
+
+  - type: explain
+    title: The formula
+    body: |
+      $$\text{file size (bits)} = \text{sampling rate (Hz)} \times \text{sampling resolution (bits)} \times \text{length (s)}$$
+
+      - Sampling rate × length = the number of samples.
+      - × sampling resolution = the number of bits.
+      - ÷ 8 for bytes, then ÷ 1024 for KiB, and ÷ 1024 again for MiB.
+      - Recorded in **stereo**? There are two channels (left and right), so multiply by 2.
+
+  - type: diagram
+    diagram: cs-multimedia-sound-bits
+    alt: >-
+      A grid of bits representing 3 seconds of sound. Each column is one sample written as 4 binary
+      digits, most significant bit at the top, so the grid is 4 bits tall. The columns are grouped
+      into three blocks labelled second 1, second 2 and second 3, with 8 columns in each block; a
+      bracket over the first block reads sampling rate, 8 samples per second, and an arrow beside the
+      grid reads 4 bits per sample. An arrow under the grid reads duration 3 seconds. Below: file size
+      in bits equals sampling rate times sampling resolution times duration, equals 8 times 4 times 3,
+      which is 96 bits, which is 12 bytes.
+    caption: |
+      A toy recording at 8 Hz so every bit fits on screen. Real audio has thousands of columns per second.
+
+  - type: example
+    title: A voice memo
+    problem: |
+      A voice memo lasts 10 seconds. It is recorded in mono with a sampling rate of 8 kHz and a sampling resolution of 8 bits. Calculate its size in bytes.
+    steps:
+      - |
+        Units first: 8 kHz $= 8000$ Hz (here kilo means 1000). Length $= 10$ s.
+      - |
+        Samples: $8000 \times 10 = 80\,000$.
+      - |
+        Bits: $80\,000 \times 8 = 640\,000$ bits.
+      - |
+        Bytes: $640\,000 \div 8 = 80\,000$ bytes.
+    answer: |
+      80 000 bytes, which is about 78 KiB ($80\,000 \div 1024 \approx 78.1$).
+
+  - type: check
+    title: Quick check
+    questions: [size-bytes-sound]
+
+  - type: example
+    title: Minutes and KiB
+    problem: |
+      A mono recording lasts 2 minutes, with a sampling rate of 16 000 Hz and a sampling resolution of 16 bits. Calculate its size in KiB.
+    steps:
+      - |
+        Convert the length to seconds: 2 minutes $= 120$ s.
+      - |
+        Bits $= 16\,000 \times 16 \times 120$.
+      - |
+        Bytes: divide by 8 first, since $16 \div 8 = 2$: $16\,000 \times 2 \times 120 = 3\,840\,000$ bytes.
+      - |
+        KiB: $3\,840\,000 \div 1024 = 3750$ KiB.
+    answer: |
+      3750 KiB (about 3.7 MiB).
+
+  - type: check
+    title: Watch the units
+    questions: [size-kib-sound, spot-minutes]
+
+  - type: explain
+    title: What changes the size?
+    body: |
+      | Change (everything else the same) | File size |
+      | --- | --- |
+      | Double the sampling rate | ×2 |
+      | Sampling resolution 8 → 16 bits | ×2 |
+      | Mono → stereo | ×2 |
+      | Double the length | ×2 |
+      | Record the sound more loudly | no change |
+
+      The size is **proportional** to each factor in the formula. Loudness isn't in the formula: a loud sample takes the same number of bits as a quiet one.
+
+  - type: misconceptions
+    items:
+      - wrong: Use the length in minutes.
+        right: |
+          The sampling rate is per **second**, so convert the length to seconds first: 3 minutes $= 180$ s.
+      - wrong: 8 kHz means 8 × 1024 Hz.
+        right: |
+          kHz uses the decimal prefix: 8 kHz $= 8000$ Hz. The 1024s only appear when you convert bytes to KiB or MiB.
+      - wrong: Going from 8 to 16 bits per sample multiplies the file size by 256.
+        right: |
+          The number of levels goes up ×256, but the bits per sample only double, so the file doubles.
+
+  - type: exam
+    body: |
+      - Write the formula, substitute **with units**, then convert. Typically 2–3 marks: the method, the number of bits, then the final unit.
+      - Hunt the hidden conversions: minutes → seconds, kHz → Hz, bits → bytes, and KiB (÷ 1024) versus kB (÷ 1000).
+      - No calculator: cancel early. $16\,000 \times 16 \times 120 \div 8$ is easier as $16\,000 \times 2 \times 120$.
+
+  - type: check
+    title: Size it up
+    questions: [factor-change, volume-change, find-rate]
+
+  - type: takeaways
+    items:
+      - File size (bits) = sampling rate × sampling resolution × length in seconds (× 2 for stereo).
+      - Divide by 8 for bytes, then by 1024 for KiB and again for MiB.
+      - Convert minutes to seconds and kHz to Hz before you multiply.
+      - Doubling any one factor doubles the file size; loudness has no effect.
+
+  - type: deeper
+    title: CD quality, worked out
+    body: |
+      CD audio: 44 100 Hz, 16 bits, stereo (2 channels). One minute is:
+
+      $$44\,100 \times 16 \times 2 \times 60 = 84\,672\,000 \text{ bits}$$
+
+      That's $84\,672\,000 \div 8 = 10\,584\,000$ bytes, about 10.1 MiB, for a single minute. A 4-minute song is over 40 MiB uncompressed, which is exactly why compression (the next topic) matters.
+
+questions:
+  - id: size-bytes-sound
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.7"]
+    prompt: |
+      A 30-second mono recording uses a sampling rate of 16 000 Hz and a sampling resolution of 8 bits. Calculate its file size in **bytes**.
+    fields:
+      - answer: 480000
+        unit: bytes
+    explanation: |
+      Bits $= 16\,000 \times 8 \times 30 = 3\,840\,000$. Bytes $= 3\,840\,000 \div 8 = 480\,000$. (Quicker: 8 bits is 1 byte per sample, so bytes $= 16\,000 \times 30$.)
+
+  - id: size-kib-sound
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.7"]
+    prompt: |
+      A 2-minute mono recording uses a sampling rate of 8 kHz and a sampling resolution of 16 bits. Calculate its file size in **KiB**.
+    fields:
+      - answer: 1875
+        unit: KiB
+    explanation: |
+      Length $= 120$ s and rate $= 8000$ Hz. Bits $= 8000 \times 16 \times 120 = 15\,360\,000$. Bytes $= 15\,360\,000 \div 8 = 1\,920\,000$. KiB $= 1\,920\,000 \div 1024 = 1875$.
+
+  - id: spot-minutes
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.2.7"]
+    prompt: |
+      A student calculates the size of a 3-minute mono recording with a sampling rate of 10 kHz and a sampling resolution of 8 bits. Which line contains the first error?
+    lines:
+      - "Sampling rate $= 10$ kHz $= 10\\,000$ Hz"
+      - Length is 3 minutes, so use 3 in the formula
+      - "Bits $= 10\\,000 \\times 8 \\times 3 = 240\\,000$ bits"
+      - "Bytes $= 240\\,000 \\div 8 = 30\\,000$ bytes"
+    errorLine: 2
+    fix: |
+      The sampling rate is per second, so use the length in seconds: $3 \times 60 = 180$ s. Bits $= 10\,000 \times 8 \times 180 = 14\,400\,000$, which is $1\,800\,000$ bytes.
+    explanation: |
+      Line 1 is right. Using minutes makes the answer 60 times too small.
+
+  - id: factor-change
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.7"]
+    prompt: |
+      A recording's sampling rate is changed from 22 050 Hz to 44 100 Hz, and its sampling resolution from 8 bits to 24 bits. The length stays the same. By what factor does the file size change?
+    fields:
+      - answer: 6
+    explanation: |
+      Rate: $44\,100 \div 22\,050 = 2$. Resolution: $24 \div 8 = 3$. File size is proportional to both, so $2 \times 3 = 6$ times larger.
+
+  - id: volume-change
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.7"]
+    prompt: |
+      Which change would **not** change the size of an uncompressed sound file?
+    options:
+      - text: Recording the same sound more loudly
+        correct: true
+        why: |
+          Loudness changes the values stored in each sample, not how many samples there are or how many bits each one uses.
+      - text: Doubling the sampling rate
+        why: |
+          Twice as many samples per second, so twice the file size.
+      - text: Recording in stereo instead of mono
+        why: |
+          Two channels means twice as many samples to store.
+      - text: Making the recording twice as long
+        why: |
+          Twice as many seconds, so twice as many samples.
+    explanation: |
+      The formula is rate × resolution × length (× channels). Loudness isn't in it.
+
+  - id: find-rate
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.7"]
+    prompt: |
+      A 4-second mono recording with a sampling resolution of 16 bits has a file size of exactly 256 000 bytes (no header). What sampling rate was used?
+    fields:
+      - answer: 32000
+        unit: Hz
+    explanation: |
+      Bits $= 256\,000 \times 8 = 2\,048\,000$. Rearrange the formula: rate $= \text{bits} \div (\text{resolution} \times \text{length}) = 2\,048\,000 \div (16 \times 4) = 2\,048\,000 \div 64 = 32\,000$ Hz (32 kHz).

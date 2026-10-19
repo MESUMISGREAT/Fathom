@@ -37,20 +37,22 @@ export default async function SubjectPage({
   const strands = [...new Set(sections.map((s) => s.strand).filter(Boolean))] as string[];
 
   return (
-    <div className="container">
+    <div className="container" data-subject={subject.code}>
       <header className="page-head">
         <Crumbs items={[{ href: '/subjects', label: 'Subjects' }, { label: subject.name }]} />
-        <div className="row row-between" style={{ alignItems: 'flex-start', ['--gap' as string]: '16px' }}>
-          <div className="row row-nowrap" style={{ ['--gap' as string]: '16px' }}>
-            <SubjectTile code={subject.code} large />
-            <div>
-              <h1>{subject.name}</h1>
-              <p className="small faint">
-                Cambridge International AS &amp; A Level {subject.name} {subject.code}
-              </p>
+        <div className="subject-hero">
+          <div className="row row-between" style={{ alignItems: 'center', ['--gap' as string]: '20px' }}>
+            <div className="row row-nowrap" style={{ ['--gap' as string]: '18px' }}>
+              <SubjectTile code={subject.code} size="xl" />
+              <div className="stack stack-xs">
+                <h1>{subject.name}</h1>
+                <p className="small muted">
+                  Cambridge International AS &amp; A Level {subject.name} {subject.code}
+                </p>
+              </div>
             </div>
+            <EnrollControl subjectCode={subject.code} subjectName={subject.shortName} enrolledLevel={enrolment?.targetLevel ?? null} signedIn={!!user} />
           </div>
-          <EnrollControl subjectCode={subject.code} subjectName={subject.shortName} enrolledLevel={enrolment?.targetLevel ?? null} signedIn={!!user} />
         </div>
         <div className="notice small">
           <ListIcon />
@@ -89,7 +91,7 @@ export default async function SubjectPage({
 
       {(strands.length > 0 ? strands : [null]).map((strand) => (
         <div key={strand ?? 'all'} className="stack stack-lg" style={{ marginBottom: 32 }}>
-          {strand && <h2 className="h3 faint">{strand}</h2>}
+          {strand && <h2 className="eyebrow">{strand}</h2>}
           {sections
             .filter((s) => (strand ? s.strand === strand : true))
             .map((section) => (

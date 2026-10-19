@@ -60,7 +60,7 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
           </NavLink>
           {user && (
             <NavLink href="/review" className="nav-item">
-              <RepeatIcon /> Review {due}
+              <NavIcon hue="var(--flame-text)"><RepeatIcon /></NavIcon> Review {due}
             </NavLink>
           )}
           <NavLink href="/search" className="nav-item">
@@ -69,13 +69,13 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
           {user && (
             <>
               <NavLink href="/progress" className="nav-item">
-                <ChartIcon /> Progress
+                <NavIcon hue="var(--good)"><ChartIcon /></NavIcon> Progress
               </NavLink>
               <NavLink href="/saved" className="nav-item">
-                <BookmarkIcon /> Saved
+                <NavIcon hue="var(--xp-text)"><BookmarkIcon /></NavIcon> Saved
               </NavLink>
               <NavLink href="/history" className="nav-item">
-                <ClockIcon /> History
+                <NavIcon hue="var(--sub-9618)"><ClockIcon /></NavIcon> History
               </NavLink>
             </>
           )}
@@ -96,13 +96,13 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
           </NavLink>
           {user && (user.role === 'editor' || user.role === 'admin') && (
             <NavLink href="/reports" className="nav-item">
-              <FlagIcon /> Content reports
+              <NavIcon hue="var(--bad)"><FlagIcon /></NavIcon> Content reports
             </NavLink>
           )}
           {user ? (
             <>
               <NavLink href="/settings" className="nav-item">
-                <SettingsIcon /> Settings
+                <NavIcon hue="var(--text-3)"><SettingsIcon /></NavIcon> Settings
               </NavLink>
               <form action={logOut}>
                 <button type="submit" className="nav-item" style={{ width: '100%', background: 'none', cursor: 'pointer' }}>
@@ -153,20 +153,20 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
         </NavLink>
         {user ? (
           <NavLink href="/review" className="tab">
-            <RepeatIcon /> Review {due}
+            <span className="tab-icon"><RepeatIcon /></span> Review {due}
           </NavLink>
         ) : (
           <NavLink href="/search" className="tab">
-            <SearchIcon /> Search
+            <span className="tab-icon"><SearchIcon /></span> Search
           </NavLink>
         )}
         {user ? (
           <NavLink href="/progress" className="tab">
-            <ChartIcon /> Progress
+            <span className="tab-icon"><ChartIcon /></span> Progress
           </NavLink>
         ) : (
           <NavLink href="/about" className="tab">
-            <InfoIcon /> About
+            <span className="tab-icon"><InfoIcon /></span> About
           </NavLink>
         )}
         <NavLink href="/more" className="tab">

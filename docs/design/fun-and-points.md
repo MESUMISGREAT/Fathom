@@ -128,3 +128,27 @@ Where it appears:
 * **Progress:** level and title, XP for the last 14 days as bars, badge gallery (locked
   badges shown greyed with how to earn them).
 * **Settings:** daily goal, celebrations on/off, sounds on/off.
+
+## 6. Brand direction (update from the student brief)
+
+The first redesign brief was not bold enough. The current site reads as a corporate
+website. Students are used to TikTok-level stimulation; Fathom must look **polished and
+really fun**, so that opening it feels like opening a game, not a school portal.
+
+* **Redesign everything, including the logo**: a new wordmark and app icon, and an
+  original **mascot** with a few expressions (happy, thinking, cheering, sleepy) that
+  appears on the home page, empty states, loading, the lesson celebration and level-ups.
+  It must be original, not a look-alike of any existing brand's mascot.
+* **A real display font with personality**, self-hosted (font files in the repo, OFL
+  licence) so it looks the same on Windows, Android, Mac and iPhone. `ui-rounded` falls
+  back to Segoe UI on Windows, which looks corporate.
+* **Bold, saturated colour**, gradients and illustration where they add joy: subject
+  tiles, headers, badges, the celebration. Chunky 3D buttons, sticker-like cards,
+  playful shapes, bouncy micro-interactions.
+* **Fun around the learning, calm inside it.** The lesson reading area and the question
+  itself stay clean and easy to focus on (ADHD-friendly). The fun lives in the chrome,
+  the feedback, the rewards and the transitions.
+* Still polished and accessible: consistent spacing, crisp SVGs, WCAG AA contrast in
+  light and dark, reduced-motion respected.
+
+The chosen direction and its assets are in `docs/design/brand/` (see `brand.md`).

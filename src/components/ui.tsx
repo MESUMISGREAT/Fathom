@@ -60,6 +60,15 @@ export function Meter({ value, label, thin, color }: { value: number; label: str
   );
 }
 
+/** A small coloured icon bubble (list rows, stat tiles, section headings). */
+export function Bubble({ children, hue, small }: { children: ReactNode; hue?: string; small?: boolean }) {
+  return (
+    <span className={`bubble${small ? ' bubble-sm' : ''}`} style={hue ? { ['--hue' as string]: hue } : undefined} aria-hidden="true">
+      {children}
+    </span>
+  );
+}
+
 export function Ring({ value, label, size = 56, color }: { value: number; label: string; size?: number; color?: string }) {
   const pct = Math.max(0, Math.min(100, Math.round(value)));
   const r = 25;
@@ -77,10 +86,11 @@ export function Ring({ value, label, size = 56, color }: { value: number; label:
   );
 }
 
-export function SubjectTile({ code, large }: { code: string; large?: boolean }) {
+export function SubjectTile({ code, large, size }: { code: string; large?: boolean; size?: 'lg' | 'xl' }) {
   const Icon = SUBJECT_ICONS[code] ?? SparkIcon;
+  const s = size ?? (large ? 'lg' : undefined);
   return (
-    <span className={`subject-tile${large ? ' lg' : ''}`} data-subject={code} aria-hidden="true">
+    <span className={`subject-tile${s ? ` ${s}` : ''}`} data-subject={code} aria-hidden="true">
       <Icon />
     </span>
   );

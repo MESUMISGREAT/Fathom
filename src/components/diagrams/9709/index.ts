@@ -5,6 +5,7 @@ import CoordinateGeometryCircleProperties from './coordinate-geometry-circle-pro
 import CoordinateGeometryCirclePythagoras from './coordinate-geometry-circle-pythagoras';
 import CoordinateGeometryDistanceTriangle from './coordinate-geometry-distance-triangle';
 import CoordinateGeometryIntersectionsCount from './coordinate-geometry-intersections-count';
+import CoordinateGeometryLineCircleCases from './coordinate-geometry-line-circle-cases';
 import CoordinateGeometryLineForms from './coordinate-geometry-line-forms';
 import CoordinateGeometryPerpendicularBisector from './coordinate-geometry-perpendicular-bisector';
 import CoordinateGeometryPerpendicularGradients from './coordinate-geometry-perpendicular-gradients';
@@ -33,6 +34,7 @@ export const diagrams: DiagramRegistry = {
   'coordinate-geometry-circle-pythagoras': CoordinateGeometryCirclePythagoras,
   'coordinate-geometry-distance-triangle': CoordinateGeometryDistanceTriangle,
   'coordinate-geometry-intersections-count': CoordinateGeometryIntersectionsCount,
+  'coordinate-geometry-line-circle-cases': CoordinateGeometryLineCircleCases,
   'coordinate-geometry-line-forms': CoordinateGeometryLineForms,
   'coordinate-geometry-perpendicular-bisector': CoordinateGeometryPerpendicularBisector,
   'coordinate-geometry-perpendicular-gradients': CoordinateGeometryPerpendicularGradients,

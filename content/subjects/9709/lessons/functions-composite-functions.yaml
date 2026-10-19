@@ -1,0 +1,243 @@
+id: functions-composite-functions
+subject: "9709"
+topic: "1.2"
+title: Composite functions
+summary: gf(x) means g(f(x)), so f acts first; the composite exists only when the range of f fits inside the domain of g.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.2.1", "1.2.2"]
+prerequisites: [functions-domain-and-range]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.2 learning outcomes "understand the terms
+    ... composition of functions" and "find the composition of two given functions", including
+    the note that gf can only be formed when the range of f lies within the domain of g. All
+    examples and questions are original; every value and expression checked in Python. Not yet
+    reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can form and evaluate composite functions such as $gf(x)$ and $f^2(x)$, decide whether a composite exists, and find its range in simple cases.
+
+  - type: explain
+    title: Socks, then shoes
+    body: |-
+      Socks then shoes: normal. Shoes then socks: a fashion statement. Same two actions, different order, different result.
+
+      Functions work the same way. A **composite function** feeds the output of one function straight into another.
+
+  - type: definition
+    term: Composite function
+    body: |-
+      The **composite function** $gf$ is defined by $gf(x) = g(f(x))$: apply $f$ first, then apply $g$ to the result. It can only be formed when the **range of $f$ lies within the domain of $g$**.
+
+  - type: diagram
+    diagram: functions-composite-machines
+    alt: >-
+      Two rows of function machines with f(x) = x + 3 and g(x) = x squared. Top row, labelled gf
+      of 2 equals g of f of 2, f acts first: 2 goes into machine f and comes out as 5, then 5
+      goes into machine g and comes out as 25. Bottom row, labelled fg of 2 equals f of g of 2,
+      g acts first: 2 goes into g and comes out as 4, then 4 goes into f and comes out as 7. A
+      note says same two machines, different order, different answer.
+    caption: |-
+      Read $gf(x)$ from the inside out: the function **closest to $x$** acts first.
+
+  - type: example
+    title: Building composites
+    problem: |-
+      $f(x) = 2x - 1$ and $g(x) = x^2 + 3$, both for $x \in \mathbb{R}$. Find $gf(x)$, $fg(x)$ and $f^2(x)$.
+    steps:
+      - |-
+        $gf(x) = g(f(x)) = g(2x - 1) = (2x - 1)^2 + 3 = 4x^2 - 4x + 4$.
+      - |-
+        $fg(x) = f(g(x)) = f(x^2 + 3) = 2(x^2 + 3) - 1 = 2x^2 + 5$.
+      - |-
+        $f^2(x)$ means $ff(x)$, not $[f(x)]^2$: $ff(x) = f(2x - 1) = 2(2x - 1) - 1 = 4x - 3$.
+    answer: |-
+      $gf(x) = 4x^2 - 4x + 4$, $\;fg(x) = 2x^2 + 5$, $\;f^2(x) = 4x - 3$. Notice $gf \neq fg$.
+
+  - type: check
+    questions: [cf-order, cf-evaluate, cf-expression]
+
+  - type: intuition
+    title: Why the range has to fit
+    body: |-
+      $g$ can only eat what's on its menu (its domain). If $f$ produces an output that isn't in the domain of $g$, the second machine jams.
+
+      So before forming $gf$, compare the **range of $f$** (what comes out of the first machine) with the **domain of $g$** (what the second machine accepts). Every output of $f$ must be acceptable to $g$.
+
+  - type: example
+    title: Does it exist? What's its range?
+    problem: |-
+      $f(x) = \dfrac{1}{x}$ for $x \geqslant 1$, and $g(x) = 2x + 3$ for $x \in \mathbb{R}$. Explain why $gf$ exists but $fg$ does not, and find the range of $gf$.
+    steps:
+      - |-
+        Range of $f$: $0 < f(x) \leqslant 1$. Domain of $g$: all real numbers. Every output of $f$ is a real number, so $gf$ exists.
+      - |-
+        Range of $g$: all real numbers (a non-horizontal straight line covers every $y$). Domain of $f$: $x \geqslant 1$. Outputs of $g$ such as $0$ are not allowed into $f$, so $fg$ cannot be formed.
+      - |-
+        $gf(x) = g\left(\tfrac1x\right) = \dfrac{2}{x} + 3$.
+      - |-
+        Feed the **range of $f$** into $g$: $0 < \tfrac1x \leqslant 1$, so $0 < \tfrac2x \leqslant 2$, so $3 < \tfrac2x + 3 \leqslant 5$.
+    answer: |-
+      $gf$ exists, $fg$ doesn't, and the range of $gf$ is $3 < gf(x) \leqslant 5$.
+
+  - type: check
+    questions: [cf-exists, cf-range]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $gf(x)$ means "do $g$, then $f$", because $g$ is written first.
+        right: |-
+          $gf(x) = g(f(x))$: the function next to $x$ acts first. So $f$ first, then $g$.
+      - wrong: |-
+          $f^2(x) = [f(x)]^2$, so for $f(x) = 2x - 1$, $f^2(x) = (2x - 1)^2$.
+        right: |-
+          In function notation $f^2(x) = ff(x) = 4x - 3$. (For trig, $\sin^2 x$ does mean $(\sin x)^2$; functions in this topic follow the composite convention.)
+      - wrong: |-
+          The range of $gf$ is the range of $g$.
+        right: |-
+          $g$ only receives the outputs of $f$, so feed the range of $f$ into $g$. Here that gave $3 < gf(x) \leqslant 5$, not all of $\mathbb{R}$.
+
+  - type: exam
+    body: |-
+      - "Find an expression for $fg(x)$" is typically 1–2 marks. Substitute with brackets, then simplify.
+      - "Solve $gf(x) = 7$": form $gf(x)$ first, then solve. Or work backwards: find what $f(x)$ must be, then find $x$.
+      - Insider hack: check a composite expression with one number. With $x = 2$ above, $f(2) = 3$ and $g(3) = 12$, and $4(2)^2 - 4(2) + 4 = 12$ ✓.
+
+  - type: check
+    questions: [cf-ff]
+
+  - type: takeaways
+    items:
+      - |-
+        $gf(x) = g(f(x))$: the function nearest $x$ acts first. In general $gf \neq fg$.
+      - |-
+        $f^2(x)$ means $ff(x)$.
+      - |-
+        $gf$ exists only if the range of $f$ lies within the domain of $g$.
+      - |-
+        Range of $gf$: feed the range of $f$ into $g$.
+
+questions:
+  - id: cf-order
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |-
+      What does $gf(x)$ mean?
+    explanation: |-
+      $gf(x) = g(f(x))$. The function written next to $x$, here $f$, acts first; then $g$ acts on its output.
+    options:
+      - text: |-
+          Apply $f$ to $x$, then apply $g$ to the result.
+        correct: true
+        why: |-
+          Yes: $gf(x) = g(f(x))$, read from the inside out.
+      - text: |-
+          Apply $g$ to $x$, then apply $f$ to the result.
+        why: |-
+          That's $fg(x) = f(g(x))$. The order is reversed.
+      - text: |-
+          Multiply $g(x)$ by $f(x)$.
+        why: |-
+          Writing $gf$ doesn't mean a product here; it's composition. The product would be written $g(x)f(x)$.
+      - text: |-
+          Add $g(x)$ and $f(x)$.
+        why: |-
+          Composition feeds one function into the other; it doesn't add them.
+
+  - id: cf-evaluate
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.2"]
+    prompt: |-
+      $f(x) = 3x + 1$ and $g(x) = x^2 - 2$, for $x \in \mathbb{R}$. Find $gf(2)$.
+    fields:
+      - label: "gf(2) ="
+        answer: 47
+    explanation: |-
+      $f$ first: $f(2) = 7$. Then $g(7) = 49 - 2 = 47$.
+
+      If you got 7, you found $fg(2) = f(g(2)) = f(2) = 7$, the other order.
+
+  - id: cf-expression
+    format: expression
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      $f(x) = 2x + 5$ and $g(x) = x^2 - 1$, for $x \in \mathbb{R}$. Find and simplify $fg(x)$.
+    answer: 2x^2 + 3
+    variables: [x]
+    display: |-
+      $fg(x) = 2x^2 + 3$
+    explanation: |-
+      $g$ first, then $f$: $fg(x) = f(x^2 - 1) = 2(x^2 - 1) + 5 = 2x^2 + 3$.
+
+      The other order, $gf(x) = (2x + 5)^2 - 1$, is a different function.
+
+  - id: cf-exists
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      $f(x) = x^2 + 1$ for $x \in \mathbb{R}$, and $g(x) = \sqrt{x - 2}$ for $x \geqslant 2$. Which composite functions can be formed?
+    explanation: |-
+      Range of $f$ is $f(x) \geqslant 1$, but $g$ only accepts $x \geqslant 2$; for instance $f(0) = 1$ and $g(1)$ is undefined. So $gf$ can't be formed.
+
+      Range of $g$ is $g(x) \geqslant 0$, and $f$ accepts every real number. So $fg$ can be formed.
+    options:
+      - text: |-
+          $fg$ but not $gf$
+        correct: true
+        why: |-
+          The range of $g$ ($\geqslant 0$) fits in the domain of $f$ ($\mathbb{R}$); the range of $f$ ($\geqslant 1$) does not fit in the domain of $g$ ($\geqslant 2$).
+      - text: |-
+          $gf$ but not $fg$
+        why: |-
+          Check the right pairing: for $gf$, compare the range of $f$ with the domain of $g$. $f(0) = 1$ is not allowed into $g$.
+      - text: |-
+          Both $fg$ and $gf$
+        why: |-
+          $gf$ fails: outputs of $f$ between 1 and 2 can't go into $g$.
+      - text: |-
+          Neither
+        why: |-
+          $fg$ is fine: $g$ only produces values $\geqslant 0$, and $f$ accepts any real number.
+
+  - id: cf-range
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.2"]
+    prompt: |-
+      $f(x) = \dfrac{4}{x}$ for $x \geqslant 2$, and $g(x) = 3x - 1$ for $x \in \mathbb{R}$. The range of $gf$ is $a < gf(x) \leqslant b$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: -1
+      - label: "b ="
+        answer: 5
+    explanation: |-
+      Range of $f$: $f(2) = 2$ and $\tfrac4x$ decreases towards 0, so $0 < f(x) \leqslant 2$.
+
+      Feed that into $g$: $3(0) - 1 = -1$ (not reached) and $3(2) - 1 = 5$ (reached). Since $g$ is increasing, $-1 < gf(x) \leqslant 5$.
+
+  - id: cf-ff
+    format: expression
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      $f(x) = 3x - 4$ for $x \in \mathbb{R}$. Find and simplify $f^2(x)$.
+    answer: 9x - 16
+    variables: [x]
+    display: |-
+      $f^2(x) = ff(x) = 9x - 16$
+    explanation: |-
+      $f^2(x) = f(f(x)) = f(3x - 4) = 3(3x - 4) - 4 = 9x - 16$.
+
+      Not $(3x - 4)^2$: in function notation, $f^2$ means "apply $f$ twice".

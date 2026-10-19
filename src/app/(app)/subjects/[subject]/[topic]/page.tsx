@@ -29,7 +29,7 @@ export default async function TopicPage({ params }: { params: Params }) {
   const lessonTitle = new Map(topic.lessons.map((l) => [l.id, l.title]));
 
   return (
-    <div className="container-narrow">
+    <div className="container-narrow" data-subject={subject.code}>
       <header className="page-head">
         <Crumbs
           items={[
@@ -44,7 +44,7 @@ export default async function TopicPage({ params }: { params: Params }) {
         </div>
         <div className="row row-between" style={{ alignItems: 'flex-start' }}>
           <h1 className="grow">
-            <span className="faint tabular">{topic.code}</span> {topic.title}
+            <span className="hue-text tabular">{topic.code}</span> {topic.title}
           </h1>
           {user && tp && topic.lessons.length > 0 && <StatusPill state={tp.state} />}
         </div>
@@ -65,7 +65,7 @@ export default async function TopicPage({ params }: { params: Params }) {
             </p>
           </div>
         ) : (
-          <ol className="list stack stack-md">
+          <ol className="list stack stack-md lesson-path">
             {topic.lessons.map((l, i) => {
               const st = progress.lessons.get(l.id)?.status ?? 'not-started';
               return (
@@ -75,7 +75,7 @@ export default async function TopicPage({ params }: { params: Params }) {
                       {st === 'completed' ? <CheckIcon /> : i + 1}
                     </span>
                     <span className="stack stack-xs">
-                      <span className="h3">{l.title}</span>
+                      <span className="h3" style={{ fontSize: '1.15rem' }}>{l.title}</span>
                       <span className="small muted">{l.summary}</span>
                       <span className="tiny faint row" style={{ ['--gap' as string]: '6px' }}>
                         <ClockIcon width={14} height={14} /> {l.minutes} min
@@ -85,7 +85,7 @@ export default async function TopicPage({ params }: { params: Params }) {
                         </span>
                       </span>
                     </span>
-                    <ChevronRightIcon width={20} height={20} style={{ color: 'var(--text-3)' }} />
+                    <ChevronRightIcon className="chev" width={22} height={22} />
                   </Link>
                 </li>
               );

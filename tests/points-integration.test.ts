@@ -32,7 +32,7 @@ const study = await import('@/server/actions/study');
 const settings = await import('@/server/actions/settings');
 const { getSessionUser } = await import('@/server/auth/session');
 const { getPointsSummary, getPointsHistory } = await import('@/server/queries/points');
-const { insertXp } = await import('@/server/points');
+const { insertXp, loadBadgeStats } = await import('@/server/points');
 const { resetRateLimits } = await import('@/server/rate-limit');
 const { addDays, BADGES, localDay } = await import('@/domain/points');
 const exportRoute = await import('@/app/api/export/route');
@@ -192,6 +192,10 @@ describe('answer XP', () => {
     await makeDue(user.id, sq('q-numeric'), new Date(Date.now() - 60_000));
     const partial = await submit({ questionId: sq('q-numeric'), response: { format: 'numeric', values: ['3', '4'] }, context: 'review' });
     expect(partial.events).toEqual([{ kind: 'review', amount: 5, label: 'Review, partly right' }]);
+
+    // Memory Keeper counts the two correct due reviews, not the partly right one.
+    const { stats } = await loadBadgeStats(await getDb(), user.id, { totalXp: 0, longestStreak: 0 });
+    expect(stats.dueReviewsCorrect).toBe(2);
   });
 });
 
@@ -409,6 +413,20 @@ describe('queries', () => {
     expect(byId.get('ten-down')).toMatchObject({ earned: false, earnedAt: null, progress: { current: 1, target: 10 }, howToEarn: 'Finish 10 lessons.' });
     expect(byId.get('combo-5')).toMatchObject({ earned: true });
     expect(h.earnedCount).toBe(h.badges.filter((b) => b.earned).length);
+
+    const { stats, earned } = await loadBadgeStats(await getDb(), user.id, { totalXp: h.totalXp, longestStreak: h.streak.longest });
+    expect(stats).toEqual({
+      correctAnswers: 7,
+      lessonsFinished: 1,
+      perfectLessons: 1,
+      bestCombo: 7,
+      longestStreak: 1,
+      dueReviewsCorrect: 0,
+      goalDays: 1,
+      subjectsWithFinishedLessons: 1,
+      totalXp: 135,
+    });
+    expect(earned.sort()).toEqual(h.badges.filter((b) => b.earned).map((b) => b.id).sort());
   });
 });
 
