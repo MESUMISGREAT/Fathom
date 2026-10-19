@@ -11,6 +11,7 @@
 import { sql } from 'drizzle-orm';
 import {
   boolean,
+  date,
   index,
   integer,
   jsonb,
@@ -19,11 +20,14 @@ import {
   real,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core';
 import type { Provenance, Question } from '@/content/schema';
 import type { RenderedBlock, QuestionReveal, QuestionView } from '@/content/rendered';
 import type { CheckResult, StudentResponse } from '@/domain/answers/check';
+// Relative (not '@/'): drizzle-kit loads this file without the tsconfig path aliases.
+import { DEFAULT_DAILY_GOAL, XP_KINDS } from '../../domain/points';
 
 const createdAt = () => timestamp('created_at', { withTimezone: true }).notNull().defaultNow();
 
@@ -174,6 +178,13 @@ export const users = pgTable('users', {
   theme: text('theme', { enum: ['system', 'light', 'dark'] }).notNull().default('system'),
   /** Lessons reveal one step at a time ('steps') or show everything ('full'). */
   lessonMode: text('lesson_mode', { enum: ['steps', 'full'] }).notNull().default('steps'),
+  /** XP per day to aim for: one of DAILY_GOALS in src/domain/points.ts. */
+  dailyGoal: integer('daily_goal').notNull().default(DEFAULT_DAILY_GOAL),
+  /** IANA time zone, detected from the browser; decides which local day XP counts towards. */
+  timeZone: text('time_zone').notNull().default('UTC'),
+  /** Confetti and pops (also off whenever the browser asks for reduced motion). */
+  celebrations: boolean('celebrations').notNull().default(true),
+  sounds: boolean('sounds').notNull().default(false),
   ageConfirmedAt: timestamp('age_confirmed_at', { withTimezone: true }).notNull(),
   createdAt: createdAt(),
 });
@@ -229,6 +240,13 @@ export const attempts = pgTable(
     score: real('score').notNull(),
     selfAssessed: boolean('self_assessed').notNull(),
     context: text('context', { enum: ['lesson', 'review'] }).notNull(),
+    /**
+     * The combo count after this answer, for answers that could earn XP (0
+     * when it broke the combo). Null for answers that could not earn XP
+     * (repeats, early reviews), which leave the combo alone. The live combo is
+     * read from the latest non-null row (see src/domain/points.ts).
+     */
+    combo: integer('combo'),
     createdAt: createdAt(),
   },
   (t) => [index('attempts_user_time_idx').on(t.userId, t.createdAt), index('attempts_user_question_idx').on(t.userId, t.questionId)],
@@ -259,10 +277,45 @@ export const bookmarks = pgTable(
   (t) => [primaryKey({ columns: [t.userId, t.kind, t.targetId] })],
 );
 
+/**
+ * Every XP award. The unique index on (user_id, kind, source_id) enforces the
+ * limits in docs/design/fun-and-points.md at the database level, so a
+ * double-submitted answer can never award twice. `source_id` is the question
+ * id (answer), `questionId@dueAt` (review), the lesson id (lesson, perfect),
+ * the local day (daily-goal) or the id of the answer that reached the
+ * milestone (combo).
+ */
+export const xpEvents = pgTable(
+  'xp_events',
+  {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    kind: text('kind', { enum: XP_KINDS }).notNull(),
+    amount: integer('amount').notNull(),
+    sourceId: text('source_id').notNull(),
+    /** The day it was earned in the student's time zone at the time. */
+    localDay: date('local_day', { mode: 'string' }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex('xp_events_source_uq').on(t.userId, t.kind, t.sourceId), index('xp_events_user_day_idx').on(t.userId, t.localDay)],
+);
+
+/** Badges earned (ids from BADGES in src/domain/points.ts). Never removed. */
+export const userBadges = pgTable(
+  'user_badges',
+  {
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    badgeId: text('badge_id').notNull(),
+    earnedAt: timestamp('earned_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.badgeId] })],
+);
+
 export type User = typeof users.$inferSelect;
 export type Lesson = typeof lessons.$inferSelect;
 export type QuestionRow = typeof questions.$inferSelect;
 export type Attempt = typeof attempts.$inferSelect;
+export type XpEvent = typeof xpEvents.$inferSelect;
 
 /** Problems students report with content (wrong answer key, typo, unclear). Reviewed by editors. */
 export const contentReports = pgTable(
