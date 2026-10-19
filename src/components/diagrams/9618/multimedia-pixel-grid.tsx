@@ -32,7 +32,7 @@ const meanings = ['background', 'cheeks', 'face', 'eyes and mouth'];
 const ROW = 6; // row 7 (0-based 6)
 
 export function MultimediaPixelGrid() {
-  const kx = GX + N * CELL + 56;
+  const kx = GX + N * CELL + 80;
   return (
     <Svg width={W} height={H}>
       <Label x={GX + (N * CELL) / 2} y={22} className="dg-text dg-bold">

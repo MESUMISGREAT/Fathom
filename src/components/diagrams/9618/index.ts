@@ -3,6 +3,17 @@ import type { DiagramRegistry } from '../types';
 import BcdVsBinary from './bcd-vs-binary';
 import BinaryPlaceValue from './binary-place-value';
 import HexNibbles from './hex-nibbles';
+import MultimediaBitPlanes from './multimedia-bit-planes';
+import MultimediaBitmapFileLayout from './multimedia-bitmap-file-layout';
+import MultimediaColourDepthBanding from './multimedia-colour-depth-banding';
+import MultimediaDrawingList from './multimedia-drawing-list';
+import MultimediaPixelGrid from './multimedia-pixel-grid';
+import MultimediaResolutionCompare from './multimedia-resolution-compare';
+import MultimediaSamplingRateCompare from './multimedia-sampling-rate-compare';
+import MultimediaSamplingResolutionCompare from './multimedia-sampling-resolution-compare';
+import MultimediaSamplingWave from './multimedia-sampling-wave';
+import MultimediaSoundBits from './multimedia-sound-bits';
+import MultimediaZoomCompare from './multimedia-zoom-compare';
 import PrefixGap from './prefix-gap';
 import TwosComplementWeights from './twos-complement-weights';
 import TwosComplementWheel from './twos-complement-wheel';
@@ -12,6 +23,17 @@ export const diagrams: DiagramRegistry = {
   'cs-bcd-vs-binary': BcdVsBinary,
   'cs-binary-place-value': BinaryPlaceValue,
   'cs-hex-nibbles': HexNibbles,
+  'cs-multimedia-bit-planes': MultimediaBitPlanes,
+  'cs-multimedia-bitmap-file-layout': MultimediaBitmapFileLayout,
+  'cs-multimedia-colour-depth-banding': MultimediaColourDepthBanding,
+  'cs-multimedia-drawing-list': MultimediaDrawingList,
+  'cs-multimedia-pixel-grid': MultimediaPixelGrid,
+  'cs-multimedia-resolution-compare': MultimediaResolutionCompare,
+  'cs-multimedia-sampling-rate-compare': MultimediaSamplingRateCompare,
+  'cs-multimedia-sampling-resolution-compare': MultimediaSamplingResolutionCompare,
+  'cs-multimedia-sampling-wave': MultimediaSamplingWave,
+  'cs-multimedia-sound-bits': MultimediaSoundBits,
+  'cs-multimedia-zoom-compare': MultimediaZoomCompare,
   'cs-prefix-gap': PrefixGap,
   'cs-twos-complement-weights': TwosComplementWeights,
   'cs-twos-complement-wheel': TwosComplementWheel,
