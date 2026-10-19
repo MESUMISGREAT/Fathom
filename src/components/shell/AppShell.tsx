@@ -22,6 +22,14 @@ import {
 } from '@/components/icons';
 import { NavLink } from './NavLink';
 
+function NavIcon({ hue, children }: { hue: string; children: ReactNode }) {
+  return (
+    <span className="nav-icon" style={{ ['--hue' as string]: hue }}>
+      {children}
+    </span>
+  );
+}
+
 function Brand() {
   return (
     <Link href="/" className="brand" aria-label={`${BRAND} home`}>
@@ -45,10 +53,10 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
         <Brand />
         <nav className="nav-group" aria-label="Study">
           <NavLink href="/" className="nav-item">
-            <HomeIcon /> Home
+            <NavIcon hue="var(--primary)"><HomeIcon /></NavIcon> Home
           </NavLink>
           <NavLink href="/subjects" className="nav-item">
-            <BookIcon /> Subjects
+            <NavIcon hue="var(--sub-9618)"><BookIcon /></NavIcon> Subjects
           </NavLink>
           {user && (
             <NavLink href="/review" className="nav-item">
@@ -56,7 +64,7 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
             </NavLink>
           )}
           <NavLink href="/search" className="nav-item">
-            <SearchIcon /> Search
+            <NavIcon hue="var(--sub-9709)"><SearchIcon /></NavIcon> Search
           </NavLink>
           {user && (
             <>
@@ -75,16 +83,16 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
         <nav className="nav-group" aria-label="Coming next">
           <div className="nav-label">Coming next</div>
           <NavLink href="/practice" className="nav-item">
-            <PencilIcon /> Exam practice <span className="badge soon">Soon</span>
+            <NavIcon hue="var(--text-3)"><PencilIcon /></NavIcon> Exam practice <span className="badge soon">Soon</span>
           </NavLink>
           <NavLink href="/tutor" className="nav-item">
-            <ChatIcon /> AI tutor <span className="badge soon">Soon</span>
+            <NavIcon hue="var(--text-3)"><ChatIcon /></NavIcon> AI tutor <span className="badge soon">Soon</span>
           </NavLink>
         </nav>
         <div className="nav-spacer" />
         <nav className="nav-group" aria-label="Account">
           <NavLink href="/about" className="nav-item">
-            <InfoIcon /> How it works
+            <NavIcon hue="var(--accent)"><InfoIcon /></NavIcon> How it works
           </NavLink>
           {user && (user.role === 'editor' || user.role === 'admin') && (
             <NavLink href="/reports" className="nav-item">
@@ -97,8 +105,8 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
                 <SettingsIcon /> Settings
               </NavLink>
               <form action={logOut}>
-                <button type="submit" className="nav-item" style={{ width: '100%', border: 0, background: 'none', cursor: 'pointer' }}>
-                  <LogoutIcon /> Log out
+                <button type="submit" className="nav-item" style={{ width: '100%', background: 'none', cursor: 'pointer' }}>
+                  <NavIcon hue="var(--text-3)"><LogoutIcon /></NavIcon> Log out
                 </button>
               </form>
             </>
@@ -138,10 +146,10 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
 
       <nav className="tabbar" aria-label="Main navigation">
         <NavLink href="/" className="tab">
-          <HomeIcon /> Home
+          <span className="tab-icon"><HomeIcon /></span> Home
         </NavLink>
         <NavLink href="/subjects" className="tab">
-          <BookIcon /> Subjects
+          <span className="tab-icon"><BookIcon /></span> Subjects
         </NavLink>
         {user ? (
           <NavLink href="/review" className="tab">
@@ -162,7 +170,7 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
           </NavLink>
         )}
         <NavLink href="/more" className="tab">
-          <GridIcon /> More
+          <span className="tab-icon"><GridIcon /></span> More
         </NavLink>
       </nav>
     </div>

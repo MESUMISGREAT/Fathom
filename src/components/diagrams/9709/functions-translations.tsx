@@ -5,7 +5,7 @@
  * moves to (−1, −1) and the roots to −2 and 0. Plus inside the bracket moves left.
  */
 import { Label, Svg } from '../primitives';
-import { ColVec, PLOT_H, PW, Panel, base, type PanelSpec } from './functions-transform-kit';
+import { ColVec, FIG_H, PW, Panel, base, type PanelSpec } from './functions-transform-kit';
 
 export const diagramKey = 'functions-translations';
 
@@ -15,11 +15,12 @@ const specs: PanelSpec[] = [
     g: (x) => base(x) + 3,
     moves: [
       [1, -1, 1, 2],
-      [2.9, base(2.9), 2.9, base(2.9) + 3],
+      [2.6, base(2.6), 2.6, base(2.6) + 3],
     ],
     baseLabel: [3.15, 0.8, 'start'],
-    imageLabel: [-0.4, 4.9, 'end'],
+    imageLabel: [0.22, 4.6, 'start'],
     imageText: 'f(x) + 3',
+    xTicks: [-2, -1, 2, 3],
     footer: (
       <g>
         <Label x={110} y={28} anchor="end" className="dg-text">
@@ -37,10 +38,10 @@ const specs: PanelSpec[] = [
     g: (x) => base(x + 2),
     moves: [
       [1, -1, -1, -1],
-      [2, 0, 0, 0],
+      [3, 3, 1, 3],
     ],
     baseLabel: [3.15, 0.8, 'start'],
-    imageLabel: [-2.35, 3.6, 'start'],
+    imageLabel: [-3.0, -1.75, 'start'],
     imageText: 'f(x + 2)',
     footer: (
       <g>
@@ -58,7 +59,7 @@ const specs: PanelSpec[] = [
 
 export default function FunctionsTranslations() {
   return (
-    <Svg width={PW * 2} height={PLOT_H + 92}>
+    <Svg width={PW * 2} height={FIG_H}>
       {specs.map((s, i) => (
         <Panel key={s.title} spec={s} index={i} />
       ))}

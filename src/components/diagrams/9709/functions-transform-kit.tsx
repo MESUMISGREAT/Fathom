@@ -10,6 +10,8 @@ import { AxesXY, Grid, makePlot, type Plot } from './kit';
 
 export const PW = 300;
 export const PLOT_H = 300;
+/** Total height of a two-panel figure. */
+export const FIG_H = PLOT_H + 80;
 export const X: [number, number] = [-3.2, 4.2];
 export const Y: [number, number] = [-2.6, 5.4];
 export const base = (x: number) => x * x - 2 * x;
@@ -47,19 +49,21 @@ export interface PanelSpec {
   baseLabel: [number, number, 'start' | 'end'];
   imageLabel: [number, number, 'start' | 'end'];
   imageText: string;
+  /** x tick labels (leave out any that an arrow would cover). */
+  xTicks?: number[];
 }
 
 export function Panel({ spec, index }: { spec: PanelSpec; index: number }) {
   const p = panelPlot();
   return (
     <g transform={`translate(${index * PW}, 0)`}>
-      {index > 0 && <line x1={0} y1={8} x2={0} y2={PLOT_H + 92} className="dg-grid" />}
+      {index > 0 && <line x1={0} y1={8} x2={0} y2={PLOT_H + 72} className="dg-grid" />}
       <Label x={PW / 2} y={20} className="dg-text-accent">
         {spec.title}
       </Label>
       <g transform="translate(0, 34)">
         <Grid p={p} />
-        <AxesXY p={p} xTicks={[-2, -1, 1, 2, 3]} yTicks={[-2, 2, 4]} />
+        <AxesXY p={p} xTicks={spec.xTicks ?? [-2, -1, 1, 2, 3]} yTicks={[-2, 2, 4]} />
         <path d={graph(base, X, p, Y)} className="dg-line" />
         <path d={graph(spec.g, X, p, Y)} className="dg-accent" />
         {spec.moves.map(([x1, y1, x2, y2]) => (
@@ -83,7 +87,7 @@ export function Panel({ spec, index }: { spec: PanelSpec; index: number }) {
           {spec.imageText}
         </Label>
       </g>
-      <g transform={`translate(0, ${PLOT_H + 34})`}>{spec.footer}</g>
+      <g transform={`translate(0, ${PLOT_H + 18})`}>{spec.footer}</g>
     </g>
   );
 }

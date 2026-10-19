@@ -19,7 +19,10 @@ import { THEME_COOKIE } from '@/lib/brand';
 const DAY = 86_400_000;
 const secure = process.env.NODE_ENV === 'production' && process.env.INSECURE_COOKIES !== '1';
 
-export type SessionUser = Pick<User, 'id' | 'email' | 'displayName' | 'role' | 'theme' | 'lessonMode' | 'createdAt'>;
+export type SessionUser = Pick<
+  User,
+  'id' | 'email' | 'displayName' | 'role' | 'theme' | 'lessonMode' | 'dailyGoal' | 'timeZone' | 'celebrations' | 'sounds' | 'createdAt'
+>;
 
 export async function createSession(userId: string): Promise<void> {
   const db = await getDb();
@@ -55,6 +58,10 @@ export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
       role: users.role,
       theme: users.theme,
       lessonMode: users.lessonMode,
+      dailyGoal: users.dailyGoal,
+      timeZone: users.timeZone,
+      celebrations: users.celebrations,
+      sounds: users.sounds,
       createdAt: users.createdAt,
       expiresAt: sessions.expiresAt,
     })

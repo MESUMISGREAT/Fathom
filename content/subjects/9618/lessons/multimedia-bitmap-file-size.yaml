@@ -1,0 +1,215 @@
+id: multimedia-bitmap-file-size
+subject: "9618"
+topic: "1.2"
+title: Estimating bitmap file size
+summary: Estimate the file size of a bitmap from its image resolution and colour depth, and give it in bits, bytes, KiB or MiB.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.2.2"]
+prerequisites: [multimedia-image-screen-resolution, data-rep-binary-prefixes]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, second learning outcome (carry
+    out calculations to estimate the file size of a bitmap image). Unit conversions use the binary
+    prefixes from topic 1.1. Image sizes are illustrative and chosen to work without a calculator;
+    every worked example and answer key checked with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **estimate** the file size of a bitmap image from its image resolution and colour depth, and give it in whatever unit the question asks for.
+
+  - type: explain
+    title: Who ate my storage?
+    body: |
+      A bitmap is pixels, and every pixel costs the same number of bits. So the file size is just *how many pixels* × *bits per pixel*.
+
+      Once you see that, it's a two-line calculation, and you'll know exactly why photos gobble your phone's storage.
+
+  - type: explain
+    title: The formula
+    body: |
+      $$\text{file size (bits)} = \text{image width} \times \text{image height} \times \text{colour depth}$$
+
+      Width and height are in pixels; colour depth is in bits. Then convert:
+
+      | To get | Do this to the bits |
+      | --- | --- |
+      | bytes | ÷ 8 |
+      | KiB | ÷ 8, then ÷ 1024 |
+      | MiB | ÷ 8, then ÷ 1024, then ÷ 1024 |
+
+      It's an **estimate** because the real file also holds the header. That's tiny next to the pixel data, so ignore it unless the question gives you its size.
+
+  - type: diagram
+    diagram: cs-multimedia-bit-planes
+    alt: >-
+      An 8 by 6 grid of pixels drawn as three stacked transparent layers, one layer for each bit of
+      the 3-bit colour depth. Arrows label the width as 8 pixels, the height as 6 pixels and the
+      depth of the stack as colour depth 3 bits, one layer per bit. The top-right pixel is
+      highlighted through all three layers, with bits 1, 0 and 1, labelled one pixel equals 3 bits.
+      Beside the stack: file size in bits equals width times height times colour depth, equals 8
+      times 6 times 3, which is 144 bits, and 144 divided by 8 is 18 bytes.
+    caption: |
+      Think of a bitmap as a box of bits: width × height × depth.
+
+  - type: example
+    title: A 24-bit image, no calculator
+    problem: |
+      Estimate the file size of a 1024 × 768 image with a colour depth of 24 bits. Give your answer in KiB and in MiB.
+    steps:
+      - |
+        Bits $= 1024 \times 768 \times 24$. Don't multiply it out yet: big numbers are where slips happen.
+      - |
+        Bytes: divide by 8. Since $24 \div 8 = 3$, that's $1024 \times 768 \times 3$ bytes (24-bit colour is 3 bytes per pixel).
+      - |
+        KiB: divide by 1024, which cancels the 1024: $768 \times 3 = 2304$ KiB.
+      - |
+        MiB: divide by 1024 again: $2304 \div 1024 = 2.25$ MiB.
+    answer: |
+      About 2304 KiB, which is 2.25 MiB (plus a little for the header).
+
+  - type: check
+    title: Quick check
+    questions: [size-bytes, size-kib]
+
+  - type: example
+    title: Working backwards
+    problem: |
+      An image is 64 × 48 pixels and its pixel data take exactly 3 KiB. What is its colour depth?
+    steps:
+      - |
+        Convert the size to bits: $3 \text{ KiB} = 3 \times 1024 = 3072$ bytes $= 3072 \times 8 = 24\,576$ bits.
+      - |
+        Count the pixels: $64 \times 48 = 3072$.
+      - |
+        Bits per pixel $= 24\,576 \div 3072 = 8$.
+    answer: |
+      8 bits. (Spotting that 3072 bytes for 3072 pixels is exactly 1 byte per pixel gets you there even faster.)
+
+  - type: misconceptions
+    items:
+      - wrong: The formula gives the answer in bytes.
+        right: |
+          It gives **bits**, because colour depth is in bits. Divide by 8 for bytes before converting to KiB or MiB.
+      - wrong: "An image with 256 colours: multiply the pixels by 256."
+        right: |
+          256 colours means a colour depth of 8 bits ($2^8 = 256$). Multiply by the **bits per pixel** (8), not by the number of colours.
+      - wrong: To get KiB, divide the bytes by 1000.
+        right: |
+          1 KiB = 1024 bytes. 1 kB = 1000 bytes. Use the one the question names; don't mix them in one calculation.
+
+  - type: exam
+    body: |
+      - Write the formula, then each step **with its unit**. Method marks survive an arithmetic slip; a bare wrong number earns nothing.
+      - Answer in the unit asked for: bits, bytes, KiB, MiB, or kB/MB. Those are all different numbers.
+      - No calculator: cancel powers of 2 before multiplying. $1024 \times 768 \times 8 \div 8 \div 1024 = 768$ KiB, done in your head.
+      - "Estimate" means ignoring the header is expected. If the question gives a header size, add it on.
+
+  - type: check
+    title: Size it up
+    questions: [spot-colours-not-bits, estimate-mib, mono-kib, find-depth]
+
+  - type: takeaways
+    items:
+      - File size (bits) = width × height × colour depth.
+      - Divide by 8 for bytes, then by 1024 for each step up to KiB and MiB.
+      - Use the colour depth (bits), never the number of colours.
+      - "It's an estimate: the header adds a small extra amount."
+
+  - type: enrichment
+    title: Where does the colour key live?
+    body: |
+      For low colour depths (8 bits or fewer), many bitmap formats store a **colour table** (palette) just after the header: a list of the actual colours, where each pixel's code is a position in that list. A 4-bit image has a 16-entry table. It's one more small extra on top of the pixel data, which is another reason the formula gives an estimate.
+
+questions:
+  - id: size-bytes
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.2"]
+    prompt: |
+      Estimate the file size, in **bytes**, of a 100 × 50 pixel image with a colour depth of 4 bits.
+    fields:
+      - answer: 2500
+        unit: bytes
+    explanation: |
+      Bits $= 100 \times 50 \times 4 = 20\,000$. Bytes $= 20\,000 \div 8 = 2500$.
+
+  - id: size-kib
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |
+      Estimate the file size, in **KiB**, of a 1024 × 768 pixel image with a colour depth of 8 bits.
+    fields:
+      - answer: 768
+        unit: KiB
+    explanation: |
+      Bits $= 1024 \times 768 \times 8$. Divide by 8 for bytes: $1024 \times 768$. Divide by 1024 for KiB: $768$ KiB. (8-bit colour is exactly 1 byte per pixel.)
+
+  - id: spot-colours-not-bits
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |
+      A student estimates the file size of a 640 × 480 image that uses 256 colours. Which line contains the first error?
+    lines:
+      - "Number of pixels $= 640 \\times 480 = 307\\,200$"
+      - 256 colours, so each pixel needs 256 bits
+      - "Size $= 307\\,200 \\times 256 = 78\\,643\\,200$ bits"
+      - "$78\\,643\\,200 \\div 8 = 9\\,830\\,400$ bytes"
+    errorLine: 2
+    fix: |
+      256 colours $= 2^8$, so the colour depth is **8 bits**. Size $= 307\,200 \times 8 = 2\,457\,600$ bits $= 307\,200$ bytes $= 300$ KiB.
+    explanation: |
+      The student used the number of colours instead of the colour depth. Their answer is 32 times too big ($256 \div 8 = 32$).
+
+  - id: estimate-mib
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |
+      A 2048 × 1536 pixel image has a colour depth of 24 bits. Which is the best estimate of its file size?
+    options:
+      - text: 9 MiB
+        correct: true
+        why: |
+          $2048 \times 1536 \times 3$ bytes $= 9\,437\,184$ bytes, and $9\,437\,184 \div 1024 \div 1024 = 9$ MiB.
+      - text: 72 MiB
+        why: |
+          That forgets to divide by 8: 72 is the size in mebi**bits**, not mebibytes.
+      - text: 3 MiB
+        why: |
+          That treats each pixel as 1 byte (8-bit colour). 24 bits is 3 bytes per pixel.
+      - text: 9 KiB
+        why: |
+          Right digits, wrong unit: you need to divide by 1024 twice to reach MiB, so the value in KiB is 9216.
+    explanation: |
+      Bytes $= 2048 \times 1536 \times 3$. Since $2048 \times 1536 = 3 \times 2^{20}$, this is $9 \times 2^{20}$ bytes $= 9$ MiB.
+
+  - id: mono-kib
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |
+      A black-and-white (1-bit) scanned page is 512 × 512 pixels. Estimate its file size in **KiB**.
+    fields:
+      - answer: 32
+        unit: KiB
+    explanation: |
+      Bits $= 512 \times 512 \times 1 = 262\,144$. Bytes $= 262\,144 \div 8 = 32\,768$. KiB $= 32\,768 \div 1024 = 32$.
+
+  - id: find-depth
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.2"]
+    prompt: |
+      The pixel data of a 100 × 80 pixel image take exactly 12 000 bytes. What is the colour depth?
+    fields:
+      - answer: 12
+        unit: bits
+    explanation: |
+      Bits $= 12\,000 \times 8 = 96\,000$. Pixels $= 100 \times 80 = 8000$. Colour depth $= 96\,000 \div 8000 = 12$ bits (so up to $2^{12} = 4096$ colours).

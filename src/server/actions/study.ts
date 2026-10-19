@@ -13,6 +13,8 @@ import { clientIp, getSessionUser } from '@/server/auth/session';
 import { hit, LIMITS } from '@/server/rate-limit';
 import { checkAnswer, type CheckResult } from '@/domain/answers/check';
 import { nextReview } from '@/domain/schedule';
+import type { PointsResult } from '@/domain/points';
+import { awardAnswer, awardLessonCompletion, lockUserPoints } from '@/server/points';
 import type { QuestionReveal } from '@/content/rendered';
 
 const ResponseSchema = z.discriminatedUnion('format', [
@@ -39,6 +41,13 @@ export interface SubmitResult {
   recorded: boolean;
   signedIn: boolean;
   error?: string;
+  /**
+   * XP, combo, level, daily goal, streak and new badges after this answer.
+   * Null when nothing was recorded (guests, unreadable answers, self-check
+   * prompts). Always set by submitAnswer; optional only so that results built
+   * in the browser (e.g. "Choose an answer first") still type-check.
+   */
+  points?: PointsResult | null;
 }
 
 export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise<SubmitResult> {
@@ -47,6 +56,7 @@ export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise
     result: { outcome: 'invalid', score: 0, selfAssessed: false, parts: [], note },
     recorded: false,
     signedIn: false,
+    points: null,
   });
   if (!parsed.success) return invalid('That answer could not be read. Please try again.');
   const { questionId, response, self, context } = parsed.data;
@@ -64,38 +74,55 @@ export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise
   if (!q) return invalid('This question is no longer available.');
 
   const result = checkAnswer(q.spec, response, self);
-  if (result.outcome === 'invalid') return { result, recorded: false, signedIn: !!user };
-  if (result.outcome === 'self-check') return { result, reveal: q.reveal, recorded: false, signedIn: !!user };
+  const outcome = result.outcome;
+  if (outcome === 'invalid') return { result, recorded: false, signedIn: !!user, points: null };
+  if (outcome === 'self-check') return { result, reveal: q.reveal, recorded: false, signedIn: !!user, points: null };
 
   let recorded = false;
+  let points: PointsResult | null = null;
   if (user) {
     const now = new Date();
-    await db.transaction(async (tx) => {
-      await tx.insert(t.attempts).values({
-        userId: user.id,
-        questionId,
-        response,
-        outcome: result.outcome,
-        score: result.score,
-        selfAssessed: result.selfAssessed,
-        context,
-        createdAt: now,
-      });
+    // The attempt, the review schedule and the XP are recorded together or not at all.
+    points = await db.transaction(async (tx) => {
+      await lockUserPoints(tx, user.id);
       const prevRows = await tx
         .select()
         .from(t.reviewItems)
         .where(and(eq(t.reviewItems.userId, user.id), eq(t.reviewItems.questionId, questionId)))
         .for('update');
       const prev = prevRows[0];
+      const award = await awardAnswer(tx, {
+        userId: user.id,
+        questionId,
+        difficulty: q.difficulty,
+        outcome,
+        score: result.score,
+        selfAssessed: result.selfAssessed,
+        dueAt: prev?.dueAt ?? null,
+        now,
+      });
+      await tx.insert(t.attempts).values({
+        id: award.attemptId,
+        userId: user.id,
+        questionId,
+        response,
+        outcome,
+        score: result.score,
+        selfAssessed: result.selfAssessed,
+        context,
+        combo: award.attemptCombo,
+        createdAt: now,
+      });
       const next = nextReview(prev ? { box: prev.box, dueAt: prev.dueAt, lapses: prev.lapses, lastReviewedAt: prev.lastReviewedAt } : null, result.score, now);
       await tx
         .insert(t.reviewItems)
         .values({ userId: user.id, questionId, ...next })
         .onConflictDoUpdate({ target: [t.reviewItems.userId, t.reviewItems.questionId], set: next });
+      return award.finish();
     });
     recorded = true;
   }
-  return { result, reveal: q.reveal, recorded, signedIn: !!user };
+  return { result, reveal: q.reveal, recorded, signedIn: !!user, points };
 }
 
 const StepSchema = z.object({
@@ -105,31 +132,55 @@ const StepSchema = z.object({
   completed: z.boolean(),
 });
 
-export async function recordLessonStep(input: z.input<typeof StepSchema>): Promise<{ saved: boolean }> {
+export interface LessonStepResult {
+  saved: boolean;
+  /**
+   * XP for finishing the lesson (20 the first time, +10 if perfect), with the
+   * level, daily goal, streak and new badges. Set when a signed-in student
+   * saves a completed lesson (gained is 0 when it was already finished); null
+   * for guests, failed saves and steps that don't complete the lesson.
+   */
+  points: PointsResult | null;
+}
+
+export async function recordLessonStep(input: z.input<typeof StepSchema>): Promise<LessonStepResult> {
   const parsed = StepSchema.safeParse(input);
   const user = await getSessionUser();
-  if (!parsed.success || !user) return { saved: false };
-  if (!hit(`write:${user.id}`, LIMITS.write).ok) return { saved: false };
+  if (!parsed.success || !user) return { saved: false, points: null };
+  if (!hit(`write:${user.id}`, LIMITS.write).ok) return { saved: false, points: null };
   const { lessonId, stepReached, stepCount, completed } = parsed.data;
   const db = await getDb();
   const exists = await db.select({ id: t.lessons.id }).from(t.lessons).where(and(eq(t.lessons.id, lessonId), isNull(t.lessons.archivedAt)));
-  if (!exists.length) return { saved: false };
+  if (!exists.length) return { saved: false, points: null };
   const now = new Date();
-  await db
-    .insert(t.lessonProgress)
-    .values({ userId: user.id, lessonId, stepReached, stepCount, openedAt: now, lastViewedAt: now, completedAt: completed ? now : null })
-    .onConflictDoUpdate({
-      target: [t.lessonProgress.userId, t.lessonProgress.lessonId],
-      set: {
-        stepReached: sql`greatest(${t.lessonProgress.stepReached}, ${stepReached})`,
-        stepCount,
-        lastViewedAt: now,
-        // Completion is sticky: revisiting a finished lesson doesn't undo it.
-        completedAt: completed ? sql`coalesce(${t.lessonProgress.completedAt}, ${now.toISOString()}::timestamptz)` : sql`${t.lessonProgress.completedAt}`,
-      },
-    });
+  const points = await db.transaction(async (tx) => {
+    let firstCompletion = false;
+    if (completed) {
+      await lockUserPoints(tx, user.id);
+      const [before] = await tx
+        .select({ completedAt: t.lessonProgress.completedAt })
+        .from(t.lessonProgress)
+        .where(and(eq(t.lessonProgress.userId, user.id), eq(t.lessonProgress.lessonId, lessonId)))
+        .for('update');
+      firstCompletion = !before?.completedAt;
+    }
+    await tx
+      .insert(t.lessonProgress)
+      .values({ userId: user.id, lessonId, stepReached, stepCount, openedAt: now, lastViewedAt: now, completedAt: completed ? now : null })
+      .onConflictDoUpdate({
+        target: [t.lessonProgress.userId, t.lessonProgress.lessonId],
+        set: {
+          stepReached: sql`greatest(${t.lessonProgress.stepReached}, ${stepReached})`,
+          stepCount,
+          lastViewedAt: now,
+          // Completion is sticky: revisiting a finished lesson doesn't undo it.
+          completedAt: completed ? sql`coalesce(${t.lessonProgress.completedAt}, ${now.toISOString()}::timestamptz)` : sql`${t.lessonProgress.completedAt}`,
+        },
+      });
+    return completed ? awardLessonCompletion(tx, { userId: user.id, lessonId, firstCompletion, now }) : null;
+  });
   if (completed) revalidatePath('/', 'layout');
-  return { saved: true };
+  return { saved: true, points };
 }
 
 const EnrollSchema = z.object({ subjectCode: z.string().regex(/^\d{4}$/), targetLevel: z.enum(['AS', 'A']) });

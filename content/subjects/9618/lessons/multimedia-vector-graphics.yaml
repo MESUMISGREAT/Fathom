@@ -1,0 +1,243 @@
+id: multimedia-vector-graphics
+subject: "9618"
+topic: "1.2"
+title: "Vector graphics: drawing objects and the drawing list"
+summary: How a vector graphic is stored as a drawing list of drawing objects and their properties, and why that lets it scale without losing quality.
+order: 5
+minutes: 5
+kind: core
+objectives: ["1.2.4"]
+prerequisites: [multimedia-pixels-colour-depth]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, fourth learning outcome (how the
+    data for a vector graphic are encoded, using the terms drawing object, property and drawing
+    list). The house picture and the drawing-list layout are illustrative; no particular file
+    format is implied. Scaling answers checked with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a vector graphic is encoded, using the terms **drawing object**, **property** and **drawing list**.
+
+  - type: explain
+    title: A recipe, not a photo
+    body: |
+      A bitmap is like a photo of a picture: every pixel, written down. A **vector graphic** is the *instructions* for drawing it: "circle here, this big, this colour".
+
+      Instructions don't care how big the paper is. That one fact explains almost everything about vectors.
+
+  - type: definition
+    term: Vector graphic
+    body: |
+      An image made up of drawing objects, each defined by its properties, and stored as a drawing list. The image is calculated from these instructions when it is displayed, so it can be scaled without losing quality.
+
+  - type: definition
+    term: Drawing object
+    body: |
+      A component of a vector graphic, such as a line, rectangle, circle, polygon, curve or piece of text.
+
+  - type: definition
+    term: Property
+    body: |
+      Data that defines one aspect of a drawing object, such as its position (coordinates), its size (for example a radius), its line colour, its line thickness or its fill colour.
+
+  - type: definition
+    term: Drawing list
+    body: |
+      The set of commands that defines a vector graphic: one entry for each drawing object, together with its properties.
+
+  - type: diagram
+    diagram: cs-multimedia-drawing-list
+    alt: >-
+      Left: a 10 by 10 coordinate grid with (0, 0) at the top-left corner and y increasing downwards,
+      showing a simple house scene made of four numbered objects: a horizontal ground line along y = 9,
+      a filled square house body, a filled triangular roof and an outlined circle for the sun in the
+      top right. Right: the drawing list that is stored. 1, line: start (0, 9), end (10, 9), line
+      colour shown as a swatch, thickness 3. 2, rectangle: corner (2, 5), width 4, height 4, fill
+      colour swatch. 3, polygon: points (1, 5), (4, 2), (7, 5), fill colour swatch. 4, circle: centre
+      (8.5, 2), radius 1, line colour swatch, thickness 3. Each entry is labelled drawing object, and a
+      note says the mono text gives the properties of each object.
+    caption: |
+      Four drawing objects, a handful of properties each. Not a single pixel is stored.
+
+  - type: check
+    title: Quick check
+    questions: [which-property, terms-cloze]
+
+  - type: explain
+    title: From list to screen
+    body: |
+      When a vector graphic is displayed or printed:
+
+      1. Software reads the drawing list, one object at a time, **in order**.
+      2. For each object, it uses the properties to **calculate** which pixels on the screen (or dots on the printer) to colour.
+      3. Objects later in the list are drawn on top of earlier ones. (In the diagram, the roof is drawn after the walls.)
+
+      The pixels are worked out fresh every time, at whatever size and resolution the device has.
+
+  - type: example
+    title: Write the entry
+    problem: |
+      A drawing contains a red circle with centre (40, 30) and radius 10, outlined in black with a line thickness of 2. Write it as a drawing-list entry, naming the drawing object and its properties.
+    steps:
+      - |
+        Drawing object: a **circle**.
+      - |
+        Properties that fix its shape and position: centre (40, 30), radius 10.
+      - |
+        Properties that fix its appearance: fill colour red, line colour black, line thickness 2.
+      - |
+        As one entry:
+
+        ```
+        circle  centre (40, 30)   radius 10
+                fill colour red   line colour black   line thickness 2
+        ```
+    answer: |
+      One drawing object, five properties. Real formats (such as SVG) write this differently, but every vector format stores objects plus their properties.
+
+  - type: intuition
+    title: Scaling is just multiplying
+    body: |
+      To make the whole graphic 3 times bigger, multiply every coordinate and size by 3: centre (40, 30) becomes (120, 90), and radius 10 becomes 30.
+
+      The edges are then recalculated at the new size, so they stay perfectly sharp. It's like reading a recipe out to a friend: they can bake it in a cupcake tin or a wedding-cake tin. (Where the analogy breaks: your friend estimates; the computer calculates exactly.)
+
+  - type: misconceptions
+    items:
+      - wrong: A vector graphic stores the colour of every pixel.
+        right: |
+          It stores drawing objects and their properties. Pixels are only calculated when the graphic is displayed or printed.
+      - wrong: Displaying a vector graphic bigger makes its file bigger.
+        right: |
+          The drawing list doesn't change; only the calculation at display time does. Vector file size depends on how many objects (and properties) there are.
+      - wrong: '"Circle" is a property.'
+        right: |
+          The circle is the **drawing object**. Its centre, radius and colours are its **properties**.
+
+  - type: exam
+    body: |
+      - Use the three terms exactly: "the **drawing list** holds a command for each **drawing object**, and each object's **properties** (e.g. centre coordinates, radius, fill colour) define how it is drawn".
+      - Give **concrete** example properties tied to their object: "a circle's radius", "a line's thickness". "Its colour" on its own is weak.
+      - If asked how the data are encoded, contrast with bitmaps: a vector stores *instructions*; a bitmap stores *pixels*.
+
+  - type: check
+    title: Objects and properties
+    questions: [line-data, spot-vector-pixels, scale-circle, enlarge-both]
+
+  - type: takeaways
+    items:
+      - A vector graphic is stored as a drawing list, not as pixels.
+      - Each entry is a drawing object (line, circle, rectangle…) with its properties (coordinates, size, colours, line thickness).
+      - The image is calculated from the drawing list each time it is displayed, so it scales without losing quality.
+      - Vector file size depends on the number of objects, not on the display size.
+
+questions:
+  - id: which-property
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.4"]
+    prompt: |
+      In a vector graphic, which of these is a **property**?
+    options:
+      - text: The fill colour of a rectangle
+        correct: true
+        why: |
+          A property describes one aspect of a drawing object, and fill colour is exactly that.
+      - text: A circle
+        why: |
+          A circle is a **drawing object**. Its radius and centre are properties.
+      - text: The drawing list
+        why: |
+          The drawing list is the whole set of commands, one for each object.
+      - text: The colour of the pixel at (12, 7)
+        why: |
+          That's bitmap thinking. Vector graphics don't store individual pixels.
+    explanation: |
+      Objects are the *things* (line, circle, rectangle); properties are the *facts about them* (position, size, colours, line thickness).
+
+  - id: terms-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.4"]
+    prompt: |
+      A vector graphic is stored as a {{1}}: a set of commands, one for each {{2}}, such as a line or a circle. Each one is described by its {{3}}, such as its coordinates and line colour.
+    blanks:
+      - accept: ["drawing list"]
+      - accept: ["drawing object", "object", "drawing objects", "objects"]
+      - accept: ["properties", "property"]
+    explanation: |
+      Drawing list (the whole thing) → drawing objects (the shapes in it) → properties (the data describing each shape).
+
+  - id: line-data
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.4"]
+    prompt: |
+      A designer adds a straight line to a vector graphic. What is added to the drawing list?
+    options:
+      - text: "A line drawing object, with properties such as its start and end coordinates, line colour and thickness"
+        correct: true
+        why: |
+          One new entry: the object plus the properties needed to draw it at any size.
+      - text: The colour of every pixel the line passes through
+        why: |
+          That's how a bitmap would store it. A vector stores the instructions, not the pixels.
+      - text: The length of the line and the colour depth
+        why: |
+          Length alone doesn't say where the line goes, and colour depth is a bitmap term.
+      - text: The screen resolution and the line colour
+        why: |
+          Screen resolution belongs to the display, not to the graphic.
+    explanation: |
+      Each drawing object gets one entry in the drawing list, holding its properties.
+
+  - id: spot-vector-pixels
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.2.4"]
+    prompt: |
+      A student describes how a vector graphic is encoded. Which line contains the error?
+    lines:
+      - The image is made up of drawing objects such as lines, circles and rectangles.
+      - Each drawing object has properties, such as its coordinates and line colour.
+      - The drawing list also stores the colour of every pixel in the image.
+      - When the graphic is displayed, the software calculates which pixels to colour.
+    errorLine: 3
+    fix: |
+      The drawing list stores only the drawing objects and their properties. No pixel colours are stored; they are calculated at display time.
+    explanation: |
+      Storing pixels is what a bitmap does. Line 4 is correct and is the reason line 3 is wrong.
+
+  - id: scale-circle
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.4"]
+    prompt: |
+      A drawing list contains: **circle, centre (12, 5), radius 4**. The whole graphic is enlarged by a scale factor of 3 from the origin (0, 0). Give the circle's new properties.
+    fields:
+      - label: "centre x ="
+        answer: 36
+      - label: "centre y ="
+        answer: 15
+      - label: "radius ="
+        answer: 12
+    explanation: |
+      Multiply every coordinate and length by 3: centre $(12 \times 3, 5 \times 3) = (36, 15)$ and radius $4 \times 3 = 12$. The circle is then recalculated at the new size, so its edge stays smooth.
+
+  - id: enlarge-both
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.4"]
+    prompt: |
+      The same simple logo exists as a bitmap and as a vector graphic. It must be printed 4 times wider and 4 times taller, with no loss of quality. By what factor does each **stored** file size change?
+    fields:
+      - label: "bitmap ×"
+        answer: 16
+      - label: "vector ×"
+        answer: 1
+    explanation: |
+      The bitmap needs 4 times as many pixels across and 4 times as many down to keep the same detail: $4 \times 4 = 16$ times the pixels, so ×16. The vector's drawing list is unchanged (the properties are just scaled when it is drawn), so ×1.
