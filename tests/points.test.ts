@@ -1,6 +1,7 @@
 /** Unit tests for the pure points rules (src/domain/points.ts). */
 import { describe, expect, it } from 'vitest';
 import {
+  activeLocalDay,
   addDays,
   answerXp,
   badgeProgress,
@@ -17,6 +18,7 @@ import {
   daysBetween,
   daysStudiedThisWeek,
   DEFAULT_DAILY_GOAL,
+  dueDatePaysXp,
   evaluateBadges,
   getBadge,
   isDailyGoal,
@@ -100,6 +102,25 @@ describe('answer XP', () => {
     // Already earned XP (first try, partial, or a review): a repeat, not eligible.
     expect(answerXp(answer({ ...later, alreadyAwarded: true }))).toEqual({ eligible: false, award: null });
     expect(answerXp(answer({ ...later, alreadyAwarded: true, outcome: 'incorrect', score: 0 }))).toEqual({ eligible: false, award: null });
+  });
+
+  it('pays no fix on the day of the miss: the feedback has just shown the answer', () => {
+    const sameDay = { firstAttempt: false, answeredEarlierToday: true };
+    expect(answerXp(answer({ ...sameDay }))).toEqual({ eligible: false, award: null });
+    // Neutral for the combo, right or wrong.
+    expect(answerXp(answer({ ...sameDay, outcome: 'incorrect', score: 0 }))).toEqual({ eligible: false, award: null });
+    // A due review is still a review (it can't be due the same day, but the order is explicit).
+    expect(answerXp(answer({ ...sameDay, due: true })).award?.kind).toBe('review');
+  });
+
+  it('withholds review XP from a due date set by an early repeat of a question that already paid', () => {
+    expect(dueDatePaysXp({ firstAttempt: true, answeredWhileDue: false, alreadyAwarded: false })).toBe(true);
+    // A deliberate early miss of a known question: tomorrow's review pays nothing…
+    expect(dueDatePaysXp({ firstAttempt: false, answeredWhileDue: false, alreadyAwarded: true })).toBe(false);
+    // …and the on-time answer after it sets a paying due date again.
+    expect(dueDatePaysXp({ firstAttempt: false, answeredWhileDue: true, alreadyAwarded: true })).toBe(true);
+    // Questions that never paid out can't be farmed this way.
+    expect(dueDatePaysXp({ firstAttempt: false, answeredWhileDue: false, alreadyAwarded: false })).toBe(true);
   });
 
   it('pays a due review 10, or 5 when partly right, whatever happened before', () => {
@@ -300,6 +321,27 @@ describe('levels', () => {
 });
 
 describe('local days', () => {
+  it('keeps a day in the zone it started in until it is over there (activeLocalDay)', () => {
+    const at = (iso: string) => new Date(iso);
+    // No day yet: the current zone decides.
+    expect(activeLocalDay({ now: at('2026-10-19T11:00:00Z'), timeZone: 'UTC', day: null, dayZone: null })).toEqual({ day: '2026-10-19', zone: 'UTC' });
+    // At 11:00 UTC, Kiritimati (UTC+14) is already the 20th; a student whose day started in UTC stays on the 19th…
+    const started = { day: '2026-10-19', dayZone: 'UTC' };
+    expect(activeLocalDay({ now: at('2026-10-19T11:00:05Z'), timeZone: 'Pacific/Kiritimati', ...started })).toEqual({ day: '2026-10-19', zone: 'UTC' });
+    // …until the 19th is over in UTC; the next day then starts in the new zone.
+    expect(activeLocalDay({ now: at('2026-10-20T00:00:00Z'), timeZone: 'Pacific/Kiritimati', ...started })).toEqual({ day: '2026-10-20', zone: 'Pacific/Kiritimati' });
+    // Moving west never reopens a past day: Pago Pago (UTC−11) is still on the 19th at 05:00 UTC on the 20th.
+    expect(activeLocalDay({ now: at('2026-10-20T05:00:00Z'), timeZone: 'Pacific/Pago_Pago', day: '2026-10-20', dayZone: 'Pacific/Kiritimati' })).toEqual({
+      day: '2026-10-20',
+      zone: 'Pacific/Kiritimati',
+    });
+    // An ordinary new day in the same zone.
+    expect(activeLocalDay({ now: at('2026-10-21T08:00:00Z'), timeZone: 'Europe/London', day: '2026-10-19', dayZone: 'Europe/London' })).toEqual({
+      day: '2026-10-21',
+      zone: 'Europe/London',
+    });
+  });
+
   it('uses the time zone to pick the calendar day', () => {
     const late = new Date('2026-10-19T23:30:00Z');
     expect(localDay(late, 'UTC')).toBe('2026-10-19');

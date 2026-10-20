@@ -34,6 +34,8 @@ interface Toast {
   title: string;
   body: string;
   badgeId?: string;
+  /** Superseded by newer rewards: shown only briefly. */
+  short?: boolean;
 }
 
 interface PointsContextValue {
@@ -43,8 +45,8 @@ interface PointsContextValue {
   combo: number;
   /** Increments whenever the total changes, so the header chip can pulse. */
   pulse: number;
-  /** Take in a server result; `anchor` is the element the student acted on, which toasts must not cover. */
-  apply: (points: PointsResult | null | undefined, anchor?: Element | null) => void;
+  /** Take in a server result: totals, combo, and toasts for new badges, levels and the daily goal. */
+  apply: (points: PointsResult | null | undefined) => void;
   celebrate: () => void;
   play: (kind: SoundKind) => void;
 }
@@ -62,6 +64,9 @@ export function prefersReducedMotion() {
 const TOAST_MS = 6500;
 /** Shorter when more are waiting, so a burst of rewards doesn't linger. */
 const TOAST_MS_QUEUED = 4500;
+/** Older toasts when a newer reward arrives (finishing a lesson right after a level-up). */
+const TOAST_MS_SUPERSEDED = 1500;
+const TOAST_ORDER: Record<Toast['kind'], number> = { badge: 0, level: 1, goal: 2 };
 let toastSeq = 0;
 
 /** Phones show one toast at a time (they stay small and clear of the content); wider screens two. */
@@ -92,33 +97,10 @@ export function PointsProvider({
   const [combo, setCombo] = useState(0);
   const [pulse, setPulse] = useState(0);
   const [toasts, setToasts] = useState<Toast[]>([]);
-  const [edge, setEdge] = useState<{ side: 'top' | 'bottom'; offset: number }>({ side: 'bottom', offset: 0 });
   const [confetti, setConfetti] = useState(0);
   const maxVisible = useVisibleToasts();
   const prefsRef = useRef(prefs);
   prefsRef.current = prefs;
-  const anchorRef = useRef<Element | null>(null);
-
-  // While toasts are up, keep them on the side away from what the student is working on, even as they scroll.
-  const hasToasts = toasts.length > 0;
-  useEffect(() => {
-    if (!hasToasts) return;
-    let raf = 0;
-    const update = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const next = placeAwayFrom(anchorRef.current);
-        setEdge((prev) => (prev.side === next.side && prev.offset === next.offset ? prev : next));
-      });
-    };
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
-    };
-  }, [hasToasts]);
 
   // A fresh server render (e.g. after finishing a lesson) is the source of truth.
   const initialKey = initial ? `${initial.totalXp}|${initial.goal}|${initial.todayXp}` : 'none';
@@ -139,7 +121,7 @@ export function PointsProvider({
   const dismiss = useCallback((id: number) => setToasts((list) => list.filter((t) => t.id !== id)), []);
 
   const apply = useCallback(
-    (points: PointsResult | null | undefined, anchor?: Element | null) => {
+    (points: PointsResult | null | undefined) => {
       if (!points) return;
       setSnapshot({ totalXp: points.totalXp, level: points.level, todayXp: points.today.xp, goal: points.today.goal });
       setCombo(points.combo);
@@ -154,10 +136,9 @@ export function PointsProvider({
       }
       if (points.today.justMetGoal && points.today.goal > 0) fresh.push({ id: ++toastSeq, kind: 'goal', title: 'Daily goal reached', body: `${points.today.xp} XP today. That's the goal.` });
       if (fresh.length) {
-        anchorRef.current = anchor ?? null;
-        setEdge(placeAwayFrom(anchor));
-        // Queued, never dropped: each one shows as the one before it goes.
-        setToasts((list) => [...list, ...fresh].slice(0, 12));
+        fresh.sort((a, b) => TOAST_ORDER[a.kind] - TOAST_ORDER[b.kind]);
+        // Newest first (badges first among them); older ones are cut short rather than dropped.
+        setToasts((list) => [...fresh, ...list.map((t) => ({ ...t, short: true }))].slice(0, 12));
         play(points.newBadges.length ? 'badge' : 'level');
       } else if (points.gained > 0) {
         play('correct');
@@ -174,48 +155,20 @@ export function PointsProvider({
   return (
     <PointsContext.Provider value={value}>
       {children}
-      <div
-        className="toaster"
-        data-edge={edge.side}
-        style={{ [edge.side]: `${edge.offset}px` }}
-        aria-live="polite"
-        aria-label="Rewards"
-        role="region"
-      >
+      {/* A fixed home in the chrome (the sidebar column on wide screens, over the top bar on phones), never over the lesson. */}
+      <div className="toaster" aria-live="polite" aria-label="Rewards" role="region">
         {toasts.slice(0, maxVisible).map((t) => (
-          <ToastCard key={t.id} toast={t} onDismiss={dismiss} ms={toasts.length > maxVisible ? TOAST_MS_QUEUED : TOAST_MS} />
+          <ToastCard
+            key={t.id}
+            toast={t}
+            onDismiss={dismiss}
+            ms={t.short ? TOAST_MS_SUPERSEDED : toasts.length > maxVisible ? TOAST_MS_QUEUED : TOAST_MS}
+          />
         ))}
       </div>
       {confetti > 0 && <Confetti key={confetti} />}
     </PointsContext.Provider>
   );
-}
-
-/**
- * Puts toasts on the edge of the screen away from what the student just
- * acted on (the question or the lesson-complete card), clear of the sticky
- * bars at the top and the tab bar at the bottom.
- */
-function placeAwayFrom(anchor?: Element | null): { side: 'top' | 'bottom'; offset: number } {
-  if (typeof window === 'undefined') return { side: 'bottom', offset: 16 };
-  const vh = window.innerHeight;
-  let top = 12;
-  // Sticky bars currently pinned near the top (the phone top bar, the lesson bar).
-  for (const el of document.querySelectorAll('.topbar, .lesson-top')) {
-    const r = el.getBoundingClientRect();
-    if (r.height > 0 && r.bottom > 0 && r.top < 140) top = Math.max(top, r.bottom + 10);
-  }
-  let bottom = 16;
-  const tab = document.querySelector('.tabbar');
-  if (tab) {
-    const r = tab.getBoundingClientRect();
-    if (r.height > 0 && r.top < vh) bottom = Math.max(bottom, vh - r.top + 12);
-  }
-  if (!anchor) return { side: 'bottom', offset: bottom };
-  const r = anchor.getBoundingClientRect();
-  const spaceAbove = r.top - top;
-  const spaceBelow = vh - bottom - r.bottom;
-  return spaceAbove > spaceBelow ? { side: 'top', offset: top } : { side: 'bottom', offset: bottom };
 }
 
 function ToastCard({ toast, onDismiss, ms }: { toast: Toast; onDismiss: (id: number) => void; ms: number }) {

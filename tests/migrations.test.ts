@@ -140,4 +140,47 @@ describe('migrations', () => {
     expect((await client.query(`select 1 from topic_recoveries`)).rows).toHaveLength(0);
     await client.close();
   });
+
+  it('0004 adds the stable local day, the live combo and the review flags, filled in from history', async () => {
+    const client = new PGlite();
+    const db = drizzle(client);
+    await migrate(db, { migrationsFolder: await migrationsUpTo(4) });
+    const a = '00000000-0000-4000-8000-0000000000a4';
+    const b = '00000000-0000-4000-8000-0000000000b4';
+    await client.exec(`
+      insert into subjects (code, slug, name, short_name, description, position) values ('9709', 'maths', 'Mathematics', 'Maths', 'x', 0);
+      insert into syllabus_versions (id, subject_code, label, exam_years, source_url, source_version, checked_at, wording)
+        values ('v1', '9709', '2026', '{2026}', 'https://example.org', '1', '2026-10-01', 'paraphrased');
+      insert into syllabus_sections (id, version_id, code, title, level, papers, position) values ('v1:1', 'v1', '1', 'P1', 'AS', '{1}', 0);
+      insert into topics (id, version_id, section_id, code, title, position) values ('v1:1.1', 'v1', 'v1:1', '1.1', 'Q', 0);
+      insert into lessons (id, version_id, topic_id, slug, title, summary, position, minutes, kind, prerequisites, provenance, blocks, search_text, content_hash)
+        values ('l', 'v1', 'v1:1.1', 'l', 'L', 's', 0, 5, 'core', '{}', '{}', '[]', 'l', 'h');
+      insert into questions (id, lesson_id, version_id, format, difficulty, position, spec, view, reveal)
+        values ('l/q', 'l', 'v1', 'mcq', 1, 0, '{}', '{}', '{}');
+      insert into users (id, email, password_hash, age_confirmed_at, time_zone) values
+        ('${a}', 'a4@example.org', 'scrypt$x', now(), 'Asia/Karachi'), ('${b}', 'b4@example.org', 'scrypt$x', now(), 'UTC');
+      insert into xp_events (user_id, kind, amount, source_id, local_day) values
+        ('${a}', 'answer', 10, 'x/1', '2026-10-18'), ('${a}', 'answer', 10, 'x/2', '2026-10-19');
+      insert into attempts (user_id, question_id, response, outcome, score, self_assessed, context, combo, created_at) values
+        ('${a}', 'l/q', '{}', 'correct', 1, false, 'lesson', 2, '2026-10-19T09:00:00Z'),
+        ('${a}', 'l/q', '{}', 'correct', 1, false, 'lesson', 3, '2026-10-19T09:01:00Z'),
+        ('${a}', 'l/q', '{}', 'correct', 1, false, 'lesson', null, '2026-10-19T09:02:00Z');
+      insert into review_items (user_id, question_id, box, due_at, last_reviewed_at) values ('${a}', 'l/q', 2, now(), now());
+    `);
+
+    await migrate(db, { migrationsFolder: MIGRATIONS });
+    const users = await client.query<{ email: string; active_day: string | null; active_day_zone: string | null; combo: number; combo_at: Date | null }>(
+      `select email, active_day::text, active_day_zone, combo, combo_at from users order by email`,
+    );
+    expect(users.rows).toEqual([
+      // The latest day with XP, in the stored zone; the combo of the latest answer that could earn XP.
+      { email: 'a4@example.org', active_day: '2026-10-19', active_day_zone: 'Asia/Karachi', combo: 3, combo_at: new Date('2026-10-19T09:01:00Z') },
+      { email: 'b4@example.org', active_day: null, active_day_zone: null, combo: 0, combo_at: null },
+    ]);
+    const attempts = await columns(client, 'attempts');
+    expect(attempts.get('local_day')).toMatchObject({ is_nullable: 'YES', column_default: null });
+    expect(attempts.get('due_review')).toMatchObject({ is_nullable: 'NO', column_default: 'false' });
+    expect((await client.query(`select pays_xp from review_items`)).rows).toEqual([{ pays_xp: true }]);
+    await client.close();
+  });
 });

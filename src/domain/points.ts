@@ -57,7 +57,11 @@ export const XP_LABELS: Record<XpKind, string> = {
 export const XP = {
   /** A question answered fully correctly on the first ever attempt, by difficulty (1–3). */
   firstTry: { 1: 10, 2: 15, 3: 20 } as Record<1 | 2 | 3, number>,
-  /** A question answered correctly on a later attempt that had never earned XP ("you fixed it"). */
+  /**
+   * A question that had never earned XP, answered correctly on a later local
+   * day than any earlier attempt at it ("you fixed it"). Not on the day of the
+   * miss: the feedback shows the answer, so a retry straight after is clicking.
+   */
   laterFix: 5,
   /** A review question answered while it was due. */
   review: { correct: 10, partial: 5 },
@@ -108,8 +112,13 @@ export interface AnswerXpInput {
   firstAttempt: boolean;
   /** This question has already earned XP before (an `answer` or `review` award). */
   alreadyAwarded: boolean;
-  /** The question's spaced-repetition review was due when it was answered. */
+  /**
+   * The question's spaced-repetition review was due when it was answered,
+   * and that due date pays XP (see `review_items.pays_xp`).
+   */
   due: boolean;
+  /** An earlier attempt at this question was recorded on the same local day (so its answer has been shown today). */
+  answeredEarlierToday?: boolean;
 }
 
 export interface AnswerXpDecision {
@@ -134,7 +143,9 @@ export interface AnswerXpDecision {
  *    due question answered inside a lesson counts as its review too, exactly
  *    as the scheduler treats it.
  * 3. A later attempt, correct, on a question that never earned XP (kind
- *    `answer`): 5.
+ *    `answer`): 5, but only on a later local day than every earlier attempt.
+ *    A retry on the day of the miss comes straight after the feedback showed
+ *    the answer, so it earns nothing and leaves the combo alone.
  * Anything else is a repeat and earns nothing.
  */
 export function answerXp(input: AnswerXpInput): AnswerXpDecision {
@@ -159,10 +170,23 @@ export function answerXp(input: AnswerXpInput): AnswerXpDecision {
     if (outcome === 'partial') return { eligible: true, award: { kind: 'review', amount: XP.review.partial, label: 'Review, partly right' } };
     return { eligible: true, award: null };
   }
-  if (!input.alreadyAwarded) {
+  if (!input.alreadyAwarded && !input.answeredEarlierToday) {
     return { eligible: true, award: outcome === 'correct' ? { kind: 'answer', amount: XP.laterFix, label: 'You fixed it' } : null };
   }
   return { eligible: false, award: null };
+}
+
+/**
+ * Whether the due date an answer sets can pay review XP. Every due date
+ * does, except one set by an early answer (before the item was due) to a
+ * question that has already earned XP: otherwise a deliberate wrong answer
+ * to a question the student knows would move it to tomorrow and buy a paid
+ * review every day. Learning is unchanged (the miss still brings the
+ * question back sooner); only the XP is withheld, until the next on-time
+ * answer sets a paying due date again.
+ */
+export function dueDatePaysXp(input: { firstAttempt: boolean; answeredWhileDue: boolean; alreadyAwarded: boolean }): boolean {
+  return input.firstAttempt || input.answeredWhileDue || !input.alreadyAwarded;
 }
 
 /** `xp_events.source_id` for a review award: one per question per due date. */
@@ -431,6 +455,26 @@ export function isLocalDay(value: unknown): value is LocalDay {
   if (!m) return false;
   const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
   return d.toISOString().slice(0, 10) === value;
+}
+
+/**
+ * The local day a student's activity counts towards now, and the zone that
+ * decides it. Once-a-day rewards (the daily goal, the review session) and
+ * study days are keyed by this day, so it must not be movable at will:
+ * - while the student's current day (`day`, started in `dayZone`) is still
+ *   running in the zone it started in, activity keeps counting towards it,
+ *   whatever the time zone is now;
+ * - once it is over there, the next day starts in the current `timeZone`,
+ *   and never earlier than `day` (moving west can't reopen a past day).
+ * So changing time zone (travel, or a forged setting) takes effect at the
+ * next day boundary instead of starting "tomorrow" early.
+ */
+export function activeLocalDay(input: { now: Date; timeZone: string; day: LocalDay | null; dayZone: string | null }): { day: LocalDay; zone: string } {
+  const { now, timeZone, day, dayZone } = input;
+  if (!day || !isLocalDay(day) || !dayZone) return { day: localDay(now, timeZone), zone: timeZone };
+  if (localDay(now, dayZone) <= day) return { day, zone: dayZone };
+  const here = localDay(now, timeZone);
+  return here <= day ? { day, zone: dayZone } : { day: here, zone: timeZone };
 }
 
 /** Calendar arithmetic on local days (no time zones involved, so no DST surprises). */

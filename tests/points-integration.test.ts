@@ -109,7 +109,11 @@ describe('guests', () => {
     jar.clear();
     const res = await study.submitAnswer({ ...right['q-mcq']!, context: 'lesson' });
     expect(res).toMatchObject({ recorded: false, signedIn: false, points: null, result: { outcome: 'correct' } });
-    expect(await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true })).toEqual({ saved: false, points: null });
+    expect(await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true })).toEqual({
+      saved: false,
+      points: null,
+      unanswered: 0,
+    });
     expect(await settings.setTimeZone('Europe/London')).toEqual({ ok: false });
   });
 });
@@ -147,14 +151,26 @@ describe('answer XP', () => {
     expect((await answer('q-numeric')).gained).toBe(0);
   });
 
-  it('pays 5 for fixing a wrong answer on a later attempt, once', async () => {
-    await newStudent();
-    await answer('q-mcq'); // combo 1
-    const wrong = await submit({ questionId: sq('q-cloze'), response: { format: 'cloze', values: ['some'] }, context: 'lesson' });
-    expect(wrong).toMatchObject({ gained: 0, combo: 0 }); // an eligible wrong answer breaks the combo
-    const fixed = await answer('q-cloze');
-    expect(fixed).toMatchObject({ gained: 5, events: [{ kind: 'answer', amount: 5, label: 'You fixed it' }], combo: 1 });
-    expect((await answer('q-cloze')).gained).toBe(0);
+  it('pays 5 for fixing a wrong answer on a later day, once', async () => {
+    const now = new Date();
+    const tenPm = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 22, 0, 0);
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vi.setSystemTime(tenPm);
+      await newStudent(); // time zone UTC
+      await answer('q-mcq'); // combo 1
+      const wrong = await submit({ questionId: sq('q-cloze'), response: { format: 'cloze', values: ['some'] }, context: 'lesson' });
+      expect(wrong).toMatchObject({ gained: 0, combo: 0 }); // an eligible wrong answer breaks the combo
+      // Straight after the feedback showed the answer: nothing, and the combo is left alone.
+      expect(await answer('q-cloze')).toMatchObject({ gained: 0, events: [], combo: 0 });
+      // The next morning (not yet due for review): fixed.
+      vi.setSystemTime(tenPm + 10 * 60 * 60_000);
+      const fixed = await answer('q-cloze');
+      expect(fixed).toMatchObject({ gained: 5, events: [{ kind: 'answer', amount: 5, label: 'You fixed it' }], combo: 1 });
+      expect((await answer('q-cloze')).gained).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('pays self-assessed answers round(base × score × 0.5)', async () => {
@@ -238,10 +254,7 @@ describe('combos', () => {
     await answer('q-mcq');
     expect((await answer('q-expr')).combo).toBe(2);
     const db = await getDb();
-    await db
-      .update(t.attempts)
-      .set({ createdAt: sql`${t.attempts.createdAt} - interval '16 minutes'` })
-      .where(eq(t.attempts.userId, user.id));
+    await db.update(t.users).set({ comboAt: sql`${t.users.comboAt} - interval '16 minutes'` }).where(eq(t.users.id, user.id));
     const next = await answer('q-text');
     expect(next.combo).toBe(1);
     expect(kinds(next)).toEqual(['answer:10']);
@@ -253,7 +266,7 @@ describe('lessons', () => {
     const user = await newStudent();
     for (const id of SQUARES) await answer(id);
     const step = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 3, stepCount: 10, completed: false });
-    expect(step).toEqual({ saved: true, points: null });
+    expect(step).toEqual({ saved: true, points: null, unanswered: 0 });
     const before = (await getPointsSummary(user.id)).totalXp;
     const done = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true });
     expect(done.saved).toBe(true);
@@ -278,10 +291,17 @@ describe('lessons', () => {
     const done = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true });
     expect(kinds(done.points!)).toEqual(['lesson:20', 'topic:50']);
 
+    // Finished past six unanswered checks: no lesson XP yet. It is paid with the answer to the
+    // last of them, and a wrong first attempt among them means it isn't perfect.
     await newStudent();
     await answer('q-mcq'); // the rest skipped
     const skipped = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true });
-    expect(kinds(skipped.points!)).toEqual(['lesson:20', 'topic:50', 'daily-goal:10']); // 10 + 70 reaches the goal of 50
+    expect(skipped).toMatchObject({ saved: true, unanswered: 6, points: { gained: 0, events: [] } });
+    await submit({ questionId: sq('q-cloze'), response: { format: 'cloze', values: ['some'] }, context: 'lesson' });
+    for (const id of SQUARES.slice(1, -1)) expect(kinds(await answer(id))).not.toContain('lesson:20');
+    const last = kinds(await answer('q-explain'));
+    expect(last).toEqual(expect.arrayContaining(['answer:10', 'lesson:20', 'topic:50']));
+    expect(last).not.toContain('perfect:10');
   });
 });
 

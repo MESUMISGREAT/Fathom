@@ -14,12 +14,13 @@
  */
 import 'server-only';
 import { randomUUID } from 'node:crypto';
-import { and, asc, desc, eq, gt, isNotNull, isNull, sql, type SQL } from 'drizzle-orm';
+import { and, asc, eq, isNull, sql, type SQL } from 'drizzle-orm';
 import type { Db } from '@/server/db';
 import * as t from '@/server/db/schema';
 import { getTopicStates } from '@/server/queries/progress';
 import type { MasteryState } from '@/domain/mastery';
 import {
+  activeLocalDay,
   answerXp,
   BADGES,
   comboAward,
@@ -27,12 +28,12 @@ import {
   computeStreak,
   dailyGoalAward,
   DEFAULT_DAILY_GOAL,
+  dueDatePaysXp,
   evaluateBadges,
   isGoalMet,
   lessonXp,
   levelFor,
   liveCombo,
-  localDay,
   nextCombo,
   reviewSessionAward,
   reviewSourceId,
@@ -51,9 +52,31 @@ export type { PointsResult } from '@/domain/points';
 /** Advisory-lock namespace for per-user point awards (the second key is a hash of the user id). */
 const LOCK_NAMESPACE = 7272;
 
-/** Serialises point awards for one user until the transaction ends. */
-export async function lockUserPoints(tx: Db, userId: string): Promise<void> {
+/**
+ * Serialises point awards for one user until the transaction ends, and
+ * returns the time to record the action at, read after the lock (a request
+ * may have waited for it).
+ */
+export async function lockUserPoints(tx: Db, userId: string): Promise<Date> {
   await tx.execute(sql`select pg_advisory_xact_lock(${sql.raw(String(LOCK_NAMESPACE))}, hashtext(${userId}))`);
+  return new Date();
+}
+
+/**
+ * The local day this action counts towards (activeLocalDay: a day keeps the
+ * zone it started in until it is over there), stored as the student's
+ * current day, plus their daily goal. Call after lockUserPoints.
+ */
+export async function startPointsDay(tx: Db, userId: string, now: Date): Promise<{ day: LocalDay; dailyGoal: number }> {
+  const [u] = await tx
+    .select({ timeZone: t.users.timeZone, dailyGoal: t.users.dailyGoal, activeDay: t.users.activeDay, activeDayZone: t.users.activeDayZone })
+    .from(t.users)
+    .where(eq(t.users.id, userId));
+  const { day, zone } = activeLocalDay({ now, timeZone: u?.timeZone ?? 'UTC', day: u?.activeDay ?? null, dayZone: u?.activeDayZone ?? null });
+  if (u && (u.activeDay !== day || u.activeDayZone !== zone)) {
+    await tx.update(t.users).set({ activeDay: day, activeDayZone: zone }).where(eq(t.users.id, userId));
+  }
+  return { day, dailyGoal: u?.dailyGoal ?? DEFAULT_DAILY_GOAL };
 }
 
 /** Stores one award; returns whether it was new (false when the unique index already had it). */
@@ -66,15 +89,14 @@ export async function insertXp(tx: Db, userId: string, award: XpAward, sourceId:
   return rows.length > 0;
 }
 
-/** The combo running now, from the user's latest scoring-eligible answer (0 if over 15 minutes ago). */
+/**
+ * The combo running now (0 if it last moved over 15 minutes ago). Read from
+ * the user's row, which only changes under the points lock, so it follows
+ * the order answers were processed in whatever their timestamps say.
+ */
 export async function currentCombo(tx: Db, userId: string, now: Date): Promise<number> {
-  const [last] = await tx
-    .select({ combo: t.attempts.combo, at: t.attempts.createdAt })
-    .from(t.attempts)
-    .where(and(eq(t.attempts.userId, userId), isNotNull(t.attempts.combo)))
-    .orderBy(desc(t.attempts.createdAt))
-    .limit(1);
-  return liveCombo(last ? { combo: last.combo ?? 0, at: last.at } : null, now);
+  const [u] = await tx.select({ combo: t.users.combo, at: t.users.comboAt }).from(t.users).where(eq(t.users.id, userId));
+  return liveCombo(u?.at ? { combo: u.combo, at: u.at } : null, now);
 }
 
 // --- Answers -------------------------------------------------------------------
@@ -82,12 +104,15 @@ export async function currentCombo(tx: Db, userId: string, now: Date): Promise<n
 export interface AnswerPointsInput {
   userId: string;
   questionId: string;
+  /** The lesson the question belongs to (answering its last unanswered check can pay the lesson's XP). */
+  lessonId: string;
   difficulty: number;
   outcome: RecordedOutcome;
   score: number;
   selfAssessed: boolean;
-  /** The question's review due date before this answer, or null if it had never been answered. */
-  dueAt: Date | null;
+  /** The question's review item before this answer, or null if it had never been answered. */
+  review: { dueAt: Date; paysXp: boolean } | null;
+  /** From lockUserPoints. */
   now: Date;
 }
 
@@ -96,6 +121,12 @@ export interface AnswerPoints {
   attemptId: string;
   /** Store in `attempts.combo`. */
   attemptCombo: number | null;
+  /** Store in `attempts.local_day`. */
+  localDay: LocalDay;
+  /** Store in `attempts.due_review`: answered while due, at a due date that pays XP. */
+  dueReview: boolean;
+  /** Store in `review_items.pays_xp` if this answer moves the due date (keep the old value if it doesn't). */
+  nextDuePaysXp: boolean;
   /** Call after the attempt is inserted, still inside the transaction. */
   finish: () => Promise<PointsResult>;
 }
@@ -103,49 +134,54 @@ export interface AnswerPoints {
 /**
  * Decides and stores the XP for one answer: the base award (first try, due
  * review or fix), a comeback bonus, then in `finish()` the combo milestone,
- * topic-secure and the daily goal. Call inside the transaction that records
- * the attempt, after lockUserPoints and before inserting the attempt or
- * updating its review item (the topic mastery "before" is read here); insert
- * the attempt with the returned id and combo, update the review item, then
- * call `finish()`.
+ * the lesson (if this was its last unanswered check), topic-secure, topic
+ * finished and the daily goal. Call inside the transaction that records the
+ * attempt, after lockUserPoints and before inserting the attempt or updating
+ * its review item (the topic mastery "before" is read here); insert the
+ * attempt with the returned id, combo, day and due flag, update the review
+ * item, then call `finish()`.
  */
 export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<AnswerPoints> {
   const { userId, questionId, now } = input;
+  const { day, dailyGoal } = await startPointsDay(tx, userId, now);
   const [history] = await tx
     .select({
-      timeZone: t.users.timeZone,
-      dailyGoal: t.users.dailyGoal,
       priorAttempts: sql<number>`(select count(*) from attempts a where a.user_id = ${userId} and a.question_id = ${questionId})`.mapWith(Number),
+      answeredEarlierToday: sql<boolean>`exists(select 1 from attempts a where a.user_id = ${userId} and a.question_id = ${questionId} and a.local_day = ${day})`,
       alreadyAwarded: sql<boolean>`exists(select 1 from xp_events e where e.user_id = ${userId} and (
         (e.kind = 'answer' and e.source_id = ${questionId})
         or (e.kind = 'review' and starts_with(e.source_id, ${questionId + '@'}))))`,
-      wrongBefore: sql<boolean>`exists(select 1 from attempts a where a.user_id = ${userId} and a.question_id = ${questionId} and a.outcome = 'incorrect')`,
+      // A miss that counted: one that could earn XP (stored with a combo) or the very first attempt.
+      // A deliberate wrong answer to a question that already paid out is neither, so it can't set up a comeback.
+      wrongBefore: sql<boolean>`exists(select 1 from attempts a where a.user_id = ${userId} and a.question_id = ${questionId} and a.outcome = 'incorrect'
+        and (a.combo is not null or not exists(select 1 from attempts b where b.user_id = a.user_id and b.question_id = a.question_id and b.created_at < a.created_at)))`,
     })
     .from(t.users)
     .where(eq(t.users.id, userId));
   // Mastery of the question's topics before this answer, to compare with after it (see settleTopics).
   const topicsBefore = await getTopicStates(tx, userId, await topicsOfQuestion(tx, questionId), now);
   const previousCombo = await currentCombo(tx, userId, now);
-  const timeZone = history?.timeZone ?? 'UTC';
-  const dailyGoal = history?.dailyGoal ?? DEFAULT_DAILY_GOAL;
-  const day = localDay(now, timeZone);
 
-  const due = input.dueAt !== null && input.dueAt.getTime() <= now.getTime();
+  const firstAttempt = (history?.priorAttempts ?? 0) === 0;
+  const alreadyAwarded = history?.alreadyAwarded ?? false;
+  const answeredWhileDue = input.review !== null && input.review.dueAt.getTime() <= now.getTime();
+  const due = answeredWhileDue && input.review!.paysXp;
   const decision = answerXp({
     difficulty: input.difficulty,
     outcome: input.outcome,
     score: input.score,
     selfAssessed: input.selfAssessed,
-    firstAttempt: (history?.priorAttempts ?? 0) === 0,
-    alreadyAwarded: history?.alreadyAwarded ?? false,
+    firstAttempt,
+    alreadyAwarded,
     due,
+    answeredEarlierToday: history?.answeredEarlierToday ?? false,
   });
 
   const attemptId = randomUUID();
   const events: XpAward[] = [];
   let awarded = false;
   if (decision.award) {
-    const sourceId = decision.award.kind === 'review' ? reviewSourceId(questionId, input.dueAt!) : questionId;
+    const sourceId = decision.award.kind === 'review' ? reviewSourceId(questionId, input.review!.dueAt) : questionId;
     awarded = await insertXp(tx, userId, decision.award, sourceId, day, now);
     if (awarded) events.push(decision.award);
   }
@@ -156,16 +192,22 @@ export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<Ans
   });
   if (comeback && (await insertXp(tx, userId, comeback, questionId, day, now))) events.push(comeback);
   const combo = nextCombo(previousCombo, { eligible: decision.eligible, awarded, outcome: input.outcome });
+  // Only answers that could earn XP touch the combo (see nextCombo).
+  if (decision.eligible) await tx.update(t.users).set({ combo, comboAt: now }).where(eq(t.users.id, userId));
 
   return {
     attemptId,
     attemptCombo: decision.eligible ? combo : null,
+    localDay: day,
+    dueReview: due,
+    nextDuePaysXp: dueDatePaysXp({ firstAttempt, answeredWhileDue, alreadyAwarded }),
     finish: async () => {
       if (awarded && combo > previousCombo) {
         const bonus = comboAward(combo);
         if (bonus && (await insertXp(tx, userId, bonus, attemptId, day, now))) events.push(bonus);
       }
-      const topics = await settleTopics(tx, userId, topicsBefore, now, day);
+      events.push(...(await settleLesson(tx, { userId, lessonId: input.lessonId, now, day })).events);
+      const topics = await settleTopics(tx, userId, topicsBefore, now, day, input.outcome === 'correct');
       events.push(...topics.events);
       return finishPoints(tx, { userId, now, day, dailyGoal, events, combo, checkBadges: topics.recovered });
     },
@@ -175,99 +217,123 @@ export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<Ans
 // --- Lessons -------------------------------------------------------------------
 
 /**
- * XP for finishing a lesson: 20 the first time, +10 if every question in it
- * was right on the first attempt, +50 when it completes its topic. Call
- * inside the transaction that marks the lesson complete, after
- * lockUserPoints and after storing the completion. `firstCompletion` is
- * whether the lesson had no completion time before this call.
+ * Lesson XP, once per lesson (by the unique index): 20 for a lesson that is
+ * finished and has every one of its checks answered at least once (right or
+ * wrong), +10 if every first attempt was right. Clicking "Finish" past
+ * unanswered checks finishes the lesson but holds its XP back until the
+ * remaining checks are answered, so the XP rewards the learning, not the
+ * click. Returns the new awards and how many checks are still unanswered.
+ */
+async function settleLesson(
+  tx: Db,
+  input: { userId: string; lessonId: string; now: Date; day: LocalDay },
+): Promise<{ events: XpAward[]; unanswered: number }> {
+  const { userId, lessonId, now, day } = input;
+  const [state] = await tx
+    .select({
+      completed: sql<boolean>`exists(select 1 from lesson_progress p where p.user_id = ${userId} and p.lesson_id = ${lessonId} and p.completed_at is not null)`,
+      paid: sql<boolean>`exists(select 1 from xp_events e where e.user_id = ${userId} and e.kind = 'lesson' and e.source_id = ${lessonId})`,
+    })
+    .from(t.users)
+    .where(eq(t.users.id, userId));
+  if (!state?.completed || state.paid) return { events: [], unanswered: 0 };
+  const firstScores = (
+    await tx
+      .select({
+        first: sql<number | null>`(select a.score from attempts a
+          where a.user_id = ${userId} and a.question_id = "questions"."id"
+          order by a.created_at asc, a.id asc limit 1)`.mapWith((v) => (v === null ? null : Number(v))),
+      })
+      .from(t.questions)
+      .where(and(eq(t.questions.lessonId, lessonId), isNull(t.questions.archivedAt)))
+      .orderBy(asc(t.questions.position))
+  ).map((r) => r.first);
+  const unanswered = firstScores.filter((s) => s === null).length;
+  if (unanswered > 0) return { events: [], unanswered };
+  const events: XpAward[] = [];
+  for (const award of lessonXp({ firstCompletion: true, firstScores })) {
+    if (await insertXp(tx, userId, award, lessonId, day, now)) events.push(award);
+  }
+  return { events, unanswered: 0 };
+}
+
+/**
+ * XP for finishing a lesson (see settleLesson), then the topic and daily
+ * goal via finishPoints. Call inside the transaction that marks the lesson
+ * complete, after lockUserPoints (pass its time) and after storing the
+ * completion. `unanswered` is how many of the lesson's checks have never
+ * been answered (its XP waits for them).
  */
 export async function awardLessonCompletion(
   tx: Db,
-  input: { userId: string; lessonId: string; firstCompletion: boolean; now: Date },
-): Promise<PointsResult> {
+  input: { userId: string; lessonId: string; now: Date },
+): Promise<{ points: PointsResult; unanswered: number }> {
   const { userId, lessonId, now } = input;
-  const [prefs] = await tx.select({ timeZone: t.users.timeZone, dailyGoal: t.users.dailyGoal }).from(t.users).where(eq(t.users.id, userId));
-  const day = localDay(now, prefs?.timeZone ?? 'UTC');
-  const firstScores = input.firstCompletion
-    ? (
-        await tx
-          .select({
-            first: sql<number | null>`(select a.score from attempts a
-              where a.user_id = ${userId} and a.question_id = "questions"."id"
-              order by a.created_at asc, a.id asc limit 1)`.mapWith((v) => (v === null ? null : Number(v))),
-          })
-          .from(t.questions)
-          .where(and(eq(t.questions.lessonId, lessonId), isNull(t.questions.archivedAt)))
-          .orderBy(asc(t.questions.position))
-      ).map((r) => r.first)
-    : [];
-  const events: XpAward[] = [];
-  for (const award of lessonXp({ firstCompletion: input.firstCompletion, firstScores })) {
-    if (await insertXp(tx, userId, award, lessonId, day, now)) events.push(award);
-  }
+  const { day, dailyGoal } = await startPointsDay(tx, userId, now);
+  const lesson = await settleLesson(tx, { userId, lessonId, now, day });
+  const points = await finishPoints(tx, { userId, now, day, dailyGoal, events: lesson.events, combo: await currentCombo(tx, userId, now) });
+  return { points, unanswered: lesson.unanswered };
+}
 
-  // Topic finished: every core (non-enrichment, non-archived) lesson in this lesson's topic is
-  // finished. Checked on every completion, so finishing an enrichment lesson, or a topic that
-  // was already complete before this rule existed, still pays (once, by the unique index).
-  const [topic] = await tx
+/**
+ * Topic finished (50, once per topic): every core, non-archived lesson in a
+ * topic is finished with all its checks answered. Checked after every
+ * XP-earning action, for every topic the student has finished a lesson in,
+ * so a topic completed before this rule existed (or whose last check was
+ * answered after its lessons were finished) still pays, once.
+ */
+async function settleFinishedTopics(tx: Db, userId: string, now: Date, day: LocalDay): Promise<XpAward[]> {
+  const rows = await tx
     .select({
       topicId: t.lessons.topicId,
       total: sql<number>`count(*)`.mapWith(Number),
-      finished: sql<number>`count(${t.lessonProgress.completedAt})`.mapWith(Number),
+      finished: sql<number>`count(*) filter (where ${t.lessonProgress.completedAt} is not null and not exists(
+        select 1 from questions q where q.lesson_id = "lessons"."id" and q.archived_at is null
+        and not exists(select 1 from attempts a where a.user_id = ${userId} and a.question_id = q.id)))`.mapWith(Number),
     })
     .from(t.lessons)
     .leftJoin(t.lessonProgress, and(eq(t.lessonProgress.lessonId, t.lessons.id), eq(t.lessonProgress.userId, userId)))
     .where(
       and(
-        eq(t.lessons.topicId, sql`(select l.topic_id from lessons l where l.id = ${lessonId})`),
         eq(t.lessons.kind, 'core'),
         isNull(t.lessons.archivedAt),
+        sql`"lessons"."topic_id" in (select l.topic_id from lesson_progress p join lessons l on l.id = p.lesson_id
+          where p.user_id = ${userId} and p.completed_at is not null)`,
+        sql`not exists(select 1 from xp_events e where e.user_id = ${userId} and e.kind = 'topic' and e.source_id = "lessons"."topic_id")`,
       ),
     )
     .groupBy(t.lessons.topicId);
-  const topicAward = topic ? topicFinishedAward(topic) : null;
-  if (topic && topicAward && (await insertXp(tx, userId, topicAward, topic.topicId, day, now))) events.push(topicAward);
-
-  return finishPoints(tx, {
-    userId,
-    now,
-    day,
-    dailyGoal: prefs?.dailyGoal ?? DEFAULT_DAILY_GOAL,
-    events,
-    combo: await currentCombo(tx, userId, now),
-  });
+  const events: XpAward[] = [];
+  for (const topic of rows) {
+    const award = topicFinishedAward(topic);
+    if (award && (await insertXp(tx, userId, award, topic.topicId, day, now))) events.push(award);
+  }
+  return events;
 }
 
 // --- Review sessions -----------------------------------------------------------
 
 /**
  * XP for finishing a review session (15, once per local day): paid when the
- * student has answered at least five different questions in review today.
- * Call inside a transaction, after lockUserPoints. Always returns the points
- * state; `gained` is 0 when nothing was paid.
+ * student has answered at least five different questions as due reviews
+ * today (right or wrong). "Due" is the server's schedule, stored on each
+ * attempt, so the page an answer came from doesn't matter; "today" is the
+ * stored local day of each attempt, so changing time zone can't count the
+ * same answers twice. Call inside a transaction, after lockUserPoints (pass
+ * its time). Always returns the points state; `gained` is 0 when nothing was
+ * paid.
  */
 export async function awardReviewSession(tx: Db, input: { userId: string; now: Date }): Promise<PointsResult> {
   const { userId, now } = input;
-  const [prefs] = await tx.select({ timeZone: t.users.timeZone, dailyGoal: t.users.dailyGoal }).from(t.users).where(eq(t.users.id, userId));
-  const timeZone = prefs?.timeZone ?? 'UTC';
-  const day = localDay(now, timeZone);
-  // A local day never starts more than 26 hours before now, so two days back is enough to find today's.
-  const recent = await tx
-    .select({ questionId: t.attempts.questionId, at: t.attempts.createdAt })
+  const { day, dailyGoal } = await startPointsDay(tx, userId, now);
+  const [row] = await tx
+    .select({ questions: sql<number>`count(distinct ${t.attempts.questionId})`.mapWith(Number) })
     .from(t.attempts)
-    .where(and(eq(t.attempts.userId, userId), eq(t.attempts.context, 'review'), gt(t.attempts.createdAt, new Date(now.getTime() - 2 * 86_400_000))));
-  const answeredToday = new Set(recent.filter((r) => localDay(r.at, timeZone) === day).map((r) => r.questionId)).size;
+    .where(and(eq(t.attempts.userId, userId), eq(t.attempts.dueReview, true), eq(t.attempts.localDay, day)));
   const events: XpAward[] = [];
-  const award = reviewSessionAward(answeredToday);
+  const award = reviewSessionAward(row?.questions ?? 0);
   if (award && (await insertXp(tx, userId, award, day, day, now))) events.push(award);
-  return finishPoints(tx, {
-    userId,
-    now,
-    day,
-    dailyGoal: prefs?.dailyGoal ?? DEFAULT_DAILY_GOAL,
-    events,
-    combo: await currentCombo(tx, userId, now),
-  });
+  return finishPoints(tx, { userId, now, day, dailyGoal, events, combo: await currentCombo(tx, userId, now) });
 }
 
 // --- Topic mastery --------------------------------------------------------------
@@ -287,8 +353,11 @@ async function topicsOfQuestion(tx: Db, questionId: string): Promise<string[]> {
  * after it (the progress page's rules, via getTopicStates).
  * - A topic seen in Needs revision (before or after) is remembered in
  *   topic_recoveries, for Comeback Arc.
- * - A topic that is now fully Secure pays topic-secure (once per topic) and,
- *   if it was remembered as slipped, counts as recovered.
+ * - When the answer was fully correct, a topic that is now fully Secure pays
+ *   topic-secure (once per topic) and, if it was remembered as slipped,
+ *   counts as recovered. A wrong answer never does either: it can make a
+ *   topic Secure on paper (answering an overdue review, even wrongly, clears
+ *   the overdue flag), but that isn't a comeback.
  */
 async function settleTopics(
   tx: Db,
@@ -296,6 +365,7 @@ async function settleTopics(
   before: Map<string, MasteryState>,
   now: Date,
   day: LocalDay,
+  correct: boolean,
 ): Promise<{ events: XpAward[]; recovered: boolean }> {
   const events: XpAward[] = [];
   let recovered = false;
@@ -305,6 +375,7 @@ async function settleTopics(
     if (before.get(topicId) === 'needs-revision' || state === 'needs-revision') {
       await tx.insert(t.topicRecoveries).values({ userId, topicId, slippedAt: now }).onConflictDoNothing();
     }
+    if (!correct) continue;
     const award = topicSecureAward(state);
     if (!award) continue;
     if (await insertXp(tx, userId, award, topicId, day, now)) events.push(award);
@@ -345,8 +416,17 @@ async function finishPoints(
   const days = totals?.days ?? [];
   let justMetGoal = false;
 
-  // The daily-goal bonus follows an XP-earning action that takes today's XP to the goal.
+  // Any XP-earning action can complete a topic (its last lesson, or the last unanswered check in it).
   const earnedSomething = events.length > 0;
+  if (earnedSomething) {
+    for (const award of await settleFinishedTopics(tx, userId, now, day)) {
+      events.push(award);
+      totalXp += award.amount;
+      todayXp += award.amount;
+    }
+  }
+
+  // The daily-goal bonus follows an XP-earning action that takes today's XP to the goal.
   const goalBonus = earnedSomething ? dailyGoalAward(todayXp, dailyGoal, totals?.goalPaid ?? false) : null;
   if (goalBonus && (await insertXp(tx, userId, goalBonus, day, day, now))) {
     events.push(goalBonus);
@@ -411,15 +491,16 @@ export async function loadBadgeStats(tx: Db, userId: string, known: { totalXp: n
     .from(t.xpEvents)
     .where(eq(t.xpEvents.userId, userId));
   const count = (expr: SQL) => n(sql`(${expr})`);
-  const finished = sql`lesson_progress p join lessons l on l.id = p.lesson_id where p.user_id = ${userId} and p.completed_at is not null`;
+  // Lessons finished with every check answered: the ones that pay lesson XP (clicking past the checks doesn't count).
+  const finished = sql`lesson_progress p join lessons l on l.id = p.lesson_id where p.user_id = ${userId} and p.completed_at is not null
+    and not exists(select 1 from questions q where q.lesson_id = l.id and q.archived_at is null
+      and not exists(select 1 from attempts a where a.user_id = p.user_id and a.question_id = q.id))`;
   const [row] = await tx
     .select({
       lessonsFinished: count(sql`select count(*) from ${finished}`),
       topicsWithFinishedLessons: count(sql`select count(distinct l.topic_id) from ${finished}`),
-      subjects: count(sql`select count(distinct v.subject_code) from lesson_progress p
-        join lessons l on l.id = p.lesson_id
-        join syllabus_versions v on v.id = l.version_id
-        where p.user_id = ${userId} and p.completed_at is not null`),
+      subjects: count(sql`select count(distinct v.subject_code) from syllabus_versions v
+        where v.id in (select l.version_id from ${finished})`),
       bestCombo: count(sql`select coalesce(max(a.combo), 0) from attempts a where a.user_id = ${userId}`),
       topicsRecovered: count(sql`select count(*) from topic_recoveries r where r.user_id = ${userId} and r.secured_at is not null`),
       earned: sql<string[]>`coalesce((select array_agg(b.badge_id) from user_badges b where b.user_id = ${userId}), '{}')`,

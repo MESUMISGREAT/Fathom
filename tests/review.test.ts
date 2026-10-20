@@ -228,3 +228,90 @@ describe('the daily goal is paid more than once a day by changing time zone', ()
     expect(goals).toHaveLength(1);
   });
 });
+
+// --- Second review pass ---------------------------------------------------------
+
+/** The prior "objective with no content" reproduction adds 1.1.9 to topic 1.1; later tests here must not depend on it. */
+async function dropExtraObjective() {
+  const db = await getDb();
+  await db.delete(t.objectives).where(eq(t.objectives.id, `${VERSION}:1.1.9`));
+}
+async function xpOf(userId: string, kind: string) {
+  const db = await getDb();
+  return db.select().from(t.xpEvents).where(and(eq(t.xpEvents.userId, userId), eq(t.xpEvents.kind, kind as never)));
+}
+
+describe('Comeback Arc is unlocked by getting an overdue question wrong', () => {
+  it('awards "a topic that needed revision is fully Secure again" on an incorrect answer', async () => {
+    // Mastery treats an objective with a review more than 7 days overdue as Needs revision.
+    // Any answer reschedules that review, a wrong one included, so the overdue flag clears and
+    // the topic flips from Needs revision straight to Secure on a *wrong* answer. settleTopics
+    // compares before/after and records that as a recovery: Comeback Arc (and, for a topic
+    // that was never paid, +30 "Topic secured") for getting it wrong.
+    await dropExtraObjective();
+    const user = await newStudent();
+    const db = await getDb();
+    const t0 = Date.now();
+    const five = ['q-mcq', 'q-expr', 'q-spot', 'q-text', 'q-cloze'];
+    clockAt(t0 - 20 * DAY);
+    for (const id of five) await answer(id); // box 2, due in 3 days
+    clockAt(t0 - 17 * DAY + 60_000);
+    for (const id of five) await answer(id, 'review'); // on time: box 3, due in 7 days; the topic is Secure (paid here, legitimately)
+    clockAt(t0 - 10 * DAY + 60_000);
+    for (const id of ['q-mcq', 'q-expr', 'q-text', 'q-cloze']) await answer(id, 'review'); // on time again; q-spot is left due
+    expect(await xpOf(user.id, 'topic-secure')).toHaveLength(1);
+
+    clockAt(t0);
+    // q-spot is now 10 days overdue, so the topic is in Needs revision.
+    expect((await getTopicStates(db, user.id, [TOPIC_QUADRATICS])).get(TOPIC_QUADRATICS)).toBe('needs-revision');
+    const res = await study.submitAnswer({ questionId: sq('q-spot'), response: { format: 'spot-error', line: 1 }, context: 'review' });
+    expect(res).toMatchObject({ recorded: true, result: { outcome: 'incorrect' } });
+    expect((await getTopicStates(db, user.id, [TOPIC_QUADRATICS])).get(TOPIC_QUADRATICS)).toBe('secure'); // after a wrong answer
+
+    expect(res.points!.newBadges.map((b) => b.id)).not.toContain('comeback-arc');
+  });
+});
+
+describe('the review-session bonus is paid twice in one real day by changing time zone', () => {
+  it('pays 15 again for the same five due reviews after setTimeZone moves the local day forward', async () => {
+    // awardReviewSession keys the session by localDay(now, current zone) and re-buckets the
+    // stored review attempts by the *current* zone. At 11:00 UTC, Pacific/Kiritimati is
+    // already tomorrow, so the five reviews just answered count again as "tomorrow's".
+    await dropExtraObjective();
+    const now = new Date();
+    const elevenUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 11, 0, 0);
+    clockAt(elevenUtc - 3 * DAY - 60_000);
+    const user = await newStudent();
+    const five = ['q-mcq', 'q-expr', 'q-spot', 'q-text', 'q-cloze'];
+    for (const id of five) await answer(id);
+    clockAt(elevenUtc);
+    for (const id of five) expect(kinds(await answer(id, 'review'))).toContain('review:10'); // genuinely due
+    expect(kinds((await study.finishReviewSession()).points!)).toContain('review-session:15');
+
+    clockAt(elevenUtc + 5_000);
+    expect(await settings.setTimeZone('Pacific/Kiritimati')).toMatchObject({ ok: true });
+    await study.finishReviewSession(); // no new answers at all
+
+    expect(await xpOf(user.id, 'review-session')).toHaveLength(1);
+  });
+});
+
+describe('a topic finished before §4 shipped can never pay Topic finished', () => {
+  it('stays unpaid through the student’s next XP-earning action when no lesson in the topic is left to finish', async () => {
+    // awardLessonCompletion is the only place that checks topic completion, and it only runs
+    // when recordLessonStep saves `completed: true`. The UI never sends that for a lesson that
+    // is already finished (LessonPlayer skips its "opened" save when initiallyCompleted and only
+    // shows "Finish lesson" while !completed), and migration 0003 backfills nothing. So a
+    // Phase 1 student whose topic is fully finished (here 1.2, one core lesson) never gets the
+    // 50 XP or Topic Finisher, although the builders' note says it pays "on the next lesson
+    // finished there": there is none.
+    const user = await newStudent();
+    const db = await getDb();
+    await db.insert(t.lessonProgress).values({ userId: user.id, lessonId: 'fixture-functions', stepReached: 0, stepCount: 1, completedAt: new Date(Date.now() - 7 * DAY) });
+
+    const res = await study.submitAnswer({ questionId: 'fixture-functions/q-one', response: { format: 'mcq', choice: 0 }, context: 'lesson' });
+    expect(kinds(res.points!)).toContain('answer:10'); // an XP-earning action, so badges were evaluated
+
+    expect(await xpOf(user.id, 'topic')).toHaveLength(1);
+  });
+});

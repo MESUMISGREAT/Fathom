@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { listSubjects } from '@/server/queries/catalog';
 import { MASTERY_RULES } from '@/domain/mastery';
 import { BOX_INTERVAL_DAYS } from '@/domain/schedule';
-import { BADGES, LEVEL_TITLES, XP } from '@/domain/points';
+import { BADGES, LEVEL_TITLES } from '@/domain/points';
 import { PageHead, StatusPill } from '@/components/ui';
+import { XpRules } from '@/components/points/PointsViews';
 import { BRAND } from '@/lib/brand';
 
 export const metadata: Metadata = { title: 'How it works' };
@@ -60,7 +61,7 @@ export default async function AboutPage() {
                     {s.name} ({s.code})
                   </td>
                   <td>
-                    <a href={s.version.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={s.version.sourceUrl} target="_blank" rel="noopener noreferrer" className="tap-pad">
                       {s.version.label}
                     </a>{' '}
                     <span className="faint">· {s.version.sourceVersion}</span>
@@ -148,21 +149,7 @@ export default async function AboutPage() {
           <p>
             XP rewards learning, not clicking. It is worked out on our server, never taken away, and you can hide it in Settings at any time.
           </p>
-          <ul>
-            <li>
-              Right on your first try: {XP.firstTry[1]}, {XP.firstTry[2]} or {XP.firstTry[3]} XP by difficulty (half for partly right). Fixing a mistake
-              later: {XP.laterFix}. Answering something you already got right again: nothing, so points can&rsquo;t be farmed.
-            </li>
-            <li>
-              A review answered while it&rsquo;s due: {XP.review.correct}. Five or more reviews in a day: +{XP.reviewSession}. A question you once missed,
-              now right in review: +{XP.comeback}.
-            </li>
-            <li>
-              Finishing a lesson: {XP.lesson} (+{XP.perfect} if every answer was right first time). Finishing every lesson in a topic: {XP.topic}. Every
-              objective in a topic Secure: {XP.topicSecure}.
-            </li>
-            <li>Combos (new right answers in a row) add a small bonus at 3, 5, 10 and every 5 after. Reaching your daily goal adds {XP.dailyGoal}.</li>
-          </ul>
+          <XpRules />
           <p>
             Levels get a new title every five: {LEVEL_TITLES.map((t) => t.title).join(', ')}. There are {BADGES.length} badges, all for real
             progress, and no leaderboards: the only person you&rsquo;re compared with is you last week.

@@ -11,6 +11,7 @@ import { getDb, type Db } from '@/server/db';
 import * as t from '@/server/db/schema';
 import { loadBadgeStats } from '@/server/points';
 import {
+  activeLocalDay,
   badgeProgress,
   BADGES,
   computeStreak,
@@ -20,7 +21,6 @@ import {
   isGoalMet,
   lastDays,
   levelFor,
-  localDay,
   type BadgeIcon,
   type BadgeId,
   type LevelInfo,
@@ -122,6 +122,8 @@ async function load(db: Db, userId: string, now: Date): Promise<Loaded> {
         celebrations: t.users.celebrations,
         sounds: t.users.sounds,
         showPoints: t.users.showPoints,
+        activeDay: t.users.activeDay,
+        activeDayZone: t.users.activeDayZone,
       })
       .from(t.users)
       .where(eq(t.users.id, userId)),
@@ -140,8 +142,10 @@ async function load(db: Db, userId: string, now: Date): Promise<Loaded> {
       .where(eq(t.userBadges.userId, userId))
       .orderBy(desc(t.userBadges.earnedAt), t.userBadges.badgeId),
   ]);
-  const settings: PointsSettings = prefs[0] ?? { dailyGoal: DEFAULT_DAILY_GOAL, timeZone: 'UTC', celebrations: true, sounds: false, showPoints: true };
-  const today = localDay(now, settings.timeZone);
+  const { activeDay = null, activeDayZone = null, ...stored } = prefs[0] ?? {};
+  const settings: PointsSettings = prefs[0] ? (stored as PointsSettings) : { dailyGoal: DEFAULT_DAILY_GOAL, timeZone: 'UTC', celebrations: true, sounds: false, showPoints: true };
+  // The same day the next award would count towards (a day keeps the zone it started in).
+  const today = activeLocalDay({ now, timeZone: settings.timeZone, day: activeDay, dayZone: activeDayZone }).day;
   const byDay = new Map(dayRows.map((r) => [r.day, { xp: r.xp, goal: r.goal }]));
   const totalXp = dayRows.reduce((sum, r) => sum + r.xp, 0);
   const streak = computeStreak([...byDay.keys()], today);

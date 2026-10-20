@@ -170,8 +170,9 @@ function SwitchRow({
   onChange: (next: boolean) => void;
 }) {
   const id = useId();
+  // The whole row is a <label>, so tapping the words flips the switch too (a bigger target than the switch alone).
   return (
-    <div className="switch-row">
+    <label className="switch-row" data-disabled={disabled || undefined}>
       <span className="switch-label" id={`${id}-label`}>
         {label}
       </span>
@@ -188,7 +189,7 @@ function SwitchRow({
         disabled={disabled}
         onClick={() => onChange(!checked)}
       />
-    </div>
+    </label>
   );
 }
 
@@ -207,11 +208,17 @@ export function PointsForm({
   const [saved, setSaved] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const save = (patch: Partial<typeof prefs>, message: string) => {
+    const before = prefs;
     setPrefs((p) => ({ ...p, ...patch }));
     setSaved(null);
     start(async () => {
-      const r = await updatePreferences(patch);
-      setSaved(r.ok ? message : 'That didn’t save. Please try again.');
+      const ok = await updatePreferences(patch).then(
+        (r) => r.ok,
+        () => false,
+      );
+      // Never show a setting that wasn't saved: put the control back.
+      if (!ok) setPrefs(before);
+      setSaved(ok ? message : 'That didn’t save. Please try again.');
     });
   };
   return (
@@ -246,7 +253,7 @@ export function PointsForm({
         <span className="label" id="goal-label">
           Daily goal
         </span>
-        <div className="segmented" role="group" aria-labelledby="goal-label">
+        <div className="segmented segmented-cards" role="group" aria-labelledby="goal-label">
           {DAILY_GOALS.map((g) => (
             <button
               key={g.xp}
@@ -255,7 +262,8 @@ export function PointsForm({
               disabled={pending}
               onClick={() => save({ dailyGoal: g.xp }, g.xp ? `Daily goal set to ${g.xp} XP.` : 'Daily goal turned off.')}
             >
-              {g.xp ? `${g.name} · ${g.xp}` : g.name}
+              <span className="seg-name">{g.name}</span>
+              <span className="seg-sub">{g.xp ? `${g.xp} XP` : 'No goal'}</span>
             </button>
           ))}
         </div>

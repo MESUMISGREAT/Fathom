@@ -10,8 +10,8 @@ import type { QuestionView } from '@/content/rendered';
 import type { StudentResponse } from '@/domain/answers/check';
 import type { PointsResult } from '@/domain/points';
 import { submitAnswer, type SubmitResult } from '@/server/actions/study';
-import { AlertIcon, BoltIcon, CheckCircleIcon, CheckIcon, HalfCircleIcon, RefreshIcon, StarFilledIcon, StarIcon, XCircleIcon } from '@/components/icons';
-import { usePoints } from '@/components/points/PointsProvider';
+import { AlertIcon, BoltIcon, CheckCircleIcon, CheckIcon, HalfCircleIcon, RefreshIcon, StarFilledIcon, StarIcon, XCircleIcon, XIcon } from '@/components/icons';
+import { prefersReducedMotion, usePoints } from '@/components/points/PointsProvider';
 import { BookmarkButton } from '@/components/study/BookmarkButton';
 import { LessonCheckContext } from '@/components/lesson/context';
 import { ReportProblem } from '@/components/study/ReportProblem';
@@ -58,7 +58,6 @@ export function QuestionCard({
   onPoints?: (points: PointsResult) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
-  const cardRef = useRef<HTMLElement>(null);
   const pointsCtx = usePoints();
   const showPoints = signedIn && (pointsCtx?.prefs.showPoints ?? true);
   const promptId = useId();
@@ -107,7 +106,7 @@ export function QuestionCard({
       setResult(res);
       const o = res.result.outcome;
       if (res.points) {
-        pointsCtx?.apply(res.points, cardRef.current);
+        pointsCtx?.apply(res.points);
         onPoints?.(res.points);
       }
       if (o !== 'invalid' && o !== 'self-check') {
@@ -141,17 +140,34 @@ export function QuestionCard({
     requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>('input, textarea')?.focus());
   }
 
+  const chosenIndex = response?.format === 'mcq' ? response.choice : response?.format === 'spot-error' ? response.line - 1 : -1;
   const markFor = (i: number): 'right' | 'wrong' | undefined => {
     if (!locked || !reveal) return undefined;
     const correctIndex = view.format === 'mcq' ? reveal.correctOption : (reveal.errorLine ?? 0) - 1;
-    const chosen = response?.format === 'mcq' ? response.choice : response?.format === 'spot-error' ? response.line - 1 : -1;
     if (i === correctIndex) return 'right';
-    if (i === chosen) return 'wrong';
+    if (i === chosenIndex) return 'wrong';
     return undefined;
+  };
+  /** Shape and words for a marked option, so colour is never the only cue (WCAG 1.4.1). */
+  const markKey = (i: number, fallback: string) => {
+    const mark = markFor(i);
+    if (!mark) return fallback;
+    return mark === 'right' ? <CheckIcon aria-hidden="true" /> : <XIcon aria-hidden="true" />;
+  };
+  const markTag = (i: number, id: string) => {
+    const mark = markFor(i);
+    if (!mark) return null;
+    const right = view.format === 'mcq' ? 'Correct answer' : 'The line with the error';
+    const text = mark === 'wrong' ? 'Your answer' : i === chosenIndex ? `Your answer · ${right.toLowerCase()}` : right;
+    return (
+      <span id={id} className="option-tag" data-mark={mark}>
+        {text}
+      </span>
+    );
   };
 
   return (
-    <article ref={cardRef} className="question" id={`q-${view.id.replace(/[^a-z0-9-]/gi, '-')}`} data-outcome={locked ? outcome : undefined} aria-labelledby={promptId}>
+    <article className="question" id={`q-${view.id.replace(/[^a-z0-9-]/gi, '-')}`} data-outcome={locked ? outcome : undefined} aria-labelledby={promptId}>
       <div className="q-meta">
         <span className="badge badge-accent">{view.label}</span>
         <span className="tiny faint grow">
@@ -171,11 +187,20 @@ export function QuestionCard({
               <div className="options" role="radiogroup" aria-labelledby={promptId}>
                 {view.options!.map((html, i) => (
                   <label key={i} className="option" data-mark={markFor(i)}>
-                    <input type="radio" name="choice" value={i} aria-label={`Option ${LETTERS[i]}`} aria-describedby={`${promptId}-o${i}`} />
+                    <input
+                      type="radio"
+                      name="choice"
+                      value={i}
+                      aria-label={`Option ${LETTERS[i]}`}
+                      aria-describedby={markFor(i) ? `${promptId}-m${i} ${promptId}-o${i}` : `${promptId}-o${i}`}
+                    />
                     <span className="option-key" aria-hidden="true">
-                      {LETTERS[i]}
+                      {markKey(i, LETTERS[i]!)}
                     </span>
-                    <span id={`${promptId}-o${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    <span className="option-main">
+                      {markTag(i, `${promptId}-m${i}`)}
+                      <span id={`${promptId}-o${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    </span>
                     {locked && reveal?.whyHtml?.[i] && <span className="option-why" dangerouslySetInnerHTML={{ __html: reveal.whyHtml[i]! }} />}
                   </label>
                 ))}
@@ -187,11 +212,20 @@ export function QuestionCard({
                 <p className="small muted">Which line contains the first error?</p>
                 {view.lines!.map((html, i) => (
                   <label key={i} className="option line-option" data-mark={markFor(i)}>
-                    <input type="radio" name="line" value={i + 1} aria-label={`Line ${i + 1}`} aria-describedby={`${promptId}-l${i}`} />
+                    <input
+                      type="radio"
+                      name="line"
+                      value={i + 1}
+                      aria-label={`Line ${i + 1}`}
+                      aria-describedby={markFor(i) ? `${promptId}-m${i} ${promptId}-l${i}` : `${promptId}-l${i}`}
+                    />
                     <span className="option-key" aria-hidden="true">
-                      {i + 1}
+                      {markKey(i, String(i + 1))}
                     </span>
-                    <span id={`${promptId}-l${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    <span className="option-main">
+                      {markTag(i, `${promptId}-m${i}`)}
+                      <span id={`${promptId}-l${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    </span>
                   </label>
                 ))}
               </div>
@@ -316,10 +350,19 @@ function Feedback({
   const reveal = result.reveal!;
   const t = TITLES[r.outcome] ?? TITLES.incorrect!;
   const selfPending = r.outcome === 'self-check';
+  const titleRef = useRef<HTMLDivElement>(null);
+
+  // The button that was pressed has gone: move focus to the result, so keyboard and screen reader users land on it.
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+    el.focus({ preventScroll: true });
+    el.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  }, [result]);
 
   return (
     <div className="feedback" data-outcome={r.outcome}>
-      <div className="feedback-title">
+      <div className="feedback-title" ref={titleRef} tabIndex={-1}>
         <t.Icon /> <span>{t.text}</span>
         {r.outcome === 'correct' && <span className="feedback-cheer">{cheer(view.id)}</span>}
         {r.selfAssessed && <span className="badge">self-marked</span>}
@@ -410,9 +453,15 @@ function Feedback({
 
       {!selfPending && (
         <div className="q-actions" style={{ marginTop: 12 }}>
-          <button type="button" className="btn btn-sm" onClick={onRetry}>
-            <RefreshIcon /> Try again
-          </button>
+          {r.outcome === 'correct' ? (
+            <button type="button" className="btn btn-sm btn-ghost" onClick={onRetry}>
+              <RefreshIcon /> Answer again
+            </button>
+          ) : (
+            <button type="button" className="btn btn-primary" onClick={onRetry}>
+              <RefreshIcon /> Try again
+            </button>
+          )}
           {sourceHref && (
             <Link href={sourceHref} className="btn btn-sm btn-ghost">
               Open the lesson

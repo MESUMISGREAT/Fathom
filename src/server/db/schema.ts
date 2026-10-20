@@ -187,6 +187,23 @@ export const users = pgTable('users', {
   sounds: boolean('sounds').notNull().default(false),
   /** Show XP, combos, goals and badges. Off hides them in the UI; XP is still recorded. */
   showPoints: boolean('show_points').notNull().default(true),
+  /**
+   * The local day the student's activity currently counts towards, and the
+   * time zone that started it (see activeLocalDay in src/domain/points.ts).
+   * A day keeps the zone it started in until it is over there, so changing
+   * time zone can't start "tomorrow" early and claim a once-a-day reward
+   * twice. Null until the first recorded activity.
+   */
+  activeDay: date('active_day', { mode: 'string' }),
+  activeDayZone: text('active_day_zone'),
+  /**
+   * The live combo and when it last moved, written under the per-user points
+   * lock (src/server/points.ts). Kept here rather than read from the latest
+   * answer by time, so two answers processed out of time order (two tabs,
+   * app servers with slightly different clocks) can't replay a milestone.
+   */
+  combo: integer('combo').notNull().default(0),
+  comboAt: timestamp('combo_at', { withTimezone: true }),
   ageConfirmedAt: timestamp('age_confirmed_at', { withTimezone: true }).notNull(),
   createdAt: createdAt(),
 });
@@ -245,10 +262,15 @@ export const attempts = pgTable(
     /**
      * The combo count after this answer, for answers that could earn XP (0
      * when it broke the combo). Null for answers that could not earn XP
-     * (repeats, early reviews), which leave the combo alone. The live combo is
-     * read from the latest non-null row (see src/domain/points.ts).
+     * (repeats, early reviews), which leave the combo alone. The live combo
+     * itself is kept on the user (users.combo); this is its history, for the
+     * combo badges.
      */
     combo: integer('combo'),
+    /** The student's local day it counted towards (null for answers recorded before 0004). */
+    localDay: date('local_day', { mode: 'string' }),
+    /** Answered while its review was due (by the server's schedule, not the page it was answered on). */
+    dueReview: boolean('due_review').notNull().default(false),
     createdAt: createdAt(),
   },
   (t) => [index('attempts_user_time_idx').on(t.userId, t.createdAt), index('attempts_user_question_idx').on(t.userId, t.questionId)],
@@ -264,6 +286,13 @@ export const reviewItems = pgTable(
     dueAt: timestamp('due_at', { withTimezone: true }).notNull(),
     lapses: integer('lapses').notNull().default(0),
     lastReviewedAt: timestamp('last_reviewed_at', { withTimezone: true }).notNull(),
+    /**
+     * Whether answering at the current due date can earn review XP. False
+     * when the due date was set by an early answer to a question that had
+     * already earned XP, so a deliberate wrong answer can't buy a paid
+     * review tomorrow. The next on-time answer sets it back to true.
+     */
+    paysXp: boolean('pays_xp').notNull().default(true),
   },
   (t) => [primaryKey({ columns: [t.userId, t.questionId] }), index('review_items_due_idx').on(t.userId, t.dueAt)],
 );

@@ -105,13 +105,26 @@ async function makeDue(userId: string, questionId: string, dueAt: Date) {
   const db = await getDb();
   await db.update(t.reviewItems).set({ dueAt }).where(and(eq(t.reviewItems.userId, userId), eq(t.reviewItems.questionId, questionId)));
 }
-/** Moves all of a student's attempts `days` days into the past. */
+/** Moves all of a student's attempts (their time and the local day they counted towards) `days` days into the past. */
 async function backdateAttempts(userId: string, days: number) {
   const db = await getDb();
   await db
     .update(t.attempts)
-    .set({ createdAt: sql`${t.attempts.createdAt} - make_interval(days => ${days})` })
+    .set({
+      createdAt: sql`${t.attempts.createdAt} - make_interval(days => ${days})`,
+      localDay: sql`(${t.attempts.localDay} - make_interval(days => ${days}))::date`,
+    })
     .where(eq(t.attempts.userId, userId));
+}
+/** Answers each question as a genuinely due review (answered once before, then made due). */
+async function dueReviews(userId: string, ids: string[]) {
+  const out: Points[] = [];
+  for (const id of ids) {
+    await answer(id);
+    await makeDue(userId, right[id]!.questionId, new Date(Date.now() - 60_000));
+    out.push(await answer(id, 'review'));
+  }
+  return out;
 }
 async function topicState(userId: string, topicId: string) {
   return (await getTopicStates(await getDb(), userId, [topicId])).get(topicId);
@@ -162,14 +175,17 @@ beforeAll(async () => {
 describe('topic finished', () => {
   it('pays 50 once, when every core lesson in the topic is finished (enrichment and archived lessons don’t count)', async () => {
     const user = await newStudent();
-    expect(kinds((await finish('fixture-functions')).points!)).toEqual(['lesson:20']); // no questions answered: not perfect
-    expect(kinds((await finish('extra-functions-enrichment')).points!)).toEqual(['lesson:20']);
+    // Finished past its one unanswered check: the lesson is done, its XP waits for the check.
+    const skipped = await finish('fixture-functions');
+    expect(skipped).toMatchObject({ saved: true, unanswered: 1, points: { gained: 0, events: [] } });
+    // Answering it pays the lesson (perfect: right first time), but the topic has another core lesson to go.
+    expect(kinds(await answer('q-one'))).toEqual(['answer:10', 'lesson:20', 'perfect:10']);
+    expect(kinds((await finish('extra-functions-enrichment')).points!)).toEqual(['lesson:20', 'daily-goal:10']);
 
     const done = (await finish('extra-functions-core')).points!;
     expect(done.events).toEqual([
       { kind: 'lesson', amount: 20, label: 'Lesson finished' },
       { kind: 'topic', amount: 50, label: 'Topic finished' },
-      { kind: 'daily-goal', amount: 10, label: 'Daily goal reached' },
     ]);
     expect(badges(done)).toEqual(['topic-finisher']);
 
@@ -183,6 +199,7 @@ describe('topic finished', () => {
   it('pays for a topic completed before the rule existed on the next completion there, once', async () => {
     const user = await newStudent();
     const db = await getDb();
+    await answer('q-one');
     // Both core lessons finished, but no topic award stored (as for an account from before §4).
     await db.insert(t.lessonProgress).values(
       ['fixture-functions', 'extra-functions-core'].map((lessonId) => ({ userId: user.id, lessonId, stepReached: 1, stepCount: 2, completedAt: new Date() })),
@@ -200,13 +217,23 @@ describe('review sessions', () => {
     expect(await study.finishReviewSession()).toEqual({ points: null }); // guests
 
     const user = await newStudent();
-    for (const id of ['q-mcq', 'q-expr', 'q-text', 'q-cloze']) await answer(id, 'review');
-    // Re-answering one question doesn't make a session.
-    for (let i = 0; i < 3; i++) await answer('q-mcq', 'review');
+    // Sent from the review page but not due (first attempts): the page doesn't decide what a review is.
+    for (const id of ['q-numeric', 'q-explain']) await answer(id, 'review');
+    await dueReviews(user.id, ['q-mcq', 'q-expr', 'q-text']);
+    // The same question due and answered again doesn't add to the count.
+    for (let i = 2; i < 5; i++) {
+      await makeDue(user.id, sq('q-mcq'), new Date(Date.now() - i * 60_000));
+      expect(kinds(await answer('q-mcq', 'review'))).toContain('review:10');
+    }
     const short = await study.finishReviewSession();
     expect(short.points).toMatchObject({ gained: 0, events: [], newBadges: [] });
 
-    await answer('q-spot', 'review');
+    // Due reviews count right or wrong.
+    await answer('q-cloze');
+    await makeDue(user.id, sq('q-cloze'), new Date(Date.now() - 60_000));
+    await miss('q-cloze', 'review');
+    expect((await study.finishReviewSession()).points!.gained).toBe(0); // four
+    await dueReviews(user.id, ['q-spot']);
     const done = (await study.finishReviewSession()).points!;
     expect(done.events).toEqual([{ kind: 'review-session', amount: 15, label: 'Review session' }]);
     expect(badges(done)).toContain('recall-rookie');
@@ -224,7 +251,7 @@ describe('review sessions', () => {
 
     await newStudent();
     const reviewer = (await getSessionUser())!;
-    for (const id of ['q-mcq', 'q-expr', 'q-text', 'q-cloze', 'q-spot']) await answer(id, 'review');
+    await dueReviews(reviewer.id, ['q-mcq', 'q-expr', 'q-text', 'q-cloze', 'q-spot']);
     await backdateAttempts(reviewer.id, 1);
     expect((await study.finishReviewSession()).points!.gained).toBe(0); // that was yesterday
     expect(await xpRows(user.id, 'review-session')).toHaveLength(0);
@@ -233,7 +260,7 @@ describe('review sessions', () => {
 
   it('pay once when the session end arrives twice at the same time', async () => {
     const user = await newStudent();
-    for (const id of ['q-mcq', 'q-expr', 'q-text', 'q-cloze', 'q-spot']) await answer(id, 'review');
+    await dueReviews(user.id, ['q-mcq', 'q-expr', 'q-text', 'q-cloze', 'q-spot']);
     const [a, b] = await Promise.all([study.finishReviewSession(), study.finishReviewSession()]);
     expect(a.points!.gained + b.points!.gained).toBe(15);
     expect(await xpRows(user.id, 'review-session')).toHaveLength(1);
@@ -264,9 +291,10 @@ describe('comebacks', () => {
     await answer('q-expr');
     await makeDue(user.id, sq('q-expr'), new Date(Date.now() - 60_000));
     expect(kinds(await answer('q-expr', 'review'))).not.toContain('comeback:5');
-    // Wrong, then fixed straight away (not due, even when sent as a review): "you fixed it" only.
+    // Wrong, then right straight away (not due, even when sent as a review): nothing at all, since
+    // the feedback has just shown the answer ("you fixed it" waits for another day), and no comeback.
     await miss('q-cloze');
-    expect(kinds(await answer('q-cloze', 'review'))).toEqual(['answer:5']);
+    expect(kinds(await answer('q-cloze', 'review'))).toEqual([]);
     expect(await xpRows(user.id, 'comeback')).toHaveLength(0);
   });
 });
@@ -346,6 +374,8 @@ describe('topic secured', () => {
 describe('more badges', () => {
   it('Curious Mind: lessons finished in five different topics', async () => {
     const user = await newStudent();
+    // Lessons count once every check in them has been answered (the extra lessons have none).
+    for (const id of ['q-mcq', 'q-numeric', 'q-expr', 'q-text', 'q-cloze', 'q-spot', 'q-explain', 'q-one']) await answer(id);
     for (const id of ['fixture-squares', 'fixture-functions', 'extra-lesson-1.7', 'extra-lesson-1.8']) {
       expect(badges((await finish(id)).points!)).not.toContain('curious-mind');
     }

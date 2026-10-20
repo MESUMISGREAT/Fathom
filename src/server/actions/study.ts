@@ -81,10 +81,9 @@ export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise
   let recorded = false;
   let points: PointsResult | null = null;
   if (user) {
-    const now = new Date();
     // The attempt, the review schedule and the XP are recorded together or not at all.
     points = await db.transaction(async (tx) => {
-      await lockUserPoints(tx, user.id);
+      const now = await lockUserPoints(tx, user.id);
       const prevRows = await tx
         .select()
         .from(t.reviewItems)
@@ -94,11 +93,12 @@ export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise
       const award = await awardAnswer(tx, {
         userId: user.id,
         questionId,
+        lessonId: q.lessonId,
         difficulty: q.difficulty,
         outcome,
         score: result.score,
         selfAssessed: result.selfAssessed,
-        dueAt: prev?.dueAt ?? null,
+        review: prev ? { dueAt: prev.dueAt, paysXp: prev.paysXp } : null,
         now,
       });
       await tx.insert(t.attempts).values({
@@ -111,9 +111,14 @@ export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise
         selfAssessed: result.selfAssessed,
         context,
         combo: award.attemptCombo,
+        localDay: award.localDay,
+        dueReview: award.dueReview,
         createdAt: now,
       });
-      const next = nextReview(prev ? { box: prev.box, dueAt: prev.dueAt, lapses: prev.lapses, lastReviewedAt: prev.lastReviewedAt } : null, result.score, now);
+      const schedule = nextReview(prev ? { box: prev.box, dueAt: prev.dueAt, lapses: prev.lapses, lastReviewedAt: prev.lastReviewedAt } : null, result.score, now);
+      // A due date set by an early repeat pays no review XP (see dueDatePaysXp); an unchanged one keeps its flag.
+      const moved = !prev || schedule.dueAt.getTime() !== prev.dueAt.getTime();
+      const next = { ...schedule, paysXp: moved ? award.nextDuePaysXp : prev.paysXp };
       await tx
         .insert(t.reviewItems)
         .values({ userId: user.id, questionId, ...next })
@@ -135,35 +140,34 @@ const StepSchema = z.object({
 export interface LessonStepResult {
   saved: boolean;
   /**
-   * XP for finishing the lesson (20 the first time, +10 if perfect), with the
-   * level, daily goal, streak and new badges. Set when a signed-in student
-   * saves a completed lesson (gained is 0 when it was already finished); null
+   * XP for finishing the lesson (20 the first time, +10 if perfect, +50 if
+   * it completes its topic), with the level, daily goal, streak and new
+   * badges. Set when a signed-in student saves a completed lesson (gained is
+   * 0 when it was already paid, or when checks are still unanswered); null
    * for guests, failed saves and steps that don't complete the lesson.
    */
   points: PointsResult | null;
+  /**
+   * Checks in the lesson the student has never answered. The lesson is
+   * finished either way, but its XP waits until every check has been
+   * answered once (it is then paid with that answer). 0 when not completing.
+   */
+  unanswered: number;
 }
 
 export async function recordLessonStep(input: z.input<typeof StepSchema>): Promise<LessonStepResult> {
   const parsed = StepSchema.safeParse(input);
   const user = await getSessionUser();
-  if (!parsed.success || !user) return { saved: false, points: null };
-  if (!hit(`write:${user.id}`, LIMITS.write).ok) return { saved: false, points: null };
+  const failed: LessonStepResult = { saved: false, points: null, unanswered: 0 };
+  if (!parsed.success || !user) return failed;
+  if (!hit(`write:${user.id}`, LIMITS.write).ok) return failed;
   const { lessonId, stepReached, stepCount, completed } = parsed.data;
   const db = await getDb();
   const exists = await db.select({ id: t.lessons.id }).from(t.lessons).where(and(eq(t.lessons.id, lessonId), isNull(t.lessons.archivedAt)));
-  if (!exists.length) return { saved: false, points: null };
-  const now = new Date();
-  const points = await db.transaction(async (tx) => {
-    let firstCompletion = false;
-    if (completed) {
-      await lockUserPoints(tx, user.id);
-      const [before] = await tx
-        .select({ completedAt: t.lessonProgress.completedAt })
-        .from(t.lessonProgress)
-        .where(and(eq(t.lessonProgress.userId, user.id), eq(t.lessonProgress.lessonId, lessonId)))
-        .for('update');
-      firstCompletion = !before?.completedAt;
-    }
+  if (!exists.length) return failed;
+  const result = await db.transaction(async (tx) => {
+    // Completions are serialised with the student's other point awards; plain step saves don't need to be.
+    const now = completed ? await lockUserPoints(tx, user.id) : new Date();
     await tx
       .insert(t.lessonProgress)
       .values({ userId: user.id, lessonId, stepReached, stepCount, openedAt: now, lastViewedAt: now, completedAt: completed ? now : null })
@@ -177,10 +181,10 @@ export async function recordLessonStep(input: z.input<typeof StepSchema>): Promi
           completedAt: completed ? sql`coalesce(${t.lessonProgress.completedAt}, ${now.toISOString()}::timestamptz)` : sql`${t.lessonProgress.completedAt}`,
         },
       });
-    return completed ? awardLessonCompletion(tx, { userId: user.id, lessonId, firstCompletion, now }) : null;
+    return completed ? awardLessonCompletion(tx, { userId: user.id, lessonId, now }) : null;
   });
   if (completed) revalidatePath('/', 'layout');
-  return { saved: true, points };
+  return { saved: true, points: result?.points ?? null, unanswered: result?.unanswered ?? 0 };
 }
 
 export interface ReviewSessionResult {
@@ -199,11 +203,7 @@ export async function finishReviewSession(): Promise<ReviewSessionResult> {
   const user = await getSessionUser();
   if (!user || !hit(`write:${user.id}`, LIMITS.write).ok) return { points: null };
   const db = await getDb();
-  const now = new Date();
-  const points = await db.transaction(async (tx) => {
-    await lockUserPoints(tx, user.id);
-    return awardReviewSession(tx, { userId: user.id, now });
-  });
+  const points = await db.transaction(async (tx) => awardReviewSession(tx, { userId: user.id, now: await lockUserPoints(tx, user.id) }));
   if (points.gained > 0) revalidatePath('/', 'layout');
   return { points };
 }

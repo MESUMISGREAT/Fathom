@@ -30,16 +30,31 @@ All rules live in one pure module, `src/domain/points.ts`, with unit tests.
 | Lesson question, correct on the **first ever** attempt | difficulty 1: 10, 2: 15, 3: 20 | once per question |
 | …partially correct on the first attempt | half of the above, rounded | once per question |
 | …self-assessed (`explain` format) | round(base × score × 0.5) | once per question |
-| Correct on a **later** attempt (you fixed it) | 5 | once per question; only if it never awarded XP before |
+| Correct on a **later day** than the miss (you fixed it) | 5 | once per question; only if it never awarded XP before |
 | Review question answered while **due**, correct | 10 (partial: 5) | once per question per due date |
-| Lesson finished for the first time | 20 | once per lesson |
+| Lesson finished, with **every check in it answered** | 20 | once per lesson |
 | Perfect lesson (every question in it correct first time) | +10 | once per lesson |
 | Combo bonus (consecutive *scoring* correct answers, see below) | 3 in a row: +5, 5: +10, 10 and every 5 after: +15 | per combo milestone |
 | Daily goal reached | +10 | once per day |
 
 A *scoring* answer is one that awarded XP. Answers that award nothing (repeats, reviews
-that are not due) neither extend nor break a combo. A combo breaks on an incorrect
-scoring-eligible answer or after 15 minutes without one.
+that are not due, a retry on the day of the miss) neither extend nor break a combo. A combo
+breaks on an incorrect scoring-eligible answer or after 15 minutes without one.
+
+Decisions that keep "reward learning, not clicking" true (product decisions from review):
+
+* **You fixed it** pays only on a later local day than the miss. The feedback on a wrong
+  answer shows the right one, so a retry straight after it is clicking, not recall; it
+  earns nothing and leaves the combo alone. The miss also brings the question back in
+  tomorrow's review, where getting it right pays the review and the comeback bonus.
+* **Lesson XP needs the checks.** "Finish without answering" still finishes the lesson
+  (for navigation and progress), but its 20 XP, the perfect bonus, Topic finished and the
+  lesson badges wait until every check in it has been answered once, right or wrong. The
+  XP is then paid with the answer to the last one, and the completion card says so.
+* **No paid review from a deliberate miss.** A wrong answer before an item is due still
+  moves it back to box 1 (the spacing is for learning), but if the question had already
+  earned XP, the due date that miss sets pays no review XP. The on-time answer after it
+  sets a paying due date again.
 
 Guests can answer questions but earn no XP; they see "Sign up to keep your XP".
 
@@ -55,6 +70,14 @@ Guests can answer questions but earn no XP; they see "Sign up to keep your XP".
 * `user_badges (user_id, badge_id, earned_at)`.
 * `users` gains `daily_goal` (default 50), `time_zone` (IANA, default `UTC`, detected from
   the browser), `celebrations` (default true), `sounds` (default false).
+* **The local day can't be moved at will.** Once a day has started (`users.active_day`,
+  started in `users.active_day_zone`), activity counts towards it until it is over in that
+  zone; a new time zone takes effect at the next day boundary, and moving west never
+  reopens a past day. So changing time zone can't claim a daily goal, a review session or a
+  study day twice (`activeLocalDay` in `src/domain/points.ts`). Each attempt stores the
+  local day it counted towards.
+* The live combo is stored on the user (`users.combo`, `combo_at`) and changes only under
+  the per-user lock, so two answers processed out of time order can't replay a milestone.
 
 Account deletion cascades; the data export includes XP events and badges.
 
@@ -94,18 +117,26 @@ How the server decides (all in `src/server/points.ts`, rules in `src/domain/poin
 * `xp_events.kind` gains `topic | review-session | comeback | topic-secure`. Source ids:
   the topic id (`topic`, `topic-secure`), the local day (`review-session`), the question
   id (`comeback`).
-* **Topic finished** is checked whenever a lesson is saved as finished: the lesson's topic
-  must have at least one core, non-archived lesson and all of them finished.
-* **Review session**: the review page calls `finishReviewSession()` when a session ends;
-  it pays when at least 5 *different* questions were answered on the review page today
-  (local day), right or wrong. Re-answering one question doesn't add to the count.
-* **Comeback**: an earlier attempt at the question was incorrect and this answer is fully
-  correct while the question is due (the scheduler's due date, as for review XP).
+* **Topic finished** is checked after every XP-earning action, for every topic the student
+  has finished a lesson in: the topic must have at least one core, non-archived lesson and
+  all of them finished with every check answered. So a topic finished before this rule
+  existed pays once, on the student's next XP-earning action.
+* **Review session**: the review page calls `finishReviewSession()` when a session ends,
+  and again if the student leaves part-way; it pays when at least 5 *different* questions
+  were answered as due reviews today (local day), right or wrong. "Due" is the server's
+  schedule stored on each attempt, not the page the answer came from. Re-answering one
+  question doesn't add to the count.
+* **Comeback**: an earlier attempt at the question was incorrect, and that miss counted
+  (the first attempt, or one that could earn XP: not a deliberate repeat), and this answer
+  is fully correct while the question is due (the scheduler's due date, as for review XP).
 * **Topic secured** and **Comeback Arc** use the progress page's mastery rules
-  (`src/domain/mastery.ts`, topic state = all objectives with content Secure). After every
-  answer the server compares the state of the question's topics before and after it. A
-  topic seen in Needs revision is remembered in `topic_recoveries (user_id, topic_id,
-  slipped_at, secured_at)`; `secured_at` is set when it is next fully Secure.
+  (`src/domain/mastery.ts`). A topic is Secure only when every objective in it is Secure;
+  an objective with no lessons or questions yet counts as Not started, so a partly
+  covered topic can't be secured. After every answer the server compares the state of the
+  question's topics before and after it. A topic seen in Needs revision is remembered in
+  `topic_recoveries (user_id, topic_id, slipped_at, secured_at)`. Only a fully correct
+  answer can pay Topic secured or set `secured_at` (a wrong answer to an overdue review
+  clears the overdue flag, which can make a topic Secure on paper; that isn't a comeback).
 * `users.show_points` (default true) stores the Show points and badges preference; a daily
   goal of 0 means Off.
 

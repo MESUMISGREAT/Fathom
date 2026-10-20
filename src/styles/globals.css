@@ -575,7 +575,7 @@ p {
   transform: scale(0.97);
 }
 .btn-danger {
-  --btn-fg: var(--coral-ink);
+  --btn-fg: var(--bad);
 }
 .btn-sm {
   min-height: 40px;
@@ -859,8 +859,9 @@ a.list-row:active {
   white-space: nowrap;
 }
 .badge-accent {
-  background: color-mix(in srgb, var(--cobalt) 10%, var(--surface));
-  color: var(--cobalt-ink);
+  /* A label, not a control: lavender (the secondary accent), so cobalt keeps meaning "you can press this". */
+  background: color-mix(in srgb, var(--lavender) 18%, var(--surface));
+  color: var(--lavender-ink);
 }
 .badge-warn {
   background: color-mix(in srgb, var(--yellow) 30%, var(--surface));
@@ -1078,8 +1079,8 @@ a.list-row:active {
 .form-error {
   padding: 12px 14px;
   border-radius: 12px;
-  background: var(--coral-soft);
-  color: var(--coral-ink);
+  background: var(--bad-soft);
+  color: var(--bad);
   font-size: 0.9375rem;
   font-weight: 650;
 }
@@ -1116,8 +1117,8 @@ a.list-row:active {
   cursor: pointer;
   transition: background-color var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
 }
-.segmented button:hover:not(:disabled),
-.segmented a:hover {
+.segmented button:hover:not(:disabled):not([aria-pressed='true']):not([aria-selected='true']),
+.segmented a:hover:not([aria-current='page']) {
   text-decoration: none;
   color: var(--text);
   background: color-mix(in srgb, var(--surface) 55%, transparent);
@@ -1133,14 +1134,35 @@ a.list-row:active {
 .segmented [aria-pressed='true'],
 .segmented [aria-current='page'],
 .segmented [aria-selected='true'] {
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: 0 0 0 1.5px var(--border-strong), 0 2px 0 var(--ledge);
+  /* Selected is cobalt (well over 3:1 against the track), and stays so on hover. */
+  background: var(--cobalt);
+  color: var(--accent-ink);
+  box-shadow: 0 2px 0 var(--cobalt-ledge);
 }
-@media (pointer: coarse) {
-  .segmented button,
-  .segmented a {
-    min-height: 44px;
+.segmented [aria-pressed='true']:hover:not(:disabled),
+.segmented [aria-current='page']:hover,
+.segmented [aria-selected='true']:hover {
+  text-decoration: none;
+  background: var(--cobalt-hover);
+  color: var(--accent-ink);
+}
+/* Choices with a second line (the daily goal): name over amount. */
+.segmented-cards button {
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.15;
+  padding: 7px 14px;
+}
+.seg-sub {
+  font-size: 0.75rem;
+  font-weight: 650;
+  opacity: 0.85;
+}
+@media (max-width: 479px) {
+  .segmented-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
   }
 }
 
@@ -1151,6 +1173,10 @@ a.list-row:active {
   gap: 4px 16px;
   align-items: center;
   padding: 14px 0;
+  cursor: pointer;
+}
+.switch-row[data-disabled] {
+  cursor: default;
 }
 .switch-row + .switch-row {
   border-top: 1.5px solid var(--border);
@@ -1169,7 +1195,8 @@ a.list-row:active {
   height: 34px;
   padding: 0;
   border-radius: 999px;
-  border: 1.5px solid var(--border-strong);
+  /* Off: a track edge and a knob outline at 3:1 or more (WCAG 1.4.11), not just beige on beige. */
+  border: 1.5px solid var(--text-3);
   background: var(--surface-3);
   cursor: pointer;
   transition: background-color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
@@ -1183,11 +1210,12 @@ a.list-row:active {
   height: 25px;
   border-radius: 50%;
   background: var(--surface);
-  box-shadow: 0 1px 0 var(--ledge), 0 0 0 1.5px var(--border-strong);
+  box-shadow: 0 1px 0 var(--ledge), 0 0 0 1.5px var(--text-2);
   transition: transform var(--dur) var(--ease-spring);
 }
-.switch:hover:not(:disabled) {
-  border-color: var(--text-3);
+.switch:not([aria-checked='true']):hover:not(:disabled),
+.switch-row:hover .switch:not(:disabled):not([aria-checked='true']) {
+  border-color: var(--text-2);
 }
 .switch:active:not(:disabled)::after {
   width: 29px;
@@ -2850,12 +2878,12 @@ a.topic-row:hover .topic-chevron {
   background: transparent;
   border: 1.5px dashed var(--border-strong);
 }
-/* Definition: an index card with a cobalt spine and the term in the display face. */
+/* Definition: an index card with a navy spine and the term in the display face. */
 .callout-definition {
-  --c: var(--cobalt-ink);
+  --c: var(--text-2);
   background: var(--surface);
   border: 1.5px solid var(--border);
-  border-left: 6px solid var(--cobalt);
+  border-left: 6px solid var(--text);
   border-radius: 8px 18px 18px 8px;
 }
 .definition-term {
@@ -2913,7 +2941,7 @@ a.topic-row:hover .topic-chevron {
   gap: 8px;
 }
 .mistakes-head svg {
-  color: var(--coral-ink);
+  color: var(--bad);
 }
 .misconception {
   display: grid;
@@ -2940,13 +2968,13 @@ a.topic-row:hover .topic-chevron {
   stroke-width: 2.5;
 }
 .mc-wrong {
-  background: var(--coral-soft);
+  background: var(--bad-soft);
 }
 .mc-right {
   background: var(--surface);
 }
 .mc-wrong svg {
-  color: var(--coral-ink);
+  color: var(--bad);
 }
 .mc-right svg {
   color: var(--mint-ink);
@@ -3070,8 +3098,9 @@ figure.diagram figcaption {
   gap: 8px;
   padding: 5px 12px 5px 8px;
   border-radius: 999px;
-  background: var(--cobalt-soft);
-  color: var(--cobalt-ink);
+  /* The subject's own colour (shows where you are); cobalt is kept for things you can press. */
+  background: var(--hue-soft, var(--lavender-soft));
+  color: var(--hue, var(--lavender-ink));
   font-weight: 800;
   font-size: 0.875rem;
 }
@@ -3096,7 +3125,7 @@ figure.diagram figcaption {
   box-shadow: 0 0 0 2px var(--mint-ink), 0 3px 0 color-mix(in srgb, var(--mint-ink) 40%, transparent);
 }
 .question[data-outcome='incorrect'] {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--coral-ink) 70%, transparent), 0 3px 0 var(--ledge);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--bad) 70%, transparent), 0 3px 0 var(--ledge);
 }
 .question[data-outcome='partial'],
 .question[data-outcome='self-check'] {
@@ -3210,12 +3239,12 @@ fieldset.q-fieldset {
   color: var(--surface);
 }
 .option[data-mark='wrong'] {
-  border-color: var(--coral-ink);
-  background: var(--coral-soft);
+  border-color: var(--bad);
+  background: var(--bad-soft);
 }
 .option[data-mark='wrong'] .option-key {
-  background: var(--coral-ink);
-  border-color: var(--coral-ink);
+  background: var(--bad);
+  border-color: var(--bad);
   color: var(--surface);
 }
 .option-why {
@@ -3241,8 +3270,8 @@ fieldset:disabled .option[data-mark='right']:hover {
   background: var(--mint-soft);
 }
 fieldset:disabled .option[data-mark='wrong']:hover {
-  border-color: var(--coral-ink);
-  background: var(--coral-soft);
+  border-color: var(--bad);
+  background: var(--bad-soft);
 }
 .numeric-field {
   display: flex;
@@ -3270,7 +3299,6 @@ fieldset:disabled .option[data-mark='wrong']:hover {
   padding: 4px 10px;
   border-radius: 10px;
   border: 1.5px solid var(--border-strong);
-  border-bottom-width: 3px;
   background: var(--surface);
   font: inherit;
   font-size: 0.95em;
@@ -3334,8 +3362,8 @@ fieldset:disabled .option[data-mark='wrong']:hover {
 }
 .feedback[data-outcome='correct'] { background: var(--mint-soft); }
 .feedback[data-outcome='correct'] .feedback-title { color: var(--mint-ink); }
-.feedback[data-outcome='incorrect'] { background: var(--coral-soft); }
-.feedback[data-outcome='incorrect'] .feedback-title { color: var(--coral-ink); }
+.feedback[data-outcome='incorrect'] { background: var(--bad-soft); }
+.feedback[data-outcome='incorrect'] .feedback-title { color: var(--bad); }
 .feedback[data-outcome='partial'],
 .feedback[data-outcome='self-check'] { background: var(--yellow-soft); }
 .feedback[data-outcome='partial'] .feedback-title,
@@ -3704,10 +3732,6 @@ fieldset:disabled .option[data-mark='wrong']:hover {
   min-height: 56px;
   font-size: 1.125rem;
   border-radius: 18px;
-  box-shadow: 0 2px 0 var(--ledge);
-}
-.search-box .input:focus {
-  box-shadow: 0 0 0 4px var(--cobalt-soft);
 }
 .filters {
   display: flex;
@@ -3797,8 +3821,14 @@ mark {
   color: var(--on-bright);
 }
 .timeline-icon[data-kind='answered'] {
-  background: var(--cobalt-soft);
-  color: var(--cobalt-ink);
+  background: var(--lavender-soft);
+  color: var(--lavender-ink);
+}
+/* Links in running text are underlined, not told apart by colour alone (WCAG 1.4.1). */
+.timeline-item a {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
 }
 .timeline-icon svg {
   width: 18px;
@@ -3943,5 +3973,57 @@ mark {
 @media (max-width: 374px) {
   .topbar .wordmark {
     display: none;
+  }
+}
+
+/* Marked answers: a check or cross in the key and a word tag, so colour is never the only cue. */
+.option-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 2px;
+}
+.option-key svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.6;
+}
+.option-tag {
+  align-self: flex-start;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--surface);
+}
+.option-tag[data-mark='right'] {
+  background: var(--mint-ink);
+}
+.option-tag[data-mark='wrong'] {
+  background: var(--bad);
+}
+
+/* Touch targets: at least 44px wherever fingers are likely (spec §5). */
+@media (pointer: coarse), (max-width: 959px) {
+  .segmented button,
+  .segmented a,
+  .btn-sm,
+  .crumbs a,
+  .provenance,
+  .cloze-input {
+    min-height: 44px;
+  }
+  .topbar .xp-chip {
+    height: 44px;
+  }
+  /* Small links in section headers and footers: a 44px tall hit area without changing the layout. */
+  .section-head a,
+  .tap-pad {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -10px;
   }
 }

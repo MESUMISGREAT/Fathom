@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { requireUser } from '@/server/auth/session';
 import { getPointsHistory } from '@/server/queries/points';
-import { XP } from '@/domain/points';
+import { canonicalTimeZone } from '@/domain/points';
 import { EmptyState, PageHead } from '@/components/ui';
-import { BadgeTile, LevelBlock } from '@/components/points/PointsViews';
+import { BadgeTile, LevelBlock, XpRules } from '@/components/points/PointsViews';
 
 export const metadata: Metadata = { title: 'Achievements' };
 
@@ -24,6 +24,7 @@ export default async function AchievementsPage() {
     );
   }
   const h = await getPointsHistory(user.id);
+  const tz = canonicalTimeZone(user.timeZone) ?? 'UTC';
   const earned = h.badges.filter((b) => b.earned);
   const locked = h.badges.filter((b) => !b.earned);
 
@@ -48,7 +49,7 @@ export default async function AchievementsPage() {
             </div>
             <ul className="badge-grid">
               {earned.map((b) => (
-                <BadgeTile key={b.id} badge={b} />
+                <BadgeTile key={b.id} badge={b} timeZone={tz} />
               ))}
             </ul>
           </section>
@@ -61,7 +62,7 @@ export default async function AchievementsPage() {
             </div>
             <ul className="badge-grid">
               {locked.map((b) => (
-                <BadgeTile key={b.id} badge={b} />
+                <BadgeTile key={b.id} badge={b} timeZone={tz} />
               ))}
             </ul>
           </section>
@@ -70,11 +71,12 @@ export default async function AchievementsPage() {
           <h2 id="xp-rules" className="h3">
             How XP works
           </h2>
-          <p className="small muted">
-            Right first time earns {XP.firstTry[1]}–{XP.firstTry[3]} XP depending on difficulty, a due review {XP.review.correct}, and a finished lesson{' '}
-            {XP.lesson} (+{XP.perfect} if every answer was right first time). Answering something you already got right earns nothing, and XP never goes
-            down. <Link href="/about#points">More about points</Link>
-          </p>
+          <div className="prose small">
+            <XpRules />
+            <p>
+              XP never goes down. <Link href="/about#points">More about points</Link>
+            </p>
+          </div>
         </section>
       </div>
     </div>

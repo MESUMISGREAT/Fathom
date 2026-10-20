@@ -6,6 +6,7 @@ import { ReviewSession } from '@/components/questions/ReviewSession';
 import { EmptyState, PageHead } from '@/components/ui';
 import { ChevronRightIcon } from '@/components/icons';
 import { BOX_INTERVAL_DAYS } from '@/domain/schedule';
+import { REVIEW_SESSION_MIN_ANSWERS } from '@/domain/points';
 
 export const metadata: Metadata = { title: 'Review' };
 
@@ -16,9 +17,12 @@ function when(d: Date) {
   return `in ${days} days`;
 }
 
+/** Questions per session. */
+const BATCH = 10;
+
 export default async function ReviewPage() {
   const user = await requireUser('/review');
-  const due = await getDueQuestions(user.id, 10);
+  const due = await getDueQuestions(user.id, BATCH);
   const locs = await lessonLocations([...new Set(due.map((d) => d.lessonId))]);
   const items = due.flatMap((d) => {
     const loc = locs.get(d.lessonId);
@@ -33,17 +37,20 @@ export default async function ReviewPage() {
         title="Review"
         lede="Questions you've answered before come back just before you're likely to forget them. A few minutes is plenty."
       />
-      {items.length > 0 ? (
-        <ReviewSession items={items} />
-      ) : (
-        <EmptyState art="done" title="Nothing to review right now">
-          <p>
-            {upcoming
-              ? `Your next review question is due ${when(upcoming)}.`
-              : 'Answer questions in a lesson and they’ll start appearing here at spaced intervals.'}
-          </p>
-        </EmptyState>
-      )}
+      {/* Always mounted: a refresh mid-session (after the session bonus) must not replace the running session. */}
+      <ReviewSession
+        items={items}
+        batchSize={BATCH}
+        empty={
+          <EmptyState art="done" title="Nothing to review right now">
+            <p>
+              {upcoming
+                ? `Your next review question is due ${when(upcoming)}.`
+                : 'Answer questions in a lesson and they’ll start appearing here at spaced intervals.'}
+            </p>
+          </EmptyState>
+        }
+      />
       <details className="disclosure" style={{ marginTop: 32 }}>
         <summary>
           <ChevronRightIcon className="disclosure-chevron" /> How review timing works
@@ -55,8 +62,9 @@ export default async function ReviewPage() {
             tomorrow. Answering early (for example re-doing a lesson) doesn&rsquo;t skip a box, so cramming can&rsquo;t fake the spacing.
           </p>
           <p>
-            Review shows up to 10 questions at a time, most overdue first. A due review answered right earns XP, and five or more in a day add a
-            small session bonus. Miss a few days and it simply waits for you; nothing is lost.
+            Review shows up to {BATCH} questions at a time, most overdue first. A due review answered right earns XP, and a session of{' '}
+            {REVIEW_SESSION_MIN_ANSWERS} or more due questions in a day adds a small bonus (it still counts if you stop part-way). Miss a few days and it
+            simply waits for you; nothing is lost.
           </p>
         </div>
       </details>

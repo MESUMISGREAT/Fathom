@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { QuestionView } from '@/content/rendered';
 import type { Outcome } from '@/domain/answers/check';
 import type { PointsResult } from '@/domain/points';
@@ -12,46 +13,130 @@ import { usePoints } from '@/components/points/PointsProvider';
 
 const DOT_STATE: Partial<Record<Outcome, string>> = { correct: 'correct', incorrect: 'missed', partial: 'partial' };
 
-/** Due questions one at a time: answer, read the feedback, move on. */
-export function ReviewSession({ items }: { items: Array<{ view: QuestionView; sourceHref: string; sourceTitle: string }> }) {
+export type ReviewItem = { view: QuestionView; sourceHref: string; sourceTitle: string };
+
+/**
+ * Due questions one at a time: answer, read the feedback, move on.
+ *
+ * The session lives in this component's state, not in the page's props: the
+ * page re-renders after the session bonus is paid (the server revalidates the
+ * layout so the header total is right), and by then the questions are no
+ * longer due. Keeping the batch here means that refresh can't swap the
+ * summary for "Nothing to review" or the next batch.
+ */
+export function ReviewSession({ items, batchSize, empty }: { items: ReviewItem[]; batchSize: number; empty: ReactNode }) {
+  const router = useRouter();
+  const [session, setSession] = useState(items);
+  const [round, setRound] = useState(0);
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<Map<string, Outcome>>(new Map());
   const [xp, setXp] = useState(0);
-  const [bonus, setBonus] = useState<PointsResult | null | 'pending'>(null);
+  /** The session bonus, whenever the server paid it (at the end, or when the student stepped away part-way). */
+  const [bonus, setBonus] = useState<PointsResult | null>(null);
+  const [ending, setEnding] = useState(false);
+  const [wantMore, setWantMore] = useState(false);
   const finished = useRef(false);
-  const endRef = useRef<HTMLElement>(null);
+  const claimedAt = useRef(0);
+  const answeredRef = useRef(0);
+  const counterRef = useRef<HTMLParagraphElement>(null);
+  const doneTitleRef = useRef<HTMLHeadingElement>(null);
+  const moved = useRef(false);
   const points = usePoints();
+  const pointsRef = useRef(points);
+  pointsRef.current = points;
   const showPoints = points?.prefs.showPoints ?? true;
-  const item = items[index];
+  const item = session[index];
   const answered = item ? results.has(item.view.id) : false;
+  answeredRef.current = results.size;
+
+  /** Asks the server for the session bonus (it decides; safe to call more than once). */
+  const claim = () => {
+    claimedAt.current = answeredRef.current;
+    return finishReviewSession()
+      .then((r) => {
+        if (r.points && r.points.gained > 0) setBonus(r.points);
+        pointsRef.current?.apply(r.points);
+        return r.points;
+      })
+      .catch(() => null);
+  };
 
   // The session is over: the server decides whether it earns the review-session bonus.
   useEffect(() => {
-    if (item || finished.current) return;
+    if (item || finished.current || session.length === 0) return;
     finished.current = true;
-    if (results.size > 0) points?.celebrate();
-    setBonus('pending');
-    void finishReviewSession().then((r) => {
-      setBonus(r.points);
-      points?.apply(r.points, endRef.current);
-    });
-  }, [item, results.size, points]);
+    if (answeredRef.current > 0) points?.celebrate();
+    setEnding(true);
+    void claim().finally(() => setEnding(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item, session.length]);
+
+  // Leaving part-way (another page, another tab, closing the app) still counts the reviews answered so far.
+  useEffect(() => {
+    const away = () => {
+      if (document.visibilityState === 'hidden' && !finished.current && answeredRef.current > claimedAt.current) void claim();
+    };
+    document.addEventListener('visibilitychange', away);
+    return () => {
+      document.removeEventListener('visibilitychange', away);
+      if (!finished.current && answeredRef.current > claimedAt.current) void claim();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // A new question: tell keyboard and screen reader users where they are (not on first load).
+  useEffect(() => {
+    if (!moved.current) return;
+    if (item) counterRef.current?.focus({ preventScroll: false });
+    else doneTitleRef.current?.focus({ preventScroll: true });
+  }, [index, item]);
+
+  // "Review more": once the page has the next due questions, start a fresh round with them.
+  useEffect(() => {
+    if (!wantMore) return;
+    setWantMore(false);
+    const fresh = items.filter((i) => !results.has(i.view.id));
+    if (!fresh.length) return;
+    finished.current = false;
+    claimedAt.current = 0;
+    moved.current = false;
+    setSession(fresh);
+    setRound((n) => n + 1);
+    setIndex(0);
+    setResults(new Map());
+    setXp(0);
+    setBonus(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
+
+  const next = () => {
+    moved.current = true;
+    setIndex((i) => i + 1);
+  };
+
+  if (session.length === 0) return <>{empty}</>;
 
   if (!item) {
     const correct = [...results.values()].filter((o) => o === 'correct').length;
-    const bonusXp = bonus && bonus !== 'pending' ? bonus.gained : 0;
+    // What the session-end call earned: the session bonus, and the daily goal if that took today over it.
+    const bonusXp = bonus?.gained ?? 0;
+    const sessionBonus = !!bonus?.events.some((e) => e.kind === 'review-session');
     return (
-      <section ref={endRef} className="celebrate" aria-live="polite" aria-labelledby="review-done-title">
+      <section className="celebrate" aria-labelledby="review-done-title">
         <Spot name="review" size={120} />
-        <h2 id="review-done-title">Review done</h2>
+        <h2 id="review-done-title" ref={doneTitleRef} tabIndex={-1}>
+          Review done
+        </h2>
         <p className="muted" style={{ marginTop: 6 }}>
-          {correct} of {results.size} correct. Right answers move further apart; anything you missed comes back tomorrow.
+          {results.size === 0
+            ? 'You skipped these for now. They’ll wait for you.'
+            : `${correct} of ${results.size} correct. Right answers move further apart; anything you missed comes back tomorrow.`}
         </p>
         <ul className="celebrate-stats">
           {showPoints && (
             <li className="celebrate-stat" data-kind="xp">
-              <span className="celebrate-num">{bonus === 'pending' ? '…' : `+${xp + bonusXp}`}</span>
-              <span className="celebrate-label">XP earned{bonusXp > 0 ? ' · session bonus' : ''}</span>
+              <span className="celebrate-num">{ending ? '…' : `+${xp + bonusXp}`}</span>
+              <span className="celebrate-label">XP earned{sessionBonus ? ' · session bonus' : ''}</span>
             </li>
           )}
           {results.size > 0 && (
@@ -65,6 +150,19 @@ export function ReviewSession({ items }: { items: Array<{ view: QuestionView; so
           <Link href="/" className="btn btn-primary btn-lg">
             Back to home
           </Link>
+          {session.length >= batchSize && (
+            <button
+              type="button"
+              className="btn btn-ghost"
+              aria-busy={wantMore || undefined}
+              onClick={() => {
+                setWantMore(true);
+                router.refresh();
+              }}
+            >
+              Review more
+            </button>
+          )}
         </div>
       </section>
     );
@@ -74,23 +172,23 @@ export function ReviewSession({ items }: { items: Array<{ view: QuestionView; so
     <div className="stack">
       <div className="row row-between">
         <div className="stack stack-xs">
-          <p className="small muted tabular">
-            Question {index + 1} of {items.length}
+          <p className="small muted tabular review-count" ref={counterRef} tabIndex={-1}>
+            Question {index + 1} of {session.length}
           </p>
           <ol className="review-progress" aria-hidden="true">
-            {items.map((it, i) => {
+            {session.map((it, i) => {
               const o = results.get(it.view.id);
               const state = i === index ? 'current' : o ? (DOT_STATE[o] ?? 'partial') : i < index ? 'skipped' : undefined;
               return <li key={it.view.id} data-state={state} />;
             })}
           </ol>
         </div>
-        <Link href={item.sourceHref} className="tiny">
+        <Link href={item.sourceHref} className="tiny tap-pad">
           From: {item.sourceTitle}
         </Link>
       </div>
       <QuestionCard
-        key={item.view.id}
+        key={`${round}:${item.view.id}`}
         view={item.view}
         context="review"
         signedIn
@@ -99,9 +197,16 @@ export function ReviewSession({ items }: { items: Array<{ view: QuestionView; so
         onPoints={(p) => setXp((n) => n + p.gained)}
       />
       <div className="row" style={{ justifyContent: 'flex-end' }}>
-        <button type="button" className={`btn ${answered ? 'btn-primary' : 'btn-ghost'}`} onClick={() => setIndex((i) => i + 1)}>
-          {answered ? (index + 1 < items.length ? 'Next question' : 'See summary') : 'Skip'} <ArrowRightIcon />
-        </button>
+        {/* Different keys: a pressed Next must not turn into Skip under the student's finger (or focus). */}
+        {answered ? (
+          <button key={`next-${index}`} type="button" className="btn btn-primary" onClick={next}>
+            {index + 1 < session.length ? 'Next question' : 'See summary'} <ArrowRightIcon />
+          </button>
+        ) : (
+          <button key={`skip-${index}`} type="button" className="btn btn-ghost" onClick={next}>
+            Skip <ArrowRightIcon />
+          </button>
+        )}
       </div>
     </div>
   );

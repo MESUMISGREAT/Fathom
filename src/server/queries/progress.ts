@@ -155,7 +155,7 @@ function objectiveMastery(objectiveId: string, ev: Evidence, now: Date) {
     lessonIds,
     questionCount: questionIds.length,
     studied: statuses.some((s) => s.status === 'completed'),
-    /** Objectives with no lessons or questions yet are left out of topic states. */
+    /** Has lessons or questions. Objectives without are Not started, which keeps their topic from being Secure. */
     hasContent: lessonIds.length > 0 || questionIds.length > 0,
     mastery,
   };
@@ -195,10 +195,10 @@ export const getSubjectProgress = cache(async (userId: string | null, versionId:
       for (const o of topic.objectives) {
         const { lessonIds: lIds, questionCount, studied, hasContent, mastery } = objectiveMastery(o.id, ev, now);
         objectives.set(o.id, { id: o.id, code: o.code, topicId: topic.id, level: section.level, lessonIds: lIds, questionCount, studied, mastery });
-        if (hasContent) {
-          tp.withContent++;
-          states.push(mastery.state);
-        }
+        if (hasContent) tp.withContent++;
+        // Every objective counts towards the topic's state: one without lessons yet is Not started, so a
+        // topic is Secure only when all of it is (docs/design/fun-and-points.md §4, Topic secured).
+        states.push(mastery.state);
         if (studied) tp.studied++;
         if (mastery.state === 'secure') tp.secure++;
         if (mastery.lastActivity && (!lastActive || mastery.lastActivity > lastActive)) lastActive = mastery.lastActivity;
@@ -228,9 +228,11 @@ export const getSubjectProgress = cache(async (userId: string | null, versionId:
 
 /**
  * The mastery state of each given topic for one student, by exactly the
- * rules getSubjectProgress uses (TopicProgress.state). Takes the database
- * handle so the points engine can call it inside its transaction; not
- * cached. Unknown topics and topics with no content are 'not-started'.
+ * rules getSubjectProgress uses (TopicProgress.state): every objective in
+ * the topic counts, and one with no content yet is Not started, so 'secure'
+ * means every objective is Secure. Takes the database handle so the points
+ * engine can call it inside its transaction; not cached. Unknown topics and
+ * topics with no content are 'not-started'.
  */
 export async function getTopicStates(db: Db, userId: string, topicIds: readonly string[], now = new Date()): Promise<Map<string, MasteryState>> {
   const ids = [...new Set(topicIds)];
@@ -256,7 +258,7 @@ export async function getTopicStates(db: Db, userId: string, topicIds: readonly 
   const states = new Map<string, MasteryState[]>();
   for (const o of objs) {
     const m = objectiveMastery(o.id, ev, now);
-    if (m.hasContent) states.set(o.topicId, [...(states.get(o.topicId) ?? []), m.mastery.state]);
+    states.set(o.topicId, [...(states.get(o.topicId) ?? []), m.mastery.state]);
   }
   for (const [topicId, list] of states) out.set(topicId, aggregateState(list));
   return out;
