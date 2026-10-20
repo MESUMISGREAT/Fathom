@@ -6,20 +6,29 @@
  * shows a small celebration with the XP the server awarded.
  */
 import Link from 'next/link';
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Outcome } from '@/domain/answers/check';
-import type { PointsResult } from '@/domain/points';
+import { XP_LABELS, type PointsResult, type XpKind } from '@/domain/points';
 import { recordLessonStep } from '@/server/actions/study';
 import { updatePreferences } from '@/server/actions/settings';
-import { ArrowRightIcon, CheckCircleIcon, ChevronLeftIcon, StarIcon } from '@/components/icons';
+import { ArrowRightIcon, CheckCircleIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, StarIcon, TrophyIcon } from '@/components/icons';
 import { Spot } from '@/components/art/Spot';
 import { prefersReducedMotion, usePoints } from '@/components/points/PointsProvider';
+import { XpChip } from '@/components/points/XpChips';
 import { LessonCheckContext } from './context';
 
 export interface PlayerStep {
   content: ReactNode;
   questionIds: string[];
 }
+
+export interface LessonLink {
+  href: string;
+  title: string;
+}
+
+/** What the completion card lists, in this order (answers come first, from this visit). */
+const BREAKDOWN: XpKind[] = ['lesson', 'perfect', 'topic', 'combo', 'daily-goal'];
 
 export function LessonPlayer({
   lessonId,
@@ -33,6 +42,8 @@ export function LessonPlayer({
   topicLabel,
   title,
   next,
+  prev,
+  topicLessons,
   header,
   bookmark,
 }: {
@@ -46,7 +57,11 @@ export function LessonPlayer({
   topicHref: string;
   topicLabel: string;
   title: string;
-  next?: { href: string; title: string };
+  /** The next and previous lessons in syllabus order. */
+  next?: LessonLink;
+  prev?: LessonLink;
+  /** Every lesson in this topic, in order, for the lesson menu (`done`: finished by this student). */
+  topicLessons: Array<LessonLink & { id: string; done: boolean }>;
   header: ReactNode;
   bookmark?: ReactNode;
 }) {
@@ -60,8 +75,15 @@ export function LessonPlayer({
   const [justRevealed, setJustRevealed] = useState<number | null>(null);
   const [answerXp, setAnswerXp] = useState(0);
   const [lessonPoints, setLessonPoints] = useState<PointsResult | null | 'pending'>(null);
+  /** Checks never answered: the lesson's XP waits for them (the server says how many). */
+  const [unanswered, setUnanswered] = useState(0);
+  const [saveFailed, setSaveFailed] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuId = useId();
+  const menuRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
   const endRef = useRef<HTMLElement>(null);
+  const doneTitleRef = useRef<HTMLHeadingElement>(null);
   const allQuestions = useMemo(() => steps.flatMap((s) => s.questionIds), [steps]);
   const points = usePoints();
   const showPoints = signedIn && (points?.prefs.showPoints ?? true);
@@ -99,12 +121,25 @@ export function LessonPlayer({
     el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
   }, [justRevealed]);
 
-  // Bring the celebration into view once it renders.
+  // Bring the celebration into view once it renders, and put focus on its heading (the button pressed has gone).
   useEffect(() => {
     if (!justFinished) return;
-    // Aligned to the bottom (above the phone tab bar, see scroll-margin), leaving room above for a badge toast.
+    doneTitleRef.current?.focus({ preventScroll: true });
     endRef.current?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'end' });
   }, [justFinished]);
+
+  // The lesson menu closes on Escape or a click outside it.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
+    const onDown = (e: PointerEvent) => !menuRef.current?.contains(e.target as Node) && setMenuOpen(false);
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onDown);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onDown);
+    };
+  }, [menuOpen]);
 
   function skip(i: number) {
     setDone((m) => {
@@ -114,17 +149,28 @@ export function LessonPlayer({
     });
   }
 
+  function save() {
+    setLessonPoints('pending');
+    setSaveFailed(false);
+    recordLessonStep({ lessonId, stepReached: total - 1, stepCount: total, completed: true })
+      .then((r) => {
+        if (!r.saved) setSaveFailed(true);
+        setLessonPoints(r.points);
+        setUnanswered(r.unanswered);
+        points?.apply(r.points);
+      })
+      .catch(() => {
+        setLessonPoints(null);
+        setSaveFailed(true);
+      });
+  }
+
   function finish() {
     setCompleted(true);
     setJustFinished(true);
     points?.celebrate();
     points?.play('complete');
-    if (!signedIn) return;
-    setLessonPoints('pending');
-    void recordLessonStep({ lessonId, stepReached: total - 1, stepCount: total, completed: true }).then((r) => {
-      setLessonPoints(r.points);
-      points?.apply(r.points, endRef.current);
-    });
+    if (signedIn) save();
   }
 
   function switchMode(m: 'steps' | 'full') {
@@ -137,8 +183,17 @@ export function LessonPlayer({
   const firstCorrect = answeredFirst.filter((o) => o === 'correct').length;
   const progressPct = completed ? 100 : Math.round((100 * (visible - (stepDone(lastIndex) ? 0 : 0.5))) / total);
   const accuracy = allQuestions.length ? Math.round((100 * firstCorrect) / allQuestions.length) : 0;
-  const lessonGained = lessonPoints && lessonPoints !== 'pending' ? lessonPoints.gained : 0;
-  const perfect = lessonPoints && lessonPoints !== 'pending' && lessonPoints.events.some((e) => e.kind === 'perfect');
+  const result = lessonPoints && lessonPoints !== 'pending' ? lessonPoints : null;
+  const lessonGained = result?.gained ?? 0;
+  const topicDone = !!result?.events.some((e) => e.kind === 'topic');
+  const breakdown = [
+    ...(answerXp > 0 ? [{ key: 'answers', label: 'Answers', amount: answerXp }] : []),
+    ...BREAKDOWN.flatMap((kind) => {
+      const amount = (result?.events ?? []).filter((e) => e.kind === kind).reduce((n, e) => n + e.amount, 0);
+      return amount > 0 ? [{ key: kind, label: XP_LABELS[kind], amount }] : [];
+    }),
+  ];
+  const currentIndex = topicLessons.findIndex((l) => l.id === lessonId);
 
   return (
     <LessonCheckContext.Provider value={ctx}>
@@ -148,8 +203,49 @@ export function LessonPlayer({
             <Link href={topicHref} className="icon-btn" aria-label={`Back to ${topicLabel}`}>
               <ChevronLeftIcon />
             </Link>
-            <div className="grow stack stack-xs" style={{ minWidth: 0 }}>
-              <span className="lesson-top-title">{title}</span>
+            <div className="grow stack stack-xs lesson-menu" style={{ minWidth: 0 }} ref={menuRef}>
+              <button
+                type="button"
+                className="lesson-top-title"
+                aria-expanded={menuOpen}
+                aria-controls={menuId}
+                onClick={() => setMenuOpen((o) => !o)}
+              >
+                <span className="lesson-top-name">{title}</span>
+                {topicLessons.length > 1 && currentIndex >= 0 && (
+                  <span className="lesson-top-count tabular">
+                    {currentIndex + 1}/{topicLessons.length}
+                  </span>
+                )}
+                <ChevronRightIcon aria-hidden="true" className="lesson-top-chevron" />
+                <span className="visually-hidden">: lessons in {topicLabel}</span>
+              </button>
+              {menuOpen && (
+                <div className="lesson-menu-panel" id={menuId}>
+                  <p className="tiny muted">Lessons in {topicLabel}</p>
+                  <ol>
+                    {topicLessons.map((l) => (
+                      <li key={l.id}>
+                        <Link
+                          href={l.href}
+                          aria-current={l.id === lessonId ? 'page' : undefined}
+                          data-done={l.done || (l.id === lessonId && completed) || undefined}
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          <span className="lesson-menu-mark" aria-hidden="true">
+                            {l.done || (l.id === lessonId && completed) ? <CheckIcon /> : null}
+                          </span>
+                          <span className="grow">{l.title}</span>
+                          {(l.done || (l.id === lessonId && completed)) && <span className="visually-hidden">(finished)</span>}
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                  <Link href={topicHref} className="small tap-pad" onClick={() => setMenuOpen(false)}>
+                    Topic overview
+                  </Link>
+                </div>
+              )}
               <div
                 className="meter meter-thin"
                 role="progressbar"
@@ -171,6 +267,10 @@ export function LessonPlayer({
               </button>
             </div>
             {bookmark}
+            {/* On phones the lesson bar replaces the top bar, so the XP total lives here. */}
+            <span className="lesson-top-xp">
+              <XpChip />
+            </span>
           </div>
         </div>
 
@@ -243,9 +343,16 @@ export function LessonPlayer({
           )}
 
           {completed && (
-            <section ref={endRef} className="celebrate" aria-live="polite" aria-labelledby="lesson-done-title">
+            <section ref={endRef} className="celebrate" aria-labelledby="lesson-done-title">
               <Spot name="done" size={116} />
-              <h2 id="lesson-done-title">Lesson complete</h2>
+              <h2 id="lesson-done-title" ref={doneTitleRef} tabIndex={-1}>
+                Lesson complete
+              </h2>
+              {justFinished && topicDone && (
+                <p className="celebrate-topic">
+                  <TrophyIcon aria-hidden="true" /> {topicLabel} finished
+                </p>
+              )}
               <p className="muted" style={{ marginTop: 6, maxWidth: '46ch', marginInline: 'auto' }}>
                 {!justFinished
                   ? 'You finished this one before. Answer the checks again any time.'
@@ -260,7 +367,7 @@ export function LessonPlayer({
                   {showPoints && (
                     <li className="celebrate-stat" data-kind="xp">
                       <span className="celebrate-num">{lessonPoints === 'pending' ? '…' : `+${answerXp + lessonGained}`}</span>
-                      <span className="celebrate-label">XP earned{perfect ? ' · perfect lesson' : ''}</span>
+                      <span className="celebrate-label">XP earned</span>
                     </li>
                   )}
                   {answeredFirst.length > 0 && (
@@ -272,6 +379,30 @@ export function LessonPlayer({
                     </li>
                   )}
                 </ul>
+              )}
+              {justFinished && showPoints && breakdown.length > 1 && (
+                <ul className="celebrate-breakdown" aria-label="What the XP was for">
+                  {breakdown.map((b) => (
+                    <li key={b.key}>
+                      {b.label} <strong className="tabular">+{b.amount}</strong>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {justFinished && signedIn && unanswered > 0 && (
+                <p className="celebrate-note">
+                  Finished, with {unanswered === 1 ? 'one check' : `${unanswered} checks`} skipped. Answer {unanswered === 1 ? 'it' : 'them'} any time to
+                  earn this lesson&rsquo;s XP.
+                </p>
+              )}
+              {saveFailed && (
+                <p className="celebrate-note" role="alert">
+                  That didn&rsquo;t save. Check your connection and{' '}
+                  <button type="button" className="link-btn" onClick={save}>
+                    try again
+                  </button>
+                  .
+                </p>
               )}
               {!signedIn && (
                 <p className="guest-xp" style={{ justifyContent: 'center', marginTop: 14 }}>
@@ -287,11 +418,37 @@ export function LessonPlayer({
                     <span className="btn-next-title">Next: {next.title}</span> <ArrowRightIcon />
                   </Link>
                 ) : null}
-                <Link href={topicHref} className="btn btn-ghost">
+                <Link href={topicHref} className={`btn ${next ? 'btn-ghost' : 'btn-primary btn-lg'}`}>
                   Back to {topicLabel}
                 </Link>
               </div>
             </section>
+          )}
+
+          {/* Always there: step back or skip ahead without finishing (the completion card has the big Next). */}
+          {(prev || next) && (
+            <nav className="lesson-nav" aria-label="Previous and next lessons">
+              {prev ? (
+                <Link href={prev.href} className="lesson-nav-link" data-dir="prev">
+                  <ChevronLeftIcon aria-hidden="true" />
+                  <span className="lesson-nav-text">
+                    <span className="lesson-nav-kicker">Previous lesson</span>
+                    <span className="lesson-nav-title">{prev.title}</span>
+                  </span>
+                </Link>
+              ) : (
+                <span />
+              )}
+              {next && (
+                <Link href={next.href} className="lesson-nav-link" data-dir="next">
+                  <span className="lesson-nav-text">
+                    <span className="lesson-nav-kicker">Next lesson</span>
+                    <span className="lesson-nav-title">{next.title}</span>
+                  </span>
+                  <ChevronRightIcon aria-hidden="true" />
+                </Link>
+              )}
+            </nav>
           )}
         </div>
       </div>

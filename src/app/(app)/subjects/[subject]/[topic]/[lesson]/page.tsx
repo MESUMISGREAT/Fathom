@@ -45,11 +45,26 @@ export default async function LessonPage({ params }: { params: Params }) {
   const savedSet = new Set(saved.map((b) => `${b.kind}:${b.targetId}`));
   const progress = progressRow[0];
 
-  // Next lesson in syllabus order.
+  // Previous and next lessons in syllabus order, and this topic's lessons for the lesson menu.
   const ordered = await lessonsInOrder(subject.version.id);
   const idx = ordered.findIndex((l) => l.id === lesson.id);
-  const nextLesson = idx >= 0 ? ordered[idx + 1] : undefined;
-  const next = nextLesson ? { href: lessonHref(subject.slug, nextLesson.topic.code, nextLesson.id), title: nextLesson.title } : undefined;
+  const link = (l: (typeof ordered)[number] | undefined) => (l ? { href: lessonHref(subject.slug, l.topic.code, l.id), title: l.title } : undefined);
+  const next = idx >= 0 ? link(ordered[idx + 1]) : undefined;
+  const prev = idx > 0 ? link(ordered[idx - 1]) : undefined;
+  const inTopic = ordered.filter((l) => l.topic.id === topic.id);
+  const finishedInTopic = user
+    ? new Set(
+        (
+          await db
+            .select({ lessonId: lessonProgress.lessonId, completedAt: lessonProgress.completedAt })
+            .from(lessonProgress)
+            .where(and(eq(lessonProgress.userId, user.id), inArray(lessonProgress.lessonId, inTopic.map((l) => l.id))))
+        )
+          .filter((r) => r.completedAt)
+          .map((r) => r.lessonId),
+      )
+    : new Set<string>();
+  const topicLessons = inTopic.map((l) => ({ id: l.id, ...link(l)!, done: finishedInTopic.has(l.id) }));
 
   // Split blocks into steps that each end with a check.
   const views = new Map(questions.map((q) => [q.id, q]));
@@ -107,6 +122,8 @@ export default async function LessonPage({ params }: { params: Params }) {
         topicLabel={`${topic.code} ${topic.title}`}
         title={lesson.title}
         next={next}
+        prev={prev}
+        topicLessons={topicLessons}
         header={
           <header className="lesson-head">
             <Crumbs
