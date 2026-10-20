@@ -24,7 +24,8 @@ test('a student signs up, studies a lesson step by step and sees progress', asyn
   await signUp(page);
   await addMaths(page);
   await page.getByRole('link', { name: 'Done, take me to my dashboard' }).click();
-  await expect(page.getByRole('heading', { name: 'Welcome back, Ayesha' })).toBeVisible();
+  // Nothing studied yet, so not "welcome back".
+  await expect(page.getByRole('heading', { name: 'Welcome, Ayesha' })).toBeVisible();
   await page.getByRole('link', { name: 'Start lesson' }).click();
   await expect(page).toHaveURL(new RegExp(`${LESSON}$`));
 

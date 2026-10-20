@@ -442,7 +442,11 @@ function SampleCheck() {
   return (
     <div className="sample" aria-hidden="true">
       <span className="sample-badge">
-        <BadgeArt id="first-steps" size={64} />
+        <BadgeArt id="first-steps" size={40} />
+        <span className="sample-badge-text">
+          <span className="sample-badge-kicker">Badge unlocked</span>
+          <span className="sample-badge-name">First Steps</span>
+        </span>
       </span>
       <div className="sample-head">
         <span className="badge badge-accent">Quick check</span>

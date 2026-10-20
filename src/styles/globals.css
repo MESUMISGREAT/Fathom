@@ -2073,11 +2073,35 @@ a.list-row:active {
 .sample-foot .xp-pop {
   animation: none;
 }
+/* A labelled badge toast, as the student will see it (not an unexplained sticker). */
 .sample-badge {
   position: absolute;
   right: -14px;
-  bottom: -22px;
-  transform: rotate(10deg);
+  bottom: -24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 0 0 1.5px var(--border-strong), 0 3px 0 var(--ledge), var(--shadow-md);
+  transform: rotate(3deg);
+}
+.sample-badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  text-align: left;
+}
+.sample-badge-kicker {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: var(--yellow-ink);
+}
+.sample-badge-name {
+  font-family: var(--font-display);
+  font-weight: 760;
+  font-size: 0.9375rem;
 }
 @media (max-width: 520px) {
   .sample-badge {
@@ -2239,19 +2263,10 @@ a.subject-card:active {
     border-right: 1.5px solid var(--border);
   }
 }
-.auth-motifs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  max-width: 440px;
+.auth-scene {
+  width: min(100%, 380px);
+  height: auto;
 }
-.auth-motif {
-  padding: 16px;
-  border-radius: 20px;
-  background: var(--hue-soft);
-}
-.auth-motif:nth-child(2) { transform: translateY(18px); }
-.auth-motif:nth-child(4) { transform: translateY(18px); }
 .auth-side-line {
   max-width: 34ch;
   margin-top: 12px;
@@ -3876,6 +3891,17 @@ fieldset:disabled .option[data-mark='wrong']:hover {
 }
 .panel-yellow {
   background: var(--yellow-soft);
+}
+/* Yellow tints go grey-brown on navy: in dark mode the achievement panel is a navy card with a gold edge instead. */
+:root[data-theme='dark'] .panel-yellow {
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--yellow) 55%, transparent), inset 0 4px 0 var(--yellow);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .panel-yellow {
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--yellow) 55%, transparent), inset 0 4px 0 var(--yellow);
+  }
 }
 .panel-lavender {
   background: var(--lavender-soft);

@@ -1,7 +1,34 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { signUp } from './helpers';
 
 const LESSON = '/subjects/mathematics/1-1/fixture-squares';
+/** Topic 1.2's only lesson, with one MCQ check (option A is right). */
+const FUNCTIONS = '/subjects/mathematics/1-2/fixture-functions';
+
+/** Answers whatever check this is (right where the fixture makes that easy), and waits for the feedback. */
+async function answerAny(q: Locator) {
+  await expect(q.locator('form[data-hydrated]')).toBeAttached();
+  if (await q.getByLabel('Your expression').count()) await q.getByLabel('Your expression').fill('x(x+4)');
+  else if (await q.getByLabel('Blank 1').count()) await q.getByLabel('Blank 1').fill('no');
+  else if (await q.getByLabel('a =').count()) {
+    await q.getByLabel('a =').fill('3');
+    await q.getByLabel('b =').fill('-4');
+  } else await q.locator('.option').first().click();
+  await q.getByRole('button', { name: 'Check answer' }).click();
+  await expect(q.locator('.feedback')).toBeVisible();
+}
+
+/** Signs up and finishes the one-check functions lesson (right first time): First Steps, Flawless and Topic Finisher together. */
+async function finishFunctions(page: Page) {
+  await page.goto(FUNCTIONS);
+  const q = page.locator('.question').first();
+  await expect(q.locator('form[data-hydrated]')).toBeAttached();
+  await q.locator('.option').first().click();
+  await q.getByRole('button', { name: 'Check answer' }).click();
+  await expect(q.getByText('Correct', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Finish lesson' }).click();
+  return page.locator('.celebrate');
+}
 
 /** The first question in the fixture lesson is an MCQ (difficulty 1); option A is right, B is wrong. */
 async function answerFirst(page: import('@playwright/test').Page, option: number) {
@@ -30,7 +57,8 @@ test('answering the same question right again earns nothing', async ({ page }) =
   await page.goto(LESSON);
   const q = await answerFirst(page, 0);
   await expect(q.locator('.xp-pop')).toHaveText('+10 XP');
-  await q.getByRole('button', { name: 'Try again' }).click();
+  // After a right answer, answering again is a quiet option, not the main action.
+  await q.getByRole('button', { name: 'Answer again' }).click();
   await q.locator('.option').nth(0).click();
   await q.getByRole('button', { name: 'Check answer' }).click();
   await expect(q.getByText('Correct', { exact: true })).toBeVisible();
@@ -39,31 +67,80 @@ test('answering the same question right again earns nothing', async ({ page }) =
   await expect(page.locator('.xp-card .xp-card-total')).toHaveText('10 XP');
 });
 
-test('finishing a lesson shows the celebration with XP, accuracy and the next lesson', async ({ page }) => {
+test('finishing past skipped checks holds the lesson XP back, and says so', async ({ page }) => {
   await signUp(page);
   await page.goto(LESSON);
   await page.getByRole('button', { name: 'All', exact: true }).click();
   await answerFirst(page, 0);
   await page.getByRole('button', { name: 'Finish without answering' }).click();
   const done = page.locator('.celebrate');
-  await expect(done.getByRole('heading', { name: 'Lesson complete' })).toBeVisible();
-  // The answer, the lesson and (the fixture topic has one lesson) the topic and daily goal, all from the server.
-  const xp = done.locator('.celebrate-stat[data-kind="xp"] .celebrate-num');
-  await expect(xp).toHaveText(/^\+\d+$/);
-  const earned = Number((await xp.textContent())!.slice(1));
-  expect(earned).toBeGreaterThanOrEqual(30);
-  // A new student earned everything here, so the header total matches.
-  await expect(page.locator('.xp-card .xp-card-total')).toHaveText(`${earned} XP`);
-  await expect(done.getByText('XP earned')).toBeVisible();
+  await expect(done.getByRole('heading', { name: 'Lesson complete' })).toBeFocused();
+  // Only the answer earned XP: the lesson's 20 waits for the six skipped checks.
+  await expect(done.locator('.celebrate-stat[data-kind="xp"] .celebrate-num')).toHaveText('+10');
+  await expect(done.getByText('Finished, with 6 checks skipped.')).toBeVisible();
   await expect(done.getByText(/right first time \(1\/7\)/)).toBeVisible();
   await expect(done.getByRole('link', { name: /Next: Fixture lesson on functions/ })).toBeVisible();
-  // The first-lesson badge arrives as a small, dismissible toast; rewards that arrive together queue up, none is dropped.
+  await expect(page.locator('.toaster .toast')).toHaveCount(0); // no First Steps for clicking through
+  await expect(page.locator('.xp-card .xp-card-total')).toHaveText('10 XP');
+});
+
+test('finishing a lesson celebrates the XP, the topic and the badges, queued', async ({ page }) => {
+  await signUp(page);
+  const done = await finishFunctions(page);
+  await expect(done.getByRole('heading', { name: 'Lesson complete' })).toBeVisible();
+  await expect(done.getByText('1.2 Functions finished')).toBeVisible();
+  // Answer 10, lesson 20, perfect 10, topic 50 and the daily goal 10, all from the server, with a breakdown.
+  const xp = done.locator('.celebrate-stat[data-kind="xp"] .celebrate-num');
+  await expect(xp).toHaveText('+100');
+  await expect(done.getByRole('list', { name: 'What the XP was for' })).toContainText('Topic finished +50');
+  await expect(page.locator('.xp-card .xp-card-total')).toHaveText('100 XP');
+  await expect(done.getByText(/right first time \(1\/1\)/)).toBeVisible();
+  // Rewards that arrive together queue up, badges first; none is dropped.
   const toast = page.locator('.toaster .toast', { hasText: 'First Steps' });
   await expect(toast).toBeVisible();
   await expect(toast).toContainText('You finished your first lesson.');
+  await expect(page.locator('.toaster .toast')).toHaveCount(2);
   await toast.getByRole('button', { name: /Dismiss/ }).click();
   await expect(toast).toHaveCount(0);
   await expect(page.locator('.toaster .toast', { hasText: 'Topic Finisher' })).toBeVisible();
+  // On a wide screen they live at the foot of the sidebar, never over the lesson.
+  const box = await page.locator('.toaster').boundingBox();
+  const main = await page.locator('main').boundingBox();
+  expect(box && main && box.x + box.width <= main.x).toBe(true);
+});
+
+test('a review session ends on its summary, with the session bonus', async ({ page }) => {
+  await signUp(page);
+  await page.goto(LESSON);
+  await page.getByRole('button', { name: 'All', exact: true }).click();
+  // Five different checks answered in the lesson (the self-marked ones are left out)…
+  for (const i of [0, 1, 2, 4]) await answerAny(page.locator('.question').nth(i));
+  const spot = page.locator('.question').nth(5);
+  await spot.locator('.option').nth(1).click();
+  await spot.getByRole('button', { name: 'Check answer' }).click();
+  await expect(spot.locator('.feedback')).toBeVisible();
+  // …then made due (a test-only hook; real reviews come back days later).
+  const res = await page.request.post('/api/e2e/age-reviews');
+  expect(await res.json()).toEqual({ due: 5 });
+
+  await page.goto('/review');
+  for (let n = 1; n <= 5; n++) {
+    await expect(page.locator('.review-count')).toHaveText(`Question ${n} of 5`);
+    await answerAny(page.locator('.question').first());
+    const next = page.getByRole('button', { name: n < 5 ? 'Next question' : 'See summary' });
+    await next.focus();
+    await page.keyboard.press('Enter');
+    // Focus moves to the new question's counter, so a second Enter can't skip it.
+    if (n < 5) await expect(page.locator('.review-count')).toBeFocused();
+  }
+  const done = page.locator('.celebrate');
+  await expect(done.getByRole('heading', { name: 'Review done' })).toBeFocused();
+  await expect(done.locator('.celebrate-stat[data-kind="xp"] .celebrate-label')).toHaveText('XP earned · session bonus');
+  await expect(page.locator('.toaster .toast', { hasText: 'Recall Rookie' })).toBeVisible();
+  // The server refreshes the page after paying the bonus; the summary stays.
+  await page.waitForLoadState('networkidle');
+  await expect(done.getByRole('heading', { name: 'Review done' })).toBeVisible();
+  await expect(page.getByText('Nothing to review right now')).toHaveCount(0);
 });
 
 test('the achievements page lists locked badges with how to earn them', async ({ page }) => {
@@ -107,24 +184,32 @@ test('turning Show points off hides every XP and badge surface', async ({ page }
   await expect(page.locator('.xp-card .xp-card-total')).toHaveText('10 XP');
 });
 
-test('@phone the XP chip sits in the top bar and toasts stay above the tab bar', async ({ page }) => {
+test('@phone lessons have one bar with the XP chip, and toasts stay in the chrome', async ({ page }) => {
   await signUp(page);
-  await page.goto(LESSON);
-  const chip = page.locator('.topbar .xp-chip');
+  await page.goto(FUNCTIONS);
+  // In a lesson the lesson bar replaces the top bar, and carries the XP chip.
+  await expect(page.locator('.topbar')).toBeHidden();
+  const chip = page.locator('.lesson-top .xp-chip');
   await expect(chip).toBeVisible();
-  await page.getByRole('button', { name: 'All', exact: true }).click();
-  await answerFirst(page, 0);
-  await expect(chip.locator('.xp-chip-total')).toHaveText('10');
-  await page.getByRole('button', { name: 'Finish without answering' }).click();
+  const done = await finishFunctions(page);
+  await expect(chip.locator('.xp-chip-total')).toHaveText('100');
   const toast = page.locator('.toaster .toast', { hasText: 'First Steps' });
   await expect(toast).toBeVisible();
   // One at a time on a phone.
   await expect(page.locator('.toaster .toast')).toHaveCount(1);
   await page.waitForTimeout(800); // let the celebration finish scrolling into place
+  const inChrome = async () => {
+    const t = await page.locator('.toaster .toast').first().boundingBox();
+    const bar = await page.locator('.lesson-top').boundingBox();
+    const tabs = await page.locator('.tabbar').boundingBox();
+    // Over the lesson bar, never below it: the lesson, its questions and the celebration stay uncovered.
+    expect(t && bar && tabs && t.y + t.height <= bar.y + bar.height + 1 && t.y + t.height <= tabs.y).toBe(true);
+  };
+  await inChrome();
+  const end = await done.boundingBox();
   const t = await toast.boundingBox();
-  const bar = await page.locator('.tabbar').boundingBox();
-  const end = await page.locator('.celebrate').boundingBox();
-  expect(t && bar && t.y + t.height <= bar.y).toBe(true);
-  // Never on top of the card the student just finished.
-  expect(t && end && (t.y + t.height <= end.y || t.y >= end.y + end.height)).toBe(true);
+  expect(t && end && t.y + t.height <= end.y).toBe(true);
+  // Still in the chrome after scrolling back up to the question.
+  await page.locator('.question').first().scrollIntoViewIfNeeded();
+  await inChrome();
 });
