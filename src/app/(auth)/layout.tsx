@@ -5,13 +5,6 @@ import { LogoMark } from '@/components/icons';
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className="auth-wrap" id="main">
-      <div className="auth-deco" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-        <i />
-        <i />
-      </div>
       <div className="auth-card stack stack-lg">
         <Link href="/" className="brand" style={{ alignSelf: 'center' }}>
           <span className="brand-mark">

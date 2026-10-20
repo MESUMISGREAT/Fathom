@@ -75,80 +75,83 @@ levels unlocks a title: 1 Curious, 5 Explorer, 10 Problem Solver, 15 Sharp Mind,
 * If today has no activity yet but yesterday was a streak day (or frozen), the streak is
   still alive and the UI says "Do one question to keep your 6-day streak".
 
-## 4. Badges
+## 4. More rewards for real progress, and badges
 
-Computed by a pure function over the user's stats after each XP-earning action; newly
-earned badges are stored and returned so the UI can celebrate them once.
+Extra XP events (all once-only, enforced by the same unique index):
+
+| Event | XP | Limit |
+| --- | --- | --- |
+| Topic finished (every core lesson in a syllabus topic finished) | 50 | once per topic |
+| Review session finished (5+ review answers in one local day) | 15 | once per day |
+| Comeback: a question you got wrong before, now right in review | +5 | once per question |
+| Topic secured (every objective in the topic reaches Secure) | 30 | once per topic |
+
+All amounts live in one config object in `src/domain/points.ts`; nothing is hard-coded
+elsewhere. Exam-practice rewards (timed papers) wait until exam practice exists.
+
+Badges (data-driven catalogue; locked badges show how to earn them):
 
 | Badge | Earned for |
 | --- | --- |
-| First Spark | first correct answer |
-| Off the Blocks | first lesson finished |
+| First Steps | first lesson finished |
+| Recall Rookie | first review session finished |
+| Getting Warmer | first comeback (wrong before, right in review) |
 | Flawless | first perfect lesson |
-| Combo ×5, Combo ×10 | a 5- and a 10-answer combo |
-| On a Roll, Week Warrior, Unstoppable | 3-, 7- and 30-day streaks |
-| Ten Down, Half Century | 10 and 50 lessons finished |
+| On a Roll / In the Zone | 5- and 10-answer combos |
+| Topic Finisher | first topic with every lesson finished |
+| Curious Mind | lessons finished in 5 different topics |
+| Concept Master | first topic fully Secure |
+| Comeback Arc | a topic that had objectives in Needs revision becomes fully Secure |
+| Consistency Club | studied on 5 different days (any days, not in a row) |
+| Ten Down / Half Century | 10 and 50 lessons finished |
 | Memory Keeper | 25 due reviews answered correctly |
 | Goal Getter | daily goal reached on 5 different days |
 | Explorer | lessons finished in 2 or more subjects |
-| 500 Club, 2.5K Club | 500 and 2,500 XP |
+| 500 Club / 2.5K Club | 500 and 2,500 XP |
 
-## 5. Visual redesign
+No streak badges and no streak warnings: the home page shows **days studied this week**
+(dots), and the longest run is a quiet stat on the progress page.
 
-Personality: bright, bouncy, friendly and confident. Playful for 16–19 year olds, not
-childish. Think of a mix of Duolingo's energy, Brilliant's clarity and Apple's polish.
+Preferences (Settings, all persisted): **Show points and badges** (on by default; off hides
+every XP chip, pop, toast and badge surface, while XP is still recorded so turning it back
+on shows real history), daily goal (Off, 20, 50, 100, 150), celebrations, sounds (off by
+default).
 
-* **Colour:** a vivid primary (violet-indigo) plus one strong hue per subject (Maths
-  violet, Computer Science cyan, Physics orange, Chemistry green), gold for XP and a flame
-  orange for streaks. Soft tinted backgrounds, not flat grey. Dark mode is a deep
-  blue-black with the same hues tuned for contrast. All text meets WCAG AA.
-* **Buttons that look pressable:** chunky rounded buttons with a darker bottom edge
-  (a solid "3D" shadow). They lift slightly on hover and press down instantly on pointer
-  down (translateY plus a shrinking edge). Thick, clear focus rings.
-* **Answer options** are big tappable cards with a keycap letter, a bold selected state, a
-  green pop when correct and a gentle shake when wrong (no shake with reduced motion).
-* **Cards and tiles:** generous radius, colourful subject tiles with an icon, a progress
-  ring and a bold title.
-* **Motion:** short, springy, interruptible; pops on XP, a filling bar, confetti when a
-  lesson is finished. Off with `prefers-reduced-motion` or the Celebrations setting.
-* **Typography:** a rounded, friendly face for headings (system `ui-rounded` where
-  available), tight tracking on large text, comfortable body leading.
-* **Sounds (optional):** tiny synthesised blips via the Web Audio API for correct, wrong,
-  combo and lesson complete. No audio files. Off by default.
+## 5. Visual identity (supersedes earlier drafts)
 
-Where it appears:
+Goal: the simplicity of a great learning tool with the personality of a well-made consumer
+app. Human, art-directed, recognisable without the logo. Not a SaaS template.
 
-* **Top bar / tab bar:** streak flame with day count, today's XP against the goal as a
-  small ring, level badge.
-* **Answer feedback:** "+15 XP" pop, combo counter ("Combo ×3"), badge and level-up toasts.
-* **Lesson finished:** a celebration card with confetti, XP earned, accuracy, and a big
-  "Next lesson" button.
-* **Home:** greeting, daily goal ring, streak with the last 7 days as dots, level progress,
-  a big "Continue" button, latest badges.
-* **Progress:** level and title, XP for the last 14 days as bars, badge gallery (locked
-  badges shown greyed with how to earn them).
-* **Settings:** daily goal, celebrations on/off, sounds on/off.
-
-## 6. Brand direction (update from the student brief)
-
-The first redesign brief was not bold enough. The current site reads as a corporate
-website. Students are used to TikTok-level stimulation; Fathom must look **polished and
-really fun**, so that opening it feels like opening a game, not a school portal.
-
-* **Redesign everything, including the logo**: a new wordmark and app icon, and an
-  original **mascot** with a few expressions (happy, thinking, cheering, sleepy) that
-  appears on the home page, empty states, loading, the lesson celebration and level-ups.
-  It must be original, not a look-alike of any existing brand's mascot.
-* **A real display font with personality**, self-hosted (font files in the repo, OFL
-  licence) so it looks the same on Windows, Android, Mac and iPhone. `ui-rounded` falls
-  back to Segoe UI on Windows, which looks corporate.
-* **Bold, saturated colour**, gradients and illustration where they add joy: subject
-  tiles, headers, badges, the celebration. Chunky 3D buttons, sticker-like cards,
-  playful shapes, bouncy micro-interactions.
-* **Fun around the learning, calm inside it.** The lesson reading area and the question
-  itself stay clean and easy to focus on (ADHD-friendly). The fun lives in the chrome,
-  the feedback, the rewards and the transitions.
-* Still polished and accessible: consistent spacing, crisp SVGs, WCAG AA contrast in
-  light and dark, reduced-motion respected.
-
-The chosen direction and its assets are in `docs/design/brand/` (see `brand.md`).
+* **Palette:** warm cream / off-white backgrounds; deep navy text; **cobalt** for primary
+  actions and interactive elements; **coral** for energy and key highlights; **soft
+  yellow** for achievements and tips; **mint/green** for correct and completed; **lavender
+  or pink** as a secondary accent. Each subject has its own accent (Maths coral, Computer
+  Science mint, Physics cobalt-sky, Chemistry lavender-pink). Colour is used for
+  hierarchy, never everywhere at once, never alone to carry meaning. AA contrast in light
+  and dark (dark = deep navy, not black).
+* **Avoid:** generic purple gradients, glassmorphism, everything-in-a-white-rounded-card,
+  identical section layouts, purposeless blobs or floating shapes, emoji as icons,
+  oversized empty heroes, decorative charts, marketing copy.
+* **Type:** a distinctive, highly readable pairing, self-hosted (OFL files in the repo,
+  `next/font/local`), the same on Windows, Android, Mac and iPhone.
+* **Icons and illustration:** one coherent icon style (extend `src/components/icons.tsx`);
+  small purposeful SVG illustrations (subject motifs, empty states, lesson complete, badge
+  art). New logo: wordmark and mark.
+* **Interaction:** every interactive element has distinct hover, pressed, selected, focus,
+  disabled and loading states; transitions 150–250 ms; small lifts or presses only on
+  interactive things; nothing decorative reacts to hover. Touch targets ≥ 44 px; hover
+  effects have touch/focus equivalents; `prefers-reduced-motion` removes movement.
+* **Feedback:** correct → brief positive message, mint state, "+N XP" pop; incorrect →
+  gentle contrasting colour (not alarm red), the explanation, and a clear Try again.
+  Badge unlocks: a small toast with the badge art, name and what was achieved; never
+  full-screen, never covering the question; dismissible.
+* **Home:** a welcome line that reacts to context ("Two reviews waiting", "Picking up
+  Functions"), a prominent Continue card, colourful subject tiles with motifs and
+  progress, the next recommendation, XP and level progress, days studied this week, recent
+  unlocks. Varied composition, not a grid of identical cards.
+* **Lessons:** strong hierarchy; definitions, formulas, worked examples, exam tips,
+  misconceptions and takeaways each get a distinct, consistent treatment; subject colour
+  shows where you are; clear progress; easy previous/next and topic navigation; finished
+  lessons look satisfyingly done; questions feel part of the lesson. The reading area stays
+  calm: fun lives around the learning, not on top of it.
+* **Copy:** short, natural, specific. No slogans.

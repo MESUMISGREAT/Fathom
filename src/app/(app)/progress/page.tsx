@@ -43,9 +43,9 @@ export default async function ProgressPage() {
               const pct = (n: number) => (s.objectives ? Math.round((100 * n) / s.objectives) : 0);
               const started = tree.flatMap((sec) => sec.topics).filter((tp) => progress.topics.get(tp.id)?.state !== 'not-started');
               return (
-                <section key={subject.code} aria-labelledby={`p-${subject.code}`} className="card card-pad stack stack-lg subject-card" data-subject={subject.code}>
-                  <div className="row row-nowrap" style={{ ['--gap' as string]: '16px' }}>
-                    <SubjectTile code={subject.code} large />
+                <section key={subject.code} aria-labelledby={`p-${subject.code}`} className="card card-pad stack stack-lg">
+                  <div className="row row-nowrap">
+                    <SubjectTile code={subject.code} />
                     <div className="grow">
                       <h2 id={`p-${subject.code}`}>{subject.name}</h2>
                       <p className="tiny faint">
@@ -53,30 +53,22 @@ export default async function ProgressPage() {
                       </p>
                     </div>
                   </div>
-                  <div className="grid-4">
-                    <div className="stat-tile" style={{ ['--hue' as string]: `var(--sub-${subject.code})` }}>
-                      <div className="stat">
-                        <span className="stat-value">{pct(s.studied)}%</span>
-                        <span className="stat-label">objectives studied ({s.studied}/{s.objectives})</span>
-                      </div>
+                  <div className="row" style={{ ['--gap' as string]: '36px' }}>
+                    <div className="stat">
+                      <span className="stat-value">{pct(s.studied)}%</span>
+                      <span className="stat-label">objectives studied ({s.studied}/{s.objectives})</span>
                     </div>
-                    <div className="stat-tile" style={{ ['--hue' as string]: 'var(--st-practising)' }}>
-                      <div className="stat">
-                        <span className="stat-value">{pct(s.practised)}%</span>
-                        <span className="stat-label">practised</span>
-                      </div>
+                    <div className="stat">
+                      <span className="stat-value">{pct(s.practised)}%</span>
+                      <span className="stat-label">practised</span>
                     </div>
-                    <div className="stat-tile" style={{ ['--hue' as string]: 'var(--st-secure)' }}>
-                      <div className="stat">
-                        <span className="stat-value">{pct(s.secure)}%</span>
-                        <span className="stat-label">secure</span>
-                      </div>
+                    <div className="stat">
+                      <span className="stat-value">{pct(s.secure)}%</span>
+                      <span className="stat-label">secure</span>
                     </div>
-                    <div className="stat-tile" style={{ ['--hue' as string]: 'var(--st-revision)' }}>
-                      <div className="stat">
-                        <span className="stat-value">{s.needsRevision}</span>
-                        <span className="stat-label">need revision</span>
-                      </div>
+                    <div className="stat">
+                      <span className="stat-value">{s.needsRevision}</span>
+                      <span className="stat-label">need revision</span>
                     </div>
                   </div>
                   <MasteryBar counts={counts} total={s.objectives} />

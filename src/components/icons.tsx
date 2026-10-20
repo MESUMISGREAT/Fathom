@@ -74,27 +74,6 @@ export const CircleIcon = make('circle', <circle cx="12" cy="12" r="8.5" />);
 export const DotsIcon = make('dots', <><circle cx="12" cy="12" r="8.5" /><path d="M8.5 12h.01M12 12h.01M15.5 12h.01" /></>);
 export const RefreshIcon = make('refresh', <><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3" /><path d="M19.5 4.5v4h-4" /></>);
 
-// Points and celebration glyphs. Paths with a class can be filled from CSS (see fun.css).
-export const BoltIcon = make('bolt', <path className="icon-fill" d="M13.2 2.8 5 13.2a.6.6 0 0 0 .5 1H11l-1 7a.3.3 0 0 0 .5.2L19 11a.6.6 0 0 0-.5-1H13l1-7a.3.3 0 0 0-.8-.2z" />);
-export const FlameIcon = make(
-  'flame',
-  <>
-    <path className="flame-outer" d="M12 2.8c.5 3.1 2.5 4.7 4 6.6 1.2 1.5 2.1 3.2 2.1 5.3A6.1 6.1 0 0 1 12 20.9a6.1 6.1 0 0 1-6.1-6.2c0-2.4 1.1-4.2 2.6-5.6.1 1.7.8 3 2.1 3.6-.6-3.6.3-7.1 1.4-9.9z" />
-    <path className="flame-inner" d="M12 20.9a2.7 2.7 0 0 1-2.7-2.8c0-1.6 1.4-2.7 2.7-4.1 1.3 1.4 2.7 2.5 2.7 4.1a2.7 2.7 0 0 1-2.7 2.8z" />
-  </>,
-);
-export const SnowflakeIcon = make('snowflake', <><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9" /><path d="m9.5 4.5 2.5 1.8 2.5-1.8M9.5 19.5l2.5-1.8 2.5 1.8M4.6 10.4l2.8-.7-.9-2.9M19.4 13.6l-2.8.7.9 2.9M6.5 17.2l.9-2.9-2.8-.7M17.5 6.8l-.9 2.9 2.8.7" /></>);
-export const TrophyIcon = make('trophy', <><path d="M7.5 4h9v5.5a4.5 4.5 0 0 1-9 0z" /><path d="M7.5 6H5a2.5 2.5 0 0 0 3 3.8M16.5 6H19a2.5 2.5 0 0 1-3 3.8" /><path d="M12 14v3.5M8.5 20.5h7M9.5 17.5h5v3h-5z" /></>);
-export const StarIcon = make('star', <path className="icon-fill" d="m12 3.6 2.5 5.1 5.6.8-4 4 .9 5.6-5-2.7-5 2.7.9-5.6-4-4 5.6-.8z" />);
-export const MedalIcon = make('medal', <><path d="M8 3.5h3l1.6 4.2M16 3.5h-3l-1.1 2.9" /><circle cx="12" cy="14.5" r="5.8" /><path d="m12 11.6.9 1.9 2 .3-1.4 1.4.3 2-1.8-1-1.8 1 .3-2-1.4-1.4 2-.3z" /></>);
-export const CrownIcon = make('crown', <><path d="M4 8.5 8 12l4-6.5 4 6.5 4-3.5-1.6 9.5H5.6z" /><path d="M6 20.5h12" /></>);
-export const RocketIcon = make('rocket', <><path d="M12.5 15.5 8.5 11.5c1.6-4.7 5-7.9 11-8 0 6-3.3 9.4-8 11z" /><path d="M8.5 11.5 5 11l2.5-3.5 4 .5M12.5 15.5l.5 3.5 3.5-2.5-.5-4" /><path d="M6.5 15.5c-1.5.6-2.3 2-2.5 4 2-.2 3.4-1 4-2.5" /><circle cx="15" cy="9" r="1.4" /></>);
-export const HeartIcon = make('heart', <path d="M12 20s-7.5-4.4-7.5-10.1A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.6C19.5 15.6 12 20 12 20z" />);
-export const SpeakerIcon = make('speaker', <><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" /><path d="M15.5 9.2a4 4 0 0 1 0 5.6M18 6.8a7.4 7.4 0 0 1 0 10.4" /></>);
-export const SpeakerOffIcon = make('speaker-off', <><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" /><path d="m16 9.5 5 5M21 9.5l-5 5" /></>);
-export const ChevronUpIcon = make('chevron-up', <path d="m6 14.5 6-6 6 6" />);
-export const CalendarIcon = make('calendar', <><rect x="4" y="5" width="16" height="15.5" rx="2.5" /><path d="M4 9.5h16M8.5 3v4M15.5 3v4" /></>);
-
 // Subject glyphs
 export const SigmaIcon = make('sigma', <path d="M17.5 5.5h-11l6 6.5-6 6.5h11" />);
 export const ChipIcon = make('chip', <><rect x="7" y="7" width="10" height="10" rx="1.5" /><path d="M10 10h4v4h-4z" /><path d="M10 3.5V7M14 3.5V7M10 17v3.5M14 17v3.5M3.5 10H7M3.5 14H7M17 10h3.5M17 14h3.5" /></>);

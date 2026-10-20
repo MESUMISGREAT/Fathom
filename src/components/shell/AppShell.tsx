@@ -22,14 +22,6 @@ import {
 } from '@/components/icons';
 import { NavLink } from './NavLink';
 
-function NavIcon({ hue, children }: { hue: string; children: ReactNode }) {
-  return (
-    <span className="nav-icon" style={{ ['--hue' as string]: hue }}>
-      {children}
-    </span>
-  );
-}
-
 function Brand() {
   return (
     <Link href="/" className="brand" aria-label={`${BRAND} home`}>
@@ -53,29 +45,29 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
         <Brand />
         <nav className="nav-group" aria-label="Study">
           <NavLink href="/" className="nav-item">
-            <NavIcon hue="var(--primary)"><HomeIcon /></NavIcon> Home
+            <HomeIcon /> Home
           </NavLink>
           <NavLink href="/subjects" className="nav-item">
-            <NavIcon hue="var(--sub-9618)"><BookIcon /></NavIcon> Subjects
+            <BookIcon /> Subjects
           </NavLink>
           {user && (
             <NavLink href="/review" className="nav-item">
-              <NavIcon hue="var(--flame-text)"><RepeatIcon /></NavIcon> Review {due}
+              <RepeatIcon /> Review {due}
             </NavLink>
           )}
           <NavLink href="/search" className="nav-item">
-            <NavIcon hue="var(--sub-9709)"><SearchIcon /></NavIcon> Search
+            <SearchIcon /> Search
           </NavLink>
           {user && (
             <>
               <NavLink href="/progress" className="nav-item">
-                <NavIcon hue="var(--good)"><ChartIcon /></NavIcon> Progress
+                <ChartIcon /> Progress
               </NavLink>
               <NavLink href="/saved" className="nav-item">
-                <NavIcon hue="var(--xp-text)"><BookmarkIcon /></NavIcon> Saved
+                <BookmarkIcon /> Saved
               </NavLink>
               <NavLink href="/history" className="nav-item">
-                <NavIcon hue="var(--sub-9618)"><ClockIcon /></NavIcon> History
+                <ClockIcon /> History
               </NavLink>
             </>
           )}
@@ -83,30 +75,30 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
         <nav className="nav-group" aria-label="Coming next">
           <div className="nav-label">Coming next</div>
           <NavLink href="/practice" className="nav-item">
-            <NavIcon hue="var(--text-3)"><PencilIcon /></NavIcon> Exam practice <span className="badge soon">Soon</span>
+            <PencilIcon /> Exam practice <span className="badge soon">Soon</span>
           </NavLink>
           <NavLink href="/tutor" className="nav-item">
-            <NavIcon hue="var(--text-3)"><ChatIcon /></NavIcon> AI tutor <span className="badge soon">Soon</span>
+            <ChatIcon /> AI tutor <span className="badge soon">Soon</span>
           </NavLink>
         </nav>
         <div className="nav-spacer" />
         <nav className="nav-group" aria-label="Account">
           <NavLink href="/about" className="nav-item">
-            <NavIcon hue="var(--accent)"><InfoIcon /></NavIcon> How it works
+            <InfoIcon /> How it works
           </NavLink>
           {user && (user.role === 'editor' || user.role === 'admin') && (
             <NavLink href="/reports" className="nav-item">
-              <NavIcon hue="var(--bad)"><FlagIcon /></NavIcon> Content reports
+              <FlagIcon /> Content reports
             </NavLink>
           )}
           {user ? (
             <>
               <NavLink href="/settings" className="nav-item">
-                <NavIcon hue="var(--text-3)"><SettingsIcon /></NavIcon> Settings
+                <SettingsIcon /> Settings
               </NavLink>
               <form action={logOut}>
-                <button type="submit" className="nav-item" style={{ width: '100%', background: 'none', cursor: 'pointer' }}>
-                  <NavIcon hue="var(--text-3)"><LogoutIcon /></NavIcon> Log out
+                <button type="submit" className="nav-item" style={{ width: '100%', border: 0, background: 'none', cursor: 'pointer' }}>
+                  <LogoutIcon /> Log out
                 </button>
               </form>
             </>
@@ -146,31 +138,31 @@ export function AppShell({ user, dueCount, children }: { user: SessionUser | nul
 
       <nav className="tabbar" aria-label="Main navigation">
         <NavLink href="/" className="tab">
-          <span className="tab-icon"><HomeIcon /></span> Home
+          <HomeIcon /> Home
         </NavLink>
         <NavLink href="/subjects" className="tab">
-          <span className="tab-icon"><BookIcon /></span> Subjects
+          <BookIcon /> Subjects
         </NavLink>
         {user ? (
           <NavLink href="/review" className="tab">
-            <span className="tab-icon"><RepeatIcon /></span> Review {due}
+            <RepeatIcon /> Review {due}
           </NavLink>
         ) : (
           <NavLink href="/search" className="tab">
-            <span className="tab-icon"><SearchIcon /></span> Search
+            <SearchIcon /> Search
           </NavLink>
         )}
         {user ? (
           <NavLink href="/progress" className="tab">
-            <span className="tab-icon"><ChartIcon /></span> Progress
+            <ChartIcon /> Progress
           </NavLink>
         ) : (
           <NavLink href="/about" className="tab">
-            <span className="tab-icon"><InfoIcon /></span> About
+            <InfoIcon /> About
           </NavLink>
         )}
         <NavLink href="/more" className="tab">
-          <span className="tab-icon"><GridIcon /></span> More
+          <GridIcon /> More
         </NavLink>
       </nav>
     </div>
