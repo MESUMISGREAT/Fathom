@@ -185,6 +185,8 @@ export const users = pgTable('users', {
   /** Confetti and pops (also off whenever the browser asks for reduced motion). */
   celebrations: boolean('celebrations').notNull().default(true),
   sounds: boolean('sounds').notNull().default(false),
+  /** Show XP, combos, goals and badges. Off hides them in the UI; XP is still recorded. */
+  showPoints: boolean('show_points').notNull().default(true),
   ageConfirmedAt: timestamp('age_confirmed_at', { withTimezone: true }).notNull(),
   createdAt: createdAt(),
 });
@@ -281,8 +283,9 @@ export const bookmarks = pgTable(
  * Every XP award. The unique index on (user_id, kind, source_id) enforces the
  * limits in docs/design/fun-and-points.md at the database level, so a
  * double-submitted answer can never award twice. `source_id` is the question
- * id (answer), `questionId@dueAt` (review), the lesson id (lesson, perfect),
- * the local day (daily-goal) or the id of the answer that reached the
+ * id (answer, comeback), `questionId@dueAt` (review), the lesson id
+ * (lesson, perfect), the topic id (topic, topic-secure), the local day
+ * (daily-goal, review-session) or the id of the answer that reached the
  * milestone (combo).
  */
 export const xpEvents = pgTable(
@@ -309,6 +312,24 @@ export const userBadges = pgTable(
     earnedAt: timestamp('earned_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [primaryKey({ columns: [t.userId, t.badgeId] })],
+);
+
+/**
+ * Topics that slipped and came back, for the Comeback Arc badge. A row is
+ * written the first time an answer shows the topic with objectives in Needs
+ * revision (mastery rules in src/domain/mastery.ts); `secured_at` is set
+ * when the topic is next fully Secure. Only the first comeback per topic is
+ * kept, like the badge it feeds.
+ */
+export const topicRecoveries = pgTable(
+  'topic_recoveries',
+  {
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    topicId: text('topic_id').notNull(),
+    slippedAt: timestamp('slipped_at', { withTimezone: true }).notNull(),
+    securedAt: timestamp('secured_at', { withTimezone: true }),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.topicId] })],
 );
 
 export type User = typeof users.$inferSelect;

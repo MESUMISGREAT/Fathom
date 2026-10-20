@@ -22,12 +22,13 @@ export async function GET() {
       timeZone: t.users.timeZone,
       celebrations: t.users.celebrations,
       sounds: t.users.sounds,
+      showPoints: t.users.showPoints,
       createdAt: t.users.createdAt,
       ageConfirmedAt: t.users.ageConfirmedAt,
     })
     .from(t.users)
     .where(eq(t.users.id, user.id));
-  const [enrollments, lessonProgress, attempts, reviewItems, bookmarks, xpEvents, badges] = await Promise.all([
+  const [enrollments, lessonProgress, attempts, reviewItems, bookmarks, xpEvents, badges, topicRecoveries] = await Promise.all([
     db.select({ subjectCode: t.enrollments.subjectCode, versionId: t.enrollments.versionId, targetLevel: t.enrollments.targetLevel, createdAt: t.enrollments.createdAt }).from(t.enrollments).where(eq(t.enrollments.userId, user.id)),
     db.select({ lessonId: t.lessonProgress.lessonId, stepReached: t.lessonProgress.stepReached, stepCount: t.lessonProgress.stepCount, openedAt: t.lessonProgress.openedAt, lastViewedAt: t.lessonProgress.lastViewedAt, completedAt: t.lessonProgress.completedAt }).from(t.lessonProgress).where(eq(t.lessonProgress.userId, user.id)),
     db.select({ questionId: t.attempts.questionId, response: t.attempts.response, outcome: t.attempts.outcome, score: t.attempts.score, selfAssessed: t.attempts.selfAssessed, context: t.attempts.context, createdAt: t.attempts.createdAt }).from(t.attempts).where(eq(t.attempts.userId, user.id)),
@@ -39,9 +40,13 @@ export async function GET() {
       .where(eq(t.xpEvents.userId, user.id))
       .orderBy(asc(t.xpEvents.createdAt)),
     db.select({ badgeId: t.userBadges.badgeId, earnedAt: t.userBadges.earnedAt }).from(t.userBadges).where(eq(t.userBadges.userId, user.id)).orderBy(asc(t.userBadges.earnedAt)),
+    db
+      .select({ topicId: t.topicRecoveries.topicId, slippedAt: t.topicRecoveries.slippedAt, securedAt: t.topicRecoveries.securedAt })
+      .from(t.topicRecoveries)
+      .where(eq(t.topicRecoveries.userId, user.id)),
   ]);
   const body = JSON.stringify(
-    { exportedAt: new Date().toISOString(), profile, enrollments, lessonProgress, attempts, reviewItems, bookmarks, xpEvents, badges },
+    { exportedAt: new Date().toISOString(), profile, enrollments, lessonProgress, attempts, reviewItems, bookmarks, xpEvents, badges, topicRecoveries },
     null,
     2,
   );

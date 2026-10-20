@@ -8,8 +8,10 @@ import Link from 'next/link';
 import { useContext, useEffect, useId, useRef, useState, useTransition, type FormEvent } from 'react';
 import type { QuestionView } from '@/content/rendered';
 import type { StudentResponse } from '@/domain/answers/check';
+import type { PointsResult } from '@/domain/points';
 import { submitAnswer, type SubmitResult } from '@/server/actions/study';
-import { AlertIcon, CheckCircleIcon, HalfCircleIcon, RefreshIcon, XCircleIcon } from '@/components/icons';
+import { AlertIcon, BoltIcon, CheckCircleIcon, CheckIcon, HalfCircleIcon, RefreshIcon, StarFilledIcon, StarIcon, XCircleIcon } from '@/components/icons';
+import { usePoints } from '@/components/points/PointsProvider';
 import { BookmarkButton } from '@/components/study/BookmarkButton';
 import { LessonCheckContext } from '@/components/lesson/context';
 import { ReportProblem } from '@/components/study/ReportProblem';
@@ -25,6 +27,14 @@ const TITLES: Record<string, { text: string; Icon: typeof CheckCircleIcon }> = {
 
 const DIFFICULTY = ['', 'Recall', 'Apply', 'Stretch'];
 
+const CHEERS = ['Nice.', 'Spot on.', 'That’s it.', 'Nailed it.', 'Exactly.'];
+/** A short, varied "well done", the same every time for a given question. */
+function cheer(id: string) {
+  let h = 0;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return CHEERS[h % CHEERS.length]!;
+}
+
 export function QuestionCard({
   view,
   context,
@@ -33,6 +43,7 @@ export function QuestionCard({
   signedIn,
   onFinal,
   sourceHref,
+  onPoints,
 }: {
   view: QuestionView;
   context: 'lesson' | 'review';
@@ -43,8 +54,13 @@ export function QuestionCard({
   onFinal?: (questionId: string, outcome: SubmitResult['result']['outcome']) => void;
   /** Link back to the lesson (used in review). */
   sourceHref?: string;
+  /** Called with the server's points result for each recorded answer. */
+  onPoints?: (points: PointsResult) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
+  const cardRef = useRef<HTMLElement>(null);
+  const pointsCtx = usePoints();
+  const showPoints = signedIn && (pointsCtx?.prefs.showPoints ?? true);
   const promptId = useId();
   const [result, setResult] = useState<SubmitResult | null>(null);
   const [response, setResponse] = useState<StudentResponse | null>(null);
@@ -90,9 +106,13 @@ export function QuestionCard({
       const res = await submitAnswer({ questionId: view.id, response: r, self, context });
       setResult(res);
       const o = res.result.outcome;
+      if (res.points) {
+        pointsCtx?.apply(res.points, cardRef.current);
+        onPoints?.(res.points);
+      }
       if (o !== 'invalid' && o !== 'self-check') {
         onFinal?.(view.id, o);
-        lesson?.report(view.id, o);
+        lesson?.report(view.id, o, res.points ?? null);
       }
     });
   }
@@ -131,7 +151,7 @@ export function QuestionCard({
   };
 
   return (
-    <article className="question" id={`q-${view.id.replace(/[^a-z0-9-]/gi, '-')}`} data-outcome={locked ? outcome : undefined} aria-labelledby={promptId}>
+    <article ref={cardRef} className="question" id={`q-${view.id.replace(/[^a-z0-9-]/gi, '-')}`} data-outcome={locked ? outcome : undefined} aria-labelledby={promptId}>
       <div className="q-meta">
         <span className="badge badge-accent">{view.label}</span>
         <span className="tiny faint grow">
@@ -237,7 +257,7 @@ export function QuestionCard({
 
         {!locked && (
           <div className="q-actions" style={{ marginTop: 14 }}>
-            <button type="submit" className="btn btn-primary" disabled={pending}>
+            <button type="submit" className="btn btn-primary" disabled={pending} aria-busy={pending || undefined}>
               {pending ? 'Checking…' : 'Check answer'}
             </button>
             {result?.result.outcome === 'invalid' && (
@@ -260,6 +280,7 @@ export function QuestionCard({
             onSelf={(self) => response && send(response, self)}
             onRetry={retry}
             signedIn={signedIn}
+            showPoints={showPoints}
             sourceHref={sourceHref}
           />
         )}
@@ -277,6 +298,7 @@ function Feedback({
   onSelf,
   onRetry,
   signedIn,
+  showPoints,
   sourceHref,
 }: {
   view: QuestionView;
@@ -287,6 +309,7 @@ function Feedback({
   onSelf: (self: { correct?: boolean; points?: number[] }) => void;
   onRetry: () => void;
   signedIn: boolean;
+  showPoints: boolean;
   sourceHref?: string;
 }) {
   const r = result.result;
@@ -297,9 +320,11 @@ function Feedback({
   return (
     <div className="feedback" data-outcome={r.outcome}>
       <div className="feedback-title">
-        <t.Icon /> {t.text}
-        {r.selfAssessed && <span className="badge" style={{ marginLeft: 6 }}>self-marked</span>}
+        <t.Icon /> <span>{t.text}</span>
+        {r.outcome === 'correct' && <span className="feedback-cheer">{cheer(view.id)}</span>}
+        {r.selfAssessed && <span className="badge">self-marked</span>}
       </div>
+      {showPoints && result.points && <XpGain points={result.points} />}
       {r.note && <p className="small" style={{ marginBottom: 8 }}>{r.note}</p>}
 
       {reveal.expected && r.outcome !== 'correct' && (
@@ -314,7 +339,8 @@ function Feedback({
           <ol className="small" style={{ margin: 0, paddingLeft: '1.3em' }}>
             {reveal.blanks.map((b, i) => (
               <li key={i}>
-                {b} {r.parts[i] && (r.parts[i]!.correct ? '✓' : '')}
+                {b}{' '}
+                {r.parts[i]?.correct && <CheckIcon title="you had this one" width={16} height={16} style={{ display: 'inline', verticalAlign: '-3px', color: 'var(--good)' }} />}
               </li>
             ))}
           </ol>
@@ -393,8 +419,11 @@ function Feedback({
             </Link>
           )}
           {!signedIn && (
-            <span className="tiny faint">
-              <Link href="/signup">Create an account</Link> to save your progress.
+            <span className="guest-xp">
+              <StarIcon aria-hidden="true" />
+              <span>
+                <Link href="/signup">Sign up to keep your XP</Link> and your progress.
+              </span>
             </span>
           )}
         </div>
@@ -403,6 +432,28 @@ function Feedback({
         <div style={{ marginTop: 10 }}>
           <ReportProblem kind="question" targetId={view.id} />
         </div>
+      )}
+    </div>
+  );
+}
+
+/** "+15 XP" with what it was for, and the combo when one is running. Only what the server returned. */
+function XpGain({ points }: { points: PointsResult }) {
+  if (points.gained <= 0) return null;
+  const reasons = points.events.filter((e) => e.kind !== 'combo').map((e) => e.label);
+  const bonus = points.events.find((e) => e.kind === 'combo');
+  return (
+    <div className="xp-gain">
+      <span className="xp-pop">
+        <StarFilledIcon aria-hidden="true" />+{points.gained} XP
+      </span>
+      {reasons.length > 0 && <span className="xp-reason">{reasons.join(' · ')}</span>}
+      {points.combo >= 2 && (
+        <span className="combo-chip">
+          <BoltIcon aria-hidden="true" />
+          Combo ×{points.combo}
+          {bonus ? ` · +${bonus.amount}` : ''}
+        </span>
       )}
     </div>
   );

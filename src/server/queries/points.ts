@@ -14,8 +14,10 @@ import {
   badgeProgress,
   BADGES,
   computeStreak,
+  daysStudiedThisWeek,
   DEFAULT_DAILY_GOAL,
   getBadge,
+  isGoalMet,
   lastDays,
   levelFor,
   localDay,
@@ -34,7 +36,7 @@ export interface PointsDay {
   active: boolean;
   /** A missed day covered by a streak freeze. */
   frozen: boolean;
-  /** The daily-goal bonus was earned that day (today: XP has reached the current goal). */
+  /** The daily-goal bonus was earned that day (today: XP has reached the current goal; never with no goal). */
   goalMet: boolean;
   isToday: boolean;
 }
@@ -48,19 +50,29 @@ export interface EarnedBadge {
 }
 
 export interface PointsSettings {
+  /** XP per day; 0 means no goal (no goal ring, no goal bonus). */
   dailyGoal: number;
   timeZone: string;
   celebrations: boolean;
   sounds: boolean;
+  /** Off: hide XP, combos, goals and badges everywhere (XP is still recorded). */
+  showPoints: boolean;
 }
 
 export interface PointsSummary {
   totalXp: number;
   level: LevelInfo;
+  /** `goal` 0 means no goal, and then `goalMet` is always false. */
   today: { day: LocalDay; xp: number; goal: number; goalMet: boolean };
   streak: Streak;
   /** The last 7 local days, oldest first, ending today. */
   week: PointsDay[];
+  /**
+   * Days studied this week: the local days (YYYY-MM-DD) with XP in the
+   * current Monday–Sunday week, oldest first. For the "days studied this
+   * week" dots; weekOf(today.day) in @/domain/points gives all seven days.
+   */
+  daysThisWeek: LocalDay[];
   /** Most recent first, at most 3. */
   latestBadges: EarnedBadge[];
   badgeCount: number;
@@ -104,7 +116,13 @@ interface Loaded {
 async function load(db: Db, userId: string, now: Date): Promise<Loaded> {
   const [prefs, dayRows, badgeRows] = await Promise.all([
     db
-      .select({ dailyGoal: t.users.dailyGoal, timeZone: t.users.timeZone, celebrations: t.users.celebrations, sounds: t.users.sounds })
+      .select({
+        dailyGoal: t.users.dailyGoal,
+        timeZone: t.users.timeZone,
+        celebrations: t.users.celebrations,
+        sounds: t.users.sounds,
+        showPoints: t.users.showPoints,
+      })
       .from(t.users)
       .where(eq(t.users.id, userId)),
     db
@@ -122,7 +140,7 @@ async function load(db: Db, userId: string, now: Date): Promise<Loaded> {
       .where(eq(t.userBadges.userId, userId))
       .orderBy(desc(t.userBadges.earnedAt), t.userBadges.badgeId),
   ]);
-  const settings: PointsSettings = prefs[0] ?? { dailyGoal: DEFAULT_DAILY_GOAL, timeZone: 'UTC', celebrations: true, sounds: false };
+  const settings: PointsSettings = prefs[0] ?? { dailyGoal: DEFAULT_DAILY_GOAL, timeZone: 'UTC', celebrations: true, sounds: false, showPoints: true };
   const today = localDay(now, settings.timeZone);
   const byDay = new Map(dayRows.map((r) => [r.day, { xp: r.xp, goal: r.goal }]));
   const totalXp = dayRows.reduce((sum, r) => sum + r.xp, 0);
@@ -136,7 +154,7 @@ function daysView(l: Loaded, count: number): PointsDay[] {
     const d = l.byDay.get(day);
     const xp = d?.xp ?? 0;
     const isToday = day === l.today;
-    return { day, xp, active: !!d, frozen: frozen.has(day), goalMet: !!d?.goal || (isToday && xp >= l.settings.dailyGoal), isToday };
+    return { day, xp, active: !!d, frozen: frozen.has(day), goalMet: !!d?.goal || (isToday && isGoalMet(xp, l.settings.dailyGoal)), isToday };
   });
 }
 
@@ -145,7 +163,7 @@ function earnedView(b: { id: string; earnedAt: Date }): EarnedBadge {
   return { id: def.id as BadgeId, name: def.name, description: def.description, icon: def.icon, earnedAt: b.earnedAt };
 }
 
-/** For the top bar and home: XP, level, today against the goal, streak, the last 7 days, latest badges. */
+/** For the top bar and home: XP, level, today against the goal, streak, the last 7 days, days studied this week, latest badges. */
 export const getPointsSummary = cache(async (userId: string): Promise<PointsSummary> => {
   const db = await getDb();
   const l = await load(db, userId, new Date());
@@ -153,9 +171,10 @@ export const getPointsSummary = cache(async (userId: string): Promise<PointsSumm
   return {
     totalXp: l.totalXp,
     level: levelFor(l.totalXp),
-    today: { day: l.today, xp: todayXp, goal: l.settings.dailyGoal, goalMet: todayXp >= l.settings.dailyGoal },
+    today: { day: l.today, xp: todayXp, goal: l.settings.dailyGoal, goalMet: isGoalMet(todayXp, l.settings.dailyGoal) },
     streak: l.streak,
     week: daysView(l, 7),
+    daysThisWeek: daysStudiedThisWeek([...l.byDay.keys()], l.today),
     latestBadges: l.badges.slice(0, 3).map(earnedView),
     badgeCount: l.badges.length,
     settings: l.settings,
@@ -166,7 +185,7 @@ export const getPointsSummary = cache(async (userId: string): Promise<PointsSumm
 export const getPointsHistory = cache(async (userId: string): Promise<PointsHistory> => {
   const db = await getDb();
   const l = await load(db, userId, new Date());
-  const { stats } = await loadBadgeStats(db, userId, { totalXp: l.totalXp, longestStreak: l.streak.longest });
+  const { stats } = await loadBadgeStats(db, userId, { totalXp: l.totalXp });
   const earnedAt = new Map(l.badges.map((b) => [b.id, b.earnedAt]));
   const badges: BadgeStatus[] = BADGES.map((b) => {
     const at = earnedAt.get(b.id) ?? null;

@@ -89,6 +89,26 @@ Extra XP events (all once-only, enforced by the same unique index):
 All amounts live in one config object in `src/domain/points.ts`; nothing is hard-coded
 elsewhere. Exam-practice rewards (timed papers) wait until exam practice exists.
 
+How the server decides (all in `src/server/points.ts`, rules in `src/domain/points.ts`):
+
+* `xp_events.kind` gains `topic | review-session | comeback | topic-secure`. Source ids:
+  the topic id (`topic`, `topic-secure`), the local day (`review-session`), the question
+  id (`comeback`).
+* **Topic finished** is checked whenever a lesson is saved as finished: the lesson's topic
+  must have at least one core, non-archived lesson and all of them finished.
+* **Review session**: the review page calls `finishReviewSession()` when a session ends;
+  it pays when at least 5 *different* questions were answered on the review page today
+  (local day), right or wrong. Re-answering one question doesn't add to the count.
+* **Comeback**: an earlier attempt at the question was incorrect and this answer is fully
+  correct while the question is due (the scheduler's due date, as for review XP).
+* **Topic secured** and **Comeback Arc** use the progress page's mastery rules
+  (`src/domain/mastery.ts`, topic state = all objectives with content Secure). After every
+  answer the server compares the state of the question's topics before and after it. A
+  topic seen in Needs revision is remembered in `topic_recoveries (user_id, topic_id,
+  slipped_at, secured_at)`; `secured_at` is set when it is next fully Secure.
+* `users.show_points` (default true) stores the Show points and badges preference; a daily
+  goal of 0 means Off.
+
 Badges (data-driven catalogue; locked badges show how to earn them):
 
 | Badge | Earned for |

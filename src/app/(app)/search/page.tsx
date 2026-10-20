@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { search, type ResultKind, type SearchFilters } from '@/server/queries/search';
 import { listSubjects } from '@/server/queries/catalog';
-import { LevelBadge, PageHead } from '@/components/ui';
+import { EmptyState, LevelBadge, PageHead } from '@/components/ui';
 import { BookIcon, ListIcon, SearchIcon, TargetIcon, LayersIcon } from '@/components/icons';
 
 export const metadata: Metadata = { title: 'Search' };
@@ -47,8 +47,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           <SearchIcon />
           <input className="input" type="search" name="q" defaultValue={q} placeholder="Search…" aria-label="Search" autoFocus={!q} />
         </div>
-        <div className="row" style={{ ['--gap' as string]: '10px' }}>
-          <select className="select" name="subject" defaultValue={filters.subject ?? ''} aria-label="Subject" style={{ width: 'auto' }}>
+        <div className="filters">
+          <select className="select" name="subject" defaultValue={filters.subject ?? ''} aria-label="Subject">
             <option value="">All subjects</option>
             {subjects.map((s) => (
               <option key={s.code} value={s.code}>
@@ -56,27 +56,27 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               </option>
             ))}
           </select>
-          <select className="select" name="kind" defaultValue={filters.kind ?? ''} aria-label="Type of result" style={{ width: 'auto' }}>
+          <select className="select" name="kind" defaultValue={filters.kind ?? ''} aria-label="Type of result">
             {KINDS.map((k) => (
               <option key={k.key} value={k.key}>
                 {k.label}
               </option>
             ))}
           </select>
-          <select className="select" name="level" defaultValue={filters.level ?? ''} aria-label="Level" style={{ width: 'auto' }}>
+          <select className="select" name="level" defaultValue={filters.level ?? ''} aria-label="Level">
             <option value="">AS and A Level</option>
             <option value="AS">AS Level</option>
             <option value="A">A Level only</option>
           </select>
           {questionFilters && (
             <>
-              <select className="select" name="difficulty" defaultValue={sp.difficulty ?? ''} aria-label="Difficulty" style={{ width: 'auto' }}>
+              <select className="select" name="difficulty" defaultValue={sp.difficulty ?? ''} aria-label="Difficulty">
                 <option value="">Any difficulty</option>
                 <option value="1">Recall</option>
                 <option value="2">Apply</option>
                 <option value="3">Stretch</option>
               </select>
-              <select className="select" name="format" defaultValue={filters.format ?? ''} aria-label="Question type" style={{ width: 'auto' }}>
+              <select className="select" name="format" defaultValue={filters.format ?? ''} aria-label="Question type">
                 <option value="">Any question type</option>
                 {FORMATS.map(([k, label]) => (
                   <option key={k} value={k}>
@@ -90,27 +90,34 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             Search
           </button>
         </div>
-        {!questionFilters && <p className="tiny faint">Choose &ldquo;Questions&rdquo; to filter by difficulty and question type.</p>}
+        {!questionFilters && <p className="tiny muted">Choose &ldquo;Questions&rdquo; to filter by difficulty and question type.</p>}
       </form>
 
       <section aria-live="polite" style={{ marginTop: 28 }}>
-        {q && (
+        {q && results.length > 0 && (
           <p className="small muted" style={{ marginBottom: 12 }}>
-            {results.length === 0 ? `No results for “${q}”.` : `${results.length} result${results.length === 1 ? '' : 's'} for “${q}”`}
+            {`${results.length} result${results.length === 1 ? '' : 's'} for “${q}”`}
           </p>
         )}
+        {q && results.length === 0 && (
+          <EmptyState art="search" title={`No results for “${q}”`}>
+            <p>Try fewer words, a syllabus code like 1.2, or a different filter.</p>
+          </EmptyState>
+        )}
         {results.length > 0 && (
-          <ul className="list card" style={{ overflow: 'hidden' }}>
+          <ul className="list card result-list" style={{ overflow: 'hidden', padding: '4px 8px' }}>
             {results.map((r) => {
               const Icon = ICON[r.kind];
               return (
-                <li key={`${r.kind}:${r.id}`} style={{ borderTop: '1px solid var(--border)' }}>
-                  <Link href={r.href} className="list-row" style={{ padding: '14px 16px', alignItems: 'flex-start' }}>
-                    <Icon width={18} height={18} style={{ color: 'var(--text-3)', marginTop: 3, flex: 'none' }} />
+                <li key={`${r.kind}:${r.id}`} data-subject={r.subject.code}>
+                  <Link href={r.href} className="list-row" style={{ padding: '14px 10px', alignItems: 'flex-start' }}>
+                    <span className="row-glyph">
+                      <Icon />
+                    </span>
                     <span className="grow stack stack-xs">
-                      <span style={{ fontWeight: 600 }}>{r.title}</span>
+                      <span style={{ fontWeight: 700 }}>{r.title}</span>
                       <span className="small muted">{r.snippet}</span>
-                      <span className="row tiny faint" style={{ ['--gap' as string]: '8px' }}>
+                      <span className="row tiny muted" style={{ ['--gap' as string]: '8px' }}>
                         {KIND_LABEL[r.kind]} · {r.subject.name}
                         {r.code && r.kind !== 'objective' ? ` · ${r.code}` : ''}
                         <LevelBadge level={r.level} />

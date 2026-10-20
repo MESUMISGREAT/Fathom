@@ -29,7 +29,7 @@ export default async function TopicPage({ params }: { params: Params }) {
   const lessonTitle = new Map(topic.lessons.map((l) => [l.id, l.title]));
 
   return (
-    <div className="container-narrow">
+    <div className="container-narrow" data-subject={subject.code}>
       <header className="page-head">
         <Crumbs
           items={[
@@ -44,7 +44,7 @@ export default async function TopicPage({ params }: { params: Params }) {
         </div>
         <div className="row row-between" style={{ alignItems: 'flex-start' }}>
           <h1 className="grow">
-            <span className="faint tabular">{topic.code}</span> {topic.title}
+            <span className="tabular" style={{ color: 'var(--hue)' }}>{topic.code}</span> {topic.title}
           </h1>
           {user && tp && topic.lessons.length > 0 && <StatusPill state={tp.state} />}
         </div>
@@ -58,34 +58,34 @@ export default async function TopicPage({ params }: { params: Params }) {
       <section aria-labelledby="lessons-title" className="stack" style={{ marginBottom: 40 }}>
         <h2 id="lessons-title">Lessons</h2>
         {topic.lessons.length === 0 ? (
-          <div className="card card-pad">
+          <div className="empty" style={{ textAlign: 'left', alignItems: 'flex-start' }}>
             <p className="muted">
               Lessons for this topic haven&rsquo;t been written yet. The objectives below show exactly what the syllabus expects, so you can
               plan with them in the meantime.
             </p>
           </div>
         ) : (
-          <ol className="list stack stack-md">
+          <ol className="lesson-path">
             {topic.lessons.map((l, i) => {
               const st = progress.lessons.get(l.id)?.status ?? 'not-started';
               return (
                 <li key={l.id}>
-                  <Link href={lessonHref(subject.slug, topic.code, l.id)} className="card card-pad lesson-card">
+                  <Link href={lessonHref(subject.slug, topic.code, l.id)} className="card card-pad lesson-card" data-status={st}>
                     <span className="lesson-num" data-status={st} aria-hidden="true">
                       {st === 'completed' ? <CheckIcon /> : i + 1}
                     </span>
                     <span className="stack stack-xs">
                       <span className="h3">{l.title}</span>
                       <span className="small muted">{l.summary}</span>
-                      <span className="tiny faint row" style={{ ['--gap' as string]: '6px' }}>
+                      <span className="tiny muted row" style={{ ['--gap' as string]: '6px', fontWeight: 700 }}>
                         <ClockIcon width={14} height={14} /> {l.minutes} min
+                        {st === 'completed' && <span className="badge badge-good">Finished</span>}
+                        {st === 'in-progress' && <span className="badge badge-accent">In progress</span>}
                         {l.kind === 'enrichment' && <span className="badge">Beyond the syllabus</span>}
-                        <span className="visually-hidden">
-                          {st === 'completed' ? ', finished' : st === 'in-progress' ? ', in progress' : ', not started'}
-                        </span>
+                        {st === 'not-started' && <span className="visually-hidden">, not started</span>}
                       </span>
                     </span>
-                    <ChevronRightIcon width={20} height={20} style={{ color: 'var(--text-3)' }} />
+                    <ChevronRightIcon width={20} height={20} className="topic-chevron" />
                   </Link>
                 </li>
               );

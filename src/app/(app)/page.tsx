@@ -1,32 +1,52 @@
 import Link from 'next/link';
 import { getSessionUser } from '@/server/auth/session';
 import { getDashboard, type Dashboard } from '@/server/queries/dashboard';
+import { getPointsSummary, type PointsSummary } from '@/server/queries/points';
 import { lessonsInOrder, lessonHref, listSubjects } from '@/server/queries/catalog';
 import { BRAND } from '@/lib/brand';
-import {
-  ArrowRightIcon,
-  BookIcon,
-  ChartIcon,
-  CheckCircleIcon,
-  FlagIcon,
-  LayersIcon,
-  PlayIcon,
-  RefreshIcon,
-  RepeatIcon,
-  ShieldIcon,
-  TargetIcon,
-} from '@/components/icons';
-import { EmptyState, MasteryBar, pluralise, Ring, SubjectTile } from '@/components/ui';
-import type { MasteryState } from '@/domain/mastery';
+import { ArrowRightIcon, CheckCircleIcon, CheckIcon, FlagIcon, PlayIcon, RefreshIcon, RepeatIcon, StarFilledIcon } from '@/components/icons';
+import { EmptyState, pluralise, Ring } from '@/components/ui';
+import { SubjectMotif } from '@/components/art/SubjectMotif';
+import { Spot } from '@/components/art/Spot';
+import { BadgeArt } from '@/components/art/BadgeArt';
+import { LevelBlock, WeekDots } from '@/components/points/PointsViews';
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ deleted?: string }> }) {
   const user = await getSessionUser();
   if (!user) return <Landing deleted={(await searchParams).deleted === '1'} />;
-  const d = await getDashboard(user.id);
-  return <DashboardView name={user.displayName} d={d} />;
+  const showPoints = user.showPoints !== false;
+  const [d, summary] = await Promise.all([getDashboard(user.id), showPoints ? getPointsSummary(user.id) : null]);
+  return <DashboardView name={user.displayName} d={d} summary={summary} />;
 }
 
-function NextCard({ next }: { next: Dashboard['next'] }) {
+const SMALL = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+const countWord = (n: number) => SMALL[n] ?? String(n);
+/** "1.2 Functions" → "Functions". */
+const topicName = (t: string) => t.replace(/^[\d.]+\s+/, '');
+
+/** One short line that reacts to what's going on. */
+function welcomeLine(d: Dashboard): string {
+  const reviews = d.dueCount > 0 ? `${countWord(d.dueCount)} ${d.dueCount === 1 ? 'review' : 'reviews'} waiting` : null;
+  switch (d.next.kind) {
+    case 'choose-subject':
+      return 'Pick your subjects and we’ll lay out the syllabus.';
+    case 'review':
+      return `${reviews}. A quick round helps them stick.`;
+    case 'resume':
+      return `Picking up ${topicName(d.next.lesson.topicTitle)}${reviews ? ` · ${reviews}` : ''}.`;
+    case 'start':
+      return d.week.lessonsCompleted === 0 && d.recent.length === 0
+        ? `First up: ${topicName(d.next.lesson.topicTitle)}.`
+        : `Next up: ${topicName(d.next.lesson.topicTitle)}${reviews ? ` · ${reviews}` : ''}.`;
+    case 'revisit':
+      return `${d.next.lesson.title} is worth another look${reviews ? ` · ${reviews}` : ''}.`;
+    case 'all-done':
+      return reviews ? `${reviews}.` : 'All caught up. Nice.';
+  }
+}
+
+function ContinueCard({ next, subjectCode }: { next: Dashboard['next']; subjectCode: string | null }) {
+  let eyebrow = 'Up next';
   let title: string;
   let detail: string | null = null;
   let href: string;
@@ -38,6 +58,7 @@ function NextCard({ next }: { next: Dashboard['next'] }) {
       cta = 'Choose subjects';
       break;
     case 'review':
+      eyebrow = 'Review';
       title = `Review ${pluralise(next.count, 'question')}`;
       detail = 'About a minute each';
       href = next.href;
@@ -45,58 +66,124 @@ function NextCard({ next }: { next: Dashboard['next'] }) {
       break;
     case 'resume':
     case 'start':
+      eyebrow = next.kind === 'resume' ? 'Continue' : 'Up next';
       title = next.lesson.title;
       detail = `${next.lesson.subjectName} · ${next.lesson.topicTitle} · ${next.lesson.minutes} min`;
       href = next.lesson.href;
       cta = next.kind === 'resume' ? 'Continue lesson' : 'Start lesson';
       break;
     case 'revisit':
+      eyebrow = 'Worth another look';
       title = next.lesson.title;
       detail = `Objective ${next.lesson.objectiveCode}`;
       href = next.lesson.href;
       cta = 'Take another look';
       break;
     case 'all-done':
-      title = 'All caught up';
+      eyebrow = 'All caught up';
+      title = 'Browse the syllabus';
       href = '/subjects';
       cta = 'Browse the syllabus';
       break;
   }
+  const art =
+    next.kind === 'review' ? <Spot name="review" size={150} /> : subjectCode ? <SubjectMotif code={subjectCode} /> : <Spot name="subjects" size={150} />;
   return (
-    <section className="card card-pad card-hero" aria-labelledby="next-title">
-      <div className="stack stack-md">
-        <p className="eyebrow">Up next for you</p>
-        <div className="stack stack-xs">
-          <h2 id="next-title" className="h1" style={{ fontSize: 'clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem)' }}>
-            {title}
-          </h2>
-          {detail && <p className="muted">{detail}</p>}
-        </div>
+    <section className="continue-card" aria-labelledby="next-title" data-subject={subjectCode ?? undefined}>
+      <div className="continue-body">
+        <p className="eyebrow">{eyebrow}</p>
+        <h2 id="next-title" className="continue-title">
+          {title}
+        </h2>
+        {detail && <p className="muted">{detail}</p>}
         <p className="small muted">{next.reason}</p>
-        <div>
+        <div className="continue-cta">
           <Link href={href} className="btn btn-primary btn-lg">
             {next.kind === 'review' ? <RepeatIcon /> : <PlayIcon />}
             {cta}
           </Link>
         </div>
       </div>
+      <div className="continue-art" aria-hidden="true">
+        {art}
+      </div>
     </section>
   );
 }
 
-function DashboardView({ name, d }: { name: string | null; d: Dashboard }) {
+function MePanel({ summary }: { summary: PointsSummary }) {
+  const { today } = summary;
+  return (
+    <section className="me-panel" aria-labelledby="me-title">
+      <h2 id="me-title" className="visually-hidden">
+        Your XP
+      </h2>
+      <LevelBlock level={summary.level} totalXp={summary.totalXp} />
+      {today.goal > 0 && (
+        <div className="goal-row">
+          <Ring value={(100 * Math.min(today.xp, today.goal)) / today.goal} label="Daily goal" size={48} />
+          <p className="small">
+            <strong className="tabular">
+              {today.xp} / {today.goal} XP
+            </strong>{' '}
+            <span className="muted">{today.goalMet ? 'today. Goal reached.' : 'towards today’s goal'}</span>
+          </p>
+        </div>
+      )}
+      <WeekDots today={today.day} studied={summary.daysThisWeek} />
+      {summary.latestBadges.length > 0 && (
+        <div className="unlocks">
+          <div className="row row-between">
+            <h3 className="small" style={{ fontWeight: 800 }}>
+              Recent unlocks
+            </h3>
+            <Link href="/achievements" className="tiny" style={{ fontWeight: 700 }}>
+              All achievements
+            </Link>
+          </div>
+          <ul className="unlock-list">
+            {summary.latestBadges.map((b) => (
+              <li key={b.id}>
+                <BadgeArt id={b.id} size={32} />
+                {b.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {summary.latestBadges.length === 0 && (
+        <p className="tiny muted">
+          Badges unlock as you go. <Link href="/achievements">See what you can earn</Link>
+        </p>
+      )}
+    </section>
+  );
+}
+
+function DashboardView({ name, d, summary }: { name: string | null; d: Dashboard; summary: PointsSummary | null }) {
   const accuracy = d.week.answered ? Math.round((100 * d.week.correct) / d.week.answered) : null;
+  const codeByName = new Map(d.enrolled.map((e) => [e.subject.name, e.subject.code]));
+  const nextSubject =
+    d.next.kind === 'start' || d.next.kind === 'resume'
+      ? (codeByName.get(d.next.lesson.subjectName) ?? null)
+      : d.next.kind === 'revisit'
+        ? (d.revisit[0] ? (codeByName.get(d.revisit[0].subjectName) ?? null) : null)
+        : null;
   return (
     <div className="container stack stack-xl">
-      <header className="stack stack-xs">
-        <h1>{name ? `Welcome back, ${name}` : 'Welcome back'}</h1>
-        <p className="muted">Small steps add up. Here&rsquo;s where you are.</p>
-      </header>
-
-      <NextCard next={d.next} />
+      <div className="stack stack-lg">
+        <header className="welcome">
+          <h1>{name ? `Welcome back, ${name}` : 'Welcome back'}</h1>
+          <p className="welcome-line">{welcomeLine(d)}</p>
+        </header>
+        <div className="home-top">
+          <ContinueCard next={d.next} subjectCode={nextSubject} />
+          {summary && <MePanel summary={summary} />}
+        </div>
+      </div>
 
       {d.enrolled.length === 0 ? (
-        <EmptyState icon={<BookIcon />} title="No subjects yet">
+        <EmptyState art="subjects" title="No subjects yet">
           <p>Pick the subjects you&rsquo;re taking and we&rsquo;ll lay out the syllabus for you.</p>
           <Link className="btn btn-primary" href="/subjects">
             Choose subjects
@@ -104,32 +191,6 @@ function DashboardView({ name, d }: { name: string | null; d: Dashboard }) {
         </EmptyState>
       ) : (
         <>
-          <section aria-labelledby="week-title">
-            <div className="section-head">
-              <h2 id="week-title">Last 7 days</h2>
-            </div>
-            <div className="card card-pad">
-              <div className="row" style={{ ['--gap' as string]: '40px' }}>
-                <div className="stat">
-                  <span className="stat-value">{d.week.answered}</span>
-                  <span className="stat-label">questions answered</span>
-                </div>
-                <div className="stat">
-                  <span className="stat-value">{accuracy === null ? '–' : `${accuracy}%`}</span>
-                  <span className="stat-label">fully correct</span>
-                </div>
-                <div className="stat">
-                  <span className="stat-value">{d.week.lessonsCompleted}</span>
-                  <span className="stat-label">lessons finished</span>
-                </div>
-                <div className="stat">
-                  <span className="stat-value">{d.dueCount}</span>
-                  <span className="stat-label">due for review</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
           <section aria-labelledby="subjects-title">
             <div className="section-head">
               <h2 id="subjects-title">Your subjects</h2>
@@ -137,31 +198,22 @@ function DashboardView({ name, d }: { name: string | null; d: Dashboard }) {
                 All progress
               </Link>
             </div>
-            <div className="grid-2">
+            <div className="subject-strip">
               {d.enrolled.map(({ subject, targetLevel, progress }) => {
                 const s = progress.summary;
-                const counts: Partial<Record<MasteryState, number>> = {};
-                for (const o of progress.objectives.values()) {
-                  if (targetLevel === 'AS' && o.level === 'A') continue;
-                  counts[o.mastery.state] = (counts[o.mastery.state] ?? 0) + 1;
-                }
                 return (
-                  <Link key={subject.code} href={`/subjects/${subject.slug}`} className="card card-pad">
-                    <div className="stack">
-                      <div className="row row-nowrap">
-                        <SubjectTile code={subject.code} />
-                        <div className="grow">
-                          <h3>{subject.name}</h3>
-                          <p className="tiny faint">
-                            {subject.code} · {subject.version.label} · aiming for {targetLevel === 'AS' ? 'AS Level' : 'A Level'}
-                          </p>
-                        </div>
-                        <Ring value={s.objectives ? (100 * s.studied) / s.objectives : 0} label="Syllabus studied" size={52} />
+                  <Link key={subject.code} href={`/subjects/${subject.slug}`} className="subject-card" data-subject={subject.code}>
+                    <div className="subject-card-art" aria-hidden="true">
+                      <SubjectMotif code={subject.code} />
+                    </div>
+                    <div className="subject-progress">
+                      <div className="grow">
+                        <h3>{subject.name}</h3>
+                        <p className="tiny muted">
+                          Aiming for {targetLevel === 'AS' ? 'AS Level' : 'A Level'} · {s.lessonsCompleted} of {s.lessonsTotal} lessons done
+                        </p>
                       </div>
-                      <MasteryBar counts={counts} total={s.objectives} />
-                      <p className="tiny muted">
-                        {s.studied} of {s.objectives} syllabus objectives studied · lessons cover {s.withContent} so far
-                      </p>
+                      <Ring value={s.objectives ? (100 * s.studied) / s.objectives : 0} label="Syllabus studied" size={50} />
                     </div>
                   </Link>
                 );
@@ -169,34 +221,8 @@ function DashboardView({ name, d }: { name: string | null; d: Dashboard }) {
             </div>
           </section>
 
-          <div className="grid-2">
-            <section aria-labelledby="revisit-title" className="card card-pad">
-              <div className="section-head">
-                <h2 id="revisit-title" className="h3">
-                  Worth another look
-                </h2>
-              </div>
-              {d.revisit.length === 0 ? (
-                <p className="small muted">Nothing flagged. When answers on a topic start slipping, it&rsquo;ll show up here.</p>
-              ) : (
-                <ul className="list list-rows">
-                  {d.revisit.map((r) => (
-                    <li key={r.lessonId}>
-                      <Link className="list-row" href={r.href}>
-                        <RefreshIcon width={18} height={18} style={{ color: 'var(--st-revision)', flex: 'none' }} />
-                        <span className="grow">
-                          <span style={{ display: 'block', fontWeight: 600 }}>{r.title}</span>
-                          <span className="tiny faint">
-                            {r.subjectName} · {r.topicTitle} · objective {r.objectiveCode}
-                          </span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-            <section aria-labelledby="upnext-title" className="card card-pad">
+          <div className="home-cols">
+            <section aria-labelledby="upnext-title">
               <div className="section-head">
                 <h2 id="upnext-title" className="h3">
                   Coming up
@@ -208,12 +234,43 @@ function DashboardView({ name, d }: { name: string | null; d: Dashboard }) {
                 <ul className="list list-rows">
                   {d.upNext.map((l) => (
                     <li key={l.id}>
-                      <Link className="list-row" href={l.href}>
-                        <FlagIcon width={18} height={18} style={{ color: 'var(--text-3)', flex: 'none' }} />
+                      <Link className="list-row" href={l.href} data-subject={codeByName.get(l.subjectName)}>
+                        <span className="row-glyph">
+                          <FlagIcon />
+                        </span>
                         <span className="grow">
-                          <span style={{ display: 'block', fontWeight: 600 }}>{l.title}</span>
-                          <span className="tiny faint">
+                          <span style={{ display: 'block', fontWeight: 700 }}>{l.title}</span>
+                          <span className="tiny muted">
                             {l.subjectName} · {l.topicTitle} · {l.minutes} min
+                          </span>
+                        </span>
+                        <ArrowRightIcon width={18} height={18} style={{ color: 'var(--text-3)', flex: 'none' }} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+            <section aria-labelledby="revisit-title">
+              <div className="section-head">
+                <h2 id="revisit-title" className="h3">
+                  Worth another look
+                </h2>
+              </div>
+              {d.revisit.length === 0 ? (
+                <p className="small muted">Nothing flagged. When answers on a topic start slipping, it&rsquo;ll show up here.</p>
+              ) : (
+                <ul className="list list-rows">
+                  {d.revisit.map((r) => (
+                    <li key={r.lessonId}>
+                      <Link className="list-row" href={r.href} data-subject={codeByName.get(r.subjectName)}>
+                        <span className="row-glyph">
+                          <RefreshIcon />
+                        </span>
+                        <span className="grow">
+                          <span style={{ display: 'block', fontWeight: 700 }}>{r.title}</span>
+                          <span className="tiny muted">
+                            {r.subjectName} · {r.topicTitle} · objective {r.objectiveCode}
                           </span>
                         </span>
                       </Link>
@@ -224,50 +281,57 @@ function DashboardView({ name, d }: { name: string | null; d: Dashboard }) {
             </section>
           </div>
 
-          <div className="grid-2">
-            <section aria-labelledby="recent-title" className="card card-pad">
-              <div className="section-head">
-                <h2 id="recent-title" className="h3">
-                  Recent results
-                </h2>
-                <Link href="/history" className="small">
-                  History
-                </Link>
+          <section aria-labelledby="week-title">
+            <div className="section-head">
+              <h2 id="week-title">Last 7 days</h2>
+              <Link href="/history" className="small">
+                History
+              </Link>
+            </div>
+            <div className="week-band">
+              <div className="stat">
+                <span className="stat-value">{d.week.answered}</span>
+                <span className="stat-label">questions answered</span>
               </div>
-              {d.recent.length === 0 ? (
-                <p className="small muted">Answer a few questions and your results will appear here.</p>
-              ) : (
-                <ul className="list list-rows">
-                  {d.recent.map((r) => (
-                    <li key={r.lessonId}>
-                      <Link className="list-row" href={r.href}>
-                        <CheckCircleIcon width={18} height={18} style={{ color: 'var(--good)', flex: 'none' }} />
-                        <span className="grow">
-                          <span style={{ display: 'block', fontWeight: 600 }}>{r.title}</span>
-                          <span className="tiny faint">{r.subjectName}</span>
-                        </span>
-                        <span className="small tabular muted">
-                          {r.correct}/{r.answered} correct
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-            <section aria-labelledby="grade-title" className="card card-pad">
-              <div className="section-head">
-                <h2 id="grade-title" className="h3">
-                  Estimated grades
-                </h2>
-                <span className="badge">Not available yet</span>
+              <div className="stat">
+                <span className="stat-value">{accuracy === null ? '–' : `${accuracy}%`}</span>
+                <span className="stat-label">fully correct</span>
               </div>
-              <p className="small muted">
-                We won&rsquo;t guess a grade from short recall questions. Grade estimates need full, timed practice papers, and they&rsquo;ll
-                arrive with exam practice. Even then, they&rsquo;ll be ranges with honest uncertainty, not promises.
-              </p>
-            </section>
-          </div>
+              <div className="stat">
+                <span className="stat-value">{d.week.lessonsCompleted}</span>
+                <span className="stat-label">lessons finished</span>
+              </div>
+              <div className="stat">
+                <span className="stat-value">{d.dueCount}</span>
+                <span className="stat-label">due for review</span>
+              </div>
+            </div>
+            {d.recent.length > 0 && (
+              <ul className="list list-rows" style={{ marginTop: 12 }} aria-label="Recent results">
+                {d.recent.map((r) => (
+                  <li key={r.lessonId}>
+                    <Link className="list-row" href={r.href}>
+                      <CheckCircleIcon width={20} height={20} style={{ color: 'var(--good)', flex: 'none' }} />
+                      <span className="grow">
+                        <span style={{ display: 'block', fontWeight: 700 }}>{r.title}</span>
+                        <span className="tiny muted">{r.subjectName}</span>
+                      </span>
+                      <span className="small tabular muted">
+                        {r.correct}/{r.answered} correct
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <p className="quiet-note small">
+            <span>
+              <strong>Estimated grades aren&rsquo;t available yet.</strong> We won&rsquo;t guess a grade from short recall questions; estimates
+              need full, timed practice papers and will arrive with exam practice, as ranges with honest uncertainty.
+            </span>
+          </p>
         </>
       )}
     </div>
@@ -285,42 +349,51 @@ async function Landing({ deleted }: { deleted: boolean }) {
           Your account and all of its data have been deleted.
         </p>
       )}
-      <section className="landing-hero" style={{ marginTop: 24 }}>
-        <p className="eyebrow" style={{ marginBottom: 14 }}>
-          Cambridge International AS &amp; A Level
-        </p>
-        <h1 className="display">A Level, one small idea at a time.</h1>
-        <p className="lede">
-          Short, clear lessons mapped to the official Cambridge syllabus, with quick questions after each idea so you know you&rsquo;ve
-          actually got it.
-        </p>
-        <div className="row" style={{ justifyContent: 'center' }}>
-          <Link href="/signup" className="btn btn-primary btn-lg">
-            Start for free
-          </Link>
-          <Link href={tryHref} className="btn btn-lg">
-            Try a lesson <ArrowRightIcon />
-          </Link>
+      <section className="landing-hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="hero-kicker">
+            <span className="row" style={{ ['--gap' as string]: '0' }} aria-hidden="true">
+              {['9709', '9618', '9702', '9701'].map((c) => (
+                <span key={c} className="subject-dot" data-subject={c} />
+              ))}
+            </span>
+            Cambridge International AS &amp; A Level
+          </p>
+          <h1 id="hero-title" className="display">
+            A Level, one <span className="hero-highlight">small idea</span> at a time.
+          </h1>
+          <p className="lede">
+            Short lessons mapped to the official Cambridge syllabus, with a quick question after each idea. Get it right first time and you earn
+            XP; get it wrong and you see why.
+          </p>
+          <div className="hero-actions">
+            <Link href="/signup" className="btn btn-primary btn-lg">
+              Start for free
+            </Link>
+            <Link href={tryHref} className="btn btn-lg">
+              Try a lesson <ArrowRightIcon />
+            </Link>
+          </div>
         </div>
+        <SampleCheck />
       </section>
 
       <section aria-labelledby="subjects-title">
         <div className="section-head">
           <h2 id="subjects-title">Subjects</h2>
+          <Link href="/subjects" className="small">
+            All subjects
+          </Link>
         </div>
-        <div className="grid-cards">
+        <div className="subject-row">
           {subjects.map((s) => (
-            <Link key={s.code} href={`/subjects/${s.slug}`} className="card card-pad">
-              <div className="stack stack-md">
-                <SubjectTile code={s.code} large />
-                <div>
-                  <h3>{s.name}</h3>
-                  <p className="tiny faint">
-                    {s.code} · syllabus for {s.version.label}
-                  </p>
-                </div>
-                <p className="small muted">{s.description}</p>
+            <Link key={s.code} href={`/subjects/${s.slug}`} className="subject-card" data-subject={s.code}>
+              <div className="subject-card-art" aria-hidden="true">
+                <SubjectMotif code={s.code} />
               </div>
+              <p className="subject-card-code">{s.code}</p>
+              <h3>{s.name}</h3>
+              <p className="small muted">{s.description}</p>
             </Link>
           ))}
         </div>
@@ -328,34 +401,67 @@ async function Landing({ deleted }: { deleted: boolean }) {
 
       <section aria-labelledby="how-title" className="stack">
         <h2 id="how-title">How {BRAND} works</h2>
-        <div className="feature-grid">
+        <ol className="how-steps">
           {[
-            { icon: <LayersIcon />, title: 'One idea per lesson', body: 'Two to five minutes each. Explanations, worked examples, diagrams and the exact wording examiners look for.' },
-            { icon: <TargetIcon />, title: 'Check yourself as you go', body: 'Quick questions straight after each idea, with feedback that explains why, not just whether.' },
-            { icon: <ChartIcon />, title: 'Progress you can trust', body: 'Topics are marked secure only after several right answers on different days. No streaks, no guilt.' },
-            { icon: <ShieldIcon />, title: 'Mapped to the syllabus', body: 'Every lesson links to the official syllabus objectives it teaches, so you can see exactly what’s covered.' },
-          ].map((f) => (
-            <div key={f.title} className="card card-pad">
-              <div className="feature-icon">{f.icon}</div>
-              <h3>{f.title}</h3>
-              <p className="small muted" style={{ marginTop: 6 }}>
-                {f.body}
-              </p>
-            </div>
+            { title: 'Read one idea', body: 'Two to five minutes: an explanation, a worked example or a diagram, and the exact wording examiners look for.' },
+            { title: 'Check it straight away', body: 'A quick question right after. Feedback says why, not just whether, and you can always try again.' },
+            { title: 'Come back just in time', body: 'Answers return for review before you’d forget them. Topics turn Secure only after right answers on different days.' },
+          ].map((f, i) => (
+            <li key={f.title} className="how-step">
+              <span className="how-num" aria-hidden="true">
+                {i + 1}
+              </span>
+              <div className="stack stack-xs">
+                <h3>{f.title}</h3>
+                <p className="small muted">{f.body}</p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </section>
 
-      <section className="card card-pad stack stack-md" aria-labelledby="status-title">
+      <section className="status-note" aria-labelledby="status-title">
         <h2 id="status-title" className="h3">
           What&rsquo;s here today
         </h2>
-        <p className="small muted">
-          {BRAND} is early. Today you get the full syllabus structure for four subjects, a first set of lessons in each, instant-feedback
-          questions, spaced review and progress tracking. Exam-style practice, an AI tutor that can read photos of your working, and grade
-          estimates are planned next, and we&rsquo;ll label them clearly when they arrive. <Link href="/about">How we make and check content</Link>
+        <p className="small">
+          {BRAND} is early. You get the full syllabus structure for four subjects, a first set of lessons in each, instant-feedback questions,
+          XP and badges for real progress, spaced review and progress tracking. Exam-style practice, an AI tutor that can read photos of your
+          working, and grade estimates come next, clearly labelled when they arrive. <Link href="/about">How we make and check content</Link>
         </p>
       </section>
+    </div>
+  );
+}
+
+/** A drawn example of a quick check, so the first screen shows what studying here feels like. */
+function SampleCheck() {
+  return (
+    <div className="sample" aria-hidden="true">
+      <span className="sample-badge">
+        <BadgeArt id="first-steps" size={64} />
+      </span>
+      <div className="sample-head">
+        <span className="badge badge-accent">Quick check</span>
+        <span className="tiny muted">Question 1 · Recall</span>
+      </div>
+      <p className="sample-q">How many real roots does x² − 6x + 9 = 0 have?</p>
+      <div className="sample-opt">
+        <span className="sample-key">A</span> Two different roots
+      </div>
+      <div className="sample-opt" data-mark="right">
+        <span className="sample-key">B</span> One repeated root
+      </div>
+      <div className="sample-opt">
+        <span className="sample-key">C</span> No real roots
+      </div>
+      <div className="sample-foot">
+        <CheckIcon /> Correct
+        <span className="xp-pop">
+          <StarFilledIcon />
+          +10 XP
+        </span>
+      </div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ import { hit, LIMITS } from '@/server/rate-limit';
 import { checkAnswer, type CheckResult } from '@/domain/answers/check';
 import { nextReview } from '@/domain/schedule';
 import type { PointsResult } from '@/domain/points';
-import { awardAnswer, awardLessonCompletion, lockUserPoints } from '@/server/points';
+import { awardAnswer, awardLessonCompletion, awardReviewSession, lockUserPoints } from '@/server/points';
 import type { QuestionReveal } from '@/content/rendered';
 
 const ResponseSchema = z.discriminatedUnion('format', [
@@ -181,6 +181,31 @@ export async function recordLessonStep(input: z.input<typeof StepSchema>): Promi
   });
   if (completed) revalidatePath('/', 'layout');
   return { saved: true, points };
+}
+
+export interface ReviewSessionResult {
+  /**
+   * XP for the finished review session (15, once per local day, when at
+   * least five different questions were answered in review today), with the
+   * level, daily goal, streak and new badges. `gained` is 0 when nothing was
+   * paid (too few answers, or already paid today). Null for guests and when
+   * rate-limited.
+   */
+  points: PointsResult | null;
+}
+
+/** Call when a review session ends (the queue is finished or the student stops). Safe to call more than once. */
+export async function finishReviewSession(): Promise<ReviewSessionResult> {
+  const user = await getSessionUser();
+  if (!user || !hit(`write:${user.id}`, LIMITS.write).ok) return { points: null };
+  const db = await getDb();
+  const now = new Date();
+  const points = await db.transaction(async (tx) => {
+    await lockUserPoints(tx, user.id);
+    return awardReviewSession(tx, { userId: user.id, now });
+  });
+  if (points.gained > 0) revalidatePath('/', 'layout');
+  return { points };
 }
 
 const EnrollSchema = z.object({ subjectCode: z.string().regex(/^\d{4}$/), targetLevel: z.enum(['AS', 'A']) });

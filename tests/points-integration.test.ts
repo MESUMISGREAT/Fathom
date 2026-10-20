@@ -115,7 +115,7 @@ describe('guests', () => {
 });
 
 describe('answer XP', () => {
-  it('awards a first correct answer once, with level, goal, streak and a first badge', async () => {
+  it('awards a first correct answer once, with level, goal and streak', async () => {
     const user = await newStudent();
     const first = await answer('q-mcq');
     expect(first).toMatchObject({
@@ -127,7 +127,7 @@ describe('answer XP', () => {
       leveledUp: false,
       today: { xp: 10, goal: 50, goalMet: false, justMetGoal: false },
       streak: { current: 1, activeToday: true, alive: true, freezesBanked: 0 },
-      newBadges: [{ id: 'first-spark', name: 'First Spark' }],
+      newBadges: [],
     });
     expect(first.today.day).toBe(localDay(new Date(), 'UTC'));
 
@@ -194,7 +194,7 @@ describe('answer XP', () => {
     expect(partial.events).toEqual([{ kind: 'review', amount: 5, label: 'Review, partly right' }]);
 
     // Memory Keeper counts the two correct due reviews, not the partly right one.
-    const { stats } = await loadBadgeStats(await getDb(), user.id, { totalXp: 0, longestStreak: 0 });
+    const { stats } = await loadBadgeStats(await getDb(), user.id, { totalXp: 0 });
     expect(stats.dueReviewsCorrect).toBe(2);
   });
 });
@@ -215,7 +215,7 @@ describe('combos', () => {
     const five = await answer('q-spot');
     expect(five.combo).toBe(5);
     expect(five.events).toContainEqual({ kind: 'combo', amount: 10, label: 'Combo ×5' });
-    expect(five.newBadges.map((b) => b.id)).toContain('combo-5');
+    expect(five.newBadges.map((b) => b.id)).toContain('on-a-roll');
 
     for (const id of ['q-numeric', 'q-explain', 'q-one']) await answer(id);
     // Two due reviews take it to 10.
@@ -224,7 +224,7 @@ describe('combos', () => {
     const ten = await answer('q-expr', 'review');
     expect(ten.combo).toBe(10);
     expect(ten.events).toContainEqual({ kind: 'combo', amount: 15, label: 'Combo ×10' });
-    expect(ten.newBadges.map((b) => b.id)).toContain('combo-10');
+    expect(ten.newBadges.map((b) => b.id)).toContain('in-the-zone');
 
     // A wrong due review breaks it.
     const broken = await submit({ questionId: sq('q-text'), response: { format: 'text', value: 'nope' }, self: { correct: false }, context: 'review' });
@@ -249,7 +249,7 @@ describe('combos', () => {
 });
 
 describe('lessons', () => {
-  it('pays 20 for a first completion plus 10 for a perfect lesson, once', async () => {
+  it('pays 20 for a first completion plus 10 for a perfect lesson (and 50 for the topic it completes), once', async () => {
     const user = await newStudent();
     for (const id of SQUARES) await answer(id);
     const step = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 3, stepCount: 10, completed: false });
@@ -261,13 +261,14 @@ describe('lessons', () => {
       events: [
         { kind: 'lesson', amount: 20, label: 'Lesson finished' },
         { kind: 'perfect', amount: 10, label: 'Perfect lesson' },
+        { kind: 'topic', amount: 50, label: 'Topic finished' }, // the fixture's topic 1.1 has this one core lesson
       ],
-      gained: 30,
-      totalXp: before + 30,
+      gained: 80,
+      totalXp: before + 80,
     });
-    expect(done.points!.newBadges.map((b) => b.id)).toEqual(expect.arrayContaining(['off-the-blocks', 'flawless']));
+    expect(done.points!.newBadges.map((b) => b.id)).toEqual(expect.arrayContaining(['first-steps', 'flawless', 'topic-finisher']));
     const again = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true });
-    expect(again.points).toMatchObject({ gained: 0, events: [], totalXp: before + 30 });
+    expect(again.points).toMatchObject({ gained: 0, events: [], totalXp: before + 80 });
   });
 
   it('is not perfect after a wrong or skipped first attempt', async () => {
@@ -275,12 +276,12 @@ describe('lessons', () => {
     await submit({ questionId: sq('q-mcq'), response: { format: 'mcq', choice: 1 }, context: 'lesson' });
     for (const id of SQUARES) await answer(id);
     const done = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true });
-    expect(kinds(done.points!)).toEqual(['lesson:20']);
+    expect(kinds(done.points!)).toEqual(['lesson:20', 'topic:50']);
 
     await newStudent();
     await answer('q-mcq'); // the rest skipped
     const skipped = await study.recordLessonStep({ lessonId: 'fixture-squares', stepReached: 9, stepCount: 10, completed: true });
-    expect(kinds(skipped.points!)).toEqual(['lesson:20']);
+    expect(kinds(skipped.points!)).toEqual(['lesson:20', 'topic:50', 'daily-goal:10']); // 10 + 70 reaches the goal of 50
   });
 });
 
@@ -380,7 +381,7 @@ describe('queries', () => {
     );
     const p = await answer('q-mcq');
     expect(p.streak).toMatchObject({ current: 8, alive: true, activeToday: true, freezesBanked: 0, frozenDays: [addDays(today, -1)] });
-    expect(p.newBadges.map((b) => b.id)).toEqual(expect.arrayContaining(['first-spark', 'on-a-roll', 'week-warrior']));
+    expect(p.newBadges.map((b) => b.id)).toEqual(['consistency-club']); // 8 different days; no streak badges
 
     const s = await getPointsSummary(user.id);
     expect(s).toMatchObject({
@@ -388,13 +389,13 @@ describe('queries', () => {
       level: { level: 2, xpIntoLevel: 30 },
       today: { day: today, xp: 10, goal: 50, goalMet: false },
       streak: { current: 8, longest: 8 },
-      settings: { dailyGoal: 50, timeZone: 'UTC', celebrations: true, sounds: false },
-      badgeCount: 3,
+      settings: { dailyGoal: 50, timeZone: 'UTC', celebrations: true, sounds: false, showPoints: true },
+      badgeCount: 1,
     });
     expect(s.week.map((d) => d.day)).toEqual(Array.from({ length: 7 }, (_, i) => addDays(today, i - 6)));
     expect(s.week.map((d) => (d.frozen ? 'F' : d.active ? 'A' : '-')).join('')).toBe('AAAAAFA');
     expect(s.week[6]).toMatchObject({ isToday: true, xp: 10, active: true });
-    expect(s.latestBadges).toHaveLength(3);
+    expect(s.latestBadges.map((b) => b.id)).toEqual(['consistency-club']);
   });
 
   it('gives 14 days of history and every badge, earned or locked, with progress', async () => {
@@ -407,24 +408,31 @@ describe('queries', () => {
     expect(h.days[13]!.xp).toBe(h.totalXp);
     expect(h.badges.map((b) => b.id)).toEqual(BADGES.map((b) => b.id));
     const byId = new Map(h.badges.map((b) => [b.id, b]));
-    expect(byId.get('first-spark')).toMatchObject({ earned: true, progress: { current: 1, target: 1 } });
-    expect(byId.get('first-spark')!.earnedAt).toBeInstanceOf(Date);
+    expect(byId.get('first-steps')).toMatchObject({ earned: true, progress: { current: 1, target: 1 } });
+    expect(byId.get('first-steps')!.earnedAt).toBeInstanceOf(Date);
     expect(byId.get('flawless')).toMatchObject({ earned: true });
     expect(byId.get('ten-down')).toMatchObject({ earned: false, earnedAt: null, progress: { current: 1, target: 10 }, howToEarn: 'Finish 10 lessons.' });
-    expect(byId.get('combo-5')).toMatchObject({ earned: true });
+    expect(byId.get('on-a-roll')).toMatchObject({ earned: true });
+    expect(byId.get('curious-mind')).toMatchObject({ earned: false, progress: { current: 1, target: 5 } });
+    expect(byId.get('consistency-club')).toMatchObject({ earned: false, progress: { current: 1, target: 5 } });
     expect(h.earnedCount).toBe(h.badges.filter((b) => b.earned).length);
 
-    const { stats, earned } = await loadBadgeStats(await getDb(), user.id, { totalXp: h.totalXp, longestStreak: h.streak.longest });
+    const { stats, earned } = await loadBadgeStats(await getDb(), user.id, { totalXp: h.totalXp });
     expect(stats).toEqual({
-      correctAnswers: 7,
       lessonsFinished: 1,
       perfectLessons: 1,
       bestCombo: 7,
-      longestStreak: 1,
+      reviewSessions: 0,
+      comebacks: 0,
+      topicsFinished: 1,
+      topicsWithFinishedLessons: 1,
+      topicsSecured: 0,
+      topicsRecovered: 0,
+      studyDays: 1,
       dueReviewsCorrect: 0,
       goalDays: 1,
       subjectsWithFinishedLessons: 1,
-      totalXp: 135,
+      totalXp: 185,
     });
     expect(earned.sort()).toEqual(h.badges.filter((b) => b.earned).map((b) => b.id).sort());
   });
@@ -433,13 +441,16 @@ describe('queries', () => {
 describe('export and deletion', () => {
   it('exports XP events and badges, and deleting the account removes them', async () => {
     const user = await newStudent();
-    await answer('q-mcq');
+    await answer('q-one');
+    await study.recordLessonStep({ lessonId: 'fixture-functions', stepReached: 2, stepCount: 3, completed: true });
     const res = await exportRoute.GET();
     expect(res.status).toBe(200);
     const data = await res.json();
-    expect(data.profile).toMatchObject({ dailyGoal: 50, timeZone: 'UTC', celebrations: true, sounds: false });
-    expect(data.xpEvents).toEqual([expect.objectContaining({ kind: 'answer', amount: 10, sourceId: sq('q-mcq') })]);
-    expect(data.badges).toEqual([expect.objectContaining({ badgeId: 'first-spark' })]);
+    expect(data.profile).toMatchObject({ dailyGoal: 50, timeZone: 'UTC', celebrations: true, sounds: false, showPoints: true });
+    expect(data.xpEvents.map((e: { kind: string; amount: number }) => `${e.kind}:${e.amount}`)).toEqual(['answer:10', 'lesson:20', 'perfect:10', 'topic:50', 'daily-goal:10']);
+    expect(data.xpEvents[0]).toMatchObject({ sourceId: 'fixture-functions/q-one' });
+    expect(data.badges.map((b: { badgeId: string }) => b.badgeId).sort()).toEqual(['first-steps', 'flawless', 'topic-finisher']);
+    expect(data.topicRecoveries).toEqual([]);
 
     await expectRedirect(settings.deleteAccount({}, form({ password: PASSWORD, confirm: 'delete' })));
     const db = await getDb();

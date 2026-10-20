@@ -21,15 +21,20 @@ export interface FormState {
 const PrefsSchema = z.object({
   theme: z.enum(['system', 'light', 'dark']).optional(),
   lessonMode: z.enum(['steps', 'full']).optional(),
-  /** XP per day: only the options in DAILY_GOALS (20, 50, 100, 150). */
+  /** XP per day: only the options in DAILY_GOALS (0 = no goal, 20, 50, 100, 150). */
   dailyGoal: z.number().refine(isDailyGoal, 'Pick one of the daily goals.').optional(),
   /** Confetti and pops. */
   celebrations: z.boolean().optional(),
   /** Little sound effects (off by default). */
   sounds: z.boolean().optional(),
+  /** Show points and badges (on by default). Off only hides them: XP is still recorded. */
+  showPoints: z.boolean().optional(),
 });
 
-/** Saves any of: theme, lesson mode, daily goal, celebrations, sounds. An invalid value rejects the whole change. */
+/**
+ * Saves any of: theme, lesson mode, daily goal, celebrations, sounds, show
+ * points. An invalid value rejects the whole change.
+ */
 export async function updatePreferences(input: z.input<typeof PrefsSchema>): Promise<{ ok: boolean }> {
   const user = await requireUser();
   const parsed = PrefsSchema.safeParse(input);

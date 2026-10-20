@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { requireUser } from '@/server/auth/session';
-import { AppearanceForm, DeleteAccountForm, PasswordForm, ProfileForm } from '@/components/forms/SettingsForms';
+import { AppearanceForm, DeleteAccountForm, PasswordForm, PointsForm, ProfileForm } from '@/components/forms/SettingsForms';
 import { PageHead } from '@/components/ui';
 import { DownloadIcon } from '@/components/icons';
 
@@ -19,6 +19,10 @@ export default async function SettingsPage() {
       <section className="card card-pad stack" aria-labelledby="s-appearance">
         <h2 id="s-appearance">Appearance &amp; lessons</h2>
         <AppearanceForm theme={user.theme} lessonMode={user.lessonMode} />
+      </section>
+      <section className="card card-pad stack stack-sm" aria-labelledby="s-points">
+        <h2 id="s-points">Points and celebrations</h2>
+        <PointsForm showPoints={user.showPoints !== false} dailyGoal={user.dailyGoal} celebrations={user.celebrations} sounds={user.sounds} />
       </section>
       <section className="card card-pad stack stack-sm" aria-labelledby="s-reminders">
         <h2 id="s-reminders">Reminders</h2>

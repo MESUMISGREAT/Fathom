@@ -1,7 +1,8 @@
 /**
  * Migrations apply to a fresh database and upgrade an existing one: a
  * database at 0001 (with a student and an attempt in it) gains the points
- * tables and columns with the right defaults, without losing data.
+ * tables and columns with the right defaults, without losing data, and one
+ * at 0002 moves earned badges to the second catalogue.
  */
 import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -84,6 +85,59 @@ describe('migrations', () => {
 
     // Running the migrator again is a no-op.
     await migrate(db, { migrationsFolder: MIGRATIONS });
+    await client.close();
+  });
+
+  it('0003 adds show_points and topic_recoveries, and moves earned badges to the new catalogue', async () => {
+    const client = new PGlite();
+    const db = drizzle(client);
+    await migrate(db, { migrationsFolder: await migrationsUpTo(3) });
+    expect((await columns(client, 'users')).has('show_points')).toBe(false);
+    const a = '00000000-0000-4000-8000-00000000000a';
+    const b = '00000000-0000-4000-8000-00000000000b';
+    await client.exec(`
+      insert into users (id, email, password_hash, age_confirmed_at) values
+        ('${a}', 'a@example.org', 'scrypt$x', now()), ('${b}', 'b@example.org', 'scrypt$x', now());
+      insert into user_badges (user_id, badge_id, earned_at) values
+        ('${a}', 'first-spark', '2026-10-01T10:00:00Z'),
+        ('${a}', 'off-the-blocks', '2026-10-02T10:00:00Z'),
+        ('${a}', 'flawless', '2026-10-03T10:00:00Z'),
+        ('${a}', 'combo-5', '2026-10-04T10:00:00Z'),
+        ('${a}', 'combo-10', '2026-10-05T10:00:00Z'),
+        ('${a}', 'on-a-roll', '2026-10-06T10:00:00Z'),
+        ('${a}', 'week-warrior', '2026-10-07T10:00:00Z'),
+        ('${a}', 'unstoppable', '2026-10-08T10:00:00Z'),
+        ('${a}', 'ten-down', '2026-10-09T10:00:00Z'),
+        ('${a}', 'half-century', '2026-10-09T10:00:00Z'),
+        ('${a}', 'memory-keeper', '2026-10-09T10:00:00Z'),
+        ('${a}', 'goal-getter', '2026-10-09T10:00:00Z'),
+        ('${a}', 'explorer', '2026-10-09T10:00:00Z'),
+        ('${a}', 'club-500', '2026-10-10T10:00:00Z'),
+        ('${a}', 'club-2500', '2026-10-10T10:00:00Z'),
+        -- b only ever had the old streak badge called on-a-roll: it must not survive as the combo badge.
+        ('${b}', 'on-a-roll', '2026-10-06T10:00:00Z');
+    `);
+
+    await migrate(db, { migrationsFolder: MIGRATIONS });
+    const rows = await client.query<{ user_id: string; badge_id: string; earned_at: Date }>(
+      `select user_id, badge_id, earned_at from user_badges order by user_id, badge_id`,
+    );
+    const of = (id: string) => rows.rows.filter((r) => r.user_id === id).map((r) => r.badge_id);
+    expect(of(a)).toEqual(['club-2500', 'club-500', 'explorer', 'first-steps', 'flawless', 'goal-getter', 'half-century', 'in-the-zone', 'memory-keeper', 'on-a-roll', 'ten-down']);
+    expect(of(b)).toEqual([]);
+    // Renamed badges keep the date they were earned (on-a-roll is the old combo-5, not the streak badge).
+    const earned = (id: string) => rows.rows.find((r) => r.user_id === a && r.badge_id === id)!.earned_at.toISOString();
+    expect(earned('first-steps')).toBe('2026-10-02T10:00:00.000Z');
+    expect(earned('on-a-roll')).toBe('2026-10-04T10:00:00.000Z');
+    expect(earned('in-the-zone')).toBe('2026-10-05T10:00:00.000Z');
+
+    const users = await client.query<{ show_points: boolean }>(`select show_points from users order by email`);
+    expect(users.rows).toEqual([{ show_points: true }, { show_points: true }]);
+    expect([...(await columns(client, 'topic_recoveries')).keys()].sort()).toEqual(['secured_at', 'slipped_at', 'topic_id', 'user_id']);
+    await client.query(`insert into topic_recoveries (user_id, topic_id, slipped_at) values ($1, 'v1:1.1', now())`, [a]);
+    await expect(client.query(`insert into topic_recoveries (user_id, topic_id, slipped_at) values ($1, 'v1:1.1', now())`, [a])).rejects.toThrow(/duplicate|unique/i);
+    await client.query(`delete from users where id = $1`, [a]);
+    expect((await client.query(`select 1 from topic_recoveries`)).rows).toHaveLength(0);
     await client.close();
   });
 });

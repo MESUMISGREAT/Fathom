@@ -2,16 +2,20 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { requireUser } from '@/server/auth/session';
 import { getEnrolled } from '@/server/queries/dashboard';
+import { getPointsHistory, type PointsHistory } from '@/server/queries/points';
+import { BadgeArt } from '@/components/art/BadgeArt';
+import { LevelBlock } from '@/components/points/PointsViews';
 import { getSyllabusTree, topicHref } from '@/server/queries/catalog';
 import { EmptyState, MasteryBar, PageHead, StatusPill, SubjectTile } from '@/components/ui';
-import { ChartIcon, InfoIcon } from '@/components/icons';
+import { InfoIcon } from '@/components/icons';
 import type { MasteryState } from '@/domain/mastery';
 
 export const metadata: Metadata = { title: 'Progress' };
 
 export default async function ProgressPage() {
   const user = await requireUser('/progress');
-  const enrolled = await getEnrolled(user.id);
+  const showPoints = user.showPoints !== false;
+  const [enrolled, history] = await Promise.all([getEnrolled(user.id), showPoints ? getPointsHistory(user.id) : null]);
 
   return (
     <div className="container">
@@ -23,8 +27,9 @@ export default async function ProgressPage() {
           </>
         }
       />
+      {history && <Profile h={history} />}
       {enrolled.length === 0 ? (
-        <EmptyState icon={<ChartIcon />} title="No subjects yet">
+        <EmptyState art="progress" title="No subjects yet">
           <Link href="/subjects" className="btn btn-primary">
             Choose subjects
           </Link>
@@ -43,7 +48,7 @@ export default async function ProgressPage() {
               const pct = (n: number) => (s.objectives ? Math.round((100 * n) / s.objectives) : 0);
               const started = tree.flatMap((sec) => sec.topics).filter((tp) => progress.topics.get(tp.id)?.state !== 'not-started');
               return (
-                <section key={subject.code} aria-labelledby={`p-${subject.code}`} className="card card-pad stack stack-lg">
+                <section key={subject.code} aria-labelledby={`p-${subject.code}`} className="card card-pad stack stack-lg" data-subject={subject.code}>
                   <div className="row row-nowrap">
                     <SubjectTile code={subject.code} />
                     <div className="grow">
@@ -86,15 +91,15 @@ export default async function ProgressPage() {
                     {started.length === 0 ? (
                       <p className="small muted">None yet.</p>
                     ) : (
-                      <div className="card" style={{ overflow: 'hidden' }}>
+                      <div className="topic-list">
                         {started.map((tp) => {
                           const st = progress.topics.get(tp.id)!;
                           return (
                             <Link key={tp.id} href={topicHref(subject.slug, tp.code)} className="topic-row">
                               <span className="topic-code">{tp.code}</span>
                               <span className="grow">
-                                <span style={{ display: 'block', fontWeight: 600 }}>{tp.title}</span>
-                                <span className="tiny faint">
+                                <span style={{ display: 'block', fontWeight: 700 }}>{tp.title}</span>
+                                <span className="tiny muted">
                                   {st.secure}/{st.withContent} objectives secure · {st.studied} studied
                                 </span>
                               </span>
@@ -111,7 +116,7 @@ export default async function ProgressPage() {
               );
             }),
           )}
-          <section className="card card-pad stack stack-sm" aria-labelledby="grades">
+          <section className="panel stack stack-sm" aria-labelledby="grades">
             <div className="row row-between">
               <h2 id="grades" className="h3">
                 Estimated grades
@@ -127,5 +132,76 @@ export default async function ProgressPage() {
         </div>
       )}
     </div>
+  );
+}
+
+const weekday = (day: string) => new Date(`${day}T00:00:00Z`).toLocaleDateString('en-GB', { weekday: 'narrow', timeZone: 'UTC' });
+const longDay = (day: string) => new Date(`${day}T00:00:00Z`).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+
+/** The student's profile: level, badges earned, XP over the last two weeks and a quiet longest-run stat. */
+function Profile({ h }: { h: PointsHistory }) {
+  const earned = h.badges.filter((b) => b.earned);
+  const max = Math.max(1, ...h.days.map((d) => d.xp));
+  const activeDays = h.days.filter((d) => d.active).length;
+  return (
+    <section className="profile" aria-labelledby="profile-title" style={{ marginBottom: 44 }}>
+      <h2 id="profile-title" className="visually-hidden">
+        Your profile
+      </h2>
+      <div className="panel panel-yellow stack">
+        <LevelBlock level={h.level} totalXp={h.totalXp} />
+        <div className="quiet-stats">
+          <span>
+            Longest run <strong className="tabular">{h.streak.longest}</strong> {h.streak.longest === 1 ? 'day' : 'days'}
+          </span>
+          <span>
+            <strong className="tabular">{activeDays}</strong> of the last 14 days studied
+          </span>
+        </div>
+      </div>
+      <div className="stack">
+        <div className="stack stack-sm">
+          <div className="section-head" style={{ marginBottom: 0 }}>
+            <h3>
+              Badges <span className="muted tabular">{h.earnedCount}/{h.badges.length}</span>
+            </h3>
+            <Link href="/achievements" className="small">
+              All achievements
+            </Link>
+          </div>
+          {earned.length === 0 ? (
+            <p className="small muted">None yet. Finish a lesson for your first one.</p>
+          ) : (
+            <ul className="profile-badges">
+              {earned.map((b) => (
+                <li key={b.id}>
+                  <BadgeArt id={b.id} size={52} />
+                  {b.name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="stack stack-sm">
+          <h3>XP, last 14 days</h3>
+          <ol className="xp-days">
+            {h.days.map((d) => (
+              <li key={d.day} data-active={d.active || undefined} data-goal={d.goalMet || undefined}>
+                <span className="bar-wrap" aria-hidden="true">
+                  <span className="bar" style={{ height: `${Math.max(4, (100 * d.xp) / max)}%` }} />
+                </span>
+                <span className="day" aria-hidden="true">
+                  {weekday(d.day)}
+                </span>
+                <span className="visually-hidden">
+                  {longDay(d.day)}: {d.xp} XP{d.goalMet ? ', daily goal reached' : ''}
+                </span>
+              </li>
+            ))}
+          </ol>
+          <p className="tiny muted">Bars are XP earned each day; green ones reached the daily goal.</p>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -1,6 +1,7 @@
 /**
- * Points (XP), levels, daily goals, streaks and badges: the rules from
- * docs/design/fun-and-points.md as pure functions and constants.
+ * Points (XP), levels, daily goals, streaks, days studied and badges: the
+ * rules from docs/design/fun-and-points.md (§1–§4) as pure functions and
+ * constants.
  *
  * Nothing here reads the database or the clock, so every rule is unit-tested
  * and can be explained on its own. The server (src/server/points.ts) decides
@@ -10,19 +11,49 @@
  *
  * Principles the rules follow:
  * - Reward learning, not clicking: XP only for doing something for the first
- *   time (a first answer, a fixed mistake, a due review, a finished lesson).
+ *   time (a first answer, a fixed mistake, a due review, a finished lesson,
+ *   a finished or secured topic).
  * - Never punish: XP is never taken away, and a missed day is covered by a
  *   streak freeze when one is banked.
  */
 import type { Outcome } from '@/domain/answers/check';
+import type { MasteryState } from '@/domain/mastery';
 
 // --- XP rules ------------------------------------------------------------------
 
 /** Every kind of XP event. Stored in `xp_events.kind`. */
-export const XP_KINDS = ['answer', 'review', 'lesson', 'perfect', 'combo', 'daily-goal'] as const;
+export const XP_KINDS = [
+  'answer',
+  'review',
+  'lesson',
+  'perfect',
+  'combo',
+  'daily-goal',
+  'topic',
+  'review-session',
+  'comeback',
+  'topic-secure',
+] as const;
 export type XpKind = (typeof XP_KINDS)[number];
 
-/** XP amounts. See the table in docs/design/fun-and-points.md §1. */
+/** What each kind of award is called when shown to the student, unless the award gives its own label. */
+export const XP_LABELS: Record<XpKind, string> = {
+  answer: 'Correct first time',
+  review: 'Review',
+  lesson: 'Lesson finished',
+  perfect: 'Perfect lesson',
+  combo: 'Combo',
+  'daily-goal': 'Daily goal reached',
+  topic: 'Topic finished',
+  'review-session': 'Review session',
+  comeback: 'Comeback',
+  'topic-secure': 'Topic secured',
+};
+
+/**
+ * Every XP amount, in one place. See the tables in docs/design/fun-and-points.md
+ * §1 and §4; nothing else hard-codes an amount.
+ */
 export const XP = {
   /** A question answered fully correctly on the first ever attempt, by difficulty (1–3). */
   firstTry: { 1: 10, 2: 15, 3: 20 } as Record<1 | 2 | 3, number>,
@@ -36,6 +67,14 @@ export const XP = {
   perfect: 10,
   /** Reaching the daily goal, once per local day. */
   dailyGoal: 10,
+  /** Every core lesson in a syllabus topic finished, once per topic. */
+  topic: 50,
+  /** A review session finished (REVIEW_SESSION_MIN_ANSWERS review answers in one local day), once per day. */
+  reviewSession: 15,
+  /** Bonus for a question that was wrong before and is now right in a due review, once per question. */
+  comeback: 5,
+  /** Every objective in a topic reaches Secure, once per topic. */
+  topicSecure: 30,
 } as const;
 
 /** A score at or above this counts as correct (the same threshold as the review scheduler). */
@@ -191,19 +230,28 @@ export function isPerfectLesson(firstScores: ReadonlyArray<number | null | undef
 /** Awards for finishing a lesson. Only the first completion pays out. */
 export function lessonXp(input: { firstCompletion: boolean; firstScores: ReadonlyArray<number | null | undefined> }): XpAward[] {
   if (!input.firstCompletion) return [];
-  const out: XpAward[] = [{ kind: 'lesson', amount: XP.lesson, label: 'Lesson finished' }];
-  if (isPerfectLesson(input.firstScores)) out.push({ kind: 'perfect', amount: XP.perfect, label: 'Perfect lesson' });
+  const out: XpAward[] = [{ kind: 'lesson', amount: XP.lesson, label: XP_LABELS.lesson }];
+  if (isPerfectLesson(input.firstScores)) out.push({ kind: 'perfect', amount: XP.perfect, label: XP_LABELS.perfect });
   return out;
+}
+
+/**
+ * Today's XP has reached the daily goal. A goal of 0 means "no goal": it is
+ * never met, so there is no goal ring and no goal bonus.
+ */
+export function isGoalMet(todayXp: number, goal: number): boolean {
+  return goal > 0 && todayXp >= goal;
 }
 
 /** The daily-goal bonus, when today's XP has reached the goal and it hasn't been paid today. */
 export function dailyGoalAward(todayXp: number, goal: number, alreadyAwardedToday: boolean): XpAward | null {
-  if (alreadyAwardedToday || todayXp < goal) return null;
-  return { kind: 'daily-goal', amount: XP.dailyGoal, label: 'Daily goal reached' };
+  if (alreadyAwardedToday || !isGoalMet(todayXp, goal)) return null;
+  return { kind: 'daily-goal', amount: XP.dailyGoal, label: XP_LABELS['daily-goal'] };
 }
 
-/** Daily goal options (XP per day). */
+/** Daily goal options (XP per day). 0 turns the goal off. */
 export const DAILY_GOALS = [
+  { xp: 0, name: 'Off' },
   { xp: 20, name: 'Chill' },
   { xp: 50, name: 'Regular' },
   { xp: 100, name: 'Serious' },
@@ -214,6 +262,58 @@ export const DEFAULT_DAILY_GOAL: DailyGoal = 50;
 
 export function isDailyGoal(value: unknown): value is DailyGoal {
   return DAILY_GOALS.some((g) => g.xp === value);
+}
+
+// --- Topics, review sessions and comebacks (§4) -----------------------------
+
+/**
+ * A topic is finished when it has at least one core lesson (enrichment and
+ * archived lessons don't count) and every one of them is finished.
+ */
+export function isTopicFinished(coreLessons: { total: number; finished: number }): boolean {
+  return coreLessons.total > 0 && coreLessons.finished >= coreLessons.total;
+}
+
+/** 50 XP for a finished topic (kind `topic`, source id the topic id, so once per topic). */
+export function topicFinishedAward(coreLessons: { total: number; finished: number }): XpAward | null {
+  return isTopicFinished(coreLessons) ? { kind: 'topic', amount: XP.topic, label: XP_LABELS.topic } : null;
+}
+
+/**
+ * 30 XP when every objective in a topic is Secure, judged by the mastery
+ * rules in src/domain/mastery.ts (the topic's aggregate state). Kind
+ * `topic-secure`, source id the topic id, so once per topic even if it later
+ * slips and is secured again.
+ */
+export function topicSecureAward(topicState: MasteryState): XpAward | null {
+  return topicState === 'secure' ? { kind: 'topic-secure', amount: XP.topicSecure, label: XP_LABELS['topic-secure'] } : null;
+}
+
+/** Different questions answered in review on one local day that make a review session. */
+export const REVIEW_SESSION_MIN_ANSWERS = 5;
+
+/**
+ * 15 XP for finishing a review session: at least five different questions
+ * answered in review today (right or wrong: showing up is what counts;
+ * re-answering one question doesn't add to the count). Kind
+ * `review-session`, source id the local day, so the unique index pays it at
+ * most once per day.
+ */
+export function reviewSessionAward(differentQuestionsReviewedToday: number): XpAward | null {
+  if (differentQuestionsReviewedToday < REVIEW_SESSION_MIN_ANSWERS) return null;
+  return { kind: 'review-session', amount: XP.reviewSession, label: XP_LABELS['review-session'] };
+}
+
+/**
+ * +5 for a comeback: a question whose earlier attempt was incorrect, now
+ * answered fully correctly in a due review (`dueReview`: the answer earned a
+ * `review` award). "Due" comes from the review schedule, as for review XP, so
+ * the browser can't claim it. Kind `comeback`, source id the question id, so
+ * once per question.
+ */
+export function comebackAward(input: { dueReview: boolean; outcome: RecordedOutcome; wrongBefore: boolean }): XpAward | null {
+  if (!input.dueReview || input.outcome !== 'correct' || !input.wrongBefore) return null;
+  return { kind: 'comeback', amount: XP.comeback, label: XP_LABELS.comeback };
 }
 
 // --- Levels --------------------------------------------------------------------
@@ -357,6 +457,23 @@ export function lastDays(today: LocalDay, count: number): LocalDay[] {
   return Array.from({ length: Math.max(0, count) }, (_, i) => addDays(today, i - count + 1));
 }
 
+/** The seven days of the Monday–Sunday week that contains `day`, Monday first. */
+export function weekOf(day: LocalDay): LocalDay[] {
+  const n = dayNumber(day);
+  const sinceMonday = (new Date(n * DAY_MS).getUTCDay() + 6) % 7; // getUTCDay: Sunday 0 … Saturday 6
+  return Array.from({ length: 7 }, (_, i) => fromDayNumber(n - sinceMonday + i));
+}
+
+/**
+ * Days studied this week: the days in `activeDays` (days with XP) that fall
+ * in the Monday–Sunday week containing `today`, oldest first, without
+ * duplicates. Shown as dots on the home page instead of a streak.
+ */
+export function daysStudiedThisWeek(activeDays: readonly LocalDay[], today: LocalDay): LocalDay[] {
+  const week = new Set(weekOf(today));
+  return [...new Set(activeDays)].filter((d) => week.has(d)).sort();
+}
+
 // --- Streaks -------------------------------------------------------------------
 
 /** Every 7 consecutive streak days earn one freeze… */
@@ -451,14 +568,24 @@ export function computeStreak(activeDays: readonly LocalDay[], today: LocalDay):
 
 /** What badges are judged on. All counts are lifetime totals. */
 export interface BadgeStats {
-  /** Answers marked fully correct. */
-  correctAnswers: number;
   lessonsFinished: number;
   perfectLessons: number;
   /** The longest combo reached. */
   bestCombo: number;
-  /** The longest streak reached, in streak days. */
-  longestStreak: number;
+  /** Review sessions finished (`review-session` awards). */
+  reviewSessions: number;
+  /** Comebacks: questions wrong before, then right in a due review (`comeback` awards). */
+  comebacks: number;
+  /** Topics with every core lesson finished (`topic` awards). */
+  topicsFinished: number;
+  /** Different topics with at least one finished lesson. */
+  topicsWithFinishedLessons: number;
+  /** Topics that reached fully Secure (`topic-secure` awards). */
+  topicsSecured: number;
+  /** Topics that had objectives in Needs revision and then became fully Secure. */
+  topicsRecovered: number;
+  /** Different local days with XP (any days, not necessarily in a row). */
+  studyDays: number;
   /** Reviews answered fully correctly while due. */
   dueReviewsCorrect: number;
   /** Days on which the daily goal was reached. */
@@ -468,7 +595,11 @@ export interface BadgeStats {
   totalXp: number;
 }
 
-/** Icon keys; the UI maps each to an icon. */
+/**
+ * Icon keys; the UI maps each to an icon. A few badges share a key (the two
+ * memory badges, the two comeback badges, the two big milestones), so badge
+ * art that must be unique should be keyed by badge id.
+ */
 export type BadgeIcon =
   | 'spark'
   | 'flag'
@@ -499,16 +630,24 @@ export interface BadgeDefinition {
   target: number;
 }
 
-/** Every badge, in display order. Ids are stored in `user_badges.badge_id`: never rename one. */
+/**
+ * Every badge, in display order (docs/design/fun-and-points.md §4). Ids are
+ * stored in `user_badges.badge_id`: never rename one without a migration
+ * (drizzle/0003 moved the first catalogue's ids to these). There are no
+ * streak badges on purpose.
+ */
 export const BADGES = [
-  { id: 'first-spark', name: 'First Spark', description: 'Your first correct answer.', howToEarn: 'Answer any question correctly.', icon: 'spark', stat: 'correctAnswers', target: 1 },
-  { id: 'off-the-blocks', name: 'Off the Blocks', description: 'You finished your first lesson.', howToEarn: 'Finish a lesson.', icon: 'flag', stat: 'lessonsFinished', target: 1 },
+  { id: 'first-steps', name: 'First Steps', description: 'You finished your first lesson.', howToEarn: 'Finish a lesson.', icon: 'flag', stat: 'lessonsFinished', target: 1 },
+  { id: 'recall-rookie', name: 'Recall Rookie', description: 'Your first review session.', howToEarn: `Answer ${REVIEW_SESSION_MIN_ANSWERS} review questions in one day.`, icon: 'brain', stat: 'reviewSessions', target: 1 },
+  { id: 'getting-warmer', name: 'Getting Warmer', description: 'You got a question right in review that you had wrong before.', howToEarn: 'Get a question you missed before right when it comes up for review.', icon: 'flame', stat: 'comebacks', target: 1 },
   { id: 'flawless', name: 'Flawless', description: 'Every question in a lesson right first time.', howToEarn: 'Get every question in a lesson right on your first try.', icon: 'gem', stat: 'perfectLessons', target: 1 },
-  { id: 'combo-5', name: 'Combo ×5', description: 'Five right answers in a row.', howToEarn: 'Get 5 new answers right in a row.', icon: 'bolt', stat: 'bestCombo', target: 5 },
-  { id: 'combo-10', name: 'Combo ×10', description: 'Ten right answers in a row.', howToEarn: 'Get 10 new answers right in a row.', icon: 'rocket', stat: 'bestCombo', target: 10 },
-  { id: 'on-a-roll', name: 'On a Roll', description: 'A 3-day streak.', howToEarn: 'Earn XP on 3 days in a row.', icon: 'flame', stat: 'longestStreak', target: 3 },
-  { id: 'week-warrior', name: 'Week Warrior', description: 'A 7-day streak.', howToEarn: 'Earn XP on 7 days in a row.', icon: 'calendar', stat: 'longestStreak', target: 7 },
-  { id: 'unstoppable', name: 'Unstoppable', description: 'A 30-day streak.', howToEarn: 'Earn XP on 30 days in a row.', icon: 'mountain', stat: 'longestStreak', target: 30 },
+  { id: 'on-a-roll', name: 'On a Roll', description: 'Five right answers in a row.', howToEarn: 'Get 5 new answers right in a row.', icon: 'bolt', stat: 'bestCombo', target: 5 },
+  { id: 'in-the-zone', name: 'In the Zone', description: 'Ten right answers in a row.', howToEarn: 'Get 10 new answers right in a row.', icon: 'rocket', stat: 'bestCombo', target: 10 },
+  { id: 'topic-finisher', name: 'Topic Finisher', description: 'Every lesson in a topic finished.', howToEarn: 'Finish every lesson in one topic.', icon: 'mountain', stat: 'topicsFinished', target: 1 },
+  { id: 'curious-mind', name: 'Curious Mind', description: 'Lessons finished in five different topics.', howToEarn: 'Finish a lesson in 5 different topics.', icon: 'spark', stat: 'topicsWithFinishedLessons', target: 5 },
+  { id: 'concept-master', name: 'Concept Master', description: 'Every objective in a topic Secure.', howToEarn: 'Get every objective in one topic to Secure.', icon: 'trophy', stat: 'topicsSecured', target: 1 },
+  { id: 'comeback-arc', name: 'Comeback Arc', description: 'A topic that needed revision is fully Secure again.', howToEarn: 'Bring a topic with objectives in Needs revision back to fully Secure.', icon: 'flame', stat: 'topicsRecovered', target: 1 },
+  { id: 'consistency-club', name: 'Consistency Club', description: 'You studied on five different days.', howToEarn: "Earn XP on 5 different days (they don't need to be in a row).", icon: 'calendar', stat: 'studyDays', target: 5 },
   { id: 'ten-down', name: 'Ten Down', description: 'Ten lessons finished.', howToEarn: 'Finish 10 lessons.', icon: 'books', stat: 'lessonsFinished', target: 10 },
   { id: 'half-century', name: 'Half Century', description: 'Fifty lessons finished.', howToEarn: 'Finish 50 lessons.', icon: 'trophy', stat: 'lessonsFinished', target: 50 },
   { id: 'memory-keeper', name: 'Memory Keeper', description: '25 reviews remembered on the day they were due.', howToEarn: 'Answer 25 due reviews correctly.', icon: 'brain', stat: 'dueReviewsCorrect', target: 25 },

@@ -64,18 +64,18 @@ export function BlockView({ block }: { block: Exclude<RenderedBlock, { type: 'ch
     case 'misconceptions':
       return (
         <section className="stack stack-sm" aria-label="Common mistakes">
-          <h2 className="block-title row" style={{ ['--gap' as string]: '8px' }}>
-            <AlertIcon width={20} height={20} style={{ color: 'var(--warn)' }} /> Common mistakes
+          <h2 className="block-title mistakes-head">
+            <AlertIcon width={22} height={22} aria-hidden="true" /> Common mistakes
           </h2>
           <div>
             {block.items.map((m, i) => (
               <div key={i} className="misconception">
                 <div className="mc-line mc-wrong">
-                  <XIcon aria-label="Mistake" />
+                  <XIcon title="Mistake" />
                   <Html html={m.wrongHtml} />
                 </div>
                 <div className="mc-line mc-right">
-                  <CheckIcon aria-label="Instead" />
+                  <CheckIcon title="Instead" />
                   <Html html={m.rightHtml} />
                 </div>
               </div>
@@ -109,7 +109,7 @@ export function BlockView({ block }: { block: Exclude<RenderedBlock, { type: 'ch
       return (
         <details className="disclosure">
           <summary>
-            <ChevronRightIcon /> Go deeper: {block.title}
+            <ChevronRightIcon className="disclosure-chevron" /> Go deeper: {block.title}
           </summary>
           <div className="disclosure-body">
             <Html html={block.html} />

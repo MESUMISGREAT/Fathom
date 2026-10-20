@@ -6,7 +6,8 @@ import { listSubjects } from '@/server/queries/catalog';
 import { getDb } from '@/server/db';
 import { enrollments } from '@/server/db/schema';
 import { EnrollControl } from '@/components/study/EnrollControl';
-import { PageHead, SubjectTile } from '@/components/ui';
+import { PageHead } from '@/components/ui';
+import { SubjectMotif } from '@/components/art/SubjectMotif';
 import { ArrowRightIcon, InfoIcon } from '@/components/icons';
 
 export const metadata: Metadata = { title: 'Subjects' };
@@ -19,6 +20,7 @@ export default async function SubjectsPage({ searchParams }: { searchParams: Pro
   return (
     <div className="container">
       <PageHead
+        art="subjects"
         title={welcome ? 'Which subjects are you taking?' : 'Subjects'}
         lede={
           welcome
@@ -26,37 +28,31 @@ export default async function SubjectsPage({ searchParams }: { searchParams: Pro
             : 'Every subject follows its official Cambridge syllabus. Add the ones you study to get a study path and progress tracking.'
         }
       />
-      <div className="stack">
+      <div className="subject-list">
         {subjects.map((s) => {
           const e = mine.find((m) => m.subjectCode === s.code);
           return (
-            <article key={s.code} className="card card-pad">
-              <div className="row row-between" style={{ alignItems: 'flex-start', ['--gap' as string]: '16px' }}>
-                <div className="row row-nowrap grow" style={{ alignItems: 'flex-start', ['--gap' as string]: '16px' }}>
-                  <SubjectTile code={s.code} large />
-                  <div className="stack stack-xs grow">
-                    <h2 className="h2">
-                      <Link href={`/subjects/${s.slug}`} style={{ color: 'inherit' }}>
-                        {s.name}
-                      </Link>
-                    </h2>
-                    <p className="small faint">
-                      Cambridge International AS &amp; A Level {s.name} ({s.code}) · syllabus for {s.version.label}
-                    </p>
-                    <p className="small muted" style={{ marginTop: 4 }}>
-                      {s.description}
-                    </p>
-                    <p className="tiny faint" style={{ marginTop: 4 }}>
-                      {s.counts.topics} topics · {s.counts.objectives} objectives · {s.counts.lessons} lessons so far
-                    </p>
-                  </div>
-                </div>
-                <div className="stack stack-sm" style={{ alignItems: 'flex-end' }}>
-                  <EnrollControl subjectCode={s.code} subjectName={s.shortName} enrolledLevel={e?.targetLevel ?? null} signedIn={!!user} />
-                  <Link href={`/subjects/${s.slug}`} className="small row" style={{ ['--gap' as string]: '4px' }}>
-                    View syllabus <ArrowRightIcon width={16} height={16} />
-                  </Link>
-                </div>
+            <article key={s.code} className="subject-item" data-subject={s.code} aria-labelledby={`s-${s.code}`}>
+              <div className="subject-item-art" aria-hidden="true">
+                <SubjectMotif code={s.code} />
+              </div>
+              <div className="stack stack-xs">
+                <p className="subject-card-code">
+                  {s.code} · syllabus for {s.version.label}
+                </p>
+                <h2 id={`s-${s.code}`} className="h2">
+                  <Link href={`/subjects/${s.slug}`}>{s.name}</Link>
+                </h2>
+                <p className="small muted">{s.description}</p>
+                <p className="tiny muted" style={{ marginTop: 2 }}>
+                  {s.counts.topics} topics · {s.counts.objectives} objectives · {s.counts.lessons} lessons so far
+                </p>
+              </div>
+              <div className="subject-item-actions">
+                <EnrollControl subjectCode={s.code} subjectName={s.shortName} enrolledLevel={e?.targetLevel ?? null} signedIn={!!user} />
+                <Link href={`/subjects/${s.slug}`} className="small row" style={{ ['--gap' as string]: '4px', fontWeight: 700, minHeight: 44 }}>
+                  View syllabus <ArrowRightIcon width={16} height={16} />
+                </Link>
               </div>
             </article>
           );

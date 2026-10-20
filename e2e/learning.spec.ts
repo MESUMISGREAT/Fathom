@@ -13,7 +13,9 @@ test('a guest can open a lesson and get feedback without an account', async ({ p
   await q1.locator('.option').first().click();
   await q1.getByRole('button', { name: 'Check answer' }).click();
   await expect(q1.getByText('Correct', { exact: true })).toBeVisible();
-  await expect(q1.getByText('Create an account')).toBeVisible();
+  // Guests earn no XP (the server awards none); they're told how to keep it.
+  await expect(q1.getByRole('link', { name: 'Sign up to keep your XP' })).toBeVisible();
+  await expect(q1.locator('.xp-pop')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 

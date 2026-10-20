@@ -6,7 +6,7 @@ import { getDb } from '@/server/db';
 import { bookmarks } from '@/server/db/schema';
 import { getQuestionsByIds, lessonLocations, plainPreview } from '@/server/queries/catalog';
 import { EmptyState, PageHead } from '@/components/ui';
-import { BookIcon, BookmarkIcon, TargetIcon } from '@/components/icons';
+import { BookIcon, TargetIcon } from '@/components/icons';
 
 export const metadata: Metadata = { title: 'Saved' };
 
@@ -33,7 +33,7 @@ export default async function SavedPage() {
     <div className="container-narrow">
       <PageHead title="Saved" lede="Lessons and questions you've bookmarked. Tap the bookmark on any lesson or question to add it here." />
       {lessons.length === 0 && questions.length === 0 ? (
-        <EmptyState icon={<BookmarkIcon />} title="Nothing saved yet">
+        <EmptyState art="saved" title="Nothing saved yet">
           <p>Save tricky questions or lessons you want to come back to.</p>
         </EmptyState>
       ) : (
@@ -43,11 +43,13 @@ export default async function SavedPage() {
               <h2 id="saved-lessons" style={{ marginBottom: 12 }}>
                 Lessons
               </h2>
-              <ul className="list card card-pad list-rows">
+              <ul className="list card list-rows" style={{ padding: '4px 8px' }}>
                 {lessons.map((l) => (
                   <li key={l.id}>
                     <Link href={l.href} className="list-row">
-                      <BookIcon width={18} height={18} style={{ color: 'var(--text-3)', flex: 'none' }} />
+                      <span className="row-glyph">
+                        <BookIcon />
+                      </span>
                       <span className="grow">
                         <span style={{ display: 'block', fontWeight: 600 }}>{l.title}</span>
                         <span className="tiny faint">
@@ -65,11 +67,13 @@ export default async function SavedPage() {
               <h2 id="saved-questions" style={{ marginBottom: 12 }}>
                 Questions
               </h2>
-              <ul className="list card card-pad list-rows">
+              <ul className="list card list-rows" style={{ padding: '4px 8px' }}>
                 {questions.map((q) => (
                   <li key={q.id}>
                     <Link href={q.href} className="list-row">
-                      <TargetIcon width={18} height={18} style={{ color: 'var(--text-3)', flex: 'none' }} />
+                      <span className="row-glyph">
+                        <TargetIcon />
+                      </span>
                       <span className="grow">
                         <span style={{ display: 'block', fontWeight: 600 }}>{q.preview || q.label}</span>
                         <span className="tiny faint">

@@ -4,7 +4,7 @@ import { getDueQuestions, nextDueAt } from '@/server/queries/review';
 import { lessonLocations } from '@/server/queries/catalog';
 import { ReviewSession } from '@/components/questions/ReviewSession';
 import { EmptyState, PageHead } from '@/components/ui';
-import { CheckCircleIcon } from '@/components/icons';
+import { ChevronRightIcon } from '@/components/icons';
 import { BOX_INTERVAL_DAYS } from '@/domain/schedule';
 
 export const metadata: Metadata = { title: 'Review' };
@@ -29,13 +29,14 @@ export default async function ReviewPage() {
   return (
     <div className="container-narrow">
       <PageHead
+        art="review"
         title="Review"
         lede="Questions you've answered before come back just before you're likely to forget them. A few minutes is plenty."
       />
       {items.length > 0 ? (
         <ReviewSession items={items} />
       ) : (
-        <EmptyState icon={<CheckCircleIcon />} title="Nothing to review right now">
+        <EmptyState art="done" title="Nothing to review right now">
           <p>
             {upcoming
               ? `Your next review question is due ${when(upcoming)}.`
@@ -44,14 +45,19 @@ export default async function ReviewPage() {
         </EmptyState>
       )}
       <details className="disclosure" style={{ marginTop: 32 }}>
-        <summary>How review timing works</summary>
+        <summary>
+          <ChevronRightIcon className="disclosure-chevron" /> How review timing works
+        </summary>
         <div className="disclosure-body prose small">
           <p>
             Each question sits in a box. Answer it correctly and it moves up a box, so it comes back after a longer gap (
             {BOX_INTERVAL_DAYS.map((d) => `${d} day${d === 1 ? '' : 's'}`).join(', ')}). Miss it and it goes back to box 1, so you see it again
             tomorrow. Answering early (for example re-doing a lesson) doesn&rsquo;t skip a box, so cramming can&rsquo;t fake the spacing.
           </p>
-          <p>Review shows up to 10 questions at a time, most overdue first. There are no streaks to keep: miss a few days and it simply waits for you.</p>
+          <p>
+            Review shows up to 10 questions at a time, most overdue first. A due review answered right earns XP, and five or more in a day add a
+            small session bonus. Miss a few days and it simply waits for you; nothing is lost.
+          </p>
         </div>
       </details>
     </div>

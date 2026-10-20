@@ -21,7 +21,18 @@ const secure = process.env.NODE_ENV === 'production' && process.env.INSECURE_COO
 
 export type SessionUser = Pick<
   User,
-  'id' | 'email' | 'displayName' | 'role' | 'theme' | 'lessonMode' | 'dailyGoal' | 'timeZone' | 'celebrations' | 'sounds' | 'createdAt'
+  | 'id'
+  | 'email'
+  | 'displayName'
+  | 'role'
+  | 'theme'
+  | 'lessonMode'
+  | 'dailyGoal'
+  | 'timeZone'
+  | 'celebrations'
+  | 'sounds'
+  | 'showPoints'
+  | 'createdAt'
 >;
 
 export async function createSession(userId: string): Promise<void> {
@@ -62,6 +73,7 @@ export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
       timeZone: users.timeZone,
       celebrations: users.celebrations,
       sounds: users.sounds,
+      showPoints: users.showPoints,
       createdAt: users.createdAt,
       expiresAt: sessions.expiresAt,
     })

@@ -10,16 +10,20 @@ import {
   comboAward,
   comboBonus,
   COMBO_WINDOW_MS,
+  comebackAward,
   computeStreak,
   DAILY_GOALS,
   dailyGoalAward,
   daysBetween,
+  daysStudiedThisWeek,
   DEFAULT_DAILY_GOAL,
   evaluateBadges,
   getBadge,
   isDailyGoal,
+  isGoalMet,
   isLocalDay,
   isPerfectLesson,
+  isTopicFinished,
   isValidTimeZone,
   lastDays,
   lessonXp,
@@ -28,10 +32,19 @@ import {
   localDay,
   MAX_FREEZES,
   nextCombo,
+  REVIEW_SESSION_MIN_ANSWERS,
+  reviewSessionAward,
   reviewSourceId,
   titleFor,
+  topicFinishedAward,
+  topicSecureAward,
+  weekOf,
+  XP,
+  XP_KINDS,
+  XP_LABELS,
   xpToReachLevel,
   type AnswerXpInput,
+  type BadgeIcon,
   type BadgeStats,
 } from '@/domain/points';
 
@@ -172,12 +185,60 @@ describe('lessons and the daily goal', () => {
     expect(dailyGoalAward(80, 50, true)).toBeNull();
   });
 
-  it('offers four daily goals, Regular by default', () => {
-    expect(DAILY_GOALS.map((g) => `${g.xp} ${g.name}`)).toEqual(['20 Chill', '50 Regular', '100 Serious', '150 Intense']);
+  it('offers four daily goals and Off, Regular by default', () => {
+    expect(DAILY_GOALS.map((g) => `${g.xp} ${g.name}`)).toEqual(['0 Off', '20 Chill', '50 Regular', '100 Serious', '150 Intense']);
     expect(DEFAULT_DAILY_GOAL).toBe(50);
     expect(isDailyGoal(100)).toBe(true);
+    expect(isDailyGoal(0)).toBe(true);
     expect(isDailyGoal(30)).toBe(false);
+    expect(isDailyGoal(-20)).toBe(false);
     expect(isDailyGoal('50')).toBe(false);
+  });
+
+  it('treats a goal of 0 as no goal: never met, never a bonus', () => {
+    expect(isGoalMet(0, 0)).toBe(false);
+    expect(isGoalMet(500, 0)).toBe(false);
+    expect(isGoalMet(20, 20)).toBe(true);
+    expect(isGoalMet(19, 20)).toBe(false);
+    expect(dailyGoalAward(0, 0, false)).toBeNull();
+    expect(dailyGoalAward(500, 0, false)).toBeNull();
+  });
+});
+
+describe('topics, review sessions and comebacks', () => {
+  it('keeps every amount in the one XP config', () => {
+    expect(XP).toMatchObject({ topic: 50, reviewSession: 15, comeback: 5, topicSecure: 30 });
+    expect(XP_KINDS).toEqual(['answer', 'review', 'lesson', 'perfect', 'combo', 'daily-goal', 'topic', 'review-session', 'comeback', 'topic-secure']);
+    expect(XP_LABELS).toMatchObject({ topic: 'Topic finished', 'review-session': 'Review session', comeback: 'Comeback', 'topic-secure': 'Topic secured' });
+  });
+
+  it('finishes a topic when every core lesson is finished, and never an empty one', () => {
+    expect(isTopicFinished({ total: 3, finished: 3 })).toBe(true);
+    expect(isTopicFinished({ total: 3, finished: 2 })).toBe(false);
+    expect(isTopicFinished({ total: 0, finished: 0 })).toBe(false);
+    expect(topicFinishedAward({ total: 1, finished: 1 })).toEqual({ kind: 'topic', amount: 50, label: 'Topic finished' });
+    expect(topicFinishedAward({ total: 2, finished: 1 })).toBeNull();
+  });
+
+  it('secures a topic only when its mastery state is Secure', () => {
+    expect(topicSecureAward('secure')).toEqual({ kind: 'topic-secure', amount: 30, label: 'Topic secured' });
+    for (const s of ['not-started', 'learning', 'practising', 'needs-revision'] as const) expect(topicSecureAward(s)).toBeNull();
+  });
+
+  it('needs five different review answers for a review session', () => {
+    expect(REVIEW_SESSION_MIN_ANSWERS).toBe(5);
+    expect(reviewSessionAward(4)).toBeNull();
+    expect(reviewSessionAward(5)).toEqual({ kind: 'review-session', amount: 15, label: 'Review session' });
+    expect(reviewSessionAward(12)).toEqual({ kind: 'review-session', amount: 15, label: 'Review session' });
+  });
+
+  it('pays a comeback for a question wrong before and fully right in a due review', () => {
+    const award = { kind: 'comeback', amount: 5, label: 'Comeback' };
+    expect(comebackAward({ dueReview: true, outcome: 'correct', wrongBefore: true })).toEqual(award);
+    expect(comebackAward({ dueReview: true, outcome: 'correct', wrongBefore: false })).toBeNull();
+    expect(comebackAward({ dueReview: false, outcome: 'correct', wrongBefore: true })).toBeNull(); // not a due review
+    expect(comebackAward({ dueReview: true, outcome: 'partial', wrongBefore: true })).toBeNull();
+    expect(comebackAward({ dueReview: true, outcome: 'incorrect', wrongBefore: true })).toBeNull();
   });
 });
 
@@ -406,38 +467,51 @@ describe('streaks', () => {
 
 describe('badges', () => {
   const zero: BadgeStats = {
-    correctAnswers: 0,
     lessonsFinished: 0,
     perfectLessons: 0,
     bestCombo: 0,
-    longestStreak: 0,
+    reviewSessions: 0,
+    comebacks: 0,
+    topicsFinished: 0,
+    topicsWithFinishedLessons: 0,
+    topicsSecured: 0,
+    topicsRecovered: 0,
+    studyDays: 0,
     dueReviewsCorrect: 0,
     goalDays: 0,
     subjectsWithFinishedLessons: 0,
     totalXp: 0,
   };
 
-  it('has the catalogue from the spec, with unique ids and icons', () => {
-    expect(BADGES.map((b) => b.name)).toEqual([
-      'First Spark',
-      'Off the Blocks',
-      'Flawless',
-      'Combo ×5',
-      'Combo ×10',
-      'On a Roll',
-      'Week Warrior',
-      'Unstoppable',
-      'Ten Down',
-      'Half Century',
-      'Memory Keeper',
-      'Goal Getter',
-      'Explorer',
-      '500 Club',
-      '2.5K Club',
+  it('has the catalogue from the spec, with unique ids and no streak badges', () => {
+    expect(BADGES.map((b) => [b.id, b.name])).toEqual([
+      ['first-steps', 'First Steps'],
+      ['recall-rookie', 'Recall Rookie'],
+      ['getting-warmer', 'Getting Warmer'],
+      ['flawless', 'Flawless'],
+      ['on-a-roll', 'On a Roll'],
+      ['in-the-zone', 'In the Zone'],
+      ['topic-finisher', 'Topic Finisher'],
+      ['curious-mind', 'Curious Mind'],
+      ['concept-master', 'Concept Master'],
+      ['comeback-arc', 'Comeback Arc'],
+      ['consistency-club', 'Consistency Club'],
+      ['ten-down', 'Ten Down'],
+      ['half-century', 'Half Century'],
+      ['memory-keeper', 'Memory Keeper'],
+      ['goal-getter', 'Goal Getter'],
+      ['explorer', 'Explorer'],
+      ['club-500', '500 Club'],
+      ['club-2500', '2.5K Club'],
     ]);
     expect(new Set(BADGES.map((b) => b.id)).size).toBe(BADGES.length);
-    expect(new Set(BADGES.map((b) => b.icon)).size).toBe(BADGES.length);
-    for (const b of BADGES) expect(b.description && b.howToEarn).toBeTruthy();
+    const icons: BadgeIcon[] = ['spark', 'flag', 'gem', 'bolt', 'rocket', 'flame', 'calendar', 'mountain', 'books', 'trophy', 'brain', 'target', 'compass', 'star', 'crown'];
+    for (const b of BADGES) {
+      expect(icons).toContain(b.icon);
+      expect(b.description && b.howToEarn).toBeTruthy();
+      expect(`${b.name} ${b.description} ${b.howToEarn}`).not.toMatch(/streak/i);
+    }
+    for (const old of ['first-spark', 'off-the-blocks', 'combo-5', 'combo-10', 'week-warrior', 'unstoppable']) expect(getBadge(old)).toBeUndefined();
   });
 
   it('earns nothing from nothing', () => {
@@ -446,18 +520,22 @@ describe('badges', () => {
 
   it('earns each badge at its threshold', () => {
     const cases: Array<[Partial<BadgeStats>, string[]]> = [
-      [{ correctAnswers: 1 }, ['first-spark']],
-      [{ lessonsFinished: 1 }, ['off-the-blocks']],
+      [{ lessonsFinished: 1 }, ['first-steps']],
+      [{ reviewSessions: 1 }, ['recall-rookie']],
+      [{ comebacks: 1 }, ['getting-warmer']],
       [{ perfectLessons: 1 }, ['flawless']],
       [{ bestCombo: 4 }, []],
-      [{ bestCombo: 5 }, ['combo-5']],
-      [{ bestCombo: 10 }, ['combo-5', 'combo-10']],
-      [{ longestStreak: 2 }, []],
-      [{ longestStreak: 3 }, ['on-a-roll']],
-      [{ longestStreak: 7 }, ['on-a-roll', 'week-warrior']],
-      [{ longestStreak: 30 }, ['on-a-roll', 'week-warrior', 'unstoppable']],
-      [{ lessonsFinished: 10 }, ['off-the-blocks', 'ten-down']],
-      [{ lessonsFinished: 50 }, ['off-the-blocks', 'ten-down', 'half-century']],
+      [{ bestCombo: 5 }, ['on-a-roll']],
+      [{ bestCombo: 10 }, ['on-a-roll', 'in-the-zone']],
+      [{ topicsFinished: 1 }, ['topic-finisher']],
+      [{ topicsWithFinishedLessons: 4 }, []],
+      [{ topicsWithFinishedLessons: 5 }, ['curious-mind']],
+      [{ topicsSecured: 1 }, ['concept-master']],
+      [{ topicsRecovered: 1 }, ['comeback-arc']],
+      [{ studyDays: 4 }, []],
+      [{ studyDays: 5 }, ['consistency-club']],
+      [{ lessonsFinished: 10 }, ['first-steps', 'ten-down']],
+      [{ lessonsFinished: 50 }, ['first-steps', 'ten-down', 'half-century']],
       [{ dueReviewsCorrect: 24 }, []],
       [{ dueReviewsCorrect: 25 }, ['memory-keeper']],
       [{ goalDays: 5 }, ['goal-getter']],
@@ -471,9 +549,11 @@ describe('badges', () => {
   });
 
   it('returns only newly earned badges', () => {
-    const stats = { ...zero, correctAnswers: 3, lessonsFinished: 10 };
-    expect(evaluateBadges(stats, ['first-spark', 'off-the-blocks'])).toEqual(['ten-down']);
-    expect(evaluateBadges(stats, new Set(['first-spark', 'off-the-blocks', 'ten-down']))).toEqual([]);
+    const stats = { ...zero, comebacks: 3, lessonsFinished: 10 };
+    expect(evaluateBadges(stats, ['getting-warmer', 'first-steps'])).toEqual(['ten-down']);
+    expect(evaluateBadges(stats, new Set(['getting-warmer', 'first-steps', 'ten-down']))).toEqual([]);
+    // Retired ids still stored somewhere change nothing.
+    expect(evaluateBadges(stats, ['first-spark', 'off-the-blocks'])).toEqual(['first-steps', 'getting-warmer', 'ten-down']);
   });
 
   it('reports progress towards locked badges', () => {
@@ -481,5 +561,25 @@ describe('badges', () => {
     expect(badgeProgress(tenDown, { ...zero, lessonsFinished: 3 })).toEqual({ current: 3, target: 10 });
     expect(badgeProgress(tenDown, { ...zero, lessonsFinished: 30 })).toEqual({ current: 10, target: 10 });
     expect(getBadge('no-such-badge')).toBeUndefined();
+  });
+});
+
+describe('days studied this week', () => {
+  it('gives the Monday–Sunday week around a day', () => {
+    // 2026-10-19 is a Monday, 2026-10-25 a Sunday.
+    const week = ['2026-10-19', '2026-10-20', '2026-10-21', '2026-10-22', '2026-10-23', '2026-10-24', '2026-10-25'];
+    expect(weekOf('2026-10-19')).toEqual(week);
+    expect(weekOf('2026-10-22')).toEqual(week);
+    expect(weekOf('2026-10-25')).toEqual(week);
+    expect(weekOf('2026-10-26')[0]).toBe('2026-10-26');
+    // Across a month and a year end.
+    expect(weekOf('2027-01-01')).toEqual(['2026-12-28', '2026-12-29', '2026-12-30', '2026-12-31', '2027-01-01', '2027-01-02', '2027-01-03']);
+  });
+
+  it('keeps only this week’s active days, sorted and without duplicates', () => {
+    const active = ['2026-10-21', '2026-10-18', '2026-10-19', '2026-10-21', '2026-10-26', '2026-10-20'];
+    expect(daysStudiedThisWeek(active, '2026-10-21')).toEqual(['2026-10-19', '2026-10-20', '2026-10-21']);
+    expect(daysStudiedThisWeek(active, '2026-10-18')).toEqual(['2026-10-18']); // Sunday ends the previous week
+    expect(daysStudiedThisWeek([], '2026-10-21')).toEqual([]);
   });
 });

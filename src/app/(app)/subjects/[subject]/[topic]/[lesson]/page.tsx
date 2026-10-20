@@ -11,7 +11,7 @@ import { LessonPlayer, type PlayerStep } from '@/components/lesson/LessonPlayer'
 import { QuestionCard } from '@/components/questions/QuestionCard';
 import { BookmarkButton } from '@/components/study/BookmarkButton';
 import { ReportProblem } from '@/components/study/ReportProblem';
-import { ClockIcon, TargetIcon } from '@/components/icons';
+import { CheckIcon, ClockIcon, TargetIcon } from '@/components/icons';
 import { Crumbs, LevelBadge, ProvenanceLabel } from '@/components/ui';
 
 type Params = Promise<{ subject: string; topic: string; lesson: string }>;
@@ -97,6 +97,7 @@ export default async function LessonPage({ params }: { params: Params }) {
     <div className="container-narrow">
       <LessonPlayer
         lessonId={lesson.id}
+        subjectCode={subject.code}
         steps={steps}
         initialStep={progress?.stepReached ?? 0}
         completed={!!progress?.completedAt}
@@ -115,9 +116,14 @@ export default async function LessonPage({ params }: { params: Params }) {
               ]}
             />
             <h1>{lesson.title}</h1>
-            <div className="row" style={{ ['--gap' as string]: '10px' }}>
-              <span className="tiny faint row" style={{ ['--gap' as string]: '4px' }}>
-                <ClockIcon width={14} height={14} /> {lesson.minutes} min
+            <div className="lesson-meta">
+              {progress?.completedAt && (
+                <span className="lesson-done-flag">
+                  <CheckIcon aria-hidden="true" /> Finished
+                </span>
+              )}
+              <span className="meta-time">
+                <ClockIcon aria-hidden="true" /> {lesson.minutes} min
               </span>
               <LevelBadge level={section.level} />
               {lesson.kind === 'enrichment' && <span className="badge">Beyond the syllabus</span>}
@@ -127,10 +133,10 @@ export default async function LessonPage({ params }: { params: Params }) {
                 </span>
               ))}
             </div>
-            <div className="row" style={{ ['--gap' as string]: '16px' }}>
-            <ProvenanceLabel provenance={lesson.provenance} />
-            <ReportProblem kind="lesson" targetId={lesson.id} />
-          </div>
+            <div className="lesson-foot-links">
+              <ProvenanceLabel provenance={lesson.provenance} />
+              <ReportProblem kind="lesson" targetId={lesson.id} />
+            </div>
           </header>
         }
         bookmark={user ? <BookmarkButton kind="lesson" targetId={lesson.id} initial={savedSet.has(`lesson:${lesson.id}`)} label="Save lesson" /> : null}
