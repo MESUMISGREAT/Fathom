@@ -969,6 +969,12 @@ a.list-row:active {
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
+.ring .ring-label svg {
+  width: 45%;
+  height: 45%;
+  stroke-width: 2.6;
+  color: var(--ring-fill, var(--cobalt));
+}
 .stat {
   display: flex;
   flex-direction: column;
@@ -2297,9 +2303,15 @@ a.subject-card:active {
   gap: 16px;
 }
 @media (min-width: 1040px) {
-  .home-top {
+  .home-top:not([data-solo]) {
     grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
     align-items: stretch;
+  }
+}
+/* The sidebar's XP card already shows the level on wide screens; the panel keeps to today, the week and unlocks. */
+@media (min-width: 960px) {
+  .me-panel .level-block {
+    display: none;
   }
 }
 .continue-card {
@@ -4346,5 +4358,9 @@ mark {
   }
   .xp-card-foot {
     display: none;
+  }
+  .xp-card {
+    gap: 8px;
+    padding: 10px 12px;
   }
 }

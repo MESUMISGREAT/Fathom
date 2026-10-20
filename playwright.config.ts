@@ -26,6 +26,8 @@ export default defineConfig({
       CONTENT_DIR: 'tests/fixtures/content',
       PGLITE_DIR: 'data/e2e-pglite',
       INSECURE_COOKIES: '1',
+      // Enables src/app/api/e2e (test-only hooks, a 404 otherwise).
+      E2E_HOOKS: '1',
       NEXT_TELEMETRY_DISABLED: '1',
     },
   },

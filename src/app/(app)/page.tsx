@@ -169,14 +169,17 @@ function DashboardView({ name, d, summary }: { name: string | null; d: Dashboard
       : d.next.kind === 'revisit'
         ? (d.revisit[0] ? (codeByName.get(d.revisit[0].subjectName) ?? null) : null)
         : null;
+  // "Welcome back" only once there is something to come back to.
+  const returning = d.dueCount > 0 || d.enrolled.some((e) => e.progress.lastActive !== null);
+  const hello = returning ? 'Welcome back' : 'Welcome';
   return (
     <div className="container stack stack-xl">
       <div className="stack stack-lg">
         <header className="welcome">
-          <h1>{name ? `Welcome back, ${name}` : 'Welcome back'}</h1>
+          <h1>{name ? `${hello}, ${name}` : hello}</h1>
           <p className="welcome-line">{welcomeLine(d)}</p>
         </header>
-        <div className="home-top">
+        <div className="home-top" data-solo={!summary || undefined}>
           <ContinueCard next={d.next} subjectCode={nextSubject} />
           {summary && <MePanel summary={summary} />}
         </div>
@@ -213,7 +216,7 @@ function DashboardView({ name, d, summary }: { name: string | null; d: Dashboard
                           Aiming for {targetLevel === 'AS' ? 'AS Level' : 'A Level'} · {s.lessonsCompleted} of {s.lessonsTotal} lessons done
                         </p>
                       </div>
-                      <Ring value={s.objectives ? (100 * s.studied) / s.objectives : 0} label="Syllabus studied" size={50} />
+                      <Ring value={s.lessonsTotal ? (100 * s.lessonsCompleted) / s.lessonsTotal : 0} label="Lessons done" size={50} />
                     </div>
                   </Link>
                 );

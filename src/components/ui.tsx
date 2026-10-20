@@ -7,6 +7,7 @@ import { Spot, type SpotName } from '@/components/art/Spot';
 import {
   AlertIcon,
   CheckCircleIcon,
+  CheckIcon,
   ChevronRightIcon,
   CircleIcon,
   HalfCircleIcon,
@@ -61,18 +62,25 @@ export function Meter({ value, label, thin, color }: { value: number; label: str
   );
 }
 
+/** A progress ring. Full rings show a tick instead of "100%" (which doesn't fit inside a small ring). */
 export function Ring({ value, label, size = 56, color }: { value: number; label: string; size?: number; color?: string }) {
   const pct = Math.max(0, Math.min(100, Math.round(value)));
   const r = 25;
   const c = 2 * Math.PI * r;
   return (
-    <div className="ring" style={{ ['--size' as string]: `${size}px`, ...(color ? { ['--ring-fill' as string]: color } : {}) }} role="img" aria-label={`${label}: ${pct}%`}>
+    <div
+      className="ring"
+      data-full={pct === 100 || undefined}
+      style={{ ['--size' as string]: `${size}px`, ...(color ? { ['--ring-fill' as string]: color } : {}) }}
+      role="img"
+      aria-label={`${label}: ${pct}%`}
+    >
       <svg viewBox="0 0 60 60" aria-hidden="true">
         <circle className="track" cx="30" cy="30" r={r} />
         <circle className="fill" cx="30" cy="30" r={r} strokeDasharray={c} strokeDashoffset={c * (1 - pct / 100)} />
       </svg>
       <span className="ring-label" aria-hidden="true">
-        {pct}%
+        {pct === 100 ? <CheckIcon /> : `${pct}%`}
       </span>
     </div>
   );
