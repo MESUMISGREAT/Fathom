@@ -78,7 +78,10 @@ export function MultimediaDrawingList() {
       <Badge x={px(8.5)} y={py(3.7)} n={4} />
 
       <Label x={px(5)} y={py(10) + 20} className="dg-text-small dg-text-muted">
-        (0, 0) is the top-left corner; y increases downwards
+        (0, 0) is the top-left corner;
+      </Label>
+      <Label x={px(5)} y={py(10) + 36} className="dg-text-small dg-text-muted">
+        y increases downwards
       </Label>
 
       {/* the drawing list */}
@@ -113,7 +116,7 @@ export function MultimediaDrawingList() {
         );
       })}
       <Label x={lx + (W - lx) / 2 - 5} y={316} className="dg-text-small dg-text-accent">
-        mono text = properties of each object
+        below each object: its properties
       </Label>
     </Svg>
   );
