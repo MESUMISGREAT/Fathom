@@ -1,0 +1,220 @@
+id: equations-motion-area-under-vt
+subject: "9702"
+topic: "2.1"
+title: Displacement from the area under a velocity–time graph
+summary: The area between a velocity–time graph and the time axis is the displacement; areas below the axis count as negative.
+order: 5
+minutes: 5
+objectives: ["2.1.3"]
+prerequisites: [equations-motion-velocity-time-graphs]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.3, displacement from the area under a velocity–time graph).
+    The diagram is drawn to scale (v = 8 − 2t). All areas recomputed with Python, including a
+    numerical integration check. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can find **displacement** from the **area** under a velocity–time graph, handle areas below the axis, and tell displacement from distance.
+
+  - type: explain
+    title: One graph, two answers
+    body: |
+      Last lesson, the **gradient** of a velocity–time graph gave you acceleration. Now the other half of the deal: the **area** between the line and the time axis is the **displacement**.
+
+      Same graph. Two answers. Zero extra cost.
+
+  - type: intuition
+    title: Why area?
+    body: |
+      At constant velocity, displacement $= v \times t$: the area of a **rectangle** of height $v$ and width $t$.
+
+      When $v$ changes, slice the time into thin strips of width $\Delta t$. In each strip the velocity barely changes, so the strip's area $v \times \Delta t$ is the small displacement $\Delta s$ in that time. Add up all the strips and you get the whole area, and the whole displacement.
+
+      Units agree too: $\text{m s}^{-1} \times \text{s} = \text{m}$.
+
+  - type: example
+    title: The car journey from last lesson
+    problem: |
+      The car speeds up uniformly from rest to $12\ \text{m s}^{-1}$ in 4 s, cruises at $12\ \text{m s}^{-1}$ until 10 s, then slows uniformly to rest at 16 s. How far does it travel?
+    steps:
+      - |
+        Split the area into simple shapes. **0–4 s**, triangle: $\tfrac{1}{2} \times 4 \times 12 = 24\ \text{m}$.
+      - |
+        **4–10 s**, rectangle: $6 \times 12 = 72\ \text{m}$.
+      - |
+        **10–16 s**, triangle: $\tfrac{1}{2} \times 6 \times 12 = 36\ \text{m}$.
+      - |
+        Total: $24 + 72 + 36 = 132\ \text{m}$. (Or treat it as one trapezium: $\tfrac{1}{2}(16 + 6) \times 12 = 132\ \text{m}$.)
+    answer: |
+      $132\ \text{m}$, all in the positive direction, so here distance and displacement are equal.
+
+  - type: check
+    questions: [area-meaning, train-area]
+
+  - type: diagram
+    diagram: phys-equations-motion-vt-area
+    alt: >-
+      A velocity–time graph drawn to scale for a ball rolled up a ramp, v in m s⁻¹ against t in
+      seconds. A straight line falls from 8 m s⁻¹ at t = 0, crosses the time axis at 4 s (labelled
+      "stops at 4 s"), and continues down to −4 m s⁻¹ at 6 s. The triangle between the line and the
+      axis from 0 to 4 s is shaded and labelled +16 m. The triangle below the axis from 4 to 6 s is
+      shaded in a second colour and labelled −4 m. A thin vertical strip at t = 1 s is outlined and
+      labelled "strip: v × Δt = Δs". A side panel reads: rolling up (0–4 s), ½ × 4 × 8 = +16 m;
+      rolling back (4–6 s), ½ × 2 × 4 = −4 m; displacement = 12 m (16 − 4: areas below subtract);
+      distance = 16 + 4 = 20 m.
+    caption: Area above the axis is positive displacement, area below is negative. For distance, add the sizes.
+
+  - type: explain
+    title: Areas below the axis
+    body: |
+      Below the axis the velocity is negative, so each strip $v \times \Delta t$ is a **negative** displacement: the object is coming back.
+
+      - **Displacement** $=$ (area above) $-$ (area below).
+      - **Distance** $=$ (area above) $+$ (area below).
+
+      In the diagram the ball rolls 16 m up the ramp and 4 m back down: it ends **12 m** from the start, having travelled **20 m**.
+
+  - type: check
+    questions: [ramp-areas, below-axis-spot]
+
+  - type: explain
+    title: Curved graphs? Count squares
+    body: |
+      For a curve, count the grid squares under it. Count a part-square as one if at least half of it is under the line, and ignore it otherwise.
+
+      Then convert: **each square is worth** (velocity per square) $\times$ (time per square). If one square is $2.0\ \text{m s}^{-1}$ tall and $0.50\ \text{s}$ wide, it's worth $1.0\ \text{m}$.
+
+  - type: misconceptions
+    items:
+      - wrong: The area under the graph is always the distance travelled.
+        right: The area is the **displacement**. It equals the distance only if the graph never goes below the time axis.
+      - wrong: Areas below the time axis should be added like the others.
+        right: For displacement, **subtract** them. Add them only when the question asks for distance.
+      - wrong: The final velocity times the total time gives the displacement.
+        right: That only works for constant velocity. When $v$ changes, you need the actual area under the line.
+
+  - type: exam
+    body: |
+      - "Determine the distance travelled" on a velocity–time graph = area. Split into triangles and rectangles, show each area, then add.
+      - Watch the axes' **units and powers of ten**, such as time in minutes or velocity in $\text{km h}^{-1}$. Convert before you multiply.
+      - Displacement or distance? Re-read the question when the graph crosses the axis. That's precisely why the examiner drew it like that.
+
+  - type: deeper
+    title: Speed–time graphs
+    body: |
+      On a **speed–time** graph, the area is the **distance** travelled (speed is never negative, so nothing subtracts). Velocity–time gives displacement; speed–time gives distance.
+
+  - type: check
+    questions: [count-squares, why-area]
+
+  - type: takeaways
+    items:
+      - Area under a velocity–time graph = displacement.
+      - Split the area into rectangles and triangles; count squares for curves.
+      - Area below the axis is negative displacement. Displacement = above − below; distance = above + below.
+      - Gradient gives acceleration; area gives displacement. Learn both as a pair.
+
+questions:
+  - id: area-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.3"]
+    prompt: |
+      What does the **area** between a velocity–time graph and the time axis represent?
+    options:
+      - text: displacement
+        correct: true
+        why: Correct. Each strip $v \times \Delta t$ is a small displacement; the total area adds them all up.
+      - text: acceleration
+        why: Acceleration is the **gradient** of a velocity–time graph.
+      - text: velocity
+        why: Velocity is what's plotted on the graph, and the gradient of a displacement–time graph.
+      - text: the time taken
+        why: Time is on the horizontal axis. The area combines velocity **and** time, giving metres.
+    explanation: |
+      Area = velocity × time, which has units of $\text{m s}^{-1} \times \text{s} = \text{m}$: a displacement.
+
+  - id: train-area
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.3"]
+    prompt: |
+      A train accelerates uniformly from rest to $20\ \text{m s}^{-1}$ in $25\ \text{s}$, then travels at a constant $20\ \text{m s}^{-1}$ for a further $60\ \text{s}$. Using the area under its velocity–time graph, find the total distance it travels.
+    fields:
+      - answer: 1450
+        tolerance: { abs: 2 }
+        unit: m
+    explanation: |
+      Triangle: $\tfrac{1}{2} \times 25 \times 20 = 250\ \text{m}$. Rectangle: $60 \times 20 = 1200\ \text{m}$. Total $= 1450\ \text{m}$ ($1.45\ \text{km}$).
+
+  - id: ramp-areas
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.3"]
+    prompt: |
+      A puck is pushed up an icy slope. Its velocity–time graph is a straight line from $+10\ \text{m s}^{-1}$ at $t = 0$ to $-5.0\ \text{m s}^{-1}$ at $t = 6.0\ \text{s}$ (it stops for an instant at $t = 4.0\ \text{s}$, then slides back). Find its displacement after $6.0\ \text{s}$ and the distance it has travelled.
+    fields:
+      - label: "displacement ="
+        answer: 15
+        tolerance: { abs: 0.1 }
+        unit: m
+      - label: "distance ="
+        answer: 25
+        tolerance: { abs: 0.1 }
+        unit: m
+    explanation: |
+      Above the axis (0–4.0 s): $\tfrac{1}{2} \times 4.0 \times 10 = 20\ \text{m}$ up the slope. Below the axis (4.0–6.0 s): $\tfrac{1}{2} \times 2.0 \times 5.0 = 5.0\ \text{m}$ back down. Displacement $= 20 - 5.0 = 15\ \text{m}$ up the slope; distance $= 20 + 5.0 = 25\ \text{m}$.
+
+  - id: below-axis-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.3"]
+    prompt: |
+      A ball's velocity–time graph is a straight line from $+6.0\ \text{m s}^{-1}$ at $t = 0$ to $-3.0\ \text{m s}^{-1}$ at $t = 3.0\ \text{s}$, crossing the axis at $t = 2.0\ \text{s}$. A student finds its displacement at $t = 3.0\ \text{s}$. Which line contains the first error?
+    lines:
+      - |
+        Area above the axis, 0–2.0 s: $\tfrac{1}{2} \times 2.0 \times 6.0 = 6.0\ \text{m}$
+      - |
+        Area below the axis, 2.0–3.0 s: $\tfrac{1}{2} \times 1.0 \times 3.0 = 1.5\ \text{m}$
+      - |
+        Displacement $= 6.0 + 1.5 = 7.5\ \text{m}$
+      - |
+        So the ball finishes $7.5\ \text{m}$ from where it started.
+    errorLine: 3
+    fix: |
+      The area below the axis is a **negative** displacement: displacement $= 6.0 - 1.5 = 4.5\ \text{m}$. ($7.5\ \text{m}$ is the **distance** travelled.)
+    explanation: |
+      Both areas were calculated correctly. The mistake is adding the backwards part instead of subtracting it.
+
+  - id: count-squares
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.3"]
+    prompt: |
+      The velocity–time graph of a sprinter is curved. A student counts **34** grid squares under the curve between the start and $t = 10\ \text{s}$. On this grid, one square is $2.0\ \text{m s}^{-1}$ tall and $0.50\ \text{s}$ wide. What displacement do the 34 squares represent?
+    fields:
+      - answer: 34
+        tolerance: { abs: 0.1 }
+        unit: m
+    explanation: |
+      One square is worth $2.0\ \text{m s}^{-1} \times 0.50\ \text{s} = 1.0\ \text{m}$. So 34 squares represent $34 \times 1.0 = 34\ \text{m}$.
+
+  - id: why-area
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.3"]
+    prompt: |
+      Explain why the area under a velocity–time graph is equal to the displacement.
+    model: |
+      Split the time into very thin strips of width $\Delta t$. Within one strip the velocity is almost constant, so the displacement in that time is $v \times \Delta t$, which is the area of the strip. Adding the areas of all the strips adds up all the small displacements, giving the total displacement. Where the graph is below the time axis the velocity is negative, so those strips count as negative displacement.
+    keyPoints:
+      - Divide the time into thin strips of width Δt
+      - In each strip the velocity is nearly constant, so Δs = v × Δt, the strip's area
+      - Adding all the strips gives the total displacement
+      - Area below the time axis is negative displacement
+    explanation: |
+      It's the same idea as "displacement = velocity × time" for constant velocity, applied to tiny slices of time.

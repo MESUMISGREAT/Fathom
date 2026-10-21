@@ -1,0 +1,220 @@
+id: equations-motion-displacement-time-graphs
+subject: "9702"
+topic: "2.1"
+title: Displacement–time graphs
+summary: The gradient of a displacement–time graph is the velocity; for a curve, draw a tangent and find its gradient.
+order: 3
+minutes: 5
+objectives: ["2.1.2", "2.1.4"]
+prerequisites: [equations-motion-distance-displacement]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 2.1.2, representing displacement and distance graphically, and
+    2.1.4, velocity as the gradient of a displacement–time graph). The diagram is drawn to scale
+    (s = 0.5t² for the curve, with its true tangent at t = 4 s). All gradients recomputed with
+    Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can read a **displacement–time graph** like a story and find the velocity from its **gradient**, including on a curve, by drawing a tangent.
+
+  - type: explain
+    title: The gradient is the velocity
+    body: |
+      Plot displacement $s$ up the side and time $t$ along the bottom. The gradient of the line is
+
+      $$\text{gradient} = \frac{\Delta s}{\Delta t}$$
+
+      and change in displacement per unit time is exactly the **definition of velocity**. So the gradient of a displacement–time graph **is** the velocity. No extra formula needed.
+
+  - type: diagram
+    diagram: phys-equations-motion-st-graphs
+    alt: >-
+      Two displacement–time graphs drawn to scale, s in metres against t in seconds. Left,
+      "Straight lines: constant velocity": the line rises from 0 to 12 m between 0 and 4 s, labelled
+      +3 m s⁻¹; it is flat at 12 m from 4 s to 7 s, labelled "at rest"; then it falls back to 0 at
+      10 s, labelled −4 m s⁻¹. The caption says gradient = velocity. Right, "Curve: use a tangent":
+      the curve s = 0.5t² rises ever more steeply from the origin to 18 m at 6 s. A straight tangent
+      line touches it at the marked point t = 4 s, s = 8 m. A dashed gradient triangle under the
+      tangent runs 2.5 s across (from 3 s to 5.5 s) and 10 m up (from 4 m to 14 m). The caption reads
+      velocity at 4 s = 10 ÷ 2.5 = 4.0 m s⁻¹.
+    caption: Straight line, constant velocity. Curve, changing velocity, so take the gradient of the tangent at the instant you care about.
+
+  - type: explain
+    title: Reading the shapes
+    body: |
+      | What the line does | What the object does |
+      | --- | --- |
+      | horizontal | at rest ($v = 0$) |
+      | straight, sloping up | constant velocity, positive direction |
+      | steeper straight line | constant velocity, but faster |
+      | straight, sloping down | constant velocity in the **negative** direction (heading back) |
+      | curving, getting steeper | speeding up |
+      | curving, getting flatter | slowing down |
+
+  - type: check
+    questions: [rest-line, straight-gradient]
+
+  - type: explain
+    title: Curves need tangents
+    body: |
+      On a curve the velocity changes from moment to moment. To find the **instantaneous velocity** at time $t$:
+
+      1. Draw a **tangent**: a straight line that just touches the curve at that point, with the same slope as the curve there.
+      2. Draw a **large** right-angled triangle on the tangent (bigger triangle, smaller reading errors).
+      3. Read $\Delta s$ and $\Delta t$ from the axes and divide.
+
+  - type: example
+    title: The tangent in the diagram
+    problem: |
+      On the right-hand graph, find the velocity at $t = 4.0\ \text{s}$.
+    steps:
+      - |
+        The tangent at $t = 4.0\ \text{s}$ passes through $(3.0\ \text{s}, 4.0\ \text{m})$ and $(5.5\ \text{s}, 14\ \text{m})$.
+      - |
+        $\Delta s = 14 - 4.0 = 10\ \text{m}$ and $\Delta t = 5.5 - 3.0 = 2.5\ \text{s}$.
+      - |
+        Velocity $= \dfrac{\Delta s}{\Delta t} = \dfrac{10}{2.5} = 4.0\ \text{m s}^{-1}$.
+    answer: |
+      $4.0\ \text{m s}^{-1}$. Notice that $\dfrac{s}{t} = \dfrac{8.0}{4.0} = 2.0\ \text{m s}^{-1}$ is **not** the answer: that's the average velocity from 0 to 4 s.
+
+  - type: check
+    questions: [tangent-gradient, curve-shape]
+
+  - type: explain
+    title: Distance–time is a different animal
+    body: |
+      A **distance–time** graph can never slope down, because distance travelled can only grow. Its gradient is the **speed**.
+
+      Take the left-hand journey: out 12 m, a rest, then back 12 m. The displacement–time graph returns to zero. The distance–time graph keeps climbing to **24 m** while the walker heads home.
+
+  - type: misconceptions
+    items:
+      - wrong: A line sloping down means the object is slowing down.
+        right: On a displacement–time graph, a straight line sloping down means a **constant velocity back towards the start**. Slowing down shows up as a curve getting flatter.
+      - wrong: Velocity at an instant is $s \div t$ read off the graph.
+        right: $s \div t$ gives the **average** velocity since $t = 0$. The instantaneous velocity is the gradient of the **tangent**.
+      - wrong: A displacement–time graph shows the path the object took, like a map.
+        right: It shows how far from the start the object is at each time. A graph that goes up then down is an object going away then coming back along a line, not climbing a hill.
+
+  - type: exam
+    body: |
+      - "Determine the velocity at $t = \dots$" on a curve is a tangent question. Marks go for a visible, ruled tangent and a **large** gradient triangle (aim for a hypotenuse at least half the length of the line you've drawn); tiny triangles lose accuracy.
+      - Read gridline crossings where you can, and quote $\Delta s$ and $\Delta t$ in your working.
+      - "Describe the motion" answers want both the **direction** and whether the velocity is constant or changing, section by section.
+
+  - type: check
+    questions: [average-vs-instant, dt-vs-st]
+
+  - type: takeaways
+    items:
+      - Gradient of a displacement–time graph = velocity.
+      - Horizontal line, at rest. Straight line, constant velocity. Curve, changing velocity.
+      - On a curve, draw a tangent and use a big triangle to find the instantaneous velocity.
+      - A distance–time graph never slopes down; its gradient is the speed.
+
+questions:
+  - id: rest-line
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.2", "2.1.4"]
+    prompt: |
+      Part of a displacement–time graph is a horizontal straight line. During that part, the object is:
+    options:
+      - text: at rest
+        correct: true
+        why: Correct. The displacement isn't changing, so the gradient (the velocity) is zero.
+      - text: moving at a constant, non-zero velocity
+        why: Constant non-zero velocity is a straight line that **slopes**. Flat means no change in displacement at all.
+      - text: moving with constant acceleration
+        why: Constant acceleration from rest makes a curve on a displacement–time graph, not a flat line.
+      - text: moving back towards its starting point
+        why: Heading back would make the displacement decrease, so the line would slope down.
+    explanation: |
+      Gradient = velocity. A horizontal line has zero gradient, so zero velocity: the object is stationary.
+
+  - id: straight-gradient
+    format: numeric
+    difficulty: 1
+    objectives: ["2.1.4"]
+    prompt: |
+      A displacement–time graph is a straight line from $s = 5.0\ \text{m}$ at $t = 0$ to $s = 45\ \text{m}$ at $t = 8.0\ \text{s}$. What is the velocity?
+    fields:
+      - answer: 5.0
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+    explanation: |
+      Gradient $= \dfrac{\Delta s}{\Delta t} = \dfrac{45 - 5.0}{8.0 - 0} = \dfrac{40}{8.0} = 5.0\ \text{m s}^{-1}$. The line doesn't start at the origin, so use the **change** in displacement, not $45 \div 8.0$.
+
+  - id: tangent-gradient
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.4"]
+    prompt: |
+      An object's displacement–time graph is a curve. A tangent drawn to the curve at $t = 3.0\ \text{s}$ passes through the points $(1.0\ \text{s}, 2.0\ \text{m})$ and $(5.0\ \text{s}, 30\ \text{m})$. Find the velocity of the object at $t = 3.0\ \text{s}$.
+    fields:
+      - answer: 7.0
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+    explanation: |
+      The velocity at that instant is the gradient of the tangent: $\dfrac{30 - 2.0}{5.0 - 1.0} = \dfrac{28}{4.0} = 7.0\ \text{m s}^{-1}$.
+
+  - id: curve-shape
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.2", "2.1.4"]
+    prompt: |
+      A displacement–time graph curves upwards, getting steeper and steeper. What does this tell you?
+    options:
+      - text: The velocity is increasing.
+        correct: true
+        why: Correct. The gradient is the velocity, and the gradient keeps growing.
+      - text: The object is slowing down.
+        why: Slowing down would make the gradient smaller, so the curve would flatten out.
+      - text: The velocity is constant.
+        why: Constant velocity gives a straight line, with the same gradient everywhere.
+      - text: The object is moving back towards its start.
+        why: Moving back would make the displacement decrease, so the graph would slope down.
+    explanation: |
+      Steeper and steeper means the gradient, and so the velocity, is increasing: the object is accelerating in the positive direction.
+
+  - id: average-vs-instant
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.4"]
+    prompt: |
+      An object starts from rest and speeds up, so its displacement–time graph is a curve through the origin that gets steeper. A student tries to find its velocity at $t = 4.0\ \text{s}$. Which line contains the first error?
+    lines:
+      - |
+        From the graph, $s = 8.0\ \text{m}$ at $t = 4.0\ \text{s}$.
+      - |
+        Velocity at $4.0\ \text{s}$ $= \dfrac{s}{t} = \dfrac{8.0}{4.0} = 2.0\ \text{m s}^{-1}$
+      - |
+        So at the instant $t = 4.0\ \text{s}$ the object is moving at $2.0\ \text{m s}^{-1}$.
+    errorLine: 2
+    fix: |
+      $s \div t$ is the **average** velocity over the first 4.0 s. For the velocity at $t = 4.0\ \text{s}$, draw the tangent at that point and find its gradient (for the curve in this lesson's diagram, $4.0\ \text{m s}^{-1}$).
+    explanation: |
+      Because the object is speeding up, its velocity at 4.0 s is bigger than its average velocity so far. Only a tangent gives the instantaneous value.
+
+  - id: dt-vs-st
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      A dog runs 12 m in a straight line away from its owner, then runs straight back to her. Which statement about its graphs is correct?
+    options:
+      - text: The distance–time graph keeps rising; the displacement–time graph returns to zero.
+        correct: true
+        why: Correct. Distance travelled only ever grows (to 24 m), but the dog's displacement from its owner goes back to zero.
+      - text: Both graphs return to zero at the end.
+        why: Distance can't decrease. The dog has run 24 m in total, and the distance–time graph shows that.
+      - text: The distance–time graph returns to zero; the displacement–time graph keeps rising.
+        why: That's the wrong way round. Displacement returns to zero; distance keeps adding up.
+      - text: Both graphs keep rising to 24 m.
+        why: The displacement at the end is zero, because the dog is back where it started.
+    explanation: |
+      Distance (scalar) adds up whichever way you go. Displacement (vector) measures how far you are from the start, in a direction, so it can decrease.

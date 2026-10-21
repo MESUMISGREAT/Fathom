@@ -1,0 +1,247 @@
+id: equations-motion-deriving-suvat
+subject: "9702"
+topic: "2.1"
+title: Deriving the equations of motion
+summary: Starting from the definitions of velocity and acceleration, four equations for uniformly accelerated motion follow in a few lines each.
+order: 7
+minutes: 5
+objectives: ["2.1.6"]
+prerequisites: [equations-motion-area-under-vt]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.6, deriving the equations of uniformly accelerated motion in a
+    straight line from the definitions of velocity and acceleration). The data-sheet statement
+    refers to the 9702 list of formulae (s = ut + ½at² and v² = u² + 2as). Every equation was
+    checked numerically with Python. All questions are original. The calculus enrichment is
+    labelled not examinable.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **derive** the four equations of uniformly accelerated motion, starting from the definitions of velocity and acceleration, and state when they apply.
+
+  - type: explain
+    title: Four equations, two of them free
+    body: |
+      The **suvat** equations solve almost every straight-line motion problem at AS. Your data sheet gives you two of them. The other two you can rebuild in ten seconds flat, which is exactly what "derive" questions test.
+
+      | Symbol | Meaning | Unit |
+      | --- | --- | --- |
+      | $s$ | displacement | m |
+      | $u$ | initial velocity | $\text{m s}^{-1}$ |
+      | $v$ | final velocity | $\text{m s}^{-1}$ |
+      | $a$ | acceleration (**constant**) | $\text{m s}^{-2}$ |
+      | $t$ | time taken | s |
+
+      **The fine print:** they only work for **uniform (constant) acceleration** in a **straight line**.
+
+  - type: explain
+    title: "Equation 1: straight from the definition of acceleration"
+    body: |
+      Acceleration is the rate of change of velocity. With constant acceleration,
+
+      $$a = \frac{v - u}{t} \quad\Longrightarrow\quad v = u + at$$
+
+  - type: explain
+    title: "Equation 2: average velocity"
+    body: |
+      Velocity is the rate of change of displacement, so displacement = average velocity × time. With **uniform** acceleration the velocity climbs steadily, so its average is exactly halfway between $u$ and $v$:
+
+      $$s = \left(\frac{u + v}{2}\right)t$$
+
+      On the velocity–time graph, that's the area of the trapezium under the line.
+
+  - type: diagram
+    diagram: phys-equations-motion-suvat-area
+    alt: >-
+      A velocity–time graph with symbolic axes. A straight line rises from velocity u at time 0 to
+      velocity v at time t. The area under it is split into a rectangle of height u and width t,
+      labelled "area = ut", and a triangle on top of it, labelled "area = ½ × t × at = ½at²". A
+      double-headed arrow beside the triangle shows its height, "v − u = at". A side panel reads:
+      total area = s; rectangle + triangle gives s = ut + ½at²; as one trapezium, s = ½(u + v)t; and
+      gradient = (v − u) / t = a.
+    caption: The triangle's height is v − u, which equation 1 tells you is at.
+
+  - type: check
+    questions: [condition-mcq, triangle-height]
+
+  - type: explain
+    title: "Equation 3: no final velocity"
+    body: |
+      Substitute $v = u + at$ into equation 2:
+
+      $$s = \tfrac{1}{2}(u + u + at)\,t = \tfrac{1}{2}(2u + at)\,t = ut + \tfrac{1}{2}at^2$$
+
+      The diagram shows the same thing: rectangle $ut$ plus triangle $\tfrac{1}{2} \times t \times at$.
+
+  - type: explain
+    title: "Equation 4: no time"
+    body: |
+      Make $t$ the subject of equation 1, $t = \dfrac{v - u}{a}$, and substitute into equation 2:
+
+      $$s = \frac{(u + v)}{2} \times \frac{(v - u)}{a} = \frac{v^2 - u^2}{2a}$$
+
+      Multiply both sides by $2a$ and rearrange:
+
+      $$v^2 = u^2 + 2as$$
+
+      The difference of two squares does the heavy lifting: $(v + u)(v - u) = v^2 - u^2$.
+
+  - type: check
+    questions: [derive-spot, eliminate-u]
+
+  - type: example
+    title: Do they really agree?
+    problem: |
+      A car moving at $4.0\ \text{m s}^{-1}$ accelerates uniformly at $2.5\ \text{m s}^{-2}$ for $6.0\ \text{s}$. Find $v$ and $s$, and check the result with all four equations.
+    steps:
+      - |
+        Equation 1: $v = 4.0 + 2.5 \times 6.0 = 19\ \text{m s}^{-1}$.
+      - |
+        Equation 3: $s = 4.0 \times 6.0 + \tfrac{1}{2} \times 2.5 \times 6.0^2 = 24 + 45 = 69\ \text{m}$.
+      - |
+        Equation 2: $s = \tfrac{1}{2}(4.0 + 19) \times 6.0 = 69\ \text{m}$. ✓
+      - |
+        Equation 4: $u^2 + 2as = 16 + 2 \times 2.5 \times 69 = 361$, and $19^2 = 361$. ✓
+    answer: |
+      $v = 19\ \text{m s}^{-1}$ and $s = 69\ \text{m}$. Four routes, one answer: they're all the same physics.
+
+  - type: misconceptions
+    items:
+      - wrong: You can use suvat for any motion.
+        right: Only for **constant acceleration in a straight line**. If the acceleration changes (a car with drag, a bungee jumper), use graphs instead.
+      - wrong: $u$ is always zero.
+        right: $u$ is the velocity at the **start of the time interval you choose**. It's zero only if the object starts from rest.
+      - wrong: $s$ is the distance travelled.
+        right: $s$ is the **displacement**. For a ball thrown up and caught, $s = 0$, however high it went.
+
+  - type: exam
+    body: |
+      - "Derive" or "show that" questions: start from a **definition** (acceleration as rate of change of velocity, or displacement as area under the velocity–time graph) and show every algebraic step. Quoting the final equation earns nothing.
+      - State the condition, **uniform acceleration**, when the question asks when the equations apply.
+      - The data sheet lists $s = ut + \tfrac{1}{2}at^2$ and $v^2 = u^2 + 2as$. Learn $v = u + at$ and $s = \tfrac{1}{2}(u + v)t$ by heart.
+
+  - type: enrichment
+    title: The calculus version
+    body: |
+      With calculus, $a = \dfrac{dv}{dt}$. For constant $a$, integrating gives $v = u + at$. Then $v = \dfrac{ds}{dt}$, so integrating again gives $s = ut + \tfrac{1}{2}at^2$. The "area under the graph" method is the same idea without the notation. Not required for 9702.
+
+  - type: check
+    questions: [consistency-numeric, show-explain]
+
+  - type: takeaways
+    items:
+      - "$v = u + at$ comes straight from the definition of acceleration."
+      - "$s = \\tfrac{1}{2}(u + v)t$ is average velocity × time (the trapezium area)."
+      - "$s = ut + \\tfrac{1}{2}at^2$ and $v^2 = u^2 + 2as$ follow by substitution (and are on the data sheet)."
+      - All four need uniform acceleration in a straight line.
+
+questions:
+  - id: condition-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.6"]
+    prompt: |
+      The equations of motion ($v = u + at$, $s = ut + \tfrac{1}{2}at^2$, …) can only be used when:
+    options:
+      - text: the acceleration is constant and the motion is in a straight line
+        correct: true
+        why: Correct. The derivations assume a constant gradient on the velocity–time graph, along one line.
+      - text: the velocity is constant
+        why: Constant velocity is just the special case $a = 0$. The equations are designed for objects that are accelerating.
+      - text: the object starts from rest
+        why: $u$ can be any value. Starting from rest just makes $u = 0$.
+      - text: the object is falling freely
+        why: Free fall is one example of constant acceleration, but the equations work for any constant acceleration.
+    explanation: |
+      Uniform acceleration in a straight line: that is the condition every derivation relies on.
+
+  - id: triangle-height
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.6"]
+    prompt: |
+      When deriving $s = ut + \tfrac{1}{2}at^2$ from a velocity–time graph, the area is split into a rectangle and a triangle. Why is the height of the triangle equal to $at$?
+    options:
+      - text: Because the height is $v - u$, and $v - u = at$ from the definition of acceleration.
+        correct: true
+        why: Correct. The triangle sits on top of the rectangle of height $u$, so its height is $v - u$, which equals $at$.
+      - text: Because the area of a triangle is half the base times the height.
+        why: That's why the area has a ½ in it, not why the height is $at$.
+      - text: Because the acceleration is the area under the velocity–time graph.
+        why: Acceleration is the **gradient** of a velocity–time graph; the area is displacement.
+      - text: Because the gradient of the line is $\dfrac{v}{t}$.
+        why: The gradient is $\dfrac{v - u}{t}$, because the line starts at $u$, not at zero.
+    explanation: |
+      Gradient $= a = \dfrac{v - u}{t}$, so the rise $v - u = at$. Triangle area $= \tfrac{1}{2} \times t \times at = \tfrac{1}{2}at^2$.
+
+  - id: derive-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.6"]
+    prompt: |
+      A student derives $v^2 = u^2 + 2as$. Which line contains the first error?
+    lines:
+      - |
+        From $v = u + at$: $t = \dfrac{v - u}{a}$
+      - |
+        Substitute into $s = \tfrac{1}{2}(u + v)t$: $s = \tfrac{1}{2}(u + v) \times \dfrac{v - u}{a}$
+      - |
+        Multiply out: $s = \dfrac{v^2 - u^2}{a}$
+      - |
+        Rearrange: $v^2 = u^2 + as$
+    errorLine: 3
+    fix: |
+      The ½ has been lost. $(u + v)(v - u) = v^2 - u^2$, so $s = \dfrac{v^2 - u^2}{2a}$, which rearranges to $v^2 = u^2 + 2as$.
+    explanation: |
+      Lines 1 and 2 are correct. Line 3 drops the factor of ½, and line 4 then inherits the error. Dimensions can't catch this one, since $as$ and $2as$ have the same units. Only careful algebra does.
+
+  - id: eliminate-u
+    format: expression
+    difficulty: 3
+    objectives: ["2.1.6"]
+    prompt: |
+      Using $v = u + at$ and $s = \tfrac{1}{2}(u + v)t$, **eliminate $u$** to find $s$ in terms of $v$, $a$ and $t$. Type your answer for $s$ (for example `v*t + a*t^2`).
+    answer: "v*t - a*t^2/2"
+    variables: [v, a, t]
+    display: |
+      $s = vt - \tfrac{1}{2}at^2$
+    explanation: |
+      From the first equation, $u = v - at$. Substitute: $s = \tfrac{1}{2}(v - at + v)t = \tfrac{1}{2}(2v - at)t = vt - \tfrac{1}{2}at^2$. It's the "fifth suvat equation", handy when you know the final velocity but not the initial one.
+
+  - id: consistency-numeric
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.6"]
+    prompt: |
+      A cyclist moving at $3.0\ \text{m s}^{-1}$ accelerates uniformly at $1.5\ \text{m s}^{-2}$ for $8.0\ \text{s}$. Find her final velocity and her displacement in that time.
+    fields:
+      - label: "$v =$"
+        answer: 15
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+      - label: "$s =$"
+        answer: 72
+        tolerance: { abs: 0.2 }
+        unit: m
+    explanation: |
+      $v = u + at = 3.0 + 1.5 \times 8.0 = 15\ \text{m s}^{-1}$. $s = ut + \tfrac{1}{2}at^2 = 3.0 \times 8.0 + \tfrac{1}{2} \times 1.5 \times 8.0^2 = 24 + 48 = 72\ \text{m}$. Check with the trapezium: $\tfrac{1}{2}(3.0 + 15) \times 8.0 = 72\ \text{m}$. ✓
+
+  - id: show-explain
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.6"]
+    prompt: |
+      Use a velocity–time graph to show that $s = ut + \tfrac{1}{2}at^2$ for an object with uniform acceleration $a$, initial velocity $u$ and final velocity $v$ after time $t$.
+    model: |
+      With uniform acceleration the velocity–time graph is a straight line from $u$ at time 0 to $v$ at time $t$. The displacement is the area under this line. Split it into a rectangle of height $u$ and width $t$, area $ut$, and a triangle on top with base $t$ and height $v - u$. From the definition of acceleration, $v - u = at$, so the triangle's area is $\tfrac{1}{2} \times t \times at = \tfrac{1}{2}at^2$. Adding the two areas gives $s = ut + \tfrac{1}{2}at^2$.
+    keyPoints:
+      - Uniform acceleration gives a straight line from u to v on the velocity–time graph
+      - Displacement is the area under the velocity–time graph
+      - Rectangle of height u and width t has area ut
+      - Triangle height is v − u = at, so its area is ½ × t × at = ½at²
+      - Adding the areas gives s = ut + ½at²
+    explanation: |
+      The key step examiners look for is justifying the triangle's height, $v - u = at$, from the definition of acceleration.

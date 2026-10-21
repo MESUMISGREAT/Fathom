@@ -58,13 +58,14 @@ export default function CoordinateGeometryLineCircleCases() {
       <Label x={p.sx(1.7)} y={p.sy(-1.95)} anchor="start" className="dg-text-accent">
         {'x² + y² = 5'}
       </Label>
-      <Label x={p.sx(5.3)} y={p.sy(0.9)} anchor="end" className="dg-text-small dg-bold">
+      {/* each label sits just above its own line */}
+      <Label x={p.sx(4.3)} y={p.sy(line(4)(4.3) + 0.4)} className="dg-text-small dg-bold">
         k = 4
       </Label>
-      <Label x={p.sx(5.3)} y={p.sy(-0.55)} anchor="end" className="dg-text-small dg-bold">
+      <Label x={p.sx(4.3)} y={p.sy(line(2.5)(4.3) + 0.4)} className="dg-text-small dg-bold">
         k = 5/2
       </Label>
-      <Label x={p.sx(5.3)} y={p.sy(-2.55)} anchor="end" className="dg-text-small dg-bold">
+      <Label x={p.sx(4.3)} y={p.sy(line(0.5)(4.3) + 0.4)} className="dg-text-small dg-bold">
         k = ½
       </Label>
 

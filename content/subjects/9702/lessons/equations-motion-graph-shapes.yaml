@@ -1,0 +1,214 @@
+id: equations-motion-graph-shapes
+subject: "9702"
+topic: "2.1"
+title: "Linking the graphs: the ball thrown upwards"
+summary: Displacement, velocity and acceleration graphs of one motion are linked by gradients, as a ball thrown upwards shows perfectly.
+order: 6
+minutes: 5
+objectives: ["2.1.2", "2.1.5"]
+prerequisites: [equations-motion-area-under-vt]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 2.1.2, representing motion graphically, and 2.1.5, acceleration
+    from the gradient of a velocity–time graph). The three graphs are drawn to scale for a ball
+    thrown up at 9.81 m s⁻¹ with no air resistance, using g = 9.81 m s⁻² from the data sheet.
+    All values recomputed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can sketch the **displacement–time**, **velocity–time** and **acceleration–time** graphs for the same motion and explain how each one follows from the one above it.
+
+  - type: explain
+    title: One ball, three graphs
+    body: |
+      Throw a ball straight up and catch it. Simple? It's also the examiners' favourite trap: **"What is the acceleration at the very top?"** Half the room says zero. Let's make sure you're in the other half.
+
+      The three graphs are linked in a chain:
+
+      $$s\text{–}t \xrightarrow{\ \text{gradient}\ } v\text{–}t \xrightarrow{\ \text{gradient}\ } a\text{–}t$$
+
+      Going back up the chain, the **area** under the velocity–time graph gives the displacement.
+
+  - type: diagram
+    diagram: phys-equations-motion-throw-graphs
+    alt: >-
+      Three graphs stacked on a shared time axis from 0 to 2 s, for a ball thrown straight up at
+      9.81 m s⁻¹ and caught at the same height, upwards positive, no air resistance. Top,
+      displacement s in metres: an upside-down parabola from 0 up to a peak of 4.9 m at t = 1 s,
+      labelled "top: gradient 0, so v = 0", then back down to 0 at 2 s, labelled "caught". Middle,
+      velocity v in m s⁻¹: a straight line from +9.81 at t = 0, crossing zero at 1 s (labelled
+      "v = 0 at the top"), down to −9.81 at 2 s; labels say "going up: v positive", "coming down: v
+      negative" and "straight line, gradient −9.81 m s⁻²". Bottom, acceleration a in m s⁻²: a
+      horizontal line at −9.81 for the whole flight, with the point at 1 s labelled "still −9.81 m s⁻²
+      at the top". A dashed vertical line at t = 1 s links the top of the flight on all three graphs.
+    caption: At the top, the displacement–time graph is flat (v = 0), but the velocity–time line sails straight through zero with the same gradient. So a = −9.81 m s⁻² at the top, as everywhere else.
+
+  - type: explain
+    title: Reading the three graphs
+    body: |
+      - **Displacement–time:** a curve. It's steep at first (fast), flattens to a peak (the top, where the gradient and so $v$ are zero), then gets steep again on the way down.
+      - **Velocity–time:** a **straight line** from $+u$ to $-u$. It crosses zero at the top. Its gradient is $-9.81\ \text{m s}^{-2}$ all the way.
+      - **Acceleration–time:** a horizontal line at $-9.81\ \text{m s}^{-2}$. Gravity doesn't take a break at the top.
+
+      The velocity–time graph is also **symmetrical**: the ball takes as long to come down as to go up, and it's caught at the speed it was thrown.
+
+  - type: check
+    questions: [top-acceleration, chain-cloze]
+
+  - type: example
+    title: Turning a displacement–time graph into a velocity–time graph
+    problem: |
+      A walker's displacement–time graph has three straight sections: 0 to 12 m in the first 4 s, flat at 12 m from 4 s to 7 s, then back to 0 by 10 s. Sketch the velocity–time graph.
+    steps:
+      - |
+        Each straight section has a constant gradient, so each gives a **horizontal** line on the velocity–time graph.
+      - |
+        **0–4 s:** gradient $= \dfrac{12}{4} = +3\ \text{m s}^{-1}$.
+      - |
+        **4–7 s:** flat, so $v = 0$.
+      - |
+        **7–10 s:** gradient $= \dfrac{0 - 12}{3} = -4\ \text{m s}^{-1}$, so this line sits **below** the time axis.
+    answer: |
+      Three horizontal steps: $+3\ \text{m s}^{-1}$, then $0$, then $-4\ \text{m s}^{-1}$. Do **not** copy the shape of the displacement graph: you're plotting its gradient, not its height. (Check: area $= 3 \times 4 - 4 \times 3 = 0$, and the walker does end where they began.)
+
+  - type: check
+    questions: [st-to-vt, throw-gradient]
+
+  - type: deeper
+    title: The bouncing ball
+    body: |
+      Drop a ball and let it bounce, taking **upwards as positive**. On the velocity–time graph:
+
+      - While falling, the line slopes down with gradient $-9.81\ \text{m s}^{-2}$: the velocity becomes more and more negative.
+      - At each bounce the velocity flips almost instantly from negative to positive (a near-vertical line), a bit smaller because some energy is lost.
+      - Then it slopes down again with the **same** gradient: rising, stopping, falling.
+
+      So you get a row of **parallel** sloping lines joined by near-vertical jumps. If every section isn't parallel, gravity changed its mind, and it never does.
+
+  - type: misconceptions
+    items:
+      - wrong: At the top of its flight the ball's acceleration is zero, because it has stopped.
+        right: Only the **velocity** is zero, for an instant. The weight still acts, so $a = 9.81\ \text{m s}^{-2}$ downwards, and the velocity carries on changing straight through zero.
+      - wrong: The displacement–time graph of a ball thrown straight up shows its curved path through the air.
+        right: The ball goes straight up and down. The curve is the graph of **height against time**, not a picture of the path.
+      - wrong: To sketch a velocity–time graph, copy the shape of the displacement–time graph.
+        right: Plot the **gradient** of the displacement–time graph at each time. Straight sections become flat lines.
+
+  - type: exam
+    body: |
+      - Sketch questions reward: labelled axes, a **ruled straight line** for constant acceleration, the line **crossing** the time axis at the top, and key values marked ($+u$, $-u$, time to the top).
+      - Say which direction you took as positive. If you choose **down** as positive, every graph flips upside down, and that's fine as long as you say so.
+      - Air resistance (topic 3) bends these straight lines. If the question says "air resistance is negligible", keep them straight.
+
+  - type: check
+    questions: [bounce-shape, top-explain]
+
+  - type: takeaways
+    items:
+      - Gradient of displacement–time gives velocity; gradient of velocity–time gives acceleration; area under velocity–time gives displacement.
+      - For a ball thrown up (no air resistance) the velocity–time graph is one straight line with gradient −g, crossing zero at the top.
+      - At the top, v = 0 but a = 9.81 m s⁻² downwards.
+      - Straight sections on displacement–time become horizontal lines on velocity–time.
+
+questions:
+  - id: top-acceleration
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |
+      A ball is thrown vertically upwards. Air resistance is negligible. At its highest point, what are its velocity and its acceleration?
+    options:
+      - text: velocity zero; acceleration $9.81\ \text{m s}^{-2}$ downwards
+        correct: true
+        why: Correct. The ball stops for an instant, but gravity is still acting, so its velocity keeps changing at $9.81\ \text{m s}^{-2}$.
+      - text: velocity zero; acceleration zero
+        why: The classic trap. If the acceleration were zero at the top, the ball's velocity would stay zero and it would hover there for ever.
+      - text: velocity $9.81\ \text{m s}^{-1}$ downwards; acceleration zero
+        why: Both parts are wrong. At the top the velocity is zero, and the acceleration is never zero during the flight.
+      - text: velocity zero; acceleration $9.81\ \text{m s}^{-2}$ upwards
+        why: The weight acts downwards, so the acceleration of free fall is downwards, both on the way up and on the way down.
+    explanation: |
+      On the velocity–time graph the line passes straight through $v = 0$ with an unchanged gradient of $-9.81\ \text{m s}^{-2}$. Zero velocity, non-zero acceleration.
+
+  - id: chain-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.2", "2.1.5"]
+    prompt: |
+      The gradient of a displacement–time graph gives the {{1}}. The gradient of a velocity–time graph gives the {{2}}. The area under a velocity–time graph gives the {{3}}.
+    blanks:
+      - accept: [velocity]
+      - accept: [acceleration]
+      - accept: [displacement, change in displacement, change of displacement]
+    explanation: |
+      Gradients take you down the chain $s \to v \to a$; the area under the velocity–time graph takes you back up to displacement.
+
+  - id: st-to-vt
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      A displacement–time graph has three straight sections: it rises, then stays flat, then falls back to zero more steeply than it rose. What does the velocity–time graph look like?
+    options:
+      - text: Three horizontal lines, at a positive value, then zero, then a larger negative value.
+        correct: true
+        why: Correct. Each straight section has a constant gradient (a horizontal velocity line). The last section is steeper and downhill, so its velocity is negative and larger in size.
+      - text: A line that rises, stays flat, then falls back to zero.
+        why: That copies the shape of the displacement graph. The velocity–time graph plots the **gradient**, not the height.
+      - text: Three horizontal lines, at a positive value, then zero, then a positive value.
+        why: Falling displacement means moving back towards the start, so the velocity in the last section is negative.
+      - text: A single straight line sloping downwards.
+        why: That would mean constant acceleration. Here the velocity jumps between three constant values.
+    explanation: |
+      Straight sections on a displacement–time graph mean constant velocities, so the velocity–time graph is made of flat steps. Steeper means bigger; downhill means negative.
+
+  - id: throw-gradient
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.5"]
+    prompt: |
+      A ball is thrown straight up (upwards positive). Its velocity–time graph is a straight line from $+12.0\ \text{m s}^{-1}$ at $t = 0$ to $-12.0\ \text{m s}^{-1}$ at $t = 2.45\ \text{s}$. Calculate the gradient of the line, with its sign.
+    fields:
+      - answer: -9.8
+        tolerance: { abs: 0.03 }
+        unit: m s⁻²
+    explanation: |
+      Gradient $= \dfrac{\Delta v}{\Delta t} = \dfrac{-12.0 - 12.0}{2.45} = \dfrac{-24.0}{2.45} = -9.80\ \text{m s}^{-2}$. That's the acceleration of free fall, $g$, pointing downwards (negative because up was chosen as positive).
+
+  - id: bounce-shape
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.2", "2.1.5"]
+    prompt: |
+      A ball is dropped and bounces several times on a hard floor. Air resistance is negligible and **upwards is positive**. Which describes its velocity–time graph?
+    options:
+      - text: Parallel straight lines, each with gradient $-9.81\ \text{m s}^{-2}$, joined by near-vertical jumps from negative to positive velocity at each bounce.
+        correct: true
+        why: Correct. Between bounces only gravity acts, so every section has the same gradient, $-g$. Each bounce reverses the velocity almost instantly.
+      - text: Parallel straight lines, each with gradient $+9.81\ \text{m s}^{-2}$, because the ball speeds up as it falls.
+        why: It does speed up as it falls, but downwards, which is the negative direction here. Its velocity becomes more negative, so the gradient is $-9.81\ \text{m s}^{-2}$.
+      - text: A smooth curve that rises and falls with each bounce, like the ball's height.
+        why: That describes the displacement–time graph (a series of arches). Velocity changes at a constant rate between bounces, so its graph is made of straight lines.
+      - text: A horizontal line at $-9.81$.
+        why: That's the acceleration–time graph between bounces, not the velocity–time graph.
+    explanation: |
+      Between bounces the acceleration is always $-g$, so every flight section of the velocity–time graph is a straight line of gradient $-9.81\ \text{m s}^{-2}$. The bounces are the near-vertical jumps.
+
+  - id: top-explain
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      A student says: "At the top of its flight the ball's velocity is zero, so its acceleration must be zero too." Explain why the student is wrong.
+    model: |
+      Acceleration is the rate of change of velocity, not the velocity itself. At the top the velocity is zero only for an instant: it is changing from positive (upwards) to negative (downwards), so it is still changing at $9.81\ \text{m s}^{-2}$. The ball's weight still acts on it at the top, so its acceleration is $g$ downwards throughout the flight. On the velocity–time graph the line passes through zero with the same gradient as everywhere else. If the acceleration really were zero there, the velocity would stay zero and the ball would hover at the top.
+    keyPoints:
+      - Acceleration is the rate of change of velocity, not the velocity itself
+      - The velocity is zero only for an instant, changing from upwards to downwards
+      - The weight still acts at the top, so a = 9.81 m s⁻² downwards
+      - The velocity–time line keeps the same gradient as it passes through zero
+    explanation: |
+      Zero velocity and zero acceleration are completely different things. A car at traffic lights has both; a ball at the top of its flight has only the first.

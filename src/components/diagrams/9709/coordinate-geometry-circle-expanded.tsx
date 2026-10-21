@@ -24,7 +24,7 @@ export default function CoordinateGeometryCircleExpanded() {
   return (
     <Svg width={W} height={H}>
       <Grid p={p} />
-      <AxesXY p={p} xTicks={[-2, 2, 4, 6, 8]} yTicks={[-8, -4, -2]} />
+      <AxesXY p={p} xTicks={[2, 4, 6, 8]} yTicks={[-8, -4, -2]} />
       <circle cx={C.x} cy={C.y} r={r} className="dg-accent" />
       <line x1={C.x} y1={C.y} x2={p.sx(3 + 3)} y2={p.sy(-2 - 4)} className="dg-line" />
       <circle cx={C.x} cy={C.y} r={5} className="dg-dot-accent" />

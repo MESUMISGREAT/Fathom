@@ -29,7 +29,7 @@ export default function CoordinateGeometryLineForms() {
   return (
     <Svg width={W} height={H}>
       <Grid p={p} />
-      <AxesXY p={p} xTicks={[-2, -1, 1, 2, 3]} yTicks={[-2, 2, 4]} />
+      <AxesXY p={p} xTicks={[-2, -1, 1, 3]} yTicks={[-2, 2, 4]} />
       <path d={graph(line, X, p, Y)} className="dg-accent" />
       {/* gradient triangle */}
       <path

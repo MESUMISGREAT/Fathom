@@ -2,6 +2,7 @@
 import type { DiagramRegistry } from '../types';
 import BcdVsBinary from './bcd-vs-binary';
 import BinaryPlaceValue from './binary-place-value';
+import CompressionSizeBars from './compression-size-bars';
 import HexNibbles from './hex-nibbles';
 import MultimediaBitPlanes from './multimedia-bit-planes';
 import MultimediaBitmapFileLayout from './multimedia-bitmap-file-layout';
@@ -22,6 +23,7 @@ import TwosComplementWheel from './twos-complement-wheel';
 export const diagrams: DiagramRegistry = {
   'cs-bcd-vs-binary': BcdVsBinary,
   'cs-binary-place-value': BinaryPlaceValue,
+  'cs-compression-size-bars': CompressionSizeBars,
   'cs-hex-nibbles': HexNibbles,
   'cs-multimedia-bit-planes': MultimediaBitPlanes,
   'cs-multimedia-bitmap-file-layout': MultimediaBitmapFileLayout,

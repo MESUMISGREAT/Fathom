@@ -42,9 +42,10 @@ export default function CoordinateGeometryPerpendicularBisector() {
   return (
     <Svg width={W} height={H}>
       <Grid p={p} />
-      <AxesXY p={p} xTicks={[-2, -1, 1, 2, 3, 4, 5, 6]} yTicks={[1, 2, 3, 4, 5, 6, 7]} />
+      <AxesXY p={p} xTicks={[-2, -1, 1, 2, 3, 4, 5, 6]} yTicks={[1, 2, 3, 4, 5, 6]} />
       <line x1={p.sx(A.x)} y1={p.sy(A.y)} x2={p.sx(B.x)} y2={p.sy(B.y)} className="dg-accent" />
-      <path d={graph(bis, X, p, Y)} className="dg-accent-2" />
+      {/* stop just below the top so the line clears the y-axis label */}
+      <path d={graph(bis, X, p, [Y[0], 7.25])} className="dg-accent-2" />
       <path
         d={`M${p.sx(M.x + k * u.x)},${p.sy(M.y + k * u.y)} L${p.sx(M.x + k * (u.x + v.x))},${p.sy(M.y + k * (u.y + v.y))} L${p.sx(M.x + k * v.x)},${p.sy(M.y + k * v.y)}`}
         className="dg-thin"

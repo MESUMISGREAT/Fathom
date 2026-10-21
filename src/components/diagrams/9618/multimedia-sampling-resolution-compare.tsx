@@ -26,7 +26,8 @@ function Panel({ x0, bits }: { x0: number; bits: number }) {
   const level = (k: number) => -RANGE + k * step;
   const quantise = (v: number) => level(Math.min(levels - 1, Math.max(0, Math.round((v + RANGE) / step))));
   const sx = (t: number) => x0 + (t / 2) * PW;
-  const sy = (v: number) => TOP + PH / 2 - (v / 1.6) * (PH / 2);
+  // ±1.8 at the frame leaves headroom above and below the outermost levels (±1.5)
+  const sy = (v: number) => TOP + PH / 2 - (v / 1.8) * (PH / 2);
   const pts = Array.from({ length: 2 * PER_CYCLE + 1 }, (_, i) => ({ t: i / PER_CYCLE, v: quantise(wave(i / PER_CYCLE)) }));
   let d = `M${sx(pts[0]!.t).toFixed(2)},${sy(pts[0]!.v).toFixed(2)}`;
   for (let i = 1; i < pts.length; i++) d += ` H${sx(pts[i]!.t).toFixed(2)} V${sy(pts[i]!.v).toFixed(2)}`;
@@ -36,7 +37,7 @@ function Panel({ x0, bits }: { x0: number; bits: number }) {
         <line key={k} x1={x0} y1={sy(level(k))} x2={x0 + PW} y2={sy(level(k))} className="dg-grid" />
       ))}
       <rect x={x0} y={TOP} width={PW} height={PH} className="dg-thin" />
-      <path d={graph(wave, [0, 2], { sx, sy }, [-1.6, 1.6], 400)} className="dg-muted dg-dashed" />
+      <path d={graph(wave, [0, 2], { sx, sy }, [-1.8, 1.8], 400)} className="dg-muted dg-dashed" />
       <path d={d} className="dg-accent" />
       {pts.map((p, i) => (
         <circle key={i} cx={sx(p.t)} cy={sy(p.v)} r={2.2} className="dg-dot-accent-2" />

@@ -10,10 +10,12 @@ import CoordinateGeometryLineForms from './coordinate-geometry-line-forms';
 import CoordinateGeometryPerpendicularBisector from './coordinate-geometry-perpendicular-bisector';
 import CoordinateGeometryPerpendicularGradients from './coordinate-geometry-perpendicular-gradients';
 import CoordinateGeometrySlidingLine from './coordinate-geometry-sliding-line';
+import CoordinateGeometryTangentAtPoint from './coordinate-geometry-tangent-at-point';
 import DiscriminantCases from './discriminant-cases';
 import FunctionsCombinedSequence from './functions-combined-sequence';
 import FunctionsCompositeMachines from './functions-composite-machines';
 import FunctionsHorizontalLineTest from './functions-horizontal-line-test';
+import FunctionsInverseLeftBranch from './functions-inverse-left-branch';
 import FunctionsInverseReflection from './functions-inverse-reflection';
 import FunctionsInverseUndo from './functions-inverse-undo';
 import FunctionsMappingTypes from './functions-mapping-types';
@@ -39,10 +41,12 @@ export const diagrams: DiagramRegistry = {
   'coordinate-geometry-perpendicular-bisector': CoordinateGeometryPerpendicularBisector,
   'coordinate-geometry-perpendicular-gradients': CoordinateGeometryPerpendicularGradients,
   'coordinate-geometry-sliding-line': CoordinateGeometrySlidingLine,
+  'coordinate-geometry-tangent-at-point': CoordinateGeometryTangentAtPoint,
   'discriminant-cases': DiscriminantCases,
   'functions-combined-sequence': FunctionsCombinedSequence,
   'functions-composite-machines': FunctionsCompositeMachines,
   'functions-horizontal-line-test': FunctionsHorizontalLineTest,
+  'functions-inverse-left-branch': FunctionsInverseLeftBranch,
   'functions-inverse-reflection': FunctionsInverseReflection,
   'functions-inverse-undo': FunctionsInverseUndo,
   'functions-mapping-types': FunctionsMappingTypes,

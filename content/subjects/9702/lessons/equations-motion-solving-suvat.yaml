@@ -1,0 +1,206 @@
+id: equations-motion-solving-suvat
+subject: "9702"
+topic: "2.1"
+title: Solving problems with the equations of motion
+summary: List s, u, v, a and t, spot the one you neither know nor need, and choose the equation that leaves it out.
+order: 8
+minutes: 5
+objectives: ["2.1.7"]
+prerequisites: [equations-motion-deriving-suvat]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.7, using the equations of uniformly accelerated motion to solve
+    problems; free fall is covered in the next lesson). All worked values and answer keys
+    recomputed with Python. All questions are original; the vehicle figures are illustrative
+    values chosen to be realistic.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve straight-line motion problems with the **suvat** equations: pick the right equation, keep the signs straight, and handle two-stage journeys.
+
+  - type: explain
+    title: Same puzzle, different costume
+    body: |
+      Every suvat question is the same puzzle in a new outfit. There are **five** quantities. You're given **three**, you want a **fourth**, and the fifth you neither know nor care about.
+
+      Each equation leaves out exactly one quantity. Pick the one that leaves out the quantity you don't care about.
+
+      | Equation | Leaves out |
+      | --- | --- |
+      | $v = u + at$ | $s$ |
+      | $s = \tfrac{1}{2}(u + v)t$ | $a$ |
+      | $s = ut + \tfrac{1}{2}at^2$ | $v$ |
+      | $v^2 = u^2 + 2as$ | $t$ |
+
+  - type: explain
+    title: The five-step routine
+    body: |
+      1. **Choose a positive direction** and write it down.
+      2. **List** $s, u, v, a, t$. Fill in what you know (with signs), put **?** by what you want.
+      3. **Pick** the equation that leaves out the remaining unknown.
+      4. **Substitute and solve.** Units in SI first: divide $\text{km h}^{-1}$ by 3.6 to get $\text{m s}^{-1}$.
+      5. **Sense-check** the sign and size.
+
+      Decode the hidden values: "from rest" or "dropped" means $u = 0$; "comes to rest" or "stops" means $v = 0$; "uniformly" or "constant" means you're allowed to use suvat at all.
+
+  - type: example
+    title: An emergency stop
+    problem: |
+      A car travelling at $25\ \text{m s}^{-1}$ brakes uniformly and stops in $40\ \text{m}$. Find its acceleration and the time it takes to stop.
+    steps:
+      - |
+        Positive = direction of travel. $s = 40\ \text{m}$, $u = 25\ \text{m s}^{-1}$, $v = 0$, $a = ?$, $t$ = not needed yet.
+      - |
+        No $t$, so use $v^2 = u^2 + 2as$: $0 = 25^2 + 2a(40)$, so $a = -\dfrac{625}{80} = -7.8\ \text{m s}^{-2}$.
+      - |
+        For the time, avoid using your rounded $a$: $s = \tfrac{1}{2}(u + v)t$ gives $40 = \tfrac{1}{2}(25 + 0)t$, so $t = 3.2\ \text{s}$.
+      - |
+        Sense-check: negative $a$ with positive $u$ means slowing down. ✓
+    answer: |
+      $a = -7.8\ \text{m s}^{-2}$ (a deceleration of $7.8\ \text{m s}^{-2}$) and $t = 3.2\ \text{s}$.
+
+  - type: check
+    questions: [pick-equation, cyclist]
+
+  - type: example
+    title: Two stages, one journey
+    problem: |
+      A driver at $20\ \text{m s}^{-1}$ sees a hazard. Her reaction time is $0.70\ \text{s}$, then the car decelerates uniformly at $6.5\ \text{m s}^{-2}$ until it stops. Find the total stopping distance.
+    steps:
+      - |
+        **Stage 1, thinking:** the car hasn't started braking, so the velocity is constant: $s_1 = 20 \times 0.70 = 14\ \text{m}$.
+      - |
+        **Stage 2, braking:** $u = 20\ \text{m s}^{-1}$, $v = 0$, $a = -6.5\ \text{m s}^{-2}$, $s_2 = ?$. No $t$: $0 = 20^2 + 2(-6.5)s_2$, so $s_2 = \dfrac{400}{13} = 30.8\ \text{m}$.
+      - |
+        **Total:** $14 + 30.8 = 44.8\ \text{m}$.
+    answer: |
+      About $45\ \text{m}$. The trick: the final velocity of stage 1 is the initial velocity of stage 2. Never run one suvat list across both stages, because the acceleration changes.
+
+  - type: check
+    questions: [aircraft, train-brake]
+
+  - type: misconceptions
+    items:
+      - wrong: Braking means $a$ is positive, because the car is "accelerating" to a stop.
+        right: With the direction of travel positive, braking makes $a$ **negative**. Forget the sign and you'll get a car that stops in a negative distance.
+      - wrong: You can use one set of suvat values for a journey with several stages.
+        right: Each stage with a different acceleration needs its own list. The stages connect through the velocity at the changeover.
+      - wrong: It's fine to put $\text{km h}^{-1}$ straight into the equations.
+        right: Convert to $\text{m s}^{-1}$ first (divide by 3.6). $72\ \text{km h}^{-1} = 20\ \text{m s}^{-1}$.
+
+  - type: exam
+    body: |
+      - Write the suvat list in your answer. It earns method marks even if your arithmetic slips later.
+      - Keep at least 3 significant figures in intermediate values and round only at the end. Better still, choose an equation that uses the **given** data rather than your earlier answer.
+      - If $s = ut + \tfrac{1}{2}at^2$ gives a quadratic in $t$, use the quadratic formula. Reject a negative time; if both roots are positive, the question usually wants a particular one (for example, the first time it passes a point).
+
+  - type: check
+    questions: [brake-spot, stopping-distance]
+
+  - type: takeaways
+    items:
+      - List s, u, v, a, t; pick the equation that leaves out the quantity you neither know nor need.
+      - Choose a positive direction first. Slowing down gives a negative a when u is positive.
+      - Convert to SI units before substituting.
+      - Multi-stage journeys need one suvat list per stage, linked by the velocity at the changeover.
+
+questions:
+  - id: pick-equation
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.7"]
+    prompt: |
+      You know an object's initial velocity $u$, final velocity $v$ and the time $t$, and you want its displacement $s$. The acceleration is uniform but unknown. Which equation should you use?
+    options:
+      - text: $s = \tfrac{1}{2}(u + v)t$
+        correct: true
+        why: Correct. It contains exactly the three quantities you know and the one you want, and leaves out $a$.
+      - text: $v^2 = u^2 + 2as$
+        why: This needs $a$, which you don't know, and it doesn't use the time you were given.
+      - text: $s = ut + \tfrac{1}{2}at^2$
+        why: This needs $a$. You could find $a$ first, but that's an unnecessary extra step.
+      - text: $v = u + at$
+        why: This doesn't contain $s$ at all, so it can't give you the displacement directly.
+    explanation: |
+      The quantity you neither know nor want is $a$, so choose the equation without $a$: $s = \tfrac{1}{2}(u + v)t$.
+
+  - id: cyclist
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      A cyclist moving at $3.0\ \text{m s}^{-1}$ accelerates uniformly at $0.80\ \text{m s}^{-2}$ for $15\ \text{s}$. How far does she travel in that time?
+    fields:
+      - answer: 135
+        tolerance: { abs: 0.5 }
+        unit: m
+    explanation: |
+      $u = 3.0$, $a = 0.80$, $t = 15$, $s = ?$; $v$ isn't needed, so use $s = ut + \tfrac{1}{2}at^2 = 3.0 \times 15 + \tfrac{1}{2} \times 0.80 \times 15^2 = 45 + 90 = 135\ \text{m}$.
+
+  - id: aircraft
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      An aircraft starts from rest and accelerates uniformly at $2.4\ \text{m s}^{-2}$ along a runway. It needs a speed of $72\ \text{m s}^{-1}$ to take off. What is the minimum length of runway it needs?
+    fields:
+      - answer: 1080
+        tolerance: { abs: 5 }
+        unit: m
+    explanation: |
+      $u = 0$, $v = 72$, $a = 2.4$, $s = ?$; no $t$, so $v^2 = u^2 + 2as$: $72^2 = 0 + 2 \times 2.4 \times s$, giving $s = \dfrac{5184}{4.8} = 1080\ \text{m}$ (about 1.1 km).
+
+  - id: train-brake
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      A train slows uniformly from $30\ \text{m s}^{-1}$ to $10\ \text{m s}^{-1}$ over a distance of $400\ \text{m}$. Taking its direction of travel as positive, find its acceleration (with its sign) and the time taken.
+    fields:
+      - label: "$a =$"
+        answer: -1.0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻²
+      - label: "$t =$"
+        answer: 20
+        tolerance: { abs: 0.1 }
+        unit: s
+    explanation: |
+      $a$ from $v^2 = u^2 + 2as$: $100 = 900 + 800a$, so $a = -1.0\ \text{m s}^{-2}$. $t$ from $s = \tfrac{1}{2}(u + v)t$ (no need for $a$): $400 = \tfrac{1}{2}(30 + 10)t$, so $t = 20\ \text{s}$. Check: $v = u + at = 30 - 1.0 \times 20 = 10\ \text{m s}^{-1}$. ✓
+
+  - id: brake-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      A car travelling at $20\ \text{m s}^{-1}$ brakes uniformly and stops in $50\ \text{m}$. A student finds the acceleration, taking the direction of travel as positive. Which line contains the first error?
+    lines:
+      - |
+        $u = 20\ \text{m s}^{-1}$, $v = 0$, $s = 50\ \text{m}$, $a = ?$
+      - |
+        No $t$, so use $v^2 = u^2 + 2as$.
+      - |
+        $0 = 20^2 + 2a \times 50$, so $0 = 400 + 100a$.
+      - |
+        So $a = +4.0\ \text{m s}^{-2}$.
+    errorLine: 4
+    fix: |
+      $100a = -400$, so $a = -4.0\ \text{m s}^{-2}$. The negative sign shows the acceleration is opposite to the motion: the car is slowing down.
+    explanation: |
+      The set-up is perfect; the sign is lost while rearranging. A positive acceleration with positive velocity would make the car speed up, not stop.
+
+  - id: stopping-distance
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.7"]
+    prompt: |
+      A cyclist riding at $15\ \text{m s}^{-1}$ spots a fallen branch. His reaction time is $0.60\ \text{s}$. He then brakes with a uniform deceleration of $5.0\ \text{m s}^{-2}$ until he stops. Calculate his total stopping distance.
+    fields:
+      - answer: 31.5
+        tolerance: { abs: 0.2 }
+        unit: m
+    explanation: |
+      Thinking distance (constant velocity): $15 \times 0.60 = 9.0\ \text{m}$. Braking distance: $0 = 15^2 + 2(-5.0)s$, so $s = \dfrac{225}{10} = 22.5\ \text{m}$. Total $= 9.0 + 22.5 = 31.5\ \text{m}$.

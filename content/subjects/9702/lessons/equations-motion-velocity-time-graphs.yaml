@@ -1,0 +1,188 @@
+id: equations-motion-velocity-time-graphs
+subject: "9702"
+topic: "2.1"
+title: Velocity–time graphs and acceleration
+summary: The gradient of a velocity–time graph is the acceleration; a line below the time axis means motion in the negative direction.
+order: 4
+minutes: 5
+objectives: ["2.1.2", "2.1.5"]
+prerequisites: [equations-motion-acceleration, equations-motion-displacement-time-graphs]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 2.1.2, representing velocity and speed graphically, and 2.1.5,
+    acceleration as the gradient of a velocity–time graph). The diagram is drawn to scale. All
+    gradients recomputed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can read a **velocity–time graph**, find the acceleration from its **gradient** (using a tangent on a curve), and interpret a line that dips below the time axis.
+
+  - type: explain
+    title: Same axes, different story
+    body: |
+      A velocity–time graph looks like a displacement–time graph's twin, but it tells a different story. Mixing them up is the number one graph crime in AS Physics.
+
+      Here the gradient is
+
+      $$\text{gradient} = \frac{\Delta v}{\Delta t}$$
+
+      which is the **definition of acceleration**. So the gradient of a velocity–time graph **is** the acceleration.
+
+  - type: diagram
+    diagram: phys-equations-motion-vt-gradient
+    alt: >-
+      A velocity–time graph drawn to scale, v in m s⁻¹ against t in seconds, for a car. From 0 to 4 s
+      the line rises straight from 0 to 12 m s⁻¹, labelled "speeding up, a = +3.0 m s⁻²", with a
+      dashed gradient triangle showing Δt = 4 s and Δv = 12 m s⁻¹. From 4 s to 10 s the line is
+      horizontal at 12 m s⁻¹, labelled "constant velocity, gradient 0, a = 0". From 10 s to 16 s it
+      falls straight back to 0, labelled "slowing down, a = −2.0 m s⁻²", with a dashed triangle
+      showing Δv = −12 m s⁻¹ and Δt = 6 s. The caption reads gradient of a velocity–time graph =
+      acceleration.
+    caption: Up-slope, speeding up. Flat, steady. Down-slope (above the axis), slowing down.
+
+  - type: example
+    title: Reading the car's graph
+    problem: |
+      Find the car's acceleration in each section of the graph.
+    steps:
+      - |
+        **0–4 s:** $a = \dfrac{12 - 0}{4 - 0} = +3.0\ \text{m s}^{-2}$.
+      - |
+        **4–10 s:** horizontal, so $a = 0$. The car moves at a steady $12\ \text{m s}^{-1}$. It is **not** at rest!
+      - |
+        **10–16 s:** $a = \dfrac{0 - 12}{16 - 10} = -2.0\ \text{m s}^{-2}$. The minus sign plus positive velocity means slowing down.
+    answer: |
+      $+3.0\ \text{m s}^{-2}$, then $0$, then $-2.0\ \text{m s}^{-2}$. Steeper line, bigger acceleration: the car speeds up faster than it brakes.
+
+  - type: check
+    questions: [vt-gradient-meaning, steady-accel]
+
+  - type: explain
+    title: Below the axis and back again
+    body: |
+      Negative velocity means moving in the **negative direction**. So:
+
+      | What the line does | What the object does |
+      | --- | --- |
+      | horizontal, above the axis | constant velocity, positive direction |
+      | sloping, straight | uniform (constant) acceleration |
+      | curved | non-uniform acceleration (changing gradient) |
+      | below the axis | moving in the negative direction |
+      | crossing the axis | stopping for an instant and reversing |
+
+      A **speed–time** graph never goes below the axis. Where a velocity–time line crosses the axis and carries on below, the speed–time graph touches zero and **bounces back up**, like a V.
+
+  - type: check
+    questions: [cross-axis]
+
+  - type: explain
+    title: Curves need tangents (again)
+    body: |
+      If the velocity–time graph curves, the acceleration is changing. The acceleration at an instant is the gradient of the **tangent** at that time: same method as for displacement–time graphs, with a big triangle.
+
+      A curve that flattens out (like a skydiver approaching terminal velocity) shows the acceleration **decreasing** towards zero.
+
+  - type: misconceptions
+    items:
+      - wrong: A horizontal line on a velocity–time graph means the object is at rest.
+        right: It means **constant velocity** (zero acceleration). At rest is a horizontal line **on the time axis** ($v = 0$).
+      - wrong: A line sloping down means the object is moving backwards.
+        right: Above the axis it is still moving forwards, just slowing down. It moves backwards only when the line is **below** the axis.
+      - wrong: The highest point on a velocity–time graph is where the object is furthest away.
+        right: The highest point is the **fastest** moment. How far it has gone comes from the area under the graph (next lesson).
+
+  - type: exam
+    body: |
+      - Before you read anything off a graph, check the **y-axis label**. Is it $s$, $v$ or speed? Thirty seconds here prevents the classic graph crime.
+      - "Determine the acceleration" = gradient. Show $\Delta v$ and $\Delta t$ and include the sign if the question gives a direction.
+      - When sketching, a constant acceleration must be a **ruled straight line**. Wobbly freehand lines can cost the mark.
+
+  - type: check
+    questions: [vt-tangent, horizontal-cloze]
+
+  - type: takeaways
+    items:
+      - Gradient of a velocity–time graph = acceleration.
+      - Straight line = uniform acceleration; horizontal line = constant velocity (not at rest).
+      - Below the time axis = moving in the negative direction; crossing it = stopping and reversing.
+      - On a curve, take the gradient of the tangent.
+
+questions:
+  - id: vt-gradient-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.5"]
+    prompt: |
+      What does the **gradient** of a velocity–time graph represent?
+    options:
+      - text: acceleration
+        correct: true
+        why: Correct. Gradient $= \dfrac{\Delta v}{\Delta t}$, the rate of change of velocity.
+      - text: displacement
+        why: Displacement is the **area** under a velocity–time graph, not its gradient.
+      - text: velocity
+        why: Velocity is the gradient of a **displacement**–time graph.
+      - text: distance travelled
+        why: Distance relates to area under a speed–time graph, not to a gradient.
+    explanation: |
+      Gradient $= \dfrac{\Delta v}{\Delta t}$, which is the definition of acceleration.
+
+  - id: steady-accel
+    format: numeric
+    difficulty: 1
+    objectives: ["2.1.5"]
+    prompt: |
+      A velocity–time graph is a straight line from $4.0\ \text{m s}^{-1}$ at $t = 0$ to $22\ \text{m s}^{-1}$ at $t = 6.0\ \text{s}$. Calculate the acceleration.
+    fields:
+      - answer: 3.0
+        tolerance: { abs: 0.02 }
+        unit: m s⁻²
+    explanation: |
+      $a = \dfrac{\Delta v}{\Delta t} = \dfrac{22 - 4.0}{6.0} = \dfrac{18}{6.0} = 3.0\ \text{m s}^{-2}$. Use the **change** in velocity: $22 \div 6.0$ would ignore the starting velocity.
+
+  - id: cross-axis
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.2", "2.1.5"]
+    prompt: |
+      An object's velocity–time graph is a single straight line sloping downwards. It starts above the time axis, crosses it, and carries on below it. Which description is correct?
+    options:
+      - text: The object slows down, stops for an instant, then speeds up in the opposite direction, with the same acceleration throughout.
+        correct: true
+        why: Correct. One straight line means one constant gradient, so one constant acceleration, even as the velocity passes through zero.
+      - text: The object slows down, stops, and then its acceleration changes direction.
+        why: The gradient never changes along a straight line, so the acceleration never changes. Only the velocity changes sign.
+      - text: The object moves forwards the whole time, getting slower and slower.
+        why: Below the axis the velocity is negative, so the object is moving in the opposite direction.
+      - text: The object goes over the top of a hill and down the other side.
+        why: A velocity–time graph is not a picture of the path. It shows velocity against time.
+    explanation: |
+      Think of a ball rolled up a ramp: it slows, stops at the top for an instant, and rolls back down. Gravity's pull along the ramp is the same throughout, so the acceleration stays constant.
+
+  - id: vt-tangent
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.5"]
+    prompt: |
+      A cyclist's velocity–time graph is curved. The tangent at $t = 4.0\ \text{s}$ passes through $(0, 2.0\ \text{m s}^{-1})$ and $(8.0\ \text{s}, 18\ \text{m s}^{-1})$. What is the cyclist's acceleration at $t = 4.0\ \text{s}$?
+    fields:
+      - answer: 2.0
+        tolerance: { abs: 0.02 }
+        unit: m s⁻²
+    explanation: |
+      Acceleration at an instant = gradient of the tangent $= \dfrac{18 - 2.0}{8.0 - 0} = \dfrac{16}{8.0} = 2.0\ \text{m s}^{-2}$.
+
+  - id: horizontal-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.2", "2.1.5"]
+    prompt: |
+      A horizontal line above the time axis on a velocity–time graph shows constant {{1}} and zero {{2}}.
+    blanks:
+      - accept: [velocity]
+      - accept: [acceleration]
+    explanation: |
+      The velocity isn't changing, so the gradient (the acceleration) is zero. The object is moving, at a steady velocity.

@@ -23,7 +23,7 @@ export default function CoordinateGeometryIntersectionsCount() {
   return (
     <Svg width={W} height={H}>
       <Grid p={p} />
-      <AxesXY p={p} xTicks={[-2, 1, 2, 3]} yTicks={[-3, -2, 2, 3, 4]} yTicksRight={[1]} />
+      <AxesXY p={p} xTicks={[-2, 1, 2, 3]} yTicks={[-3, 2, 3, 4]} yTicksRight={[1]} />
       <path d={graph(q, X, p, Y)} className="dg-accent" />
       <path d={graph(h, [X[0], -0.05], p, Y)} className="dg-accent-2" />
       <path d={graph(h, [0.05, X[1]], p, Y)} className="dg-accent-2" />

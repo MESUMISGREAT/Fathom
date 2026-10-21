@@ -91,6 +91,10 @@ export function MultimediaBitmapFileLayout() {
           <rect key={`${i}-${c}`} x={gx + c * cell} y={gy + i * cell} width={cell} height={cell} className={`${fills[v]} dg-thin`} />
         )),
       )}
+      {/* outline every cell again on top, so no neighbour paints over a border */}
+      {rows.map((r, i) =>
+        r.map((_, c) => <rect key={`o${i}-${c}`} x={gx + c * cell} y={gy + i * cell} width={cell} height={cell} className="dg-thin" />),
+      )}
       <Label x={gx + 4 * cell + 14} y={gy + cell} anchor="start" className="dg-text-small dg-text-muted">
         decoded image
       </Label>

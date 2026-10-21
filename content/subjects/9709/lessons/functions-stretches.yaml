@@ -1,0 +1,222 @@
+id: functions-stretches
+subject: "9709"
+topic: "1.2"
+title: "Transformations: stretches"
+summary: y = af(x) stretches the graph parallel to the y-axis by factor a; y = f(ax) stretches it parallel to the x-axis by factor 1/a.
+order: 9
+minutes: 5
+kind: core
+objectives: ["1.2.5"]
+prerequisites: [functions-reflections]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.2 learning outcome "understand and use the
+    transformations of the graph of y = f(x) given by ... y = af(x) and y = f(ax)", including the
+    note on using the term 'stretch' and that questions may involve trigonometric functions. All
+    examples and questions are original; every transformed equation and point checked in Python.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can sketch and describe $y = af(x)$ and $y = f(ax)$ as **stretches**, with the right direction and the right scale factor.
+
+  - type: explain
+    title: Pulling the graph like dough
+    body: |-
+      A **stretch** pulls the graph away from one axis (or squashes it towards it). Same rule as always: outside acts on $y$ and does what it says; inside acts on $x$ and does the opposite.
+
+      | Equation | Transformation | Point $(p, q)$ goes to |
+      | --- | --- | --- |
+      | $y = af(x)$ | **stretch parallel to the $y$-axis**, scale factor $a$ | $(p,\ aq)$ |
+      | $y = f(ax)$ | **stretch parallel to the $x$-axis**, scale factor $\dfrac{1}{a}$ | $\left(\dfrac{p}{a},\ q\right)$ |
+
+      So $y = 3f(x)$ triples every height, while $y = f(3x)$ squeezes the graph to a third of its width.
+
+  - type: diagram
+    diagram: functions-stretches
+    alt: >-
+      Two panels at the same scale, each showing y = f(x) = x² − 2x in dark ink, a U-shaped curve
+      with vertex (1, −1) and roots 0 and 2. Left panel, y = 2f(x): the blue curve is a narrower U
+      through the same roots 0 and 2, with its vertex pulled down to (1, −2); vertical orange arrows
+      show heights doubling. Caption: stretch parallel to the y-axis, factor 2. Right panel,
+      y = f(2x): the blue curve is a U squeezed towards the y-axis, with roots 0 and 1 and vertex
+      (0.5, −1); horizontal orange arrows show x-coordinates halving, for example (3, 3) moves to
+      (1.5, 3). Caption: stretch parallel to the x-axis, factor one half.
+    caption: |-
+      Left: heights double, but points on the $x$-axis can't move (twice zero is zero). Right: distances from the $y$-axis halve, but points on the $y$-axis stay put.
+
+  - type: intuition
+    title: Why f(2x) halves the width
+    body: |-
+      $y = f(2x)$ at $x = 1.5$ shows what $f$ did at $x = 3$. The new graph gets everywhere **twice as fast**, so it only needs half the width.
+
+      Like watching a video at 2× speed: the whole story fits into half the time. The analogy breaks for $af(x)$, which isn't about speed; it just turns up the volume on every height.
+
+  - type: check
+    questions: [st-factor, st-points]
+
+  - type: example
+    title: Both stretches on one function
+    problem: |-
+      $f(x) = x^2 - 2x$, with vertex $(1, -1)$. Find the equations of $y = 3f(x)$ and $y = f\!\left(\tfrac12 x\right)$, describe each transformation and give each new vertex.
+    steps:
+      - |-
+        $3f(x) = 3x^2 - 6x$. Stretch parallel to the $y$-axis, factor 3. Vertex: $(1, 3 \times (-1)) = (1, -3)$.
+      - |-
+        $f\!\left(\tfrac12 x\right) = \left(\tfrac12 x\right)^2 - 2\left(\tfrac12 x\right) = \tfrac14 x^2 - x$.
+      - |-
+        Here $a = \tfrac12$, so the factor is $\dfrac{1}{1/2} = 2$: a stretch parallel to the $x$-axis, factor 2. The graph gets **wider**.
+      - |-
+        Vertex: $\left(\dfrac{1}{1/2}, -1\right) = (2, -1)$. Check: $\tfrac14 x^2 - x = \tfrac14(x - 2)^2 - 1$ ✓
+    answer: |-
+      $y = 3x^2 - 6x$, vertex $(1, -3)$; $\;y = \tfrac14 x^2 - x$, vertex $(2, -1)$.
+
+  - type: explain
+    title: Naming it so it scores
+    body: |-
+      A full description of a stretch has **three** parts:
+
+      1. the word **stretch**;
+      2. the direction: **parallel to the $y$-axis** (or "in the $y$-direction"), or parallel to the $x$-axis;
+      3. the **scale factor**.
+
+      A factor between 0 and 1 is still called a stretch. "Squash", "compress" and "shrink" aren't the official words, so don't rely on them.
+
+  - type: deeper
+    title: Negative factors and trig graphs
+    body: |-
+      **Negative factor.** $y = -2f(x)$ is a stretch parallel to the $y$-axis with factor 2 **and** a reflection in the $x$-axis. (Those two can happen in either order.) Exam answers usually describe them as two separate transformations.
+
+      **Trig graphs** follow exactly the same rules. $y = 3\sin 2x$ (in degrees) is $y = \sin x$ stretched parallel to the $x$-axis with factor $\tfrac12$ and parallel to the $y$-axis with factor 3. The maximum point $(90°, 1)$ goes to $(45°, 3)$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $y = f(2x)$ is a stretch with scale factor 2.
+        right: |-
+          Inside the bracket does the opposite: the factor is $\tfrac12$, parallel to the $x$-axis. The graph gets narrower, not wider.
+      - wrong: |-
+          $y = 2f(x)$ moves the graph up.
+        right: |-
+          It multiplies heights, it doesn't add to them. Points below the axis go further **down**, and points on the $x$-axis don't move.
+      - wrong: |-
+          "Stretch, factor 3" is a full description.
+        right: |-
+          Without a direction it could be either axis. Say "stretch parallel to the $y$-axis with scale factor 3".
+
+  - type: exam
+    body: |-
+      - "Describe fully" a stretch needs all three parts: stretch, direction, factor. Miss one and you usually lose the mark.
+      - Questions can use any function: a quadratic, a trig graph, or a sketch with a few labelled points. Push each labelled point through $(p, q) \to (p, aq)$ or $(p, q) \to \left(\tfrac{p}{a}, q\right)$.
+      - Insider hack: points on the axis you stretch **away from** don't move. Use them as a free check on your sketch.
+
+  - type: check
+    questions: [st-cloze, st-expression, st-trig]
+
+  - type: takeaways
+    items:
+      - |-
+        $y = af(x)$: stretch parallel to the $y$-axis, scale factor $a$. Heights are multiplied by $a$.
+      - |-
+        $y = f(ax)$: stretch parallel to the $x$-axis, scale factor $\dfrac1a$. Inside does the opposite.
+      - |-
+        Describe a stretch with three things: the word stretch, the direction, the factor.
+      - |-
+        $af(x)$ leaves the $x$-intercepts fixed; $f(ax)$ leaves the $y$-intercept fixed.
+
+questions:
+  - id: st-factor
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      Which transformation maps the graph of $y = f(x)$ onto the graph of $y = f(3x)$?
+    explanation: |-
+      The 3 is **inside** the bracket, so it acts on $x$ and does the opposite: $x$-coordinates are divided by 3. A stretch parallel to the $x$-axis, scale factor $\tfrac13$.
+    options:
+      - text: |-
+          Stretch parallel to the $x$-axis, scale factor $\tfrac13$
+        correct: true
+        why: |-
+          Inside the bracket: acts on $x$, and the factor is $\tfrac{1}{3}$.
+      - text: |-
+          Stretch parallel to the $x$-axis, scale factor 3
+        why: |-
+          Right direction, wrong factor. Inside the bracket does the opposite, so it's $\tfrac13$.
+      - text: |-
+          Stretch parallel to the $y$-axis, scale factor 3
+        why: |-
+          That's $y = 3f(x)$, with the 3 outside the bracket.
+      - text: |-
+          Stretch parallel to the $y$-axis, scale factor $\tfrac13$
+        why: |-
+          That's $y = \tfrac13 f(x)$. A number inside the bracket acts on $x$, not $y$.
+
+  - id: st-points
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      The point $(4, 6)$ lies on the graph of $y = f(x)$. Find the corresponding point on $y = 3f(x)$, and on $y = f(2x)$.
+    fields:
+      - label: "on y = 3f(x): x ="
+        answer: 4
+      - label: "on y = 3f(x): y ="
+        answer: 18
+      - label: "on y = f(2x): x ="
+        answer: 2
+      - label: "on y = f(2x): y ="
+        answer: 6
+    explanation: |-
+      $y = 3f(x)$ multiplies heights by 3: $(4, 6) \to (4, 18)$.
+
+      $y = f(2x)$ divides $x$-coordinates by 2: $(4, 6) \to (2, 6)$. Check: at $x = 2$, $f(2 \times 2) = f(4) = 6$ ✓
+
+  - id: st-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      The graph of $y = f\!\left(\tfrac14 x\right)$ is obtained from $y = f(x)$ by a {{1}} parallel to the {{2}} with scale factor {{3}}.
+    blanks:
+      - accept: [stretch, a stretch]
+      - accept: [x-axis, x axis, the x-axis, the x axis, x]
+      - accept: ["4", four]
+    explanation: |-
+      $\tfrac14$ inside the bracket acts on $x$, and the factor is the reciprocal: $\dfrac{1}{1/4} = 4$. So it's a **stretch** parallel to the **$x$-axis** with factor **4**: the graph gets four times wider.
+
+  - id: st-expression
+    format: expression
+    difficulty: 2
+    objectives: ["1.2.5"]
+    prompt: |-
+      $f(x) = x^2 + 4x - 1$. The graph of $y = f(x)$ is stretched parallel to the $x$-axis with scale factor $\tfrac12$. Find the equation of the new graph, $y = \dots$
+    answer: 4x^2 + 8x - 1
+    variables: [x]
+    display: |-
+      $y = f(2x) = 4x^2 + 8x - 1$
+    explanation: |-
+      Factor $\tfrac12$ parallel to the $x$-axis means $y = f(2x)$, because inside the bracket does the opposite.
+
+      $f(2x) = (2x)^2 + 4(2x) - 1 = 4x^2 + 8x - 1$.
+
+  - id: st-trig
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.5"]
+    prompt: |-
+      The graph of $y = \sin x$, for $x$ in degrees, has a maximum point at $(90°, 1)$. Find the coordinates of the corresponding maximum point on the graph of $y = 3\sin 2x$.
+    fields:
+      - label: "x ="
+        answer: 45
+        unit: "°"
+      - label: "y ="
+        answer: 3
+    explanation: |-
+      $\sin 2x$: the 2 is inside, so $x$-coordinates halve: $90° \to 45°$. The 3 is outside, so heights triple: $1 \to 3$.
+
+      The point is $(45°, 3)$. Check: $3\sin(2 \times 45°) = 3\sin 90° = 3$ ✓
