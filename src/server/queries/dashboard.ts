@@ -1,6 +1,6 @@
 /** Everything the home dashboard needs, in one place. */
 import 'server-only';
-import { and, desc, eq, gte, inArray } from 'drizzle-orm';
+import { and, desc, eq, gte, inArray, isNotNull } from 'drizzle-orm';
 import { getDb } from '@/server/db';
 import * as t from '@/server/db/schema';
 import { recommendNext, type LessonCandidate, type NextStep, type RevisitCandidate } from '@/domain/recommend';
@@ -35,11 +35,19 @@ export interface RecentLessonResult {
   answered: number;
   correct: number;
   at: Date;
+  /** The lesson is finished (not just answered in). */
+  completed: boolean;
 }
 
 export interface Dashboard {
   enrolled: EnrolledSubject[];
   next: NextStep;
+  /**
+   * The lesson the student is part-way through (most recently viewed), even
+   * when `next` recommends something else first (reviews), so Home can still
+   * offer to pick it up.
+   */
+  resume: LessonCandidate | null;
   upNext: LessonCandidate[];
   dueCount: number;
   revisit: Array<RevisitCandidate & { subjectName: string; topicTitle: string }>;
@@ -88,6 +96,8 @@ export async function getDashboard(userId: string): Promise<Dashboard> {
 
   const next = recommendNext({ enrolledCount: enrolled.length, dueReviews: dueCount, lessons: candidates, revisit });
   const nextId = next.kind === 'start' || next.kind === 'resume' ? next.lesson.id : null;
+  const resume =
+    candidates.filter((c) => c.status === 'in-progress').sort((a, b) => (b.lastViewedAt?.getTime() ?? 0) - (a.lastViewedAt?.getTime() ?? 0))[0] ?? null;
   const upNext = candidates
     .filter((c) => c.status === 'not-started' && c.id !== nextId)
     .sort((a, b) => (b.subjectLastActive?.getTime() ?? 0) - (a.subjectLastActive?.getTime() ?? 0) || a.order - b.order)
@@ -109,10 +119,21 @@ export async function getDashboard(userId: string): Promise<Dashboard> {
     if (a.score >= 0.99) g.correct++;
     byLesson.set(a.lessonId, g);
   }
-  const locs = await lessonLocations([...byLesson.keys()].slice(0, 5));
-  const recent: RecentLessonResult[] = [...byLesson.entries()].slice(0, 5).flatMap(([lessonId, g]) => {
+  const recentIds = [...byLesson.keys()].slice(0, 5);
+  const [locs, finished] = await Promise.all([
+    lessonLocations(recentIds),
+    recentIds.length
+      ? db
+          .select({ id: t.lessonProgress.lessonId })
+          .from(t.lessonProgress)
+          .where(and(eq(t.lessonProgress.userId, userId), inArray(t.lessonProgress.lessonId, recentIds), isNotNull(t.lessonProgress.completedAt)))
+      : Promise.resolve([]),
+  ]);
+  const finishedIds = new Set(finished.map((f) => f.id));
+  const recent: RecentLessonResult[] = recentIds.flatMap((lessonId) => {
     const loc = locs.get(lessonId);
-    return loc ? [{ lessonId, title: loc.title, href: loc.href, subjectName: loc.subjectName, ...g }] : [];
+    const g = byLesson.get(lessonId)!;
+    return loc ? [{ lessonId, title: loc.title, href: loc.href, subjectName: loc.subjectName, ...g, completed: finishedIds.has(lessonId) }] : [];
   });
   const lessonIds = candidates.map((c) => c.id);
   const completedThisWeek = lessonIds.length
@@ -125,6 +146,7 @@ export async function getDashboard(userId: string): Promise<Dashboard> {
   return {
     enrolled,
     next,
+    resume: next.kind === 'resume' ? null : resume,
     upNext,
     dueCount,
     revisit: revisit.slice(0, 4),

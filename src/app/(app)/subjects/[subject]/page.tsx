@@ -8,7 +8,8 @@ import { enrollments } from '@/server/db/schema';
 import { getSubject, getSyllabusTree, topicHref } from '@/server/queries/catalog';
 import { getSubjectProgress } from '@/server/queries/progress';
 import { EnrollControl } from '@/components/study/EnrollControl';
-import { Crumbs, LevelBadge, pluralise, StatusPill, SubjectTile } from '@/components/ui';
+import { Crumbs, LevelBadge, pluralise, StatusPill } from '@/components/ui';
+import { SubjectMotif } from '@/components/art/SubjectMotif';
 import { ChevronRightIcon, ListIcon } from '@/components/icons';
 
 export async function generateMetadata({ params }: { params: Promise<{ subject: string }> }): Promise<Metadata> {
@@ -38,35 +39,41 @@ export default async function SubjectPage({
 
   return (
     <div className="container">
-      <header className="page-head">
+      <header className="page-head" data-subject={subject.code}>
         <Crumbs items={[{ href: '/subjects', label: 'Subjects' }, { label: subject.name }]} />
-        <div className="row row-between" style={{ alignItems: 'flex-start', ['--gap' as string]: '16px' }}>
-          <div className="row row-nowrap" style={{ ['--gap' as string]: '16px' }}>
-            <SubjectTile code={subject.code} large />
-            <div>
-              <h1>{subject.name}</h1>
-              <p className="small faint">
-                Cambridge International AS &amp; A Level {subject.name} {subject.code}
-              </p>
-            </div>
+        <div className="subject-hero">
+          <div className="stack stack-md">
+            <p className="eyebrow">
+              Cambridge International AS &amp; A Level · {subject.code}
+            </p>
+            <h1>{subject.name}</h1>
+            <p className="small muted">
+              {pluralise(progress.summary.lessonsTotal, 'lesson')} so far · {progress.summary.withContent} of {progress.summary.objectives} objectives
+              have lessons
+            </p>
+            <EnrollControl subjectCode={subject.code} subjectName={subject.shortName} enrolledLevel={enrolment?.targetLevel ?? null} signedIn={!!user} />
           </div>
-          <EnrollControl subjectCode={subject.code} subjectName={subject.shortName} enrolledLevel={enrolment?.targetLevel ?? null} signedIn={!!user} />
+          <div className="subject-hero-art" aria-hidden="true">
+            <SubjectMotif code={subject.code} />
+          </div>
         </div>
         <div className="notice small">
           <ListIcon />
           <span>
             Follows the official syllabus for examination in {subject.version.label} ({subject.version.sourceVersion}), checked against{' '}
-            <a href={subject.version.sourceUrl} rel="noopener noreferrer" target="_blank">
+            <a href={subject.version.sourceUrl} rel="noopener noreferrer" target="_blank" className="tap-inline">
               Cambridge&rsquo;s syllabus document
             </a>{' '}
             on {subject.version.checkedAt}.{' '}
             {subject.version.wording === 'paraphrased' && 'Objectives are paraphrased; the official document is the final word. '}
-            <Link href={`/subjects/${subject.slug}/coverage`}>See what&rsquo;s covered so far</Link>
+            <Link href={`/subjects/${subject.slug}/coverage`} className="tap-inline">
+              See what&rsquo;s covered so far
+            </Link>
           </span>
         </div>
       </header>
 
-      <div className="row row-between" style={{ marginBottom: 20 }}>
+      <div className="row row-between" style={{ marginBottom: 24 }}>
         <nav className="segmented" aria-label="Filter by level">
           {[
             { key: 'all', label: 'Everything' },
@@ -82,14 +89,11 @@ export default async function SubjectPage({
             </Link>
           ))}
         </nav>
-        <p className="small faint">
-          {pluralise(progress.summary.lessonsTotal, 'lesson')} · {progress.summary.withContent} of {progress.summary.objectives} objectives have lessons so far
-        </p>
       </div>
 
       {(strands.length > 0 ? strands : [null]).map((strand) => (
         <div key={strand ?? 'all'} className="stack stack-lg" style={{ marginBottom: 32 }}>
-          {strand && <h2 className="h3 faint">{strand}</h2>}
+          {strand && <h2 className="h3 muted">{strand}</h2>}
           {sections
             .filter((s) => (strand ? s.strand === strand : true))
             .map((section) => (
@@ -103,22 +107,22 @@ export default async function SubjectPage({
                   </div>
                   <span className="tiny faint">{section.papers.join(', ')}</span>
                 </div>
-                <div className="card" style={{ overflow: 'hidden' }}>
+                <div className="topic-list" data-subject={subject.code}>
                   {section.topics.map((topic) => {
                     const tp = progress.topics.get(topic.id);
                     return (
-                      <Link key={topic.id} href={topicHref(subject.slug, topic.code)} className="topic-row">
+                      <Link key={topic.id} href={topicHref(subject.slug, topic.code)} className="topic-row" data-empty={topic.lessons.length === 0 || undefined}>
                         <span className="topic-code">{topic.code}</span>
                         <span className="grow">
-                          <span style={{ display: 'block', fontWeight: 600 }}>{topic.title}</span>
-                          <span className="tiny faint">
+                          <span style={{ display: 'block', fontWeight: 700 }}>{topic.title}</span>
+                          <span className="tiny muted">
                             {pluralise(topic.objectives.length, 'objective')} ·{' '}
                             {topic.lessons.length ? pluralise(topic.lessons.length, 'lesson') : 'lessons coming'}
                           </span>
                         </span>
                         <span className="topic-meta">
                           {user && topic.lessons.length > 0 && tp && <StatusPill state={tp.state} />}
-                          <ChevronRightIcon width={18} height={18} style={{ color: 'var(--text-3)' }} />
+                          <ChevronRightIcon width={18} height={18} className="topic-chevron" />
                         </span>
                       </Link>
                     );

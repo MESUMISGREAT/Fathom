@@ -28,13 +28,14 @@ export async function getDueQuestions(userId: string, limit = 10, now = new Date
     .limit(limit);
 }
 
-/** The next time something becomes due, for the "all caught up" state. */
+/** The next time something becomes due, for the "all caught up" state. Same scope as the queue (enrolled subjects), so the two never disagree. */
 export async function nextDueAt(userId: string): Promise<Date | null> {
   const db = await getDb();
   const rows = await db
     .select({ dueAt: t.reviewItems.dueAt })
     .from(t.reviewItems)
     .innerJoin(t.questions, eq(t.questions.id, t.reviewItems.questionId))
+    .innerJoin(t.enrollments, and(eq(t.enrollments.userId, t.reviewItems.userId), eq(t.enrollments.versionId, t.questions.versionId)))
     .where(and(eq(t.reviewItems.userId, userId), isNull(t.questions.archivedAt)))
     .orderBy(asc(t.reviewItems.dueAt))
     .limit(1);

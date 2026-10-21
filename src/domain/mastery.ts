@@ -144,8 +144,9 @@ export function computeMastery(ev: ObjectiveEvidence, now: Date): MasteryResult 
 }
 
 /**
- * Topic (or any group) state from its objectives' states. Objectives with no
- * learning material yet are excluded by the caller.
+ * Topic (or any group) state from its objectives' states. Callers pass every
+ * objective in the topic, including ones with no learning material yet
+ * (they are 'not-started'), so 'secure' means every objective is Secure.
  */
 export function aggregateState(states: MasteryState[]): MasteryState {
   if (states.length === 0 || states.every((s) => s === 'not-started')) return 'not-started';

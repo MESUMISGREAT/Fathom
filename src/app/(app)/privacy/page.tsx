@@ -21,7 +21,9 @@ export default function PrivacyPage() {
           <li>Your first name, if you choose to give it.</li>
           <li>The date you confirmed the age statement when signing up.</li>
           <li>Your subjects and target level, lesson progress, your answers to questions, your review schedule and saved items.</li>
-          <li>Your theme and lesson display preferences.</li>
+          <li>The XP you&rsquo;ve earned (what for and on which day) and the badges you&rsquo;ve unlocked.</li>
+          <li>Your time zone, detected from your browser, so XP counts towards your own day.</li>
+          <li>Your preferences: theme, lesson display, daily goal, and whether points, celebrations and sounds are on.</li>
         </ul>
         <h2 className="h3">What we don&rsquo;t do</h2>
         <ul>
@@ -40,7 +42,8 @@ export default function PrivacyPage() {
           <li>
             Download all your data, or delete your account and everything linked to it, from <Link href="/settings">Settings</Link>.
           </li>
-          <li>Deleting your account removes your progress, answers, review schedule and saved items straight away.</li>
+          <li>Deleting your account removes your progress, answers, review schedule, saved items, XP and badges straight away.</li>
+          <li>XP and badges are never shown to anyone else. There are no leaderboards.</li>
         </ul>
       </section>
     </div>

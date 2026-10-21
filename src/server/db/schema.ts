@@ -11,6 +11,7 @@
 import { sql } from 'drizzle-orm';
 import {
   boolean,
+  date,
   index,
   integer,
   jsonb,
@@ -19,11 +20,14 @@ import {
   real,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core';
 import type { Provenance, Question } from '@/content/schema';
 import type { RenderedBlock, QuestionReveal, QuestionView } from '@/content/rendered';
 import type { CheckResult, StudentResponse } from '@/domain/answers/check';
+// Relative (not '@/'): drizzle-kit loads this file without the tsconfig path aliases.
+import { DEFAULT_DAILY_GOAL, XP_KINDS } from '../../domain/points';
 
 const createdAt = () => timestamp('created_at', { withTimezone: true }).notNull().defaultNow();
 
@@ -174,6 +178,32 @@ export const users = pgTable('users', {
   theme: text('theme', { enum: ['system', 'light', 'dark'] }).notNull().default('system'),
   /** Lessons reveal one step at a time ('steps') or show everything ('full'). */
   lessonMode: text('lesson_mode', { enum: ['steps', 'full'] }).notNull().default('steps'),
+  /** XP per day to aim for: one of DAILY_GOALS in src/domain/points.ts. */
+  dailyGoal: integer('daily_goal').notNull().default(DEFAULT_DAILY_GOAL),
+  /** IANA time zone, detected from the browser; decides which local day XP counts towards. */
+  timeZone: text('time_zone').notNull().default('UTC'),
+  /** Confetti and pops (also off whenever the browser asks for reduced motion). */
+  celebrations: boolean('celebrations').notNull().default(true),
+  sounds: boolean('sounds').notNull().default(false),
+  /** Show XP, combos, goals and badges. Off hides them in the UI; XP is still recorded. */
+  showPoints: boolean('show_points').notNull().default(true),
+  /**
+   * The local day the student's activity currently counts towards, and the
+   * time zone that started it (see activeLocalDay in src/domain/points.ts).
+   * A day keeps the zone it started in until it is over there, so changing
+   * time zone can't start "tomorrow" early and claim a once-a-day reward
+   * twice. Null until the first recorded activity.
+   */
+  activeDay: date('active_day', { mode: 'string' }),
+  activeDayZone: text('active_day_zone'),
+  /**
+   * The live combo and when it last moved, written under the per-user points
+   * lock (src/server/points.ts). Kept here rather than read from the latest
+   * answer by time, so two answers processed out of time order (two tabs,
+   * app servers with slightly different clocks) can't replay a milestone.
+   */
+  combo: integer('combo').notNull().default(0),
+  comboAt: timestamp('combo_at', { withTimezone: true }),
   ageConfirmedAt: timestamp('age_confirmed_at', { withTimezone: true }).notNull(),
   createdAt: createdAt(),
 });
@@ -229,6 +259,18 @@ export const attempts = pgTable(
     score: real('score').notNull(),
     selfAssessed: boolean('self_assessed').notNull(),
     context: text('context', { enum: ['lesson', 'review'] }).notNull(),
+    /**
+     * The combo count after this answer, for answers that could earn XP (0
+     * when it broke the combo). Null for answers that could not earn XP
+     * (repeats, early reviews), which leave the combo alone. The live combo
+     * itself is kept on the user (users.combo); this is its history, for the
+     * combo badges.
+     */
+    combo: integer('combo'),
+    /** The student's local day it counted towards (null for answers recorded before 0004). */
+    localDay: date('local_day', { mode: 'string' }),
+    /** Answered while its review was due (by the server's schedule, not the page it was answered on). */
+    dueReview: boolean('due_review').notNull().default(false),
     createdAt: createdAt(),
   },
   (t) => [index('attempts_user_time_idx').on(t.userId, t.createdAt), index('attempts_user_question_idx').on(t.userId, t.questionId)],
@@ -244,6 +286,13 @@ export const reviewItems = pgTable(
     dueAt: timestamp('due_at', { withTimezone: true }).notNull(),
     lapses: integer('lapses').notNull().default(0),
     lastReviewedAt: timestamp('last_reviewed_at', { withTimezone: true }).notNull(),
+    /**
+     * Whether answering at the current due date can earn review XP. False
+     * when the due date was set by an early answer to a question that had
+     * already earned XP, so a deliberate wrong answer can't buy a paid
+     * review tomorrow. The next on-time answer sets it back to true.
+     */
+    paysXp: boolean('pays_xp').notNull().default(true),
   },
   (t) => [primaryKey({ columns: [t.userId, t.questionId] }), index('review_items_due_idx').on(t.userId, t.dueAt)],
 );
@@ -259,10 +308,64 @@ export const bookmarks = pgTable(
   (t) => [primaryKey({ columns: [t.userId, t.kind, t.targetId] })],
 );
 
+/**
+ * Every XP award. The unique index on (user_id, kind, source_id) enforces the
+ * limits in docs/design/fun-and-points.md at the database level, so a
+ * double-submitted answer can never award twice. `source_id` is the question
+ * id (answer, comeback), `questionId@dueAt` (review), the lesson id
+ * (lesson, perfect), the topic id (topic, topic-secure), the local day
+ * (daily-goal, review-session) or the id of the answer that reached the
+ * milestone (combo).
+ */
+export const xpEvents = pgTable(
+  'xp_events',
+  {
+    id: uuid('id').primaryKey().default(sql`gen_random_uuid()`),
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    kind: text('kind', { enum: XP_KINDS }).notNull(),
+    amount: integer('amount').notNull(),
+    sourceId: text('source_id').notNull(),
+    /** The day it was earned in the student's time zone at the time. */
+    localDay: date('local_day', { mode: 'string' }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex('xp_events_source_uq').on(t.userId, t.kind, t.sourceId), index('xp_events_user_day_idx').on(t.userId, t.localDay)],
+);
+
+/** Badges earned (ids from BADGES in src/domain/points.ts). Never removed. */
+export const userBadges = pgTable(
+  'user_badges',
+  {
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    badgeId: text('badge_id').notNull(),
+    earnedAt: timestamp('earned_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.badgeId] })],
+);
+
+/**
+ * Topics that slipped and came back, for the Comeback Arc badge. A row is
+ * written the first time an answer shows the topic with objectives in Needs
+ * revision (mastery rules in src/domain/mastery.ts); `secured_at` is set
+ * when the topic is next fully Secure. Only the first comeback per topic is
+ * kept, like the badge it feeds.
+ */
+export const topicRecoveries = pgTable(
+  'topic_recoveries',
+  {
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    topicId: text('topic_id').notNull(),
+    slippedAt: timestamp('slipped_at', { withTimezone: true }).notNull(),
+    securedAt: timestamp('secured_at', { withTimezone: true }),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.topicId] })],
+);
+
 export type User = typeof users.$inferSelect;
 export type Lesson = typeof lessons.$inferSelect;
 export type QuestionRow = typeof questions.$inferSelect;
 export type Attempt = typeof attempts.$inferSelect;
+export type XpEvent = typeof xpEvents.$inferSelect;
 
 /** Problems students report with content (wrong answer key, typo, unclear). Reviewed by editors. */
 export const contentReports = pgTable(

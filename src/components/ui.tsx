@@ -3,9 +3,11 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { MASTERY_LABEL, type MasteryState } from '@/domain/mastery';
 import type { Provenance } from '@/content/schema';
+import { Spot, type SpotName } from '@/components/art/Spot';
 import {
   AlertIcon,
   CheckCircleIcon,
+  CheckIcon,
   ChevronRightIcon,
   CircleIcon,
   HalfCircleIcon,
@@ -60,18 +62,25 @@ export function Meter({ value, label, thin, color }: { value: number; label: str
   );
 }
 
+/** A progress ring. Full rings show a tick instead of "100%" (which doesn't fit inside a small ring). */
 export function Ring({ value, label, size = 56, color }: { value: number; label: string; size?: number; color?: string }) {
   const pct = Math.max(0, Math.min(100, Math.round(value)));
   const r = 25;
   const c = 2 * Math.PI * r;
   return (
-    <div className="ring" style={{ ['--size' as string]: `${size}px`, ...(color ? { ['--ring-fill' as string]: color } : {}) }} role="img" aria-label={`${label}: ${pct}%`}>
+    <div
+      className="ring"
+      data-full={pct === 100 || undefined}
+      style={{ ['--size' as string]: `${size}px`, ...(color ? { ['--ring-fill' as string]: color } : {}) }}
+      role="img"
+      aria-label={`${label}: ${pct}%`}
+    >
       <svg viewBox="0 0 60 60" aria-hidden="true">
         <circle className="track" cx="30" cy="30" r={r} />
         <circle className="fill" cx="30" cy="30" r={r} strokeDasharray={c} strokeDashoffset={c * (1 - pct / 100)} />
       </svg>
       <span className="ring-label" aria-hidden="true">
-        {pct}%
+        {pct === 100 ? <CheckIcon /> : `${pct}%`}
       </span>
     </div>
   );
@@ -101,28 +110,56 @@ export function Crumbs({ items }: { items: Array<{ href?: string; label: string 
   );
 }
 
-export function PageHead({ title, lede, crumbs, actions, eyebrow }: { title: ReactNode; lede?: ReactNode; crumbs?: ReactNode; actions?: ReactNode; eyebrow?: ReactNode }) {
-  return (
-    <header className="page-head">
-      {crumbs}
+export function PageHead({
+  title,
+  lede,
+  crumbs,
+  actions,
+  eyebrow,
+  art,
+}: {
+  title: ReactNode;
+  lede?: ReactNode;
+  crumbs?: ReactNode;
+  actions?: ReactNode;
+  eyebrow?: ReactNode;
+  /** A small spot illustration on the right (hidden on narrow phones). */
+  art?: SpotName;
+}) {
+  const text = (
+    <>
       {eyebrow && <div className="eyebrow">{eyebrow}</div>}
       <div className="row row-between" style={{ alignItems: 'flex-start' }}>
         <h1 className="grow">{title}</h1>
         {actions}
       </div>
       {lede && <p className="lede">{lede}</p>}
+    </>
+  );
+  return (
+    <header className="page-head">
+      {crumbs}
+      {art ? (
+        <div className="page-head-art">
+          <div className="stack stack-sm grow">{text}</div>
+          <Spot name={art} size={108} />
+        </div>
+      ) : (
+        text
+      )}
     </header>
   );
 }
 
-export function EmptyState({ icon, title, children }: { icon: ReactNode; title: string; children?: ReactNode }) {
+/** An empty state with a small illustration (or an icon), a title and what to do next. */
+export function EmptyState({ icon, art, title, children }: { icon?: ReactNode; art?: SpotName; title: string; children?: ReactNode }) {
   return (
-    <div className="empty card">
-      <div className="empty-icon">{icon}</div>
+    <div className="empty">
+      {art ? <Spot name={art} size={132} /> : icon ? <div className="empty-icon">{icon}</div> : null}
       <h2 className="h3" style={{ color: 'var(--text)' }}>
         {title}
       </h2>
-      {children && <div className="stack stack-md" style={{ marginTop: 8, alignItems: 'center' }}>{children}</div>}
+      {children && <div className="stack stack-md" style={{ marginTop: 4, alignItems: 'center' }}>{children}</div>}
     </div>
   );
 }

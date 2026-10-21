@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import type { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
 import { BRAND, TAGLINE, THEME_COOKIE } from '@/lib/brand';
+import { displayFont, textFont } from './fonts/fonts';
 
 export const metadata: Metadata = {
   title: { default: `${BRAND} · Cambridge AS & A Level`, template: `%s · ${BRAND}` },
@@ -15,8 +16,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7f7f5' },
-    { media: '(prefers-color-scheme: dark)', color: '#0d0d0f' },
+    { media: '(prefers-color-scheme: light)', color: '#fbf5ea' },
+    { media: '(prefers-color-scheme: dark)', color: '#0e1630' },
   ],
 };
 
@@ -24,7 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   // Theme comes from a cookie and is rendered on <html>, so there is no flash and no inline script.
   const theme = (await cookies()).get(THEME_COOKIE)?.value;
   return (
-    <html lang="en-GB" data-theme={theme === 'light' || theme === 'dark' ? theme : undefined}>
+    <html lang="en-GB" className={`${displayFont.variable} ${textFont.variable}`} data-theme={theme === 'light' || theme === 'dark' ? theme : undefined}>
       <body>{children}</body>
     </html>
   );

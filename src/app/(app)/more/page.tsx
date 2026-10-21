@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getSessionUser } from '@/server/auth/session';
 import { logOut } from '@/server/actions/auth';
-import { BookmarkIcon, ChatIcon, ChevronRightIcon, ClockIcon, InfoIcon, LockIcon, LogoutIcon, PencilIcon, SearchIcon, SettingsIcon } from '@/components/icons';
+import { BookmarkIcon, ChatIcon, ChevronRightIcon, ClockIcon, InfoIcon, LockIcon, LogoutIcon, MedalIcon, PencilIcon, SearchIcon, SettingsIcon } from '@/components/icons';
 import { PageHead } from '@/components/ui';
 
 export const metadata: Metadata = { title: 'More' };
@@ -12,6 +12,7 @@ export default async function MorePage() {
   const items = [
     ...(user
       ? [
+          ...(user.showPoints !== false ? [{ href: '/achievements', label: 'Achievements', Icon: MedalIcon }] : []),
           { href: '/saved', label: 'Saved', Icon: BookmarkIcon },
           { href: '/history', label: 'History', Icon: ClockIcon },
         ]
@@ -26,11 +27,13 @@ export default async function MorePage() {
   return (
     <div className="container-narrow">
       <PageHead title="More" />
-      <ul className="list card card-pad list-rows">
+      <ul className="list card list-rows menu-list" style={{ padding: '4px 8px' }}>
         {items.map(({ href, label, Icon }) => (
           <li key={href}>
             <Link href={href} className="list-row">
-              <Icon width={20} height={20} style={{ color: 'var(--text-2)' }} />
+              <span className="row-glyph">
+                <Icon />
+              </span>
               <span className="grow">{label}</span>
               <ChevronRightIcon width={18} height={18} style={{ color: 'var(--text-3)' }} />
             </Link>

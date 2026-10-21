@@ -13,7 +13,9 @@ test('a guest can open a lesson and get feedback without an account', async ({ p
   await q1.locator('.option').first().click();
   await q1.getByRole('button', { name: 'Check answer' }).click();
   await expect(q1.getByText('Correct', { exact: true })).toBeVisible();
-  await expect(q1.getByText('Create an account')).toBeVisible();
+  // Guests earn no XP (the server awards none); they're told how to keep it.
+  await expect(q1.getByRole('link', { name: 'Sign up to keep your XP' })).toBeVisible();
+  await expect(q1.locator('.xp-pop')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 
@@ -22,7 +24,8 @@ test('a student signs up, studies a lesson step by step and sees progress', asyn
   await signUp(page);
   await addMaths(page);
   await page.getByRole('link', { name: 'Done, take me to my dashboard' }).click();
-  await expect(page.getByRole('heading', { name: 'Welcome back, Ayesha' })).toBeVisible();
+  // Nothing studied yet, so not "welcome back".
+  await expect(page.getByRole('heading', { name: 'Welcome, Ayesha' })).toBeVisible();
   await page.getByRole('link', { name: 'Start lesson' }).click();
   await expect(page).toHaveURL(new RegExp(`${LESSON}$`));
 

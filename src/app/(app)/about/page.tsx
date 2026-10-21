@@ -3,7 +3,9 @@ import Link from 'next/link';
 import { listSubjects } from '@/server/queries/catalog';
 import { MASTERY_RULES } from '@/domain/mastery';
 import { BOX_INTERVAL_DAYS } from '@/domain/schedule';
+import { BADGES, LEVEL_TITLES } from '@/domain/points';
 import { PageHead, StatusPill } from '@/components/ui';
+import { XpRules } from '@/components/points/PointsViews';
 import { BRAND } from '@/lib/brand';
 
 export const metadata: Metadata = { title: 'How it works' };
@@ -19,6 +21,7 @@ const ROADMAP: Array<{ phase: string; title: string; status: 'Available' | 'Plan
       'Bite-sized lessons with worked examples, diagrams and common mistakes (first topics in each subject)',
       'Instant-feedback recall questions in seven formats',
       'Progress by objective and topic, spaced review, search, saved items and history',
+      'XP, levels and badges for real progress, with calm settings',
     ],
   },
   { phase: 'Phase 2', title: 'Exam practice', status: 'Planned', items: ['Cambridge-style question bank with mark schemes', 'Multi-part questions and subject-specific diagrams', 'Timed practice and topic analytics'] },
@@ -58,7 +61,7 @@ export default async function AboutPage() {
                     {s.name} ({s.code})
                   </td>
                   <td>
-                    <a href={s.version.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={s.version.sourceUrl} target="_blank" rel="noopener noreferrer" className="tap-pad">
                       {s.version.label}
                     </a>{' '}
                     <span className="faint">· {s.version.sourceVersion}</span>
@@ -124,7 +127,7 @@ export default async function AboutPage() {
       <section id="progress" className="stack" aria-labelledby="h-progress">
         <h2 id="h-progress">How progress is decided</h2>
         <p className="muted">Every syllabus objective has a status, worked out from your answers. One correct answer is never enough to be secure.</p>
-        <div className="card card-pad stack">
+        <div className="panel stack">
           {MASTERY_RULES.map((r) => (
             <div key={r.state} className="row row-nowrap" style={{ alignItems: 'flex-start', ['--gap' as string]: '14px' }}>
               <div style={{ minWidth: 150 }}>
@@ -136,29 +139,48 @@ export default async function AboutPage() {
         </div>
         <p className="small muted">
           Review questions come back after {BOX_INTERVAL_DAYS.join(', ')} days as you keep getting them right, and tomorrow if you miss one. There are
-          no streaks, points or reminders designed to make you feel guilty.
+          no streak warnings or reminders designed to make you feel guilty.
         </p>
+      </section>
+
+      <section id="points" className="stack" aria-labelledby="h-points">
+        <h2 id="h-points">Points and badges</h2>
+        <div className="prose">
+          <p>
+            XP rewards learning, not clicking. It is worked out on our server, never taken away, and you can hide it in Settings at any time.
+          </p>
+          <XpRules />
+          <p>
+            Levels get a new title every five: {LEVEL_TITLES.map((t) => t.title).join(', ')}. There are {BADGES.length} badges, all for real
+            progress, and no leaderboards: the only person you&rsquo;re compared with is you last week.
+          </p>
+        </div>
       </section>
 
       <section id="roadmap" className="stack" aria-labelledby="h-roadmap">
         <h2 id="h-roadmap">What&rsquo;s built and what&rsquo;s next</h2>
-        <div className="stack stack-md">
-          {ROADMAP.map((p) => (
-            <div key={p.phase} className="card card-pad">
-              <div className="row row-between" style={{ marginBottom: 8 }}>
-                <h3>
-                  {p.phase}: {p.title}
-                </h3>
-                <span className={`badge ${p.status === 'Available' ? 'badge-good' : ''}`}>{p.status}</span>
+        <ol className="roadmap">
+          {ROADMAP.map((p, n) => (
+            <li key={p.phase} data-status={p.status}>
+              <span className="roadmap-mark" aria-hidden="true">
+                {n + 1}
+              </span>
+              <div className="stack stack-xs">
+                <div className="row" style={{ ['--gap' as string]: '10px' }}>
+                  <h3>
+                    {p.phase}: {p.title}
+                  </h3>
+                  <span className={`badge ${p.status === 'Available' ? 'badge-good' : ''}`}>{p.status}</span>
+                </div>
+                <ul className="small muted" style={{ margin: 0, paddingLeft: '1.2em' }}>
+                  {p.items.map((i) => (
+                    <li key={i}>{i}</li>
+                  ))}
+                </ul>
               </div>
-              <ul className="small muted" style={{ margin: 0, paddingLeft: '1.2em' }}>
-                {p.items.map((i) => (
-                  <li key={i}>{i}</li>
-                ))}
-              </ul>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </section>
     </div>
   );

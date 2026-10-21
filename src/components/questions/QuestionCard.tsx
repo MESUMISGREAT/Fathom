@@ -8,8 +8,10 @@ import Link from 'next/link';
 import { useContext, useEffect, useId, useRef, useState, useTransition, type FormEvent } from 'react';
 import type { QuestionView } from '@/content/rendered';
 import type { StudentResponse } from '@/domain/answers/check';
+import type { PointsResult } from '@/domain/points';
 import { submitAnswer, type SubmitResult } from '@/server/actions/study';
-import { AlertIcon, CheckCircleIcon, HalfCircleIcon, RefreshIcon, XCircleIcon } from '@/components/icons';
+import { AlertIcon, BoltIcon, CheckCircleIcon, CheckIcon, HalfCircleIcon, RefreshIcon, StarFilledIcon, StarIcon, XCircleIcon, XIcon } from '@/components/icons';
+import { prefersReducedMotion, usePoints } from '@/components/points/PointsProvider';
 import { BookmarkButton } from '@/components/study/BookmarkButton';
 import { LessonCheckContext } from '@/components/lesson/context';
 import { ReportProblem } from '@/components/study/ReportProblem';
@@ -25,6 +27,14 @@ const TITLES: Record<string, { text: string; Icon: typeof CheckCircleIcon }> = {
 
 const DIFFICULTY = ['', 'Recall', 'Apply', 'Stretch'];
 
+const CHEERS = ['Nice.', 'Spot on.', 'That’s it.', 'Nailed it.', 'Exactly.'];
+/** A short, varied "well done", the same every time for a given question. */
+function cheer(id: string) {
+  let h = 0;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return CHEERS[h % CHEERS.length]!;
+}
+
 export function QuestionCard({
   view,
   context,
@@ -33,6 +43,7 @@ export function QuestionCard({
   signedIn,
   onFinal,
   sourceHref,
+  onPoints,
 }: {
   view: QuestionView;
   context: 'lesson' | 'review';
@@ -43,8 +54,12 @@ export function QuestionCard({
   onFinal?: (questionId: string, outcome: SubmitResult['result']['outcome']) => void;
   /** Link back to the lesson (used in review). */
   sourceHref?: string;
+  /** Called with the server's points result for each recorded answer. */
+  onPoints?: (points: PointsResult) => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
+  const pointsCtx = usePoints();
+  const showPoints = signedIn && (pointsCtx?.prefs.showPoints ?? true);
   const promptId = useId();
   const [result, setResult] = useState<SubmitResult | null>(null);
   const [response, setResponse] = useState<StudentResponse | null>(null);
@@ -90,9 +105,13 @@ export function QuestionCard({
       const res = await submitAnswer({ questionId: view.id, response: r, self, context });
       setResult(res);
       const o = res.result.outcome;
+      if (res.points) {
+        pointsCtx?.apply(res.points);
+        onPoints?.(res.points);
+      }
       if (o !== 'invalid' && o !== 'self-check') {
         onFinal?.(view.id, o);
-        lesson?.report(view.id, o);
+        lesson?.report(view.id, o, res.points ?? null);
       }
     });
   }
@@ -121,13 +140,30 @@ export function QuestionCard({
     requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>('input, textarea')?.focus());
   }
 
+  const chosenIndex = response?.format === 'mcq' ? response.choice : response?.format === 'spot-error' ? response.line - 1 : -1;
   const markFor = (i: number): 'right' | 'wrong' | undefined => {
     if (!locked || !reveal) return undefined;
     const correctIndex = view.format === 'mcq' ? reveal.correctOption : (reveal.errorLine ?? 0) - 1;
-    const chosen = response?.format === 'mcq' ? response.choice : response?.format === 'spot-error' ? response.line - 1 : -1;
     if (i === correctIndex) return 'right';
-    if (i === chosen) return 'wrong';
+    if (i === chosenIndex) return 'wrong';
     return undefined;
+  };
+  /** Shape and words for a marked option, so colour is never the only cue (WCAG 1.4.1). */
+  const markKey = (i: number, fallback: string) => {
+    const mark = markFor(i);
+    if (!mark) return fallback;
+    return mark === 'right' ? <CheckIcon aria-hidden="true" /> : <XIcon aria-hidden="true" />;
+  };
+  const markTag = (i: number, id: string) => {
+    const mark = markFor(i);
+    if (!mark) return null;
+    const right = view.format === 'mcq' ? 'Correct answer' : 'The line with the error';
+    const text = mark === 'wrong' ? 'Your answer' : i === chosenIndex ? `Your answer · ${right.toLowerCase()}` : right;
+    return (
+      <span id={id} className="option-tag" data-mark={mark}>
+        {text}
+      </span>
+    );
   };
 
   return (
@@ -151,11 +187,20 @@ export function QuestionCard({
               <div className="options" role="radiogroup" aria-labelledby={promptId}>
                 {view.options!.map((html, i) => (
                   <label key={i} className="option" data-mark={markFor(i)}>
-                    <input type="radio" name="choice" value={i} aria-label={`Option ${LETTERS[i]}`} aria-describedby={`${promptId}-o${i}`} />
+                    <input
+                      type="radio"
+                      name="choice"
+                      value={i}
+                      aria-label={`Option ${LETTERS[i]}`}
+                      aria-describedby={markFor(i) ? `${promptId}-m${i} ${promptId}-o${i}` : `${promptId}-o${i}`}
+                    />
                     <span className="option-key" aria-hidden="true">
-                      {LETTERS[i]}
+                      {markKey(i, LETTERS[i]!)}
                     </span>
-                    <span id={`${promptId}-o${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    <span className="option-main">
+                      {markTag(i, `${promptId}-m${i}`)}
+                      <span id={`${promptId}-o${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    </span>
                     {locked && reveal?.whyHtml?.[i] && <span className="option-why" dangerouslySetInnerHTML={{ __html: reveal.whyHtml[i]! }} />}
                   </label>
                 ))}
@@ -167,11 +212,20 @@ export function QuestionCard({
                 <p className="small muted">Which line contains the first error?</p>
                 {view.lines!.map((html, i) => (
                   <label key={i} className="option line-option" data-mark={markFor(i)}>
-                    <input type="radio" name="line" value={i + 1} aria-label={`Line ${i + 1}`} aria-describedby={`${promptId}-l${i}`} />
+                    <input
+                      type="radio"
+                      name="line"
+                      value={i + 1}
+                      aria-label={`Line ${i + 1}`}
+                      aria-describedby={markFor(i) ? `${promptId}-m${i} ${promptId}-l${i}` : `${promptId}-l${i}`}
+                    />
                     <span className="option-key" aria-hidden="true">
-                      {i + 1}
+                      {markKey(i, String(i + 1))}
                     </span>
-                    <span id={`${promptId}-l${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    <span className="option-main">
+                      {markTag(i, `${promptId}-m${i}`)}
+                      <span id={`${promptId}-l${i}`} className="prose" dangerouslySetInnerHTML={{ __html: html }} />
+                    </span>
                   </label>
                 ))}
               </div>
@@ -237,7 +291,7 @@ export function QuestionCard({
 
         {!locked && (
           <div className="q-actions" style={{ marginTop: 14 }}>
-            <button type="submit" className="btn btn-primary" disabled={pending}>
+            <button type="submit" className="btn btn-primary" disabled={pending} aria-busy={pending || undefined}>
               {pending ? 'Checking…' : 'Check answer'}
             </button>
             {result?.result.outcome === 'invalid' && (
@@ -260,7 +314,9 @@ export function QuestionCard({
             onSelf={(self) => response && send(response, self)}
             onRetry={retry}
             signedIn={signedIn}
+            showPoints={showPoints}
             sourceHref={sourceHref}
+            context={context}
           />
         )}
       </div>
@@ -277,8 +333,11 @@ function Feedback({
   onSelf,
   onRetry,
   signedIn,
+  showPoints,
   sourceHref,
+  context,
 }: {
+  context: 'lesson' | 'review';
   view: QuestionView;
   result: SubmitResult;
   points: number[];
@@ -287,18 +346,40 @@ function Feedback({
   onSelf: (self: { correct?: boolean; points?: number[] }) => void;
   onRetry: () => void;
   signedIn: boolean;
+  showPoints: boolean;
   sourceHref?: string;
 }) {
   const r = result.result;
   const reveal = result.reveal!;
   const t = TITLES[r.outcome] ?? TITLES.incorrect!;
   const selfPending = r.outcome === 'self-check';
+  const titleRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLDivElement>(null);
+
+  // The button that was pressed has gone: move focus to the result, so keyboard and screen reader users land on it.
+  // Then bring the whole head (title and "+N XP") into view, clear of the sticky lesson bar and the phone tab bar.
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+    // A slow result must not pull the student back: if focus has gone somewhere else (they finished the lesson,
+    // moved to the next step), leave focus and scroll where they are.
+    const active = document.activeElement;
+    const card = el.closest('.question');
+    if (active && active !== document.body && card && !card.contains(active)) return;
+    el.focus({ preventScroll: true });
+    const frame = requestAnimationFrame(() => revealHead(headRef.current ?? el));
+    return () => cancelAnimationFrame(frame);
+  }, [result]);
 
   return (
     <div className="feedback" data-outcome={r.outcome}>
-      <div className="feedback-title">
-        <t.Icon /> {t.text}
-        {r.selfAssessed && <span className="badge" style={{ marginLeft: 6 }}>self-marked</span>}
+      <div className="feedback-head" ref={headRef}>
+        <div className="feedback-title" ref={titleRef} tabIndex={-1}>
+          <t.Icon /> <span>{t.text}</span>
+          {r.outcome === 'correct' && <span className="feedback-cheer">{cheer(view.id)}</span>}
+          {r.selfAssessed && <span className="badge">self-marked</span>}
+        </div>
+        {showPoints && result.points && <XpGain points={result.points} />}
       </div>
       {r.note && <p className="small" style={{ marginBottom: 8 }}>{r.note}</p>}
 
@@ -314,7 +395,8 @@ function Feedback({
           <ol className="small" style={{ margin: 0, paddingLeft: '1.3em' }}>
             {reveal.blanks.map((b, i) => (
               <li key={i}>
-                {b} {r.parts[i] && (r.parts[i]!.correct ? '✓' : '')}
+                {b}{' '}
+                {r.parts[i]?.correct && <CheckIcon title="you had this one" width={16} height={16} style={{ display: 'inline', verticalAlign: '-3px', color: 'var(--good)' }} />}
               </li>
             ))}
           </ol>
@@ -384,17 +466,27 @@ function Feedback({
 
       {!selfPending && (
         <div className="q-actions" style={{ marginTop: 12 }}>
-          <button type="button" className="btn btn-sm" onClick={onRetry}>
-            <RefreshIcon /> Try again
-          </button>
+          {r.outcome === 'correct' ? (
+            <button type="button" className="btn btn-sm btn-ghost" onClick={onRetry}>
+              <RefreshIcon /> Answer again
+            </button>
+          ) : (
+            // In review, "Next question" is the one primary action; Try again stays clearly offered, as a secondary button.
+            <button type="button" className={context === 'review' ? 'btn' : 'btn btn-primary'} onClick={onRetry}>
+              <RefreshIcon /> Try again
+            </button>
+          )}
           {sourceHref && (
             <Link href={sourceHref} className="btn btn-sm btn-ghost">
               Open the lesson
             </Link>
           )}
           {!signedIn && (
-            <span className="tiny faint">
-              <Link href="/signup">Create an account</Link> to save your progress.
+            <span className="guest-xp">
+              <StarIcon aria-hidden="true" />
+              <span>
+                <Link href="/signup">Sign up to keep your XP</Link> and your progress.
+              </span>
             </span>
           )}
         </div>
@@ -403,6 +495,46 @@ function Feedback({
         <div style={{ marginTop: 10 }}>
           <ReportProblem kind="question" targetId={view.id} />
         </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Scrolls the window just enough for `el` and its scroll margins (the room
+ * the lesson bar and tab bar take, see .feedback-head) to be in view, top
+ * first if it can't all fit. Measured and scrolled by hand: scrollIntoView
+ * with "nearest" left the "+N XP" row under the tab bar in mobile emulation.
+ */
+function revealHead(el: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  const cs = getComputedStyle(el);
+  const above = parseFloat(cs.scrollMarginTop) || 0;
+  const below = parseFloat(cs.scrollMarginBottom) || 0;
+  const vh = window.innerHeight;
+  let delta = 0;
+  if (r.bottom + below > vh) delta = r.bottom + below - vh;
+  if (r.top - delta < above) delta = r.top - above;
+  if (Math.abs(delta) >= 1) window.scrollBy({ top: delta, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+}
+
+/** "+15 XP" with what it was for, and the combo when one is running. Only what the server returned. */
+function XpGain({ points }: { points: PointsResult }) {
+  if (points.gained <= 0) return null;
+  const reasons = points.events.filter((e) => e.kind !== 'combo').map((e) => e.label);
+  const bonus = points.events.find((e) => e.kind === 'combo');
+  return (
+    <div className="xp-gain">
+      <span className="xp-pop">
+        <StarFilledIcon aria-hidden="true" />+{points.gained} XP
+      </span>
+      {reasons.length > 0 && <span className="xp-reason">{reasons.join(' · ')}</span>}
+      {points.combo >= 2 && (
+        <span className="combo-chip">
+          <BoltIcon aria-hidden="true" />
+          Combo ×{points.combo}
+          {bonus ? ` · +${bonus.amount}` : ''}
+        </span>
       )}
     </div>
   );

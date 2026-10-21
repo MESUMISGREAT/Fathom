@@ -1,14 +1,17 @@
 'use client';
 import Link from 'next/link';
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { logIn, signUp, type AuthState } from '@/server/actions/auth';
 import { BRAND } from '@/lib/brand';
 
 export function LoginForm({ next }: { next?: string }) {
   const [state, action, pending] = useActionState<AuthState, FormData>(logIn, {});
   return (
-    <form action={action} className="card card-pad stack" noValidate>
-      <h1 className="h2">Welcome back</h1>
+    <form action={action} className="card card-pad stack auth-form" noValidate>
+      <div className="stack stack-xs">
+        <h1 className="h2">Welcome back</h1>
+        <p className="small muted">Pick up where you left off.</p>
+      </div>
       {state.error && (
         <p className="form-error" role="alert">
           {state.error}
@@ -27,7 +30,7 @@ export function LoginForm({ next }: { next?: string }) {
         </label>
         <input className="input" id="password" name="password" type="password" autoComplete="current-password" required />
       </div>
-      <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={pending}>
+      <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={pending} aria-busy={pending || undefined}>
         {pending ? 'Logging in…' : 'Log in'}
       </button>
       <p className="small muted" style={{ textAlign: 'center' }}>
@@ -37,13 +40,28 @@ export function LoginForm({ next }: { next?: string }) {
   );
 }
 
+/** The browser's IANA time zone, so XP counts towards the student's own day from the start. */
+function useBrowserTimeZone() {
+  const [zone, setZone] = useState('');
+  useEffect(() => {
+    try {
+      setZone(Intl.DateTimeFormat().resolvedOptions().timeZone ?? '');
+    } catch {
+      // The server falls back to UTC.
+    }
+  }, []);
+  return zone;
+}
+
 export function SignupForm() {
   const [state, action, pending] = useActionState<AuthState, FormData>(signUp, {});
+  const timeZone = useBrowserTimeZone();
   return (
-    <form action={action} className="card card-pad stack" noValidate>
+    <form action={action} className="card card-pad stack auth-form" noValidate>
+      <input type="hidden" name="timeZone" value={timeZone} />
       <div className="stack stack-xs">
         <h1 className="h2">Create your account</h1>
-        <p className="small muted">Free. We only ask for what we need to save your progress.</p>
+        <p className="small muted">Free. We only ask for what we need to save your progress and XP.</p>
       </div>
       {state.error && (
         <p className="form-error" role="alert">
@@ -87,7 +105,7 @@ export function SignupForm() {
           <Link href="/privacy">How we use your data</Link>
         </span>
       </label>
-      <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={pending}>
+      <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={pending} aria-busy={pending || undefined}>
         {pending ? 'Creating account…' : 'Create account'}
       </button>
       <p className="small muted" style={{ textAlign: 'center' }}>

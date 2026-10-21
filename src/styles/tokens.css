@@ -3,164 +3,253 @@
  * it (unless the user chose light) or when the user chose dark explicitly.
  * The theme choice is rendered server-side as data-theme on <html>, so there
  * is no flash and no inline script.
+ *
+ * Palette (docs/design/fun-and-points.md §5): warm cream paper, deep navy
+ * ink, cobalt for anything you can press, coral for energy, soft yellow for
+ * achievements and tips, mint for correct and done, lavender/pink as a
+ * secondary accent. Every colour has three strengths:
+ *   --x        bright fill for illustration, chips and bars (never small text)
+ *   --x-ink    text and icon strength (≥ 4.5:1 on the page and on --x-soft)
+ *   --x-soft   tinted background
+ * Dark mode is deep navy, not black.
  */
 :root {
   color-scheme: light;
-  --bg: #f7f7f5;
-  --surface: #ffffff;
-  --surface-2: #f1f1ee;
-  --surface-3: #e8e8e4;
-  --border: rgba(20, 20, 15, 0.09);
-  --border-strong: rgba(20, 20, 15, 0.16);
-  --text: #19191c;
-  --text-2: #55555d;
-  --text-3: #63636b;
-  --accent: #3355d1;
-  --accent-hover: #2a48b8;
-  --accent-soft: rgba(51, 85, 209, 0.1);
-  --accent-ink: #ffffff;
-  --focus: #3355d1;
 
-  --good: #18794e;
-  --good-soft: rgba(24, 121, 78, 0.1);
-  --bad: #c2324a;
-  --bad-soft: rgba(194, 50, 74, 0.09);
-  --warn: #9a5b00;
-  --warn-soft: rgba(196, 122, 0, 0.12);
+  /* Paper and ink */
+  --bg: #fbf5ea;
+  --surface: #fffcf6;
+  --surface-2: #f5eddd;
+  --surface-3: #ebe1cc;
+  --border: rgba(26, 36, 67, 0.11);
+  --border-strong: rgba(26, 36, 67, 0.22);
+  --text: #1a2443;
+  --text-2: #454e6c;
+  --text-3: #59617d;
+  /* Text on any bright fill (yellow, coral, mint, lavender). */
+  --on-bright: #1a2443;
+
+  /* Named colours */
+  --cobalt: #2d4bd1;
+  --cobalt-hover: #2340b8;
+  --cobalt-ink: #2d4bd1;
+  --cobalt-soft: rgba(45, 75, 209, 0.1);
+  --cobalt-ledge: #1c3196;
+  --coral: #ff6b4a;
+  --coral-ink: #b23e26;
+  --coral-soft: rgba(255, 107, 74, 0.14);
+  --yellow: #ffc94d;
+  --yellow-ink: #875400;
+  --yellow-soft: rgba(255, 201, 77, 0.3);
+  --mint: #34c08f;
+  --mint-ink: #0f7550;
+  --mint-soft: rgba(52, 192, 143, 0.16);
+  --lavender: #a994f5;
+  --lavender-ink: #5f3fc4;
+  --lavender-soft: rgba(169, 148, 245, 0.18);
+  --pink: #ff8fb8;
+  --pink-ink: #ad2f67;
+  --pink-soft: rgba(255, 143, 184, 0.18);
+  --sky: #5ab0ff;
+  --sky-ink: #1f60b5;
+  --sky-soft: rgba(90, 176, 255, 0.16);
+
+  /* Roles */
+  --accent: var(--cobalt);
+  --accent-hover: var(--cobalt-hover);
+  --accent-soft: var(--cobalt-soft);
+  --accent-ink: #ffffff;
+  --focus: #2d4bd1;
+  --good: var(--mint-ink);
+  --good-soft: var(--mint-soft);
+  /* "Not quite" is a muted rose: gentle, never an alarm red, and a hue no subject accent
+     uses (Maths is coral), so a wrong answer never blends into a subject's own colour. */
+  --bad: #9e2f55;
+  --bad-soft: rgba(214, 72, 122, 0.12);
+  --warn: var(--yellow-ink);
+  --warn-soft: var(--yellow-soft);
+  --xp: var(--yellow);
+  --xp-ink: var(--yellow-ink);
 
   /* Progress states (always paired with a text label, never colour alone). */
-  --st-not-started: #6b6b74;
-  --st-learning: #3a6fd8;
-  --st-practising: #b86e00;
-  --st-secure: #18794e;
-  --st-revision: #c2324a;
+  --st-not-started: #59617d;
+  --st-learning: var(--lavender-ink);
+  --st-practising: var(--yellow-ink);
+  --st-secure: var(--mint-ink);
+  --st-revision: var(--coral-ink);
 
-  /* Subject hues, used sparingly for identity (icon tile, accents). */
-  --sub-9709: #5a54d6;
-  --sub-9618: #0b8a7a;
-  --sub-9702: #cc5a12;
-  --sub-9701: #2f8a3c;
+  /* Subject accents: Maths coral, Computer Science mint, Physics cobalt-sky, Chemistry lavender-pink.
+     --sub-X is text/icon strength; --sub-X-bright is for illustration and bars. */
+  --sub-9709: #ae3b22;
+  --sub-9709-bright: #ff7a59;
+  --sub-9618: #0d7556;
+  --sub-9618-bright: #3ccb9a;
+  --sub-9702: #1f60b5;
+  --sub-9702-bright: #5ab0ff;
+  --sub-9701: #8a3bb5;
+  --sub-9701-bright: #d99cf5;
 
-  --shadow-sm: 0 1px 2px rgba(20, 20, 15, 0.05);
-  --shadow-md: 0 1px 2px rgba(20, 20, 15, 0.04), 0 6px 20px rgba(20, 20, 15, 0.06);
-  --shadow-lg: 0 2px 6px rgba(20, 20, 15, 0.05), 0 18px 48px rgba(20, 20, 15, 0.1);
-  --material: rgba(250, 250, 248, 0.78);
-  --scrim: rgba(10, 10, 12, 0.32);
+  --shadow-sm: 0 1px 2px rgba(60, 40, 10, 0.06);
+  --shadow-md: 0 1px 2px rgba(60, 40, 10, 0.05), 0 8px 24px rgba(60, 40, 10, 0.08);
+  --shadow-lg: 0 2px 6px rgba(26, 36, 67, 0.08), 0 20px 48px rgba(26, 36, 67, 0.14);
+  /* The little ledge under pressable things; pressing sinks onto it. */
+  --ledge: rgba(26, 36, 67, 0.16);
+  --material: rgba(251, 245, 234, 0.9);
+  --scrim: rgba(14, 22, 48, 0.32);
 
   /* Diagrams */
   --dg-ink: var(--text);
-  --dg-muted: #8b8b94;
-  --dg-grid: rgba(20, 20, 15, 0.1);
-  --dg-accent: #3355d1;
-  --dg-accent-soft: rgba(51, 85, 209, 0.14);
-  --dg-accent-2: #cc5a12;
-  --dg-accent-2-soft: rgba(204, 90, 18, 0.14);
-  --dg-fill-muted: rgba(20, 20, 15, 0.06);
+  --dg-muted: #686f8a;
+  --dg-grid: rgba(26, 36, 67, 0.1);
+  --dg-accent: #2d4bd1;
+  --dg-accent-soft: rgba(45, 75, 209, 0.14);
+  --dg-accent-2: #b84a28;
+  --dg-accent-2-soft: rgba(255, 107, 74, 0.18);
+  --dg-fill-muted: rgba(26, 36, 67, 0.06);
 
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Fonts are self-hosted with next/font/local (src/app/fonts); the variables come from <html>. */
+  --font-sans: var(--font-text-face, 'Figtree'), system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-display: var(--font-display-face, 'Bricolage Grotesque'), var(--font-sans);
   --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, monospace;
 
-  /* Motion: critically damped feel, short. Reduced-motion collapses these. */
+  /* Motion: short and settled. Reduced motion removes movement. */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-fast: 120ms;
-  --dur: 220ms;
-  --dur-slow: 360ms;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 150ms;
+  --dur: 200ms;
+  --dur-slow: 250ms;
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0d0d0f;
-  --surface: #17171a;
-  --surface-2: #1f1f23;
-  --surface-3: #2a2a2f;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.15);
-  --text: #f2f2f4;
-  --text-2: #b4b4bd;
-  --text-3: #8e8e98;
-  --accent: #7d9bff;
-  --accent-hover: #98b0ff;
-  --accent-soft: rgba(125, 155, 255, 0.14);
-  --accent-ink: #0d0d0f;
-  --focus: #98b0ff;
-  --good: #4cc38a;
-  --good-soft: rgba(76, 195, 138, 0.13);
-  --bad: #ff7b8f;
-  --bad-soft: rgba(255, 123, 143, 0.12);
-  --warn: #f0b252;
-  --warn-soft: rgba(240, 178, 82, 0.13);
-  --st-not-started: #8e8e98;
-  --st-learning: #7d9bff;
-  --st-practising: #f0b252;
-  --st-secure: #4cc38a;
-  --st-revision: #ff7b8f;
-  --sub-9709: #a19cff;
-  --sub-9618: #3fd0bd;
-  --sub-9702: #ff9a5c;
-  --sub-9701: #6fd17d;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.4), 0 20px 56px rgba(0, 0, 0, 0.5);
-  --material: rgba(23, 23, 26, 0.74);
-  --scrim: rgba(0, 0, 0, 0.55);
-  --dg-muted: #8e8e98;
-  --dg-grid: rgba(255, 255, 255, 0.1);
-  --dg-accent: #7d9bff;
-  --dg-accent-soft: rgba(125, 155, 255, 0.2);
-  --dg-accent-2: #ff9a5c;
-  --dg-accent-2-soft: rgba(255, 154, 92, 0.2);
-  --dg-fill-muted: rgba(255, 255, 255, 0.07);
+  --bg: #0e1630;
+  --surface: #152044;
+  --surface-2: #1b2851;
+  --surface-3: #25345f;
+  --border: rgba(226, 232, 255, 0.1);
+  --border-strong: rgba(226, 232, 255, 0.2);
+  --text: #f6f0e5;
+  --text-2: #c5c8da;
+  --text-3: #a3a9c2;
+  --on-bright: #0e1630;
+  --cobalt: #91a8ff;
+  --cobalt-hover: #aabcff;
+  --cobalt-ink: #91a8ff;
+  --cobalt-soft: rgba(145, 168, 255, 0.14);
+  --cobalt-ledge: #5b74d6;
+  --coral: #ff8c6f;
+  --coral-ink: #ffa088;
+  --coral-soft: rgba(255, 140, 111, 0.14);
+  --yellow: #ffd46a;
+  --yellow-ink: #ffd46a;
+  --yellow-soft: rgba(255, 212, 106, 0.14);
+  --mint: #5eddb0;
+  --mint-ink: #5eddb0;
+  --mint-soft: rgba(94, 221, 176, 0.14);
+  --lavender: #c4b4ff;
+  --lavender-ink: #c4b4ff;
+  --lavender-soft: rgba(196, 180, 255, 0.16);
+  --pink: #ffa6cb;
+  --pink-ink: #ffa6cb;
+  --pink-soft: rgba(255, 166, 203, 0.16);
+  --sky: #82c3ff;
+  --sky-ink: #82c3ff;
+  --sky-soft: rgba(130, 195, 255, 0.14);
+  --accent-ink: #0e1630;
+  --focus: #aabcff;
+  --bad: #ff9fbf;
+  --bad-soft: rgba(255, 159, 191, 0.14);
+  --st-not-started: #a3a9c2;
+  --sub-9709: #ff9a7e;
+  --sub-9709-bright: #ff8c6f;
+  --sub-9618: #5eddb0;
+  --sub-9618-bright: #4fcfa2;
+  --sub-9702: #82c3ff;
+  --sub-9702-bright: #6fb6ff;
+  --sub-9701: #e2a9ff;
+  --sub-9701-bright: #d394f5;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.35), 0 20px 56px rgba(0, 0, 0, 0.45);
+  --ledge: rgba(0, 0, 0, 0.35);
+  --material: rgba(14, 22, 48, 0.9);
+  --scrim: rgba(4, 8, 20, 0.6);
+  --dg-muted: #9ea4be;
+  --dg-grid: rgba(226, 232, 255, 0.12);
+  --dg-accent: #91a8ff;
+  --dg-accent-soft: rgba(145, 168, 255, 0.2);
+  --dg-accent-2: #ff9a7e;
+  --dg-accent-2-soft: rgba(255, 140, 111, 0.2);
+  --dg-fill-muted: rgba(226, 232, 255, 0.07);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
-    --bg: #0d0d0f;
-    --surface: #17171a;
-    --surface-2: #1f1f23;
-    --surface-3: #2a2a2f;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.15);
-    --text: #f2f2f4;
-    --text-2: #b4b4bd;
-    --text-3: #8e8e98;
-    --accent: #7d9bff;
-    --accent-hover: #98b0ff;
-    --accent-soft: rgba(125, 155, 255, 0.14);
-    --accent-ink: #0d0d0f;
-    --focus: #98b0ff;
-    --good: #4cc38a;
-    --good-soft: rgba(76, 195, 138, 0.13);
-    --bad: #ff7b8f;
-    --bad-soft: rgba(255, 123, 143, 0.12);
-    --warn: #f0b252;
-    --warn-soft: rgba(240, 178, 82, 0.13);
-    --st-not-started: #8e8e98;
-    --st-learning: #7d9bff;
-    --st-practising: #f0b252;
-    --st-secure: #4cc38a;
-    --st-revision: #ff7b8f;
-    --sub-9709: #a19cff;
-    --sub-9618: #3fd0bd;
-    --sub-9702: #ff9a5c;
-    --sub-9701: #6fd17d;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.4), 0 20px 56px rgba(0, 0, 0, 0.5);
-    --material: rgba(23, 23, 26, 0.74);
-    --scrim: rgba(0, 0, 0, 0.55);
-    --dg-muted: #8e8e98;
-    --dg-grid: rgba(255, 255, 255, 0.1);
-    --dg-accent: #7d9bff;
-    --dg-accent-soft: rgba(125, 155, 255, 0.2);
-    --dg-accent-2: #ff9a5c;
-    --dg-accent-2-soft: rgba(255, 154, 92, 0.2);
-    --dg-fill-muted: rgba(255, 255, 255, 0.07);
+    --bg: #0e1630;
+    --surface: #152044;
+    --surface-2: #1b2851;
+    --surface-3: #25345f;
+    --border: rgba(226, 232, 255, 0.1);
+    --border-strong: rgba(226, 232, 255, 0.2);
+    --text: #f6f0e5;
+    --text-2: #c5c8da;
+    --text-3: #a3a9c2;
+    --on-bright: #0e1630;
+    --cobalt: #91a8ff;
+    --cobalt-hover: #aabcff;
+    --cobalt-ink: #91a8ff;
+    --cobalt-soft: rgba(145, 168, 255, 0.14);
+    --cobalt-ledge: #5b74d6;
+    --coral: #ff8c6f;
+    --coral-ink: #ffa088;
+    --coral-soft: rgba(255, 140, 111, 0.14);
+    --yellow: #ffd46a;
+    --yellow-ink: #ffd46a;
+    --yellow-soft: rgba(255, 212, 106, 0.14);
+    --mint: #5eddb0;
+    --mint-ink: #5eddb0;
+    --mint-soft: rgba(94, 221, 176, 0.14);
+    --lavender: #c4b4ff;
+    --lavender-ink: #c4b4ff;
+    --lavender-soft: rgba(196, 180, 255, 0.16);
+    --pink: #ffa6cb;
+    --pink-ink: #ffa6cb;
+    --pink-soft: rgba(255, 166, 203, 0.16);
+    --sky: #82c3ff;
+    --sky-ink: #82c3ff;
+    --sky-soft: rgba(130, 195, 255, 0.14);
+    --accent-ink: #0e1630;
+    --focus: #aabcff;
+    --bad: #ff9fbf;
+    --bad-soft: rgba(255, 159, 191, 0.14);
+    --st-not-started: #a3a9c2;
+    --sub-9709: #ff9a7e;
+    --sub-9709-bright: #ff8c6f;
+    --sub-9618: #5eddb0;
+    --sub-9618-bright: #4fcfa2;
+    --sub-9702: #82c3ff;
+    --sub-9702-bright: #6fb6ff;
+    --sub-9701: #e2a9ff;
+    --sub-9701-bright: #d394f5;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.35), 0 20px 56px rgba(0, 0, 0, 0.45);
+    --ledge: rgba(0, 0, 0, 0.35);
+    --material: rgba(14, 22, 48, 0.9);
+    --scrim: rgba(4, 8, 20, 0.6);
+    --dg-muted: #9ea4be;
+    --dg-grid: rgba(226, 232, 255, 0.12);
+    --dg-accent: #91a8ff;
+    --dg-accent-soft: rgba(145, 168, 255, 0.2);
+    --dg-accent-2: #ff9a7e;
+    --dg-accent-2-soft: rgba(255, 140, 111, 0.2);
+    --dg-fill-muted: rgba(226, 232, 255, 0.07);
   }
 }

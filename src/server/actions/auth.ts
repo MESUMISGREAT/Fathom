@@ -7,6 +7,7 @@ import { users } from '@/server/db/schema';
 import { dummyHash, hashPassword, PASSWORD_MAX, PASSWORD_MIN, verifyPassword } from '@/server/auth/password';
 import { clientIp, createSession, destroySession, setThemeCookie } from '@/server/auth/session';
 import { hit, LIMITS } from '@/server/rate-limit';
+import { canonicalTimeZone } from '@/domain/points';
 
 export interface AuthState {
   error?: string;
@@ -59,6 +60,8 @@ export async function signUp(_prev: AuthState, form: FormData): Promise<AuthStat
       email: parsed.data.email,
       passwordHash: await hashPassword(parsed.data.password),
       displayName: parsed.data.displayName,
+      // Optional hidden field filled from the browser; anything that isn't an IANA zone falls back to UTC.
+      timeZone: canonicalTimeZone(form.get('timeZone')) ?? 'UTC',
       ageConfirmedAt: new Date(),
     })
     .returning({ id: users.id });
