@@ -43,6 +43,7 @@ const specs: PanelSpec[] = [
     baseLabel: [3.15, 0.8, 'start'],
     imageLabel: [-3.0, -1.75, 'start'],
     imageText: 'f(x + 2)',
+    hideOrigin: true,
     footer: (
       <g>
         <Label x={110} y={28} anchor="end" className="dg-text">

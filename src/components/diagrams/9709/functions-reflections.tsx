@@ -21,6 +21,7 @@ const specs: PanelSpec[] = [
     imageLabel: [-1.2, -1.7, 'end'],
     imageText: '−f(x)',
     xTicks: [-2, -1, 2, 3],
+    hideOrigin: true,
     footer: (
       <Label x={150} y={22} className="dg-text">
         reflection in the x-axis
@@ -34,6 +35,7 @@ const specs: PanelSpec[] = [
     baseLabel: [3.15, 0.8, 'start'],
     imageLabel: [-3.0, -1.75, 'start'],
     imageText: 'f(−x)',
+    hideOrigin: true,
     footer: (
       <Label x={150} y={22} className="dg-text">
         reflection in the y-axis

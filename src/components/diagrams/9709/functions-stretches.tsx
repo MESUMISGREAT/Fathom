@@ -38,6 +38,8 @@ const specs: PanelSpec[] = [
     baseLabel: [3.15, 0.8, 'start'],
     imageLabel: [0.18, 4.75, 'start'],
     imageText: 'f(2x)',
+    yTicks: [-2, 4],
+    yTicksRight: [2],
     footer: (
       <Label x={150} y={22} className="dg-text">
         stretch parallel to the x-axis, factor ½

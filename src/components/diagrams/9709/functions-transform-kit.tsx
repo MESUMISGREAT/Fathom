@@ -6,7 +6,7 @@
  */
 import type { ReactNode } from 'react';
 import { Arrow, Label, graph } from '../primitives';
-import { AxesXY, Grid, makePlot, type Plot } from './kit';
+import { Grid, makePlot, type Plot } from './kit';
 
 export const PW = 300;
 export const PLOT_H = 300;
@@ -51,6 +51,60 @@ export interface PanelSpec {
   imageText: string;
   /** x tick labels (leave out any that an arrow would cover). */
   xTicks?: number[];
+  /** y tick labels drawn to the left of the axis (default −2, 2, 4). */
+  yTicks?: number[];
+  /** y tick labels drawn to the right of the axis, where a curve would cover the left. */
+  yTicksRight?: number[];
+  /** Leave out the "O" at the origin when both curves pass through it. */
+  hideOrigin?: boolean;
+}
+
+/** x- and y-axes with arrowheads, ticks and labels (like kit's AxesXY, with an optional origin label). */
+function PanelAxes({ p, xTicks, yTicks, yTicksRight, hideOrigin }: {
+  p: Plot;
+  xTicks: number[];
+  yTicks: number[];
+  yTicksRight: number[];
+  hideOrigin: boolean;
+}) {
+  const x0 = p.sx(0);
+  const y0 = p.sy(0);
+  const fmt = (n: number) => (n < 0 ? `−${Math.abs(n)}` : `${n}`);
+  const yTick = (t: number, side: 'left' | 'right') => (
+    <g key={`y${side}${t}`}>
+      <line x1={x0 - 4} y1={p.sy(t)} x2={x0 + 4} y2={p.sy(t)} className="dg-thin" />
+      <Label x={side === 'left' ? x0 - 8 : x0 + 8} y={p.sy(t)} anchor={side === 'left' ? 'end' : 'start'} className="dg-text-small">
+        {fmt(t)}
+      </Label>
+    </g>
+  );
+  return (
+    <g>
+      <Arrow x1={p.sx(p.x[0])} y1={y0} x2={p.sx(p.x[1]) + 8} y2={y0} className="dg-thin" head={8} />
+      <Arrow x1={x0} y1={p.sy(p.y[0])} x2={x0} y2={p.sy(p.y[1]) - 8} className="dg-thin" head={8} />
+      <Label x={p.sx(p.x[1]) + 8} y={y0 + 15} className="dg-text dg-italic">
+        x
+      </Label>
+      <Label x={x0 - 13} y={p.sy(p.y[1]) - 6} className="dg-text dg-italic">
+        y
+      </Label>
+      {!hideOrigin && (
+        <Label x={x0 - 9} y={y0 + 13} className="dg-text-small">
+          O
+        </Label>
+      )}
+      {xTicks.map((t) => (
+        <g key={`x${t}`}>
+          <line x1={p.sx(t)} y1={y0 - 4} x2={p.sx(t)} y2={y0 + 4} className="dg-thin" />
+          <Label x={p.sx(t)} y={y0 + 15} className="dg-text-small">
+            {fmt(t)}
+          </Label>
+        </g>
+      ))}
+      {yTicks.map((t) => yTick(t, 'left'))}
+      {yTicksRight.map((t) => yTick(t, 'right'))}
+    </g>
+  );
 }
 
 export function Panel({ spec, index }: { spec: PanelSpec; index: number }) {
@@ -63,7 +117,13 @@ export function Panel({ spec, index }: { spec: PanelSpec; index: number }) {
       </Label>
       <g transform="translate(0, 34)">
         <Grid p={p} />
-        <AxesXY p={p} xTicks={spec.xTicks ?? [-2, -1, 1, 2, 3]} yTicks={[-2, 2, 4]} />
+        <PanelAxes
+          p={p}
+          xTicks={spec.xTicks ?? [-2, -1, 1, 2, 3]}
+          yTicks={spec.yTicks ?? [-2, 2, 4]}
+          yTicksRight={spec.yTicksRight ?? []}
+          hideOrigin={spec.hideOrigin ?? false}
+        />
         <path d={graph(base, X, p, Y)} className="dg-line" />
         <path d={graph(spec.g, X, p, Y)} className="dg-accent" />
         {spec.moves.map(([x1, y1, x2, y2]) => (
