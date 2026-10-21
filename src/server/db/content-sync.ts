@@ -228,15 +228,48 @@ export async function syncContentIfChanged(db: Db): Promise<void> {
   const hash = await hashBundle(bundle);
   const current = await db.select().from(t.appMeta).where(eq(t.appMeta.key, 'content_hash'));
   if (current[0]?.value === hash) return;
-  const { issues } = validateContent(bundle, new Set(Object.keys(diagrams)));
-  const errors = issues.filter((i) => i.level === 'error');
-  if (errors.length) {
-    console.error(`[content] not imported: ${errors.length} validation error(s). Run "npm run content:check". Serving previously imported content.`);
-    for (const e of errors.slice(0, 10)) console.error(`[content]   ${e.file}: ${e.message}`);
+  const usable = withoutInvalidLessons(bundle, new Set(Object.keys(diagrams)));
+  if (!usable.ok) {
+    console.error(`[content] not imported: ${usable.errors.length} validation error(s) outside lesson files. Run "npm run content:check". Serving previously imported content.`);
+    for (const e of usable.errors.slice(0, 10)) console.error(`[content]   ${e.file}: ${e.message}`);
     return;
   }
-  const counts = await importContent(db, bundle, hash);
+  if (usable.skipped.length) {
+    const files = new Set(usable.skipped.map((e) => e.file));
+    console.error(`[content] skipped ${files.size} lesson file(s) with errors. Run "npm run content:check".`);
+    for (const e of usable.skipped.slice(0, 10)) console.error(`[content]   ${e.file}: ${e.message}`);
+  }
+  const counts = await importContent(db, usable.bundle, hash);
   console.log(`[content] imported ${counts.lessons} lessons, ${counts.questions} questions`);
+}
+
+/**
+ * Drops lesson files that have validation errors, then any lessons that break
+ * because of that (e.g. a prerequisite that was dropped), so one bad lesson
+ * can't stop every other lesson from being served. Errors in syllabus files
+ * are not recoverable this way and return ok: false.
+ */
+export function withoutInvalidLessons(
+  bundle: ContentBundle,
+  diagramKeys: Set<string>,
+): { ok: true; bundle: ContentBundle; skipped: Issue[] } | { ok: false; errors: Issue[] } {
+  const isLessonFile = (file: string) => /[\\/]lessons[\\/][^\\/]+$/.test(file);
+  const skipped: Issue[] = [];
+  let current = bundle;
+  for (;;) {
+    const errors = validateContent(current, diagramKeys).issues.filter((i) => i.level === 'error');
+    if (!errors.length) return { ok: true, bundle: current, skipped };
+    if (errors.some((e) => !isLessonFile(e.file))) return { ok: false, errors };
+    const bad = new Set(errors.map((e) => e.file));
+    skipped.push(...errors);
+    const next = {
+      syllabi: current.syllabi,
+      lessons: current.lessons.filter((l) => !bad.has(l.file)),
+      issues: current.issues.filter((i) => !bad.has(i.file)),
+    };
+    if (next.lessons.length === current.lessons.length && next.issues.length === current.issues.length) return { ok: false, errors };
+    current = next;
+  }
 }
 
 /** Lesson ids that are live (not archived), for callers that need to filter. */
