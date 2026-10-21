@@ -74,7 +74,7 @@ blocks:
 
       1. Software reads the drawing list, one object at a time, **in order**.
       2. For each object, it uses the properties to **calculate** which pixels on the screen (or dots on the printer) to colour.
-      3. Objects later in the list are drawn on top of earlier ones. (In the diagram, the roof is drawn after the walls.)
+      3. Objects later in the list are drawn **on top of** earlier ones, so where two shapes overlap, the later one hides part of the earlier one. The order of the list is part of the data.
 
       The pixels are worked out fresh every time, at whatever size and resolution the device has.
 
@@ -170,8 +170,8 @@ questions:
     prompt: |
       A vector graphic is stored as a {{1}}: a set of commands, one for each {{2}}, such as a line or a circle. Each one is described by its {{3}}, such as its coordinates and line colour.
     blanks:
-      - accept: ["drawing list"]
-      - accept: ["drawing object", "object", "drawing objects", "objects"]
+      - accept: ["drawing list", "drawing-list"]
+      - accept: ["drawing object", "object", "drawing objects", "objects", "drawing-object"]
       - accept: ["properties", "property"]
     explanation: |
       Drawing list (the whole thing) → drawing objects (the shapes in it) → properties (the data describing each shape).

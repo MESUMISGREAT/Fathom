@@ -12,14 +12,14 @@ export const diagramKey = 'cs-multimedia-zoom-compare';
 const W = 620;
 const H = 290;
 const N = 20; // stored bitmap is 20 x 20 pixels
-const SMALL = 1.4; // on-screen size of one stored pixel in the "original"
+const SMALL = 1; // on-screen size of one stored pixel in the "original" (to scale: BIG / SMALL = 8)
 const BIG = 8; // enlarged pixel size
 const inCircle = (c: number, r: number) => (c + 0.5 - N / 2) ** 2 + (r + 0.5 - N / 2) ** 2 < (N / 2 - 0.6) ** 2;
 
 function Bitmap({ x, y, s }: { x: number; y: number; s: number }) {
   const cells = [];
   for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (inCircle(c, r)) cells.push(<rect key={`${r}-${c}`} x={x + c * s} y={y + r * s} width={s + 0.3} height={s + 0.3} className="dg-dot-accent" />);
-  return <g>{cells}</g>;
+  return <g shapeRendering="crispEdges">{cells}</g>;
 }
 
 export function MultimediaZoomCompare() {
