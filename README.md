@@ -13,7 +13,7 @@ npm run user:role -- you@example.com editor   # let an account see /reports (stu
 
 If you previously ran the app with fixture content, delete the `data` folder and restart so the real content is imported.
 
-Production: set `DATABASE_URL` to a PostgreSQL server. Behind a reverse proxy, set `TRUST_PROXY=1` so rate limits use the client's address from `X-Forwarded-For`.
+Production: set `DATABASE_URL` to a PostgreSQL server. On Vercel, connect a Neon database (Storage tab); the `vercel-build` script runs migrations and the content import before `next build`. Behind a reverse proxy, set `TRUST_PROXY=1` so rate limits use the client's address from `X-Forwarded-For`.
 
 ## Status
 | Area | State |

@@ -19,12 +19,13 @@ interface DbState {
 const MIGRATIONS = path.join(process.cwd(), 'drizzle');
 
 async function connect(): Promise<DbState> {
-  const url = process.env.DATABASE_URL;
+  // POSTGRES_URL is what Vercel's database integrations may set.
+  const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
   if (url && url !== 'memory') {
     const { Pool } = await import('pg');
     const { drizzle } = await import('drizzle-orm/node-postgres');
     const { migrate } = await import('drizzle-orm/node-postgres/migrator');
-    const pool = new Pool({ connectionString: url, max: Number(process.env.DATABASE_POOL_SIZE ?? 10) });
+    const pool = new Pool({ connectionString: url, max: Number(process.env.DATABASE_POOL_SIZE ?? (process.env.VERCEL ? 3 : 10)) });
     const db = drizzle(pool, { schema });
     if (process.env.AUTO_MIGRATE !== '0') await migrate(db, { migrationsFolder: MIGRATIONS });
     return { db: db as unknown as Db, close: () => pool.end() };
