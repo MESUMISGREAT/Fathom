@@ -1,0 +1,242 @@
+id: functions-one-one-functions
+subject: "9709"
+topic: "1.2"
+title: One-one functions and the horizontal line test
+summary: A function is one-one when no two inputs share an output; test it with horizontal lines, and fix a quadratic by cutting its domain at the vertex.
+order: 4
+minutes: 5
+kind: core
+objectives: ["1.2.1", "1.2.3"]
+prerequisites: [functions-domain-and-range, functions-range-of-a-quadratic]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.2 learning outcomes "understand the terms
+    function, domain, range, one-one function ..." and "determine whether or not a given function
+    is one-one". All examples and questions are original; every value checked in Python. Not yet
+    reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can say what makes a function **one-one**, test a graph with the horizontal line test, and restrict a domain so that a function becomes one-one.
+
+  - type: explain
+    title: One locker, one owner
+    body: |-
+      Every student gets exactly one locker: that's a function (student ↦ locker). Now ask the reverse question: does every locker belong to just **one** student?
+
+      - If no two students share a locker, the function is **one-one**.
+      - If two siblings share locker 42, it's **many-one**. Still a function, but you can't name "the" owner of locker 42.
+
+      Where the analogy breaks: a school has a finite number of lockers. A function's domain can be infinite.
+
+  - type: definition
+    term: One-one function
+    body: |-
+      A function $f$ is **one-one** if each value in its range comes from **exactly one** value in its domain. Equivalently: if $f(a) = f(b)$, then $a = b$. A function that is not one-one is called **many-one**.
+
+  - type: explain
+    title: The horizontal line test
+    body: |-
+      Sketch $y = f(x)$ **over the given domain only**, then imagine sliding a horizontal ruler up the page.
+
+      - Some horizontal line meets the graph **twice or more** → two inputs share an output → **many-one**.
+      - **Every** horizontal line meets it **at most once** → **one-one**.
+
+      (The *vertical* line test is a different question: whether the graph is a function at all.)
+
+  - type: diagram
+    diagram: functions-horizontal-line-test
+    alt: >-
+      Two panels at the same scale showing the parabola y = (x − 2)² − 1, with vertex (2, −1) and
+      x-intercepts 1 and 3. Left panel, domain x ∈ ℝ, labelled many-one: the whole U-shaped curve is
+      drawn and the dashed horizontal line y = 3 meets it twice, at x = 0 and x = 4. Right panel,
+      domain x ≥ 2, labelled one-one: only the right half of the U is drawn solid, starting at the
+      vertex (2, −1); the left half is dashed. The line y = 3 meets the solid part only once, at
+      x = 4. Captions: f(0) = f(4) = 3 on the left; every horizontal line meets it at most once on
+      the right.
+    caption: |-
+      Same rule, different domain, different verdict. Chopping the parabola at its vertex leaves a piece that only ever goes up, so no output can repeat.
+
+  - type: check
+    questions: [oo-term, oo-which]
+
+  - type: explain
+    title: Making a quadratic one-one
+    body: |-
+      A parabola on all of $\mathbb{R}$ always fails the test: it's symmetric about its vertex, so heights repeat on either side.
+
+      The fix is to **keep only one side of the vertex**:
+
+      | Domain | What's left of the ∪ | One-one? |
+      | --- | --- | --- |
+      | $x \geqslant$ (vertex $x$) | right half, always rising | yes |
+      | $x \leqslant$ (vertex $x$) | left half, always falling | yes |
+      | anything that includes both sides | a dip | no |
+
+  - type: example
+    title: Find the least value of k
+    problem: |-
+      The function $f$ is defined by $f(x) = x^2 - 6x + 5$ for $x \geqslant k$. Find the least value of $k$ for which $f$ is one-one.
+    steps:
+      - |-
+        Complete the square: $x^2 - 6x + 5 = (x - 3)^2 - 4$. The vertex is at $x = 3$.
+      - |-
+        For $x \geqslant 3$ the graph only rises, so every output appears once. $k = 3$ works.
+      - |-
+        Any $k < 3$ lets in points on **both** sides of the vertex. For example, with $k = 2$: $f(2) = -3$ and $f(4) = -3$. Two inputs, one output.
+      - |-
+        So the domain can start at the vertex, but no further left.
+    answer: |-
+      The least value is $k = 3$. Note it's the $x$-coordinate of the vertex: domains are about $x$.
+
+  - type: check
+    questions: [oo-least-k, oo-max-domain]
+
+  - type: intuition
+    title: Why anyone cares
+    body: |-
+      Next up: **inverse functions**, which run a function backwards (output → input).
+
+      With $x \mapsto x^2$ on $\mathbb{R}$, the output 9 came from both 3 and $-3$. Running it backwards, 9 would need *two* answers, and a function can't do that. So only **one-one** functions have inverses. That's why exam questions keep asking you to restrict domains.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $f(x) = x^2$ is never one-one.
+        right: |-
+          It depends on the domain. $x^2$ for $x \in \mathbb{R}$ is many-one, but $x^2$ for $x \geqslant 0$ is one-one.
+      - wrong: |-
+          The least $k$ for $f(x) = (x - 3)^2 - 4$, $x \geqslant k$, is $-4$.
+        right: |-
+          $-4$ is the $y$-coordinate of the vertex. The domain is a set of $x$-values, so $k = 3$.
+      - wrong: |-
+          A graph passing the vertical line test is one-one.
+        right: |-
+          Vertical lines test whether it's a function at all. **Horizontal** lines test whether it's one-one.
+
+  - type: exam
+    body: |-
+      - "Find the largest value of $a$ for which $f$ is one-one" (domain $x \leqslant a$) or "the least value of $k$" (domain $x \geqslant k$): the answer is the vertex's $x$-coordinate. Usually 1 mark after a completing-the-square part.
+      - "Explain why $f$ has no inverse" needs **two things**: "$f$ is not one-one", plus evidence.
+      - Insider hack: the best evidence is a specific pair, like "$f(0) = f(4) = 3$". Concrete beats vague every time.
+
+  - type: check
+    questions: [oo-pair, oo-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        **One-one**: every output comes from exactly one input. Otherwise the function is **many-one**.
+      - |-
+        Horizontal line test: if any horizontal line meets the graph (over the domain) more than once, it's many-one.
+      - |-
+        A quadratic becomes one-one when its domain stays on one side of the vertex: $x \geqslant$ or $x \leqslant$ the vertex's $x$-coordinate.
+      - |-
+        Only one-one functions have inverses. To show a function isn't one-one, give two inputs with the same output.
+
+questions:
+  - id: oo-term
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |-
+      A function is {{1}} if each output comes from exactly one input. A function in which two different inputs can give the same output is {{2}}.
+    blanks:
+      - accept: [one-one, one one, one to one, one-to-one, 1-1, injective]
+      - accept: [many-one, many one, many to one, many-to-one]
+    explanation: |-
+      **One-one**: no output is shared. **Many-one**: at least two inputs share an output, like $x^2$ sending 2 and $-2$ to 4. Both are functions.
+
+  - id: oo-which
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.3"]
+    prompt: |-
+      Which of these functions is one-one?
+    explanation: |-
+      $(x - 2)^2$ has its vertex at $x = 2$. With domain $x \geqslant 2$, only the rising half of the parabola is used, so every horizontal line meets it at most once.
+    options:
+      - text: |-
+          $f(x) = (x - 2)^2$ for $x \geqslant 2$
+        correct: true
+        why: |-
+          The domain starts at the vertex, so the graph only rises: no output repeats.
+      - text: |-
+          $f(x) = (x - 2)^2$ for $x \geqslant 0$
+        why: |-
+          This domain includes both sides of the vertex $x = 2$: $f(1) = f(3) = 1$.
+      - text: |-
+          $f(x) = x^2 + 1$ for $x \in \mathbb{R}$
+        why: |-
+          The whole parabola is used: $f(-1) = f(1) = 2$.
+      - text: |-
+          $f(x) = 3$ for $x \in \mathbb{R}$
+        why: |-
+          Every input gives 3. That's as many-one as a function can get.
+
+  - id: oo-least-k
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |-
+      The function $f$ is defined by $f(x) = x^2 + 8x + 3$ for $x \geqslant k$. Find the least value of $k$ for which $f$ is one-one.
+    fields:
+      - label: "k ="
+        answer: -4
+    explanation: |-
+      $x^2 + 8x + 3 = (x + 4)^2 - 13$, so the vertex is at $x = -4$. The domain may start at the vertex but not to its left, so the least value is $k = -4$.
+
+      If you wrote $-13$, that's the vertex's $y$-coordinate; the domain is about $x$.
+
+  - id: oo-max-domain
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |-
+      The function $g$ is defined by $g(x) = 2x^2 - 12x + 7$ for $x \leqslant a$. Find the largest value of $a$ for which $g$ is one-one.
+    fields:
+      - label: "a ="
+        answer: 3
+    explanation: |-
+      $2x^2 - 12x + 7 = 2(x - 3)^2 - 11$, so the vertex is at $x = 3$. For $x \leqslant 3$ the graph only falls, so $g$ is one-one. Any larger $a$ would include points on both sides of the vertex. So $a = 3$.
+
+  - id: oo-pair
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |-
+      The function $f$ is defined by $f(x) = x^2 - 10x$ for $x \in \mathbb{R}$. You know $f(1) = -9$. Find the **other** value of $x$ for which $f(x) = -9$, which proves that $f$ is not one-one.
+    fields:
+      - label: "x ="
+        answer: 9
+    explanation: |-
+      Solve $x^2 - 10x = -9$: $x^2 - 10x + 9 = 0$, so $(x - 1)(x - 9) = 0$ and $x = 1$ or $x = 9$.
+
+      So $f(1) = f(9) = -9$: two inputs, one output. That's the evidence an examiner wants. (They're symmetric about the vertex $x = 5$.)
+
+  - id: oo-spot
+    format: spot-error
+    difficulty: 3
+    objectives: ["1.2.3"]
+    prompt: |-
+      A student tries to show that $f(x) = x^2 - 4x$ for $x \geqslant 1$ is one-one. Which line contains the first error?
+    lines:
+      - |-
+        $f(x) = (x - 2)^2 - 4$
+      - |-
+        The vertex is at $(2, -4)$.
+      - |-
+        The domain $x \geqslant 1$ starts at $x = 1$.
+      - |-
+        The graph rises for all $x \geqslant 1$, so every horizontal line meets it at most once.
+      - |-
+        So $f$ is one-one.
+    errorLine: 4
+    fix: |-
+      The vertex $x = 2$ lies **inside** the domain, so the graph falls from $x = 1$ to $x = 2$ and then rises. For example $f(1) = f(3) = -3$, so $f$ is not one-one.
+    explanation: |-
+      Always compare the vertex with the domain. Here the domain starts to the left of the vertex, so it includes a dip, and outputs between $-4$ and $-3$ each appear twice.
