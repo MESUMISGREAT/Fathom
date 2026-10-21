@@ -2,6 +2,8 @@
 
 Short, step-by-step lessons and instantly marked recall questions for Cambridge International AS & A Level Mathematics (9709), Computer Science (9618), Physics (9702) and Chemistry (9701).
 
+**Live:** https://fathom-steel-ten.vercel.app (Vercel, Neon Postgres). Every push to `main` deploys automatically.
+
 ```bash
 npm install
 npm run dev          # http://localhost:3000, loads the real content in /content. Embedded Postgres (PGlite) in ./data, no DB server needed
