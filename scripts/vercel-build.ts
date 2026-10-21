@@ -18,6 +18,12 @@ if (!url) {
 }
 const env = { ...process.env, DATABASE_URL: url };
 const run = (cmd: string) => execSync(cmd, { stdio: 'inherit', env });
-run('npx tsx scripts/db-migrate.ts');
-run('npx tsx scripts/content-import.ts');
+// Preview deployments share the production database, so only production
+// builds may migrate it or replace its lessons.
+if (process.env.VERCEL_ENV === 'production') {
+  run('npx tsx scripts/db-migrate.ts');
+  run('npx tsx scripts/content-import.ts');
+} else {
+  console.log(`Skipping migrations and content import (VERCEL_ENV=${process.env.VERCEL_ENV ?? 'unset'}).`);
+}
 run('npx next build');
