@@ -24,6 +24,7 @@ import {
   answerXp,
   BADGES,
   comboAward,
+  CORRECT_SCORE,
   comebackAward,
   computeStreak,
   dailyGoalAward,
@@ -34,6 +35,7 @@ import {
   lessonXp,
   levelFor,
   liveCombo,
+  localDay,
   nextCombo,
   reviewSessionAward,
   reviewSourceId,
@@ -67,7 +69,7 @@ export async function lockUserPoints(tx: Db, userId: string): Promise<Date> {
  * zone it started in until it is over there), stored as the student's
  * current day, plus their daily goal. Call after lockUserPoints.
  */
-export async function startPointsDay(tx: Db, userId: string, now: Date): Promise<{ day: LocalDay; dailyGoal: number }> {
+export async function startPointsDay(tx: Db, userId: string, now: Date): Promise<{ day: LocalDay; zone: string; dailyGoal: number }> {
   const [u] = await tx
     .select({ timeZone: t.users.timeZone, dailyGoal: t.users.dailyGoal, activeDay: t.users.activeDay, activeDayZone: t.users.activeDayZone })
     .from(t.users)
@@ -76,7 +78,7 @@ export async function startPointsDay(tx: Db, userId: string, now: Date): Promise
   if (u && (u.activeDay !== day || u.activeDayZone !== zone)) {
     await tx.update(t.users).set({ activeDay: day, activeDayZone: zone }).where(eq(t.users.id, userId));
   }
-  return { day, dailyGoal: u?.dailyGoal ?? DEFAULT_DAILY_GOAL };
+  return { day, zone, dailyGoal: u?.dailyGoal ?? DEFAULT_DAILY_GOAL };
 }
 
 /** Stores one award; returns whether it was new (false when the unique index already had it). */
@@ -125,8 +127,8 @@ export interface AnswerPoints {
   localDay: LocalDay;
   /** Store in `attempts.due_review`: answered while due, at a due date that pays XP. */
   dueReview: boolean;
-  /** Store in `review_items.pays_xp` if this answer moves the due date (keep the old value if it doesn't). */
-  nextDuePaysXp: boolean;
+  /** Store in `review_items.pays_xp`: whether the due date this answer leaves (`nextDueAt`, from the scheduler) pays review XP. */
+  nextDuePaysXp: (nextDueAt: Date) => boolean;
   /** Call after the attempt is inserted, still inside the transaction. */
   finish: () => Promise<PointsResult>;
 }
@@ -143,11 +145,19 @@ export interface AnswerPoints {
  */
 export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<AnswerPoints> {
   const { userId, questionId, now } = input;
-  const { day, dailyGoal } = await startPointsDay(tx, userId, now);
+  const { day, zone, dailyGoal } = await startPointsDay(tx, userId, now);
   const [history] = await tx
     .select({
       priorAttempts: sql<number>`(select count(*) from attempts a where a.user_id = ${userId} and a.question_id = ${questionId})`.mapWith(Number),
       answeredEarlierToday: sql<boolean>`exists(select 1 from attempts a where a.user_id = ${userId} and a.question_id = ${questionId} and a.local_day = ${day})`,
+      // Attempts stored before 0004 have no local day: judge "earlier today" by their time instead (see below).
+      lastUndatedAt: sql<Date | null>`(select max(a.created_at) from attempts a where a.user_id = ${userId} and a.question_id = ${questionId} and a.local_day is null)`.mapWith(
+        t.attempts.createdAt,
+      ),
+      missedBefore: sql<boolean>`exists(select 1 from attempts a where a.user_id = ${userId} and a.question_id = ${questionId} and a.score < ${CORRECT_SCORE})`,
+      // "You fixed it" paid: an `answer` award stored after the question's first attempt (a first-try award has its time).
+      fixPaid: sql<boolean>`exists(select 1 from xp_events e where e.user_id = ${userId} and e.kind = 'answer' and e.source_id = ${questionId}
+        and e.created_at > (select min(a.created_at) from attempts a where a.user_id = ${userId} and a.question_id = ${questionId}))`,
       alreadyAwarded: sql<boolean>`exists(select 1 from xp_events e where e.user_id = ${userId} and (
         (e.kind = 'answer' and e.source_id = ${questionId})
         or (e.kind = 'review' and starts_with(e.source_id, ${questionId + '@'}))))`,
@@ -166,6 +176,7 @@ export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<Ans
   const alreadyAwarded = history?.alreadyAwarded ?? false;
   const answeredWhileDue = input.review !== null && input.review.dueAt.getTime() <= now.getTime();
   const due = answeredWhileDue && input.review!.paysXp;
+  const undatedAt = history?.lastUndatedAt ?? null;
   const decision = answerXp({
     difficulty: input.difficulty,
     outcome: input.outcome,
@@ -174,7 +185,8 @@ export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<Ans
     firstAttempt,
     alreadyAwarded,
     due,
-    answeredEarlierToday: history?.answeredEarlierToday ?? false,
+    answeredEarlierToday: (history?.answeredEarlierToday ?? false) || (undatedAt !== null && localDay(undatedAt, zone) >= day),
+    missedBefore: history?.missedBefore ?? false,
   });
 
   const attemptId = randomUUID();
@@ -189,6 +201,7 @@ export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<Ans
     dueReview: awarded && decision.award?.kind === 'review',
     outcome: input.outcome,
     wrongBefore: history?.wrongBefore ?? false,
+    fixPaid: history?.fixPaid ?? false,
   });
   if (comeback && (await insertXp(tx, userId, comeback, questionId, day, now))) events.push(comeback);
   const combo = nextCombo(previousCombo, { eligible: decision.eligible, awarded, outcome: input.outcome });
@@ -200,14 +213,14 @@ export async function awardAnswer(tx: Db, input: AnswerPointsInput): Promise<Ans
     attemptCombo: decision.eligible ? combo : null,
     localDay: day,
     dueReview: due,
-    nextDuePaysXp: dueDatePaysXp({ firstAttempt, answeredWhileDue, alreadyAwarded }),
+    nextDuePaysXp: (nextDueAt) => dueDatePaysXp({ firstAttempt, alreadyAwarded, outcome: input.outcome, previous: input.review, nextDueAt, now }),
     finish: async () => {
       if (awarded && combo > previousCombo) {
         const bonus = comboAward(combo);
         if (bonus && (await insertXp(tx, userId, bonus, attemptId, day, now))) events.push(bonus);
       }
       events.push(...(await settleLesson(tx, { userId, lessonId: input.lessonId, now, day })).events);
-      const topics = await settleTopics(tx, userId, topicsBefore, now, day, input.outcome === 'correct');
+      const topics = await settleTopics(tx, userId, topicsBefore, now, day, { correct: input.outcome === 'correct', scored: awarded });
       events.push(...topics.events);
       return finishPoints(tx, { userId, now, day, dailyGoal, events, combo, checkBadges: topics.recovered });
     },
@@ -354,10 +367,14 @@ async function topicsOfQuestion(tx: Db, questionId: string): Promise<string[]> {
  * - A topic seen in Needs revision (before or after) is remembered in
  *   topic_recoveries, for Comeback Arc.
  * - When the answer was fully correct, a topic that is now fully Secure pays
- *   topic-secure (once per topic) and, if it was remembered as slipped,
- *   counts as recovered. A wrong answer never does either: it can make a
+ *   topic-secure (once per topic). A wrong answer never does: it can make a
  *   topic Secure on paper (answering an overdue review, even wrongly, clears
- *   the overdue flag), but that isn't a comeback.
+ *   the overdue flag), but that isn't learning.
+ * - A topic remembered as slipped counts as recovered (Comeback Arc) when a
+ *   fully correct answer either makes it Secure (it wasn't before) or, while
+ *   it is Secure, earned XP itself (a due review, a first answer). So after
+ *   a wrong answer made it Secure on paper, a repeat that earns nothing
+ *   doesn't count; tomorrow's due review of the missed question does.
  */
 async function settleTopics(
   tx: Db,
@@ -365,7 +382,7 @@ async function settleTopics(
   before: Map<string, MasteryState>,
   now: Date,
   day: LocalDay,
-  correct: boolean,
+  answer: { correct: boolean; scored: boolean },
 ): Promise<{ events: XpAward[]; recovered: boolean }> {
   const events: XpAward[] = [];
   let recovered = false;
@@ -375,10 +392,11 @@ async function settleTopics(
     if (before.get(topicId) === 'needs-revision' || state === 'needs-revision') {
       await tx.insert(t.topicRecoveries).values({ userId, topicId, slippedAt: now }).onConflictDoNothing();
     }
-    if (!correct) continue;
+    if (!answer.correct) continue;
     const award = topicSecureAward(state);
     if (!award) continue;
     if (await insertXp(tx, userId, award, topicId, day, now)) events.push(award);
+    if (before.get(topicId) === 'secure' && !answer.scored) continue;
     const rows = await tx
       .update(t.topicRecoveries)
       .set({ securedAt: now })

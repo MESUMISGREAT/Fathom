@@ -78,6 +78,42 @@ export function LevelBlock({ level, totalXp, compact = false }: { level: LevelIn
 /** The date in the student's own time zone, like their XP days and history. */
 const dateLabel = (d: Date, timeZone: string) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone });
 
+/**
+ * An earned badge on the achievements shelf: its art and name, with what it
+ * was for and when in a disclosure (an open one spans the whole row), so the
+ * shelf stays a compact grid of medals rather than a column of identical tiles.
+ */
+export function BadgeMedal({
+  badge,
+  timeZone,
+}: {
+  badge: { id: string; name: string; description: string; earnedAt: Date | null };
+  timeZone: string;
+}) {
+  return (
+    <li className="badge-medal">
+      <details>
+        <summary>
+          <BadgeArt id={badge.id} size={64} />
+          <span className="badge-medal-name">{badge.name}</span>
+          {badge.earnedAt && <span className="badge-medal-date">{dateLabel(badge.earnedAt, timeZone)}</span>}
+        </summary>
+        <p className="badge-medal-desc">
+          {badge.description}
+          {badge.earnedAt && (
+            <>
+              {' '}
+              <span className="badge-tile-date">
+                <CheckIcon aria-hidden="true" /> Earned {dateLabel(badge.earnedAt, timeZone)}
+              </span>
+            </>
+          )}
+        </p>
+      </details>
+    </li>
+  );
+}
+
 export function BadgeTile({
   badge,
   timeZone,
@@ -148,7 +184,7 @@ export function XpRules({ className = '' }: { className?: string }) {
         topic Secure: {XP.topicSecure}.
       </li>
       <li>
-        Combos (new right answers in a row): +5 at 3, +10 at 5, +15 at 10 and every 5 after. Reaching your daily goal: +{XP.dailyGoal}.
+        Combos (new right answers in a row): +{XP.combo.at3} at 3, +{XP.combo.at5} at 5, +{XP.combo.at10AndEvery5} at 10 and every 5 after. Reaching your daily goal: +{XP.dailyGoal}.
       </li>
     </ul>
   );

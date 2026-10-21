@@ -4,7 +4,7 @@ import { getDashboard, type Dashboard } from '@/server/queries/dashboard';
 import { getPointsSummary, type PointsSummary } from '@/server/queries/points';
 import { lessonsInOrder, lessonHref, listSubjects } from '@/server/queries/catalog';
 import { BRAND } from '@/lib/brand';
-import { ArrowRightIcon, CheckCircleIcon, CheckIcon, FlagIcon, PlayIcon, RefreshIcon, RepeatIcon, StarFilledIcon } from '@/components/icons';
+import { ArrowRightIcon, CheckCircleIcon, CheckIcon, FlagIcon, HalfCircleIcon, PlayIcon, RefreshIcon, RepeatIcon, StarFilledIcon } from '@/components/icons';
 import { EmptyState, pluralise, Ring } from '@/components/ui';
 import { SubjectMotif } from '@/components/art/SubjectMotif';
 import { Spot } from '@/components/art/Spot';
@@ -15,8 +15,9 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const user = await getSessionUser();
   if (!user) return <Landing deleted={(await searchParams).deleted === '1'} />;
   const showPoints = user.showPoints !== false;
-  const [d, summary] = await Promise.all([getDashboard(user.id), showPoints ? getPointsSummary(user.id) : null]);
-  return <DashboardView name={user.displayName} d={d} summary={summary} />;
+  // The summary is always loaded: days studied this week stay on Home with points hidden (only XP and badges go).
+  const [d, summary] = await Promise.all([getDashboard(user.id), getPointsSummary(user.id)]);
+  return <DashboardView name={user.displayName} d={d} summary={summary} showPoints={showPoints} />;
 }
 
 const SMALL = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
@@ -31,7 +32,7 @@ function welcomeLine(d: Dashboard): string {
     case 'choose-subject':
       return 'Pick your subjects and we’ll lay out the syllabus.';
     case 'review':
-      return `${reviews}. A quick round helps them stick.`;
+      return d.resume ? `${reviews}, then back to ${topicName(d.resume.topicTitle)}.` : `${reviews}. A quick round helps them stick.`;
     case 'resume':
       return `Picking up ${topicName(d.next.lesson.topicTitle)}${reviews ? ` · ${reviews}` : ''}.`;
     case 'start':
@@ -45,7 +46,7 @@ function welcomeLine(d: Dashboard): string {
   }
 }
 
-function ContinueCard({ next, subjectCode }: { next: Dashboard['next']; subjectCode: string | null }) {
+function ContinueCard({ next, resume, subjectCode }: { next: Dashboard['next']; resume: Dashboard['resume']; subjectCode: string | null }) {
   let eyebrow = 'Up next';
   let title: string;
   let detail: string | null = null;
@@ -96,13 +97,23 @@ function ContinueCard({ next, subjectCode }: { next: Dashboard['next']; subjectC
           {title}
         </h2>
         {detail && <p className="muted">{detail}</p>}
-        <p className="small muted">{next.reason}</p>
+        {/* The welcome line already says why reviews come first. */}
+        {next.kind !== 'review' && <p className="small muted">{next.reason}</p>}
         <div className="continue-cta">
           <Link href={href} className="btn btn-primary btn-lg">
             {next.kind === 'review' ? <RepeatIcon /> : <PlayIcon />}
             {cta}
           </Link>
         </div>
+        {resume && (
+          <p className="continue-also small">
+            <span className="muted">Or pick up </span>
+            <Link href={resume.href} className="tap-pad">
+              {resume.title}
+            </Link>
+            <span className="muted"> · {resume.subjectName}</span>
+          </p>
+        )}
       </div>
       <div className="continue-art" aria-hidden="true">
         {art}
@@ -111,8 +122,15 @@ function ContinueCard({ next, subjectCode }: { next: Dashboard['next']; subjectC
   );
 }
 
-function MePanel({ summary }: { summary: PointsSummary }) {
+function MePanel({ summary, showPoints }: { summary: PointsSummary; showPoints: boolean }) {
   const { today } = summary;
+  if (!showPoints) {
+    return (
+      <section className="me-panel me-panel-quiet" aria-label="Days studied this week">
+        <WeekDots today={today.day} studied={summary.daysThisWeek} />
+      </section>
+    );
+  }
   return (
     <section className="me-panel" aria-labelledby="me-title">
       <h2 id="me-title" className="visually-hidden">
@@ -137,7 +155,7 @@ function MePanel({ summary }: { summary: PointsSummary }) {
             <h3 className="small" style={{ fontWeight: 800 }}>
               Recent unlocks
             </h3>
-            <Link href="/achievements" className="tiny" style={{ fontWeight: 700 }}>
+            <Link href="/achievements" className="tiny tap-pad" style={{ fontWeight: 700 }}>
               All achievements
             </Link>
           </div>
@@ -160,7 +178,7 @@ function MePanel({ summary }: { summary: PointsSummary }) {
   );
 }
 
-function DashboardView({ name, d, summary }: { name: string | null; d: Dashboard; summary: PointsSummary | null }) {
+function DashboardView({ name, d, summary, showPoints }: { name: string | null; d: Dashboard; summary: PointsSummary; showPoints: boolean }) {
   const accuracy = d.week.answered ? Math.round((100 * d.week.correct) / d.week.answered) : null;
   const codeByName = new Map(d.enrolled.map((e) => [e.subject.name, e.subject.code]));
   const nextSubject =
@@ -179,9 +197,9 @@ function DashboardView({ name, d, summary }: { name: string | null; d: Dashboard
           <h1>{name ? `${hello}, ${name}` : hello}</h1>
           <p className="welcome-line">{welcomeLine(d)}</p>
         </header>
-        <div className="home-top" data-solo={!summary || undefined}>
-          <ContinueCard next={d.next} subjectCode={nextSubject} />
-          {summary && <MePanel summary={summary} />}
+        <div className="home-top">
+          <ContinueCard next={d.next} resume={d.resume} subjectCode={nextSubject} />
+          <MePanel summary={summary} showPoints={showPoints} />
         </div>
       </div>
 
@@ -314,10 +332,16 @@ function DashboardView({ name, d, summary }: { name: string | null; d: Dashboard
                 {d.recent.map((r) => (
                   <li key={r.lessonId}>
                     <Link className="list-row" href={r.href}>
-                      <CheckCircleIcon width={20} height={20} style={{ color: 'var(--good)', flex: 'none' }} />
+                      {r.completed ? (
+                        <CheckCircleIcon width={20} height={20} style={{ color: 'var(--good)', flex: 'none' }} aria-hidden="true" />
+                      ) : (
+                        <HalfCircleIcon width={20} height={20} style={{ color: 'var(--text-3)', flex: 'none' }} aria-hidden="true" />
+                      )}
                       <span className="grow">
                         <span style={{ display: 'block', fontWeight: 700 }}>{r.title}</span>
-                        <span className="tiny muted">{r.subjectName}</span>
+                        <span className="tiny muted">
+                          {r.subjectName} · {r.completed ? 'Finished' : 'In progress'}
+                        </span>
                       </span>
                       <span className="small tabular muted">
                         {r.correct}/{r.answered} correct
@@ -329,12 +353,6 @@ function DashboardView({ name, d, summary }: { name: string | null; d: Dashboard
             )}
           </section>
 
-          <p className="quiet-note small">
-            <span>
-              <strong>Estimated grades aren&rsquo;t available yet.</strong> We won&rsquo;t guess a grade from short recall questions; estimates
-              need full, timed practice papers and will arrive with exam practice, as ranges with honest uncertainty.
-            </span>
-          </p>
         </>
       )}
     </div>

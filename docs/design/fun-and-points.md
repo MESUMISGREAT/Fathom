@@ -53,8 +53,12 @@ Decisions that keep "reward learning, not clicking" true (product decisions from
   XP is then paid with the answer to the last one, and the completion card says so.
 * **No paid review from a deliberate miss.** A wrong answer before an item is due still
   moves it back to box 1 (the spacing is for learning), but if the question had already
-  earned XP, the due date that miss sets pays no review XP. The on-time answer after it
-  sets a paying due date again.
+  earned XP, the due date that miss sets pays no review XP. Only a fully correct on-time
+  answer after it sets a paying due date again (a second miss there doesn't). An early
+  answer that only postpones a due date (a partly right answer restarts the interval)
+  keeps that date's pay.
+* **"You fixed it" needs a miss.** Re-answering a question you never got wrong (for
+  example one answered before XP existed) is a repeat and earns nothing.
 
 Guests can answer questions but earn no XP; they see "Sign up to keep your XP".
 
@@ -129,6 +133,7 @@ How the server decides (all in `src/server/points.ts`, rules in `src/domain/poin
 * **Comeback**: an earlier attempt at the question was incorrect, and that miss counted
   (the first attempt, or one that could earn XP: not a deliberate repeat), and this answer
   is fully correct while the question is due (the scheduler's due date, as for review XP).
+  One bonus per fixed miss: no comeback when "You fixed it" already paid for the question.
 * **Topic secured** and **Comeback Arc** use the progress page's mastery rules
   (`src/domain/mastery.ts`). A topic is Secure only when every objective in it is Secure;
   an objective with no lessons or questions yet counts as Not started, so a partly
@@ -136,7 +141,10 @@ How the server decides (all in `src/server/points.ts`, rules in `src/domain/poin
   question's topics before and after it. A topic seen in Needs revision is remembered in
   `topic_recoveries (user_id, topic_id, slipped_at, secured_at)`. Only a fully correct
   answer can pay Topic secured or set `secured_at` (a wrong answer to an overdue review
-  clears the overdue flag, which can make a topic Secure on paper; that isn't a comeback).
+  clears the overdue flag, which can make a topic Secure on paper; that isn't a comeback),
+  and only one that makes the topic Secure, or earns XP itself while it is Secure (such as
+  the missed question's next due review), sets `secured_at`: a repeat that earns nothing
+  doesn't.
 * `users.show_points` (default true) stores the Show points and badges preference; a daily
   goal of 0 means Off.
 

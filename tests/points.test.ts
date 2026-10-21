@@ -57,6 +57,7 @@ const answer = (o: Partial<AnswerXpInput> = {}): AnswerXpInput => ({
   selfAssessed: false,
   firstAttempt: true,
   alreadyAwarded: false,
+  missedBefore: false,
   due: false,
   ...o,
 });
@@ -95,7 +96,7 @@ describe('answer XP', () => {
   });
 
   it('pays 5 for fixing a question on a later attempt, only if it never earned XP', () => {
-    const later = { firstAttempt: false };
+    const later = { firstAttempt: false, missedBefore: true };
     expect(answerXp(answer({ ...later })).award).toEqual({ kind: 'answer', amount: 5, label: 'You fixed it' });
     expect(answerXp(answer({ ...later, outcome: 'incorrect', score: 0 }))).toEqual({ eligible: true, award: null });
     expect(answerXp(answer({ ...later, outcome: 'partial', score: 0.5 }))).toEqual({ eligible: true, award: null });
@@ -105,7 +106,7 @@ describe('answer XP', () => {
   });
 
   it('pays no fix on the day of the miss: the feedback has just shown the answer', () => {
-    const sameDay = { firstAttempt: false, answeredEarlierToday: true };
+    const sameDay = { firstAttempt: false, missedBefore: true, answeredEarlierToday: true };
     expect(answerXp(answer({ ...sameDay }))).toEqual({ eligible: false, award: null });
     // Neutral for the combo, right or wrong.
     expect(answerXp(answer({ ...sameDay, outcome: 'incorrect', score: 0 }))).toEqual({ eligible: false, award: null });
@@ -113,14 +114,33 @@ describe('answer XP', () => {
     expect(answerXp(answer({ ...sameDay, due: true })).award?.kind).toBe('review');
   });
 
-  it('withholds review XP from a due date set by an early repeat of a question that already paid', () => {
-    expect(dueDatePaysXp({ firstAttempt: true, answeredWhileDue: false, alreadyAwarded: false })).toBe(true);
-    // A deliberate early miss of a known question: tomorrow's review pays nothing…
-    expect(dueDatePaysXp({ firstAttempt: false, answeredWhileDue: false, alreadyAwarded: true })).toBe(false);
-    // …and the on-time answer after it sets a paying due date again.
-    expect(dueDatePaysXp({ firstAttempt: false, answeredWhileDue: true, alreadyAwarded: true })).toBe(true);
+  it('pays nothing for re-answering a question with no miss to fix (e.g. got right before XP existed)', () => {
+    expect(answerXp(answer({ firstAttempt: false, missedBefore: false }))).toEqual({ eligible: false, award: null });
+  });
+
+  it('withholds review XP from a due date set by a deliberate early miss of a question that already paid', () => {
+    const now = new Date('2026-10-20T10:00:00Z');
+    const at = (days: number) => new Date(now.getTime() + days * 86_400_000);
+    const known = { firstAttempt: false, alreadyAwarded: true, now };
+    expect(dueDatePaysXp({ ...known, firstAttempt: true, alreadyAwarded: false, outcome: 'correct', previous: null, nextDueAt: at(3) })).toBe(true);
+    // A deliberate early miss: the sooner due date pays nothing…
+    const early = { dueAt: at(6), paysXp: true };
+    expect(dueDatePaysXp({ ...known, outcome: 'incorrect', previous: early, nextDueAt: at(1) })).toBe(false);
+    // …a second miss at that unpaid date keeps it unpaid…
+    const unpaid = { dueAt: at(-0.01), paysXp: false };
+    expect(dueDatePaysXp({ ...known, outcome: 'incorrect', previous: unpaid, nextDueAt: at(1) })).toBe(false);
+    expect(dueDatePaysXp({ ...known, outcome: 'partial', previous: unpaid, nextDueAt: at(3) })).toBe(false);
+    // …and only a fully correct on-time answer sets a paying due date again.
+    expect(dueDatePaysXp({ ...known, outcome: 'correct', previous: unpaid, nextDueAt: at(3) })).toBe(true);
+    // An honest miss at a paying due date: tomorrow's review pays.
+    expect(dueDatePaysXp({ ...known, outcome: 'incorrect', previous: { dueAt: at(-0.01), paysXp: true }, nextDueAt: at(1) })).toBe(true);
+    // An early partial answer only postpones the review: it keeps its flag.
+    expect(dueDatePaysXp({ ...known, outcome: 'partial', previous: { dueAt: at(2), paysXp: true }, nextDueAt: at(3) })).toBe(true);
+    expect(dueDatePaysXp({ ...known, outcome: 'partial', previous: { dueAt: at(0.5), paysXp: false }, nextDueAt: at(1) })).toBe(false);
+    // An unchanged due date (an early correct answer) keeps its flag.
+    expect(dueDatePaysXp({ ...known, outcome: 'correct', previous: { dueAt: at(2), paysXp: false }, nextDueAt: at(2) })).toBe(false);
     // Questions that never paid out can't be farmed this way.
-    expect(dueDatePaysXp({ firstAttempt: false, answeredWhileDue: false, alreadyAwarded: false })).toBe(true);
+    expect(dueDatePaysXp({ ...known, alreadyAwarded: false, outcome: 'incorrect', previous: early, nextDueAt: at(1) })).toBe(true);
   });
 
   it('pays a due review 10, or 5 when partly right, whatever happened before', () => {
@@ -260,6 +280,8 @@ describe('topics, review sessions and comebacks', () => {
     expect(comebackAward({ dueReview: false, outcome: 'correct', wrongBefore: true })).toBeNull(); // not a due review
     expect(comebackAward({ dueReview: true, outcome: 'partial', wrongBefore: true })).toBeNull();
     expect(comebackAward({ dueReview: true, outcome: 'incorrect', wrongBefore: true })).toBeNull();
+    // "You fixed it" already paid for this miss: one bonus per fixed miss.
+    expect(comebackAward({ dueReview: true, outcome: 'correct', wrongBefore: true, fixPaid: true })).toBeNull();
   });
 });
 

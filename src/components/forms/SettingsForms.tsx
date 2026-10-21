@@ -33,16 +33,22 @@ export function ProfileForm({ displayName, email }: { displayName: string | null
 export function AppearanceForm({ theme, lessonMode }: { theme: 'system' | 'light' | 'dark'; lessonMode: 'steps' | 'full' }) {
   const [t, setT] = useState(theme);
   const [m, setM] = useState(lessonMode);
-  const [pending, start] = useTransition();
-  const save = (patch: { theme?: typeof t; lessonMode?: typeof m }) =>
+  // While a save is in flight the controls are aria-disabled, not disabled: a disabled button loses keyboard focus.
+  // `pending` tracks the save itself, not the transition (which also waits for the page refresh after it).
+  const [pending, setPending] = useState(false);
+  const [, start] = useTransition();
+  const save = (patch: { theme?: typeof t; lessonMode?: typeof m }) => {
+    setPending(true);
     start(async () => {
-      await updatePreferences(patch);
+      await updatePreferences(patch).catch(() => null);
+      setPending(false);
       if (patch.theme) {
         // Apply immediately without waiting for navigation.
         if (patch.theme === 'system') document.documentElement.removeAttribute('data-theme');
         else document.documentElement.setAttribute('data-theme', patch.theme);
       }
     });
+  };
   return (
     <div className="stack">
       <div className="field">
@@ -55,8 +61,9 @@ export function AppearanceForm({ theme, lessonMode }: { theme: 'system' | 'light
               key={v}
               type="button"
               aria-pressed={t === v}
-              disabled={pending}
+              aria-disabled={pending || undefined}
               onClick={() => {
+                if (pending) return;
                 setT(v);
                 save({ theme: v });
               }}
@@ -71,10 +78,10 @@ export function AppearanceForm({ theme, lessonMode }: { theme: 'system' | 'light
           Lessons
         </span>
         <div className="segmented" role="group" aria-labelledby="mode-label">
-          <button type="button" aria-pressed={m === 'steps'} disabled={pending} onClick={() => (setM('steps'), save({ lessonMode: 'steps' }))}>
+          <button type="button" aria-pressed={m === 'steps'} aria-disabled={pending || undefined} onClick={() => pending || (setM('steps'), save({ lessonMode: 'steps' }))}>
             One step at a time
           </button>
-          <button type="button" aria-pressed={m === 'full'} disabled={pending} onClick={() => (setM('full'), save({ lessonMode: 'full' }))}>
+          <button type="button" aria-pressed={m === 'full'} aria-disabled={pending || undefined} onClick={() => pending || (setM('full'), save({ lessonMode: 'full' }))}>
             Whole lesson
           </button>
         </div>
@@ -155,7 +162,11 @@ export function DeleteAccountForm() {
   );
 }
 
-/** A labelled on/off switch that saves as soon as it is flipped. */
+/**
+ * A labelled on/off switch that saves as soon as it is flipped. While a save
+ * is pending it is aria-disabled (and ignores presses) rather than disabled,
+ * so the switch keeps keyboard focus.
+ */
 function SwitchRow({
   label,
   help,
@@ -186,8 +197,10 @@ function SwitchRow({
         aria-checked={checked}
         aria-labelledby={`${id}-label`}
         aria-describedby={`${id}-help`}
-        disabled={disabled}
-        onClick={() => onChange(!checked)}
+        aria-disabled={disabled || undefined}
+        onClick={() => {
+          if (!disabled) onChange(!checked);
+        }}
       />
     </label>
   );
@@ -206,16 +219,21 @@ export function PointsForm({
 }) {
   const [prefs, setPrefs] = useState({ showPoints, dailyGoal, celebrations, sounds });
   const [saved, setSaved] = useState<string | null>(null);
-  const [pending, start] = useTransition();
+  // The save itself, not the transition (which also waits for the page refresh after it): controls take input
+  // again as soon as the "saved" message shows.
+  const [pending, setPending] = useState(false);
+  const [, start] = useTransition();
   const save = (patch: Partial<typeof prefs>, message: string) => {
     const before = prefs;
     setPrefs((p) => ({ ...p, ...patch }));
     setSaved(null);
+    setPending(true);
     start(async () => {
       const ok = await updatePreferences(patch).then(
         (r) => r.ok,
         () => false,
       );
+      setPending(false);
       // Never show a setting that wasn't saved: put the control back.
       if (!ok) setPrefs(before);
       setSaved(ok ? message : 'That didn’t save. Please try again.');
@@ -259,8 +277,8 @@ export function PointsForm({
               key={g.xp}
               type="button"
               aria-pressed={prefs.dailyGoal === g.xp}
-              disabled={pending}
-              onClick={() => save({ dailyGoal: g.xp }, g.xp ? `Daily goal set to ${g.xp} XP.` : 'Daily goal turned off.')}
+              aria-disabled={pending || undefined}
+              onClick={() => pending || save({ dailyGoal: g.xp }, g.xp ? `Daily goal set to ${g.xp} XP.` : 'Daily goal turned off.')}
             >
               <span className="seg-name">{g.name}</span>
               <span className="seg-sub">{g.xp ? `${g.xp} XP` : 'No goal'}</span>

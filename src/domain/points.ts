@@ -69,6 +69,8 @@ export const XP = {
   lesson: 20,
   /** Bonus when every question in the lesson was right on the first attempt. */
   perfect: 10,
+  /** Combo milestones (consecutive scoring correct answers): 3 in a row, 5 in a row, then 10 and every 5 after. */
+  combo: { at3: 5, at5: 10, at10AndEvery5: 15 },
   /** Reaching the daily goal, once per local day. */
   dailyGoal: 10,
   /** Every core lesson in a syllabus topic finished, once per topic. */
@@ -119,6 +121,12 @@ export interface AnswerXpInput {
   due: boolean;
   /** An earlier attempt at this question was recorded on the same local day (so its answer has been shown today). */
   answeredEarlierToday?: boolean;
+  /**
+   * An earlier attempt at this question scored below correct: there is a miss
+   * to fix. Without one, a later correct answer is a repeat (for example a
+   * question answered right before XP existed), not "you fixed it".
+   */
+  missedBefore: boolean;
 }
 
 export interface AnswerXpDecision {
@@ -142,8 +150,9 @@ export interface AnswerXpDecision {
  *    date): correct 10, partial 5. "Due" comes from the review schedule, so a
  *    due question answered inside a lesson counts as its review too, exactly
  *    as the scheduler treats it.
- * 3. A later attempt, correct, on a question that never earned XP (kind
- *    `answer`): 5, but only on a later local day than every earlier attempt.
+ * 3. A later attempt, correct, on a question that never earned XP and was
+ *    missed before (kind `answer`): 5, but only on a later local day than
+ *    every earlier attempt.
  *    A retry on the day of the miss comes straight after the feedback showed
  *    the answer, so it earns nothing and leaves the combo alone.
  * Anything else is a repeat and earns nothing.
@@ -170,23 +179,48 @@ export function answerXp(input: AnswerXpInput): AnswerXpDecision {
     if (outcome === 'partial') return { eligible: true, award: { kind: 'review', amount: XP.review.partial, label: 'Review, partly right' } };
     return { eligible: true, award: null };
   }
-  if (!input.alreadyAwarded && !input.answeredEarlierToday) {
+  if (!input.alreadyAwarded && input.missedBefore && !input.answeredEarlierToday) {
     return { eligible: true, award: outcome === 'correct' ? { kind: 'answer', amount: XP.laterFix, label: 'You fixed it' } : null };
   }
   return { eligible: false, award: null };
 }
 
+export interface DueDatePayInput {
+  firstAttempt: boolean;
+  /** This question has already earned XP before this answer. */
+  alreadyAwarded: boolean;
+  outcome: RecordedOutcome;
+  /** The question's due date before this answer and whether it pays, or null if it had none. */
+  previous: { dueAt: Date; paysXp: boolean } | null;
+  /** The due date the scheduler sets after this answer. */
+  nextDueAt: Date;
+  now: Date;
+}
+
 /**
- * Whether the due date an answer sets can pay review XP. Every due date
- * does, except one set by an early answer (before the item was due) to a
- * question that has already earned XP: otherwise a deliberate wrong answer
- * to a question the student knows would move it to tomorrow and buy a paid
- * review every day. Learning is unchanged (the miss still brings the
- * question back sooner); only the XP is withheld, until the next on-time
- * answer sets a paying due date again.
+ * Whether the due date an answer leaves can pay review XP
+ * (`review_items.pays_xp`). The aim: a deliberate wrong answer to a question
+ * the student knows must never buy a paid review, while learning is
+ * unchanged (a miss still brings the question back sooner).
+ * - An unchanged due date keeps its flag.
+ * - A question's first due date, and any due date of a question that never
+ *   earned XP, pays (there is nothing to farm).
+ * - Answered while due: a paying due date stays paying, right or wrong. An
+ *   unpaid one (set by a deliberate early miss) pays again only after a fully
+ *   correct answer, so a second miss at it can't restore a paid review.
+ * - Answered early: a due date moved sooner pays nothing (that is the
+ *   deliberate miss). One moved later (an early partial answer restarts the
+ *   interval) is the same review postponed, so it keeps its flag.
  */
-export function dueDatePaysXp(input: { firstAttempt: boolean; answeredWhileDue: boolean; alreadyAwarded: boolean }): boolean {
-  return input.firstAttempt || input.answeredWhileDue || !input.alreadyAwarded;
+export function dueDatePaysXp(input: DueDatePayInput): boolean {
+  const { previous, now } = input;
+  if (!previous) return true;
+  const was = previous.dueAt.getTime();
+  const next = input.nextDueAt.getTime();
+  if (next === was) return previous.paysXp;
+  if (input.firstAttempt || !input.alreadyAwarded) return true;
+  if (was <= now.getTime()) return previous.paysXp || input.outcome === 'correct';
+  return next > was ? previous.paysXp : false;
 }
 
 /** `xp_events.source_id` for a review award: one per question per due date. */
@@ -225,11 +259,11 @@ export function liveCombo(last: { combo: number; at: Date } | null | undefined, 
   return now.getTime() - last.at.getTime() <= COMBO_WINDOW_MS ? last.combo : 0;
 }
 
-/** Combo milestones: 3 in a row +5, 5 in a row +10, 10 and every 5 after +15. */
+/** Combo milestones (amounts in XP.combo): 3 in a row, 5 in a row, 10 and every 5 after. */
 export function comboBonus(combo: number): number {
-  if (combo === 3) return 5;
-  if (combo === 5) return 10;
-  if (combo >= 10 && combo % 5 === 0) return 15;
+  if (combo === 3) return XP.combo.at3;
+  if (combo === 5) return XP.combo.at5;
+  if (combo >= 10 && combo % 5 === 0) return XP.combo.at10AndEvery5;
   return 0;
 }
 
@@ -333,10 +367,12 @@ export function reviewSessionAward(differentQuestionsReviewedToday: number): XpA
  * answered fully correctly in a due review (`dueReview`: the answer earned a
  * `review` award). "Due" comes from the review schedule, as for review XP, so
  * the browser can't claim it. Kind `comeback`, source id the question id, so
- * once per question.
+ * once per question. Not paid when "you fixed it" already paid for the
+ * question (`fixPaid`): one bonus per fixed miss, so missing an easy question
+ * on purpose can't earn more than getting it right.
  */
-export function comebackAward(input: { dueReview: boolean; outcome: RecordedOutcome; wrongBefore: boolean }): XpAward | null {
-  if (!input.dueReview || input.outcome !== 'correct' || !input.wrongBefore) return null;
+export function comebackAward(input: { dueReview: boolean; outcome: RecordedOutcome; wrongBefore: boolean; fixPaid?: boolean }): XpAward | null {
+  if (!input.dueReview || input.outcome !== 'correct' || !input.wrongBefore || input.fixPaid) return null;
   return { kind: 'comeback', amount: XP.comeback, label: XP_LABELS.comeback };
 }
 

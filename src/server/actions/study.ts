@@ -116,9 +116,8 @@ export async function submitAnswer(input: z.input<typeof SubmitSchema>): Promise
         createdAt: now,
       });
       const schedule = nextReview(prev ? { box: prev.box, dueAt: prev.dueAt, lapses: prev.lapses, lastReviewedAt: prev.lastReviewedAt } : null, result.score, now);
-      // A due date set by an early repeat pays no review XP (see dueDatePaysXp); an unchanged one keeps its flag.
-      const moved = !prev || schedule.dueAt.getTime() !== prev.dueAt.getTime();
-      const next = { ...schedule, paysXp: moved ? award.nextDuePaysXp : prev.paysXp };
+      // A due date set by a deliberate early miss pays no review XP (see dueDatePaysXp in src/domain/points.ts).
+      const next = { ...schedule, paysXp: award.nextDuePaysXp(schedule.dueAt) };
       await tx
         .insert(t.reviewItems)
         .values({ userId: user.id, questionId, ...next })

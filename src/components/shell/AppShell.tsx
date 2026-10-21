@@ -11,7 +11,6 @@ import {
   BookIcon,
   BookmarkIcon,
   ChartIcon,
-  ChatIcon,
   ClockIcon,
   FlagIcon,
   GridIcon,
@@ -19,7 +18,6 @@ import {
   InfoIcon,
   LogoutIcon,
   MedalIcon,
-  PencilIcon,
   RepeatIcon,
   SearchIcon,
   SettingsIcon,
@@ -89,15 +87,6 @@ export function AppShell({
                 </NavLink>
               </>
             )}
-          </nav>
-          <nav className="nav-group" aria-label="Coming next">
-            <div className="nav-label">Coming next</div>
-            <NavLink href="/practice" className="nav-item">
-              <PencilIcon /> Exam practice <span className="badge soon">Soon</span>
-            </NavLink>
-            <NavLink href="/tutor" className="nav-item">
-              <ChatIcon /> AI tutor <span className="badge soon">Soon</span>
-            </NavLink>
           </nav>
           <div className="nav-spacer" />
           <nav className="nav-group" aria-label="Account">

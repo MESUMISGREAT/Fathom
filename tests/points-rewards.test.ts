@@ -258,6 +258,17 @@ describe('review sessions', () => {
     expect(await xpRows(reviewer.id, 'review-session')).toHaveLength(0);
   });
 
+  it('count due reviews answered from a lesson page: due is the server’s schedule, not the page', async () => {
+    const user = await newStudent();
+    for (const id of ['q-mcq', 'q-expr', 'q-text', 'q-cloze', 'q-spot']) {
+      await answer(id);
+      await makeDue(user.id, sq(id), new Date(Date.now() - 60_000));
+      expect(kinds(await answer(id, 'lesson'))).toContain('review:10');
+    }
+    const done = (await study.finishReviewSession()).points!;
+    expect(done.events).toEqual([{ kind: 'review-session', amount: 15, label: 'Review session' }]);
+  });
+
   it('pay once when the session end arrives twice at the same time', async () => {
     const user = await newStudent();
     await dueReviews(user.id, ['q-mcq', 'q-expr', 'q-text', 'q-cloze', 'q-spot']);

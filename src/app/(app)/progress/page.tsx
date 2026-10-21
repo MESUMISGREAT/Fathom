@@ -7,7 +7,7 @@ import { BadgeArt } from '@/components/art/BadgeArt';
 import { LevelBlock } from '@/components/points/PointsViews';
 import { getSyllabusTree, topicHref } from '@/server/queries/catalog';
 import { EmptyState, MasteryBar, PageHead, StatusPill, SubjectTile } from '@/components/ui';
-import { InfoIcon } from '@/components/icons';
+import { CheckIcon, InfoIcon } from '@/components/icons';
 import type { MasteryState } from '@/domain/mastery';
 
 export const metadata: Metadata = { title: 'Progress' };
@@ -188,7 +188,9 @@ function Profile({ h }: { h: PointsHistory }) {
             {h.days.map((d) => (
               <li key={d.day} data-active={d.active || undefined} data-goal={d.goalMet || undefined}>
                 <span className="bar-wrap" aria-hidden="true">
-                  <span className="bar" style={{ height: `${Math.max(4, (100 * d.xp) / max)}%` }} />
+                  <span className="bar" style={{ height: `${Math.max(4, (100 * d.xp) / max)}%` }}>
+                    {d.goalMet && <CheckIcon className="bar-goal" />}
+                  </span>
                 </span>
                 <span className="day" aria-hidden="true">
                   {weekday(d.day)}
@@ -199,7 +201,7 @@ function Profile({ h }: { h: PointsHistory }) {
               </li>
             ))}
           </ol>
-          <p className="tiny muted">Bars are XP earned each day; green ones reached the daily goal.</p>
+          <p className="tiny muted">Bars are XP earned each day; a tick means the daily goal was reached.</p>
         </div>
       </div>
     </section>

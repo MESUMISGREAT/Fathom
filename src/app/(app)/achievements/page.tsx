@@ -4,7 +4,7 @@ import { requireUser } from '@/server/auth/session';
 import { getPointsHistory } from '@/server/queries/points';
 import { canonicalTimeZone } from '@/domain/points';
 import { EmptyState, PageHead } from '@/components/ui';
-import { BadgeTile, LevelBlock, XpRules } from '@/components/points/PointsViews';
+import { BadgeMedal, BadgeTile, LevelBlock, XpRules } from '@/components/points/PointsViews';
 
 export const metadata: Metadata = { title: 'Achievements' };
 
@@ -47,9 +47,9 @@ export default async function AchievementsPage() {
               <h2 id="earned-title">Earned</h2>
               <span className="small muted tabular">{earned.length}</span>
             </div>
-            <ul className="badge-grid">
+            <ul className="badge-shelf">
               {earned.map((b) => (
-                <BadgeTile key={b.id} badge={b} timeZone={tz} />
+                <BadgeMedal key={b.id} badge={b} timeZone={tz} />
               ))}
             </ul>
           </section>

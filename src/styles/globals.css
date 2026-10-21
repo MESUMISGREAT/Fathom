@@ -943,7 +943,7 @@ a.list-row:active {
   height: var(--size);
   flex: none;
 }
-.ring svg {
+.ring > svg {
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
@@ -1123,13 +1123,13 @@ a.list-row:active {
   cursor: pointer;
   transition: background-color var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
 }
-.segmented button:hover:not(:disabled):not([aria-pressed='true']):not([aria-selected='true']),
+.segmented button:hover:not(:disabled):not([aria-disabled='true']):not([aria-pressed='true']):not([aria-selected='true']),
 .segmented a:hover:not([aria-current='page']) {
   text-decoration: none;
   color: var(--text);
   background: color-mix(in srgb, var(--surface) 55%, transparent);
 }
-.segmented button:active:not(:disabled),
+.segmented button:active:not(:disabled):not([aria-disabled='true']),
 .segmented a:active {
   transform: scale(0.96);
 }
@@ -1137,20 +1137,26 @@ a.list-row:active {
   cursor: not-allowed;
   opacity: 0.6;
 }
+/* Saving: still focusable (aria-disabled), visibly busy. */
+.segmented button[aria-disabled='true'] {
+  cursor: progress;
+  opacity: 0.7;
+}
 .segmented [aria-pressed='true'],
 .segmented [aria-current='page'],
 .segmented [aria-selected='true'] {
-  /* Selected is cobalt (well over 3:1 against the track), and stays so on hover. */
-  background: var(--cobalt);
-  color: var(--accent-ink);
-  box-shadow: 0 2px 0 var(--cobalt-ledge);
+  /* Selected is a raised surface chip with a cobalt edge (3:1+ against the track), not a solid
+     cobalt pill: solid cobalt with a ledge is kept for primary buttons. */
+  background: var(--surface);
+  color: var(--cobalt-ink);
+  box-shadow: inset 0 0 0 1.5px var(--cobalt), 0 1px 2px color-mix(in srgb, var(--text) 12%, transparent);
 }
-.segmented [aria-pressed='true']:hover:not(:disabled),
+.segmented [aria-pressed='true']:hover:not(:disabled):not([aria-disabled='true']),
 .segmented [aria-current='page']:hover,
 .segmented [aria-selected='true']:hover {
   text-decoration: none;
-  background: var(--cobalt-hover);
-  color: var(--accent-ink);
+  background: var(--cobalt-soft);
+  color: var(--cobalt-ink);
 }
 /* Choices with a second line (the daily goal): name over amount. */
 .segmented-cards button {
@@ -1180,9 +1186,6 @@ a.list-row:active {
   align-items: center;
   padding: 14px 0;
   cursor: pointer;
-}
-.switch-row[data-disabled] {
-  cursor: default;
 }
 .switch-row + .switch-row {
   border-top: 1.5px solid var(--border);
@@ -1219,11 +1222,11 @@ a.list-row:active {
   box-shadow: 0 1px 0 var(--ledge), 0 0 0 1.5px var(--text-2);
   transition: transform var(--dur) var(--ease-spring);
 }
-.switch:not([aria-checked='true']):hover:not(:disabled),
-.switch-row:hover .switch:not(:disabled):not([aria-checked='true']) {
+.switch:not([aria-checked='true']):hover:not(:disabled):not([aria-disabled='true']),
+.switch-row:hover .switch:not(:disabled):not([aria-disabled='true']):not([aria-checked='true']) {
   border-color: var(--text-2);
 }
-.switch:active:not(:disabled)::after {
+.switch:active:not(:disabled):not([aria-disabled='true'])::after {
   width: 29px;
 }
 .switch[aria-checked='true'] {
@@ -1234,12 +1237,20 @@ a.list-row:active {
   transform: translateX(22px);
   box-shadow: none;
 }
-.switch[aria-checked='true']:active:not(:disabled)::after {
+.switch[aria-checked='true']:active:not(:disabled):not([aria-disabled='true'])::after {
   transform: translateX(18px);
 }
 .switch:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+/* Saving: still focusable (aria-disabled), visibly busy. */
+.switch[aria-disabled='true'] {
+  opacity: 0.7;
+  cursor: progress;
+}
+.switch-row[data-disabled] {
+  cursor: progress;
 }
 .switch-label {
   font-weight: 700;
@@ -1497,9 +1508,10 @@ a.list-row:active {
 }
 
 /*
- * Toasts: one polite live region, small and dismissible, with a fixed home in
- * the chrome so they never cover the lesson: at the foot of the sidebar on
- * wide screens, and over the top bar on phones (one at a time).
+ * Toasts: one polite live region, small and dismissible, one at a time, with
+ * a fixed home in the chrome so they never cover the lesson: in the sidebar
+ * just above its account links on wide screens (PointsProvider measures where),
+ * and over the tab bar's footprint on phones.
  */
 .toaster {
   position: fixed;
@@ -1529,33 +1541,46 @@ a.list-row:active {
     width: 36px;
     height: 36px;
   }
+  /* Compact: a long badge description is clamped to two lines (the full text is still read out). */
+  .toaster .toast-body {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.8125rem;
+  }
 }
+/*
+ * Phones: one toast at a time, docked over the tab bar's own footprint (the
+ * tab bar is 56px tabs + 2 × 6px padding + its 1.5px top border). So it sits
+ * above the tab bar without hiding any content, the question and the XP chip
+ * at the top stay in view, and Dismiss is within thumb reach.
+ */
 @media (max-width: 959px) {
   .toaster {
-    top: 0;
     left: 0;
     right: 0;
-    padding-top: env(safe-area-inset-top);
+    bottom: 0;
   }
   .toaster .toast {
-    grid-template-columns: 40px minmax(0, 1fr) 44px;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
     gap: 10px;
-    height: 60px;
-    padding: 0 4px 0 12px;
-    border-radius: 0 0 18px 18px;
-    animation-name: toast-down;
+    height: calc(69.5px + env(safe-area-inset-bottom));
+    padding: 0 4px env(safe-area-inset-bottom) 12px;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 0 0 1.5px var(--border-strong), 0 -10px 28px -14px rgba(0, 0, 0, 0.35);
+    animation-name: toast-up;
   }
   .toaster .toast-art .badge-art,
   .toaster .toast-glyph {
-    width: 40px;
-    height: 40px;
-  }
-  .toaster .toast-kicker {
-    display: none;
+    width: 44px;
+    height: 44px;
   }
   .toaster .toast-title {
     font-size: 1rem;
   }
+  .toaster .toast-kicker,
   .toaster .toast-title,
   .toaster .toast-body {
     white-space: nowrap;
@@ -1563,10 +1588,10 @@ a.list-row:active {
     text-overflow: ellipsis;
   }
 }
-@keyframes toast-down {
+@keyframes toast-up {
   from {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(100%);
   }
 }
 .toast {
@@ -1579,7 +1604,7 @@ a.list-row:active {
   border-radius: 18px;
   background: var(--surface);
   color: var(--text);
-  box-shadow: 0 0 0 1.5px var(--border-strong), 0 3px 0 var(--ledge), var(--shadow-lg);
+  box-shadow: 0 0 0 1.5px var(--border-strong), var(--shadow-lg);
   animation: toast-in var(--dur-slow) var(--ease-spring) both;
 }
 @keyframes toast-in {
@@ -1858,6 +1883,107 @@ a.list-row:active {
   --meter-fill: var(--text-3);
 }
 
+/* Settings: titled sections on the page background, separated by rules (heading beside the controls on wide screens). */
+.settings-section {
+  display: grid;
+  gap: 14px;
+  padding: 24px 0;
+  border-top: 1.5px solid var(--border);
+  scroll-margin-top: 80px;
+}
+.settings-section:first-child {
+  border-top: 0;
+  padding-top: 8px;
+}
+.settings-intro h2 {
+  font-size: 1.1875rem;
+}
+@media (min-width: 720px) {
+  .settings-section {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 28px;
+  }
+}
+.danger-zone {
+  margin-top: 8px;
+  padding: 16px;
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--bad) 45%, var(--border));
+}
+
+/* Earned badges: a shelf of medals (art and name); tapping one opens what it was for across the row. */
+.badge-shelf {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 479px) {
+  .badge-shelf {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.badge-medal:has(details[open]) {
+  grid-column: 1 / -1;
+}
+.badge-medal summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 10px 4px 8px;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color var(--dur-fast);
+}
+.badge-medal summary::-webkit-details-marker {
+  display: none;
+}
+.badge-medal summary:hover {
+  background: var(--surface-2);
+}
+.badge-medal details[open] summary {
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 12px;
+  text-align: left;
+  background: var(--surface-2);
+  border-radius: 16px 16px 0 0;
+}
+.badge-medal-name {
+  font-family: var(--font-display);
+  font-weight: 760;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+}
+.badge-medal-date {
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: var(--text-3);
+}
+.badge-medal details[open] .badge-medal-date {
+  display: none;
+}
+.badge-medal-desc {
+  margin: 0;
+  padding: 0 14px 12px 90px;
+  border-radius: 0 0 16px 16px;
+  background: var(--surface-2);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+@media (max-width: 479px) {
+  .badge-medal-desc {
+    padding-left: 14px;
+  }
+}
+
 /* -------------------------------------------------------- illustration -- */
 .art {
   --art-1: var(--hue-bright, var(--coral));
@@ -2004,7 +2130,7 @@ a.list-row:active {
   padding: 20px;
   border-radius: 24px;
   background: var(--surface);
-  box-shadow: 0 0 0 1.5px var(--border-strong), 0 4px 0 var(--ledge);
+  box-shadow: 0 0 0 1.5px var(--border-strong);
 }
 .sample-head {
   display: flex;
@@ -2084,7 +2210,7 @@ a.list-row:active {
   padding: 6px 14px 6px 6px;
   border-radius: 999px;
   background: var(--surface);
-  box-shadow: 0 0 0 1.5px var(--border-strong), 0 3px 0 var(--ledge), var(--shadow-md);
+  box-shadow: 0 0 0 1.5px var(--border-strong), var(--shadow-md);
   transform: rotate(3deg);
 }
 .sample-badge-text {
@@ -2292,7 +2418,6 @@ a.subject-card:active {
   }
 }
 .auth-form {
-  box-shadow: 0 3px 0 var(--ledge);
   border-color: var(--border-strong);
 }
 
@@ -2336,7 +2461,8 @@ a.subject-card:active {
   padding: 24px;
   border-radius: var(--radius-xl);
   background: var(--surface);
-  box-shadow: 0 0 0 1.5px var(--border-strong), 0 4px 0 var(--ledge);
+  /* Not pressable itself (its button is): a border, no ledge. */
+  box-shadow: 0 0 0 1.5px var(--border-strong);
   overflow: hidden;
 }
 @media (min-width: 640px) {
@@ -2385,6 +2511,16 @@ a.subject-card:active {
 }
 .continue-cta {
   margin-top: 6px;
+}
+.continue-also {
+  margin-top: 4px;
+}
+.continue-also a {
+  font-weight: 700;
+}
+/* Points hidden: just the week, compact at the top of the column rather than a tall, mostly empty panel. */
+.me-panel-quiet {
+  align-self: start;
 }
 .me-panel {
   display: flex;
@@ -2637,11 +2773,14 @@ a.topic-row:hover .topic-chevron {
   border-top: 1.5px solid var(--border);
 }
 .objective-code {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--text-3);
-  padding-top: 3px;
+  /* A syllabus label, not code: the text face with even-width figures. */
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.875rem;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  color: var(--text-2);
+  padding-top: 2px;
 }
 @media (max-width: 560px) {
   .objective {
@@ -3303,7 +3442,7 @@ figure.diagram figcaption {
   padding: 18px;
   border-radius: 22px;
   background: var(--surface);
-  box-shadow: 0 0 0 1.5px var(--border-strong), 0 3px 0 var(--ledge);
+  box-shadow: 0 0 0 1.5px var(--border-strong);
   scroll-margin-top: 132px;
   transition: box-shadow var(--dur) var(--ease-out);
 }
@@ -3313,14 +3452,15 @@ figure.diagram figcaption {
   }
 }
 .question[data-outcome='correct'] {
-  box-shadow: 0 0 0 2px var(--mint-ink), 0 3px 0 color-mix(in srgb, var(--mint-ink) 40%, transparent);
+  box-shadow: 0 0 0 2px var(--mint-ink);
 }
+/* A miss stays calm: the card keeps its neutral edge; only the chosen option's marker and "Not quite" are berry. */
 .question[data-outcome='incorrect'] {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--bad) 70%, transparent), 0 3px 0 var(--ledge);
+  box-shadow: 0 0 0 1.5px var(--border-strong);
 }
 .question[data-outcome='partial'],
 .question[data-outcome='self-check'] {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--yellow-ink) 70%, transparent), 0 3px 0 var(--ledge);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--yellow-ink) 70%, transparent);
 }
 .q-meta {
   display: flex;
@@ -3430,8 +3570,8 @@ fieldset.q-fieldset {
   color: var(--surface);
 }
 .option[data-mark='wrong'] {
-  border-color: var(--bad);
-  background: var(--bad-soft);
+  border-color: var(--text-3);
+  background: var(--surface-2);
 }
 .option[data-mark='wrong'] .option-key {
   background: var(--bad);
@@ -3461,17 +3601,33 @@ fieldset:disabled .option[data-mark='right']:hover {
   background: var(--mint-soft);
 }
 fieldset:disabled .option[data-mark='wrong']:hover {
-  border-color: var(--bad);
-  background: var(--bad-soft);
+  border-color: var(--text-3);
+  background: var(--surface-2);
 }
+/*
+ * One row per field, down to 320px: label | input | unit, with the s.f. hint
+ * and the Right / Not this one mark on a second row under the input. Long
+ * labels wrap rather than push the input off the row.
+ */
 .numeric-field {
-  display: flex;
+  display: grid;
+  grid-template-columns: fit-content(40%) minmax(5em, 260px) auto;
+  justify-content: start;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+.numeric-field:not(:has(.numeric-label)) {
+  grid-template-columns: minmax(5em, 260px) auto;
 }
 .numeric-field .input {
-  max-width: 260px;
+  min-width: 0;
+  width: 100%;
+}
+.numeric-field > .tiny {
+  grid-column: -3 / -1;
+}
+.numeric-field:not(:has(.numeric-label)) > .tiny {
+  grid-column: 1 / -1;
 }
 .numeric-label {
   min-width: 2.5em;
@@ -3529,6 +3685,15 @@ fieldset:disabled .option[data-mark='wrong']:hover {
   background: var(--surface-2);
   animation: fade-in var(--dur) var(--ease-out) both;
 }
+/* Title and "+N XP": scrolled into view together after an answer, clear of the sticky lesson bar and the phone tab bar. */
+.feedback-head {
+  scroll-margin: 140px 0 calc(92px + env(safe-area-inset-bottom));
+}
+@media (min-width: 960px) {
+  .feedback-head {
+    scroll-margin-bottom: 24px;
+  }
+}
 .feedback-title {
   display: flex;
   flex-wrap: wrap;
@@ -3553,7 +3718,7 @@ fieldset:disabled .option[data-mark='wrong']:hover {
 }
 .feedback[data-outcome='correct'] { background: var(--mint-soft); }
 .feedback[data-outcome='correct'] .feedback-title { color: var(--mint-ink); }
-.feedback[data-outcome='incorrect'] { background: var(--bad-soft); }
+.feedback[data-outcome='incorrect'] { background: var(--lavender-soft); }
 .feedback[data-outcome='incorrect'] .feedback-title { color: var(--bad); }
 .feedback[data-outcome='partial'],
 .feedback[data-outcome='self-check'] { background: var(--yellow-soft); }
@@ -3604,7 +3769,7 @@ fieldset:disabled .option[data-mark='wrong']:hover {
   padding: 28px 22px;
   border-radius: var(--radius-xl);
   background: var(--surface);
-  box-shadow: 0 0 0 2px var(--mint-ink), 0 4px 0 color-mix(in srgb, var(--mint-ink) 35%, transparent);
+  box-shadow: 0 0 0 2px var(--mint-ink);
   text-align: center;
   animation: celebrate-in 400ms var(--ease-spring) both;
 }
@@ -3755,10 +3920,17 @@ fieldset:disabled .option[data-mark='wrong']:hover {
 .celebrate h2:focus {
   outline: none;
 }
+/* Focus lands here after finishing (tabIndex -1): the ring hugs the words, not the whole card. */
+.celebrate h2 {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding-inline: 8px;
+}
 .celebrate h2:focus-visible {
   outline: 3px solid var(--focus);
-  outline-offset: 4px;
-  border-radius: 6px;
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 /* Previous / next lesson, always at the end of the lesson. */
@@ -3940,9 +4112,10 @@ fieldset:disabled .option[data-mark='wrong']:hover {
   grid-template-columns: repeat(14, minmax(0, 1fr));
   align-items: end;
   gap: 4px;
-  height: 96px;
+  height: 116px;
   margin: 0;
-  padding: 0;
+  /* Room above the tallest bar for its goal tick. */
+  padding: 20px 0 0;
   list-style: none;
 }
 .xp-days li {
@@ -3973,6 +4146,20 @@ fieldset:disabled .option[data-mark='wrong']:hover {
 }
 .xp-days li[data-goal] .bar {
   background: var(--mint-ink);
+}
+.xp-days .bar {
+  position: relative;
+}
+/* Goal days get a tick as well as the colour, so the meaning never rests on colour alone. */
+.xp-days .bar-goal {
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translateX(-50%);
+  color: var(--mint-ink);
+  stroke-width: 3;
 }
 .xp-days .day {
   font-size: 0.6875rem;
@@ -4295,17 +4482,63 @@ mark {
   padding: 32px 16px;
 }
 
-/* Narrow phones: keep the top bar on one line, even with a combo running. */
+/*
+ * Narrow phones: keep the top bar and the lesson bar on one line, even with a
+ * combo running. The level leaves the chip visually but stays in its
+ * accessible name; the combo (decorative here) also shows in each answer's
+ * feedback; the lesson's name is the page heading just below.
+ */
 @media (max-width: 440px) {
-  .topbar .xp-chip-level {
-    display: none;
+  .topbar .xp-chip-level,
+  .lesson-top .xp-chip-level,
+  .lesson-top-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .topbar {
     gap: 4px;
   }
+  .lesson-top-inner {
+    gap: 4px;
+  }
+  .lesson-top .xp-chip-combo {
+    display: none;
+  }
+  /* With the name hidden, "Lesson" sits small above "5/9" so the count fits beside the Steps / All toggle. */
+  .lesson-top-count {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: -6px;
+    line-height: 1.05;
+    font-size: 0.875rem;
+    color: var(--text-2);
+  }
+  .lesson-top-count-word {
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .lesson-top .xp-chip {
+    margin: 0;
+    padding-right: 12px;
+  }
 }
 @media (max-width: 374px) {
-  .topbar .wordmark {
+  .topbar .wordmark,
+  .lesson-top-chevron {
+    display: none;
+  }
+}
+/* The smallest phones (320px): the lesson bar keeps its controls; the XP total waits for the next page, and each answer still shows its "+N XP". */
+@media (max-width: 359px) {
+  .lesson-top-xp {
     display: none;
   }
 }
@@ -4336,7 +4569,9 @@ mark {
   background: var(--mint-ink);
 }
 .option-tag[data-mark='wrong'] {
-  background: var(--bad);
+  background: var(--surface-3);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1.5px var(--text-3);
 }
 
 /* Touch targets: at least 44px wherever fingers are likely (spec §5). */
@@ -4349,8 +4584,38 @@ mark {
   .cloze-input {
     min-height: 44px;
   }
-  .topbar .xp-chip {
+  .segmented button,
+  .segmented a {
+    min-width: 44px;
+  }
+  .topbar .xp-chip,
+  .lesson-top .xp-chip {
     height: 44px;
+    margin-block: 0;
+  }
+  /* The lesson title button is a full 44px target; the progress meter sits inside its lower edge, so the bar keeps its height. */
+  .lesson-top-title {
+    min-height: 44px;
+    min-width: 44px;
+    margin: 0 -6px;
+    padding: 0 6px 10px;
+  }
+  .lesson-menu > .meter {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    pointer-events: none;
+  }
+  /* Links inside a sentence: padding on an inline box grows the hit area to 44px without moving any text. */
+  .tap-inline {
+    padding-block: 13px;
+  }
+  /* A table cell's link fills a 44px row. */
+  .cell-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
   /* Small links in section headers and footers: a 44px tall hit area without changing the layout. */
   .section-head a,

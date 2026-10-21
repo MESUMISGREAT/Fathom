@@ -61,12 +61,14 @@ export default async function SubjectPage({
           <ListIcon />
           <span>
             Follows the official syllabus for examination in {subject.version.label} ({subject.version.sourceVersion}), checked against{' '}
-            <a href={subject.version.sourceUrl} rel="noopener noreferrer" target="_blank">
+            <a href={subject.version.sourceUrl} rel="noopener noreferrer" target="_blank" className="tap-inline">
               Cambridge&rsquo;s syllabus document
             </a>{' '}
             on {subject.version.checkedAt}.{' '}
             {subject.version.wording === 'paraphrased' && 'Objectives are paraphrased; the official document is the final word. '}
-            <Link href={`/subjects/${subject.slug}/coverage`}>See what&rsquo;s covered so far</Link>
+            <Link href={`/subjects/${subject.slug}/coverage`} className="tap-inline">
+              See what&rsquo;s covered so far
+            </Link>
           </span>
         </div>
       </header>

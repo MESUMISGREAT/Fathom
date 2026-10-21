@@ -315,3 +315,168 @@ describe('a topic finished before §4 shipped can never pay Topic finished', () 
     expect(await xpOf(user.id, 'topic')).toHaveLength(1);
   });
 });
+
+// --- Third review pass ------------------------------------------------------------
+
+describe('a second deliberate miss restores a paid review', () => {
+  it('pays review XP two days after two deliberate wrong answers to a question the student knows', async () => {
+    // dueDatePaysXp withholds review XP from the due date an early miss sets (pays_xp=false), but
+    // *any* answer given while that unpaid date is due sets a paying date again, a wrong one included.
+    // That second miss is free: it is not scoring-eligible (no XP to lose, the combo is left alone),
+    // and it moves the question back to box 1, due tomorrow, now with pays_xp=true. So two deliberate
+    // misses buy a paid review (and a Memory Keeper tick, and a review-session count) every two days
+    // for every question the student already knows, which is the farming §1 says can't happen.
+    const user = await newStudent();
+    const t0 = Date.now();
+    clockAt(t0);
+    expect(kinds(await answer('q-mcq'))).toEqual(['answer:10']);
+    clockAt(t0 + 3 * DAY + 60_000); // due (box 2): the honest review
+    expect(kinds(await answer('q-mcq', 'review'))).toContain('review:10');
+
+    clockAt(t0 + 3 * DAY + 120_000); // deliberate miss 1, early: the next due date pays nothing
+    expect((await miss('q-mcq')).gained).toBe(0);
+    clockAt(t0 + 4 * DAY + 180_000); // deliberate miss 2, at that unpaid due date
+    const second = await miss('q-mcq', 'review');
+    expect(second.gained).toBe(0);
+    const db = await getDb();
+    const [item] = await db
+      .select()
+      .from(t.reviewItems)
+      .where(and(eq(t.reviewItems.userId, user.id), eq(t.reviewItems.questionId, sq('q-mcq'))));
+    expect(item!.box).toBe(1);
+
+    clockAt(t0 + 5 * DAY + 240_000); // the day after: due again
+    const farmed = await answer('q-mcq', 'review');
+    expect(kinds(farmed)).not.toContain('review:10');
+  });
+});
+
+describe('an honest early partial answer takes away the next review’s XP', () => {
+  it('pays no review XP at the (later) due date set by a partly right answer in a lesson', async () => {
+    // nextReview keeps a partly right answer in its box but restarts the interval from now, so an
+    // early partial answer always moves the due date *later*: it can never buy a sooner review.
+    // submitAnswer still treats it as an early answer to a question that already earned XP and stores
+    // pays_xp=false, so re-doing a lesson and getting one part wrong postpones the review and also
+    // strips its 10 XP (and its review-session and Memory Keeper count). §1 withholds XP only from
+    // the due date a deliberate *miss* sets.
+    await newStudent();
+    const t0 = Date.now();
+    const numeric = (values: string[], context: 'lesson' | 'review') =>
+      study.submitAnswer({ questionId: sq('q-numeric'), response: { format: 'numeric', values }, context });
+    clockAt(t0);
+    expect(kinds((await numeric(['3', '-4'], 'lesson')).points!)).toEqual(['answer:15']); // box 2, due t0 + 3 days
+
+    clockAt(t0 + DAY); // re-doing the lesson the next day, one part wrong
+    const partial = await numeric(['3', '4'], 'lesson');
+    expect(partial).toMatchObject({ recorded: true, result: { outcome: 'partial' } });
+    expect(partial.points!.gained).toBe(0); // fine: not due yet
+
+    clockAt(t0 + 4 * DAY + 60_000); // due (moved from t0 + 3 days to t0 + 4 days by the partial answer)
+    const review = await numeric(['3', '-4'], 'review');
+    expect(review).toMatchObject({ recorded: true, result: { outcome: 'correct' } });
+    expect(kinds(review.points!)).toContain('review:10');
+  });
+});
+
+describe('Comeback Arc after a wrong answer to the overdue review, one click later', () => {
+  it('awards Comeback Arc to the next correct answer in the topic, even a repeat that earns nothing', async () => {
+    // The second pass stopped the wrong answer itself from unlocking Comeback Arc, but it still writes
+    // the topic_recoveries row (the topic was in Needs revision before it) and leaves the topic Secure
+    // on paper (answering the overdue review, even wrongly, clears the overdue flag). settleTopics then
+    // treats the *next* fully correct answer in the topic as the comeback, without asking whether it
+    // changed anything: re-answering an easy question that is not due (0 XP) sets secured_at and
+    // unlocks the badge, though the slipped question was never answered correctly.
+    await dropExtraObjective();
+    const user = await newStudent();
+    const db = await getDb();
+    const t0 = Date.now();
+    const five = ['q-mcq', 'q-expr', 'q-spot', 'q-text', 'q-cloze'];
+    clockAt(t0 - 20 * DAY);
+    for (const id of five) await answer(id);
+    clockAt(t0 - 17 * DAY + 60_000);
+    for (const id of five) await answer(id, 'review');
+    clockAt(t0 - 10 * DAY + 60_000);
+    for (const id of ['q-mcq', 'q-expr', 'q-text', 'q-cloze']) await answer(id, 'review'); // q-spot is left to go overdue
+
+    clockAt(t0);
+    expect((await getTopicStates(db, user.id, [TOPIC_QUADRATICS])).get(TOPIC_QUADRATICS)).toBe('needs-revision');
+    const wrongSpot = await study.submitAnswer({ questionId: sq('q-spot'), response: { format: 'spot-error', line: 1 }, context: 'review' });
+    expect(wrongSpot).toMatchObject({ recorded: true, result: { outcome: 'incorrect' } });
+    expect(wrongSpot.points!.newBadges.map((b) => b.id)).not.toContain('comeback-arc'); // the second-pass fix holds
+
+    clockAt(t0 + 60_000);
+    const repeat = await answer('q-mcq'); // not due, already paid: a repeat
+    expect(repeat.gained).toBe(0);
+    expect(repeat.newBadges.map((b) => b.id)).not.toContain('comeback-arc');
+  });
+});
+
+describe('students with Phase 1 history (answers stored before the points migrations)', () => {
+  it('pays "You fixed it" for re-answering a question they got right before XP existed, straight away', async () => {
+    // 0002–0004 add XP without backfilling anything from existing attempts, and answerXp's "later
+    // fix" branch only asks "has this question ever earned XP?", not "was there a miss to fix?".
+    // Every question a Phase 1 student already got right therefore pays 5 XP ("You fixed it") the
+    // first time it is re-answered, and with no wait: their old attempts have local_day = null, so
+    // "answered earlier today" never matches them. Clicking back through old lessons' checks mints
+    // XP (5 × every question answered before the upgrade), which §1 says re-answering never does.
+    const user = await newStudent();
+    const db = await getDb();
+    const t0 = Date.now();
+    // What a Phase 1 database holds after migrating: a correct answer given just before the upgrade,
+    // with no local_day, no combo and no XP event, and its review item in box 2, due in two days.
+    await db.insert(t.attempts).values({
+      userId: user.id,
+      questionId: sq('q-mcq'),
+      response: { format: 'mcq', choice: 0 },
+      outcome: 'correct',
+      score: 1,
+      selfAssessed: false,
+      context: 'lesson',
+      createdAt: new Date(t0 - 1 * 60_000),
+    });
+    await db.insert(t.reviewItems).values({ userId: user.id, questionId: sq('q-mcq'), box: 2, dueAt: new Date(t0 + 2 * DAY), lapses: 0, lastReviewedAt: new Date(t0 - 60_000) });
+
+    clockAt(t0);
+    const again = await answer('q-mcq'); // a minute later: re-answering a question already got right
+    expect(kinds(again)).not.toContain('answer:5');
+  });
+});
+
+// --- Final pass: the guards added for the third review --------------------------
+
+describe('a deliberate first miss can’t earn more than a right answer through two fix bonuses', () => {
+  it('pays "You fixed it" the next morning and then the due review, but no comeback on top', async () => {
+    const now = new Date();
+    const evening = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 20, 0, 0) - 2 * DAY;
+    clockAt(evening);
+    await newStudent(); // time zone UTC
+    expect((await miss('q-mcq')).gained).toBe(0); // box 1, due tomorrow at 20:00
+    clockAt(evening + 12 * 3_600_000); // the next local day, before it is due
+    expect(kinds(await answer('q-mcq'))).toEqual(['answer:5']);
+    clockAt(evening + DAY + 60_000); // due
+    const review = await answer('q-mcq', 'review');
+    expect(kinds(review)).toContain('review:10');
+    expect(kinds(review)).not.toContain('comeback:5');
+  });
+});
+
+describe('a Phase 1 miss from earlier today (stored with no local day)', () => {
+  it('pays no "You fixed it" for a retry straight after it', async () => {
+    const user = await newStudent();
+    const db = await getDb();
+    const t0 = Date.now();
+    await db.insert(t.attempts).values({
+      userId: user.id,
+      questionId: sq('q-mcq'),
+      response: { format: 'mcq', choice: 1 },
+      outcome: 'incorrect',
+      score: 0,
+      selfAssessed: false,
+      context: 'lesson',
+      createdAt: new Date(t0 - 60_000),
+    });
+    await db.insert(t.reviewItems).values({ userId: user.id, questionId: sq('q-mcq'), box: 1, dueAt: new Date(t0 + DAY - 60_000), lapses: 1, lastReviewedAt: new Date(t0 - 60_000) });
+    clockAt(t0);
+    expect(kinds(await answer('q-mcq'))).toEqual([]);
+  });
+});

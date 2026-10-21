@@ -41,7 +41,9 @@ export default async function SubjectsPage({ searchParams }: { searchParams: Pro
                   {s.code} · syllabus for {s.version.label}
                 </p>
                 <h2 id={`s-${s.code}`} className="h2">
-                  <Link href={`/subjects/${s.slug}`}>{s.name}</Link>
+                  <Link href={`/subjects/${s.slug}`} className="tap-pad">
+                    {s.name}
+                  </Link>
                 </h2>
                 <p className="small muted">{s.description}</p>
                 <p className="tiny muted" style={{ marginTop: 2 }}>

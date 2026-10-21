@@ -316,6 +316,7 @@ export function QuestionCard({
             signedIn={signedIn}
             showPoints={showPoints}
             sourceHref={sourceHref}
+            context={context}
           />
         )}
       </div>
@@ -334,7 +335,9 @@ function Feedback({
   signedIn,
   showPoints,
   sourceHref,
+  context,
 }: {
+  context: 'lesson' | 'review';
   view: QuestionView;
   result: SubmitResult;
   points: number[];
@@ -351,23 +354,33 @@ function Feedback({
   const t = TITLES[r.outcome] ?? TITLES.incorrect!;
   const selfPending = r.outcome === 'self-check';
   const titleRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLDivElement>(null);
 
   // The button that was pressed has gone: move focus to the result, so keyboard and screen reader users land on it.
+  // Then bring the whole head (title and "+N XP") into view, clear of the sticky lesson bar and the phone tab bar.
   useEffect(() => {
     const el = titleRef.current;
     if (!el) return;
+    // A slow result must not pull the student back: if focus has gone somewhere else (they finished the lesson,
+    // moved to the next step), leave focus and scroll where they are.
+    const active = document.activeElement;
+    const card = el.closest('.question');
+    if (active && active !== document.body && card && !card.contains(active)) return;
     el.focus({ preventScroll: true });
-    el.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    const frame = requestAnimationFrame(() => revealHead(headRef.current ?? el));
+    return () => cancelAnimationFrame(frame);
   }, [result]);
 
   return (
     <div className="feedback" data-outcome={r.outcome}>
-      <div className="feedback-title" ref={titleRef} tabIndex={-1}>
-        <t.Icon /> <span>{t.text}</span>
-        {r.outcome === 'correct' && <span className="feedback-cheer">{cheer(view.id)}</span>}
-        {r.selfAssessed && <span className="badge">self-marked</span>}
+      <div className="feedback-head" ref={headRef}>
+        <div className="feedback-title" ref={titleRef} tabIndex={-1}>
+          <t.Icon /> <span>{t.text}</span>
+          {r.outcome === 'correct' && <span className="feedback-cheer">{cheer(view.id)}</span>}
+          {r.selfAssessed && <span className="badge">self-marked</span>}
+        </div>
+        {showPoints && result.points && <XpGain points={result.points} />}
       </div>
-      {showPoints && result.points && <XpGain points={result.points} />}
       {r.note && <p className="small" style={{ marginBottom: 8 }}>{r.note}</p>}
 
       {reveal.expected && r.outcome !== 'correct' && (
@@ -458,7 +471,8 @@ function Feedback({
               <RefreshIcon /> Answer again
             </button>
           ) : (
-            <button type="button" className="btn btn-primary" onClick={onRetry}>
+            // In review, "Next question" is the one primary action; Try again stays clearly offered, as a secondary button.
+            <button type="button" className={context === 'review' ? 'btn' : 'btn btn-primary'} onClick={onRetry}>
               <RefreshIcon /> Try again
             </button>
           )}
@@ -484,6 +498,24 @@ function Feedback({
       )}
     </div>
   );
+}
+
+/**
+ * Scrolls the window just enough for `el` and its scroll margins (the room
+ * the lesson bar and tab bar take, see .feedback-head) to be in view, top
+ * first if it can't all fit. Measured and scrolled by hand: scrollIntoView
+ * with "nearest" left the "+N XP" row under the tab bar in mobile emulation.
+ */
+function revealHead(el: HTMLElement) {
+  const r = el.getBoundingClientRect();
+  const cs = getComputedStyle(el);
+  const above = parseFloat(cs.scrollMarginTop) || 0;
+  const below = parseFloat(cs.scrollMarginBottom) || 0;
+  const vh = window.innerHeight;
+  let delta = 0;
+  if (r.bottom + below > vh) delta = r.bottom + below - vh;
+  if (r.top - delta < above) delta = r.top - above;
+  if (Math.abs(delta) >= 1) window.scrollBy({ top: delta, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
 }
 
 /** "+15 XP" with what it was for, and the combo when one is running. Only what the server returned. */

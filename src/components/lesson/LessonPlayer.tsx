@@ -17,6 +17,9 @@ import { prefersReducedMotion, usePoints } from '@/components/points/PointsProvi
 import { XpChip } from '@/components/points/XpChips';
 import { LessonCheckContext } from './context';
 
+const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const countWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
+
 export interface PlayerStep {
   content: ReactNode;
   questionIds: string[];
@@ -27,8 +30,15 @@ export interface LessonLink {
   title: string;
 }
 
-/** What the completion card lists, in this order (answers come first, from this visit). */
-const BREAKDOWN: XpKind[] = ['lesson', 'perfect', 'topic', 'combo', 'daily-goal'];
+/**
+ * What the completion card lists, in this order, from every award this visit
+ * (each answer's and the finish's): answers and due reviews share one line,
+ * every bonus gets its own.
+ */
+const BREAKDOWN: Array<{ key: string; label: string; kinds: XpKind[] }> = [
+  { key: 'answers', label: 'Answers', kinds: ['answer', 'review'] },
+  ...(['lesson', 'perfect', 'topic', 'topic-secure', 'comeback', 'combo', 'daily-goal'] as const).map((k) => ({ key: k, label: XP_LABELS[k], kinds: [k] })),
+];
 
 export function LessonPlayer({
   lessonId,
@@ -43,6 +53,7 @@ export function LessonPlayer({
   title,
   next,
   prev,
+  completionNext,
   topicLessons,
   header,
   bookmark,
@@ -57,9 +68,14 @@ export function LessonPlayer({
   topicHref: string;
   topicLabel: string;
   title: string;
-  /** The next and previous lessons in syllabus order. */
+  /** The next and previous lessons in syllabus order (the footer navigation). */
   next?: LessonLink;
   prev?: LessonLink;
+  /**
+   * Where the completion card's main button goes: the next lesson with work
+   * left (unfinished, in this topic first), or none (back to the topic).
+   */
+  completionNext?: LessonLink;
   /** Every lesson in this topic, in order, for the lesson menu (`done`: finished by this student). */
   topicLessons: Array<LessonLink & { id: string; done: boolean }>;
   header: ReactNode;
@@ -73,7 +89,8 @@ export function LessonPlayer({
   const [completed, setCompleted] = useState(initiallyCompleted);
   const [justFinished, setJustFinished] = useState(false);
   const [justRevealed, setJustRevealed] = useState<number | null>(null);
-  const [answerXp, setAnswerXp] = useState(0);
+  /** XP earned on this visit, by kind (every answer's awards, then the finish's). */
+  const [earned, setEarned] = useState<ReadonlyMap<XpKind, number>>(new Map());
   const [lessonPoints, setLessonPoints] = useState<PointsResult | null | 'pending'>(null);
   /** Checks never answered: the lesson's XP waits for them (the server says how many). */
   const [unanswered, setUnanswered] = useState(0);
@@ -81,6 +98,7 @@ export function LessonPlayer({
   const [menuOpen, setMenuOpen] = useState(false);
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
   const endRef = useRef<HTMLElement>(null);
   const doneTitleRef = useRef<HTMLHeadingElement>(null);
@@ -95,11 +113,25 @@ export function LessonPlayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const report = useCallback((qid: string, outcome: Outcome, result: PointsResult | null) => {
-    setDone((m) => new Map(m).set(qid, outcome));
-    setFirst((m) => (m.has(qid) ? m : new Map(m).set(qid, outcome)));
-    if (result?.gained) setAnswerXp((n) => n + result.gained);
+  const addEarned = useCallback((result: PointsResult | null) => {
+    if (!result?.events.length) return;
+    setEarned((m) => {
+      const n = new Map(m);
+      for (const e of result.events) n.set(e.kind, (n.get(e.kind) ?? 0) + e.amount);
+      return n;
+    });
   }, []);
+
+  const report = useCallback(
+    (qid: string, outcome: Outcome, result: PointsResult | null) => {
+      setDone((m) => new Map(m).set(qid, outcome));
+      setFirst((m) => (m.has(qid) ? m : new Map(m).set(qid, outcome)));
+      addEarned(result);
+      // Answering the last skipped check pays the lesson's XP: the "answer it to earn this lesson's XP" note is done.
+      if (result?.events.some((e) => e.kind === 'lesson')) setUnanswered(0);
+    },
+    [addEarned],
+  );
   const ctx = useMemo(() => ({ report }), [report]);
 
   const visible = mode === 'full' ? total : revealed;
@@ -131,7 +163,12 @@ export function LessonPlayer({
   // The lesson menu closes on Escape or a click outside it.
   useEffect(() => {
     if (!menuOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      // Focus may be inside the menu, which is about to go: return it to the button that opened it.
+      menuButtonRef.current?.focus();
+      setMenuOpen(false);
+    };
     const onDown = (e: PointerEvent) => !menuRef.current?.contains(e.target as Node) && setMenuOpen(false);
     document.addEventListener('keydown', onKey);
     document.addEventListener('pointerdown', onDown);
@@ -157,6 +194,7 @@ export function LessonPlayer({
         if (!r.saved) setSaveFailed(true);
         setLessonPoints(r.points);
         setUnanswered(r.unanswered);
+        addEarned(r.points);
         points?.apply(r.points);
       })
       .catch(() => {
@@ -181,18 +219,20 @@ export function LessonPlayer({
 
   const answeredFirst = [...first.values()];
   const firstCorrect = answeredFirst.filter((o) => o === 'correct').length;
-  const progressPct = completed ? 100 : Math.round((100 * (visible - (stepDone(lastIndex) ? 0 : 0.5))) / total);
+  const missed = answeredFirst.length - firstCorrect;
+  // Steps mode: steps revealed (half a step while its check is open). Whole lesson: checks dealt with, the finish counting as one more.
+  const progressPct = completed
+    ? 100
+    : mode === 'full'
+      ? Math.round((100 * allQuestions.filter((q) => done.has(q)).length) / (allQuestions.length + 1))
+      : Math.round((100 * (visible - (stepDone(lastIndex) ? 0 : 0.5))) / total);
   const accuracy = allQuestions.length ? Math.round((100 * firstCorrect) / allQuestions.length) : 0;
-  const result = lessonPoints && lessonPoints !== 'pending' ? lessonPoints : null;
-  const lessonGained = result?.gained ?? 0;
-  const topicDone = !!result?.events.some((e) => e.kind === 'topic');
-  const breakdown = [
-    ...(answerXp > 0 ? [{ key: 'answers', label: 'Answers', amount: answerXp }] : []),
-    ...BREAKDOWN.flatMap((kind) => {
-      const amount = (result?.events ?? []).filter((e) => e.kind === kind).reduce((n, e) => n + e.amount, 0);
-      return amount > 0 ? [{ key: kind, label: XP_LABELS[kind], amount }] : [];
-    }),
-  ];
+  const totalEarned = [...earned.values()].reduce((n, v) => n + v, 0);
+  const topicDone = earned.has('topic');
+  const breakdown = BREAKDOWN.flatMap((b) => {
+    const amount = b.kinds.reduce((n, k) => n + (earned.get(k) ?? 0), 0);
+    return amount > 0 ? [{ key: b.key, label: b.label, amount }] : [];
+  });
   const currentIndex = topicLessons.findIndex((l) => l.id === lessonId);
 
   return (
@@ -206,6 +246,7 @@ export function LessonPlayer({
             <div className="grow stack stack-xs lesson-menu" style={{ minWidth: 0 }} ref={menuRef}>
               <button
                 type="button"
+                ref={menuButtonRef}
                 className="lesson-top-title"
                 aria-expanded={menuOpen}
                 aria-controls={menuId}
@@ -214,7 +255,8 @@ export function LessonPlayer({
                 <span className="lesson-top-name">{title}</span>
                 {topicLessons.length > 1 && currentIndex >= 0 && (
                   <span className="lesson-top-count tabular">
-                    {currentIndex + 1}/{topicLessons.length}
+                    {/* Says "lesson": the bar below measures steps, so a bare "5/9" would read as a step count. */}
+                    <span className="lesson-top-count-word">Lesson</span> {currentIndex + 1}/{topicLessons.length}
                   </span>
                 )}
                 <ChevronRightIcon aria-hidden="true" className="lesson-top-chevron" />
@@ -353,20 +395,24 @@ export function LessonPlayer({
                   <TrophyIcon aria-hidden="true" /> {topicLabel} finished
                 </p>
               )}
-              <p className="muted" style={{ marginTop: 6, maxWidth: '46ch', marginInline: 'auto' }}>
+              <p className="muted" style={{ marginTop: 10, maxWidth: '46ch', marginInline: 'auto' }}>
                 {!justFinished
                   ? 'You finished this one before. Answer the checks again any time.'
                   : answeredFirst.length === 0
                     ? 'Nice work.'
-                    : firstCorrect === allQuestions.length
-                      ? 'Every one right first time. They’ll come back for a quick review in a few days to make them stick.'
-                      : 'The ones you missed come back in tomorrow’s review. That’s exactly how it’s meant to work.'}
+                    : missed === 0
+                      ? firstCorrect === allQuestions.length
+                        ? 'Every one right first time. They’ll come back for a quick review in a few days to make them stick.'
+                        : 'Every check you answered was right first time.'
+                      : missed === 1
+                        ? 'The one you missed comes back in tomorrow’s review. That’s exactly how it’s meant to work.'
+                        : `The ${countWord(missed)} you missed come back in tomorrow’s review. That’s exactly how it’s meant to work.`}
               </p>
               {justFinished && (showPoints || answeredFirst.length > 0) && (
                 <ul className="celebrate-stats">
                   {showPoints && (
                     <li className="celebrate-stat" data-kind="xp">
-                      <span className="celebrate-num">{lessonPoints === 'pending' ? '…' : `+${answerXp + lessonGained}`}</span>
+                      <span className="celebrate-num">{lessonPoints === 'pending' ? '…' : `+${totalEarned}`}</span>
                       <span className="celebrate-label">XP earned</span>
                     </li>
                   )}
@@ -413,12 +459,12 @@ export function LessonPlayer({
                 </p>
               )}
               <div className="celebrate-actions">
-                {next ? (
-                  <Link href={next.href} className="btn btn-primary btn-next">
-                    <span className="btn-next-title">Next: {next.title}</span> <ArrowRightIcon />
+                {completionNext ? (
+                  <Link href={completionNext.href} className="btn btn-primary btn-next">
+                    <span className="btn-next-title">Next: {completionNext.title}</span> <ArrowRightIcon />
                   </Link>
                 ) : null}
-                <Link href={topicHref} className={`btn ${next ? 'btn-ghost' : 'btn-primary btn-lg'}`}>
+                <Link href={topicHref} className={`btn ${completionNext ? 'btn-ghost' : 'btn-primary btn-lg'}`}>
                   Back to {topicLabel}
                 </Link>
               </div>

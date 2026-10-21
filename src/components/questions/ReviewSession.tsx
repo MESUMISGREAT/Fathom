@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { QuestionView } from '@/content/rendered';
 import type { Outcome } from '@/domain/answers/check';
-import type { PointsResult } from '@/domain/points';
+import { XP_LABELS, type PointsResult, type XpKind } from '@/domain/points';
 import { finishReviewSession } from '@/server/actions/study';
 import { QuestionCard } from './QuestionCard';
 import { ArrowRightIcon } from '@/components/icons';
@@ -24,13 +24,25 @@ export type ReviewItem = { view: QuestionView; sourceHref: string; sourceTitle: 
  * longer due. Keeping the batch here means that refresh can't swap the
  * summary for "Nothing to review" or the next batch.
  */
+/** The summary's "what the XP was for" lines, in order. */
+const SUMMARY: Array<{ key: string; label: string; kinds: XpKind[] }> = [
+  { key: 'reviews', label: 'Reviews', kinds: ['review', 'answer'] },
+  { key: 'combo', label: 'Combo', kinds: ['combo'] },
+  { key: 'comeback', label: 'Comeback', kinds: ['comeback'] },
+  { key: 'topic-secure', label: XP_LABELS['topic-secure'], kinds: ['topic-secure'] },
+  { key: 'lesson', label: 'Lessons finished', kinds: ['lesson', 'perfect', 'topic'] },
+  { key: 'daily-goal', label: XP_LABELS['daily-goal'], kinds: ['daily-goal'] },
+  { key: 'session', label: 'Session bonus', kinds: ['review-session'] },
+];
+
 export function ReviewSession({ items, batchSize, empty }: { items: ReviewItem[]; batchSize: number; empty: ReactNode }) {
   const router = useRouter();
   const [session, setSession] = useState(items);
   const [round, setRound] = useState(0);
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<Map<string, Outcome>>(new Map());
-  const [xp, setXp] = useState(0);
+  /** XP from this round's answers, by kind (reviews, combos, comebacks, the daily goal…). */
+  const [earned, setEarned] = useState<ReadonlyMap<XpKind, number>>(new Map());
   /** The session bonus, whenever the server paid it (at the end, or when the student stepped away part-way). */
   const [bonus, setBonus] = useState<PointsResult | null>(null);
   const [ending, setEnding] = useState(false);
@@ -104,7 +116,7 @@ export function ReviewSession({ items, batchSize, empty }: { items: ReviewItem[]
     setRound((n) => n + 1);
     setIndex(0);
     setResults(new Map());
-    setXp(0);
+    setEarned(new Map());
     setBonus(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
@@ -118,16 +130,21 @@ export function ReviewSession({ items, batchSize, empty }: { items: ReviewItem[]
 
   if (!item) {
     const correct = [...results.values()].filter((o) => o === 'correct').length;
-    // What the session-end call earned: the session bonus, and the daily goal if that took today over it.
-    const bonusXp = bonus?.gained ?? 0;
-    const sessionBonus = !!bonus?.events.some((e) => e.kind === 'review-session');
+    // Everything this round earned: each answer's awards, then the session-end call's (the session bonus, and the daily goal if that took today over it).
+    const all = new Map(earned);
+    for (const e of bonus?.events ?? []) all.set(e.kind, (all.get(e.kind) ?? 0) + e.amount);
+    const total = [...all.values()].reduce((n, v) => n + v, 0);
+    const breakdown = SUMMARY.flatMap((b) => {
+      const amount = b.kinds.reduce((n, k) => n + (all.get(k) ?? 0), 0);
+      return amount > 0 ? [{ ...b, amount }] : [];
+    });
     return (
       <section className="celebrate" aria-labelledby="review-done-title">
         <Spot name="review" size={120} />
         <h2 id="review-done-title" ref={doneTitleRef} tabIndex={-1}>
           Review done
         </h2>
-        <p className="muted" style={{ marginTop: 6 }}>
+        <p className="muted" style={{ marginTop: 10 }}>
           {results.size === 0
             ? 'You skipped these for now. They’ll wait for you.'
             : `${correct} of ${results.size} correct. Right answers move further apart; anything you missed comes back tomorrow.`}
@@ -135,8 +152,8 @@ export function ReviewSession({ items, batchSize, empty }: { items: ReviewItem[]
         <ul className="celebrate-stats">
           {showPoints && (
             <li className="celebrate-stat" data-kind="xp">
-              <span className="celebrate-num">{ending ? '…' : `+${xp + bonusXp}`}</span>
-              <span className="celebrate-label">XP earned{sessionBonus ? ' · session bonus' : ''}</span>
+              <span className="celebrate-num">{ending ? '…' : `+${total}`}</span>
+              <span className="celebrate-label">XP earned</span>
             </li>
           )}
           {results.size > 0 && (
@@ -146,6 +163,15 @@ export function ReviewSession({ items, batchSize, empty }: { items: ReviewItem[]
             </li>
           )}
         </ul>
+        {showPoints && !ending && breakdown.length > 1 && (
+          <ul className="celebrate-breakdown" aria-label="What the XP was for">
+            {breakdown.map((b) => (
+              <li key={b.key}>
+                {b.label} <strong className="tabular">+{b.amount}</strong>
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="celebrate-actions">
           <Link href="/" className="btn btn-primary btn-lg">
             Back to home
@@ -194,7 +220,13 @@ export function ReviewSession({ items, batchSize, empty }: { items: ReviewItem[]
         signedIn
         sourceHref={item.sourceHref}
         onFinal={(id, o) => setResults((m) => (m.has(id) ? m : new Map(m).set(id, o)))}
-        onPoints={(p) => setXp((n) => n + p.gained)}
+        onPoints={(p) =>
+          setEarned((m) => {
+            const n = new Map(m);
+            for (const e of p.events) n.set(e.kind, (n.get(e.kind) ?? 0) + e.amount);
+            return n;
+          })
+        }
       />
       <div className="row" style={{ justifyContent: 'flex-end' }}>
         {/* Different keys: a pressed Next must not turn into Skip under the student's finger (or focus). */}

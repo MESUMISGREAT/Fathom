@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { signUp } from './helpers';
+import { addMaths, signUp } from './helpers';
 
 const LESSON = '/subjects/mathematics/1-1/fixture-squares';
 /** Topic 1.2's only lesson, with one MCQ check (option A is right). */
@@ -50,6 +50,8 @@ test('a correct first answer pops XP and updates the total in the header', async
   await expect(q.getByText('Correct first time')).toBeVisible();
   // The total in the sidebar updates straight away, from the server's result.
   await expect(total).toHaveText('10 XP');
+  // The pop is scrolled into view with the result, not left below the fold.
+  await expect(q.locator('.xp-pop')).toBeInViewport({ ratio: 1 });
 });
 
 test('answering the same question right again earns nothing', async ({ page }) => {
@@ -71,7 +73,8 @@ test('finishing past skipped checks holds the lesson XP back, and says so', asyn
   await signUp(page);
   await page.goto(LESSON);
   await page.getByRole('button', { name: 'All', exact: true }).click();
-  await answerFirst(page, 0);
+  // The answer is recorded before finishing (the counts below depend on it).
+  await expect((await answerFirst(page, 0)).locator('.feedback')).toBeVisible();
   await page.getByRole('button', { name: 'Finish without answering' }).click();
   const done = page.locator('.celebrate');
   await expect(done.getByRole('heading', { name: 'Lesson complete' })).toBeFocused();
@@ -95,22 +98,29 @@ test('finishing a lesson celebrates the XP, the topic and the badges, queued', a
   await expect(done.getByRole('list', { name: 'What the XP was for' })).toContainText('Topic finished +50');
   await expect(page.locator('.xp-card .xp-card-total')).toHaveText('100 XP');
   await expect(done.getByText(/right first time \(1\/1\)/)).toBeVisible();
-  // Rewards that arrive together queue up, badges first; none is dropped.
+  // Rewards that arrive together queue up, badges first, one at a time; none is dropped.
   const toast = page.locator('.toaster .toast', { hasText: 'First Steps' });
   await expect(toast).toBeVisible();
   await expect(toast).toContainText('You finished your first lesson.');
-  await expect(page.locator('.toaster .toast')).toHaveCount(2);
+  await expect(page.locator('.toaster .toast')).toHaveCount(1);
   await toast.getByRole('button', { name: /Dismiss/ }).click();
   await expect(toast).toHaveCount(0);
+  const flawless = page.locator('.toaster .toast', { hasText: 'Flawless' });
+  await expect(flawless).toBeVisible();
+  await flawless.getByRole('button', { name: /Dismiss/ }).click();
   await expect(page.locator('.toaster .toast', { hasText: 'Topic Finisher' })).toBeVisible();
-  // On a wide screen they live at the foot of the sidebar, never over the lesson.
+  // On a wide screen they live in the sidebar, never over the lesson, and above its account links.
   const box = await page.locator('.toaster').boundingBox();
   const main = await page.locator('main').boundingBox();
   expect(box && main && box.x + box.width <= main.x).toBe(true);
+  const account = await page.locator('.sidebar [aria-label="Account"]').boundingBox();
+  expect(box && account && box.y + box.height <= account.y).toBe(true);
 });
 
 test('a review session ends on its summary, with the session bonus', async ({ page }) => {
   await signUp(page);
+  // Review covers the subjects a student takes.
+  await addMaths(page);
   await page.goto(LESSON);
   await page.getByRole('button', { name: 'All', exact: true }).click();
   // Five different checks answered in the lesson (the self-marked ones are left out)…
@@ -135,7 +145,8 @@ test('a review session ends on its summary, with the session bonus', async ({ pa
   }
   const done = page.locator('.celebrate');
   await expect(done.getByRole('heading', { name: 'Review done' })).toBeFocused();
-  await expect(done.locator('.celebrate-stat[data-kind="xp"] .celebrate-label')).toHaveText('XP earned · session bonus');
+  await expect(done.locator('.celebrate-stat[data-kind="xp"] .celebrate-label')).toHaveText('XP earned');
+  await expect(done.getByRole('list', { name: 'What the XP was for' })).toContainText('Session bonus +15');
   await expect(page.locator('.toaster .toast', { hasText: 'Recall Rookie' })).toBeVisible();
   // The server refreshes the page after paying the bonus; the summary stays.
   await page.waitForLoadState('networkidle');
@@ -161,9 +172,20 @@ test('turning Show points off hides every XP and badge surface', async ({ page }
   await page.goto('/settings');
   const toggle = page.getByRole('switch', { name: 'Show points and badges' });
   await expect(toggle).toHaveAttribute('aria-checked', 'true');
-  await toggle.click();
+  // From the keyboard: the switch keeps focus while (and after) it saves.
+  await toggle.focus();
+  await page.keyboard.press('Space');
   await expect(toggle).toHaveAttribute('aria-checked', 'false');
+  await expect(toggle).toBeFocused();
   await expect(page.getByText('Points and badges are hidden.')).toBeVisible();
+  await expect(toggle).toBeFocused();
+  // The same for the daily goal choices.
+  const goal = page.getByRole('button', { name: /Chill/ });
+  await goal.focus();
+  await page.keyboard.press('Enter');
+  await expect(goal).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByText('Daily goal set to 20 XP.')).toBeVisible();
+  await expect(goal).toBeFocused();
 
   await page.goto(LESSON);
   await expect(page.locator('.xp-card')).toHaveCount(0);
@@ -184,7 +206,7 @@ test('turning Show points off hides every XP and badge surface', async ({ page }
   await expect(page.locator('.xp-card .xp-card-total')).toHaveText('10 XP');
 });
 
-test('@phone lessons have one bar with the XP chip, and toasts stay in the chrome', async ({ page }) => {
+test('@phone lessons have one bar with the XP chip, and toasts sit over the tab bar', async ({ page }) => {
   await signUp(page);
   await page.goto(FUNCTIONS);
   // In a lesson the lesson bar replaces the top bar, and carries the XP chip.
@@ -197,19 +219,45 @@ test('@phone lessons have one bar with the XP chip, and toasts stay in the chrom
   await expect(toast).toBeVisible();
   // One at a time on a phone.
   await expect(page.locator('.toaster .toast')).toHaveCount(1);
-  await page.waitForTimeout(800); // let the celebration finish scrolling into place
-  const inChrome = async () => {
+  await page.waitForTimeout(800); // let the celebration finish scrolling into place and the toast slide up
+  const overlaps = (a: { x: number; y: number; width: number; height: number } | null, b: typeof a) =>
+    !!a && !!b && a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+  const onTabBar = async () => {
     const t = await page.locator('.toaster .toast').first().boundingBox();
-    const bar = await page.locator('.lesson-top').boundingBox();
     const tabs = await page.locator('.tabbar').boundingBox();
-    // Over the lesson bar, never below it: the lesson, its questions and the celebration stay uncovered.
-    expect(t && bar && tabs && t.y + t.height <= bar.y + bar.height + 1 && t.y + t.height <= tabs.y).toBe(true);
+    const vh = page.viewportSize()!.height;
+    // Within the tab bar's own footprint: no lesson content, question or celebration underneath.
+    expect(t && tabs && t.y >= tabs.y - 1 && t.y + t.height <= vh + 1).toBe(true);
+    // The XP total at the top stays in view while it updates.
+    expect(overlaps(t, await chip.boundingBox())).toBe(false);
   };
-  await inChrome();
-  const end = await done.boundingBox();
-  const t = await toast.boundingBox();
-  expect(t && end && t.y + t.height <= end.y).toBe(true);
-  // Still in the chrome after scrolling back up to the question.
+  await onTabBar();
+  await expect(done).toBeVisible();
+  // Still docked there after scrolling back up to the question.
   await page.locator('.question').first().scrollIntoViewIfNeeded();
-  await inChrome();
+  await onTabBar();
+  // Dismissible, without moving focus there first.
+  await toast.getByRole('button', { name: /^Dismiss/ }).click();
+  await expect(page.locator('.toaster .toast', { hasText: 'First Steps' })).toHaveCount(0);
+});
+
+test.describe('@phone at 390 × 844', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('@phone the result and its "+N XP" scroll into view above the tab bar', async ({ page }) => {
+    await signUp(page);
+    await page.goto(LESSON);
+    const q = await answerFirst(page, 0);
+    const pop = q.locator('.xp-pop');
+    await expect(pop).toHaveText('+10 XP');
+    await page.waitForTimeout(800); // the smooth scroll
+    const box = (await pop.boundingBox())!;
+    const bar = (await page.locator('.lesson-top').boundingBox())!;
+    const tabs = (await page.locator('.tabbar').isVisible()) ? await page.locator('.tabbar').boundingBox() : null;
+    const floor = tabs ? tabs.y : page.viewportSize()!.height;
+    const title = (await q.locator('.feedback-title').boundingBox())!;
+    // Below the sticky lesson bar and above the tab bar.
+    expect(title.y, 'title top vs lesson bar bottom').toBeGreaterThanOrEqual(bar.y + bar.height);
+    expect(box.y + box.height, '"+N XP" bottom vs tab bar top').toBeLessThanOrEqual(floor);
+  });
 });

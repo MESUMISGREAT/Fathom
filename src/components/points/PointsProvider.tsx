@@ -69,17 +69,32 @@ const TOAST_MS_SUPERSEDED = 1500;
 const TOAST_ORDER: Record<Toast['kind'], number> = { badge: 0, level: 1, goal: 2 };
 let toastSeq = 0;
 
-/** Phones show one toast at a time (they stay small and clear of the content); wider screens two. */
-function useVisibleToasts() {
-  const [max, setMax] = useState(2);
+/** One toast at a time everywhere: the rest wait their turn (each is shorter while others queue). */
+const MAX_VISIBLE_TOASTS = 1;
+
+/**
+ * Wide screens: where the toaster sits, in px from the bottom of the window,
+ * so it docks just above the sidebar's account links (How it works, Settings,
+ * Log out) instead of covering them. Null on phones (the CSS docks it over
+ * the tab bar) and until measured.
+ */
+function useToasterBottom(): number | null {
+  const [bottom, setBottom] = useState<number | null>(null);
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 959px)');
-    const update = () => setMax(mq.matches ? 1 : 2);
+    const mq = window.matchMedia('(min-width: 960px)');
+    const update = () => {
+      const foot = mq.matches ? document.querySelector('.sidebar [aria-label="Account"]') : null;
+      setBottom(foot ? Math.max(12, Math.round(window.innerHeight - foot.getBoundingClientRect().top + 8)) : null);
+    };
     update();
     mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+    window.addEventListener('resize', update);
+    return () => {
+      mq.removeEventListener('change', update);
+      window.removeEventListener('resize', update);
+    };
   }, []);
-  return max;
+  return bottom;
 }
 
 export function PointsProvider({
@@ -98,7 +113,8 @@ export function PointsProvider({
   const [pulse, setPulse] = useState(0);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [confetti, setConfetti] = useState(0);
-  const maxVisible = useVisibleToasts();
+  const maxVisible = MAX_VISIBLE_TOASTS;
+  const toasterBottom = useToasterBottom();
   const prefsRef = useRef(prefs);
   prefsRef.current = prefs;
 
@@ -155,8 +171,8 @@ export function PointsProvider({
   return (
     <PointsContext.Provider value={value}>
       {children}
-      {/* A fixed home in the chrome (the sidebar column on wide screens, over the top bar on phones), never over the lesson. */}
-      <div className="toaster" aria-live="polite" aria-label="Rewards" role="region">
+      {/* A fixed home in the chrome (the sidebar column on wide screens, over the tab bar on phones), never over the lesson. */}
+      <div className="toaster" aria-live="polite" aria-label="Rewards" role="region" style={toasterBottom === null ? undefined : { bottom: toasterBottom }}>
         {toasts.slice(0, maxVisible).map((t) => (
           <ToastCard
             key={t.id}
