@@ -80,7 +80,7 @@ export function MultimediaResolutionCompare() {
                   <line x1={x0} y1={TOP + (i + 1) * cell} x2={x0 + SIZE} y2={TOP + (i + 1) * cell} className="dg-grid" />
                 </g>
               ))}
-            {cells}
+            <g shapeRendering="crispEdges">{cells}</g>
             <path d={outline(x0)} className="dg-muted dg-dashed" />
             <rect x={x0} y={TOP} width={SIZE} height={SIZE} className="dg-thin" />
             <Label x={x0 + SIZE / 2} y={TOP + SIZE + 22} className="dg-text-small">

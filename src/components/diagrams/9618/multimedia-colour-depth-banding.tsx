@@ -47,17 +47,20 @@ export function MultimediaColourDepthBanding() {
             <Label x={20} y={y + SH / 2 + 10} anchor="start" className="dg-text-small dg-text-muted">
               {`2${s.bits === 1 ? '¹' : s.bits === 2 ? '²' : s.bits === 3 ? '³' : '⁸'} = ${levels} shades`}
             </Label>
-            {Array.from({ length: levels }, (_, k) => (
-              <rect
-                key={k}
-                x={SX + k * w}
-                y={y}
-                width={w + (k < levels - 1 ? 0.6 : 0)}
-                height={SH}
-                className="dg-dot"
-                fillOpacity={k / (levels - 1)}
-              />
-            ))}
+            {/* Rects abut exactly (no overlap): overlapping translucent ink would paint darker seams. */}
+            <g shapeRendering="crispEdges">
+              {Array.from({ length: levels }, (_, k) => (
+                <rect
+                  key={k}
+                  x={SX + k * w}
+                  y={y}
+                  width={w}
+                  height={SH}
+                  className="dg-dot"
+                  fillOpacity={k / (levels - 1)}
+                />
+              ))}
+            </g>
             <rect x={SX} y={y} width={SW} height={SH} className="dg-thin" />
             <Label x={SX + SW + 50} y={y + SH / 2} className="dg-text-accent">
               {s.size}
