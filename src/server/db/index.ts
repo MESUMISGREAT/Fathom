@@ -18,6 +18,8 @@ interface DbState {
 
 const MIGRATIONS = path.join(process.cwd(), 'drizzle');
 
+const isVercelPreview = () => !!process.env.VERCEL_ENV && process.env.VERCEL_ENV !== 'production';
+
 async function connect(): Promise<DbState> {
   // POSTGRES_URL is what Vercel's database integrations may set.
   const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
@@ -27,7 +29,8 @@ async function connect(): Promise<DbState> {
     const { migrate } = await import('drizzle-orm/node-postgres/migrator');
     const pool = new Pool({ connectionString: url, max: Number(process.env.DATABASE_POOL_SIZE ?? (process.env.VERCEL ? 3 : 10)) });
     const db = drizzle(pool, { schema });
-    if (process.env.AUTO_MIGRATE !== '0') await migrate(db, { migrationsFolder: MIGRATIONS });
+    // Vercel preview deployments share the production database: never let them migrate it.
+    if (process.env.AUTO_MIGRATE !== '0' && !isVercelPreview()) await migrate(db, { migrationsFolder: MIGRATIONS });
     return { db: db as unknown as Db, close: () => pool.end() };
   }
   const { PGlite } = await import('@electric-sql/pglite');
@@ -50,7 +53,8 @@ const g = globalThis as unknown as { __fathomDb?: Promise<DbState> };
 export function getDb(): Promise<Db> {
   g.__fathomDb ??= (async () => {
     const state = await connect();
-    if (process.env.CONTENT_SYNC !== '0') {
+    // ...or replace its lessons with a branch's content.
+    if (process.env.CONTENT_SYNC !== '0' && !isVercelPreview()) {
       const { syncContentIfChanged } = await import('./content-sync');
       await syncContentIfChanged(state.db);
     }
