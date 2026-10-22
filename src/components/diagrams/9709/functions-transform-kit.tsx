@@ -51,6 +51,11 @@ export interface PanelSpec {
   imageText: string;
   /** x tick labels (leave out any that an arrow would cover). */
   xTicks?: number[];
+  /**
+   * Sideways shifts (px) for x tick labels, as [tick, dx] pairs. Use at a root, where a
+   * curve passes through the spot under the tick, to move the label to the free side.
+   */
+  xTickNudge?: Array<[number, number]>;
   /** y tick labels drawn to the left of the axis (default −2, 2, 4). */
   yTicks?: number[];
   /** y tick labels drawn to the right of the axis, where a curve would cover the left. */
@@ -60,9 +65,10 @@ export interface PanelSpec {
 }
 
 /** x- and y-axes with arrowheads, ticks and labels (like kit's AxesXY, with an optional origin label). */
-function PanelAxes({ p, xTicks, yTicks, yTicksRight, hideOrigin }: {
+function PanelAxes({ p, xTicks, xTickNudge, yTicks, yTicksRight, hideOrigin }: {
   p: Plot;
   xTicks: number[];
+  xTickNudge: Array<[number, number]>;
   yTicks: number[];
   yTicksRight: number[];
   hideOrigin: boolean;
@@ -96,7 +102,7 @@ function PanelAxes({ p, xTicks, yTicks, yTicksRight, hideOrigin }: {
       {xTicks.map((t) => (
         <g key={`x${t}`}>
           <line x1={p.sx(t)} y1={y0 - 4} x2={p.sx(t)} y2={y0 + 4} className="dg-thin" />
-          <Label x={p.sx(t)} y={y0 + 15} className="dg-text-small">
+          <Label x={p.sx(t) + (xTickNudge.find(([n]) => n === t)?.[1] ?? 0)} y={y0 + 15} className="dg-text-small">
             {fmt(t)}
           </Label>
         </g>
@@ -120,6 +126,7 @@ export function Panel({ spec, index }: { spec: PanelSpec; index: number }) {
         <PanelAxes
           p={p}
           xTicks={spec.xTicks ?? [-2, -1, 1, 2, 3]}
+          xTickNudge={spec.xTickNudge ?? []}
           yTicks={spec.yTicks ?? [-2, 2, 4]}
           yTicksRight={spec.yTicksRight ?? []}
           hideOrigin={spec.hideOrigin ?? false}

@@ -49,7 +49,8 @@ export default function FunctionsCombinedInside() {
       {[-3, 2, 3].map((t) => (
         <g key={`xt${t}`}>
           <line x1={p.sx(t)} y1={p.sy(0) - 4} x2={p.sx(t)} y2={p.sy(0) + 4} className="dg-thin" />
-          <Label x={p.sx(t)} y={p.sy(0) + 15} className="dg-text-small">
+          {/* the curve crosses the axis at 2, so that label sits just to the right */}
+          <Label x={p.sx(t) + (t === 2 ? 8 : 0)} y={p.sy(0) + 15} className="dg-text-small">
             {t < 0 ? `−${-t}` : `${t}`}
           </Label>
         </g>

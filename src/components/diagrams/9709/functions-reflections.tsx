@@ -20,7 +20,12 @@ const specs: PanelSpec[] = [
     baseLabel: [3.15, 0.8, 'start'],
     imageLabel: [-1.2, -1.7, 'end'],
     imageText: '−f(x)',
-    xTicks: [-2, -1, 2, 3],
+    // Both curves cross the axis at 2 (no free side for a label there), and the arrow at
+    // x = 1 crosses the axis, so that label is shifted right.
+    xTicks: [-2, -1, 1, 3],
+    xTickNudge: [[1, 10]],
+    yTicks: [2, 4],
+    yTicksRight: [-2],
     hideOrigin: true,
     footer: (
       <Label x={150} y={22} className="dg-text">
@@ -35,6 +40,10 @@ const specs: PanelSpec[] = [
     baseLabel: [3.15, 0.8, 'start'],
     imageLabel: [-3.0, -1.75, 'start'],
     imageText: 'f(−x)',
+    xTickNudge: [
+      [-2, -8],
+      [2, 8],
+    ],
     hideOrigin: true,
     footer: (
       <Label x={150} y={22} className="dg-text">

@@ -18,9 +18,12 @@ const specs: PanelSpec[] = [
       [2.6, base(2.6), 2.6, base(2.6) + 3],
     ],
     baseLabel: [3.15, 0.8, 'start'],
-    imageLabel: [0.22, 4.6, 'start'],
+    imageLabel: [0.25, 4.95, 'start'],
     imageText: 'f(x) + 3',
     xTicks: [-2, -1, 2, 3],
+    xTickNudge: [[2, 8]],
+    yTicks: [-2, 2],
+    yTicksRight: [4],
     footer: (
       <g>
         <Label x={110} y={28} anchor="end" className="dg-text">
@@ -43,6 +46,10 @@ const specs: PanelSpec[] = [
     baseLabel: [3.15, 0.8, 'start'],
     imageLabel: [-3.0, -1.75, 'start'],
     imageText: 'f(x + 2)',
+    xTickNudge: [
+      [-2, -8],
+      [2, 8],
+    ],
     hideOrigin: true,
     footer: (
       <g>

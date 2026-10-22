@@ -19,8 +19,11 @@ const specs: PanelSpec[] = [
       [-0.5, base(-0.5), -0.5, 2 * base(-0.5)],
     ],
     baseLabel: [3.15, 0.8, 'start'],
-    imageLabel: [0.2, 3.7, 'start'],
+    imageLabel: [0.5, 4.9, 'start'],
     imageText: '2f(x)',
+    xTickNudge: [[2, 8]],
+    yTicks: [-2],
+    yTicksRight: [2, 4],
     footer: (
       <Label x={150} y={22} className="dg-text">
         stretch parallel to the y-axis, factor 2
@@ -38,6 +41,10 @@ const specs: PanelSpec[] = [
     baseLabel: [3.15, 0.8, 'start'],
     imageLabel: [0.18, 4.75, 'start'],
     imageText: 'f(2x)',
+    xTickNudge: [
+      [1, 8],
+      [2, 8],
+    ],
     yTicks: [-2, 4],
     yTicksRight: [2],
     footer: (
