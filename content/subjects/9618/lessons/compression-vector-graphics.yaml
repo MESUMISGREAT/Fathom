@@ -1,0 +1,254 @@
+id: compression-vector-graphics
+subject: "9618"
+topic: "1.3"
+title: "Compressing vector graphics"
+summary: Shrink a vector graphic by compressing its drawing list losslessly, or by simplifying paths and rounding coordinates (lossy).
+order: 8
+minutes: 4
+kind: core
+objectives: ["1.3.3"]
+prerequisites: [multimedia-vector-graphics, compression-text-files]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, third learning
+    outcome (how a vector graphic can be compressed). The drawing-list layout follows
+    multimedia-vector-graphics and is illustrative, not a real file format. The path in the
+    diagram is a generated curve simplified with the Ramer-Douglas-Peucker algorithm, and the
+    character counts in the questions are illustrative. Every count checked with Python. All
+    questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a **vector graphic** can be compressed, both losslessly and lossily, and explain why the bitmap tricks don't apply.
+
+  - type: explain
+    title: No pixels to squash
+    body: |
+      A vector graphic isn't a grid of pixels. It's a **drawing list** of **drawing objects** and their **properties**: "circle here, this big, this colour".
+
+      So RLE on pixels and lowering the resolution have nothing to work on. Instead, you compress **the drawing list itself**.
+
+      Most vector files are already small. But a detailed map, a technical drawing or a complex illustration can hold thousands of objects and hundreds of thousands of coordinates, and they're sent across the web all the time.
+
+  - type: explain
+    title: "Lossless: say it once"
+    body: |
+      A drawing list is data, often stored as text, so the lossless ideas you've met all work on it:
+
+      - **Store repeated properties once.** If 300 objects share the same fill colour, line colour and line thickness, store that set once as a named **style** and give each object a short reference to it.
+      - **Store repeated objects once.** A star drawn 50 times can be defined once and reused at 50 positions.
+      - **Compress the file's text** with dictionary-based compression, so repeated words such as `circle` or `line colour` become short indexes, or with RLE wherever the data contains runs.
+
+      The decompressor can expand every reference back, so **no data is lost**.
+
+  - type: example
+    title: Three circles, one style
+    problem: |
+      Compress this drawing list losslessly.
+
+      ```
+      circle  centre (40, 50)    radius 12
+              fill colour red    line colour black    line thickness 2
+      circle  centre (90, 50)    radius 12
+              fill colour red    line colour black    line thickness 2
+      circle  centre (140, 50)   radius 12
+              fill colour red    line colour black    line thickness 2
+      ```
+    steps:
+      - |
+        Spot the repetition: all three circles have the same three appearance properties.
+      - |
+        Store those properties once, as a style:
+
+        ```
+        style S1
+              fill colour red    line colour black    line thickness 2
+        circle  centre (40, 50)    radius 12   style S1
+        circle  centre (90, 50)    radius 12   style S1
+        circle  centre (140, 50)   radius 12   style S1
+        ```
+      - |
+        To decompress, replace each `style S1` with the properties it stands for. You get the original list back exactly, so this is **lossless**.
+      - |
+        With 3 circles the saving is modest. With 3000 circles sharing a style, the properties are stored once instead of 3000 times.
+    answer: |
+      One style definition plus a short reference on each object.
+
+  - type: check
+    title: Quick check
+    questions: [no-pixels, style-saving]
+
+  - type: explain
+    title: "Lossy: drop detail nobody can see"
+    body: |
+      - **Reduce the precision of coordinates.** `127.384615` becomes `127.4`. A shift that small is usually far less than a pixel on screen.
+      - **Simplify paths.** Describe a curve or an outline using fewer points.
+      - **Remove objects that can't be seen**, such as shapes completely hidden behind others, or outside the visible area.
+
+      The picture looks the same (or nearly), but the original drawing list **can't be rebuilt exactly**, so these methods are **lossy**.
+
+  - type: diagram
+    diagram: cs-compression-vector-simplify
+    alt: >-
+      Two panels compare a wiggly path, like a stretch of coastline. Left, original path: 49 points
+      joined by short straight segments, so 49 × 2 = 98 coordinate values stored. Right, simplified
+      path (lossy): only 14 points, so 14 × 2 = 28 coordinate values, with the original drawn dashed
+      underneath; the two outlines almost overlap. Text underneath: fewer points means fewer numbers in
+      the drawing list and a smaller file; every original point stays within 4 units of the new outline.
+    caption: |
+      The simplified path keeps the shape and drops over 70% of the coordinates. Small wiggles are the price.
+
+  - type: check
+    title: Lossy vectors
+    questions: [round-lossy, precision-saving]
+
+  - type: misconceptions
+    items:
+      - wrong: You compress a vector graphic by applying RLE to its pixels.
+        right: |
+          It doesn't store pixels. You compress the **drawing list** instead (and RLE or dictionary methods can be used on that data).
+      - wrong: Rounding coordinates is lossless, because the picture looks identical.
+        right: |
+          The stored data has changed and can't be restored, so it's **lossy**, however invisible the change.
+      - wrong: Converting a vector graphic into a bitmap is a good way to compress it.
+        right: |
+          For a simple drawing the bitmap is usually much **bigger**, and it can no longer be scaled without going blocky.
+
+  - type: exam
+    body: |
+      - Start from the key fact: a vector graphic is a **drawing list**, not pixels. Examiners want to see that you know the difference.
+      - Lossless ideas: store repeated properties or objects **once** and refer to them; apply text compression (dictionary-based, RLE) to the drawing list.
+      - Lossy ideas: fewer decimal places for **coordinates**; fewer **points** on paths; remove **hidden** objects.
+      - Say which type each method is and why: can the exact drawing list be rebuilt?
+
+  - type: check
+    title: Put it together
+    questions: [spot-vector, coastline]
+
+  - type: enrichment
+    title: SVG files on the web
+    body: |
+      On the web, vector graphics are often **SVG** files, which are plain text. "Minifier" tools shrink them by rounding numbers, removing hidden objects and stripping out comments and editor data, all lossy steps. Web servers then usually send them through a general lossless compressor (gzip), which works very well on repetitive text.
+
+  - type: takeaways
+    items:
+      - A vector graphic is compressed by working on its drawing list, not on pixels.
+      - "Lossless: store repeated properties or objects once and refer to them, or apply text compression to the drawing list."
+      - "Lossy: round coordinates, simplify paths to fewer points, remove objects that can't be seen."
+      - If the exact drawing list can't be rebuilt, the method is lossy, even if the picture looks identical.
+
+questions:
+  - id: no-pixels
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Why can't a vector graphic be compressed by applying RLE to its pixel colours?
+    options:
+      - text: It doesn't store pixels; it stores a drawing list of objects and their properties.
+        correct: true
+        why: |
+          Pixels are only calculated when the graphic is displayed. The file holds the drawing list.
+      - text: Its pixels are all different colours.
+        why: |
+          There are no stored pixels at all, so there's nothing for pixel RLE to work on.
+      - text: RLE is lossy, and vector graphics must be compressed losslessly.
+        why: |
+          RLE is lossless, and vector graphics can be compressed either way. The problem is what the file contains.
+      - text: Vector graphics are too small to need compressing.
+        why: |
+          Many are small, but detailed ones can be large. They're compressed by working on the drawing list.
+    explanation: |
+      Compress what is actually stored: the drawing list.
+
+  - id: style-saving
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A drawing list has 60 objects. Each one repeats the same 30-character set of appearance properties. Instead, that set is stored once as a style (30 characters), and each object stores a 5-character reference to the style. How many characters are saved?
+    fields:
+      - answer: 1470
+        unit: characters
+    explanation: |
+      Before: $60 \times 30 = 1800$ characters. After: $60 \times 5 + 30 = 330$. Saved: $1800 - 330 = 1470$. It's lossless, because every reference can be expanded back into the full properties.
+
+  - id: round-lossy
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      Every coordinate in a drawing list is rounded from 4 decimal places to 1. The drawing looks identical on screen. What kind of compression is this?
+    options:
+      - text: Lossy, because the original coordinates can't be restored.
+        correct: true
+        why: |
+          Once 127.3846 is stored as 127.4, nothing records the lost digits.
+      - text: Lossless, because the drawing looks identical.
+        why: |
+          Looking identical isn't the test. Lossless means the exact data can be restored.
+      - text: Lossless, because only numbers were changed, not objects.
+        why: |
+          Changing any stored value, with no way to restore it, is data loss.
+      - text: It isn't compression, because the file size doesn't change.
+        why: |
+          Fewer digits per coordinate means fewer characters (or bits) stored, so the file gets smaller.
+    explanation: |
+      Invisible loss is still loss. The test is always: can the exact original be rebuilt?
+
+  - id: precision-saving
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A path has 400 points. Each point stores an x and a y coordinate as 8-character text, such as `127.3846`. Every coordinate is rounded to 5 characters, such as `127.4`. How many characters are saved?
+    fields:
+      - answer: 2400
+        unit: characters
+    explanation: |
+      Each coordinate saves $8 - 5 = 3$ characters, and there are $400 \times 2 = 800$ coordinates, so $800 \times 3 = 2400$ characters. (Answering 1200 means you forgot each point has two coordinates.)
+
+  - id: spot-vector
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A student describes how a vector graphic can be compressed. Which line contains the error?
+    lines:
+      - A vector graphic is stored as a drawing list, not as pixels.
+      - Its drawing list can be compressed losslessly, for example by storing a repeated style once and referring to it.
+      - Coordinates can be rounded to fewer decimal places to make the file smaller.
+      - Rounding coordinates is lossless, because the rounded values can be turned back into the originals.
+      - Removing objects that are completely hidden behind others also shrinks the file.
+    errorLine: 4
+    fix: |
+      Rounding coordinates is **lossy**: the original values can't be worked out from the rounded ones.
+    explanation: |
+      127.3846 and 127.4123 both round to 127.4, so there's no way back. That's the signature of lossy compression.
+
+  - id: coastline
+    format: mcq
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |
+      A map app sends phones a vector outline of a coastline made of 50 000 points. It is displayed on a small screen. Which compression is most suitable?
+    options:
+      - text: Simplify the outline to far fewer points (lossy), because detail smaller than a pixel on a phone screen can't be seen anyway.
+        correct: true
+        why: |
+          The shape survives, the file shrinks dramatically, and the lost wiggles are invisible at that size.
+      - text: Remove every second drawing object from the drawing list.
+        why: |
+          That throws away objects regardless of whether anyone can see them, leaving gaps or missing features that people would definitely notice.
+      - text: Convert the map to a bitmap and compress it with RLE.
+        why: |
+          The map would lose its ability to scale smoothly as the user zooms, and a detailed map has few long runs.
+      - text: No compression is needed, because vector files are always small.
+        why: |
+          50 000 points is a lot of data to send to every phone. Detailed vector files can be large.
+    explanation: |
+      Lossy simplification fits the situation: the exact coastline isn't needed on a small screen, and a much smaller file reaches the phone faster.

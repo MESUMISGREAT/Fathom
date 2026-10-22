@@ -1,0 +1,226 @@
+id: multimedia-bitmap-quality
+subject: "9618"
+topic: "1.2"
+title: Resolution, colour depth and quality
+summary: How changing the image resolution or the colour depth of a bitmap changes its quality and its file size, and by how much.
+order: 4
+minutes: 5
+kind: core
+objectives: ["1.2.3"]
+prerequisites: [multimedia-bitmap-file-size]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, third learning outcome (how
+    changing elements of a bitmap image affects image quality and file size, using the terms image
+    resolution and colour depth / bit depth). The crescent and gradient images are illustrative and
+    rendered from real geometry; every scale factor and answer key checked with Python. All
+    questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how changing the **image resolution** and the **colour depth** affects a bitmap's quality and file size, and work out the factor by which the size changes.
+
+  - type: explain
+    title: Two dials, one bill
+    body: |
+      A bitmap has two quality dials: **image resolution** (how many pixels) and **colour depth** (how many bits per pixel).
+
+      Turn either one up and the picture gets better. Turn either one up and the file gets bigger. No free lunch, because file size = width × height × colour depth.
+
+      | Change | Effect on quality | Effect on file size |
+      | --- | --- | --- |
+      | Increase image resolution | more pixels, so finer detail; smoother edges | larger: more pixels to store |
+      | Decrease image resolution | less detail; blocky (pixelated) at the same display size | smaller |
+      | Increase colour depth | more colours available, so colours and shading are more accurate | larger: more bits per pixel |
+      | Decrease colour depth | fewer colours; colours approximated, visible bands in gradients | smaller |
+
+  - type: diagram
+    diagram: cs-multimedia-resolution-compare
+    alt: >-
+      Three square panels showing the same crescent moon stored as a bitmap at 8 by 8, 16 by 16 and
+      32 by 32 pixels, all displayed at the same size, with the true crescent outline dashed over
+      each. At 8 by 8 the crescent is a crude blocky shape that misses much of the outline; at 16 by
+      16 it is closer but still stepped; at 32 by 32 it follows the outline closely. Labels give 64,
+      256 and 1024 pixels, which at 1 bit per pixel are 8, 32 and 128 bytes. A note reads: double the
+      width and height, 4 times the pixels, 4 times the file size.
+    caption: |
+      More pixels, more detail, more bytes. Each step doubles both dimensions, so the file grows ×4.
+
+  - type: explain
+    title: Resolution counts twice
+    body: |
+      Image resolution has **two** numbers. Double the width **and** the height and you get $2 \times 2 = 4$ times the pixels, so 4 times the file size.
+
+      Halve both and the file shrinks to a quarter. Scale both by $k$ and the size scales by $k^2$.
+
+  - type: check
+    title: Quick check
+    questions: [more-detail, triple-dimensions]
+
+  - type: diagram
+    diagram: cs-multimedia-colour-depth-banding
+    alt: >-
+      Four horizontal strips showing the same smooth gradient, from the lightest shade at one end to
+      the darkest at the other, at the same image resolution but different colour depths. The 1-bit
+      strip has 2 shades, so it is simply half one shade and half the other. The 2-bit strip shows
+      4 clear bands, the 3-bit strip 8 bands, and the 8-bit strip 256 shades, which looks smooth. Beside each strip the file size relative to 1-bit is given: times
+      1, times 2, times 3 and times 8. A note says each extra bit doubles the shades but adds only 1
+      bit per pixel to the file.
+    caption: |
+      Too few colours and a smooth sky turns into stripes (called **banding**).
+
+  - type: explain
+    title: "Colour depth: colours explode, size doesn't"
+    body: |
+      One extra bit per pixel **doubles** the number of colours, but adds only one bit to every pixel.
+
+      From 8-bit to 16-bit, the colours jump from 256 to 65 536 (×256), but the file only doubles ($16 \div 8 = 2$). Colours grow like $2^n$; file size grows like $n$.
+
+  - type: check
+    title: Colour depth
+    questions: [reduce-depth-effect, third-size, depth-cloze]
+
+  - type: example
+    title: Resize and recolour
+    problem: |
+      A photo is 1600 × 1200 pixels with 24-bit colour. It is resized to 800 × 600 and saved with 8-bit colour. By what factor does the file size change?
+    steps:
+      - |
+        Resolution: width and height both halve, so the number of pixels is multiplied by $\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$.
+      - |
+        Colour depth: 24 → 8 bits, so the bits per pixel are multiplied by $\frac{8}{24} = \frac{1}{3}$.
+      - |
+        Combine the two: $\frac{1}{4} \times \frac{1}{3} = \frac{1}{12}$.
+      - |
+        Check with real sizes: before, $1600 \times 1200 \times 3 = 5\,760\,000$ bytes; after, $800 \times 600 \times 1 = 480\,000$ bytes; and $5\,760\,000 \div 12 = 480\,000$ ✓
+    answer: |
+      The new file is $\frac{1}{12}$ of the size, but with a quarter of the pixels (less detail) and only 256 colours (shading less accurate).
+
+  - type: check
+    title: Both dials at once
+    questions: [combined-factor]
+
+  - type: misconceptions
+    items:
+      - wrong: Doubling the image resolution doubles the file size.
+        right: |
+          Doubling the width **and** the height quadruples the pixels, so the file is ×4. Only doubling one dimension doubles it.
+      - wrong: Adding one bit of colour depth doubles the file size.
+        right: |
+          It doubles the number of **colours**. The file grows by $(n+1) \div n$: from 8 to 9 bits is only ×1.125.
+      - wrong: Enlarging a small bitmap adds detail.
+        right: |
+          Enlarging can't add detail that was never captured. The existing pixels just get bigger (or are smudged together), so the image looks pixelated or blurry.
+
+  - type: exam
+    body: |
+      - "Describe the effect of…" wants **both** quality and file size, each with a reason: "more pixels, so more detail can be shown, but more pixels to store, so a larger file".
+      - Use the syllabus terms *image resolution* and *colour depth* (or *bit depth*), not "clearer" or "more megapixels".
+      - For factor questions, multiply the change in pixels by the change in bits per pixel, and write the fraction.
+
+  - type: takeaways
+    items:
+      - Higher image resolution = more pixels = more detail and a larger file.
+      - Higher colour depth = more colours = more accurate colour and a larger file.
+      - Scaling both dimensions by $k$ scales the file by $k^2$.
+      - Each extra bit doubles the colours but only adds one bit per pixel to the file.
+
+questions:
+  - id: more-detail
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.3"]
+    prompt: |
+      Which change to a bitmap image lets it show **finer detail**?
+    options:
+      - text: Increasing the image resolution
+        correct: true
+        why: |
+          More pixels in the same picture means each pixel covers a smaller area, so smaller details can be represented.
+      - text: Increasing the colour depth
+        why: |
+          That gives more colours per pixel, which improves colour accuracy, but the number of pixels (and so the detail) stays the same.
+      - text: Displaying it on a screen with a higher screen resolution
+        why: |
+          A better screen can't show detail the image doesn't contain.
+      - text: Decreasing the image resolution
+        why: |
+          Fewer pixels means less detail, not more (though the file gets smaller).
+    explanation: |
+      Detail comes from the number of pixels: image resolution. Colour accuracy comes from bits per pixel: colour depth.
+
+  - id: triple-dimensions
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |
+      An image's width and height are both **tripled**, and its colour depth stays the same. By what factor does the file size change?
+    fields:
+      - answer: 9
+    explanation: |
+      Pixels are multiplied by $3 \times 3 = 9$, and each pixel still has the same number of bits, so the file is about 9 times larger.
+
+  - id: reduce-depth-effect
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |
+      A photo is saved again with its colour depth reduced from 24 bits to 8 bits. The image resolution is unchanged. What happens?
+    options:
+      - text: Fewer colours are available, so colours and shading are less accurate; the file is about a third of the size
+        correct: true
+        why: |
+          $2^8 = 256$ colours instead of over 16 million, so colours are approximated and gradients may band. Bits per pixel go from 24 to 8: a third.
+      - text: There are fewer pixels, so there is less detail; the file is about a third of the size
+        why: |
+          The number of pixels is set by the image resolution, which didn't change. Only the bits per pixel did.
+      - text: Fewer colours are available; the file is about 1/65 536 of the size
+        why: |
+          That's how much the number of *colours* falls ($2^{24} \div 2^8 = 2^{16}$). The file only shrinks in proportion to the bits: $8 \div 24$.
+      - text: The image becomes pixelated, but the file size stays the same
+        why: |
+          Pixelation comes from too few pixels, and the file definitely shrinks when each pixel uses fewer bits.
+    explanation: |
+      Colour depth controls colours (quality of colour) and bits per pixel (file size). Detail is untouched because the pixel count is unchanged.
+
+  - id: third-size
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |
+      A 24-bit bitmap is 6 MiB. It is saved with an 8-bit colour depth at the same image resolution. Estimate the new file size in MiB.
+    fields:
+      - answer: 2
+        unit: MiB
+    explanation: |
+      Same number of pixels, but each pixel now has $8 \div 24 = \frac{1}{3}$ of the bits. $6 \times \frac{1}{3} = 2$ MiB.
+
+  - id: depth-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["1.2.3"]
+    prompt: |
+      Changing the colour depth from 4 bits to 8 bits increases the number of available colours from {{1}} to {{2}}, and multiplies the file size by {{3}}.
+    blanks:
+      - accept: ["16", "sixteen"]
+      - accept: ["256"]
+      - accept: ["2", "two", "x2", "×2", "2 times", "2x", "two times"]
+    explanation: |
+      $2^4 = 16$ and $2^8 = 256$ colours. But each pixel only goes from 4 bits to 8 bits, so the file doubles.
+
+  - id: combined-factor
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.3"]
+    prompt: |
+      A 2000 × 1000 image with a 16-bit colour depth is changed to 1000 × 500 with a 24-bit colour depth. The new file size is what fraction of the old one? (A fraction or a decimal is fine.)
+    fields:
+      - answer: 0.375
+        tolerance: { abs: 0.001 }
+    explanation: |
+      Pixels: $\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$. Bits per pixel: $\frac{24}{16} = \frac{3}{2}$. Together: $\frac{1}{4} \times \frac{3}{2} = \frac{3}{8} = 0.375$. Less detail, more accurate colours, and a smaller file overall.

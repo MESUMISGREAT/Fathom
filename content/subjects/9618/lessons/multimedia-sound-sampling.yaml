@@ -1,0 +1,239 @@
+id: multimedia-sound-sampling
+subject: "9618"
+topic: "1.2"
+title: "Sampling sound: analogue to digital"
+summary: How an analogue sound wave is sampled at regular intervals and stored as digital data, using the sampling rate and the sampling resolution.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.2.6"]
+prerequisites: [data-rep-binary-denary]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, sixth learning outcome (how sound
+    is represented and encoded, using the terms sampling, sampling rate, sampling resolution,
+    analogue data and digital data). The wave in the diagram is an illustrative function sampled
+    at a deliberately slow 1000 Hz so the samples can be seen; its sample values were computed with
+    Python, as was every answer key. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain how sound is **sampled** and encoded, using the terms analogue data, digital data, sampling, sampling rate and sampling resolution.
+
+  - type: explain
+    title: Computers can't store a wiggle
+    body: |
+      Sound is air pressure wobbling smoothly up and down. A computer can only store binary numbers.
+
+      So we cheat: we measure the wave over and over, very fast, and store the measurements. Done well enough, your ears can't tell.
+
+  - type: definition
+    term: Analogue data
+    body: |
+      Data that vary continuously and can take any value within a range, such as the changing air pressure of a sound wave.
+
+  - type: definition
+    term: Digital data
+    body: |
+      Data stored as discrete (separate, fixed) values, represented in binary.
+
+  - type: explain
+    title: From air to binary
+    body: |
+      1. A **microphone** turns the sound wave into an analogue electrical signal.
+      2. An **analogue-to-digital converter (ADC)** measures the **amplitude** (height) of the signal at regular time intervals. This is **sampling**.
+      3. Each measurement is rounded to the nearest value that the available bits can store, and saved as a binary number.
+      4. To play it back, a **digital-to-analogue converter (DAC)** turns the numbers back into a varying signal for the speaker.
+
+  - type: check
+    title: Quick check
+    questions: [pipeline-cloze]
+
+  - type: definition
+    term: Sampling
+    body: |
+      Measuring the amplitude of an analogue sound wave at regular (fixed) time intervals.
+
+  - type: definition
+    term: Sampling rate
+    body: |
+      The number of samples taken per second, measured in hertz (Hz). For example, 44 100 Hz means 44 100 samples every second.
+
+  - type: definition
+    term: Sampling resolution
+    body: |
+      The number of bits used to store each sample (also called the bit depth). With $n$ bits, each sample can take one of $2^n$ values.
+
+  - type: diagram
+    diagram: cs-multimedia-sampling-wave
+    alt: >-
+      Graph of an analogue sound wave against time from 0 to 10 milliseconds. The vertical axis shows
+      8 amplitude levels labelled 000 to 111, for a 3-bit sampling resolution. Every 1 millisecond a
+      dashed line marks a sample: a dot shows the measured amplitude on the curve, and a square shows
+      the nearest level that is actually stored. The stored values, written along the top, are 100,
+      101, 101, 110, 101, 010, 001, 010, 010, 011 and 101. Most measured dots sit slightly above or
+      below their squares, showing the rounding.
+    caption: |
+      The curve is what happened; the squares are all the file remembers.
+
+  - type: example
+    title: Reading the diagram
+    problem: |
+      In the diagram the wave is sampled every 1 ms with a 3-bit sampling resolution. (a) What is the sampling rate? (b) How many levels can a sample take? (c) At 3 ms the amplitude measures about 5.8. What is stored?
+    steps:
+      - |
+        (a) One sample every 1 ms $= 0.001$ s, so $1 \div 0.001 = 1000$ samples per second: **1000 Hz** (1 kHz). Real recordings use far higher rates; this one is slowed down so you can see each sample.
+      - |
+        (b) 3 bits give $2^3 = 8$ levels, `000` to `111`.
+      - |
+        (c) 5.8 isn't one of the levels. The nearest is 6, so `110` is stored. The 0.2 difference is lost for good.
+    answer: |
+      (a) 1000 Hz (b) 8 levels (c) `110`
+
+  - type: check
+    title: Rate and resolution
+    questions: [define-sampling-rate, levels-4bit, binary-sample]
+
+  - type: intuition
+    title: A dancer under a strobe light
+    body: |
+      Sampling is like watching a dancer under a strobe light. Each flash is a sample: you see exactly where they are at that instant, and nothing in between. Flash faster and the motion looks smoother.
+
+      Where the analogy breaks: the strobe shows the dancer's exact position, but each sound sample is also **rounded** to the nearest level the sampling resolution allows.
+
+  - type: misconceptions
+    items:
+      - wrong: The sampling rate is the number of bits per sample.
+        right: |
+          That's the **sampling resolution**. The sampling rate is the number of samples **per second** (Hz).
+      - wrong: A digital recording is an exact copy of the sound.
+        right: |
+          It's an approximation. Whatever happens between samples is lost, and each sample is rounded to the nearest available value.
+      - wrong: The sound file stores the shape of the wave.
+        right: |
+          It stores only the list of sample values, as binary numbers. The smooth wave is rebuilt from them on playback.
+
+  - type: exam
+    body: |
+      - Definitions are 1 mark each. Sampling rate: "the number of samples taken **per second**". Sampling resolution: "the number of **bits** used to store **each sample**". Swapping them is the most common lost mark.
+      - Describing how sound is encoded? Hit the four beats: the **amplitude** is measured, at **regular intervals**, each value is **rounded** to the nearest available value, and it is stored in **binary**.
+      - Hz means "per second": 8 kHz is 8000 samples every second. Here kilo means 1000, not 1024.
+
+  - type: check
+    title: Samples and bits
+    questions: [samples-in-time, spot-sampling, gap-between-samples]
+
+  - type: takeaways
+    items:
+      - Sound is analogue (continuous); a computer stores digital (discrete, binary) data.
+      - Sampling measures the amplitude of the wave at regular time intervals.
+      - Sampling rate = samples per second (Hz); sampling resolution = bits per sample.
+      - With $n$ bits per sample there are $2^n$ possible values, and each sample is rounded to the nearest one.
+
+questions:
+  - id: define-sampling-rate
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.6"]
+    prompt: |
+      Which is the correct definition of **sampling rate**?
+    options:
+      - text: The number of samples taken per second
+        correct: true
+        why: |
+          Measured in hertz: 22 050 Hz means 22 050 samples every second.
+      - text: The number of bits used to store each sample
+        why: |
+          That's the sampling resolution.
+      - text: The highest amplitude the microphone can measure
+        why: |
+          Sampling rate is about how often you measure, not how big the signal can be.
+      - text: The total number of samples in the recording
+        why: |
+          That depends on the length too. Rate is samples *per second*.
+    explanation: |
+      Rate = how often (per second). Resolution = how precisely (bits per sample).
+
+  - id: levels-4bit
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.6"]
+    prompt: |
+      A sound is recorded with a sampling resolution of 4 bits. How many different values can each sample take?
+    fields:
+      - answer: 16
+        unit: values
+    explanation: |
+      $2^4 = 16$ different binary patterns, `0000` to `1111`.
+
+  - id: samples-in-time
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.6"]
+    prompt: |
+      A recording uses a sampling rate of 22 050 Hz. How many samples are taken in 4 seconds?
+    fields:
+      - answer: 88200
+        unit: samples
+    explanation: |
+      22 050 samples every second, for 4 seconds: $22\,050 \times 4 = 88\,200$ samples.
+
+  - id: pipeline-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.6"]
+    prompt: |
+      A microphone turns sound into an {{1}} electrical signal. An {{2}} measures the {{3}} of the signal at regular time intervals and stores each measurement as a binary number.
+    blanks:
+      - accept: ["analogue", "analog"]
+      - accept: ["ADC", "analogue-to-digital converter", "analogue to digital converter", "analog-to-digital converter", "analog to digital converter", "analogue-to-digital convertor", "analog-to-digital convertor", "A/D converter"]
+      - accept: ["amplitude", "height", "amplitudes"]
+    explanation: |
+      Microphone → analogue signal → ADC samples its amplitude at regular intervals → binary values.
+
+  - id: binary-sample
+    format: text
+    style: one-line
+    difficulty: 2
+    objectives: ["1.2.6"]
+    prompt: |
+      In the diagram, the amplitude at 9 ms measures about 2.9. With a 3-bit sampling resolution, what binary value is stored?
+    accept: ["011"]
+    model: |
+      `011`: 2.9 is rounded to the nearest level, 3, which is `011` in 3 bits.
+    explanation: |
+      The stored value must be one of the 8 levels. 2.9 is nearest to 3, and 3 in 3-bit binary is `011` (keep the leading 0: every sample uses all 3 bits).
+
+  - id: spot-sampling
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.2.6"]
+    prompt: |
+      A student describes a recording made with a sampling rate of 8 kHz and a sampling resolution of 8 bits. Which line contains the error?
+    lines:
+      - The microphone produces an analogue signal.
+      - The amplitude of the signal is measured 8000 times every second.
+      - Each sample can be one of 8 different values.
+      - Each sample is stored as an 8-bit binary number.
+    errorLine: 3
+    fix: |
+      8 bits per sample give $2^8 = 256$ possible values, not 8.
+    explanation: |
+      8 kHz is 8000 samples per second (line 2 is right). The student confused the number of bits with the number of values: $n$ bits give $2^n$ values.
+
+  - id: gap-between-samples
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.6"]
+    prompt: |
+      A sound is sampled at 20 kHz. How much time passes between one sample and the next, in **microseconds** (μs)?
+    fields:
+      - answer: 50
+        unit: μs
+    explanation: |
+      20 kHz $= 20\,000$ samples per second, so the gap is $1 \div 20\,000 = 0.000\,05$ s $= 50$ μs (1 μs $= 10^{-6}$ s).

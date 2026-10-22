@@ -1,0 +1,255 @@
+id: compression-lossless-lossy
+subject: "9618"
+topic: "1.3"
+title: "Lossless vs lossy: keep everything, or keep enough"
+summary: Tell lossless compression, which restores the original exactly, from lossy compression, which removes some data for good, and name examples of each.
+order: 2
+minutes: 4
+kind: core
+objectives: ["1.3.2"]
+prerequisites: [compression-why-compress]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, second learning
+    outcome (understand lossy and lossless compression). Justifying a choice in a given situation,
+    the other half of that outcome, is taught in compression-choosing-method. The pixel and sample
+    values are illustrative. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define **lossless** and **lossy** compression, explain the difference, and say which type common file formats use.
+
+  - type: explain
+    title: Two ways to pack a suitcase
+    body: |
+      There are only two ways to make a file smaller. **Pack it more cleverly**, so that everything still comes out at the other end. Or **leave some things behind** that you've decided nobody will miss.
+
+      The first is **lossless** compression. The second is **lossy**.
+
+  - type: definition
+    term: Lossless compression
+    body: |
+      Compression that reduces the file size **without losing any data**. When the file is decompressed, the **original is reconstructed exactly**, bit for bit.
+
+  - type: definition
+    term: Lossy compression
+    body: |
+      Compression that reduces the file size by **permanently removing some data**, usually detail that is unnecessary or unlikely to be noticed. The original file **cannot be reconstructed exactly**.
+
+  - type: diagram
+    diagram: cs-compression-lossless-vs-lossy
+    alt: >-
+      Two side-by-side lanes start from the same eight pixel values: 200, 201, 199, 200, 81, 79, 80,
+      80. In the lossless lane they are compressed into a smaller box and decompressed to exactly
+      200, 201, 199, 200, 81, 79, 80, 80, labelled identical to the original, every bit restored.
+      In the lossy lane they are compressed into a much smaller box and decompressed to 200, 200,
+      200, 200, 80, 80, 80, 80. The four values that changed (201 and 199 became 200; 81 and 79
+      became 80) are highlighted, with the note: only an approximation, that detail is gone for good.
+    caption: |
+      Lossless gives back exactly what went in. Lossy gives back something close, and a much smaller file.
+
+  - type: check
+    title: Quick check
+    questions: [define-lossless, name-lossy]
+
+  - type: explain
+    title: Side by side
+    body: |
+      | | Lossless | Lossy |
+      | --- | --- | --- |
+      | After decompression | exactly the original | an approximation of the original |
+      | Can it be undone? | yes, completely | no: removed data is gone for good |
+      | Size reduction | smaller; how much depends on the data | usually much smaller, and you can often choose how much |
+      | Methods you'll meet | run-length encoding (RLE), dictionary-based methods | perceptual coding (sound); reducing resolution, colour depth or sampling rate; merging similar colours |
+      | Example formats | ZIP, PNG, FLAC | JPEG, MP3, most video formats (e.g. MP4) |
+
+  - type: intuition
+    title: The vacuum bag and the ruthless friend
+    body: |
+      Lossless is a **vacuum storage bag**: your clothes take up less room for the journey, and every sock comes back out when you open it.
+
+      Lossy is a **ruthless friend** packing for you: "You never wear that jumper. It stays." The case is lighter, but the jumper isn't coming back. Where the analogy breaks: your friend guesses what *you* won't miss, but a lossy compressor is built around what human eyes and ears in general are worst at noticing, and you can set how ruthless it is.
+
+  - type: example
+    title: Lossy or lossless?
+    problem: |
+      Decide which type of compression each of these is.
+
+      - (a) The text `WWWWWWBB` is stored as `6W 2B`.
+      - (b) The sound samples 1003, 998, 1001 are stored as 1000, 1000, 1000.
+      - (c) A photo is saved as a JPEG and later reopened.
+    steps:
+      - |
+        (a) Decompress `6W 2B`: six Ws then two Bs gives `WWWWWWBB`. That's exactly the original, so **lossless**.
+      - |
+        (b) Decompressing gives 1000, 1000, 1000. Nothing tells you the originals were 1003, 998 and 1001, so **lossy**.
+      - |
+        (c) JPEG is a **lossy** format: reopening it gives a close approximation of the photo, not the original pixels.
+      - |
+        The test is always the same: **can the exact original be rebuilt?** Yes means lossless. No means lossy.
+    answer: |
+      (a) lossless (b) lossy (c) lossy
+
+  - type: check
+    title: Formats and traps
+    questions: [format-cloze, jpeg-to-png]
+
+  - type: misconceptions
+    items:
+      - wrong: Lossless compression doesn't actually make the file smaller.
+        right: |
+          It does. It finds a shorter way to store the same data, so the file shrinks and nothing is lost.
+      - wrong: Lossy means the file is damaged or corrupt.
+        right: |
+          It's a deliberate, controlled removal of detail. The file works perfectly; it just isn't identical to the original.
+      - wrong: Converting a JPEG to PNG gets the lost detail back.
+        right: |
+          Converting to a lossless format only stops **further** loss. The detail the JPEG removed is gone for good.
+      - wrong: Lossy files always look or sound noticeably worse.
+        right: |
+          At sensible settings most people can't tell. Push the compression too far, though, and you'll see blocky patches or hear a watery, "swishy" sound.
+
+  - type: exam
+    body: |
+      - Definitions score with the key phrases. Lossless: **no data is lost**, the **original can be reconstructed exactly**. Lossy: some data is **permanently removed**, the original **cannot be reconstructed**.
+      - "State a difference" means **compare both**: "lossless keeps all the data, **whereas** lossy permanently removes some". Describing only one type is a weaker answer.
+      - Don't say lossy "removes quality". It removes **data**; any drop in quality is the result.
+
+  - type: check
+    title: Stretch
+    questions: [spot-stored-data, which-type-samples]
+
+  - type: deeper
+    title: Generation loss
+    body: |
+      Each time a lossy file is edited and saved again in a lossy format, it is compressed again and **more** detail is thrown away. Re-save a JPEG enough times and it turns visibly blocky.
+
+      That's why professionals keep a **lossless master copy** to edit, and only make lossy copies for sharing.
+
+  - type: takeaways
+    items:
+      - "Lossless: smaller file, no data lost, the original is reconstructed exactly."
+      - "Lossy: much smaller file, some data permanently removed, only an approximation comes back."
+      - "The test: can the exact original be rebuilt from the compressed file?"
+      - "Lossless examples: ZIP, PNG, FLAC. Lossy examples: JPEG, MP3, most video."
+      - Converting a lossy file to a lossless format can't bring the removed data back.
+
+questions:
+  - id: define-lossless
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |
+      Which statement describes **lossless** compression?
+    options:
+      - text: The file is made smaller, and decompressing it reconstructs the original exactly.
+        correct: true
+        why: |
+          That's the definition: a smaller file, with nothing lost.
+      - text: Data that people are unlikely to notice is permanently removed.
+        why: |
+          That describes **lossy** compression.
+      - text: The file stays the same size but is stored more securely.
+        why: |
+          Lossless compression does reduce the file size, and compression isn't about security.
+      - text: Only the less important data is lost, so the original can still be rebuilt.
+        why: |
+          If any data is lost, the original can't be rebuilt exactly. That would be lossy.
+    explanation: |
+      Lossless: reduced file size, no data lost, exact original restored on decompression.
+
+  - id: name-lossy
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |
+      Name the type of compression in which some data is permanently removed, so the original file cannot be reconstructed exactly.
+    accept: ["lossy", "lossy compression"]
+    model: |
+      **Lossy** compression
+    explanation: |
+      Lossy compression trades exactness for a much smaller file. The removed data can never be recovered.
+
+  - id: format-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |
+      Write **lossy** or **lossless** for each format. A ZIP archive: {{1}}. An MP3 music file: {{2}}. A PNG image: {{3}}. A JPEG photo: {{4}}.
+    blanks:
+      - accept: ["lossless"]
+      - accept: ["lossy"]
+      - accept: ["lossless"]
+      - accept: ["lossy"]
+    explanation: |
+      ZIP and PNG rebuild the exact original (lossless). MP3 and JPEG permanently remove detail that people are unlikely to notice (lossy). ZIP *has* to be lossless: it's used for documents and programs, where one wrong bit would be a disaster.
+
+  - id: jpeg-to-png
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |
+      Leo takes a photo, saves it as a JPEG, then converts the JPEG into a PNG (a lossless format). Compared with the image his camera originally captured, the PNG is…
+    options:
+      - text: still missing the detail that was removed when it was saved as a JPEG
+        correct: true
+        why: |
+          Lossy removal is permanent. The PNG faithfully keeps what it was given, which is the JPEG's approximation.
+      - text: identical to the original, because PNG is lossless
+        why: |
+          Lossless only means the PNG won't lose anything *more*. It can't restore what the JPEG already threw away.
+      - text: even worse, because PNG removes more detail
+        why: |
+          PNG is lossless, so the conversion itself loses nothing.
+      - text: identical, because converting a file always restores the original
+        why: |
+          No conversion can recreate data that has been permanently removed.
+    explanation: |
+      Once lossy compression has removed data, no later step can bring it back.
+
+  - id: spot-stored-data
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |
+      A student compares the two types of compression. Which line contains the error?
+    lines:
+      - Both lossy and lossless compression reduce the file size.
+      - Lossless compression does not remove any data.
+      - So a file compressed losslessly can be decompressed to an exact copy of the original.
+      - Lossy compression permanently removes some data.
+      - The removed data is stored separately, so the original can be rebuilt later if needed.
+      - Lossy files are usually much smaller than lossless files of the same data.
+    errorLine: 5
+    fix: |
+      The removed data is thrown away, not stored. The original **cannot** be rebuilt from a lossy file.
+    explanation: |
+      If the removed data were kept, the file wouldn't be any smaller. "Permanently removed" is the whole point of lossy compression.
+
+  - id: which-type-samples
+    format: mcq
+    difficulty: 3
+    objectives: ["1.3.2"]
+    prompt: |
+      A sound file is compressed and then decompressed. The original samples were 513, 511, 508, 507. The decompressed samples are 512, 512, 508, 508. Which statement is correct?
+    options:
+      - text: It was lossy compression, because the original values can't be rebuilt from the decompressed data.
+        correct: true
+        why: |
+          Three of the four values changed, and nothing records what they were.
+      - text: It was lossless compression, because the values are very close to the originals.
+        why: |
+          Close isn't enough. Lossless means **exactly** the same values.
+      - text: It was lossless compression, because the file still plays.
+        why: |
+          Lossy files play perfectly well. The test is whether the exact original comes back.
+      - text: It was lossy compression, but decompressing it again would recover the original values.
+        why: |
+          Decompressing again gives the same approximation. Removed data never comes back.
+    explanation: |
+      513 → 512, 511 → 512 and 507 → 508 changed, so data was lost: lossy. Only 508 survived unchanged.

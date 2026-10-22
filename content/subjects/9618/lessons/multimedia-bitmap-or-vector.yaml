@@ -1,0 +1,238 @@
+id: multimedia-bitmap-or-vector
+subject: "9618"
+topic: "1.2"
+title: "Bitmap or vector? Choosing for the job"
+summary: Justify choosing a bitmap or a vector graphic for a task by linking what each format is good at to what the task needs.
+order: 6
+minutes: 4
+kind: core
+objectives: ["1.2.5"]
+prerequisites: [multimedia-bitmap-quality, multimedia-vector-graphics]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, fifth learning outcome (justify
+    the choice of a bitmap image or a vector graphic for a given task). The café, school and
+    architect scenarios are invented for illustration; the banner arithmetic was checked with
+    Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can choose a bitmap or a vector graphic for a given task and **justify** the choice with a reason tied to that task.
+
+  - type: explain
+    title: The banner disaster
+    body: |
+      A café emails its 200 × 100 pixel logo to a printer for a 6-metre banner. Each pixel becomes a square 3 cm wide. The café's elegant swirl turns into a staircase.
+
+      If the logo had been a vector, the printer would simply have recalculated it at 6 metres, perfectly smooth. Same logo, same file, no staircase.
+
+  - type: diagram
+    diagram: cs-multimedia-zoom-compare
+    alt: >-
+      Two panels. Left, bitmap enlarged times 8: a small circle stored as 20 by 20 pixels is enlarged,
+      and each pixel becomes a large square block, so the circle's edge is a jagged staircase; the label
+      says pixels just get bigger, jagged edge (pixelation). Right, vector enlarged times 8: the same
+      small circle is recalculated from its centre and radius, and the large circle has a perfectly
+      smooth edge; the label says edge stays smooth.
+    caption: |
+      A bitmap has a fixed number of pixels. A vector has a fixed set of instructions, which work at any size.
+
+  - type: explain
+    title: Side by side
+    body: |
+      | | Bitmap | Vector graphic |
+      | --- | --- | --- |
+      | Stored as | a grid of pixels, each with a colour code | a drawing list of drawing objects and their properties |
+      | When enlarged | pixels get bigger: jagged, pixelated | recalculated: sharp at any size |
+      | Best for | photographs and realistic images with continuous, subtle changes of colour | logos, diagrams, icons, maps, plans, text: anything built from shapes |
+      | File size depends on | image resolution × colour depth | the number and complexity of drawing objects |
+      | You edit | individual pixels (e.g. retouching a photo) | individual objects (move, resize, recolour a shape) |
+      | Made by | cameras, scanners, paint software | drawing and CAD software |
+
+  - type: check
+    title: Quick check
+    questions: [sunset-photo, logo-everywhere, scanned-letter]
+
+  - type: explain
+    title: The justification recipe
+    body: |
+      A "justify" answer has two parts: **the choice**, and **a reason linked to the task**.
+
+      - Weak: "Vector, because it's better quality." (Better how? For what?)
+      - Strong: "Vector, because the logo must be printed on pens and on banners, and a vector is recalculated at each size, so it never pixelates."
+
+      Three questions get you there:
+
+      1. Is it a **photo** or a real-world scene with subtle shading? → bitmap.
+      2. Is it made of **shapes, lines or text**, and will it be **resized**? → vector.
+      3. Will someone edit **individual pixels**, like retouching a face? → bitmap.
+
+  - type: example
+    title: Justify it
+    problem: |
+      A school needs (a) its crest for letters, the website and a 3-metre banner, and (b) photos from sports day for the newsletter. Choose a format for each and justify.
+    steps:
+      - |
+        (a) The crest is made of shapes and text, and it has to work at very different sizes.
+      - |
+        So choose a **vector graphic**: it is redrawn from its drawing list at each size, so it stays sharp on the banner, and the file stays small because it only stores a few objects.
+      - |
+        (b) The photos are captured by a camera as pixels and contain continuous changes of colour and shading.
+      - |
+        So choose a **bitmap**: drawing objects can't realistically describe a photo, and the newsletter prints the photos at a fixed size, so scaling isn't an issue.
+    answer: |
+      (a) Vector, (b) bitmap, each with a reason tied to the task, not just to the format.
+
+  - type: misconceptions
+    items:
+      - wrong: Vector files are always smaller than bitmaps.
+        right: |
+          Usually smaller for simple artwork, but a vector with thousands of objects can be bigger than a bitmap. Vector size depends on the number of objects.
+      - wrong: A high-resolution bitmap can be enlarged as much as you like.
+        right: |
+          Every bitmap has a fixed number of pixels. Enlarge it far enough and it pixelates. High resolution only delays the problem.
+      - wrong: Any photo can be turned into a vector with no loss.
+        right: |
+          Tracing a photo into shapes loses its subtle detail, or needs so many objects that the file balloons.
+
+  - type: exam
+    body: |
+      - "Justify" means choice + reason linked to the scenario. A 2-mark item is often one mark for each.
+      - Use the technical reason: "scales without loss of quality because it is recalculated from the drawing list", or "a photo has continuous variation of colour, which pixels can represent".
+      - Don't just describe the format: say why that feature matters **for this task**.
+
+  - type: check
+    title: Make the call
+    questions: [complex-vector, pixelation-cloze, justify-floorplan]
+
+  - type: takeaways
+    items:
+      - Photos and realistic images with subtle shading → bitmap.
+      - Logos, diagrams, plans, icons and text that must be resized → vector.
+      - Bitmaps pixelate when enlarged; vectors are recalculated, so they stay sharp.
+      - A justification needs a reason linked to the task, not just a feature of the format.
+
+questions:
+  - id: sunset-photo
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |
+      A travel website needs a photograph of a sunset over the sea. Which format is better, and why?
+    options:
+      - text: Bitmap, because a photo has continuous, subtle changes of colour that pixels can represent
+        correct: true
+        why: |
+          A photo has no neat shapes to describe; it's millions of slightly different colours, which is exactly what pixels store.
+      - text: Vector, because it can be scaled without losing quality
+        why: |
+          True of vectors, but it doesn't help here: drawing objects can't realistically represent a photo's shading.
+      - text: Vector, because vector files are always smaller
+        why: |
+          Not always. A vector detailed enough to look like a photo would need a vast number of objects.
+      - text: Bitmap, because bitmaps can be enlarged without pixelation
+        why: |
+          Right choice, wrong reason: bitmaps *do* pixelate when enlarged.
+    explanation: |
+      Photos → bitmap, because the image is continuous colour, not shapes.
+
+  - id: logo-everywhere
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |
+      A company's logo will be printed on pens, T-shirts and the sides of lorries. Which format should it be stored in?
+    options:
+      - text: Vector, because it is recalculated at each size, so it stays sharp from pen to lorry
+        correct: true
+        why: |
+          The drawing list works at any size, so one file serves every use without pixelation.
+      - text: Bitmap, because it can then use 24-bit colour
+        why: |
+          Colour depth doesn't stop pixelation when the logo is enlarged for a lorry.
+      - text: Bitmap at a low resolution, so the file is small
+        why: |
+          A low-resolution bitmap would look badly pixelated on a lorry.
+      - text: Vector, because vectors can only use a few colours
+        why: |
+          Vectors aren't limited to a few colours, and that wouldn't be a reason to choose one anyway.
+    explanation: |
+      The key need is resizing to very different sizes, which is what vectors are good at.
+
+  - id: scanned-letter
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.5"]
+    prompt: |
+      A scanner digitises a handwritten letter. What type of image does it produce?
+    options:
+      - text: A bitmap, because the scanner samples the page into a grid of pixels
+        correct: true
+        why: |
+          A scanner measures the colour of a grid of tiny areas of the page: that's a bitmap.
+      - text: A vector, because handwriting is made of lines
+        why: |
+          The scanner doesn't know where the strokes are; it just records the colour at each point. Turning it into lines would need extra software.
+      - text: A vector, because it can then be printed at any size
+        why: |
+          That would be nice, but it's not what a scanner produces.
+      - text: Either, depending on the screen resolution
+        why: |
+          Screen resolution is about the display, not about how the scan is stored.
+    explanation: |
+      Cameras and scanners capture pixels, so they produce bitmaps.
+
+  - id: complex-vector
+    format: mcq
+    difficulty: 3
+    objectives: ["1.2.5"]
+    prompt: |
+      Which statement is correct?
+    options:
+      - text: A detailed photograph stored as a vector would need a huge number of drawing objects, so a bitmap is usually more suitable
+        correct: true
+        why: |
+          Vector size grows with the number of objects, and realistic shading needs a great many of them.
+      - text: A vector graphic's file size increases when it is printed larger
+        why: |
+          The drawing list is the same at any print size; only the calculation at print time changes.
+      - text: A bitmap can be enlarged without loss of quality if its colour depth is high enough
+        why: |
+          Colour depth controls colours, not the number of pixels. Enlarging still pixelates.
+      - text: Bitmap files are always smaller than vector files
+        why: |
+          For simple shapes a vector is usually much smaller than a bitmap of the same picture.
+    explanation: |
+      Neither format always wins on file size: it depends on the picture. That's why the choice must be justified for the task.
+
+  - id: pixelation-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |
+      When a bitmap is enlarged too far, its individual pixels become visible and edges look jagged. This effect is called {{1}}.
+    blanks:
+      - accept: ["pixelation", "pixellation", "pixelisation", "pixelization", "pixelated", "pixellated", "pixelating"]
+    explanation: |
+      Pixelation: the fixed number of pixels is spread over a bigger area, so each one becomes a visible square.
+
+  - id: justify-floorplan
+    format: explain
+    difficulty: 2
+    objectives: ["1.2.5"]
+    prompt: |
+      An architect draws floor plans. The plans are edited often (walls are moved and resized) and printed at many different sizes. Justify storing the plans as **vector graphics**.
+    model: |
+      A floor plan is made of lines, rectangles and text, which are drawing objects. Because each wall is a separate object with properties such as its coordinates and length, it can be moved or resized by changing its properties, without redrawing pixels. The plan is recalculated from the drawing list at whatever size it is printed, so it stays sharp at every size without pixelation. The file stays small because it only stores the objects and their properties, not millions of pixels.
+    keyPoints:
+      - Plans are made of shapes, lines and text, which are drawing objects
+      - Each object can be edited by changing its properties (e.g. coordinates, length)
+      - The plan is recalculated at any print size, so there is no loss of quality or pixelation
+      - The file size depends on the number of objects, so it stays small
+    explanation: |
+      The best answers link each feature of vectors to a need in the scenario: editing walls, and printing at many sizes.

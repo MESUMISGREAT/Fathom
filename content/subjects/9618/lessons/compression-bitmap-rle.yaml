@@ -1,0 +1,230 @@
+id: compression-bitmap-rle
+subject: "9618"
+topic: "1.3"
+title: "Compressing bitmaps with RLE"
+summary: Apply run-length encoding to the pixels of a bitmap image, calculate the compressed size, and recognise which kinds of image RLE suits.
+order: 6
+minutes: 5
+kind: core
+objectives: ["1.3.3"]
+prerequisites: [compression-rle, multimedia-bitmap-file-size]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, third learning
+    outcome (how a bitmap image can be compressed, including the use of run-length encoding).
+    Lossy methods for bitmaps follow in compression-bitmap-lossy. The heart and grid images are
+    illustrative, and the 1-byte count per run is a stated assumption. Every run count and size
+    checked with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can compress a bitmap image with **RLE**, calculate its compressed size, and explain which kinds of image RLE suits.
+
+  - type: explain
+    title: Pixels in a queue
+    body: |
+      A bitmap stores a **colour code for every pixel**, row by row, left to right. Line those codes up and neighbouring pixels of the same colour form **runs**, exactly like the `AAAA`s in text.
+
+      RLE stores each run as a pair: **(number of pixels, colour code)**.
+
+  - type: diagram
+    diagram: cs-compression-bitmap-rle
+    alt: >-
+      A 12 by 8 pixel image of a red heart on a white background, with each row's run-length
+      encoding written beside it. Row 1: 2W 3R 2W 3R 2W (5 runs). Row 2: 1W 10R 1W (3 runs). Rows
+      3 and 4: 12R (1 run each). Row 5: 1W 10R 1W. Row 6: 2W 8R 2W. Row 7: 4W 4R 4W. Row 8: 5W 2R 5W
+      (3 runs each). Below: uncompressed at 8 bits per pixel, 96 pixels = 96 bytes; RLE, 22 runs × 2
+      bytes (count + colour) = 44 bytes.
+    caption: |
+      R is a red pixel, W a white one. Each row becomes a short list of runs.
+
+  - type: example
+    title: The heart in numbers
+    problem: |
+      The 12 × 8 heart uses 8-bit colour. Each RLE run is stored as a 1-byte count and a 1-byte colour code, and runs stop at the end of each row. Compare the uncompressed and compressed sizes.
+    steps:
+      - |
+        Uncompressed: $12 \times 8 = 96$ pixels, at 1 byte each, so **96 bytes**.
+      - |
+        Row 1 is `WWRRRWWRRRWW`: 5 runs, `2W 3R 2W 3R 2W`.
+      - |
+        Count every row's runs: $5 + 3 + 1 + 1 + 3 + 3 + 3 + 3 = 22$ runs.
+      - |
+        Compressed: 22 runs × 2 bytes = **44 bytes**, under half the original.
+      - |
+        Decompressing expands every pair back into its pixels, so the image is identical: RLE is **lossless**.
+    answer: |
+      96 bytes → 44 bytes, with not a single pixel changed.
+
+  - type: check
+    title: Quick check
+    questions: [row-encode, decode-row, grid-bytes]
+
+  - type: explain
+    title: Which images love RLE?
+    body: |
+      | Image | Runs? | RLE result |
+      | --- | --- | --- |
+      | Icons, logos, flags, cartoons | long runs of one colour | big savings |
+      | Screenshots and diagrams | large flat backgrounds | good savings |
+      | Photographs | neighbouring pixels are rarely *exactly* the same colour | little or no saving, and often bigger |
+
+      In a photo of the sky, two neighbouring "blue" pixels might have 24-bit codes that differ by 1. To RLE they're different colours, so the run is broken.
+
+  - type: example
+    title: When colour depth bites
+    problem: |
+      A row of 12 pixels in a 24-bit photo are all slightly different colours. Each RLE run is stored as a 1-byte count and a 3-byte colour code. Compare the sizes.
+    steps:
+      - |
+        Uncompressed: 12 pixels × 3 bytes = **36 bytes**.
+      - |
+        RLE: there are 12 runs of length 1, each costing $1 + 3 = 4$ bytes, so **48 bytes**.
+      - |
+        RLE made the row a third **bigger**. Every run of 1 pays for a count it didn't need.
+    answer: |
+      36 bytes → 48 bytes. Wrong tool for a photo.
+
+  - type: misconceptions
+    items:
+      - wrong: RLE works well on photographs.
+        right: |
+          Photos have gradual shading and fine noise, so runs of *exactly* the same colour are short. RLE shines on flat colour.
+      - wrong: RLE merges similar colours to make longer runs.
+        right: |
+          That would lose data, so it would be lossy. RLE only groups pixels with **exactly** the same colour code. (Merging similar colours is a lossy trick, coming next lesson.)
+      - wrong: You count all the red pixels in the image.
+        right: |
+          Runs are **consecutive** pixels in the order they're stored. Two red patches with white between them are separate runs.
+
+  - type: exam
+    body: |
+      - "Describe how RLE compresses a bitmap": **consecutive pixels of the same colour** are grouped into a run; each run is stored as **the colour code and the number of pixels** in the run; it is **lossless**.
+      - In calculations, list the runs row by row, add them up, then multiply by the bytes per run. The question will say whether runs may continue onto the next row.
+      - Most common slip: forgetting that each run costs **two** values, the count and the colour.
+
+  - type: check
+    title: Choose and calculate
+    questions: [best-image, spot-calc, colour24]
+
+  - type: deeper
+    title: Runs that wrap onto the next row
+    body: |
+      If runs may carry on from the end of one row to the start of the next, the heart needs only **17 runs**: for example, the two all-red rows join into a single run of 24, and the 2W ending row 1 joins the 1W starting row 2. That's $17 \times 2 = 34$ bytes.
+
+      Same pixels, slightly better compression. The rules of the scheme matter, so always use the ones the question gives you.
+
+  - type: takeaways
+    items:
+      - "RLE on a bitmap stores each run of identical consecutive pixels as (count, colour code)."
+      - Compressed size = number of runs × (bytes for the count + bytes for the colour).
+      - It's lossless, and it works best on images with large areas of exactly the same colour.
+      - On photographs, runs are short, so RLE saves little and can make the file bigger.
+
+questions:
+  - id: row-encode
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Encode this row of pixels with RLE, writing each run as count then colour: `RRRRRBBBRR` → {{1}}
+    blanks:
+      - accept: ["5R 3B 2R", "5R3B2R", "5 R 3 B 2 R", "5R,3B,2R", "5 R,3 B,2 R", "(5,R)(3,B)(2,R)", "5R, 3B, 2R"]
+    explanation: |
+      The runs are 5 red, 3 blue, 2 red. The two red runs stay separate because blue pixels come between them.
+
+  - id: decode-row
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Decode the RLE row `2W 4B 2W` into its pixels, writing each pixel as a letter.
+    accept: ["WWBBBBWW", "WW BBBB WW", "W W B B B B W W"]
+    model: |
+      `WWBBBBWW`
+    explanation: |
+      Two white, four black, two white: 8 pixels rebuilt exactly.
+
+  - id: grid-bytes
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      Each letter below is one pixel (G = green, Y = yellow) of an image with 8-bit colour.
+
+      ```
+      GGGGGGGGGG
+      GGGYYYYGGG
+      GGGYYYYGGG
+      GGGGGGGGGG
+      ```
+
+      Each run is stored as a 1-byte count and a 1-byte colour code, and runs stop at the end of each row. How many bytes does the RLE version take?
+    fields:
+      - answer: 16
+        unit: bytes
+    explanation: |
+      Runs per row: 1, 3, 3, 1, so 8 runs. $8 \times 2 = 16$ bytes, against 40 bytes uncompressed (40 pixels × 1 byte).
+
+  - id: best-image
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Which image will RLE compress **best**?
+    options:
+      - text: A flag made of three wide stripes of solid colour
+        correct: true
+        why: |
+          Each row is just a few very long runs.
+      - text: A photograph of a forest
+        why: |
+          Leaves, light and shadow mean constantly changing pixel colours: very short runs.
+      - text: A photograph of a crowd at a concert
+        why: |
+          Lots of fine detail and noise means few identical neighbouring pixels.
+      - text: A picture of TV static (random dots)
+        why: |
+          Random pixels are the worst case for RLE: runs of length 1 that double in size.
+    explanation: |
+      RLE loves large areas of exactly the same colour. The flag is the only image built from them.
+
+  - id: spot-calc
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A student calculates the size of a compressed image. Which line contains the first error?
+    lines:
+      - The image is 20 × 10 pixels, so it has 200 pixels.
+      - The colour depth is 8 bits, so the image is 200 bytes uncompressed.
+      - RLE finds 30 runs in the image.
+      - Each run is stored as a 1-byte count and a 1-byte colour code.
+      - So the compressed image is 30 bytes.
+      - That saves 170 bytes.
+    errorLine: 5
+    fix: |
+      Each run takes 2 bytes, so the compressed image is $30 \times 2 = 60$ bytes, saving 140 bytes.
+    explanation: |
+      Lines 1 to 4 are fine. The student counted runs, not bytes. Line 6 is wrong too, but only because of line 5.
+
+  - id: colour24
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |
+      A row of 30 pixels in a 24-bit image contains just 3 runs. Each run is stored as a 1-byte count and a 3-byte colour code. Calculate the size of the row uncompressed and after RLE.
+    fields:
+      - label: "Uncompressed:"
+        answer: 90
+        unit: bytes
+      - label: "After RLE:"
+        answer: 12
+        unit: bytes
+    explanation: |
+      Uncompressed: 30 pixels × 3 bytes = 90 bytes. After RLE: 3 runs × (1 + 3) bytes = 12 bytes. With long runs, even 4-byte pairs are a bargain.

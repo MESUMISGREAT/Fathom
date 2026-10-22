@@ -1,0 +1,244 @@
+id: compression-text-files
+subject: "9618"
+topic: "1.3"
+title: "Compressing text: a dictionary of repeats"
+summary: How a text file is compressed losslessly by replacing repeated words or patterns with short references to a dictionary, and why RLE rarely helps with text.
+order: 5
+minutes: 4
+kind: core
+objectives: ["1.3.3"]
+prerequisites: [compression-rle]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, third learning
+    outcome (how a text file can be compressed, including the use of RLE). The byte sizes in the
+    worked example rest on stated, simplified assumptions (1-byte indexes, a 1-byte end marker per
+    dictionary word, spaces restored by the decoder); real formats differ. Huffman coding is
+    included only as labelled enrichment. Every count and size checked with Python. All questions
+    are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain how a text file can be compressed using **dictionary-based** compression and RLE, and why text is always compressed **losslessly**.
+
+  - type: explain
+    title: Every letter counts
+    body: |
+      Change one letter and "I can **now** come" becomes "I can **not** come". Ouch.
+
+      So text is always compressed **losslessly**: the decompressed file must match the original, character for character.
+
+  - type: explain
+    title: Why RLE isn't enough
+    body: |
+      RLE needs runs of identical characters, and normal writing barely has any (the "ss" in "mess" is about as good as it gets). RLE does help with text that has long runs, such as rows of spaces used to line up columns.
+
+      What ordinary text has lots of is **repeated words and phrases**: "the", "and", "compression"… That's what **dictionary-based compression** exploits.
+
+  - type: definition
+    term: Dictionary-based compression
+    body: |
+      A **lossless** method that stores the words (or patterns) that occur in a text **once**, in a **dictionary**, each with an **index**. Every occurrence in the text is replaced by its index. The dictionary is kept with the compressed file so the text can be rebuilt exactly.
+
+  - type: diagram
+    diagram: cs-compression-dictionary
+    alt: >-
+      The tongue twister "how much wood would a woodchuck chuck if a woodchuck could chuck wood", 69
+      characters, shown as 13 word chips, each with its dictionary index underneath. The words that
+      appear more than once (wood, a, woodchuck, chuck) are highlighted. On the right, the
+      dictionary lists nine words with indexes: 1 how, 2 much, 3 wood, 4 would, 5 a, 6 woodchuck,
+      7 chuck, 8 if, 9 could. The encoded text, 13 references, reads 1 2 3 4 5 6 7 8 5 6 9 7 3. A
+      note says each repeat costs one index, not the whole word.
+    caption: |
+      Each different word is stored once. Every later appearance costs just one index.
+
+  - type: example
+    title: How much does it save?
+    problem: |
+      Compress the 69-character tongue twister above. Assume each character takes 1 byte, each index takes 1 byte, the dictionary stores each word followed by a 1-byte end marker, and the decoder puts a space between words automatically.
+    steps:
+      - |
+        Original: 69 characters = **69 bytes**.
+      - |
+        Encoded text: 13 indexes × 1 byte = **13 bytes**.
+      - |
+        Dictionary: the 9 words contain 38 letters, plus 9 end markers, so **47 bytes**.
+      - |
+        Total: $13 + 47 = 60$ bytes. A saving of only 9 bytes, because this text is short and the dictionary makes up most of the file.
+      - |
+        In a long document the dictionary is stored once while the repeats keep coming, so the saving grows with every repeat.
+    answer: |
+      60 bytes instead of 69. Small text, small saving; long text, big saving.
+
+  - type: check
+    title: Quick check
+    questions: [now-not, encode-dict, decode-dict]
+
+  - type: explain
+    title: Where the big savings come from
+    body: |
+      Each time a word appears again, it costs **one index instead of the whole word**. So the best savings come from **long** words that are **repeated often**.
+
+      Real compressors go further and store common **patterns** that aren't whole words, such as `ing`, `tion` or `ould`. Same idea, more repeats to exploit.
+
+  - type: misconceptions
+    items:
+      - wrong: You can compress text lossily by removing the spaces, vowels or punctuation.
+        right: |
+          That changes the text, and meaning can be lost ("now" or "not"?). Text compression is **always lossless**.
+      - wrong: The dictionary isn't part of the compressed file.
+        right: |
+          The decompressor needs it to rebuild the text, so it has to be stored with the file. That's why very short texts barely shrink.
+      - wrong: Dictionary compression and RLE are the same thing.
+        right: |
+          RLE replaces **consecutive** repeats of one item with a count. Dictionary methods replace repeats that occur **anywhere** in the text with an index.
+
+  - type: exam
+    body: |
+      - "Explain how a text file can be compressed": name a **lossless** method and describe it. Dictionary-based: repeated words or patterns are stored once in a dictionary, and each occurrence is replaced by its shorter index. RLE: runs of the same character are replaced by the character and a count.
+      - Say **why** it must be lossless: any changed character could change the meaning of the text.
+      - Insider hack: if a question gives you a dictionary, write the indexes in a line with spaces between them. It makes your answer easy to mark and easy for *you* to check.
+
+  - type: check
+    title: Sizes and reasons
+    questions: [savings-numeric, best-word, why-not-rle, explain-dictionary]
+
+  - type: enrichment
+    title: "Huffman coding: short codes for common letters"
+    body: |
+      In English, `e` turns up far more often than `z`. **Huffman coding** gives frequent characters short bit patterns and rare ones longer patterns, instead of 8 bits each, so the total number of bits falls. Morse code uses the same idea: `E` is a single dot.
+
+      Real tools combine tricks: ZIP files usually use a dictionary-style method followed by Huffman coding. Huffman coding isn't named in the 9618 syllabus.
+
+  - type: takeaways
+    items:
+      - Text must be compressed losslessly, because one changed character can change the meaning.
+      - Dictionary-based compression stores each word or pattern once and replaces every occurrence with an index.
+      - The dictionary is stored with the file, so short texts save little and long, repetitive texts save a lot.
+      - RLE only helps text that contains long runs of the same character.
+
+questions:
+  - id: now-not
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Why must a text file always be compressed **losslessly**?
+    options:
+      - text: Changing even one character could change the meaning of the text.
+        correct: true
+        why: |
+          "I can now come" and "I can not come" differ by a single letter.
+      - text: Text files are too small for lossy compression to work.
+        why: |
+          Size isn't the issue. Huge text files exist, and they still have to come back exactly.
+      - text: Lossy compression only works on files that contain numbers.
+        why: |
+          Lossy methods are used on images and sound. Text can't use them because every character matters.
+      - text: Lossless compression always gives a smaller file than lossy compression.
+        why: |
+          Lossy files are usually smaller. Text uses lossless because accuracy matters more than size.
+    explanation: |
+      Text has no "detail nobody will notice": every character is part of the message.
+
+  - id: encode-dict
+    format: cloze
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A dictionary contains: 1 = `to`, 2 = `be`, 3 = `or`, 4 = `not`. Encode the text `to be or not to be` as a list of indexes: {{1}}
+    blanks:
+      - accept: ["1 2 3 4 1 2", "123412", "1,2,3,4,1,2", "1, 2, 3, 4, 1, 2"]
+    explanation: |
+      Replace each word with its index: to → 1, be → 2, or → 3, not → 4, to → 1, be → 2. The second "to be" costs just two indexes.
+
+  - id: decode-dict
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      A dictionary contains: 1 = `row`, 2 = `your`, 3 = `boat`. Decode the indexes `1 1 1 2 3`.
+    accept: ["row row row your boat", "row, row, row your boat", "row, row, row, your boat"]
+    model: |
+      `row row row your boat`
+    explanation: |
+      Look up each index in turn. Notice that RLE couldn't help here: the repeats are whole words separated by spaces, not runs of one character.
+
+  - id: savings-numeric
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      In a long report, the word `compression` (11 characters, 1 byte each) appears 50 times. Each occurrence is replaced by a 1-byte index, and the word is stored once in the dictionary, taking 11 bytes. How many bytes are saved overall?
+    fields:
+      - answer: 489
+        unit: bytes
+    explanation: |
+      Before: $50 \times 11 = 550$ bytes. After: $50 \times 1 + 11 = 61$ bytes. Saved: $550 - 61 = 489$ bytes. Long words that repeat a lot give the biggest savings.
+
+  - id: best-word
+    format: mcq
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |
+      In a document, each word below may be replaced by a 1-byte index, with the word stored once in the dictionary (1 byte per letter). Characters take 1 byte each. Which replacement saves the **most** bytes?
+    options:
+      - text: '`a`, which appears 100 times'
+        why: |
+          $100 \times 1 = 100$ bytes become $100 + 1 = 101$ bytes: it actually costs 1 byte. An index is no shorter than a one-letter word.
+      - text: '`the`, which appears 60 times'
+        why: |
+          $180$ bytes become $60 + 3 = 63$: a saving of 117 bytes. Good, but not the best.
+      - text: '`compression`, which appears 20 times'
+        correct: true
+        why: |
+          $20 \times 11 = 220$ bytes become $20 + 11 = 31$: a saving of 189 bytes, the biggest here.
+      - text: '`information`, which appears 15 times'
+        why: |
+          $15 \times 11 = 165$ bytes become $15 + 11 = 26$: a saving of 139 bytes. Same length as "compression", but fewer repeats.
+    explanation: |
+      Saving = (occurrences × word length) − (occurrences × index size + dictionary entry). Long words that repeat often win; very short words can save nothing at all.
+
+  - id: why-not-rle
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      Why does RLE on its own usually compress an ordinary English essay very poorly?
+    options:
+      - text: Normal text has very few runs of identical consecutive characters, so most runs have length 1 and storing a count with each one makes the file bigger.
+        correct: true
+        why: |
+          RLE only saves space on runs, and essays hardly have any.
+      - text: RLE is lossy, so it would change the words.
+        why: |
+          RLE is lossless. The problem is that it finds almost nothing to compress in normal text.
+      - text: RLE can only be used on images.
+        why: |
+          RLE works on any data with runs: text, images or sound. Essays just don't have many runs.
+      - text: Essays contain too many repeated words.
+        why: |
+          Repeated words are great for **dictionary** compression. RLE only looks for consecutive identical characters.
+    explanation: |
+      Match the method to the kind of repetition: runs of one item suit RLE; repeated words anywhere suit a dictionary.
+
+  - id: explain-dictionary
+    format: explain
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      Explain how dictionary-based compression reduces the size of a text file **without losing any data**.
+    model: |
+      The compressor finds the words or patterns that occur in the text and stores each one once in a dictionary, with an index. Every occurrence in the text is replaced by its index, which takes fewer bytes than the word itself. The dictionary is stored with the compressed file. To decompress, each index is looked up in the dictionary and replaced by its word, so the original text is rebuilt exactly. Repeated words now cost only an index each time, so the file is smaller.
+    keyPoints:
+      - Words or patterns are stored once in a dictionary, each with an index
+      - Each occurrence in the text is replaced by its shorter index
+      - The dictionary is stored with the compressed file
+      - Decompression looks up each index, rebuilding the text exactly (lossless)
+    explanation: |
+      The "without losing any data" part is the dictionary: as long as it travels with the file, every word can be put back.

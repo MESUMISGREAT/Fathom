@@ -1,0 +1,236 @@
+id: multimedia-pixels-colour-depth
+subject: "9618"
+topic: "1.2"
+title: "Bitmaps: pixels and colour depth"
+summary: How a bitmap image is stored as a grid of pixels, each holding a binary colour code whose length is the colour depth.
+order: 1
+minutes: 4
+kind: core
+objectives: ["1.2.1"]
+prerequisites: [data-rep-binary-denary]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, first learning outcome (how the
+    data for a bitmapped image are encoded): the terms pixel and colour depth / bit depth. Image
+    resolution, screen resolution and the file header follow in
+    multimedia-image-screen-resolution. Powers of 2 and every answer key checked with Python. The
+    8 × 8 smiley image and its 2-bit key are illustrative. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain how a bitmap image is stored as **pixels**, use the **colour depth** to work out how many colours are available, and write a row of pixels in binary.
+
+  - type: explain
+    title: Zoom in until it breaks
+    body: |
+      Zoom into a photo on your phone far enough and it falls apart into tiny coloured squares. Those squares are the whole secret.
+
+      A **bitmapped image** (a **bitmap**) is a grid of **pixels**. Each pixel is one solid colour, and that colour is stored as a **binary number**.
+
+      So a picture, to a computer, is just a very long list of numbers. Pretty unromantic, honestly.
+
+  - type: definition
+    term: Pixel
+    body: |
+      The smallest identifiable element of a bitmap image (short for *picture element*). Each pixel has a single colour, stored as a binary value.
+
+  - type: definition
+    term: Colour depth (bit depth)
+    body: |
+      The number of bits used to represent the colour of each pixel. With a colour depth of $n$ bits, $2^n$ different colours can be represented.
+
+  - type: explain
+    title: How many colours do you get?
+    body: |
+      | Colour depth | Colours available | Where you'd see it |
+      | --- | --- | --- |
+      | 1 bit | $2^1 = 2$ | black-and-white (monochrome) images |
+      | 2 bits | $2^2 = 4$ | very simple graphics |
+      | 4 bits | $2^4 = 16$ | old-school game sprites |
+      | 8 bits | $2^8 = 256$ | simple web graphics and icons |
+      | 24 bits | $2^{24} = 16\,777\,216$ | photos (8 bits each for red, green and blue) |
+
+      Every extra bit **doubles** the number of colours, because each existing code can now end in a 0 or a 1.
+
+  - type: check
+    title: Quick check
+    questions: [name-pixel, define-colour-depth, colours-from-depth]
+
+  - type: diagram
+    diagram: cs-multimedia-pixel-grid
+    alt: >-
+      An 8 by 8 grid of pixels showing a smiley face. A key beside it gives the four 2-bit codes:
+      00 for the background, 01 for the cheeks, 10 for the face and 11 for the eyes and mouth, with a
+      note that 2 bits give 2 squared, which is 4, possible colours. Row 7 of the grid is outlined,
+      and underneath, the codes stored for that row are written out in order: 00 10 10 11 11 10 10
+      00, a total of 16 bits.
+    caption: |
+      64 pixels × 2 bits each = 128 bits of pixel data. Row 7 alone is `00 10 10 11 11 10 10 00`.
+
+  - type: example
+    title: Encode a row
+    problem: |
+      Using the key in the diagram, write the binary stored for this row of 6 pixels, left to right: **face, face, cheeks, background, eyes, face**.
+    steps:
+      - |
+        Look up each pixel in the key: face = `10`, cheeks = `01`, background = `00`, eyes = `11`.
+      - |
+        Write the codes in order: `10 10 01 00 11 10`.
+      - |
+        Check the length: 6 pixels × 2 bits = 12 bits ✓
+    answer: |
+      `10 10 01 00 11 10` (12 bits). The computer stores the codes with no gaps: `101001001110`.
+
+  - type: check
+    title: Your turn
+    questions: [encode-row]
+
+  - type: intuition
+    title: Paint by numbers
+    body: |
+      A bitmap is a paint-by-numbers kit. The grid is the canvas, each square holds a number, and the key says which paint each number means. The computer only ever stores the numbers.
+
+      Where the analogy breaks: in a 24-bit image there's usually no separate key. The 24 bits *are* the colour: they give the amounts of red, green and blue directly.
+
+  - type: explain
+    title: Working backwards
+    body: |
+      Exam favourite: *a logo needs 100 different colours. What is the minimum colour depth?*
+
+      Find the smallest $n$ with $2^n \ge 100$. $2^6 = 64$ is too few; $2^7 = 128$ is enough. So **7 bits**.
+
+      Don't jump to a "nice" number like 8 unless the question asks what is *typical*: "minimum" means the smallest that works.
+
+  - type: misconceptions
+    items:
+      - wrong: Colour depth is the number of colours in the image.
+        right: |
+          Colour depth is the number of **bits per pixel**. The number of colours is $2^{\text{colour depth}}$: a colour depth of 8 bits gives 256 colours.
+      - wrong: Going from 4-bit to 8-bit colour doubles the number of colours.
+        right: |
+          Each extra *bit* doubles it, so 4 extra bits multiply it by $2^4 = 16$: from 16 colours to 256.
+      - wrong: 9 colours need 3 bits, because $2^3 = 8$ is close enough.
+        right: |
+          8 codes can't label 9 colours: one colour would have no code. You need 4 bits, because $2^4 = 16 \ge 9$.
+
+  - type: exam
+    body: |
+      - **Define** questions on *pixel* and *colour depth* are usually 1 mark each, and the wording matters. Colour depth is "the number of bits used to represent the colour of each pixel", not "how colourful the image is".
+      - For "minimum number of bits", find the smallest power of 2 that is **at least** the number of colours, and show it: $2^7 = 128 \ge 100$, so 7 bits.
+      - No calculators in 9618, so know the powers of 2 up to $2^{10} = 1024$ without thinking.
+
+  - type: check
+    title: Colour depth
+    questions: [min-bits, spot-nine-colours, depth-factor]
+
+  - type: takeaways
+    items:
+      - A bitmap is a grid of pixels; each pixel's colour is stored as a binary code.
+      - Colour depth (bit depth) is the number of bits per pixel.
+      - A colour depth of $n$ bits gives $2^n$ colours; each extra bit doubles the number of colours.
+      - "Minimum bits for $c$ colours: the smallest $n$ with $2^n \\ge c$."
+
+questions:
+  - id: name-pixel
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |
+      What name is given to the smallest identifiable element of a bitmap image?
+    accept: ["pixel", "pixels", "a pixel", "picture element", "picture elements", "pixel (picture element)"]
+    model: |
+      A **pixel** (short for *picture element*).
+    explanation: |
+      A bitmap is a grid of pixels. Each pixel is one solid colour, stored as a binary code whose length is the colour depth.
+
+  - id: colours-from-depth
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |
+      A bitmap image has a colour depth of 5 bits. How many different colours can each pixel be?
+    fields:
+      - answer: 32
+        unit: colours
+    explanation: |
+      With $n$ bits there are $2^n$ different codes, so $2^5 = 32$ colours.
+
+  - id: encode-row
+    format: cloze
+    difficulty: 2
+    objectives: ["1.2.1"]
+    prompt: |
+      Using the key 00 = background, 01 = cheeks, 10 = face, 11 = eyes and mouth, the row of pixels *background, face, eyes, eyes, face, cheeks* is stored as {{1}}
+    blanks:
+      - accept: ["001011111001", "00 10 11 11 10 01", "0010 1111 1001", "00,10,11,11,10,01"]
+    explanation: |
+      Look up each pixel in turn: background `00`, face `10`, eyes `11`, eyes `11`, face `10`, cheeks `01`. Six pixels × 2 bits = 12 bits: `00 10 11 11 10 01`.
+
+  - id: define-colour-depth
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |
+      Which statement best defines **colour depth**?
+    options:
+      - text: The number of bits used to represent the colour of each pixel
+        correct: true
+        why: |
+          That's the definition mark schemes reward. The number of colours then follows: $2^{\text{colour depth}}$.
+      - text: The number of different colours used in the image
+        why: |
+          That's a consequence of the colour depth, not the colour depth itself. 8-bit colour depth *allows* 256 colours.
+      - text: The number of pixels in the image
+        why: |
+          That's the image resolution (width × height in pixels).
+      - text: How bright and saturated the colours appear on screen
+        why: |
+          Colour depth is about how many bits each pixel's code has, not how vivid the display is.
+    explanation: |
+      Colour depth (or bit depth) = bits per pixel. More bits per pixel means more possible colours.
+
+  - id: min-bits
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.1"]
+    prompt: |
+      A cartoon uses exactly 40 different colours. What is the **minimum** colour depth needed to store it as a bitmap?
+    fields:
+      - answer: 6
+        unit: bits
+    explanation: |
+      $2^5 = 32$ is too few codes for 40 colours, but $2^6 = 64 \ge 40$. So the minimum colour depth is 6 bits.
+
+  - id: spot-nine-colours
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.2.1"]
+    prompt: |
+      A student works out the colour depth needed for a flag that uses 9 colours. Which line contains the first error?
+    lines:
+      - The flag uses 9 different colours.
+      - "With 3 bits there are $2^3 = 8$ possible codes."
+      - 8 is close to 9, so a colour depth of 3 bits is enough.
+      - Each pixel will be stored using 3 bits.
+    errorLine: 3
+    fix: |
+      8 codes can only label 8 colours. 9 colours need 4 bits, since $2^4 = 16 \ge 9$.
+    explanation: |
+      Lines 1 and 2 are true. "Close enough" doesn't work: every colour needs its own code, so the colour depth must give **at least** 9 codes.
+
+  - id: depth-factor
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.1"]
+    prompt: |
+      An image's colour depth is increased from 3 bits to 6 bits. By what factor does the number of available colours increase?
+    fields:
+      - answer: 8
+    explanation: |
+      3 bits give $2^3 = 8$ colours; 6 bits give $2^6 = 64$ colours. $64 \div 8 = 8$, which is $2^3$: three extra bits, three doublings. (If you said 2, you doubled the *bits*. The pixel data do double in size, but the colours go up 8 times.)

@@ -1,0 +1,239 @@
+id: compression-sound-files
+subject: "9618"
+topic: "1.3"
+title: "Compressing sound: cut what ears can't hear"
+summary: How sound files are compressed, with lossy perceptual coding or lower sampling rates and resolutions, or with lossless methods that keep every sample.
+order: 9
+minutes: 5
+kind: core
+objectives: ["1.3.3", "1.3.2"]
+prerequisites: [multimedia-sound-file-size, compression-lossless-lossy]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, third learning
+    outcome (how a sound file can be compressed), with one question on justifying lossy or
+    lossless compression (second learning outcome). CD and MP3 bit rates are the standard values;
+    the loudness levels and masking curve in the diagram are illustrative, and the recording
+    settings are chosen to work without a calculator. Every calculation checked with Python. All
+    questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a sound file can be compressed, including **perceptual coding**, and say which methods are lossy and which are lossless.
+
+  - type: explain
+    title: The MP3 magic trick
+    body: |
+      CD-quality stereo uses about **1411 kbit/s** ($44\,100 \times 16 \times 2$ bits every second). A typical MP3 uses **128 kbit/s**: about 11 times less. Most people can't hear the difference.
+
+      The trick: **don't store what ears can't hear**.
+
+  - type: definition
+    term: Perceptual coding
+    body: |
+      A **lossy** method of compressing sound that removes the parts of the sound the human ear is **unlikely to hear** (perceive), so the file is much smaller with little noticeable loss of quality. It is used in formats such as MP3 and AAC, and is sometimes called **perceptual music shaping**.
+
+  - type: explain
+    title: What gets removed
+    body: |
+      - **Sounds outside the range of human hearing**: roughly **20 Hz to 20 kHz** (most adults can't reach the top end anyway).
+      - **Masked sounds**: when a loud sound and a quieter sound of similar frequency play **at the same time**, the quieter one can't be heard, so it is removed.
+
+      The removed data is gone for good: an MP3 can never be turned back into the original recording.
+
+  - type: diagram
+    diagram: cs-compression-sound-masking
+    alt: >-
+      A graph of loudness against frequency on a logarithmic scale from 10 Hz to about 40 kHz, with
+      tick marks at 10 Hz, 100 Hz, 1 kHz and 10 kHz, and the range of human hearing, about 20 Hz to 20 kHz, shaded. Six sound components are drawn as
+      vertical lines. Kept (solid): one at 150 Hz, a loud sound at 1 kHz, and one at 6 kHz. Removed
+      (dashed): one at 12 Hz labelled too low to hear, one at 25 kHz labelled too high to hear, and
+      a quiet one just above 1 kHz labelled masked, which sits under a dashed triangular masking
+      threshold peaking at the loud 1 kHz sound. Loudness levels are illustrative.
+    caption: |
+      Perceptual coding keeps the solid lines and drops the dashed ones: too low, too high, or drowned out.
+
+  - type: check
+    title: Quick check
+    questions: [masked-mcq, outside-hearing, name-perceptual]
+
+  - type: explain
+    title: "Blunter tools: fewer samples, fewer bits"
+    body: |
+      You can also shrink a sound file by **reducing the sampling rate** (fewer samples per second) or **reducing the sampling resolution** (fewer bits per sample). Both are lossy, and the change is easier to hear than perceptual coding.
+
+      A lower sampling rate loses the high-pitched detail, so the sound is duller. Fewer bits per sample makes each sample less accurate, so the sound is noisier.
+
+  - type: example
+    title: Halve the rate, halve the bits
+    problem: |
+      A 10-second mono recording has a sampling rate of 48 000 Hz and a sampling resolution of 16 bits. Find its size in bytes, then its size if the sampling rate is halved and the resolution is cut to 8 bits.
+    steps:
+      - |
+        Original: $48\,000 \times 16 \times 10 = 7\,680\,000$ bits, $\div 8 = 960\,000$ bytes.
+      - |
+        Halving the sampling rate halves the number of samples: $24\,000 \times 10 = 240\,000$ samples.
+      - |
+        Halving the resolution halves the bits in each: $240\,000 \times 8 = 1\,920\,000$ bits, $\div 8 = 240\,000$ bytes.
+      - |
+        Half × half = **a quarter** of the original size, and noticeably worse quality.
+    answer: |
+      960 000 bytes → 240 000 bytes.
+
+  - type: check
+    title: Size it up
+    questions: [size-reduction]
+
+  - type: explain
+    title: When every sample matters
+    body: |
+      A recording studio's master copy, or a sound archive, must keep **every sample exactly**. **Lossless** formats such as FLAC do this. They save space by spotting patterns, for example:
+
+      - storing a long stretch of **digital silence** (a run of identical samples) with **RLE**;
+      - storing how much each sample **differs from a prediction** based on the samples before it, which is usually a small number that needs fewer bits.
+
+      Lossless sound files typically end up about half to two-thirds of the original size, against roughly a tenth for a 128 kbit/s MP3.
+
+  - type: misconceptions
+    items:
+      - wrong: MP3 removes the quiet parts of a song.
+        right: |
+          It removes quiet sounds that are **masked** by louder sounds playing **at the same time**. A quiet passage on its own is kept.
+      - wrong: Perceptual coding is lossless, because you can't hear the difference.
+        right: |
+          Data is permanently removed, so it's **lossy**, however good it sounds.
+      - wrong: Cutting out frequencies above 20 kHz makes music sound worse.
+        right: |
+          Those frequencies are outside the range of human hearing, so listeners couldn't hear them in the first place.
+
+  - type: exam
+    body: |
+      - "Describe how a sound file can be compressed" (3–4 marks): name **perceptual coding** and say it is **lossy**; it removes sounds **outside the range of human hearing** and **quieter sounds masked by louder ones** played at the same time. Reducing the **sampling rate** or **sampling resolution** is another lossy method.
+      - For lossless, say that **every sample is kept**, and give an example of how, such as RLE on runs of identical samples.
+      - Don't write "it removes unnecessary sounds" without saying **which** sounds. That's where marks slip away.
+
+  - type: check
+    title: Explain it
+    questions: [spot-mp3, explain-studio]
+
+  - type: takeaways
+    items:
+      - "Perceptual coding (lossy) removes sounds people are unlikely to hear: frequencies outside about 20 Hz to 20 kHz, and quieter sounds masked by louder ones at the same time."
+      - Reducing the sampling rate or sampling resolution also shrinks a sound file, but the quality loss is easier to hear.
+      - Lossless sound compression (such as FLAC) keeps every sample, using patterns like runs of identical samples.
+      - Lossy files such as MP3 are much smaller than lossless ones, which is why streaming uses them.
+
+questions:
+  - id: masked-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Which of these would perceptual coding remove from a recording?
+    options:
+      - text: A quiet sound of similar frequency playing at the same moment as a much louder one
+        correct: true
+        why: |
+          The loud sound masks it, so the listener can't hear it anyway.
+      - text: The quietest song on the album
+        why: |
+          A quiet song on its own is perfectly audible. Only sounds masked by louder ones at the same time are removed.
+      - text: The chorus, because it repeats
+        why: |
+          Perceptual coding removes sounds you can't hear. A repeated chorus is very much audible.
+      - text: Every sound above 1 kHz
+        why: |
+          Much of what you hear in music and speech is above 1 kHz. Only frequencies outside human hearing (above about 20 kHz) are cut.
+    explanation: |
+      Perceptual coding removes what the ear can't perceive: masked sounds and frequencies outside the hearing range.
+
+  - id: outside-hearing
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      A recording contains sound at each of these frequencies. Which one is outside the range of human hearing, so perceptual coding would remove it?
+    options:
+      - text: 50 Hz
+        why: |
+          Low, but audible: a deep hum.
+      - text: 3 kHz
+        why: |
+          Right in the middle of the hearing range, where our ears are most sensitive.
+      - text: 15 kHz
+        why: |
+          High, but still within the range (most young people can hear it).
+      - text: 30 kHz
+        correct: true
+        why: |
+          Above about 20 kHz: beyond human hearing, so storing it is a waste of bits.
+    explanation: |
+      Human hearing covers roughly 20 Hz to 20 kHz. Anything outside that range can be removed without listeners noticing.
+
+  - id: name-perceptual
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Name the lossy compression technique, used by formats such as MP3, that removes sounds the human ear is unlikely to hear.
+    accept: ["perceptual coding", "perceptual music shaping", "perceptual encoding", "perceptual compression", "perceptual audio coding"]
+    model: |
+      **Perceptual coding** (also called perceptual music shaping)
+    explanation: |
+      "Perceptual" because it's based on what people perceive (hear), not on the raw data.
+
+  - id: size-reduction
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A 20-second mono recording has a sampling rate of 40 000 Hz and a sampling resolution of 16 bits. Calculate (a) its size in bytes, and (b) its size in bytes if the sampling rate is halved and the sampling resolution is reduced to 8 bits. Type each number without spaces.
+    fields:
+      - label: "(a)"
+        answer: 1600000
+        unit: bytes
+      - label: "(b)"
+        answer: 400000
+        unit: bytes
+    explanation: |
+      (a) $40\,000 \times 16 \times 20 = 12\,800\,000$ bits $= 1\,600\,000$ bytes. (b) $20\,000 \times 8 \times 20 = 3\,200\,000$ bits $= 400\,000$ bytes: half the samples, each half the size, so a quarter of the file.
+
+  - id: spot-mp3
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A student describes how an MP3 file is compressed. Which line contains the error?
+    lines:
+      - MP3 uses lossy compression.
+      - It removes frequencies outside the range of human hearing.
+      - When a loud sound and a quieter sound of similar frequency play at the same time, the quieter one can be removed.
+      - Because listeners can't hear the removed sounds, the original recording can be rebuilt exactly when the file is decompressed.
+      - The much smaller file can be streamed using less bandwidth.
+    errorLine: 4
+    fix: |
+      The removed sounds are gone permanently, so the original recording **cannot** be rebuilt. Not hearing a difference doesn't make it lossless.
+    explanation: |
+      "You can't hear it" explains why lossy is acceptable here; it doesn't make the data come back.
+
+  - id: explain-studio
+    format: explain
+    difficulty: 3
+    objectives: ["1.3.3", "1.3.2"]
+    prompt: |
+      A recording studio keeps a master copy of every album it records, and also supplies the albums to a music streaming service. Explain which type of compression is suitable for each, and how each reduces the file size.
+    model: |
+      The studio's master copies should be compressed losslessly, because they may be edited or remixed later and every sample must be kept exactly. Lossless compression finds patterns, such as runs of identical samples, and stores them more efficiently, so no data is lost. The streaming service should use lossy compression with perceptual coding. This removes sounds outside the range of human hearing and quieter sounds masked by louder ones at the same time. The files become much smaller, so they stream using less bandwidth with less buffering, and listeners are unlikely to notice the difference.
+    keyPoints:
+      - "Master copies: lossless, so every sample is kept for future editing"
+      - Lossless works by storing patterns (such as runs of identical samples) more efficiently
+      - "Streaming: lossy compression using perceptual coding"
+      - Removes sounds outside human hearing and quieter sounds masked by louder ones
+      - Much smaller files stream with less bandwidth; listeners are unlikely to notice
+    explanation: |
+      Same music, two jobs, two answers. The master must be exact; the stream must be small.

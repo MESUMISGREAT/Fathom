@@ -1,0 +1,247 @@
+id: multimedia-sampling-accuracy
+subject: "9618"
+topic: "1.2"
+title: Sampling rate, sampling resolution and accuracy
+summary: How raising or lowering the sampling rate and the sampling resolution changes how accurately a recording matches the original sound, and its file size.
+order: 8
+minutes: 5
+kind: core
+objectives: ["1.2.7"]
+prerequisites: [multimedia-sound-sampling]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, seventh learning outcome (the
+    impact of changing the sampling rate and the sampling resolution, including on accuracy and
+    file size). This lesson covers accuracy and the direction of the file-size change; file-size
+    calculations follow in multimedia-sound-file-size. The waves in the diagrams are illustrative
+    functions; telephone and CD figures are standard published values. Answer keys checked with
+    Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the impact of changing the **sampling rate** and the **sampling resolution** on the accuracy of a sound recording and on its file size.
+
+  - type: explain
+    title: Same song, two very different files
+    body: |
+      A phone call sounds a bit tinny. A studio master sounds like the band is in your room. Both are digital sound.
+
+      The difference comes down to two numbers: how **often** you sample, and how many **bits** each sample gets. If that sounds familiar, it should:
+
+      | Bitmap | Sound |
+      | --- | --- |
+      | image resolution: how many pixels | sampling rate: how many samples per second |
+      | colour depth: bits per pixel | sampling resolution: bits per sample |
+
+      Turn either sound dial up: a more accurate recording and a bigger file.
+
+  - type: diagram
+    diagram: cs-multimedia-sampling-rate-compare
+    alt: >-
+      Two panels showing the same wave, a large slow oscillation with small fast wiggles on top, drawn
+      as a dashed line over two cycles. Left, low sampling rate, 5 samples per cycle: the stored
+      version, drawn as steps that hold each sample until the next, is a crude blocky shape that
+      misses the small wiggles completely; labelled fast wiggles missed, less accurate, smaller file.
+      Right, high sampling rate, 20 samples per cycle, 4 times as many: the steps closely follow the
+      dashed wave including the wiggles; labelled follows the original closely, 4 times the file
+      size.
+    caption: |
+      Sampling rate is about **time**: more samples per second, smaller gaps, fewer changes slip through.
+
+  - type: explain
+    title: "Sampling rate: how often"
+    body: |
+      **Increase the sampling rate** → samples are closer together in time → rapid changes in the wave (high-pitched sounds) are captured → the recording is a **more accurate** copy of the original. But there are more samples per second to store, so the **file is larger**.
+
+      **Decrease the sampling rate** → bigger gaps between samples → fast changes fall between samples and are lost → **less accurate** (high frequencies missing, sound muffled), but a **smaller file**.
+
+  - type: check
+    title: Quick check
+    questions: [halve-rate]
+
+  - type: diagram
+    diagram: cs-multimedia-sampling-resolution-compare
+    alt: >-
+      Two panels showing the same wave sampled at the same rate, with horizontal grid lines marking the
+      levels each sample can take. Left, sampling resolution 2 bits, 2 squared is 4 levels: every
+      sample is forced onto one of only 4 widely spaced levels, so the stored steps are blocky and far
+      from the dashed wave; labelled big rounding errors, blocky, less accurate. Right, sampling
+      resolution 4 bits, 2 to the power 4 is 16 levels: the steps sit very close to the wave; labelled
+      small rounding errors, 2 times the file size.
+    caption: |
+      Sampling resolution is about **amplitude**: more bits, more levels, smaller rounding errors.
+
+  - type: explain
+    title: "Sampling resolution: how precisely"
+    body: |
+      **Increase the sampling resolution** → more bits per sample → more possible values ($2^n$) → each sample is rounded to a level closer to the true amplitude → smaller rounding errors (called **quantisation** errors) → **more accurate**, less distorted sound. Each sample takes more bits, so the **file is larger**.
+
+      **Decrease the sampling resolution** → fewer levels → bigger rounding errors → the sound is distorted or noisy, but the **file is smaller**.
+
+  - type: check
+    title: Resolution
+    questions: [levels-16bit, resolution-up, rounding-error]
+
+  - type: explain
+    title: The whole picture
+    body: |
+      | Change | Accuracy | File size |
+      | --- | --- | --- |
+      | Increase sampling rate | more accurate: samples closer in time, faster changes captured | larger |
+      | Decrease sampling rate | less accurate | smaller |
+      | Increase sampling resolution | more accurate: more levels, smaller rounding errors | larger |
+      | Decrease sampling resolution | less accurate | smaller |
+
+      Real-world settings: telephone-quality speech uses about 8000 Hz with 8 bits per sample. CD audio uses 44 100 Hz with 16 bits per sample (in stereo).
+
+  - type: misconceptions
+    items:
+      - wrong: A higher sampling rate makes the recording louder.
+        right: |
+          Loudness depends on the amplitude of the sound itself. The sampling rate only changes how often it is measured.
+      - wrong: Increasing the sampling resolution means taking more samples per second.
+        right: |
+          It means more **bits per sample**. More samples per second is the sampling rate.
+      - wrong: With a high enough sampling rate and resolution, the recording is perfect.
+        right: |
+          It's always an approximation. Higher settings just make the errors too small to hear.
+
+  - type: exam
+    body: |
+      - "Explain the impact" wants the chain: change → what happens to the samples → accuracy → file size. For example: "more bits per sample, so more possible values, so each sample is closer to the true amplitude: more accurate, but more bits to store, so a larger file".
+      - "Better quality" on its own scores little. Say **why**: closer samples in time, or more levels.
+      - Keep the two dials apart: rate is about **time**, resolution is about **amplitude**.
+
+  - type: check
+    title: Rate or resolution?
+    questions: [dials-cloze, explain-rate]
+
+  - type: takeaways
+    items:
+      - Higher sampling rate = samples closer together in time = more accurate, larger file.
+      - Higher sampling resolution = more levels per sample = smaller rounding errors, more accurate, larger file.
+      - Lower settings give a smaller file but a less accurate recording.
+      - A digital recording is always an approximation of the analogue sound.
+
+  - type: enrichment
+    title: The Nyquist rule
+    body: |
+      To capture a frequency at all, you need more than two samples per cycle of it. So the sampling rate must be more than **twice the highest frequency** you want to keep (the Nyquist–Shannon sampling theorem).
+
+      Human hearing tops out at around 20 000 Hz, which is why CD audio uses 44 100 Hz: just over double. Telephone speech at 8000 Hz can only keep frequencies below 4000 Hz, which is why calls sound tinny.
+
+questions:
+  - id: halve-rate
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.7"]
+    prompt: |
+      A recording's sampling rate is halved from 44 100 Hz to 22 050 Hz. The sampling resolution is unchanged. What is the effect?
+    options:
+      - text: Half as many samples per second, so fast changes (high-pitched sounds) may be lost; the file is half the size
+        correct: true
+        why: |
+          Bigger gaps between samples mean less of the wave is captured, and there are half as many samples to store.
+      - text: Each sample is rounded more coarsely; the file is half the size
+        why: |
+          Rounding depends on the sampling resolution (bits per sample), which hasn't changed.
+      - text: Half as many samples per second; the file is a quarter of the size
+        why: |
+          File size is proportional to the sampling rate, so halving it halves the file.
+      - text: No change to accuracy, because each sample is still stored with the same number of bits; the file is half the size
+        why: |
+          Each sample is as precise as before, but there are fewer of them, so changes between samples are missed.
+    explanation: |
+      Sampling rate controls *how often* the wave is measured. Halve it and you halve the samples, the file and the detail in time.
+
+  - id: levels-16bit
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.7"]
+    prompt: |
+      CD audio uses a sampling resolution of 16 bits. How many different amplitude values can each sample take?
+    fields:
+      - answer: 65536
+        unit: values
+    explanation: |
+      $2^{16} = 65\,536$ levels, compared with only $2^8 = 256$ for an 8-bit recording.
+
+  - id: resolution-up
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.7"]
+    prompt: |
+      The sampling resolution of a recording is increased from 8 bits to 16 bits, at the same sampling rate. Which describes the effect?
+    options:
+      - text: Each sample can take more values, so it is closer to the true amplitude; the file is twice the size
+        correct: true
+        why: |
+          256 levels become 65 536, so rounding errors shrink, and each sample now takes 16 bits instead of 8.
+      - text: More samples are taken per second, so more detail is captured; the file is twice the size
+        why: |
+          That describes increasing the sampling **rate**.
+      - text: Each sample can take 256 times as many values, so the file is 256 times the size
+        why: |
+          The levels go up ×256, but the bits per sample only double, so the file doubles.
+      - text: The recording becomes louder; the file size is unchanged
+        why: |
+          Loudness isn't set by the sampling resolution, and more bits per sample definitely means a bigger file.
+    explanation: |
+      More bits per sample → more levels → more accurate samples → larger file (in proportion to the bits).
+
+  - id: rounding-error
+    format: mcq
+    difficulty: 3
+    objectives: ["1.2.7"]
+    prompt: |
+      Which change reduces the error caused by rounding each sample to the nearest available value?
+    options:
+      - text: Increasing the sampling resolution
+        correct: true
+        why: |
+          More bits give more levels that are closer together, so each sample is rounded by a smaller amount.
+      - text: Increasing the sampling rate
+        why: |
+          That takes samples more often, reducing what is missed *between* samples, but each sample is still rounded to the same coarse levels.
+      - text: Recording for longer
+        why: |
+          A longer recording has more samples, but each one is rounded just as much.
+      - text: Recording in stereo
+        why: |
+          Stereo adds a second channel; it doesn't change how precisely each sample is stored.
+    explanation: |
+      Rounding (quantisation) error is about **amplitude**, so it is fixed by more bits per sample. Gaps in **time** are fixed by the sampling rate.
+
+  - id: dials-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["1.2.7"]
+    prompt: |
+      Increasing the sampling {{1}} means samples are taken closer together in time. Increasing the sampling {{2}} means each sample can take more different values. Both make the file {{3}}.
+    blanks:
+      - accept: ["rate", "frequency"]
+      - accept: ["resolution", "bit depth"]
+      - accept: ["larger", "bigger", "greater", "increase", "larger in size"]
+    explanation: |
+      Rate = how often (time). Resolution = how precisely (bits per sample). More of either means more bits to store.
+
+  - id: explain-rate
+    format: explain
+    difficulty: 2
+    objectives: ["1.2.7"]
+    prompt: |
+      Explain the impact of **increasing the sampling rate** used to record a sound.
+    model: |
+      Increasing the sampling rate means more samples are taken per second, so the samples are closer together in time. Changes in the sound wave that happen between samples, such as high-pitched sounds, are more likely to be captured, so the recording is a more accurate representation of the original sound. However, there are more samples to store, so the file size increases (in proportion to the sampling rate).
+    keyPoints:
+      - More samples are taken per second
+      - The gaps between samples are smaller, so faster changes in the wave are captured
+      - The recording is a more accurate representation of the original analogue sound
+      - More samples have to be stored, so the file size is larger
+    explanation: |
+      Cover both sides: what happens to accuracy (and why) and what happens to file size (and why).

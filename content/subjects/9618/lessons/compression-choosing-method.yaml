@@ -1,0 +1,210 @@
+id: compression-choosing-method
+subject: "9618"
+topic: "1.3"
+title: "Lossy or lossless? Justify your choice"
+summary: Choose lossy or lossless compression for a situation and justify it by linking the choice to what the data is and how it will be used.
+order: 3
+minutes: 4
+kind: core
+objectives: ["1.3.2"]
+prerequisites: [compression-lossless-lossy]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, second learning
+    outcome (justify the use of lossy or lossless compression in a given situation). The
+    definitions are taught in compression-lossless-lossy. The school, company and estate-agent
+    scenarios are invented for illustration. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can choose lossy or lossless compression for a situation and **justify** the choice in a way that earns the marks.
+
+  - type: explain
+    title: One question decides it
+    body: |
+      Ask yourself: **would losing any data cause a problem?**
+
+      - If one changed bit could break the file or change its meaning, it must be **lossless**.
+      - If small changes would go unnoticed, and a smaller file really matters (streaming, web pages, limited storage), **lossy** is usually the better choice.
+
+  - type: diagram
+    diagram: cs-compression-decision-flow
+    alt: >-
+      A flowchart. First question: would changing even one bit of the data cause a problem? Yes
+      leads to LOSSLESS, with examples text, program code, spreadsheets, databases and medical
+      scans. No leads to a second question: is a smaller, faster file worth losing detail people
+      won't notice? Yes leads to LOSSY, with examples streaming music and video, web photos and
+      video calls. No leads to LOSSLESS, with examples master copies that will be edited again, and
+      archives.
+    caption: |
+      Two questions, in this order. Accuracy first, then size.
+
+  - type: explain
+    title: The usual suspects
+    body: |
+      | Situation | Choose | Because… |
+      | --- | --- | --- |
+      | Text documents, emails, source code | lossless | one changed character can change the meaning ("now" → "not") |
+      | A program file to download | lossless | one wrong bit could stop the program running or make it misbehave |
+      | Spreadsheets, databases, bank records | lossless | every value must be exactly right |
+      | Medical scans | lossless | removed detail could hide something a doctor needs to see |
+      | Music or video streamed to phones | lossy | much smaller files stream in real time with less bandwidth; listeners are unlikely to notice what's gone |
+      | Photos on a website | lossy | pages load faster; the tiny lost detail isn't noticed on screen |
+      | A photographer's master copies | lossless | they'll be edited and saved again, and each lossy save loses more |
+      | Logos, screenshots and diagrams with big blocks of colour | lossless | they compress well without loss, and lossy compression can smudge sharp edges and text |
+
+  - type: check
+    title: Quick check
+    questions: [download-program, classify-cloze]
+
+  - type: explain
+    title: The justification formula
+    body: |
+      A full justification has three parts:
+
+      **method** + **reason linked to this data** + **consequence in this situation**
+
+      For streamed music: "**Lossy**, because the removed sounds are ones listeners are unlikely to notice, **so** the much smaller files can be streamed in real time with less buffering."
+
+  - type: example
+    title: One website, two answers
+    problem: |
+      A school website has (1) a page of exam timetables that students download and print, and (2) a gallery of 300 photos from sports day. Justify a type of compression for each.
+    steps:
+      - |
+        **Timetable**: it's text and numbers. One changed character could turn 09:00 into 08:00, and someone would miss an exam. So **lossless**: every character must come back exactly.
+      - |
+        **Gallery**: 300 full-size photos would make the page painfully slow to load. People viewing on a screen won't notice small detail being removed. So **lossy**: the photos become much smaller and load quickly.
+      - |
+        Check each justification mentions the **specific data** and the **consequence**, not just "lossy is smaller".
+    answer: |
+      Timetable: lossless (every character must be exact). Gallery: lossy (much faster loading, and the lost detail goes unnoticed).
+
+  - type: misconceptions
+    items:
+      - wrong: Lossless is better, so you should always use it.
+        right: |
+          Lossless keeps everything, but the files are bigger. A film streamed losslessly would need far more bandwidth and buffer constantly. "Best" depends on the situation.
+      - wrong: Images and sound should always be compressed lossily.
+        right: |
+          Medical scans, master recordings and logos are usually kept lossless. Ask what the file is *for*.
+      - wrong: Text can be compressed lossily by removing the spaces or vowels.
+        right: |
+          That changes the data, and the reader (or the program reading it) might not cope. Text is always compressed losslessly.
+
+  - type: exam
+    body: |
+      - "Justify" questions are typically 2–3 marks. Naming the method is worth little on its own; the marks are for the **reason**, linked to the **scenario**.
+      - Reuse the question's own words. If it says "streamed to mobile phones", mention bandwidth, buffering or mobile data.
+      - Generic answers ("lossy makes it smaller") are an easy way to drop marks. Always add **so…** and finish the sentence with a consequence.
+
+  - type: check
+    title: Justify it
+    questions: [spot-spreadsheet, logo-choice, explain-estate-agent]
+
+  - type: takeaways
+    items:
+      - "First ask: would losing any data cause a problem? If yes, use lossless."
+      - Text, programs, records and medical data must be lossless.
+      - Streamed media and web photos are usually lossy, for smaller files and faster transmission.
+      - "Justify with: method + reason linked to this data + consequence in this situation."
+
+questions:
+  - id: download-program
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |
+      A software company lets customers download its new app. Which type of compression should it use for the program files, and why?
+    options:
+      - text: Lossless, because changing even one bit could stop the program working correctly.
+        correct: true
+        why: |
+          A program has to be restored exactly, bit for bit, or it may crash or misbehave.
+      - text: Lossy, because a smaller file downloads faster.
+        why: |
+          Smaller, yes, but a program with missing data could crash. Download speed is pointless if the app won't run.
+      - text: Lossy, because customers won't notice the removed data.
+        why: |
+          The computer "notices" every bit of a program. Unnoticed loss only works for things people see or hear.
+      - text: Lossless, because lossless files are always smaller than lossy ones.
+        why: |
+          Right method, wrong reason. Lossless files are usually *bigger* than lossy ones.
+    explanation: |
+      Programs, like text, must be restored exactly, so lossless is the only sensible choice.
+
+  - id: classify-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |
+      Write **lossy** or **lossless**. A novel emailed to a publisher: {{1}}. A live video call: {{2}}. A podcast streamed to listeners: {{3}}. A hospital's archive of X-ray images: {{4}}.
+    blanks:
+      - accept: ["lossless"]
+      - accept: ["lossy"]
+      - accept: ["lossy"]
+      - accept: ["lossless"]
+    explanation: |
+      The novel and the X-rays must be exact: a changed word, or a hidden detail on a scan, matters. The call and the podcast must be small enough to send in real time, and listeners won't notice the removed detail.
+
+  - id: spot-spreadsheet
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |
+      A student justifies a compression method for a spreadsheet of exam marks. Which line contains the error?
+    lines:
+      - The file is a spreadsheet of every student's exam marks.
+      - Every mark must be stored exactly, because a changed digit could change a grade.
+      - Lossy compression would usually make the file smaller than lossless compression.
+      - So lossy compression should be used.
+      - The file would then take less time to email to the teachers.
+    errorLine: 4
+    fix: |
+      **Lossless** compression should be used, because no data may be lost. The file will still be smaller and quicker to email.
+    explanation: |
+      Line 3 is true, but line 4 ignores line 2. When data must be exact, accuracy beats file size.
+
+  - id: logo-choice
+    format: mcq
+    difficulty: 3
+    objectives: ["1.3.2"]
+    prompt: |
+      A company's logo has large areas of solid colour and sharp lettering. Which is the best justification for compressing it **losslessly** for the company's website?
+    options:
+      - text: It has long runs of identical pixels, so it compresses well without loss, and lossy compression could smudge its sharp edges and text.
+        correct: true
+        why: |
+          This links the choice to the specific image: flat colour compresses well losslessly, and sharp edges suffer under lossy compression.
+      - text: Lossy compression can't be used on images that contain text.
+        why: |
+          It can be used. It just tends to leave visible smudges (artefacts) around sharp edges.
+      - text: Lossless files are always smaller, so the page will load faster.
+        why: |
+          Lossless files are usually *larger* than lossy ones. This kind of image simply compresses well losslessly.
+      - text: All images on websites should be compressed losslessly.
+        why: |
+          Most website photos are lossy, for speed. This ignores what makes the logo different.
+    explanation: |
+      A good justification is about **this** data: big blocks of colour compress well losslessly, and sharp edges and text are exactly where lossy compression shows.
+
+  - id: explain-estate-agent
+    format: explain
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |
+      An online estate agent shows hundreds of photos of houses on its website. Most visitors browse on mobile phones. Justify the type of compression it should use for the photos.
+    model: |
+      It should use lossy compression. The photos are only viewed on screen, often on small phone screens, so visitors are unlikely to notice the detail that is removed. Lossy files are much smaller than lossless ones, so the pages load faster and use less of a visitor's mobile data, and the agent's servers use less bandwidth. The exact original photos aren't needed for browsing, so permanently losing some data doesn't matter here.
+    keyPoints:
+      - Choose lossy compression
+      - The removed detail is unlikely to be noticed on screen
+      - Much smaller files, so pages load faster on phones
+      - Less bandwidth or mobile data used
+      - The exact originals aren't needed, so permanent loss is acceptable
+    explanation: |
+      Every point is tied to the scenario: screens, phones, page speed. That's what turns "lossy is smaller" into a justification.

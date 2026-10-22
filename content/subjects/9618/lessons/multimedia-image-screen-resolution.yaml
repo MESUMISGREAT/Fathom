@@ -1,0 +1,248 @@
+id: multimedia-image-screen-resolution
+subject: "9618"
+topic: "1.2"
+title: Resolution and the file header
+summary: Tell image resolution from screen resolution, and see why every bitmap file starts with a header that explains how to read its pixels.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.2.1"]
+prerequisites: [multimedia-pixels-colour-depth]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.2, first learning outcome (how the
+    data for a bitmapped image are encoded): the terms image resolution, screen resolution and file
+    header. Pixel and colour depth are taught in multimedia-pixels-colour-depth. The header fields
+    shown are typical examples, not the layout of any one file format, and the image and screen
+    sizes are illustrative. Every answer key checked with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define **image resolution**, **screen resolution** and **file header**, and explain why software needs the header to decode a bitmap.
+
+  - type: explain
+    title: A pile of bits is useless on its own
+    body: |
+      Here are the pixel data of a tiny image: `0001101111100100`.
+
+      Is it 4 pixels wide or 8? Is each pixel 2 bits or 4? You can't tell, and neither can the computer.
+
+      So a bitmap file carries two things: facts *about* the image first, then the pixels themselves. Let's meet the facts.
+
+  - type: definition
+    term: Image resolution
+    body: |
+      The number of pixels that make up an image, usually given as width × height in pixels (for example 1920 × 1080). Total number of pixels = width × height.
+
+  - type: definition
+    term: Screen resolution
+    body: |
+      The number of pixels a screen can display, given as the number of pixels horizontally × the number vertically (for example 1366 × 768).
+
+  - type: explain
+    title: Same word, different owners
+    body: |
+      | | Image resolution | Screen resolution |
+      | --- | --- | --- |
+      | Belongs to | the image | the display hardware |
+      | Set by | whatever created the image (camera, scanner, software) | the monitor and its settings |
+      | Example | a 4000 × 3000 photo: 12 000 000 pixels | a 1920 × 1080 laptop screen |
+
+      When they don't match:
+
+      - **Image bigger than the screen:** you can't see every pixel at full size. The image is scaled down for display (detail is dropped), or you scroll around it.
+      - **Image smaller than the screen, stretched to fill it:** each image pixel is spread across several screen pixels, so it looks blocky (**pixelated**).
+
+  - type: check
+    title: Quick check
+    questions: [which-resolution, total-pixels, screen-pixels-per-image-pixel]
+
+  - type: definition
+    term: File header
+    body: |
+      Data stored at the start of a bitmap file that describe the file and the image (**metadata**): for example the file type, the image width and height in pixels, the colour depth, the file size and the type of compression used, if any.
+
+  - type: diagram
+    diagram: cs-multimedia-bitmap-file-layout
+    alt: >-
+      A bitmap file drawn as two boxes from the start of the file to the end. The first box, the file
+      header (metadata), lists file type bitmap, width 4 pixels, height 2 pixels, colour depth 2 bits
+      and compression none. The second box, the pixel data at 2 bits per pixel, shows row 1 as 00 01
+      10 11 and row 2 as 11 10 01 00, with the note that the 0s and 1s are meaningless without the
+      header. Arrows lead from both boxes to the decoded 4 by 2 image; the arrow from the header is
+      labelled 4 pixels times 2 bits equals 8 bits per row.
+    caption: |
+      The header comes first, so software knows how to slice up everything after it.
+
+  - type: example
+    title: Decoding with the header
+    problem: |
+      A header says: width 4 pixels, height 2 pixels, colour depth 2 bits. The pixel data are `0001101111100100`. Decode them.
+    steps:
+      - |
+        Colour depth 2, so split the data into 2-bit codes: `00 01 10 11 11 10 01 00`. That's 8 codes, and $4 \times 2 = 8$ pixels ✓
+      - |
+        Width 4, so the first 4 codes are row 1 (`00 01 10 11`) and the next 4 are row 2 (`11 10 01 00`).
+      - |
+        Look up each code's colour and paint the grid, row by row.
+    answer: |
+      Row 1: `00 01 10 11`; row 2: `11 10 01 00`. Read the same 16 bits with a colour depth of 4 and you'd get 4 completely different pixels: garbage.
+
+  - type: intuition
+    title: The label on the jar
+    body: |
+      A jar of white powder could be sugar or salt. The header is the label, and you really want to read it before baking.
+
+      Where the analogy breaks: a jar's label only *names* the contents. A bitmap header is needed to *read* them at all, because it says how many bits each pixel uses and where each row ends.
+
+  - type: misconceptions
+    items:
+      - wrong: Image resolution and screen resolution are the same thing.
+        right: |
+          Image resolution belongs to the **image** (how many pixels it contains). Screen resolution belongs to the **display** (how many pixels it can show).
+      - wrong: Viewing an image on a higher-resolution screen gives it more detail.
+        right: |
+          A screen can't show detail the image doesn't contain. A 640 × 360 image on a 4K screen is still only 640 × 360 pixels of information, just spread out.
+      - wrong: The file header contains the image.
+        right: |
+          The header holds data **about** the image (metadata). The pixel data come after it.
+
+  - type: exam
+    body: |
+      - "State **two** items stored in a bitmap file header": be specific. *Image width in pixels*, *image height in pixels*, *colour depth*, *file type*, *compression type* and *file size* all score. "Information about the image" is too vague.
+      - Define image resolution with **pixels** and **width × height**. Cambridge treats it as a pixel count, so don't drift into "dots per inch".
+      - Keep the owners straight: image resolution is a property of the image; screen resolution is a property of the display.
+
+  - type: check
+    title: The header
+    questions: [header-item, rows-from-header, why-header]
+
+  - type: takeaways
+    items:
+      - Image resolution = number of pixels in the image (width × height).
+      - Screen resolution = number of pixels the display can show (horizontal × vertical).
+      - The file header stores metadata such as file type, width, height, colour depth, file size and compression.
+      - Without the header, software can't tell how many bits each pixel uses or where each row ends.
+
+questions:
+  - id: which-resolution
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |
+      A monitor's specification says **2560 × 1440**. What does this describe?
+    options:
+      - text: The screen resolution
+        correct: true
+        why: |
+          It's the number of pixels the monitor can display: 2560 across and 1440 down.
+      - text: The image resolution
+        why: |
+          Image resolution belongs to an image file, not to the hardware that displays it.
+      - text: The colour depth
+        why: |
+          Colour depth is a single number of bits per pixel, such as 24.
+      - text: The file size
+        why: |
+          File size is measured in bytes (or KiB, MiB…), not as width × height.
+    explanation: |
+      A pair of pixel counts on a *monitor* is its screen resolution. The same pair on a photo would be its image resolution.
+
+  - id: total-pixels
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |
+      A photo has an image resolution of 1200 × 800. How many pixels does it contain?
+    fields:
+      - answer: 960000
+        unit: pixels
+    explanation: |
+      Total pixels = width × height $= 1200 \times 800 = 960\,000$.
+
+  - id: screen-pixels-per-image-pixel
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.1"]
+    prompt: |
+      A 640 × 360 image is stretched to fill a screen with a resolution of 1920 × 1080. Each image pixel is displayed using how many screen pixels?
+    fields:
+      - answer: 9
+        unit: screen pixels
+    explanation: |
+      Across: $1920 \div 640 = 3$. Down: $1080 \div 360 = 3$. So each image pixel becomes a $3 \times 3$ block of $9$ screen pixels. That's why the image looks blocky: no new detail, just bigger squares.
+
+  - id: header-item
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |
+      Other than the colour depth, state **one** item of data stored in a bitmap file header.
+    accept:
+      - width
+      - height
+      - image width
+      - image height
+      - width of the image
+      - height of the image
+      - width in pixels
+      - height in pixels
+      - image width in pixels
+      - image height in pixels
+      - width and height
+      - image width and height
+      - dimensions
+      - image dimensions
+      - image resolution
+      - resolution
+      - file type
+      - file format
+      - type of file
+      - image format
+      - file size
+      - size of the file
+      - file size in bytes
+      - size of the file in bytes
+      - compression
+      - compression type
+      - type of compression
+      - compression method
+      - compression used
+    model: |
+      Any one of: the image width (in pixels), the image height (in pixels), the file type, the file size, or the type of compression used.
+    explanation: |
+      The header is metadata: everything software needs to know before it reads the pixel data. Width and colour depth matter most, because they say where each row ends and how many bits each pixel uses.
+
+  - id: rows-from-header
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.1"]
+    prompt: |
+      A bitmap's header says the image is **6 pixels wide** with a colour depth of **4 bits**. The pixel data (uncompressed) are 96 bits long. How many rows of pixels does the image have?
+    fields:
+      - answer: 4
+        unit: rows
+    explanation: |
+      Pixels $= 96 \div 4 = 24$. Rows $= 24 \div 6 = 4$. So the image is 6 × 4 pixels. This is exactly the sum the software does using the header.
+
+  - id: why-header
+    format: explain
+    difficulty: 2
+    objectives: ["1.2.1"]
+    prompt: |
+      Explain why a bitmap image file needs a **file header**.
+    model: |
+      The pixel data are just a long sequence of bits. To decode them, the software needs metadata stored in the header: the colour depth tells it how many bits make up each pixel, and the image width and height tell it how many pixels are in each row and how many rows there are. The header can also give the file type and any compression used, so the software knows how to process the data. Without the header the bits could not be turned back into the correct image.
+    keyPoints:
+      - The pixel data are only a sequence of bits with no structure of their own
+      - The colour depth says how many bits belong to each pixel
+      - The width and height say where each row ends and how many rows there are
+      - File type and compression tell the software how to process the data
+    explanation: |
+      A strong answer says what is in the header **and** why each item is needed to decode the pixels.
