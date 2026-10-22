@@ -16,6 +16,8 @@ export interface ParsedNumber {
 const SCI = /^([+-]?(?:\d+\.?\d*|\.\d+))\s*(?:e([+-]?\d+)|[x*]\s*10\s*\^\s*\(?([+-]?\d+)\)?)$/;
 const PLAIN = /^[+-]?(?:\d+\.?\d*|\.\d+)$/;
 const THOUSANDS = /^[+-]?\d{1,3}(?:,\d{3})+(?:\.\d+)?$/;
+/** SI-style digit grouping with spaces: "1 440 000", "12 345.6". */
+const SPACED = /^[+-]?\d{1,3}(?: \d{3})+(?:\.\d+)?$/;
 
 export function countSigFigs(mantissa: string): { min: number; max: number } {
   const digits = mantissa.replace(/^[+-]/, '');
@@ -34,8 +36,8 @@ export function countSigFigs(mantissa: string): { min: number; max: number } {
 export function parseNumber(input: string): ParsedNumber | null {
   const raw = normaliseMath(input).replace(/\s+/g, ' ').trim();
   if (raw === '') return null;
-  if (THOUSANDS.test(raw)) {
-    const plain = raw.replace(/,/g, '');
+  if (THOUSANDS.test(raw) || SPACED.test(raw)) {
+    const plain = raw.replace(/[, ]/g, '');
     return { value: Number(plain), sigFigs: countSigFigs(plain), isDecimal: true };
   }
   if (PLAIN.test(raw)) {
@@ -47,6 +49,9 @@ export function parseNumber(input: string): ParsedNumber | null {
     const exponent = Number(sci[2] ?? sci[3]);
     return { value: Number(mantissa) * 10 ** exponent, sigFigs: countSigFigs(mantissa), isDecimal: true };
   }
+  // Digits separated only by a space ("1 2", "12 34.5") are a typo or an odd grouping,
+  // not a product: refuse them rather than let the evaluator multiply them.
+  if (/\d \.?\d/.test(raw)) return null;
   try {
     const value = evaluateConstant(raw);
     if (!Number.isFinite(value)) return null;
