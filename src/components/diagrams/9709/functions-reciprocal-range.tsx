@@ -49,10 +49,10 @@ export default function FunctionsReciprocalRange() {
       <Label x={p.sx(7.4)} y={p.sy(0.4)} anchor="end" className="dg-text-muted">
         gets close to 0, never reaches it
       </Label>
-      <Label x={x0 + 14} y={p.sy(1.38)} anchor="start" className="dg-text-accent-2">
+      <Label x={x0 + 14} y={p.sy(0.22)} anchor="start" className="dg-text-accent-2">
         {'range: 0 < f(x) ≤ 1'}
       </Label>
-      <Label x={p.sx(0.78)} y={p.sy(1.55)} anchor="start" className="dg-text-muted">
+      <Label x={p.sx(0.92)} y={p.sy(1.5)} anchor="start" className="dg-text-muted">
         dashed: not in the domain
       </Label>
     </Svg>

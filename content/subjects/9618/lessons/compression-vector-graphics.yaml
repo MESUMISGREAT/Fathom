@@ -10,7 +10,7 @@ objectives: ["1.3.3"]
 prerequisites: [multimedia-vector-graphics, compression-text-files]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, third learning
@@ -19,6 +19,7 @@ provenance:
     diagram is a generated curve simplified with the Ramer-Douglas-Peucker algorithm, and the
     character counts in the questions are illustrative. Every count checked with Python. All
     questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -40,7 +41,7 @@ blocks:
 
       - **Store repeated properties once.** If 300 objects share the same fill colour, line colour and line thickness, store that set once as a named **style** and give each object a short reference to it.
       - **Store repeated objects once.** A star drawn 50 times can be defined once and reused at 50 positions.
-      - **Compress the file's text** with dictionary-based compression or RLE: repeated words such as `circle` or `line colour` become short indexes.
+      - **Compress the file's text** with dictionary-based compression, so repeated words such as `circle` or `line colour` become short indexes, or with RLE wherever the data contains runs.
 
       The decompressor can expand every reference back, so **no data is lost**.
 
@@ -96,8 +97,8 @@ blocks:
       Two panels compare a wiggly path, like a stretch of coastline. Left, original path: 49 points
       joined by short straight segments, so 49 × 2 = 98 coordinate values stored. Right, simplified
       path (lossy): only 14 points, so 14 × 2 = 28 coordinate values, with the original drawn dashed
-      underneath; the two outlines almost overlap. Caption: fewer points means fewer numbers in the
-      drawing list and a smaller file; every original point stays within 4 units of the new outline.
+      underneath; the two outlines almost overlap. Text underneath: fewer points means fewer numbers in
+      the drawing list and a smaller file; every original point stays within 4 units of the new outline.
     caption: |
       The simplified path keeps the shape and drops over 70% of the coordinates. Small wiggles are the price.
 
@@ -242,7 +243,7 @@ questions:
           The shape survives, the file shrinks dramatically, and the lost wiggles are invisible at that size.
       - text: Remove every second drawing object from the drawing list.
         why: |
-          That would delete whole features, such as roads or labels, which people would definitely notice.
+          That throws away objects regardless of whether anyone can see them, leaving gaps or missing features that people would definitely notice.
       - text: Convert the map to a bitmap and compress it with RLE.
         why: |
           The map would lose its ability to scale smoothly as the user zooms, and a detailed map has few long runs.

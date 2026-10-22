@@ -34,10 +34,10 @@ export function EquationsMotionVtGradient() {
       <Label x={p.sx(2.6)} y={p.sy(1.6)} className="dg-text-small">
         Δt = 4 s
       </Label>
-      <Label x={p.sx(0.3)} y={p.sy(10.6)} anchor="start" className="dg-text-small dg-bold">
+      <Label x={p.sx(0.3)} y={p.sy(12.9)} anchor="start" className="dg-text-small dg-bold">
         speeding up
       </Label>
-      <Label x={p.sx(0.3)} y={p.sy(10.6) + 15} anchor="start" className="dg-text-small">
+      <Label x={p.sx(0.3)} y={p.sy(12.9) + 15} anchor="start" className="dg-text-small">
         a = +3.0 m s⁻²
       </Label>
       {/* segment 2 */}

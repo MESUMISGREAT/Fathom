@@ -80,10 +80,10 @@ export function MultimediaBitmapFileLayout() {
       {/* decoding */}
       <Arrow x1={hx + hw / 2} y1={hy + bh + 4} x2={gx - 12} y2={gy + cell} head={8} className="dg-accent" headClassName="dg-dot-accent" />
       <Label x={hx + 64} y={gy + 40} anchor="start" className="dg-text-small dg-text-accent">
-        width 4, depth 2: so
+        4 pixels × 2 bits
       </Label>
       <Label x={hx + 64} y={gy + 56} anchor="start" className="dg-text-small dg-text-accent">
-        8 bits per row
+        = 8 bits per row
       </Label>
       <Arrow x1={px + pw / 2} y1={hy + bh + 4} x2={px + pw / 2} y2={gy - 6} head={8} className="dg-muted" />
       {rows.map((r, i) =>

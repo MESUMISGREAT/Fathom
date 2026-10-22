@@ -96,7 +96,7 @@ export function MultimediaBitPlanes() {
         = 8 × 6 × 3 = 144 bits
       </Label>
       <Label x={tx} y={196} anchor="start" className="dg-text dg-mono">
-        = 144 ÷ 8 = 18 bytes
+        144 bits ÷ 8 = 18 bytes
       </Label>
     </Svg>
   );

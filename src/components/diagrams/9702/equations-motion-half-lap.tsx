@@ -57,7 +57,7 @@ export function EquationsMotionHalfLap() {
       <Label x={C.x} y={C.y + 38} className="dg-text-small">
         straight from start to finish
       </Label>
-      <Label x={C.x} y={C.y + 74} className="dg-text-small dg-text-muted">
+      <Label x={C.x} y={C.y + 64} className="dg-text-small dg-text-muted">
         rest of the track (not run)
       </Label>
 

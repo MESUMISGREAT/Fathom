@@ -41,7 +41,7 @@ export function EquationsMotionThrowGraphs() {
       <path d={curve(ps, (t) => G * t - 0.5 * G * t * t, 0, 2)} className="dg-accent" />
       <circle cx={ps.sx(tTop)} cy={ps.sy(4.905)} r={4} className="dg-dot" />
       <Label x={ps.sx(tTop) + 10} y={ps.sy(4.905) - 12} anchor="start" className="dg-text-small">
-        top: gradient 0, so v = 0
+        top, s = 4.9 m: gradient 0, so v = 0
       </Label>
       <Label x={ps.sx(2) + 4} y={ps.sy(0) - 14} anchor="start" className="dg-text-small dg-text-muted">
         caught

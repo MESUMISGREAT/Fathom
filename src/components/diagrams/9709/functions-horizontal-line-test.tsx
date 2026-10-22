@@ -33,7 +33,17 @@ export default function FunctionsHorizontalLineTest() {
           </Label>
           <g transform="translate(0, 40)">
             <Grid p={p} />
-            <AxesXY p={p} xTicks={[1, 2, 3, 4]} yTicks={[2, 4, 6]} />
+            <AxesXY p={p} xTicks={[2, 4]} yTicks={[2, 6]} yTicksRight={[4]} />
+            {/* the curve crosses the x-axis at 1 and 3, so those labels sit to the side it isn't on */}
+            {[1, 3].map((t) => (
+              <line key={t} x1={p.sx(t)} y1={p.sy(0) - 4} x2={p.sx(t)} y2={p.sy(0) + 4} className="dg-thin" />
+            ))}
+            <Label x={p.sx(1) - 7} y={p.sy(0) + 15} anchor="end" className="dg-text-small">
+              1
+            </Label>
+            <Label x={p.sx(3) + 7} y={p.sy(0) + 15} anchor="start" className="dg-text-small">
+              3
+            </Label>
             {i === 1 && <path d={graph(f, [X[0], 2], p, Y)} className="dg-muted dg-dashed" />}
             <path d={graph(f, [k.from, X[1]], p, Y)} className={i === 0 ? 'dg-accent-2' : 'dg-accent'} />
             <line x1={p.sx(X[0])} y1={p.sy(3)} x2={p.sx(X[1])} y2={p.sy(3)} className="dg-line dg-dashed" />

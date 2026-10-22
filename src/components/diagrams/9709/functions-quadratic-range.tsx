@@ -22,7 +22,7 @@ export default function FunctionsQuadraticRange() {
     <Svg width={W} height={H}>
       <Grid p={p} />
       <rect x={x0 - 6} y={p.sy(6)} width={12} height={p.sy(-3) - p.sy(6)} className="dg-fill-accent-2" />
-      <AxesXY p={p} xTicks={[-1, 1, 2, 3, 4, 5, 6]} yTicks={[-4, -2, 2, 4, 8]} />
+      <AxesXY p={p} xTicks={[-1, 1, 2, 3, 4, 5, 6]} yTicks={[-4, -2, 4, 8]} yTicksRight={[2]} />
 
       <path d={graph(f, [X[0], 0], p, Y)} className="dg-muted dg-dashed" />
       <path d={graph(f, [5, X[1]], p, Y)} className="dg-muted dg-dashed" />

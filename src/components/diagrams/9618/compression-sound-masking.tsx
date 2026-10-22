@@ -78,7 +78,7 @@ export function CompressionSoundMasking() {
 
       {/* masking threshold of the loud sound */}
       <path d={maskPts.join(' ')} className="dg-accent-2 dg-dashed" />
-      <Label x={sx(2600)} y={sy(62)} anchor="start" className="dg-text-small dg-text-accent-2">
+      <Label x={sx(2000)} y={sy(73)} anchor="start" className="dg-text-small dg-text-accent-2">
         masking threshold
       </Label>
 
