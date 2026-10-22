@@ -1,0 +1,233 @@
+id: equations-motion-acceleration
+subject: "9702"
+topic: "2.1"
+title: "Acceleration: the rate of change of velocity"
+summary: Acceleration is how quickly velocity changes, including its direction, so a sign convention tells you whether something speeds up or slows down.
+order: 2
+minutes: 5
+objectives: ["2.1.1"]
+prerequisites: [equations-motion-distance-displacement]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.1: define and use acceleration). All worked values recomputed
+    with Python. All questions are original; the car, wall and tennis-ball figures are
+    illustrative values chosen to be realistic.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **define acceleration**, calculate it from a change in velocity, and use a sign convention to tell speeding up from slowing down.
+
+  - type: explain
+    title: Fast is not the same as accelerating
+    body: |
+      An airliner cruising at a steady $250\ \text{m s}^{-1}$ in a straight line has **zero** acceleration. A sprinter exploding out of the blocks at a measly $2\ \text{m s}^{-1}$ has a **large** one.
+
+      Acceleration doesn't care how fast you are going. It cares how fast your **velocity is changing**.
+
+  - type: definition
+    term: Acceleration
+    body: |
+      The **rate of change of velocity** (the change in velocity per unit time):
+
+      $$a = \frac{\Delta v}{\Delta t} = \frac{v - u}{t}$$
+
+      where $u$ is the initial velocity and $v$ the final velocity after time $t$. It is a **vector**, measured in $\text{m s}^{-2}$.
+
+  - type: explain
+    title: What "m s⁻²" actually means
+    body: |
+      Read $\text{m s}^{-2}$ as "metres per second, **every** second". An acceleration of $3\ \text{m s}^{-2}$ adds $3\ \text{m s}^{-1}$ to the velocity each second:
+
+      | time / s | 0 | 1 | 2 | 3 |
+      | --- | --- | --- | --- | --- |
+      | velocity / $\text{m s}^{-1}$ | 0 | 3 | 6 | 9 |
+
+  - type: example
+    title: A car pulls away
+    problem: |
+      A car accelerates uniformly from rest to $27\ \text{m s}^{-1}$ in $9.0\ \text{s}$. Find its acceleration.
+    steps:
+      - |
+        "From rest" means $u = 0$. So $\Delta v = 27 - 0 = 27\ \text{m s}^{-1}$.
+      - |
+        $a = \dfrac{\Delta v}{\Delta t} = \dfrac{27}{9.0} = 3.0\ \text{m s}^{-2}$.
+    answer: |
+      $3.0\ \text{m s}^{-2}$ in the direction of motion. (That's roughly 0 to 60 mph in 9 s: a brisk family car.)
+
+  - type: check
+    questions: [define-acceleration, units-cloze]
+
+  - type: explain
+    title: Signs tell the story
+    body: |
+      In a straight line, pick one direction as **positive** and stick to it. Then velocity and acceleration each get a sign.
+
+      - Same sign (same direction): the object is **speeding up**.
+      - Opposite signs (opposite directions): the object is **slowing down**. This is what people call **deceleration**.
+
+      So a **negative acceleration does not always mean slowing down**. It means "acceleration in the negative direction". If the object is already moving in the negative direction, it speeds up.
+
+  - type: diagram
+    diagram: phys-equations-motion-sign-cases
+    alt: >-
+      A table of four rows, with an arrow at the top showing that the positive direction is to the
+      right. Each row shows a cart with its velocity arrow v above it and its acceleration arrow a
+      below it, then the signs, then the result. Row 1: v right, a right, signs v plus a plus,
+      speeding up (same direction). Row 2: v right, a left, signs v plus a minus, slowing down
+      (opposite directions). Row 3: v left, a left, signs v minus a minus, speeding up (same
+      direction). Row 4: v left, a right, signs v minus a plus, slowing down (opposite directions).
+    caption: Same direction, speeding up. Opposite directions, slowing down. The sign alone tells you only the direction.
+
+  - type: example
+    title: The rebound trap
+    problem: |
+      A ball hits a wall at $12\ \text{m s}^{-1}$ and bounces straight back at $8.0\ \text{m s}^{-1}$. It is in contact with the wall for $0.050\ \text{s}$. Find its average acceleration during the bounce.
+    steps:
+      - |
+        Choose **towards the wall** as positive. Then $u = +12\ \text{m s}^{-1}$ and $v = -8.0\ \text{m s}^{-1}$ (it's now moving the other way).
+      - |
+        $\Delta v = v - u = (-8.0) - (+12) = -20\ \text{m s}^{-1}$. The velocity changes by 20, not by 4!
+      - |
+        $a = \dfrac{-20}{0.050} = -400\ \text{m s}^{-2}$.
+    answer: |
+      $400\ \text{m s}^{-2}$ directed **away from the wall** (the minus sign says "opposite to the positive direction"). Ignoring the direction change would give $\frac{8.0 - 12}{0.050} = -80\ \text{m s}^{-2}$, five times too small.
+
+  - type: check
+    questions: [train-slowing, sign-mcq]
+
+  - type: intuition
+    title: Changing direction counts too
+    body: |
+      Velocity is a vector, so changing its **direction** is a change in velocity, even at constant speed. A car going round a roundabout at a steady $8\ \text{m s}^{-1}$ is accelerating the whole time.
+
+      You'll work out the size of that sideways acceleration in the A Level topic on circular motion. For now, just never say "constant speed, so no acceleration" when the path curves.
+
+  - type: misconceptions
+    items:
+      - wrong: A big velocity means a big acceleration.
+        right: Acceleration is the **rate of change** of velocity. A fast object moving steadily in a straight line has zero acceleration.
+      - wrong: Negative acceleration always means slowing down.
+        right: It means the acceleration points in the negative direction. It's slowing down only if the velocity is positive.
+      - wrong: For a bounce, $\Delta v$ = final speed − initial speed.
+        right: Use **signed** velocities. Reversing from $+12$ to $-8.0\ \text{m s}^{-1}$ is a change of $-20\ \text{m s}^{-1}$.
+
+  - type: exam
+    body: |
+      - "Define acceleration": write **"rate of change of velocity"**. Velocity, not speed: speed has no direction, and that loses the mark.
+      - In multi-step problems, write "taking ... as positive" at the start. It costs five words and makes every sign defensible.
+      - Rebounds (balls, cars hitting walls, molecules hitting containers) are where the signs are tested. Expect them in momentum questions in topic 3 too.
+
+  - type: check
+    questions: [tennis-rebound, roundabout]
+
+  - type: takeaways
+    items:
+      - "**Acceleration** is the rate of change of velocity: $a = \\dfrac{v - u}{t}$, unit $\\text{m s}^{-2}$, a vector."
+      - Choose a positive direction. Same signs for v and a, speeding up; opposite signs, slowing down.
+      - In a straight-back rebound, the **size** of the change in velocity is the **sum** of the two speeds.
+      - Changing direction at constant speed is still acceleration.
+
+questions:
+  - id: define-acceleration
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["2.1.1"]
+    prompt: |
+      Define **acceleration**.
+    accept:
+      - rate of change of velocity
+      - acceleration is rate of change of velocity
+      - acceleration is the rate of change of velocity
+      - change in velocity per unit time
+      - change of velocity per unit time
+      - acceleration is change in velocity per unit time
+      - acceleration is the change in velocity per unit time
+      - acceleration is the change of velocity per unit time
+      - rate of change of velocity with time
+      - acceleration is the rate of change of velocity with time
+      - rate of change of velocity with respect to time
+    model: |
+      Acceleration is the **rate of change of velocity** (the change in velocity per unit time).
+    explanation: |
+      It must be **velocity**, not speed. That's what lets acceleration have a direction, and what makes turning at constant speed count as accelerating.
+
+  - id: units-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.1"]
+    prompt: |
+      An object has a constant acceleration of $5\ \text{m s}^{-2}$. This means its velocity changes by {{1}} $\text{m s}^{-1}$ every {{2}}.
+    blanks:
+      - accept: ["5", "five", "5.0"]
+      - accept: [second, "1 second", "one second", "s", "1 s"]
+    explanation: |
+      $\text{m s}^{-2}$ is $\text{m s}^{-1}$ per second: the velocity changes by $5\ \text{m s}^{-1}$ in each second.
+
+  - id: train-slowing
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.1"]
+    prompt: |
+      A train slows uniformly from $15\ \text{m s}^{-1}$ to $6.0\ \text{m s}^{-1}$ in $12\ \text{s}$. Taking its direction of travel as positive, calculate its acceleration. Include the sign.
+    fields:
+      - answer: -0.75
+        tolerance: { abs: 0.005 }
+        unit: m s⁻²
+    explanation: |
+      $a = \dfrac{v - u}{t} = \dfrac{6.0 - 15}{12} = \dfrac{-9.0}{12} = -0.75\ \text{m s}^{-2}$. The minus sign says the acceleration points backwards, opposite to the velocity, so the train is slowing down.
+
+  - id: sign-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.1"]
+    prompt: |
+      Taking **right** as positive, a trolley has velocity $-3\ \text{m s}^{-1}$ and acceleration $-2\ \text{m s}^{-2}$. What is it doing?
+    options:
+      - text: Moving left and speeding up
+        correct: true
+        why: Correct. Both point left (same sign), so the acceleration adds to the speed.
+      - text: Moving left and slowing down
+        why: A negative acceleration only slows something down if its velocity is positive. Here both are negative, in the same direction.
+      - text: Moving right and slowing down
+        why: A negative velocity means it is moving left, not right.
+      - text: Moving right and speeding up
+        why: The negative velocity means it is moving left.
+    explanation: |
+      Compare the signs of $v$ and $a$: same sign, speeding up; opposite signs, slowing down. The sign of $a$ on its own only gives its direction.
+
+  - id: tennis-rebound
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.1"]
+    prompt: |
+      A tennis ball travelling at $20\ \text{m s}^{-1}$ hits a racket and leaves at $15\ \text{m s}^{-1}$ in the opposite direction. The contact time is $5.0\ \text{ms}$. Calculate the **magnitude** of the ball's average acceleration.
+    fields:
+      - answer: 7000
+        tolerance: { rel: 0.01 }
+        unit: m s⁻²
+    explanation: |
+      Take the original direction as positive: $u = +20$, $v = -15\ \text{m s}^{-1}$. $\Delta v = -15 - 20 = -35\ \text{m s}^{-1}$. With $t = 5.0 \times 10^{-3}\ \text{s}$: $a = \dfrac{-35}{5.0 \times 10^{-3}} = -7.0 \times 10^{3}\ \text{m s}^{-2}$. Magnitude $7.0 \times 10^{3}\ \text{m s}^{-2}$, directed back the way the ball came. (Using $15 - 20$ would give only $1.0 \times 10^3$.)
+
+  - id: roundabout
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.1"]
+    prompt: |
+      A car drives all the way round a roundabout at a constant speed of $8\ \text{m s}^{-1}$. Which statement is correct?
+    options:
+      - text: It is accelerating, because the direction of its velocity keeps changing.
+        correct: true
+        why: Correct. Velocity is a vector, so a change of direction is a change of velocity, and acceleration is the rate of change of velocity.
+      - text: It is not accelerating, because its speed is constant.
+        why: Constant speed is not constant velocity when the direction changes.
+      - text: Its velocity is constant, because its speed is constant.
+        why: Velocity includes direction. The car's direction changes all the way round, so its velocity changes.
+      - text: It accelerates only if the driver presses the accelerator.
+        why: The pedal changes the speed. Turning the steering wheel changes the direction, and that is an acceleration too.
+    explanation: |
+      Acceleration is the rate of change of **velocity**, and velocity has direction. Steering at constant speed is acceleration.

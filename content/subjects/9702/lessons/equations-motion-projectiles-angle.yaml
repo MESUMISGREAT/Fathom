@@ -1,0 +1,224 @@
+id: equations-motion-projectiles-angle
+subject: "9702"
+topic: "2.1"
+title: Projectiles launched at an angle
+summary: Resolve the launch velocity, then use u cos θ for the steady horizontal motion and u sin θ with a = −9.81 m s⁻² for the vertical motion.
+order: 12
+minutes: 5
+objectives: ["2.1.9", "2.1.7"]
+prerequisites: [equations-motion-projectiles-horizontal, units-resolving-vectors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 2.1.9, motion produced by a uniform velocity combined with a
+    uniform acceleration at right angles to it, and 2.1.7, solving problems with the equations of
+    uniformly accelerated motion), using g = 9.81 m s⁻² from the 9702 data sheet. The trajectory
+    diagram is drawn to scale for u = 20 m s⁻¹ at 55°. The range formula is labelled not
+    examinable. All worked values and answer keys recomputed with Python. All questions are
+    original; the speeds and angles are illustrative values.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve problems on projectiles **launched at an angle**: resolve the launch velocity, then find the time of flight, the maximum height, the horizontal range and the velocity at any point.
+
+  - type: explain
+    title: Same trick, one extra step
+    body: |
+      A goal kick, a basketball shot, a stone lobbed off a cliff: the launch velocity now points **up at an angle** $\theta$. So the first move is always the same. **Resolve it:**
+
+      $$u_x = u\cos\theta \qquad u_y = u\sin\theta$$
+
+      After that, it's last lesson's two-column method, with one change: the vertical motion now starts with $u_y$ upwards instead of zero.
+
+  - type: explain
+    title: The two-column recipe
+    body: |
+      Taking **upwards as positive**:
+
+      | | horizontal | vertical |
+      | --- | --- | --- |
+      | initial velocity | $u\cos\theta$ | $u\sin\theta$ |
+      | acceleration | $0$ | $-9.81\ \text{m s}^{-2}$ |
+      | velocity at time $t$ | $u\cos\theta$, always | $u\sin\theta - 9.81t$ |
+      | displacement | $x = (u\cos\theta)\,t$ | $y = (u\sin\theta)\,t - \tfrac{1}{2}(9.81)t^2$ |
+
+      Three checkpoints turn up in almost every question:
+
+      - **At the top:** the vertical velocity is zero. The velocity is **not** zero: it's $u\cos\theta$, horizontal.
+      - **Landing at launch height:** $y = 0$, and the flight is symmetrical, so time up = time down.
+      - **Velocity at any point:** combine $v_x$ and $v_y$ with Pythagoras; the direction is $\tan^{-1}\left(\dfrac{v_y}{v_x}\right)$.
+
+  - type: diagram
+    diagram: phys-equations-motion-projectile-components
+    alt: >-
+      A projectile's path drawn to scale for a launch from level ground at u = 20 m s⁻¹ and 55°
+      above the horizontal, with no air resistance. The path is a symmetrical parabola, reaching a
+      maximum height of 13.7 m halfway along and landing 38.3 m away (the range, shown by a
+      double-headed arrow below the ground). At launch, the velocity arrow u is drawn at angle θ to
+      the ground, with its components u cos θ (horizontal) and u sin θ (vertical). Dots mark the
+      ball at each quarter of the flight, each with component arrows: the horizontal arrow is the
+      same length at every dot; the vertical arrow points up and is half its launch length at the
+      first quarter, is absent at the top, then points down, half its launch length at three
+      quarters and back to full length when the ball lands. Labels read "top: vertical component = 0, velocity = u cos θ,
+      horizontal" and "lands at u, θ below the horizontal". A key says the horizontal arrow is the
+      same all the way, and the vertical arrow shrinks, is 0 at the top, then grows downwards.
+    caption: The horizontal arrow never changes. The vertical arrow shrinks by 9.81 m s⁻¹ every second, through zero at the top and out the other side.
+
+  - type: check
+    questions: [top-speed, arrow-components]
+
+  - type: example
+    title: The long kick
+    problem: |
+      A football is kicked from level ground at $18\ \text{m s}^{-1}$ at $35°$ above the horizontal. Air resistance is negligible. Find its time of flight, its maximum height and its range.
+    steps:
+      - |
+        **Resolve:** $u_x = 18\cos 35° = 14.74\ \text{m s}^{-1}$ and $u_y = 18\sin 35° = 10.32\ \text{m s}^{-1}$.
+      - |
+        **Time to the top** (vertical, $v_y = 0$): $0 = 10.32 - 9.81t$, so $t = 1.052\ \text{s}$. It lands at launch height, so the time of flight is $2 \times 1.052 = 2.10\ \text{s}$.
+      - |
+        **Maximum height** (vertical, $v_y = 0$): $0 = 10.32^2 - 2(9.81)H$, so $H = \dfrac{10.32^2}{19.62} = 5.43\ \text{m}$.
+      - |
+        **Range** (horizontal, constant velocity): $R = 14.74 \times 2.105 = 31.0\ \text{m}$.
+    answer: |
+      Time of flight $2.10\ \text{s}$, maximum height $5.43\ \text{m}$, range $31.0\ \text{m}$. Notice the order: the **vertical** motion gave the time, and the time unlocked the horizontal distance.
+
+  - type: check
+    questions: [golf-flight, stone-height]
+
+  - type: misconceptions
+    items:
+      - wrong: At the top of its flight the ball's velocity is zero.
+        right: Only the **vertical** component is zero. The ball is still moving horizontally at $u\cos\theta$; if it really stopped, it would drop straight down from the top.
+      - wrong: Use the launch speed u in the vertical equations.
+        right: The vertical motion only knows about $u\sin\theta$. Using the full $u$ treats the ball as if it had been thrown straight up, and gives far too much height.
+      - wrong: A bigger horizontal component makes the ball stay up longer.
+        right: The time of flight is set by the vertical motion alone. The horizontal component only decides how far the ball goes in that time.
+
+  - type: exam
+    body: |
+      - **Resolve first**, and write $u_x$ and $u_y$ down with their values. That is often the first mark.
+      - Usually, find the **time** from the vertical motion, then use it in the horizontal one.
+      - Keep unrounded values in your calculator ($u_y = 10.3244\ldots$) and round only the final answer.
+      - The shortcut "time of flight = 2 × time to the top" only works when it **lands at launch height**. For a landing point above or below the launch, put the real $y$ into $y = (u\sin\theta)t - \tfrac{1}{2}gt^2$ and solve the quadratic.
+
+  - type: enrichment
+    title: Why 45° (on paper)
+    body: |
+      For level ground, combining the two columns gives the range $R = \dfrac{u^2 \sin 2\theta}{g}$, which is biggest when $\sin 2\theta = 1$, at $\theta = 45°$. Real balls feel air resistance, so their best launch angle is usually lower. The formula isn't on the 9702 syllabus or data sheet; build what you need from the two columns instead.
+
+  - type: check
+    questions: [vertical-spot, wall-height]
+
+  - type: takeaways
+    items:
+      - "Resolve: $u\\cos\\theta$ horizontally (constant all the way), $u\\sin\\theta$ vertically (changing at $9.81\\ \\text{m s}^{-2}$ downwards)."
+      - "Time is the bridge: usually find it from the vertical motion, then use it horizontally."
+      - "At the top: vertical velocity zero, but the velocity is $u\\cos\\theta$, horizontal."
+      - Landing at launch height, the flight is symmetrical, and it lands at its launch speed, at θ below the horizontal.
+
+questions:
+  - id: top-speed
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.9"]
+    prompt: |
+      A ball is kicked at $20\ \text{m s}^{-1}$ at $30°$ above the horizontal. Air resistance is negligible. What is its speed at the highest point of its flight?
+    options:
+      - text: $17.3\ \text{m s}^{-1}$
+        correct: true
+        why: Correct. At the top only the horizontal component is left, and that never changes, so $v = 20\cos 30° = 17.3\ \text{m s}^{-1}$.
+      - text: $0$
+        why: Only the vertical component is zero at the top. The ball is still moving sideways.
+      - text: $10\ \text{m s}^{-1}$
+        why: That's $20\sin 30°$, the initial **vertical** component, which is exactly the part that has dropped to zero at the top.
+      - text: $20\ \text{m s}^{-1}$
+        why: The ball is slower at the top than at launch, because the vertical part of its velocity has gone.
+    explanation: |
+      At the top $v_y = 0$, so the speed is just $v_x = u\cos\theta = 20\cos 30° = 17.3\ \text{m s}^{-1}$.
+
+  - id: arrow-components
+    format: numeric
+    difficulty: 1
+    objectives: ["2.1.9"]
+    prompt: |
+      An arrow is fired at $45\ \text{m s}^{-1}$ at $25°$ above the horizontal. Find the horizontal and vertical components of its initial velocity, each to 3 significant figures.
+    fields:
+      - label: "horizontal ="
+        answer: 40.78
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+      - label: "vertical ="
+        answer: 19.02
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+    explanation: |
+      Horizontal: $45\cos 25° = 40.8\ \text{m s}^{-1}$. Vertical: $45\sin 25° = 19.0\ \text{m s}^{-1}$. The angle is measured from the horizontal, so the horizontal component is the one that gets cos.
+
+  - id: golf-flight
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.9", "2.1.7"]
+    prompt: |
+      A golf ball is hit from level ground at $30\ \text{m s}^{-1}$ at $40°$ above the horizontal and lands at the same level. Air resistance is negligible. Find its time of flight and its range, each to 3 significant figures.
+    fields:
+      - label: "time of flight ="
+        answer: 3.931
+        tolerance: { abs: 0.02 }
+        unit: s
+      - label: "range ="
+        answer: 90.35
+        tolerance: { abs: 0.3 }
+        unit: m
+    explanation: |
+      $u_y = 30\sin 40° = 19.28\ \text{m s}^{-1}$ and $u_x = 30\cos 40° = 22.98\ \text{m s}^{-1}$. Vertically, $y = 0$ at landing: $0 = 19.28t - 4.905t^2$, so $t = \dfrac{19.28}{4.905} = 3.93\ \text{s}$. Range $= 22.98 \times 3.93 = 90.3\ \text{m}$.
+
+  - id: stone-height
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.9", "2.1.7"]
+    prompt: |
+      A stone is thrown at $15\ \text{m s}^{-1}$ at $60°$ above the horizontal. Air resistance is negligible. What is its maximum height above the point where it was thrown? Give your answer to 3 significant figures.
+    fields:
+      - answer: 8.601
+        tolerance: { abs: 0.03 }
+        unit: m
+    explanation: |
+      Vertical only: $u_y = 15\sin 60° = 12.99\ \text{m s}^{-1}$, and $v_y = 0$ at the top. $0 = 12.99^2 - 2(9.81)H$, so $H = \dfrac{168.75}{19.62} = 8.60\ \text{m}$.
+
+  - id: vertical-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.9", "2.1.7"]
+    prompt: |
+      A ball is kicked from the ground at $25\ \text{m s}^{-1}$ at $30°$ above the horizontal. A student calculates its maximum height. Which line contains the first error?
+    lines:
+      - |
+        Upwards positive. At the top, the vertical velocity $v = 0$.
+      - |
+        $a = -9.81\ \text{m s}^{-2}$
+      - |
+        Initial vertical velocity $u = 25\ \text{m s}^{-1}$
+      - |
+        $0 = 25^2 + 2(-9.81)s$, so $s = 31.9\ \text{m}$
+    errorLine: 3
+    fix: |
+      The initial vertical velocity is the vertical **component**: $u = 25\sin 30° = 12.5\ \text{m s}^{-1}$. Then $s = \dfrac{12.5^2}{19.62} = 7.96\ \text{m}$.
+    explanation: |
+      Lines 1 and 2 are right. Line 3 uses the whole launch speed, which treats the ball as if it were kicked straight up, so the height comes out four times too big.
+
+  - id: wall-height
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.9", "2.1.7"]
+    prompt: |
+      A ball is kicked at $16\ \text{m s}^{-1}$ at $40°$ above the horizontal towards a tall wall $20\ \text{m}$ away (measured horizontally). Air resistance is negligible. At what height above the launch point does it hit the wall? Give your answer to 3 significant figures.
+    fields:
+      - answer: 3.722
+        tolerance: { abs: 0.05 }
+        unit: m
+    explanation: |
+      Horizontal: $u_x = 16\cos 40° = 12.26\ \text{m s}^{-1}$, so it reaches the wall at $t = \dfrac{20}{12.26} = 1.632\ \text{s}$. Vertical: $u_y = 16\sin 40° = 10.28\ \text{m s}^{-1}$, so $y = 10.28 \times 1.632 - 4.905 \times 1.632^2 = 16.78 - 13.06 = 3.72\ \text{m}$. (Its vertical velocity there is $10.28 - 9.81 \times 1.632 = -5.72\ \text{m s}^{-1}$, so it's already on the way down.)

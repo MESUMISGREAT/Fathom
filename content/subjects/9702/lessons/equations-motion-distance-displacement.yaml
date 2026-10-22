@@ -1,0 +1,257 @@
+id: equations-motion-distance-displacement
+subject: "9702"
+topic: "2.1"
+title: Distance, displacement, speed and velocity
+summary: Distance and speed ignore direction; displacement and velocity keep it, which is why a full lap can have a big distance and zero displacement.
+order: 1
+minutes: 5
+objectives: ["2.1.1"]
+prerequisites: [units-scalars-and-vectors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.1: define and use distance, displacement, speed and velocity;
+    acceleration is covered in the next lesson). The diagram is drawn to scale. All worked values
+    recomputed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **define** distance, displacement, speed and velocity in the words examiners reward, and calculate average speed and average velocity for a journey.
+
+  - type: explain
+    title: The lap that goes nowhere
+    body: |
+      Run one full lap of a 400 m track. Your legs say you've gone **400 m**. Physics says your **displacement** is **zero**: you finished exactly where you started.
+
+      Both are right. They are answering different questions:
+
+      - **"How far did you travel?"** That's **distance**, a scalar.
+      - **"How far are you from where you started, and in which direction?"** That's **displacement**, a vector.
+
+  - type: definition
+    term: Distance
+    body: |
+      The total length of the path travelled, whatever the direction. A **scalar**, measured in metres (m).
+
+  - type: definition
+    term: Displacement
+    body: |
+      The distance moved in a specified **direction** (from a fixed starting point). A **vector**, measured in metres (m), symbol $s$.
+
+  - type: diagram
+    diagram: phys-equations-motion-half-lap
+    alt: >-
+      A circular running track drawn to scale with its centre marked. A runner starts at the
+      left-hand side of the circle and runs over the top half of the track to the right-hand side,
+      labelled finish. This curved path is drawn as a bold arrow labelled "distance = πr (the curved
+      path)". A straight arrow goes directly from start to finish through the centre, labelled
+      "displacement = 2r, straight from start to finish". The bottom half of the track is dashed and
+      labelled "rest of the track (not run)". A side panel for a 400 m track, radius 63.7 m, says:
+      half a lap, distance 200 m and displacement 127 m; a full lap, distance 400 m and displacement 0.
+    caption: Distance follows the path. Displacement is the straight arrow from start to finish, and it ignores the scenic route.
+
+  - type: check
+    questions: [define-displacement, bounce-ball]
+
+  - type: definition
+    term: Speed
+    body: |
+      The distance travelled per unit time (the rate of change of distance). A **scalar**, in $\text{m s}^{-1}$.
+
+  - type: definition
+    term: Velocity
+    body: |
+      The **rate of change of displacement** (the change in displacement per unit time). A **vector**, in $\text{m s}^{-1}$, symbol $v$ (or $u$ for an initial velocity).
+
+  - type: explain
+    title: Averages, and what your speedometer shows
+    body: |
+      Over a whole journey:
+
+      $$\text{average speed} = \frac{\text{total distance}}{\text{total time}} \qquad \text{average velocity} = \frac{\text{displacement}}{\text{total time}}$$
+
+      A car's speedometer shows **instantaneous speed**: the speed at that moment. The **instantaneous velocity** is that speed **plus** the direction you're heading right then.
+
+      | Scalar (no direction) | Vector (has direction) |
+      | --- | --- |
+      | distance, m | displacement, m |
+      | speed, $\text{m s}^{-1}$ | velocity, $\text{m s}^{-1}$ |
+
+  - type: check
+    questions: [define-velocity, vector-pair]
+
+  - type: example
+    title: Half a lap
+    problem: |
+      A runner completes half a lap of a circular 400 m track in 40 s. Find her distance, displacement, average speed and average velocity.
+    steps:
+      - |
+        **Distance:** half the circumference, $\tfrac{1}{2} \times 400 = 200\ \text{m}$.
+      - |
+        **Radius:** $400 = 2\pi r$, so $r = \dfrac{400}{2\pi} = 63.7\ \text{m}$.
+      - |
+        **Displacement:** she ends directly across the track, so it's the diameter: $2r = 127\ \text{m}$, in the direction from start to finish.
+      - |
+        **Average speed:** $\dfrac{200}{40} = 5.0\ \text{m s}^{-1}$.
+      - |
+        **Average velocity:** $\dfrac{127}{40} = 3.2\ \text{m s}^{-1}$, directed straight across the track from start to finish.
+    answer: |
+      Distance 200 m; displacement 127 m across the track; average speed $5.0\ \text{m s}^{-1}$; average velocity $3.2\ \text{m s}^{-1}$ across the track. Same run, two very different numbers.
+
+  - type: check
+    questions: [walk-east-north, velodrome, quarter-lap]
+
+  - type: misconceptions
+    items:
+      - wrong: Displacement is just a posh word for distance.
+        right: Displacement has a **direction** and only cares about start and finish. A round trip has a big distance and zero displacement.
+      - wrong: Average velocity is the average of the starting and finishing velocities.
+        right: In general, average velocity = **displacement ÷ time**. The shortcut $\tfrac{1}{2}(u + v)$ only works when the acceleration is uniform (you'll meet it soon).
+      - wrong: Speed and velocity are always equal in size.
+        right: Instantaneous speed is the size of the instantaneous velocity, but **average** speed and **average** velocity can differ hugely (5.0 versus $3.2\ \text{m s}^{-1}$ in the example).
+
+  - type: exam
+    body: |
+      - "Define velocity" is a classic 1-mark opener. Write **"rate of change of displacement"**. Saying "speed" or "distance" instead of displacement throws the mark away.
+      - In "show that" or calculation questions, give a vector answer **with its direction** ("127 m across the track", "$2.0\ \text{m s}^{-1}$ at 53° north of east").
+      - If the path bends, draw a quick sketch of start and finish: the displacement is the straight arrow between them, usually found with Pythagoras.
+
+  - type: takeaways
+    items:
+      - "**Distance**: total path length (scalar). **Displacement**: distance in a specified direction (vector)."
+      - "**Speed**: distance per unit time (scalar). **Velocity**: rate of change of displacement (vector)."
+      - Average speed = total distance ÷ time; average velocity = displacement ÷ time.
+      - Finishing where you started means zero displacement and zero average velocity, however far you ran.
+
+questions:
+  - id: define-displacement
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.1"]
+    prompt: |
+      Displacement is the {{1}} moved in a specified {{2}}.
+    blanks:
+      - accept: [distance]
+      - accept: [direction]
+    explanation: |
+      Displacement is a **vector**: a distance with a direction attached, measured from a fixed starting point.
+
+  - id: bounce-ball
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.1"]
+    prompt: |
+      A ball is dropped from $2.0\ \text{m}$ above the floor. It bounces straight back up and is caught $1.5\ \text{m}$ above the floor. Find the total **distance** it travels and the **size** of its displacement.
+    fields:
+      - label: "distance ="
+        answer: 3.5
+        tolerance: { abs: 0.01 }
+        unit: m
+      - label: "displacement ="
+        answer: 0.5
+        tolerance: { abs: 0.01 }
+        unit: m
+    explanation: |
+      Distance: $2.0\ \text{m}$ down plus $1.5\ \text{m}$ up $= 3.5\ \text{m}$. Displacement: it ends $1.5\ \text{m}$ above the floor, having started at $2.0\ \text{m}$, so it is $0.50\ \text{m}$ **below** its starting point. The trip down and back up partly cancel.
+
+  - id: define-velocity
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["2.1.1"]
+    prompt: |
+      Define **velocity**.
+    accept:
+      - rate of change of displacement
+      - velocity is rate of change of displacement
+      - velocity is the rate of change of displacement
+      - change in displacement per unit time
+      - change of displacement per unit time
+      - velocity is change in displacement per unit time
+      - velocity is the change in displacement per unit time
+      - displacement per unit time
+      - velocity is displacement per unit time
+      - rate of change of displacement with time
+      - velocity is the rate of change of displacement with time
+      - rate of change of displacement with respect to time
+    model: |
+      Velocity is the **rate of change of displacement** (the change in displacement per unit time).
+    explanation: |
+      The key word is **displacement**. "Rate of change of distance" defines speed, which has no direction.
+
+  - id: vector-pair
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.1"]
+    prompt: |
+      Which pair contains **only** vector quantities?
+    options:
+      - text: displacement and velocity
+        correct: true
+        why: Correct. Both have a magnitude and a direction.
+      - text: distance and speed
+        why: These are both scalars. They are the "no direction" partners of displacement and velocity.
+      - text: displacement and speed
+        why: Displacement is a vector, but speed is a scalar.
+      - text: velocity and time
+        why: Velocity is a vector, but time has no direction, so it is a scalar.
+    explanation: |
+      Learn the pairs: distance/displacement and speed/velocity. In each pair the scalar comes first and the vector second.
+
+  - id: walk-east-north
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.1"]
+    prompt: |
+      A student walks $300\ \text{m}$ due east and then $400\ \text{m}$ due north. The whole walk takes $250\ \text{s}$. Calculate her average speed and the magnitude of her average velocity.
+    fields:
+      - label: "average speed ="
+        answer: 2.8
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+      - label: "average velocity ="
+        answer: 2.0
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+    explanation: |
+      Distance $= 300 + 400 = 700\ \text{m}$, so average speed $= \dfrac{700}{250} = 2.8\ \text{m s}^{-1}$. Displacement: the two legs are at right angles, so $\sqrt{300^2 + 400^2} = 500\ \text{m}$ (at $53°$ north of east). Average velocity $= \dfrac{500}{250} = 2.0\ \text{m s}^{-1}$ at $53°$ north of east.
+
+  - id: velodrome
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.1"]
+    prompt: |
+      A cyclist rides exactly 3 laps of a $250\ \text{m}$ velodrome in $60\ \text{s}$, finishing where she started. What is her average velocity?
+    options:
+      - text: $0$
+        correct: true
+        why: Correct. She ends where she started, so her displacement is zero, and zero divided by 60 s is zero.
+      - text: $12.5\ \text{m s}^{-1}$
+        why: That's her average **speed** (750 m of distance divided by 60 s). Velocity uses displacement.
+      - text: $4.2\ \text{m s}^{-1}$
+        why: This divides one lap (250 m) by the time. It is neither the average speed nor the average velocity.
+      - text: It can't be found without knowing which way she rode.
+        why: The direction doesn't matter here. Any direction round a closed loop gives zero displacement.
+    explanation: |
+      Average velocity = displacement ÷ time. Closed loop, zero displacement, zero average velocity, however hard she pedalled.
+
+  - id: quarter-lap
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.1"]
+    prompt: |
+      A cyclist rides round a circular track of radius $50\ \text{m}$ at a constant speed, taking $60\ \text{s}$ for each full lap. For one **quarter** of a lap, calculate her average speed and the magnitude of her average velocity. Give each to 3 significant figures.
+    fields:
+      - label: "average speed ="
+        answer: 5.236
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+      - label: "average velocity ="
+        answer: 4.714
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+    explanation: |
+      A quarter lap takes $15\ \text{s}$. Distance: a quarter of the circumference, $\tfrac{1}{4} \times 2\pi \times 50 = 78.5\ \text{m}$, so average speed $= \dfrac{78.5}{15} = 5.24\ \text{m s}^{-1}$. Displacement: the straight line between two points a quarter-circle apart, which is the hypotenuse of a right-angled triangle with two 50 m sides: $\sqrt{50^2 + 50^2} = 70.7\ \text{m}$. Average velocity $= \dfrac{70.7}{15} = 4.71\ \text{m s}^{-1}$. The speedometer read $5.24\ \text{m s}^{-1}$ the whole time, yet the average velocity is smaller, because the path curves.

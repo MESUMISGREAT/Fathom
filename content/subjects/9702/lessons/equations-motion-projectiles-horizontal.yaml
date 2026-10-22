@@ -1,0 +1,258 @@
+id: equations-motion-projectiles-horizontal
+subject: "9702"
+topic: "2.1"
+title: "Projectiles: two motions in one"
+summary: A uniform velocity in one direction plus a uniform acceleration at right angles gives a parabola, and the two motions never interfere with each other.
+order: 11
+minutes: 5
+objectives: ["2.1.9"]
+prerequisites: [equations-motion-free-fall, units-resolving-vectors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.9, describing and explaining the motion produced by a uniform
+    velocity in one direction combined with a uniform acceleration at right angles to it), using
+    g = 9.81 m s⁻² from the 9702 data sheet. The strobe diagram is drawn to scale (2.0 m s⁻¹
+    launch, flashes every 0.10 s). The charged-particle example links forward to the A Level topic
+    on electric fields. All worked values and answer keys recomputed with Python. All questions
+    are original; the heights and speeds are illustrative values.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-22. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **describe and explain** the motion of an object with a uniform velocity in one direction and a uniform acceleration at right angles to it, and solve problems on objects launched horizontally.
+
+  - type: explain
+    title: The bullet race
+    body: |
+      Fire a bullet horizontally and, at the same instant, drop a second bullet from the same height. Which hits the (level) ground first?
+
+      **Neither.** With air resistance negligible they land **together**, even though one has flown hundreds of metres and the other has dropped straight down.
+
+      That's the big idea of this lesson: the sideways motion and the downward motion **ignore each other completely**.
+
+  - type: explain
+    title: Two motions at right angles
+    body: |
+      Treat a projectile (air resistance negligible) as two separate motions:
+
+      | | horizontal | vertical |
+      | --- | --- | --- |
+      | force | none | weight, downwards |
+      | acceleration | zero | $g = 9.81\ \text{m s}^{-2}$ downwards |
+      | velocity | **constant**, $u_x$ | changes steadily: $v_y = u_y + at$ |
+      | equations | $x = u_x t$ | the suvat equations, with $a = g$ |
+
+      The two columns share **one** thing: the time $t$. Find it from one column, then use it in the other.
+
+  - type: diagram
+    diagram: phys-equations-motion-projectile-strobe
+    alt: >-
+      A strobe picture drawn to scale, with flashes every 0.10 s. On the left, ball A is dropped
+      from rest and its images fall straight down with growing gaps. To its right, ball B is
+      launched horizontally at 2.0 m s⁻¹ from the same height at the same instant. B's images
+      follow a dashed curved path (a parabola). Horizontal guide lines show that at every flash B
+      is at exactly the same height as A. Vertical guide lines under B's images mark equal
+      horizontal gaps, each labelled 20 cm. At t = 0.2 s and t = 0.4 s, B has two arrows: a
+      horizontal component labelled vx = 2.0 both times, and a downward component labelled
+      vy = 1.96 and then vy = 3.92, twice as long. A panel reads: across, equal gaps, so constant
+      horizontal velocity; down, B matches A at every flash, accelerating at g; so they land
+      together; velocities in m s⁻¹.
+    caption: Across, B moves the same 20 cm every flash. Down, it keeps pace with the dropped ball exactly. Two independent motions, one curved path.
+
+  - type: intuition
+    title: Two shadows
+    body: |
+      Hang a lamp directly above a thrown ball: its **shadow on the floor** glides along at a steady speed. Put a lamp off to the side: its **shadow on the wall** falls exactly like a dropped ball. The real ball is doing both at once.
+
+      Where the picture breaks down: with significant air resistance the horizontal velocity no longer stays constant, and this simple two-column method stops working (that's topic 3).
+
+  - type: check
+    questions: [land-together, components-cloze]
+
+  - type: example
+    title: Off the edge of the table
+    problem: |
+      A marble rolls off a horizontal table $0.80\ \text{m}$ high at $2.5\ \text{m s}^{-1}$. Air resistance is negligible. Find (a) the time it takes to reach the floor, (b) how far from the table it lands, and (c) its velocity as it lands.
+    steps:
+      - |
+        **Vertical** (downwards positive): it leaves horizontally, so $u_y = 0$; $a = 9.81\ \text{m s}^{-2}$, $s = 0.80\ \text{m}$. From $s = \tfrac{1}{2}at^2$: $t = \sqrt{\dfrac{2 \times 0.80}{9.81}} = 0.404\ \text{s}$.
+      - |
+        **Horizontal:** constant $2.5\ \text{m s}^{-1}$, so $x = 2.5 \times 0.404 = 1.01\ \text{m}$.
+      - |
+        **Vertical velocity on landing:** $v_y = u_y + at = 0 + 9.81 \times 0.404 = 3.96\ \text{m s}^{-1}$ downwards. The horizontal component is still $2.5\ \text{m s}^{-1}$.
+      - |
+        **Combine:** $v = \sqrt{2.5^2 + 3.96^2} = 4.68\ \text{m s}^{-1}$, at $\tan^{-1}\left(\dfrac{3.96}{2.5}\right) = 57.7°$ below the horizontal.
+    answer: |
+      (a) $0.404\ \text{s}$; (b) $1.01\ \text{m}$ from the table; (c) $4.68\ \text{m s}^{-1}$ at $57.7°$ below the horizontal. Roll it twice as fast and it lands twice as far away, but **not** a millisecond later.
+
+  - type: check
+    questions: [bench-marble, landing-velocity]
+
+  - type: explain
+    title: Why the path is a parabola
+    body: |
+      Measure $x$ across and $y$ downwards from the launch point. For a horizontal launch at speed $u$:
+
+      $$x = ut \qquad y = \tfrac{1}{2}gt^2$$
+
+      Eliminate $t = \dfrac{x}{u}$ to get $y = \dfrac{g}{2u^2}\,x^2$. So $y \propto x^2$: the path is a **parabola**.
+
+      Nothing here is special to gravity. **Any** uniform velocity in one direction combined with a uniform acceleration at right angles gives a parabola. An electron fired between two charged parallel plates has a constant velocity along the plates and a constant acceleration across them, so it curves in a parabola too (you'll meet it in the A Level topic on electric fields).
+
+  - type: misconceptions
+    items:
+      - wrong: Launching faster sideways keeps an object in the air for longer.
+        right: The time of flight is set by the **vertical** motion only (the height and the initial vertical velocity). A faster horizontal launch just lands further away, at the same moment.
+      - wrong: The horizontal velocity gradually slows down during the flight.
+        right: With air resistance negligible there is **no horizontal force**, so no horizontal acceleration. The horizontal velocity stays exactly the same.
+      - wrong: For a horizontal launch, use the launch speed as u in the vertical equations.
+        right: Launched horizontally means the initial **vertical** velocity is zero. Keep a separate list for each direction.
+      - wrong: Because the path curves, the acceleration keeps changing direction.
+        right: The acceleration is $g$, vertically downwards, at every point. It's the **velocity** that changes direction.
+
+  - type: exam
+    body: |
+      - "Describe **and explain** the motion" (air resistance negligible) wants three things, with a reason for each of the first two:
+        - horizontally: constant velocity, **because** there is no horizontal force;
+        - vertically: constant acceleration $g$ downwards, **because** the only force is the weight, which acts vertically;
+        - the result: a **parabolic** path.
+      - A description with no reasons misses the "explain" marks. Every "because" is doing real work.
+      - Set out two columns, horizontal and vertical. Never mix a horizontal and a vertical quantity in one suvat equation.
+      - The velocity at any moment needs both components: Pythagoras for its size, $\tan^{-1}$ for its direction.
+
+  - type: check
+    questions: [cliff-launch, electron-path, describe-explain]
+
+  - type: takeaways
+    items:
+      - Uniform velocity in one direction plus uniform acceleration at right angles to it gives a parabolic path.
+      - "For a projectile: constant horizontal velocity (no horizontal force); vertical acceleration $g$ downwards (its weight)."
+      - The two motions are independent; the time is the link between them.
+      - Launched horizontally means zero initial vertical velocity, so it falls exactly like a dropped object.
+
+questions:
+  - id: land-together
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.9"]
+    prompt: |
+      From the same height and at the same instant, ball A is dropped and ball B is projected horizontally at $15\ \text{m s}^{-1}$. The ground is level and air resistance is negligible. Which statement is correct?
+    options:
+      - text: Both balls hit the ground at the same time.
+        correct: true
+        why: Correct. Both start with zero vertical velocity and have the same vertical acceleration $g$, so their vertical motions are identical.
+      - text: A lands first, because B has further to travel.
+        why: B does travel further, but the extra distance is horizontal, and horizontal motion doesn't affect how fast it falls.
+      - text: B lands first, because it is moving faster.
+        why: B's extra speed is all horizontal. It has no effect on the vertical motion.
+      - text: A lands first, because B's horizontal motion holds it up.
+        why: Nothing holds B up. With air resistance negligible, its horizontal motion has no vertical effect at all.
+    explanation: |
+      Horizontal and vertical motions are independent. The time to fall depends only on the vertical motion, which is the same for both balls.
+
+  - id: components-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.9"]
+    prompt: |
+      For a projectile with air resistance negligible, the horizontal component of its velocity is {{1}}, because there is no horizontal {{2}}. The vertical component changes at a constant rate of {{3}} $\text{m s}^{-2}$, because the {{4}} of the object acts vertically downwards.
+    blanks:
+      - accept: [constant, unchanged, the same, uniform, constant velocity]
+      - accept: [force, resultant force, net force]
+      - accept: ["9.81", "9.8", g]
+      - accept: [weight, gravitational force, force of gravity, force due to gravity]
+    explanation: |
+      No horizontal force means no horizontal acceleration. The weight acts vertically, giving a constant vertical acceleration $g = 9.81\ \text{m s}^{-2}$.
+
+  - id: bench-marble
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.9"]
+    prompt: |
+      A marble rolls off the edge of a horizontal bench $1.10\ \text{m}$ high at $1.8\ \text{m s}^{-1}$. Air resistance is negligible. Find the time it takes to reach the floor and the horizontal distance from the bench to where it lands, each to 3 significant figures.
+    fields:
+      - label: "time ="
+        answer: 0.4736
+        tolerance: { abs: 0.005 }
+        unit: s
+      - label: "horizontal distance ="
+        answer: 0.8524
+        tolerance: { abs: 0.005 }
+        unit: m
+    explanation: |
+      Vertical, from rest: $1.10 = \tfrac{1}{2} \times 9.81 \times t^2$, so $t = \sqrt{\dfrac{2.20}{9.81}} = 0.474\ \text{s}$. Horizontal, constant velocity: $x = 1.8 \times 0.474 = 0.852\ \text{m}$.
+
+  - id: landing-velocity
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.9"]
+    prompt: |
+      A marble leaves the edge of a horizontal bench $1.10\ \text{m}$ high moving horizontally at $1.8\ \text{m s}^{-1}$. Air resistance is negligible. Find the speed at which it hits the floor and the angle its velocity then makes with the horizontal, each to 3 significant figures.
+    fields:
+      - label: "speed ="
+        answer: 4.982
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+      - label: "angle below the horizontal ="
+        answer: 68.82
+        tolerance: { abs: 0.2 }
+        unit: °
+    explanation: |
+      Vertical component: $v_y^2 = 0 + 2 \times 9.81 \times 1.10 = 21.58$, so $v_y = 4.65\ \text{m s}^{-1}$ downwards. Horizontal component: still $1.8\ \text{m s}^{-1}$. Speed $= \sqrt{1.8^2 + 4.65^2} = 4.98\ \text{m s}^{-1}$, at $\tan^{-1}\left(\dfrac{4.65}{1.8}\right) = 68.8°$ below the horizontal.
+
+  - id: cliff-launch
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.9"]
+    prompt: |
+      A stone is thrown horizontally from the top of a vertical cliff. It lands in the sea $2.5\ \text{s}$ later, $24\ \text{m}$ from the foot of the cliff. Air resistance is negligible. Find the speed at which it was thrown and the height of the cliff, each to 3 significant figures.
+    fields:
+      - label: "launch speed ="
+        answer: 9.6
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+      - label: "cliff height ="
+        answer: 30.66
+        tolerance: { abs: 0.1 }
+        unit: m
+    explanation: |
+      Horizontal, constant velocity: $u = \dfrac{24}{2.5} = 9.6\ \text{m s}^{-1}$. Vertical, from rest: $h = \tfrac{1}{2} \times 9.81 \times 2.5^2 = 30.7\ \text{m}$. The launch speed played no part in the height.
+
+  - id: electron-path
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.9"]
+    prompt: |
+      An electron enters the space between two charged parallel plates, moving parallel to them. Between the plates it keeps a constant velocity parallel to the plates and has a constant acceleration at right angles to them. Ignore gravity. What is the shape of its path between the plates?
+    options:
+      - text: part of a parabola
+        correct: true
+        why: Correct. Uniform velocity in one direction plus uniform acceleration at right angles to it is exactly a projectile, turned on its side.
+      - text: a straight line at an angle to the plates
+        why: The velocity component across the plates keeps growing while the one along them stays fixed, so the direction of motion keeps changing. The path must curve.
+      - text: an arc of a circle
+        why: Circular motion needs an acceleration that keeps turning to stay at right angles to the velocity. Here the acceleration has a fixed direction.
+      - text: a straight line parallel to the plates
+        why: The acceleration across the plates pushes it sideways, so it can't carry straight on.
+    explanation: |
+      Along the plates $x = ut$; across them $y = \tfrac{1}{2}at^2$. Eliminating $t$ gives $y \propto x^2$, a parabola, just like a ball rolling off a table.
+
+  - id: describe-explain
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.9"]
+    prompt: |
+      A ball is thrown horizontally from a high window. Air resistance is negligible. Describe and explain the ball's motion until it hits the ground.
+    model: |
+      The horizontal component of the ball's velocity stays constant, because no horizontal force acts on it. The vertical component increases at a constant rate: the ball has a constant acceleration of $g = 9.81\ \text{m s}^{-2}$ downwards, because its weight, the only force on it, acts vertically downwards. The horizontal and vertical motions are independent of each other. Combining a constant horizontal velocity with a constant vertical acceleration gives a parabolic path, getting steeper as the vertical velocity grows.
+    keyPoints:
+      - The horizontal velocity stays constant
+      - because no horizontal force acts (air resistance negligible)
+      - The vertical motion has a constant acceleration g = 9.81 m s⁻² downwards
+      - because the weight is the only force and it acts vertically
+      - The two motions are independent and together give a parabolic path
+    explanation: |
+      Saying what happens earns the "describe" marks; the "because" reasons earn the "explain" ones. Give both.
