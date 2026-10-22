@@ -53,6 +53,16 @@ describe('numbers', () => {
     expect(parseNumber('banana')).toBeNull();
   });
 
+  it('reads space-grouped digits as one number and never multiplies digits separated by spaces', () => {
+    expect(parseNumber('1 440 000')).toMatchObject({ value: 1440000, sigFigs: { min: 3, max: 7 } });
+    expect(parseNumber('12 345.6')?.value).toBe(12345.6);
+    expect(parseNumber('-1 000')?.value).toBe(-1000);
+    expect(parseNumber('1 2')).toBeNull();
+    expect(parseNumber('12 34.5')).toBeNull();
+    expect(parseNumber('3 x 10^5')?.value).toBe(3e5);
+    expect(parseNumber('2 √5')?.value).toBeCloseTo(2 * Math.sqrt(5));
+  });
+
   it('counts significant figures', () => {
     expect(countSigFigs('0.00340')).toEqual({ min: 3, max: 3 });
     expect(countSigFigs('3400')).toEqual({ min: 2, max: 4 });
