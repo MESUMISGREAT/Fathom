@@ -1,0 +1,263 @@
+id: coordinate-geometry-equation-of-a-circle
+subject: "9709"
+topic: "1.3"
+title: The equation of a circle
+summary: (x − a)² + (y − b)² = r² is Pythagoras in disguise. Read off the centre and radius, and write the equation from a centre and a point, or from a diameter.
+order: 5
+minutes: 5
+kind: core
+objectives: ["1.3.3"]
+prerequisites: [coordinate-geometry-gradient-distance-midpoint]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcome "understand that the
+    equation (x − a)² + (y − b)² = r² represents the circle with centre (a, b) and radius r". The
+    expanded form in the same outcome's note is taught in the next lesson. All examples and
+    questions are original; every centre, radius and point checked in Python. Not yet reviewed by
+    a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain why $(x - a)^2 + (y - b)^2 = r^2$ is a circle, read off its **centre** and **radius**, and write the equation of a circle from the information you're given.
+
+  - type: explain
+    title: A circle is a distance rule
+    body: |-
+      Tie a goat to a post with a 5 m rope and let it wander to the very end in every direction. The path it traces is a circle: every point exactly 5 m from the post.
+
+      That's the definition. A **circle** is the set of all points at a fixed distance $r$ (the **radius**) from a fixed point (the **centre**). Where the goat analogy breaks: real goats wander *inside* the circle too. The circle is only the edge.
+
+  - type: diagram
+    diagram: coordinate-geometry-circle-pythagoras
+    alt: >-
+      Square grid with a blue circle of radius 5 centred at C(2, 1). A general point P(x, y) on
+      the circle, drawn at (5, 5), is joined to C by a line labelled r = 5. A shaded right-angled
+      triangle under CP has a horizontal side labelled x − 2 and a vertical side labelled y − 1,
+      with the right angle at (5, 1). The equation (x − 2)² + (y − 1)² = 5² is written below.
+    caption: |-
+      For any point $P(x, y)$ on the circle, the triangle has legs $x - 2$ and $y - 1$ and hypotenuse 5. Pythagoras does the rest: $(x - 2)^2 + (y - 1)^2 = 25$.
+
+  - type: definition
+    term: Equation of a circle
+    body: |-
+      The circle with **centre $(a, b)$** and **radius $r$** has equation
+
+      $$(x - a)^2 + (y - b)^2 = r^2.$$
+
+      A point lies on the circle exactly when its coordinates satisfy the equation. A circle centred at the origin is simply $x^2 + y^2 = r^2$.
+
+  - type: explain
+    title: Reading one off
+    body: |-
+      Two traps, both about signs and squares:
+
+      - The centre's coordinates have the **opposite sign** to the numbers in the brackets: $(x + 3)^2 + (y - 1)^2 = 16$ has centre $(-3, 1)$.
+      - The right-hand side is $r^2$, so take the **square root**: radius $\sqrt{16} = 4$, not 16.
+
+      Think of $(x + 3)$ as $(x - (-3))$, and the sign flip stops being mysterious.
+
+  - type: check
+    questions: [ce-read, ce-write]
+
+  - type: example
+    title: Centre and a point on the circle
+    problem: |-
+      A circle has centre $(-1, 2)$ and passes through $(3, 5)$. Find its equation.
+    steps:
+      - |-
+        The radius is the distance from the centre to the point: $r^2 = (3 - (-1))^2 + (5 - 2)^2 = 16 + 9 = 25$.
+      - |-
+        You need $r^2$, not $r$, so there's no need to square-root. (Here $r = 5$ anyway.)
+      - |-
+        Substitute: $(x - (-1))^2 + (y - 2)^2 = 25$.
+    answer: |-
+      $(x + 1)^2 + (y - 2)^2 = 25$.
+
+  - type: example
+    title: Ends of a diameter
+    problem: |-
+      $A(-2, 1)$ and $B(4, 9)$ are the ends of a diameter of a circle. Find the equation of the circle.
+    steps:
+      - |-
+        The centre is the **midpoint** of the diameter: $\left(\dfrac{-2 + 4}{2}, \dfrac{1 + 9}{2}\right) = (1, 5)$.
+      - |-
+        The radius is **half** the diameter: $AB = \sqrt{6^2 + 8^2} = 10$, so $r = 5$.
+      - |-
+        (Or find the distance from the centre to $A$: $\sqrt{3^2 + 4^2} = 5$ ✓)
+    answer: |-
+      $(x - 1)^2 + (y - 5)^2 = 25$.
+
+  - type: check
+    questions: [ce-through-point, ce-diameter]
+
+  - type: explain
+    title: Inside, on or outside?
+    body: |-
+      Substitute the point into the left-hand side, $(x - a)^2 + (y - b)^2$. That's the **squared distance** from the centre. Then compare it with $r^2$:
+
+      | Result | The point is |
+      | --- | --- |
+      | less than $r^2$ | inside the circle |
+      | equal to $r^2$ | on the circle |
+      | greater than $r^2$ | outside the circle |
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $(x - 1)^2 + (y + 4)^2 = 9$ has radius 9.
+        right: |-
+          The right-hand side is $r^2$, so $r = \sqrt9 = 3$.
+      - wrong: |-
+          $(x + 2)^2 + (y - 5)^2 = 36$ has centre $(2, -5)$.
+        right: |-
+          Opposite signs: the centre is $(-2, 5)$. Check by substituting: the brackets are both 0 at $(-2, 5)$.
+      - wrong: |-
+          The circle with centre $(4, -1)$ and radius 6 is $(x - 4)^2 + (y + 1)^2 = 6$.
+        right: |-
+          Square the radius: $(x - 4)^2 + (y + 1)^2 = 36$.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Find the equation of the circle with centre $C$ which passes through $A$*, or with $AB$ as a diameter. About 3 marks: centre, $r^2$, equation.
+      - Leave $r^2$ as a number (often not a perfect square): $(x - 2)^2 + (y + 1)^2 = 13$ is perfect. No need for $(\sqrt{13})^2$.
+      - Insider hack: plug the given point into your final equation. If it doesn't satisfy it, recheck your signs.
+
+  - type: check
+    questions: [ce-inside, ce-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        $(x - a)^2 + (y - b)^2 = r^2$: centre $(a, b)$, radius $r$. It's Pythagoras for every point on the circle.
+      - |-
+        Centre: opposite signs to the brackets. Radius: square-root the right-hand side.
+      - |-
+        From a diameter: centre = midpoint, radius = half the length.
+      - |-
+        Compare $(x - a)^2 + (y - b)^2$ with $r^2$ to tell inside, on or outside.
+
+questions:
+  - id: ce-read
+    format: numeric
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |-
+      Find the centre and radius of the circle $(x + 4)^2 + (y - 7)^2 = 36$.
+    fields:
+      - label: "centre x ="
+        answer: -4
+      - label: "centre y ="
+        answer: 7
+      - label: "radius ="
+        answer: 6
+    explanation: |-
+      $(x + 4)^2 = (x - (-4))^2$, so the centre is $(-4, 7)$. The radius is $\sqrt{36} = 6$.
+
+  - id: ce-write
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |-
+      Which is the equation of the circle with centre $(3, -2)$ and radius 5?
+    explanation: |-
+      $(x - a)^2 + (y - b)^2 = r^2$ with $a = 3$, $b = -2$, $r = 5$: $(x - 3)^2 + (y + 2)^2 = 25$.
+    options:
+      - text: |-
+          $(x - 3)^2 + (y + 2)^2 = 25$
+        correct: true
+        why: |-
+          Brackets have the opposite signs to the centre, and the right-hand side is $5^2$.
+      - text: |-
+          $(x + 3)^2 + (y - 2)^2 = 25$
+        why: |-
+          Signs the wrong way round: this circle has centre $(-3, 2)$.
+      - text: |-
+          $(x - 3)^2 + (y + 2)^2 = 5$
+        why: |-
+          The right-hand side must be $r^2 = 25$. This one has radius $\sqrt5$.
+      - text: |-
+          $(x + 3)^2 + (y - 2)^2 = 5$
+        why: |-
+          Both mistakes at once: wrong centre $(-3, 2)$ and radius $\sqrt5$.
+
+  - id: ce-through-point
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |-
+      A circle has centre $(-2, 3)$ and passes through $(4, -5)$. Its equation is $(x + 2)^2 + (y - 3)^2 = k$. Find $k$.
+    fields:
+      - label: "k ="
+        answer: 100
+    explanation: |-
+      $k = r^2 = (4 - (-2))^2 + (-5 - 3)^2 = 36 + 64 = 100$. (So the radius is 10.)
+
+  - id: ce-diameter
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |-
+      $A(-3, 4)$ and $B(5, -2)$ are the ends of a diameter of a circle. Its equation is $(x - a)^2 + (y - b)^2 = r^2$. Find $a$, $b$ and $r^2$.
+    fields:
+      - label: "a ="
+        answer: 1
+      - label: "b ="
+        answer: 1
+      - label: "r² ="
+        answer: 25
+    explanation: |-
+      Centre = midpoint of $AB$: $\left(\dfrac{-3 + 5}{2}, \dfrac{4 + (-2)}{2}\right) = (1, 1)$.
+
+      $AB = \sqrt{8^2 + 6^2} = 10$, so $r = 5$ and $r^2 = 25$. Check with $A$: $(-3 - 1)^2 + (4 - 1)^2 = 16 + 9 = 25$ ✓
+
+  - id: ce-inside
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |-
+      Where is the point $(5, 1)$ relative to the circle $(x - 1)^2 + (y + 3)^2 = 25$?
+    explanation: |-
+      $(5 - 1)^2 + (1 + 3)^2 = 16 + 16 = 32$. That's the squared distance from the centre, and $32 > 25$, so the point is outside.
+    options:
+      - text: |-
+          On the circle
+        why: |-
+          That needs the left-hand side to equal 25 exactly. It's 32.
+      - text: |-
+          Outside the circle
+        correct: true
+        why: |-
+          Squared distance from the centre is 32, which is more than $r^2 = 25$.
+      - text: |-
+          Inside the circle
+        why: |-
+          Inside needs a squared distance less than 25. If you got $4^2 + (-2)^2 = 20$, check the second bracket: $1 + 3 = 4$, not $1 - 3$.
+      - text: |-
+          You can't tell without a sketch
+        why: |-
+          You can: substitute into $(x - 1)^2 + (y + 3)^2$ and compare with 25.
+
+  - id: ce-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |-
+      A student finds the equation of the circle with centre $(5, -1)$ that passes through $(1, 2)$. Which line contains the first error?
+    lines:
+      - |-
+        The radius is the distance from $(5, -1)$ to $(1, 2)$.
+      - |-
+        $r^2 = (1 - 5)^2 + (2 - (-1))^2 = 16 + 9 = 25$
+      - |-
+        So $r = 5$.
+      - |-
+        The equation is $(x - 5)^2 + (y - 1)^2 = 25$.
+    errorLine: 4
+    fix: |-
+      The centre's $y$-coordinate is $-1$, so the bracket is $(y - (-1)) = (y + 1)$: $(x - 5)^2 + (y + 1)^2 = 25$.
+    explanation: |-
+      Test the student's equation with the given point: $(1 - 5)^2 + (2 - 1)^2 = 16 + 1 = 17 \neq 25$. The radius work is right; the sign of $b$ slipped in the last line.

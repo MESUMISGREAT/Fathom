@@ -7,6 +7,7 @@ import ChemicalFormulasCombustionTracking from './chemical-formulas-combustion-t
 import ChemicalFormulasEmpiricalBlocks from './chemical-formulas-empirical-blocks';
 import ChemicalFormulasHeatingCrucible from './chemical-formulas-heating-crucible';
 import ChemicalFormulasIonCharges from './chemical-formulas-ion-charges';
+import ChemicalFormulasIonPatterns from './chemical-formulas-ion-patterns';
 import ChemicalFormulasSpectatorIons from './chemical-formulas-spectator-ions';
 import ElectronsInBoxes from './electrons-in-boxes';
 import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
@@ -28,6 +29,7 @@ export const diagrams: DiagramRegistry = {
   'chem-chemical-formulas-empirical-blocks': ChemicalFormulasEmpiricalBlocks,
   'chem-chemical-formulas-heating-crucible': ChemicalFormulasHeatingCrucible,
   'chem-chemical-formulas-ion-charges': ChemicalFormulasIonCharges,
+  'chem-chemical-formulas-ion-patterns': ChemicalFormulasIonPatterns,
   'chem-chemical-formulas-spectator-ions': ChemicalFormulasSpectatorIons,
   'chem-electrons-in-boxes': ElectronsInBoxes,
   'chem-first-ionisation-energy-trend': FirstIonisationEnergyTrend,

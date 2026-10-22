@@ -1,0 +1,281 @@
+id: coordinate-geometry-line-and-circle
+subject: "9709"
+topic: "1.3"
+title: Where a line meets a circle
+summary: Substitute the line into the circle to get a quadratic. Its roots give the meeting points, and its discriminant says whether the line cuts, touches or misses.
+order: 9
+minutes: 5
+kind: core
+objectives: ["1.3.4", "1.3.5"]
+prerequisites: [coordinate-geometry-circle-expanded-form, quadratics-simultaneous-equations, quadratics-discriminant]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcomes "use algebraic methods to
+    solve problems involving lines and circles" and "understand the relationship between a graph
+    and its associated algebraic equation, and use the relationship between points of
+    intersection of graphs and solutions of equations". All examples and questions are original;
+    every intersection, discriminant and length checked in Python. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find where a line meets a circle, find the length and midpoint of the chord, and use the **discriminant** to decide whether a line cuts, touches or misses a circle.
+
+  - type: explain
+    title: "Same trick as ever: substitute"
+    body: |-
+      Points where a line and a circle meet satisfy **both** equations. So:
+
+      1. Rearrange the line to $y = \dots$ (or $x = \dots$).
+      2. **Substitute** into the circle. You get a quadratic in one letter.
+      3. Solve it, then use the **line** to get the other coordinate of each point.
+
+      Pair each $x$ with its own $y$. Two points, not four.
+
+  - type: example
+    title: A chord and its midpoint
+    problem: |-
+      The line $y = x + 1$ meets the circle $(x - 2)^2 + (y - 1)^2 = 10$ at $A$ and $B$. Find the coordinates of $A$ and $B$, and the length of $AB$.
+    steps:
+      - |-
+        Substitute $y = x + 1$, so $y - 1 = x$: $\;(x - 2)^2 + x^2 = 10$.
+      - |-
+        Expand: $x^2 - 4x + 4 + x^2 = 10$, so $2x^2 - 4x - 6 = 0$, i.e. $x^2 - 2x - 3 = 0$.
+      - |-
+        Factorise: $(x - 3)(x + 1) = 0$, so $x = 3$ or $x = -1$.
+      - |-
+        Use the line: $x = 3$ gives $y = 4$; $x = -1$ gives $y = 0$. So $A(-1, 0)$ and $B(3, 4)$.
+      - |-
+        $AB = \sqrt{4^2 + 4^2} = \sqrt{32} = 4\sqrt2$.
+    answer: |-
+      $A(-1, 0)$, $B(3, 4)$ and $AB = 4\sqrt2$.
+
+  - type: diagram
+    diagram: coordinate-geometry-chord-midpoint
+    alt: >-
+      Square grid with the blue circle (x − 2)² + (y − 1)² = 10, centre C(2, 1). The grey line
+      y = x + 1 cuts the circle at A(−1, 0) and B(3, 4), and the chord AB between them is
+      highlighted in orange. The midpoint M(1, 2) of the chord is joined to C by a dashed line,
+      with a right-angle mark at M showing that CM is perpendicular to AB.
+    caption: |-
+      The midpoint of the chord is $M(1, 2)$. The gradient of $CM$ is $-1$ and the chord's is $1$: perpendicular, just as the symmetry of a circle says it must be.
+
+  - type: check
+    questions: [lc-points, lc-chord]
+
+  - type: explain
+    title: Two, one or none
+    body: |-
+      The quadratic you get after substituting has 2, 1 or 0 real roots, and each root is a meeting point. So the **discriminant** tells you the whole story without solving:
+
+      | $b^2 - 4ac$ of the substituted quadratic | The line … |
+      | --- | --- |
+      | $> 0$ | cuts the circle at two points (a chord) |
+      | $= 0$ | **touches** it at one point: it's a **tangent** |
+      | $< 0$ | misses the circle completely |
+
+  - type: diagram
+    diagram: coordinate-geometry-line-circle-cases
+    alt: >-
+      Square grid with the blue circle x² + y² = 5, centred at the origin. Three parallel lines
+      of the form y = k − ½x are drawn. The lowest, k = ½, cuts the circle at two marked points,
+      about (−1.76, 1.38) and (2.16, −0.58). The middle orange line, k = 5/2, touches the circle
+      at the single point (1, 2), where a dashed radius from the origin meets it at a right angle.
+      The top dashed line, k = 4, misses the circle. A legend reads: k = ½, two points, b² − 4ac
+      greater than 0; k = 5/2, tangent, b² − 4ac equal to 0; k = 4, misses, b² − 4ac less than 0.
+    caption: |-
+      Substituting $y = k - \tfrac12 x$ into $x^2 + y^2 = 5$ gives $5x^2 - 4kx + 4k^2 - 20 = 0$, with discriminant $400 - 64k^2$. Slide the line up and the discriminant goes positive → zero → negative.
+
+  - type: example
+    title: Finding k for a tangent
+    problem: |-
+      Find the values of $k$ for which the line $y = 2x + k$ is a tangent to the circle $x^2 + y^2 = 20$, and find the point of contact when $k$ is positive.
+    steps:
+      - |-
+        Substitute: $x^2 + (2x + k)^2 = 20$, so $x^2 + 4x^2 + 4kx + k^2 = 20$.
+      - |-
+        As a quadratic: $5x^2 + 4kx + (k^2 - 20) = 0$, with $a = 5$, $b = 4k$, $c = k^2 - 20$.
+      - |-
+        Tangent means a repeated root: $(4k)^2 - 4(5)(k^2 - 20) = 0$, so $16k^2 - 20k^2 + 400 = 0$.
+      - |-
+        $-4k^2 + 400 = 0$, so $k^2 = 100$ and $k = \pm 10$.
+      - |-
+        For $k = 10$: $5x^2 + 40x + 80 = 0$, i.e. $5(x + 4)^2 = 0$, so $x = -4$ and $y = 2(-4) + 10 = 2$.
+    answer: |-
+      $k = 10$ or $k = -10$. When $k = 10$ the line touches the circle at $(-4, 2)$. Check: $16 + 4 = 20$ ✓
+
+  - type: check
+    questions: [lc-count, lc-tangent-k]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $(2x + k)^2 = 4x^2 + k^2$.
+        right: |-
+          You need the middle term: $(2x + k)^2 = 4x^2 + 4kx + k^2$. Dropping it changes $b$, and the discriminant along with it.
+      - wrong: |-
+          "The line meets the circle" means $b^2 - 4ac > 0$.
+        right: |-
+          Touching counts as meeting, so it's $b^2 - 4ac \geqslant 0$. Only "two distinct points" needs $> 0$.
+      - wrong: |-
+          I solved and got $x = 3$ and $x = -1$. Those are the points.
+        right: |-
+          They're $x$-coordinates. Substitute each into the **line** to get its partner $y$, giving $(3, 4)$ and $(-1, 0)$.
+
+  - type: deeper
+    title: The geometry check for tangents
+    body: |-
+      A line is a tangent exactly when its **perpendicular distance from the centre equals the radius**. You could find the foot of the perpendicular from the centre to the line, and compare.
+
+      For $k = 10$ above: the perpendicular from $O$ to $y = 2x + 10$ has gradient $-\tfrac12$ and meets the line at $(-4, 2)$, which is $\sqrt{20}$ from $O$, exactly the radius ✓. The discriminant method is usually quicker, but it's reassuring that both agree.
+
+  - type: exam
+    body: |-
+      - *Find the coordinates of the points where the line meets the circle*: substitute, solve, pair up. About 4 marks.
+      - *Show that the line is a tangent to the circle*: substitute, show $b^2 - 4ac = 0$ (or factorise into a perfect square), and **say** "repeated root, so the line is a tangent".
+      - *Find the set of values of $k$ for which the line meets the circle at two distinct points*: discriminant $> 0$, then solve the quadratic inequality in $k$.
+      - Insider hack: substitute into the circle, then multiply out **slowly**. Nearly every lost mark here is a dropped middle term.
+
+  - type: check
+    questions: [lc-set, lc-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        Substitute the line into the circle to get a quadratic; its roots are the meeting points.
+      - |-
+        Use the line to find each partner coordinate.
+      - |-
+        Discriminant $> 0$: two points. $= 0$: tangent. $< 0$: no meeting.
+      - |-
+        "Meets" means $\geqslant 0$; "two distinct points" means $> 0$.
+
+questions:
+  - id: lc-points
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.4", "1.3.5"]
+    prompt: |-
+      The line $y = 3 - x$ meets the circle $x^2 + y^2 = 29$ at two points. Find their coordinates.
+    fields:
+      - label: "point with larger x: x ="
+        answer: 5
+      - label: "point with larger x: y ="
+        answer: -2
+      - label: "other point: x ="
+        answer: -2
+      - label: "other point: y ="
+        answer: 5
+    explanation: |-
+      $x^2 + (3 - x)^2 = 29 \Rightarrow 2x^2 - 6x + 9 = 29 \Rightarrow x^2 - 3x - 10 = 0 \Rightarrow (x - 5)(x + 2) = 0.$
+
+      $x = 5$ gives $y = -2$; $x = -2$ gives $y = 5$. The points are $(5, -2)$ and $(-2, 5)$. Check: $25 + 4 = 29$ ✓
+
+  - id: lc-chord
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.4"]
+    prompt: |-
+      The line $y = x - 2$ cuts the circle $(x - 1)^2 + (y + 2)^2 = 25$ at $P$ and $Q$. Find the length of $PQ$. Give an exact surd (such as `7√2`) or a decimal to 3 significant figures.
+    fields:
+      - label: "PQ ="
+        answer: 9.899494936611665
+        tolerance: { abs: 0.005 }
+    explanation: |-
+      $y + 2 = x$, so $(x - 1)^2 + x^2 = 25 \Rightarrow 2x^2 - 2x - 24 = 0 \Rightarrow x^2 - x - 12 = 0 \Rightarrow (x - 4)(x + 3) = 0.$
+
+      $P(4, 2)$ and $Q(-3, -5)$. $PQ = \sqrt{7^2 + 7^2} = \sqrt{98} = 7\sqrt2 \approx 9.90$.
+
+  - id: lc-count
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.5"]
+    prompt: |-
+      Substituting the equation of a line into the equation of a circle gives $3x^2 - 2x + 5 = 0$. How many points do the line and circle have in common?
+    explanation: |-
+      $b^2 - 4ac = (-2)^2 - 4(3)(5) = 4 - 60 = -56 < 0$. No real roots, so no meeting points: the line misses the circle.
+    options:
+      - text: |-
+          One
+        why: |-
+          That needs $b^2 - 4ac = 0$ (a tangent). Here it's $-56$.
+      - text: |-
+          None
+        correct: true
+        why: |-
+          The discriminant is $-56$, so there are no real solutions.
+      - text: |-
+          Two
+        why: |-
+          That needs $b^2 - 4ac > 0$. Check $4ac = 4 \times 3 \times 5 = 60$, which is bigger than $b^2 = 4$.
+      - text: |-
+          You can't tell without solving
+        why: |-
+          The discriminant tells you the number of real roots, and each root is one meeting point.
+
+  - id: lc-tangent-k
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.4", "1.3.5"]
+    prompt: |-
+      Find the positive value of $k$ for which the line $y = x + k$ is a tangent to the circle $x^2 + y^2 = 18$.
+    fields:
+      - label: "k ="
+        answer: 6
+    explanation: |-
+      $x^2 + (x + k)^2 = 18 \Rightarrow 2x^2 + 2kx + k^2 - 18 = 0$.
+
+      Tangent: $(2k)^2 - 4(2)(k^2 - 18) = 0 \Rightarrow 4k^2 - 8k^2 + 144 = 0 \Rightarrow k^2 = 36$. The positive value is $k = 6$ (it touches at $(-3, 3)$).
+
+  - id: lc-set
+    format: mcq
+    difficulty: 3
+    objectives: ["1.3.4", "1.3.5"]
+    prompt: |-
+      Find the set of values of $k$ for which the line $y = 2x + k$ meets the circle $x^2 + y^2 = 5$ at two distinct points.
+    explanation: |-
+      $x^2 + (2x + k)^2 = 5 \Rightarrow 5x^2 + 4kx + k^2 - 5 = 0$.
+
+      Two distinct points: $16k^2 - 20(k^2 - 5) > 0 \Rightarrow 100 - 4k^2 > 0 \Rightarrow k^2 < 25$, so $-5 < k < 5$.
+    options:
+      - text: |-
+          $k < -5$ or $k > 5$
+        why: |-
+          That's where $100 - 4k^2 < 0$: the lines that **miss** the circle.
+      - text: |-
+          $-5 \leqslant k \leqslant 5$
+        why: |-
+          Including $\pm 5$ adds the two tangents, which meet the circle at only one point each. "Distinct" needs strict inequalities.
+      - text: |-
+          $-5 < k < 5$
+        correct: true
+        why: |-
+          $100 - 4k^2 > 0$ means $k^2 < 25$: the values *between* the roots.
+      - text: |-
+          $k < 5$
+        why: |-
+          $k^2 < 25$ has two boundaries. Very negative $k$, like $k = -10$, gives a line far below the circle.
+
+  - id: lc-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.4", "1.3.5"]
+    prompt: |-
+      A student investigates whether the line $x + y = 4$ meets the circle $x^2 + y^2 = 8$. Which line contains the first error?
+    lines:
+      - |-
+        $y = 4 - x$, so $x^2 + (4 - x)^2 = 8$.
+      - |-
+        $x^2 + 16 - x^2 = 8$
+      - |-
+        $16 = 8$, which is impossible.
+      - |-
+        So the line does not meet the circle.
+    errorLine: 2
+    fix: |-
+      $(4 - x)^2 = 16 - 8x + x^2$, so $2x^2 - 8x + 8 = 0$, i.e. $x^2 - 4x + 4 = (x - 2)^2 = 0$. A repeated root: the line is a tangent, touching at $(2, 2)$.
+    explanation: |-
+      $(4 - x)^2$ is not $16 - x^2$. With the correct expansion the discriminant is $16 - 16 = 0$, so the line touches the circle. Check: $(2, 2)$ is on both, since $2 + 2 = 4$ and $4 + 4 = 8$ ✓

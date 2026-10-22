@@ -1,0 +1,275 @@
+id: coordinate-geometry-equation-of-a-line
+subject: "9709"
+topic: "1.3"
+title: The equation of a straight line
+summary: Find a line from a point and a gradient, or from two points, and switch between y = mx + c, y − y₁ = m(x − x₁) and ax + by + c = 0.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.3.1", "1.3.2"]
+prerequisites: [coordinate-geometry-gradient-distance-midpoint]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcomes "find the equation of a
+    straight line given sufficient information" (e.g. two points, or one point and the gradient)
+    and "interpret and use any of the forms y = mx + c, y − y₁ = m(x − x₁) and ax + by + c = 0".
+    All examples and questions are original; every equation checked in Python by substituting
+    the given points. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the equation of a straight line from **a point and a gradient** or from **two points**, and move between the three forms Cambridge uses.
+
+  - type: explain
+    title: One line, three outfits
+    body: |-
+      A straight line can wear three different equations. Same line, different outfit for different occasions:
+
+      | Form | Best for | What you read off |
+      | --- | --- | --- |
+      | $y = mx + c$ | sketching, comparing gradients | gradient $m$, $y$-intercept $(0, c)$ |
+      | $y - y_1 = m(x - x_1)$ | **writing** the equation | passes through $(x_1, y_1)$ with gradient $m$ |
+      | $ax + by + c = 0$ | final answers ("integers, please") | nothing directly: rearrange first |
+
+      The middle one is the workhorse. It's just the gradient formula rearranged: $\dfrac{y - y_1}{x - x_1} = m$.
+
+  - type: diagram
+    diagram: coordinate-geometry-line-forms
+    alt: >-
+      Square grid showing the straight line through P(−1, 5) and Q(2, −1), falling from upper
+      left to lower right. It crosses the y-axis at the marked point (0, 3). A dashed gradient
+      triangle from (1, 1) goes 1 to the right and down 2, labelled run 1 and rise −2. A panel on
+      the right lists the same line three ways: y = −2x + 3, gradient m = −2 and y-intercept
+      c = 3; y − 5 = −2(x + 1), through (−1, 5) with gradient −2; and 2x + y − 3 = 0, the form
+      ax + by + c = 0.
+    caption: |-
+      Every point on this line fits all three equations. Try $Q(2, -1)$: $-2(2) + 3 = -1$ ✓, $\;-1 - 5 = -2(2 + 1)$ ✓, $\;2(2) + (-1) - 3 = 0$ ✓
+
+  - type: example
+    title: A point and a gradient
+    problem: |-
+      Find the equation of the line through $(3, -2)$ with gradient 4.
+    steps:
+      - |-
+        Use $y - y_1 = m(x - x_1)$ with $x_1 = 3$, $y_1 = -2$, $m = 4$.
+      - |-
+        $y - (-2) = 4(x - 3)$, so $y + 2 = 4x - 12$.
+      - |-
+        Rearrange: $y = 4x - 14$.
+    answer: |-
+      $y = 4x - 14$ (or $4x - y - 14 = 0$). Check: $4(3) - 14 = -2$ ✓
+
+  - type: check
+    questions: [el-point-gradient, el-vertical]
+
+  - type: example
+    title: Two points
+    problem: |-
+      Find the equation of the line through $A(-2, 5)$ and $B(4, 1)$, giving your answer in the form $ax + by + c = 0$ where $a$, $b$ and $c$ are integers.
+    steps:
+      - |-
+        Gradient first: $m = \dfrac{1 - 5}{4 - (-2)} = \dfrac{-4}{6} = -\dfrac23$.
+      - |-
+        Use either point. With $A$: $y - 5 = -\dfrac23(x + 2)$.
+      - |-
+        Clear the fraction by multiplying by 3: $3y - 15 = -2(x + 2) = -2x - 4$.
+      - |-
+        Collect everything on one side: $2x + 3y - 11 = 0$.
+      - |-
+        Check with the *other* point, $B(4, 1)$: $2(4) + 3(1) - 11 = 0$ ✓
+    answer: |-
+      $2x + 3y - 11 = 0$.
+
+  - type: explain
+    title: Reading an ax + by + c = 0 line
+    body: |-
+      The gradient is hiding. Rearrange to $y = \dots$ to find it:
+
+      $$3x - 4y + 12 = 0 \;\Rightarrow\; 4y = 3x + 12 \;\Rightarrow\; y = \tfrac34 x + 3.$$
+
+      So the gradient is $\tfrac34$ and the $y$-intercept is $(0, 3)$. For the $x$-intercept, put $y = 0$: $3x + 12 = 0$, so $(-4, 0)$.
+
+      Shortcut: the gradient of $ax + by + c = 0$ is $-\dfrac{a}{b}$. Use it as a check, not instead of the working.
+
+  - type: check
+    questions: [el-gradient-from-general, el-two-points, el-integer-form]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Through $(-2, 3)$ with gradient $-\tfrac12$: $\;y - 3 = -\tfrac12(x - 2)$.
+        right: |-
+          $x - x_1 = x - (-2) = x + 2$. So $y - 3 = -\tfrac12(x + 2)$. Bracket the negative coordinate before you simplify.
+      - wrong: |-
+          The gradient of $2x + 3y = 6$ is 2.
+        right: |-
+          Only $y = mx + c$ shows the gradient directly. Rearrange: $y = -\tfrac23 x + 2$, so the gradient is $-\tfrac23$.
+      - wrong: |-
+          The line through $(3, -1)$ and $(3, 5)$ is $y = 3$.
+        right: |-
+          Every point on it has $x = 3$, so it's the **vertical** line $x = 3$. Its gradient is undefined; $y = 3$ is horizontal.
+
+  - type: exam
+    body: |-
+      - "Find the equation of the line …" is 2–3 marks: gradient, substitution, tidy answer.
+      - If the question says *in the form $ax + by + c = 0$* or *with integer coefficients*, clear every fraction. $y = -\tfrac23 x + \tfrac{11}{3}$ is correct maths but may lose the final mark.
+      - Insider hack: you used one point to build the equation, so test it with **the other** point. Ten seconds, and it catches nearly every sign slip.
+
+  - type: check
+    questions: [el-intercepts, el-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        Point and gradient: $y - y_1 = m(x - x_1)$. Two points: find $m$ first, then do the same.
+      - |-
+        $y = mx + c$ shows the gradient and $y$-intercept. For $ax + by + c = 0$, rearrange (the gradient is $-\tfrac{a}{b}$).
+      - |-
+        Vertical lines are $x = k$; horizontal lines are $y = k$.
+      - |-
+        Clear fractions when integers are asked for, and check with a second point.
+
+questions:
+  - id: el-point-gradient
+    format: expression
+    difficulty: 1
+    objectives: ["1.3.1"]
+    prompt: |-
+      Find the equation of the line through $(-1, 4)$ with gradient 3. Give $y$ in terms of $x$.
+    answer: 3x + 7
+    variables: [x]
+    display: |-
+      $y = 3x + 7$
+    explanation: |-
+      $y - 4 = 3(x - (-1)) = 3(x + 1) = 3x + 3$, so $y = 3x + 7$.
+
+      Check: $3(-1) + 7 = 4$ ✓
+
+  - id: el-vertical
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |-
+      What is the equation of the line through $(3, -1)$ and $(3, 5)$?
+    explanation: |-
+      Both points have $x = 3$, and so does every point between and beyond them. The line is vertical: $x = 3$. Its gradient is undefined, because the run is $3 - 3 = 0$.
+    options:
+      - text: |-
+          $y = 3$
+        why: |-
+          That's the horizontal line through $(0, 3)$. The 3 here is an $x$-coordinate.
+      - text: |-
+          $y = 6x + 3$
+        why: |-
+          Using rise ÷ run gives $\tfrac{6}{0}$, which is undefined, not 6. There's no $y = mx + c$ form for a vertical line.
+      - text: |-
+          $x = 3$
+        correct: true
+        why: |-
+          Every point on the line has $x$-coordinate 3: a vertical line.
+      - text: |-
+          $y = x - 4$
+        why: |-
+          That line passes through $(3, -1)$ but not $(3, 5)$. Always check both points.
+
+  - id: el-gradient-from-general
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |-
+      What is the gradient of the line $4x + 2y - 7 = 0$?
+    explanation: |-
+      Rearrange: $2y = -4x + 7$, so $y = -2x + \tfrac72$. The gradient is $-2$. (Check with $-\tfrac{a}{b} = -\tfrac42 = -2$.)
+    options:
+      - text: |-
+          $4$
+        why: |-
+          The coefficient of $x$ is only the gradient when the equation is $y = mx + c$. Here $y$ has a coefficient of 2 and it's on the same side as $4x$.
+      - text: |-
+          $2$
+        why: |-
+          Right size, wrong sign. Moving $4x$ to the other side makes it $-4x$.
+      - text: |-
+          $\tfrac72$
+        why: |-
+          That's the $y$-intercept, $c$, not the gradient.
+      - text: |-
+          $-2$
+        correct: true
+        why: |-
+          $y = -2x + \tfrac72$, so $m = -2$.
+
+  - id: el-two-points
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |-
+      The line through $(1, -2)$ and $(4, 7)$ has equation $y = mx + c$. Find $m$ and $c$.
+    fields:
+      - label: "m ="
+        answer: 3
+      - label: "c ="
+        answer: -5
+    explanation: |-
+      $m = \dfrac{7 - (-2)}{4 - 1} = \dfrac93 = 3$. Then $y + 2 = 3(x - 1)$, so $y = 3x - 5$.
+
+      Check with $(4, 7)$: $3(4) - 5 = 7$ ✓
+
+  - id: el-integer-form
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.1", "1.3.2"]
+    prompt: |-
+      The line through $(-3, 1)$ and $(2, -3)$ has equation $4x + by + c = 0$. Find the integers $b$ and $c$.
+    fields:
+      - label: "b ="
+        answer: 5
+      - label: "c ="
+        answer: 7
+    explanation: |-
+      $m = \dfrac{-3 - 1}{2 - (-3)} = -\dfrac45$. Then $y - 1 = -\dfrac45(x + 3)$.
+
+      Multiply by 5: $5y - 5 = -4x - 12$, so $4x + 5y + 7 = 0$.
+
+      Check with $(2, -3)$: $8 - 15 + 7 = 0$ ✓
+
+  - id: el-intercepts
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |-
+      The line $2x - 5y + 20 = 0$ crosses the $x$-axis at $A$ and the $y$-axis at $B$. Find the $x$-coordinate of $A$ and the $y$-coordinate of $B$.
+    fields:
+      - label: "A: x ="
+        answer: -10
+      - label: "B: y ="
+        answer: 4
+    explanation: |-
+      On the $x$-axis, $y = 0$: $2x + 20 = 0$, so $x = -10$ and $A$ is $(-10, 0)$.
+
+      On the $y$-axis, $x = 0$: $-5y + 20 = 0$, so $y = 4$ and $B$ is $(0, 4)$.
+
+  - id: el-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |-
+      A student finds the equation of the line through $(-2, 3)$ with gradient $-\tfrac12$. Which line contains the first error?
+    lines:
+      - |-
+        Use $y - y_1 = m(x - x_1)$ with $(x_1, y_1) = (-2, 3)$ and $m = -\tfrac12$.
+      - |-
+        $y - 3 = -\tfrac12(x - 2)$
+      - |-
+        $2y - 6 = -x + 2$
+      - |-
+        $x + 2y - 8 = 0$
+    errorLine: 2
+    fix: |-
+      $x - x_1 = x - (-2) = x + 2$, so $y - 3 = -\tfrac12(x + 2)$. Then $2y - 6 = -x - 2$, giving $x + 2y - 4 = 0$.
+    explanation: |-
+      Test the student's answer with the given point: $-2 + 2(3) - 8 = -4 \neq 0$, so $(-2, 3)$ isn't even on their line. The sign of $x_1$ was dropped in line 2. The correct line passes the test: $-2 + 6 - 4 = 0$ ✓

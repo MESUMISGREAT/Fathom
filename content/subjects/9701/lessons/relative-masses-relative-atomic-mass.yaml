@@ -1,0 +1,250 @@
+id: relative-masses-relative-atomic-mass
+subject: "9701"
+topic: "2.1"
+title: "Relative atomic mass: a weighted mean"
+summary: Why chlorine is 35.5 when no chlorine atom weighs 35.5, how to define relative atomic mass, and how to calculate it from isotope abundances (forwards and backwards).
+order: 2
+minutes: 5
+objectives: ["2.1.2"]
+prerequisites: [relative-masses-unified-atomic-mass-unit]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.1, learning outcome 2.1.2, relative atomic mass part).
+    Isotope abundances for Cl (75.8/24.2 %), Mg (78.99/10.00/11.01 %), Cu (69.2/30.8 %), Rb
+    (relative isotopic masses 84.91 and 86.91, Ar 85.47) and B are standard literature
+    values, rounded; the Li ratio and Ga peak heights are rounded illustrative data. Mass
+    numbers are used as relative isotopic masses where the question says so. All
+    questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define **relative atomic mass**, $A_r$, explain why it's a **weighted mean**, and calculate it from isotope data (or work backwards to an abundance).
+
+  - type: explain
+    title: The 35.5 mystery
+    body: |
+      Look up chlorine in the Data Booklet: $A_r = 35.5$. Now find a chlorine atom with a mass of 35.5 u. You can't. There isn't one.
+
+      Natural chlorine is a mixture of two isotopes: about three-quarters $^{35}\text{Cl}$ and one quarter $^{37}\text{Cl}$. The 35.5 is the **average** atom, weighted by how common each isotope is.
+
+  - type: definition
+    term: Relative atomic mass, Ar
+    body: |
+      The weighted mean mass of an atom of an element compared with one twelfth of the mass of one atom of carbon-12.
+
+      "Weighted" means each isotope counts in proportion to its **abundance**.
+
+  - type: diagram
+    diagram: chem-relative-masses-weighted-mean
+    alt: "Bar chart of abundance (per cent, 0 to 100) against relative isotopic mass (34 to 38) for chlorine. A tall bar at 34.97 for chlorine-35 reaches 75.8 %, and a short bar at 36.97 for chlorine-37 reaches 24.2 %. The mass axis is drawn as a see-saw beam resting on a triangular pivot at 35.45, labelled weighted mean, Ar = 35.45, about 35.5, and balance point. A grey dashed line at about 36 is labelled simple mean, wrong because it ignores abundance."
+    caption: The weighted mean is where the see-saw balances. The big ³⁵Cl bar drags it towards 35.
+
+  - type: intuition
+    title: Why not just average 35 and 37?
+    body: |
+      Imagine a jar of 100 coins: 76 weigh 35 g and 24 weigh 37 g. The mean mass of a coin isn't 36 g, because most coins are the light ones. It's a bit over 35 g.
+
+      Isotopes work the same way. Where the analogy breaks: real relative isotopic masses aren't neat whole numbers ($^{35}\text{Cl}$ is 34.97), and there are rather more than 100 atoms in the jar.
+
+  - type: check
+    title: Quick check
+    questions: [ar-definition-mcq, define-ar]
+
+  - type: explain
+    title: The formula
+    body: |
+      $$A_r = \frac{\sum(\text{relative isotopic mass} \times \text{abundance})}{\sum \text{abundance}}$$
+
+      - Abundances as **percentages**: the bottom line is 100.
+      - Abundances as **relative amounts** (ratios, or peak heights from a mass spectrum): divide by their **total**, whatever it is.
+
+  - type: example
+    title: Magnesium, three isotopes
+    problem: |
+      Magnesium is 78.99 % $^{24}\text{Mg}$, 10.00 % $^{25}\text{Mg}$ and 11.01 % $^{26}\text{Mg}$. Using the mass numbers as relative isotopic masses, calculate $A_r$(Mg) to 3 significant figures.
+    steps:
+      - |
+        Multiply each mass by its abundance: $24 \times 78.99 = 1895.76$, $\;25 \times 10.00 = 250.00$, $\;26 \times 11.01 = 286.26$
+      - |
+        Add them: $1895.76 + 250.00 + 286.26 = 2432.02$
+      - |
+        The abundances are percentages, so divide by 100: $2432.02 \div 100 = 24.32$
+      - |
+        Sense check: the answer sits close to 24, because $^{24}\text{Mg}$ is the most common isotope. It matches the Data Booklet's 24.3.
+    answer: |
+      $A_r(\text{Mg}) = 24.3$
+
+  - type: check
+    title: Forwards
+    questions: [copper-ar, lithium-ratio]
+
+  - type: example
+    title: Working backwards, boron
+    problem: |
+      Boron has two isotopes, $^{10}\text{B}$ and $^{11}\text{B}$, and $A_r = 10.8$. Using mass numbers as relative isotopic masses, find the percentage abundance of $^{10}\text{B}$.
+    steps:
+      - |
+        Let the abundance of $^{10}\text{B}$ be $x$ %. Then $^{11}\text{B}$ is $(100 - x)$ %.
+      - |
+        Set up the weighted mean: $\dfrac{10x + 11(100 - x)}{100} = 10.8$
+      - |
+        Multiply out: $10x + 1100 - 11x = 1080$, so $-x = -20$
+      - |
+        $x = 20$. Check: $(10 \times 20 + 11 \times 80) \div 100 = 10.8$ ✓
+    answer: |
+      20 % $^{10}\text{B}$ (and 80 % $^{11}\text{B}$).
+
+  - type: check
+    title: Backwards, and a bug hunt
+    questions: [rubidium-reverse, gallium-error]
+
+  - type: misconceptions
+    items:
+      - wrong: "$A_r$ is the simple average of the isotope masses."
+        right: "It's a **weighted** mean. Chlorine's simple average would be about 36; the real $A_r$ is 35.5."
+      - wrong: "Always divide by 100."
+        right: "Only when the abundances are percentages. With peak heights or ratios, divide by their total."
+      - wrong: "$A_r$ has units of g or u."
+        right: "Like all relative masses, $A_r$ has **no units**."
+      - wrong: "Relative atomic mass and relative isotopic mass are the same thing."
+        right: "Relative isotopic mass is for **one isotope**. Relative atomic mass is the weighted mean of **all** the element's isotopes."
+
+  - type: exam
+    body: |
+      - The definition needs two marks' worth: **weighted mean mass of an atom** (of the element) + **compared with one twelfth of the mass of one carbon-12 atom**. "Average mass of an atom" without "weighted" can cost you.
+      - Show the multiply–add–divide working. A bare answer with an arithmetic slip scores nothing; the method can still score.
+      - Sense check every answer: $A_r$ must lie **between** the lightest and heaviest isotope, nearer the most abundant one.
+      - Give the significant figures asked for. If none are asked, match the data (often 3 s.f. or 1 d.p.).
+
+  - type: deeper
+    title: Where the abundance data come from
+    body: |
+      Abundances are measured with a **mass spectrometer**, which sorts ions by mass-to-charge ratio. Each isotope gives a peak, and the peak heights are the relative abundances. You'll interpret mass spectra in the analysis topic; for now, treat peak heights as relative abundances and divide by their total.
+
+  - type: takeaways
+    items:
+      - "$A_r$ = weighted mean mass of an atom of an element compared with one twelfth of the mass of one carbon-12 atom."
+      - "$A_r = \\sum(\\text{mass} \\times \\text{abundance}) \\div \\sum \\text{abundance}$."
+      - "Divide by 100 for percentages, or by the total for ratios and peak heights."
+      - "$A_r$ lies between the isotope masses, closest to the most abundant isotope."
+
+questions:
+  - id: ar-definition-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |
+      Which is the correct definition of **relative atomic mass**?
+    options:
+      - text: |
+          The mean mass of the isotopes of an element
+        why: |
+          Missing two things: "weighted", and the comparison with carbon-12.
+      - text: |
+          The weighted mean mass of an atom of an element compared with one twelfth of the mass of one atom of carbon-12
+        correct: true
+        why: |
+          Weighted by abundance, and measured against 1 u.
+      - text: |
+          The mass of one atom of an element compared with the mass of one atom of carbon-12
+        why: |
+          Two errors: atoms of an element can have different masses (so you need a weighted mean), and you compare with one **twelfth** of a carbon-12 atom.
+      - text: |
+          The total number of protons and neutrons in an atom of the element
+        why: |
+          That's the mass number, which is a whole number for a single isotope.
+    explanation: |
+      Relative atomic mass is a weighted mean over all the isotopes, measured on the carbon-12 scale.
+
+  - id: define-ar
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |
+      Define **relative atomic mass**, $A_r$.
+    accept:
+      - "the weighted mean mass of an atom of an element compared with one twelfth of the mass of one atom of carbon-12"
+      - "weighted mean mass of an atom of an element compared with one twelfth of the mass of one atom of carbon-12"
+      - "the weighted mean mass of an atom of an element compared with one twelfth of the mass of an atom of carbon-12"
+      - "the weighted mean mass of an atom of an element compared with 1/12 of the mass of one atom of carbon-12"
+      - "the weighted mean mass of an atom of an element compared with 1/12 of the mass of a carbon-12 atom"
+      - "the weighted mean mass of an atom of an element compared with one twelfth of the mass of a carbon-12 atom"
+      - "the weighted mean mass of an atom of an element relative to one twelfth of the mass of one atom of carbon-12"
+      - "the weighted mean mass of an atom of an element relative to 1/12 of the mass of a carbon-12 atom"
+      - "the weighted average mass of an atom of an element compared with one twelfth of the mass of one atom of carbon-12"
+      - "the weighted average mass of an atom of an element compared with 1/12 of the mass of a carbon-12 atom"
+      - "the weighted average mass of an atom of an element relative to 1/12 of the mass of a carbon-12 atom"
+      - "the weighted mean mass of the atoms of an element compared with one twelfth of the mass of one atom of carbon-12"
+      - "the weighted mean mass of the atoms of an element compared with 1/12 of the mass of a carbon-12 atom"
+      - "the weighted mean mass of an atom of the element compared with one twelfth of the mass of one atom of carbon-12"
+      - "the weighted mean mass of an atom of an element compared with 1/12 of the mass of a ¹²C atom"
+      - "the weighted mean mass of an atom of an element in unified atomic mass units"
+      - "the weighted mean mass of an atom of an element divided by the unified atomic mass unit"
+    model: |
+      The weighted mean mass of an atom of an element compared with one twelfth of the mass of one atom of carbon-12.
+    explanation: |
+      Two must-haves: **weighted mean (or average) mass of an atom**, and **compared with one twelfth of a carbon-12 atom** (which is 1 u).
+
+  - id: copper-ar
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      Natural copper is 69.2 % $^{63}\text{Cu}$ and 30.8 % $^{65}\text{Cu}$. Using the mass numbers as relative isotopic masses, calculate $A_r$(Cu) to 3 significant figures.
+    fields:
+      - answer: 63.6
+        tolerance: { abs: 0.05 }
+    explanation: |
+      $(63 \times 69.2 + 65 \times 30.8) \div 100 = (4359.6 + 2002.0) \div 100 = 63.6$. Nearer 63 than 65, as it should be. (Using the precise isotopic masses gives the Data Booklet's 63.5.)
+
+  - id: lithium-ratio
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      A sample of lithium contains $^{6}\text{Li}$ and $^{7}\text{Li}$ atoms in the ratio $1 : 12.2$. Using mass numbers as relative isotopic masses, calculate $A_r$(Li) to 3 significant figures.
+    fields:
+      - answer: 6.92
+        tolerance: { abs: 0.01 }
+    explanation: |
+      The abundances are a ratio, not percentages, so divide by their total, $1 + 12.2 = 13.2$: $\;(6 \times 1 + 7 \times 12.2) \div 13.2 = 91.4 \div 13.2 = 6.92$.
+
+  - id: rubidium-reverse
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.2"]
+    prompt: |
+      Rubidium has two isotopes: $^{85}\text{Rb}$ (relative isotopic mass 84.91) and $^{87}\text{Rb}$ (relative isotopic mass 86.91). Its relative atomic mass is 85.47. Calculate the percentage abundance of $^{85}\text{Rb}$.
+    fields:
+      - answer: 72.0
+        tolerance: { abs: 0.5 }
+        unit: "%"
+    explanation: |
+      Let $x$ = % of $^{85}\text{Rb}$: $\;84.91x + 86.91(100 - x) = 8547$. So $8691 - 2.00x = 8547$, giving $x = 72.0$ %. Sense check: $A_r$ is nearer 85 than 87, so $^{85}\text{Rb}$ should be the majority.
+
+  - id: gallium-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      A mass spectrum of gallium shows two peaks. A student calculates $A_r$(Ga) using mass numbers. Which line contains the first error?
+    lines:
+      - |
+        Peak heights: $^{69}\text{Ga}$ is 6.0 and $^{71}\text{Ga}$ is 4.0.
+      - |
+        Multiply each mass by its peak height: $69 \times 6.0 = 414$ and $71 \times 4.0 = 284$.
+      - |
+        Add them: $414 + 284 = 698$.
+      - |
+        Divide by 100: $A_r = 698 \div 100 = 6.98$.
+      - |
+        So $A_r(\text{Ga}) = 6.98$.
+    errorLine: 4
+    fix: |
+      Peak heights aren't percentages. Divide by their total, $6.0 + 4.0 = 10.0$: $A_r = 698 \div 10.0 = 69.8$.
+    explanation: |
+      The sense check catches it straight away: $A_r$ must lie between 69 and 71, and 6.98 doesn't.

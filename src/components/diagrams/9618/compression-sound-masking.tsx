@@ -47,7 +47,7 @@ export function CompressionSoundMasking() {
     <Svg width={W} height={H}>
       {/* hearing range */}
       <rect x={sx(20)} y={sy(100)} width={sx(20000) - sx(20)} height={y0 - sy(100)} className="dg-fill-accent" />
-      <Label x={(sx(20) + sx(20000)) / 2} y={sy(100) + 14} className="dg-text-small dg-text-accent">
+      <Label x={(sx(20) + sx(20000)) / 2} y={sy(100) - 14} className="dg-text-small dg-text-accent">
         range of human hearing (about 20 Hz to 20 kHz)
       </Label>
 
@@ -91,9 +91,9 @@ export function CompressionSoundMasking() {
             <circle cx={x} cy={top} r={5} className={p.kept ? 'dg-dot' : 'dg-fill-surface dg-muted'} />
             {p.note && (
               <Label
-                x={p.f === 1250 ? x + 8 : x}
-                y={p.f === 1250 ? top : top - 16}
-                anchor={p.f === 1250 ? 'start' : 'middle'}
+                x={p.f === 1250 || p.f === 12 ? x + 9 : x}
+                y={p.f === 1250 || p.f === 12 ? top : top - 16}
+                anchor={p.f === 1250 || p.f === 12 ? 'start' : 'middle'}
                 className={p.kept ? 'dg-text-small dg-bold' : 'dg-text-small dg-text-muted'}
               >
                 {p.note}

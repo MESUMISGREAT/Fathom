@@ -1,0 +1,261 @@
+id: coordinate-geometry-intersecting-lines
+subject: "9709"
+topic: "1.3"
+title: Where lines meet, and the foot of a perpendicular
+summary: Solve two line equations simultaneously to find where they cross, then use that to find the foot of a perpendicular and the shortest distance to a line.
+order: 4
+minutes: 5
+kind: core
+objectives: ["1.3.1", "1.3.2"]
+prerequisites: [coordinate-geometry-parallel-and-perpendicular]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcomes "find the equation of a
+    straight line given sufficient information" and "interpret and use any of the forms ... in
+    solving problems", whose note includes calculating points of intersection and distances and
+    using perpendicular gradients. All examples and questions are original; every intersection
+    and distance checked in Python. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find where two lines cross, find the **foot of the perpendicular** from a point to a line, and use it to get the **shortest distance** from the point to the line.
+
+  - type: explain
+    title: Meeting point = shared solution
+    body: |-
+      A point lies on a line exactly when its coordinates fit the line's equation. So the point where two lines **cross** is the one $(x, y)$ that fits **both** equations at once.
+
+      That's just simultaneous equations:
+
+      - Both in the form $y = \dots$? Set them **equal**.
+      - Otherwise, **substitute** or **eliminate**, as you did at IGCSE.
+
+  - type: example
+    title: Finding the crossing point
+    problem: |-
+      Find the point of intersection of $2x + y = 7$ and $x - 3y = 7$.
+    steps:
+      - |-
+        From the first equation, $y = 7 - 2x$.
+      - |-
+        Substitute into the second: $x - 3(7 - 2x) = 7$, so $x - 21 + 6x = 7$.
+      - |-
+        $7x = 28$, so $x = 4$. Then $y = 7 - 8 = -1$.
+      - |-
+        Check in the equation you didn't use for $y$: $4 - 3(-1) = 7$ ✓
+    answer: |-
+      The lines meet at $(4, -1)$.
+
+  - type: explain
+    title: When there's no crossing
+    body: |-
+      Two lines with the **same gradient** are parallel. If they're different lines, they never meet, and the simultaneous equations have **no solution** (the algebra collapses into nonsense like $0 = 5$).
+
+      | Gradients | Number of meeting points |
+      | --- | --- |
+      | different | exactly one |
+      | equal, different intercepts | none (parallel) |
+      | equal, same intercept | infinitely many (same line) |
+
+  - type: check
+    questions: [il-intersect, il-general, il-parallel]
+
+  - type: definition
+    term: Foot of the perpendicular
+    body: |-
+      The **foot of the perpendicular** from a point $P$ to a line $L$ is the point $F$ on $L$ where the line through $P$ perpendicular to $L$ meets $L$. The length $PF$ is the **perpendicular distance** from $P$ to $L$: the shortest distance from $P$ to any point on $L$.
+
+  - type: diagram
+    diagram: coordinate-geometry-foot-of-perpendicular
+    alt: >-
+      Square grid with the blue line L: y = 2x + 1, gradient 2, rising steeply. The point P(5, 1)
+      lies to its right. An orange segment from P to F(1, 3) on L has gradient −½ and meets L at
+      a right angle, shown by a right-angle mark at F, which is labelled foot of the
+      perpendicular. The rest of the perpendicular line is shown dashed. A note at the bottom
+      right reads PF = √(4² + 2²) = 2√5.
+    caption: |-
+      Drop a perpendicular from $P$ to $L$. Where it lands is the foot, $F$. Any other route from $P$ to $L$ is a hypotenuse, so it's longer.
+
+  - type: example
+    title: Foot of the perpendicular, step by step
+    problem: |-
+      Find the coordinates of the foot of the perpendicular from $P(5, 1)$ to the line $L$: $y = 2x + 1$. Hence find the perpendicular distance from $P$ to $L$.
+    steps:
+      - |-
+        **Perpendicular gradient.** $L$ has gradient 2, so the perpendicular has gradient $-\tfrac12$.
+      - |-
+        **Line through $P$.** $y - 1 = -\tfrac12(x - 5)$, so $y = -\tfrac12 x + \tfrac72$.
+      - |-
+        **Meet $L$.** $2x + 1 = -\tfrac12 x + \tfrac72$. Multiply by 2: $4x + 2 = -x + 7$, so $5x = 5$ and $x = 1$.
+      - |-
+        Then $y = 2(1) + 1 = 3$, so $F$ is $(1, 3)$.
+      - |-
+        **Distance.** $PF = \sqrt{(5 - 1)^2 + (1 - 3)^2} = \sqrt{16 + 4} = \sqrt{20} = 2\sqrt5$.
+    answer: |-
+      $F(1, 3)$; the perpendicular distance is $2\sqrt5$.
+
+  - type: check
+    questions: [il-foot, il-spot]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The perpendicular from $P$ to $y = 2x + 1$ has gradient 2.
+        right: |-
+          Gradient 2 is **parallel** to $L$. The perpendicular has gradient $-\tfrac12$.
+      - wrong: |-
+          The perpendicular from $P(5, 1)$ goes straight across to $L$, so the distance is the difference in $x$-coordinates.
+        right: |-
+          "Straight across" is horizontal, and that's only perpendicular to a vertical line. Find the foot $F$ properly, then use the distance formula.
+      - wrong: |-
+          Found $x = 1$, so the lines meet at $x = 1$. Done.
+        right: |-
+          A point needs **both** coordinates. Substitute back to get $y$, then check in the other equation.
+
+  - type: deeper
+    title: Reflecting a point in a line
+    body: |-
+      The foot $F$ is the **midpoint** of $P$ and its mirror image $P'$ in the line. So once you have $F$, run the midpoint formula backwards: $P' = (2 \times 1 - 5,\ 2 \times 3 - 1) = (-3, 5)$.
+
+      Check: $(-3, 5)$ is on the perpendicular line, since $-\tfrac12(-3) + \tfrac72 = 5$ ✓, and it's the same distance from $L$ as $P$.
+
+  - type: exam
+    body: |-
+      - "Find the coordinates of the foot of the perpendicular from $A$ to the line …" is a multi-step question, typically 4–5 marks: perpendicular gradient, line through $A$, solve simultaneously, coordinates.
+      - "Hence find the perpendicular distance" then needs one more line: the distance formula. Leave it exact.
+      - Insider hack: check that $F$ really is on the original line before you move on. If it isn't, nothing after it can be right.
+
+  - type: check
+    questions: [il-distance]
+
+  - type: takeaways
+    items:
+      - |-
+        Two lines meet where their equations are **simultaneously** true. Find both coordinates.
+      - |-
+        Equal gradients (different lines) means parallel: no meeting point.
+      - |-
+        Foot of the perpendicular from $P$ to $L$: line through $P$ with the perpendicular gradient, then solve with $L$.
+      - |-
+        The perpendicular distance $PF$ is the shortest distance from $P$ to $L$.
+
+questions:
+  - id: il-intersect
+    format: numeric
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |-
+      Find the point where the lines $y = 3x - 5$ and $y = -x + 7$ meet.
+    fields:
+      - label: "x ="
+        answer: 3
+      - label: "y ="
+        answer: 4
+    explanation: |-
+      Both give $y$, so set them equal: $3x - 5 = -x + 7$, so $4x = 12$ and $x = 3$. Then $y = 3(3) - 5 = 4$.
+
+      Check in the other line: $-3 + 7 = 4$ ✓
+
+  - id: il-general
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |-
+      Find the point of intersection of $3x + 2y = 4$ and $5x - 3y = 13$.
+    fields:
+      - label: "x ="
+        answer: 2
+      - label: "y ="
+        answer: -1
+    explanation: |-
+      Eliminate $y$: multiply the first by 3 and the second by 2.
+
+      $9x + 6y = 12$ and $10x - 6y = 26$. Add: $19x = 38$, so $x = 2$. Then $6 + 2y = 4$, so $y = -1$.
+
+      Check: $5(2) - 3(-1) = 13$ ✓
+
+  - id: il-parallel
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |-
+      How many points do the lines $y = 2x + 3$ and $4x - 2y = 1$ have in common?
+    explanation: |-
+      $4x - 2y = 1 \Rightarrow y = 2x - \tfrac12$. Both lines have gradient 2 but different intercepts (3 and $-\tfrac12$), so they're parallel and never meet.
+    options:
+      - text: |-
+          Exactly one
+        why: |-
+          That needs different gradients. Rearranged, the second line is $y = 2x - \tfrac12$: gradient 2 again.
+      - text: |-
+          Exactly two
+        why: |-
+          Two different straight lines can never meet twice. They cross once, or not at all.
+      - text: |-
+          Infinitely many
+        why: |-
+          That happens only if they're the same line. Here the intercepts differ, 3 versus $-\tfrac12$.
+      - text: |-
+          None
+        correct: true
+        why: |-
+          Same gradient, different intercepts: parallel lines.
+
+  - id: il-foot
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.1", "1.3.2"]
+    prompt: |-
+      Find the coordinates of the foot of the perpendicular from $P(1, 6)$ to the line $y = x - 1$.
+    fields:
+      - label: "x ="
+        answer: 4
+      - label: "y ="
+        answer: 3
+    explanation: |-
+      The line has gradient 1, so the perpendicular has gradient $-1$: $y - 6 = -(x - 1)$, i.e. $y = -x + 7$.
+
+      Meet: $x - 1 = -x + 7$, so $x = 4$ and $y = 3$. The foot is $(4, 3)$, and the perpendicular distance is $\sqrt{9 + 9} = 3\sqrt2$.
+
+  - id: il-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |-
+      A student finds the foot of the perpendicular from $P(4, 0)$ to $L$: $y = 3x - 2$. Which line contains the first error?
+    lines:
+      - |-
+        $L$ is $y = 3x - 2$, so its gradient is 3.
+      - |-
+        So the perpendicular from $P(4, 0)$ has gradient $-3$.
+      - |-
+        Its equation is $y = -3(x - 4)$, i.e. $y = -3x + 12$.
+      - |-
+        Meeting $L$: $3x - 2 = -3x + 12$, so $x = \tfrac73$.
+    errorLine: 2
+    fix: |-
+      The perpendicular gradient is $-\tfrac13$ (flip **and** change sign). Then $y = -\tfrac13(x - 4)$, which meets $L$ where $3x - 2 = -\tfrac13 x + \tfrac43$, i.e. $9x - 6 = -x + 4$, so $x = 1$: the foot is $(1, 1)$.
+    explanation: |-
+      $3 \times (-3) = -9$, not $-1$, so the line in step 2 isn't perpendicular to $L$. Only changing the sign is the classic half-done flip. With $-\tfrac13$: $3 \times \left(-\tfrac13\right) = -1$ ✓
+
+  - id: il-distance
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.1", "1.3.2"]
+    prompt: |-
+      Find the perpendicular distance from the point $(7, 2)$ to the line $3x + 4y = 4$.
+    fields:
+      - label: "distance ="
+        answer: 5
+    explanation: |-
+      $3x + 4y = 4$ has gradient $-\tfrac34$, so the perpendicular has gradient $\tfrac43$: $y - 2 = \tfrac43(x - 7)$.
+
+      Multiply by 3: $3y - 6 = 4x - 28$, so $y = \dfrac{4x - 22}{3}$. Substitute into $3x + 4y = 4$:
+
+      $$3x + \frac{4(4x - 22)}{3} = 4 \;\Rightarrow\; 9x + 16x - 88 = 12 \;\Rightarrow\; x = 4,\ y = -2.$$
+
+      The foot is $(4, -2)$, and the distance is $\sqrt{(7 - 4)^2 + (2 + 2)^2} = \sqrt{9 + 16} = 5$.

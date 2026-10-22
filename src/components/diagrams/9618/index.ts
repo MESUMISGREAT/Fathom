@@ -2,7 +2,16 @@
 import type { DiagramRegistry } from '../types';
 import BcdVsBinary from './bcd-vs-binary';
 import BinaryPlaceValue from './binary-place-value';
+import CompressionBitmapRle from './compression-bitmap-rle';
+import CompressionDecisionFlow from './compression-decision-flow';
+import CompressionDictionary from './compression-dictionary';
+import CompressionLosslessVsLossy from './compression-lossless-vs-lossy';
+import CompressionResolutionQuarter from './compression-resolution-quarter';
+import CompressionRleRuns from './compression-rle-runs';
+import CompressionSimilarColours from './compression-similar-colours';
 import CompressionSizeBars from './compression-size-bars';
+import CompressionSoundMasking from './compression-sound-masking';
+import CompressionVectorSimplify from './compression-vector-simplify';
 import HexNibbles from './hex-nibbles';
 import MultimediaBitPlanes from './multimedia-bit-planes';
 import MultimediaBitmapFileLayout from './multimedia-bitmap-file-layout';
@@ -23,7 +32,16 @@ import TwosComplementWheel from './twos-complement-wheel';
 export const diagrams: DiagramRegistry = {
   'cs-bcd-vs-binary': BcdVsBinary,
   'cs-binary-place-value': BinaryPlaceValue,
+  'cs-compression-bitmap-rle': CompressionBitmapRle,
+  'cs-compression-decision-flow': CompressionDecisionFlow,
+  'cs-compression-dictionary': CompressionDictionary,
+  'cs-compression-lossless-vs-lossy': CompressionLosslessVsLossy,
+  'cs-compression-resolution-quarter': CompressionResolutionQuarter,
+  'cs-compression-rle-runs': CompressionRleRuns,
+  'cs-compression-similar-colours': CompressionSimilarColours,
   'cs-compression-size-bars': CompressionSizeBars,
+  'cs-compression-sound-masking': CompressionSoundMasking,
+  'cs-compression-vector-simplify': CompressionVectorSimplify,
   'cs-hex-nibbles': HexNibbles,
   'cs-multimedia-bit-planes': MultimediaBitPlanes,
   'cs-multimedia-bitmap-file-layout': MultimediaBitmapFileLayout,

@@ -1,0 +1,224 @@
+id: coordinate-geometry-tangents-to-circles
+subject: "9709"
+topic: "1.3"
+title: Tangents to a circle
+summary: A tangent is perpendicular to the radius at the point of contact. Find the radius gradient, flip it, and you have the tangent.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.3.4"]
+prerequisites: [coordinate-geometry-circle-expanded-form, coordinate-geometry-parallel-and-perpendicular]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcome "use algebraic methods to
+    solve problems involving lines and circles", including the note on using elementary geometry
+    of circles (a tangent is perpendicular to the radius) and that implicit differentiation is not
+    included. All examples and questions are original; every point, gradient and equation checked
+    in Python. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the equation of the **tangent** to a circle at a given point, using the fact that the tangent is **perpendicular to the radius**.
+
+  - type: explain
+    title: The one fact you need
+    body: |-
+      Spin a weight on a string, then let go. It flies off **at right angles to the string**, along the tangent. (Strictly, real physics adds gravity and wobble. The geometry is the point.)
+
+      For a circle, that's exact: the **tangent** at a point $P$ touches the circle only at $P$, and it is **perpendicular to the radius** $CP$.
+
+  - type: definition
+    term: Tangent to a circle
+    body: |-
+      A **tangent** to a circle is a straight line that meets the circle at exactly one point, the **point of contact**. At that point, the tangent is **perpendicular to the radius**.
+
+  - type: diagram
+    diagram: coordinate-geometry-tangent-at-point
+    alt: >-
+      Square grid with the blue circle (x − 1)² + (y + 2)² = 20, centre C(1, −2). The radius from
+      C to the point P(3, 2) on the circle is drawn and labelled CP: gradient 2. An orange line
+      labelled tangent x + 2y = 7 touches the circle only at P, sloping gently downwards, with a
+      right-angle mark at P between the radius and the tangent.
+    caption: |-
+      Radius gradient $\dfrac{2 - (-2)}{3 - 1} = 2$, so the tangent gradient is $-\tfrac12$. Through $P(3, 2)$: $y - 2 = -\tfrac12(x - 3)$, i.e. $x + 2y = 7$.
+
+  - type: explain
+    title: The four-step recipe
+    body: |-
+      1. **Centre.** Get it from the equation (complete the square if it's expanded).
+      2. **Radius gradient.** Gradient of $CP$.
+      3. **Flip it.** Tangent gradient $= -\dfrac{1}{\text{radius gradient}}$.
+      4. **Line through $P$.** $y - y_1 = m(x - x_1)$.
+
+      Optional step 0: check that $P$ really is on the circle by substituting it.
+
+  - type: check
+    questions: [tg-fact, tg-gradient]
+
+  - type: example
+    title: Tangent to an expanded circle
+    problem: |-
+      The point $P(5, 1)$ lies on the circle $x^2 + y^2 - 4x + 6y - 12 = 0$. Find the equation of the tangent to the circle at $P$.
+    steps:
+      - |-
+        **Check $P$:** $25 + 1 - 20 + 6 - 12 = 0$ ✓
+      - |-
+        **Centre:** $(x - 2)^2 + (y + 3)^2 = 4 + 9 + 12 = 25$, so $C$ is $(2, -3)$.
+      - |-
+        **Radius gradient:** $\dfrac{1 - (-3)}{5 - 2} = \dfrac43$.
+      - |-
+        **Tangent gradient:** $-\dfrac34$.
+      - |-
+        **Line:** $y - 1 = -\tfrac34(x - 5)$. Multiply by 4: $4y - 4 = -3x + 15$, so $3x + 4y - 19 = 0$.
+    answer: |-
+      $3x + 4y - 19 = 0$. Check: $3(5) + 4(1) - 19 = 0$ ✓
+
+  - type: check
+    questions: [tg-equation, tg-spot]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The tangent at $P$ has the same gradient as the radius $CP$.
+        right: |-
+          That's the line through the centre and $P$ (sometimes called the **normal**). The tangent is perpendicular to it: flip and change the sign.
+      - wrong: |-
+          For $x^2 + y^2 - 4x + 6y - 12 = 0$ the centre is $(-2, 3)$.
+        right: |-
+          Halve and flip: $g = -2$, $f = 3$, so the centre is $(2, -3)$. A wrong centre ruins the radius gradient and everything after it.
+      - wrong: |-
+          A line that meets the circle at one point I can see on my sketch must be a tangent.
+        right: |-
+          Sketches can mislead. Prove it with the perpendicular-radius check here, or with the discriminant method coming in a later lesson.
+
+  - type: deeper
+    title: Tangents from a point outside the circle
+    body: |-
+      From an external point $T$ you can draw **two** tangents, and they're the same length (symmetry).
+
+      The radius to the point of contact is perpendicular to the tangent, so you get a right-angled triangle: hypotenuse $CT$, legs $r$ and the tangent length. So
+
+      $$\text{tangent length}^2 = CT^2 - r^2.$$
+
+      Example: circle $(x - 2)^2 + (y + 3)^2 = 36$ and $T(8, 5)$. $CT^2 = 6^2 + 8^2 = 100$, so the tangent length is $\sqrt{100 - 36} = 8$.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Find the equation of the tangent to the circle at the point $A$.* Usually 3–4 marks: centre, gradient of radius, perpendicular gradient, equation.
+      - The point is often found in an earlier part (where a line meets the circle, say). Carry it forward carefully.
+      - Insider hack: substitute $P$ into your final tangent equation. If $P$ isn't on your line, the line can't be the tangent at $P$.
+
+  - type: check
+    questions: [tg-expanded, tg-length]
+
+  - type: takeaways
+    items:
+      - |-
+        A tangent is **perpendicular to the radius** at the point of contact.
+      - |-
+        Recipe: centre → radius gradient → flip and change sign → line through the point.
+      - |-
+        Find the centre carefully: halve and flip for expanded form.
+      - |-
+        From an outside point, tangent length$^2$ = (distance to centre)$^2 - r^2$.
+
+questions:
+  - id: tg-fact
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.4"]
+    prompt: |-
+      A tangent to a circle is {{1}} to the radius at the point of contact.
+    blanks:
+      - accept: [perpendicular, at right angles, at right-angles, at 90 degrees, at 90°, normal]
+    explanation: |-
+      The tangent is **perpendicular** to the radius at the point where it touches the circle. So their gradients multiply to $-1$.
+
+  - id: tg-gradient
+    format: numeric
+    difficulty: 1
+    objectives: ["1.3.4"]
+    prompt: |-
+      A circle has centre $(2, 1)$, and $P(5, 3)$ is a point on it. Find the gradient of the tangent to the circle at $P$.
+    fields:
+      - label: "gradient ="
+        answer: -1.5
+    explanation: |-
+      Radius gradient: $\dfrac{3 - 1}{5 - 2} = \dfrac23$. The tangent is perpendicular to it, so its gradient is $-\dfrac32$.
+
+  - id: tg-equation
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.4"]
+    prompt: |-
+      The point $P(2, 6)$ lies on the circle $(x + 1)^2 + (y - 2)^2 = 25$. The tangent at $P$ has equation $3x + by = d$. Find $b$ and $d$.
+    fields:
+      - label: "b ="
+        answer: 4
+      - label: "d ="
+        answer: 30
+    explanation: |-
+      Centre $(-1, 2)$. Radius gradient: $\dfrac{6 - 2}{2 - (-1)} = \dfrac43$, so the tangent gradient is $-\dfrac34$.
+
+      $y - 6 = -\tfrac34(x - 2)$. Multiply by 4: $4y - 24 = -3x + 6$, so $3x + 4y = 30$.
+
+      Check: $3(2) + 4(6) = 30$ ✓
+
+  - id: tg-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.4"]
+    prompt: |-
+      A student finds the tangent at $P(4, 5)$ to a circle with centre $C(1, 1)$. Which line contains the first error?
+    lines:
+      - |-
+        Centre $C(1, 1)$ and point $P(4, 5)$.
+      - |-
+        Gradient of $CP = \dfrac{5 - 1}{4 - 1} = \dfrac43$.
+      - |-
+        The tangent at $P$ has gradient $\dfrac34$.
+      - |-
+        Tangent: $y - 5 = \tfrac34(x - 4)$, i.e. $3x - 4y + 8 = 0$.
+    errorLine: 3
+    fix: |-
+      Perpendicular means flip **and** change the sign: the tangent gradient is $-\tfrac34$. Then $y - 5 = -\tfrac34(x - 4)$, i.e. $3x + 4y - 32 = 0$.
+    explanation: |-
+      $\tfrac43 \times \tfrac34 = 1$, not $-1$, so the student's line isn't perpendicular to the radius. It still passes through $P$, which is why "it goes through the point" isn't enough of a check.
+
+  - id: tg-expanded
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.4"]
+    prompt: |-
+      The point $P(1, 4)$ lies on the circle $x^2 + y^2 + 6x - 2y - 15 = 0$. The tangent at $P$ has equation $y = mx + c$. Find $m$ and $c$. Fractions are fine.
+    fields:
+      - label: "m ="
+        answer: -1.3333333333333333
+        tolerance: { abs: 0.005 }
+      - label: "c ="
+        answer: 5.333333333333333
+        tolerance: { abs: 0.005 }
+    explanation: |-
+      Centre: $(x + 3)^2 + (y - 1)^2 = 9 + 1 + 15 = 25$, so $C$ is $(-3, 1)$.
+
+      Radius gradient: $\dfrac{4 - 1}{1 - (-3)} = \dfrac34$, so the tangent gradient is $-\dfrac43$.
+
+      $y - 4 = -\tfrac43(x - 1)$, so $y = -\tfrac43 x + \tfrac43 + 4 = -\tfrac43 x + \tfrac{16}{3}$.
+
+  - id: tg-length
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.4"]
+    prompt: |-
+      The circle $(x + 1)^2 + (y - 2)^2 = 25$ has centre $C$. A tangent is drawn from $T(11, 7)$ to touch the circle at $A$. Find the length $TA$.
+    fields:
+      - label: "TA ="
+        answer: 12
+    explanation: |-
+      $C$ is $(-1, 2)$ and $r = 5$. $CT^2 = 12^2 + 5^2 = 169$, so $CT = 13$.
+
+      Angle $CAT = 90°$ (tangent ⊥ radius), so $TA^2 = CT^2 - CA^2 = 169 - 25 = 144$ and $TA = 12$.

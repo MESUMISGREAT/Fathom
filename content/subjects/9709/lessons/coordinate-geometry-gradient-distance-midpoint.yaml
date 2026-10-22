@@ -1,0 +1,238 @@
+id: coordinate-geometry-gradient-distance-midpoint
+subject: "9709"
+topic: "1.3"
+title: Gradient, distance and midpoint
+summary: One right-angled triangle gives you all three. Rise over run is the gradient, Pythagoras is the distance, and averaging is the midpoint.
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.3.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcome "interpret and use any of
+    the forms y = mx + c, y − y₁ = m(x − x₁) and ax + by + c = 0 in solving problems", whose note
+    includes calculating distances, gradients and midpoints. All examples and questions are
+    original; every value checked in Python. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the **gradient**, the **distance** and the **midpoint** for any two points, leave lengths as exact surds, and run the midpoint formula backwards.
+
+  - type: explain
+    title: One triangle, three formulas
+    body: |-
+      Pick two points $A(x_1, y_1)$ and $B(x_2, y_2)$. Walk from $A$ to $B$ the lazy way: straight across, then straight up. You've just drawn a right-angled triangle, and it holds everything:
+
+      | You want | Formula | Where it comes from |
+      | --- | --- | --- |
+      | **Gradient** $m$ | $\dfrac{y_2 - y_1}{x_2 - x_1}$ | rise ÷ run |
+      | **Distance** $AB$ | $\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ | Pythagoras on the triangle |
+      | **Midpoint** | $\left(\dfrac{x_1 + x_2}{2},\ \dfrac{y_1 + y_2}{2}\right)$ | average the $x$'s, average the $y$'s |
+
+  - type: diagram
+    diagram: coordinate-geometry-distance-triangle
+    alt: >-
+      Square grid with points A(1, 1) and B(4, 5) joined by a blue line segment. A shaded
+      right-angled triangle runs from A across to C(4, 1) and up to B. The horizontal side is
+      labelled x₂ − x₁ = 3 and the vertical side y₂ − y₁ = 4, with a right-angle mark at C. The
+      midpoint M(2.5, 3) is marked on AB. A note reads AB = √(3² + 4²) = 5 and gradient = 4/3.
+    caption: |-
+      $A(1, 1)$ to $B(4, 5)$: run 3, rise 4. Gradient $\tfrac43$, distance $\sqrt{9 + 16} = 5$, midpoint $(2.5, 3)$.
+
+  - type: explain
+    title: What a gradient tells you
+    body: |-
+      - **Positive**: uphill as you go right. **Negative**: downhill.
+      - **Zero**: a horizontal line ($y = k$).
+      - **Undefined**: a vertical line ($x = k$), because the run is 0 and you can't divide by 0.
+
+      Subtract in the **same order** on top and bottom. $\dfrac{y_2 - y_1}{x_2 - x_1}$ and $\dfrac{y_1 - y_2}{x_1 - x_2}$ are both fine. Mixing them flips the sign.
+
+  - type: check
+    questions: [gdm-gradient, gdm-midpoint]
+
+  - type: example
+    title: All three at once
+    problem: |-
+      For $P(-2, 3)$ and $Q(4, -5)$, find the gradient of $PQ$, the length of $PQ$ and the midpoint of $PQ$.
+    steps:
+      - |-
+        Differences: $x_2 - x_1 = 4 - (-2) = 6$ and $y_2 - y_1 = -5 - 3 = -8$. Bracket the negatives!
+      - |-
+        Gradient: $\dfrac{-8}{6} = -\dfrac43$. Negative, so $PQ$ slopes down to the right.
+      - |-
+        Length: $\sqrt{6^2 + (-8)^2} = \sqrt{36 + 64} = \sqrt{100} = 10$.
+      - |-
+        Midpoint: $\left(\dfrac{-2 + 4}{2},\ \dfrac{3 + (-5)}{2}\right) = (1, -1)$.
+    answer: |-
+      Gradient $-\tfrac43$, length 10, midpoint $(1, -1)$.
+
+  - type: explain
+    title: Keep lengths exact
+    body: |-
+      Most lengths aren't whole numbers. Cambridge usually wants them **exact**, as a simplified surd.
+
+      Pull out the biggest square factor: $\sqrt{52} = \sqrt{4 \times 13} = 2\sqrt{13}$, and $\sqrt{45} = \sqrt{9 \times 5} = 3\sqrt5$.
+
+      If a question says "correct to 3 significant figures", then give the decimal: $2\sqrt{13} \approx 7.21$.
+
+  - type: check
+    questions: [gdm-distance, gdm-spot]
+
+  - type: example
+    title: Running the midpoint backwards
+    problem: |-
+      $M(3, -1)$ is the midpoint of $AB$, where $A$ is $(-1, 4)$. Find the coordinates of $B$.
+    steps:
+      - |-
+        The midpoint is halfway, so $M$ is the same step from $A$ as $B$ is from $M$.
+      - |-
+        Step from $A$ to $M$: $x$ goes $-1 \to 3$ (that's $+4$) and $y$ goes $4 \to -1$ (that's $-5$).
+      - |-
+        Take the same step again from $M$: $B = (3 + 4,\ -1 - 5) = (7, -6)$.
+      - |-
+        Check: $\left(\dfrac{-1 + 7}{2}, \dfrac{4 + (-6)}{2}\right) = (3, -1)$ ✓
+    answer: |-
+      $B(7, -6)$. Shortcut: $B = (2 \times 3 - (-1),\ 2 \times (-1) - 4)$, i.e. "double the midpoint, take away the point you know".
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The gradient from $(1, 2)$ to $(4, 8)$ is $\dfrac{4 - 1}{8 - 2} = \tfrac12$.
+        right: |-
+          That's run over rise, upside down. Gradient is **rise over run**: $\dfrac{8 - 2}{4 - 1} = 2$.
+      - wrong: |-
+          The midpoint of $(2, 6)$ and $(8, 10)$ is $\left(\dfrac{8 - 2}{2}, \dfrac{10 - 6}{2}\right) = (3, 2)$.
+        right: |-
+          The midpoint **adds** then halves: $\left(\dfrac{2 + 8}{2}, \dfrac{6 + 10}{2}\right) = (5, 8)$. Subtracting gives the half-differences, not a point between them.
+      - wrong: |-
+          $\sqrt{3^2 + 4^2} = 3 + 4 = 7$.
+        right: |-
+          Square roots don't split over a sum: $\sqrt{9 + 16} = \sqrt{25} = 5$.
+
+  - type: deeper
+    title: Are three points in a straight line?
+    body: |-
+      Points $A$, $B$ and $C$ are **collinear** (on one straight line) when $AB$ and $BC$ have the **same gradient**. They share the point $B$, so same gradient means same line.
+
+      Example: $A(-1, -4)$, $B(1, 2)$, $C(4, 11)$. Gradient $AB = \dfrac{6}{2} = 3$ and gradient $BC = \dfrac{9}{3} = 3$. Equal, so they're collinear.
+
+  - type: exam
+    body: |-
+      - These three formulas are rarely a whole question. They're the tools *inside* bigger ones (perpendicular bisectors, circles, tangents), often worth 1 mark each along the way.
+      - "Find the exact length" or "leave your answer in surd form" means simplify, e.g. $2\sqrt{13}$, not $\sqrt{52}$ or $7.21$.
+      - Insider hack: do a 5-second sketch. If $B$ is down and to the right of $A$, your gradient had better be negative.
+
+  - type: check
+    questions: [gdm-endpoint, gdm-unknown]
+
+  - type: takeaways
+    items:
+      - |-
+        Gradient $= \dfrac{y_2 - y_1}{x_2 - x_1}$: rise over run, subtracting in the same order on top and bottom.
+      - |-
+        Distance $= \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$: Pythagoras. Simplify surds.
+      - |-
+        Midpoint $= \left(\dfrac{x_1 + x_2}{2}, \dfrac{y_1 + y_2}{2}\right)$: average each coordinate.
+      - |-
+        Bracket negative coordinates every time you substitute.
+
+questions:
+  - id: gdm-gradient
+    format: numeric
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |-
+      Find the gradient of the line through $(-3, 2)$ and $(5, -4)$. A fraction or a decimal is fine.
+    fields:
+      - label: "m ="
+        answer: -0.75
+    explanation: |-
+      $m = \dfrac{-4 - 2}{5 - (-3)} = \dfrac{-6}{8} = -\dfrac34$.
+
+      Negative makes sense: going right from $x = -3$ to $x = 5$, the line drops from $y = 2$ to $y = -4$.
+
+  - id: gdm-midpoint
+    format: numeric
+    difficulty: 1
+    objectives: ["1.3.2"]
+    prompt: |-
+      Find the midpoint of the line segment joining $(-3, 7)$ and $(5, -1)$.
+    fields:
+      - label: "x ="
+        answer: 1
+      - label: "y ="
+        answer: 3
+    explanation: |-
+      Average each coordinate: $\left(\dfrac{-3 + 5}{2}, \dfrac{7 + (-1)}{2}\right) = (1, 3)$.
+
+  - id: gdm-distance
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |-
+      Find the distance between $(2, -3)$ and $(-4, 1)$. Give an exact surd (such as `2√13`) or a decimal to 3 significant figures.
+    fields:
+      - label: "distance ="
+        answer: 7.211102550927978
+        tolerance: { abs: 0.005 }
+    explanation: |-
+      Differences: $-4 - 2 = -6$ and $1 - (-3) = 4$.
+
+      $$\sqrt{(-6)^2 + 4^2} = \sqrt{36 + 16} = \sqrt{52} = \sqrt{4 \times 13} = 2\sqrt{13} \approx 7.21.$$
+
+  - id: gdm-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |-
+      A student finds the exact length of $AB$, where $A$ is $(-1, 4)$ and $B$ is $(3, -2)$. Which line contains the first error?
+    lines:
+      - |-
+        $x_2 - x_1 = 3 - (-1) = 4$
+      - |-
+        $y_2 - y_1 = -2 - 4 = -6$
+      - |-
+        $AB^2 = 4^2 + (-6)^2 = 16 + 36 = 52$
+      - |-
+        $AB = \sqrt{52} = 4\sqrt{13}$
+    errorLine: 4
+    fix: |-
+      $52 = 4 \times 13$, and $\sqrt4 = 2$, so $AB = 2\sqrt{13}$.
+    explanation: |-
+      Everything up to $\sqrt{52}$ is right, including squaring the negative. The slip is in simplifying: the square factor 4 comes out as $\sqrt4 = 2$, not 4. Check: $(4\sqrt{13})^2 = 16 \times 13 = 208$, not 52.
+
+  - id: gdm-endpoint
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.2"]
+    prompt: |-
+      The midpoint of $AB$ is $M(2, -3)$, and $A$ is the point $(5, 1)$. Find the coordinates of $B$.
+    fields:
+      - label: "x ="
+        answer: -1
+      - label: "y ="
+        answer: -7
+    explanation: |-
+      From $A$ to $M$: $x$ changes by $2 - 5 = -3$ and $y$ by $-3 - 1 = -4$. Do the same step again from $M$: $B = (2 - 3,\ -3 - 4) = (-1, -7)$.
+
+      Check: $\left(\dfrac{5 + (-1)}{2}, \dfrac{1 + (-7)}{2}\right) = (2, -3)$ ✓
+
+  - id: gdm-unknown
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.2"]
+    prompt: |-
+      The distance between $A(-2, 1)$ and $B(k, 7)$ is 10, where $k > 0$. Find $k$.
+    fields:
+      - label: "k ="
+        answer: 6
+    explanation: |-
+      $AB^2 = (k + 2)^2 + (7 - 1)^2 = 100$, so $(k + 2)^2 + 36 = 100$ and $(k + 2)^2 = 64$.
+
+      So $k + 2 = 8$ or $k + 2 = -8$, giving $k = 6$ or $k = -10$. Since $k > 0$, $k = 6$. Check: $\sqrt{8^2 + 6^2} = 10$ ✓

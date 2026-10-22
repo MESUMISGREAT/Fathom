@@ -45,7 +45,7 @@ export default function CoordinateGeometryIntersectionsCount() {
       <Label x={p.sx(0.45)} y={p.sy(3.6)} anchor="start" className="dg-text-accent-2">
         y = 1/x
       </Label>
-      <Label x={p.sx(2.95)} y={p.sy(-2.9)} anchor="end" className="dg-text">
+      <Label x={p.sx(3.0)} y={p.sy(-2.55)} anchor="end" className="dg-text-small dg-bold">
         3 meeting points ⇒ 3 real roots
       </Label>
     </Svg>

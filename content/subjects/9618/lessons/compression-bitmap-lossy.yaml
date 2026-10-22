@@ -1,0 +1,268 @@
+id: compression-bitmap-lossy
+subject: "9618"
+topic: "1.3"
+title: "Lossy image compression: lose what the eye won't miss"
+summary: Shrink a bitmap with lossy methods (lower resolution, lower colour depth, merging similar colours) and work out what each saves and costs.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.3.3"]
+prerequisites: [compression-bitmap-rle, multimedia-bitmap-quality]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, third learning
+    outcome (how a bitmap image can be compressed). This lesson covers the lossy methods; lossless
+    RLE for bitmaps is taught in compression-bitmap-rle. Image sizes and pixel values are
+    illustrative; the JPEG description is simplified and the detail is given only as labelled
+    enrichment. Every size checked with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe three **lossy** ways to compress a bitmap image and work out how much each one saves.
+
+  - type: explain
+    title: The case of the vanishing megabytes
+    body: |
+      A 12-megapixel phone photo (4000 × 3000 pixels, 24-bit colour) is **36 000 000 bytes** of raw pixels. The JPEG your phone actually saves is typically just a few MB.
+
+      Most of the data was thrown away, and you didn't notice. That's lossy compression doing its job.
+
+  - type: explain
+    title: Three lossy tricks
+    body: |
+      | Method | What changes | Saving | Cost |
+      | --- | --- | --- | --- |
+      | **Reduce the image resolution** | fewer pixels are stored | halve width *and* height → **¼** of the pixels | less detail; blocky (pixelated) if enlarged |
+      | **Reduce the colour depth** | fewer bits per pixel | 24-bit → 8-bit → **⅓** of the size | 256 colours instead of about 16.7 million; smooth shading shows bands |
+      | **Merge similar colours** | pixels with very similar colours are stored as **one shared colour** | long runs and repeats that compress brilliantly | subtle colour differences are lost |
+
+      All three are lossy: the original pixels **cannot** be rebuilt afterwards.
+
+  - type: diagram
+    diagram: cs-compression-resolution-quarter
+    alt: >-
+      The same filled circle drawn as a bitmap twice, at the same physical size. Left: a 16 by 12
+      grid, 192 pixels, where the circle has a fairly smooth stepped edge; at 24-bit colour, 192 × 3
+      = 576 bytes. Right: an 8 by 6 grid, 48 pixels, each pixel four times the area, where the
+      circle is a chunky cross-like blob; 48 × 3 = 144 bytes. A dashed outline of the true circle is
+      drawn over both. The caption reads: half the width × half the height = one quarter of the
+      pixels, so one quarter of the file size, and a blockier circle.
+
+  - type: example
+    title: Cutting a photo down to size
+    problem: |
+      A 1200 × 800 bitmap has 24-bit colour. Find its size in bytes (ignoring the file header) before and after each change: (a) halving its width and height; (b) reducing the colour depth to 8 bits; (c) both.
+    steps:
+      - |
+        Original: $1200 \times 800 = 960\,000$ pixels, × 3 bytes = **2 880 000 bytes**.
+      - |
+        (a) 600 × 400 = $240\,000$ pixels, × 3 bytes = **720 000 bytes**: a quarter.
+      - |
+        (b) $960\,000$ pixels × 1 byte = **960 000 bytes**: a third.
+      - |
+        (c) $240\,000$ pixels × 1 byte = **240 000 bytes**: one twelfth of the original ($\tfrac14 \times \tfrac13$).
+    answer: |
+      2 880 000 → 720 000 (a), 960 000 (b) or 240 000 bytes (c).
+
+  - type: check
+    title: Quick check
+    questions: [quarter-mcq, resize-bytes, email-limit]
+
+  - type: explain
+    title: "The sneaky one: merging similar colours"
+    body: |
+      The cleverest trick doesn't throw away whole pixels or whole bits. It **nudges nearly identical colours to be identical**.
+
+      Your eye can't tell 199 from 201, but RLE can. Make them both 200 and a broken row of "different" pixels becomes one long run.
+
+  - type: diagram
+    diagram: cs-compression-similar-colours
+    alt: >-
+      A row of 12 greyscale pixels, 8 bits each, 12 bytes: 201, 199, 200, 202, 200, 198, 81, 79,
+      80, 82, 80, 78. RLE on the original finds 12 runs × 2 bytes = 24 bytes, which is bigger than
+      the original. An arrow labelled lossy step, round to the nearest 10, no pixel changes by more
+      than 2, leads to the row 200 six times then 80 six times. RLE after rounding finds 2 runs × 2
+      bytes = 4 bytes, shown as two pairs: count 6, value 200 and count 6, value 80. Caption: tiny,
+      invisible changes create long runs of identical pixels, and long runs compress brilliantly.
+    caption: |
+      Lossy first, then lossless. Real image formats often combine the two.
+
+  - type: explain
+    title: What real formats do
+    body: |
+      Formats such as **JPEG** use more sophisticated maths, but the principle is the same: remove the fine detail the human eye is least likely to notice, then store what's left efficiently.
+
+      The more you compress, the more detail goes. Push it too far and you'll see blocky smudges called **artefacts**, especially around sharp edges.
+
+  - type: check
+    title: Merging colours
+    questions: [rounding-numeric, lossless-odd-one-out]
+
+  - type: misconceptions
+    items:
+      - wrong: Halving the resolution halves the file size.
+        right: |
+          Halving **both** the width and the height leaves a quarter of the pixels, so a quarter of the file size.
+      - wrong: Lossy image compression deletes random pixels.
+        right: |
+          It removes the detail that's **least noticeable**, such as tiny colour differences and fine texture.
+      - wrong: '"Enhance!" Like on TV crime dramas, you can zoom into a compressed photo to recover a blurry number plate.'
+        right: |
+          Removed detail is gone permanently. Zooming in just makes the blocks bigger.
+
+  - type: exam
+    body: |
+      - "Describe how a bitmap can be compressed" can be answered with lossless (RLE) or lossy methods. Read whether the question asks for a particular type.
+      - For a lossy method, name it **and** say what is lost: "colours that are very similar are grouped and stored as the same colour, so some colour detail is **permanently lost**".
+      - Reducing resolution or colour depth reduces quality as well as file size. Say both.
+      - Insider hack: resolution changes act on **two** dimensions. "Halve the width and height" means divide the size by 4.
+
+  - type: check
+    title: Name and describe
+    questions: [cloze-terms, explain-two-methods]
+
+  - type: enrichment
+    title: Inside a JPEG
+    body: |
+      JPEG first separates brightness from colour, and usually stores the colour at a lower resolution, because our eyes are far more sensitive to brightness than to colour.
+
+      Then each 8 × 8 block of pixels is turned into numbers describing how quickly the shade changes across the block. The numbers for the finest detail are rounded heavily (many become 0), and the result is compressed losslessly. That rounding is where the "loss" happens.
+
+  - type: takeaways
+    items:
+      - "Reducing resolution stores fewer pixels: halving width and height leaves a quarter of the file."
+      - "Reducing colour depth stores fewer bits per pixel: 24-bit to 8-bit leaves a third."
+      - Merging very similar colours creates long runs that then compress very well.
+      - All three are lossy, so the removed detail can never be recovered.
+
+questions:
+  - id: quarter-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      A bitmap's width and height in pixels are both halved, and its colour depth stays the same. Its file size becomes…
+    options:
+      - text: one quarter of the original
+        correct: true
+        why: |
+          $\tfrac12 \times \tfrac12 = \tfrac14$ of the pixels, each still using the same number of bits.
+      - text: one half of the original
+        why: |
+          That would only happen if *one* dimension were halved.
+      - text: one eighth of the original
+        why: |
+          The colour depth hasn't changed, so only the pixel count matters: ½ × ½ = ¼.
+      - text: the same as before
+        why: |
+          Fewer pixels means fewer colour codes to store.
+    explanation: |
+      File size is proportional to the number of pixels × the colour depth. Halving both dimensions quarters the pixels.
+
+  - id: resize-bytes
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A 1600 × 1200 bitmap has a colour depth of 24 bits. Its width and height in pixels are both halved. What is its new size in bytes? (Ignore the file header, and type the number without spaces.)
+    fields:
+      - answer: 1440000
+        unit: bytes
+    explanation: |
+      $800 \times 600 = 480\,000$ pixels × 3 bytes = 1 440 000 bytes: a quarter of the original 5 760 000 bytes.
+
+  - id: email-limit
+    format: mcq
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |
+      A 2400 × 1600 bitmap with 24-bit colour must be emailed, and the attachment limit is 1 000 000 bytes. Ignoring the file header, which change gets the image under the limit?
+    options:
+      - text: Halve both the width and the height, and reduce the colour depth to 8 bits
+        correct: true
+        why: |
+          $1200 \times 800 = 960\,000$ pixels × 1 byte = 960 000 bytes: under the limit.
+      - text: Halve both the width and the height only
+        why: |
+          $1200 \times 800 \times 3 = 2\,880\,000$ bytes: a quarter of the original, but still well over the limit.
+      - text: Reduce the colour depth to 8 bits only
+        why: |
+          $2400 \times 1600 \times 1 = 3\,840\,000$ bytes: a third of the original, still over the limit.
+      - text: Halve the width only, and reduce the colour depth to 8 bits
+        why: |
+          $1200 \times 1600 \times 1 = 1\,920\,000$ bytes: one sixth of the original, still over the limit.
+    explanation: |
+      The original is $2400 \times 1600 \times 3 = 11\,520\,000$ bytes, so you need to divide it by more than 11.52. Quartering the pixels and thirding the bits divides it by 12.
+
+  - id: rounding-numeric
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A row of 8 greyscale pixels (8 bits each) holds the values `52 50 51 50 120 121 119 120`. Each RLE run takes 2 bytes (count + value). How many bytes does RLE need (a) for the original row, (b) if every value is first rounded to the nearest 10?
+    fields:
+      - label: "(a) original:"
+        answer: 16
+        unit: bytes
+      - label: "(b) rounded:"
+        answer: 4
+        unit: bytes
+    explanation: |
+      (a) No two neighbours are equal, so there are 8 runs: $8 \times 2 = 16$ bytes, double the 8-byte original. (b) Rounding gives `50 50 50 50 120 120 120 120`: 2 runs, so 4 bytes. The rounding is the lossy step; the RLE is lossless.
+
+  - id: lossless-odd-one-out
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      Which of these ways of reducing a bitmap's file size is **lossless**?
+    options:
+      - text: Run-length encoding of the pixel colour codes
+        correct: true
+        why: |
+          Every run records its exact colour and length, so every pixel can be rebuilt.
+      - text: Reducing the colour depth from 24 bits to 8 bits
+        why: |
+          Lossy: millions of colours are squeezed into 256, and the originals can't be recovered.
+      - text: Reducing the image resolution
+        why: |
+          Lossy: the removed pixels, and their detail, are gone.
+      - text: Storing very similar colours as one colour
+        why: |
+          Lossy: once 199 and 201 are both stored as 200, nobody knows what they were.
+    explanation: |
+      Only RLE keeps every pixel's exact colour. The other three trade detail for size.
+
+  - id: cloze-terms
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Reducing the {{1}} means fewer bits are used for each pixel. Reducing the {{2}} means fewer pixels are stored. Both are {{3}} methods of compression.
+    blanks:
+      - accept: ["colour depth", "color depth", "bit depth"]
+      - accept: ["resolution", "image resolution", "number of pixels"]
+      - accept: ["lossy"]
+    explanation: |
+      Colour depth = bits per pixel. Image resolution = number of pixels. Cutting either loses data permanently, so both are lossy.
+
+  - id: explain-two-methods
+    format: explain
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      Describe **two** lossy methods of reducing the file size of a bitmap image, and give a drawback of each.
+    model: |
+      Reducing the image resolution stores fewer pixels (halving the width and height leaves a quarter of them), but detail is lost and the image looks pixelated if it is enlarged. Reducing the colour depth uses fewer bits for each pixel, but fewer colours can be shown, so smooth shading shows visible bands. Another method is to store pixels with very similar colours as one shared colour, which creates long runs that compress well, but the subtle differences in colour are lost. In each case the removed data is lost permanently.
+    keyPoints:
+      - "Reduce resolution: fewer pixels stored"
+      - "Drawback: less detail, pixelated when enlarged"
+      - "Reduce colour depth: fewer bits per pixel"
+      - "Drawback: fewer colours, banding in smooth shading"
+      - Or merge similar colours into one, losing subtle colour differences
+      - The removed data is lost permanently
+    explanation: |
+      Any two methods with a matching drawback each make a complete answer. Saying the loss is permanent shows you know *why* they're lossy.

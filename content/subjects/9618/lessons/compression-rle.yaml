@@ -1,0 +1,224 @@
+id: compression-rle
+subject: "9618"
+topic: "1.3"
+title: "Run-length encoding (RLE)"
+summary: Compress and decompress data with run-length encoding, work out the compressed size, and spot when RLE makes a file bigger instead of smaller.
+order: 4
+minutes: 5
+kind: core
+objectives: ["1.3.3"]
+prerequisites: [compression-lossless-lossy, data-rep-character-sets]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, third learning
+    outcome (how files can be compressed, including the use of run-length encoding). This lesson
+    teaches RLE itself on character data; its use on text, bitmaps and sound follows in the later
+    compression lessons. The count-then-character layout with 1 byte for each is a common teaching
+    convention, and the flag-character variant is one illustrative scheme. Every run count and
+    size checked with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can encode and decode data with **run-length encoding**, work out the compressed size, and say when RLE helps and when it backfires.
+
+  - type: explain
+    title: You already do this
+    body: |
+      Imagine reading `AAAAAAAAAAAA` aloud to a friend over the phone. By the fourth "A" you'd give up and say **"twelve As"**.
+
+      Congratulations: you've just invented RLE.
+
+  - type: definition
+    term: Run-length encoding (RLE)
+    body: |
+      A **lossless** compression method in which each **run** (a sequence of consecutive, identical data items, such as characters or pixel colours) is replaced by **one copy of the item and a count** of how many times it repeats.
+
+  - type: diagram
+    diagram: cs-compression-rle-runs
+    alt: >-
+      The 20-character string AAAAAABBBBCCCCCCCCDD in a row of boxes, one byte each, labelled
+      original: 20 characters = 20 bytes. Brackets underneath group it into four runs: run of 6
+      (A), run of 4 (B), run of 8 (C) and run of 2 (D). An arrow from each run leads to a two-box
+      pair holding the count and the character: 6 A, 4 B, 8 C, 2 D. The total reads encoded: 4
+      runs × 2 bytes = 8 bytes.
+    caption: |
+      Four runs become four (count, character) pairs: 20 bytes down to 8.
+
+  - type: example
+    title: Encode a very sleepy message
+    problem: |
+      Encode `ZZZZZZZZzzzzzz!!!` with RLE as count–character pairs. Each count and each character takes 1 byte.
+    steps:
+      - |
+        Scan from the left and count each run of **identical** characters. `Z` and `z` have different character codes (90 and 122 in ASCII), so they are **different** runs.
+      - |
+        The runs are 8 × `Z`, 6 × `z` and 3 × `!`.
+      - |
+        Write each run as a pair: `8Z 6z 3!`.
+      - |
+        Size: 17 characters = 17 bytes before; 3 pairs × 2 bytes = **6 bytes** after.
+    answer: |
+      `8Z 6z 3!`, which is 6 bytes instead of 17.
+
+  - type: example
+    title: Decode it back
+    problem: |
+      Decode the RLE data `5A 1R 2G 1H`.
+    steps:
+      - |
+        Each pair means "write this character, this many times": 5 × A, 1 × R, 2 × G, 1 × H.
+      - |
+        Write them out in order: `AAAAARGGH`.
+      - |
+        Every character comes back exactly, in the right order. That's why RLE is **lossless**.
+    answer: |
+      `AAAAARGGH`, which happens to be the noise people make when RLE backfires. Keep reading.
+
+  - type: check
+    title: Quick check
+    questions: [encode-cloze, decode-text, count-bytes]
+
+  - type: explain
+    title: When RLE backfires
+    body: |
+      RLE only helps when there are **long runs**. Plenty of data has hardly any: in `COMPUTER`, every run has length 1.
+
+      | Data (8 bytes) | Runs | After RLE |
+      | --- | --- | --- |
+      | `AAAAAAAB` | 7A 1B | 4 bytes |
+      | `AABBCCDD` | 2A 2B 2C 2D | 8 bytes (no gain at all) |
+      | `COMPUTER` | 1C 1O 1M 1P 1U 1T 1E 1R | **16 bytes** (double!) |
+
+      With 2 bytes per run, a run of 1 doubles in size, a run of 2 breaks even, and only runs of 3 or more save space. So RLE suits data with lots of repetition, like images with big blocks of one colour.
+
+  - type: misconceptions
+    items:
+      - wrong: RLE always makes a file smaller.
+        right: |
+          Only when there are runs. Data with no repeats can double in size.
+      - wrong: RLE is lossy, because the repeated characters are removed.
+        right: |
+          The count records exactly how many there were, so decoding rebuilds every one. RLE is **lossless**.
+      - wrong: RLE counts how many times each character appears in the whole file.
+        right: |
+          It only counts **consecutive** repeats. `ABABAB` is six runs of length 1, not "3A 3B".
+      - wrong: '`T` and `t` can go in the same run.'
+        right: |
+          They have different character codes. A run must be the **same** code repeated.
+
+  - type: exam
+    body: |
+      - "Describe how RLE compresses data" (about 2–3 marks): **runs** of **consecutive identical** items are found; each run is replaced by **one copy of the item and the number of times it repeats**; nothing is lost, so it is **lossless**.
+      - In calculations, write down the runs first, then multiply by the bytes per run. The question will tell you how big a count and an item are (often 1 byte each).
+      - If asked when RLE is **not** effective: when the data has few runs of repeated items, the "compressed" file can be as big as the original, or bigger.
+
+  - type: deeper
+    title: Count limits and flag characters
+    body: |
+      **Count limits.** If each count is one unsigned byte, the largest count is 255. A run of 300 `A`s must be split into two runs, such as `255A 45A`.
+
+      **Flag (escape) characters.** To stop short runs doubling in size, some RLE schemes only encode runs of (say) 4 or more, and mark each encoded run with a special **flag** character that doesn't otherwise appear, such as `#`. Everything else is stored as it is. With the layout flag, count, character, `ABCCCCCCD` becomes `AB#6CD`: 6 bytes instead of 9, and the single characters cost nothing extra.
+
+  - type: check
+    title: Traps and limits
+    questions: [bigger-mcq, spot-case, split-run]
+
+  - type: takeaways
+    items:
+      - "RLE replaces each run of consecutive identical items with one copy of the item and a count."
+      - "RLE is lossless: decoding rebuilds every item exactly."
+      - Compressed size = number of runs × bytes per run.
+      - With 2 bytes per run, runs of 1 double in size and runs of 2 break even, so RLE needs long runs to help.
+      - Different codes (such as `T` and `t`) are always different runs.
+
+questions:
+  - id: encode-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Encode `PPPPPPQQQRRRRRRRR` with RLE, writing each run as count then character: {{1}}
+    blanks:
+      - accept: ["6P 3Q 8R", "6P3Q8R", "6 P 3 Q 8 R", "6P,3Q,8R", "6 P,3 Q,8 R", "(6,P)(3,Q)(8,R)", "6P, 3Q, 8R"]
+    explanation: |
+      Runs: 6 × P, 3 × Q, 8 × R. Three pairs is 6 bytes instead of 17.
+
+  - id: decode-text
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.3.3"]
+    prompt: |
+      Decode the RLE data `1Y 8A 1Y`.
+    accept: ["YAAAAAAAAY"]
+    model: |
+      `YAAAAAAAAY`: one Y, eight As, one Y.
+    explanation: |
+      Expand each pair in order. Ten characters come back from 6 bytes of RLE data. Count the As carefully: there are exactly eight.
+
+  - id: count-bytes
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      The string `ABBBBBBBBBCD` is compressed with RLE. Each run is stored as a 1-byte count and a 1-byte character. How many bytes does the compressed version take?
+    fields:
+      - answer: 8
+        unit: bytes
+    explanation: |
+      The runs are 1A, 9B, 1C and 1D: 4 runs × 2 bytes = 8 bytes, against 12 bytes originally. The lone A, C and D now cost *two* bytes each, which eats into the saving from the run of Bs.
+
+  - id: bigger-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      Each run is stored in 2 bytes (count + character). Which of these 8-character strings gets **bigger** when it is compressed with RLE?
+    options:
+      - text: '`AAAABBBB`'
+        why: |
+          2 runs = 4 bytes: half the original size.
+      - text: '`AABBCCDD`'
+        why: |
+          4 runs of 2 = 8 bytes: exactly the same size, not bigger.
+      - text: '`ABCDEFGH`'
+        correct: true
+        why: |
+          8 runs of 1 = 16 bytes: double the original.
+      - text: '`AAAAAAAB`'
+        why: |
+          2 runs = 4 bytes: half the original size.
+    explanation: |
+      Here RLE needs runs of 3 or more to save space. With no repeats at all, every single character turns into a pair.
+
+  - id: spot-case
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.3"]
+    prompt: |
+      A student compresses `TTTTtttGG` with RLE, using 1 byte for each count and 1 byte for each character. Which line contains the first error?
+    lines:
+      - Scan from the left, counting runs of identical characters.
+      - The first run is TTTTttt, which is 7 × T.
+      - The next run is GG, which is 2 × G.
+      - The encoded data is 7T 2G, which is 4 bytes.
+    errorLine: 2
+    fix: |
+      `T` and `t` are different characters with different codes, so they form separate runs: 4 × T, then 3 × t. The encoded data is `4T 3t 2G`, which is 6 bytes.
+    explanation: |
+      Decoding the student's version gives `TTTTTTTGG`, which isn't the original, so their "compression" lost data. Real RLE is lossless.
+
+  - id: split-run
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |
+      A file contains one run of 300 identical bytes. In this RLE scheme, each run is stored as a count in a single **unsigned byte** followed by the 1-byte data item. What is the smallest number of bytes needed to encode the run?
+    fields:
+      - answer: 4
+        unit: bytes
+    explanation: |
+      One unsigned byte holds at most 255, so the run of 300 must be split into two runs, such as 255 + 45. Two pairs × 2 bytes = 4 bytes.

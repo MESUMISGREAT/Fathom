@@ -34,7 +34,8 @@ export default function CoordinateGeometryTangentAtPoint() {
   return (
     <Svg width={W} height={H}>
       <Grid p={p} />
-      <AxesXY p={p} xTicks={[-2, 2, 4, 6]} yTicks={[-4, -2, 2, 4]} />
+      {/* no x tick label at 2: the radius CP passes through (2, 0) */}
+      <AxesXY p={p} xTicks={[-2, 4, 6]} yTicks={[-4, -2, 2, 4]} />
       <circle cx={p.sx(C.x)} cy={p.sy(C.y)} r={r} className="dg-accent" />
       <path d={graph(tangent, X, p, Y)} className="dg-accent-2" />
       <line x1={p.sx(C.x)} y1={p.sy(C.y)} x2={p.sx(P.x)} y2={p.sy(P.y)} className="dg-line" />

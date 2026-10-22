@@ -1,0 +1,219 @@
+id: chemical-formulas-combustion-analysis
+subject: "9701"
+topic: "2.3"
+title: Formulas from combustion data
+summary: How to find the empirical and molecular formula of an organic compound from the masses of carbon dioxide and water it makes when it burns.
+order: 8
+minutes: 5
+objectives: ["2.3.5"]
+prerequisites: [chemical-formulas-empirical-from-data]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.3, learning outcome 2.3.5: calculate empirical and molecular
+    formulas from given data, here combustion data). Ar values from the Cambridge Data
+    Booklet. All combustion masses are illustrative, calculated back from the stated
+    formulas so the arithmetic comes out exactly. Gas-volume combustion problems belong to
+    topic 2.4. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use the masses of $\text{CO}_2$ and $\text{H}_2\text{O}$ from complete combustion to find the empirical formula of a compound (including any oxygen it contains), then its molecular formula.
+
+  - type: explain
+    title: Chemical forensics
+    body: |
+      Burn an unknown organic compound in plenty of oxygen, trap the gases, and weigh them. Every carbon atom from the sample ends up in carbon dioxide; every hydrogen atom ends up in water. The products are a full confession.
+
+  - type: explain
+    title: Follow the atoms
+    body: |
+      | element | where it goes | mass in the sample |
+      | --- | --- | --- |
+      | C | all into $\text{CO}_2$ | $m(\text{C}) = m(\text{CO}_2) \times \dfrac{12.0}{44.0}$ |
+      | H | all into $\text{H}_2\text{O}$ | $m(\text{H}) = m(\text{H}_2\text{O}) \times \dfrac{2.0}{18.0}$ |
+      | O | **can't** be traced | $m(\text{O}) = m(\text{sample}) - m(\text{C}) - m(\text{H})$ |
+
+      Why the fractions? 44.0 g of $\text{CO}_2$ contains 12.0 g of carbon; 18.0 g of water contains 2.0 g of hydrogen (two H atoms per molecule).
+
+      Why is oxygen different? The O atoms in $\text{CO}_2$ and $\text{H}_2\text{O}$ come from the sample **and** from the oxygen gas it burned in. So find the sample's oxygen **by difference**.
+
+  - type: diagram
+    diagram: chem-chemical-formulas-combustion-tracking
+    alt: "Flow diagram. A box labelled weighed sample, contains C, H, O, mass known, has an arrow into an oval labelled burns completely; a dashed arrow from a box labelled O2 (excess) also feeds the oval. Two arrows leave the oval: one labelled C to a box reading CO2 (mass measured), holds all the carbon, m(C) = m(CO2) × 12.0 ÷ 44.0; one labelled H to a box reading H2O (mass measured), holds all the hydrogen, m(H) = m(H2O) × 2.0 ÷ 18.0. A banner at the bottom: O atoms in CO2 and H2O come from the sample and from the O2, so find O by difference: m(O) = m(sample) − m(C) − m(H)."
+    caption: Carbon and hydrogen can be tracked. Oxygen gets mixed with the air's oxygen, so it's found by subtraction.
+
+  - type: check
+    title: Quick check
+    questions: [carbon-from-co2, oxygen-difference]
+
+  - type: explain
+    title: The moles shortcut
+    body: |
+      You can skip the masses and go straight to moles of atoms:
+
+      $$n(\text{C}) = n(\text{CO}_2) \qquad\qquad n(\text{H}) = 2 \times n(\text{H}_2\text{O})$$
+
+      That **× 2** is the single most forgotten step in this whole topic. Each water molecule carries two hydrogen atoms.
+
+      For oxygen you still need masses: $m(\text{O})$ by difference, then $n(\text{O}) = m(\text{O}) \div 16.0$.
+
+      **Hydrocarbon?** It has no oxygen, so $m(\text{C}) + m(\text{H})$ should equal the sample mass. That's a free check.
+
+  - type: check
+    title: Hydrogen
+    questions: [hydrogen-moles, hydrogen-error]
+
+  - type: example
+    title: The full case file
+    problem: |
+      1.80 g of compound Z, which contains C, H and O only, burns completely to give 3.52 g of $\text{CO}_2$ and 1.80 g of $\text{H}_2\text{O}$. Its $M_r$ is 90.0. Find its molecular formula. ($A_r$: C = 12.0, H = 1.0, O = 16.0)
+    steps:
+      - |
+        Carbon: $m(\text{C}) = 3.52 \times \dfrac{12.0}{44.0} = 0.960$ g
+      - |
+        Hydrogen: $m(\text{H}) = 1.80 \times \dfrac{2.0}{18.0} = 0.200$ g
+      - |
+        Oxygen by difference: $m(\text{O}) = 1.80 - 0.960 - 0.200 = 0.640$ g
+      - |
+        Moles of atoms: C $0.960 \div 12.0 = 0.0800$; H $0.200 \div 1.0 = 0.200$; O $0.640 \div 16.0 = 0.0400$
+      - |
+        ÷ smallest (0.0400): C 2, H 5, O 1. Empirical formula $\text{C}_2\text{H}_5\text{O}$, mass $2(12.0) + 5(1.0) + 16.0 = 45.0$.
+      - |
+        $n = 90.0 \div 45.0 = 2$
+    answer: |
+      $\text{C}_4\text{H}_{10}\text{O}_2$
+
+  - type: check
+    title: Solve the case
+    questions: [hydrocarbon-molecular, three-element-combustion]
+
+  - type: misconceptions
+    items:
+      - wrong: "$n(\\text{H}) = n(\\text{H}_2\\text{O})$."
+        right: "Each $\\text{H}_2\\text{O}$ has two H atoms: $n(\\text{H}) = 2 \\times n(\\text{H}_2\\text{O})$."
+      - wrong: "Oxygen in the sample = oxygen in the $\\text{CO}_2$ and $\\text{H}_2\\text{O}$."
+        right: "Most of that oxygen came from the $\\text{O}_2$ the sample burned in. Find the sample's oxygen by difference."
+      - wrong: "The mass of carbon is the mass of $\\text{CO}_2$."
+        right: "Only $\\tfrac{12.0}{44.0}$ of $\\text{CO}_2$ is carbon. 2.20 g of $\\text{CO}_2$ holds just 0.600 g of C."
+
+  - type: exam
+    body: |
+      - Lay it out as a table: masses → moles → ratio. Each row tends to carry its own mark.
+      - If the question says "contains C, H and O", you **must** find O by difference. Leaving it out gives a hydrocarbon formula that can't match $M_r$.
+      - Keep 3 significant figures in the moles row. Over-rounding is the usual reason a ratio comes out as 1 : 2.4 instead of 1 : 2.5.
+      - Sense check: does your molecular formula's $M_r$ really equal the given value?
+
+  - type: takeaways
+    items:
+      - "$m(\\text{C}) = m(\\text{CO}_2) \\times 12.0/44.0$; $m(\\text{H}) = m(\\text{H}_2\\text{O}) \\times 2.0/18.0$."
+      - "Or in moles: $n(\\text{C}) = n(\\text{CO}_2)$ and $n(\\text{H}) = 2 \\times n(\\text{H}_2\\text{O})$."
+      - "Oxygen in the sample is found by difference, never from the products."
+      - "Then: ÷ $A_r$, ÷ smallest, and $n = M_r \\div$ empirical formula mass."
+
+questions:
+  - id: carbon-from-co2
+    format: numeric
+    difficulty: 1
+    objectives: ["2.3.5"]
+    prompt: |
+      A sample burns completely and makes 2.20 g of carbon dioxide. What mass of carbon was in the sample? ($A_r$: C = 12.0, O = 16.0)
+    fields:
+      - answer: 0.600
+        tolerance: { abs: 0.002 }
+        unit: g
+    explanation: |
+      $m(\text{C}) = 2.20 \times \dfrac{12.0}{44.0} = 0.600$ g. All of the sample's carbon ends up in the $\text{CO}_2$.
+
+  - id: oxygen-difference
+    format: mcq
+    difficulty: 2
+    objectives: ["2.3.5"]
+    prompt: |
+      In combustion analysis, why is the mass of oxygen in the sample found by difference instead of from the products?
+    options:
+      - text: |
+          Some of the oxygen atoms in the $\text{CO}_2$ and $\text{H}_2\text{O}$ came from the oxygen gas, not from the sample.
+        correct: true
+        why: |
+          The products mix the sample's oxygen with oxygen from the $\text{O}_2$, so you can't tell them apart.
+      - text: |
+          Oxygen in a compound doesn't react when the compound burns.
+        why: |
+          The sample's oxygen atoms do end up in the products; the problem is they're mixed with oxygen from the air.
+      - text: |
+          Oxygen is a gas, so it can't be weighed.
+        why: |
+          The products are measured by absorbing them and weighing the absorbers, so weighing isn't the problem.
+      - text: |
+          The sample's oxygen escapes as $\text{O}_2$ during burning.
+        why: |
+          It isn't released as $\text{O}_2$; it becomes part of the $\text{CO}_2$ and $\text{H}_2\text{O}$, alongside oxygen from the air.
+    explanation: |
+      Carbon and hydrogen come only from the sample; oxygen doesn't. Hence $m(\text{O}) = m(\text{sample}) - m(\text{C}) - m(\text{H})$.
+
+  - id: hydrogen-moles
+    format: numeric
+    difficulty: 2
+    objectives: ["2.3.5"]
+    prompt: |
+      Burning a sample completely produces 0.540 g of water. What amount, in mol, of **hydrogen atoms** did the sample contain? ($A_r$: H = 1.0, O = 16.0)
+    fields:
+      - answer: 0.0600
+        tolerance: { rel: 0.01 }
+        unit: mol
+    explanation: |
+      $n(\text{H}_2\text{O}) = 0.540 \div 18.0 = 0.0300$ mol. Two H atoms per molecule: $n(\text{H}) = 0.0600$ mol.
+
+  - id: hydrogen-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.3.5"]
+    prompt: |
+      A hydrocarbon burns completely to give 0.880 g of $\text{CO}_2$ and 0.540 g of $\text{H}_2\text{O}$. A student works out its empirical formula. Which line contains the first error?
+    lines:
+      - |
+        $n(\text{CO}_2) = 0.880 \div 44.0 = 0.0200$ mol, so $n(\text{C}) = 0.0200$ mol
+      - |
+        $n(\text{H}_2\text{O}) = 0.540 \div 18.0 = 0.0300$ mol, so $n(\text{H}) = 0.0300$ mol
+      - |
+        C : H $= 0.0200 : 0.0300 = 1 : 1.5$
+      - |
+        Multiply by 2: the empirical formula is $\text{C}_2\text{H}_3$
+    errorLine: 2
+    fix: |
+      Each $\text{H}_2\text{O}$ contains two H atoms, so $n(\text{H}) = 0.0600$ mol. Then C : H = 1 : 3 and the empirical formula is $\text{CH}_3$.
+    explanation: |
+      The forgotten × 2 strikes. The later steps are done correctly, but on the wrong number.
+
+  - id: hydrocarbon-molecular
+    format: numeric
+    difficulty: 2
+    objectives: ["2.3.5"]
+    prompt: |
+      0.290 g of a hydrocarbon burns completely to give 0.880 g of $\text{CO}_2$ and 0.450 g of $\text{H}_2\text{O}$. Its $M_r$ is 58.0. Find its molecular formula, $\text{C}_x\text{H}_y$. ($A_r$: C = 12.0, H = 1.0, O = 16.0)
+    fields:
+      - label: "x ="
+        answer: 4
+      - label: "y ="
+        answer: 10
+    explanation: |
+      $n(\text{C}) = 0.880 \div 44.0 = 0.0200$; $n(\text{H}) = 2 \times 0.450 \div 18.0 = 0.0500$. Ratio $1 : 2.5 = 2 : 5$, so $\text{C}_2\text{H}_5$ (mass 29.0). $n = 58.0 \div 29.0 = 2$: $\text{C}_4\text{H}_{10}$. Check: 0.240 g C + 0.050 g H = 0.290 g ✓
+
+  - id: three-element-combustion
+    format: numeric
+    difficulty: 3
+    objectives: ["2.3.5"]
+    prompt: |
+      0.450 g of a compound containing C, H and O only burns completely to give 0.660 g of $\text{CO}_2$ and 0.270 g of $\text{H}_2\text{O}$. Its $M_r$ is 90.0. Find its molecular formula, $\text{C}_x\text{H}_y\text{O}_z$. ($A_r$: C = 12.0, H = 1.0, O = 16.0)
+    fields:
+      - label: "x ="
+        answer: 3
+      - label: "y ="
+        answer: 6
+      - label: "z ="
+        answer: 3
+    explanation: |
+      $m(\text{C}) = 0.660 \times 12.0/44.0 = 0.180$ g; $m(\text{H}) = 0.270 \times 2.0/18.0 = 0.030$ g; $m(\text{O}) = 0.450 - 0.180 - 0.030 = 0.240$ g. Moles: C 0.0150, H 0.0300, O 0.0150 → $\text{CH}_2\text{O}$ (30.0). $n = 90.0 \div 30.0 = 3$: $\text{C}_3\text{H}_6\text{O}_3$.

@@ -1,0 +1,262 @@
+id: equations-motion-free-fall
+subject: "9702"
+topic: "2.1"
+title: "Free fall: suvat with gravity"
+summary: With air resistance negligible, everything falls with the same acceleration, g = 9.81 m s⁻² downwards, so free-fall problems are suvat with a already filled in.
+order: 9
+minutes: 5
+objectives: ["2.1.7"]
+prerequisites: [equations-motion-solving-suvat]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.7, using the equations of uniformly accelerated motion to solve
+    problems, including problems on bodies falling without air resistance in a uniform
+    gravitational field), using g = 9.81 m s⁻² from the 9702 data sheet. Both diagrams are drawn
+    to scale (strobe positions s = ½gt² every 0.10 s; the cliff throw s = 8.0t − 4.905t²). All
+    worked values and answer keys recomputed with Python. All questions are original; the
+    heights and speeds are illustrative values.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve problems on objects **falling freely** (dropped or thrown, with air resistance negligible) using the suvat equations with $a = 9.81\ \text{m s}^{-2}$ downwards and a sign convention you stick to.
+
+  - type: explain
+    title: A hammer, a feather and the Moon
+    body: |
+      In 1971, Apollo 15 astronaut David Scott stood on the Moon, held up a hammer and a falcon feather, and let go. They hit the dust **together**.
+
+      No air means no air resistance, so the only force on each is its weight. A heavier object has a bigger weight, but also more mass to get moving, and the two cancel exactly (you'll see why with $F = ma$ in Dynamics). So **every object falls with the same acceleration**, whatever its mass.
+
+      Near the Earth's surface the gravitational field is **uniform**, so that acceleration is constant. Constant acceleration in a straight line? That's a suvat licence.
+
+  - type: definition
+    term: Acceleration of free fall, g
+    body: |
+      The acceleration of an object falling with no force on it except its weight (air resistance negligible). Near the Earth's surface $g = 9.81\ \text{m s}^{-2}$, directed **vertically downwards**, and it is the same for every object.
+
+  - type: diagram
+    diagram: phys-equations-motion-strobe-fall
+    alt: >-
+      A stroboscopic picture, drawn to scale, of a ball falling from rest beside a vertical rule
+      marked from 0 to 130 cm (s / cm, increasing downwards). The ball is shown at six flashes,
+      0.10 s apart, labelled t = 0.00 s at 0 cm, 0.10 s at 4.9 cm, 0.20 s at 19.6 cm, 0.30 s at
+      44.1 cm, 0.40 s at 78.5 cm and 0.50 s at 122.6 cm. The first two images almost overlap.
+      Arrows beside the images mark the gaps between them: 4.9, 14.7, 24.5, 34.3 and 44.1 cm, each
+      bigger than the last. A panel reads: flashes every 0.10 s; s = ½gt², from rest; gaps grow in
+      the ratio 1 : 3 : 5 : 7 : 9; each gap 9.8 cm longer.
+    caption: Equal time intervals, growing gaps. Each gap is 9.8 cm longer than the one before, because the velocity rises by 0.981 m s⁻¹ every flash.
+
+  - type: check
+    questions: [same-g, bridge-drop]
+
+  - type: explain
+    title: Pick a direction, and g gets a sign
+    body: |
+      $g$ itself is just a size, $9.81\ \text{m s}^{-2}$. The **acceleration** $a$ gets a sign from the direction you call positive. Choose once, write it down, and keep it for the whole flight.
+
+      | | upwards positive | downwards positive |
+      | --- | --- | --- |
+      | acceleration $a$ | $-9.81\ \text{m s}^{-2}$ | $+9.81\ \text{m s}^{-2}$ |
+      | thrown up at $15\ \text{m s}^{-1}$ | $u = +15\ \text{m s}^{-1}$ | $u = -15\ \text{m s}^{-1}$ |
+      | lands $20\ \text{m}$ below the start | $s = -20\ \text{m}$ | $s = +20\ \text{m}$ |
+
+      Downwards positive is comfy when everything moves down (a dropped stone). Upwards positive is safest whenever anything is thrown up.
+
+      **Decode the hidden values:**
+
+      - "dropped" or "released from rest": $u = 0$
+      - "maximum height" (straight up and down): $v = 0$ there
+      - "returns to the thrower's hand": $s = 0$
+      - "air resistance is negligible": $a = g$, so suvat is allowed
+
+  - type: example
+    title: Straight up
+    problem: |
+      A ball is thrown vertically upwards at $15\ \text{m s}^{-1}$. Air resistance is negligible. Find its maximum height and the time it takes to get there.
+    steps:
+      - |
+        Upwards positive. $u = +15\ \text{m s}^{-1}$, $v = 0$ (at the top), $a = -9.81\ \text{m s}^{-2}$, $s = ?$
+      - |
+        No $t$, so use $v^2 = u^2 + 2as$: $0 = 15^2 + 2(-9.81)s$, giving $s = \dfrac{225}{19.62} = 11.5\ \text{m}$.
+      - |
+        Time: $v = u + at$ gives $0 = 15 - 9.81t$, so $t = \dfrac{15}{9.81} = 1.53\ \text{s}$.
+      - |
+        Sense-check: $s$ is positive, so the top is above the launch point. ✓
+    answer: |
+      $11.5\ \text{m}$ above the launch point, after $1.53\ \text{s}$. It takes another $1.53\ \text{s}$ to fall back, so it is in the air for $3.06\ \text{s}$ in total.
+
+  - type: check
+    questions: [max-height, sign-spot]
+
+  - type: diagram
+    diagram: phys-equations-motion-cliff-throw
+    alt: >-
+      A ball thrown vertically upwards from the top edge of a 25 m cliff, then falling past the
+      cliff into the sea, with upwards marked positive and the note a = −9.81 m s⁻² the whole time.
+      The vertical scale is true; the up and down parts of the path are drawn side by side so they
+      don't overlap. A dashed line marks s = 0 at the cliff top. An arrow at launch shows
+      u = +8.0 m s⁻¹. The path rises a short way to the top, labelled "v = 0, s = +3.26 m
+      (t = 0.82 s)", turns over and falls. Where it passes the cliff top again it is labelled
+      "t = 1.63 s, v = −8.0 m s⁻¹, same speed as the throw". At the sea it is labelled "s = −25 m,
+      v = −23.5 m s⁻¹ (t = 3.22 s)". Dots every 0.4 s are close together near the top and spread
+      out further and further on the way down, because the ball is speeding up.
+    caption: One flight, one set of signs. Upwards positive makes the sea at s = −25 m, and a = −9.81 m s⁻² from launch to splash.
+
+  - type: example
+    title: Off a cliff, in one go
+    problem: |
+      A ball is thrown vertically upwards at $8.0\ \text{m s}^{-1}$ from the top of a $25\ \text{m}$ cliff and falls past the edge into the sea. Air resistance is negligible. How long is it in the air, and how fast is it moving when it hits the water?
+    steps:
+      - |
+        Upwards positive, measured from the cliff top. $u = +8.0\ \text{m s}^{-1}$, $a = -9.81\ \text{m s}^{-2}$, and $s = -25\ \text{m}$ (it ends 25 m **below** its start).
+      - |
+        $s = ut + \tfrac{1}{2}at^2$: $-25 = 8.0t - 4.905t^2$, which rearranges to $4.905t^2 - 8.0t - 25 = 0$.
+      - |
+        Quadratic formula: $t = \dfrac{8.0 \pm \sqrt{8.0^2 + 4(4.905)(25)}}{2(4.905)} = \dfrac{8.0 \pm 23.55}{9.81}$, so $t = 3.22\ \text{s}$ or $-1.58\ \text{s}$. A negative time is before the throw, so reject it.
+      - |
+        Speed: $v^2 = u^2 + 2as = 8.0^2 + 2(-9.81)(-25) = 554.5$, so $v = -23.5\ \text{m s}^{-1}$ (the negative root, because it's moving down).
+    answer: |
+      In the air for $3.22\ \text{s}$; it hits the sea at $23.5\ \text{m s}^{-1}$ downwards. No need to split the flight at the top: the acceleration never changes, so one suvat list covers the whole trip.
+
+  - type: misconceptions
+    items:
+      - wrong: Heavier objects fall faster.
+        right: With air resistance negligible, every object has the same acceleration, $g$. It's air resistance (topic 3), not mass, that makes a feather drift down slowly on Earth.
+      - wrong: g is negative, so write g = −9.81 m s⁻².
+        right: $g$ is the size, $9.81\ \text{m s}^{-2}$. The **acceleration** is $-9.81\ \text{m s}^{-2}$ only if you chose upwards as positive. Writing $a = -g$ with $g = -9.81$ double-negatives you into a ball that falls upwards.
+      - wrong: For a ball thrown upwards you have to split the flight at the top.
+        right: You can, but you don't have to. The acceleration is the same throughout, so one suvat list from launch to landing works, as long as $s$ is measured from the launch point.
+
+  - type: exam
+    body: |
+      - Use $g = 9.81\ \text{m s}^{-2}$, the data-sheet value. Rounding to 10 can push a final answer outside the accepted range.
+      - "Air resistance is negligible" is the examiner saying: suvat is allowed here.
+      - Write "taking upwards as positive" before your suvat list. Then a negative $s$ or $v$ is information, not a disaster.
+      - A quadratic in $t$ gives two roots. Reject a negative one; if both are positive (passing a point on the way up **and** on the way down), choose the one the question means.
+
+  - type: check
+    questions: [cliff-time, same-speed]
+
+  - type: takeaways
+    items:
+      - With air resistance negligible, every object falls with the same acceleration, $g = 9.81\ \text{m s}^{-2}$ downwards.
+      - "Choose a positive direction: upwards positive gives $a = -9.81\\ \\text{m s}^{-2}$; downwards positive gives $a = +9.81\\ \\text{m s}^{-2}$."
+      - "Dropped: $u = 0$. At the top: $v = 0$. Back at launch height: $s = 0$."
+      - Constant acceleration means one suvat list covers the whole flight, up and down.
+
+questions:
+  - id: same-g
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.7"]
+    prompt: |
+      A $5.0\ \text{kg}$ bowling ball and a $0.50\ \text{kg}$ football are dropped together from the same height. Air resistance is negligible. Which statement is correct?
+    options:
+      - text: Both have the same acceleration, so they land at the same time.
+        correct: true
+        why: Correct. With only its weight acting, every object accelerates at $g = 9.81\ \text{m s}^{-2}$, whatever its mass.
+      - text: The bowling ball has ten times the acceleration, so it lands first.
+        why: Ten times the mass gives ten times the weight, but there is also ten times as much mass to accelerate. The acceleration is the same.
+      - text: The bowling ball lands first, because heavier objects always fall faster.
+        why: That was Aristotle's idea, and experiments prove it wrong. In everyday life it's air resistance, not mass, that slows some objects down.
+      - text: The football lands first, because it is lighter.
+        why: Mass doesn't change the acceleration of free fall in either direction.
+    explanation: |
+      In free fall the acceleration is $g$ for every object. Same start, same acceleration, same height: same landing time.
+
+  - id: bridge-drop
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      A stone is dropped from rest from a bridge and hits the water $2.2\ \text{s}$ later. Air resistance is negligible. Find the height of the bridge above the water and the speed of the stone as it hits the water. Give each answer to 3 significant figures.
+    fields:
+      - label: "height ="
+        answer: 23.74
+        tolerance: { abs: 0.15 }
+        unit: m
+      - label: "speed ="
+        answer: 21.58
+        tolerance: { abs: 0.1 }
+        unit: m s⁻¹
+    explanation: |
+      Downwards positive: $u = 0$, $a = +9.81\ \text{m s}^{-2}$, $t = 2.2\ \text{s}$. Height: $s = ut + \tfrac{1}{2}at^2 = \tfrac{1}{2} \times 9.81 \times 2.2^2 = 23.7\ \text{m}$. Speed: $v = u + at = 9.81 \times 2.2 = 21.6\ \text{m s}^{-1}$.
+
+  - id: max-height
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      A ball is thrown vertically upwards at $18\ \text{m s}^{-1}$ and caught again at the same height. Air resistance is negligible. Find its maximum height above the launch point and the total time it spends in the air, each to 3 significant figures.
+    fields:
+      - label: "maximum height ="
+        answer: 16.51
+        tolerance: { abs: 0.1 }
+        unit: m
+      - label: "time in the air ="
+        answer: 3.67
+        tolerance: { abs: 0.02 }
+        unit: s
+    explanation: |
+      Upwards positive, $a = -9.81\ \text{m s}^{-2}$. At the top $v = 0$: $0 = 18^2 - 2 \times 9.81 \times s$, so $s = \dfrac{324}{19.62} = 16.5\ \text{m}$. For the whole flight $s = 0$: $0 = 18t - 4.905t^2$, so $t = \dfrac{18}{4.905} = 3.67\ \text{s}$ (the other root, $t = 0$, is the throw). That's twice the $1.83\ \text{s}$ it takes to reach the top.
+
+  - id: sign-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      A ball is thrown vertically upwards at $10\ \text{m s}^{-1}$. Taking upwards as positive, a student finds its maximum height. Which line contains the first error?
+    lines:
+      - |
+        $u = +10\ \text{m s}^{-1}$, $v = 0$ at the top, $s = ?$
+      - |
+        $a = +9.81\ \text{m s}^{-2}$, the acceleration of free fall.
+      - |
+        $v^2 = u^2 + 2as$: $0 = 10^2 + 2 \times 9.81 \times s$
+      - |
+        $s = -\dfrac{100}{19.62} = -5.10\ \text{m}$, so the ball rises $5.10\ \text{m}$.
+    errorLine: 2
+    fix: |
+      With upwards positive, the downward acceleration is negative: $a = -9.81\ \text{m s}^{-2}$. Then $0 = 100 - 19.62s$, so $s = +5.10\ \text{m}$.
+    explanation: |
+      A negative displacement for a point **above** the launch was the alarm bell. Quietly dropping the minus sign in line 4 hides the mistake instead of fixing it.
+
+  - id: cliff-time
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.7"]
+    prompt: |
+      A stone is thrown vertically upwards at $6.0\ \text{m s}^{-1}$ from the edge of a cliff $30\ \text{m}$ above the sea, and misses the cliff on the way down. Air resistance is negligible. How long after the throw does it hit the sea, and how fast is it moving then? Give each answer to 3 significant figures.
+    fields:
+      - label: "time ="
+        answer: 3.159
+        tolerance: { abs: 0.02 }
+        unit: s
+      - label: "speed ="
+        answer: 24.99
+        tolerance: { abs: 0.1 }
+        unit: m s⁻¹
+    explanation: |
+      Upwards positive from the cliff top: $u = +6.0$, $a = -9.81$, $s = -30\ \text{m}$. Then $-30 = 6.0t - 4.905t^2$, so $4.905t^2 - 6.0t - 30 = 0$ and $t = \dfrac{6.0 + \sqrt{36 + 588.6}}{9.81} = \dfrac{6.0 + 24.99}{9.81} = 3.16\ \text{s}$ (the other root is negative). Speed: $v^2 = 6.0^2 + 2(-9.81)(-30) = 624.6$, so $|v| = 25.0\ \text{m s}^{-1}$.
+
+  - id: same-speed
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.7"]
+    prompt: |
+      From the top of a tower, ball P is thrown vertically **upwards** at $5.0\ \text{m s}^{-1}$ and ball Q is thrown vertically **downwards** at $5.0\ \text{m s}^{-1}$. Air resistance is negligible. Which ball hits the ground at the greater speed?
+    options:
+      - text: They hit the ground at the same speed.
+        correct: true
+        why: Correct. In $v^2 = u^2 + 2as$ both balls have the same $u^2$, the same $a$ and the same displacement $s$, so they have the same $v^2$.
+      - text: P, because it falls from a greater height.
+        why: P's fall from its highest point is longer, but it starts that fall from rest, while Q starts with $5.0\ \text{m s}^{-1}$. The two effects cancel exactly.
+      - text: Q, because it was thrown towards the ground.
+        why: P comes back past the top of the tower moving down at $5.0\ \text{m s}^{-1}$, just like Q. From there on their motions are identical.
+      - text: It depends on the masses of the balls.
+        why: Mass doesn't appear in the suvat equations. In free fall every object has the same acceleration.
+    explanation: |
+      $v^2 = u^2 + 2as$ only cares about $u^2$, so the direction of the throw doesn't change the landing speed. P does take longer to land, though.

@@ -1,10 +1,11 @@
 /**
  * Periods 1–5 of the Periodic Table with the charge of the simple ion each
  * main group usually forms: group 1 → 1+, group 2 → 2+, group 13 → 3+
- * (aluminium at AS), groups 15, 16, 17 → 3−, 2−, 1−. Group 14 usually bonds
- * covalently and group 18 forms no ions. Transition elements have variable
- * charges, shown by a Roman numeral oxidation number; zinc (Zn²⁺) and silver
- * (Ag⁺) are outlined because their charges are fixed and must be learned.
+ * (aluminium at AS), groups 15, 16, 17 → 3−, 2−, 1− (shaded for the
+ * non-metals N, P, O, S, Se, F, Cl, Br, I, which form these anions). Group 14
+ * usually bonds covalently and group 18 forms no ions. Many d-block metals
+ * have variable charges, shown by a Roman numeral oxidation number; zinc
+ * (Zn²⁺) and silver (Ag⁺) are outlined because their charges are fixed.
  */
 import { Label, Svg } from '../primitives';
 
@@ -27,11 +28,14 @@ const PERIODS: string[][] = [
 /** Charge label above each group column (index = group - 1). */
 const CHARGE: Record<number, string> = { 0: '1+', 1: '2+', 12: '3+', 13: '–', 14: '3−', 15: '2−', 16: '1−', 17: 'none' };
 
+/** Non-metals in groups 15-17 that form simple negative ions. */
+const ANION_FORMERS = new Set(['N', 'P', 'O', 'S', 'Se', 'F', 'Cl', 'Br', 'I']);
+
 function fillFor(sym: string, col: number): string {
   if (col <= 1 && sym !== 'H') return 'dg-fill-accent';
   if (sym === 'Al') return 'dg-fill-accent';
   if (col >= 2 && col <= 11) return 'dg-fill-muted';
-  if (col >= 14 && col <= 16) return 'dg-fill-accent-2';
+  if (ANION_FORMERS.has(sym)) return 'dg-fill-accent-2';
   return 'dg-fill-surface';
 }
 
@@ -60,7 +64,7 @@ export function ChemicalFormulasIonCharges() {
       {/* d-block bracket */}
       <path d={`M${cx(2) + 2},${Y0 + 3 * C - 10} L${cx(2) + 2},${Y0 + 3 * C - 16} L${cx(12) - 2},${Y0 + 3 * C - 16} L${cx(12) - 2},${Y0 + 3 * C - 10}`} className="dg-thin" />
       <Label x={(cx(2) + cx(12)) / 2} y={Y0 + 3 * C - 44} className="dg-text dg-bold">
-        transition elements: variable charge
+        d-block: many metals have variable charges
       </Label>
       <Label x={(cx(2) + cx(12)) / 2} y={Y0 + 3 * C - 27} className="dg-text-small">
         shown by a Roman numeral, e.g. iron(III) = Fe³⁺
@@ -89,7 +93,7 @@ export function ChemicalFormulasIonCharges() {
       {/* key */}
       {[
         { y: 262, cls: 'dg-fill-accent dg-thin', text: 'groups 1, 2 and Al: lose electrons to form positive ions (cations)' },
-        { y: 286, cls: 'dg-fill-accent-2 dg-thin', text: 'groups 15 to 17: gain electrons to form negative ions (anions)' },
+        { y: 286, cls: 'dg-fill-accent-2 dg-thin', text: 'non-metals in groups 15 to 17: gain electrons to form negative ions (anions)' },
         { y: 310, cls: 'dg-fill-surface dg-accent-2', text: 'Zn²⁺ and Ag⁺: fixed charges you must learn' },
       ].map((k) => (
         <g key={k.y}>

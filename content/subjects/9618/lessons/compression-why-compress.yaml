@@ -1,0 +1,253 @@
+id: compression-why-compress
+subject: "9618"
+topic: "1.3"
+title: "Why compress? Smaller files, faster everything"
+summary: Why files are compressed (less storage, faster transmission, less bandwidth) and where you meet compression every day.
+order: 1
+minutes: 4
+kind: core
+objectives: ["1.3.1"]
+prerequisites: [multimedia-sound-file-size, data-rep-binary-prefixes]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 1.3 Compression, first learning
+    outcome (understand the need for compression and give examples of its use). The sound example
+    uses the standard CD audio values and the standard 320 and 128 kbit/s MP3 bit rates; the 4K
+    film, photo sizes and connection speeds are illustrative. Every calculation and answer key
+    checked with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain **why** files are compressed and give real examples of where compression is used.
+
+  - type: explain
+    title: Your phone would be full by lunchtime
+    body: |
+      A two-hour 4K film stored as raw pixels (24-bit colour, 24 frames a second) is about **4.3 TB**. That's more than thirty 128 GB phones' worth of storage. For one film.
+
+      Yet you stream films like that without a second thought. The trick that makes it possible is **compression**.
+
+  - type: definition
+    term: Compression
+    body: |
+      Encoding data using **fewer bits**, so that the **file size is reduced**. A compressed file must be **decompressed** before it can be used (played, displayed or edited).
+
+  - type: explain
+    title: Why bother? The three big reasons
+    body: |
+      A smaller file means:
+
+      - **Less storage space** is needed, on a device, a server or in the cloud.
+      - **Faster transmission**: less time to upload, download or send it.
+      - **Less bandwidth** is used, so a network can carry more traffic and less of a mobile data allowance is used.
+
+      Those three lead to the everyday wins: files fit within **email attachment limits**, web pages **load faster**, and music and video can be **streamed** in real time with less **buffering**.
+
+  - type: example
+    title: One minute of music
+    problem: |
+      One minute of CD-quality stereo sound has 44 100 samples per second, 16 bits per sample and 2 channels. How long does it take to download over an 8 Mbit/s connection, uncompressed and as a 128 kbit/s MP3? (Network speeds use decimal prefixes: 1 Mbit/s = 1 000 000 bits per second.)
+    steps:
+      - |
+        Uncompressed size: $44\,100 \times 16 \times 2 \times 60 = 84\,672\,000$ bits, which is $10\,584\,000$ bytes (about 10.1 MiB).
+      - |
+        Download time: $84\,672\,000 \div 8\,000\,000 \approx 10.6$ s.
+      - |
+        A 128 kbit/s MP3 stores 128 000 bits for each second of sound: $128\,000 \times 60 = 7\,680\,000$ bits, which is $960\,000$ bytes.
+      - |
+        Download time: $7\,680\,000 \div 8\,000\,000 = 0.96$ s. The MP3 is about **11 times** smaller, so it arrives about 11 times faster.
+    answer: |
+      Uncompressed: about 10.6 s. MP3: under 1 s. Now multiply that by a whole playlist, and by millions of listeners.
+
+  - type: diagram
+    diagram: cs-compression-size-bars
+    alt: >-
+      Horizontal bar chart, drawn to scale, for one minute of CD-quality stereo sound, with file
+      size in MiB on the x-axis from 0 to 10. Uncompressed: a long bar of 10.1 MiB, with a download
+      time of 10.6 seconds at 8 Mbit/s. MP3 at 320 kbit/s: a bar of 2.29 MiB, 2.4 seconds. MP3 at
+      128 kbit/s: a short bar of 0.92 MiB, 0.96 seconds.
+    caption: |
+      Same minute of music, three file sizes. The download time shrinks in proportion to the file.
+
+  - type: check
+    title: Quick check
+    questions: [why-cloze, not-a-benefit, download-times]
+
+  - type: explain
+    title: Compression is everywhere
+    body: |
+      | Where | What gets compressed | Why it matters there |
+      | --- | --- | --- |
+      | Music and video streaming | sound and video | must arrive in real time without buffering; less bandwidth per viewer |
+      | Video calls | live video and sound | must be sent instantly over whatever bandwidth the connection has |
+      | Web pages | photos, plus the page's own text and code | pages load faster, especially on mobile |
+      | Email | attachments, often zipped into one archive | fits the attachment size limit and sends faster |
+      | Phone camera | photos and videos | far more fit in the phone's storage |
+      | Software downloads and updates | program files in an archive | faster downloads, less load on the servers |
+      | Backups and archives | many files zipped together | less storage space needed |
+
+  - type: intuition
+    title: A shorter description, not a squashed file
+    body: |
+      Compression doesn't physically squeeze bits. It finds a **shorter way to describe** the same data: instead of "red, red, red, red…" five hundred times, write "500 × red".
+
+      It's like texting "brb": your friend expands it back to "be right back". Where the analogy breaks: text-speak only works if your friend knows the shorthand (and some of it is ambiguous), but a computer uses an exact, agreed method, so the decompressor rebuilds the data the same way every time.
+
+  - type: check
+    title: Compression in the wild
+    questions: [storage-photos, call-reason, playlist-data]
+
+  - type: misconceptions
+    items:
+      - wrong: Compressing a file makes it quicker to open.
+        right: |
+          Not necessarily. It has to be **decompressed** first, which takes processing time. Compression saves **storage** and **transmission time**, at the cost of some processing.
+      - wrong: Compressing a file encrypts it, so it's secure.
+        right: |
+          Compression is about **size**, not secrecy. Anyone with the right software can decompress the file. Encryption is a completely separate process.
+      - wrong: '"It makes the file smaller" is a full answer to "why compress?"'
+        right: |
+          That's just what compression *is*. Say what the smaller size **achieves**: less storage space, faster transmission, less bandwidth used.
+
+  - type: exam
+    body: |
+      - "Explain why…" or "give two reasons…" questions usually give 1 mark per reason. Each reason needs its **benefit**: "it reduces the file size, **so** it takes less time to transmit".
+      - **Use the context.** Streaming? Talk about bandwidth and buffering. A phone? Storage. Email? Attachment limits. A context-free answer can cost you the mark.
+      - "Faster" on its own is vague. Faster to **transmit, download or upload**.
+      - Insider hack: there's no calculator in the exam, so size and time questions use friendly numbers. If your working gets ugly, recheck your bits-and-bytes conversion.
+
+  - type: check
+    title: Put it in words
+    questions: [explain-streaming]
+
+  - type: takeaways
+    items:
+      - Compression reduces file size by encoding the data in fewer bits.
+      - Smaller files need less storage space, are transmitted faster and use less bandwidth.
+      - "You meet it everywhere: streaming, video calls, web pages, email attachments, phone photos, downloads and backups."
+      - Compressed files must be decompressed before use, which costs some processing time.
+      - In an answer, link each benefit to the situation in the question.
+
+questions:
+  - id: why-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.1"]
+    prompt: |
+      Compression reduces the {{1}} of a file. As a result, less storage {{2}} is needed, the file takes less time to {{3}}, and less {{4}} is used on the network.
+    blanks:
+      - accept: ["size", "file size", "number of bits", "storage size"]
+      - accept: ["space"]
+      - accept: ["transmit", "transfer", "download", "upload", "send", "be transmitted", "be sent", "be downloaded", "be transferred", "be uploaded"]
+      - accept: ["bandwidth"]
+    explanation: |
+      Smaller file → less storage space, shorter transmission time, less bandwidth. Those three benefits are behind nearly every use of compression.
+
+  - id: not-a-benefit
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.1"]
+    prompt: |
+      Maya compresses a holiday photo before emailing it to her gran. Which of these is **not** a benefit of compressing it?
+    options:
+      - text: The photo takes less time to upload.
+        why: |
+          A real benefit: fewer bits to send means a shorter transmission time.
+      - text: Less bandwidth is used.
+        why: |
+          A real benefit: less data has to cross the network.
+      - text: The photo is more likely to fit within the email attachment size limit.
+        why: |
+          A real benefit, and a classic example of compression in use.
+      - text: The photo's quality improves.
+        correct: true
+        why: |
+          Compression never adds detail. At best (lossless) the photo is identical; with lossy compression some detail is lost.
+    explanation: |
+      Compression reduces file size, which saves storage, transmission time and bandwidth. It can't make a photo better.
+
+  - id: download-times
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |
+      A video clip is 40 000 000 bytes. Compression reduces it to 4 000 000 bytes. How many seconds does each version take to download over a 16 Mbit/s connection? (1 Mbit/s = 1 000 000 bits per second.)
+    fields:
+      - label: "Uncompressed:"
+        answer: 20
+        unit: s
+      - label: "Compressed:"
+        answer: 2
+        unit: s
+    explanation: |
+      Convert bytes to bits first: $40\,000\,000 \times 8 = 320\,000\,000$ bits, and $320\,000\,000 \div 16\,000\,000 = 20$ s. The compressed file is ten times smaller: $32\,000\,000 \div 16\,000\,000 = 2$ s. (If you got 2.5 s and 0.25 s, you forgot the × 8.)
+
+  - id: storage-photos
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |
+      A phone has 12 GB (12 000 MB) of free storage. A photo is 24 MB uncompressed, or 3 MB compressed. How many photos fit in the free storage in each case?
+    fields:
+      - label: "Uncompressed:"
+        answer: 500
+        unit: photos
+      - label: "Compressed:"
+        answer: 4000
+        unit: photos
+    explanation: |
+      $12\,000 \div 24 = 500$ uncompressed photos, but $12\,000 \div 3 = 4000$ compressed ones: eight times as many. That's why phone cameras always save photos compressed.
+
+  - id: call-reason
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |
+      A video-calling app compresses the video from your camera before sending it. What is the **main** reason?
+    options:
+      - text: The video must be sent in real time over the bandwidth available, so it has to be small enough to keep up.
+        correct: true
+        why: |
+          A live call can't stop to buffer. Compression lets the video fit the connection as it is being made.
+      - text: To save storage space on the app's servers.
+        why: |
+          Calls are usually sent live, not stored. Storage is the main reason for a phone's photo library, not a live call.
+      - text: To encrypt the call so that no one else can watch it.
+        why: |
+          Compression is not encryption. Anyone with the right software can decompress a stream; security is a separate process.
+      - text: To improve the picture quality.
+        why: |
+          Compression can't add detail. Lossy compression actually removes some.
+    explanation: |
+      Match the reason to the situation. For anything live (calls, streaming), the key benefits are faster transmission and less bandwidth.
+
+  - id: playlist-data
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.1"]
+    prompt: |
+      A music app streams songs compressed at 128 kbit/s (128 000 bits per second). How many MB of mobile data does a 30-minute playlist use? (1 MB = 1 000 000 bytes.)
+    fields:
+      - answer: 28.8
+        unit: MB
+    explanation: |
+      30 minutes is 1800 s, so $128\,000 \times 1800 = 230\,400\,000$ bits. Divide by 8 for bytes: $28\,800\,000$ bytes = 28.8 MB. Uncompressed CD-quality sound (about 1411 kbit/s) would use about 11 times as much, over 300 MB.
+
+  - id: explain-streaming
+    format: explain
+    difficulty: 2
+    objectives: ["1.3.1"]
+    prompt: |
+      A film streaming service compresses every film it offers. Give **two** reasons why, explaining the benefit of each.
+    model: |
+      Compression reduces the file size of each film. A smaller file takes less time to transmit, so the film can start quickly and stream in real time with little buffering. It also uses less bandwidth, so more viewers can watch at the same time, and viewers on slower connections or limited mobile data can still watch. The service also needs less storage space on its servers for its whole film library.
+    keyPoints:
+      - Compression reduces the file size of each film
+      - Less time to transmit, so the film streams in real time with less buffering
+      - Less bandwidth used per viewer (more viewers, slower connections, less mobile data)
+      - Less storage space needed on the service's servers
+    explanation: |
+      Any two benefits earn credit if each one is tied to streaming. "It makes the file smaller" on its own only restates what compression is.

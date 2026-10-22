@@ -1,0 +1,276 @@
+id: equations-motion-measuring-g
+subject: "9702"
+topic: "2.1"
+title: Measuring g with a falling object
+summary: Drop a ball from rest through several measured heights, time each fall electronically, and plot h against t², whose gradient is g/2.
+order: 10
+minutes: 5
+objectives: ["2.1.8"]
+prerequisites: [equations-motion-free-fall, units-systematic-and-random-errors]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 2.1.8, describing an experiment to determine the acceleration of
+    free fall using a falling object). The results table and graph are illustrative data
+    generated for this lesson (times consistent with g ≈ 9.8 m s⁻² plus small scatter), plotted
+    to scale with a best-fit line h = 4.90t²; the least-squares fit through the origin gives 4.90.
+    The apparatus diagram is schematic, not to scale. All values and answer keys recomputed with
+    Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **describe an experiment** that uses a falling object to find $g$: what you measure and with what, the graph you plot, how $g$ comes from its gradient, and how to keep errors small.
+
+  - type: explain
+    title: Measure a planet with a ball bearing
+    body: |
+      With a steel ball, a ruler and a timer, you can measure a property of the **entire Earth**. The physics is one line of suvat. The marks are in the details of how you actually do it, so this lesson is mostly about the details.
+
+  - type: explain
+    title: The physics in one line
+    body: |
+      The ball is **released from rest**, so $u = 0$. If it falls a height $h$ in time $t$:
+
+      $$h = \tfrac{1}{2}gt^2$$
+
+      So $h$ is proportional to $t^2$. Plot $h$ on the y-axis against $t^2$ on the x-axis and you get a **straight line through the origin** with
+
+      $$\text{gradient} = \frac{g}{2} \quad\Longrightarrow\quad g = 2 \times \text{gradient}$$
+
+      Why bother with a graph instead of one drop? The best-fit line uses every reading, so random errors partly cancel, anomalies stand out, and a line that misses the origin flags a **systematic error** (such as measuring every $h$ to the wrong point on the ball).
+
+  - type: diagram
+    diagram: phys-equations-motion-g-apparatus
+    alt: >-
+      Schematic apparatus, not to scale. A clamp stand on a bench holds an electromagnet on an arm;
+      a steel ball hangs from the bottom of the electromagnet. Directly below, on the bench, is a
+      trapdoor switch, and a dashed line shows the ball's fall from rest down to it. A vertical
+      metre rule stands beside the drop, and a double-headed arrow labelled h runs from the bottom
+      of the ball to the top of the trapdoor. Wires run from the electromagnet through a switch to
+      the start terminal of an electronic timer reading 0.452 s, with the note "one switch cuts the
+      magnet's current and starts the timer". Another wire runs from the trapdoor to the timer's
+      stop terminal, labelled "ball opens trapdoor: timer stops".
+    caption: The ball starts its fall at the instant the timer starts, and stops the timer when it lands. No human reactions anywhere.
+
+  - type: explain
+    title: The method (where the marks are)
+    body: |
+      1. A small **steel ball** is held by an **electromagnet** above a **trapdoor switch** (or above a **light gate**), both connected to an **electronic timer**.
+      2. Measure the height $h$ from the **bottom of the ball** to the trapdoor with a **metre rule**. Keep the rule vertical and your eye level with the mark, to avoid parallax.
+      3. Switch off the electromagnet. The same switch starts the timer; the ball hitting the trapdoor stops it. Record $t$.
+      4. Repeat at the same height (say three times) and find the **mean** $t$.
+      5. Repeat for **at least five** more heights, spread from about $0.2\ \text{m}$ to $1.2\ \text{m}$.
+      6. Plot $h$ against $t^2$, draw the best-fit line, find the gradient, and calculate $g = 2 \times \text{gradient}$.
+
+  - type: check
+    questions: [which-graph, gradient-to-g]
+
+  - type: diagram
+    diagram: phys-equations-motion-g-graph
+    alt: >-
+      A graph, drawn to scale, of h in metres (0 to 1.3) against t² in s² (0 to 0.26). Six
+      plotted crosses at (0.0412, 0.200), (0.0812, 0.400), (0.1232, 0.600), (0.1624, 0.800),
+      (0.2052, 1.000) and (0.2440, 1.200) lie very close to a straight best-fit line through the
+      origin. A large dashed gradient triangle on the line runs from t² = 0.020 to 0.220 s²,
+      labelled Δ(t²) = 0.200 s², and up by Δh = 0.980 m. A panel reads: from rest, h = ½gt², so
+      gradient = g / 2; gradient = 0.980 / 0.200 = 4.90 m s⁻²; g = 2 × gradient = 9.80 m s⁻².
+    caption: A big gradient triangle, read from the line (not from the data points), keeps the reading error small.
+
+  - type: example
+    title: From results to g
+    problem: |
+      A student's mean times for six heights are below. Use them to find $g$.
+
+      | $h$ / m | 0.200 | 0.400 | 0.600 | 0.800 | 1.000 | 1.200 |
+      | --- | --- | --- | --- | --- | --- | --- |
+      | $t$ / s | 0.203 | 0.285 | 0.351 | 0.403 | 0.453 | 0.494 |
+    steps:
+      - |
+        Square each time: $t^2$ / s² = 0.0412, 0.0812, 0.1232, 0.1624, 0.2052, 0.2440.
+      - |
+        Plot $h$ against $t^2$ and draw the best-fit straight line. It passes through the origin, as $h = \tfrac{1}{2}gt^2$ predicts.
+      - |
+        Gradient from a large triangle on the line, from $(0.020, 0.098)$ to $(0.220, 1.078)$: $\dfrac{1.078 - 0.098}{0.220 - 0.020} = \dfrac{0.980}{0.200} = 4.90\ \text{m s}^{-2}$.
+      - |
+        $g = 2 \times 4.90 = 9.80\ \text{m s}^{-2}$.
+    answer: |
+      $g = 9.80\ \text{m s}^{-2}$, within about 0.1% of the data-sheet value of $9.81\ \text{m s}^{-2}$. (These are illustrative results; real ones usually scatter a little more.)
+
+  - type: check
+    questions: [single-drop, stopwatch]
+
+  - type: explain
+    title: Errors, and how to beat them
+    body: |
+      | Problem | Effect on $g$ | Fix |
+      | --- | --- | --- |
+      | air resistance | ball falls more slowly, so $g$ too small | small, dense ball (a steel ball bearing) |
+      | human reaction time, about $0.2\ \text{s}$ | large random error in $t$ (the whole fall lasts about $0.45\ \text{s}$) | electronic timer, started by the release and stopped by the landing |
+      | electromagnet lets go late | every $t$ too long, so $g$ too small (systematic) | light gates, or the graph trick in "Go deeper" |
+      | $h$ measured to the top of the ball | every $h$ off by the same amount: the line misses the origin, but its gradient (so $g$) is unchanged | measure to the bottom of the ball every time |
+      | parallax reading the rule | random error in $h$ | eye level with the mark |
+
+      Repeats and averaging shrink **random** errors. They do nothing about **systematic** ones, which push every reading the same way.
+
+  - type: deeper
+    title: Two other ways to catch a falling ball
+    body: |
+      - **Light gate:** drop a ball of diameter $d$ from rest through a light gate a height $h$ below. Its speed at the gate is $v = \dfrac{d}{\text{time the beam is blocked}}$. From rest, $v^2 = 2gh$, so a graph of $v^2$ against $h$ has gradient $2g$.
+      - **Strobe photo or video:** film the fall against a metre rule (like the strobe picture in the free-fall lesson). Read the positions at equal time intervals, work out velocities, and plot a velocity–time graph: its gradient is $g$.
+
+  - type: deeper
+    title: The delay-proof graph
+    body: |
+      Suppose the timer always reads a constant $\delta$ too long, because the magnet is slow to let go. Then $h = \tfrac{1}{2}g(t - \delta)^2$. Take the square root:
+
+      $$\sqrt{h} = \sqrt{\tfrac{g}{2}}\,(t - \delta)$$
+
+      A graph of $\sqrt{h}$ against $t$ is a straight line with gradient $\sqrt{g/2}$, **whatever** the delay. The delay just slides the line along the time axis (it crosses at $t = \delta$). Then $g = 2 \times \text{gradient}^2$.
+
+  - type: misconceptions
+    items:
+      - wrong: The gradient of the h against t² graph is g.
+        right: It's $\dfrac{g}{2}$, because $h = \tfrac{1}{2}gt^2$. Forgetting to double it is the most common slip in this experiment.
+      - wrong: Repeating the readings removes all the errors.
+        right: Repeats and means reduce **random** errors. Air resistance and a late release push every drop in the same direction, so they survive any amount of averaging.
+      - wrong: A heavier ball would give a bigger value of g.
+        right: $g$ is the same for every mass. A small, dense ball is chosen because air resistance matters much less compared with its weight.
+
+  - type: exam
+    body: |
+      - "Describe an experiment to determine $g$" is a classic multi-mark question. The marks usually go to: the apparatus, how $h$ is measured, how $t$ is measured (what starts and stops the timer), repeating for several heights, the graph you plot, and how $g$ comes from the gradient.
+      - Name instruments exactly: **metre rule**, **electronic timer**, **light gate**. "Measure the time" without saying how earns very little.
+      - Draw a **labelled diagram**. It can carry marks on its own and saves you a paragraph.
+      - Say the ball is **released from rest**. That is why $h = \tfrac{1}{2}gt^2$, with no $ut$ term.
+
+  - type: check
+    questions: [delay-effect, light-gate, describe]
+
+  - type: takeaways
+    items:
+      - "Released from rest: $h = \\tfrac{1}{2}gt^2$, so $h \\propto t^2$."
+      - Plot h against t²; it is a straight line through the origin with gradient g/2, so g = 2 × gradient.
+      - Time with an electronic timer (electromagnet and trapdoor, or light gates), never a hand stopwatch.
+      - Use a small, dense ball, several heights, repeats and a graph.
+      - Air resistance and a late release both make g too small. They are systematic, so averaging doesn't remove them.
+
+questions:
+  - id: which-graph
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.8"]
+    prompt: |
+      A ball is released from rest from several heights $h$, and its fall time $t$ is measured for each. Which graph should be a straight line through the origin?
+    options:
+      - text: $h$ against $t^2$
+        correct: true
+        why: Correct. $h = \tfrac{1}{2}gt^2$, so $h \propto t^2$, giving a straight line through the origin with gradient $\tfrac{g}{2}$.
+      - text: $h$ against $t$
+        why: $h$ is proportional to $t^2$, not $t$, so this graph curves upwards.
+      - text: $t$ against $h$
+        why: Here $t \propto \sqrt{h}$, which is also a curve.
+      - text: $h$ against $\dfrac{1}{t}$
+        why: Longer falls take more time, so $h$ goes down as $\dfrac{1}{t}$ goes up. That is not a straight line through the origin.
+    explanation: |
+      Match the graph to the equation: $h = \tfrac{1}{2}g \times t^2$ has the form $y = mx$ with $y = h$, $x = t^2$ and $m = \tfrac{g}{2}$.
+
+  - id: gradient-to-g
+    format: numeric
+    difficulty: 1
+    objectives: ["2.1.8"]
+    prompt: |
+      A student's graph of $h$ (in m) against $t^2$ (in s²) is a straight line through the origin with a gradient of $4.87\ \text{m s}^{-2}$. What value of $g$ does this give?
+    fields:
+      - answer: 9.74
+        tolerance: { abs: 0.01 }
+        unit: m s⁻²
+    explanation: |
+      The gradient is $\tfrac{g}{2}$, so $g = 2 \times 4.87 = 9.74\ \text{m s}^{-2}$.
+
+  - id: single-drop
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.8"]
+    prompt: |
+      A ball released from rest falls $1.200\ \text{m}$ in $0.496\ \text{s}$. Calculate $g$ from this one drop. Give your answer to 3 significant figures, with its unit.
+    fields:
+      - answer: 9.7555
+        sigFigs: 3
+        acceptUnits: ["m s⁻²"]
+    explanation: |
+      From rest, $h = \tfrac{1}{2}gt^2$, so $g = \dfrac{2h}{t^2} = \dfrac{2 \times 1.200}{0.496^2} = \dfrac{2.400}{0.246} = 9.76\ \text{m s}^{-2}$. One drop is fine for practice; a graph of several heights is better for a real result.
+
+  - id: stopwatch
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.8"]
+    prompt: |
+      Why is a hand-operated stopwatch a poor choice for timing a ball falling $1.0\ \text{m}$?
+    options:
+      - text: The fall lasts only about 0.45 s, and human reaction time (about 0.2 s) is a large fraction of that.
+        correct: true
+        why: Correct. An error of around 0.2 s in a 0.45 s measurement is roughly 40%, which swamps everything else.
+      - text: The stopwatch reads only to 0.01 s, which is not precise enough.
+        why: The resolution isn't the problem. 0.01 s out of 0.45 s is only about 2%. Your reactions are the weak link.
+      - text: A stopwatch measures in seconds, but g needs metres per second squared.
+        why: The unit of g comes from the calculation. The time is measured in seconds whichever timer you use.
+      - text: Using a stopwatch increases the air resistance on the ball.
+        why: The timer has no effect at all on how the ball falls.
+    explanation: |
+      A $1.0\ \text{m}$ fall takes $t = \sqrt{2 \times 1.0 / 9.81} = 0.45\ \text{s}$. An electronic timer started by the release and stopped by the landing takes human reactions out of it.
+
+  - id: delay-effect
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.8"]
+    prompt: |
+      In every drop, the electromagnet releases the ball a short time **after** the timer has started. What effect does this have on the value of $g$ found from the experiment?
+    options:
+      - text: g comes out too small, and repeating the drops does not remove the error.
+        correct: true
+        why: Correct. Every measured time is too long, and $g = \dfrac{2h}{t^2}$, so $g$ is too small. The delay is the same every time, so it is a systematic error that averaging can't cancel.
+      - text: g comes out too large, because the measured times are too long.
+        why: Check the formula. $g = \dfrac{2h}{t^2}$, so a bigger $t$ gives a **smaller** $g$.
+      - text: There is no effect, because averaging repeated readings cancels the delay out.
+        why: Averaging only reduces random errors. A delay that is the same in every drop survives the averaging.
+      - text: It only makes the points on the graph more scattered.
+        why: A constant delay shifts every reading the same way. It biases the result rather than adding scatter.
+    explanation: |
+      For example, a $0.010\ \text{s}$ delay on a $0.80\ \text{m}$ drop turns the true $0.404\ \text{s}$ into $0.414\ \text{s}$, and $g$ comes out as $9.34\ \text{m s}^{-2}$ instead of $9.81$.
+
+  - id: light-gate
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.8"]
+    prompt: |
+      A ball of diameter $2.50\ \text{cm}$ is released from rest $0.800\ \text{m}$ above a light gate. It blocks the light beam for $6.35\ \text{ms}$. Calculate the ball's speed at the gate and the value of $g$ this gives, each to 3 significant figures.
+    fields:
+      - label: "speed ="
+        answer: 3.937
+        tolerance: { abs: 0.01 }
+        unit: m s⁻¹
+      - label: "g ="
+        answer: 9.688
+        tolerance: { abs: 0.02 }
+        unit: m s⁻²
+    explanation: |
+      Speed $= \dfrac{d}{t} = \dfrac{0.0250}{6.35 \times 10^{-3}} = 3.94\ \text{m s}^{-1}$. From rest, $v^2 = 2gh$, so $g = \dfrac{v^2}{2h} = \dfrac{3.937^2}{2 \times 0.800} = 9.69\ \text{m s}^{-2}$. Convert cm to m and ms to s first.
+
+  - id: describe
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.8"]
+    prompt: |
+      Describe an experiment that uses a falling object to determine the acceleration of free fall, $g$.
+    model: |
+      Hold a small steel ball with an electromagnet above a trapdoor switch connected to an electronic timer. Measure the height $h$ from the bottom of the ball to the trapdoor with a metre rule. Switch off the electromagnet: this releases the ball from rest and starts the timer, and the ball opening the trapdoor stops it, giving the fall time $t$. Repeat each height and take the mean time, then repeat for several different heights. Since $h = \tfrac{1}{2}gt^2$, plot $h$ against $t^2$: it is a straight line through the origin with gradient $\tfrac{g}{2}$, so $g = 2 \times \text{gradient}$.
+    keyPoints:
+      - A small dense ball is released from rest (for example from an electromagnet)
+      - The height h fallen is measured with a metre rule
+      - The fall time t is measured with an electronic timer started on release and stopped on landing (trapdoor or light gate)
+      - Readings are repeated, and taken for several different heights
+      - Plot h against t²; the gradient is g/2, so g = 2 × gradient
+    explanation: |
+      Every key point is a likely mark: what is measured, with what, how the timing starts and stops, repeats over a range, and the graph with the gradient-to-$g$ step.
