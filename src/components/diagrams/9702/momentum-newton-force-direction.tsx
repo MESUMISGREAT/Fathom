@@ -6,6 +6,7 @@
  * Right, "Braking": a 1200 kg car moving to the right (dashed velocity arrow)
  *   with a 6000 N braking force to the left. The resultant force and the
  *   acceleration (5.0 m s⁻²) point to the left, against the motion.
+ * Both acceleration arrows share one scale (20 px per m s⁻²).
  */
 import { Arrow, Label, Svg } from '../primitives';
 
@@ -39,6 +40,7 @@ export function MomentumNewtonForceDirection() {
   const carY = road - 22;
   const kb = 0.012; // px per newton for the car
 
+  const ka = 20; // px per m s⁻² (both acceleration arrows on one scale)
   const rowF = 200; // resultant force row
   const rowA = 244; // acceleration row
 
@@ -83,11 +85,11 @@ export function MomentumNewtonForceDirection() {
       <Label x={cx + 30 * k + 8} y={rowF} anchor="start" className="dg-text-small dg-text-accent-2">
         50 − 20 = 30 N
       </Label>
-      <Arrow x1={cx} y1={rowA} x2={cx + 60} y2={rowA} className="dg-accent" headClassName="dg-dot-accent" />
+      <Arrow x1={cx} y1={rowA} x2={cx + 3.0 * ka} y2={rowA} className="dg-accent" headClassName="dg-dot-accent" />
       <Label x={cx - 10} y={rowA} anchor="end" className="dg-text-small dg-text-accent">
         a
       </Label>
-      <Label x={cx + 68} y={rowA} anchor="start" className="dg-text-small dg-text-accent">
+      <Label x={cx + 3.0 * ka + 8} y={rowA} anchor="start" className="dg-text-small dg-text-accent">
         30 ÷ 10 = 3.0 m s⁻²
       </Label>
       <Label x={160} y={280} className="dg-text-small dg-text-muted">
@@ -102,7 +104,7 @@ export function MomentumNewtonForceDirection() {
       />
       <circle cx={carL + 22} cy={road - 10} r={10} className="dg-fill-muted dg-line" />
       <circle cx={carR - 22} cy={road - 10} r={10} className="dg-fill-muted dg-line" />
-      <Label x={carC} y={carY - 26} className="dg-text-small">
+      <Label x={carC} y={carY - 50} className="dg-text-small">
         1200 kg
       </Label>
       <Velocity x1={carL} x2={carR + 44} y={58} />
@@ -124,11 +126,11 @@ export function MomentumNewtonForceDirection() {
       <Label x={600 - 6000 * kb - 10} y={rowF} anchor="end" className="dg-text-small dg-text-accent-2">
         resultant 6000 N
       </Label>
-      <Arrow x1={600} y1={rowA} x2={540} y2={rowA} className="dg-accent" headClassName="dg-dot-accent" />
-      <Label x={530} y={rowA - 9} anchor="end" className="dg-text-small dg-text-accent">
+      <Arrow x1={600} y1={rowA} x2={600 - 5.0 * ka} y2={rowA} className="dg-accent" headClassName="dg-dot-accent" />
+      <Label x={600 - 5.0 * ka - 10} y={rowA - 9} anchor="end" className="dg-text-small dg-text-accent">
         a = 6000 ÷ 1200
       </Label>
-      <Label x={530} y={rowA + 9} anchor="end" className="dg-text-small dg-text-accent">
+      <Label x={600 - 5.0 * ka - 10} y={rowA + 9} anchor="end" className="dg-text-small dg-text-accent">
         = 5.0 m s⁻²
       </Label>
       <Label x={480} y={280} className="dg-text-small dg-text-muted">

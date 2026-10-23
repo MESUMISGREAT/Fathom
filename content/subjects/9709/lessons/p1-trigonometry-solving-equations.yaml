@@ -1,0 +1,266 @@
+id: p1-trigonometry-solving-equations
+subject: "9709"
+topic: "1.5"
+title: Solving sin x = k, cos x = k and tan x = k
+summary: Find every solution of a basic trig equation in a given interval, in degrees or radians, from the principal value and the symmetry of the graph.
+order: 8
+minutes: 5
+kind: core
+objectives: ["1.5.5"]
+prerequisites: [p1-trigonometry-inverse-notation, p1-trigonometry-graphs-of-sin-cos-tan]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "find all the solutions of
+    simple trigonometrical equations lying in a specified interval (general forms of solution are
+    not included)". All examples and questions are original; every solution set found by a
+    brute-force search in Python. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find **all** the solutions of $\sin x = k$, $\cos x = k$ and $\tan x = k$ in any interval you're given, in degrees or radians, exactly where possible.
+
+  - type: explain
+    title: The calculator only tells you half the story
+    body: |-
+      $\sin^{-1}0.4 = 23.6^\circ$. Great, but $\sin 156.4^\circ$ is also $0.4$, and so is $\sin 383.6^\circ$. The calculator gives one answer (the principal value); the question wants **every** answer in the interval.
+
+      The recipe:
+
+      1. **Principal value** $\alpha$ from $\sin^{-1}$, $\cos^{-1}$ or $\tan^{-1}$.
+      2. **Second value** from the symmetry of the graph (table below).
+      3. **Add or subtract the period** ($360^\circ$ or $2\pi$; for tan, $180^\circ$ or $\pi$) until you've covered the interval.
+      4. **Keep only** the values inside the interval. Check whether the ends are included.
+
+  - type: diagram
+    diagram: p1-trigonometry-solve-graphs
+    alt: >-
+      Three graphs for 0° ≤ x ≤ 360°, each crossed by the horizontal line y = 0.4. Top: y = sin x
+      meets the line at α = 23.6° and 180° − α = 156.4°, symmetric about 90°. Middle: y = cos x
+      meets it at α = 66.4° and 360° − α = 293.6°, symmetric about 180°. Bottom: y = tan x, with
+      asymptotes at 90° and 270°, meets it at α = 21.8° and 180° + α = 201.8°, because tan repeats
+      every 180°.
+
+  - type: explain
+    title: Where the second solution lives
+    body: |-
+      | Equation | Principal value | Second value (degrees) | (radians) | Then repeat every |
+      | --- | --- | --- | --- | --- |
+      | $\sin x = k$ | $\alpha = \sin^{-1}k$ | $180^\circ - \alpha$ | $\pi - \alpha$ | $360^\circ$ ($2\pi$) |
+      | $\cos x = k$ | $\alpha = \cos^{-1}k$ | $360^\circ - \alpha$ (or $-\alpha$) | $2\pi - \alpha$ | $360^\circ$ ($2\pi$) |
+      | $\tan x = k$ | $\alpha = \tan^{-1}k$ | $180^\circ + \alpha$ | $\pi + \alpha$ | $180^\circ$ ($\pi$) |
+
+      These rules work even when $\alpha$ is negative. Or use CAST: the solutions are in the quadrants where the ratio has the sign of $k$.
+
+  - type: check
+    questions: [tan-second-mcq, sin-basic]
+
+  - type: example
+    title: A negative principal value
+    problem: |-
+      Solve $\sin x = -0.4$ for $0^\circ \leqslant x \leqslant 360^\circ$.
+    steps:
+      - |-
+        $\alpha = \sin^{-1}(-0.4) = -23.58\ldots^\circ$. Outside the interval, but keep it: it's the key.
+      - |-
+        Second value: $180^\circ - (-23.58^\circ) = 203.58^\circ$. In the interval ✓
+      - |-
+        Add $360^\circ$ to the principal value: $-23.58^\circ + 360^\circ = 336.42^\circ$. In the interval ✓
+      - |-
+        CAST check: sine is negative in quadrants 3 and 4, and both answers are there.
+    answer: |-
+      $x = 203.6^\circ$ or $336.4^\circ$ (1 d.p.).
+
+  - type: example
+    title: Tan in a negative interval
+    problem: |-
+      Solve $\tan x = -2$ for $-180^\circ < x < 180^\circ$.
+    steps:
+      - |-
+        $\alpha = \tan^{-1}(-2) = -63.43\ldots^\circ$. In the interval ✓
+      - |-
+        Tan repeats every $180^\circ$: $-63.43^\circ + 180^\circ = 116.57^\circ$ ✓. And $-63.43^\circ - 180^\circ = -243.4^\circ$ is too far.
+    answer: |-
+      $x = -63.4^\circ$ or $116.6^\circ$.
+
+  - type: check
+    questions: [principal-spot, count-cos]
+
+  - type: example
+    title: Radians, and exact answers
+    problem: |-
+      (a) Solve $\cos x = 0.6$ for $-\pi \leqslant x \leqslant \pi$. (b) Solve $2\sin x + \sqrt3 = 0$ for $0 \leqslant x \leqslant 2\pi$, giving exact answers.
+    steps:
+      - |-
+        (a) Radian mode: $\alpha = \cos^{-1}0.6 = 0.9272\ldots$ The second value $-\alpha$ (cos is symmetric about the $y$-axis) is in the interval too.
+      - |-
+        So $x = \pm 0.927$ (3 s.f.).
+      - |-
+        (b) Rearrange first: $\sin x = -\tfrac{\sqrt3}{2}$. The basic angle is $\tfrac{\pi}{3}$ (exact value), and sine is negative in quadrants 3 and 4.
+      - |-
+        Quadrant 3: $\pi + \tfrac{\pi}{3} = \tfrac{4\pi}{3}$. Quadrant 4: $2\pi - \tfrac{\pi}{3} = \tfrac{5\pi}{3}$.
+    answer: |-
+      (a) $x = -0.927$ or $0.927$. (b) $x = \tfrac{4\pi}{3}$ or $\tfrac{5\pi}{3}$.
+
+  - type: check
+    questions: [cos-exact-radians, tan-radians]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          For $\cos x = k$, the second solution is $180^\circ - \alpha$.
+        right: |-
+          That's the **sine** rule. Cos is symmetric about $0^\circ$ and $180^\circ$, so its second solution is $360^\circ - \alpha$.
+      - wrong: |-
+          A principal value outside the interval is useless.
+        right: |-
+          It still generates the answers: add the period, or use it in $180^\circ - \alpha$. Throw it away only at the end.
+      - wrong: |-
+          $\tan x = k$ has two solutions per $360^\circ$, so use $360^\circ - \alpha$.
+        right: |-
+          Tan's period is $180^\circ$, so the second solution is $\alpha + 180^\circ$.
+      - wrong: |-
+          In a radian question, give answers in degrees.
+        right: |-
+          Interval in radians means answers in radians. Calculator in radian mode from the start.
+
+  - type: exam
+    body: |-
+      - Answers to **1 d.p. in degrees** or **3 s.f. in radians**, unless the question asks for exact values.
+      - An extra solution **inside** the interval usually costs the final accuracy mark, so check every value against the interval before you write the final line.
+      - Solutions outside the interval are usually just ignored, but don't risk it: cross them out.
+      - Sketching the graph and the line $y = k$ takes 20 seconds and tells you exactly how many solutions to look for.
+
+  - type: takeaways
+    items:
+      - |-
+        Principal value first, then the second value: $\sin$: $180^\circ - \alpha$; $\cos$: $360^\circ - \alpha$; $\tan$: $180^\circ + \alpha$.
+      - |-
+        Add or subtract the period ($360^\circ$, or $180^\circ$ for tan) to fill the interval.
+      - |-
+        Negative principal values still work in these rules.
+      - |-
+        Match the units of the interval, and use exact values when the basic angle is special.
+
+questions:
+  - id: tan-second-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.5"]
+    prompt: |-
+      $\tan^{-1}3 = 71.6^\circ$. What is the other solution of $\tan x = 3$ in $0^\circ \leqslant x \leqslant 360^\circ$?
+    explanation: |-
+      Tan repeats every $180^\circ$, so the next solution is $71.6^\circ + 180^\circ = 251.6^\circ$ (3rd quadrant, where tan is positive).
+    options:
+      - text: |-
+          $251.6^\circ$
+        correct: true
+        why: |-
+          $71.6^\circ + 180^\circ$: tan's period is $180^\circ$.
+      - text: |-
+          $108.4^\circ$
+        why: |-
+          That's $180^\circ - 71.6^\circ$, the rule for **sine**. $\tan 108.4^\circ$ is negative.
+      - text: |-
+          $288.4^\circ$
+        why: |-
+          That's $360^\circ - 71.6^\circ$, the rule for **cosine**. $\tan 288.4^\circ = -3$.
+      - text: |-
+          $161.6^\circ$
+        why: |-
+          That's $90^\circ + 71.6^\circ$, which isn't a symmetry of the tan graph.
+
+  - id: sin-basic
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solve $\sin x = 0.7$ for $0^\circ \leqslant x \leqslant 360^\circ$. Give your answers to 1 decimal place.
+    fields:
+      - label: "smaller x ="
+        answer: 44.427004
+        tolerance: { abs: 0.05 }
+        unit: "°"
+      - label: "larger x ="
+        answer: 135.572996
+        tolerance: { abs: 0.05 }
+        unit: "°"
+    explanation: |-
+      $\alpha = \sin^{-1}0.7 = 44.43^\circ$. Second value: $180^\circ - 44.43^\circ = 135.57^\circ$.
+
+      So $x = 44.4^\circ$ or $135.6^\circ$. (Adding $360^\circ$ to either goes past the interval.)
+
+  - id: principal-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      A student solves $\sin x = -0.5$ for $0^\circ \leqslant x \leqslant 360^\circ$. Which line contains the first error?
+    lines:
+      - |-
+        The principal value is $x = \sin^{-1}(-0.5) = -30^\circ$.
+      - |-
+        This is outside the interval, so add $360^\circ$: $x = 330^\circ$.
+      - |-
+        The other solution is $180^\circ - 30^\circ = 150^\circ$.
+      - |-
+        So $x = 150^\circ$ or $330^\circ$.
+    errorLine: 3
+    fix: |-
+      Use the principal value with its sign: $180^\circ - (-30^\circ) = 210^\circ$. So $x = 210^\circ$ or $330^\circ$.
+    explanation: |-
+      $\sin 150^\circ = +0.5$, not $-0.5$. Sine is negative in quadrants 3 and 4, so the solutions are $210^\circ$ and $330^\circ$. The student dropped the minus sign of $\alpha$.
+
+  - id: count-cos
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      How many solutions does $\cos x = 0.2$ have in the interval $-360^\circ \leqslant x \leqslant 360^\circ$?
+    fields:
+      - answer: 4
+    explanation: |-
+      $\alpha = \cos^{-1}0.2 = 78.5^\circ$. The solutions are $\pm 78.5^\circ$ and $\pm(360^\circ - 78.5^\circ) = \pm 281.5^\circ$.
+
+      That's 4: two per full period, and the interval is two periods long.
+
+  - id: cos-exact-radians
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solve $\cos x = -\tfrac12$ for $0 \leqslant x \leqslant 2\pi$. Give exact answers in terms of $\pi$.
+    fields:
+      - label: "smaller x ="
+        answer: 2.0943951023931953
+        tolerance: { abs: 0.002 }
+      - label: "larger x ="
+        answer: 4.1887902047863905
+        tolerance: { abs: 0.002 }
+    explanation: |-
+      Basic angle: $\cos\tfrac{\pi}{3} = \tfrac12$. Cos is negative in quadrants 2 and 3:
+
+      $\pi - \tfrac{\pi}{3} = \tfrac{2\pi}{3}$ and $\pi + \tfrac{\pi}{3} = \tfrac{4\pi}{3}$.
+
+      (Same as $\alpha = \cos^{-1}(-\tfrac12) = \tfrac{2\pi}{3}$ and $2\pi - \alpha = \tfrac{4\pi}{3}$.)
+
+  - id: tan-radians
+    format: numeric
+    difficulty: 3
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solve $3\tan x + 4 = 0$ for $0 < x < 2\pi$. Give your answers correct to 3 significant figures.
+    fields:
+      - label: "smaller x ="
+        answer: 2.214297441769369
+        sigFigs: 3
+      - label: "larger x ="
+        answer: 5.355890095359162
+        sigFigs: 3
+    explanation: |-
+      $\tan x = -\tfrac43$, so $\alpha = \tan^{-1}\left(-\tfrac43\right) = -0.9273$ (outside the interval).
+
+      Add $\pi$: $2.214$. Add $\pi$ again: $5.356$. So $x = 2.21$ or $5.36$.

@@ -1,0 +1,242 @@
+id: series-binomial-terms
+subject: "9709"
+topic: "1.6"
+title: Finding one term of a binomial expansion
+summary: Pick out a single term or coefficient of (a + b)ⁿ, including the term independent of x and terms of a product like (2 + x)(1 − 2x)⁵.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.6.1"]
+prerequisites: [series-binomial-expansion]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.6 learning outcome "use the expansion of
+    (a + b)ⁿ, where n is a positive integer", including the binomial coefficient notation. All
+    examples and questions are original; all arithmetic checked in Python. Not yet
+    teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find any single term or coefficient in $(a + b)^n$ without writing out the whole expansion, including the **term independent of $x$** and coefficients in products such as $(2 + x)(1 - 2x)^5$.
+
+  - type: explain
+    title: You rarely need all of it
+    body: |-
+      Exam questions almost never want all nine terms of $(2x - 1)^8$. They want *one*: "the coefficient of $x^3$", "the constant term". So go straight to it.
+
+      The term containing $b^r$ is
+
+      $$\binom{n}{r}\,a^{\,n-r}\,b^{\,r}$$
+
+      Two powers, one coefficient, and the powers **add up to $n$**. Pick $r$ to get the power of $x$ you want.
+
+  - type: example
+    title: One coefficient
+    problem: |-
+      Find the coefficient of $x^3$ in the expansion of $(2 - 3x)^6$.
+    steps:
+      - |-
+        $a = 2$, $b = -3x$, $n = 6$. We need $b^3$, so $r = 3$ and $a$ gets power $6 - 3 = 3$.
+      - |-
+        Term: $\binom{6}{3}(2)^3(-3x)^3$.
+      - |-
+        $\binom{6}{3} = 20$, $2^3 = 8$, $(-3x)^3 = -27x^3$.
+      - |-
+        $20 \times 8 \times (-27) = -4320$.
+    answer: |-
+      The coefficient of $x^3$ is $-4320$. (An odd power of a negative $b$ gives a negative term.)
+
+  - type: check
+    questions: [coeff-x2, coeff-sign]
+
+  - type: explain
+    title: The term independent of x
+    body: |-
+      "Independent of $x$" means the **constant term**: the one where the powers of $x$ cancel to $x^0$. It only gets interesting when $b$ has $x$ on the bottom.
+
+      Write the general term, collect the powers of $x$, and set the total power equal to 0.
+
+  - type: example
+    title: Finding the constant term
+    problem: |-
+      Find the term independent of $x$ in the expansion of $\left(x^2 + \dfrac{2}{x}\right)^6$.
+    steps:
+      - |-
+        General term: $\binom{6}{r}(x^2)^{6-r}\left(\dfrac{2}{x}\right)^r = \binom{6}{r}\,2^r\,x^{12 - 2r}\,x^{-r} = \binom{6}{r}\,2^r\,x^{12 - 3r}$.
+      - |-
+        Independent of $x$: $12 - 3r = 0$, so $r = 4$.
+      - |-
+        Term: $\binom{6}{4}\,2^4 = 15 \times 16 = 240$.
+    answer: |-
+      The term independent of $x$ is $240$.
+
+  - type: explain
+    title: Every term at a glance
+    body: |-
+      Here's that expansion term by term. The power of $x$ drops by 3 each time, and only $r = 4$ lands on zero:
+
+      | $r$ | 0 | 1 | 2 | 3 | **4** | 5 | 6 |
+      | --- | --- | --- | --- | --- | --- | --- | --- |
+      | power of $x$ | 12 | 9 | 6 | 3 | **0** | −3 | −6 |
+      | coefficient | 1 | 12 | 60 | 160 | **240** | 192 | 64 |
+
+      If $12 - 3r = 0$ had no whole-number solution, there would be **no** constant term (its value is 0).
+
+  - type: check
+    questions: [constant-term]
+
+  - type: explain
+    title: Products of two brackets
+    body: |-
+      For the coefficient of $x^2$ in $(3 + 2x)(1 - x)^6$, you only need the first three terms of $(1 - x)^6$:
+
+      $$(1 - x)^6 = 1 - 6x + 15x^2 - \dots$$
+
+      Now find every way to make $x^2$ from (one term of the first bracket) × (one term of the second):
+
+      - $3 \times 15x^2 = 45x^2$
+      - $2x \times (-6x) = -12x^2$
+
+      Add them: the coefficient of $x^2$ is $45 - 12 = 33$. Don't expand everything; just collect the pairs that make the power you want.
+
+  - type: deeper
+    title: Finding an unknown constant
+    body: |-
+      *The coefficient of $x^2$ in $(1 + ax)^5$ is 90. Find the possible values of $a$.*
+
+      The $x^2$ term is $\binom{5}{2}(ax)^2 = 10a^2x^2$. So $10a^2 = 90$, $a^2 = 9$ and $a = 3$ or $a = -3$.
+
+      Both signs work because $a$ is squared. If the question says $a > 0$ (or gives an odd-power coefficient as well), use that to pick one.
+
+  - type: check
+    questions: [product-coeff, find-k, spot-half]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The coefficient of $x^3$ in $(2 + x)^7$ is $\binom{7}{3}2^3$.
+        right: |-
+          The powers must add to 7: it's $\binom{7}{3}2^4x^3$, so the coefficient is $35 \times 16 = 560$.
+      - wrong: |-
+          $\left(\dfrac{x}{2}\right)^2 = \dfrac{x^2}{2}$
+        right: |-
+          The 2 is squared too: $\left(\dfrac{x}{2}\right)^2 = \dfrac{x^2}{4}$.
+      - wrong: |-
+          "The 4th term" means $r = 4$.
+        right: |-
+          Terms are counted from $r = 0$, so the 4th term has $r = 3$. Safer still: work from the power of $x$ you want.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Find the coefficient of $x^2$ in the expansion of $(2 + x)(1 - 2x)^5$*, or *Find the term independent of $x$*. Usually 3–4 marks.
+      - Show the general term with substituted numbers, e.g. $\binom{6}{4}(x^2)^2\left(\frac{2}{x}\right)^4$, even if your calculator does the rest. It earns the method mark if the arithmetic goes wrong.
+      - "Coefficient" means the number only: $-4320$, not $-4320x^3$. "Term" means number and power.
+
+  - type: takeaways
+    items:
+      - |-
+        The term in $b^r$ is $\binom{n}{r}a^{n-r}b^r$: the powers add up to $n$.
+      - |-
+        For a constant term, collect the powers of $x$ in the general term and set the total to 0.
+      - |-
+        For products, list every pair of terms that multiplies to the power you want, then add.
+      - |-
+        Bracket the whole of $b$, including its sign and any fraction.
+
+questions:
+  - id: coeff-x2
+    format: numeric
+    difficulty: 1
+    objectives: ["1.6.1"]
+    prompt: |-
+      Find the coefficient of $x^2$ in the expansion of $(1 + 4x)^5$.
+    fields:
+      - answer: 160
+    explanation: |-
+      The $x^2$ term is $\binom{5}{2}(1)^3(4x)^2 = 10 \times 16x^2 = 160x^2$. The coefficient is 160.
+
+  - id: coeff-sign
+    format: mcq
+    difficulty: 2
+    objectives: ["1.6.1"]
+    prompt: |-
+      What is the coefficient of $x^3$ in the expansion of $(2 - x)^7$?
+    explanation: |-
+      The term is $\binom{7}{3}(2)^4(-x)^3 = 35 \times 16 \times (-x^3) = -560x^3$.
+    options:
+      - text: $-560$
+        correct: true
+        why: |-
+          $\binom{7}{3} = 35$, the power of 2 is $7 - 3 = 4$, and $(-x)^3$ is negative: $35 \times 16 \times (-1) = -560$.
+      - text: $560$
+        why: |-
+          Right size, wrong sign. $b = -x$ is cubed, and $(-1)^3 = -1$.
+      - text: $-280$
+        why: |-
+          That uses $2^3$. The powers must add up to 7, so 2 is raised to the power 4.
+      - text: $-35$
+        why: |-
+          That's just $-\binom{7}{3}$. You still need the factor $2^4 = 16$ from $a$.
+
+  - id: constant-term
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.1"]
+    prompt: |-
+      Find the term independent of $x$ in the expansion of $\left(2x - \dfrac{1}{x}\right)^6$.
+    fields:
+      - answer: -160
+    explanation: |-
+      General term: $\binom{6}{r}(2x)^{6-r}\left(-\dfrac1x\right)^r = \binom{6}{r}\,2^{6-r}(-1)^r\,x^{6-2r}$.
+
+      Constant when $6 - 2r = 0$, so $r = 3$: $\;\binom{6}{3}\,2^3\,(-1)^3 = 20 \times 8 \times (-1) = -160$.
+
+  - id: product-coeff
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.1"]
+    prompt: |-
+      Find the coefficient of $x^2$ in the expansion of $(2 + x)(1 - 2x)^5$.
+    fields:
+      - answer: 70
+    explanation: |-
+      $(1 - 2x)^5 = 1 + 5(-2x) + 10(-2x)^2 + \dots = 1 - 10x + 40x^2 + \dots$
+
+      Pairs that make $x^2$: $\;2 \times 40x^2 = 80x^2$ and $x \times (-10x) = -10x^2$. Total: $80 - 10 = 70$.
+
+  - id: find-k
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.1"]
+    prompt: |-
+      The coefficient of $x^2$ in the expansion of $(1 + kx)^6$ is 135, where $k > 0$. Find $k$.
+    fields:
+      - label: "k ="
+        answer: 3
+    explanation: |-
+      The $x^2$ term is $\binom{6}{2}(kx)^2 = 15k^2x^2$. So $15k^2 = 135$, $k^2 = 9$, and since $k > 0$, $k = 3$.
+
+  - id: spot-half
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.6.1"]
+    prompt: |-
+      A student finds the coefficient of $x^2$ in $\left(3 + \dfrac{x}{2}\right)^5$. Which line contains the first error?
+    lines:
+      - |-
+        The $x^2$ term has $r = 2$, so the power of 3 is $5 - 2 = 3$.
+      - |-
+        Term: $\binom{5}{2}(3)^3\left(\dfrac{x}{2}\right)^2$
+      - |-
+        $= 10 \times 27 \times \dfrac{x^2}{2}$
+      - |-
+        So the coefficient is $135$.
+    errorLine: 3
+    fix: |-
+      $\left(\dfrac{x}{2}\right)^2 = \dfrac{x^2}{4}$, so the term is $10 \times 27 \times \dfrac{x^2}{4} = \dfrac{135}{2}x^2$ and the coefficient is $\dfrac{135}{2} = 67.5$.
+    explanation: |-
+      Lines 1 and 2 are right. In line 3 the student squared the $x$ but not the 2 underneath it. Squaring a fraction squares the top **and** the bottom.

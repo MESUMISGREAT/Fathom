@@ -74,13 +74,14 @@ export function MomentumNewtonThirdLawPairs() {
       <rect x={tx - 62} y={ty} width={124} height={11} className="dg-fill-muted dg-thin" />
       <line x1={tx - 52} y1={ty + 11} x2={tx - 52} y2={ty + 78} className="dg-thin" />
       <line x1={tx + 52} y1={ty + 11} x2={tx + 52} y2={ty + 78} className="dg-thin" />
-      <Label x={tx} y={ty - 50} className="dg-text-small">
+      <Label x={tx + 10} y={ty - 44} anchor="start" className="dg-text-small">
         book pushes
       </Label>
-      <Label x={tx} y={ty - 36} className="dg-text-small">
+      <Label x={tx + 10} y={ty - 30} anchor="start" className="dg-text-small">
         table down
       </Label>
-      <Arrow x1={tx} y1={ty - 20} x2={tx} y2={ty - 20 + L} className="dg-accent-2" headClassName="dg-dot-accent-2" />
+      {/* a push on the table top: the arrow ends on the surface it acts on */}
+      <Arrow x1={tx} y1={ty - L} x2={tx} y2={ty} className="dg-accent-2" headClassName="dg-dot-accent-2" />
 
       {/* ---- the Earth: pulled up by the book ---- */}
       <path

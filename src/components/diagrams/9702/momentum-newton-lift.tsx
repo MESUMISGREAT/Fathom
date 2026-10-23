@@ -1,6 +1,6 @@
 /**
  * Free-body diagrams for an 800 kg lift in three states, forces drawn to
- * scale (0.01 px per newton). Weight W = 800 × 9.81 = 7848 N in every panel.
+ * scale (0.011 px per newton). Weight W = 800 × 9.81 = 7848 N in every panel.
  *   Accelerating upwards at 1.5 m s⁻²: T = m(g + a) = 9048 N, longer than W.
  *   Constant velocity: T = W = 7848 N.
  *   Accelerating downwards at 1.5 m s⁻²: T = m(g − a) = 6648 N, shorter than W.

@@ -49,6 +49,13 @@ import P1TrigonometryTransformedCos from './p1-trigonometry-transformed-cos';
 import P1TrigonometryUnitCircle from './p1-trigonometry-unit-circle';
 import QuadraticInequality from './quadratic-inequality';
 import QuadraticVertex from './quadratic-vertex';
+import SeriesApGpShared from './series-ap-gp-shared';
+import SeriesApStaircase from './series-ap-staircase';
+import SeriesApSumPairing from './series-ap-sum-pairing';
+import SeriesGpSumShift from './series-gp-sum-shift';
+import SeriesGpTerms from './series-gp-terms';
+import SeriesPascalTriangle from './series-pascal-triangle';
+import SeriesSumToInfinity from './series-sum-to-infinity';
 
 /** Diagrams for 9709 lessons. Keys are referenced from lesson YAML (`diagram: <key>`). */
 export const diagrams: DiagramRegistry = {
@@ -101,4 +108,11 @@ export const diagrams: DiagramRegistry = {
   'p1-trigonometry-unit-circle': P1TrigonometryUnitCircle,
   'quadratic-inequality': QuadraticInequality,
   'quadratic-vertex': QuadraticVertex,
+  'series-ap-gp-shared': SeriesApGpShared,
+  'series-ap-staircase': SeriesApStaircase,
+  'series-ap-sum-pairing': SeriesApSumPairing,
+  'series-gp-sum-shift': SeriesGpSumShift,
+  'series-gp-terms': SeriesGpTerms,
+  'series-pascal-triangle': SeriesPascalTriangle,
+  'series-sum-to-infinity': SeriesSumToInfinity,
 };

@@ -1,0 +1,264 @@
+id: p1-trigonometry-equations-with-identities
+subject: "9709"
+topic: "1.5"
+title: Trig equations that need an identity first
+summary: Use tan ≡ sin/cos and sin² + cos² ≡ 1 to turn harder equations into tan x = k or a quadratic in sin or cos, factorise instead of dividing, and reject impossible roots.
+order: 10
+minutes: 5
+kind: core
+objectives: ["1.5.4", "1.5.5"]
+prerequisites: [p1-trigonometry-solving-equations, p1-trigonometry-two-identities, quadratics-hidden-quadratics]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcomes "use the identities
+    sin θ / cos θ ≡ tan θ and sin²θ + cos²θ ≡ 1" (its note on solving equations) and "find all the
+    solutions of simple trigonometrical equations lying in a specified interval", including the
+    syllabus's example type 3 sin²θ − 5 cos θ − 1 = 0. The worked examples and questions use
+    different, original equations; every solution set found by a brute-force search in Python. Not
+    yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can spot which identity turns a messy trig equation into one you can solve, solve **quadratics in $\sin\theta$ or $\cos\theta$**, and reject the impossible roots.
+
+  - type: explain
+    title: Three moves
+    body: |-
+      | You see… | Move | You get |
+      | --- | --- | --- |
+      | $a\sin x = b\cos x$ | divide by $\cos x$ | $\tan x = \tfrac{b}{a}$ |
+      | $\sin^2$ mixed with $\cos$ (or $\cos^2$ with $\sin$) | swap with $\sin^2 x = 1 - \cos^2 x$ (or vice versa) | a quadratic in one ratio |
+      | a common factor like $\sin x$ on both sides | bring everything to one side and **factorise** | two simpler equations |
+
+      Then it's the solving recipe from before, once per equation.
+
+  - type: example
+    title: "Move 1: sin and cos to tan"
+    problem: |-
+      Solve $3\sin x = 2\cos x$ for $0^\circ \leqslant x \leqslant 360^\circ$.
+    steps:
+      - |-
+        Divide both sides by $3\cos x$: $\tan x = \tfrac23$. (Safe: if $\cos x = 0$ then $\sin x = \pm 1$, and $\pm 3 \neq 0$, so no solutions are lost.)
+      - |-
+        $\alpha = \tan^{-1}\tfrac23 = 33.69^\circ$. Tan repeats every $180^\circ$: $213.69^\circ$.
+    answer: |-
+      $x = 33.7^\circ$ or $213.7^\circ$.
+
+  - type: check
+    questions: [tan-from-ratio]
+
+  - type: example
+    title: "Move 2: a quadratic in cos θ"
+    problem: |-
+      (a) Show that $2\sin^2\theta = 3\cos\theta$ can be written as $2\cos^2\theta + 3\cos\theta - 2 = 0$.
+      (b) Hence solve the equation for $0^\circ \leqslant \theta \leqslant 360^\circ$.
+    steps:
+      - |-
+        (a) Replace $\sin^2\theta$ with $1 - \cos^2\theta$: $2(1 - \cos^2\theta) = 3\cos\theta$, so $2 - 2\cos^2\theta = 3\cos\theta$.
+      - |-
+        Rearrange: $2\cos^2\theta + 3\cos\theta - 2 = 0$, as required.
+      - |-
+        (b) It's a quadratic in $\cos\theta$ (think $2c^2 + 3c - 2 = 0$). Factorise: $(2\cos\theta - 1)(\cos\theta + 2) = 0$.
+      - |-
+        So $\cos\theta = \tfrac12$ or $\cos\theta = -2$. **Reject** $\cos\theta = -2$: cosine can't be less than $-1$.
+      - |-
+        $\cos\theta = \tfrac12$: $\theta = 60^\circ$ or $360^\circ - 60^\circ = 300^\circ$.
+    answer: |-
+      $\theta = 60^\circ$ or $300^\circ$.
+
+  - type: diagram
+    diagram: p1-trigonometry-reject-root
+    alt: >-
+      Graph of y = cos θ for 0° ≤ θ ≤ 360° lying inside a shaded band from y = −1 to y = 1, labelled
+      "range of cos θ: −1 ≤ y ≤ 1". The horizontal line y = ½ crosses the curve at θ = 60° and
+      θ = 300°. The dashed line y = −2 lies below the band and never meets the curve. Notes:
+      cos θ = ½ gives θ = 60°, 300°; cos θ = −2 has no solutions, so reject it.
+    caption: |-
+      Both roots of the quadratic are numbers, but only one is a possible value of $\cos\theta$. The graph makes the rejection obvious.
+
+  - type: check
+    questions: [quadratic-form, quadratic-solve, reject-mcq]
+
+  - type: explain
+    title: "Move 3: never divide by something that could be zero"
+    body: |-
+      Dividing both sides by $\sin x$ silently throws away every solution of $\sin x = 0$. Instead, move everything to one side and **factorise**.
+
+      Solve $\sin^2 x = \sin x\cos x$ for $0 \leqslant x \leqslant 2\pi$:
+
+      - $\sin^2 x - \sin x\cos x = 0$, so $\sin x(\sin x - \cos x) = 0$.
+      - $\sin x = 0$: $x = 0, \pi, 2\pi$.
+      - $\sin x = \cos x$, i.e. $\tan x = 1$: $x = \tfrac{\pi}{4}, \tfrac{5\pi}{4}$.
+
+      Five solutions. Divide by $\sin x$ at the start and you'd find only two.
+
+  - type: check
+    questions: [divide-spot, radians-quadratic]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\cos\theta = -2$, so $\theta = \cos^{-1}(-2)$.
+        right: |-
+          No such angle: $-1 \leqslant \cos\theta \leqslant 1$. Write "$\cos\theta = -2$ has no solutions" and move on.
+      - wrong: |-
+          Divide $2\sin x\cos x = \sin x$ by $\sin x$ to get $2\cos x = 1$.
+        right: |-
+          Factorise: $\sin x(2\cos x - 1) = 0$. The solutions of $\sin x = 0$ count too.
+      - wrong: |-
+          $2\sin^2\theta = 2 - \cos^2\theta$
+        right: |-
+          The 2 multiplies the whole bracket: $2\sin^2\theta = 2(1 - \cos^2\theta) = 2 - 2\cos^2\theta$.
+      - wrong: |-
+          Solve the quadratic in $\cos\theta$ and stop: $\cos\theta = \tfrac12$.
+        right: |-
+          That's the halfway point. The question wants **angles**: $\theta = 60^\circ, 300^\circ$.
+
+  - type: exam
+    body: |-
+      - Very often a two-parter: *(a) Show that the equation can be written as … (b) Hence solve …*. Part (a) is the identity; part (b) is a quadratic and the solving recipe.
+      - Even if you can't do the "show that", use the given result for part (b). The marks are independent.
+      - Write the rejection with a reason: "$\cos\theta = -2$ is impossible since $-1 \leqslant \cos\theta \leqslant 1$."
+      - Factorising beats the quadratic formula when it works. If it doesn't, the formula is fine; then use $\cos^{-1}$ on the decimal roots.
+
+  - type: takeaways
+    items:
+      - |-
+        $a\sin x = b\cos x \;\Rightarrow\; \tan x = \tfrac{b}{a}$.
+      - |-
+        Mixed $\sin^2$ and $\cos$? Use $\sin^2 = 1 - \cos^2$ to get a quadratic in $\cos$ (or the other way round).
+      - |-
+        Reject roots outside $[-1, 1]$ for sin and cos, with a reason.
+      - |-
+        Factorise; never divide by $\sin x$ or $\cos x$ unless you've shown it can't be zero.
+
+questions:
+  - id: tan-from-ratio
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.4", "1.5.5"]
+    prompt: |-
+      Solve $5\sin x = 2\cos x$ for $0^\circ \leqslant x \leqslant 360^\circ$. Give your answers to 1 decimal place.
+    fields:
+      - label: "smaller x ="
+        answer: 21.801409
+        tolerance: { abs: 0.05 }
+        unit: "°"
+      - label: "larger x ="
+        answer: 201.801409
+        tolerance: { abs: 0.05 }
+        unit: "°"
+    explanation: |-
+      Divide by $5\cos x$: $\tan x = \tfrac25 = 0.4$. So $x = \tan^{-1}0.4 = 21.8^\circ$, and adding $180^\circ$ gives $201.8^\circ$.
+
+  - id: quadratic-form
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.4"]
+    prompt: |-
+      The equation $2\sin^2\theta + 5\cos\theta + 1 = 0$ can be written as $2\cos^2\theta + b\cos\theta + c = 0$. Find $b$ and $c$.
+    fields:
+      - label: "b ="
+        answer: -5
+      - label: "c ="
+        answer: -3
+    explanation: |-
+      $2(1 - \cos^2\theta) + 5\cos\theta + 1 = 0$, so $3 - 2\cos^2\theta + 5\cos\theta = 0$.
+
+      Multiply by $-1$: $2\cos^2\theta - 5\cos\theta - 3 = 0$. So $b = -5$, $c = -3$.
+
+  - id: quadratic-solve
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      Hence solve $2\sin^2\theta + 5\cos\theta + 1 = 0$ for $0^\circ \leqslant \theta \leqslant 360^\circ$.
+    fields:
+      - label: "smaller θ ="
+        answer: 120
+        tolerance: { abs: 0.05 }
+        unit: "°"
+      - label: "larger θ ="
+        answer: 240
+        tolerance: { abs: 0.05 }
+        unit: "°"
+    explanation: |-
+      $2\cos^2\theta - 5\cos\theta - 3 = 0$ factorises as $(2\cos\theta + 1)(\cos\theta - 3) = 0$.
+
+      $\cos\theta = 3$ is impossible. $\cos\theta = -\tfrac12$: basic angle $60^\circ$, cos negative in quadrants 2 and 3, so $\theta = 120^\circ$ or $240^\circ$.
+
+  - id: reject-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solving that quadratic gave $\cos\theta = -\tfrac12$ or $\cos\theta = 3$. Why is $\cos\theta = 3$ rejected?
+    explanation: |-
+      Cosine is the $x$-coordinate of a point on the unit circle, so $-1 \leqslant \cos\theta \leqslant 1$ for every angle. No angle has cosine 3.
+    options:
+      - text: |-
+          Because $-1 \leqslant \cos\theta \leqslant 1$ for every angle.
+        correct: true
+        why: |-
+          3 is outside the range of cosine, so $\cos\theta = 3$ has no solutions.
+      - text: |-
+          Because it's positive, and the answer must be negative.
+        why: |-
+          Positive values of $\cos\theta$ are perfectly possible (think $\cos 0 = 1$). The problem is the size.
+      - text: |-
+          Because $\cos^{-1}3$ is outside the interval $0^\circ$ to $360^\circ$.
+        why: |-
+          $\cos^{-1}3$ doesn't exist at all: there's no angle to be in or out of the interval.
+      - text: |-
+          Because a quadratic can only have one valid root.
+        why: |-
+          Both roots can be valid. For example $(2\cos\theta - 1)(2\cos\theta + 1) = 0$ gives four angles.
+
+  - id: divide-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      A student solves $2\sin x\cos x = \sin x$ for $0^\circ \leqslant x \leqslant 360^\circ$. Which line contains the first error?
+    lines:
+      - |-
+        $2\sin x\cos x = \sin x$
+      - |-
+        Divide both sides by $\sin x$: $2\cos x = 1$
+      - |-
+        $\cos x = \tfrac12$
+      - |-
+        $x = 60^\circ$ or $300^\circ$
+    errorLine: 2
+    fix: |-
+      Factorise instead: $\sin x(2\cos x - 1) = 0$. So $\sin x = 0$ (giving $0^\circ, 180^\circ, 360^\circ$) or $\cos x = \tfrac12$ (giving $60^\circ, 300^\circ$).
+    explanation: |-
+      Dividing by $\sin x$ assumes $\sin x \neq 0$, which throws away three solutions. There are five solutions in total: $0^\circ, 60^\circ, 180^\circ, 300^\circ, 360^\circ$.
+
+  - id: radians-quadratic
+    format: numeric
+    difficulty: 3
+    objectives: ["1.5.4", "1.5.5"]
+    prompt: |-
+      Solve $2\cos^2 x + \sin x = 1$ for $0 \leqslant x \leqslant 2\pi$. Give exact answers in terms of $\pi$, in increasing order.
+    fields:
+      - label: "first x ="
+        answer: 1.5707963267948966
+        tolerance: { abs: 0.002 }
+      - label: "second x ="
+        answer: 3.6651914291880923
+        tolerance: { abs: 0.002 }
+      - label: "third x ="
+        answer: 5.759586531581287
+        tolerance: { abs: 0.002 }
+    explanation: |-
+      Replace $\cos^2 x$: $2(1 - \sin^2 x) + \sin x = 1$, so $2\sin^2 x - \sin x - 1 = 0$, which factorises as $(2\sin x + 1)(\sin x - 1) = 0$.
+
+      - $\sin x = 1$: $x = \tfrac{\pi}{2}$.
+      - $\sin x = -\tfrac12$: basic angle $\tfrac{\pi}{6}$, quadrants 3 and 4: $x = \tfrac{7\pi}{6}$ or $\tfrac{11\pi}{6}$.
+
+      So $x = \tfrac{\pi}{2}, \tfrac{7\pi}{6}, \tfrac{11\pi}{6}$.

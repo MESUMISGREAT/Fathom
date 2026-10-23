@@ -1,0 +1,268 @@
+id: p1-trigonometry-multiple-angle-equations
+subject: "9709"
+topic: "1.5"
+title: Equations like sin 2x = k and cos(x − 30°) = k
+summary: Solve trig equations whose angle is 2x, 3x or x + a constant by substituting, transforming the interval, solving, then converting back.
+order: 9
+minutes: 5
+kind: core
+objectives: ["1.5.5"]
+prerequisites: [p1-trigonometry-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "find all the solutions of
+    simple trigonometrical equations lying in a specified interval", including its example of the
+    type 3 sin 2x + 1 = 0 for −π < x < π. The worked examples and questions use different
+    equations and intervals; all solution sets found by a brute-force search in Python. Not yet
+    reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve equations such as $5\sin 2x = 2$, $\cos(x - 30^\circ) = \tfrac12$ or $4\cos 2x + 1 = 0$ in a given interval, without losing (or inventing) solutions.
+
+  - type: explain
+    title: Change the variable, change the interval
+    body: |-
+      The trick is to solve for the **whole angle** first. For $\sin 2x = k$:
+
+      1. Let $u = 2x$.
+      2. **Transform the interval**: if $0^\circ \leqslant x \leqslant 360^\circ$, then $0^\circ \leqslant u \leqslant 720^\circ$.
+      3. Solve $\sin u = k$ for **every** $u$ in the new interval (the recipe from the last lesson).
+      4. Convert back: $x = \tfrac{u}{2}$.
+
+      Skip step 2 and you'll lose half the answers. It's the single most common way to drop marks on these.
+
+  - type: diagram
+    diagram: p1-trigonometry-double-angle
+    alt: >-
+      Graph for 0° ≤ x ≤ 360° of y = sin 2x (solid, two full waves) and y = sin x (dashed, one
+      wave), with the horizontal line y = 0.6. The line meets y = sin 2x at four points, marked with
+      solid dots and listed beside the graph as x = 18.4°, 71.6°, 198.4° and 251.6°, and meets
+      y = sin x at only two points, marked with rings. A note explains that 0° ≤ x ≤ 360° means
+      0° ≤ 2x ≤ 720°: two full cycles.
+    caption: |-
+      Squash the graph horizontally and twice as many waves fit in the interval, so the line meets it twice as often.
+
+  - type: check
+    questions: [interval-mcq, count-double]
+
+  - type: example
+    title: A double angle in a negative interval
+    problem: |-
+      Solve $5\sin 2x = 2$ for $-180^\circ < x < 180^\circ$.
+    steps:
+      - |-
+        $\sin 2x = 0.4$. Let $u = 2x$; the interval becomes $-360^\circ < u < 360^\circ$.
+      - |-
+        $\alpha = \sin^{-1}0.4 = 23.58^\circ$, and $180^\circ - \alpha = 156.42^\circ$.
+      - |-
+        Subtract $360^\circ$ from each to fill the negative half: $-336.42^\circ$ and $-203.58^\circ$. All four are inside $(-360^\circ, 360^\circ)$.
+      - |-
+        Halve them all: $x = 11.79^\circ, 78.21^\circ, -168.21^\circ, -101.79^\circ$.
+    answer: |-
+      $x = -168.2^\circ, -101.8^\circ, 11.8^\circ, 78.2^\circ$.
+
+  - type: check
+    questions: [sin-2x, interval-spot]
+
+  - type: explain
+    title: A shifted angle works the same way
+    body: |-
+      Solve $\cos(x - 30^\circ) = \tfrac12$ for $0^\circ \leqslant x \leqslant 360^\circ$.
+
+      - Let $u = x - 30^\circ$, so $-30^\circ \leqslant u \leqslant 330^\circ$.
+      - $\cos u = \tfrac12$ gives $u = 60^\circ$ or $300^\circ$ (and $u = -60^\circ$, which is just outside: $-60^\circ < -30^\circ$).
+      - Undo: $x = u + 30^\circ = 90^\circ$ or $330^\circ$.
+
+      The interval shifts by the same amount as the angle. Always check the new ends: that's where sneaky extra (or missing) solutions hide.
+
+  - type: example
+    title: Radians and a double angle
+    problem: |-
+      Solve $4\cos 2x + 1 = 0$ for $0 < x < \pi$, giving answers to 3 significant figures.
+    steps:
+      - |-
+        $\cos 2x = -\tfrac14$. Let $u = 2x$, so $0 < u < 2\pi$.
+      - |-
+        Radian mode: $\alpha = \cos^{-1}\left(-\tfrac14\right) = 1.8234\ldots$, and $2\pi - \alpha = 4.4597\ldots$
+      - |-
+        Halve: $x = 0.9117\ldots$ or $2.2298\ldots$
+    answer: |-
+      $x = 0.912$ or $2.23$.
+
+  - type: check
+    questions: [shifted-cos, tan-2x-radians, three-sin-2x]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          For $\sin 2x = k$ with $0^\circ \leqslant x \leqslant 360^\circ$, find $2x$ between $0^\circ$ and $360^\circ$.
+        right: |-
+          $2x$ runs from $0^\circ$ to $720^\circ$. Find all $u$ up to $720^\circ$, then halve. Expect four solutions, not two.
+      - wrong: |-
+          $\sin 2x = 0.5$, so $\sin x = 0.25$.
+        right: |-
+          You can't divide inside a trig function: $\sin 2x \neq 2\sin x$. Solve for $2x$, then halve the **angles**.
+      - wrong: |-
+          Halve the principal value, then find the other solutions using $x$'s interval.
+        right: |-
+          Find **all** values of $u$ first (in $u$'s interval), and only then convert each one back.
+
+  - type: exam
+    body: |-
+      - Write the transformed interval as a line of working: "$0 \leqslant 2x \leqslant 4\pi$". Examiners look for it, and it stops you losing solutions.
+      - Count before you write: $\sin bx = k$ over an interval of length $L$ has about $b \times \tfrac{L}{360^\circ} \times 2$ solutions (for $-1 < k < 1$).
+      - Final answers are values of $x$, not $u$. Lots of scripts stop one step early.
+
+  - type: takeaways
+    items:
+      - |-
+        Substitute $u =$ the whole angle ($2x$, $3x$, $x - 30^\circ$, …).
+      - |-
+        Transform the interval the same way, then find every $u$ in it.
+      - |-
+        Convert each $u$ back to $x$ at the end.
+      - |-
+        $\sin bx$ has $b$ times as many solutions as $\sin x$ over the same interval.
+
+questions:
+  - id: interval-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.5"]
+    prompt: |-
+      To solve $\sin 3x = 0.5$ for $0^\circ \leqslant x \leqslant 180^\circ$, you let $u = 3x$. What interval must you find $u$ in?
+    explanation: |-
+      Multiply every part of the interval by 3: $0^\circ \leqslant 3x \leqslant 540^\circ$.
+    options:
+      - text: |-
+          $0^\circ \leqslant u \leqslant 540^\circ$
+        correct: true
+        why: |-
+          $u = 3x$, so the ends of the interval are tripled too.
+      - text: |-
+          $0^\circ \leqslant u \leqslant 180^\circ$
+        why: |-
+          That's $x$'s interval. Using it loses the solutions with $u$ between $180^\circ$ and $540^\circ$.
+      - text: |-
+          $0^\circ \leqslant u \leqslant 60^\circ$
+        why: |-
+          That divides by 3 instead of multiplying.
+      - text: |-
+          $0^\circ \leqslant u \leqslant 360^\circ$
+        why: |-
+          The interval has nothing to do with one standard turn here. Triple $180^\circ$.
+
+  - id: count-double
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.5"]
+    prompt: |-
+      How many solutions does $\cos 2x = 0.3$ have for $0^\circ \leqslant x \leqslant 360^\circ$?
+    fields:
+      - answer: 4
+    explanation: |-
+      $0^\circ \leqslant 2x \leqslant 720^\circ$ is two full periods of cosine, and $\cos u = 0.3$ has two solutions per period: $2 \times 2 = 4$.
+
+  - id: sin-2x
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solve $\sin 2x = \tfrac12$ for $0^\circ \leqslant x \leqslant 180^\circ$.
+    fields:
+      - label: "smaller x ="
+        answer: 15
+        tolerance: { abs: 0.05 }
+        unit: "°"
+      - label: "larger x ="
+        answer: 75
+        tolerance: { abs: 0.05 }
+        unit: "°"
+    explanation: |-
+      Let $u = 2x$, so $0^\circ \leqslant u \leqslant 360^\circ$. $\sin u = \tfrac12$ gives $u = 30^\circ$ or $150^\circ$.
+
+      Halve: $x = 15^\circ$ or $75^\circ$.
+
+  - id: interval-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      A student solves $\cos 2x = 0.5$ for $0^\circ \leqslant x \leqslant 360^\circ$. Which line contains the first error?
+    lines:
+      - |-
+        Let $u = 2x$. Since $0^\circ \leqslant x \leqslant 360^\circ$, $0^\circ \leqslant u \leqslant 360^\circ$.
+      - |-
+        $\cos u = 0.5$ gives $u = 60^\circ$ or $u = 300^\circ$.
+      - |-
+        So $x = 30^\circ$ or $x = 150^\circ$.
+    errorLine: 1
+    fix: |-
+      $0^\circ \leqslant u \leqslant 720^\circ$. Then $u = 60^\circ, 300^\circ, 420^\circ, 660^\circ$, so $x = 30^\circ, 150^\circ, 210^\circ, 330^\circ$.
+    explanation: |-
+      The interval wasn't doubled, so two of the four solutions went missing. Quick check: $\cos(2 \times 210^\circ) = \cos 420^\circ = \cos 60^\circ = 0.5$ ✓
+
+  - id: shifted-cos
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solve $\cos(x + 20^\circ) = -\tfrac12$ for $0^\circ \leqslant x \leqslant 360^\circ$.
+    fields:
+      - label: "smaller x ="
+        answer: 100
+        tolerance: { abs: 0.05 }
+        unit: "°"
+      - label: "larger x ="
+        answer: 220
+        tolerance: { abs: 0.05 }
+        unit: "°"
+    explanation: |-
+      Let $u = x + 20^\circ$, so $20^\circ \leqslant u \leqslant 380^\circ$. $\cos u = -\tfrac12$ gives $u = 120^\circ$ or $240^\circ$ (the next one, $480^\circ$, is too big).
+
+      Subtract $20^\circ$: $x = 100^\circ$ or $220^\circ$.
+
+  - id: tan-2x-radians
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solve $\tan 2x = 1$ for $0 < x < \pi$. Give exact answers in terms of $\pi$.
+    fields:
+      - label: "smaller x ="
+        answer: 0.39269908169872414
+        tolerance: { abs: 0.002 }
+      - label: "larger x ="
+        answer: 1.9634954084936207
+        tolerance: { abs: 0.002 }
+    explanation: |-
+      Let $u = 2x$, so $0 < u < 2\pi$. $\tan u = 1$ gives $u = \tfrac{\pi}{4}$ or $\tfrac{\pi}{4} + \pi = \tfrac{5\pi}{4}$.
+
+      Halve: $x = \tfrac{\pi}{8}$ or $\tfrac{5\pi}{8}$.
+
+  - id: three-sin-2x
+    format: numeric
+    difficulty: 3
+    objectives: ["1.5.5"]
+    prompt: |-
+      Solve $3\sin 2x + 2 = 0$ for $-90^\circ \leqslant x \leqslant 90^\circ$. Give your answers to 1 decimal place.
+    fields:
+      - label: "smaller x ="
+        answer: -69.094843
+        tolerance: { abs: 0.05 }
+        unit: "°"
+      - label: "larger x ="
+        answer: -20.905157
+        tolerance: { abs: 0.05 }
+        unit: "°"
+    explanation: |-
+      $\sin 2x = -\tfrac23$. Let $u = 2x$, so $-180^\circ \leqslant u \leqslant 180^\circ$.
+
+      $\alpha = \sin^{-1}\left(-\tfrac23\right) = -41.81^\circ$ (in range). Second: $180^\circ - (-41.81^\circ) = 221.81^\circ$, too big, so subtract $360^\circ$: $-138.19^\circ$ (in range).
+
+      Halve: $x = -20.9^\circ$ or $-69.1^\circ$. Both negative, which makes sense: sine is negative for $-180^\circ < u < 0^\circ$.

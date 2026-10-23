@@ -57,13 +57,13 @@ export function MomentumNewtonFirstLaw() {
       <line x1={48} y1={tableTop + 9} x2={48} y2={232} className="dg-line" />
       <line x1={166} y1={tableTop + 9} x2={166} y2={232} className="dg-line" />
       <rect x={bx - 26} y={bookTop} width={52} height={bookH} className="dg-fill-accent dg-accent" />
-      <Arrow x1={bx} y1={by} x2={bx} y2={by - F - bookH / 2} className="dg-accent-2" headClassName="dg-dot-accent-2" />
+      <Arrow x1={bx} y1={by} x2={bx} y2={by - F} className="dg-accent-2" headClassName="dg-dot-accent-2" />
       <Arrow x1={bx} y1={by} x2={bx} y2={by + F} />
       <circle cx={bx} cy={by} r={3} className="dg-dot" />
-      <Label x={bx + 10} y={by - 58} anchor="start" className="dg-text-accent-2">
+      <Label x={bx + 10} y={by - 52} anchor="start" className="dg-text-accent-2">
         N
       </Label>
-      <Label x={bx + 10} y={by - 40} anchor="start" className="dg-text-small">
+      <Label x={bx + 10} y={by - 34} anchor="start" className="dg-text-small">
         contact force
       </Label>
       <Label x={bx + 10} y={by + 52} anchor="start" className="dg-text dg-bold">
