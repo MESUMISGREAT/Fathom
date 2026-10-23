@@ -16,6 +16,9 @@ import EquationsMotionThrowGraphs from './equations-motion-throw-graphs';
 import EquationsMotionVtArea from './equations-motion-vt-area';
 import EquationsMotionVtGradient from './equations-motion-vt-gradient';
 import ErrorGraphs from './error-graphs';
+import MomentumNewtonAFGraph from './momentum-newton-a-f-graph';
+import MomentumNewtonFirstLaw from './momentum-newton-first-law';
+import MomentumNewtonForceDirection from './momentum-newton-force-direction';
 import PrefixLadder from './prefix-ladder';
 import VectorComponents from './vector-components';
 import VectorTriangle from './vector-triangle';
@@ -38,6 +41,9 @@ export const diagrams: DiagramRegistry = {
   'phys-equations-motion-vt-area': EquationsMotionVtArea,
   'phys-equations-motion-vt-gradient': EquationsMotionVtGradient,
   'phys-error-graphs': ErrorGraphs,
+  'phys-momentum-newton-a-f-graph': MomentumNewtonAFGraph,
+  'phys-momentum-newton-first-law': MomentumNewtonFirstLaw,
+  'phys-momentum-newton-force-direction': MomentumNewtonForceDirection,
   'phys-prefix-ladder': PrefixLadder,
   'phys-vector-components': VectorComponents,
   'phys-vector-triangle': VectorTriangle,

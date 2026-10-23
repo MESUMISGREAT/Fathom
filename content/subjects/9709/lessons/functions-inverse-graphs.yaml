@@ -121,7 +121,7 @@ blocks:
       - Insider hack: lightly sketch $y = x$ first, then reflect two or three points by swapping coordinates. Join the dots. Done.
 
   - type: check
-    questions: [ig-asymptote, ig-explain]
+    questions: [ig-asymptote, ig-recover, ig-explain]
 
   - type: takeaways
     items:
@@ -223,6 +223,24 @@ questions:
       - accept: ["2"]
     explanation: |-
       Reflecting in $y = x$ swaps $x$ and $y$ everywhere, so the line $x = 2$ becomes $y = 2$ and the line $y = 5$ becomes $x = 5$. Vertical becomes horizontal and vice versa.
+
+  - id: ig-recover
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.4"]
+    prompt: |-
+      $f(x) = ax + b$, where $a$ and $b$ are constants. The graph of $y = f^{-1}(x)$ passes through the points $(7, 2)$ and $(1, -1)$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: 2
+      - label: "b ="
+        answer: 3
+    explanation: |-
+      Reflect the two points in $y = x$ by swapping their coordinates: $(2, 7)$ and $(-1, 1)$ lie on $y = f(x)$.
+
+      Gradient: $a = \dfrac{7 - 1}{2 - (-1)} = \dfrac63 = 2$. Then $7 = 2(2) + b$, so $b = 3$.
+
+      Check: $f(x) = 2x + 3$ has $f^{-1}(x) = \dfrac{x - 3}{2}$, and $f^{-1}(7) = 2$ ✓, $f^{-1}(1) = -1$ ✓
 
   - id: ig-explain
     format: explain

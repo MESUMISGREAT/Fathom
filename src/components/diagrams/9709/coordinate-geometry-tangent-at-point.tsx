@@ -50,7 +50,7 @@ export default function CoordinateGeometryTangentAtPoint() {
         P(3, 2)
       </Label>
       <g transform={`rotate(${tAng} ${tl.x} ${tl.y})`}>
-        <Label x={tl.x} y={tl.y - 12} className="dg-text-accent-2">
+        <Label x={tl.x} y={tl.y - 17} className="dg-text-accent-2">
           tangent x + 2y = 7
         </Label>
       </g>

@@ -125,9 +125,10 @@ blocks:
       - Typical wording: *Find the equation of the circle with centre $C$ which passes through $A$*, or with $AB$ as a diameter. About 3 marks: centre, $r^2$, equation.
       - Leave $r^2$ as a number (often not a perfect square): $(x - 2)^2 + (y + 1)^2 = 13$ is perfect. No need for $(\sqrt{13})^2$.
       - Insider hack: plug the given point into your final equation. If it doesn't satisfy it, recheck your signs.
+      - "The circle **touches** the $x$-axis" is a radius in disguise: the axis is a tangent, so the radius is the distance from the centre straight down (or up) to it. Centre $(a, b)$ means $r = |b|$. Touching the $y$-axis means $r = |a|$.
 
   - type: check
-    questions: [ce-inside, ce-spot]
+    questions: [ce-inside, ce-spot, ce-touches]
 
   - type: takeaways
     items:
@@ -261,3 +262,25 @@ questions:
       The centre's $y$-coordinate is $-1$, so the bracket is $(y - (-1)) = (y + 1)$: $(x - 5)^2 + (y + 1)^2 = 25$.
     explanation: |-
       Test the student's equation with the given point: $(1 - 5)^2 + (2 - 1)^2 = 16 + 1 = 17 \neq 25$. The radius work is right; the sign of $b$ slipped in the last line.
+
+  - id: ce-touches
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.3"]
+    prompt: |-
+      A circle has centre $(-3, 4)$ and touches the $x$-axis. Find $r^2$, and the $y$-coordinates of the two points where the circle crosses the $y$-axis. Give exact answers (such as `2 − √3`) or decimals to 3 significant figures.
+    fields:
+      - label: "r² ="
+        answer: 16
+      - label: "upper point: y ="
+        answer: 6.645751311064591
+        tolerance: { abs: 0.005 }
+      - label: "lower point: y ="
+        answer: 1.3542486889354093
+        tolerance: { abs: 0.005 }
+    explanation: |-
+      The $x$-axis is a tangent, so the radius is the distance from $(-3, 4)$ down to the axis: $r = 4$ and $r^2 = 16$. The circle is $(x + 3)^2 + (y - 4)^2 = 16$.
+
+      On the $y$-axis, $x = 0$: $9 + (y - 4)^2 = 16$, so $(y - 4)^2 = 7$ and $y = 4 \pm \sqrt7$.
+
+      That's $4 + \sqrt7 \approx 6.65$ and $4 - \sqrt7 \approx 1.35$.
