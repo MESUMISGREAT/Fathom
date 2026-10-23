@@ -1,0 +1,213 @@
+id: reacting-masses-titration-calculations
+subject: "9701"
+topic: "2.4"
+title: "Titration calculations, step by step"
+summary: How to pick concordant titres, the four-step route from a titre to an unknown concentration, and how to scale up from a portion to the whole flask.
+order: 6
+minutes: 5
+objectives: ["2.4.1"]
+prerequisites: [reacting-masses-concentration, reacting-masses-from-equations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.4, learning outcome 2.4.1(c) volumes and concentrations of
+    solutions and 2.4.1(e) stoichiometric relationships, with the guidance on significant
+    figures). Burette readings and titres in the diagram, worked examples and questions
+    are illustrative values, not real results. All Ar values from the Cambridge Data
+    Booklet. All numerical answers were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can choose concordant titres, calculate an unknown concentration from titration results, and scale up from a pipetted portion to the whole solution.
+
+  - type: explain
+    title: The drip game
+    body: |
+      A **titration** is a game of "just enough". You add one solution drop by drop to a measured volume of another until the reaction is *exactly* complete. One drop too far and you've overshot.
+
+      The point where the indicator just changes colour is the **end-point**. The volume added from the burette is the **titre**.
+
+  - type: explain
+    title: How it's done
+    body: |
+      1. **Pipette** a fixed volume (usually 25.0 cm³) of one solution into a conical flask, and add a few drops of indicator.
+      2. Run the other solution in from a **burette** until the indicator just changes colour. Swirl constantly; go dropwise near the end.
+      3. **Titre** = final burette reading − initial reading. Burettes are read to the nearest **0.05 cm³**, recorded to 2 decimal places.
+      4. Do a quick **rough** titration first, then repeat accurately until you have **concordant** titres: titres within **0.10 cm³** of each other.
+      5. The **mean titre** uses the concordant titres only. The rough one never makes the cut.
+
+  - type: diagram
+    diagram: chem-reacting-masses-titration
+    alt: "Left: titration apparatus. A burette held by a clamp on a stand, read to the nearest 0.05 cm³, with a tap labelled add dropwise near the end-point. Below the jet, a conical flask containing 25.0 cm³ of solution from a pipette plus indicator stands on a white tile. Right: a table of illustrative burette readings in cm³. Rough run: final 24.40, initial 0.00, titre 24.40. Run 1: final 24.00, initial 0.20, titre 23.80, concordant. Run 2: final 48.15, initial 24.00, titre 24.15, not concordant. Run 3: final 24.20, initial 0.50, titre 23.70, concordant. Notes: titre = final − initial; concordant means within 0.10 cm³ of each other; mean = (23.80 + 23.70) ÷ 2 = 23.75 cm³."
+    caption: Runs 1 and 3 agree within 0.10 cm³. The rough run and run 2 are left out of the mean.
+
+  - type: check
+    title: Reading the results
+    questions: [titre-cloze, mean-titre]
+
+  - type: explain
+    title: The four-step calculation
+    body: |
+      1. **Moles of the solution you know** (concentration *and* volume): $n = c \times V$.
+      2. **Mole ratio** from the balanced equation → moles of the other substance.
+      3. **Concentration of the unknown**: $c = n \div V$, using *its* volume.
+      4. **Scale up** if the portion came from a bigger flask (see the deeper box).
+
+      Volumes in dm³ throughout: divide every cm³ by 1000.
+
+  - type: example
+    title: Finding the concentration of an alkali
+    problem: |
+      25.0 cm³ of sodium hydroxide solution is titrated with 0.100 mol dm⁻³ sulfuric acid. The mean titre is 23.75 cm³ (the results in the diagram). Calculate the concentration of the sodium hydroxide.
+      $$\text{H}_2\text{SO}_4\text{(aq)} + 2\text{NaOH(aq)} \rightarrow \text{Na}_2\text{SO}_4\text{(aq)} + 2\text{H}_2\text{O(l)}$$
+    steps:
+      - |
+        **Step 1.** The acid is the one you know fully: $n(\text{H}_2\text{SO}_4) = 0.100 \times 0.02375 = 2.375 \times 10^{-3}$ mol.
+      - |
+        **Step 2.** NaOH : $\text{H}_2\text{SO}_4$ = 2 : 1, so $n(\text{NaOH}) = 2 \times 2.375 \times 10^{-3} = 4.750 \times 10^{-3}$ mol.
+      - |
+        **Step 3.** This was in 25.0 cm³ = 0.0250 dm³: $c = 4.750 \times 10^{-3} \div 0.0250 = 0.190\ \text{mol dm}^{-3}$.
+    answer: |
+      $0.190\ \text{mol dm}^{-3}$
+
+  - type: check
+    title: Your turn
+    questions: [hydrochloric-concentration, carbonate-titration]
+
+  - type: deeper
+    title: "Scaling up: from 25.0 cm³ to the whole flask"
+    body: |
+      Often a solid is dissolved and made up to 250 cm³ in a volumetric flask, and only **25.0 cm³** of it is titrated. The titration tells you the moles in the portion; the flask holds $250 \div 25.0 = 10$ times as much.
+
+      **Example.** Some sodium hydroxide is dissolved and made up to 250 cm³. 25.0 cm³ portions need 22.50 cm³ of 0.0500 mol dm⁻³ $\text{H}_2\text{SO}_4$. What mass of NaOH was dissolved?
+
+      - $n(\text{H}_2\text{SO}_4) = 0.0500 \times 0.02250 = 1.125 \times 10^{-3}$ mol
+      - $n(\text{NaOH})$ in 25.0 cm³ $= 2 \times 1.125 \times 10^{-3} = 2.250 \times 10^{-3}$ mol
+      - in the whole 250 cm³: $\times 10 = 0.02250$ mol
+      - mass $= 0.02250 \times 40.0 = 0.900$ g
+
+      Percentage purity of a sample = mass of the pure substance found ÷ mass of the sample × 100.
+
+  - type: check
+    title: Stretch
+    questions: [titration-spot-error, sodium-carbonate-purity]
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          The mean titre is the average of all the titres, including the rough one.
+        right: |
+          Average only the **concordant** titres (within 0.10 cm³). The rough titre is just for finding roughly where the end-point is.
+      - wrong: |
+          At the end-point, moles of acid = moles of alkali.
+        right: |
+          Only when the ratio is 1 : 1. With $\text{H}_2\text{SO}_4$ and NaOH it's 1 : 2. Always use the balanced equation.
+      - wrong: |
+          The moles found by titration are the moles in the whole flask.
+        right: |
+          They're the moles in the **portion** you pipetted. Scale up by (flask volume ÷ portion volume), usually × 10.
+
+  - type: exam
+    body: |
+      - Titration calculations are worth 3–5 marks, one per step. Label each: "$n(\text{HCl}) = \dots$", "ratio 1 : 2 so $n(\text{Na}_2\text{CO}_3) = \dots$".
+      - Record burette readings and titres to **2 decimal places** (e.g. 23.80, not 23.8), and say which titres you used for the mean.
+      - Give the final concentration to 3 s.f. with the unit $\text{mol dm}^{-3}$.
+
+  - type: takeaways
+    items:
+      - "Titre = final − initial reading; the mean uses concordant titres only (within 0.10 cm³)."
+      - "Four steps: $n = cV$ for the known → mole ratio → $c = n/V$ for the unknown → scale up if needed."
+      - "Every volume in dm³; every ratio from the balanced equation."
+      - "A 25.0 cm³ portion from a 250 cm³ flask is one tenth of the total."
+
+questions:
+  - id: titre-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      The titre is the {{1}} burette reading minus the {{2}} burette reading. Titres that agree within 0.10 cm³ are called {{3}} titres.
+    blanks:
+      - accept: ["final", "end", "last", "second"]
+      - accept: ["initial", "start", "starting", "first"]
+      - accept: ["concordant"]
+    explanation: |
+      Titre = final − initial. Concordant titres (within 0.10 cm³) are the ones you average.
+
+  - id: mean-titre
+    format: numeric
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      A student records these titres: rough 22.20 cm³; run 1, 21.45 cm³; run 2, 22.00 cm³; run 3, 21.55 cm³. What mean titre should be used in the calculation?
+    fields:
+      - answer: 21.5
+        tolerance: { abs: 0.005 }
+        unit: cm³
+    explanation: |
+      Runs 1 and 3 are concordant (within 0.10 cm³). The rough titre and run 2 are left out. Mean $= (21.45 + 21.55) \div 2 = 21.50\ \text{cm}^3$. Averaging all three accurate runs would give 21.67 cm³, dragged up by the overshoot in run 2.
+
+  - id: hydrochloric-concentration
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      25.0 cm³ of 0.120 mol dm⁻³ sodium hydroxide is exactly neutralised by 20.00 cm³ of hydrochloric acid: $\text{NaOH(aq)} + \text{HCl(aq)} \rightarrow \text{NaCl(aq)} + \text{H}_2\text{O(l)}$. What is the concentration of the acid?
+    fields:
+      - answer: 0.15
+        tolerance: { abs: 0.0005 }
+        unit: mol dm⁻³
+    explanation: |
+      $n(\text{NaOH}) = 0.120 \times 0.0250 = 3.00 \times 10^{-3}$ mol. Ratio 1 : 1, so $n(\text{HCl}) = 3.00 \times 10^{-3}$ mol. $c = 3.00 \times 10^{-3} \div 0.02000 = 0.150\ \text{mol dm}^{-3}$.
+
+  - id: carbonate-titration
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      25.0 cm³ of sodium carbonate solution needs 22.50 cm³ of 0.200 mol dm⁻³ hydrochloric acid for complete reaction: $\text{Na}_2\text{CO}_3\text{(aq)} + 2\text{HCl(aq)} \rightarrow 2\text{NaCl(aq)} + \text{H}_2\text{O(l)} + \text{CO}_2\text{(g)}$. What is the concentration of the sodium carbonate solution? Give your answer to 3 significant figures.
+    fields:
+      - answer: 0.09
+        tolerance: { abs: 0.0005 }
+        sigFigs: 3
+        unit: mol dm⁻³
+    explanation: |
+      $n(\text{HCl}) = 0.200 \times 0.02250 = 4.50 \times 10^{-3}$ mol. Ratio $\text{Na}_2\text{CO}_3$ : HCl = 1 : 2, so $n(\text{Na}_2\text{CO}_3) = 2.25 \times 10^{-3}$ mol. $c = 2.25 \times 10^{-3} \div 0.0250 = 0.0900\ \text{mol dm}^{-3}$.
+
+  - id: titration-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      25.0 cm³ of barium hydroxide solution needs a mean titre of 18.20 cm³ of 0.100 mol dm⁻³ hydrochloric acid: $\text{Ba(OH)}_2\text{(aq)} + 2\text{HCl(aq)} \rightarrow \text{BaCl}_2\text{(aq)} + 2\text{H}_2\text{O(l)}$. A student calculates the concentration of the barium hydroxide. Which line contains the first error?
+    lines:
+      - |
+        $n(\text{HCl}) = 0.100 \times \dfrac{18.20}{1000} = 1.820 \times 10^{-3}$ mol
+      - |
+        $\text{Ba(OH)}_2$ : HCl = 1 : 2
+      - |
+        $n(\text{Ba(OH)}_2) = 1.820 \times 10^{-3} \div 2 = 9.10 \times 10^{-4}$ mol
+      - |
+        $c(\text{Ba(OH)}_2) = 9.10 \times 10^{-4} \div 25.0 = 3.64 \times 10^{-5}\ \text{mol dm}^{-3}$
+    errorLine: 4
+    fix: |
+      The volume must be in dm³: $c = 9.10 \times 10^{-4} \div 0.0250 = 0.0364\ \text{mol dm}^{-3}$.
+    explanation: |
+      The student converted the titre to dm³ in line 1 but forgot to convert the 25.0 cm³ in line 4. A concentration of $10^{-5}$ mol dm⁻³ for a lab alkali should set off alarm bells.
+
+  - id: sodium-carbonate-purity
+    format: numeric
+    difficulty: 3
+    objectives: ["2.4.1"]
+    prompt: |
+      1.325 g of impure anhydrous sodium carbonate is dissolved and made up to 250.0 cm³ of solution. 25.0 cm³ portions need a mean titre of 24.00 cm³ of 0.100 mol dm⁻³ hydrochloric acid: $\text{Na}_2\text{CO}_3\text{(aq)} + 2\text{HCl(aq)} \rightarrow 2\text{NaCl(aq)} + \text{H}_2\text{O(l)} + \text{CO}_2\text{(g)}$. Calculate the percentage purity of the sodium carbonate. ($M(\text{Na}_2\text{CO}_3) = 106.0\ \text{g mol}^{-1}$) Give your answer to 3 significant figures.
+    fields:
+      - answer: 96.0
+        tolerance: { abs: 0.1 }
+        sigFigs: 3
+        unit: "%"
+    explanation: |
+      $n(\text{HCl}) = 0.100 \times 0.02400 = 2.400 \times 10^{-3}$ mol, so $n(\text{Na}_2\text{CO}_3) = 1.200 \times 10^{-3}$ mol in 25.0 cm³. In 250.0 cm³: $\times 10 = 0.01200$ mol, which is $0.01200 \times 106.0 = 1.272$ g. Purity $= 1.272 \div 1.325 \times 100 = 96.0\%$.

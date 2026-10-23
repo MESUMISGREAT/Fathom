@@ -1,0 +1,259 @@
+id: reacting-masses-from-equations
+subject: "9701"
+topic: "2.4"
+title: "Reacting masses: cross the mole bridge"
+summary: Why balanced equations work in moles, not grams, and the three-step method for turning a mass of one substance into the mass of another.
+order: 1
+minutes: 5
+objectives: ["2.4.1"]
+prerequisites: [mole-avogadro-mass-moles-particles, chemical-formulas-balancing-equations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.4, learning outcome 2.4.1(a) reacting masses from formulas
+    and equations, 2.4.1(e) stoichiometric relationships, and the guidance on significant
+    figures). All Ar values from the Cambridge Data Booklet. All numerical answers were
+    computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use a balanced equation to calculate the mass of any reactant or product from the mass of another, and give the answer to a sensible number of significant figures.
+
+  - type: explain
+    title: Equations speak moles, not grams
+    body: |
+      Plot twist: a balanced equation is a recipe written in **moles**.
+
+      $$2\text{Mg(s)} + \text{O}_2\text{(g)} \rightarrow 2\text{MgO(s)}$$
+
+      This says **2 mol** of magnesium reacts with **1 mol** of oxygen to make **2 mol** of magnesium oxide. It does *not* say 2 g + 1 g → 2 g. (That would be 3 g in and 2 g out, and conservation of mass would like a word.)
+
+      The coefficients give the **mole ratio** of the reaction, its **stoichiometry**. Here Mg : $\text{O}_2$ : MgO = 2 : 1 : 2.
+
+  - type: intuition
+    title: The pancake recipe
+    body: |
+      A recipe says "2 eggs to 1 cup of flour". That's a ratio of *portions*, not of masses: an egg and a cup of flour don't weigh the same. To scale it up, you count portions, then weigh them.
+
+      Chemistry is identical. Count in moles using the equation, then convert to grams with molar mass. Where the analogy breaks: a cook can improvise with an extra egg, but a reaction can't. Any extra reactant just sits there unreacted (more on that in the limiting reagent lesson).
+
+  - type: diagram
+    diagram: chem-reacting-masses-mole-bridge
+    alt: "A U-shaped route between four boxes for a reaction a A → b B. Top left: mass of A, what you know, in g. Top right: mass of B, what you want, in g. A dashed line joining them is crossed out with the note: no shortcut, equations give mole ratios. Step 1 is an arrow down from mass of A to moles of A, labelled divide by M of A. Step 2 is an arrow across the bottom from moles of A to moles of B, labelled multiply by b divided by a, the mole ratio. Step 3 is an arrow up from moles of B to mass of B, labelled multiply by M of B. Example values beside the boxes: 25.0 g CaCO3, 0.2498 mol CaCO3, 0.2498 mol CaO, 14.0 g CaO, for CaCO3(s) → CaO(s) + CO2(g) with M of CaCO3 100.1 and M of CaO 56.1 g mol⁻¹."
+    caption: Down, across, up. The only bridge between two substances is at the mole level.
+
+  - type: explain
+    title: The three-step method
+    body: |
+      1. **Mass → moles** of the substance you know: $n = \dfrac{m}{M}$.
+      2. **Mole ratio**: use the coefficients to get moles of the substance you want.
+      3. **Moles → mass**: $m = n \times M$.
+
+      Insider hack for step 2: write the ratio as **wanted : known**, then multiply by wanted ÷ known. For $2\text{Mg} \rightarrow 2\text{MgO}$ it's 2 : 2, so ×1. For $\text{Fe}_2\text{O}_3 \rightarrow 2\text{Fe}$ it's 2 : 1, so ×2.
+
+  - type: example
+    title: Quicklime from limestone
+    problem: |
+      Calcium carbonate decomposes on strong heating. What mass of calcium oxide forms from 25.0 g of calcium carbonate? ($A_r$: Ca = 40.1, C = 12.0, O = 16.0)
+    steps:
+      - |
+        Equation first: $\text{CaCO}_3\text{(s)} \rightarrow \text{CaO(s)} + \text{CO}_2\text{(g)}$. Ratio CaO : $\text{CaCO}_3$ = 1 : 1.
+      - |
+        **Step 1.** $M(\text{CaCO}_3) = 40.1 + 12.0 + 3(16.0) = 100.1\ \text{g mol}^{-1}$, so $n = 25.0 \div 100.1 = 0.2498$ mol. Keep the extra digit for now.
+      - |
+        **Step 2.** 1 : 1, so $n(\text{CaO}) = 0.2498$ mol.
+      - |
+        **Step 3.** $M(\text{CaO}) = 40.1 + 16.0 = 56.1\ \text{g mol}^{-1}$, so $m = 0.2498 \times 56.1 = 14.01$ g.
+      - |
+        The data were given to 3 significant figures, so the answer is too: **14.0 g**.
+    answer: |
+      14.0 g of calcium oxide.
+
+  - type: check
+    title: Quick check
+    questions: [equation-meaning, magnesium-oxide-mass]
+
+  - type: example
+    title: "When the ratio isn't 1 : 1"
+    problem: |
+      In a blast furnace: $\text{Fe}_2\text{O}_3\text{(s)} + 3\text{CO(g)} \rightarrow 2\text{Fe(l)} + 3\text{CO}_2\text{(g)}$. What mass of iron can be made from 40.0 g of iron(III) oxide? ($A_r$: Fe = 55.8, O = 16.0)
+    steps:
+      - |
+        **Step 1.** $M(\text{Fe}_2\text{O}_3) = 2(55.8) + 3(16.0) = 159.6\ \text{g mol}^{-1}$; $n = 40.0 \div 159.6 = 0.2506$ mol.
+      - |
+        **Step 2.** Wanted : known = Fe : $\text{Fe}_2\text{O}_3$ = 2 : 1, so $n(\text{Fe}) = 2 \times 0.2506 = 0.5013$ mol.
+      - |
+        **Step 3.** $m = 0.5013 \times 55.8 = 27.97$ g, which is **28.0 g** to 3 s.f.
+      - |
+        Sense check: iron is $111.6 \div 159.6 = 70\%$ of the oxide's mass, and 70% of 40 g is 28 g. ✓
+    answer: |
+      28.0 g of iron.
+
+  - type: check
+    title: Your turn
+    questions: [propane-carbon-dioxide, methane-oxygen-error]
+
+  - type: deeper
+    title: Significant figures, the way the syllabus wants them
+    body: |
+      - Give the final answer to the **same number of significant figures as the data** (or as the question asks). Most data come to 3 s.f., so most answers do too.
+      - Carry **at least one extra figure** through the middle steps. Round once, at the end.
+      - Rounding early costs marks. In the iron example, rounding 0.2506 mol to 0.25 gives $0.50 \times 55.8 = 27.9$ g, not 28.0 g.
+      - Don't add precision you don't have: 27.96992 g looks clever but claims more than 40.0 g can justify.
+
+  - type: deeper
+    title: Kilograms and tonnes
+    body: |
+      Industrial questions love tonnes. Convert to grams ($1\ \text{kg} = 10^3\ \text{g}$, $1\ \text{tonne} = 10^6\ \text{g}$) and run the same three steps. Or use the shortcut that ratios scale: if 159.6 g of $\text{Fe}_2\text{O}_3$ gives 111.6 g of Fe, then 159.6 tonnes gives 111.6 tonnes.
+
+  - type: check
+    title: Precision and scale
+    questions: [sig-figs-answer, iron-ore-kilograms]
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          $2\text{Mg} + \text{O}_2 \rightarrow 2\text{MgO}$ means 2 g of magnesium reacts with 1 g of oxygen.
+        right: |
+          Coefficients are **mole** ratios. 2 mol of Mg (48.6 g) reacts with 1 mol of $\text{O}_2$ (32.0 g).
+      - wrong: |
+          For "$2\text{Fe}$", double the moles **and** use $M = 2 \times 55.8$.
+        right: |
+          Use the ratio once. Double the moles, then multiply by $M(\text{Fe}) = 55.8\ \text{g mol}^{-1}$. Doubling twice gives an answer twice too big.
+      - wrong: |
+          You can go straight from the mass of one substance to the mass of another using the coefficients.
+        right: |
+          Only moles cross the bridge. Always convert to moles first.
+
+  - type: exam
+    body: |
+      - Label every line: "$n(\text{CaCO}_3) = 25.0 \div 100.1 = 0.2498$ mol". Examiners award marks for each step, and if one number is wrong, later marks can still be earned (**error carried forward**) only if they can follow you.
+      - The ratio step is where most marks die. Say it in words: "2 mol Fe per 1 mol $\text{Fe}_2\text{O}_3$".
+      - End with a value, a unit and the right number of significant figures.
+
+  - type: takeaways
+    items:
+      - "Balanced equations give **mole** ratios (stoichiometry), never mass ratios."
+      - "Three steps: mass → moles ($n = m/M$), × mole ratio (wanted : known), moles → mass ($m = nM$)."
+      - "Keep extra figures in the middle; round the final answer to match the data (usually 3 s.f.)."
+      - "Sense-check: does the answer make sense compared with the mass you started with?"
+
+questions:
+  - id: equation-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      What does the equation $2\text{H}_2\text{(g)} + \text{O}_2\text{(g)} \rightarrow 2\text{H}_2\text{O(l)}$ tell you?
+    options:
+      - text: |
+          2 g of hydrogen reacts with 1 g of oxygen to form 2 g of water.
+        why: |
+          Coefficients are mole ratios, not mass ratios. This would also lose 1 g of mass, which can't happen.
+      - text: |
+          2 mol of hydrogen molecules react with 1 mol of oxygen molecules to form 2 mol of water molecules.
+        correct: true
+        why: |
+          The coefficients give the amounts in moles: $\text{H}_2$ : $\text{O}_2$ : $\text{H}_2\text{O}$ = 2 : 1 : 2.
+      - text: |
+          Equal masses of hydrogen and oxygen react together.
+        why: |
+          4.0 g of $\text{H}_2$ reacts with 32.0 g of $\text{O}_2$: very different masses.
+      - text: |
+          3 mol of gas react to form 3 mol of water.
+        why: |
+          3 mol of reactants (2 + 1) give 2 mol of water. Moles of particles are not conserved in a reaction; atoms are.
+    explanation: |
+      Read coefficients as moles of each formula. 2 mol $\text{H}_2$ (4.0 g) + 1 mol $\text{O}_2$ (32.0 g) → 2 mol $\text{H}_2\text{O}$ (36.0 g). Mass is conserved; moles of molecules need not be.
+
+  - id: magnesium-oxide-mass
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      Magnesium burns in air: $2\text{Mg(s)} + \text{O}_2\text{(g)} \rightarrow 2\text{MgO(s)}$. What mass of magnesium oxide forms when 6.00 g of magnesium burns completely? ($A_r$: Mg = 24.3, O = 16.0) Give your answer to 3 significant figures.
+    fields:
+      - answer: 9.95
+        tolerance: { abs: 0.01 }
+        sigFigs: 3
+        unit: g
+    explanation: |
+      $n(\text{Mg}) = 6.00 \div 24.3 = 0.2469$ mol. Ratio MgO : Mg = 2 : 2, so $n(\text{MgO}) = 0.2469$ mol. $M(\text{MgO}) = 40.3\ \text{g mol}^{-1}$, so $m = 0.2469 \times 40.3 = 9.95$ g.
+
+  - id: propane-carbon-dioxide
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      A camping stove burns propane: $\text{C}_3\text{H}_8\text{(g)} + 5\text{O}_2\text{(g)} \rightarrow 3\text{CO}_2\text{(g)} + 4\text{H}_2\text{O(l)}$. What mass of carbon dioxide is made when 11.0 g of propane burns completely? ($A_r$: C = 12.0, H = 1.0, O = 16.0)
+    fields:
+      - answer: 33.0
+        tolerance: { abs: 0.1 }
+        unit: g
+    explanation: |
+      $M(\text{C}_3\text{H}_8) = 44.0\ \text{g mol}^{-1}$, so $n = 11.0 \div 44.0 = 0.250$ mol. Ratio $\text{CO}_2$ : $\text{C}_3\text{H}_8$ = 3 : 1, so $n(\text{CO}_2) = 0.750$ mol. $m = 0.750 \times 44.0 = 33.0$ g. (Three times the mass of fuel, because most of the mass comes from the oxygen.)
+
+  - id: methane-oxygen-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      A student calculates the mass of oxygen needed to burn 8.00 g of methane: $\text{CH}_4\text{(g)} + 2\text{O}_2\text{(g)} \rightarrow \text{CO}_2\text{(g)} + 2\text{H}_2\text{O(l)}$. ($A_r$: C = 12.0, H = 1.0, O = 16.0) Which line contains the first error?
+    lines:
+      - |
+        $M(\text{CH}_4) = 12.0 + 4(1.0) = 16.0\ \text{g mol}^{-1}$
+      - |
+        $n(\text{CH}_4) = 8.00 \div 16.0 = 0.500$ mol
+      - |
+        $n(\text{O}_2) = 0.500 \div 2 = 0.250$ mol
+      - |
+        $m(\text{O}_2) = 0.250 \times 32.0 = 8.00$ g
+    errorLine: 3
+    fix: |
+      Each mole of $\text{CH}_4$ needs **2** mol of $\text{O}_2$, so $n(\text{O}_2) = 0.500 \times 2 = 1.00$ mol and $m(\text{O}_2) = 32.0$ g.
+    explanation: |
+      The ratio is upside down. Wanted : known = $\text{O}_2$ : $\text{CH}_4$ = 2 : 1, so multiply by 2. Line 4 then follows correctly from the wrong value.
+
+  - id: sig-figs-answer
+    format: mcq
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      A question gives every mass to 3 significant figures. At the end of a reacting-mass calculation the calculator shows 14.01098901. What should you write?
+    options:
+      - text: |
+          14 g
+        why: |
+          That's 2 significant figures: precision lost unnecessarily.
+      - text: |
+          14.0 g
+        correct: true
+        why: |
+          3 s.f., matching the data. The trailing zero matters: it shows the answer is known to the nearest 0.1 g.
+      - text: |
+          14.01 g
+        why: |
+          4 s.f. claims more precision than the 3 s.f. data can justify.
+      - text: |
+          14.01098901 g
+        why: |
+          Copying the calculator display uses far more figures than the data justify.
+    explanation: |
+      The syllabus asks for answers that match the significant figures of the data: neither losing precision (14) nor inventing it (14.01…).
+
+  - id: iron-ore-kilograms
+    format: numeric
+    difficulty: 3
+    objectives: ["2.4.1"]
+    prompt: |
+      Using $\text{Fe}_2\text{O}_3\text{(s)} + 3\text{CO(g)} \rightarrow 2\text{Fe(l)} + 3\text{CO}_2\text{(g)}$, what mass of iron(III) oxide, in **kilograms**, is needed to make 1.00 kg of iron? ($A_r$: Fe = 55.8, O = 16.0) Give your answer to 3 significant figures.
+    fields:
+      - answer: 1.43
+        tolerance: { abs: 0.005 }
+        sigFigs: 3
+        unit: kg
+    explanation: |
+      $n(\text{Fe}) = 1000 \div 55.8 = 17.92$ mol. Ratio $\text{Fe}_2\text{O}_3$ : Fe = 1 : 2, so $n(\text{Fe}_2\text{O}_3) = 8.961$ mol. $m = 8.961 \times 159.6 = 1430$ g = 1.43 kg. Sense check: iron is 70% of the oxide, and $1.00 \div 0.70 \approx 1.43$. ✓

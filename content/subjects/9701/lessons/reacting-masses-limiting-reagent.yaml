@@ -1,0 +1,251 @@
+id: reacting-masses-limiting-reagent
+subject: "9701"
+topic: "2.4"
+title: "Limiting and excess reagents"
+summary: How to find which reactant runs out first, use it to calculate the product, and work out how much of the excess reactant is left over.
+order: 7
+minutes: 5
+objectives: ["2.4.1"]
+prerequisites: [reacting-masses-from-equations, reacting-masses-gas-volumes, reacting-masses-concentration]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.4, learning outcome 2.4.1(d) limiting reagent and excess
+    reagent, using reacting masses, gas volumes and solution concentrations from
+    2.4.1(a)-(c), with the guidance on significant figures). Molar gas volume 24.0 dm³ mol⁻¹
+    and all Ar values from the Cambridge Data Booklet. All numerical answers were computed
+    with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can identify the **limiting reagent** in a reaction, use it to calculate the amount of product, and find how much of the **excess reagent** is left over.
+
+  - type: explain
+    title: The burger problem
+    body: |
+      You have 10 buns and 6 patties. Each burger needs 1 bun and 1 patty. You make **6** burgers, not 10, and 4 lonely buns are left over.
+
+      The patties ran out first, so they **limited** how many burgers you could make. The buns were **in excess**. Reactions work exactly the same way, except the "recipe" is the balanced equation.
+
+  - type: definition
+    term: Limiting reagent and excess reagent
+    body: |
+      The **limiting reagent** is the reactant that is completely used up first. It decides the maximum amount of product.
+
+      The **excess reagent** is any reactant that is left over when the reaction stops.
+
+  - type: diagram
+    diagram: chem-reacting-masses-limiting-particles
+    alt: "Particle diagram for 2H2 + O2 → 2H2O. Left box, before: six H2 molecules (pairs of small white circles) and four O2 molecules (pairs of larger coloured circles). An arrow labelled react points to the right box, after: six bent H2O molecules and one O2 molecule, circled with a dashed ring and labelled excess. Below the boxes: before, 6 H2 + 4 O2; after, 6 H2O + 1 O2 left over. Underneath: divide each amount by its coefficient, H2 6 ÷ 2 = 3, O2 4 ÷ 1 = 4; smaller number, so H2 is the limiting reagent and runs out first. Note: more H2 molecules than O2 molecules, yet H2 still runs out, because 6 H2 need only 3 O2."
+    caption: There's more hydrogen than oxygen, but hydrogen still runs out first. Fewer moles doesn't mean limiting.
+
+  - type: explain
+    title: The test that never fails
+    body: |
+      1. Find the **moles** of each reactant.
+      2. **Divide each by its coefficient** in the balanced equation.
+      3. The **smallest** answer is the limiting reagent.
+      4. Use the limiting reagent, and only the limiting reagent, to calculate the product.
+
+      Why dividing works: it tells you how many "equation's worth" of each reactant you have. The reactant with the fewest runs out first, just like the patties.
+
+  - type: check
+    title: Quick check
+    questions: [limiting-definition, ammonia-limiting]
+
+  - type: example
+    title: Magnesium in not-quite-enough acid
+    problem: |
+      5.00 g of magnesium is added to 80.0 cm³ of 1.00 mol dm⁻³ hydrochloric acid: $\text{Mg(s)} + 2\text{HCl(aq)} \rightarrow \text{MgCl}_2\text{(aq)} + \text{H}_2\text{(g)}$. Find the limiting reagent, the volume of hydrogen at room conditions, and the mass of the excess reagent left. ($A_r$: Mg = 24.3; $V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$)
+    steps:
+      - |
+        **Moles:** $n(\text{Mg}) = 5.00 \div 24.3 = 0.2058$ mol; $n(\text{HCl}) = 1.00 \times 0.0800 = 0.0800$ mol.
+      - |
+        **Divide by coefficients:** Mg: $0.2058 \div 1 = 0.2058$. HCl: $0.0800 \div 2 = 0.0400$. HCl is smaller, so **HCl is limiting** and Mg is in excess.
+      - |
+        **Product from the limiting reagent:** $n(\text{H}_2) = 0.0800 \div 2 = 0.0400$ mol, so $V = 0.0400 \times 24.0 = 0.960\ \text{dm}^3$.
+      - |
+        **Excess left:** Mg used $= 0.0400$ mol $= 0.0400 \times 24.3 = 0.972$ g, so $5.00 - 0.972 = 4.03$ g of Mg is left over.
+    answer: |
+      HCl is limiting; $0.960\ \text{dm}^3$ of $\text{H}_2$; 4.03 g of magnesium left.
+
+  - type: check
+    title: Your turn
+    questions: [limiting-spot-error, zinc-copper]
+
+  - type: example
+    title: Two masses, one winner
+    problem: |
+      10.0 g of aluminium is heated in 10.0 g of chlorine: $2\text{Al(s)} + 3\text{Cl}_2\text{(g)} \rightarrow 2\text{AlCl}_3\text{(s)}$. What mass of aluminium chloride forms? ($A_r$: Al = 27.0, Cl = 35.5)
+    steps:
+      - |
+        $n(\text{Al}) = 10.0 \div 27.0 = 0.3704$ mol; $n(\text{Cl}_2) = 10.0 \div 71.0 = 0.1408$ mol.
+      - |
+        Divide by coefficients: Al $0.3704 \div 2 = 0.1852$; $\text{Cl}_2$ $0.1408 \div 3 = 0.04695$. **Chlorine is limiting.**
+      - |
+        $n(\text{AlCl}_3) = 0.1408 \times \dfrac{2}{3} = 0.09390$ mol
+      - |
+        $M(\text{AlCl}_3) = 27.0 + 3(35.5) = 133.5$, so $m = 0.09390 \times 133.5 = 12.5$ g.
+    answer: |
+      12.5 g (equal masses of reactants, but chlorine runs out long before aluminium does).
+
+  - type: deeper
+    title: Why chemists use an excess on purpose
+    body: |
+      Adding one reactant in excess makes sure the **other one reacts completely**. You'd use excess acid to dissolve every last bit of an expensive metal oxide, or excess oxygen to make sure a fuel burns completely. Choose the cheap, easy-to-remove reactant to be the one in excess.
+
+  - type: check
+    title: Stretch
+    questions: [iron-sulfide, chalk-acid-volume]
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          The reactant with the fewer moles is always the limiting reagent.
+        right: |
+          Divide by the coefficients first. 6 mol $\text{H}_2$ and 4 mol $\text{O}_2$: $\text{H}_2$ has more moles but is still limiting, because the equation needs twice as many moles of $\text{H}_2$ as of $\text{O}_2$ (4 mol $\text{O}_2$ would need 8 mol $\text{H}_2$).
+      - wrong: |
+          The reactant with the smaller mass is the limiting reagent.
+        right: |
+          Masses don't tell you anything until you convert them to moles. 10.0 g Al and 10.0 g $\text{Cl}_2$ are equal masses, but chlorine is limiting.
+      - wrong: |
+          Calculate the product from both reactants and take the bigger answer.
+        right: |
+          Product comes from the **limiting** reagent only. (If you do calculate from both, the *smaller* answer is the right one.)
+
+  - type: exam
+    body: |
+      - "Show that X is in excess" wants numbers: moles of each, and the ratio comparison written out.
+      - For "mass of excess reagent left over", find moles **used** (from the limiting reagent and the ratio), then subtract from moles at the start.
+      - Questions often mix units: a mass of one reactant and a volume and concentration of the other. Convert both to moles before comparing.
+
+  - type: takeaways
+    items:
+      - "The limiting reagent is used up first and fixes the maximum amount of product; the others are in excess."
+      - "To find it: moles of each, divide by its coefficient, smallest wins."
+      - "Calculate products from the limiting reagent only."
+      - "Excess left = moles at start − moles used (from the ratio with the limiting reagent)."
+
+questions:
+  - id: limiting-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      Which statement describes the **limiting reagent** in a reaction?
+    options:
+      - text: |
+          The reactant with the smallest mass.
+        why: |
+          Mass alone means nothing until you convert to moles and compare with the equation.
+      - text: |
+          The reactant that is completely used up first, so it decides the maximum amount of product.
+        correct: true
+        why: |
+          That's the definition: once it's gone, the reaction stops.
+      - text: |
+          The reactant that is left over at the end.
+        why: |
+          That's the **excess** reagent.
+      - text: |
+          The reactant with the smallest coefficient in the equation.
+        why: |
+          Coefficients alone don't decide it; it depends on how much of each you actually have.
+    explanation: |
+      The limiting reagent runs out first. Product calculations must start from it.
+
+  - id: ammonia-limiting
+    format: mcq
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      3.0 mol of nitrogen and 6.0 mol of hydrogen react completely: $\text{N}_2\text{(g)} + 3\text{H}_2\text{(g)} \rightarrow 2\text{NH}_3\text{(g)}$. Which is the limiting reagent, and what is the maximum amount of ammonia?
+    options:
+      - text: |
+          Nitrogen is limiting; 2.0 mol of ammonia.
+        why: |
+          Nitrogen has fewer moles, but 3.0 mol of $\text{N}_2$ would need 9.0 mol of $\text{H}_2$ and there's only 6.0 mol.
+      - text: |
+          Nitrogen is limiting; 6.0 mol of ammonia.
+        why: |
+          This uses all 3.0 mol of nitrogen, which would need 9.0 mol of hydrogen. Not possible.
+      - text: |
+          Hydrogen is limiting; 4.0 mol of ammonia.
+        correct: true
+        why: |
+          $\text{N}_2$: $3.0 \div 1 = 3.0$; $\text{H}_2$: $6.0 \div 3 = 2.0$. Hydrogen is limiting, and $6.0 \times \frac{2}{3} = 4.0$ mol of $\text{NH}_3$. 1.0 mol of $\text{N}_2$ is left over.
+      - text: |
+          Hydrogen is limiting; 12.0 mol of ammonia.
+        why: |
+          The ratio is upside down: 3 mol of $\text{H}_2$ make 2 mol of $\text{NH}_3$, so it's × 2/3, not × 2.
+    explanation: |
+      Divide each amount by its coefficient; the smaller result (hydrogen, 2.0) is limiting. Then $n(\text{NH}_3) = 6.0 \times 2/3 = 4.0$ mol.
+
+  - id: limiting-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      0.30 mol of hydrogen is mixed with 0.20 mol of oxygen and ignited. A student calculates the mass of water formed. ($M(\text{H}_2\text{O}) = 18.0\ \text{g mol}^{-1}$) Which line contains the first error?
+    lines:
+      - |
+        $2\text{H}_2\text{(g)} + \text{O}_2\text{(g)} \rightarrow 2\text{H}_2\text{O(l)}$
+      - |
+        Oxygen has fewer moles (0.20 < 0.30), so oxygen is the limiting reagent.
+      - |
+        $n(\text{H}_2\text{O}) = 2 \times 0.20 = 0.40$ mol
+      - |
+        Mass of water $= 0.40 \times 18.0 = 7.2$ g
+    errorLine: 2
+    fix: |
+      Divide by coefficients: $\text{H}_2$ $0.30 \div 2 = 0.15$; $\text{O}_2$ $0.20 \div 1 = 0.20$. **Hydrogen** is limiting, so $n(\text{H}_2\text{O}) = 0.30$ mol and the mass is 5.4 g (0.05 mol of $\text{O}_2$ is left over).
+    explanation: |
+      0.20 mol of $\text{O}_2$ would need 0.40 mol of $\text{H}_2$, and there's only 0.30 mol. Fewer moles doesn't mean limiting.
+
+  - id: zinc-copper
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      1.00 g of zinc powder is added to 50.0 cm³ of 0.200 mol dm⁻³ copper(II) sulfate solution: $\text{Zn(s)} + \text{CuSO}_4\text{(aq)} \rightarrow \text{ZnSO}_4\text{(aq)} + \text{Cu(s)}$. What is the maximum mass of copper that can form? ($A_r$: Zn = 65.4, Cu = 63.5) Give your answer to 3 significant figures.
+    fields:
+      - answer: 0.635
+        tolerance: { abs: 0.001 }
+        sigFigs: 3
+        unit: g
+    explanation: |
+      $n(\text{Zn}) = 1.00 \div 65.4 = 0.01529$ mol; $n(\text{CuSO}_4) = 0.200 \times 0.0500 = 0.0100$ mol. Ratio 1 : 1, so copper(II) sulfate is limiting. $n(\text{Cu}) = 0.0100$ mol, so $m = 0.0100 \times 63.5 = 0.635$ g.
+
+  - id: iron-sulfide
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      5.58 g of iron is heated with 4.00 g of sulfur: $\text{Fe(s)} + \text{S(s)} \rightarrow \text{FeS(s)}$. What mass of iron(II) sulfide forms, and what mass of the excess reactant is left over? ($A_r$: Fe = 55.8, S = 32.1)
+    fields:
+      - label: "mass of FeS ="
+        answer: 8.79
+        tolerance: { abs: 0.01 }
+        unit: g
+      - label: "mass of excess reactant left ="
+        answer: 0.79
+        tolerance: { abs: 0.01 }
+        unit: g
+    explanation: |
+      $n(\text{Fe}) = 5.58 \div 55.8 = 0.100$ mol; $n(\text{S}) = 4.00 \div 32.1 = 0.1246$ mol. Ratio 1 : 1, so iron is limiting. $n(\text{FeS}) = 0.100$ mol, so $m = 0.100 \times 87.9 = 8.79$ g. Sulfur used $= 0.100 \times 32.1 = 3.21$ g, so $4.00 - 3.21 = 0.79$ g of sulfur is left.
+
+  - id: chalk-acid-volume
+    format: numeric
+    difficulty: 3
+    objectives: ["2.4.1"]
+    prompt: |
+      0.500 g of calcium carbonate is added to 20.0 cm³ of 0.200 mol dm⁻³ hydrochloric acid: $\text{CaCO}_3\text{(s)} + 2\text{HCl(aq)} \rightarrow \text{CaCl}_2\text{(aq)} + \text{H}_2\text{O(l)} + \text{CO}_2\text{(g)}$. What volume of carbon dioxide, in cm³ at room conditions, is produced? ($M(\text{CaCO}_3) = 100.1\ \text{g mol}^{-1}$; $V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$)
+    fields:
+      - answer: 48.0
+        tolerance: { abs: 0.2 }
+        unit: cm³
+    explanation: |
+      $n(\text{CaCO}_3) = 0.500 \div 100.1 = 4.995 \times 10^{-3}$ mol; $n(\text{HCl}) = 0.200 \times 0.0200 = 4.00 \times 10^{-3}$ mol. Divide by coefficients: $\text{CaCO}_3$ $4.995 \times 10^{-3}$, HCl $2.00 \times 10^{-3}$, so the acid is limiting. $n(\text{CO}_2) = 2.00 \times 10^{-3}$ mol, so $V = 2.00 \times 10^{-3} \times 24\,000 = 48.0\ \text{cm}^3$. (About 0.300 g of calcium carbonate is left unreacted.)

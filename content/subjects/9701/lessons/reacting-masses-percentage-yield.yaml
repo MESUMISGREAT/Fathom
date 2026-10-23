@@ -1,0 +1,244 @@
+id: reacting-masses-percentage-yield
+subject: "9701"
+topic: "2.4"
+title: "Percentage yield: where did my product go?"
+summary: Theoretical yield, actual yield and percentage yield, why real reactions fall short of 100%, and how to work backwards from a target mass.
+order: 2
+minutes: 4
+objectives: ["2.4.1"]
+prerequisites: [reacting-masses-from-equations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.4, learning outcome 2.4.1(a) reacting masses including
+    percentage yield calculations, and the guidance on significant figures). All Ar values
+    from the Cambridge Data Booklet. The esterification masses (6.00 g acid, 5.72 g ester)
+    are illustrative numbers chosen for the worked example, not measured data. All
+    numerical answers were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can calculate a **percentage yield**, explain why it is usually below 100%, and work backwards to find how much reactant you need for a target mass of product.
+
+  - type: explain
+    title: The recipe said 12 cookies
+    body: |
+      The recipe promised 12 cookies. You got 9: two welded themselves to the tray and one "fell" into your mouth. Chemistry has the same heartbreak, with numbers.
+
+      - **Theoretical yield**: the mass of product you *should* get, calculated from the equation, assuming the reaction goes to completion with no losses.
+      - **Actual yield**: the mass you *really* get, weighed at the end.
+
+  - type: definition
+    term: Percentage yield
+    body: |
+      $$\text{percentage yield} = \frac{\text{actual yield}}{\text{theoretical yield}} \times 100\%$$
+
+      Both yields must be in the **same units** (usually grams, or both in moles).
+
+  - type: example
+    title: Making a fruity ester
+    problem: |
+      6.00 g of ethanoic acid is heated with excess ethanol and a little concentrated sulfuric acid:
+      $$\text{CH}_3\text{COOH(l)} + \text{CH}_3\text{CH}_2\text{OH(l)} \rightleftharpoons \text{CH}_3\text{COOCH}_2\text{CH}_3\text{(l)} + \text{H}_2\text{O(l)}$$
+      The student collects 5.72 g of pure ethyl ethanoate. Calculate the percentage yield. ($M_r$: ethanoic acid 60.0, ethyl ethanoate 88.0)
+    steps:
+      - |
+        **Theoretical yield first** (the three-step method): $n(\text{CH}_3\text{COOH}) = 6.00 \div 60.0 = 0.100$ mol.
+      - |
+        Ratio ester : acid = 1 : 1, so at most 0.100 mol of ester, which is $0.100 \times 88.0 = 8.80$ g.
+      - |
+        **Percentage yield** $= \dfrac{5.72}{8.80} \times 100 = 65.0\%$
+    answer: |
+      65.0%
+
+  - type: diagram
+    diagram: chem-reacting-masses-yield-bars
+    alt: "Two horizontal bars drawn to scale on an axis of mass of ethyl ethanoate from 0 to 9 g. The top bar, theoretical yield from the equation, reaches 8.80 g, labelled 100%. The bottom bar, actual yield weighed at the end, reaches 5.72 g, and a dashed section from 5.72 g to 8.80 g is labelled 3.08 g missing. Below, a list headed where the missing product goes: reaction incomplete, or reversible so it reaches equilibrium; side reactions make other products; losses when transferring, filtering and purifying. On the right: percentage yield = 5.72 ÷ 8.80 × 100 = 65.0%."
+    caption: About a third of the ester never made it into the bottle.
+
+  - type: check
+    title: Quick check
+    questions: [yield-cloze, copper-oxide-yield]
+
+  - type: explain
+    title: Why it's never 100%
+    body: |
+      | reason | what happens |
+      | --- | --- |
+      | **incomplete or reversible reaction** | it stops before all the reactant is used; reversible ones (like the ester) reach **equilibrium** |
+      | **side reactions** | some reactant makes a different product |
+      | **mechanical losses** | product left on glassware, on filter paper, or lost when transferring |
+      | **purification losses** | recrystallisation or distillation always leaves some behind |
+
+      Above 100%? That's not a miracle. The product is **impure** or **still wet** (water or solvent adds mass).
+
+  - type: check
+    title: Spot the problem
+    questions: [ester-equilibrium, over-hundred]
+
+  - type: example
+    title: Working backwards
+    problem: |
+      A chemist wants 22.0 g of ethyl ethanoate. The method has a 62.5% yield. What mass of ethanoic acid is needed? ($M_r$: ethanoic acid 60.0, ethyl ethanoate 88.0)
+    steps:
+      - |
+        The 22.0 g is only 62.5% of what's theoretically made, so the theoretical yield must be $22.0 \div 0.625 = 35.2$ g.
+      - |
+        $n(\text{ester}) = 35.2 \div 88.0 = 0.400$ mol, and the ratio is 1 : 1, so 0.400 mol of acid.
+      - |
+        $m(\text{acid}) = 0.400 \times 60.0 = 24.0$ g
+      - |
+        Sense check: you need *more* starting material than 100% yield would need ($22.0 \div 88.0 \times 60.0 = 15.0$ g). ✓
+    answer: |
+      24.0 g of ethanoic acid.
+
+  - type: check
+    title: Go further
+    questions: [yield-spot-error, zinc-sulfate-target]
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          The theoretical yield is the mass of reactant you started with.
+        right: |
+          It's the maximum mass of **product**, calculated from the reactant using the equation. 6.00 g of acid gives at most 8.80 g of ester, not 6.00 g.
+      - wrong: |
+          Percentage yield = theoretical ÷ actual × 100.
+        right: |
+          Actual on top. If you get more than 100% for a normal experiment, check you haven't flipped it.
+      - wrong: |
+          A low yield means the student calculated something wrongly.
+        right: |
+          Low yields are normal: equilibrium, side reactions and losses are real chemistry, not maths mistakes.
+
+  - type: exam
+    body: |
+      - Show the theoretical yield as its own line, with units: examiners usually give it a mark of its own.
+      - Give the percentage to 3 s.f. (or what the question asks), e.g. 65.0%, not 65%.
+      - "Suggest why the yield was less than 100%" wants a **specific** reason: "the reaction is reversible / reaches equilibrium" or "product lost during recrystallisation", not just "human error".
+
+  - type: takeaways
+    items:
+      - "Percentage yield = actual yield ÷ theoretical yield × 100."
+      - "Theoretical yield comes from the equation (three-step method), assuming complete reaction and no losses."
+      - "Yields fall short through incomplete or reversible reactions, side reactions, and losses in transfer and purification."
+      - "Above 100% means the product is impure or wet. Working backwards: divide the target by the fractional yield first."
+
+questions:
+  - id: yield-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      Percentage yield = ({{1}} yield ÷ {{2}} yield) × 100
+    blanks:
+      - accept: ["actual", "experimental", "obtained", "real", "measured"]
+      - accept: ["theoretical", "maximum", "calculated", "expected", "predicted", "theoretical maximum"]
+    explanation: |
+      What you got (actual) divided by what the equation says you could get (theoretical), times 100.
+
+  - id: copper-oxide-yield
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      Heating 5.00 g of copper(II) carbonate gives 2.90 g of copper(II) oxide: $\text{CuCO}_3\text{(s)} \rightarrow \text{CuO(s)} + \text{CO}_2\text{(g)}$. Calculate the percentage yield. ($A_r$: Cu = 63.5, C = 12.0, O = 16.0) Give your answer to 3 significant figures.
+    fields:
+      - answer: 90.1
+        tolerance: { abs: 0.1 }
+        sigFigs: 3
+        unit: "%"
+    explanation: |
+      $M(\text{CuCO}_3) = 123.5$, so $n = 5.00 \div 123.5 = 0.04049$ mol. Ratio 1 : 1, so the theoretical yield is $0.04049 \times 79.5 = 3.219$ g of CuO. Percentage yield $= 2.90 \div 3.219 \times 100 = 90.1\%$.
+
+  - id: ester-equilibrium
+    format: mcq
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      Even with perfect technique, the yield of ethyl ethanoate from ethanoic acid and ethanol is well below 100%. Which is the main reason?
+    options:
+      - text: |
+          The reaction is reversible, so it reaches equilibrium with some reactants left.
+        correct: true
+        why: |
+          The $\rightleftharpoons$ sign is the clue: the forward and backward reactions balance before all the acid is used up.
+      - text: |
+          Product is lost when the liquid is transferred between flasks.
+        why: |
+          That's a real loss, but it's a technique loss. The question says the technique is perfect.
+      - text: |
+          The sulfuric acid catalyst is used up during the reaction.
+        why: |
+          Catalysts are not used up, and they don't change how much product forms at equilibrium.
+      - text: |
+          The ethanol is in excess.
+        why: |
+          An excess of ethanol makes sure more of the acid reacts; it doesn't lower the yield based on the acid.
+    explanation: |
+      Reversible reactions never convert all the reactant into product, however careful you are.
+
+  - id: over-hundred
+    format: mcq
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      A student filters off a solid product and calculates a percentage yield of 104%. What is the most likely explanation?
+    options:
+      - text: |
+          The reaction did not go to completion.
+        why: |
+          An incomplete reaction gives less product, so the yield would be below 100%.
+      - text: |
+          Some product stayed on the filter paper.
+        why: |
+          Losing product lowers the actual yield.
+      - text: |
+          The product was weighed before it was completely dry.
+        correct: true
+        why: |
+          Water still in the solid adds mass, so the "actual yield" is too big.
+      - text: |
+          A side reaction made a different product.
+        why: |
+          Side reactions use up reactant, which lowers the yield of the product you want.
+    explanation: |
+      You can't make more product than the equation allows. A yield above 100% means extra mass that isn't product: water, solvent or impurities.
+
+  - id: yield-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      A student reacts 4.00 g of copper(II) oxide with excess sulfuric acid and obtains 6.50 g of dry anhydrous copper(II) sulfate. ($M$: CuO = 79.5, $\text{CuSO}_4$ = 159.6 g mol⁻¹) Which line contains the first error?
+    lines:
+      - |
+        $\text{CuO(s)} + \text{H}_2\text{SO}_4\text{(aq)} \rightarrow \text{CuSO}_4\text{(aq)} + \text{H}_2\text{O(l)}$
+      - |
+        $n(\text{CuO}) = 4.00 \div 79.5 = 0.05031$ mol
+      - |
+        Theoretical yield $= 0.05031 \times 159.6 = 8.03$ g of $\text{CuSO}_4$
+      - |
+        Percentage yield $= 8.03 \div 6.50 \times 100 = 124\%$
+    errorLine: 4
+    fix: |
+      Actual on top: percentage yield $= 6.50 \div 8.03 \times 100 = 80.9\%$.
+    explanation: |
+      Everything up to the theoretical yield is right. The fraction was flipped, and the impossible-looking 124% should have been the warning sign.
+
+  - id: zinc-sulfate-target
+    format: numeric
+    difficulty: 3
+    objectives: ["2.4.1"]
+    prompt: |
+      Zinc sulfate is made by $\text{ZnCO}_3\text{(s)} + \text{H}_2\text{SO}_4\text{(aq)} \rightarrow \text{ZnSO}_4\text{(aq)} + \text{H}_2\text{O(l)} + \text{CO}_2\text{(g)}$. The method gives an 80.0% yield. What mass of zinc carbonate is needed to obtain 20.0 g of zinc sulfate? ($A_r$: Zn = 65.4, S = 32.1, C = 12.0, O = 16.0) Give your answer to 3 significant figures.
+    fields:
+      - answer: 19.4
+        tolerance: { abs: 0.05 }
+        sigFigs: 3
+        unit: g
+    explanation: |
+      Theoretical yield needed $= 20.0 \div 0.800 = 25.0$ g of $\text{ZnSO}_4$. $M(\text{ZnSO}_4) = 161.5$, so $n = 25.0 \div 161.5 = 0.1548$ mol. Ratio 1 : 1, and $M(\text{ZnCO}_3) = 125.4$, so $m = 0.1548 \times 125.4 = 19.4$ g.

@@ -1,0 +1,247 @@
+id: reacting-masses-gas-volumes
+subject: "9701"
+topic: "2.4"
+title: "Gas volumes: every mole gets 24 dm³"
+summary: Why one mole of any gas fills the same volume, how to use the molar volume from the Data Booklet, and why gas volumes react in the same ratio as moles.
+order: 3
+minutes: 5
+objectives: ["2.4.1"]
+prerequisites: [reacting-masses-from-equations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.4, learning outcome 2.4.1(b) volumes of gases and 2.4.1(e)
+    stoichiometric relationships). Molar gas volumes 24.0 dm³ mol⁻¹ at room conditions and
+    22.4 dm³ mol⁻¹ at s.t.p. (273 K, 101 kPa) and all Ar values are from the Cambridge Data
+    Booklet. The ideal gas equation is left to topic 4.1. All numerical answers were
+    computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can convert between moles and gas volumes using the **molar gas volume**, and use gas-volume ratios to solve reacting-volume problems.
+
+  - type: explain
+    title: The heavy balloon and the light balloon
+    body: |
+      Fill one party balloon with hydrogen and an identical one with carbon dioxide, at the same temperature and pressure. The $\text{CO}_2$ inside is 22 times heavier, and that balloon sinks like a sad pancake. But both contain **the same number of molecules**.
+
+      That's **Avogadro's law**: equal volumes of gases at the same temperature and pressure contain equal numbers of molecules. So one mole of *any* gas takes up the same volume.
+
+  - type: definition
+    term: Molar gas volume, Vₘ
+    body: |
+      The volume occupied by **one mole of any gas** at a stated temperature and pressure. From the Data Booklet:
+
+      - $V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$ at **room conditions**
+      - $V_m = 22.4\ \text{dm}^3\ \text{mol}^{-1}$ at **s.t.p.** (273 K and 101 kPa)
+
+  - type: intuition
+    title: Why the gas doesn't matter
+    body: |
+      A gas is almost entirely **empty space**: the molecules themselves fill well under 0.1% of the container. So the volume is really "space per molecule", and that is set by temperature and pressure, not by how big or heavy each molecule is.
+
+      Where it breaks down: real gases aren't perfect, so 24.0 dm³ is a very good approximation rather than exact. (Ideal and real gases come back in topic 4.)
+
+  - type: diagram
+    diagram: chem-reacting-masses-molar-volume
+    alt: "Three identical square boxes side by side, each labelled 24.0 dm³ = 1 mol and 6.02 × 10²³ molecules. The first holds ten small hydrogen molecules, H2, total mass 2.0 g. The second holds ten oxygen molecules, O2, in the same positions, mass 32.0 g. The third holds ten linear carbon dioxide molecules, CO2, in the same positions, mass 44.0 g. Title: same temperature and pressure, same volume, same number of molecules. Footer: molar volume from the Data Booklet, 24.0 dm³ mol⁻¹ at room conditions and 22.4 dm³ mol⁻¹ at s.t.p. (273 K, 101 kPa); molecules are drawn far too big, as in a real gas they fill well under 0.1% of the space."
+    caption: Same box, same count, very different masses.
+
+  - type: explain
+    title: The toolkit
+    body: |
+      $$n = \frac{V}{V_m} \qquad\qquad V = n \times V_m$$
+
+      Match the units:
+
+      | volume in | use $V_m$ = |
+      | --- | --- |
+      | $\text{dm}^3$ | $24.0\ \text{dm}^3\ \text{mol}^{-1}$ |
+      | $\text{cm}^3$ | $24\,000\ \text{cm}^3\ \text{mol}^{-1}$ |
+
+      $1\ \text{dm}^3 = 1000\ \text{cm}^3$ (a dm³ is a litre). And this works **only for gases**: never for liquids, solids or solutions.
+
+  - type: check
+    title: Quick check
+    questions: [room-volume, cm3-to-moles]
+
+  - type: example
+    title: Fizz from marble chips
+    problem: |
+      5.00 g of calcium carbonate reacts with excess hydrochloric acid. What volume of carbon dioxide forms, measured at room conditions? ($M(\text{CaCO}_3) = 100.1\ \text{g mol}^{-1}$)
+    steps:
+      - |
+        $\text{CaCO}_3\text{(s)} + 2\text{HCl(aq)} \rightarrow \text{CaCl}_2\text{(aq)} + \text{H}_2\text{O(l)} + \text{CO}_2\text{(g)}$
+      - |
+        $n(\text{CaCO}_3) = 5.00 \div 100.1 = 0.04995$ mol
+      - |
+        Ratio $\text{CO}_2$ : $\text{CaCO}_3$ = 1 : 1, so $n(\text{CO}_2) = 0.04995$ mol.
+      - |
+        $V = 0.04995 \times 24.0 = 1.20\ \text{dm}^3$ (or $1200\ \text{cm}^3$, written $1.20 \times 10^3\ \text{cm}^3$ to show 3 s.f.)
+    answer: |
+      $1.20\ \text{dm}^3$ of $\text{CO}_2$.
+
+  - type: check
+    title: Mass to volume
+    questions: [magnesium-hydrogen-volume, hydrogencarbonate-error]
+
+  - type: explain
+    title: "Gas to gas: skip the molar volume entirely"
+    body: |
+      If every volume is measured at the **same temperature and pressure**, volumes are proportional to moles. So the coefficients give the **volume ratio** directly:
+
+      $$\text{N}_2\text{(g)} + 3\text{H}_2\text{(g)} \rightarrow 2\text{NH}_3\text{(g)}$$
+
+      10 cm³ of nitrogen reacts with 30 cm³ of hydrogen to make 20 cm³ of ammonia. No dividing by 24 000 needed.
+
+      Careful: only **gases** follow this. A liquid or solid product (like water at room temperature) has a volume so tiny by comparison that you count it as zero.
+
+  - type: check
+    title: Volume ratios
+    questions: [carbon-monoxide-volumes, greatest-volume]
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          One mole of water occupies 24.0 dm³ at room temperature.
+        right: |
+          Water is a **liquid** at room temperature: one mole is only about 18 cm³. Molar gas volume is for gases only.
+      - wrong: |
+          Heavier gas molecules take up more space, so a mole of $\text{CO}_2$ has a bigger volume than a mole of $\text{H}_2$.
+        right: |
+          At the same temperature and pressure, a mole of any gas has the same volume. The molecules are tiny compared with the space between them.
+      - wrong: |
+          It's always 24.0 dm³ mol⁻¹.
+        right: |
+          The molar volume depends on temperature and pressure: 24.0 at room conditions, 22.4 at s.t.p. Read which conditions the question states.
+
+  - type: exam
+    body: |
+      - The Data Booklet gives both values. Using 22.4 when the question says room conditions is a classic slip.
+      - The biggest mark-killer is cm³ versus dm³. Write the unit next to every volume in your working.
+      - A gas volume in a question at other conditions? That's a job for $pV = nRT$ (topic 4), not 24.0.
+
+  - type: takeaways
+    items:
+      - "Equal volumes of gases at the same temperature and pressure contain equal numbers of molecules."
+      - "$n = V \\div V_m$, with $V_m = 24.0\\ \\text{dm}^3\\ \\text{mol}^{-1}$ (room conditions) or $22.4\\ \\text{dm}^3\\ \\text{mol}^{-1}$ (s.t.p.)."
+      - "$1\\ \\text{dm}^3 = 1000\\ \\text{cm}^3$, so $V_m = 24\\,000\\ \\text{cm}^3\\ \\text{mol}^{-1}$ at room conditions."
+      - "For gases at the same temperature and pressure, volume ratio = mole ratio = ratio of coefficients."
+
+questions:
+  - id: room-volume
+    format: numeric
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      What volume does 0.250 mol of oxygen gas occupy at room conditions? ($V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$)
+    fields:
+      - answer: 6.00
+        tolerance: { abs: 0.01 }
+        unit: dm³
+    explanation: |
+      $V = n \times V_m = 0.250 \times 24.0 = 6.00\ \text{dm}^3$. Any gas would give the same answer.
+
+  - id: cm3-to-moles
+    format: numeric
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      A gas syringe collects 180 cm³ of hydrogen at room conditions. What amount of hydrogen is this, in mol? ($V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$) Type standard form like `1.23e-3` or a decimal.
+    fields:
+      - answer: 0.0075
+        tolerance: { abs: 0.00005 }
+        unit: mol
+    explanation: |
+      Match the units: $180\ \text{cm}^3 = 0.180\ \text{dm}^3$. Then $n = 0.180 \div 24.0 = 7.50 \times 10^{-3}$ mol. (Or $180 \div 24\,000$, same thing.)
+
+  - id: magnesium-hydrogen-volume
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      0.486 g of magnesium ribbon reacts with excess dilute hydrochloric acid: $\text{Mg(s)} + 2\text{HCl(aq)} \rightarrow \text{MgCl}_2\text{(aq)} + \text{H}_2\text{(g)}$. What volume of hydrogen, in **cm³**, forms at room conditions? ($A_r$: Mg = 24.3; $V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$)
+    fields:
+      - answer: 480
+        tolerance: { abs: 1 }
+        unit: cm³
+    explanation: |
+      $n(\text{Mg}) = 0.486 \div 24.3 = 0.0200$ mol. Ratio $\text{H}_2$ : Mg = 1 : 1, so $n(\text{H}_2) = 0.0200$ mol. $V = 0.0200 \times 24\,000 = 480\ \text{cm}^3$.
+
+  - id: hydrogencarbonate-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      A student heats 2.10 g of sodium hydrogencarbonate: $2\text{NaHCO}_3\text{(s)} \rightarrow \text{Na}_2\text{CO}_3\text{(s)} + \text{H}_2\text{O(g)} + \text{CO}_2\text{(g)}$. They calculate the volume of carbon dioxide at room conditions. Which line contains the first error?
+    lines:
+      - |
+        $M(\text{NaHCO}_3) = 23.0 + 1.0 + 12.0 + 3(16.0) = 84.0\ \text{g mol}^{-1}$
+      - |
+        $n(\text{NaHCO}_3) = 2.10 \div 84.0 = 0.0250$ mol
+      - |
+        $n(\text{CO}_2) = 0.0250$ mol
+      - |
+        $V(\text{CO}_2) = 0.0250 \times 24\,000 = 600\ \text{cm}^3$
+    errorLine: 3
+    fix: |
+      2 mol of $\text{NaHCO}_3$ give 1 mol of $\text{CO}_2$, so $n(\text{CO}_2) = 0.0250 \div 2 = 0.0125$ mol and $V = 300\ \text{cm}^3$.
+    explanation: |
+      The student ignored the 2 in front of $\text{NaHCO}_3$. Ratio $\text{CO}_2$ : $\text{NaHCO}_3$ = 1 : 2, so halve the moles.
+
+  - id: carbon-monoxide-volumes
+    format: mcq
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      Carbon monoxide burns: $2\text{CO(g)} + \text{O}_2\text{(g)} \rightarrow 2\text{CO}_2\text{(g)}$. What volume of oxygen is needed to burn 40 cm³ of carbon monoxide completely? (All volumes at the same temperature and pressure.)
+    options:
+      - text: |
+          20 cm³
+        correct: true
+        why: |
+          Volume ratio = mole ratio: $\text{O}_2$ : CO = 1 : 2, so half of 40 cm³.
+      - text: |
+          40 cm³
+        why: |
+          That assumes a 1 : 1 ratio, ignoring the coefficients.
+      - text: |
+          80 cm³
+        why: |
+          The ratio is upside down: each 2 volumes of CO need only 1 volume of $\text{O}_2$.
+      - text: |
+          You can't tell without the molar gas volume.
+        why: |
+          For gases at the same temperature and pressure, volumes are in the same ratio as moles, so no molar volume is needed.
+    explanation: |
+      Gas-to-gas problems at the same conditions: read the volume ratio straight from the coefficients.
+
+  - id: greatest-volume
+    format: mcq
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      Which sample has the **largest** volume at room conditions? ($A_r$: H = 1.0, He = 4.0, C = 12.0, O = 16.0)
+    options:
+      - text: |
+          1.0 g of hydrogen, $\text{H}_2$
+        correct: true
+        why: |
+          $1.0 \div 2.0 = 0.50$ mol: the most moles, so the most volume (12.0 dm³).
+      - text: |
+          1.0 g of helium, He
+        why: |
+          $1.0 \div 4.0 = 0.25$ mol. Helium atoms are light, but hydrogen molecules ($M = 2.0$) are lighter.
+      - text: |
+          1.0 g of methane, $\text{CH}_4$
+        why: |
+          $1.0 \div 16.0 = 0.0625$ mol.
+      - text: |
+          1.0 g of oxygen, $\text{O}_2$
+        why: |
+          $1.0 \div 32.0 = 0.03125$ mol: the smallest volume. Bigger molecules don't mean more space.
+    explanation: |
+      Volume depends only on moles of gas. The same mass of the lightest gas has the most moles, so the most volume.
