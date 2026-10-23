@@ -3,7 +3,7 @@
  * isosceles triangle OAB and the minor segment. The perpendicular from O meets AB
  * at its midpoint M, so AM = MB = r sin(θ/2) and AB = 2r sin(θ/2).
  */
-import { Label, Svg } from '../primitives';
+import { FracLabel, Svg, MathLabel } from '../primitives';
 import { RightAngle, arcPath, polar } from './p1-trigonometry-kit';
 
 export const diagramKey = 'circular-measure-segment';
@@ -37,59 +37,51 @@ export default function CircularMeasureSegment() {
       <path d={arcPath(O, 30, aB, Math.PI / 2)} className="dg-accent-2" />
       <circle cx={O.x} cy={O.y} r={3.5} className="dg-dot" />
       <circle cx={M.x} cy={M.y} r={3} className="dg-dot" />
-      <Label x={O.x} y={O.y + 14} className="dg-text dg-italic">
+      <FracLabel x={O.x} y={O.y + 14} className="dg-text dg-italic">
         O
-      </Label>
-      <Label x={A.x - 10} y={A.y} anchor="end" className="dg-text dg-italic">
+      </FracLabel>
+      <FracLabel x={A.x - 10} y={A.y} anchor="end" className="dg-text dg-italic">
         A
-      </Label>
-      <Label x={B.x + 10} y={B.y} anchor="start" className="dg-text dg-italic">
+      </FracLabel>
+      <FracLabel x={B.x + 10} y={B.y} anchor="start" className="dg-text dg-italic">
         B
-      </Label>
-      <Label x={M.x - 12} y={M.y + 14} className="dg-text dg-italic">
+      </FracLabel>
+      <FracLabel x={M.x - 12} y={M.y + 14} className="dg-text dg-italic">
         M
-      </Label>
-      <Label x={rA.x - 12} y={rA.y} anchor="end" className="dg-text dg-italic">
+      </FracLabel>
+      <FracLabel x={rA.x - 12} y={rA.y} anchor="end" className="dg-text dg-italic">
         r
-      </Label>
-      <Label x={rB.x + 12} y={rB.y} anchor="start" className="dg-text dg-italic">
+      </FracLabel>
+      <FracLabel x={rB.x + 12} y={rB.y} anchor="start" className="dg-text dg-italic">
         r
-      </Label>
-      <Label x={half.x + 6} y={half.y - 4} anchor="start" className="dg-text-accent-2">
+      </FracLabel>
+      <FracLabel x={half.x + 6} y={half.y - 4} anchor="start" className="dg-text-accent-2">
         θ/2
-      </Label>
-      <Label x={(M.x + B.x) / 2} y={M.y + 15} className="dg-text-small">
+      </FracLabel>
+      <FracLabel x={(M.x + B.x) / 2} y={M.y + 15} className="dg-text-small">
         r sin(θ/2)
-      </Label>
-      <Label x={O.x} y={M.y - 16} className="dg-text-accent">
+      </FracLabel>
+      <FracLabel x={O.x} y={M.y - 16} className="dg-text-accent">
         segment
-      </Label>
-      <Label x={O.x - 44} y={140} className="dg-text-small">
+      </FracLabel>
+      <FracLabel x={O.x - 44} y={140} className="dg-text-small">
         triangle OAB
-      </Label>
+      </FracLabel>
 
       <g>
-        <Label x={510} y={44} className="dg-text dg-bold">
+        <FracLabel x={510} y={44} className="dg-text dg-bold">
           θ in radians
-        </Label>
-        <Label x={510} y={82} className="dg-text-small">
-          sector = ½r²θ
-        </Label>
-        <Label x={510} y={106} className="dg-text-small">
-          triangle = ½r² sin θ
-        </Label>
-        <Label x={510} y={140} className="dg-text-accent">
+        </FracLabel>
+        <MathLabel x={510} y={80} w={163} h={46} size="small" tex={"\\text{sector} = \\dfrac{1}{2} r^2\\theta"} />
+        <MathLabel x={510} y={118} w={230} h={46} size="small" tex={"\\text{triangle} = \\dfrac{1}{2} r^2\\sin\\theta"} />
+        <FracLabel x={510} y={154} className="dg-text-accent">
           segment
-        </Label>
-        <Label x={510} y={162} className="dg-text-small">
-          = ½r²θ − ½r² sin θ
-        </Label>
-        <Label x={510} y={184} className="dg-text-small">
-          = ½r²(θ − sin θ)
-        </Label>
-        <Label x={510} y={224} className="dg-text-small">
+        </FracLabel>
+        <MathLabel x={510} y={188} w={211} h={46} size="small" tex={"= \\dfrac{1}{2} r^2\\theta - \\dfrac{1}{2} r^2\\sin\\theta"} />
+        <MathLabel x={510} y={226} w={192} h={46} size="small" tex={"= \\dfrac{1}{2} r^2(\\theta - \\sin\\theta)"} />
+        <FracLabel x={510} y={264} className="dg-text-small">
           chord AB = 2r sin(θ/2)
-        </Label>
+        </FracLabel>
       </g>
     </Svg>
   );

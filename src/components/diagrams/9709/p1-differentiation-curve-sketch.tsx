@@ -3,7 +3,7 @@
  * and minimum (3, 0), where the curve touches the x-axis (repeated root).
  * Crosses the axes at the origin. y → −∞ as x → −∞ and y → ∞ as x → ∞.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, makePlot } from './kit';
 
 export const diagramKey = 'p1-differentiation-curve-sketch';
@@ -29,12 +29,10 @@ export default function P1DifferentiationCurveSketch() {
       <circle cx={p.sx(3)} cy={p.sy(0)} r={5} className="dg-dot-accent-2" />
       <circle cx={p.sx(0)} cy={p.sy(0)} r={4} className="dg-dot" />
 
-      <Label x={p.sx(1)} y={p.sy(4) - 34} className="dg-text-accent-2">
+      <Label x={p.sx(1)} y={p.sy(4) - 58} className="dg-text-accent-2">
         maximum (1, 4)
       </Label>
-      <Label x={p.sx(1)} y={p.sy(4) - 15} className="dg-text-small">
-        d²y/dx² = −6
-      </Label>
+      <MathLabel x={p.sx(1)} y={p.sy(4) - 28} w={154} h={46} size="small" tex={"\\dfrac{d^2y}{dx^2} = -6"} />
       <Label x={p.sx(3)} y={p.sy(0) + 22} className="dg-text-accent-2">
         minimum (3, 0)
       </Label>

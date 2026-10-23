@@ -4,8 +4,9 @@
  *   npx tsx scripts/render-diagram.tsx <key> [<key> ...] [--out dir]
  * Writes <out>/<key>-light.png and <out>/<key>-dark.png (default out: ./data/diagram-previews).
  */
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { chromium } from '@playwright/test';
 import { scanDiagrams } from './diagram-scan';
@@ -21,7 +22,16 @@ if (keys.length === 0) {
   process.exit(0);
 }
 await mkdir(out, { recursive: true });
-const css = (await readFile('src/styles/tokens.css', 'utf8')) + (await readFile('src/styles/diagrams.css', 'utf8'));
+// KaTeX's CSS (for MathLabel) points at its fonts with relative URLs; make them absolute and load
+// the page from a file:// URL so Chromium will fetch them.
+const katexDist = path.join(process.cwd(), 'node_modules', 'katex', 'dist');
+const katexCss = (await readFile(path.join(katexDist, 'katex.min.css'), 'utf8')).replaceAll(
+  'url(fonts/',
+  `url(${pathToFileURL(katexDist).href}/fonts/`,
+);
+const css =
+  katexCss + (await readFile('src/styles/tokens.css', 'utf8')) + (await readFile('src/styles/diagrams.css', 'utf8'));
+const pageFile = path.join(out, '.render.html');
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined }).catch(() =>
   chromium.launch({ executablePath: '/opt/pw-browsers/chromium' }), // cloud sessions: link to the installed version
 );
@@ -36,12 +46,41 @@ for (const key of keys) {
   }
   const svg = renderToStaticMarkup(<D />);
   for (const theme of ['light', 'dark'] as const) {
-    await page.setContent(
-      `<!doctype html><html data-theme="${theme}"><head><style>${css} body{margin:0;padding:24px;background:var(--surface);} .wrap{max-width:680px}</style></head><body><div class="wrap">${svg}</div></body></html>`,
+    await writeFile(
+      pageFile,
+      `<!doctype html><html data-theme="${theme}"><head><meta charset="utf-8"><style>${css} body{margin:0;padding:24px;background:var(--surface);} .wrap{max-width:680px}</style></head><body><div class="wrap">${svg}</div></body></html>`,
     );
+    await page.goto(pathToFileURL(pageFile).href);
+    await page.evaluate(() => document.fonts.ready);
+    // A MathLabel box that is too small cuts its formula off without any error, so measure each one.
+    const clipped = await page.$$eval('.dg-math', (els) =>
+      els
+        .filter((el) => {
+          const svg = el.closest('svg')!.getBoundingClientRect();
+          const own = el.getBoundingClientRect();
+          // the visible area is the label's box, cut down to the diagram's edges
+          const box = {
+            left: Math.max(own.left, svg.left),
+            right: Math.min(own.right, svg.right),
+            top: Math.max(own.top, svg.top),
+            bottom: Math.min(own.bottom, svg.bottom),
+          };
+          return [...el.querySelectorAll('.katex-html > .katex-base, .katex-html > .base')].some((b) => {
+            const r = b.getBoundingClientRect();
+            return r.left < box.left - 0.5 || r.right > box.right + 0.5 || r.top < box.top - 0.5 || r.bottom > box.bottom + 0.5;
+          });
+        })
+        .map((el) => el.textContent),
+    );
+    if (theme === 'light')
+      for (const t of clipped) {
+        console.error(`${key}: MathLabel cut off: "${t}" (raise w or h, or move it inside the diagram)`);
+        process.exitCode = 1;
+      }
     const file = path.join(out, `${key}-${theme}.png`);
     await (await page.$('.wrap'))!.screenshot({ path: file });
     console.log(file);
   }
 }
 await browser.close();
+await rm(pageFile, { force: true });

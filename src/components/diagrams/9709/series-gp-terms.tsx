@@ -5,7 +5,7 @@
  *   r = ½   (a = 32): 32, 16, 8, 4, 2, 1         shrinks towards 0
  *   r = −½  (a = 32): 32, −16, 8, −4, 2, −1      alternates in sign and shrinks
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 import { makePlot } from './kit';
 
 export const diagramKey = 'series-gp-terms';
@@ -19,8 +19,8 @@ const ns = [1, 2, 3, 4, 5, 6];
 
 const panels = [
   { a: 1, r: 2, title: 'r = 2', sub: 'grows faster and faster', cls: 'accent' },
-  { a: 32, r: 0.5, title: 'r = ½', sub: 'shrinks towards 0', cls: 'accent-2' },
-  { a: 32, r: -0.5, title: 'r = −½', sub: 'alternates in sign, shrinks', cls: 'accent' },
+  { a: 32, r: 0.5, title: 'r = \\dfrac{1}{2}', sub: 'shrinks towards 0', cls: 'accent-2' },
+  { a: 32, r: -0.5, title: 'r = -\\dfrac{1}{2}', sub: 'alternates in sign, shrinks', cls: 'accent' },
 ] as const;
 
 const fmt = (v: number) => (v < 0 ? `−${Math.abs(v)}` : `${v}`);
@@ -32,10 +32,8 @@ export default function SeriesGpTerms() {
       {panels.map((k, i) => (
         <g key={k.title} transform={`translate(${i * PW}, 0)`}>
           {i > 0 && <line x1={0} y1={10} x2={0} y2={H - 36} className="dg-grid" />}
-          <Label x={PW / 2} y={18} className={`dg-text-${k.cls}`}>
-            {k.title}
-          </Label>
-          <Label x={PW / 2} y={37} className="dg-text-small">
+          <MathLabel x={PW / 2} y={22} w={PW - 20} h={40} tone={k.cls as 'accent' | 'accent-2'} tex={k.title} />
+          <Label x={PW / 2} y={48} className="dg-text-small">
             {`a = ${k.a}: ${k.sub}`}
           </Label>
           <g transform="translate(0, 50)">

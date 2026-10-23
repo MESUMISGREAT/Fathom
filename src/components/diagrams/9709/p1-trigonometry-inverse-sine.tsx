@@ -4,7 +4,7 @@
  * (−1, −π/2) to (1, π/2). The rest of y = sin x (dashed) is not used, because it
  * would repeat y-values.
  */
-import { Label, Svg, graph } from '../primitives';
+import { FracLabel, Svg, graph } from '../primitives';
 import { GraphFrame, frame } from './p1-trigonometry-kit';
 
 export const diagramKey = 'p1-trigonometry-inverse-sine';
@@ -47,36 +47,36 @@ export default function P1TrigonometryInverseSine() {
       ].map(([x, y, c]) => (
         <circle key={`${x},${y}`} cx={p.sx(x as number)} cy={p.sy(y as number)} r={4} className={c as string} />
       ))}
-      <Label x={p.sx(2) + 6} y={p.sy(2) + 4} anchor="start" className="dg-text-small">
+      <FracLabel x={p.sx(2) + 6} y={p.sy(2) + 4} anchor="start" className="dg-text-small">
         y = x
-      </Label>
+      </FracLabel>
 
       <g>
         <line x1={lx} y1={70} x2={lx + 28} y2={70} className="dg-accent" />
-        <Label x={lx + 36} y={70} anchor="start" className="dg-text-accent">
-          y = sin x
-        </Label>
-        <Label x={lx + 36} y={90} anchor="start" className="dg-text-small">
-          for −π/2 ≤ x ≤ π/2 (one-one)
-        </Label>
+        <FracLabel x={lx + 36} y={70} anchor="start" className="dg-text-accent">
+          y = sin x (one-one)
+        </FracLabel>
+        <FracLabel x={lx + 36} y={92} anchor="start" className="dg-text-small">
+          for −π/2 ≤ x ≤ π/2
+        </FracLabel>
         <line x1={lx} y1={130} x2={lx + 28} y2={130} className="dg-accent-2" />
-        <Label x={lx + 36} y={130} anchor="start" className="dg-text-accent-2">
+        <FracLabel x={lx + 36} y={130} anchor="start" className="dg-text-accent-2">
           y = sin⁻¹x
-        </Label>
-        <Label x={lx + 36} y={150} anchor="start" className="dg-text-small">
+        </FracLabel>
+        <FracLabel x={lx + 36} y={150} anchor="start" className="dg-text-small">
           for −1 ≤ x ≤ 1
-        </Label>
+        </FracLabel>
         <line x1={lx} y1={190} x2={lx + 28} y2={190} className="dg-thin dg-dashed" />
-        <Label x={lx + 36} y={190} anchor="start" className="dg-text-small">
+        <FracLabel x={lx + 36} y={190} anchor="start" className="dg-text-small">
           mirror line y = x
-        </Label>
+        </FracLabel>
         <line x1={lx} y1={230} x2={lx + 28} y2={230} className="dg-muted dg-dashed" />
-        <Label x={lx + 36} y={230} anchor="start" className="dg-text-small">
+        <FracLabel x={lx + 36} y={230} anchor="start" className="dg-text-small">
           rest of y = sin x
-        </Label>
-        <Label x={lx + 36} y={248} anchor="start" className="dg-text-small">
+        </FracLabel>
+        <FracLabel x={lx + 36} y={248} anchor="start" className="dg-text-small">
           (not used)
-        </Label>
+        </FracLabel>
       </g>
     </Svg>
   );

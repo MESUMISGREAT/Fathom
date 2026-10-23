@@ -5,7 +5,7 @@
  * Right: y = f(2x) = 4x² − 4x, stretch parallel to the x-axis, factor ½. Distances from
  * the y-axis halve, so the vertex goes to (0.5, −1) and the roots to 0 and 1.
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 import { FIG_H, PW, Panel, base, type PanelSpec } from './functions-transform-kit';
 
 export const diagramKey = 'functions-stretches';
@@ -48,9 +48,7 @@ const specs: PanelSpec[] = [
     yTicks: [-2, 4],
     yTicksRight: [2],
     footer: (
-      <Label x={150} y={22} className="dg-text">
-        stretch parallel to the x-axis, factor ½
-      </Label>
+      <MathLabel x={150} y={22} w={420} h={46} tex={"\\text{stretch parallel to the } x\\text{-axis, factor } \\dfrac{1}{2}"} />
     ),
   },
 ];

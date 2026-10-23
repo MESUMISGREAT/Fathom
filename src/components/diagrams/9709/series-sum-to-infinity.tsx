@@ -3,7 +3,7 @@
  * Left, r = ½: 8, 12, 14, 15, 15.5, … climbing towards S∞ = 8 ⁄ (1 − ½) = 16.
  * Right, r = −½: 8, 4, 6, 5, 5.5, … zigzagging in towards S∞ = 8 ⁄ (1 + ½) = 16⁄3.
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 import { makePlot } from './kit';
 
 export const diagramKey = 'series-sum-to-infinity';
@@ -18,8 +18,8 @@ const ns = [1, 2, 3, 4, 5, 6, 7, 8];
 const partial = (a: number, r: number, n: number) => (a * (1 - r ** n)) / (1 - r);
 
 const panels = [
-  { r: 0.5, title: 'r = ½', limit: 16, limitText: 'S∞ = 16', cls: 'accent', note: 'creeps up, never passes 16' },
-  { r: -0.5, title: 'r = −½', limit: 16 / 3, limitText: 'S∞ = 16⁄3', cls: 'accent-2', note: 'overshoots, undershoots, closes in' },
+  { r: 0.5, title: 'r = \\dfrac{1}{2}', limit: 16, limitText: 'S_\\infty = 16', cls: 'accent', note: 'creeps up, never passes 16' },
+  { r: -0.5, title: 'r = -\\dfrac{1}{2}', limit: 16 / 3, limitText: 'S_\\infty = \\dfrac{16}{3}', cls: 'accent-2', note: 'overshoots, undershoots, closes in' },
 ] as const;
 
 export default function SeriesSumToInfinity() {
@@ -32,10 +32,8 @@ export default function SeriesSumToInfinity() {
         return (
           <g key={k.title} transform={`translate(${i * PW}, 0)`}>
             {i > 0 && <line x1={0} y1={10} x2={0} y2={H - 10} className="dg-grid" />}
-            <Label x={PW / 2} y={18} className={`dg-text-${k.cls}`}>
-              {`a = 8, ${k.title}`}
-            </Label>
-            <Label x={PW / 2} y={37} className="dg-text-small">
+            <MathLabel x={PW / 2} y={22} w={PW - 20} h={40} tone={k.cls as 'accent' | 'accent-2'} tex={`a = 8,\\ ${k.title}`} />
+            <Label x={PW / 2} y={48} className="dg-text-small">
               {k.note}
             </Label>
             <g transform="translate(0, 50)">
@@ -64,9 +62,7 @@ export default function SeriesSumToInfinity() {
 
               {/* the limit */}
               <line x1={p.sx(0)} y1={p.sy(k.limit)} x2={p.sx(X[1])} y2={p.sy(k.limit)} className="dg-muted dg-dashed" />
-              <Label x={p.sx(X[1])} y={p.sy(k.limit) + (i === 0 ? -12 : 16)} anchor="end" className="dg-text-muted">
-                {k.limitText}
-              </Label>
+              <MathLabel x={p.sx(X[1])} y={p.sy(k.limit) + (i === 0 ? -16 : 22)} anchor="end" w={110} h={44} tone="muted" tex={k.limitText} />
 
               <path d={d} className="dg-muted" />
               {pts.map((q) => (

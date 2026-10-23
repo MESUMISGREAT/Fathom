@@ -3,12 +3,12 @@
  * The ring is almost a long thin strip, circumference × width, so
  * δA ≈ 2πr × δr and δA/δr → 2πr. With time involved, dA/dt = dA/dr × dr/dt.
  */
-import { Arrow, Label, Svg } from '../primitives';
+import { Arrow, Label, Svg, MathLabel } from '../primitives';
 
 export const diagramKey = 'p1-differentiation-growing-circle';
 
 const W = 600;
-const H = 300;
+const H = 326;
 const CX = 150;
 const CY = 150;
 const R = 100;
@@ -48,19 +48,13 @@ export default function P1DifferentiationGrowingCircle() {
       <Label x={316} y={116} anchor="start" className="dg-text">
         so δA ≈ 2πr × δr
       </Label>
-      <Label x={316} y={146} anchor="start" className="dg-text">
-        and δA ⁄ δr ≈ 2πr
-      </Label>
-      <Label x={316} y={176} anchor="start" className="dg-text dg-bold">
-        dA/dr = 2πr (the circumference)
-      </Label>
-      <line x1={316} y1={200} x2={W - 20} y2={200} className="dg-grid" />
-      <Label x={316} y={226} anchor="start" className="dg-text">
+      <MathLabel x={316} y={154} anchor="start" w={201} h={46} tex={"\\text{and } \\dfrac{\\delta A}{\\delta r} \\approx 2\\pi r"} />
+      <MathLabel x={316} y={204} anchor="start" w={334} h={46} tex={"\\dfrac{dA}{dr} = 2\\pi r\\ \\text{(the circumference)}"} />
+      <line x1={316} y1={236} x2={W - 20} y2={236} className="dg-grid" />
+      <Label x={316} y={260} anchor="start" className="dg-text">
         If r grows with time t:
       </Label>
-      <Label x={316} y={252} anchor="start" className="dg-text-accent-2">
-        dA/dt = dA/dr × dr/dt
-      </Label>
+      <MathLabel x={316} y={292} anchor="start" w={239} h={46} tone="accent-2" tex={"\\dfrac{dA}{dt} = \\dfrac{dA}{dr} \\times \\dfrac{dr}{dt}"} />
     </Svg>
   );
 }

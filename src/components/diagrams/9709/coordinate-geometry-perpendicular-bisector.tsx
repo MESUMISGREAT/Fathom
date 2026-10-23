@@ -4,7 +4,7 @@
  * and equation 3x + 2y = 14. A right-angle mark at M and tick marks on AM and MB
  * show it is perpendicular to AB and cuts it in half.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'coordinate-geometry-perpendicular-bisector';
@@ -64,15 +64,11 @@ export default function CoordinateGeometryPerpendicularBisector() {
       <Label x={p.sx(M.x) + 14} y={p.sy(M.y) + 9} anchor="start" className="dg-text-accent-2">
         M(2, 4)
       </Label>
-      <Label x={p.sx(4.5)} y={p.sy(2.6)} anchor="start" className="dg-text-small">
-        {'AB: gradient 2/3'}
-      </Label>
+      <MathLabel x={p.sx(4.5)} y={p.sy(2.6)} anchor="start" w={192} h={46} size="small" tex={"AB\\text{: gradient } \\dfrac{2}{3}"} />
       <Label x={p.sx(4.3)} y={p.sy(1.35)} anchor="start" className="dg-text-accent-2">
         3x + 2y = 14
       </Label>
-      <Label x={p.sx(4.3)} y={p.sy(1.35) + 18} anchor="start" className="dg-text-small">
-        {'gradient −3/2'}
-      </Label>
+      <MathLabel x={p.sx(4.3)} y={p.sy(1.35) + 26} anchor="start" w={163} h={46} size="small" tex={"\\text{gradient } {-\\dfrac{3}{2}}"} />
     </Svg>
   );
 }

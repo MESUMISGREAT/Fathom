@@ -3,7 +3,7 @@
  * on a number line with equal gaps. Its 1st, 3rd and 4th terms, 16, 8 and 4,
  * are highlighted: they form a GP with r = ½ (each is half the one before).
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 
 export const diagramKey = 'series-ap-gp-shared';
 
@@ -52,15 +52,9 @@ export default function SeriesApGpShared() {
       {/* GP: multiply by ½, arcs below */}
       <path d={arc(16, 8, 1, 70)} className="dg-accent-2" />
       <path d={arc(8, 4, 1, 40)} className="dg-accent-2" />
-      <Label x={sx(12)} y={AXIS + 58} className="dg-text-accent-2">
-        × ½
-      </Label>
-      <Label x={sx(6)} y={AXIS + 42} className="dg-text-accent-2">
-        × ½
-      </Label>
-      <Label x={sx(10)} y={AXIS + 100} className="dg-text-accent-2">
-        GP: 1st, 3rd and 4th terms, 16, 8, 4 (r = ½)
-      </Label>
+      <MathLabel x={sx(12)} y={AXIS + 58} w={68} h={46} tone="accent-2" tex={"\\times \\dfrac{1}{2}"} />
+      <MathLabel x={sx(6)} y={AXIS + 42} w={68} h={46} tone="accent-2" tex={"\\times \\dfrac{1}{2}"} />
+      <MathLabel x={sx(10)} y={AXIS + 100} w={458} h={46} tone="accent-2" tex={"\\text{GP: 1st, 3rd and 4th terms, 16, 8, 4 } \\left(r = \\dfrac{1}{2}\\right)"} />
 
       {/* the points */}
       {ap.map((v, i) => {

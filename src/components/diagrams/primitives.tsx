@@ -6,11 +6,16 @@
  *            dg-accent, dg-accent-2, dg-dashed (combine with a stroke class)
  *   fills:   dg-fill-accent, dg-fill-accent-2, dg-fill-muted, dg-dot, dg-dot-accent
  *   text:    dg-text, dg-text-muted, dg-text-accent, dg-text-accent-2, dg-text-small, dg-mono, dg-bold, dg-italic
- *   helpers: Svg, Arrow, Label, axes() + graph() for y = f(x) in maths coordinates
+ *   helpers: Svg, Arrow, Label, MathLabel, axes() + graph() for y = f(x) in maths coordinates
+ *
+ * Write every formula with MathLabel (LaTeX), not Label: Label is plain SVG text, which can't
+ * draw a fraction bar or a root sign over a whole expression. So no "1 ⁄ (2√u)" or "√(2x³ + 5)"
+ * in diagram text: use MathLabel with \dfrac{1}{2\sqrt{u}} and \sqrt{2x^3 + 5}.
  *
  * Keep text at the default 14px (dg-text) or 12px (dg-text-small) in
  * viewBox units and design for a viewBox about 480-640 wide.
  */
+import katex from 'katex';
 import type { ReactNode, SVGProps } from 'react';
 
 export function Svg({
@@ -97,6 +102,113 @@ export function Label({
 }
 
 /** Build an SVG path from a function, e.g. a curve y = f(x), already mapped to screen space. */
+/**
+ * A formula typeset by KaTeX, e.g. tex="\dfrac{dy}{dx} = 3x^2". It sits in a w × h box centred on
+ * (x, y); with anchor 'start' or 'end' the box starts or ends at x instead. Make the box big
+ * enough: KaTeX doesn't wrap, and anything outside the box is cut off. A \dfrac needs h ≈ 44.
+ * tone picks the colour (like dg-text, dg-text-muted, dg-text-accent, dg-text-accent-2).
+ * Colour part of a formula with \htmlClass{dg-k-accent}{...} (or dg-k-accent-2, dg-k-muted), so it
+ * follows light/dark mode; \cancel{...} strikes a term through. Bad LaTeX throws when the diagram
+ * renders, so the diagram tests catch it.
+ */
+export function MathLabel({
+  x,
+  y,
+  tex,
+  w = 320,
+  h = 32,
+  anchor = 'middle',
+  tone,
+  size,
+}: {
+  x: number;
+  y: number;
+  tex: string;
+  w?: number;
+  h?: number;
+  anchor?: 'start' | 'middle' | 'end';
+  tone?: 'muted' | 'accent' | 'accent-2';
+  size?: 'small' | 'large';
+}) {
+  const left = anchor === 'middle' ? x - w / 2 : anchor === 'end' ? x - w : x;
+  const html = katex.renderToString(tex, {
+    throwOnError: true,
+    output: 'html',
+    trust: (ctx) => ctx.command === '\\htmlClass' && /^dg-k-[a-z0-9-]+$/.test(ctx.class),
+    strict: (code: string) => (code === 'htmlExtension' ? 'ignore' : 'warn'),
+  });
+  const cls = ['dg-math', anchor !== 'middle' && `dg-math-${anchor}`, tone && `dg-math-${tone}`, size && `dg-math-${size}`]
+    .filter(Boolean)
+    .join(' ');
+  return (
+    <foreignObject x={left} y={y - h / 2} width={w} height={h}>
+      <div className={cls} dangerouslySetInnerHTML={{ __html: html }} />
+    </foreignObject>
+  );
+}
+
+/**
+ * Turns short plain maths like "3π/2", "−π/2", "(π/2, 3)", "r sin(θ/2)" or "30° = π/6" into LaTeX
+ * with real fractions. Words of three or more letters (other than sin, cos, tan) stay as text.
+ */
+export function plainToTex(s: string): string {
+  return s
+    .replace(/ \(/g, '\\ (')
+    .replace(/(\s?)\b([A-Za-z]{3,}(?:-[A-Za-z]+)*)\b(\s?)/g, (_m, a: string, w: string, b: string) =>
+      ['sin', 'cos', 'tan'].includes(w) ? `${a}\\${w} ` : `\\text{${a}${w}${b}}`,
+    )
+    .replace(/(\d*)([πθ]?)\/(\d+)/g, (_m, n: string, sym: string, d: string) => `\\dfrac{${n}${sym}}{${d}}`)
+    .replace(/π/g, '\\pi ')
+    .replace(/θ/g, '\\theta ')
+    .replace(/°/g, '^\\circ')
+    .replace(/−/g, '-');
+}
+
+/**
+ * A Label whose text may hold a fraction (e.g. a radian tick "3π/2"): if it does, it is typeset as
+ * a real fraction with MathLabel; otherwise it is ordinary SVG text. Use it in shared kits whose
+ * labels are data.
+ */
+export function FracLabel({
+  x,
+  y,
+  children,
+  anchor = 'middle',
+  className = 'dg-text',
+}: {
+  x: number;
+  y: number;
+  children: ReactNode;
+  anchor?: 'start' | 'middle' | 'end';
+  className?: string;
+}) {
+  if (typeof children !== 'string' || !/[\dπθ]\/\d/.test(children))
+    return (
+      <Label x={x} y={y} anchor={anchor} className={className}>
+        {children}
+      </Label>
+    );
+  const tone = className.includes('accent-2')
+    ? 'accent-2'
+    : className.includes('accent')
+      ? 'accent'
+      : className.includes('muted')
+        ? 'muted'
+        : undefined;
+  return (
+    <MathLabel
+      x={x}
+      y={y}
+      anchor={anchor}
+      w={children.length * 10 + 40}
+      h={46}
+      tone={tone}
+      size={className.includes('small') ? 'small' : undefined}
+      tex={plainToTex(children)}
+    />
+  );
+}
+
 export function plotPath(f: (x: number) => number, from: number, to: number, steps = 120): string {
   let d = '';
   for (let i = 0; i <= steps; i++) {

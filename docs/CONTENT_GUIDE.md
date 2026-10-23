@@ -64,9 +64,19 @@ Rules:
 
 ### Writing style
 
+* **Written for students with ADHD and short attention spans.** Every block should be
+  easy to scan and leave the reader refreshed, not tired:
+  * Paragraphs of at most 2 sentences, with a blank line between chunks.
+  * Bullets wherever there are two or more parallel points, steps or conditions; numbered
+    steps for a method.
+  * One idea per block. Split a long explanation into separate blocks.
+  * No walls of text: if a block needs scrolling on a phone, cut it or split it.
+* Teach a first-timer: start from the simplest concrete case, then the general rule. Where
+  you can, give an easy first example the student can check another way (e.g. the chain
+  rule on $(2x + 1)^2$, checked by expanding) before the harder ones.
 * Conversational, warm, occasionally funny. Never at the expense of accuracy.
 * Lead with the idea, not a preamble. No "In this lesson we will…" filler.
-* Short paragraphs (≤ 3 sentences), bullets, tables, numbered steps.
+* Tables and bold key terms help scanning; use them.
 * **Bold** key terms the first time they appear. Use exact Cambridge terminology.
 * Analogies only when they genuinely clarify; say where the analogy breaks down.
 * State conditions and limits precisely ("for $a \neq 0$", "at constant temperature").
@@ -109,15 +119,25 @@ Guidance:
 ## 4. Diagrams
 
 Diagrams are React components returning one `<svg>` built with the helpers in
-`src/components/diagrams/primitives.tsx` (`Svg`, `Arrow`, `Label`, `plotPath`, `axes`).
+`src/components/diagrams/primitives.tsx` (`Svg`, `Arrow`, `Label`, `MathLabel`, `FracLabel`,
+`plotPath`, `axes`).
 
+* **Formulas go in `MathLabel`** (LaTeX, typeset by KaTeX): fractions with a real bar
+  (`\dfrac{dy}{dx}`), root signs that cover the whole expression (`\sqrt{2x^3 + 5}`).
+  Never write a slash fraction (`dy/dx`, `1 ⁄ (2√u)`), a `½`-style glyph or a `√(` in plain
+  `Label` text; `tests/diagram-notation.test.ts` fails if you do. `FracLabel` does this
+  automatically for short data labels such as radian ticks (`3π/2`).
+* Not every diagram has to be a graph. A rule table (x² → 2x, x³ → 3x²), a row of step
+  boxes or a picture of terms cancelling is often clearer for a first-timer.
 * Use only the `dg-*` classes for colour (listed in `primitives.tsx`). No hard-coded
   colours, so diagrams work in dark mode.
 * File: `src/components/diagrams/<code>/<name>.tsx` with a default export (the component)
   and `export const diagramKey = '<key>';` (kebab-case, prefixed by subject: none for 9709,
   `cs-` for 9618, `phys-` for 9702, `chem-` for 9701). Then run `npm run diagrams:gen` to
   regenerate `<code>/index.ts`; never edit the index by hand.
-* Preview it in light and dark: `npm run diagram:render -- <key> --out <dir>` writes PNGs.
+* Preview it in light and dark: `npm run diagram:render -- <key> --out <dir>` writes PNGs
+  and reports any `MathLabel` whose formula is cut off (box too small, or outside the
+  diagram).
 * The lesson's `alt` must describe what the diagram shows for a screen-reader user. The
   svg itself is `aria-hidden`.
 * Diagrams must be mathematically and physically accurate: plot real functions with

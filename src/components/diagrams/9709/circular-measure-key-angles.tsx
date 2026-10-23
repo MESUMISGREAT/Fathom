@@ -2,7 +2,7 @@
  * A semicircular "protractor" from 0° to 180°: each key angle is marked with its
  * size in degrees (inside) and in radians (outside). π rad = 180°.
  */
-import { Label, Svg } from '../primitives';
+import { FracLabel, Svg } from '../primitives';
 import { arcPath, polar } from './p1-trigonometry-kit';
 
 export const diagramKey = 'circular-measure-key-angles';
@@ -43,36 +43,36 @@ export default function CircularMeasureKeyAngles() {
             <line x1={tickIn.x} y1={tickIn.y} x2={end.x} y2={end.y} className="dg-line" />
             {edge ? (
               <>
-                <Label x={end.x} y={C.y + 18} className="dg-text-small">
+                <FracLabel x={end.x} y={C.y + 18} className="dg-text-small">
                   {`${m.deg}°`}
-                </Label>
-                <Label x={end.x + (m.deg === 0 ? 22 : -22)} y={C.y - 2} className="dg-text-accent">
+                </FracLabel>
+                <FracLabel x={end.x + (m.deg === 0 ? 22 : -22)} y={C.y - 2} className="dg-text-accent">
                   {m.rad}
-                </Label>
+                </FracLabel>
               </>
             ) : (
               <>
-                <Label x={inner.x} y={inner.y} className="dg-text-small">
+                <FracLabel x={inner.x} y={inner.y} className="dg-text-small">
                   {`${m.deg}°`}
-                </Label>
-                <Label x={outer.x} y={outer.y} className="dg-text-accent">
+                </FracLabel>
+                <FracLabel x={outer.x} y={outer.y} className="dg-text-accent">
                   {m.rad}
-                </Label>
+                </FracLabel>
               </>
             )}
           </g>
         );
       })}
       <circle cx={C.x} cy={C.y} r={3.5} className="dg-dot" />
-      <Label x={C.x} y={C.y - 52} className="dg-text dg-bold">
+      <FracLabel x={C.x} y={C.y - 52} className="dg-text dg-bold">
         π rad = 180°
-      </Label>
-      <Label x={C.x} y={C.y - 30} className="dg-text-small">
+      </FracLabel>
+      <FracLabel x={C.x} y={C.y - 30} className="dg-text-small">
         degrees inside, radians outside
-      </Label>
-      <Label x={C.x} y={C.y + 20} className="dg-text-small dg-italic">
+      </FracLabel>
+      <FracLabel x={C.x} y={C.y + 20} className="dg-text-small dg-italic">
         O
-      </Label>
+      </FracLabel>
     </Svg>
   );
 }

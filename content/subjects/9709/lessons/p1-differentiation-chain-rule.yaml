@@ -2,7 +2,7 @@ id: p1-differentiation-chain-rule
 subject: "9709"
 topic: "1.7"
 title: The chain rule
-summary: Differentiate composite functions such as (3x − 1)⁵ and √(2x³ + 5) using dy/dx = dy/du × du/dx.
+summary: Differentiate a function inside a function, like (2x + 1)² or the square root of 2x³ + 5, with the chain rule.
 order: 3
 minutes: 5
 kind: core
@@ -10,7 +10,7 @@ objectives: ["1.7.2"]
 prerequisites: [p1-differentiation-powers-of-x, functions-composite-functions]
 provenance:
   origin: ai-drafted
-  status: ai-checked
+  status: draft
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "use the derivative of
@@ -19,6 +19,9 @@ provenance:
     example y = √(2x³ + 5), which is worked here. Other examples and all questions are original;
     all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Opening rewritten on 2026-10-23 for first-time learners at the student's request (inside/outside
+    as a box, the cancelling-fractions way to remember the rule, an easy example checked by
+    expanding); needs a fresh independent review.
 
 blocks:
   - type: objective
@@ -26,52 +29,64 @@ blocks:
       By the end you can differentiate a **composite function** like $(3x - 1)^5$ or $\sqrt{2x^3 + 5}$ with the **chain rule**, without expanding anything.
 
   - type: explain
-    title: Please don't expand (3x − 1)⁵
+    title: A function inside a function
     body: |-
-      You *could* expand $(3x - 1)^5$ with the binomial theorem, differentiate six terms, and tidy up. Or you could do it in one line.
+      Look at $y = (2x + 1)^2$. There's a bracket, and the whole bracket is squared. Think of the bracket as a box:
 
-      $(3x - 1)^5$ is a function **inside** another function: first $x \mapsto 3x - 1$ (the **inner** function), then "raise it to the power 5" (the **outer** function). The chain rule handles exactly this.
+      $$y = \big(\,\boxed{2x + 1}\,\big)^2$$
+
+      - The **inside** is what's in the box: $2x + 1$.
+      - The **outside** is what happens to the box: it gets squared.
+
+      A function inside another function is a **composite function**. The chain rule differentiates one without expanding anything.
 
   - type: definition
     term: The chain rule
     body: |-
-      If $y$ is a function of $u$, and $u$ is a function of $x$, then
+      Call the inside $u$. Then $y$ is a function of $u$, and $u$ is a function of $x$, and
 
       $$\frac{dy}{dx} = \frac{dy}{du} \times \frac{du}{dx}.$$
 
-      In words: **differentiate the outer function, leaving the inside alone, then multiply by the derivative of the inside.**
-
-  - type: diagram
-    diagram: p1-differentiation-chain-machines
-    alt: >-
-      Two function machines in a row. x goes into the first box, labelled inner function, u = 2x³ + 5,
-      with du/dx = 6x² written underneath. Its output u goes into the second box, labelled outer
-      function, y = √u, with dy/du = 1/(2√u) underneath. The output is y. Below a line: dy/dx =
-      dy/du × du/dx = 1/(2√u) × 6x² = 3x²/√(2x³ + 5), and the note: rates multiply, outer rate
-      (inside left alone) times inner rate.
-    caption: |-
-      Two machines, two rates. The overall rate of change is the product of the rates.
+      In words: **differentiate the outside (leave the inside alone), then multiply by the derivative of the inside.**
 
   - type: intuition
-    title: Gears
+    title: Remember it like fractions
     body: |-
-      Gear A turns 3 times for every turn of gear B, and gear B turns 2 times for every turn of gear C. Then A turns $3 \times 2 = 6$ times for every turn of C.
+      Pretend $\dfrac{dy}{du}$ and $\dfrac{du}{dx}$ are fractions:
 
-      Rates of change chain together the same way: if $y$ changes $\frac{dy}{du}$ times as fast as $u$, and $u$ changes $\frac{du}{dx}$ times as fast as $x$, then $y$ changes $\frac{dy}{du} \times \frac{du}{dx}$ times as fast as $x$. (The gears analogy breaks for negative rates, where one quantity falls as the other rises, but the multiplication still works.)
+      $$\frac{dy}{\cancel{du}} \times \frac{\cancel{du}}{dx} = \frac{dy}{dx}$$
+
+      - The $du$ on the bottom cancels the $du$ on top.
+      - $dy$ stays on top and $dx$ stays on the bottom.
+      - That leaves exactly the derivative you want.
+
+      They aren't really fractions. But the cancelling always gives the right formula, so it's a safe way to remember which way round it goes.
+
+  - type: diagram
+    diagram: p1-differentiation-chain-cancel
+    alt: >-
+      Top: dy over du, times du over dx, equals dy over dx. Both du's are coloured and crossed out, with
+      the notes "treat them like fractions: the du's cancel" and "dy stays on top, dx stays on the
+      bottom". Below, the example y = (2x + 1)² in three boxes. 1, name the inside: u = 2x + 1, so
+      du/dx = 2. 2, do the outside: y = u², so dy/du = 2u. 3, multiply: dy/dx = 2u × 2 = 4(2x + 1).
+      Last line: check by expanding, (2x + 1)² = 4x² + 4x + 1, which differentiates to 8x + 4 =
+      4(2x + 1), with a tick.
+    caption: |-
+      Three steps: name the inside, do the outside, multiply. Expanding gives the same answer, so you can see the rule works before you trust it on harder ones.
 
   - type: example
-    title: A power of a linear expression
+    title: Now one you wouldn't want to expand
     problem: |-
       Differentiate $y = (3x - 1)^5$.
     steps:
       - |-
-        Let $u = 3x - 1$, so $y = u^5$.
+        Inside: $u = 3x - 1$, so $\dfrac{du}{dx} = 3$.
       - |-
-        $\dfrac{dy}{du} = 5u^4$ and $\dfrac{du}{dx} = 3$.
+        Outside: $y = u^5$, so $\dfrac{dy}{du} = 5u^4$.
       - |-
-        $\dfrac{dy}{dx} = 5u^4 \times 3 = 15(3x - 1)^4$.
+        Multiply: $\dfrac{dy}{dx} = 5u^4 \times 3 = 15(3x - 1)^4$.
     answer: |-
-      $\dfrac{dy}{dx} = 15(3x - 1)^4$. Shortcut for a linear inside: $\dfrac{d}{dx}(ax + b)^n = an(ax + b)^{n-1}$.
+      $\dfrac{dy}{dx} = 15(3x - 1)^4$. Expanding $(3x - 1)^5$ first would take six terms; the chain rule takes one line. Shortcut for a straight-line inside: $\dfrac{d}{dx}(ax + b)^n = an(ax + b)^{n-1}$.
 
   - type: check
     questions: [chain-linear, chain-mcq]
@@ -82,11 +97,11 @@ blocks:
       Find $\dfrac{dy}{dx}$ given $y = \sqrt{2x^3 + 5}$.
     steps:
       - |-
-        Rewrite as a power: $y = (2x^3 + 5)^{\frac12}$. Let $u = 2x^3 + 5$, so $y = u^{\frac12}$.
+        Inside: $u = 2x^3 + 5$, so $\dfrac{du}{dx} = 6x^2$.
       - |-
-        $\dfrac{dy}{du} = \tfrac12 u^{-\frac12}$ and $\dfrac{du}{dx} = 6x^2$.
+        Outside: $y = \sqrt{u} = u^{\frac12}$, so $\dfrac{dy}{du} = \tfrac12 u^{-\frac12} = \dfrac{1}{2\sqrt{u}}$.
       - |-
-        $\dfrac{dy}{dx} = \tfrac12(2x^3 + 5)^{-\frac12} \times 6x^2 = 3x^2(2x^3 + 5)^{-\frac12}$.
+        Multiply: $\dfrac{dy}{dx} = \dfrac{1}{2\sqrt{2x^3 + 5}} \times 6x^2 = \dfrac{6x^2}{2\sqrt{2x^3 + 5}}$, then cancel the 2.
     answer: |-
       $\dfrac{dy}{dx} = \dfrac{3x^2}{\sqrt{2x^3 + 5}}$
 

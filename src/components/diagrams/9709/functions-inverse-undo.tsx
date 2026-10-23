@@ -3,7 +3,7 @@
  * in reverse order. Top row (left to right): 4 → ×2 → 8 → +3 → 11.
  * Bottom row (right to left): 11 → −3 → 8 → ÷2 → 4, so f⁻¹(x) = (x − 3)/2.
  */
-import { Arrow, Label, Svg } from '../primitives';
+import { Arrow, Label, Svg, MathLabel } from '../primitives';
 
 export const diagramKey = 'functions-inverse-undo';
 
@@ -62,9 +62,7 @@ export default function FunctionsInverseUndo() {
 
       <line x1={20} y1={157} x2={W - 20} y2={157} className="dg-grid" />
 
-      <Label x={20} y={bot - 50} anchor="start" className="dg-text dg-bold">
-        {'f⁻¹(x) = (x − 3)/2: undo each step, last one first'}
-      </Label>
+      <MathLabel x={20} y={bot - 50} anchor="start" w={515} h={46} tex={"f^{-1}(x) = \\dfrac{x - 3}{2}\\text{: undo each step, last one first}"} />
       <Value x={cols[4]!} y={bot} v="11" />
       <Arrow x1={cols[4]! - 21} y1={bot} x2={cols[3]! + BW / 2 + 3} y2={bot} head={8} className="dg-thin" />
       <Box x={cols[3]!} y={bot} text="− 3" accent={false} />

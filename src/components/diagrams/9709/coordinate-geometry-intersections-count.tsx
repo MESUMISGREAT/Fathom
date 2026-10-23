@@ -3,7 +3,7 @@
  * x³ − 2x − 1 = 0) has three real roots: x = −1, x = (1 − √5)/2 ≈ −0.618 and
  * x = (1 + √5)/2 ≈ 1.618. Both branches of the hyperbola are drawn.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'coordinate-geometry-intersections-count';
@@ -42,9 +42,7 @@ export default function CoordinateGeometryIntersectionsCount() {
       <Label x={p.sx(2.3)} y={p.sy(4.1)} anchor="end" className="dg-text-accent">
         y = x² − 2
       </Label>
-      <Label x={p.sx(0.45)} y={p.sy(3.6)} anchor="start" className="dg-text-accent-2">
-        y = 1/x
-      </Label>
+      <MathLabel x={p.sx(0.45)} y={p.sy(3.6)} anchor="start" w={106} h={46} tone="accent-2" tex={"y = \\dfrac{1}{x}"} />
       <Label x={p.sx(3.0)} y={p.sy(-2.55)} anchor="end" className="dg-text-small dg-bold">
         3 meeting points ⇒ 3 real roots
       </Label>

@@ -4,7 +4,7 @@
  * the foot of the perpendicular. PF = √(4² + 2²) = 2√5 is the shortest (perpendicular)
  * distance from P to L. A right-angle mark at F.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'coordinate-geometry-foot-of-perpendicular';
@@ -59,12 +59,8 @@ export default function CoordinateGeometryFootOfPerpendicular() {
       <Label x={p.sx(3.05)} y={p.sy(6.3) + 18} anchor="start" className="dg-text-small">
         gradient 2
       </Label>
-      <Label x={p.sx(3.35)} y={p.sy(2.55)} anchor="start" className="dg-text-small">
-        {'PF: gradient −½'}
-      </Label>
-      <Label x={p.sx(7.3)} y={p.sy(-0.75)} anchor="end" className="dg-text-small dg-bold">
-        {'PF = √(4² + 2²) = 2√5'}
-      </Label>
+      <MathLabel x={p.sx(3.35)} y={p.sy(2.55)} anchor="start" w={182} h={46} size="small" tex={"PF\\text{: gradient } {-\\dfrac{1}{2}}"} />
+      <MathLabel x={p.sx(7.3)} y={p.sy(-0.75)} anchor="end" w={239} h={30} size="small" tex={"PF = \\sqrt{4^2 + 2^2} = 2\\sqrt{5}"} />
     </Svg>
   );
 }
