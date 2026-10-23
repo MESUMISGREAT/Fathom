@@ -1,0 +1,243 @@
+id: momentum-newton-force-momentum
+subject: "9702"
+topic: "3.1"
+title: Force is the rate of change of momentum
+summary: Force is the rate of change of momentum, F = Δp / Δt. This is Newton's second law, and F = ma is its special case for constant mass.
+order: 7
+minutes: 5
+objectives: ["3.1.4", "3.1.5"]
+prerequisites: [momentum-newton-linear-momentum]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.1.4, defining force as the rate of change of momentum and using
+    this definition, and learning outcome 3.1.5, stating Newton's laws; this lesson covers the
+    second law and shows how F = ma (3.1.2) follows for constant mass). The force–time diagram is
+    drawn to scale (half-sine pulses with equal areas of 2.0 N s, lasting 4.0 ms and 16 ms). All
+    worked values and answer keys computed with Python. All questions are original; masses, speeds
+    and contact times are illustrative values. Independently re-checked line by line (facts, worked
+    examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a
+    teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define **force as the rate of change of momentum**, use $F = \Delta p / \Delta t$, state Newton's second law in full, and show where $F = ma$ comes from.
+
+  - type: explain
+    title: Why you bend your knees
+    body: |
+      Jump off a wall and land stiff-legged: ouch. Land and bend your knees: no problem. Either way your momentum has to drop to zero.
+
+      The difference is **how quickly** it drops. And "how quickly momentum changes" is, it turns out, exactly what a force is.
+
+  - type: definition
+    term: Force
+    body: |
+      Force is the **rate of change of momentum**:
+
+      $$F = \frac{\Delta p}{\Delta t}$$
+
+      If the force varies during $\Delta t$, this gives the **average** resultant force.
+
+  - type: definition
+    term: Newton's second law
+    body: |
+      The rate of change of momentum of an object is **proportional** to the resultant force acting on it, and the change in momentum takes place in the **direction** of that force.
+
+      The newton is defined so that the constant of proportionality is 1, which gives $F = \dfrac{\Delta p}{\Delta t}$.
+
+  - type: explain
+    title: Where F = ma comes from
+    body: |
+      If the mass stays constant, only the velocity changes:
+
+      $$F = \frac{\Delta (mv)}{\Delta t} = m\,\frac{\Delta v}{\Delta t} = ma$$
+
+      So $F = ma$ is the second law for **constant mass**. The momentum version is more general: it still works when mass flows in or out, like a rocket burning fuel or a hose spraying water.
+
+  - type: check
+    questions: [force-definition, second-law-cloze]
+
+  - type: example
+    title: Kicking a football
+    problem: |
+      A footballer kicks a stationary $0.43\ \text{kg}$ ball, which leaves her boot at $25\ \text{m s}^{-1}$. The boot is in contact with the ball for $0.010\ \text{s}$. Find the average force on the ball.
+    steps:
+      - |
+        Change in momentum: $\Delta p = mv - mu = 0.43 \times 25 - 0 = 10.75\ \text{kg m s}^{-1}$.
+      - |
+        $F = \dfrac{\Delta p}{\Delta t} = \dfrac{10.75}{0.010} = 1075\ \text{N}$.
+    answer: |
+      About $1100\ \text{N}$, in the direction the ball moves off. By the third law, the ball pushes back on the boot just as hard.
+
+  - type: intuition
+    title: Same change in momentum, more time, less force
+    body: |
+      $F = \dfrac{\Delta p}{\Delta t}$. When the change in momentum is fixed (you **must** stop), the only way to cut the force is to make $\Delta t$ longer.
+
+      | Situation | How the time is made longer |
+      | --- | --- |
+      | landing from a jump | bending your knees |
+      | car crash | crumple zones fold and airbags squash |
+      | catching a ball | letting your hands "give" |
+      | falling off a bike | the helmet's foam crushes |
+
+      A $70\ \text{kg}$ person landing at $5.0\ \text{m s}^{-1}$ has $\Delta p = 350\ \text{N s}$. Stopping in $0.010\ \text{s}$ needs an average resultant force of $35\,000\ \text{N}$; bending the knees to stop in $0.20\ \text{s}$ needs only $1750\ \text{N}$.
+
+  - type: diagram
+    diagram: phys-momentum-newton-force-time
+    alt: >-
+      A graph of force F / N (0 to 900) against time t / ms (0 to 20) for stopping a 0.50 kg ball
+      moving at 4.0 m s⁻¹. Two shaded hump-shaped curves start and end on the time axis. The hard
+      floor curve is tall and narrow: it lasts 4.0 ms and peaks at 785 N. The cushion curve is low
+      and wide: it lasts 16 ms and peaks at 196 N. A note says both have the same Δp = 2.0 N s,
+      equal to the area under each graph: four times the time gives a quarter of the peak force.
+    caption: Equal areas, equal changes in momentum. Spread the change over more time and the force drops.
+
+  - type: deeper
+    title: Change in momentum = area under a force–time graph
+    body: |
+      Over a short interval, $\Delta p = F\Delta t$: the area of a thin strip under a graph of $F$ against $t$. Add up all the strips and
+
+      $$\Delta p = \text{area under the force–time graph}$$
+
+      This works even when the force changes during an impact, as it always does in a real collision. The product $F\Delta t$ is sometimes called the **impulse**; its unit, $\text{N s}$, is another reason $\text{N s}$ is a unit of momentum.
+
+  - type: check
+    questions: [golf-force, airbag-mcq]
+
+  - type: misconceptions
+    items:
+      - wrong: Force is the same thing as momentum.
+        right: Force is the **rate of change** of momentum. A spacecraft coasting with an enormous momentum needs no force at all (first law).
+      - wrong: Airbags and crumple zones reduce the change in momentum.
+        right: The change in momentum is the same (from moving to stopped). They increase the **time** it takes, which reduces the average force.
+      - wrong: F = Δp/Δt gives the force of the ground on you when you land.
+        right: It gives the **resultant** force. The ground's upward push is that plus your weight, because the resultant is the push minus the weight.
+      - wrong: Force is the change of momentum.
+        right: Leave out "rate" and the definition is wrong. Force is the change of momentum **per unit time**.
+
+  - type: exam
+    body: |
+      - "Define force": "force is the rate of change of momentum". One line, one mark, and "rate" is the word that scores it.
+      - "State Newton's second law" (usually 1–2 marks): the rate of change of momentum is proportional to the resultant force, **and** it takes place in the direction of that force.
+      - "Show that F = ma": start from $F = \dfrac{\Delta (mv)}{\Delta t}$ and say "for constant mass".
+      - Rebounds: find $\Delta p$ with signs first (its size is $m(u + v)$ for a straight bounce), **then** divide by the contact time.
+
+  - type: check
+    questions: [wall-force, puck-graph]
+
+  - type: takeaways
+    items:
+      - "Force is the rate of change of momentum: $F = \\Delta p / \\Delta t$."
+      - "Newton's second law: the rate of change of momentum is proportional to the resultant force, and in the direction of that force."
+      - For constant mass it becomes $F = ma$.
+      - The same change in momentum over a longer time means a smaller force (bent knees, crumple zones, airbags).
+      - The change in momentum is the area under a force–time graph.
+
+questions:
+  - id: force-definition
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["3.1.4"]
+    prompt: |
+      Define force in terms of momentum.
+    accept:
+      - force is the rate of change of momentum
+      - rate of change of momentum
+      - the rate of change of momentum
+      - force is rate of change of momentum
+      - force is the rate of change of linear momentum
+      - rate of change of linear momentum
+      - force equals the rate of change of momentum
+      - force = rate of change of momentum
+      - change in momentum per unit time
+      - change of momentum per unit time
+      - force is the change in momentum per unit time
+      - force is the change of momentum per unit time
+      - F = Δp/Δt
+      - F = dp/dt
+      - force is equal to the rate of change of momentum
+      - force equals rate of change of momentum
+      - the rate of change of momentum of an object
+      - force is the rate of change of momentum of an object
+      - resultant force is the rate of change of momentum
+      - F = change in momentum / time
+    model: |
+      Force is the rate of change of momentum: $F = \Delta p / \Delta t$.
+    explanation: |
+      The word **rate** (or "per unit time") is essential. Without it you've described a change in momentum, which is measured in N s, not N.
+
+  - id: second-law-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.5"]
+    prompt: |
+      Newton's second law: the {{1}} of change of momentum of an object is {{2}} to the resultant force acting on it, and the change in momentum takes place in the {{3}} of that force.
+    blanks:
+      - accept: [rate]
+      - accept: [proportional, directly proportional, equal]
+      - accept: [direction]
+    explanation: |
+      "Proportional" is the usual wording; with the newton defined as it is, the rate of change of momentum is actually **equal** to the resultant force, $F = \Delta p / \Delta t$.
+
+  - id: golf-force
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      A golf ball of mass $0.046\ \text{kg}$ sits at rest on a tee. The club is in contact with it for $0.50\ \text{ms}$, and the ball leaves at $70\ \text{m s}^{-1}$. Calculate the average force on the ball.
+    fields:
+      - answer: 6440
+        tolerance: { rel: 0.01 }
+        unit: N
+    explanation: |
+      $\Delta p = 0.046 \times 70 - 0 = 3.22\ \text{kg m s}^{-1}$ and $\Delta t = 0.50\ \text{ms} = 5.0 \times 10^{-4}\ \text{s}$. So $F = \dfrac{3.22}{5.0 \times 10^{-4}} = 6440\ \text{N}$: about 14 000 times the ball's weight, for half a millisecond.
+
+  - id: airbag-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      In a crash, an airbag reduces the force on a passenger's head mainly because it...
+    options:
+      - text: increases the time taken for the head's momentum to change.
+        correct: true
+        why: Correct. The same change in momentum spread over a longer time means a smaller average force, $F = \Delta p / \Delta t$.
+      - text: reduces the change in the head's momentum.
+        why: The head goes from moving to stopped either way, so the change in momentum is the same.
+      - text: reduces the head's momentum before the crash.
+        why: The airbag only acts during the crash. The momentum before depends on the car's speed.
+      - text: makes the change in momentum happen more quickly.
+        why: A quicker change would mean a **bigger** force. The airbag does the opposite.
+    explanation: |
+      Crumple zones, airbags, crash mats and bent knees all work the same way: fixed $\Delta p$, bigger $\Delta t$, smaller $F$.
+
+  - id: wall-force
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |
+      A $0.25\ \text{kg}$ ball hits a wall at $12\ \text{m s}^{-1}$ and rebounds along the same line at $9.0\ \text{m s}^{-1}$. It is in contact with the wall for $0.030\ \text{s}$. Calculate the size of the average force exerted on the ball by the wall.
+    fields:
+      - answer: 175
+        tolerance: { abs: 5 }
+        unit: N
+    explanation: |
+      Towards the wall positive: $\Delta p = 0.25 \times (-9.0) - 0.25 \times 12 = -5.25\ \text{kg m s}^{-1}$. Then $F = \dfrac{\Delta p}{\Delta t} = \dfrac{-5.25}{0.030} = -175\ \text{N}$: $175\ \text{N}$ (about $180\ \text{N}$ to 2 significant figures), directed away from the wall. Using $12 - 9.0$ would give a force seven times too small.
+
+  - id: puck-graph
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |
+      A hockey puck of mass $0.15\ \text{kg}$ is at rest on frictionless ice. A stick hits it, and the force–time graph of the hit is a triangle: the force rises steadily from 0 to a peak of $600\ \text{N}$ and falls steadily back to 0, over a total time of $0.020\ \text{s}$. Calculate the speed of the puck after the hit.
+    fields:
+      - answer: 40
+        tolerance: { abs: 0.4 }
+        unit: m s⁻¹
+    explanation: |
+      Change in momentum = area under the graph $= \tfrac{1}{2} \times 0.020 \times 600 = 6.0\ \text{N s}$. The puck started at rest, so $mv = 6.0$ and $v = \dfrac{6.0}{0.15} = 40\ \text{m s}^{-1}$.

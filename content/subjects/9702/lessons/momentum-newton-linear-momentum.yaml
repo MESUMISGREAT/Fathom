@@ -1,0 +1,240 @@
+id: momentum-newton-linear-momentum
+subject: "9702"
+topic: "3.1"
+title: "Linear momentum: mass times velocity"
+summary: Linear momentum is mass multiplied by velocity, a vector measured in kg m s⁻¹ (or N s) whose sign matters whenever something changes direction.
+order: 6
+minutes: 5
+objectives: ["3.1.3"]
+prerequisites: [momentum-newton-f-equals-ma, units-scalars-and-vectors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.1.3, defining linear momentum as the product of mass and velocity
+    and using this definition). The rebound diagram is drawn to scale (0.20 kg ball, 15 m s⁻¹ in
+    and 10 m s⁻¹ out; momentum arrows at 40 px per kg m s⁻¹). All worked values and answer keys
+    computed with Python. All questions are original; masses and speeds are illustrative values.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate
+    AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **define linear momentum**, calculate it with the right sign and unit, and find the **change in momentum** when something speeds up, slows down or bounces.
+
+  - type: explain
+    title: Which would you rather stop?
+    body: |
+      A cricket ball flying at you at $40\ \text{m s}^{-1}$, or a car rolling towards you at walking pace? The car is slower, but it is far harder to stop. How hard something is to stop depends on its mass **and** its velocity, so physicists bundle the two together as **momentum**.
+
+      | | mass / kg | velocity / m s⁻¹ | momentum / kg m s⁻¹ |
+      | --- | --- | --- | --- |
+      | cricket ball | 0.16 | 40 | 6.4 |
+      | rolling car | 1000 | 0.50 | 500 |
+
+      (Please don't try to stop either.)
+
+  - type: definition
+    term: Linear momentum
+    body: |
+      Linear momentum is the product of an object's **mass** and its **velocity**:
+
+      $$p = mv$$
+
+      It is a **vector**, pointing the same way as the velocity. Its unit is $\text{kg m s}^{-1}$, which is the same as $\text{N s}$.
+
+  - type: explain
+    title: A vector, so signs matter
+    body: |
+      Choose a positive direction and stick to it. A $2.0\ \text{kg}$ trolley moving right at $3.0\ \text{m s}^{-1}$ has $p = +6.0\ \text{kg m s}^{-1}$. The same trolley moving left at the same speed has $p = -6.0\ \text{kg m s}^{-1}$. Same speed, opposite momentum.
+
+      Why is $\text{N s}$ the same as $\text{kg m s}^{-1}$? Because $1\ \text{N} = 1\ \text{kg m s}^{-2}$, so $1\ \text{N s} = 1\ \text{kg m s}^{-1}$. Force multiplied by time gives a change in momentum: a clue to the next lesson.
+
+  - type: check
+    questions: [sprinter-momentum, momentum-unit]
+
+  - type: explain
+    title: "Change in momentum: final minus initial"
+    body: |
+      $$\Delta p = mv - mu$$
+
+      where $u$ and $v$ are the initial and final **velocities**, signs and all. When an object bounces back, its velocity reverses, so the change in momentum is **bigger** than the momentum before or after. This is where most marks go missing.
+
+  - type: diagram
+    diagram: phys-momentum-newton-rebound
+    alt: >-
+      A ball bouncing off a wall on the right, with "positive direction: towards the wall" marked
+      by an arrow. Momentum arrows are drawn to scale. Before: an arrow towards the wall, labelled
+      15 m s⁻¹ and p = 0.20 × (+15) = +3.0 kg m s⁻¹. After: a shorter arrow away from the wall,
+      labelled 10 m s⁻¹ and p = 0.20 × (−10) = −2.0 kg m s⁻¹. Below, "Change in momentum": a dashed
+      arrow labelled "− p before" (3.0 units, pointing away from the wall) followed tip to tail by
+      an arrow labelled "+ p after" (2.0 units, also away from the wall). Underneath, a single long
+      arrow Δp covers both, labelled Δp = (−2.0) − (+3.0) = −5.0 kg m s⁻¹, that is 5.0 kg m s⁻¹ away
+      from the wall, not 3.0 − 2.0 = 1.0.
+    caption: Subtracting a vector means adding it reversed. A rebound's change in momentum is the sum of the two sizes.
+
+  - type: example
+    title: A ball bouncing off a wall
+    problem: |
+      A $0.20\ \text{kg}$ ball hits a wall at $15\ \text{m s}^{-1}$ and rebounds along the same line at $10\ \text{m s}^{-1}$. Find its change in momentum.
+    steps:
+      - |
+        Towards the wall positive: $u = +15\ \text{m s}^{-1}$ and $v = -10\ \text{m s}^{-1}$.
+      - |
+        Before: $p = 0.20 \times 15 = +3.0\ \text{kg m s}^{-1}$. After: $p = 0.20 \times (-10) = -2.0\ \text{kg m s}^{-1}$.
+      - |
+        $\Delta p = (-2.0) - (+3.0) = -5.0\ \text{kg m s}^{-1}$.
+    answer: |
+      The change in momentum is $5.0\ \text{kg m s}^{-1}$ **away from the wall**. The tempting answer, $0.20 \times (15 - 10) = 1.0\ \text{kg m s}^{-1}$, treats the bounce as if the ball had merely slowed down.
+
+  - type: check
+    questions: [tennis-rebound, football-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: Momentum is mass × speed, so it's always positive.
+        right: It's mass × **velocity**, a vector. Its sign tells you its direction.
+      - wrong: For a rebound, the change in momentum is m(u − v), using the two speeds.
+        right: Use velocities with signs, $\Delta p = m(v - u)$. For a straight-back bounce its size is $m(u + v)$ in terms of the speeds.
+      - wrong: The heavier object always has more momentum.
+        right: A parked lorry has zero momentum; a flying bullet has plenty. Mass **and** velocity both count.
+      - wrong: The unit of momentum is kg m s⁻².
+        right: That is the newton. Momentum is measured in $\text{kg m s}^{-1}$, or equivalently $\text{N s}$.
+
+  - type: exam
+    body: |
+      - "Define linear momentum": "the product of mass and velocity" earns the mark. "Mass times speed" does not.
+      - Give a direction with every momentum and every change in momentum ("5.0 N s away from the wall").
+      - Write down your positive direction before you start. It turns any bounce question into a plain subtraction.
+
+  - type: check
+    questions: [momentum-definition, greatest-momentum]
+
+  - type: takeaways
+    items:
+      - "Linear momentum is mass × velocity: $p = mv$."
+      - "It is a vector, with unit $\\text{kg m s}^{-1}$, the same as $\\text{N s}$."
+      - "Change in momentum = final momentum − initial momentum, with signs."
+      - "For a straight rebound, the size of $\\Delta p$ is $m(u + v)$, using the two speeds."
+
+questions:
+  - id: sprinter-momentum
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      A sprinter of mass $70\ \text{kg}$ runs at $9.5\ \text{m s}^{-1}$. Calculate her momentum. Include the unit.
+    fields:
+      - answer: 665
+        tolerance: { rel: 0.01 }
+        acceptUnits: ["kg m s⁻¹", "N s"]
+    explanation: |
+      $p = mv = 70 \times 9.5 = 665\ \text{kg m s}^{-1}$ (or $665\ \text{N s}$; $670$ to 2 significant figures), in her direction of motion.
+
+  - id: momentum-unit
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Which unit is equivalent to $\text{kg m s}^{-1}$?
+    options:
+      - text: N s
+        correct: true
+        why: Correct. $1\ \text{N} = 1\ \text{kg m s}^{-2}$, so $1\ \text{N s} = 1\ \text{kg m s}^{-1}$.
+      - text: N s⁻¹
+        why: That's newtons per second, $\text{kg m s}^{-3}$, a rate of change of force.
+      - text: N m
+        why: That's the joule, the unit of energy or work, $\text{kg m}^2\ \text{s}^{-2}$.
+      - text: kg m s⁻²
+        why: That's the newton, the unit of force.
+    explanation: |
+      Force × time has the same unit as momentum, which is why a force acting for a time changes an object's momentum.
+
+  - id: tennis-rebound
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |
+      A tennis ball of mass $0.058\ \text{kg}$ hits a wall at $25\ \text{m s}^{-1}$ and rebounds along the same line at $18\ \text{m s}^{-1}$. Calculate the magnitude of its change in momentum.
+    fields:
+      - answer: 2.494
+        tolerance: { abs: 0.02 }
+        unit: kg m s⁻¹
+    explanation: |
+      Towards the wall positive: $\Delta p = m(v - u) = 0.058 \times (-18 - 25) = 0.058 \times (-43) = -2.49\ \text{kg m s}^{-1}$. The magnitude is $2.49\ \text{kg m s}^{-1}$, directed away from the wall.
+
+  - id: football-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A $0.40\ \text{kg}$ football hits a wall at $12\ \text{m s}^{-1}$ and rebounds along the same line at $8.0\ \text{m s}^{-1}$. A student calculates its change in momentum. Which line contains the first error?
+    lines:
+      - |
+        Take the direction towards the wall as positive.
+      - |
+        Initial momentum $= 0.40 \times 12 = +4.8\ \text{kg m s}^{-1}$
+      - |
+        Final momentum $= 0.40 \times 8.0 = +3.2\ \text{kg m s}^{-1}$
+      - |
+        Change in momentum $= 3.2 - 4.8 = -1.6\ \text{kg m s}^{-1}$
+    errorLine: 3
+    fix: |
+      After the bounce the ball moves away from the wall, so its velocity is $-8.0\ \text{m s}^{-1}$ and its momentum is $-3.2\ \text{kg m s}^{-1}$. Then $\Delta p = -3.2 - 4.8 = -8.0\ \text{kg m s}^{-1}$: $8.0\ \text{kg m s}^{-1}$ away from the wall.
+    explanation: |
+      Line 1 chose a direction, and line 3 then forgot to use it. The rebound reverses the velocity, so the final momentum must be negative.
+
+  - id: momentum-definition
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Define linear momentum.
+    accept:
+      - the product of mass and velocity
+      - product of mass and velocity
+      - mass multiplied by velocity
+      - mass times velocity
+      - mass x velocity
+      - mass × velocity
+      - momentum is mass multiplied by velocity
+      - momentum is mass times velocity
+      - momentum is the product of mass and velocity
+      - linear momentum is the product of mass and velocity
+      - linear momentum is mass multiplied by velocity
+      - linear momentum is mass times velocity
+      - p = mv
+      - momentum = mass x velocity
+      - momentum = mass × velocity
+      - momentum = mv
+      - mv
+      - mass*velocity
+      - mass multiplied by its velocity
+      - the product of an object's mass and its velocity
+      - the product of the mass and the velocity
+      - momentum is the product of an object's mass and its velocity
+    model: |
+      Linear momentum is the product of an object's mass and its velocity: $p = mv$.
+    explanation: |
+      "Velocity", not "speed": momentum is a vector, in the direction of the velocity.
+
+  - id: greatest-momentum
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      Which of these has the greatest momentum?
+    options:
+      - text: A $0.010\ \text{kg}$ bullet travelling at $400\ \text{m s}^{-1}$
+        why: Fastest by far, but $p = 0.010 \times 400 = 4.0\ \text{kg m s}^{-1}$.
+      - text: A $60\ \text{kg}$ runner at $5.0\ \text{m s}^{-1}$
+        why: $p = 60 \times 5.0 = 300\ \text{kg m s}^{-1}$. Close, but not the biggest.
+      - text: A $1500\ \text{kg}$ car creeping along at $0.30\ \text{m s}^{-1}$
+        correct: true
+        why: Correct. $p = 1500 \times 0.30 = 450\ \text{kg m s}^{-1}$, the largest here despite the tiny speed.
+      - text: A $12\,000\ \text{kg}$ lorry parked at the kerb
+        why: The largest mass, but its velocity is zero, so its momentum is zero.
+    explanation: |
+      Momentum needs both mass and velocity. Calculate $mv$ for each rather than judging by mass or speed alone.
