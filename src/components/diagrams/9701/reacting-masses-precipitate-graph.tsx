@@ -75,7 +75,7 @@ export function ReactingMassesPrecipitateGraph() {
       </text>
 
       {/* best-fit lines, extended past the break */}
-      <line x1={sx(0)} y1={sy(0)} x2={sx(15)} y2={sy(SLOPE * 15)} className="dg-accent" />
+      <line x1={sx(0)} y1={sy(0)} x2={sx(14.2)} y2={sy(SLOPE * 14.2)} className="dg-accent" />
       <line x1={sx(9)} y1={sy(PLATEAU)} x2={sx(25)} y2={sy(PLATEAU)} className="dg-accent" />
 
       {/* the break point */}
@@ -84,8 +84,8 @@ export function ReactingMassesPrecipitateGraph() {
       <Label x={sx(BREAK) + 8} y={Y0 - 12} anchor="start" className="dg-text-accent-2">
         12.5 cm³
       </Label>
-      <Label x={sx(BREAK)} y={sy(PLATEAU) - 18} className="dg-text-small dg-bold">
-        all I⁻ used up: 1.15 g
+      <Label x={sx(BREAK) + 12} y={sy(PLATEAU) + 20} anchor="start" className="dg-text-small dg-bold">
+        all I⁻ used up: 1.15 g of PbI₂
       </Label>
 
       {/* data */}

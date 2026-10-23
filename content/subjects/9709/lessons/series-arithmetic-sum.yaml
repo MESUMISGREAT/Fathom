@@ -1,0 +1,250 @@
+id: series-arithmetic-sum
+subject: "9709"
+topic: "1.6"
+title: Summing an arithmetic progression
+summary: Add up the first n terms of an AP with Sₙ = ½n(2a + (n − 1)d) = ½n(a + l), and solve for n when the sum is given.
+order: 4
+minutes: 5
+kind: core
+objectives: ["1.6.3"]
+prerequisites: [series-arithmetic-nth-term, quadratics-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.6 learning outcome "use the formulae for
+    the nth term and for the sum of the first n terms to solve problems involving arithmetic or
+    geometric progressions". The Gauss anecdote is the well-known (probably embellished) story,
+    told as such. All examples and questions are original; all arithmetic checked in Python. Not
+    yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the sum of the first $n$ terms of an arithmetic progression with $S_n = \tfrac12 n\{2a + (n - 1)d\}$ or $S_n = \tfrac12 n(a + l)$, and work backwards to find $n$, $a$ or $d$.
+
+  - type: explain
+    title: The 5050 trick
+    body: |-
+      The story goes that a teacher told young Carl Friedrich Gauss's class to add up $1 + 2 + \dots + 100$, hoping for a quiet hour. Gauss had the answer in moments: **5050**. (The details are probably embellished. The trick is real.)
+
+      His idea: pair the first term with the last, the second with the second-last, and so on. Every pair makes $101$, and there are 50 pairs.
+
+  - type: intuition
+    title: Forwards plus backwards
+    body: |-
+      Write the sum twice, once forwards and once backwards, and add the columns:
+
+      $$\begin{aligned} S &= a + (a + d) + \dots + (l - d) + l \\ S &= l + (l - d) + \dots + (a + d) + a \\ 2S &= (a + l) + (a + l) + \dots + (a + l) + (a + l) \end{aligned}$$
+
+      That's $n$ copies of $(a + l)$, so $2S = n(a + l)$. Every column has the same total because one row goes up by $d$ exactly as fast as the other goes down.
+
+  - type: diagram
+    diagram: series-ap-sum-pairing
+    alt: >-
+      Five columns, each made of two stacked bars. The lower bars, labelled S forwards, have heights
+      2, 5, 8, 11 and 14 from left to right. The upper bars, labelled S backwards, have heights 14,
+      11, 8, 5 and 2. Every column reaches the same height, marked a + l = 2 + 14 = 16. A brace
+      along the bottom says: n = 5 columns, so 2S = 5 × 16 = 80 and S = 40.
+    caption: |-
+      $2 + 5 + 8 + 11 + 14$: the two copies fill a $5 \times 16$ rectangle, so $2S = 80$ and $S = 40$.
+
+  - type: definition
+    term: Sum of an arithmetic progression
+    body: |-
+      The sum of the first $n$ terms of an AP with first term $a$, common difference $d$ and last term $l$ is
+
+      $$S_n = \tfrac12 n(a + l) = \tfrac12 n\{2a + (n - 1)d\}.$$
+
+      The second form comes from substituting $l = a + (n - 1)d$. Use it when you don't know the last term.
+
+  - type: check
+    questions: [sum-200, sum-25]
+
+  - type: example
+    title: Straight substitution
+    problem: |-
+      Find the sum of the first 40 terms of the arithmetic progression $3 + 7 + 11 + \dots$
+    steps:
+      - |-
+        $a = 3$, $d = 4$, $n = 40$.
+      - |-
+        $S_{40} = \tfrac12 \times 40 \times \{2(3) + 39(4)\} = 20 \times (6 + 156)$.
+      - |-
+        $= 20 \times 162 = 3240$.
+    answer: |-
+      $S_{40} = 3240$
+
+  - type: example
+    title: Multiples in a range
+    problem: |-
+      Find the sum of all the multiples of 7 between 100 and 300.
+    steps:
+      - |-
+        First multiple of 7 above 100: $7 \times 15 = 105$. Last below 300: $7 \times 42 = 294$.
+      - |-
+        Number of terms: $105 + 7(n - 1) = 294$, so $n - 1 = 27$ and $n = 28$.
+      - |-
+        $S = \tfrac12 \times 28 \times (105 + 294) = 14 \times 399 = 5586$.
+    answer: |-
+      The sum is 5586.
+
+  - type: check
+    questions: [sum-formula-mcq, spot-count]
+
+  - type: example
+    title: When does the sum pass 1000?
+    problem: |-
+      Find the least number of terms of $5 + 9 + 13 + \dots$ needed for the sum to exceed 1000.
+    steps:
+      - |-
+        $S_n = \tfrac12 n\{10 + 4(n - 1)\} = \tfrac12 n(4n + 6) = n(2n + 3)$.
+      - |-
+        We need $2n^2 + 3n > 1000$. Solve $2n^2 + 3n - 1000 = 0$: $\;n = \dfrac{-3 + \sqrt{9 + 8000}}{4} = 21.6$ (3 s.f.), ignoring the negative root.
+      - |-
+        $n$ must be a whole number bigger than 21.6, so try $n = 22$. Check both sides of the boundary: $S_{21} = 21 \times 45 = 945$ and $S_{22} = 22 \times 47 = 1034$.
+    answer: |-
+      22 terms are needed. (Rounding 21.6 *down* would give a sum of only 945.)
+
+  - type: check
+    questions: [find-n, two-sums]
+
+  - type: deeper
+    title: Getting a term back from a sum
+    body: |-
+      If you know $S_n$ for every $n$, the $n$th term is what the $n$th term *added*:
+
+      $$u_n = S_n - S_{n-1}.$$
+
+      Example: if $S_n = 3n^2 + 2n$, then $u_1 = S_1 = 5$ and $u_n = (3n^2 + 2n) - \{3(n - 1)^2 + 2(n - 1)\} = 6n - 1$. That's an AP with $a = 5$ and $d = 6$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $S_n = \tfrac12 n\{2a + nd\}$
+        right: |-
+          It's $(n - 1)d$, matching the last term $a + (n - 1)d$. Check with $n = 1$: $S_1$ must equal $a$.
+      - wrong: |-
+          Multiples of 3 from 3 to 99: $n = \dfrac{99 - 3}{3} = 32$.
+        right: |-
+          That counts the gaps. Terms = gaps + 1, so $n = 33$.
+      - wrong: |-
+          $n = 21.6$, so 21 terms are enough to pass 1000.
+        right: |-
+          21 terms gives only 945. For "exceed", round **up** and check the whole numbers either side.
+
+  - type: exam
+    body: |-
+      - Quote the formula, then substitute: it's in the formula list, but the method mark is for using it correctly with *your* $a$, $d$ and $n$.
+      - "Sum of the first $n$ terms" questions often give two sums, or a sum and a term. Each fact is one equation.
+      - When a question gives a sum and asks for $n$, expect a quadratic. Reject the negative or non-integer root and say why.
+
+  - type: takeaways
+    items:
+      - |-
+        $S_n = \tfrac12 n(a + l) = \tfrac12 n\{2a + (n - 1)d\}$.
+      - |-
+        The formula comes from pairing terms: every pair sums to $a + l$.
+      - |-
+        Number of terms = $\dfrac{\text{last} - \text{first}}{d} + 1$.
+      - |-
+        Finding $n$ from a sum gives a quadratic; $n$ must be a positive integer.
+
+questions:
+  - id: sum-25
+    format: numeric
+    difficulty: 1
+    objectives: ["1.6.3"]
+    prompt: |-
+      Find the sum of the first 25 terms of the arithmetic progression $2 + 6 + 10 + \dots$
+    fields:
+      - label: "S₂₅ ="
+        answer: 1250
+    explanation: |-
+      $a = 2$, $d = 4$: $\;S_{25} = \tfrac12 \times 25 \times (4 + 24 \times 4) = 12.5 \times 100 = 1250$.
+
+  - id: sum-200
+    format: numeric
+    difficulty: 1
+    objectives: ["1.6.3"]
+    prompt: |-
+      Find $1 + 2 + 3 + \dots + 200$.
+    fields:
+      - answer: 20100
+    explanation: |-
+      $a = 1$, $l = 200$, $n = 200$: $\;S = \tfrac12 \times 200 \times (1 + 200) = 100 \times 201 = 20\,100$.
+
+  - id: sum-formula-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      Which expression gives the sum of the first $n$ terms of $8 + 5 + 2 + \dots$?
+    explanation: |-
+      $a = 8$, $d = -3$: $\;S_n = \tfrac12 n\{16 + (n - 1)(-3)\} = \tfrac12 n(16 - 3n + 3) = \tfrac12 n(19 - 3n)$. Check: $n = 2$ gives $19 - 6 = 13$, and $8 + 5 = 13$ ✓
+    options:
+      - text: $\tfrac12 n(19 - 3n)$
+        correct: true
+        why: |-
+          $16 + (n - 1)(-3) = 19 - 3n$. With $n = 1$ it gives $\tfrac12(16) = 8$ ✓
+      - text: $\tfrac12 n(16 - 3n)$
+        why: |-
+          This uses $2a + nd$ instead of $2a + (n - 1)d$. With $n = 1$ it gives $6.5$, not 8.
+      - text: $\tfrac12 n(13 + 3n)$
+        why: |-
+          Sign slip: the sequence goes *down*, so $d = 5 - 8 = -3$, not $+3$.
+      - text: $n(19 - 3n)$
+        why: |-
+          The $\tfrac12$ is missing. With $n = 1$ this gives 16, double the first term.
+
+  - id: find-n
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.3"]
+    prompt: |-
+      An arithmetic progression has first term 6 and common difference 4. The sum of the first $n$ terms is 1150. Find $n$.
+    fields:
+      - label: "n ="
+        answer: 23
+    explanation: |-
+      $S_n = \tfrac12 n\{12 + 4(n - 1)\} = n(2n + 4) = 2n^2 + 4n$.
+
+      $2n^2 + 4n = 1150$ gives $n^2 + 2n - 575 = 0$, so $(n - 23)(n + 25) = 0$. $n$ is positive, so $n = 23$. Check: $23 \times 50 = 1150$ ✓
+
+  - id: spot-count
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      A student finds the sum of the multiples of 3 from 3 to 99. Which line contains the first error?
+    lines:
+      - |-
+        This is an AP with $a = 3$, $d = 3$ and last term $l = 99$.
+      - |-
+        Number of terms: $n = \dfrac{99 - 3}{3} = 32$.
+      - |-
+        $S = \tfrac12 \times 32 \times (3 + 99) = 1632$.
+    errorLine: 2
+    fix: |-
+      $n = \dfrac{99 - 3}{3} + 1 = 33$, so $S = \tfrac12 \times 33 \times 102 = 1683$.
+    explanation: |-
+      $\dfrac{99 - 3}{3} = 32$ counts the **steps** between 3 and 99. There's one more term than steps. Quick check: the multiples of 3 up to 99 are $3 \times 1$ to $3 \times 33$, so 33 terms.
+
+  - id: two-sums
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.3"]
+    prompt: |-
+      The sum of the first 10 terms of an arithmetic progression is 175 and the sum of the first 20 terms is 650. Find the first term and the common difference.
+    fields:
+      - label: "a ="
+        answer: 4
+      - label: "d ="
+        answer: 3
+    explanation: |-
+      $S_{10} = 5(2a + 9d) = 175$, so $2a + 9d = 35$.
+
+      $S_{20} = 10(2a + 19d) = 650$, so $2a + 19d = 65$.
+
+      Subtract: $10d = 30$, so $d = 3$, and $2a = 35 - 27 = 8$, so $a = 4$.

@@ -1,0 +1,229 @@
+id: reacting-masses-deducing-stoichiometry
+subject: "9701"
+topic: "2.4"
+title: "From numbers to equations: deducing stoichiometry"
+summary: How to work backwards from measured masses, gas volumes, titres or a break-point graph to the mole ratio, and so to the balanced equation.
+order: 8
+minutes: 5
+objectives: ["2.4.1"]
+prerequisites: [reacting-masses-limiting-reagent, reacting-masses-titration-calculations, chemical-formulas-ionic-equations, chemical-formulas-water-of-crystallisation]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.4, learning outcome 2.4.1(e) deducing stoichiometric
+    relationships from calculations involving reacting masses, gas volumes, solution
+    volumes and concentrations, and limiting and excess reagents). Molar gas volume
+    24.0 dm³ mol⁻¹ and all Ar values from the Cambridge Data Booklet. The break-point graph
+    readings are illustrative points scattered slightly around the exact lines. All
+    numerical answers were computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can turn experimental results (masses, gas volumes, titres, or a break-point graph) into a mole ratio, and use it to write the balanced equation.
+
+  - type: explain
+    title: Flip it around
+    body: |
+      Until now you've gone **equation → numbers**. Examiners love to flip it: here are the numbers, now **you** find the equation.
+
+      It's the same mole bridge, walked backwards. Get everything into moles, compare, and the coefficients fall out.
+
+  - type: explain
+    title: The method
+    body: |
+      1. **Convert every measurement to moles**: mass ÷ $M$, gas volume ÷ $V_m$, or $c \times V$ for a solution.
+      2. **Divide each by the smallest** number of moles.
+      3. **Make whole numbers**: if you get 1.5, double everything (1 : 1.5 = 2 : 3).
+      4. Use the ratio as **coefficients**, then balance the rest of the equation.
+
+      Yes, it's basically the empirical formula method, but for whole molecules in a reaction.
+
+  - type: example
+    title: What charge does aluminium take?
+    problem: |
+      0.540 g of aluminium reacts with excess hydrochloric acid, giving 0.720 dm³ of hydrogen at room conditions. Deduce the equation, and the charge on the aluminium ion. ($A_r$: Al = 27.0; $V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$)
+    steps:
+      - |
+        **Moles:** $n(\text{Al}) = 0.540 \div 27.0 = 0.0200$ mol; $n(\text{H}_2) = 0.720 \div 24.0 = 0.0300$ mol.
+      - |
+        **Ratio:** Al : $\text{H}_2$ = 0.0200 : 0.0300 = 1 : 1.5 = **2 : 3**.
+      - |
+        **Equation:** $2\text{Al} + \dots \rightarrow \dots + 3\text{H}_2$. 3 $\text{H}_2$ needs 6 HCl, and the 6 Cl must go with 2 Al: $2\text{Al(s)} + 6\text{HCl(aq)} \rightarrow 2\text{AlCl}_3\text{(aq)} + 3\text{H}_2\text{(g)}$.
+      - |
+        $\text{AlCl}_3$ has three $\text{Cl}^-$ ions for each aluminium, so the ion is $\text{Al}^{3+}$. (Each Al atom loses 3 electrons: enough to make $1\tfrac{1}{2}$ molecules of $\text{H}_2$.)
+    answer: |
+      $2\text{Al(s)} + 6\text{HCl(aq)} \rightarrow 2\text{AlCl}_3\text{(aq)} + 3\text{H}_2\text{(g)}$; the ion is $\text{Al}^{3+}$.
+
+  - type: check
+    title: Quick check
+    questions: [metal-ion-charge, chlorine-spot-error]
+
+  - type: explain
+    title: "Titrations: how many H⁺ can an acid give?"
+    body: |
+      A titration gives a mole ratio directly. Example: 25.0 cm³ of 0.0400 mol dm⁻³ of an acid needs 20.00 cm³ of 0.100 mol dm⁻³ NaOH.
+
+      - $n(\text{acid}) = 0.0400 \times 0.0250 = 1.00 \times 10^{-3}$ mol
+      - $n(\text{NaOH}) = 0.100 \times 0.02000 = 2.00 \times 10^{-3}$ mol
+      - ratio acid : NaOH = 1 : 2, so each molecule gives **2** $\text{H}^+$ ions: it's $\text{H}_2\text{A}$, e.g. $\text{H}_2\text{A} + 2\text{NaOH} \rightarrow \text{Na}_2\text{A} + 2\text{H}_2\text{O}$
+
+  - type: deeper
+    title: Finding water of crystallisation by titration
+    body: |
+      A titration can find the $x$ in a hydrate like $\text{Na}_2\text{CO}_3 \cdot x\text{H}_2\text{O}$:
+
+      1. Titrate to find the moles of $\text{Na}_2\text{CO}_3$ in the whole solution (remember to scale up from the pipetted portion).
+      2. Molar mass of the hydrate $= \dfrac{\text{mass of crystals dissolved}}{\text{moles}}$.
+      3. $x = \dfrac{M(\text{hydrate}) - M(\text{Na}_2\text{CO}_3)}{M(\text{H}_2\text{O})}$
+
+  - type: check
+    title: Titration ratios
+    questions: [acid-basicity, washing-soda]
+
+  - type: explain
+    title: Break-point graphs
+    body: |
+      Add one reactant in portions to a fixed amount of the other, and plot the amount of product. The product rises while the added reactant is **limiting**, then levels off once the fixed reactant is **used up**.
+
+      The **break point**, where the two best-fit lines meet, is where the reactants were mixed in exactly the ratio of the equation. Read the volume there, convert to moles, compare.
+
+  - type: diagram
+    diagram: chem-reacting-masses-precipitate-graph
+    alt: "Graph of mass of PbI2 precipitate in g, 0 to 1.4, against volume of 0.200 mol dm⁻³ Pb(NO3)2(aq) added to 25.0 cm³ of 0.200 mol dm⁻³ KI(aq), in cm³, 0 to 25. Crosses marked as illustrative readings lie on a straight line rising from the origin up to 12.5 cm³, and on a horizontal line at 1.15 g from 15 to 25 cm³. The two best-fit lines meet at a circled break point; a dashed line drops from it to 12.5 cm³ on the x-axis, and a label reads all I⁻ used up, 1.15 g of PbI2. Left region: Pb²⁺ limiting, more Pb²⁺ gives more PbI2. Right region: I⁻ limiting, extra Pb²⁺ has nothing to react with. Footer: at the break, n(Pb²⁺) = 2.50 × 10⁻³ mol and n(I⁻) = 5.00 × 10⁻³ mol; ratio 1 : 2, so Pb²⁺(aq) + 2I⁻(aq) → PbI2(s)."
+    caption: "The corner of the graph is the equation in disguise: 12.5 cm³ of Pb²⁺ solution to 25.0 cm³ of I⁻ solution of the same concentration, 1 : 2."
+
+  - type: check
+    title: Reading a break point
+    questions: [chloride-ratio, break-point-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          Compare the masses that react to get the coefficients.
+        right: |
+          Coefficients are **mole** ratios. Convert every mass, volume and titre to moles before comparing.
+      - wrong: |
+          A ratio of 1 : 1.5 means the equation has a 1.5 in it.
+        right: |
+          Double it: 2 : 3. Equations use the smallest **whole** numbers.
+      - wrong: |
+          For a diatomic gas like chlorine, divide its mass by $A_r$.
+        right: |
+          Chlorine gas is $\text{Cl}_2$: divide by $M = 71.0$, not 35.5, to get moles of molecules.
+
+  - type: exam
+    body: |
+      - Questions often say "use your answers to deduce the equation". Show the ratio line clearly: "Al : $\text{H}_2$ = 0.0200 : 0.0300 = 2 : 3".
+      - Check your equation against the data at the end: plug the ratio back in.
+      - On a break-point graph, draw **two** straight best-fit lines and read where they cross. Don't just pick the highest point.
+
+  - type: takeaways
+    items:
+      - "Every measurement to moles first: $m/M$, $V/V_m$ or $cV$."
+      - "Divide by the smallest, make whole numbers: that's the mole ratio, so the coefficients."
+      - "A titration ratio tells you, for example, how many $\\text{H}^+$ an acid gives per molecule."
+      - "On a break-point graph, the corner marks the exact reacting ratio."
+
+questions:
+  - id: metal-ion-charge
+    format: mcq
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      0.0100 mol of a metal M reacts with excess dilute hydrochloric acid, giving 360 cm³ of hydrogen at room conditions. ($V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$) Which equation fits these results?
+    options:
+      - text: |
+          $\text{M} + 2\text{HCl} \rightarrow \text{MCl}_2 + \text{H}_2$
+        why: |
+          This needs M : $\text{H}_2$ = 1 : 1, so only 0.0100 mol (240 cm³) of hydrogen.
+      - text: |
+          $2\text{M} + 6\text{HCl} \rightarrow 2\text{MCl}_3 + 3\text{H}_2$
+        correct: true
+        why: |
+          $n(\text{H}_2) = 360 \div 24\,000 = 0.0150$ mol. M : $\text{H}_2$ = 0.0100 : 0.0150 = 2 : 3, so M forms $\text{M}^{3+}$ ions.
+      - text: |
+          $2\text{M} + 2\text{HCl} \rightarrow 2\text{MCl} + \text{H}_2$
+        why: |
+          This needs M : $\text{H}_2$ = 2 : 1, so only 0.00500 mol (120 cm³) of hydrogen.
+      - text: |
+          $\text{M} + 4\text{HCl} \rightarrow \text{MCl}_4 + 2\text{H}_2$
+        why: |
+          This needs M : $\text{H}_2$ = 1 : 2, so 0.0200 mol (480 cm³) of hydrogen.
+    explanation: |
+      Convert the volume to moles: 0.0150 mol of $\text{H}_2$. Ratio 0.0100 : 0.0150 = 1 : 1.5 = 2 : 3.
+
+  - id: chlorine-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      1.12 g of iron reacts exactly with 2.13 g of chlorine gas. A student deduces the reacting ratio. ($A_r$: Fe = 55.8, Cl = 35.5) Which line contains the first error?
+    lines:
+      - |
+        Convert both masses to moles, then compare.
+      - |
+        $n(\text{Fe}) = 1.12 \div 55.8 = 0.0201$ mol
+      - |
+        $n(\text{Cl}_2) = 2.13 \div 35.5 = 0.0600$ mol
+      - |
+        Ratio Fe : $\text{Cl}_2$ = 0.0201 : 0.0600 = 1 : 3
+    errorLine: 3
+    fix: |
+      Chlorine gas is $\text{Cl}_2$, $M = 71.0$: $n(\text{Cl}_2) = 2.13 \div 71.0 = 0.0300$ mol. The ratio is 0.0201 : 0.0300 = 2 : 3, so $2\text{Fe} + 3\text{Cl}_2 \rightarrow 2\text{FeCl}_3$.
+    explanation: |
+      Dividing by 35.5 gives moles of Cl **atoms**, not $\text{Cl}_2$ molecules. The corrected ratio matches iron(III) chloride.
+
+  - id: acid-basicity
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      25.0 cm³ of 0.0500 mol dm⁻³ of an acid needs exactly 37.50 cm³ of 0.100 mol dm⁻³ sodium hydroxide for complete reaction. How many moles of NaOH react with **one** mole of the acid?
+    fields:
+      - answer: 3
+        tolerance: { abs: 0.01 }
+        unit: mol
+    explanation: |
+      $n(\text{acid}) = 0.0500 \times 0.0250 = 1.25 \times 10^{-3}$ mol; $n(\text{NaOH}) = 0.100 \times 0.03750 = 3.75 \times 10^{-3}$ mol. Ratio $3.75 \div 1.25 = 3$, so each acid molecule gives 3 $\text{H}^+$: it behaves like $\text{H}_3\text{A}$ (phosphoric acid, $\text{H}_3\text{PO}_4$, is an example).
+
+  - id: chloride-ratio
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      0.100 mol dm⁻³ silver nitrate is added to 20.0 cm³ of 0.150 mol dm⁻³ of a metal chloride, $\text{MCl}_n\text{(aq)}$. The mass of silver chloride precipitate stops increasing once 60.0 cm³ has been added: $\text{Ag}^+\text{(aq)} + \text{Cl}^-\text{(aq)} \rightarrow \text{AgCl(s)}$. Find $n$.
+    fields:
+      - label: "n ="
+        answer: 2
+    explanation: |
+      At the break point, $n(\text{Ag}^+) = 0.100 \times 0.0600 = 6.00 \times 10^{-3}$ mol, which equals $n(\text{Cl}^-)$. $n(\text{MCl}_n) = 0.150 \times 0.0200 = 3.00 \times 10^{-3}$ mol. So each formula unit has $6.00 \div 3.00 = 2$ chloride ions: $\text{MCl}_2$.
+
+  - id: break-point-explain
+    format: explain
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      Look at the lead(II) iodide graph. Explain why the mass of precipitate stops increasing after 12.5 cm³ of lead(II) nitrate solution has been added, and how this shows the formula $\text{PbI}_2$.
+    model: |
+      Up to 12.5 cm³, lead(II) ions are the limiting reagent, so each extra portion makes more $\text{PbI}_2$. At 12.5 cm³, all $5.00 \times 10^{-3}$ mol of iodide ions has reacted, so iodide becomes limiting and any further $\text{Pb}^{2+}$ is in excess with nothing to react with. At the break point, $0.200 \times 0.0125 = 2.50 \times 10^{-3}$ mol of $\text{Pb}^{2+}$ reacted with $5.00 \times 10^{-3}$ mol of $\text{I}^-$, a 1 : 2 ratio, so the precipitate is $\text{PbI}_2$.
+    keyPoints:
+      - "Before the break, Pb²⁺ is limiting, so adding more makes more precipitate."
+      - "At 12.5 cm³ all the iodide ions have reacted (iodide is now limiting / Pb²⁺ in excess)."
+      - "Moles of Pb²⁺ at the break point = 2.50 × 10⁻³ mol; moles of I⁻ = 5.00 × 10⁻³ mol."
+      - "Ratio Pb²⁺ : I⁻ = 1 : 2, so the formula is PbI₂."
+    explanation: |
+      The break point is the exact reacting ratio. Convert both amounts to moles and compare.
+
+  - id: washing-soda
+    format: numeric
+    difficulty: 3
+    objectives: ["2.4.1"]
+    prompt: |
+      2.86 g of hydrated sodium carbonate crystals, $\text{Na}_2\text{CO}_3 \cdot x\text{H}_2\text{O}$, is dissolved and made up to 250 cm³ of solution. 25.0 cm³ portions need a mean titre of 20.00 cm³ of 0.100 mol dm⁻³ hydrochloric acid: $\text{Na}_2\text{CO}_3 + 2\text{HCl} \rightarrow 2\text{NaCl} + \text{H}_2\text{O} + \text{CO}_2$. Find $x$. ($M$: $\text{Na}_2\text{CO}_3$ = 106.0, $\text{H}_2\text{O}$ = 18.0 g mol⁻¹)
+    fields:
+      - label: "x ="
+        answer: 10
+    explanation: |
+      $n(\text{HCl}) = 0.100 \times 0.02000 = 2.00 \times 10^{-3}$ mol, so $n(\text{Na}_2\text{CO}_3) = 1.00 \times 10^{-3}$ mol in 25.0 cm³, and $1.00 \times 10^{-2}$ mol in 250 cm³. $M(\text{hydrate}) = 2.86 \div 0.0100 = 286\ \text{g mol}^{-1}$. $x = (286 - 106.0) \div 18.0 = 10$: $\text{Na}_2\text{CO}_3 \cdot 10\text{H}_2\text{O}$, washing soda.
