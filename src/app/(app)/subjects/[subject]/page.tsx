@@ -35,7 +35,15 @@ export default async function SubjectPage({
   const level = levelParam === 'AS' || levelParam === 'A' ? levelParam : 'all';
   const [tree, progress] = await Promise.all([getSyllabusTree(subject.version.id), getSubjectProgress(user?.id ?? null, subject.version.id)]);
   const sections = tree.filter((s) => level === 'all' || s.level === level);
-  const strands = [...new Set(sections.map((s) => s.strand).filter(Boolean))] as string[];
+  // Group consecutive sections by strand, keeping syllabus order (9701 runs Physical, Inorganic,
+  // Organic, Analysis at AS, then the same strands again at A Level).
+  const groups: { strand: string | null; level: string; sections: typeof sections }[] = [];
+  for (const s of sections) {
+    const last = groups[groups.length - 1];
+    if (last && last.strand === (s.strand ?? null)) last.sections.push(s);
+    else groups.push({ strand: s.strand ?? null, level: s.level, sections: [s] });
+  }
+  const repeated = new Set(groups.map((g) => g.strand).filter((st, i, all) => st && all.indexOf(st) !== i));
 
   return (
     <div className="container">
@@ -91,12 +99,15 @@ export default async function SubjectPage({
         </nav>
       </div>
 
-      {(strands.length > 0 ? strands : [null]).map((strand) => (
-        <div key={strand ?? 'all'} className="stack stack-lg" style={{ marginBottom: 32 }}>
-          {strand && <h2 className="h3 muted">{strand}</h2>}
-          {sections
-            .filter((s) => (strand ? s.strand === strand : true))
-            .map((section) => (
+      {groups.map(({ strand, level: groupLevel, sections: groupSections }) => (
+        <div key={`${strand ?? 'all'}-${groupSections[0]!.id}`} className="stack stack-lg" style={{ marginBottom: 32 }}>
+          {strand && (
+            <h2 className="h3 muted">
+              {strand}
+              {repeated.has(strand) && ` · ${groupLevel === 'A' ? 'A Level' : 'AS Level'}`}
+            </h2>
+          )}
+          {groupSections.map((section) => (
               <section key={section.id} className="section-block" aria-labelledby={`sec-${section.code}`}>
                 <div className="section-head">
                   <div className="row" style={{ ['--gap' as string]: '10px' }}>
