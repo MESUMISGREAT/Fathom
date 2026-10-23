@@ -87,7 +87,7 @@ export function NetworksWirelessLinks() {
         microwave beam: line of sight
       </Label>
       <Label x={310} y={ground(310) + 42} className="dg-text-small dg-text-muted">
-        microwave towers must be tall enough to see over the curve
+        towers must be tall enough to see over the curve
       </Label>
       <Label x={W - 10} y={H - 10} anchor="end" className="dg-text-small dg-text-muted">
         not to scale

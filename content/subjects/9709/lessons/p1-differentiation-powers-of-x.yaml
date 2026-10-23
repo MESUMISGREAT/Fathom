@@ -1,0 +1,272 @@
+id: p1-differentiation-powers-of-x
+subject: "9709"
+topic: "1.7"
+title: Differentiating powers of x
+summary: Differentiate xⁿ for any rational n, with constant multiples, sums and differences, and find the second derivative d²y/dx² or f″(x).
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.7.2", "1.7.1"]
+prerequisites: [p1-differentiation-gradient-of-a-curve]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcomes "use the derivative of
+    xⁿ (for any rational n), together with constant multiples, sums and differences of functions"
+    and the notations f′(x), f″(x), dy/dx and d²y/dx² for first and second derivatives. All
+    examples and questions are original; all arithmetic checked in Python. Not yet
+    teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can differentiate any sum of terms like $kx^n$ (for any rational $n$, so roots and fractions too), and find the **second derivative** $\dfrac{d^2y}{dx^2}$ or $f''(x)$.
+
+  - type: explain
+    title: The pattern that saves you
+    body: |-
+      Doing chord limits every time would be exhausting. Luckily they always give the same pattern:
+
+      | $y$ | $x^2$ | $x^3$ | $x^4$ | $x^n$ |
+      | --- | --- | --- | --- | --- |
+      | $\dfrac{dy}{dx}$ | $2x$ | $3x^2$ | $4x^3$ | $nx^{n-1}$ |
+
+      **Bring the power down in front, then knock one off the power.** That's the whole rule, and it works for *any* rational power: negative, fractional, the lot.
+
+  - type: definition
+    term: Derivative of xⁿ
+    body: |-
+      For any rational number $n$:
+
+      $$y = x^n \quad\Longrightarrow\quad \frac{dy}{dx} = nx^{n-1}.$$
+
+      - **Constant multiple:** $\dfrac{d}{dx}(kx^n) = knx^{n-1}$.
+      - **Sums and differences:** differentiate term by term.
+      - **A constant** on its own differentiates to $0$ (a horizontal line has gradient 0).
+
+  - type: diagram
+    diagram: p1-differentiation-gradient-function
+    alt: >-
+      Two graphs stacked with the same x-scale. Top: the parabola y = x² with short tangent lines at
+      x = −2, −1, 0, 1 and 2, labelled gradient −4, −2, 0, 2 and 4. Bottom: the straight line
+      dy/dx = 2x, labelled the gradient function, with points (−2, −4), (−1, −2), (0, 0), (1, 2) and
+      (2, 4). Dashed vertical guides link each tangent point on the parabola to the matching point
+      on the line.
+    caption: |-
+      Read the tangent gradients off $y = x^2$ and plot them: they lie on the line $\dfrac{dy}{dx} = 2x$. The derivative is a whole new function.
+
+  - type: check
+    questions: [diff-poly, notation-mcq]
+
+  - type: explain
+    title: Rewrite first, differentiate second
+    body: |-
+      The rule only works on terms written as $kx^n$. So before you differentiate, turn roots and fractions into powers:
+
+      | Looks like | Rewrite as |
+      | --- | --- |
+      | $\sqrt{x}$ | $x^{\frac12}$ |
+      | $\dfrac{1}{x^3}$ | $x^{-3}$ |
+      | $\dfrac{5}{\sqrt{x}}$ | $5x^{-\frac12}$ |
+      | $\dfrac{x^2 + 3}{x}$ | $x + 3x^{-1}$ (split the fraction) |
+      | $(x + 2)(x - 5)$ | $x^2 - 3x - 10$ (expand) |
+
+      There's **no** rule here for differentiating a product or quotient directly, so expand or split it.
+
+  - type: example
+    title: Roots and negative powers
+    problem: |-
+      Find $\dfrac{dy}{dx}$ when $y = 4x^3 - 6\sqrt{x} + \dfrac{2}{x^2}$.
+    steps:
+      - |-
+        Rewrite: $y = 4x^3 - 6x^{\frac12} + 2x^{-2}$.
+      - |-
+        $4x^3 \to 12x^2$.
+      - |-
+        $-6x^{\frac12} \to -6 \times \tfrac12 x^{-\frac12} = -3x^{-\frac12}$.
+      - |-
+        $2x^{-2} \to 2 \times (-2)x^{-3} = -4x^{-3}$. (One less than $-2$ is $-3$.)
+    answer: |-
+      $\dfrac{dy}{dx} = 12x^2 - 3x^{-\frac12} - 4x^{-3} = 12x^2 - \dfrac{3}{\sqrt{x}} - \dfrac{4}{x^3}$
+
+  - type: example
+    title: Split the fraction
+    problem: |-
+      Differentiate $y = \dfrac{3x^2 - 5}{x}$.
+    steps:
+      - |-
+        Split: $y = \dfrac{3x^2}{x} - \dfrac{5}{x} = 3x - 5x^{-1}$.
+      - |-
+        Differentiate: $\dfrac{dy}{dx} = 3 - 5(-1)x^{-2} = 3 + 5x^{-2}$.
+    answer: |-
+      $\dfrac{dy}{dx} = 3 + \dfrac{5}{x^2}$
+
+  - type: check
+    questions: [diff-roots, diff-fraction, spot-power]
+
+  - type: explain
+    title: "Differentiate again: the second derivative"
+    body: |-
+      $\dfrac{dy}{dx}$ is itself a function, so you can differentiate it again. The result is the **second derivative**: the rate at which the gradient changes.
+
+      | First derivative | Second derivative |
+      | --- | --- |
+      | $\dfrac{dy}{dx}$ | $\dfrac{d^2y}{dx^2}$ |
+      | $f'(x)$ | $f''(x)$ |
+
+      Example: $f(x) = x^4 - 2x^3 + 5x$ gives $f'(x) = 4x^3 - 6x^2 + 5$ and $f''(x) = 12x^2 - 12x$, so $f''(2) = 48 - 24 = 24$.
+
+      You'll use it to tell maxima from minima later in this topic.
+
+  - type: check
+    questions: [gradient-value, second-derivative]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\dfrac{d}{dx}\left(x^{\frac12}\right) = \tfrac12 x^{\frac32}$
+        right: |-
+          Subtract 1 from the power: $\tfrac12 - 1 = -\tfrac12$, so it's $\tfrac12 x^{-\frac12}$.
+      - wrong: |-
+          $\dfrac{d}{dx}\left(x^{-2}\right) = -2x^{-1}$
+        right: |-
+          One less than $-2$ is $-3$: the answer is $-2x^{-3}$. Negative powers get *more* negative.
+      - wrong: |-
+          $\dfrac{d}{dx}(7) = 7$, or $\dfrac{d}{dx}(5x) = 5x$
+        right: |-
+          A constant differentiates to $0$, and $5x = 5x^1$ differentiates to $5x^0 = 5$.
+      - wrong: |-
+          $\dfrac{d^2y}{dx^2}$ means $\left(\dfrac{dy}{dx}\right)^2$.
+        right: |-
+          It means differentiate twice. For $y = x^3$: $\dfrac{d^2y}{dx^2} = 6x$, but $\left(\dfrac{dy}{dx}\right)^2 = 9x^4$.
+
+  - type: exam
+    body: |-
+      - Differentiation turns up in most Paper 1 questions on curves. Show the rewritten powers line: it's where the method mark lives if the final simplification slips.
+      - "Find $f'(x)$" usually wants a simplified answer. Leaving $-3x^{-\frac12}$ is fine; so is $-\dfrac{3}{\sqrt{x}}$.
+      - Values like $f'(4)$ or $\dfrac{d^2y}{dx^2}$ at $x = 2$: differentiate first, substitute second. Never substitute into $y$ and then differentiate a number.
+
+  - type: takeaways
+    items:
+      - |-
+        $\dfrac{d}{dx}(x^n) = nx^{n-1}$ for any rational $n$; constants differentiate to 0.
+      - |-
+        Rewrite roots and fractions as powers, and expand products, **before** differentiating.
+      - |-
+        Differentiate sums and differences term by term; constant multiples come along for the ride.
+      - |-
+        Differentiate twice for the second derivative: $\dfrac{d^2y}{dx^2}$ or $f''(x)$.
+
+questions:
+  - id: diff-poly
+    format: expression
+    difficulty: 1
+    objectives: ["1.7.2"]
+    prompt: |-
+      Find $\dfrac{dy}{dx}$ when $y = 5x^4 - 3x^2 + 7x - 2$.
+    answer: 20x^3 - 6x + 7
+    variables: [x]
+    display: |-
+      $20x^3 - 6x + 7$
+    explanation: |-
+      Term by term: $5x^4 \to 20x^3$, $\;-3x^2 \to -6x$, $\;7x \to 7$, and the constant $-2 \to 0$.
+
+  - id: notation-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.7.1"]
+    prompt: |-
+      For the curve $y = f(x)$, which of these means the gradient of the curve at the point where $x = 3$?
+    explanation: |-
+      $f'(x)$ is the gradient function, so $f'(3)$ is the gradient at $x = 3$.
+    options:
+      - text: $f'(3)$
+        correct: true
+        why: |-
+          The derivative $f'(x)$ gives the gradient at any $x$; put $x = 3$ in it.
+      - text: $f(3)$
+        why: |-
+          That's the $y$-coordinate of the point, not how steep the curve is there.
+      - text: $f''(3)$
+        why: |-
+          That's the second derivative at $x = 3$: the rate of change of the gradient, not the gradient itself.
+      - text: $\dfrac{f(3)}{3}$
+        why: |-
+          That's the gradient of the line from the origin to the point, which is generally different.
+
+  - id: diff-roots
+    format: expression
+    difficulty: 2
+    objectives: ["1.7.2"]
+    prompt: |-
+      Differentiate $y = 6\sqrt{x} - \dfrac{4}{x}$ with respect to $x$.
+    answer: 3x^(-1/2) + 4x^(-2)
+    variables: [x]
+    domain: { min: 0.2, max: 5 }
+    display: |-
+      $3x^{-\frac12} + 4x^{-2} = \dfrac{3}{\sqrt{x}} + \dfrac{4}{x^2}$
+    explanation: |-
+      $y = 6x^{\frac12} - 4x^{-1}$, so $\dfrac{dy}{dx} = 6 \times \tfrac12 x^{-\frac12} - 4(-1)x^{-2} = 3x^{-\frac12} + 4x^{-2}$.
+
+  - id: diff-fraction
+    format: expression
+    difficulty: 3
+    objectives: ["1.7.2"]
+    prompt: |-
+      Find $\dfrac{dy}{dx}$ when $y = \dfrac{(\sqrt{x} + 3)^2}{x}$.
+    answer: -3x^(-3/2) - 9x^(-2)
+    variables: [x]
+    domain: { min: 0.3, max: 5 }
+    display: |-
+      $-3x^{-\frac32} - 9x^{-2}$
+    explanation: |-
+      Expand the top first: $(\sqrt{x} + 3)^2 = x + 6\sqrt{x} + 9$. Then split: $y = 1 + 6x^{-\frac12} + 9x^{-1}$.
+
+      Differentiate: $\dfrac{dy}{dx} = 0 + 6 \times (-\tfrac12)x^{-\frac32} + 9 \times (-1)x^{-2} = -3x^{-\frac32} - 9x^{-2}$.
+
+  - id: spot-power
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.7.2"]
+    prompt: |-
+      A student differentiates $y = \dfrac{8}{x^2} + \sqrt{x}$. Which line contains the first error?
+    lines:
+      - |-
+        $y = 8x^{-2} + x^{\frac12}$
+      - |-
+        $\dfrac{dy}{dx} = -16x^{-1} + \tfrac12 x^{-\frac12}$
+      - |-
+        $= -\dfrac{16}{x} + \dfrac{1}{2\sqrt{x}}$
+    errorLine: 2
+    fix: |-
+      $8x^{-2}$ differentiates to $8 \times (-2)x^{-3} = -16x^{-3}$, so $\dfrac{dy}{dx} = -16x^{-3} + \tfrac12 x^{-\frac12} = -\dfrac{16}{x^3} + \dfrac{1}{2\sqrt{x}}$.
+    explanation: |-
+      Line 1 is right. In line 2 the power went from $-2$ to $-1$, i.e. *up* by one. Subtracting 1 from $-2$ gives $-3$.
+
+  - id: gradient-value
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.2"]
+    prompt: |-
+      Given $f(x) = x^3 - 4\sqrt{x}$, find $f'(4)$.
+    fields:
+      - label: "f′(4) ="
+        answer: 47
+    explanation: |-
+      $f(x) = x^3 - 4x^{\frac12}$, so $f'(x) = 3x^2 - 2x^{-\frac12} = 3x^2 - \dfrac{2}{\sqrt{x}}$.
+
+      $f'(4) = 3(16) - \dfrac{2}{2} = 48 - 1 = 47$.
+
+  - id: second-derivative
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.1", "1.7.2"]
+    prompt: |-
+      Given $y = 2x^3 - 9x^2 + 5$, find the value of $\dfrac{d^2y}{dx^2}$ when $x = 2$.
+    fields:
+      - label: "d²y/dx² ="
+        answer: 6
+    explanation: |-
+      $\dfrac{dy}{dx} = 6x^2 - 18x$, then $\dfrac{d^2y}{dx^2} = 12x - 18$. At $x = 2$: $24 - 18 = 6$.

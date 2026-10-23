@@ -104,6 +104,16 @@ blocks:
   - type: check
     questions: [ncr-value, x2-coefficient, spot-bracket]
 
+  - type: deeper
+    title: Adding two expansions
+    body: |-
+      $(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4$ and $(1 - x)^4 = 1 - 4x + 6x^2 - 4x^3 + x^4$.
+
+      Add them and the odd powers cancel: $(1 + x)^4 + (1 - x)^4 = 2 + 12x^2 + 2x^4$. Subtract them and the *even* powers cancel instead. Spotting this saves half the work.
+
+  - type: check
+    questions: [sum-of-expansions]
+
   - type: misconceptions
     items:
       - wrong: |-
@@ -223,3 +233,21 @@ questions:
       $3(2x)^2(-3) = 3(4x^2)(-3) = -36x^2$, so the answer is $8x^3 - 36x^2 + 54x - 27$.
     explanation: |-
       Line 2 is a perfect setup. In line 3 the student squared only the $x$ and not the 2: $(2x)^2$ is $4x^2$, not $2x^2$. Check with $x = 1$: $(2 - 3)^3 = -1$, and $8 - 36 + 54 - 27 = -1$ ✓, but $8 - 18 + 54 - 27 = 17$ ✗.
+
+  - id: sum-of-expansions
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.1"]
+    prompt: |-
+      Simplify $(1 + x)^5 + (1 - x)^5$, giving your answer in the form $p + qx^2 + rx^4$.
+    fields:
+      - label: "p ="
+        answer: 2
+      - label: "q ="
+        answer: 20
+      - label: "r ="
+        answer: 10
+    explanation: |-
+      $(1 + x)^5 = 1 + 5x + 10x^2 + 10x^3 + 5x^4 + x^5$ and $(1 - x)^5 = 1 - 5x + 10x^2 - 10x^3 + 5x^4 - x^5$.
+
+      Adding, the odd powers cancel: $2 + 20x^2 + 10x^4$.

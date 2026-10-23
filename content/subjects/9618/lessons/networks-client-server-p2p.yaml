@@ -1,0 +1,226 @@
+id: networks-client-server-p2p
+subject: "9618"
+topic: "2.1"
+title: "Client-server and peer-to-peer"
+summary: The roles of computers in client-server and peer-to-peer networks, the benefits and drawbacks of each, and how to justify a choice.
+order: 2
+minutes: 5
+kind: core
+objectives: ["2.1.3"]
+prerequisites: [networks-why-network]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, third learning outcome (2.1.3,
+    the client-server and peer-to-peer models: roles of the computers, subnetwork models, benefits
+    and drawbacks, justifying a model for a situation). All questions are original. The hospital,
+    school, family and studio scenarios are illustrative.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe the **roles** of computers in a **client-server** and a **peer-to-peer** network, give the benefits and drawbacks of each, and **justify** which suits a situation.
+
+  - type: intuition
+    title: Restaurant vs potluck
+    body: |
+      **Client-server** is a restaurant. The kitchen (server) does the cooking; diners (clients) order and get served. Everything depends on the kitchen.
+
+      **Peer-to-peer** is a potluck. Everyone brings a dish *and* everyone eats. No kitchen in charge.
+
+      Where it breaks down: a peer can serve and request at the same moment, which would be a very confusing dinner.
+
+  - type: definition
+    term: Client-server model
+    body: |
+      A network in which one or more central computers (**servers**) provide resources and services, and other computers (**clients**) **send requests** to the servers and receive **responses**.
+
+  - type: explain
+    title: Who does what
+    body: |
+      - A **server** provides a service to clients. Examples: a **file server** (stores users' files), **print server** (manages the print queue), **web server**, **email server**, **database server**.
+      - A **client** requests services. It sends a request; the server processes it and sends a response.
+      - Clients don't usually share files directly with each other; data goes **via the server**.
+
+  - type: definition
+    term: Peer-to-peer (P2P) model
+    body: |
+      A network with **no central server**, in which every computer (**peer**) has **equal status** and acts as **both a client and a server**, sharing its own resources directly with other peers.
+
+  - type: diagram
+    diagram: cs-networks-client-server-p2p
+    alt: >-
+      Two panels. Left, client-server: a server in the middle with five clients around it, each
+      linked only to the server; on the link to the top client, an arrow labelled request goes from
+      client to server and an arrow labelled response goes back. Caption: clients send requests to a
+      central server. Right, peer-to-peer: five peers, each linked to all of the others, with no
+      central computer. Caption: every peer is both client and server.
+    caption: |
+      Client-server: everything goes through the server. P2P: peers deal with each other directly.
+
+  - type: check
+    title: Quick check
+    questions: [server-role, request-response]
+
+  - type: explain
+    title: Benefits and drawbacks
+    body: |
+      | | Client-server | Peer-to-peer |
+      | --- | --- | --- |
+      | Security | **managed centrally** (user accounts, access rights) | each peer is responsible for its own |
+      | Backups | **central**, done once on the server | each peer backs up its own data, or nobody does |
+      | Finding files | in one place; log in anywhere to reach them | spread across peers; may be duplicated |
+      | Cost | **expensive**: server hardware, software, a network manager | **cheap**: no dedicated server |
+      | Set-up | complex | simple |
+      | If one machine fails | server down = **everyone stuck** (single point of failure) | only that peer's resources are lost |
+      | Heavy demand | the server can become a bottleneck | load is **spread across peers** (e.g. sharing a big file from many peers at once) |
+
+      **Subnetwork models**: a large network can be divided into subnetworks, and each can use the model that suits it. A school might run client-server for students while a small media team shares project files peer-to-peer.
+
+  - type: example
+    title: Justify the model
+    problem: |
+      Choose and justify a model for (a) a hospital where 400 staff access patient records, (b) a family of four who want to share photos and one printer at home.
+    steps:
+      - |
+        **(a) Client-server.** The records are confidential, so **access rights** must be controlled centrally on a server.
+      - |
+        The records are vital, so the server can be **backed up centrally** and regularly.
+      - |
+        Staff can log in from **any** ward computer and reach the same up-to-date records.
+      - |
+        **(b) Peer-to-peer.** Only four devices, so it's **cheap and simple**: no server to buy and no network manager.
+      - |
+        The data isn't critical, so the lack of central security and backup is an acceptable trade-off.
+    answer: |
+      Hospital: client-server (central security, backup, access from anywhere). Family: peer-to-peer (cheap and simple for a few devices).
+
+  - type: misconceptions
+    items:
+      - wrong: A server has to be a giant, special computer.
+        right: |
+          A server is whatever **provides a service**. It's usually a powerful dedicated machine, but in P2P every ordinary peer acts as a server too.
+      - wrong: Peer-to-peer means file piracy.
+        right: |
+          P2P is a network model. It's used legitimately, e.g. to spread software and game updates across many computers.
+      - wrong: In P2P, if one peer goes offline the whole network fails.
+        right: |
+          The others carry on. Only the resources stored on that peer become unavailable. A **server** failing is what stops a client-server network.
+
+  - type: exam
+    body: |
+      - "Justify" questions: **name the model**, then give reasons **linked to the scenario** (number of users, how sensitive the data is, budget, need for backups). Generic lists of benefits score less.
+      - Describe roles precisely: the client **requests**, the server **responds** with the service or resource.
+      - Use the phrase **"acts as both a client and a server"** for a peer.
+
+  - type: check
+    title: Choose the model
+    questions: [p2p-drawback, choose-studio, justify-school]
+
+  - type: takeaways
+    items:
+      - "Client-server: clients send requests; servers provide services and respond."
+      - "P2P: no central server; every peer has equal status and is both client and server."
+      - Client-server gives central security, backup and management but costs more and has a single point of failure.
+      - P2P is cheap and simple but has no central security or backup, so it suits small networks or spreading load.
+      - Justify a model by linking its features to the facts of the scenario.
+
+questions:
+  - id: server-role
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.3"]
+    prompt: |
+      In the client-server model, what is the role of the **server**?
+    options:
+      - text: To provide services and resources in response to requests from clients
+        correct: true
+        why: |
+          That's the server's job: files, printing, web pages, email and so on, on request.
+      - text: To send requests to the clients for the data they hold
+        why: |
+          That's backwards. Clients request; the server responds.
+      - text: To connect the network to the internet
+        why: |
+          That's a router's job, not what makes something a server.
+      - text: To act as both a client and a server
+        why: |
+          That describes a peer in a P2P network.
+    explanation: |
+      Clients request, servers serve.
+
+  - id: request-response
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.3"]
+    prompt: |
+      In the client-server model, the client sends a {{1}} to the server, which processes it and sends back a {{2}}.
+    blanks:
+      - accept: ["request", "requests"]
+      - accept: ["response", "reply", "responses", "replies"]
+    explanation: |
+      Request goes in, response comes out. The client never has to do the server's work itself.
+
+  - id: p2p-drawback
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.3"]
+    prompt: |
+      Which is a drawback of a peer-to-peer network?
+    options:
+      - text: There is no central backup, so each user must back up their own files
+        correct: true
+        why: |
+          With no server, nothing backs everything up in one place.
+      - text: It needs an expensive dedicated server
+        why: |
+          P2P has no dedicated server; that's why it's cheap.
+      - text: If the server fails, nobody can work
+        why: |
+          There is no server in P2P. That's a client-server drawback.
+      - text: Peers cannot share files with each other
+        why: |
+          Sharing directly between peers is the whole idea.
+    explanation: |
+      P2P's weaknesses come from having no centre: no central backup, no central security, files scattered across peers.
+
+  - id: choose-studio
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.3"]
+    prompt: |
+      A three-person animation studio shares project files and a printer. It has no IT technician and a tiny budget. Which model and reason fit best?
+    options:
+      - text: Peer-to-peer, because it needs no dedicated server and is simple to set up
+        correct: true
+        why: |
+          Few users, small budget, no technician: P2P's low cost and simplicity match the scenario.
+      - text: Client-server, because it is always faster
+        why: |
+          It isn't always faster, and it needs a server and someone to manage it.
+      - text: Client-server, because peers cannot share printers
+        why: |
+          Peers can share a printer directly.
+      - text: Peer-to-peer, because it provides central security
+        why: |
+          Central security is a client-server feature, not P2P.
+    explanation: |
+      The justification has to match the facts given: small, cheap, no technician points to P2P.
+
+  - id: justify-school
+    format: explain
+    difficulty: 3
+    objectives: ["2.1.3"]
+    prompt: |
+      A school has 1200 students who use any of 300 computers. Justify the use of a **client-server** network for the school.
+    model: |
+      A client-server network suits the school because students can log in from any of the 300 computers and reach their own files stored on the file server. Security is managed centrally: the network manager can set user accounts and access rights so students can't see staff files. All files can be backed up centrally from the server rather than on each computer. Software can be installed and updated centrally. With 1200 users, a P2P network would be impossible to manage.
+    keyPoints:
+      - Students can log in from any computer and access their files on the server
+      - Central security, with user accounts and access rights
+      - Central backup of all files from the server
+      - Software and updates can be managed centrally
+      - Too many users and computers to manage peer-to-peer
+    explanation: |
+      Each reason is linked to a fact in the scenario (many users, shared computers), which is what "justify" asks for.

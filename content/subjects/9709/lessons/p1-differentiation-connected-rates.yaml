@@ -1,0 +1,214 @@
+id: p1-differentiation-connected-rates
+subject: "9709"
+topic: "1.7"
+title: Rates of change and connected rates
+summary: Read dy/dx as a rate of change, and link rates with dy/dt = dy/dx × dx/dt, for growing circles, spheres and cubes.
+order: 6
+minutes: 5
+kind: core
+objectives: ["1.7.3"]
+prerequisites: [p1-differentiation-chain-rule]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "apply differentiation
+    to ... rates of change", including connected rates of change such as finding the rate of
+    increase of the area of a circle from the rate of increase of its radius. The sphere volume
+    formula V = (4/3)πr³ is stated in the questions. All examples and questions are original,
+    with made-up illustrative rates; all arithmetic checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can interpret a derivative as a **rate of change** and solve **connected rates of change** problems with $\dfrac{dy}{dt} = \dfrac{dy}{dx} \times \dfrac{dx}{dt}$.
+
+  - type: explain
+    title: Everything is changing
+    body: |-
+      A drop of ink spreads on paper. A balloon inflates. A puddle shrinks in the sun. Each has one quantity (radius, volume, area) changing over **time** $t$.
+
+      - $\dfrac{dr}{dt}$ is the **rate of change of $r$** with respect to time: how fast the radius grows, in, say, $\text{cm s}^{-1}$.
+      - $\dfrac{dA}{dr}$ is the rate of change of area **with respect to radius**: how fast area grows per unit of radius.
+      - A negative rate means the quantity is **decreasing**.
+
+  - type: check
+    questions: [rate-meaning]
+
+  - type: definition
+    term: Connected rates of change
+    body: |-
+      If $y$ depends on $x$, and $x$ changes with time $t$, then by the chain rule
+
+      $$\frac{dy}{dt} = \frac{dy}{dx} \times \frac{dx}{dt}.$$
+
+      You usually know one rate with respect to time, find $\dfrac{dy}{dx}$ by differentiating a formula, and multiply (or divide) to get the other.
+
+  - type: intuition
+    title: Why dA/dr is the circumference
+    body: |-
+      Grow a circle's radius by a tiny $\delta r$. The new area is a thin ring around the edge. Unroll it and it's almost a long thin strip: length $2\pi r$, width $\delta r$.
+
+      So $\delta A \approx 2\pi r\,\delta r$, which means $\dfrac{\delta A}{\delta r} \approx 2\pi r$. In the limit, $\dfrac{dA}{dr} = 2\pi r$, exactly what you get by differentiating $A = \pi r^2$.
+
+  - type: diagram
+    diagram: p1-differentiation-growing-circle
+    alt: >-
+      A shaded circle of radius r, labelled area A = πr², surrounded by a thin ring of width δr drawn
+      with a dashed outer edge. Text beside it: the new ring is approximately a strip 2πr long and
+      δr wide, so δA ≈ 2πr × δr and δA/δr ≈ 2πr; hence dA/dr = 2πr, the circumference. Below a
+      line: if r grows with time t, dA/dt = dA/dr × dr/dt.
+    caption: |-
+      A little extra radius adds a ring of area about $2\pi r \times \delta r$. That's why $\dfrac{dA}{dr} = 2\pi r$.
+
+  - type: example
+    title: The spreading circle
+    problem: |-
+      The radius of a circle is increasing at $0.5\ \text{cm s}^{-1}$. Find the rate at which its area is increasing when the radius is 6 cm.
+    steps:
+      - |-
+        Known: $\dfrac{dr}{dt} = 0.5$. Wanted: $\dfrac{dA}{dt}$ when $r = 6$.
+      - |-
+        Link: $A = \pi r^2$, so $\dfrac{dA}{dr} = 2\pi r$.
+      - |-
+        Chain: $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt} = 2\pi r \times 0.5 = \pi r$.
+      - |-
+        At $r = 6$: $\dfrac{dA}{dt} = 6\pi$.
+    answer: |-
+      The area is increasing at $6\pi \approx 18.8\ \text{cm}^2\,\text{s}^{-1}$.
+
+  - type: check
+    questions: [rate-of-y, circle-rate]
+
+  - type: example
+    title: Dividing instead of multiplying
+    problem: |-
+      Air is pumped into a spherical balloon at $10\ \text{cm}^3\,\text{s}^{-1}$. Find the rate at which the radius is increasing when the radius is 5 cm. (The volume of a sphere is $V = \tfrac43\pi r^3$.)
+    steps:
+      - |-
+        Known: $\dfrac{dV}{dt} = 10$. Wanted: $\dfrac{dr}{dt}$ when $r = 5$.
+      - |-
+        $\dfrac{dV}{dr} = 4\pi r^2 = 4\pi(25) = 100\pi$ at $r = 5$.
+      - |-
+        $\dfrac{dV}{dt} = \dfrac{dV}{dr} \times \dfrac{dr}{dt}$, so $10 = 100\pi \times \dfrac{dr}{dt}$.
+      - |-
+        $\dfrac{dr}{dt} = \dfrac{10}{100\pi} = \dfrac{1}{10\pi}$.
+    answer: |-
+      $\dfrac{dr}{dt} = \dfrac{1}{10\pi} \approx 0.0318\ \text{cm s}^{-1}$. Write the chain with the *wanted* rate in it, then rearrange; don't guess whether to multiply or divide.
+
+  - type: check
+    questions: [sphere-rate, spot-divide]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Put $r = 6$ into $A = \pi r^2$ first: $A = 36\pi$, so $\dfrac{dA}{dr} = 0$.
+        right: |-
+          Differentiate the **formula** first ($\dfrac{dA}{dr} = 2\pi r$), *then* substitute $r = 6$. A number has derivative 0, which tells you nothing.
+      - wrong: |-
+          $\dfrac{dr}{dt} = \dfrac{dV}{dt} \times \dfrac{dV}{dr}$
+        right: |-
+          Check the chain "cancels" properly: $\dfrac{dV}{dt} = \dfrac{dV}{dr} \times \dfrac{dr}{dt}$, so $\dfrac{dr}{dt} = \dfrac{dV}{dt} \div \dfrac{dV}{dr}$.
+      - wrong: |-
+          "The volume is decreasing at 3 cm³ per second", so $\dfrac{dV}{dt} = 3$.
+        right: |-
+          Decreasing means a negative rate: $\dfrac{dV}{dt} = -3$.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Given that the radius is increasing at a rate of 0.5 cm per second, find the rate of increase of the area when $r = 6$.* Usually 3–4 marks.
+      - Write the chain rule with the actual letters, e.g. $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt}$, before substituting. That line earns the method mark.
+      - Give units if the question has them, and an exact answer ($6\pi$) or 3 s.f. ($18.8$) as asked.
+
+  - type: takeaways
+    items:
+      - |-
+        A derivative is a rate of change: $\dfrac{dV}{dt}$ is how fast $V$ changes per unit time; negative means decreasing.
+      - |-
+        Connected rates: $\dfrac{dy}{dt} = \dfrac{dy}{dx} \times \dfrac{dx}{dt}$.
+      - |-
+        Differentiate the formula first, substitute the value second.
+      - |-
+        Write the chain with the wanted rate in it, then rearrange.
+
+questions:
+  - id: rate-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["1.7.3"]
+    prompt: |-
+      $V\ \text{cm}^3$ is the volume of water in a tank $t$ seconds after a tap is opened. At one moment $\dfrac{dV}{dt} = -3$. What does this mean?
+    explanation: |-
+      $\dfrac{dV}{dt}$ is the rate of change of volume with time. Negative means the volume is going down, at $3\ \text{cm}^3$ every second.
+    options:
+      - text: The volume is decreasing at $3\ \text{cm}^3$ per second.
+        correct: true
+        why: |-
+          A rate of $-3\ \text{cm}^3\,\text{s}^{-1}$: the volume falls by about 3 cm³ each second.
+      - text: The volume is $-3\ \text{cm}^3$.
+        why: |-
+          $\dfrac{dV}{dt}$ is how fast $V$ changes, not $V$ itself (and a volume can't be negative).
+      - text: The volume is increasing at $3\ \text{cm}^3$ per second.
+        why: |-
+          The minus sign means decreasing.
+      - text: Time is going down by 3 seconds per cm³.
+        why: |-
+          That reads the derivative upside down. $\dfrac{dV}{dt}$ is change in $V$ per unit change in $t$.
+
+  - id: rate-of-y
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.3"]
+    prompt: |-
+      A point moves along the curve $y = x^2 + 4x$ so that its $x$-coordinate increases at $0.3$ units per second. Find the rate at which its $y$-coordinate is increasing when $x = 2$.
+    fields:
+      - answer: 2.4
+        unit: units per second
+    explanation: |-
+      $\dfrac{dy}{dx} = 2x + 4 = 8$ at $x = 2$. $\;\dfrac{dy}{dt} = \dfrac{dy}{dx} \times \dfrac{dx}{dt} = 8 \times 0.3 = 2.4$.
+
+  - id: circle-rate
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.3"]
+    prompt: |-
+      The radius of a circle increases at $0.4\ \text{cm s}^{-1}$. Find the rate of increase of its area when the radius is 10 cm. Give an exact answer or 3 significant figures.
+    fields:
+      - answer: 25.132741228718345
+        tolerance: { abs: 0.05 }
+        unit: cm² s⁻¹
+    explanation: |-
+      $\dfrac{dA}{dr} = 2\pi r = 20\pi$ at $r = 10$. $\;\dfrac{dA}{dt} = 20\pi \times 0.4 = 8\pi \approx 25.1\ \text{cm}^2\,\text{s}^{-1}$.
+
+  - id: sphere-rate
+    format: numeric
+    difficulty: 3
+    objectives: ["1.7.3"]
+    prompt: |-
+      The volume of a sphere, $V = \tfrac43\pi r^3$, is increasing at $20\ \text{cm}^3\,\text{s}^{-1}$. Find the rate of increase of the radius when $r = 4$ cm, to 3 significant figures.
+    fields:
+      - answer: 0.0994718394324346
+        sigFigs: 3
+        unit: cm s⁻¹
+    explanation: |-
+      $\dfrac{dV}{dr} = 4\pi r^2 = 64\pi$ at $r = 4$. $\;20 = 64\pi \times \dfrac{dr}{dt}$, so $\dfrac{dr}{dt} = \dfrac{20}{64\pi} = \dfrac{5}{16\pi} = 0.0995\ \text{cm s}^{-1}$ (3 s.f.).
+
+  - id: spot-divide
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.7.3"]
+    prompt: |-
+      The volume of a cube of side $x$ cm is increasing at $6\ \text{cm}^3\,\text{s}^{-1}$. A student finds the rate of increase of $x$ when $x = 2$. Which line contains the first error?
+    lines:
+      - |-
+        $V = x^3$, so $\dfrac{dV}{dx} = 3x^2 = 12$ when $x = 2$.
+      - |-
+        $\dfrac{dx}{dt} = \dfrac{dV}{dt} \times \dfrac{dV}{dx} = 6 \times 12$
+      - |-
+        $= 72\ \text{cm s}^{-1}$
+    errorLine: 2
+    fix: |-
+      $\dfrac{dV}{dt} = \dfrac{dV}{dx} \times \dfrac{dx}{dt}$, so $\dfrac{dx}{dt} = \dfrac{dV}{dt} \div \dfrac{dV}{dx} = \dfrac{6}{12} = 0.5\ \text{cm s}^{-1}$.
+    explanation: |-
+      Line 1 is right. Line 2 multiplies when it should divide. Sanity check: a cube of side 2 cm gaining only 6 cm³ a second can't have its side growing at 72 cm a second.

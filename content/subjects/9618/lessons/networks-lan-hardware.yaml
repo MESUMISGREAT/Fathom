@@ -1,0 +1,233 @@
+id: networks-lan-hardware
+subject: "9618"
+topic: "2.1"
+title: "The hardware that builds a LAN"
+summary: What a switch, server, NIC, WNIC, wireless access point, cables, bridge and repeater each do in a local area network.
+order: 8
+minutes: 5
+kind: core
+objectives: ["2.1.8"]
+prerequisites: [networks-bus-star, networks-transmission-media]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, eighth learning outcome (2.1.8,
+    the hardware used to support a LAN: switch, server, NIC, WNIC, WAP, cables, bridge and
+    repeater). The 100 m figure is the usual maximum segment length for twisted-pair Ethernet. All
+    questions are original; the office scenario is illustrative.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe what each piece of LAN hardware does: **switch**, **server**, **NIC**, **WNIC**, **WAP**, **cables**, **bridge** and **repeater**.
+
+  - type: explain
+    title: Build a LAN from a box of parts
+    body: |
+      Someone hands you a box of network kit and says "make the office work by Monday". Here's what's in the box, and what each part is for.
+
+  - type: diagram
+    diagram: cs-networks-lan-hardware
+    alt: >-
+      A LAN in two dashed regions labelled LAN segment 1 and LAN segment 2. In segment 1 a router at
+      the top leads to the internet; below it a switch connects a server and two PCs, each labelled
+      NIC, and a long cable from the switch passes through a repeater to reach a distant PC, also
+      with a NIC. Between the two segments a bridge joins the segment 1 switch to the segment 2
+      switch. In segment 2 the switch connects a PC with a NIC and a wireless access point (WAP);
+      a laptop and a phone, each labelled WNIC, connect to the WAP by dashed radio links.
+    caption: |
+      Every device has a NIC or WNIC; switches join them up; a bridge joins two segments; a repeater stretches a long cable run.
+
+  - type: explain
+    title: What each part does
+    body: |
+      | Hardware | Job |
+      | --- | --- |
+      | **NIC** (network interface card) | Lets a device connect to a **wired** network. Every NIC has a unique **MAC address**, set when it is made. |
+      | **WNIC** (wireless NIC) | Lets a device connect to a **wireless** network, sending and receiving **radio signals** through an antenna. |
+      | **WAP** (wireless access point) | Lets wireless devices connect to the **wired** LAN. Plugged into a switch by cable; talks to WNICs by radio. |
+      | **Switch** | Connects the devices in a LAN (the centre of a star). Reads each frame's **destination MAC address** and forwards it **only to the port** of that device. |
+      | **Server** | A computer that provides services to the others: files, printing, email, web pages, databases. |
+      | **Cables** | The wired medium linking devices: twisted-pair copper (Ethernet), coaxial or fibre-optic. |
+      | **Bridge** | Connects **two LAN segments** that use the **same protocol**, so they act as one network. It forwards a frame to the other segment only if the destination is there. |
+      | **Repeater** | **Regenerates (boosts)** a weakened signal and retransmits it, so data can travel further than the cable's maximum length. |
+
+  - type: check
+    title: Quick check
+    questions: [wap-role, mac-cloze, switch-forwards]
+
+  - type: intuition
+    title: A post room, not a megaphone
+    body: |
+      An old **hub** was a megaphone: every message shouted to every port. A **switch** is a post room. It learns which desk (port) each MAC address sits at and delivers each frame only there. Less noise, fewer collisions, better privacy.
+
+      Where the analogy breaks: a switch learns those "desk locations" automatically, by noting the source address of every frame that arrives.
+
+  - type: example
+    title: Kit out the office
+    problem: |
+      An office has 12 desktop PCs, staff laptops that roam between rooms, a file server and one PC in a warehouse 160 m of cable away. Which hardware is needed?
+    steps:
+      - |
+        Every desktop and the server need a **NIC** and a **cable** to a **switch**.
+      - |
+        The laptops need a **WNIC** (built in) and a **WAP** connected to the switch, so they can join the wired LAN by WiFi.
+      - |
+        The **server** stores shared files and provides the services.
+      - |
+        Twisted-pair Ethernet cable is usually limited to about 100 m, so the 160 m run needs a **repeater** part-way to regenerate the signal.
+    answer: |
+      NICs, cables, a switch, a WAP (for laptops with WNICs), a file server and a repeater on the long run.
+
+  - type: misconceptions
+    items:
+      - wrong: A WAP connects the LAN to the internet.
+        right: |
+          A WAP connects **wireless devices to the wired LAN**. The **router** connects the LAN to the internet (home "routers" often contain a WAP too, which is where the confusion comes from).
+      - wrong: A switch sends every frame to every connected device.
+        right: |
+          That was a **hub**. A switch forwards each frame only to the port of its destination MAC address.
+      - wrong: A repeater decides where data should go.
+        right: |
+          A repeater just **regenerates the signal**. It doesn't read addresses. A **bridge** or **switch** makes forwarding decisions.
+
+  - type: exam
+    body: |
+      - "Describe the function of..." wants **what it does**, often in 2 marks: e.g. switch: "connects devices in a LAN (1); forwards data only to the intended device using its MAC address (1)".
+      - Don't mix up WAP and router, or bridge and repeater. The examiners love those swaps.
+      - Write the acronyms out once in full: network interface card, wireless access point.
+
+  - type: check
+    title: Which device?
+    questions: [repeater-scenario, bridge-role, hardware-spot-error]
+
+  - type: takeaways
+    items:
+      - "NIC / WNIC: connect a device to a wired / wireless network; each has a unique MAC address."
+      - "WAP: connects wireless devices to the wired LAN."
+      - "Switch: connects LAN devices and forwards each frame only to its destination MAC address."
+      - "Bridge: joins two LAN segments using the same protocol. Repeater: regenerates a signal to extend its range."
+      - "Server: provides services to clients. Cables: the wired medium."
+
+questions:
+  - id: wap-role
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.8"]
+    prompt: |
+      What is the function of a **wireless access point (WAP)**?
+    options:
+      - text: It allows wireless devices to connect to a wired network
+        correct: true
+        why: |
+          It's cabled to the LAN on one side and talks to WNICs by radio on the other.
+      - text: It connects a LAN to the internet
+        why: |
+          That's a router's job.
+      - text: It boosts a weak signal on a long cable
+        why: |
+          That's a repeater.
+      - text: It gives each device a unique MAC address
+        why: |
+          MAC addresses come with each device's NIC or WNIC.
+    explanation: |
+      WAP: the bridge between WiFi devices and the wired LAN.
+
+  - id: mac-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.8"]
+    prompt: |
+      Every network interface card has a unique {{1}} address, set when it is manufactured.
+    blanks:
+      - accept: ["MAC", "media access control", "medium access control", "physical", "hardware"]
+    explanation: |
+      The MAC address identifies the NIC itself. Switches use it to forward frames to the right port.
+
+  - id: switch-forwards
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.8"]
+    prompt: |
+      A switch receives a frame from one of its ports. What does it do?
+    options:
+      - text: Reads the destination MAC address and forwards the frame only to the port that device is on
+        correct: true
+        why: |
+          Switches deliver frames only where they need to go.
+      - text: Sends the frame out of every port
+        why: |
+          That's what a hub does.
+      - text: Reads the destination IP address and chooses a route across the internet
+        why: |
+          Routing between networks by IP address is a router's job.
+      - text: Amplifies the signal and passes it along the cable unchanged
+        why: |
+          That's a repeater; it makes no forwarding decisions.
+    explanation: |
+      Switch: within a LAN, by MAC address, to one port.
+
+  - id: repeater-scenario
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.8"]
+    prompt: |
+      A cable run from a switch to a sports hall is 180 m long. The signal arriving at the hall is too weak to read. Which device solves this?
+    options:
+      - text: A repeater part-way along, to regenerate the signal
+        correct: true
+        why: |
+          Signals attenuate along copper cable; a repeater restores them so they can travel further.
+      - text: A second NIC in the sports hall computer
+        why: |
+          The NIC isn't the problem; the signal fades before it arrives.
+      - text: A bridge
+        why: |
+          A bridge joins two LAN segments; it isn't the fix for a weak signal on one cable.
+      - text: A server in the sports hall
+        why: |
+          A server provides services; it doesn't strengthen signals.
+    explanation: |
+      Long cable plus weak signal means repeater.
+
+  - id: bridge-role
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.8"]
+    prompt: |
+      What is a **bridge** used for in a LAN?
+    options:
+      - text: To connect two LAN segments that use the same protocol so they work as one network
+        correct: true
+        why: |
+          It joins segments and forwards frames across only when the destination is on the other side.
+      - text: To connect a LAN to a network that uses a different protocol, such as the internet
+        why: |
+          Connecting different networks is a router's (or gateway's) job.
+      - text: To let wireless devices join the network
+        why: |
+          That's a WAP.
+      - text: To store files for the other computers
+        why: |
+          That's a file server.
+    explanation: |
+      Bridge: same protocol, two segments, one network.
+
+  - id: hardware-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["2.1.8"]
+    prompt: |
+      A student writes notes on LAN hardware. Which line is wrong?
+    lines:
+      - A NIC allows a device to connect to a wired network and has a unique MAC address.
+      - A WNIC sends and receives radio signals so a device can join a wireless network.
+      - A switch forwards each frame only to the device with the destination MAC address.
+      - A repeater reads the MAC address of each frame and passes it to the correct segment.
+      - A WAP connects wireless devices to the wired LAN.
+    errorLine: 4
+    fix: |
+      A repeater **regenerates (boosts) the signal** so it can travel further; it doesn't read addresses. Passing frames to the correct segment by MAC address is what a **bridge** does.
+    explanation: |
+      Repeaters work on the signal only. Bridges and switches make forwarding decisions.

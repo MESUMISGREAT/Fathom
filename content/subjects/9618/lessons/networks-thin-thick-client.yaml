@@ -1,0 +1,216 @@
+id: networks-thin-thick-client
+subject: "9618"
+topic: "2.1"
+title: "Thin clients and thick clients"
+summary: What makes a client thin or thick, where the processing and storage happen, and how to choose between them.
+order: 3
+minutes: 4
+kind: core
+objectives: ["2.1.4"]
+prerequisites: [networks-client-server-p2p]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, fourth learning outcome (2.1.4,
+    thin-client and thick-client and the differences between them). All questions are original.
+    The library, sales team and video-editing scenarios are illustrative.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the difference between a **thin client** and a **thick client**, and say which suits a given situation.
+
+  - type: explain
+    title: Some computers are mostly a screen and a lot of trust
+    body: |
+      A **thin client** is basically a screen, a keyboard and a network cable. It sends your clicks to a server, the server does the real work, and the results come back to be displayed.
+
+      A **thick client** (or **fat client**) is a full computer that does its own work and only talks to the server when it needs to.
+
+  - type: definition
+    term: Thin client
+    body: |
+      A client (device or program) that **relies heavily on a server** for processing and storage. It does little processing itself and needs a **continuous connection** to the server to work.
+
+  - type: definition
+    term: Thick client
+    body: |
+      A client (device or program) that does **most of its processing locally**, with its own storage and installed software. It can **work independently** of the server and connects only when it needs to share data.
+
+  - type: diagram
+    diagram: cs-networks-thin-thick
+    alt: >-
+      Two panels. Left, thin client: a small client box containing only input and output, joined by a
+      solid line labelled constant connection needed to a large server box containing processing,
+      storage and applications. Right, thick client: a large client box containing processing,
+      storage and applications, joined by a dashed line labelled connection optional to a small
+      server box holding shared files and backups.
+    caption: |
+      Same three jobs, different homes. Thin: the server does them. Thick: the client does them.
+
+  - type: check
+    title: Quick check
+    questions: [thin-definition, thin-cloze]
+
+  - type: explain
+    title: The differences
+    body: |
+      | | Thin client | Thick client |
+      | --- | --- | --- |
+      | Processing | mostly on the **server** | mostly **local** |
+      | Storage | on the server | local (may also use the server) |
+      | Network connection | needed **all the time** | needed only to share or sync |
+      | Hardware | cheap, low specification | more powerful, more expensive |
+      | Software | installed and updated **once, on the server** | installed and updated on **each** client |
+      | Security | data stays on the server | data stored on each device, so more to protect |
+      | Network and server load | heavy | lighter |
+      | If the server or network fails | **can't work** | carries on |
+
+      The idea applies to **software** too. Email used in a web browser is thin-client software (the server does the work). An installed video editor is thick-client software.
+
+  - type: example
+    title: Which one?
+    problem: |
+      Choose thin or thick clients for (a) 40 catalogue terminals in a public library, (b) sales reps who travel to areas with patchy mobile signal.
+    steps:
+      - |
+        (a) The terminals only search a catalogue held on a server and need no local storage. Cheap hardware, one central update, and nothing stored locally to steal: **thin clients**.
+      - |
+        (b) A thin client stops working without a connection. The reps need to keep working offline and sync later: **thick clients**.
+    answer: |
+      Library: thin. Travelling sales reps: thick.
+
+  - type: misconceptions
+    items:
+      - wrong: Thin and thick describe how big or heavy the device is.
+        right: |
+          They describe **where the processing and storage happen**. A slim laptop running installed software is a thick client.
+      - wrong: A thin client has no processor at all.
+        right: |
+          It has a small one for input, output, the display and the network connection. It just doesn't run the applications itself.
+      - wrong: Thick clients never use a server.
+        right: |
+          They can still use servers for shared files and backups; they just don't **depend** on them to work.
+
+  - type: exam
+    body: |
+      - Compare questions want **paired** points: "a thin client depends on the server for processing, **whereas** a thick client processes locally".
+      - Always mention the **connection**: thin needs a continuous connection; thick can work offline.
+      - In a scenario, link your choice to a fact: cost, offline working, central updates, heavy processing.
+
+  - type: check
+    title: Choose the client
+    questions: [travel-reps, thin-drawback, school-switch]
+
+  - type: takeaways
+    items:
+      - "Thin client: the server does most processing and storage; needs a continuous connection."
+      - "Thick client: processes and stores locally; can work without the server."
+      - "Thin: cheap hardware, central updates, data on the server, but useless if the network fails."
+      - "Thick: works offline and eases server load, but costs more and needs software on every machine."
+
+questions:
+  - id: thin-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.4"]
+    prompt: |
+      Which statement best describes a **thin client**?
+    options:
+      - text: A client that relies on a server for most of its processing and storage
+        correct: true
+        why: |
+          That's the definition: the work happens on the server.
+      - text: A lightweight, portable laptop
+        why: |
+          Thin refers to where processing happens, not to the device's size.
+      - text: A client that stores all its data locally so it can work offline
+        why: |
+          That describes a thick client.
+      - text: A computer that acts as both client and server
+        why: |
+          That's a peer in a P2P network.
+    explanation: |
+      A thin client depends on the server; a thick client is largely self-sufficient.
+
+  - id: thin-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.4"]
+    prompt: |
+      A thin client depends on the {{1}} for most processing, so it needs a continuous {{2}} connection to work.
+    blanks:
+      - accept: ["server", "servers", "central server"]
+      - accept: ["network", "internet", "network or internet"]
+    explanation: |
+      No connection to the server means no processing, so a thin client can't work offline.
+
+  - id: travel-reps
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.4"]
+    prompt: |
+      A company's engineers visit remote sites with no internet access and need to run diagnostic software there. Which choice is best?
+    options:
+      - text: Thick clients, because they can process data without a connection to the server
+        correct: true
+        why: |
+          With no connection on site, only a thick client can run the software.
+      - text: Thin clients, because they are cheaper
+        why: |
+          Cheap is no use if the device can't work without the server.
+      - text: Thin clients, because the software is updated centrally
+        why: |
+          Central updates are a real benefit, but they don't help when there's no connection.
+      - text: Thick clients, because they don't need any software installed
+        why: |
+          Thick clients do need software installed locally; that's how they work offline.
+    explanation: |
+      The deciding fact is "no internet access": thin clients need a continuous connection.
+
+  - id: thin-drawback
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.4"]
+    prompt: |
+      Which is a **drawback** of thin clients?
+    options:
+      - text: If the network or server fails, the thin clients can't be used
+        correct: true
+        why: |
+          All the processing is on the server, so losing it stops everything.
+      - text: Software has to be installed on every client
+        why: |
+          That's a thick-client drawback. Thin-client software is installed on the server.
+      - text: Each client needs expensive, high-specification hardware
+        why: |
+          Thin clients can use cheap, low-specification hardware.
+      - text: Data stored on each client could be stolen with the device
+        why: |
+          Thin clients store data on the server, which is a security benefit.
+    explanation: |
+      Thin clients trade independence for low cost and central control.
+
+  - id: school-switch
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.4"]
+    prompt: |
+      A school replaces 200 thick-client PCs with thin clients. What else will it most need to do?
+    options:
+      - text: Make sure the server is powerful enough and the network can carry the extra traffic
+        correct: true
+        why: |
+          The processing moves to the server and every action now crosses the network, so both must cope with 200 users.
+      - text: Install the applications on each of the 200 new clients
+        why: |
+          With thin clients, applications run on the server; that's the point.
+      - text: Fit each thin client with a larger hard disk
+        why: |
+          Storage moves to the server, so local disks matter less.
+      - text: Nothing, because thin clients reduce the load on the server
+        why: |
+          Thin clients *increase* server and network load; thick clients reduce it.
+    explanation: |
+      Moving to thin clients shifts the work onto the server and the network. Plan for that.

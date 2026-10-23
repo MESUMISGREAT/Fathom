@@ -1,0 +1,258 @@
+id: p1-differentiation-stationary-points
+subject: "9709"
+topic: "1.7"
+title: Stationary points and their nature
+summary: Find stationary points by solving dy/dx = 0, then use the second derivative (or the sign of dy/dx) to decide whether each is a maximum or a minimum.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.7.4"]
+prerequisites: [p1-differentiation-increasing-decreasing]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "locate stationary
+    points and determine their nature", including use of the second derivative to identify
+    maxima and minima (other methods allowed where a question does not specify one). Points of
+    inflexion are excluded by the syllabus and are only mentioned as "neither". All examples and
+    questions are original; all arithmetic checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the **stationary points** of a curve and determine their **nature** (maximum or minimum) using the second derivative or the sign of $\dfrac{dy}{dx}$.
+
+  - type: explain
+    title: Flat for a moment
+    body: |-
+      At the very top of a hill, and at the very bottom of a valley, the ground is level for an instant. You're not going up or down.
+
+      On a graph that's a point where the gradient is **zero**: a **stationary point**. The tangent there is horizontal.
+
+  - type: definition
+    term: Stationary point
+    body: |-
+      A **stationary point** of $y = f(x)$ is a point where $\dfrac{dy}{dx} = 0$.
+
+      - A **maximum point** is where the curve changes from going up to going down ($\dfrac{dy}{dx}$: $+$, $0$, $-$).
+      - A **minimum point** is where it changes from going down to going up ($\dfrac{dy}{dx}$: $-$, $0$, $+$).
+
+      These are *local*: the highest or lowest point nearby, not necessarily on the whole curve. Maxima and minima are also called **turning points**.
+
+  - type: diagram
+    diagram: p1-differentiation-stationary-points
+    alt: >-
+      Graph of y = x³ − 3x + 2 on a grid. The curve rises to a maximum point at (−1, 4), falls to a
+      minimum point at (1, 0) where it touches the x-axis, then rises steeply. Short horizontal
+      tangent lines mark both stationary points, each labelled dy/dx = 0. Labels give the sign of
+      the gradient on each stretch: dy/dx > 0 on the left, dy/dx < 0 in the middle, dy/dx > 0 on the
+      right. The maximum is labelled d²y/dx² = −6 < 0 and the minimum d²y/dx² = 6 > 0.
+    caption: |-
+      $\dfrac{dy}{dx} = 3x^2 - 3 = 0$ at $x = \pm 1$. The gradient goes $+, 0, -$ through the maximum and $-, 0, +$ through the minimum.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Find $\dfrac{dy}{dx}$ and solve $\dfrac{dy}{dx} = 0$ for $x$.
+      2. Find each $y$-coordinate from the **original** equation.
+      3. Find $\dfrac{d^2y}{dx^2}$ and evaluate it at each $x$:
+         - $\dfrac{d^2y}{dx^2} < 0$: **maximum**;
+         - $\dfrac{d^2y}{dx^2} > 0$: **minimum**;
+         - $\dfrac{d^2y}{dx^2} = 0$: the test fails, so check the sign of $\dfrac{dy}{dx}$ either side instead.
+
+  - type: check
+    questions: [nature-cloze, max-point]
+
+  - type: example
+    title: A cubic
+    problem: |-
+      Find the coordinates of the stationary points of $y = 2x^3 - 3x^2 - 12x + 7$ and determine their nature.
+    steps:
+      - |-
+        $\dfrac{dy}{dx} = 6x^2 - 6x - 12 = 6(x - 2)(x + 1) = 0$, so $x = 2$ or $x = -1$.
+      - |-
+        $x = 2$: $y = 16 - 12 - 24 + 7 = -13$. $\;x = -1$: $y = -2 - 3 + 12 + 7 = 14$.
+      - |-
+        $\dfrac{d^2y}{dx^2} = 12x - 6$.
+      - |-
+        At $x = 2$: $24 - 6 = 18 > 0$, so $(2, -13)$ is a minimum. At $x = -1$: $-12 - 6 = -18 < 0$, so $(-1, 14)$ is a maximum.
+    answer: |-
+      Maximum point $(-1, 14)$; minimum point $(2, -13)$.
+
+  - type: intuition
+    title: Why the sign of d²y/dx² works
+    body: |-
+      $\dfrac{d^2y}{dx^2}$ is the rate of change of the gradient. Through a **minimum** the gradient goes from negative to positive, so it's increasing: $\dfrac{d^2y}{dx^2} > 0$.
+
+      Memory hook: positive second derivative, curve shaped like a ∪ (a cup that holds water), so the stationary point is at the bottom. Negative, ∩-shaped, it's at the top.
+
+  - type: check
+    questions: [nature-mcq, spot-nature]
+
+  - type: example
+    title: Negative powers, and a surprise
+    problem: |-
+      Find the stationary points of $y = x + \dfrac{4}{x}$ and determine their nature.
+    steps:
+      - |-
+        $y = x + 4x^{-1}$, so $\dfrac{dy}{dx} = 1 - 4x^{-2} = 1 - \dfrac{4}{x^2}$.
+      - |-
+        $1 - \dfrac{4}{x^2} = 0$ gives $x^2 = 4$, so $x = 2$ or $x = -2$. Then $y = 2 + 2 = 4$ and $y = -2 - 2 = -4$.
+      - |-
+        $\dfrac{d^2y}{dx^2} = 8x^{-3} = \dfrac{8}{x^3}$. At $x = 2$: $1 > 0$, minimum. At $x = -2$: $-1 < 0$, maximum.
+    answer: |-
+      Minimum $(2, 4)$ and maximum $(-2, -4)$. The surprise: the maximum is *lower* than the minimum. That's fine, because "maximum" only means highest **nearby**.
+
+  - type: deeper
+    title: When d²y/dx² = 0
+    body: |-
+      For $y = x^4$: $\dfrac{dy}{dx} = 4x^3 = 0$ at $x = 0$, and $\dfrac{d^2y}{dx^2} = 12x^2 = 0$ there too. The second-derivative test tells you nothing.
+
+      Use the sign of $\dfrac{dy}{dx}$ instead: at $x = -0.1$ it's negative, at $x = 0.1$ positive. So $-, 0, +$: a **minimum** at $(0, 0)$.
+
+      A stationary point can also be neither: $y = x^3$ has gradient $+, 0, +$ at the origin. (Classifying those is beyond this syllabus.)
+
+  - type: check
+    questions: [sp-reciprocal, sp-root]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Stationary points are where $y = 0$.
+        right: |-
+          They're where the **gradient** is zero: $\dfrac{dy}{dx} = 0$. Where $y = 0$ is where the curve meets the $x$-axis.
+      - wrong: |-
+          $\dfrac{d^2y}{dx^2} > 0$ means a maximum, because "positive is high".
+        right: |-
+          Positive means the gradient is increasing: $-$ to $+$, a **minimum**. Think ∪ for positive.
+      - wrong: |-
+          $\dfrac{d^2y}{dx^2} = 0$, so it's a point of inflexion.
+        right: |-
+          Not necessarily: $y = x^4$ has a minimum where $\dfrac{d^2y}{dx^2} = 0$. Use the sign test.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Find the coordinates of the stationary points and determine their nature.* Usually 5–6 marks: derivative, solve, both $y$-values, second derivative, conclusions.
+      - For the nature, write the **value** and the **sign** and the **conclusion**: "$\dfrac{d^2y}{dx^2} = 18 > 0$, so minimum". Just "minimum" can lose the mark.
+      - If the question doesn't specify a method, the sign of $\dfrac{dy}{dx}$ either side is also accepted.
+
+  - type: takeaways
+    items:
+      - |-
+        Stationary point: $\dfrac{dy}{dx} = 0$. Find $x$, then $y$ from the original equation.
+      - |-
+        $\dfrac{d^2y}{dx^2} < 0$: maximum. $\dfrac{d^2y}{dx^2} > 0$: minimum.
+      - |-
+        If $\dfrac{d^2y}{dx^2} = 0$, check the sign of $\dfrac{dy}{dx}$ either side.
+      - |-
+        Maxima and minima are local: a maximum can be lower than a minimum.
+
+questions:
+  - id: nature-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.7.4"]
+    prompt: |-
+      At a stationary point $\dfrac{dy}{dx} = 0$. If also $\dfrac{d^2y}{dx^2} > 0$, the stationary point is a {{1}} point.
+    blanks:
+      - accept: ["minimum", "min", "local minimum", "minimum turning", "turning minimum"]
+    explanation: |-
+      A positive second derivative means the gradient is increasing, from negative to positive: the curve goes down then up, so it's a **minimum**.
+
+  - id: max-point
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.4"]
+    prompt: |-
+      The curve $y = x^3 - 12x + 1$ has a maximum point. Find its coordinates.
+    fields:
+      - label: "x ="
+        answer: -2
+      - label: "y ="
+        answer: 17
+    explanation: |-
+      $\dfrac{dy}{dx} = 3x^2 - 12 = 0$ gives $x = \pm 2$. $\;\dfrac{d^2y}{dx^2} = 6x$: at $x = -2$ it's $-12 < 0$, so that's the maximum.
+
+      $y = (-2)^3 - 12(-2) + 1 = -8 + 24 + 1 = 17$. Maximum point $(-2, 17)$. (The other, $(2, -15)$, is a minimum.)
+
+  - id: nature-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.7.4"]
+    prompt: |-
+      $f(x) = x^3 - 6x^2 + 9x$ has stationary points at $x = 1$ and $x = 3$. Which statement about the stationary point at $x = 3$ is correct?
+    explanation: |-
+      $f'(x) = 3x^2 - 12x + 9$ and $f''(x) = 6x - 12$. $f''(3) = 6 > 0$, so $x = 3$ gives a minimum, at $(3, 0)$.
+    options:
+      - text: It is a minimum, because $f''(3) = 6 > 0$.
+        correct: true
+        why: |-
+          Positive second derivative: the gradient is increasing through the point, so it's a minimum.
+      - text: It is a maximum, because $f''(3) = 6 > 0$.
+        why: |-
+          Right value, wrong conclusion. Positive second derivative means **minimum** (∪-shaped).
+      - text: It is a maximum, because $f''(3) = -6 < 0$.
+        why: |-
+          $f''(3) = 6(3) - 12 = 6$, not $-6$. That value belongs to $x = 1$, which is the maximum.
+      - text: It is neither, because $f(3) = 0$.
+        why: |-
+          The value of $f$ doesn't decide the nature. $f(3) = 0$ just means the minimum point lies on the $x$-axis.
+
+  - id: spot-nature
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.7.4"]
+    prompt: |-
+      A student finds and classifies the stationary points of $y = 2x^3 - 3x^2$. Which line contains the first error?
+    lines:
+      - |-
+        $\dfrac{dy}{dx} = 6x^2 - 6x = 6x(x - 1)$
+      - |-
+        $\dfrac{dy}{dx} = 0$ gives $x = 0$ or $x = 1$; the points are $(0, 0)$ and $(1, -1)$.
+      - |-
+        $\dfrac{d^2y}{dx^2} = 12x - 6$
+      - |-
+        At $x = 0$: $\dfrac{d^2y}{dx^2} = -6 < 0$, so $(0, 0)$ is a minimum.
+      - |-
+        At $x = 1$: $\dfrac{d^2y}{dx^2} = 6 > 0$, so $(1, -1)$ is a minimum.
+    errorLine: 4
+    fix: |-
+      A negative second derivative means a **maximum**: $(0, 0)$ is a maximum point.
+    explanation: |-
+      Lines 1–3 are correct, and line 5 is correct too. Line 4 has the right value, $-6$, but the wrong conclusion: $\dfrac{d^2y}{dx^2} < 0$ means maximum.
+
+  - id: sp-reciprocal
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.4"]
+    prompt: |-
+      Find the coordinates of the stationary point of $y = x + \dfrac{9}{x}$ for $x > 0$.
+    fields:
+      - label: "x ="
+        answer: 3
+      - label: "y ="
+        answer: 6
+    explanation: |-
+      $\dfrac{dy}{dx} = 1 - \dfrac{9}{x^2} = 0$ gives $x^2 = 9$, and $x > 0$ so $x = 3$, $y = 3 + 3 = 6$.
+
+      $\dfrac{d^2y}{dx^2} = \dfrac{18}{x^3} = \dfrac{18}{27} > 0$, so $(3, 6)$ is a minimum.
+
+  - id: sp-root
+    format: numeric
+    difficulty: 3
+    objectives: ["1.7.4"]
+    prompt: |-
+      The curve $y = 4\sqrt{x} - x$ (for $x > 0$) has one stationary point. Find its coordinates and the value of $\dfrac{d^2y}{dx^2}$ there. (Decide its nature for yourself.)
+    fields:
+      - label: "x ="
+        answer: 4
+      - label: "y ="
+        answer: 4
+      - label: "d²y/dx² ="
+        answer: -0.125
+    explanation: |-
+      $y = 4x^{\frac12} - x$, so $\dfrac{dy}{dx} = 2x^{-\frac12} - 1 = 0$ gives $\sqrt{x} = 2$, $x = 4$ and $y = 8 - 4 = 4$.
+
+      $\dfrac{d^2y}{dx^2} = -x^{-\frac32} = -\dfrac{1}{8}$ at $x = 4$. Negative, so $(4, 4)$ is a **maximum**.

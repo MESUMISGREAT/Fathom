@@ -1,0 +1,244 @@
+id: networks-internet-hardware
+subject: "9618"
+topic: "2.1"
+title: "Leaving the LAN: routers, modems and lines"
+summary: The role and function of a router, and the hardware that carries data to and across the internet, including modems, the PSTN, dedicated lines and the cell phone network.
+order: 10
+minutes: 5
+kind: core
+objectives: ["2.1.9", "2.1.13"]
+prerequisites: [networks-lan-hardware, networks-mesh-hybrid]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1: the ninth learning outcome
+    (2.1.9, the role and function of a router) and the thirteenth (2.1.13, the hardware used to
+    support the internet: modems, PSTN, dedicated lines and the cell phone network). IP addresses
+    in the examples come from the ranges reserved for documentation (198.51.100.0 and
+    203.0.113.0). All questions are original; scenarios are illustrative.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe the **role and function of a router**, and explain how **modems**, the **PSTN**, **dedicated lines** and the **cell phone network** carry data to and across the internet.
+
+  - type: explain
+    title: Your LAN is a village; the internet is the planet
+    body: |
+      Inside the village (your LAN) the switch delivers everything. But a packet for a server on the other side of the world needs roads out of the village and signposts at every junction.
+
+      The signposts are **routers**. The roads are phone lines, leased lines and mobile masts.
+
+  - type: definition
+    term: Router
+    body: |
+      A device that **connects two or more networks** (for example a LAN to the internet) and **forwards packets** between them, using each packet's **destination IP address** and a **routing table** to choose the next hop on the route.
+
+  - type: explain
+    title: What a router does
+    body: |
+      1. **Receives** a packet and reads its **destination IP address**.
+      2. **Looks up** the destination network in its **routing table** to find the best **next hop** (the next router on the route).
+      3. **Forwards** the packet to that next hop. Each router along the way repeats this until the packet reaches the destination network.
+      4. Keeps its routing table **up to date** by exchanging information with other routers, so packets can be sent round failed or congested links.
+
+      Routers also join networks that use **different media or protocols**, such as an Ethernet LAN and an ISP's line. A home "router" box usually does more besides: it gives devices private IP addresses (DHCP), shares one public address between them (NAT), runs a firewall, and often contains a switch, a WAP and a modem too.
+
+  - type: diagram
+    diagram: cs-networks-router-hops
+    alt: >-
+      Your PC sends a packet with destination 198.51.100.7. Six routers R1 to R6 are joined in a
+      partial mesh: R1 to R2 and R3, R2 to R3 and R4, R3 to R5, R4 to R5 and R6, and R5 to R6. A
+      highlighted route runs PC, R1, R2, R4, R6 and on to the web server at 198.51.100.7. Below,
+      R1's simplified routing table: destination network 198.51.100.0, next hop R2;
+      destination network 203.0.113.0, next hop R3.
+    caption: |
+      Each router only decides the next hop. Hop by hop, the packet gets there.
+
+  - type: misconceptions
+    items:
+      - wrong: A router and a switch do the same job.
+        right: |
+          A **switch** forwards frames **within one network** using **MAC addresses**. A **router** forwards packets **between networks** using **IP addresses**.
+      - wrong: A router knows the whole route to the destination.
+        right: |
+          It only knows the best **next hop** for each destination network. The full route emerges hop by hop.
+
+  - type: check
+    title: Quick check
+    questions: [router-decides, router-vs-switch]
+
+  - type: explain
+    title: The links to and across the internet
+    body: |
+      | Hardware | What it is and does |
+      | --- | --- |
+      | **Modem** (modulator–demodulator) | Converts the computer's **digital** signals into **analogue** signals for transmission over telephone lines (modulation), and converts received analogue signals back into digital (demodulation). |
+      | **PSTN** (Public Switched Telephone Network) | The worldwide network of telephone lines and **exchanges**, built for voice calls and also used to carry internet data. Available almost everywhere; **shared** with other users. Broadband over the PSTN uses different frequencies from voice, so calls and internet can run together. |
+      | **Dedicated line** (leased line) | A **permanent** connection between two points (e.g. a company and its ISP, or two of its sites), rented for the organisation's **exclusive use**. Not shared, so it gives a **guaranteed bandwidth**, and it's more secure, but **expensive**. |
+      | **Cell phone network** | The area is divided into **cells**, each with a **base station** (mast) that exchanges radio signals with mobile devices. Base stations are linked by cable, fibre or microwave to the operator's network and the internet. As you move, your connection is **handed over** to the next cell. 4G and 5G give mobile internet access. |
+
+  - type: diagram
+    diagram: cs-networks-internet-access
+    alt: >-
+      Three rows, each ending at a tall box labelled the internet. Home broadband over the PSTN: home
+      devices, then router, then modem (digital in, analogue out), then PSTN phone exchange, then
+      ISP, then the internet. Business dedicated line: company LAN, then router, then a highlighted
+      dedicated leased line, permanent and not shared, to the ISP, then the internet. Mobile cell
+      phone network: phone, then a dashed radio link to a cell tower base station, then the mobile
+      network, then the internet.
+    caption: |
+      Three roads onto the internet: the shared phone network, a private leased line, or the mobile network.
+
+  - type: example
+    title: Which connection?
+    problem: |
+      A bank's head office must send transactions to its data centre all day, every day, at a steady high speed. A farmer needs internet access from a tractor in a field. Recommend a connection for each.
+    steps:
+      - |
+        The bank needs guaranteed bandwidth, constant availability and security: a **dedicated (leased) line**. The cost is justified.
+      - |
+        The farmer is moving and far from any cable: the **cell phone network** (4G or 5G), using a mobile device or a mobile broadband router.
+    answer: |
+      Bank: dedicated line. Farmer: cell phone network.
+
+  - type: exam
+    body: |
+      - Router "role and function" answers: **connects networks**, **receives packets**, **reads the destination IP address**, **uses a routing table**, **forwards to the next hop / best route**. One mark per point.
+      - Modem: say **digital to analogue and back**, and that it's needed to send data over **telephone lines**.
+      - Dedicated line: the key words are **permanent**, **not shared** and **guaranteed bandwidth**.
+
+  - type: check
+    title: Getting online
+    questions: [modem-cloze, dedicated-line, cell-network, describe-router]
+
+  - type: takeaways
+    items:
+      - A router connects networks and forwards each packet to the next hop, using the destination IP address and its routing table.
+      - "Switch: within a LAN, by MAC address. Router: between networks, by IP address."
+      - "A modem converts digital to analogue and back for transmission over telephone lines."
+      - "PSTN: the shared public telephone network. Dedicated line: permanent, private, guaranteed bandwidth, expensive."
+      - "Cell phone network: cells, each with a base station; connections are handed over as you move."
+
+questions:
+  - id: router-decides
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.9"]
+    prompt: |
+      How does a router decide where to send a packet next?
+    options:
+      - text: It reads the packet's destination IP address and looks it up in its routing table
+        correct: true
+        why: |
+          The routing table gives the best next hop for each destination network.
+      - text: It reads the destination MAC address and sends it to the matching port
+        why: |
+          That's what a switch does inside a LAN.
+      - text: It sends the packet to every network it is connected to
+        why: |
+          That would flood the internet; routers forward to one next hop.
+      - text: It asks the sending computer which route to take
+        why: |
+          The sender doesn't know the route; routers work it out hop by hop.
+    explanation: |
+      Destination IP address plus routing table gives the next hop.
+
+  - id: router-vs-switch
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.9"]
+    prompt: |
+      Which statement correctly compares a router with a switch?
+    options:
+      - text: A router forwards packets between networks using IP addresses; a switch forwards frames within a network using MAC addresses
+        correct: true
+        why: |
+          That's the core difference: between vs within, IP vs MAC.
+      - text: A router connects devices within a LAN; a switch connects the LAN to the internet
+        why: |
+          Swapped: the switch works inside the LAN and the router connects it to other networks.
+      - text: A switch uses a routing table; a router doesn't
+        why: |
+          Routing tables belong to routers.
+      - text: They are the same device with different names
+        why: |
+          Home boxes often contain both, but they do different jobs.
+    explanation: |
+      Switch: within, MAC. Router: between, IP.
+
+  - id: modem-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.13"]
+    prompt: |
+      A modem converts {{1}} signals from a computer into {{2}} signals so they can travel along a telephone line.
+    blanks:
+      - accept: ["digital"]
+      - accept: ["analogue", "analog"]
+    explanation: |
+      Modulation turns digital into analogue for the line; demodulation turns it back at the other end.
+
+  - id: dedicated-line
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.13"]
+    prompt: |
+      Which is a characteristic of a **dedicated (leased) line**?
+    options:
+      - text: It is a permanent connection used only by the organisation, so its bandwidth is guaranteed
+        correct: true
+        why: |
+          Not shared with anyone else, always on, steady speed.
+      - text: It is shared with other users, so it is cheaper than the PSTN
+        why: |
+          Shared is the PSTN. Dedicated lines are exclusive and cost more.
+      - text: It connects only when a call is dialled
+        why: |
+          That describes dial-up over the PSTN. A dedicated line is always connected.
+      - text: It uses cell towers to reach mobile devices
+        why: |
+          That's the cell phone network.
+    explanation: |
+      Dedicated line: permanent, exclusive, guaranteed bandwidth, expensive.
+
+  - id: cell-network
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.13"]
+    prompt: |
+      A passenger on a train streams music on their phone. How does the cell phone network keep the stream going as the train moves?
+    options:
+      - text: The area is divided into cells, each with a base station, and the connection is handed over from one cell to the next
+        correct: true
+        why: |
+          Handover between base stations keeps the connection alive on the move.
+      - text: The phone connects directly to a satellite for the whole journey
+        why: |
+          Ordinary phones use base stations, not satellites.
+      - text: The phone connects to the PSTN through a modem
+        why: |
+          Phones talk to base stations by radio; they don't dial in through a modem.
+      - text: A dedicated line runs alongside the track to the phone
+        why: |
+          Dedicated lines link fixed points, not moving phones.
+    explanation: |
+      Cells, base stations and handover are the three ideas to remember.
+
+  - id: describe-router
+    format: explain
+    difficulty: 3
+    objectives: ["2.1.9"]
+    prompt: |
+      Describe the role and function of a router when a packet is sent from a computer in a school LAN to a web server on the internet.
+    model: |
+      The router connects the school LAN to the internet (another network). It receives the packet from the LAN and reads its destination IP address. It looks up the destination network in its routing table to find the best next hop, and forwards the packet to that next router. Each router on the route repeats this until the packet reaches the web server's network. Routers update their routing tables, so packets can avoid failed or congested links. The school's router may also use NAT to replace the computer's private IP address with the school's public IP address.
+    keyPoints:
+      - Connects the LAN to another network (the internet)
+      - Reads the destination IP address of each packet
+      - Uses a routing table to find the next hop / best route
+      - Forwards the packet; each router repeats this hop by hop
+      - May translate between private and public IP addresses (NAT)
+    explanation: |
+      Connect, read IP, routing table, next hop, forward: those are the core marks.

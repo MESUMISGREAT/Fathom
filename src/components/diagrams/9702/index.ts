@@ -16,6 +16,10 @@ import EquationsMotionThrowGraphs from './equations-motion-throw-graphs';
 import EquationsMotionVtArea from './equations-motion-vt-area';
 import EquationsMotionVtGradient from './equations-motion-vt-gradient';
 import ErrorGraphs from './error-graphs';
+import LinearMomentumCollision_1d from './linear-momentum-collision-1d';
+import LinearMomentumKeBars from './linear-momentum-ke-bars';
+import LinearMomentumRecoil from './linear-momentum-recoil';
+import LinearMomentumThirdLawProof from './linear-momentum-third-law-proof';
 import MomentumNewtonAFGraph from './momentum-newton-a-f-graph';
 import MomentumNewtonFirstLaw from './momentum-newton-first-law';
 import MomentumNewtonForceDirection from './momentum-newton-force-direction';
@@ -26,6 +30,13 @@ import MomentumNewtonThirdLawPairs from './momentum-newton-third-law-pairs';
 import MomentumNewtonTow from './momentum-newton-tow';
 import MomentumNewtonWaterJet from './momentum-newton-water-jet';
 import MomentumNewtonWeightField from './momentum-newton-weight-field';
+import NonUniformBallInOil from './non-uniform-ball-in-oil';
+import NonUniformFallGraphs from './non-uniform-fall-graphs';
+import NonUniformParachuteVt from './non-uniform-parachute-vt';
+import NonUniformProjectileDrag from './non-uniform-projectile-drag';
+import NonUniformResistiveForces from './non-uniform-resistive-forces';
+import NonUniformSkydiverForces from './non-uniform-skydiver-forces';
+import NonUniformThrowVt from './non-uniform-throw-vt';
 import PrefixLadder from './prefix-ladder';
 import VectorComponents from './vector-components';
 import VectorTriangle from './vector-triangle';
@@ -48,6 +59,10 @@ export const diagrams: DiagramRegistry = {
   'phys-equations-motion-vt-area': EquationsMotionVtArea,
   'phys-equations-motion-vt-gradient': EquationsMotionVtGradient,
   'phys-error-graphs': ErrorGraphs,
+  'phys-linear-momentum-collision-1d': LinearMomentumCollision_1d,
+  'phys-linear-momentum-ke-bars': LinearMomentumKeBars,
+  'phys-linear-momentum-recoil': LinearMomentumRecoil,
+  'phys-linear-momentum-third-law-proof': LinearMomentumThirdLawProof,
   'phys-momentum-newton-a-f-graph': MomentumNewtonAFGraph,
   'phys-momentum-newton-first-law': MomentumNewtonFirstLaw,
   'phys-momentum-newton-force-direction': MomentumNewtonForceDirection,
@@ -58,6 +73,13 @@ export const diagrams: DiagramRegistry = {
   'phys-momentum-newton-tow': MomentumNewtonTow,
   'phys-momentum-newton-water-jet': MomentumNewtonWaterJet,
   'phys-momentum-newton-weight-field': MomentumNewtonWeightField,
+  'phys-non-uniform-ball-in-oil': NonUniformBallInOil,
+  'phys-non-uniform-fall-graphs': NonUniformFallGraphs,
+  'phys-non-uniform-parachute-vt': NonUniformParachuteVt,
+  'phys-non-uniform-projectile-drag': NonUniformProjectileDrag,
+  'phys-non-uniform-resistive-forces': NonUniformResistiveForces,
+  'phys-non-uniform-skydiver-forces': NonUniformSkydiverForces,
+  'phys-non-uniform-throw-vt': NonUniformThrowVt,
   'phys-prefix-ladder': PrefixLadder,
   'phys-vector-components': VectorComponents,
   'phys-vector-triangle': VectorTriangle,

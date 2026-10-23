@@ -61,16 +61,16 @@ export function NetworksInternetAccess() {
       <Label x={184} y={y1 - 14} className="dg-text-small dg-text-muted">
         digital
       </Label>
-      <Arrow x1={270} y1={y1} x2={324} y2={y1} head={7} />
-      <Label x={297} y={y1 - 14} className="dg-text-small dg-text-muted">
+      <Arrow x1={270} y1={y1} x2={328} y2={y1} head={7} />
+      <Label x={299} y={y1 - 14} className="dg-text-small dg-text-muted">
         analogue
       </Label>
-      <Arrow x1={430} y1={y1} x2={463} y2={y1} head={7} />
+      <Arrow x1={434} y1={y1} x2={463} y2={y1} head={7} />
       <Arrow x1={515} y1={y1} x2={IX - 2} y2={y1} head={7} />
       <Box x={45} y={y1} w={70} lines={['home', 'devices']} />
       <Box x={130} y={y1} w={60} lines={['router']} kind="hw" />
       <Box x={240} y={y1} w={60} lines={['modem']} kind="hw" />
-      <Box x={378} y={y1} w={104} lines={['PSTN', '(phone exchange)']} kind="hw" />
+      <Box x={382} y={y1} w={104} lines={['PSTN', '(phone exchange)']} kind="hw" />
       <Box x={490} y={y1} w={50} lines={['ISP']} />
 
       {/* business */}

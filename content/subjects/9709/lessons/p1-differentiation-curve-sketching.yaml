@@ -1,0 +1,221 @@
+id: p1-differentiation-curve-sketching
+subject: "9709"
+topic: "1.7"
+title: Sketching curves with stationary points
+summary: Combine stationary points, their nature and the axis intercepts to sketch a curve, then use the sketch to count roots and find ranges.
+order: 8
+minutes: 5
+kind: core
+objectives: ["1.7.4"]
+prerequisites: [p1-differentiation-stationary-points]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "locate stationary
+    points and determine their nature, and use information about stationary points in sketching
+    graphs". All examples and questions are original; all arithmetic checked in Python. Not yet
+    teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **sketch** a curve using its stationary points and intercepts, and use the sketch to count solutions of $f(x) = k$ or find the range of a function.
+
+  - type: explain
+    title: A sketch is a portrait, not a photo
+    body: |-
+      A sketch doesn't need graph paper or plotted points. It needs the right **shape** and the key features **labelled**: like a good caricature, it captures what matters.
+
+      Checklist:
+
+      1. **Stationary points**: coordinates and nature.
+      2. **Intercepts**: put $x = 0$ for the $y$-intercept; solve $y = 0$ for the $x$-intercepts if it's easy.
+      3. **The ends**: what happens for large positive and negative $x$? For a cubic, the $x^3$ term wins.
+      4. **Join** them with one smooth curve, turning only at the stationary points.
+
+  - type: example
+    title: Sketching y = x³ − 6x² + 9x
+    problem: |-
+      Sketch $y = x^3 - 6x^2 + 9x$, showing the stationary points and where the curve meets the axes.
+    steps:
+      - |-
+        $\dfrac{dy}{dx} = 3x^2 - 12x + 9 = 3(x - 1)(x - 3) = 0$ at $x = 1$ and $x = 3$, giving the points $(1, 4)$ and $(3, 0)$.
+      - |-
+        $\dfrac{d^2y}{dx^2} = 6x - 12$: at $x = 1$ it's $-6$ (maximum); at $x = 3$ it's $6$ (minimum).
+      - |-
+        Intercepts: $y = x(x^2 - 6x + 9) = x(x - 3)^2$. So the curve passes through $(0, 0)$ and touches the $x$-axis at $(3, 0)$ (a repeated root, which is also the minimum).
+      - |-
+        Ends: the $x^3$ term dominates, so $y \to -\infty$ as $x \to -\infty$ and $y \to \infty$ as $x \to \infty$.
+    answer: |-
+      Rising from bottom left through $O$, up to the maximum $(1, 4)$, down to touch the $x$-axis at the minimum $(3, 0)$, then up to the top right.
+
+  - type: diagram
+    diagram: p1-differentiation-curve-sketch
+    alt: >-
+      Sketch of y = x(x − 3)², a cubic. It comes up from the bottom left, passes through the origin,
+      rises to a maximum at (1, 4), labelled with d²y/dx² = −6, falls to a minimum at (3, 0) where
+      it touches the x-axis, labelled touches the x-axis: repeated root, and then rises steeply to
+      the top right. A note near the bottom left says as x → −∞, y → −∞. Dashed guide lines mark
+      x = 1 and y = 4.
+    caption: |-
+      Only five facts were needed: two stationary points, their nature, the intercepts and the end behaviour.
+
+  - type: check
+    questions: [crossings-mcq, sketch-min]
+
+  - type: explain
+    title: Counting solutions with a sketch
+    body: |-
+      How many solutions does $x^3 - 6x^2 + 9x = k$ have? Draw the horizontal line $y = k$ across the sketch and count the crossings:
+
+      | $k$ | Crossings |
+      | --- | --- |
+      | $k > 4$ or $k < 0$ | 1 |
+      | $k = 4$ or $k = 0$ | 2 (the line touches at a stationary point) |
+      | $0 < k < 4$ | 3 |
+
+      The stationary **values** (the $y$-coordinates, 4 and 0) are the boundaries.
+
+  - type: check
+    questions: [roots-range, shape-mcq]
+
+  - type: deeper
+    title: The range on a restricted domain
+    body: |-
+      *Find the range of $f(x) = x^3 - 3x$ for $-2 \leqslant x \leqslant 3$.*
+
+      Stationary points: $f'(x) = 3x^2 - 3 = 0$ at $x = \pm 1$, giving $f(-1) = 2$ (maximum) and $f(1) = -2$ (minimum).
+
+      Now check the **endpoints** too: $f(-2) = -2$ and $f(3) = 18$. The greatest value is 18 (at an endpoint, not the stationary maximum!) and the least is $-2$. Range: $-2 \leqslant f(x) \leqslant 18$.
+
+      A local maximum isn't always the greatest value. Always compare with the ends of the domain.
+
+  - type: check
+    questions: [restricted-range]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A sketch needs lots of plotted points.
+        right: |-
+          It needs the right shape plus labelled stationary points and intercepts. Extra points just waste time.
+      - wrong: |-
+          The maximum point of $f$ gives the greatest value of $f(x)$.
+        right: |-
+          Only nearby. On a restricted domain (or as $x \to \infty$) the curve can go higher; check the endpoints.
+      - wrong: |-
+          A minimum at $(3, 0)$ means the curve crosses the $x$-axis at $x = 3$.
+        right: |-
+          It **touches** the axis there and turns back up. That's the picture of a repeated root.
+
+  - type: exam
+    body: |-
+      - "Sketch" means show the shape and label key coordinates; you don't need a scale. Stationary points and intercepts are usually where the marks are.
+      - Stationary-point questions often end with *Hence* find the values of $k$ for which $f(x) = k$ has three roots, or *state the range*. The stationary values are the boundaries.
+      - Make the curve smooth at maxima and minima (rounded, not pointed), and make sure it turns only there.
+
+  - type: takeaways
+    items:
+      - |-
+        Sketch checklist: stationary points and nature, intercepts, end behaviour, smooth join.
+      - |-
+        A minimum or maximum on the $x$-axis means the curve touches it: a repeated root.
+      - |-
+        The number of solutions of $f(x) = k$ = number of crossings of $y = k$; the stationary values are the boundaries.
+      - |-
+        On a restricted domain, compare stationary values with the values at the endpoints.
+
+questions:
+  - id: crossings-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.7.4"]
+    prompt: |-
+      A cubic curve $y = f(x)$ with a positive $x^3$ coefficient has a maximum point at $(1, 5)$ and a minimum point at $(4, -2)$, and no other stationary points. How many times does it cross the $x$-axis?
+    explanation: |-
+      From the bottom left the curve rises through the axis to the maximum at height 5 (crossing 1), falls through the axis to the minimum at $-2$ (crossing 2), then rises through the axis to the top right (crossing 3).
+    options:
+      - text: "3"
+        correct: true
+        why: |-
+          The maximum is above the axis and the minimum below, and the ends go to $\mp\infty$, so there's a crossing on each of the three stretches.
+      - text: "2"
+        why: |-
+          That's the number of stationary points, not crossings. Don't forget the stretch to the left of the maximum, which comes up from $-\infty$.
+      - text: "1"
+        why: |-
+          Only one crossing would need both stationary points on the same side of the axis. Here one is above and one below.
+      - text: "0"
+        why: |-
+          A cubic always crosses the $x$-axis at least once, because its ends go off to $-\infty$ and $+\infty$.
+
+  - id: sketch-min
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.4"]
+    prompt: |-
+      Find the coordinates of the minimum point of $y = x^3 - 3x^2$.
+    fields:
+      - label: "x ="
+        answer: 2
+      - label: "y ="
+        answer: -4
+    explanation: |-
+      $\dfrac{dy}{dx} = 3x^2 - 6x = 3x(x - 2) = 0$ at $x = 0$ and $x = 2$. $\;\dfrac{d^2y}{dx^2} = 6x - 6$: at $x = 0$ it's $-6$ (maximum at the origin); at $x = 2$ it's $6$ (minimum).
+
+      $y = 8 - 12 = -4$, so the minimum is $(2, -4)$.
+
+  - id: roots-range
+    format: numeric
+    difficulty: 3
+    objectives: ["1.7.4"]
+    prompt: |-
+      The curve $y = x^3 - 3x^2$ has a maximum at $(0, 0)$ and a minimum at $(2, -4)$. The equation $x^3 - 3x^2 = k$ has three distinct real roots for $a < k < b$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: -4
+      - label: "b ="
+        answer: 0
+    explanation: |-
+      Three crossings happen when the line $y = k$ lies strictly between the stationary values: $-4 < k < 0$. At $k = 0$ or $k = -4$ the line touches at a stationary point, giving only two distinct roots.
+
+  - id: shape-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.7.4"]
+    prompt: |-
+      Which description fits the curve $y = 3x^2 - x^3$?
+    explanation: |-
+      $\dfrac{dy}{dx} = 6x - 3x^2 = 3x(2 - x)$, zero at $x = 0$ and $x = 2$. $\;\dfrac{d^2y}{dx^2} = 6 - 6x$: $+6$ at $x = 0$ (minimum $(0, 0)$), $-6$ at $x = 2$ (maximum $(2, 4)$). It factorises as $x^2(3 - x)$, so it touches the axis at 0 and crosses at 3. The $-x^3$ term means $y \to -\infty$ as $x \to \infty$.
+    options:
+      - text: Minimum at $(0, 0)$, maximum at $(2, 4)$, crosses the $x$-axis at $x = 3$, and $y \to -\infty$ as $x \to \infty$
+        correct: true
+        why: |-
+          All four features check out, including the end behaviour from the negative $x^3$ coefficient.
+      - text: Maximum at $(0, 0)$, minimum at $(2, 4)$, crosses the $x$-axis at $x = 3$
+        why: |-
+          The natures are swapped. $\dfrac{d^2y}{dx^2} = 6 > 0$ at $x = 0$ means minimum.
+      - text: Minimum at $(0, 0)$, maximum at $(2, 4)$, and $y \to +\infty$ as $x \to \infty$
+        why: |-
+          The coefficient of $x^3$ is negative, so for large positive $x$ the curve heads down.
+      - text: Minimum at $(3, 0)$, maximum at $(2, 4)$
+        why: |-
+          At $x = 3$, $\dfrac{dy}{dx} = 18 - 27 = -9 \neq 0$, so $(3, 0)$ is just where the curve crosses the axis, not a stationary point.
+
+  - id: restricted-range
+    format: numeric
+    difficulty: 3
+    objectives: ["1.7.4"]
+    prompt: |-
+      Find the range of $f(x) = x^3 - 12x$ for $0 \leqslant x \leqslant 3$, in the form $p \leqslant f(x) \leqslant q$.
+    fields:
+      - label: "p ="
+        answer: -16
+      - label: "q ="
+        answer: 0
+    explanation: |-
+      $f'(x) = 3x^2 - 12 = 0$ at $x = \pm 2$; only $x = 2$ is in the domain, with $f(2) = 8 - 24 = -16$ (a minimum, since $f''(2) = 12 > 0$).
+
+      Endpoints: $f(0) = 0$ and $f(3) = 27 - 36 = -9$. Least value $-16$, greatest $0$, so $-16 \leqslant f(x) \leqslant 0$.

@@ -1,0 +1,253 @@
+id: networks-ip-addresses
+subject: "9618"
+topic: "2.1"
+title: "IP addresses: IPv4 and IPv6"
+summary: The format of IPv4 and IPv6 addresses, how to shorten an IPv6 address, and how IP addresses get packets across the internet.
+order: 11
+minutes: 5
+kind: core
+objectives: ["2.1.14"]
+prerequisites: [networks-internet-hardware, data-rep-binary-denary, data-rep-hexadecimal]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, fourteenth learning outcome
+    (2.1.14, how IP addresses are used in the transmission of data over the internet). This lesson
+    covers the format of IPv4 and IPv6 addresses and their use in packet headers; subnetting and
+    public, private, static and dynamic addresses follow in networks-subnetting and
+    networks-public-private-ip. Example IPv6 addresses use the 2001:db8 documentation prefix;
+    binary conversions, address counts and IPv6 shortenings checked with Python. All questions are
+    original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe the format of **IPv4** and **IPv6** addresses, shorten an IPv6 address, and explain how IP addresses are used to deliver packets.
+
+  - type: explain
+    title: Every parcel needs an address
+    body: |
+      Data crosses the internet in **packets**. A router holding a packet has one question: *where is this going?* The answer is written on the packet: an **IP address**.
+
+  - type: definition
+    term: IP address
+    body: |
+      A **logical address** given to a device on a network that **identifies it**, so that data packets can be **routed** to it. (Unlike a MAC address, it isn't fixed to the hardware and can change.)
+
+  - type: explain
+    title: How IP addresses deliver data
+    body: |
+      1. The data is split into **packets**.
+      2. Each packet's **header** holds the **source IP address** (the sender) and the **destination IP address** (the receiver).
+      3. Every **router** on the way reads the **destination** IP address to decide the next hop.
+      4. The receiver uses the **source** IP address to send its reply back.
+
+  - type: diagram
+    diagram: cs-networks-ipv4-ipv6
+    alt: >-
+      IPv4 and IPv6 drawn to the same scale. The IPv4 bar is 32 bits long, divided into four 8-bit
+      parts holding 192, 168, 10 and 77, written 192.168.10.77; a note says 2 to the power 32 is
+      about 4.3 billion addresses. The IPv6 bar is four times as long, 128 bits, divided into eight
+      16-bit groups: 2001, 0db8, 0000, 0000, 0000, ff00, 0042, 8329. Below it the full form
+      2001:0db8:0000:0000:0000:ff00:0042:8329 and the short form 2001:db8::ff00:42:8329; a note
+      says 2 to the power 128 is about 3.4 times 10 to the 38 addresses.
+    caption: |
+      IPv6 addresses are four times longer than IPv4 ones, which gives a mind-boggling number of them.
+
+  - type: explain
+    title: The two formats
+    body: |
+      | | IPv4 | IPv6 |
+      | --- | --- | --- |
+      | Length | **32 bits** | **128 bits** |
+      | Written as | **4 denary numbers** (0–255), one per 8 bits, separated by **dots** | **8 groups of 4 hexadecimal digits**, one per 16 bits, separated by **colons** |
+      | Example | `192.168.10.77` | `2001:0db8:0000:0000:0000:ff00:0042:8329` |
+      | Number of addresses | $2^{32}$ ≈ 4.3 billion | $2^{128}$ ≈ $3.4 \times 10^{38}$ |
+
+      Why IPv6? With phones, laptops, smart TVs and smart fridges, **4.3 billion IPv4 addresses ran out**. IPv6 provides enough for every device imaginable.
+
+  - type: example
+    title: Is this a valid IPv4 address?
+    problem: |
+      Which of these are valid IPv4 addresses? (a) `172.16.254.3` (b) `10.0.256.1` (c) `192.168.1`
+    steps:
+      - |
+        Each of the four parts is 8 bits, so it must be between 0 and 255.
+      - |
+        (a) Four parts, all between 0 and 255: **valid**.
+      - |
+        (b) 256 needs 9 bits: **invalid**.
+      - |
+        (c) Only three parts, which is 24 bits: **invalid**.
+    answer: |
+      Only (a) is valid.
+
+  - type: check
+    title: Quick check
+    questions: [valid-ipv4, address-bits, octet-binary]
+
+  - type: explain
+    title: Shortening an IPv6 address
+    body: |
+      Two rules make IPv6 addresses less painful:
+
+      1. **Leading zeros** in a group can be dropped: `0db8` → `db8`, `0042` → `42`, `0000` → `0`.
+      2. **One** run of consecutive all-zero groups can be replaced by `::`. Only once per address, or nobody could tell how many zeros each `::` hides.
+
+  - type: example
+    title: Shorten it
+    problem: |
+      Shorten `2001:0db8:0000:0000:0000:ff00:0042:8329`.
+    steps:
+      - |
+        Drop leading zeros: `2001:db8:0:0:0:ff00:42:8329`.
+      - |
+        Replace the run of three zero groups with `::`: `2001:db8::ff00:42:8329`.
+      - |
+        Check: 5 groups are written, so `::` stands for $8 - 5 = 3$ groups of zeros ✓
+    answer: |
+      `2001:db8::ff00:42:8329`
+
+  - type: misconceptions
+    items:
+      - wrong: Each part of an IPv4 address can be any number.
+        right: |
+          Each part is 8 bits, so it's **0 to 255**. `192.168.1.300` isn't an address.
+      - wrong: An IPv6 address is just a longer IPv4 address with more dots.
+        right: |
+          IPv6 uses **hexadecimal** groups separated by **colons**, and each group is 16 bits.
+      - wrong: You can remove trailing zeros from an IPv6 group too.
+        right: |
+          Only **leading** zeros. `ff00` stays `ff00`; dropping its zeros would change the value.
+
+  - type: exam
+    body: |
+      - Format questions: give the **number of bits** and **how it's written** (denary with dots for IPv4; hexadecimal with colons for IPv6).
+      - "Why was IPv6 introduced?" There weren't enough IPv4 addresses for all the devices connected to the internet.
+      - In "how are IP addresses used" answers, mention the **header**, the **destination** address used by **routers**, and the **source** address used for replies.
+
+  - type: check
+    title: IPv6 and packets
+    questions: [ipv6-shorten, reply-address, ipv6-spot-error]
+
+  - type: takeaways
+    items:
+      - An IP address identifies a device so packets can be routed to it; packet headers carry source and destination IP addresses.
+      - "IPv4: 32 bits, four denary numbers 0–255 separated by dots."
+      - "IPv6: 128 bits, eight groups of four hex digits separated by colons."
+      - "Shorten IPv6 by dropping leading zeros and replacing one run of zero groups with ::."
+      - IPv6 exists because IPv4's 4.3 billion addresses weren't enough.
+
+questions:
+  - id: valid-ipv4
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.14"]
+    prompt: |
+      Which of these is a valid IPv4 address?
+    options:
+      - text: "`172.16.4.20`"
+        correct: true
+        why: |
+          Four numbers, each between 0 and 255.
+      - text: "`192.168.1.256`"
+        why: |
+          256 is too big for 8 bits; the maximum is 255.
+      - text: "`10.1.2`"
+        why: |
+          Only three numbers. IPv4 needs four.
+      - text: "`2001:db8::1`"
+        why: |
+          That's an IPv6 address: hex digits and colons.
+    explanation: |
+      IPv4: exactly four parts, each 0–255, separated by dots.
+
+  - id: address-bits
+    format: numeric
+    difficulty: 1
+    objectives: ["2.1.14"]
+    prompt: |
+      How many bits long is an IPv4 address, and how many bits long is an IPv6 address?
+    fields:
+      - label: "IPv4:"
+        answer: 32
+        unit: bits
+      - label: "IPv6:"
+        answer: 128
+        unit: bits
+    explanation: |
+      IPv4: 4 × 8 = 32 bits. IPv6: 8 × 16 = 128 bits.
+
+  - id: octet-binary
+    format: cloze
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      In the IPv4 address `172.20.5.9`, the first part, 172, is stored in 8 bits as {{1}}
+    blanks:
+      - accept: ["10101100", "1010 1100"]
+    explanation: |
+      $172 = 128 + 32 + 8 + 4$, so the 8 bits are `1010 1100`.
+
+  - id: ipv6-shorten
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      Which is a correct shortened form of `2001:0db8:0000:0000:0000:0000:00a1:0001`?
+    options:
+      - text: "`2001:db8::a1:1`"
+        correct: true
+        why: |
+          Leading zeros dropped, and the run of four zero groups replaced by one `::`.
+      - text: "`2001:db8:a1:1`"
+        why: |
+          The zero groups have vanished with no `::` to show where, so this reads as a different (and incomplete) address.
+      - text: "`21:db8::a1:1`"
+        why: |
+          Only leading zeros can go. The zeros in the middle of `2001` are part of its value.
+      - text: "`2001:db8::a1::1`"
+        why: |
+          `::` can be used only once, and there are no zero groups between `a1` and `1`.
+    explanation: |
+      Drop leading zeros in each group; replace one run of all-zero groups with `::`.
+
+  - id: reply-address
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      You request a web page. How does the web server know where to send the page?
+    options:
+      - text: It uses the source IP address in the header of your request packets
+        correct: true
+        why: |
+          The source address in your request becomes the destination address of the reply.
+      - text: It uses your computer's MAC address
+        why: |
+          MAC addresses are used only within a local network; they aren't used to route across the internet.
+      - text: It sends the page to every device on the internet
+        why: |
+          Packets are routed to one destination IP address, not broadcast.
+      - text: It looks up your domain name in the DNS
+        why: |
+          DNS turns the **server's** name into its IP address; your computer doesn't need a domain name.
+    explanation: |
+      Headers carry both addresses: routers use the destination; replies go to the source.
+
+  - id: ipv6-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["2.1.14"]
+    prompt: |
+      A student shortens `2001:0db8:0000:0042:0000:0000:0000:0007`. Which line contains the first error?
+    lines:
+      - "Drop leading zeros in each group: `2001:db8:0:42:0:0:0:7`"
+      - "Replace every group of zeros with `::`, giving `2001:db8::42::7`"
+      - "So the shortened address is `2001:db8::42::7`"
+    errorLine: 2
+    fix: |
+      `::` can replace only **one** run of zero groups. Replace the longer run (three groups): `2001:db8:0:42::7`.
+    explanation: |
+      With two `::` nobody could tell whether they hide 1 + 3 or 2 + 2 groups of zeros, so it's not allowed.
