@@ -1,0 +1,258 @@
+id: series-geometric-sum
+subject: "9709"
+topic: "1.6"
+title: Summing a geometric progression
+summary: Use Sₙ = a(1 − rⁿ)/(1 − r) to add the first n terms of a GP, see why it works, and work backwards to find n or r.
+order: 6
+minutes: 5
+kind: core
+objectives: ["1.6.3"]
+prerequisites: [series-geometric-nth-term]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.6 learning outcome "use the formulae for
+    the nth term and for the sum of the first n terms to solve problems involving arithmetic or
+    geometric progressions". The chessboard-and-rice story is a traditional legend, told as
+    such. All examples and questions are original; all arithmetic checked in Python. Not yet
+    teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the sum of the first $n$ terms of a geometric progression with $S_n = \dfrac{a(1 - r^n)}{1 - r}$, explain where it comes from, and use it to find $n$ or $r$.
+
+  - type: explain
+    title: The rice that broke the bank
+    body: |-
+      An old legend: a king offers a reward, and the clever inventor of chess asks for 1 grain of rice on the first square, 2 on the second, 4 on the third, doubling across all 64 squares. The king laughs. Then his accountants do the sum.
+
+      $1 + 2 + 4 + \dots + 2^{63} = 2^{64} - 1 \approx 1.8 \times 10^{19}$ grains. That's far more rice than has ever been grown. GP sums get huge fast, and there's a neat formula for them.
+
+  - type: intuition
+    title: Multiply, shift, subtract
+    body: |-
+      Write the sum, then multiply every term by $r$:
+
+      $$\begin{aligned} S_n &= a + ar + ar^2 + \dots + ar^{n-1} \\ rS_n &= \phantom{a + {}} ar + ar^2 + \dots + ar^{n-1} + ar^n \end{aligned}$$
+
+      Almost everything appears in both lines. Subtract and it all cancels except the two ends:
+
+      $$S_n - rS_n = a - ar^n \quad\Longrightarrow\quad S_n(1 - r) = a(1 - r^n).$$
+
+  - type: diagram
+    diagram: series-gp-sum-shift
+    alt: >-
+      Two rows of boxes. The top row, Sₙ, reads a + ar + ar² + ⋯ + arⁿ⁻¹. The second row, rSₙ, is
+      shifted one place to the right and reads ar + ar² + ⋯ + arⁿ⁻¹ + arⁿ. The matching boxes ar,
+      ar² and arⁿ⁻¹ sit in the same columns, joined by dashed lines marked cancel; only the a at the
+      far left of the top row and the arⁿ at the far right of the bottom row are highlighted. Below
+      a line: Sₙ − rSₙ = a minus arⁿ, with everything in between cancelling, so Sₙ(1 − r) = a(1 − rⁿ)
+      and Sₙ = a(1 − rⁿ)/(1 − r) for r ≠ 1.
+    caption: |-
+      Shift $rS_n$ one place right and the middle terms line up and cancel. Only $a$ and $ar^n$ survive.
+
+  - type: definition
+    term: Sum of a geometric progression
+    body: |-
+      The sum of the first $n$ terms of a GP with first term $a$ and common ratio $r \neq 1$ is
+
+      $$S_n = \frac{a(1 - r^n)}{1 - r} = \frac{a(r^n - 1)}{r - 1}.$$
+
+      The two forms are equal (multiply top and bottom by $-1$). Use the first when $|r| < 1$ and the second when $r > 1$, so you aren't juggling negatives.
+
+  - type: check
+    questions: [sum-six, spot-subtract]
+
+  - type: example
+    title: A growing GP
+    problem: |-
+      Find the sum of the first 10 terms of $2 + 6 + 18 + \dots$
+    steps:
+      - |-
+        $a = 2$, $r = 3$, $n = 10$. Since $r > 1$, use $S_n = \dfrac{a(r^n - 1)}{r - 1}$.
+      - |-
+        $S_{10} = \dfrac{2(3^{10} - 1)}{3 - 1} = 3^{10} - 1$.
+      - |-
+        $3^{10} = 59\,049$, so $S_{10} = 59\,048$.
+    answer: |-
+      $S_{10} = 59\,048$
+
+  - type: example
+    title: A negative ratio
+    problem: |-
+      A geometric progression has first term 64 and common ratio $-\tfrac12$. Find the sum of the first 8 terms.
+    steps:
+      - |-
+        $S_8 = \dfrac{64\left(1 - (-\tfrac12)^8\right)}{1 - (-\tfrac12)}$. Bracket the negative ratio.
+      - |-
+        $(-\tfrac12)^8 = \tfrac{1}{256}$ (even power, so positive), and $1 - (-\tfrac12) = \tfrac32$.
+      - |-
+        $S_8 = \dfrac{64 \times \tfrac{255}{256}}{\tfrac32} = \dfrac{63.75}{1.5} = 42.5$.
+    answer: |-
+      $S_8 = 42.5$. Sanity check by adding: $64 - 32 + 16 - 8 + 4 - 2 + 1 - 0.5 = 42.5$ ✓
+
+  - type: example
+    title: Working backwards to n
+    problem: |-
+      The sum of the first $n$ terms of $3 + 6 + 12 + \dots$ is 3069. Find $n$.
+    steps:
+      - |-
+        $a = 3$, $r = 2$: $\;S_n = \dfrac{3(2^n - 1)}{2 - 1} = 3(2^n - 1)$.
+      - |-
+        $3(2^n - 1) = 3069$, so $2^n - 1 = 1023$ and $2^n = 1024$.
+      - |-
+        $2^{10} = 1024$, so $n = 10$.
+    answer: |-
+      $n = 10$
+
+  - type: check
+    questions: [sum-negative-ratio, find-n-gp, sum-two-thirds]
+
+  - type: deeper
+    title: Finding r from a sum
+    body: |-
+      *A GP has first term 9 and the sum of its first three terms is 19. Find the possible values of $r$.*
+
+      $S_3 = a + ar + ar^2$, so $9 + 9r + 9r^2 = 19$, giving $9r^2 + 9r - 10 = 0$.
+
+      This factorises: $(3r - 2)(3r + 5) = 0$, so $r = \tfrac23$ or $r = -\tfrac53$. Both give valid GPs: $9, 6, 4$ and $9, -15, 25$. Each sums to 19 ✓
+
+      Also note the case the formula excludes: if $r = 1$, every term is $a$ and $S_n = na$.
+
+  - type: check
+    questions: [find-r]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $S_n = \dfrac{a(1 - r^{n-1})}{1 - r}$
+        right: |-
+          The sum of $n$ terms uses $r^n$. It's the $n$th *term* that has $r^{n-1}$.
+      - wrong: |-
+          With $r = -2$ and $n = 4$: $\;1 - r^4 = 1 - (-2^4) = 1 + 16 = 17$.
+        right: |-
+          $(-2)^4 = +16$, so $1 - (-2)^4 = 1 - 16 = -15$. Without brackets, $-2^4$ means $-(2^4) = -16$. Bracket a negative ratio every time.
+      - wrong: |-
+          $1 - r = 1 - (-\tfrac12) = \tfrac12$
+        right: |-
+          Subtracting a negative adds: $1 - (-\tfrac12) = \tfrac32$.
+
+  - type: exam
+    body: |-
+      - The formula list gives $S_n = \dfrac{a(1 - r^n)}{1 - r}$; the $r > 1$ form is the same thing with top and bottom multiplied by $-1$. Quote a form, substitute with brackets, then evaluate.
+      - Give exact answers where they're whole numbers or simple fractions; otherwise 3 s.f. (e.g. $233.518\ldots \to 234$).
+      - A "find $n$" question usually lands on a power you can recognise ($2^n = 1024$). If not, trial with a calculator is fine on Paper 1: show the values either side.
+
+  - type: takeaways
+    items:
+      - |-
+        $S_n = \dfrac{a(1 - r^n)}{1 - r} = \dfrac{a(r^n - 1)}{r - 1}$, for $r \neq 1$.
+      - |-
+        It comes from $S_n - rS_n = a - ar^n$: shift and cancel.
+      - |-
+        Bracket a negative ratio: $(-\tfrac12)^n$, never $-\tfrac12^n$.
+      - |-
+        $n$th term: power $n - 1$. Sum of $n$ terms: power $n$.
+
+questions:
+  - id: sum-six
+    format: numeric
+    difficulty: 1
+    objectives: ["1.6.3"]
+    prompt: |-
+      Find the sum of the first 6 terms of the geometric progression $1 + 3 + 9 + \dots$
+    fields:
+      - label: "S₆ ="
+        answer: 364
+    explanation: |-
+      $a = 1$, $r = 3$: $\;S_6 = \dfrac{1(3^6 - 1)}{3 - 1} = \dfrac{728}{2} = 364$. (Check: $1 + 3 + 9 + 27 + 81 + 243 = 364$ ✓)
+
+  - id: spot-subtract
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      A student tries to derive the formula for $S_n$. Which line contains the first error?
+    lines:
+      - |-
+        $S_n = a + ar + ar^2 + \dots + ar^{n-1}$
+      - |-
+        $rS_n = ar + ar^2 + \dots + ar^{n-1} + ar^n$
+      - |-
+        $S_n - rS_n = a - ar^{n-1}$
+      - |-
+        $S_n = \dfrac{a(1 - r^{n-1})}{1 - r}$
+    errorLine: 3
+    fix: |-
+      The term left over from $rS_n$ is $ar^n$, so $S_n - rS_n = a - ar^n$ and $S_n = \dfrac{a(1 - r^n)}{1 - r}$.
+    explanation: |-
+      The last term of $rS_n$ is $ar^n$ (one power higher than the last term of $S_n$). Everything from $ar$ to $ar^{n-1}$ cancels, leaving $a - ar^n$. Line 4 is wrong too, but only because it follows from line 3.
+
+  - id: sum-negative-ratio
+    format: mcq
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      A geometric progression has first term 5 and common ratio $-2$. Which expression gives the sum of the first $n$ terms?
+    explanation: |-
+      $S_n = \dfrac{5\left(1 - (-2)^n\right)}{1 - (-2)} = \dfrac{5\left(1 - (-2)^n\right)}{3}$. Check: $n = 2$ gives $\dfrac{5(1 - 4)}{3} = -5$, and indeed $5 + (-10) = -5$ ✓
+    options:
+      - text: $\dfrac{5\left(1 - (-2)^n\right)}{3}$
+        correct: true
+        why: |-
+          $1 - r = 1 - (-2) = 3$, and the ratio is bracketed before it's raised to the power $n$.
+      - text: $\dfrac{5\left(1 - (-2)^n\right)}{-1}$
+        why: |-
+          The denominator should be $1 - (-2) = 3$. Subtracting a negative is adding.
+      - text: $\dfrac{5\left(1 - (-2)^{n-1}\right)}{3}$
+        why: |-
+          The sum of $n$ terms uses $r^n$; $r^{n-1}$ belongs in the $n$th term.
+      - text: $\dfrac{5\left(1 - 2^n\right)}{3}$
+        why: |-
+          The ratio is $-2$, not 2. This version gives $S_2 = -5$ correctly by luck but $S_1 = -\tfrac53$ instead of 5.
+
+  - id: find-n-gp
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      How many terms of the geometric progression $5 + 10 + 20 + \dots$ add up to 5115?
+    fields:
+      - label: "n ="
+        answer: 10
+    explanation: |-
+      $S_n = \dfrac{5(2^n - 1)}{2 - 1} = 5(2^n - 1) = 5115$, so $2^n - 1 = 1023$, $2^n = 1024$ and $n = 10$.
+
+  - id: sum-two-thirds
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      Find the sum of the first 8 terms of the geometric progression $81 + 54 + 36 + \dots$, giving your answer to 3 significant figures.
+    fields:
+      - answer: 233.5185185
+        sigFigs: 3
+    explanation: |-
+      $r = \tfrac{54}{81} = \tfrac23$. Since $|r| < 1$, use $S_n = \dfrac{a(1 - r^n)}{1 - r}$:
+
+      $$S_8 = \frac{81\left(1 - (\tfrac23)^8\right)}{1 - \tfrac23} = 243\left(1 - \tfrac{256}{6561}\right) = 233.518\ldots = 234 \text{ (3 s.f.)}$$
+
+  - id: find-r
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.3"]
+    prompt: |-
+      A geometric progression has first term 4 and the sum of its first three terms is 28. Find the two possible values of the common ratio $r$.
+    fields:
+      - label: "larger r ="
+        answer: 2
+      - label: "smaller r ="
+        answer: -3
+    explanation: |-
+      $4 + 4r + 4r^2 = 28$, so $4r^2 + 4r - 24 = 0$, i.e. $r^2 + r - 6 = 0$.
+
+      $(r - 2)(r + 3) = 0$, so $r = 2$ or $r = -3$. Check: $4 + 8 + 16 = 28$ ✓ and $4 - 12 + 36 = 28$ ✓

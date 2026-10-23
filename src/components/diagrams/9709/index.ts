@@ -35,6 +35,15 @@ import FunctionsStretches from './functions-stretches';
 import FunctionsTranslations from './functions-translations';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
+import P1DifferentiationBoxNet from './p1-differentiation-box-net';
+import P1DifferentiationChainMachines from './p1-differentiation-chain-machines';
+import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
+import P1DifferentiationCurveSketch from './p1-differentiation-curve-sketch';
+import P1DifferentiationGradientFunction from './p1-differentiation-gradient-function';
+import P1DifferentiationGrowingCircle from './p1-differentiation-growing-circle';
+import P1DifferentiationIncreasingDecreasing from './p1-differentiation-increasing-decreasing';
+import P1DifferentiationStationaryPoints from './p1-differentiation-stationary-points';
+import P1DifferentiationTangentNormal from './p1-differentiation-tangent-normal';
 import P1TrigonometryAmplitudePeriod from './p1-trigonometry-amplitude-period';
 import P1TrigonometryBasicGraphs from './p1-trigonometry-basic-graphs';
 import P1TrigonometryCast from './p1-trigonometry-cast';
@@ -49,6 +58,13 @@ import P1TrigonometryTransformedCos from './p1-trigonometry-transformed-cos';
 import P1TrigonometryUnitCircle from './p1-trigonometry-unit-circle';
 import QuadraticInequality from './quadratic-inequality';
 import QuadraticVertex from './quadratic-vertex';
+import SeriesApGpShared from './series-ap-gp-shared';
+import SeriesApStaircase from './series-ap-staircase';
+import SeriesApSumPairing from './series-ap-sum-pairing';
+import SeriesGpSumShift from './series-gp-sum-shift';
+import SeriesGpTerms from './series-gp-terms';
+import SeriesPascalTriangle from './series-pascal-triangle';
+import SeriesSumToInfinity from './series-sum-to-infinity';
 
 /** Diagrams for 9709 lessons. Keys are referenced from lesson YAML (`diagram: <key>`). */
 export const diagrams: DiagramRegistry = {
@@ -87,6 +103,15 @@ export const diagrams: DiagramRegistry = {
   'functions-translations': FunctionsTranslations,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
+  'p1-differentiation-box-net': P1DifferentiationBoxNet,
+  'p1-differentiation-chain-machines': P1DifferentiationChainMachines,
+  'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
+  'p1-differentiation-curve-sketch': P1DifferentiationCurveSketch,
+  'p1-differentiation-gradient-function': P1DifferentiationGradientFunction,
+  'p1-differentiation-growing-circle': P1DifferentiationGrowingCircle,
+  'p1-differentiation-increasing-decreasing': P1DifferentiationIncreasingDecreasing,
+  'p1-differentiation-stationary-points': P1DifferentiationStationaryPoints,
+  'p1-differentiation-tangent-normal': P1DifferentiationTangentNormal,
   'p1-trigonometry-amplitude-period': P1TrigonometryAmplitudePeriod,
   'p1-trigonometry-basic-graphs': P1TrigonometryBasicGraphs,
   'p1-trigonometry-cast': P1TrigonometryCast,
@@ -101,4 +126,11 @@ export const diagrams: DiagramRegistry = {
   'p1-trigonometry-unit-circle': P1TrigonometryUnitCircle,
   'quadratic-inequality': QuadraticInequality,
   'quadratic-vertex': QuadraticVertex,
+  'series-ap-gp-shared': SeriesApGpShared,
+  'series-ap-staircase': SeriesApStaircase,
+  'series-ap-sum-pairing': SeriesApSumPairing,
+  'series-gp-sum-shift': SeriesGpSumShift,
+  'series-gp-terms': SeriesGpTerms,
+  'series-pascal-triangle': SeriesPascalTriangle,
+  'series-sum-to-infinity': SeriesSumToInfinity,
 };

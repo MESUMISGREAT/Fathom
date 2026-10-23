@@ -1,0 +1,248 @@
+id: series-geometric-nth-term
+subject: "9709"
+topic: "1.6"
+title: "Geometric progressions: the nth term"
+summary: Recognise a geometric progression by its common ratio, use uₙ = arⁿ⁻¹, and test whether three numbers are in GP with b² = ac.
+order: 5
+minutes: 5
+kind: core
+objectives: ["1.6.2", "1.6.3"]
+prerequisites: [series-arithmetic-nth-term]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.6 learning outcomes "recognise arithmetic
+    and geometric progressions" and "use the formulae for the nth term and for the sum of the
+    first n terms to solve problems involving arithmetic or geometric progressions", including
+    the condition b² = ac for three numbers in geometric progression. Logarithms are not part of
+    Paper 1, so "first term to exceed" problems are solved by trial with a calculator. All
+    examples and questions are original; all arithmetic checked in Python. Not yet
+    teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can recognise a **geometric progression**, find any term with $u_n = ar^{n-1}$, and use $b^2 = ac$ to test whether three numbers are in geometric progression.
+
+  - type: explain
+    title: Multiply, don't add
+    body: |-
+      Fold a sheet of paper in half: 2 layers. Again: 4. Again: 8. Each fold **doubles** the layers.
+
+      A **geometric progression** (GP) works like that: you get each term by **multiplying** the previous one by the same number. That number is the **common ratio** $r$. The first term is $a$, as before.
+
+      APs grow at a steady pace. GPs explode (or shrink away to nothing). That's the whole drama of this topic.
+
+  - type: definition
+    term: Geometric progression
+    body: |-
+      A **geometric progression** is a sequence in which each term after the first is obtained by multiplying the previous term by a constant, the **common ratio** $r$ (with $a \neq 0$ and $r \neq 0$):
+
+      $$\frac{u_{n+1}}{u_n} = r \quad \text{for every } n.$$
+
+      The $n$th term is $u_n = ar^{n-1}$.
+
+  - type: diagram
+    diagram: series-gp-terms
+    alt: >-
+      Three panels on the same scale, each plotting the terms u₁ to u₆ of a geometric progression as
+      vertical stems against n. Left, r = 2 with a = 1: terms 1, 2, 4, 8, 16, 32, growing faster and
+      faster. Middle, r = ½ with a = 32: terms 32, 16, 8, 4, 2, 1, shrinking towards 0. Right,
+      r = −½ with a = 32: terms 32, −16, 8, −4, 2, −1, alternating above and below the n-axis
+      while shrinking.
+    caption: |-
+      $r > 1$: growth. $0 < r < 1$: decay towards 0. Negative $r$: the signs alternate.
+
+  - type: explain
+    title: Why the power is n − 1
+    body: |-
+      $u_1 = a$, $\;u_2 = ar$, $\;u_3 = ar^2$, $\;u_4 = ar^3$. To reach the $n$th term you multiply by $r$ exactly $n - 1$ times, the same "steps, not terms" idea as in an AP.
+
+      To **recognise** a GP, divide each term by the one before. If the ratio is the same every time, it's geometric.
+
+  - type: check
+    questions: [ratio-name, recognise-gp, eighth-term]
+
+  - type: example
+    title: Two terms given
+    problem: |-
+      The 3rd term of a geometric progression is 12 and the 6th term is 96. Find the first term and the common ratio.
+    steps:
+      - |-
+        $ar^2 = 12$ and $ar^5 = 96$.
+      - |-
+        **Divide** (not subtract) to cancel $a$: $\;\dfrac{ar^5}{ar^2} = \dfrac{96}{12}$, so $r^3 = 8$.
+      - |-
+        $r = 2$, and then $a = \dfrac{12}{r^2} = \dfrac{12}{4} = 3$.
+    answer: |-
+      $a = 3$, $r = 2$. The GP is $3, 6, 12, 24, 48, 96, \dots$ ✓
+
+  - type: explain
+    title: Watch out for even powers
+    body: |-
+      If the 2nd term is 6 and the 4th is 54, dividing gives $r^2 = 9$. That has **two** solutions: $r = 3$ or $r = -3$.
+
+      - $r = 3$: $\;2, 6, 18, 54, \dots$
+      - $r = -3$: $\;-2, 6, -18, 54, \dots$
+
+      Both fit. Keep both unless the question rules one out (e.g. "all the terms are positive").
+
+  - type: explain
+    title: Three numbers in GP
+    body: |-
+      $a$, $b$, $c$ (all non-zero) are **in geometric progression** when the two ratios are equal: $\dfrac{b}{a} = \dfrac{c}{b}$. Cross-multiplied:
+
+      $$b^2 = ac$$
+
+      The middle term squared equals the product of the outer two.
+
+  - type: example
+    title: Using b² = ac
+    problem: |-
+      Find $x$ given that $x + 1$, $x + 4$ and $x + 13$ are consecutive terms of a geometric progression.
+    steps:
+      - |-
+        $(x + 4)^2 = (x + 1)(x + 13)$.
+      - |-
+        $x^2 + 8x + 16 = x^2 + 14x + 13$.
+      - |-
+        The $x^2$ terms cancel: $3 = 6x$, so $x = \tfrac12$.
+    answer: |-
+      $x = \tfrac12$, giving $1.5, 4.5, 13.5$ with common ratio 3 ✓
+
+  - type: check
+    questions: [two-terms-gp, gp-condition]
+
+  - type: deeper
+    title: The first term to pass a target
+    body: |-
+      *Which is the first term of $3, 6, 12, \dots$ to exceed 1000?*
+
+      You need $3 \times 2^{n-1} > 1000$, i.e. $2^{n-1} > 333.3\ldots$. Try powers of 2: $2^8 = 256$ (too small), $2^9 = 512$ (big enough). So $n - 1 = 9$, $n = 10$, and the term is $3 \times 2^9 = 1536$.
+
+      Paper 1 doesn't use logarithms, so trial with a calculator is the expected method. Always show the value just below and just above the target.
+
+  - type: check
+    questions: [exceed-100]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $u_n = ar^n$
+        right: |-
+          $u_n = ar^{n-1}$. With $n = 1$ you must get $a$ back.
+      - wrong: |-
+          For $48, 24, 12, \dots$, $r = \dfrac{48}{24} = 2$.
+        right: |-
+          The ratio is "next ÷ previous": $r = \dfrac{24}{48} = \tfrac12$.
+      - wrong: |-
+          $r^2 = 9$, so $r = 3$.
+        right: |-
+          $r = \pm 3$. A negative ratio is allowed; it just makes the signs alternate.
+
+  - type: exam
+    body: |-
+      - With two terms of a GP, **divide** the equations to eliminate $a$. Subtracting gets you nowhere.
+      - $b^2 = ac$ questions usually give a quadratic (or something that collapses to linear, like the example). Check your answer by finding the ratio.
+      - Some questions need both: "the 1st, 2nd and 4th terms of an AP are in GP". That's the lesson on two progressions.
+
+  - type: takeaways
+    items:
+      - |-
+        GP: multiply by the same common ratio $r$ each time; $r = u_{n+1} \div u_n$.
+      - |-
+        $u_n = ar^{n-1}$.
+      - |-
+        Two terms given → divide the equations to find $r$; watch for $\pm$ with even powers.
+      - |-
+        Non-zero $a, b, c$ are in GP exactly when $b^2 = ac$.
+
+questions:
+  - id: recognise-gp
+    format: mcq
+    difficulty: 1
+    objectives: ["1.6.2"]
+    prompt: |-
+      Which of these sequences is a geometric progression?
+    explanation: |-
+      $48, -24, 12, -6, \dots$ has ratio $\dfrac{-24}{48} = \dfrac{12}{-24} = \dfrac{-6}{12} = -\tfrac12$ every time.
+    options:
+      - text: $48, -24, 12, -6, \dots$
+        correct: true
+        why: |-
+          Constant ratio $r = -\tfrac12$. Negative ratios are fine: the signs just alternate.
+      - text: $2, 4, 6, 8, \dots$
+        why: |-
+          The *differences* are constant (2), so this is an AP. The ratios are $2, 1.5, 1.33\ldots$
+      - text: $1, 2, 4, 7, \dots$
+        why: |-
+          The first two ratios are 2, but $7 \div 4 = 1.75$. Check every pair.
+      - text: $3, 9, 27, 54, \dots$
+        why: |-
+          The ratio is 3, 3, then $54 \div 27 = 2$. The last step breaks the pattern.
+
+  - id: eighth-term
+    format: numeric
+    difficulty: 1
+    objectives: ["1.6.3"]
+    prompt: |-
+      Find the 8th term of the geometric progression $5, 10, 20, \dots$
+    fields:
+      - label: "u₈ ="
+        answer: 640
+    explanation: |-
+      $a = 5$, $r = 2$: $\;u_8 = 5 \times 2^7 = 5 \times 128 = 640$.
+
+  - id: two-terms-gp
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      The 2nd term of a geometric progression is 18 and the 5th term is 486. Find the first term and the common ratio.
+    fields:
+      - label: "a ="
+        answer: 6
+      - label: "r ="
+        answer: 3
+    explanation: |-
+      $ar = 18$ and $ar^4 = 486$. Dividing: $r^3 = 27$, so $r = 3$ (a cube has only one real root), and $a = 18 \div 3 = 6$.
+
+  - id: gp-condition
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      The numbers $p$, $p + 6$ and $p + 24$ are consecutive terms of a geometric progression. Find $p$.
+    fields:
+      - label: "p ="
+        answer: 3
+    explanation: |-
+      $(p + 6)^2 = p(p + 24)$, so $p^2 + 12p + 36 = p^2 + 24p$, giving $12p = 36$ and $p = 3$. The terms are $3, 9, 27$, ratio 3 ✓
+
+  - id: exceed-100
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.3"]
+    prompt: |-
+      A geometric progression is $4, 6, 9, \dots$. Which term is the first to exceed 100? Give its position $n$.
+    fields:
+      - label: "n ="
+        answer: 9
+    explanation: |-
+      $r = \tfrac64 = 1.5$, so $u_n = 4 \times 1.5^{n-1}$. We need $1.5^{n-1} > 25$.
+
+      $1.5^7 = 17.1$ (too small) and $1.5^8 = 25.6$ (big enough), so $n - 1 = 8$ and $n = 9$. Check: $u_8 = 68.3$ and $u_9 = 102.5$.
+
+  - id: ratio-name
+    format: cloze
+    difficulty: 1
+    objectives: ["1.6.2"]
+    prompt: |-
+      In a geometric progression, the constant that each term is multiplied by to get the next term is called the {{1}}.
+    blanks:
+      - accept: ["common ratio", "ratio", "the common ratio", "r"]
+    explanation: |-
+      It's the **common ratio** $r$. (In an AP the constant you *add* is the common difference $d$.)

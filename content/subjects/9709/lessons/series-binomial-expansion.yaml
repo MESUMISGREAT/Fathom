@@ -1,0 +1,254 @@
+id: series-binomial-expansion
+subject: "9709"
+topic: "1.6"
+title: The binomial expansion of (a + b)ⁿ
+summary: Expand (a + b)ⁿ for a positive integer n using Pascal's triangle or the binomial coefficients ⁿCᵣ = n!/(r!(n − r)!).
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.6.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.6 learning outcome "use the expansion of
+    (a + b)ⁿ, where n is a positive integer", including the notations n! and the binomial
+    coefficient (greatest term and properties of coefficients excluded, as the syllabus says).
+    All examples and questions are original; all arithmetic checked in Python. Not yet
+    teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can expand $(a + b)^n$ for any positive integer $n$, using **Pascal's triangle** or the **binomial coefficients** $\binom{n}{r}$, and you know what $n!$ means.
+
+  - type: explain
+    title: Five brackets? No thanks
+    body: |-
+      You *could* expand $(3 + 2x)^4$ by multiplying out four brackets. It works. It also takes ages and one slip wrecks everything.
+
+      Look at the first few powers instead and a pattern jumps out:
+
+      | $n$ | $(a + b)^n$ |
+      | --- | --- |
+      | 1 | $a + b$ |
+      | 2 | $a^2 + 2ab + b^2$ |
+      | 3 | $a^3 + 3a^2b + 3ab^2 + b^3$ |
+      | 4 | $a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + b^4$ |
+
+      - Powers of $a$ go **down** by one each term; powers of $b$ go **up** by one.
+      - In every term the powers add up to $n$.
+      - There are $n + 1$ terms.
+      - The numbers in front, the **coefficients**, come from Pascal's triangle.
+
+  - type: diagram
+    diagram: series-pascal-triangle
+    alt: >-
+      Pascal's triangle drawn as numbers in circles, rows n = 0 to n = 6. Row 0 is 1; row 1 is 1, 1;
+      row 2 is 1, 2, 1; row 3 is 1, 3, 3, 1; row 4 is 1, 4, 6, 4, 1; row 5 is 1, 5, 10, 10, 5, 1;
+      row 6 is 1, 6, 15, 20, 15, 6, 1. The two 10s in row 5 are highlighted with arrows pointing
+      down to the 20 in row 6, with the note that each number is the sum of the two just above it:
+      10 + 10 = 20. Underneath: row 4 gives (a + b)⁴ = 1a⁴ + 4a³b + 6a²b² + 4ab³ + 1b⁴, and entry r
+      of row n, counting r from 0, is nCr, for example 6C3 = 20.
+    caption: |-
+      Each row starts and ends with 1, and every other number is the sum of the two above it. Row $n$ gives the coefficients of $(a + b)^n$.
+
+  - type: check
+    questions: [pascal-row, term-count]
+
+  - type: definition
+    term: Factorial and binomial coefficient
+    body: |-
+      For a positive integer $n$, **$n$ factorial** is $n! = n \times (n - 1) \times \dots \times 2 \times 1$, and $0! = 1$.
+
+      The **binomial coefficient** $\binom{n}{r}$, also written ${}^n\mathrm{C}_r$, is
+
+      $$\binom{n}{r} = \frac{n!}{r!\,(n - r)!}, \qquad r = 0, 1, \dots, n.$$
+
+      It is entry $r$ of row $n$ of Pascal's triangle (counting from $r = 0$). For example $\binom{5}{2} = \dfrac{5!}{2!\,3!} = \dfrac{120}{2 \times 6} = 10$.
+
+  - type: explain
+    title: The binomial expansion
+    body: |-
+      For a positive integer $n$:
+
+      $$(a + b)^n = a^n + \binom{n}{1}a^{n-1}b + \binom{n}{2}a^{n-2}b^2 + \dots + \binom{n}{r}a^{n-r}b^r + \dots + b^n$$
+
+      Pascal's triangle is quickest for small $n$. For bigger $n$, or when you only need one coefficient, use $\binom{n}{r}$ (your calculator's ${}^n\mathrm{C}_r$ button).
+
+  - type: intuition
+    title: Why n choose r?
+    body: |-
+      $(a + b)^4 = (a + b)(a + b)(a + b)(a + b)$. Every term in the expansion comes from picking either $a$ or $b$ from **each** of the four brackets and multiplying.
+
+      To get $a^2b^2$ you pick $b$ from 2 of the 4 brackets. The number of ways to choose those 2 brackets is $\binom{4}{2} = 6$. So 6 copies of $a^2b^2$ turn up, and the coefficient is 6.
+
+  - type: example
+    title: A full expansion
+    problem: |-
+      Expand $(3 + 2x)^4$ fully, simplifying each term.
+    steps:
+      - |-
+        Row 4 of Pascal's triangle: $1, 4, 6, 4, 1$. Here $a = 3$ and $b = 2x$.
+      - |-
+        Write each term with brackets round the whole of $b$: $\;1(3)^4 + 4(3)^3(2x) + 6(3)^2(2x)^2 + 4(3)(2x)^3 + 1(2x)^4$.
+      - |-
+        Square and cube the **whole** bracket: $(2x)^2 = 4x^2$, $(2x)^3 = 8x^3$, $(2x)^4 = 16x^4$.
+      - |-
+        Multiply out: $81 + 4 \times 27 \times 2x + 6 \times 9 \times 4x^2 + 4 \times 3 \times 8x^3 + 16x^4$.
+    answer: |-
+      $(3 + 2x)^4 = 81 + 216x + 216x^2 + 96x^3 + 16x^4$. Quick check: put $x = 1$. The left side is $5^4 = 625$ and the right side is $81 + 216 + 216 + 96 + 16 = 625$ ✓
+
+  - type: check
+    questions: [ncr-value, x2-coefficient, spot-bracket]
+
+  - type: deeper
+    title: Adding two expansions
+    body: |-
+      $(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4$ and $(1 - x)^4 = 1 - 4x + 6x^2 - 4x^3 + x^4$.
+
+      Add them and the odd powers cancel: $(1 + x)^4 + (1 - x)^4 = 2 + 12x^2 + 2x^4$. Subtract them and the *even* powers cancel instead. Spotting this saves half the work.
+
+  - type: check
+    questions: [sum-of-expansions]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          In $(3 + 2x)^4$ the third term is $6(3)^2 \cdot 2x^2$.
+        right: |-
+          The whole of $b = 2x$ is squared: $(2x)^2 = 4x^2$, so the term is $6 \times 9 \times 4x^2 = 216x^2$. Always put brackets round $b$.
+      - wrong: |-
+          $(2 - x)^3 = 8 + 12x + 6x^2 + x^3$
+        right: |-
+          Here $b = -x$, so odd powers are negative: $(2 - x)^3 = 8 - 12x + 6x^2 - x^3$. Signs alternate.
+      - wrong: |-
+          $0! = 0$
+        right: |-
+          $0! = 1$ by definition. That's what makes $\binom{n}{0} = \dfrac{n!}{0!\,n!} = 1$ work.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Find the first three terms in the expansion of $(2 - x)^5$ in ascending powers of $x$.* **Ascending** means start from the constant: $32 - 80x + 80x^2$. **Descending** starts from the highest power.
+      - "Simplify each term" means numbers multiplied out, so $80x^2$, not $10 \times 8x^2$.
+      - The $x = 1$ check above takes ten seconds and catches most arithmetic slips.
+
+  - type: takeaways
+    items:
+      - |-
+        $(a + b)^n$ has $n + 1$ terms; powers of $a$ fall from $n$ to 0 while powers of $b$ rise from 0 to $n$.
+      - |-
+        The coefficients are row $n$ of Pascal's triangle, or $\binom{n}{r} = \dfrac{n!}{r!\,(n - r)!}$.
+      - |-
+        Bracket the whole of $b$, including its coefficient and sign, before raising it to a power.
+      - |-
+        $0! = 1$, and $\binom{n}{0} = \binom{n}{n} = 1$.
+
+questions:
+  - id: pascal-row
+    format: mcq
+    difficulty: 1
+    objectives: ["1.6.1"]
+    prompt: |-
+      Which list gives the coefficients in the expansion of $(a + b)^6$?
+    explanation: |-
+      Row 6 of Pascal's triangle is $1, 6, 15, 20, 15, 6, 1$: seven numbers for seven terms. You can build it from row 5 ($1, 5, 10, 10, 5, 1$) by adding neighbours.
+    options:
+      - text: $1, 6, 15, 20, 15, 6, 1$
+        correct: true
+        why: |-
+          Row 6 of Pascal's triangle. These are $\binom{6}{0}$ to $\binom{6}{6}$.
+      - text: $1, 5, 10, 10, 5, 1$
+        why: |-
+          That's row 5, the coefficients of $(a + b)^5$. Row 0 is the single 1 at the top, so count from 0.
+      - text: $1, 6, 15, 15, 6, 1$
+        why: |-
+          Only six numbers, but $(a + b)^6$ has seven terms. The middle coefficient $\binom{6}{3} = 20$ is missing.
+      - text: $1, 6, 12, 18, 12, 6, 1$
+        why: |-
+          These aren't binomial coefficients. Each entry is the sum of the two above it, so the third is $5 + 10 = 15$.
+
+  - id: term-count
+    format: cloze
+    difficulty: 1
+    objectives: ["1.6.1"]
+    prompt: |-
+      The expansion of $(a + b)^n$ has {{1}} terms. In each term, the powers of $a$ and $b$ add up to {{2}}.
+    blanks:
+      - accept: ["n + 1", "n+1", "1 + n", "1+n", "(n + 1)", "(n+1)"]
+      - accept: ["n"]
+    explanation: |-
+      The power of $b$ runs $0, 1, 2, \dots, n$: that's $n + 1$ values, so $n + 1$ terms. Each term is $a^{n-r}b^r$, and $(n - r) + r = n$.
+
+  - id: ncr-value
+    format: numeric
+    difficulty: 1
+    objectives: ["1.6.1"]
+    prompt: |-
+      Evaluate $\binom{7}{3}$.
+    fields:
+      - answer: 35
+    explanation: |-
+      $\binom{7}{3} = \dfrac{7!}{3!\,4!} = \dfrac{7 \times 6 \times 5}{3 \times 2 \times 1} = \dfrac{210}{6} = 35.$
+
+      Cancel the $4!$ first rather than working out $7! = 5040$; it's faster and safer.
+
+  - id: x2-coefficient
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.1"]
+    prompt: |-
+      Find the first three terms in the expansion of $(3 - x)^5$ in ascending powers of $x$. Enter the constant term and the coefficients of $x$ and $x^2$.
+    fields:
+      - label: "constant ="
+        answer: 243
+      - label: "coefficient of x ="
+        answer: -405
+      - label: "coefficient of x² ="
+        answer: 270
+    explanation: |-
+      Row 5: $1, 5, 10, \dots$ with $a = 3$ and $b = -x$:
+
+      $$3^5 + 5(3^4)(-x) + 10(3^3)(-x)^2 = 243 - 405x + 270x^2 + \dots$$
+
+      The $x$ term is negative because $b = -x$ appears to an odd power.
+
+  - id: spot-bracket
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.6.1"]
+    prompt: |-
+      A student expands $(2x - 3)^3$. Which line contains the first error?
+    lines:
+      - |-
+        Row 3 of Pascal's triangle is $1, 3, 3, 1$.
+      - |-
+        $(2x - 3)^3 = (2x)^3 + 3(2x)^2(-3) + 3(2x)(-3)^2 + (-3)^3$
+      - |-
+        $= 8x^3 - 18x^2 + 54x - 27$
+    errorLine: 3
+    fix: |-
+      $3(2x)^2(-3) = 3(4x^2)(-3) = -36x^2$, so the answer is $8x^3 - 36x^2 + 54x - 27$.
+    explanation: |-
+      Line 2 is a perfect setup. In line 3 the student squared only the $x$ and not the 2: $(2x)^2$ is $4x^2$, not $2x^2$. Check with $x = 1$: $(2 - 3)^3 = -1$, and $8 - 36 + 54 - 27 = -1$ ✓, but $8 - 18 + 54 - 27 = 17$ ✗.
+
+  - id: sum-of-expansions
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.1"]
+    prompt: |-
+      Simplify $(1 + x)^5 + (1 - x)^5$, giving your answer in the form $p + qx^2 + rx^4$.
+    fields:
+      - label: "p ="
+        answer: 2
+      - label: "q ="
+        answer: 20
+      - label: "r ="
+        answer: 10
+    explanation: |-
+      $(1 + x)^5 = 1 + 5x + 10x^2 + 10x^3 + 5x^4 + x^5$ and $(1 - x)^5 = 1 - 5x + 10x^2 - 10x^3 + 5x^4 - x^5$.
+
+      Adding, the odd powers cancel: $2 + 20x^2 + 10x^4$.

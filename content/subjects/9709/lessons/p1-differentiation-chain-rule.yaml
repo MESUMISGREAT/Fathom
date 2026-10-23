@@ -1,0 +1,252 @@
+id: p1-differentiation-chain-rule
+subject: "9709"
+topic: "1.7"
+title: The chain rule
+summary: Differentiate composite functions such as (3x − 1)⁵ and √(2x³ + 5) using dy/dx = dy/du × du/dx.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.7.2"]
+prerequisites: [p1-differentiation-powers-of-x, functions-composite-functions]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "use the derivative of
+    xⁿ (for any rational n), together with constant multiples, sums and differences of
+    functions, and of composite functions using the chain rule", including the syllabus's
+    example y = √(2x³ + 5), which is worked here. Other examples and all questions are original;
+    all arithmetic checked in Python. Not yet teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can differentiate a **composite function** like $(3x - 1)^5$ or $\sqrt{2x^3 + 5}$ with the **chain rule**, without expanding anything.
+
+  - type: explain
+    title: Please don't expand (3x − 1)⁵
+    body: |-
+      You *could* expand $(3x - 1)^5$ with the binomial theorem, differentiate six terms, and tidy up. Or you could do it in one line.
+
+      $(3x - 1)^5$ is a function **inside** another function: first $x \mapsto 3x - 1$ (the **inner** function), then "raise it to the power 5" (the **outer** function). The chain rule handles exactly this.
+
+  - type: definition
+    term: The chain rule
+    body: |-
+      If $y$ is a function of $u$, and $u$ is a function of $x$, then
+
+      $$\frac{dy}{dx} = \frac{dy}{du} \times \frac{du}{dx}.$$
+
+      In words: **differentiate the outer function, leaving the inside alone, then multiply by the derivative of the inside.**
+
+  - type: diagram
+    diagram: p1-differentiation-chain-machines
+    alt: >-
+      Two function machines in a row. x goes into the first box, labelled inner function, u = 2x³ + 5,
+      with du/dx = 6x² written underneath. Its output u goes into the second box, labelled outer
+      function, y = √u, with dy/du = 1/(2√u) underneath. The output is y. Below a line: dy/dx =
+      dy/du × du/dx = 1/(2√u) × 6x² = 3x²/√(2x³ + 5), and the note: rates multiply, outer rate
+      (inside left alone) times inner rate.
+    caption: |-
+      Two machines, two rates. The overall rate of change is the product of the rates.
+
+  - type: intuition
+    title: Gears
+    body: |-
+      Gear A turns 3 times for every turn of gear B, and gear B turns 2 times for every turn of gear C. Then A turns $3 \times 2 = 6$ times for every turn of C.
+
+      Rates of change chain together the same way: if $y$ changes $\frac{dy}{du}$ times as fast as $u$, and $u$ changes $\frac{du}{dx}$ times as fast as $x$, then $y$ changes $\frac{dy}{du} \times \frac{du}{dx}$ times as fast as $x$. (The gears analogy breaks for negative rates, where one quantity falls as the other rises, but the multiplication still works.)
+
+  - type: example
+    title: A power of a linear expression
+    problem: |-
+      Differentiate $y = (3x - 1)^5$.
+    steps:
+      - |-
+        Let $u = 3x - 1$, so $y = u^5$.
+      - |-
+        $\dfrac{dy}{du} = 5u^4$ and $\dfrac{du}{dx} = 3$.
+      - |-
+        $\dfrac{dy}{dx} = 5u^4 \times 3 = 15(3x - 1)^4$.
+    answer: |-
+      $\dfrac{dy}{dx} = 15(3x - 1)^4$. Shortcut for a linear inside: $\dfrac{d}{dx}(ax + b)^n = an(ax + b)^{n-1}$.
+
+  - type: check
+    questions: [chain-linear, chain-mcq]
+
+  - type: example
+    title: The syllabus example
+    problem: |-
+      Find $\dfrac{dy}{dx}$ given $y = \sqrt{2x^3 + 5}$.
+    steps:
+      - |-
+        Rewrite as a power: $y = (2x^3 + 5)^{\frac12}$. Let $u = 2x^3 + 5$, so $y = u^{\frac12}$.
+      - |-
+        $\dfrac{dy}{du} = \tfrac12 u^{-\frac12}$ and $\dfrac{du}{dx} = 6x^2$.
+      - |-
+        $\dfrac{dy}{dx} = \tfrac12(2x^3 + 5)^{-\frac12} \times 6x^2 = 3x^2(2x^3 + 5)^{-\frac12}$.
+    answer: |-
+      $\dfrac{dy}{dx} = \dfrac{3x^2}{\sqrt{2x^3 + 5}}$
+
+  - type: example
+    title: A bracket on the bottom
+    problem: |-
+      Differentiate $y = \dfrac{4}{(1 - 2x)^2}$.
+    steps:
+      - |-
+        Rewrite: $y = 4(1 - 2x)^{-2}$.
+      - |-
+        Outer: $4 \times (-2)(1 - 2x)^{-3} = -8(1 - 2x)^{-3}$. Inner derivative: $\dfrac{d}{dx}(1 - 2x) = -2$.
+      - |-
+        Multiply: $-8(1 - 2x)^{-3} \times (-2) = 16(1 - 2x)^{-3}$.
+    answer: |-
+      $\dfrac{dy}{dx} = \dfrac{16}{(1 - 2x)^3}$. Two negatives made a positive, so watch the signs.
+
+  - type: check
+    questions: [chain-root, chain-reciprocal, spot-chain]
+
+  - type: deeper
+    title: Gradient at a point with the chain rule
+    body: |-
+      *Find the gradient of $y = (x^2 + 1)^3$ at $x = 1$.*
+
+      $\dfrac{dy}{dx} = 3(x^2 + 1)^2 \times 2x = 6x(x^2 + 1)^2$. At $x = 1$: $6 \times 1 \times 2^2 = 24$.
+
+      Differentiate **first**, then substitute. If you put $x = 1$ in first, you get $y = 8$, a constant, whose derivative is a useless 0.
+
+  - type: check
+    questions: [chain-value]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\dfrac{d}{dx}(5 - x^2)^3 = 3(5 - x^2)^2$
+        right: |-
+          You forgot to multiply by the inner derivative, $-2x$: the answer is $-6x(5 - x^2)^2$.
+      - wrong: |-
+          $\dfrac{d}{dx}(5 - x^2)^3 = 3(5 - 2x)^2$
+        right: |-
+          Leave the inside **alone** when you differentiate the outer function; its derivative goes outside as a multiplier.
+      - wrong: |-
+          $\dfrac{d}{dx}(x^3 + 1)^{-\frac12} = -\tfrac12(x^3 + 1)^{-\frac12} \times 3x^2$
+        right: |-
+          The power still drops by 1: $-\tfrac12 - 1 = -\tfrac32$, giving $-\tfrac32 x^2(x^3 + 1)^{-\frac32}$.
+
+  - type: exam
+    body: |-
+      - The chain rule turns up in many Paper 1 calculus questions: tangents, stationary points and rates of change all start with "differentiate", often of a composite function.
+      - Writing the substitution $u = \dots$ is optional once you're fluent, but it's a safe habit when the inside is complicated.
+      - Leave answers in factorised form, like $15(3x - 1)^4$. Expanding wastes time and invites errors.
+
+  - type: takeaways
+    items:
+      - |-
+        $\dfrac{dy}{dx} = \dfrac{dy}{du} \times \dfrac{du}{dx}$: outer derivative (inside unchanged) × inner derivative.
+      - |-
+        Rewrite roots and reciprocals as powers first: $\dfrac{1}{\sqrt{u}} = u^{-\frac12}$.
+      - |-
+        For a linear inside: $\dfrac{d}{dx}(ax + b)^n = an(ax + b)^{n-1}$.
+      - |-
+        Differentiate first, substitute values afterwards.
+
+questions:
+  - id: chain-linear
+    format: expression
+    difficulty: 1
+    objectives: ["1.7.2"]
+    prompt: |-
+      Differentiate $y = (2x + 7)^4$.
+    answer: 8(2x + 7)^3
+    variables: [x]
+    display: |-
+      $8(2x + 7)^3$
+    explanation: |-
+      Outer: $4(2x + 7)^3$. Inner derivative: 2. Product: $8(2x + 7)^3$.
+
+  - id: chain-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.7.2"]
+    prompt: |-
+      What is $\dfrac{d}{dx}(5 - x^2)^3$?
+    explanation: |-
+      Outer: $3(5 - x^2)^2$. Inner: $\dfrac{d}{dx}(5 - x^2) = -2x$. Product: $-6x(5 - x^2)^2$.
+    options:
+      - text: $-6x(5 - x^2)^2$
+        correct: true
+        why: |-
+          Outer derivative $3(5 - x^2)^2$ times inner derivative $-2x$.
+      - text: $3(5 - x^2)^2$
+        why: |-
+          The inner derivative $-2x$ is missing. That's the most common chain-rule slip.
+      - text: $6x(5 - x^2)^2$
+        why: |-
+          Sign slip: the inside is $5 - x^2$, whose derivative is $-2x$, not $2x$.
+      - text: $-6x(5 - 2x)^2$
+        why: |-
+          The inside of the bracket was differentiated too. It must stay as $(5 - x^2)$.
+
+  - id: chain-root
+    format: expression
+    difficulty: 2
+    objectives: ["1.7.2"]
+    prompt: |-
+      Find $\dfrac{dy}{dx}$ when $y = \sqrt{4x - 3}$.
+    answer: 2(4x - 3)^(-1/2)
+    variables: [x]
+    domain: { min: 1, max: 5 }
+    display: |-
+      $2(4x - 3)^{-\frac12} = \dfrac{2}{\sqrt{4x - 3}}$
+    explanation: |-
+      $y = (4x - 3)^{\frac12}$, so $\dfrac{dy}{dx} = \tfrac12(4x - 3)^{-\frac12} \times 4 = 2(4x - 3)^{-\frac12}$.
+
+  - id: chain-reciprocal
+    format: expression
+    difficulty: 2
+    objectives: ["1.7.2"]
+    prompt: |-
+      Differentiate $y = \dfrac{6}{(3x + 1)^2}$.
+    answer: -36(3x + 1)^(-3)
+    variables: [x]
+    domain: { min: 0, max: 4 }
+    display: |-
+      $-36(3x + 1)^{-3} = -\dfrac{36}{(3x + 1)^3}$
+    explanation: |-
+      $y = 6(3x + 1)^{-2}$, so $\dfrac{dy}{dx} = 6 \times (-2)(3x + 1)^{-3} \times 3 = -36(3x + 1)^{-3}$.
+
+  - id: spot-chain
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.7.2"]
+    prompt: |-
+      A student differentiates $y = \dfrac{1}{\sqrt{x^3 + 1}}$. Which line contains the first error?
+    lines:
+      - |-
+        $y = (x^3 + 1)^{-\frac12}$
+      - |-
+        $\dfrac{dy}{dx} = -\tfrac12(x^3 + 1)^{-\frac12} \times 3x^2$
+      - |-
+        $= -\dfrac{3x^2}{2\sqrt{x^3 + 1}}$
+    errorLine: 2
+    fix: |-
+      The power should drop to $-\tfrac32$: $\;\dfrac{dy}{dx} = -\tfrac12(x^3 + 1)^{-\frac32} \times 3x^2 = -\dfrac{3x^2}{2(x^3 + 1)^{\frac32}}$.
+    explanation: |-
+      Line 1 rewrites correctly. In line 2 the student brought the $-\tfrac12$ down but forgot to subtract 1 from the power: $-\tfrac12 - 1 = -\tfrac32$.
+
+  - id: chain-value
+    format: numeric
+    difficulty: 3
+    objectives: ["1.7.2"]
+    prompt: |-
+      The curve $y = \sqrt{2x + 1}$ has gradient $\tfrac13$ at the point $P$. Find the coordinates of $P$.
+    fields:
+      - label: "x ="
+        answer: 4
+      - label: "y ="
+        answer: 3
+    explanation: |-
+      $y = (2x + 1)^{\frac12}$, so $\dfrac{dy}{dx} = \tfrac12(2x + 1)^{-\frac12} \times 2 = \dfrac{1}{\sqrt{2x + 1}}$.
+
+      $\dfrac{1}{\sqrt{2x + 1}} = \dfrac13$ gives $\sqrt{2x + 1} = 3$, so $2x + 1 = 9$, $x = 4$ and $y = 3$. So $P = (4, 3)$.

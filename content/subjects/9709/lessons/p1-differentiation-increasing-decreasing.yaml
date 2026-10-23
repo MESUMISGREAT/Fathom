@@ -1,0 +1,222 @@
+id: p1-differentiation-increasing-decreasing
+subject: "9709"
+topic: "1.7"
+title: Increasing and decreasing functions
+summary: Use the sign of dy/dx to find where a function is increasing or decreasing, and show that a function is increasing for every x.
+order: 5
+minutes: 5
+kind: core
+objectives: ["1.7.3"]
+prerequisites: [p1-differentiation-powers-of-x, quadratics-inequalities, quadratics-completing-the-square]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "apply differentiation
+    to gradients, tangents and normals, increasing and decreasing functions, and rates of
+    change" (the increasing and decreasing functions part). All examples and questions are
+    original; all arithmetic checked in Python. Not yet teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use the sign of $f'(x)$ to find where $f$ is **increasing** or **decreasing**, and show that a function is increasing for all $x$.
+
+  - type: explain
+    title: Walk the graph from left to right
+    body: |-
+      Imagine walking along a graph from left to right. Going **uphill** means $y$ gets bigger as $x$ gets bigger: the function is **increasing**. Going **downhill**: **decreasing**.
+
+      Uphill means a positive gradient; downhill means a negative one. So the sign of the derivative tells you everything, and you never need to draw the graph.
+
+  - type: definition
+    term: Increasing and decreasing functions
+    body: |-
+      On an interval of values of $x$:
+
+      - if $f'(x) > 0$ throughout, $f$ is **increasing** there ($f(x)$ gets larger as $x$ gets larger);
+      - if $f'(x) < 0$ throughout, $f$ is **decreasing** there.
+
+      A function is still increasing if $f'(x) = 0$ only at isolated points, like $f(x) = x^3$ at $x = 0$.
+
+  - type: diagram
+    diagram: p1-differentiation-increasing-decreasing
+    alt: >-
+      Two graphs stacked with the same x-scale. Top: y = x³ − 3x, with a maximum at (−1, 2) and a
+      minimum at (1, −2). The parts for x < −1 and x > 1 are drawn in one colour and labelled
+      increasing; the part between −1 and 1 is in a second colour and labelled decreasing. Bottom:
+      f′(x) = 3x² − 3, a U-shaped parabola crossing the x-axis at −1 and 1, labelled f′(x) > 0
+      outside that interval and f′(x) < 0 between. Dashed vertical lines at x = −1 and x = 1 join
+      the two graphs.
+    caption: |-
+      Where $f'(x) > 0$ (outside $-1 < x < 1$) the curve climbs; where $f'(x) < 0$ it falls. The switch happens where $f'(x) = 0$.
+
+  - type: check
+    questions: [inc-dec-mcq, least-k]
+
+  - type: example
+    title: Where is it decreasing?
+    problem: |-
+      Find the set of values of $x$ for which $y = x^3 - 6x^2 + 9x + 1$ is decreasing.
+    steps:
+      - |-
+        $\dfrac{dy}{dx} = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x - 1)(x - 3)$.
+      - |-
+        Decreasing where $3(x - 1)(x - 3) < 0$. This ∪-shaped quadratic is negative **between** its roots.
+      - |-
+        So $1 < x < 3$.
+    answer: |-
+      $y$ is decreasing for $1 < x < 3$. (Answer with an inequality in $x$, not in $y$.)
+
+  - type: check
+    questions: [decreasing-set]
+
+  - type: example
+    title: Show it's increasing for all x
+    problem: |-
+      Show that $f(x) = x^3 + 3x^2 + 5x$ is an increasing function.
+    steps:
+      - |-
+        $f'(x) = 3x^2 + 6x + 5$.
+      - |-
+        Complete the square: $3(x^2 + 2x) + 5 = 3\left[(x + 1)^2 - 1\right] + 5 = 3(x + 1)^2 + 2$.
+      - |-
+        $(x + 1)^2 \geqslant 0$, so $3(x + 1)^2 + 2 \geqslant 2 > 0$ for every $x$.
+    answer: |-
+      $f'(x) > 0$ for all $x$, so $f$ is an increasing function. (Alternative: discriminant $36 - 60 < 0$ with positive $x^2$ coefficient, so $f'(x)$ is always positive.)
+
+  - type: explain
+    title: Restricted domains
+    body: |-
+      Some functions are only increasing on part of their domain, which matters in topic 1.2: an increasing (or decreasing) function is **one-one**, so it has an inverse.
+
+      Example: $f(x) = x + \dfrac{4}{x}$ for $x > 2$. Then $f'(x) = 1 - \dfrac{4}{x^2}$. For $x > 2$, $x^2 > 4$, so $\dfrac{4}{x^2} < 1$ and $f'(x) > 0$. So $f$ is increasing on its domain.
+
+  - type: check
+    questions: [complete-square-cloze, increasing-explain, restricted-domain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "Increasing" means the $y$-values are positive.
+        right: |-
+          Increasing is about the **gradient**: $y$ goes up as $x$ goes up. $y = x^3 - 3x$ is increasing for $x < -1$ even though $y$ is negative there.
+      - wrong: |-
+          $f'(0) > 0$, so $f$ is increasing.
+        right: |-
+          One point proves nothing. You need $f'(x) > 0$ for **every** $x$ in the interval, which is why completing the square (or the discriminant) is used.
+      - wrong: |-
+          $(x - 1)(x - 3) < 0$ gives $x < 1$ or $x > 3$.
+        right: |-
+          A ∪-shaped quadratic is negative **between** its roots: $1 < x < 3$. Sketch it if in doubt.
+
+  - type: exam
+    body: |-
+      - *Find the set of values of $x$ for which $f$ is decreasing*: differentiate, factorise, solve the quadratic inequality. Typically 3–4 marks.
+      - *Show that $f$ is an increasing function*: complete the square on $f'(x)$ (or use the discriminant) and **state** the conclusion: "$f'(x) > 0$ for all $x$, so $f$ is increasing".
+      - This links to inverse functions: "Given that $f$ is increasing, explain why $f^{-1}$ exists" wants "an increasing function is one-one".
+
+  - type: takeaways
+    items:
+      - |-
+        $f'(x) > 0$ on an interval: increasing there. $f'(x) < 0$: decreasing.
+      - |-
+        For "set of values", solve $f'(x) > 0$ or $f'(x) < 0$ as an inequality in $x$.
+      - |-
+        To show "increasing for all $x$", prove $f'(x) > 0$ everywhere: complete the square or use the discriminant.
+      - |-
+        An increasing (or decreasing) function is one-one.
+
+questions:
+  - id: inc-dec-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.7.3"]
+    prompt: |-
+      For every $x$ in an interval, $f'(x) < 0$. What can you say about $f$ on that interval?
+    explanation: |-
+      A negative gradient everywhere means the graph goes downhill all the way: $f$ is decreasing.
+    options:
+      - text: $f$ is decreasing
+        correct: true
+        why: |-
+          Negative gradient: as $x$ increases, $f(x)$ decreases.
+      - text: $f(x)$ is negative
+        why: |-
+          That mixes up $f$ and $f'$. A function can be positive and still decreasing, like $\dfrac{1}{x}$ for $x > 0$.
+      - text: $f$ is increasing
+        why: |-
+          Increasing needs $f'(x) > 0$. Here the gradient is negative.
+      - text: $f$ has a stationary point
+        why: |-
+          Stationary points need $f'(x) = 0$, which never happens on this interval.
+
+  - id: least-k
+    format: numeric
+    difficulty: 1
+    objectives: ["1.7.3"]
+    prompt: |-
+      The function $f(x) = x^2 - 10x + 3$ is increasing for $x > k$. Find the smallest possible value of $k$.
+    fields:
+      - label: "k ="
+        answer: 5
+    explanation: |-
+      $f'(x) = 2x - 10 > 0$ when $x > 5$. So $f$ is increasing for $x > 5$ (to the right of the vertex), and the smallest $k$ is 5.
+
+  - id: decreasing-set
+    format: numeric
+    difficulty: 2
+    objectives: ["1.7.3"]
+    prompt: |-
+      The function $y = 2x^3 - 3x^2 - 12x + 4$ is decreasing for $p < x < q$. Find $p$ and $q$.
+    fields:
+      - label: "p ="
+        answer: -1
+      - label: "q ="
+        answer: 2
+    explanation: |-
+      $\dfrac{dy}{dx} = 6x^2 - 6x - 12 = 6(x^2 - x - 2) = 6(x - 2)(x + 1)$.
+
+      This is negative between the roots, so $y$ is decreasing for $-1 < x < 2$.
+
+  - id: complete-square-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["1.7.3"]
+    prompt: |-
+      For $f(x) = x^3 + 3x^2 + 7x$, completing the square gives $f'(x) = 3(x + p)^2 + q$, where $p =$ {{1}} and $q =$ {{2}}. Since $q > 0$, $f'(x)$ is always positive and $f$ is increasing.
+    blanks:
+      - accept: ["1"]
+      - accept: ["4"]
+    explanation: |-
+      $f'(x) = 3x^2 + 6x + 7 = 3(x^2 + 2x) + 7 = 3\left[(x + 1)^2 - 1\right] + 7 = 3(x + 1)^2 + 4$. Since $3(x + 1)^2 \geqslant 0$, $f'(x) \geqslant 4 > 0$.
+
+  - id: increasing-explain
+    format: explain
+    difficulty: 3
+    objectives: ["1.7.3"]
+    prompt: |-
+      Show that $f(x) = x^3 - 6x^2 + 15x$ is an increasing function for all real $x$.
+    explanation: |-
+      The key is proving $f'(x)$ is positive for **every** $x$, not just checking a few values. Completing the square does that in one line.
+    model: |-
+      $f'(x) = 3x^2 - 12x + 15 = 3(x^2 - 4x + 5) = 3\left[(x - 2)^2 + 1\right] = 3(x - 2)^2 + 3$. Since $(x - 2)^2 \geqslant 0$ for all $x$, $f'(x) \geqslant 3 > 0$ for all $x$. So $f$ is an increasing function.
+    keyPoints:
+      - Correct derivative f′(x) = 3x² − 12x + 15
+      - Completed square 3(x − 2)² + 3 (or discriminant 144 − 180 < 0 with positive x² coefficient)
+      - Reason that this is always positive, since a square is never negative
+      - Conclusion that f′(x) > 0 for all x, so f is increasing
+
+  - id: restricted-domain
+    format: numeric
+    difficulty: 3
+    objectives: ["1.7.3"]
+    prompt: |-
+      The function $f(x) = x + \dfrac{9}{x}$, defined for $x > 0$, is increasing for $x > a$. Find the smallest possible value of $a$.
+    fields:
+      - label: "a ="
+        answer: 3
+    explanation: |-
+      $f'(x) = 1 - \dfrac{9}{x^2}$. This is positive when $\dfrac{9}{x^2} < 1$, i.e. $x^2 > 9$. With $x > 0$ that means $x > 3$. So $a = 3$.
