@@ -53,11 +53,27 @@ Rules the user stressed:
   - They can't be farmed, there are no shame-based streaks, they can be switched off
     (`showPoints`), and they are stored on the server.
 - **Write lessons for every syllabus topic.** This is the main remaining job (section 4).
+  Keep the queue order: all AS units first, then A2 (the user confirmed this on 23 Oct).
+- **Easy to read for ADHD (user, 23 Oct).** Paragraphs of at most 2 sentences, bullets wherever
+  possible, white space, one idea per block. Start with an easy example the student can check
+  another way. This is in `docs/CONTENT_GUIDE.md` ("Writing style") and in the writer and
+  reviewer prompts.
+- **Keep the teaching simple (user, 23 Oct).** Don't add notation a first-timer doesn't need.
+  The chain rule is taught as "power down, box stays the same, then multiply by the derivative
+  of the box"; dy/du × du/dx appears only in an optional block. Not every diagram has to be a
+  graph: a rule table (x² → 2x) or numbered steps are often clearer.
+- **Proper maths typesetting (user, 23 Oct).** Real fraction bars and root signs that cover the
+  whole expression, never slash fractions like 1 ⁄ (2√u). Diagrams use `MathLabel` / `FracLabel`
+  (see "Diagrams" in `docs/CONTENT_GUIDE.md`); `tests/diagram-notation.test.ts` enforces it.
 - **Talking to the user:** short plain-language replies, no jargon dumps. The user is a
   student with exams and college essays.
   - "pause" means stop all agents and disable scheduled tasks.
   - "resume" means pick the queue back up.
   - Ask before starting big new work they didn't request.
+  - **Budget:** the user asked not to use more than 80% of the session limit. You can't see
+    the meter: run about one round of 3 agents, then stop starting new ones. `get_session`
+    shows `rate_limit_info` when a limit is near (on 23 Oct the weekly limit was at
+    "warning", resetting 30 Oct).
 
 ## 3. Token rules (the user asked for these, and quality must not drop)
 
@@ -75,7 +91,10 @@ Follow the project skill `.claude/skills/token-efficient-workflow/SKILL.md`, inc
   - Don't reread files you just edited.
 - **Never skip correctness checks:** validator, tsc, tests and the review pass.
 - **Open promise to the user:** measure tokens per published lesson for the next few
-  batches, compared with earlier batches, and report the savings. Not done yet.
+  batches, compared with earlier batches, and report the savings. Numbers so far (from the
+  agents' usage reports, 23 Oct): reviewing ≈ 15k tokens per lesson (9618 2.1: 223k for 15;
+  9709 1.6+1.7: 271k for 17); writing ≈ 33k per lesson (9702 3.2+3.3: 265k for 8 new lessons).
+  Earlier batches weren't recorded, so there's no baseline yet: keep logging and compare.
 
 ## 4. The lesson pipeline (exactly as used so far)
 
@@ -91,6 +110,11 @@ export COMMIT_TRAILER="<the attribution lines your session's instructions give f
 bash scripts/lessons/restore-drafts.sh     # brings back unpublished drafts from the wip-snapshot branch
 node scripts/lessons/status.mjs            # where every unit stands
 ```
+
+`restore-drafts.sh` fetches `wip-snapshot` itself, so it works on a fresh shallow clone.
+`snapshot.sh` builds on the remote branch and says "NOT PUSHED" (exit 1) if a push fails.
+The diagram renderer and Playwright fall back to `/opt/pw-browsers/chromium` when the pinned
+browser is missing.
 
 `status.mjs` reports one of five states for each unit:
 
@@ -144,6 +168,18 @@ The prompt files already contain everything else:
 4. Run `bash scripts/lessons/snapshot.sh`. This backs up all drafts to the `wip-snapshot`
    branch, which never touches `main`.
 
+### Changing a published lesson (or code plus lessons)
+
+`publish.sh` only handles new lessons. To ship edits to a lesson already on `main`, or code
+changes alongside lessons:
+1. Set the lesson back to `status: draft` with a note saying what changed, then run one
+   independent reviewer on it.
+2. Build a clean worktree from `origin/main`, copy in only the files you mean to ship, and
+   regenerate the diagram index there. The local index lists draft diagrams, so never commit it.
+3. Run `tsc`, `vitest` and `content-check` there, then commit and push from it.
+4. Run `npx playwright test` in the main checkout. Turbopack refuses a worktree whose
+   `node_modules` is a symlink.
+
 ### When things stop
 
 - **Usage limits:**
@@ -156,23 +192,32 @@ The prompt files already contain everything else:
   include draft diagrams) and untracked draft lessons are expected in `git status`.
   `publish.sh` handles both.
 
-## 5. Current state (23 Oct 2026, when the last chat paused)
+## 5. Current state (23 Oct 2026, end of the second chat)
 
-- On `main`: **133 reviewed lessons** (9709: 42, 9618: 27, 9702: 31, 9701: 33). All are
-  live. Tests: 162 vitest and 25 Playwright e2e (`npx playwright test`).
-- Queue: 8 units published, 2 drafted, 1 partial, 143 todo. Next actions, in order:
-  1. Run a reviewer on **9709 1.6+1.7** (drafted, 17 lessons).
-  2. Run a reviewer on **9618 2.1** (drafted, 15 `networks-*` lessons). The writer flagged
-     two calls to check: WiFi filed under radio waves, and teaching the 2^h − 2 host count
-     in subnetting. Objective 2.1.12 has only 2 questions, so add one if coverage is thin.
-  3. Rerun the writer on **9702 3.2+3.3** (partial: 3.3.1–3.3.4 missing).
-  4. Then run the `todo` units in order: 9701 3.1+3.2, 9709 1.8, 9618 3.1, 9702 4.1+4.2, …
-- Paused: no agents running. The old scheduled task `trig_01NiVSUy5PGKorMtJZ6y9aSt` is
-  disabled. Don't re-enable it; schedule a fresh one if needed.
-- Open question for the user: should A2 Chemistry be done sooner? They are studying it now.
-  If they say yes, move the 9701 A Level units forward in `units.json`.
+- On `main`: **165 reviewed lessons, 998 questions** (9709: 59, 9618: 42, 9702: 31, 9701: 33).
+  All are live. Tests: 165 vitest and 25 Playwright e2e.
+- Done in this chat:
+  - published 9618 2.1 (networks) and 9709 1.6+1.7 (series, differentiation);
+  - every 9709 diagram now has proper fractions and roots;
+  - the chain rule was rewritten the box way;
+  - a power-rule table was added to the powers-of-x lesson;
+  - the snapshot, restore and browser tooling was fixed.
+- Queue: 10 published, 1 drafted, 143 todo. Next actions, in order:
+  1. Run a reviewer on **9702 3.2+3.3** (drafted, 11 lessons: 4 `non-uniform-*`, 7
+     `linear-momentum-*`; backed up on `wip-snapshot`).
+  2. Then the `todo` units in order: 9701 3.1+3.2, 9709 1.8, 9618 3.1, 9702 4.1+4.2, …
+- **Open question for the user (asked 23 Oct, no answer yet):** restyle the 165 existing
+  lessons to the new short-chunk style? It's a big job (a writer and a reviewer per batch).
+  Ask before starting it, and ask whether it goes before or after the new topics.
+- The user asked to "recheck all the Maths lessons first". Done so far: the notation in every
+  Maths diagram, and the differentiation diagrams and chain rule. A full restyle of the other
+  Maths lessons is part of the open question above.
+- No agents running. The old scheduled task `trig_01NiVSUy5PGKorMtJZ6y9aSt` stays disabled.
 
 ## 6. Other follow-ups (small, do when convenient)
+
+- `circular-measure-sector-parts` mixes "θ ÷ 2π" with a stacked θ over 2π fraction; make
+  them match. The reviewer flagged this.
 
 - Keep the README status line (lesson and question counts) current after each publish.
 - `docs/PLAN.md` section 2.2 should list the points tables now built: `xp_events`,
