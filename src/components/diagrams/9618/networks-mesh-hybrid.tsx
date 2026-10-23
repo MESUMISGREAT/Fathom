@@ -64,7 +64,7 @@ export function NetworksMeshHybrid() {
 
       {/* mesh */}
       {links.map(([i, j]) =>
-        i === 0 && j === 2 ? null : (
+        (i === 0 && j === 2) || (i === 0 && j === 1) || (i === 1 && j === 2) ? null : (
           <line key={`${i}${j}`} x1={n[i]!.x} y1={n[i]!.y} x2={n[j]!.x} y2={n[j]!.y} className="dg-thin" />
         ),
       )}
@@ -72,8 +72,26 @@ export function NetworksMeshHybrid() {
       <Label x={mid.x} y={mid.y} className="dg-text-accent-2">
         ✕
       </Label>
-      <Arrow x1={A.x + 14} y1={A.y + 6} x2={B.x - 15} y2={B.y - 6} head={8} className="dg-accent" headClassName="dg-dot-accent" />
-      <Arrow x1={B.x - 4} y1={B.y + 16} x2={C.x + 8} y2={C.y - 15} head={8} className="dg-accent" headClassName="dg-dot-accent" />
+      {[
+        [A, B],
+        [B, C],
+      ].map(([p, q], k) => {
+        const d = Math.hypot(q!.x - p!.x, q!.y - p!.y);
+        const ux = (q!.x - p!.x) / d;
+        const uy = (q!.y - p!.y) / d;
+        return (
+          <Arrow
+            key={k}
+            x1={p!.x + 16 * ux}
+            y1={p!.y + 16 * uy}
+            x2={q!.x - 17 * ux}
+            y2={q!.y - 17 * uy}
+            head={9}
+            className="dg-accent"
+            headClassName="dg-dot-accent"
+          />
+        );
+      })}
       {n.map((p, i) => (
         <g key={i}>
           <circle cx={p.x} cy={p.y} r={16} className="dg-fill-surface" />
@@ -97,11 +115,9 @@ export function NetworksMeshHybrid() {
       <Label x={470} y={BB - 22} className="dg-text-small dg-text-muted">
         bus backbone
       </Label>
-      {[...star1.map((x) => [s1, x] as const), ...star2.map((x) => [s2, x] as const)].map(([sx, hx]) => (
+      {[...star1.slice(1).map((x) => [s1, x] as const), ...star2.slice(0, 2).map((x) => [s2, x] as const)].map(([sx, hx]) => (
         <line key={hx} x1={sx} y1={182} x2={hx} y2={HY} className="dg-thin" />
       ))}
-      <line x1={s1} y1={BB} x2={s1} y2={182} className="dg-thin" />
-      <line x1={s2} y1={BB} x2={s2} y2={182} className="dg-thin" />
       {/* packet path */}
       <path d={`M${star1[0]},${HY - 12} L${s1},${182} L${s1},${BB} L${s2},${BB} L${s2},${182} L${star2[2]},${HY - 12}`} className="dg-accent" />
       {[s1, s2].map((sx) => (

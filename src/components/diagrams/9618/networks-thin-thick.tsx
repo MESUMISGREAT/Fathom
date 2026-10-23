@@ -65,8 +65,11 @@ export function NetworksThinThick() {
 
       {/* thin: small client, big server */}
       <line x1={155} y1={102} x2={155} y2={150} className="dg-line" />
-      <Label x={163} y={126} anchor="start" className="dg-text-small">
-        constant connection needed
+      <Label x={163} y={118} anchor="start" className="dg-text-small">
+        constant
+      </Label>
+      <Label x={163} y={134} anchor="start" className="dg-text-small">
+        connection needed
       </Label>
       <Machine x={50} y={36} h={66} title="client" chips={thinClient} />
       <Machine x={50} y={150} h={130} title="server" chips={thinServer} />

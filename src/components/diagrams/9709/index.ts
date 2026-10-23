@@ -35,9 +35,14 @@ import FunctionsStretches from './functions-stretches';
 import FunctionsTranslations from './functions-translations';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
+import P1DifferentiationBoxNet from './p1-differentiation-box-net';
 import P1DifferentiationChainMachines from './p1-differentiation-chain-machines';
 import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
+import P1DifferentiationCurveSketch from './p1-differentiation-curve-sketch';
 import P1DifferentiationGradientFunction from './p1-differentiation-gradient-function';
+import P1DifferentiationGrowingCircle from './p1-differentiation-growing-circle';
+import P1DifferentiationIncreasingDecreasing from './p1-differentiation-increasing-decreasing';
+import P1DifferentiationStationaryPoints from './p1-differentiation-stationary-points';
 import P1DifferentiationTangentNormal from './p1-differentiation-tangent-normal';
 import P1TrigonometryAmplitudePeriod from './p1-trigonometry-amplitude-period';
 import P1TrigonometryBasicGraphs from './p1-trigonometry-basic-graphs';
@@ -98,9 +103,14 @@ export const diagrams: DiagramRegistry = {
   'functions-translations': FunctionsTranslations,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
+  'p1-differentiation-box-net': P1DifferentiationBoxNet,
   'p1-differentiation-chain-machines': P1DifferentiationChainMachines,
   'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
+  'p1-differentiation-curve-sketch': P1DifferentiationCurveSketch,
   'p1-differentiation-gradient-function': P1DifferentiationGradientFunction,
+  'p1-differentiation-growing-circle': P1DifferentiationGrowingCircle,
+  'p1-differentiation-increasing-decreasing': P1DifferentiationIncreasingDecreasing,
+  'p1-differentiation-stationary-points': P1DifferentiationStationaryPoints,
   'p1-differentiation-tangent-normal': P1DifferentiationTangentNormal,
   'p1-trigonometry-amplitude-period': P1TrigonometryAmplitudePeriod,
   'p1-trigonometry-basic-graphs': P1TrigonometryBasicGraphs,

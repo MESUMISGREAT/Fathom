@@ -26,10 +26,15 @@ import MultimediaSoundBits from './multimedia-sound-bits';
 import MultimediaZoomCompare from './multimedia-zoom-compare';
 import NetworksBusStar from './networks-bus-star';
 import NetworksClientServerP2p from './networks-client-server-p2p';
+import NetworksCsmaCd from './networks-csma-cd';
+import NetworksInternetAccess from './networks-internet-access';
+import NetworksLanHardware from './networks-lan-hardware';
 import NetworksLanWan from './networks-lan-wan';
 import NetworksMeshHybrid from './networks-mesh-hybrid';
 import NetworksPublicPrivateCloud from './networks-public-private-cloud';
+import NetworksRouterHops from './networks-router-hops';
 import NetworksThinThick from './networks-thin-thick';
+import NetworksWirelessLinks from './networks-wireless-links';
 import PrefixGap from './prefix-gap';
 import TwosComplementWeights from './twos-complement-weights';
 import TwosComplementWheel from './twos-complement-wheel';
@@ -62,10 +67,15 @@ export const diagrams: DiagramRegistry = {
   'cs-multimedia-zoom-compare': MultimediaZoomCompare,
   'cs-networks-bus-star': NetworksBusStar,
   'cs-networks-client-server-p2p': NetworksClientServerP2p,
+  'cs-networks-csma-cd': NetworksCsmaCd,
+  'cs-networks-internet-access': NetworksInternetAccess,
+  'cs-networks-lan-hardware': NetworksLanHardware,
   'cs-networks-lan-wan': NetworksLanWan,
   'cs-networks-mesh-hybrid': NetworksMeshHybrid,
   'cs-networks-public-private-cloud': NetworksPublicPrivateCloud,
+  'cs-networks-router-hops': NetworksRouterHops,
   'cs-networks-thin-thick': NetworksThinThick,
+  'cs-networks-wireless-links': NetworksWirelessLinks,
   'cs-prefix-gap': PrefixGap,
   'cs-twos-complement-weights': TwosComplementWeights,
   'cs-twos-complement-wheel': TwosComplementWheel,

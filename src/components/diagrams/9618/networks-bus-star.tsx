@@ -59,10 +59,10 @@ export function NetworksBusStar() {
       <line x1={30} y1={BUS_Y} x2={286} y2={BUS_Y} className="dg-line" />
       <rect x={20} y={BUS_Y - 9} width={10} height={18} className="dg-dot" />
       <rect x={286} y={BUS_Y - 9} width={10} height={18} className="dg-dot" />
-      <Label x={25} y={BUS_Y + 26} className="dg-text-small dg-text-muted">
+      <Label x={16} y={BUS_Y + 26} anchor="start" className="dg-text-small dg-text-muted">
         terminator
       </Label>
-      <Label x={286} y={BUS_Y + 26} anchor="end" className="dg-text-small dg-text-muted">
+      <Label x={298} y={BUS_Y + 26} anchor="end" className="dg-text-small dg-text-muted">
         terminator
       </Label>
       <Arrow x1={108} y1={BUS_Y - 8} x2={36} y2={BUS_Y - 8} head={7} className="dg-accent" headClassName="dg-dot-accent" />

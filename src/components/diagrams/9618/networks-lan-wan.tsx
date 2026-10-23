@@ -71,8 +71,11 @@ export function NetworksLanWan() {
       <Label x={310} y={168} className="dg-text-small dg-text-muted">
         from a telecoms company
       </Label>
-      <Label x={310} y={H - 26} className="dg-text-small dg-text-accent-2">
-        LAN 1 + LAN 2 + the link = one WAN
+      <Label x={310} y={214} className="dg-text-small dg-text-accent-2">
+        LAN 1 + LAN 2 + link
+      </Label>
+      <Label x={310} y={232} className="dg-text-small dg-text-accent-2">
+        = one WAN
       </Label>
     </Svg>
   );

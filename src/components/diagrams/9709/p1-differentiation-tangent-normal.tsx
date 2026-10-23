@@ -30,7 +30,7 @@ export default function P1DifferentiationTangentNormal() {
   return (
     <Svg width={W} height={H}>
       <Grid p={p} />
-      <AxesXY p={p} xTicks={[-1, 1, 2, 3, 4, 5, 6]} yTicks={[-1, 1, 2, 3, 4, 5, 6, 7]} />
+      <AxesXY p={p} xTicks={[-1, 1, 2, 3, 4, 5, 6]} yTicks={[-1, 1, 2, 3, 5, 6, 7]} />
 
       {/* tangent y = 2x − 1 */}
       <path d={graph((x) => 2 * x - 1, [-0.25, 4.2], p, Y)} className="dg-accent-2" />
@@ -46,23 +46,26 @@ export default function P1DifferentiationTangentNormal() {
       />
 
       <circle cx={p.sx(P.x)} cy={p.sy(P.y)} r={5} className="dg-dot" />
-      <Label x={p.sx(P.x) + 12} y={p.sy(P.y) + 14} anchor="start" className="dg-text dg-bold">
+      <Label x={p.sx(P.x) + 10} y={p.sy(P.y) + 44} anchor="start" className="dg-text dg-bold">
         P(2, 3)
       </Label>
 
-      <Label x={p.sx(3.95)} y={p.sy(7.15)} anchor="end" className="dg-text-accent-2">
-        tangent y = 2x − 1
+      <Label x={p.sx(4.1)} y={p.sy(6.6)} anchor="start" className="dg-text-accent-2">
+        tangent
       </Label>
-      <Label x={p.sx(3.95)} y={p.sy(7.15) + 18} anchor="end" className="dg-text-small">
+      <Label x={p.sx(4.1)} y={p.sy(6.6) + 19} anchor="start" className="dg-text-small">
+        y = 2x − 1
+      </Label>
+      <Label x={p.sx(4.1)} y={p.sy(6.6) + 36} anchor="start" className="dg-text-small">
         gradient 2
       </Label>
-      <Label x={p.sx(6.4)} y={p.sy(0.75)} anchor="end" className="dg-text dg-bold">
+      <Label x={p.sx(6.4)} y={p.sy(0.42)} anchor="end" className="dg-text dg-bold">
         normal y = −½x + 4
       </Label>
-      <Label x={p.sx(6.4)} y={p.sy(0.75) + 18} anchor="end" className="dg-text-small">
+      <Label x={p.sx(6.4)} y={p.sy(1.95)} anchor="end" className="dg-text-small">
         gradient −½
       </Label>
-      <Label x={p.sx(-1.35)} y={p.sy(6.1)} anchor="start" className="dg-text-accent">
+      <Label x={p.sx(3.5)} y={p.sy(3.9)} anchor="start" className="dg-text-accent">
         y = x² − 2x + 3
       </Label>
     </Svg>

@@ -27,11 +27,11 @@ function Servers({ x, y }: { x: number; y: number }) {
   );
 }
 
-function User({ x, y, label }: { x: number; y: number; label: string }) {
+function User({ x, y, label, w = 88 }: { x: number; y: number; label: string; w?: number }) {
   return (
     <g>
-      <rect x={x - 44} y={y - 14} width={88} height={28} rx={6} className="dg-fill-surface" />
-      <rect x={x - 44} y={y - 14} width={88} height={28} rx={6} className="dg-fill-muted dg-thin" />
+      <rect x={x - w / 2} y={y - 14} width={w} height={28} rx={6} className="dg-fill-surface" />
+      <rect x={x - w / 2} y={y - 14} width={w} height={28} rx={6} className="dg-fill-muted dg-thin" />
       <Label x={x} y={y} className="dg-text-small">
         {label}
       </Label>
@@ -83,7 +83,7 @@ export function NetworksPublicPrivateCloud() {
       <Label x={465} y={174} className="dg-text-small">
         restricted access
       </Label>
-      <User x={465} y={240} label="one organisation" />
+      <User x={465} y={240} w={130} label="one organisation" />
       <Label x={465} y={284} className="dg-text-small dg-text-muted">
         dedicated to one organisation
       </Label>

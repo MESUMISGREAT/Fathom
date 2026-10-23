@@ -48,13 +48,13 @@ export function NetworksClientServerP2p() {
       {cs.map((p, i) => (
         <line key={i} x1={150} y1={CY} x2={p.x} y2={p.y} className="dg-thin" />
       ))}
-      {/* request / response on the lower-right client's link */}
-      <Arrow x1={cs[2]!.x - 14} y1={cs[2]!.y - 34} x2={150 + 30} y2={CY + 22} head={7} className="dg-accent" headClassName="dg-dot-accent" />
-      <Arrow x1={150 + 42} y1={CY + 12} x2={cs[2]!.x - 2} y2={cs[2]!.y - 44} head={7} className="dg-accent-2" headClassName="dg-dot-accent-2" />
-      <Label x={238} y={196} anchor="start" className="dg-text-small dg-text-accent">
+      {/* request / response on the top client's link */}
+      <Arrow x1={140} y1={86} x2={140} y2={142} head={7} className="dg-accent" headClassName="dg-dot-accent" />
+      <Arrow x1={160} y1={142} x2={160} y2={86} head={7} className="dg-accent-2" headClassName="dg-dot-accent-2" />
+      <Label x={132} y={114} anchor="end" className="dg-text-small dg-text-accent">
         request
       </Label>
-      <Label x={176} y={150} anchor="start" className="dg-text-small dg-text-accent-2">
+      <Label x={168} y={114} anchor="start" className="dg-text-small dg-text-accent-2">
         response
       </Label>
       <Dev x={150} y={CY} w={64} h={48} label="server" accent />

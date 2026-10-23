@@ -45,13 +45,18 @@ export default function P1DifferentiationGradientFunction() {
               className="dg-accent-2"
             />
             <circle cx={top.sx(x)} cy={top.sy(x * x)} r={4} className="dg-dot-accent-2" />
-            <Label x={top.sx(x) + (x < 0 ? -10 : 10)} y={top.sy(x * x) - (x === 0 ? 16 : 4)} anchor={x < 0 ? 'end' : x === 0 ? 'middle' : 'start'} className="dg-text-small">
+            <Label
+              x={top.sx(x) + (x < 0 ? -12 : x === 0 ? 0 : 12)}
+              y={top.sy(x * x) + (x === 0 ? -16 : 14)}
+              anchor={x < 0 ? 'end' : x === 0 ? 'middle' : 'start'}
+              className="dg-text-small"
+            >
               {`gradient ${fmt(m)}`}
             </Label>
           </g>
         );
       })}
-      <Label x={top.sx(-2.45)} y={top.sy(6.1)} anchor="start" className="dg-text-accent">
+      <Label x={top.sx(0.15)} y={top.sy(5.8)} anchor="start" className="dg-text-accent">
         y = x²
       </Label>
       <Label x={top.sx(X[1]) + 2} y={top.sy(0) + 14} anchor="end" className="dg-text-small dg-italic">
