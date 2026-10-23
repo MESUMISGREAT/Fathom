@@ -33,12 +33,13 @@ export default function CircularMeasureKeyAngles() {
         const a = (m.deg * Math.PI) / 180;
         const end = polar(C, R, a);
         const tickIn = polar(C, R - 10, a);
+        const spoke = polar(C, 104, a);
         const inner = polar(C, R - 30, a);
         const outer = polar(C, R + 24, a);
         const edge = m.deg === 0 || m.deg === 180;
         return (
           <g key={m.deg}>
-            {!edge && <line x1={C.x} y1={C.y} x2={end.x} y2={end.y} className="dg-grid" />}
+            {!edge && <line x1={spoke.x} y1={spoke.y} x2={end.x} y2={end.y} className="dg-grid" />}
             <line x1={tickIn.x} y1={tickIn.y} x2={end.x} y2={end.y} className="dg-line" />
             {edge ? (
               <>

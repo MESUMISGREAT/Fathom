@@ -19,6 +19,13 @@ import ErrorGraphs from './error-graphs';
 import MomentumNewtonAFGraph from './momentum-newton-a-f-graph';
 import MomentumNewtonFirstLaw from './momentum-newton-first-law';
 import MomentumNewtonForceDirection from './momentum-newton-force-direction';
+import MomentumNewtonForceTime from './momentum-newton-force-time';
+import MomentumNewtonLift from './momentum-newton-lift';
+import MomentumNewtonRebound from './momentum-newton-rebound';
+import MomentumNewtonThirdLawPairs from './momentum-newton-third-law-pairs';
+import MomentumNewtonTow from './momentum-newton-tow';
+import MomentumNewtonWaterJet from './momentum-newton-water-jet';
+import MomentumNewtonWeightField from './momentum-newton-weight-field';
 import PrefixLadder from './prefix-ladder';
 import VectorComponents from './vector-components';
 import VectorTriangle from './vector-triangle';
@@ -44,6 +51,13 @@ export const diagrams: DiagramRegistry = {
   'phys-momentum-newton-a-f-graph': MomentumNewtonAFGraph,
   'phys-momentum-newton-first-law': MomentumNewtonFirstLaw,
   'phys-momentum-newton-force-direction': MomentumNewtonForceDirection,
+  'phys-momentum-newton-force-time': MomentumNewtonForceTime,
+  'phys-momentum-newton-lift': MomentumNewtonLift,
+  'phys-momentum-newton-rebound': MomentumNewtonRebound,
+  'phys-momentum-newton-third-law-pairs': MomentumNewtonThirdLawPairs,
+  'phys-momentum-newton-tow': MomentumNewtonTow,
+  'phys-momentum-newton-water-jet': MomentumNewtonWaterJet,
+  'phys-momentum-newton-weight-field': MomentumNewtonWeightField,
   'phys-prefix-ladder': PrefixLadder,
   'phys-vector-components': VectorComponents,
   'phys-vector-triangle': VectorTriangle,

@@ -131,3 +131,86 @@ export function RightAngle({ v, a, b, s = 11 }: { v: Pt; a: Pt; b: Pt; s?: numbe
     />
   );
 }
+
+/**
+ * Graph furniture with labels kept clear of the curves: dashed verticals at the
+ * x ticks with their labels in a row under the plotting frame, light horizontal
+ * lines at the y ticks with labels in the left margin, and arrowed axes.
+ */
+export function GraphFrame({
+  p,
+  xTicks = [],
+  yTicks = [],
+  xLabel = 'x',
+  yLabel = 'y',
+  below = 14,
+}: {
+  p: Plot;
+  xTicks?: Tick[];
+  yTicks?: Tick[];
+  xLabel?: string;
+  yLabel?: string;
+  /** Gap between the bottom of the frame and the x tick labels. */
+  below?: number;
+}) {
+  const top = p.sy(p.y[1]);
+  const bot = p.sy(p.y[0]);
+  const left = p.sx(p.x[0]);
+  const right = p.sx(p.x[1]);
+  const x0 = p.sx(Math.max(p.x[0], Math.min(0, p.x[1])));
+  const y0 = p.sy(0);
+  return (
+    <g>
+      {xTicks.map((t) => (
+        <line key={`gx${t.v}`} x1={p.sx(t.v)} y1={top} x2={p.sx(t.v)} y2={bot} className="dg-grid dg-dashed" />
+      ))}
+      {yTicks.map((t) => (
+        <line key={`gy${t.v}`} x1={left} y1={p.sy(t.v)} x2={right} y2={p.sy(t.v)} className="dg-grid" />
+      ))}
+      <Arrow x1={left} y1={y0} x2={right + 12} y2={y0} className="dg-thin" head={7} />
+      <Arrow x1={x0} y1={bot} x2={x0} y2={top - 10} className="dg-thin" head={7} />
+      <Label x={right + 16} y={y0 + 12} className="dg-text-small dg-italic">
+        {xLabel}
+      </Label>
+      <Label x={x0 + 10} y={top - 8} className="dg-text-small dg-italic">
+        {yLabel}
+      </Label>
+      {xTicks.map((t) =>
+        t.label ? (
+          <Label
+            key={`lx${t.v}`}
+            x={p.sx(t.v) + (t.dx ?? 0)}
+            y={bot + below + (t.dy ?? 0)}
+            anchor={t.anchor ?? 'middle'}
+            className={t.className ?? 'dg-text-small'}
+          >
+            {t.label}
+          </Label>
+        ) : null,
+      )}
+      {yTicks.map((t) =>
+        t.label ? (
+          <Label
+            key={`ly${t.v}`}
+            x={left - 6 + (t.dx ?? 0)}
+            y={p.sy(t.v) + (t.dy ?? 0)}
+            anchor={t.anchor ?? 'end'}
+            className={t.className ?? 'dg-text-small'}
+          >
+            {t.label}
+          </Label>
+        ) : null,
+      )}
+    </g>
+  );
+}
+
+/** A Plot whose x- and y-ranges fill the rectangle (left, top, width, height) exactly. */
+export function frame(left: number, top: number, width: number, height: number, x: [number, number], y: [number, number]): Plot {
+  return {
+    sx: (v: number) => left + ((v - x[0]) / (x[1] - x[0])) * width,
+    sy: (v: number) => top + height - ((v - y[0]) / (y[1] - y[0])) * height,
+    x,
+    y,
+  };
+}

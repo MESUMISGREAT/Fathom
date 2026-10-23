@@ -3,6 +3,8 @@ import type { DiagramRegistry } from '../types';
 import CircularMeasureKeyAngles from './circular-measure-key-angles';
 import CircularMeasureRadianDefinition from './circular-measure-radian-definition';
 import CircularMeasureSectorParts from './circular-measure-sector-parts';
+import CircularMeasureSegment from './circular-measure-segment';
+import CircularMeasureTangentRegion from './circular-measure-tangent-region';
 import CoordinateGeometryChordMidpoint from './coordinate-geometry-chord-midpoint';
 import CoordinateGeometryCircleExpanded from './coordinate-geometry-circle-expanded';
 import CoordinateGeometryCircleProperties from './coordinate-geometry-circle-properties';
@@ -33,6 +35,14 @@ import FunctionsStretches from './functions-stretches';
 import FunctionsTranslations from './functions-translations';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
+import P1TrigonometryAmplitudePeriod from './p1-trigonometry-amplitude-period';
+import P1TrigonometryBasicGraphs from './p1-trigonometry-basic-graphs';
+import P1TrigonometryCast from './p1-trigonometry-cast';
+import P1TrigonometryExactTriangles from './p1-trigonometry-exact-triangles';
+import P1TrigonometryInverseSine from './p1-trigonometry-inverse-sine';
+import P1TrigonometryTanShift from './p1-trigonometry-tan-shift';
+import P1TrigonometryTransformedCos from './p1-trigonometry-transformed-cos';
+import P1TrigonometryUnitCircle from './p1-trigonometry-unit-circle';
 import QuadraticInequality from './quadratic-inequality';
 import QuadraticVertex from './quadratic-vertex';
 
@@ -41,6 +51,8 @@ export const diagrams: DiagramRegistry = {
   'circular-measure-key-angles': CircularMeasureKeyAngles,
   'circular-measure-radian-definition': CircularMeasureRadianDefinition,
   'circular-measure-sector-parts': CircularMeasureSectorParts,
+  'circular-measure-segment': CircularMeasureSegment,
+  'circular-measure-tangent-region': CircularMeasureTangentRegion,
   'coordinate-geometry-chord-midpoint': CoordinateGeometryChordMidpoint,
   'coordinate-geometry-circle-expanded': CoordinateGeometryCircleExpanded,
   'coordinate-geometry-circle-properties': CoordinateGeometryCircleProperties,
@@ -71,6 +83,14 @@ export const diagrams: DiagramRegistry = {
   'functions-translations': FunctionsTranslations,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
+  'p1-trigonometry-amplitude-period': P1TrigonometryAmplitudePeriod,
+  'p1-trigonometry-basic-graphs': P1TrigonometryBasicGraphs,
+  'p1-trigonometry-cast': P1TrigonometryCast,
+  'p1-trigonometry-exact-triangles': P1TrigonometryExactTriangles,
+  'p1-trigonometry-inverse-sine': P1TrigonometryInverseSine,
+  'p1-trigonometry-tan-shift': P1TrigonometryTanShift,
+  'p1-trigonometry-transformed-cos': P1TrigonometryTransformedCos,
+  'p1-trigonometry-unit-circle': P1TrigonometryUnitCircle,
   'quadratic-inequality': QuadraticInequality,
   'quadratic-vertex': QuadraticVertex,
 };

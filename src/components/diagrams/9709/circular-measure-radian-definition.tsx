@@ -7,7 +7,7 @@ import { arcPath, polar, sectorPath } from './p1-trigonometry-kit';
 
 export const diagramKey = 'circular-measure-radian-definition';
 
-const W = 520;
+const W = 590;
 const H = 290;
 const O = { x: 170, y: 160 };
 const R = 115;
@@ -53,25 +53,25 @@ export default function CircularMeasureRadianDefinition() {
       </Label>
 
       <g>
-        <Label x={420} y={72} className="dg-text dg-bold">
+        <Label x={478} y={72} className="dg-text dg-bold">
           1 radian
         </Label>
-        <Label x={420} y={96} className="dg-text-small">
+        <Label x={478} y={96} className="dg-text-small">
           the angle at the centre when
         </Label>
-        <Label x={420} y={114} className="dg-text-small">
+        <Label x={478} y={114} className="dg-text-small">
           the arc is as long as the radius
         </Label>
-        <Label x={420} y={160} className="dg-text-accent-2">
+        <Label x={478} y={160} className="dg-text-accent-2">
           1 rad ≈ 57.3°
         </Label>
-        <Label x={420} y={196} className="dg-text-small">
+        <Label x={478} y={196} className="dg-text-small">
           a full turn fits 2π ≈ 6.28
         </Label>
-        <Label x={420} y={214} className="dg-text-small">
+        <Label x={478} y={214} className="dg-text-small">
           radius-lengths of arc
         </Label>
-        <Label x={420} y={242} className="dg-text-accent">
+        <Label x={478} y={242} className="dg-text-accent">
           2π rad = 360°
         </Label>
       </g>

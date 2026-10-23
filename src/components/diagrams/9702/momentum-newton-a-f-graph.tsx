@@ -9,7 +9,7 @@ import { Arrow, Label, Svg, axes, graph } from '../primitives';
 
 export const diagramKey = 'phys-momentum-newton-a-f-graph';
 
-const W = 600;
+const W = 520;
 const H = 330;
 const X: [number, number] = [0, 2];
 const Y: [number, number] = [0, 4];
@@ -64,10 +64,10 @@ export function MomentumNewtonAFGraph() {
 
       {/* gradient triangle on the 0.50 kg line */}
       <path d={`M${sx(0.5)},${sy(1)} L${sx(1.5)},${sy(1)} L${sx(1.5)},${sy(3)}`} className="dg-thin dg-dashed" />
-      <Label x={sx(1.0)} y={sy(1) + 13} className="dg-text-small">
+      <Label x={sx(1.22)} y={sy(1) + 14} className="dg-text-small">
         ΔF = 1.0 N
       </Label>
-      <Label x={sx(1.5) + 6} y={sy(2)} anchor="start" className="dg-text-small">
+      <Label x={sx(1.5) + 6} y={sy(2.4)} anchor="start" className="dg-text-small">
         Δa = 2.0 m s⁻²
       </Label>
 
@@ -83,7 +83,7 @@ export function MomentumNewtonAFGraph() {
       <Label x={sx(2) - 4} y={sy(4) - 16} anchor="end" className="dg-text-accent">
         m = 0.50 kg
       </Label>
-      <Label x={sx(2) + 8} y={sy(2) - 16} anchor="end" className="dg-text-accent-2">
+      <Label x={sx(2) + 6} y={sy(2) + 40} anchor="end" className="dg-text-accent-2">
         m = 1.00 kg
       </Label>
       {/* reading box */}
