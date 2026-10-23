@@ -6,7 +6,7 @@
  * k = 5/2: tangent at (1, 2) (discriminant 0); the radius to (1, 2) is perpendicular to it.
  * k = 4: misses the circle (discriminant < 0).
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'coordinate-geometry-line-circle-cases';
@@ -32,9 +32,9 @@ export default function CoordinateGeometryLineCircleCases() {
   const b = { x: a.x + 2 * s, y: a.y - s };
   const P = (x: number, y: number) => `${p.sx(x)},${p.sy(y)}`;
   const legend = [
-    { cls: 'dg-line', text: 'k = ½: two points (b² − 4ac > 0)', tcls: 'dg-text-small' },
-    { cls: 'dg-accent-2', text: 'k = 5/2: tangent (b² − 4ac = 0)', tcls: 'dg-text-small' },
-    { cls: 'dg-muted dg-dashed', text: 'k = 4: misses (b² − 4ac < 0)', tcls: 'dg-text-small' },
+    { cls: 'dg-line', text: 'k = \\tfrac{1}{2}\\text{: two points } (b^2 - 4ac > 0)', tcls: 'dg-text-small' },
+    { cls: 'dg-accent-2', text: 'k = \\tfrac{5}{2}\\text{: tangent } (b^2 - 4ac = 0)', tcls: 'dg-text-small' },
+    { cls: 'dg-muted dg-dashed', text: 'k = 4\\text{: misses } (b^2 - 4ac < 0)', tcls: 'dg-text-small' },
   ];
   return (
     <Svg width={W} height={H}>
@@ -62,24 +62,16 @@ export default function CoordinateGeometryLineCircleCases() {
       <Label x={p.sx(4.3)} y={p.sy(line(4)(4.3) + 0.4)} className="dg-text-small dg-bold">
         k = 4
       </Label>
-      <Label x={p.sx(4.3)} y={p.sy(line(2.5)(4.3) + 0.4)} className="dg-text-small dg-bold">
-        k = 5/2
-      </Label>
-      <Label x={p.sx(4.3)} y={p.sy(line(0.5)(4.3) + 0.4)} className="dg-text-small dg-bold">
-        k = ½
-      </Label>
+      <MathLabel x={p.sx(4.3)} y={p.sy(line(2.5)(4.3) + 0.4)} w={106} h={46} size="small" tex={"k = \\dfrac{5}{2}"} />
+      <MathLabel x={p.sx(4.3)} y={p.sy(line(0.5)(4.3) + 0.4)} w={87} h={46} size="small" tex={"k = \\dfrac{1}{2}"} />
 
-      <Label x={p.sx(0.95)} y={p.sy(-2.6)} anchor="start" className="dg-text-small dg-bold">
-        {'lines y = k − ½x'}
-      </Label>
+      <MathLabel x={p.sx(0.95)} y={p.sy(-2.6)} anchor="start" w={192} h={46} size="small" tex={"\\text{lines } y = k - \\dfrac{1}{2}x"} />
       {legend.map((l, i) => {
         const y = p.sy(-3.0 - 0.38 * i);
         return (
           <g key={l.text}>
             <line x1={p.sx(0.95)} y1={y} x2={p.sx(0.95) + 24} y2={y} className={l.cls} />
-            <Label x={p.sx(0.95) + 32} y={y} anchor="start" className={l.tcls}>
-              {l.text}
-            </Label>
+            <MathLabel x={p.sx(0.95) + 32} y={y} anchor="start" w={250} h={30} size="small" tex={l.text} />
           </g>
         );
       })}

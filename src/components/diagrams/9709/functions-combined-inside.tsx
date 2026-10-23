@@ -6,7 +6,7 @@
  * Inside the bracket the steps run "add 2 first, then double", so undoing them on
  * the x-coordinate means translate first, then stretch.
  */
-import { Arrow, Label, Svg, graph } from '../primitives';
+import { Arrow, Label, Svg, graph, MathLabel } from '../primitives';
 import { Grid, makePlot } from './kit';
 
 export const diagramKey = 'functions-combined-inside';
@@ -77,9 +77,7 @@ export default function FunctionsCombinedInside() {
       <Label x={p.sx(-1) - 8} y={p.sy(-1) + 17} anchor="end" className="dg-text-small dg-text-muted">
         (−1, −1)
       </Label>
-      <Label x={p.sx(-0.58)} y={p.sy(-1) + 34} className="dg-text-accent">
-        (−½, −1)
-      </Label>
+      <MathLabel x={p.sx(-0.58)} y={p.sy(-1) + 34} w={116} h={46} tone="accent" tex={"(-\\tfrac{1}{2},\\ -1)"} />
 
       {/* the point (3, 3): → (1, 3) → (½, 3) */}
       <circle cx={p.sx(3)} cy={p.sy(3)} r={4} className="dg-dot" />
@@ -112,12 +110,8 @@ export default function FunctionsCombinedInside() {
         </Label>
       </g>
 
-      <Label x={W / 2} y={PH + 12} className="dg-text">
-        ① translation by 2 units in the negative x-direction
-      </Label>
-      <Label x={W / 2} y={PH + 36} className="dg-text">
-        ② then stretch parallel to the x-axis, factor ½
-      </Label>
+      <MathLabel x={W / 2} y={PH + 12} w={W - 20} h={26} tex="\text{\textcircled{1} translation by 2 units in the negative } x\text{-direction}" />
+      <MathLabel x={W / 2} y={PH + 38} w={W - 20} h={36} tex="\text{\textcircled{2} then stretch parallel to the } x\text{-axis, factor } \tfrac{1}{2}" />
     </Svg>
   );
 }

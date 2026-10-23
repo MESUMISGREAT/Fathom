@@ -3,7 +3,7 @@
  * the full circle. The arc length is s = rθ and the shaded area is A = ½r²θ,
  * both found as the fraction θ / 2π of the whole circle.
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 import { arcPath, polar, sectorPath } from './p1-trigonometry-kit';
 
 export const diagramKey = 'circular-measure-sector-parts';
@@ -67,9 +67,7 @@ export default function CircularMeasureSectorParts() {
         <Label x={460} y={176} className="dg-text dg-bold">
           sector area
         </Label>
-        <Label x={460} y={198} className="dg-text-small">
-          (θ ÷ 2π) × πr² = ½r²θ
-        </Label>
+        <MathLabel x={460} y={198} w={239} h={46} size="small" tex={"\\dfrac{\\theta}{2\\pi} \\times \\pi r^2 = \\dfrac{1}{2} r^2\\theta"} />
         <Label x={460} y={240} className="dg-text-small">
           perimeter of sector = 2r + rθ
         </Label>

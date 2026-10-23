@@ -3,7 +3,7 @@
  * Period π, centre line y = 1, maximum 3 at x = π/2, minimum −1 at x = 0 and x = π,
  * and x-intercepts where cos 2x = ½: x = π/6 and x = 5π/6.
  */
-import { Label, Svg, graph } from '../primitives';
+import { FracLabel, Svg, graph } from '../primitives';
 import { GraphFrame, frame } from './p1-trigonometry-kit';
 
 export const diagramKey = 'p1-trigonometry-transformed-cos';
@@ -43,9 +43,9 @@ export default function P1TrigonometryTransformedCos() {
       {pts.map((q) => (
         <g key={q.label}>
           <circle cx={p.sx(q.x)} cy={p.sy(q.y)} r={4} className="dg-dot-accent" />
-          <Label x={p.sx(q.x) + q.dx} y={p.sy(q.y) + q.dy} anchor={q.anchor} className="dg-text-small">
+          <FracLabel x={p.sx(q.x) + q.dx} y={p.sy(q.y) + q.dy} anchor={q.anchor} className="dg-text-small">
             {q.label}
-          </Label>
+          </FracLabel>
         </g>
       ))}
       {[
@@ -54,20 +54,20 @@ export default function P1TrigonometryTransformedCos() {
       ].map((q) => (
         <g key={q.label}>
           <circle cx={p.sx(q.x)} cy={p.sy(0)} r={4} className="dg-dot" />
-          <Label x={p.sx(q.x) + q.dx} y={p.sy(0) - 12} anchor={q.anchor} className="dg-text-small dg-bold">
+          <FracLabel x={p.sx(q.x) + q.dx} y={p.sy(0) - 12} anchor={q.anchor} className="dg-text-small dg-bold">
             {q.label}
-          </Label>
+          </FracLabel>
         </g>
       ))}
-      <Label x={p.sx(PI) + 20} y={p.sy(1)} anchor="start" className="dg-text-small">
+      <FracLabel x={p.sx(PI) + 20} y={p.sy(1)} anchor="start" className="dg-text-small">
         y = 1
-      </Label>
-      <Label x={p.sx(1.05)} y={p.sy(2.55)} anchor="end" className="dg-text-accent">
+      </FracLabel>
+      <FracLabel x={p.sx(1.05)} y={p.sy(2.55)} anchor="end" className="dg-text-accent">
         y = 1 − 2cos 2x
-      </Label>
-      <Label x={p.sx(PI / 2)} y={p.sy(-1.3)} className="dg-text-small">
+      </FracLabel>
+      <FracLabel x={p.sx(PI / 2)} y={p.sy(-1.3)} className="dg-text-small">
         y = cos 2x (dashed)
-      </Label>
+      </FracLabel>
     </Svg>
   );
 }

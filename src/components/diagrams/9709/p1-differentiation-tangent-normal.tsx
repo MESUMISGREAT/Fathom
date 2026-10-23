@@ -3,7 +3,7 @@
  * scales on both axes so the right angle is a true right angle.
  * dy/dx = 2x − 2 = 2 at x = 2: tangent y = 2x − 1, normal y = −½x + 4.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'p1-differentiation-tangent-normal';
@@ -59,12 +59,8 @@ export default function P1DifferentiationTangentNormal() {
       <Label x={p.sx(4.1)} y={p.sy(6.6) + 36} anchor="start" className="dg-text-small">
         gradient 2
       </Label>
-      <Label x={p.sx(6.4)} y={p.sy(0.42)} anchor="end" className="dg-text dg-bold">
-        normal y = −½x + 4
-      </Label>
-      <Label x={p.sx(6.4)} y={p.sy(1.95)} anchor="end" className="dg-text-small">
-        gradient −½
-      </Label>
+      <MathLabel x={p.sx(6.4)} y={p.sy(0.42)} anchor="end" w={211} h={46} tex={"\\text{normal } y = -\\dfrac{1}{2}x + 4"} />
+      <MathLabel x={p.sx(6.4)} y={p.sy(1.95)} anchor="end" w={144} h={46} size="small" tex={"\\text{gradient } {-\\dfrac{1}{2}}"} />
       <Label x={p.sx(3.5)} y={p.sy(3.9)} anchor="start" className="dg-text-accent">
         y = x² − 2x + 3
       </Label>

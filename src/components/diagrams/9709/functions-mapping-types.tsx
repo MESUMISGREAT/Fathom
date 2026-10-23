@@ -4,7 +4,7 @@
  *   many-one  x ↦ x²   on {−2, 2, 3}   (a function: −2 and 2 share the output 4)
  *   one-many  x ↦ ±√x  on {4, 9}       (not a function: each input has two outputs)
  */
-import { Arrow, Label, Svg } from '../primitives';
+import { Arrow, Label, Svg, MathLabel } from '../primitives';
 
 export const diagramKey = 'functions-mapping-types';
 
@@ -31,7 +31,7 @@ const panels: Panel[] = [
     title: 'one-one',
     verdict: 'a function',
     ok: true,
-    rule: 'x ↦ 2x',
+    rule: 'x \\mapsto 2x',
     left: ['1', '2', '3'],
     right: ['2', '4', '6'],
     arrows: [
@@ -44,7 +44,7 @@ const panels: Panel[] = [
     title: 'many-one',
     verdict: 'a function',
     ok: true,
-    rule: 'x ↦ x²',
+    rule: 'x \\mapsto x^2',
     left: ['−2', '2', '3'],
     right: ['4', '9'],
     arrows: [
@@ -57,7 +57,7 @@ const panels: Panel[] = [
     title: 'one-many',
     verdict: 'NOT a function',
     ok: false,
-    rule: 'x ↦ ±√x',
+    rule: 'x \\mapsto \\pm\\sqrt{x}',
     left: ['4', '9'],
     right: ['2', '−2', '3', '−3'],
     arrows: [
@@ -117,9 +117,7 @@ export default function FunctionsMappingTypes() {
                 headClassName={p.ok ? 'dg-dot-accent' : 'dg-dot-accent-2'}
               />
             ))}
-            <Label x={PW / 2} y={H - 28} className="dg-text dg-italic">
-              {p.rule}
-            </Label>
+            <MathLabel x={PW / 2} y={H - 28} w={PW - 10} h={30} tex={p.rule} />
           </g>
         );
       })}

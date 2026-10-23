@@ -3,7 +3,7 @@
  * A → C(4, 1) → B has legs x₂ − x₁ = 3 and y₂ − y₁ = 4, so AB = √(3² + 4²) = 5 and
  * the gradient is 4/3. The midpoint M(2.5, 3) averages the coordinates.
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'coordinate-geometry-distance-triangle';
@@ -52,12 +52,8 @@ export default function CoordinateGeometryDistanceTriangle() {
       <Label x={C.x + 10} y={(C.y + B.y) / 2} anchor="start" className="dg-text-accent-2">
         y₂ − y₁ = 4
       </Label>
-      <Label x={p.sx(4.3)} y={p.sy(6.35)} anchor="start" className="dg-text">
-        {'AB = √(3² + 4²) = 5'}
-      </Label>
-      <Label x={p.sx(4.3)} y={p.sy(5.85)} anchor="start" className="dg-text">
-        gradient = 4/3
-      </Label>
+      <MathLabel x={p.sx(4.3)} y={p.sy(6.35)} anchor="start" w={220} h={30} tex={"AB = \\sqrt{3^2 + 4^2} = 5"} />
+      <MathLabel x={p.sx(4.3)} y={p.sy(5.85)} anchor="start" w={173} h={46} tex={"\\text{gradient} = \\dfrac{4}{3}"} />
     </Svg>
   );
 }

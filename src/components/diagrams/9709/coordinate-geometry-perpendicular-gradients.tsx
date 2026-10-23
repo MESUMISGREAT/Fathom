@@ -5,7 +5,7 @@
  * is rotated through 90° about (1, 1) to give the triangle on the second line
  * (rise 2, run −1). Run and rise swap and one changes sign, so ½ × (−2) = −1.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'coordinate-geometry-perpendicular-gradients';
@@ -50,15 +50,11 @@ export default function CoordinateGeometryPerpendicularGradients() {
       <Label x={p.sx(0.5)} y={p.sy(3) - 13} className="dg-text-small">
         run −1
       </Label>
-      <Label x={p.sx(4.45)} y={p.sy(2.95)} anchor="end" className="dg-text-accent">
-        {'gradient 1 ÷ 2 = ½'}
-      </Label>
+      <MathLabel x={p.sx(4.45)} y={p.sy(2.95)} anchor="end" w={211} h={46} tone="accent" tex={"\\text{gradient } 1 \\div 2 = \\dfrac{1}{2}"} />
       <Label x={p.sx(1.85)} y={p.sy(-0.45)} anchor="start" className="dg-text-accent-2">
         {'gradient 2 ÷ (−1) = −2'}
       </Label>
-      <Label x={p.sx(4.45)} y={p.sy(3.45)} anchor="end" className="dg-text dg-bold">
-        {'½ × (−2) = −1'}
-      </Label>
+      <MathLabel x={p.sx(4.45)} y={p.sy(3.45)} anchor="end" w={163} h={46} tex={"\\dfrac{1}{2} \\times (-2) = -1"} />
     </Svg>
   );
 }

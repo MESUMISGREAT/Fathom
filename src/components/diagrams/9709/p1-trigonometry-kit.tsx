@@ -4,7 +4,7 @@
  * helpers (angle arcs, right-angle marks). Not a diagram itself, so it has no
  * diagramKey and is not registered in index.ts.
  */
-import { Arrow, Label } from '../primitives';
+import { Arrow, FracLabel } from '../primitives';
 import type { Plot } from './kit';
 
 /** Degrees to radians. */
@@ -49,29 +49,29 @@ export function TrigAxes({
     <g>
       <Arrow x1={p.sx(p.x[0])} y1={y0} x2={p.sx(p.x[1]) + 10} y2={y0} className="dg-thin" head={8} />
       <Arrow x1={x0} y1={p.sy(p.y[0])} x2={x0} y2={p.sy(p.y[1]) - 8} className="dg-thin" head={8} />
-      <Label x={p.sx(p.x[1]) + 12} y={y0 + 14} className="dg-text dg-italic">
+      <FracLabel x={p.sx(p.x[1]) + 12} y={y0 + 14} className="dg-text dg-italic">
         {xLabel}
-      </Label>
-      <Label x={x0 - 12} y={p.sy(p.y[1]) - 6} className="dg-text dg-italic">
+      </FracLabel>
+      <FracLabel x={x0 - 12} y={p.sy(p.y[1]) - 6} className="dg-text dg-italic">
         {yLabel}
-      </Label>
+      </FracLabel>
       {origin && (
-        <Label x={x0 - 8} y={y0 + 13} className="dg-text-small">
+        <FracLabel x={x0 - 8} y={y0 + 13} className="dg-text-small">
           O
-        </Label>
+        </FracLabel>
       )}
       {xTicks.map((t) => (
         <g key={`xt${t.v}`}>
           <line x1={p.sx(t.v)} y1={y0 - 4} x2={p.sx(t.v)} y2={y0 + 4} className="dg-thin" />
           {t.label && (
-            <Label
+            <FracLabel
               x={p.sx(t.v) + (t.dx ?? 0)}
               y={y0 + 15 + (t.dy ?? 0)}
               anchor={t.anchor ?? 'middle'}
               className={t.className ?? 'dg-text-small'}
             >
               {t.label}
-            </Label>
+            </FracLabel>
           )}
         </g>
       ))}
@@ -79,14 +79,14 @@ export function TrigAxes({
         <g key={`yt${t.v}`}>
           <line x1={x0 - 4} y1={p.sy(t.v)} x2={x0 + 4} y2={p.sy(t.v)} className="dg-thin" />
           {t.label && (
-            <Label
+            <FracLabel
               x={x0 - 8 + (t.dx ?? 0)}
               y={p.sy(t.v) + (t.dy ?? 0)}
               anchor={t.anchor ?? 'end'}
               className={t.className ?? 'dg-text-small'}
             >
               {t.label}
-            </Label>
+            </FracLabel>
           )}
         </g>
       ))}
@@ -169,15 +169,15 @@ export function GraphFrame({
       ))}
       <Arrow x1={left} y1={y0} x2={right + 12} y2={y0} className="dg-thin" head={7} />
       <Arrow x1={x0} y1={bot} x2={x0} y2={top - 10} className="dg-thin" head={7} />
-      <Label x={right + 16} y={y0 + 12} className="dg-text-small dg-italic">
+      <FracLabel x={right + 16} y={y0 + 12} className="dg-text-small dg-italic">
         {xLabel}
-      </Label>
-      <Label x={x0 + 10} y={top - 8} className="dg-text-small dg-italic">
+      </FracLabel>
+      <FracLabel x={x0 + 10} y={top - 8} className="dg-text-small dg-italic">
         {yLabel}
-      </Label>
+      </FracLabel>
       {xTicks.map((t) =>
         t.label ? (
-          <Label
+          <FracLabel
             key={`lx${t.v}`}
             x={p.sx(t.v) + (t.dx ?? 0)}
             y={bot + below + (t.dy ?? 0)}
@@ -185,12 +185,12 @@ export function GraphFrame({
             className={t.className ?? 'dg-text-small'}
           >
             {t.label}
-          </Label>
+          </FracLabel>
         ) : null,
       )}
       {yTicks.map((t) =>
         t.label ? (
-          <Label
+          <FracLabel
             key={`ly${t.v}`}
             x={left - 6 + (t.dx ?? 0)}
             y={p.sy(t.v) + (t.dy ?? 0)}
@@ -198,7 +198,7 @@ export function GraphFrame({
             className={t.className ?? 'dg-text-small'}
           >
             {t.label}
-          </Label>
+          </FracLabel>
         ) : null,
       )}
     </g>

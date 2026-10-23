@@ -4,7 +4,7 @@
  * five gradients plotted as points on it. Dashed guides link each tangent to
  * its point.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { makePlot } from './kit';
 
 export const diagramKey = 'p1-differentiation-gradient-function';
@@ -76,10 +76,8 @@ export default function P1DifferentiationGradientFunction() {
             </Label>
           </g>
         ))}
-        <Label x={bot.sx(-2.45)} y={bot.sy(4.6)} anchor="start" className="dg-text-accent-2">
-          dy/dx = 2x
-        </Label>
-        <Label x={bot.sx(-2.45)} y={bot.sy(4.6) + 20} anchor="start" className="dg-text-muted">
+        <MathLabel x={bot.sx(-2.45)} y={bot.sy(4.6) - 10} anchor="start" w={135} h={46} tone="accent-2" tex={"\\dfrac{dy}{dx} = 2x"} />
+        <Label x={bot.sx(-2.45)} y={bot.sy(4.6) + 24} anchor="start" className="dg-text-muted">
           the gradient function
         </Label>
         <Label x={bot.sx(X[1]) + 2} y={bot.sy(0) + 14} anchor="end" className="dg-text-small dg-italic">

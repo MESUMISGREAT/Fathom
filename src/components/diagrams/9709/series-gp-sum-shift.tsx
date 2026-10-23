@@ -4,7 +4,7 @@
  * arⁿ⁻¹ appears in both rows and cancels on subtraction, leaving
  * Sₙ − rSₙ = a − arⁿ.
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 
 export const diagramKey = 'series-gp-sum-shift';
 
@@ -101,9 +101,7 @@ export default function SeriesGpSumShift() {
       <Label x={X0 + 5 * STEP + BW / 2} y={226} className="dg-text-accent-2">
         − arⁿ
       </Label>
-      <Label x={W / 2} y={268} className="dg-text">
-        Sₙ(1 − r) = a(1 − rⁿ), so Sₙ = a(1 − rⁿ) ⁄ (1 − r) for r ≠ 1
-      </Label>
+      <MathLabel x={W / 2} y={268} w={610} h={46} tex={"S_n(1 - r) = a(1 - r^n),\\ \\text{so } S_n = \\dfrac{a(1 - r^n)}{1 - r}\\ \\text{for } r \\ne 1"} />
     </Svg>
   );
 }

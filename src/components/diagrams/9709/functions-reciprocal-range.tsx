@@ -4,7 +4,7 @@
  * shown as a shaded band on the y-axis (open at 0, closed at 1). The part of
  * y = 1/x for 0 < x < 1 is outside the domain and drawn dashed.
  */
-import { Label, Svg, graph } from '../primitives';
+import { Label, Svg, graph, MathLabel } from '../primitives';
 import { AxesXY, makePlot } from './kit';
 
 export const diagramKey = 'functions-reciprocal-range';
@@ -43,9 +43,7 @@ export default function FunctionsReciprocalRange() {
       <Label x={p.sx(1) + 10} y={p.sy(1) - 14} anchor="start" className="dg-text">
         (1, 1)
       </Label>
-      <Label x={p.sx(3.1)} y={p.sy(0.62)} anchor="start" className="dg-text-accent">
-        y = 1/x, domain x ≥ 1
-      </Label>
+      <MathLabel x={p.sx(3.1)} y={p.sy(0.62)} anchor="start" w={239} h={46} tone="accent" tex={"y = \\dfrac{1}{x},\\ \\text{domain } x \\ge 1"} />
       <Label x={p.sx(7.4)} y={p.sy(0.4)} anchor="end" className="dg-text-muted">
         gets close to 0, never reaches it
       </Label>

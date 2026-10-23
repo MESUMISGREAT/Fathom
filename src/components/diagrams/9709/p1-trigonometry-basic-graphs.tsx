@@ -5,7 +5,7 @@
  * x = −90°, 90°, 270°, and takes every real value. The bottom row repeats the
  * x-scale in radians.
  */
-import { Arrow, Label, Svg } from '../primitives';
+import { Arrow, FracLabel, Svg } from '../primitives';
 import { cosd, sind, tand } from './p1-trigonometry-kit';
 
 export const diagramKey = 'p1-trigonometry-basic-graphs';
@@ -67,35 +67,35 @@ function Panel({ s, cy, last }: { s: Spec; cy: number; last: boolean }) {
       ))}
       <Arrow x1={sx(-180) - 4} y1={cy} x2={sx(360) + 16} y2={cy} className="dg-thin" head={7} />
       <Arrow x1={sx(0)} y1={bot + 2} x2={sx(0)} y2={top - 8} className="dg-thin" head={7} />
-      <Label x={sx(360) + 20} y={cy + 12} className="dg-text-small dg-italic">
+      <FracLabel x={sx(360) + 20} y={cy + 12} className="dg-text-small dg-italic">
         x
-      </Label>
-      <Label x={sx(0) + 10} y={top - 6} className="dg-text-small dg-italic">
+      </FracLabel>
+      <FracLabel x={sx(0) + 10} y={top - 6} className="dg-text-small dg-italic">
         y
-      </Label>
+      </FracLabel>
       <path d={curve(s.f, sy, s.ymax)} className={s.cls} />
-      <Label x={X0 - 8} y={sy(1)} anchor="end" className="dg-text-small">
+      <FracLabel x={X0 - 8} y={sy(1)} anchor="end" className="dg-text-small">
         1
-      </Label>
-      <Label x={X0 - 8} y={sy(-1)} anchor="end" className="dg-text-small">
+      </FracLabel>
+      <FracLabel x={X0 - 8} y={sy(-1)} anchor="end" className="dg-text-small">
         −1
-      </Label>
-      <Label x={8} y={cy - 8} anchor="start" className={s.cls === 'dg-accent' ? 'dg-text-accent' : 'dg-text-accent-2'}>
+      </FracLabel>
+      <FracLabel x={8} y={cy - 8} anchor="start" className={s.cls === 'dg-accent' ? 'dg-text-accent' : 'dg-text-accent-2'}>
         {s.title}
-      </Label>
-      <Label x={8} y={cy + 12} anchor="start" className="dg-text-small">
+      </FracLabel>
+      <FracLabel x={8} y={cy + 12} anchor="start" className="dg-text-small">
         {s.period}
-      </Label>
+      </FracLabel>
       {TICKS.map((t) => (
-        <Label key={`l${t}`} x={sx(t) - (t === 0 ? 12 : 0)} y={bot + 12} className="dg-text-small">
+        <FracLabel key={`l${t}`} x={sx(t) - (t === 0 ? 12 : 0)} y={bot + 12} className="dg-text-small">
           {t < 0 ? `−${-t}°` : `${t}°`}
-        </Label>
+        </FracLabel>
       ))}
       {last &&
         TICKS.map((t, i) => (
-          <Label key={`r${t}`} x={sx(t) - (t === 0 ? 12 : 0)} y={bot + 32} className="dg-text-muted">
+          <FracLabel key={`r${t}`} x={sx(t) - (t === 0 ? 12 : 0)} y={bot + 32} className="dg-text-muted">
             {RADS[i]}
-          </Label>
+          </FracLabel>
         ))}
     </g>
   );

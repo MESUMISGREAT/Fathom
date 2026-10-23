@@ -3,7 +3,7 @@
  * Centre (3, −2), radius 5. It cuts the y-axis at (0, 2) and (0, −6) and the x-axis at
  * x = 3 ± √21 (about −1.58 and 7.58).
  */
-import { Label, Svg } from '../primitives';
+import { Label, Svg, MathLabel } from '../primitives';
 import { AxesXY, Grid, makePlot } from './kit';
 
 export const diagramKey = 'coordinate-geometry-circle-expanded';
@@ -45,12 +45,8 @@ export default function CoordinateGeometryCircleExpanded() {
       {[lx, rx].map((x) => (
         <circle key={x} cx={p.sx(x)} cy={p.sy(0)} r={4.5} className="dg-dot" />
       ))}
-      <Label x={p.sx(lx) - 6} y={p.sy(0) - 12} anchor="end" className="dg-text-small">
-        {'3 − √21'}
-      </Label>
-      <Label x={p.sx(rx) + 4} y={p.sy(0) - 12} anchor="start" className="dg-text-small">
-        {'3 + √21'}
-      </Label>
+      <MathLabel x={p.sx(lx) - 6} y={p.sy(0) - 12} anchor="end" w={106} h={30} size="small" tex={"3 - \\sqrt{21}"} />
+      <MathLabel x={p.sx(rx) + 4} y={p.sy(0) - 12} anchor="start" w={106} h={30} size="small" tex={"3 + \\sqrt{21}"} />
       <Label x={p.sx(9.0)} y={p.sy(-7.6)} anchor="end" className="dg-text-small">
         {'x² + y² − 6x + 4y − 12 = 0'}
       </Label>
