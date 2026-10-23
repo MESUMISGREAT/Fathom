@@ -1,0 +1,275 @@
+id: networks-web-urls-dns
+subject: "9618"
+topic: "2.1"
+title: "The web, URLs and DNS"
+summary: How the World Wide Web differs from the internet, what each part of a URL does, and how the Domain Name Service turns a domain name into an IP address.
+order: 14
+minutes: 5
+kind: core
+objectives: ["2.1.12", "2.1.15"]
+prerequisites: [networks-ip-addresses, networks-public-private-ip]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1: the twelfth learning outcome
+    (2.1.12, the differences between the WWW and the internet) and the fifteenth (2.1.15, how a URL
+    is used to locate a resource on the WWW, and the role of the DNS). Example domains use the
+    reserved example.org and example.net names and the documentation address 198.51.100.7. All
+    questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain how the **World Wide Web** differs from the **internet**, name the parts of a **URL**, and describe how the **DNS** finds the IP address for a domain name.
+
+  - type: intuition
+    title: Roads and shops
+    body: |
+      Saying "the internet" when you mean "the web" is like saying "the roads" when you mean "the shops". The **internet** is the road network: the cables, routers and rules that move data. The **web** is one set of shops you can drive to.
+
+      Where it breaks down: lots of other traffic uses the same roads (email, video calls, online games) without ever visiting a shop.
+
+  - type: definition
+    term: Internet
+    body: |
+      A **global network of interconnected networks**: the hardware (routers, cables, servers) and protocols (TCP/IP) that carry data between devices anywhere in the world.
+
+  - type: definition
+    term: World Wide Web (WWW)
+    body: |
+      A **collection of web pages and other resources**, linked by **hyperlinks**, stored on **web servers** and accessed **over the internet** using **HTTP or HTTPS**, usually through a web browser.
+
+  - type: explain
+    title: Internet vs WWW
+    body: |
+      | Internet | World Wide Web |
+      | --- | --- |
+      | the **infrastructure**: hardware and protocols | a **service** that runs on the internet |
+      | a network of networks | a collection of linked web pages and resources |
+      | carries many services: email, VoIP calls, online games, file transfer, **and** the web | accessed with a browser, using HTTP/HTTPS and URLs |
+
+  - type: check
+    title: Quick check
+    questions: [www-or-internet, not-the-web, url-stands-for]
+
+  - type: definition
+    term: URL (Uniform Resource Locator)
+    body: |
+      The **address of a resource on the WWW**, giving the **protocol** to use, the **domain name** of the web server and the **path** to the resource on that server.
+
+  - type: diagram
+    diagram: cs-networks-url-parts
+    alt: >-
+      The URL https://www.example.org/films/reviews/index.html split into boxes. https is labelled
+      protocol, how to communicate. The separator colon slash slash follows. www.example.org is
+      labelled domain name, which web server. /films/reviews/ is labelled path, folders on the
+      server. index.html is labelled file name, the resource itself. Note: DNS turns the domain name
+      into an IP address; the path and file name are sent to that server.
+    caption: |
+      Read a URL left to right: how, which server, where on it, which file.
+
+  - type: explain
+    title: Inside the domain name
+    body: |
+      `www.example.org` is read **right to left**, from the general to the specific:
+
+      - `.org` is the **top-level domain (TLD)**. Others include `.com` and country codes like `.uk` or `.pk`.
+      - `example` is the organisation's own domain, registered under `.org`.
+      - `www` names the particular web server (host) in that domain.
+
+  - type: definition
+    term: DNS (Domain Name Service)
+    body: |
+      A **hierarchical, distributed** system of **DNS servers** that translates (resolves) **domain names into IP addresses**, so that browsers can find web servers by name.
+
+  - type: diagram
+    diagram: cs-networks-dns-lookup
+    alt: >-
+      Your browser is linked by a two-way arrow, step 1, to a DNS resolver at your ISP. The resolver
+      has two-way arrows to a root server (step 2), a TLD server for .org (step 3) and example.org's
+      name server (step 4). A one-way arrow, step 5, goes from the browser down to a web server at
+      198.51.100.7. A legend: 1, browser asks the resolver for the IP address of www.example.org;
+      2, not cached, so the resolver asks a root server, which says try the .org servers; 3, the
+      .org TLD server says try example.org's name server; 4, example.org's name server replies
+      198.51.100.7 and the resolver caches it and tells the browser; 5, the browser sends an HTTP
+      request to 198.51.100.7, which returns the page.
+    caption: |
+      Root, then TLD, then the domain's own name server. The answer is cached for next time.
+
+  - type: explain
+    title: From URL to web page
+    body: |
+      1. You type `https://www.example.org/films/reviews/index.html`. The browser extracts the **domain name**.
+      2. It checks its own **cache**. If the IP address isn't there, it sends the domain name to a **DNS server** (the resolver, usually at the ISP).
+      3. If the resolver has the address cached, it replies at once. If not, it asks **other DNS servers** up the hierarchy (root, then the `.org` TLD server, then example.org's own name server) until one knows.
+      4. The **IP address** goes back to the browser, and it's **cached** along the way to speed up the next request.
+      5. The browser sends an **HTTP(S) request** to that IP address, including the **path and file name**. The web server sends back the page.
+
+      If no DNS server can find the name, the browser shows an error.
+
+  - type: misconceptions
+    items:
+      - wrong: The internet and the WWW are the same thing.
+        right: |
+          The web is **one service** that runs on the internet. Email works over the internet without the web.
+      - wrong: The DNS stores web pages.
+        right: |
+          The DNS stores and looks up **IP addresses for domain names**. The pages live on web servers.
+      - wrong: There is one giant DNS server that knows every domain.
+        right: |
+          The DNS is **distributed** across many servers in a **hierarchy**; each knows part of the answer.
+
+  - type: exam
+    body: |
+      - Internet vs WWW: **infrastructure** vs **collection of pages/resources accessed over it**, and give a non-web internet service (email) as evidence.
+      - "Describe how a URL is used to locate a web page" usually means: domain name extracted → sent to DNS → IP address returned → browser requests the resource from that IP address.
+      - DNS role in one line: **translates a domain name into an IP address**.
+
+  - type: check
+    title: Find that page
+    questions: [url-parts, dns-role, dns-spot-error, ip-works-name-fails]
+
+  - type: takeaways
+    items:
+      - "Internet: the global network of networks (hardware and protocols). WWW: linked web pages and resources accessed over it with HTTP(S)."
+      - "A URL gives the protocol, the domain name and the path and file name of a resource."
+      - The DNS is a hierarchical, distributed system that translates domain names into IP addresses.
+      - If a DNS server doesn't know an address, it asks other DNS servers; answers are cached.
+
+questions:
+  - id: www-or-internet
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.12"]
+    prompt: |
+      Which of these is part of the **World Wide Web** rather than the internet's infrastructure?
+    options:
+      - text: Web pages linked by hyperlinks
+        correct: true
+        why: |
+          The WWW is the collection of linked pages and resources.
+      - text: Routers forwarding packets between networks
+        why: |
+          Routers are internet hardware.
+      - text: Fibre-optic cables under the ocean
+        why: |
+          Cables are part of the internet's infrastructure.
+      - text: The TCP/IP protocols that carry data
+        why: |
+          TCP/IP is how the internet moves data; the web is built on top.
+    explanation: |
+      Internet = infrastructure; WWW = the pages and resources that use it.
+
+  - id: not-the-web
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.12"]
+    prompt: |
+      Which activity uses the **internet** but is **not** part of the World Wide Web?
+    options:
+      - text: Sending a message with an email app
+        correct: true
+        why: |
+          Email travels over the internet using its own protocols; no web pages are involved.
+      - text: Reading a news website in a browser
+        why: |
+          Web pages fetched with HTTP(S) are the WWW.
+      - text: Clicking a hyperlink to another web page
+        why: |
+          Hyperlinked pages are exactly what the WWW is.
+      - text: Viewing an image on a web page
+        why: |
+          Images on web pages are web resources, identified by URLs.
+    explanation: |
+      The internet carries many services: email, VoIP, online games, file transfer, and the web is just one of them.
+
+  - id: url-stands-for
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["2.1.15"]
+    prompt: |
+      What does **URL** stand for?
+    accept: ["uniform resource locator", "uniform resource locater"]
+    model: |
+      **Uniform Resource Locator**
+    explanation: |
+      A URL locates a resource on the WWW.
+
+  - id: url-parts
+    format: cloze
+    difficulty: 2
+    objectives: ["2.1.15"]
+    prompt: |
+      In the URL `https://www.example.net/shop/basket.html` the protocol is {{1}}, the domain name is {{2}} and the file name is {{3}}.
+    blanks:
+      - accept: ["https", "https://", "hypertext transfer protocol secure"]
+      - accept: ["www.example.net", "example.net"]
+      - accept: ["basket.html", "basket"]
+    explanation: |
+      `https` is the protocol, `www.example.net` identifies the web server, `/shop/` is the path and `basket.html` is the file.
+
+  - id: dns-role
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.15"]
+    prompt: |
+      What is the role of the **DNS**?
+    options:
+      - text: To translate domain names into IP addresses
+        correct: true
+        why: |
+          That's its whole job: name in, IP address out.
+      - text: To store copies of web pages
+        why: |
+          Web pages are stored on web servers.
+      - text: To give devices dynamic IP addresses
+        why: |
+          That's DHCP.
+      - text: To encrypt data sent over HTTPS
+        why: |
+          Encryption is part of HTTPS, not DNS.
+    explanation: |
+      DNS: domain name to IP address.
+
+  - id: dns-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.15"]
+    prompt: |
+      A student describes what happens when a URL is typed into a browser. Which line contains the error?
+    lines:
+      - The browser extracts the domain name from the URL.
+      - The browser sends the domain name to a DNS server.
+      - If the DNS server doesn't have the IP address, it returns an error straight away.
+      - The IP address is returned to the browser.
+      - The browser sends a request for the page to that IP address.
+    errorLine: 3
+    fix: |
+      If the DNS server doesn't have the IP address, it **asks other DNS servers** higher in the hierarchy. An error is shown only if no DNS server can find it.
+    explanation: |
+      The DNS is distributed, so one server not knowing isn't the end of the search.
+
+  - id: ip-works-name-fails
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.15"]
+    prompt: |
+      Typing a website's IP address into the browser loads the page, but typing its domain name gives an error. What is the most likely cause?
+    options:
+      - text: The DNS lookup is failing, so the domain name can't be translated into the IP address
+        correct: true
+        why: |
+          The server and network work (the IP address loads the page); only the name-to-address step is broken.
+      - text: The web server is switched off
+        why: |
+          Then the IP address wouldn't work either.
+      - text: The computer has no internet connection
+        why: |
+          The page loads by IP address, so the connection works.
+      - text: The website has moved to a different file name
+        why: |
+          The same page loads by IP address, so the file is still there.
+    explanation: |
+      Name fails but number works: blame the DNS.

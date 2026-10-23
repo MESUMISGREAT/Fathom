@@ -1,0 +1,251 @@
+id: networks-bit-streaming
+subject: "9618"
+topic: "2.1"
+title: "Bit streaming: real-time and on-demand"
+summary: How bit streaming and buffering work, how real-time and on-demand streaming differ, and why the bit rate and broadband speed matter.
+order: 15
+minutes: 5
+kind: core
+objectives: ["2.1.11"]
+prerequisites: [networks-web-urls-dns, data-rep-binary-prefixes, multimedia-sound-file-size]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, eleventh learning outcome
+    (2.1.11, bit streaming: real-time and on-demand methods, and the importance of bit rates and
+    broadband speed). The bit rates and buffer figures are illustrative round numbers; every
+    data-size and buffer calculation checked with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain **bit streaming** and **buffering**, compare **real-time** and **on-demand** streaming, and calculate how much data a stream uses and when a buffer runs dry.
+
+  - type: explain
+    title: You don't download the whole film first
+    body: |
+      When you press play on a two-hour film, it starts in seconds. The film isn't on your device yet; it's arriving **while** you watch, a few seconds ahead of the bit you're seeing.
+
+      That's **bit streaming**. And those few seconds of head start live in the **buffer**.
+
+  - type: definition
+    term: Bit streaming
+    body: |
+      Sending data such as video or audio as a **continuous sequence of bits** over a network, so it can be **played as it arrives** without waiting for the whole file to download.
+
+  - type: definition
+    term: Buffer
+    body: |
+      An area of **memory** that temporarily holds data that has arrived but hasn't been played yet. Playback starts once enough data is buffered, which **smooths out** changes in the download speed.
+
+  - type: explain
+    title: Real-time vs on-demand
+    body: |
+      | | Real-time (live) | On-demand |
+      | --- | --- | --- |
+      | What is streamed | an event **as it happens**: a match, a concert, a video call | **pre-recorded** files stored on a server |
+      | When you watch | at the same time as everyone else (with a small delay) | **whenever you choose** |
+      | Controls | can't fast-forward past "now" | can **pause, rewind, fast-forward, skip** |
+      | Encoding | encoded and compressed **on the fly** | encoded in advance, often at several quality levels |
+      | Delays | latency really matters | a bigger buffer can hide slow patches |
+
+  - type: check
+    title: Quick check
+    questions: [on-demand-feature, buffer-purpose]
+
+  - type: definition
+    term: Bit rate
+    body: |
+      The **number of bits transmitted or processed per second**, measured in bps, kbps or Mbps (1 Mbps = 1 000 000 bits per second).
+
+  - type: explain
+    title: Why bit rate and broadband speed matter
+    body: |
+      - A stream has a **bit rate**: the number of bits needed for each second of playback. Higher quality (more pixels, more frames per second, higher sample rate) means a **higher bit rate**.
+      - For smooth playback the **broadband speed must be at least the stream's bit rate**. If it's lower, data is played faster than it arrives, the buffer **empties**, and playback stops to **buffer**.
+      - A household shares its broadband, so three people streaming at once need three times the bit rate.
+      - Many services **lower the quality** automatically when the connection slows, trading picture quality for no pauses.
+
+  - type: diagram
+    diagram: cs-networks-buffer-level
+    alt: >-
+      A graph of data in the buffer in megabits against time in seconds, from 0 to 70 seconds, for a
+      video that plays at 5 Mbit/s. From 0 to 5 s the line rises steeply to 40 Mbit (8 in, 0 out);
+      playback starts at 5 s. From 5 to 20 s it rises more slowly to 85 Mbit (8 in minus 5 out is
+      +3 Mbit/s). At 20 s the download speed drops, and the line falls steadily (3 in minus 5 out is
+      −2 Mbit/s) until it reaches zero at 62.5 s, marked buffer empty: video stalls.
+    caption: |
+      The buffer grows while data arrives faster than it's played, and drains when it doesn't.
+
+  - type: example
+    title: Read the graph
+    problem: |
+      In the graph, the video plays at 5 Mbps. At 20 s the buffer holds 85 Mbit and the download speed drops to 3 Mbps. When does the video stall?
+    steps:
+      - |
+        The buffer gains 3 Mbit and loses 5 Mbit each second: a net change of $3 - 5 = -2$ Mbit per second.
+      - |
+        Time to empty: $\frac{85}{2} = 42.5$ s.
+      - |
+        So it stalls at $20 + 42.5 = 62.5$ s, unless the speed recovers or the quality is lowered.
+    answer: |
+      At 62.5 s
+
+  - type: example
+    title: How much data does a film use?
+    problem: |
+      A 90-minute film streams at 4 Mbps. How many gigabytes is that?
+    steps:
+      - |
+        Data = bit rate × time. 90 minutes $= 90 \times 60 = 5400$ s.
+      - |
+        $4\,000\,000 \times 5400 = 21\,600\,000\,000$ bits.
+      - |
+        Divide by 8 for bytes: $2\,700\,000\,000$ bytes.
+      - |
+        1 GB = $10^9$ bytes, so that's **2.7 GB**.
+    answer: |
+      2.7 GB
+
+  - type: misconceptions
+    items:
+      - wrong: Streaming downloads the whole file before playing it.
+        right: |
+          It plays the data **as it arrives**, with only a small part held in the buffer.
+      - wrong: A bigger buffer fixes a connection that's too slow.
+        right: |
+          A buffer only covers **temporary** dips. If the broadband speed stays below the bit rate, any buffer eventually empties.
+      - wrong: Mbps means megabytes per second.
+        right: |
+          Lower-case b is **bits**. Divide by 8 to get bytes.
+
+  - type: exam
+    body: |
+      - Explain **why bit rate matters**: the broadband speed must be at least the stream's bit rate, or the buffer empties and playback pauses; higher quality needs a higher bit rate.
+      - Real-time vs on-demand: **live as it happens, can't skip ahead** vs **pre-recorded, watch any time, can pause and rewind**.
+      - In calculations, show **bit rate × time**, then convert bits → bytes (÷ 8) and use the prefixes the question asks for.
+
+  - type: check
+    title: Stream it
+    questions: [stream-data, buffer-drain, live-stutter, explain-bitrate]
+
+  - type: takeaways
+    items:
+      - Bit streaming plays data as it arrives; a buffer holds a few seconds ahead to smooth out speed changes.
+      - "Real-time: live, encoded on the fly, can't skip ahead. On-demand: pre-recorded, watch any time, full controls."
+      - The broadband speed must be at least the stream's bit rate, or the buffer empties and playback stalls.
+      - Data used = bit rate × time; divide by 8 to get bytes.
+
+questions:
+  - id: on-demand-feature
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.11"]
+    prompt: |
+      Which feature shows that a stream is **on-demand** rather than real-time?
+    options:
+      - text: The viewer can pause, rewind and fast-forward through it
+        correct: true
+        why: |
+          The whole file already exists on the server, so you can jump anywhere in it.
+      - text: Everyone watches it at the same time as it happens
+        why: |
+          That's real-time (live) streaming.
+      - text: It is encoded as the event is captured
+        why: |
+          Encoding on the fly is a feature of live streaming.
+      - text: It uses a buffer
+        why: |
+          Both kinds of streaming use a buffer.
+    explanation: |
+      On-demand: pre-recorded, watch whenever, full playback controls.
+
+  - id: buffer-purpose
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.11"]
+    prompt: |
+      What is the purpose of the **buffer** when streaming video?
+    options:
+      - text: To store data that has arrived ahead of playback, so playback stays smooth when the download speed varies
+        correct: true
+        why: |
+          It's a cushion against dips in the connection speed.
+      - text: To store the whole video permanently on the device
+        why: |
+          A buffer holds only a small amount temporarily.
+      - text: To compress the video so it uses less data
+        why: |
+          Compression is done when the video is encoded, not by the buffer.
+      - text: To speed up the broadband connection
+        why: |
+          A buffer can't change the connection speed.
+    explanation: |
+      Buffers smooth out changes in speed; they can't fix a connection that's always too slow.
+
+  - id: stream-data
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.11"]
+    prompt: |
+      A student watches a 40-minute lecture streamed at 3 Mbps. How much data, in megabytes (MB), is downloaded? Use 1 MB = 1 000 000 bytes.
+    fields:
+      - answer: 900
+        tolerance: { rel: 0.001 }
+        unit: MB
+    explanation: |
+      $40 \times 60 = 2400$ s. $3\,000\,000 \times 2400 = 7\,200\,000\,000$ bits. ÷ 8 = $900\,000\,000$ bytes = **900 MB**.
+
+  - id: buffer-drain
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.11"]
+    prompt: |
+      A video plays at 6 Mbps. Its buffer holds 30 Mbit when the download speed falls to 4 Mbps and stays there. How many seconds until the buffer is empty?
+    fields:
+      - answer: 15
+        tolerance: { abs: 0.01 }
+        unit: s
+    explanation: |
+      Each second 4 Mbit arrive and 6 Mbit are played, so the buffer loses 2 Mbit per second. $\frac{30}{2} = 15$ s.
+
+  - id: live-stutter
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.11"]
+    prompt: |
+      A live match is streamed at 8 Mbps, but a viewer's broadband speed is only 5 Mbps. What happens?
+    options:
+      - text: Data is played faster than it arrives, so the buffer empties and playback keeps pausing (unless the quality is lowered)
+        correct: true
+        why: |
+          Speed below bit rate means the buffer drains, however big it is.
+      - text: Nothing, because the buffer stores the whole match first
+        why: |
+          A live match can't be stored ahead; it hasn't happened yet.
+      - text: The video plays smoothly but finishes early
+        why: |
+          The playback rate is fixed by the video, not by the connection.
+      - text: The broadband speed rises to 8 Mbps to match the stream
+        why: |
+          The connection speed doesn't adapt to the video; the video quality might.
+    explanation: |
+      For smooth streaming, broadband speed ≥ bit rate.
+
+  - id: explain-bitrate
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.11"]
+    prompt: |
+      Explain why the bit rate of a stream and the user's broadband speed are important for bit streaming.
+    model: |
+      The bit rate is the number of bits needed per second of playback, and higher-quality video or audio has a higher bit rate. Data is played from the buffer at the bit rate while it arrives at the broadband speed. If the broadband speed is at least the bit rate, the buffer stays topped up and playback is smooth. If it's lower, data is played faster than it arrives, so the buffer empties and playback pauses to buffer, or the service has to lower the quality. A shared connection reduces the speed available to each stream.
+    keyPoints:
+      - Bit rate is the number of bits needed per second; higher quality needs a higher bit rate
+      - Broadband speed must be at least the bit rate for smooth playback
+      - If the speed is lower, the buffer empties and playback pauses
+      - The service may reduce the quality to match a slower connection
+      - Sharing a connection reduces the speed available to each stream
+    explanation: |
+      Link the two rates together through the buffer: in at broadband speed, out at bit rate.

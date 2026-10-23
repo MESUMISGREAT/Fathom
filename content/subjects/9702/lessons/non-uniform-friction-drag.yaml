@@ -1,0 +1,237 @@
+id: non-uniform-friction-drag
+subject: "9702"
+topic: "3.2"
+title: "Friction and drag: the forces that fight back"
+summary: Friction acts where surfaces touch and drag acts on anything moving through a fluid; both oppose motion, and drag grows as speed increases.
+order: 1
+minutes: 5
+objectives: ["3.2.1"]
+prerequisites: [momentum-newton-mass-inertia, momentum-newton-f-equals-ma]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.2.1, a qualitative understanding of friction and of viscous
+    (drag) forces including air resistance, using the simple model in which drag increases as
+    speed increases; coefficients of friction and viscosity are not required and appear only in
+    the enrichment block). The drag graph is a qualitative sketch (shape D ∝ v², no scale). The
+    cyclist forces and masses are illustrative values; all worked values and answer keys were
+    computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe **friction** and **drag** (including **air resistance**), say which way they act, and explain why drag gets bigger as an object speeds up.
+
+  - type: explain
+    title: Why doesn't anything keep going?
+    body: |
+      Shove a shopping trolley and let go. Newton's first law says it should roll on forever. It stops after a few metres, because two sneaky forces are pushing back the whole time: **friction** and **drag**.
+
+      Together they're called **resistive forces**. Every resistive force:
+
+      - acts in the direction that **opposes the motion** (more precisely, the relative motion);
+      - transfers kinetic energy into **thermal energy** (and a bit of sound). That's why brakes and re-entering spacecraft get hot.
+
+  - type: explain
+    title: Two kinds of pushback
+    body: |
+      | | **Friction** | **Drag** (viscous force) |
+      | --- | --- | --- |
+      | Where? | Between two **surfaces in contact** | On an object moving through a **fluid** (a liquid or a gas) |
+      | Direction | Along the surfaces, opposing sliding | Opposite to the object's velocity through the fluid |
+      | Effect of speed | Roughly **constant** once sliding | **Increases as speed increases**; zero at zero speed |
+      | Everyday name | grip, rubbing | air resistance, water resistance |
+
+      **Air resistance** is simply drag in air. Drag is bigger for a larger **cross-sectional area**, a less **streamlined** shape, and a "thicker" fluid: try running through a swimming pool, then through honey (actually, don't).
+
+  - type: diagram
+    diagram: phys-non-uniform-resistive-forces
+    alt: >-
+      Three parts. Top left, "Friction: surfaces in contact": a block on a hatched floor is pulled
+      to the right by an arrow labelled pull and is sliding to the right; a friction arrow points
+      to the left along the bottom of the block, at the contact surface, with the note "acts along
+      the surface, opposing the sliding". Bottom left, "Drag: moving through a fluid": a ball
+      surrounded by dots representing air moves to the right (velocity arrow v) and a drag arrow
+      points to the left from the ball, with the note "air resistance is drag in air; acts
+      opposite to v". Right, "The simple model": a sketch graph of resistive force against
+      speed, with no scale. The drag curve starts at zero at the origin ("drag = 0 when speed =
+      0") and rises ever more steeply ("grows as speed grows"). Sliding friction is a dashed
+      horizontal line, labelled "roughly constant".
+    caption: Friction needs contact; drag needs a fluid. Only drag cares much about how fast you're going.
+
+  - type: definition
+    term: Friction
+    body: |
+      The force between two surfaces in contact that **opposes their relative motion** (or attempted motion). It acts **along** the surfaces.
+
+  - type: definition
+    term: Drag (viscous force)
+    body: |
+      The resistive force on an object moving through a **fluid**. It acts in the **opposite direction to the object's velocity** relative to the fluid and **increases as the speed increases**. Air resistance is drag in air.
+
+  - type: check
+    questions: [drag-direction, drag-cloze]
+
+  - type: intuition
+    title: Why speed makes drag worse
+    body: |
+      Moving through air means shoving air molecules out of the way. Go faster and you shove **more** air every second, and you shove each bit **harder**. Both effects grow with speed, so drag climbs steeply: for a cyclist, doubling the speed roughly quadruples the air resistance.
+
+      Think of walking through a crowded corridor versus sprinting through it. Sprinting, you bump more people per second and you hit each one harder. (Where the analogy breaks: air flows smoothly around a streamlined shape, and people mostly don't.)
+
+  - type: example
+    title: Same pedalling, less acceleration
+    problem: |
+      A cyclist and bike have a total mass of $80\ \text{kg}$. The driving force from the pedals is a constant $150\ \text{N}$, and friction in the tyres and bearings is a constant $20\ \text{N}$. Air resistance is $30\ \text{N}$ at $5.0\ \text{m s}^{-1}$ and $120\ \text{N}$ at $10\ \text{m s}^{-1}$. Find the acceleration at each speed.
+    steps:
+      - |
+        Resultant force = driving force − all resistive forces. At $5.0\ \text{m s}^{-1}$: $F = 150 - 20 - 30 = 100\ \text{N}$.
+      - |
+        $a = \dfrac{F}{m} = \dfrac{100}{80} = 1.25\ \text{m s}^{-2}$.
+      - |
+        At $10\ \text{m s}^{-1}$: $F = 150 - 20 - 120 = 10\ \text{N}$, so $a = \dfrac{10}{80} = 0.125\ \text{m s}^{-2}$.
+    answer: |
+      $1.25\ \text{m s}^{-2}$ at $5.0\ \text{m s}^{-1}$, but only $0.125\ \text{m s}^{-2}$ at $10\ \text{m s}^{-1}$. Same effort, a tenth of the acceleration, because the drag grew. Keep speeding up and the resultant force hits zero: that's **terminal velocity**, coming up next.
+
+  - type: check
+    questions: [cyclist-acceleration, crouch-drag]
+
+  - type: misconceptions
+    items:
+      - wrong: Friction always acts backwards, against the way you're going.
+        right: Friction opposes the **sliding of the surfaces** over each other. When you walk, your foot pushes backwards on the ground, so friction on your foot acts **forwards**. That's what moves you (try walking on ice).
+      - wrong: If an object isn't moving, there's no friction on it.
+        right: Friction also opposes **attempted** motion. Push a heavy crate that doesn't budge and friction matches your push exactly, up to a maximum.
+      - wrong: Air resistance is a fixed amount for each object.
+        right: Drag **increases as speed increases**. A parked car in still air has no air resistance at all.
+      - wrong: Heavier objects have more air resistance.
+        right: Drag depends on speed, shape, cross-sectional area and the fluid, not directly on mass. (Mass matters for how fast something ends up falling, which is next lesson's story.)
+
+  - type: exam
+    body: |
+      - This outcome is **qualitative**: no coefficients of friction or viscosity, no drag formula. You need words and directions.
+      - The phrase that earns marks again and again: "**as speed increases, air resistance (drag) increases**". Learn it like a phone number.
+      - Draw resistive forces **opposite to the velocity**, starting on the object. On a free-body diagram, label it "air resistance" or "drag", not just "resistance".
+      - If asked where the "lost" kinetic energy goes: work done against friction or drag becomes **thermal energy** (internal energy) of the object and its surroundings.
+
+  - type: check
+    questions: [walking-friction, crate-spot-error]
+
+  - type: enrichment
+    title: How big is drag, exactly?
+    body: |
+      For a small sphere moving slowly through a viscous liquid, drag is proportional to speed (Stokes' law, $F = 6\pi\eta r v$, where $\eta$ is the viscosity). For everyday objects moving quickly through air, drag is closer to proportional to $v^2$. For friction between dry surfaces, the maximum friction is about $\mu R$, where $R$ is the normal contact force and $\mu$ is the coefficient of friction. None of these formulae is needed for 9702; the simple model "drag increases with speed" is enough.
+
+  - type: takeaways
+    items:
+      - "Friction (surfaces in contact) and drag (moving through a fluid) are **resistive forces**: they oppose the relative motion."
+      - Air resistance is drag in air.
+      - Drag is zero at zero speed and **increases as speed increases**; it is also bigger for larger, less streamlined objects.
+      - Sliding friction is roughly constant; friction can act even when nothing is sliding.
+      - Work done against resistive forces turns kinetic energy into thermal energy.
+
+questions:
+  - id: drag-direction
+    format: mcq
+    difficulty: 1
+    objectives: ["3.2.1"]
+    prompt: |
+      A tennis ball has just been hit straight upwards and is still rising. In which direction does the air resistance on it act?
+    options:
+      - text: Vertically downwards
+        correct: true
+        why: Correct. Drag always acts opposite to the velocity, and the velocity is upwards.
+      - text: Vertically upwards
+        why: That's the direction of motion. Drag opposes the motion, so it points the other way.
+      - text: There is no air resistance, because nothing is pushing the ball upwards any more
+        why: Drag depends on the ball moving through the air, not on a force pushing it. A rising ball moves through air, so there is drag.
+      - text: Horizontally, at right angles to the motion
+        why: Drag acts along the line of motion, opposing it. It doesn't push sideways on a ball moving straight up.
+    explanation: |
+      Drag acts opposite to the object's velocity relative to the air. Moving up means drag down. On the way back down the drag flips to point upwards.
+
+  - id: drag-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.2.1"]
+    prompt: |
+      Drag acts on an object moving through a {{1}}, which can be a liquid or a gas. In the simple model, the drag force {{2}} as the object's speed increases, and it acts in the {{3}} direction to the object's velocity.
+    blanks:
+      - accept: [fluid]
+      - accept: [increases, rises, grows, gets bigger, gets larger, goes up, increase]
+      - accept: [opposite, reverse]
+    explanation: |
+      Drag (a viscous force) acts on objects moving through fluids: liquids and gases. It increases with speed and opposes the velocity.
+
+  - id: cyclist-acceleration
+    format: numeric
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |
+      A cyclist and bike have a total mass of $75\ \text{kg}$ and a driving force of $180\ \text{N}$. At one instant the air resistance is $105\ \text{N}$; all other resistive forces are negligible. Find the acceleration at this instant.
+    fields:
+      - answer: 1.0
+        tolerance: { abs: 0.02 }
+        unit: m s⁻²
+    explanation: |
+      Resultant force $= 180 - 105 = 75\ \text{N}$ forwards, so $a = \dfrac{75}{75} = 1.0\ \text{m s}^{-2}$. As the cyclist speeds up, the air resistance will grow and this acceleration will shrink.
+
+  - id: crouch-drag
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |
+      A cyclist travelling at a steady $12\ \text{m s}^{-1}$ crouches low over the handlebars, keeping the same speed. Why does the air resistance on the cyclist decrease?
+    options:
+      - text: The cyclist presents a smaller cross-sectional area and a more streamlined shape to the air
+        correct: true
+        why: Correct. At the same speed, drag depends on shape and frontal area, and crouching reduces both.
+      - text: Crouching reduces the cyclist's mass
+        why: Mass doesn't change, and drag doesn't depend directly on mass anyway.
+      - text: The cyclist is moving more slowly
+        why: The question says the speed stays the same. (Slowing down would reduce drag, but that isn't what happened.)
+      - text: Friction between the tyres and the road is smaller
+        why: Tyre friction is a different force from air resistance. Crouching changes how the cyclist meets the air.
+    explanation: |
+      Drag depends on speed, cross-sectional area, shape and the fluid. With speed fixed, a smaller and more streamlined profile means less air to shove aside, so less drag.
+
+  - id: walking-friction
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |
+      You walk forwards across a level floor. As your back foot pushes off, what is the direction of the friction force that the floor exerts on that foot?
+    options:
+      - text: Forwards
+        correct: true
+        why: Correct. Your foot pushes backwards on the floor and tends to slip backwards; friction opposes that slipping, so it acts forwards on you. It's the force that moves you.
+      - text: Backwards
+        why: That's the direction your foot pushes on the floor. Friction on the foot opposes the foot's backward slipping, so it points forwards.
+      - text: Vertically upwards
+        why: The upward push from the floor is the normal contact force. Friction acts along the surface.
+      - text: There is no friction, because the foot is not sliding
+        why: Friction acts on surfaces that try to slide, not only on ones that do. Without it you couldn't walk, as anyone on ice discovers.
+    explanation: |
+      Friction opposes the relative sliding of the two surfaces. The foot tries to slide backwards over the floor, so friction on the foot acts forwards.
+
+  - id: crate-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |
+      A student explains what happens when they push a heavy crate. Which line contains the error?
+    lines:
+      - |
+        I push horizontally on the crate with a force of $40\ \text{N}$, but it stays at rest.
+      - |
+        The crate is at rest, so its acceleration is zero.
+      - |
+        By $F = ma$, the resultant force on the crate must be zero.
+      - |
+        The crate isn't sliding, so there is no friction on it.
+    errorLine: 4
+    fix: |
+      Friction opposes **attempted** motion too. For the resultant force to be zero, friction on the crate must be $40\ \text{N}$, acting opposite to the push.
+    explanation: |
+      Lines 1–3 are correct and they force the conclusion: something must balance the 40 N push, and that something is friction. Push harder and friction grows to match, up to a maximum, after which the crate starts to slide.

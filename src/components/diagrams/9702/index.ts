@@ -16,7 +16,10 @@ import EquationsMotionThrowGraphs from './equations-motion-throw-graphs';
 import EquationsMotionVtArea from './equations-motion-vt-area';
 import EquationsMotionVtGradient from './equations-motion-vt-gradient';
 import ErrorGraphs from './error-graphs';
+import LinearMomentumApproachSeparation from './linear-momentum-approach-separation';
 import LinearMomentumCollision_1d from './linear-momentum-collision-1d';
+import LinearMomentumGlancing from './linear-momentum-glancing';
+import LinearMomentumJunctionCrash from './linear-momentum-junction-crash';
 import LinearMomentumKeBars from './linear-momentum-ke-bars';
 import LinearMomentumRecoil from './linear-momentum-recoil';
 import LinearMomentumThirdLawProof from './linear-momentum-third-law-proof';
@@ -59,7 +62,10 @@ export const diagrams: DiagramRegistry = {
   'phys-equations-motion-vt-area': EquationsMotionVtArea,
   'phys-equations-motion-vt-gradient': EquationsMotionVtGradient,
   'phys-error-graphs': ErrorGraphs,
+  'phys-linear-momentum-approach-separation': LinearMomentumApproachSeparation,
   'phys-linear-momentum-collision-1d': LinearMomentumCollision_1d,
+  'phys-linear-momentum-glancing': LinearMomentumGlancing,
+  'phys-linear-momentum-junction-crash': LinearMomentumJunctionCrash,
   'phys-linear-momentum-ke-bars': LinearMomentumKeBars,
   'phys-linear-momentum-recoil': LinearMomentumRecoil,
   'phys-linear-momentum-third-law-proof': LinearMomentumThirdLawProof,

@@ -1,0 +1,257 @@
+id: non-uniform-terminal-velocity
+subject: "9702"
+topic: "3.2"
+title: "Terminal velocity: parachutes, raindrops and top speeds"
+summary: Anything moving against a resistive force that grows with speed reaches a terminal velocity when that force balances the driving force; a parachute gives a new, lower one.
+order: 3
+minutes: 5
+objectives: ["3.2.3", "3.2.2"]
+prerequisites: [non-uniform-falling-with-drag]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 3.2.3, an object moving against a resistive force may reach a
+    terminal (constant) velocity, and 3.2.2, the motion of an object falling in a uniform
+    gravitational field with air resistance). The parachute graph is computed by stepping
+    dv/dt = g − cv² with g = 9.81 m s⁻², illustrative terminal velocities of 50 m s⁻¹ and
+    5 m s⁻¹ and a canopy that opens over 3 s; the oil-tube force arrows are to scale with
+    U : D : W = 1 : 3 : 4. Masses, forces and speeds are illustrative or rounded typical values;
+    all worked values and answer keys were computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why an object moving against a resistive force reaches a **terminal velocity**, predict how mass and shape change it, and explain what happens when a parachute opens.
+
+  - type: explain
+    title: Raindrops should hurt
+    body: |
+      A raindrop that fell $1\ \text{km}$ with no air would land at about $140\ \text{m s}^{-1}$. Every rain shower would be a hail of bullets. Real big raindrops land at about $9\ \text{m s}^{-1}$, because they reach **terminal velocity** long before they hit you.
+
+      Terminal velocity isn't only about falling. It happens whenever a **constant driving force** is opposed by a **resistive force that grows with speed**:
+
+      - a falling object: driving force = weight;
+      - a car with its foot flat to the floor: driving force from the engine, opposed by friction and air resistance;
+      - a ball bearing sinking through oil: weight, opposed by viscous drag (and upthrust).
+
+      In each case the object speeds up until the resistive force has grown enough to **balance** the driving force. Resultant force zero, acceleration zero, constant velocity: the top speed.
+
+  - type: example
+    title: Why cars have a top speed
+    problem: |
+      A car of mass $1200\ \text{kg}$ has a maximum driving force of $3600\ \text{N}$. (a) At its top speed, what is the total resistive force? (b) At a lower speed, the total resistive force is $900\ \text{N}$. Find its acceleration with the maximum driving force.
+    steps:
+      - |
+        (a) At top speed the velocity is constant, so the resultant force is zero: total resistive force $= 3600\ \text{N}$.
+      - |
+        (b) Resultant force $= 3600 - 900 = 2700\ \text{N}$ forwards.
+      - |
+        $a = \dfrac{2700}{1200} = 2.25\ \text{m s}^{-2}$.
+    answer: |
+      (a) $3600\ \text{N}$. (b) $2.25\ \text{m s}^{-2}$. Flooring it at low speed gives a big acceleration; at top speed the same driving force gives none, because air resistance has caught up.
+
+  - type: check
+    questions: [car-forces, terminal-cloze]
+
+  - type: explain
+    title: What sets the terminal velocity?
+    body: |
+      At terminal velocity, **drag = driving force**. So:
+
+      - **Heavier, same shape** → it needs more drag to balance its weight → it must go **faster** before that happens. Higher terminal velocity.
+      - **Bigger area or less streamlined** → more drag at every speed → balance is reached sooner. **Lower** terminal velocity.
+
+      | Skydiver | Typical terminal velocity |
+      | --- | --- |
+      | head-down, arms in (small area) | about $80\ \text{m s}^{-1}$ |
+      | belly-down, spread out | about $55\ \text{m s}^{-1}$ |
+      | under an open parachute (huge area) | about $5\ \text{m s}^{-1}$ |
+
+  - type: diagram
+    diagram: phys-non-uniform-parachute-vt
+    alt: >-
+      A velocity–time graph of a parachute jump, with downward velocity in m s⁻¹ from 0 to 60 and
+      time in seconds from 0 to 55, plus a key. A: from the origin the velocity rises steeply,
+      with the curve bending over (speeding up, acceleration decreasing). B: it levels off at a
+      terminal velocity of 50 m s⁻¹ from about 12 s to 25 s (D = W, a = 0). C: at 25 s the
+      parachute opens and the velocity falls very steeply, in a curve that flattens out, to 5 m s⁻¹
+      within about 3 s (D greater than W, so it decelerates while still falling). D: the velocity
+      stays at a new, lower terminal velocity of 5 m s⁻¹ until 50 s (D = W again). E: at 50 s it
+      drops to zero as the parachutist lands. The velocity never becomes negative.
+    caption: Illustrative values. Notice the velocity stays positive (downwards) the whole time.
+
+  - type: explain
+    title: The parachute plot twist
+    body: |
+      When the parachute opens, the area facing the air jumps enormously. At $50\ \text{m s}^{-1}$ the drag is suddenly **much bigger than the weight**, so:
+
+      1. The resultant force is **upwards**, so the parachutist **decelerates**, while still moving **downwards**.
+      2. As the speed falls, the drag falls too, so the deceleration gets smaller.
+      3. When the drag has dropped back to equal the weight, the resultant is zero again: a new, much lower terminal velocity.
+
+      In videos the parachutist seems to shoot upwards. That's only because the camera operator is still falling at $50\ \text{m s}^{-1}$.
+
+  - type: example
+    title: The jolt when the canopy opens
+    problem: |
+      A parachutist of total mass $80\ \text{kg}$ opens her parachute. Just afterwards the air resistance on her is $2000\ \text{N}$. Find her acceleration. Use $g = 9.81\ \text{m s}^{-2}$.
+    steps:
+      - |
+        Weight: $W = 80 \times 9.81 = 784.8\ \text{N}$ downwards.
+      - |
+        Resultant force $= 2000 - 784.8 = 1215.2\ \text{N}$ **upwards**.
+      - |
+        $a = \dfrac{1215.2}{80} = 15.2\ \text{m s}^{-2}$ upwards.
+    answer: |
+      $15.2\ \text{m s}^{-2}$ upwards: a deceleration of about $1.5g$ while she is still falling. That's the jolt you feel through the harness.
+
+  - type: check
+    questions: [parachute-opens, parachute-deceleration]
+
+  - type: explain
+    title: Terminal velocity in a liquid
+    body: |
+      Drop a steel ball into a tall tube of oil. Oil is far more **viscous** than air, so the drag gets large at a low speed and the ball reaches terminal velocity within a few centimetres.
+
+      In a liquid there is a third force: **upthrust** $U$, upwards. At terminal velocity the forces balance, so **weight = drag + upthrust**. To check that the ball has reached terminal velocity, time it between marks an equal distance apart: equal times mean constant speed.
+
+  - type: diagram
+    diagram: phys-non-uniform-ball-in-oil
+    alt: >-
+      A tall tube filled with oil (a viscous liquid), with four bands around it an equal distance
+      apart. A small ball inside has three force arrows drawn to scale: weight W downwards (the
+      longest, 4 units), viscous drag D upwards (3 units) and upthrust U upwards (1 unit). Notes
+      say the ball speeds up first, then reaches terminal velocity quickly. A panel headed "At
+      terminal velocity" lists W = weight (down), D = viscous drag (up), U = upthrust (up), then W
+      = D + U, resultant force = 0, a = 0, and says that equal times between the bands show the
+      speed is constant.
+    caption: In a liquid, upthrust helps the drag hold the weight up.
+
+  - type: misconceptions
+    items:
+      - wrong: Opening a parachute makes the skydiver move upwards.
+        right: The resultant force becomes **upwards**, so she **decelerates**, but her velocity stays **downwards** throughout. On a v–t graph it never crosses zero.
+      - wrong: All objects have the same terminal velocity.
+        right: It depends on weight, area, shape and the fluid. A heavier ball of the same size falls faster at terminal velocity.
+      - wrong: A heavier object always falls faster.
+        right: Without air resistance, every object falls with acceleration $g$. Only **with** air resistance does the heavier of two same-shaped objects win, because it needs more drag, so more speed, to balance its weight.
+
+  - type: exam
+    body: |
+      - **Sketching the parachute graph** is a favourite. Show: a curve levelling off (first terminal velocity); a steep but **curved** drop when the parachute opens (steepest at the start, flattening out); a **lower** horizontal line; the velocity never going below zero.
+      - "Top speed", "maximum speed", "steady speed against air resistance" all mean: driving force = resistive force.
+      - In liquids, don't forget **upthrust** when you balance the forces.
+
+  - type: check
+    questions: [heavier-ball, oil-ball]
+
+  - type: takeaways
+    items:
+      - Terminal velocity happens when a resistive force that grows with speed rises to equal the driving force.
+      - "At terminal velocity: resultant force zero, acceleration zero, velocity constant."
+      - Heavier (same shape) means a higher terminal velocity; bigger area means a lower one.
+      - Opening a parachute makes drag exceed weight, so the parachutist decelerates (still falling) to a new, lower terminal velocity.
+      - "In a liquid at terminal velocity: weight = drag + upthrust."
+
+questions:
+  - id: car-forces
+    format: numeric
+    difficulty: 2
+    objectives: ["3.2.3"]
+    prompt: |
+      A car of mass $1500\ \text{kg}$ has a maximum driving force of $4800\ \text{N}$. Find (a) the total resistive force on it when it travels at its top speed, and (b) its acceleration, with the maximum driving force, at a lower speed where the total resistive force is $1500\ \text{N}$.
+    fields:
+      - label: "(a) resistive force ="
+        answer: 4800
+        tolerance: { abs: 1 }
+        unit: N
+      - label: "(b) acceleration ="
+        answer: 2.2
+        tolerance: { abs: 0.02 }
+        unit: m s⁻²
+    explanation: |
+      (a) At top speed the velocity is constant, so the resistive force balances the driving force: $4800\ \text{N}$. (b) Resultant $= 4800 - 1500 = 3300\ \text{N}$, so $a = \dfrac{3300}{1500} = 2.2\ \text{m s}^{-2}$.
+
+  - id: terminal-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.2.3"]
+    prompt: |
+      At terminal velocity the resistive force is {{1}} to the driving force, so the resultant force is {{2}} and the acceleration is {{3}}.
+    blanks:
+      - accept: [equal, equal in magnitude, equal and opposite]
+      - accept: [zero, "0", nil]
+      - accept: [zero, "0", nil]
+    explanation: |
+      Balanced forces mean zero resultant force, so zero acceleration ($F = ma$), so constant velocity.
+
+  - id: parachute-opens
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.2", "3.2.3"]
+    prompt: |
+      A skydiver is falling at terminal velocity and then opens her parachute. Which statement describes her motion just after it opens?
+    options:
+      - text: She is moving downwards and slowing down, because the air resistance is greater than her weight
+        correct: true
+        why: Correct. The resultant force is upwards, so she decelerates, but her velocity is still downwards.
+      - text: She is moving upwards, because the air resistance is greater than her weight
+        why: An upward resultant force means an upward acceleration, not an upward velocity. She slows down while still falling.
+      - text: She is moving downwards and still speeding up, but with a smaller acceleration
+        why: That describes the free fall before terminal velocity, when air resistance is less than weight. Now it is greater.
+      - text: She is at a new terminal velocity straight away, because the forces are balanced
+        why: Just after opening, the drag is far bigger than her weight. The forces only balance again once she has slowed down.
+    explanation: |
+      Opening the parachute increases the area, so at the same speed the drag is much larger than the weight. Upward resultant → deceleration → speed falls → drag falls → new, lower terminal velocity.
+
+  - id: parachute-deceleration
+    format: numeric
+    difficulty: 2
+    objectives: ["3.2.2"]
+    prompt: |
+      A parachutist of total mass $70\ \text{kg}$ opens his parachute. Immediately afterwards the air resistance on him is $1800\ \text{N}$. Calculate the magnitude of his acceleration, to 3 significant figures. Use $g = 9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 15.90
+        tolerance: { abs: 0.05 }
+        unit: m s⁻²
+    explanation: |
+      $W = 70 \times 9.81 = 686.7\ \text{N}$. Resultant $= 1800 - 686.7 = 1113.3\ \text{N}$ upwards, so $a = \dfrac{1113.3}{70} = 15.9\ \text{m s}^{-2}$ upwards: he is decelerating while still falling.
+
+  - id: heavier-ball
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.3", "3.2.2"]
+    prompt: |
+      A solid rubber ball and a hollow plastic ball have exactly the same size and shape, but the rubber ball is heavier. Both are dropped from a very tall tower and reach terminal velocity. Which statement is correct?
+    options:
+      - text: The rubber ball has the higher terminal velocity, because a larger air resistance is needed to balance its larger weight
+        correct: true
+        why: Correct. Same shape means same drag at the same speed, so the heavier ball must go faster before its drag equals its weight.
+      - text: Both have the same terminal velocity, because all objects fall with acceleration $g$
+        why: That's only true with no air resistance. Here air resistance matters, and the balance point depends on the weight.
+      - text: The plastic ball has the higher terminal velocity, because it is lighter
+        why: Being lighter means less weight to balance, so its drag catches up at a lower speed. Its terminal velocity is lower.
+      - text: The plastic ball has the higher terminal velocity, because air resistance is greater on heavier objects
+        why: Air resistance depends on speed, size and shape, not directly on mass. At the same speed, the two balls feel the same drag.
+    explanation: |
+      Terminal velocity is reached when drag = weight. For identical shapes the drag–speed relationship is the same, so a bigger weight requires a bigger speed.
+
+  - id: oil-ball
+    format: mcq
+    difficulty: 3
+    objectives: ["3.2.3"]
+    prompt: |
+      A steel ball falls through oil at its terminal velocity. $W$ is its weight, $D$ the viscous drag and $U$ the upthrust. Which equation is correct?
+    options:
+      - text: $W = D + U$
+        correct: true
+        why: Correct. Drag and upthrust both act upwards and together balance the weight, so the resultant force is zero.
+      - text: $W = D$
+        why: This forgets the upthrust, which always acts on an object in a liquid.
+      - text: $D = W + U$
+        why: Upthrust acts upwards, the same way as the drag, so it adds to the drag, not to the weight.
+      - text: $W + D = U$
+        why: Drag opposes the downward velocity, so it acts upwards, not alongside the weight.
+    explanation: |
+      Moving down at constant velocity means zero resultant force: total upward force ($D + U$) = total downward force ($W$).
