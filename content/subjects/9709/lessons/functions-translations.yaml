@@ -1,0 +1,243 @@
+id: functions-translations
+subject: "9709"
+topic: "1.2"
+title: "Transformations: translations"
+summary: y = f(x) + a slides the graph up by a; y = f(x + a) slides it left by a. Outside the bracket does what it says, inside does the opposite.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.2.5"]
+prerequisites: [functions-domain-and-range, quadratics-completing-the-square]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.2 learning outcome "understand and use the
+    transformations of the graph of y = f(x) given by y = f(x) + a, y = f(x + a) ...", including
+    the note on using the term 'translation' to describe them. All examples and questions are
+    original; every transformed equation and point checked in Python. Not yet reviewed by a
+    teacher.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can sketch and describe the graphs of $y = f(x) + a$ and $y = f(x + a)$ as **translations**, find the new equation, and track where points move.
+
+  - type: explain
+    title: Slide, don't bend
+    body: |-
+      A **translation** picks the whole graph up and slides it, without stretching, flipping or bending it. Every point moves the same distance in the same direction.
+
+      The one rule to tattoo on your brain:
+
+      - A change **outside** the bracket acts on $y$ and does **what it says**.
+      - A change **inside** the bracket acts on $x$ and does **the opposite**.
+
+  - type: explain
+    title: The two translations
+    body: |-
+      | Equation | Translation by | In words | Point $(p, q)$ goes to |
+      | --- | --- | --- | --- |
+      | $y = f(x) + a$ | $\begin{pmatrix} 0 \\ a \end{pmatrix}$ | up $a$ (down if $a < 0$) | $(p,\ q + a)$ |
+      | $y = f(x + a)$ | $\begin{pmatrix} -a \\ 0 \end{pmatrix}$ | **left** $a$ (right if $a < 0$) | $(p - a,\ q)$ |
+
+      So $y = f(x - 4)$ is a translation by $\begin{pmatrix} 4 \\ 0 \end{pmatrix}$: four to the **right**.
+
+  - type: diagram
+    diagram: functions-translations
+    alt: >-
+      Two panels at the same scale, each showing y = f(x) = x² − 2x in dark ink, a U-shaped curve
+      with vertex (1, −1) through the origin and (2, 0). Left panel, y = f(x) + 3: the blue curve is
+      the same U moved up 3, with vertex (1, 2); vertical orange arrows of length 3 join matching
+      points. Caption: translation by the column vector 0, 3, up 3. Right panel, y = f(x + 2): the
+      blue curve is the same U moved 2 to the left, with vertex (−1, −1) and roots −2 and 0;
+      horizontal orange arrows of length 2 point left. Caption: translation by the column vector
+      −2, 0, left 2, not right.
+    caption: |-
+      $f(x) = x^2 - 2x$. Adding 3 outside lifts every point by 3. Adding 2 inside slides the graph 2 to the **left**.
+
+  - type: intuition
+    title: Why does + inside move it left?
+    body: |-
+      In $y = f(x + 2)$, the new graph at $x = 1$ shows what $f$ was doing at $x = 3$. Everything happens **2 units earlier**, so the whole picture appears 2 units further left.
+
+      Think of a song that starts 2 seconds early: every beat lands 2 seconds sooner on the timeline. The analogy breaks a bit for $f(x) + a$, which isn't about timing at all: it simply adds $a$ to every height.
+
+  - type: check
+    questions: [tr-up-down, tr-vertex]
+
+  - type: example
+    title: Completing the square is a translation
+    problem: |-
+      Describe how the graph of $y = x^2 - 6x + 11$ can be obtained from the graph of $y = x^2$.
+    steps:
+      - |-
+        Complete the square: $x^2 - 6x + 11 = (x - 3)^2 + 2$.
+      - |-
+        With $f(x) = x^2$, this is $y = f(x - 3) + 2$.
+      - |-
+        $f(x - 3)$: inside, so opposite: 3 to the **right**. The $+ 2$ is outside: 2 **up**.
+      - |-
+        Check with the vertex: $y = x^2$ has vertex $(0, 0)$, and $(0 + 3, 0 + 2) = (3, 2)$ is the vertex of $(x - 3)^2 + 2$ ✓
+    answer: |-
+      A translation by $\begin{pmatrix} 3 \\ 2 \end{pmatrix}$.
+
+  - type: check
+    questions: [tr-vector-from-square, tr-point]
+
+  - type: example
+    title: Finding the new equation
+    problem: |-
+      The graph of $y = 2x^2 - x$ is translated by $\begin{pmatrix} -1 \\ 3 \end{pmatrix}$. Find the equation of the new graph in the form $y = ax^2 + bx + c$.
+    steps:
+      - |-
+        With $f(x) = 2x^2 - x$: $-1$ in $x$ means replace $x$ with $x + 1$; $+3$ in $y$ means add 3. The new graph is $y = f(x + 1) + 3$.
+      - |-
+        $f(x + 1) = 2(x + 1)^2 - (x + 1) = 2x^2 + 4x + 2 - x - 1 = 2x^2 + 3x + 1$.
+      - |-
+        Add 3: $y = 2x^2 + 3x + 4$.
+    answer: |-
+      $y = 2x^2 + 3x + 4$. Quick check: $(0, 0)$ is on the original, so $(-1, 3)$ should be on the new graph: $2 - 3 + 4 = 3$ ✓
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $y = f(x + 2)$ moves the graph 2 to the right.
+        right: |-
+          Inside the bracket does the opposite: $f(x + 2)$ is a translation by $\begin{pmatrix} -2 \\ 0 \end{pmatrix}$, 2 to the **left**.
+      - wrong: |-
+          $y = f(x) + 3$ is a translation by $\begin{pmatrix} 3 \\ 0 \end{pmatrix}$.
+        right: |-
+          Adding outside changes the $y$-values, so it's $\begin{pmatrix} 0 \\ 3 \end{pmatrix}$: 3 up.
+      - wrong: |-
+          To translate $y = x^2 - 4x$ by $\begin{pmatrix} 3 \\ 0 \end{pmatrix}$, write $y = x^2 - 4x - 3$.
+        right: |-
+          A horizontal move replaces **every** $x$: $y = (x - 3)^2 - 4(x - 3)$. Subtracting 3 at the end would move it down instead.
+
+  - type: exam
+    body: |-
+      - "Describe fully the single transformation" needs the word **translation** and the vector, e.g. "translation by $\begin{pmatrix} -2 \\ 0 \end{pmatrix}$", or "translation of 2 units in the negative $x$-direction".
+      - Words like "shift", "move" or "slide" may not earn the mark. Use the official word.
+      - Insider hack: pick one easy point, such as the vertex or an intercept, and push it through your answer. If it lands in the right place, you've got the direction right.
+
+  - type: check
+    questions: [tr-describe, tr-equation]
+
+  - type: takeaways
+    items:
+      - |-
+        $y = f(x) + a$: translation by $\begin{pmatrix} 0 \\ a \end{pmatrix}$, up $a$.
+      - |-
+        $y = f(x + a)$: translation by $\begin{pmatrix} -a \\ 0 \end{pmatrix}$, left $a$. Inside the bracket does the opposite.
+      - |-
+        For a horizontal translation, replace every $x$ in the equation.
+      - |-
+        Describe it with the word **translation** plus a vector, and check with one point.
+
+questions:
+  - id: tr-up-down
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      Which transformation maps the graph of $y = f(x)$ onto the graph of $y = f(x) - 4$?
+    explanation: |-
+      Subtracting 4 **outside** the function lowers every $y$-value by 4: a translation by $\begin{pmatrix} 0 \\ -4 \end{pmatrix}$.
+    options:
+      - text: |-
+          Translation by $\begin{pmatrix} 0 \\ 4 \end{pmatrix}$
+        why: |-
+          Outside changes don't flip direction. $-4$ means down 4.
+      - text: |-
+          Translation by $\begin{pmatrix} 0 \\ -4 \end{pmatrix}$
+        correct: true
+        why: |-
+          Outside the bracket acts on $y$ and does what it says: down 4.
+      - text: |-
+          Translation by $\begin{pmatrix} 4 \\ 0 \end{pmatrix}$
+        why: |-
+          That would be $y = f(x - 4)$, with the $-4$ **inside** the bracket.
+      - text: |-
+          Translation by $\begin{pmatrix} -4 \\ 0 \end{pmatrix}$
+        why: |-
+          That would be $y = f(x + 4)$. A change outside the bracket moves the graph vertically.
+
+  - id: tr-vertex
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      The graph of $y = f(x)$ has a minimum point at $(2, 5)$. Find the minimum point of $y = f(x + 3)$.
+    fields:
+      - label: "x ="
+        answer: -1
+      - label: "y ="
+        answer: 5
+    explanation: |-
+      $+3$ inside the bracket is a translation by $\begin{pmatrix} -3 \\ 0 \end{pmatrix}$: 3 to the left. The $y$-coordinate doesn't change. $(2 - 3, 5) = (-1, 5)$.
+
+  - id: tr-describe
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      The graph of $y = f(x - 5)$ is obtained from the graph of $y = f(x)$ by a {{1}} of 5 units in the {{2}} $x$-direction.
+    blanks:
+      - accept: [translation, a translation]
+      - accept: [positive, +, positive x, plus]
+    explanation: |-
+      $-5$ inside the bracket does the opposite of what it looks like: a **translation** of 5 units in the **positive** $x$-direction, i.e. by $\begin{pmatrix} 5 \\ 0 \end{pmatrix}$.
+
+  - id: tr-equation
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.5"]
+    prompt: |-
+      The graph of $y = x^2 + 2x$ is translated by $\begin{pmatrix} 4 \\ -2 \end{pmatrix}$. The new graph has equation $y = ax^2 + bx + c$. Find $a$, $b$ and $c$.
+    fields:
+      - label: "a ="
+        answer: 1
+      - label: "b ="
+        answer: -6
+      - label: "c ="
+        answer: 6
+    explanation: |-
+      Replace every $x$ with $x - 4$ (4 to the right), then subtract 2 (down 2):
+
+      $$y = (x - 4)^2 + 2(x - 4) - 2 = x^2 - 8x + 16 + 2x - 8 - 2 = x^2 - 6x + 6.$$
+
+      Check: $(0, 0)$ on the original should move to $(4, -2)$: $16 - 24 + 6 = -2$ ✓
+
+  - id: tr-point
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.5"]
+    prompt: |-
+      The point $(-2, 7)$ lies on the graph of $y = f(x)$. Find the corresponding point on the graph of $y = f(x - 4) - 3$.
+    fields:
+      - label: "x ="
+        answer: 2
+      - label: "y ="
+        answer: 4
+    explanation: |-
+      $x - 4$ inside: 4 to the **right**, so $x$: $-2 + 4 = 2$. $-3$ outside: 3 down, so $y$: $7 - 3 = 4$. The point is $(2, 4)$.
+
+      Check: at $x = 2$ the new graph gives $f(2 - 4) - 3 = f(-2) - 3 = 7 - 3 = 4$ ✓
+
+  - id: tr-vector-from-square
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.5"]
+    prompt: |-
+      The graph of $y = x^2 + 8x + 19$ is a translation of the graph of $y = x^2$ by the vector $\begin{pmatrix} p \\ q \end{pmatrix}$. Find $p$ and $q$.
+    fields:
+      - label: "p ="
+        answer: -4
+      - label: "q ="
+        answer: 3
+    explanation: |-
+      Complete the square: $x^2 + 8x + 19 = (x + 4)^2 - 16 + 19 = (x + 4)^2 + 3$.
+
+      $+4$ inside the bracket means 4 to the **left**, and $+3$ outside means 3 up. So the vector is $\begin{pmatrix} -4 \\ 3 \end{pmatrix}$. The vertex moves from $(0, 0)$ to $(-4, 3)$ ✓

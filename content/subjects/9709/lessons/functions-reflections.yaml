@@ -1,0 +1,238 @@
+id: functions-reflections
+subject: "9709"
+topic: "1.2"
+title: "Transformations: reflections"
+summary: y = −f(x) reflects the graph in the x-axis; y = f(−x) reflects it in the y-axis. A minus outside flips y, a minus inside flips x.
+order: 8
+minutes: 4
+kind: core
+objectives: ["1.2.5"]
+prerequisites: [functions-translations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.2 learning outcome "understand and use the
+    transformations of the graph of y = f(x) given by ... y = af(x) and y = f(ax)", for the case
+    a = −1, including the note on using the term 'reflection'. All examples and questions are
+    original; every transformed equation checked in Python.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can sketch and describe $y = -f(x)$ and $y = f(-x)$ as **reflections**, find their equations, and say exactly which mirror line is involved.
+
+  - type: explain
+    title: Two mirrors
+    body: |-
+      Same rule as last time: outside the bracket acts on $y$, inside acts on $x$.
+
+      | Equation | What changes | Transformation | Point $(p, q)$ goes to |
+      | --- | --- | --- | --- |
+      | $y = -f(x)$ | every height changes sign | **reflection in the $x$-axis** | $(p,\ -q)$ |
+      | $y = f(-x)$ | every input changes sign | **reflection in the $y$-axis** | $(-p,\ q)$ |
+
+      Points **on the mirror line** stay put: $x$-intercepts don't move under $y = -f(x)$, and the $y$-intercept doesn't move under $y = f(-x)$.
+
+  - type: diagram
+    diagram: functions-reflections
+    alt: >-
+      Two panels at the same scale, each showing y = f(x) = x² − 2x in dark ink, a U-shaped curve
+      with vertex (1, −1) and roots 0 and 2. Left panel, y = −f(x): the blue curve is an upside-down
+      U through the same roots 0 and 2, with its maximum at (1, 1); vertical orange arrows show
+      points flipping across the x-axis. Caption: reflection in the x-axis. Right panel, y = f(−x):
+      the blue curve is a U with vertex (−1, −1) and roots −2 and 0, the mirror image of f in the
+      y-axis; an orange arrow joins (1, −1) to (−1, −1). Caption: reflection in the y-axis.
+    caption: |-
+      $f(x) = x^2 - 2x$. Left: $-f(x)$ flips the curve upside down about the $x$-axis. Right: $f(-x)$ flips it left to right about the $y$-axis.
+
+  - type: intuition
+    title: Why the minus inside flips sideways
+    body: |-
+      $y = f(-x)$ at $x = -3$ shows what $f$ did at $x = 3$. Whatever happened on the right now happens on the left, at the same height. That's a mirror standing on the $y$-axis.
+
+      $y = -f(x)$ keeps every input where it was but turns each height upside down: a mirror lying along the $x$-axis.
+
+  - type: check
+    questions: [rf-which, rf-point]
+
+  - type: example
+    title: Equations of both reflections
+    problem: |-
+      $f(x) = x^2 - 2x$. Find the equations of $y = -f(x)$ and $y = f(-x)$, and the vertex of each.
+    steps:
+      - |-
+        $-f(x) = -(x^2 - 2x) = -x^2 + 2x$. Every term changes sign.
+      - |-
+        $f(-x) = (-x)^2 - 2(-x) = x^2 + 2x$. Replace **every** $x$ with $-x$, in brackets. Note $(-x)^2 = x^2$.
+      - |-
+        The vertex of $f$ is $(1, -1)$. Reflect in the $x$-axis: $(1, 1)$. Reflect in the $y$-axis: $(-1, -1)$.
+      - |-
+        Check: $-x^2 + 2x = -(x - 1)^2 + 1$ has vertex $(1, 1)$ ✓, and $x^2 + 2x = (x + 1)^2 - 1$ has vertex $(-1, -1)$ ✓
+    answer: |-
+      $y = -x^2 + 2x$ with maximum point $(1, 1)$; $\;y = x^2 + 2x$ with minimum point $(-1, -1)$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $y = -f(x)$ is a reflection in the $y$-axis.
+        right: |-
+          The minus is **outside**, so it acts on $y$: reflection in the $x$-axis. Heights flip sign; $x$-values stay the same.
+      - wrong: |-
+          For $f(x) = x^2 + 3x - 1$, $f(-x) = -x^2 - 3x - 1$.
+        right: |-
+          $(-x)^2 = +x^2$. So $f(-x) = x^2 - 3x - 1$: only the odd powers change sign.
+      - wrong: |-
+          $f(-x)$ and $-f(x)$ are always the same thing.
+        right: |-
+          For $x^2 - 2x$ they're $x^2 + 2x$ and $-x^2 + 2x$: different graphs. They match only for special functions like $x^3$.
+
+  - type: check
+    questions: [rf-expression, rf-spot]
+
+  - type: enrichment
+    title: Graphs that are their own reflection
+    body: |-
+      Some graphs survive a reflection unchanged. If $f(-x) = f(x)$ for all $x$ (like $x^2$ or $x^4 - 3x^2$), the graph is symmetric about the $y$-axis: mathematicians call $f$ an **even** function.
+
+      If $f(-x) = -f(x)$ (like $x^3$ or $\dfrac{1}{x}$), reflecting in both axes gives the same graph: an **odd** function. The terms "even" and "odd" aren't needed for 9709, but spotting the symmetry can save you sketching time.
+
+  - type: exam
+    body: |-
+      - "Describe fully the single transformation" here needs the word **reflection** and the mirror line: "reflection in the $x$-axis" or "reflection in the $y$-axis". "Flip" won't do.
+      - "In the line $y = 0$" is also fine for the $x$-axis, and "in the line $x = 0$" for the $y$-axis. Just make sure you name the right one.
+      - Insider hack: write the change in a box above your working, $(p, q) \to (p, -q)$ or $(p, q) \to (-p, q)$, and push the vertex or an intercept through it.
+
+  - type: check
+    questions: [rf-describe, rf-meet]
+
+  - type: takeaways
+    items:
+      - |-
+        $y = -f(x)$: **reflection in the $x$-axis**, $(p, q) \to (p, -q)$.
+      - |-
+        $y = f(-x)$: **reflection in the $y$-axis**, $(p, q) \to (-p, q)$.
+      - |-
+        For $f(-x)$, replace every $x$ with $(-x)$; even powers don't change sign.
+      - |-
+        Name the mirror line every time you describe a reflection.
+
+questions:
+  - id: rf-which
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      Which transformation maps the graph of $y = f(x)$ onto the graph of $y = f(-x)$?
+    explanation: |-
+      The minus is **inside** the bracket, so it acts on $x$: each point $(p, q)$ goes to $(-p, q)$. That's a reflection in the $y$-axis.
+    options:
+      - text: |-
+          Reflection in the $x$-axis
+        why: |-
+          That's $y = -f(x)$, with the minus outside the bracket.
+      - text: |-
+          Reflection in the line $y = x$
+        why: |-
+          That gives the inverse, $y = f^{-1}(x)$.
+      - text: |-
+          Translation by $\begin{pmatrix} -1 \\ 0 \end{pmatrix}$
+        why: |-
+          That would be $y = f(x + 1)$. Multiplying $x$ by $-1$ is a reflection, not a translation.
+      - text: |-
+          Reflection in the $y$-axis
+        correct: true
+        why: |-
+          Inputs change sign and heights stay the same: $(p, q) \to (-p, q)$.
+
+  - id: rf-point
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      The point $(3, -4)$ lies on the graph of $y = f(x)$. Find the corresponding point on the graph of $y = -f(x)$.
+    fields:
+      - label: "x ="
+        answer: 3
+      - label: "y ="
+        answer: 4
+    explanation: |-
+      $y = -f(x)$ is a reflection in the $x$-axis: $x$ stays the same and $y$ changes sign. $(3, -4) \to (3, 4)$.
+
+  - id: rf-describe
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["1.2.5"]
+    prompt: |-
+      Describe fully the single transformation that maps the graph of $y = f(x)$ onto the graph of $y = -f(x)$.
+    accept:
+      - reflection in the x-axis
+      - reflection in x-axis
+      - a reflection in the x-axis
+      - reflection in the x axis
+      - reflection in x axis
+      - reflection in the line y = 0
+      - reflection in y = 0
+      - reflection in the line y=0
+      - reflection in y=0
+      - reflect in the x-axis
+      - reflected in the x-axis
+    model: |-
+      A **reflection in the $x$-axis**.
+    explanation: |-
+      The minus outside the bracket changes the sign of every $y$-value: $(p, q) \to (p, -q)$. That's a reflection with the $x$-axis as the mirror line.
+
+  - id: rf-expression
+    format: expression
+    difficulty: 2
+    objectives: ["1.2.5"]
+    prompt: |-
+      $f(x) = x^3 - 2x^2 + 5$. The graph of $y = f(x)$ is reflected in the $y$-axis. Find the equation of the new graph, $y = \dots$
+    answer: -x^3 - 2x^2 + 5
+    variables: [x]
+    display: |-
+      $y = f(-x) = -x^3 - 2x^2 + 5$
+    explanation: |-
+      Reflection in the $y$-axis is $y = f(-x)$: $(-x)^3 - 2(-x)^2 + 5 = -x^3 - 2x^2 + 5$.
+
+      The odd power flips sign; the even power doesn't.
+
+  - id: rf-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.2.5"]
+    prompt: |-
+      A student finds the equation of the reflection of $y = 2x^2 - 5x + 3$ in the $y$-axis. Which line contains the first error?
+    lines:
+      - |-
+        Reflection in the $y$-axis means $y = f(-x)$.
+      - |-
+        $y = 2(-x)^2 - 5(-x) + 3$
+      - |-
+        $y = -2x^2 + 5x + 3$
+      - |-
+        So the reflected graph is $y = -2x^2 + 5x + 3$.
+    errorLine: 3
+    fix: |-
+      $(-x)^2 = x^2$, so $2(-x)^2 = 2x^2$ and $y = 2x^2 + 5x + 3$.
+    explanation: |-
+      Line 2 is right. In line 3 the student treated $2(-x)^2$ as $-2x^2$. Squaring a negative gives a positive, so the reflected parabola is still ∪-shaped: $y = 2x^2 + 5x + 3$. A reflection in the $y$-axis can never turn a ∪ into a ∩.
+
+  - id: rf-meet
+    format: numeric
+    difficulty: 3
+    objectives: ["1.2.5"]
+    prompt: |-
+      $f(x) = x^2 - 6x + 8$. Find the coordinates of the point where the graphs of $y = f(x)$ and $y = f(-x)$ meet.
+    fields:
+      - label: "x ="
+        answer: 0
+      - label: "y ="
+        answer: 8
+    explanation: |-
+      $f(-x) = (-x)^2 - 6(-x) + 8 = x^2 + 6x + 8$. Where the graphs meet, $x^2 - 6x + 8 = x^2 + 6x + 8$, so $-6x = 6x$ and $x = 0$. Then $y = f(0) = 8$.
+
+      The picture agrees: the two parabolas are mirror images in the $y$-axis, with vertices $(3, -1)$ and $(-3, -1)$, so they cross on the mirror line itself, at the $y$-intercept $(0, 8)$.

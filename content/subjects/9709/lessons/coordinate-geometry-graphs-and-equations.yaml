@@ -1,0 +1,265 @@
+id: coordinate-geometry-graphs-and-equations
+subject: "9709"
+topic: "1.3"
+title: Graphs, equations and meeting points
+summary: A point is on a graph exactly when it satisfies the equation, so where two graphs meet gives the solutions of an equation, and a sketch can count them.
+order: 10
+minutes: 5
+kind: core
+objectives: ["1.3.5"]
+prerequisites: [coordinate-geometry-intersecting-lines, quadratics-simultaneous-equations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcome "understand the
+    relationship between a graph and its associated algebraic equation, and use the relationship
+    between points of intersection of graphs and solutions of equations". All examples and
+    questions are original; every point, root and root count checked in Python (cubic roots
+    found numerically).
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can test whether a point is on a graph, turn "where do these graphs meet?" into "solve this equation", and use a sketch to **count** the real roots of an equation you can't solve directly.
+
+  - type: explain
+    title: A graph is a picture of an equation
+    body: |-
+      The graph of $y = x^2 - 3x + 1$ is **every** point $(x, y)$ that makes the equation true. Nothing more, nothing less.
+
+      So "is $(2, -1)$ on the curve?" is just "does it fit?": $\;2^2 - 3(2) + 1 = -1$ ✓. Yes, it's on the curve.
+
+      And "is $(1, 1)$ on it?": $\;1 - 3 + 1 = -1 \neq 1$. No.
+
+  - type: explain
+    title: Meeting points are solutions
+    body: |-
+      Where $y = f(x)$ and $y = g(x)$ **meet**, both equations are true at once, so $f(x) = g(x)$ there.
+
+      - The **$x$-coordinates** of the meeting points are the **solutions** of $f(x) = g(x)$.
+      - The **number** of meeting points is the **number of real solutions**.
+
+      Special case: the $x$-axis is $y = 0$, so where $y = f(x)$ crosses the $x$-axis gives the roots of $f(x) = 0$.
+
+  - type: example
+    title: Curve meets line
+    problem: |-
+      Find the coordinates of the points where the curve $y = x^2 - 4x + 5$ meets the line $y = 2x - 3$.
+    steps:
+      - |-
+        At a meeting point the $y$-values are equal: $x^2 - 4x + 5 = 2x - 3$.
+      - |-
+        Rearrange: $x^2 - 6x + 8 = 0$, so $(x - 2)(x - 4) = 0$.
+      - |-
+        $x = 2$ gives $y = 2(2) - 3 = 1$; $x = 4$ gives $y = 5$.
+      - |-
+        Check on the curve: $4 - 8 + 5 = 1$ ✓ and $16 - 16 + 5 = 5$ ✓
+    answer: |-
+      $(2, 1)$ and $(4, 5)$.
+
+  - type: check
+    questions: [ge-on-curve, ge-meet]
+
+  - type: explain
+    title: Can't solve it? Count it
+    body: |-
+      Some equations are beyond the quadratic formula. Take
+
+      $$x^3 - 2x - 1 = 0.$$
+
+      Divide by $x$ (fine, since $x = 0$ isn't a root) and rearrange: $x^2 - 2 = \dfrac1x$. Now the roots are the $x$-coordinates of the points where $y = x^2 - 2$ meets $y = \dfrac1x$. **Sketch both, count the crossings.**
+
+  - type: diagram
+    diagram: coordinate-geometry-intersections-count
+    alt: >-
+      Graph of the U-shaped parabola y = x² − 2, with its lowest point at (0, −2), and both
+      branches of the hyperbola y = 1/x. The right branch crosses the parabola once, at x ≈ 1.618.
+      The left branch, which falls steeply towards the y-axis below the x-axis, crosses the left
+      side of the parabola twice, at x = −1 and x ≈ −0.618. All three meeting points are marked,
+      and a note reads 3 meeting points ⇒ 3 real roots.
+    caption: |-
+      Three crossings, so $x^3 - 2x - 1 = 0$ has **three** real roots. (They're $x = -1$ and $x = \tfrac{1 \pm \sqrt5}{2}$, but the sketch tells you how many before you find any.)
+
+  - type: intuition
+    title: Why splitting the equation helps
+    body: |-
+      You choose how to split an equation into "left graph = right graph". Pick two graphs you can sketch from memory: lines, parabolas, $\dfrac1x$, $x^3$.
+
+      The sketch doesn't give you the roots exactly. What it gives you is the **count**, and roughly where each root lives. That's often exactly what the question asks for.
+
+  - type: check
+    questions: [ge-which-equation, ge-count]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The number of solutions of $f(x) = g(x)$ is the number of times $y = f(x)$ crosses the $x$-axis.
+        right: |-
+          That counts solutions of $f(x) = 0$. For $f(x) = g(x)$, count where the **two graphs cross each other**.
+      - wrong: |-
+          The graphs meet at $x = 2$ and $x = 4$, so the meeting points are 2 and 4.
+        right: |-
+          Points need two coordinates. Substitute back to get $(2, 1)$ and $(4, 5)$.
+      - wrong: |-
+          My sketch shows two crossings, so there are exactly two, even though I only drew $-1 \leqslant x \leqslant 1$.
+        right: |-
+          Crossings can hide off the edge of a sketch. Think about what both graphs do for large positive and negative $x$, and near any asymptotes.
+
+  - type: exam
+    body: |-
+      - Paper 1 mostly tests this through meeting points: substitute, solve, and count the solutions (next lesson: the discriminant does the counting).
+      - Wording such as *By sketching suitable graphs on the same diagram, state the number of real roots of the equation …* is more common in Papers 2 and 3, but it rests on this idea. The marks are for two correct sketches on one diagram and a stated number.
+      - Give a reason: "the graphs meet at three points, so there are three real roots".
+      - Insider hack: rearrange so that one side is a curve you know cold and the other is a straight line or another standard curve. If you're told which graphs to sketch, use those.
+
+  - type: check
+    questions: [ge-k-point, ge-explain]
+
+  - type: takeaways
+    items:
+      - |-
+        A point is on a graph exactly when its coordinates satisfy the equation.
+      - |-
+        Where $y = f(x)$ meets $y = g(x)$: the $x$-coordinates solve $f(x) = g(x)$.
+      - |-
+        Number of meeting points = number of real solutions.
+      - |-
+        To count roots you can't find, split the equation into two sketchable graphs.
+
+questions:
+  - id: ge-on-curve
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.5"]
+    prompt: |-
+      Which point lies on the curve $y = 2x^2 - 3x$?
+    explanation: |-
+      Substitute $x = -1$: $2(-1)^2 - 3(-1) = 2 + 3 = 5$. So $(-1, 5)$ fits the equation and is on the curve.
+    options:
+      - text: |-
+          $(-1, 1)$
+        why: |-
+          This comes from treating $2(-1)^2$ as $-2$. Squaring first gives $+1$, so $2(-1)^2 = 2$.
+      - text: |-
+          $(-1, 5)$
+        correct: true
+        why: |-
+          $2(1) + 3 = 5$ ✓
+      - text: |-
+          $(-1, -1)$
+        why: |-
+          This comes from treating $-3(-1)$ as $-3$. Two negatives multiply to a positive: $+3$.
+      - text: |-
+          $(5, -1)$
+        why: |-
+          Coordinates swapped. At $x = 5$, $y = 50 - 15 = 35$.
+
+  - id: ge-meet
+    format: numeric
+    difficulty: 1
+    objectives: ["1.3.5"]
+    prompt: |-
+      Find the $x$-coordinates of the points where the curve $y = x^2 + x - 4$ meets the line $y = 2x + 2$.
+    fields:
+      - label: "smaller x ="
+        answer: -2
+      - label: "larger x ="
+        answer: 3
+    explanation: |-
+      $x^2 + x - 4 = 2x + 2 \Rightarrow x^2 - x - 6 = 0 \Rightarrow (x - 3)(x + 2) = 0$, so $x = -2$ or $x = 3$.
+
+      (The points are $(-2, -2)$ and $(3, 8)$.)
+
+  - id: ge-which-equation
+    format: mcq
+    difficulty: 2
+    objectives: ["1.3.5"]
+    prompt: |-
+      The $x$-coordinates of the points where $y = x^3$ meets $y = 3x - 2$ are the roots of which equation?
+    explanation: |-
+      Set the $y$-values equal: $x^3 = 3x - 2$, so $x^3 - 3x + 2 = 0$.
+
+      Bonus: it factorises as $(x - 1)^2(x + 2) = 0$. The repeated root $x = 1$ means the line **touches** the curve at $(1, 1)$, and it crosses at $(-2, -8)$.
+    options:
+      - text: |-
+          $x^3 + 3x - 2 = 0$
+        why: |-
+          Sign slip moving $3x - 2$ across: both terms change sign, giving $-3x + 2$.
+      - text: |-
+          $x^3 - 3x - 2 = 0$
+        why: |-
+          Only one of the two terms changed sign. Moving $-2$ to the left makes it $+2$.
+      - text: |-
+          $x^3 - 3x + 2 = 0$
+        correct: true
+        why: |-
+          From $x^3 = 3x - 2$, subtract $3x$ and add 2 on both sides.
+      - text: |-
+          $3x - 2 = 0$
+        why: |-
+          That's where the line crosses the $x$-axis, not where it meets the curve.
+
+  - id: ge-count
+    format: mcq
+    difficulty: 3
+    objectives: ["1.3.5"]
+    prompt: |-
+      By considering the graphs of $y = 4 - x^2$ and $y = \dfrac1x$, how many real roots does the equation $\dfrac1x = 4 - x^2$ have?
+    explanation: |-
+      $y = 4 - x^2$ is ∩-shaped with maximum $(0, 4)$, crossing the $x$-axis at $\pm 2$.
+
+      - For $x > 0$: $\tfrac1x$ starts very high, dips below the ∩ and then (for large $x$) the ∩ falls below it. They cross **twice** (near $x \approx 0.25$ and $x \approx 1.86$).
+      - For $x < 0$: $\tfrac1x$ is negative, while $4 - x^2$ is positive until $x = -2$ and then plunges. They cross **once** (near $x \approx -2.11$).
+
+      Three crossings, so three real roots. (Equivalently, $x^3 - 4x + 1 = 0$ has three real roots.)
+    options:
+      - text: |-
+          3
+        correct: true
+        why: |-
+          Two crossings for $x > 0$ and one for $x < 0$.
+      - text: |-
+          2
+        why: |-
+          You've found the two on the right. On the left, $4 - x^2$ goes negative for $x < -2$ and meets the left branch of $\tfrac1x$ there too.
+      - text: |-
+          1
+        why: |-
+          On the right, $\tfrac1x$ is above the ∩ near $x = 0$ (at $x = 0.1$ it's 10), below it at $x = 1$ (1 versus 3), and above it again by $x = 2$ ($\tfrac12$ versus 0). That's two crossings already.
+      - text: |-
+          0
+        why: |-
+          At $x = 1$, $\tfrac1x = 1$ is below $4 - 1 = 3$, but at $x = 2$, $\tfrac12$ is above $0$. The graphs must cross in between.
+
+  - id: ge-k-point
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.5"]
+    prompt: |-
+      The point $(k, 5)$ lies on the curve $y = x^2 - 2x - 3$, and $k > 0$. Find $k$.
+    fields:
+      - label: "k ="
+        answer: 4
+    explanation: |-
+      The point fits the equation: $5 = k^2 - 2k - 3$, so $k^2 - 2k - 8 = 0$ and $(k - 4)(k + 2) = 0$.
+
+      $k = 4$ or $k = -2$; since $k > 0$, $k = 4$. Check: $16 - 8 - 3 = 5$ ✓
+
+  - id: ge-explain
+    format: explain
+    difficulty: 2
+    objectives: ["1.3.5"]
+    prompt: |-
+      Explain how the graphs of $y = x^2 - 2$ and $y = \dfrac1x$ tell you the number of real roots of $x^3 - 2x - 1 = 0$.
+    explanation: |-
+      The key move is rewriting the cubic as "one graph = another graph", so that every root becomes a meeting point you can see.
+    model: |-
+      $x = 0$ is not a root, so I can divide $x^3 - 2x - 1 = 0$ by $x$ to get $x^2 - 2 = \dfrac1x$. A root of the cubic is therefore an $x$-value where $y = x^2 - 2$ and $y = \dfrac1x$ have the same $y$-value, i.e. the $x$-coordinate of a point where the two graphs meet. Each meeting point gives one real root. The sketch shows the graphs meeting at three points (one for $x > 0$, two for $x < 0$), so the equation has three real roots.
+    keyPoints:
+      - Rearranges the cubic to x² − 2 = 1/x (noting x = 0 is not a root)
+      - A root is the x-coordinate of a point where the two graphs meet
+      - Each meeting point gives exactly one real root
+      - The graphs meet three times, so there are three real roots

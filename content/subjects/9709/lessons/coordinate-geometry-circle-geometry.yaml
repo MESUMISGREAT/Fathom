@@ -1,0 +1,266 @@
+id: coordinate-geometry-circle-geometry
+subject: "9709"
+topic: "1.3"
+title: Circle facts that find circles
+summary: Use the angle in a semicircle and the perpendicular bisector of a chord to find a circle's centre, radius and equation from a few points.
+order: 8
+minutes: 5
+kind: core
+objectives: ["1.3.4"]
+prerequisites: [coordinate-geometry-equation-of-a-circle, coordinate-geometry-intersecting-lines]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcome "use algebraic methods to
+    solve problems involving lines and circles", including the note on elementary geometrical
+    properties of circles (the angle in a semicircle, symmetry). All examples and questions are
+    original; every centre, gradient and radius checked in Python.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use the **angle in a semicircle** and the **perpendicular bisector of a chord** to find the centre and equation of a circle through given points.
+
+  - type: explain
+    title: Three facts, endless questions
+    body: |-
+      IGCSE circle theorems are back, now with coordinates. Three of them do almost all the work:
+
+      | Fact | In coordinates |
+      | --- | --- |
+      | Tangent ⊥ radius | gradients multiply to $-1$ (last lesson) |
+      | **Angle in a semicircle** is $90°$ | if $AB$ is a diameter, $m_{AP} \times m_{BP} = -1$ |
+      | **Perpendicular bisector of a chord** passes through the centre | the centre lies on it |
+
+  - type: diagram
+    diagram: coordinate-geometry-circle-properties
+    alt: >-
+      Three circles side by side. Left, titled tangent perpendicular to radius: a radius from the
+      centre O to a point P, and a tangent line touching at P with a right-angle mark between
+      them; caption, gradients multiply to −1. Middle, titled angle in a semicircle: a diameter AB
+      through the centre O and a point P on the circle, with triangle APB shaded and a right angle
+      at P; caption, AP ⊥ BP. Right, titled perpendicular bisector of a chord, through the
+      centre: a horizontal chord AB with
+      midpoint M marked by equal tick marks either side, and a dashed vertical line through M and
+      the centre O, with a right angle at M; caption, AM = MB and OM ⊥ AB.
+    caption: |-
+      All three are about right angles, and in coordinate geometry a right angle means one thing: **gradients multiply to $-1$**.
+
+  - type: definition
+    term: Angle in a semicircle
+    body: |-
+      If $AB$ is a **diameter** of a circle and $P$ is any other point on the circle, then angle $APB = 90°$.
+
+      It works backwards too: if angle $APB = 90°$, then $P$ lies on the circle with **diameter $AB$**.
+
+  - type: check
+    questions: [cg-semicircle, cg-chord-bisector]
+
+  - type: example
+    title: Spot the hidden diameter
+    problem: |-
+      The points are $A(1, 1)$, $B(7, 3)$ and $C(5, 5)$. Show that angle $ACB = 90°$, and hence find the equation of the circle through $A$, $B$ and $C$.
+    steps:
+      - |-
+        $m_{AC} = \dfrac{5 - 1}{5 - 1} = 1$ and $m_{BC} = \dfrac{5 - 3}{5 - 7} = -1$.
+      - |-
+        $m_{AC} \times m_{BC} = -1$, so $AC \perp BC$ and angle $ACB = 90°$.
+      - |-
+        Angle in a semicircle, backwards: $AB$ is a **diameter**. So the centre is the midpoint of $AB$: $(4, 2)$.
+      - |-
+        $r^2 = (1 - 4)^2 + (1 - 2)^2 = 9 + 1 = 10$.
+    answer: |-
+      $(x - 4)^2 + (y - 2)^2 = 10$. Check with $C$: $1 + 9 = 10$ ✓
+
+  - type: explain
+    title: "Symmetry: the chord's secret"
+    body: |-
+      A **chord** is a line segment joining two points on a circle. Both ends are the same distance from the centre, so the centre must sit on the chord's **perpendicular bisector**.
+
+      Two chords give two perpendicular bisectors, and **where they cross is the centre**. That's how to find the circle through any three points.
+
+  - type: diagram
+    diagram: coordinate-geometry-circumcentre
+    alt: >-
+      Square grid with points A(0, 6), B(6, 6) and C(7, −1) on a blue circle. Chords AB and BC
+      are drawn. The perpendicular bisector of AB is the dashed vertical line x = 3 through the
+      midpoint (3, 6). The perpendicular bisector of BC is a dashed line with a gentle upward
+      slope through the midpoint of BC, (6.5, 2.5). The two dashed lines cross at the centre
+      (3, 2). A dashed radius from the centre to A is labelled r = 5, and the equation
+      (x − 3)² + (y − 2)² = 25 is written at the bottom right.
+    caption: |-
+      Two perpendicular bisectors, one crossing point, one centre. Here $AB$ is horizontal, so its bisector is simply the vertical line $x = 3$.
+
+  - type: example
+    title: The circle through three points
+    problem: |-
+      Find the equation of the circle through $A(0, 6)$, $B(6, 6)$ and $C(7, -1)$.
+    steps:
+      - |-
+        $AB$ is horizontal with midpoint $(3, 6)$, so its perpendicular bisector is the vertical line $x = 3$.
+      - |-
+        $BC$: midpoint $\left(\tfrac{13}{2}, \tfrac52\right)$, gradient $\dfrac{-1 - 6}{7 - 6} = -7$, so the perpendicular gradient is $\tfrac17$: $\;y - \tfrac52 = \tfrac17\left(x - \tfrac{13}{2}\right)$.
+      - |-
+        The centre is on both. Put $x = 3$: $y = \tfrac52 + \tfrac17\left(-\tfrac72\right) = \tfrac52 - \tfrac12 = 2$. Centre $(3, 2)$.
+      - |-
+        Radius: $r^2 = (0 - 3)^2 + (6 - 2)^2 = 9 + 16 = 25$.
+    answer: |-
+      $(x - 3)^2 + (y - 2)^2 = 25$. Check with $C$: $16 + 9 = 25$ ✓
+
+  - type: check
+    questions: [cg-diameter-check, cg-midpoint-chord]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The centre of a circle is the midpoint of any chord.
+        right: |-
+          Only of a **diameter**. For any other chord, the centre is somewhere on its perpendicular bisector, not at its midpoint.
+      - wrong: |-
+          Angle $ACB = 90°$, so the centre is at $C$.
+        right: |-
+          The right angle is on the circle, **opposite** the diameter. The centre is the midpoint of $AB$, the side facing the right angle.
+      - wrong: |-
+          To find the centre from three points, average all three.
+        right: |-
+          Averaging gives the centroid of the triangle, which is usually not the circle's centre. Intersect two perpendicular bisectors instead.
+
+  - type: exam
+    body: |-
+      - Watch for *"Show that angle $ABC = 90°$ … hence find the equation of the circle through $A$, $B$ and $C$"*. The *hence* is shouting "angle in a semicircle".
+      - In a "show that", write the gradients, the product **and** the conclusion: "$m_{AC} \times m_{BC} = -1$, so angle $ACB = 90°$".
+      - Insider hack: once you have a centre, check it's the same distance from **all** the given points. If one disagrees, there's a slip.
+
+  - type: check
+    questions: [cg-three-points, cg-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        **Angle in a semicircle:** a right angle at $P$ means $AB$ is a diameter, so the centre is the midpoint of $AB$.
+      - |-
+        The **perpendicular bisector of a chord** passes through the centre.
+      - |-
+        Circle through three points: intersect two perpendicular bisectors to get the centre.
+      - |-
+        Right angles in coordinates: gradients multiply to $-1$.
+
+questions:
+  - id: cg-semicircle
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.4"]
+    prompt: |-
+      $AB$ is a diameter of a circle and $P$ is another point on the circle. Which statement must be true?
+    explanation: |-
+      This is the angle in a semicircle: the angle subtended by a diameter at any point on the circle is $90°$. So angle $APB = 90°$ and $AP \perp BP$.
+    options:
+      - text: |-
+          $AP = BP$
+        why: |-
+          That's only true when $P$ is exactly halfway round. In general $AP$ and $BP$ have different lengths.
+      - text: |-
+          $AP$ is perpendicular to $AB$
+        why: |-
+          The right angle is at $P$, between $AP$ and $BP$, not at $A$.
+      - text: |-
+          Angle $APB = 180°$
+        why: |-
+          $180°$ would put $P$ on the line $AB$. A point on the circle sees the diameter at $90°$.
+      - text: |-
+          Angle $APB = 90°$
+        correct: true
+        why: |-
+          The angle in a semicircle is always a right angle.
+
+  - id: cg-chord-bisector
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.4"]
+    prompt: |-
+      The perpendicular bisector of any chord of a circle passes through the {{1}} of the circle.
+    blanks:
+      - accept: [centre, center, the centre, the center]
+    explanation: |-
+      Both ends of a chord are a radius away from the centre, so the centre is equidistant from them. Every such point lies on the perpendicular bisector of the chord.
+
+  - id: cg-diameter-check
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.4"]
+    prompt: |-
+      The points are $A(-3, 2)$, $B(5, -4)$ and $P(4, 3)$. Given that angle $APB = 90°$, the circle through $A$, $B$ and $P$ has equation $(x - a)^2 + (y - b)^2 = r^2$. Find $a$, $b$ and $r^2$.
+    fields:
+      - label: "a ="
+        answer: 1
+      - label: "b ="
+        answer: -1
+      - label: "r² ="
+        answer: 25
+    explanation: |-
+      Angle $APB = 90°$, so $AB$ is a diameter. (Check: $m_{PA} = \tfrac{2 - 3}{-3 - 4} = \tfrac17$ and $m_{PB} = \tfrac{-4 - 3}{5 - 4} = -7$; product $-1$ ✓)
+
+      Centre = midpoint of $AB = (1, -1)$. $r^2 = (-3 - 1)^2 + (2 + 1)^2 = 16 + 9 = 25$.
+
+      Check with $P$: $(4 - 1)^2 + (3 + 1)^2 = 25$ ✓
+
+  - id: cg-midpoint-chord
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.4"]
+    prompt: |-
+      A circle has centre $C(3, 1)$. A chord $PQ$ has midpoint $M(5, 4)$. Find the gradient of $PQ$. A fraction is fine.
+    fields:
+      - label: "gradient of PQ ="
+        answer: -0.6666666666666666
+        tolerance: { abs: 0.005 }
+    explanation: |-
+      The line from the centre to the midpoint of a chord is perpendicular to the chord (it's part of the perpendicular bisector).
+
+      $m_{CM} = \dfrac{4 - 1}{5 - 3} = \dfrac32$, so $m_{PQ} = -\dfrac23$.
+
+  - id: cg-three-points
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.4"]
+    prompt: |-
+      A circle passes through $A(-1, 3)$, $B(5, 3)$ and $C(6, -4)$. Find its centre and radius.
+    fields:
+      - label: "centre x ="
+        answer: 2
+      - label: "centre y ="
+        answer: -1
+      - label: "radius ="
+        answer: 5
+    explanation: |-
+      $AB$ is horizontal with midpoint $(2, 3)$, so its perpendicular bisector is $x = 2$.
+
+      $BC$: midpoint $\left(\tfrac{11}{2}, -\tfrac12\right)$, gradient $\dfrac{-4 - 3}{6 - 5} = -7$, perpendicular gradient $\tfrac17$. At $x = 2$: $y = -\tfrac12 + \tfrac17\left(2 - \tfrac{11}{2}\right) = -\tfrac12 - \tfrac12 = -1$.
+
+      Centre $(2, -1)$; $r^2 = (-1 - 2)^2 + (3 + 1)^2 = 25$, so $r = 5$. Check with $C$: $16 + 9 = 25$ ✓
+
+  - id: cg-spot
+    format: spot-error
+    difficulty: 3
+    objectives: ["1.3.4"]
+    prompt: |-
+      A student finds the circle through $A(-2, 1)$, $B(4, 3)$ and $C(2, 5)$. Which line contains the first error?
+    lines:
+      - |-
+        $m_{AC} = \dfrac{5 - 1}{2 + 2} = 1$ and $m_{BC} = \dfrac{5 - 3}{2 - 4} = -1$.
+      - |-
+        $1 \times (-1) = -1$, so angle $ACB = 90°$.
+      - |-
+        So $AB$ is a diameter of the circle through $A$, $B$ and $C$.
+      - |-
+        The centre is the midpoint of $AC$, which is $(0, 3)$.
+      - |-
+        $r^2 = (-2 - 0)^2 + (1 - 3)^2 = 8$, so the circle is $x^2 + (y - 3)^2 = 8$.
+    errorLine: 4
+    fix: |-
+      $AB$ is the diameter, so the centre is the midpoint of $AB$: $(1, 2)$. Then $r^2 = (-2 - 1)^2 + (1 - 2)^2 = 10$, giving $(x - 1)^2 + (y - 2)^2 = 10$.
+    explanation: |-
+      Lines 1–3 are spot on. Line 4 uses the wrong segment: the diameter is the side **opposite** the right angle. Test the student's circle with $B$: $16 + 0 = 16 \neq 8$, so it doesn't even pass through $B$.

@@ -1,0 +1,290 @@
+id: functions-domain-and-range
+subject: "9709"
+topic: "1.2"
+title: Functions, domain and range
+summary: A function sends every input in its domain to exactly one output; the range is the set of outputs you actually get.
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.2.1", "1.2.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.2 learning outcomes "understand the terms
+    function, domain, range ..." and "identify the range of a given function in simple cases",
+    including the syllabus's own illustrations (the range of 1/x for x ≥ 1 and of x² + 1 for
+    x ∈ ℝ). All questions are original; every answer checked in Python. Not yet reviewed by a
+    teacher.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use the words **function**, **domain** and **range** the way examiners do, read Cambridge function notation, and find the range of a simple function.
+
+  - type: explain
+    title: A vending machine that never glitches
+    body: |-
+      Press button B4 on a vending machine and you get crisps. Every time. That reliability is the whole idea of a **function**: each input gives **exactly one** output.
+
+      - Two buttons giving the same snack? Fine. Still a function.
+      - One button dropping crisps on Monday and a cola on Tuesday? Not a function.
+
+      Where the analogy breaks: a real machine runs out of crisps. A function never does, and its list of buttons can be infinite.
+
+  - type: definition
+    term: Function
+    body: |-
+      A **function** is a rule that maps each element of a set of inputs, the **domain**, to **exactly one** output value.
+
+  - type: diagram
+    diagram: functions-mapping-types
+    alt: >-
+      Three arrow diagrams side by side, each with an oval of inputs labelled domain and an oval
+      of outputs. Left, one-one, a function: x maps to 2x, sending 1 to 2, 2 to 4 and 3 to 6, one
+      arrow each. Middle, many-one, a function: x maps to x squared, sending both −2 and 2 to 4,
+      and 3 to 9. Right, one-many, not a function: x maps to plus or minus root x, so 4 has two
+      arrows, to 2 and −2, and 9 has two arrows, to 3 and −3.
+    caption: |-
+      Many-one is allowed (two inputs can share an output). One-many is not: an input with two outputs breaks the "exactly one" rule.
+
+  - type: explain
+    title: Reading the notation
+    body: |-
+      Cambridge writes the same function in two ways, and you need both:
+
+      | Notation | Read it as |
+      | --- | --- |
+      | $f(x) = 3x - 1$ | "f of $x$ equals $3x - 1$" |
+      | $f : x \mapsto 3x - 1$ | "f maps $x$ to $3x - 1$" |
+      | $\text{for } x \in \mathbb{R}$ | "for every real number $x$" |
+      | $\text{for } x \geqslant 2$ | "the domain is $x \geqslant 2$ only" |
+
+      The domain is part of the function. $f(x) = x^2$ for $x \in \mathbb{R}$ and $f(x) = x^2$ for $x \geqslant 0$ are **different functions**, even though the rule is the same.
+
+  - type: definition
+    term: Domain and range
+    body: |-
+      The **domain** of a function is the set of input values it is defined for. The **range** is the set of all output values $f(x)$ that the function produces from its domain.
+
+  - type: check
+    questions: [fdr-which-function, fdr-cloze]
+
+  - type: explain
+    title: "Finding a range: sketch, then squash"
+    body: |-
+      1. **Sketch** $y = f(x)$, but only over the given domain.
+      2. **Squash** the graph sideways onto the $y$-axis. Whatever it covers is the range.
+      3. Check the **ends**: is each end value reached (use $\leqslant$) or only approached (use $<$)?
+
+      Write the range in terms of $f(x)$ (or $y$), never $x$. The range is about outputs.
+
+  - type: example
+    title: The syllabus classic
+    problem: |-
+      Find the range of $f : x \mapsto \dfrac{1}{x}$ for $x \geqslant 1$.
+    steps:
+      - |-
+        Start at the left end of the domain: $f(1) = 1$. That value is reached, so 1 is included.
+      - |-
+        As $x$ increases, $\dfrac{1}{x}$ decreases: $f(2) = \tfrac12$, $f(10) = \tfrac{1}{10}$, $f(1000) = 0.001$.
+      - |-
+        It gets as close to 0 as you like, but $\dfrac{1}{x}$ is never 0 (and never negative for $x \geqslant 1$). So 0 is **not** included.
+    answer: |-
+      Range: $0 < f(x) \leqslant 1$.
+
+  - type: diagram
+    diagram: functions-reciprocal-range
+    alt: >-
+      Graph of y = 1/x drawn only for x ≥ 1. The curve starts at the solid point (1, 1) and falls
+      to the right, flattening towards the x-axis without touching it. The part of y = 1/x for x
+      between 0 and 1 is shown dashed because it is outside the domain. On the y-axis, the
+      interval from 0 to 1 is shaded, with a solid dot at 1 and an open circle at 0, labelled
+      range: 0 < f(x) ≤ 1.
+    caption: |-
+      Squash the curve onto the $y$-axis: it covers everything from just above 0 up to 1. The open circle at 0 means "approached, never reached".
+
+  - type: check
+    questions: [fdr-reciprocal, fdr-linear]
+
+  - type: example
+    title: When a square does the work
+    problem: |-
+      Find the range of $g : x \mapsto x^2 + 1$ for $x \in \mathbb{R}$.
+    steps:
+      - |-
+        For every real $x$, $x^2 \geqslant 0$, and $x^2 = 0$ when $x = 0$.
+      - |-
+        Add 1 to everything: $x^2 + 1 \geqslant 1$, with equality at $x = 0$.
+      - |-
+        $x^2$ can be as large as you like, so there's no upper limit.
+    answer: |-
+      Range: $g(x) \geqslant 1$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The range of $g(x) = x^2 + 1$ is $x \geqslant 1$.
+        right: |-
+          The range is a set of **outputs**: $g(x) \geqslant 1$ (or $y \geqslant 1$). Writing $x$ describes inputs and loses the mark.
+      - wrong: |-
+          $\dfrac{1}{x}$ eventually reaches 0, so the range of $\dfrac1x$ for $x \geqslant 1$ is $0 \leqslant f(x) \leqslant 1$.
+        right: |-
+          $\dfrac{1}{x} = 0$ has no solution, so 0 is never an output. The correct range is $0 < f(x) \leqslant 1$.
+      - wrong: |-
+          A function can't send two different inputs to the same output.
+        right: |-
+          It can: $x^2$ sends both $2$ and $-2$ to $4$. What a function can't do is send **one** input to **two** outputs.
+
+  - type: deeper
+    title: Why some domains come with fences
+    body: |-
+      Sometimes the rule itself forces a restriction, because real-number outputs must exist:
+
+      - $\sqrt{x - 2}$ needs $x - 2 \geqslant 0$, so the largest possible domain is $x \geqslant 2$.
+      - $\dfrac{1}{x + 3}$ breaks at $x = -3$ (division by zero), so $-3$ must be left out.
+
+      When a question gives the domain, use exactly that domain. Don't quietly extend it.
+
+  - type: exam
+    body: |-
+      - "State the range of f" is usually 1 mark, and the mark goes on the **inequality in $f(x)$** with the right ends: $<$ versus $\leqslant$ matters.
+      - Mark schemes accept $f(x) \geqslant 1$, $y \geqslant 1$ or $f \geqslant 1$. They don't accept $x \geqslant 1$.
+      - Insider hack: do a 5-second sketch even when the question doesn't ask for one. Ranges read off a sketch are far harder to get wrong.
+
+  - type: check
+    questions: [fdr-square, fdr-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        A **function** maps each element of its **domain** to exactly one output. Many-one is fine; one-many is not a function.
+      - |-
+        The **range** is the set of outputs actually produced from the domain.
+      - |-
+        To find a range: sketch over the domain, squash onto the $y$-axis, check whether each end is reached.
+      - |-
+        Write ranges in terms of $f(x)$ or $y$, with $<$ or $\leqslant$ chosen carefully.
+
+questions:
+  - id: fdr-which-function
+    format: mcq
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |-
+      Which of these rules is **not** a function?
+    explanation: |-
+      A function must give exactly one output for each input. "A number whose square is $x$" gives two outputs for each $x > 0$ (for example 3 and $-3$ when $x = 9$), so it is one-many, not a function.
+    options:
+      - text: |-
+          $x \mapsto x^2$ for $x \in \mathbb{R}$
+        why: |-
+          Different inputs can share an output ($2$ and $-2$ both give 4), but each input still has exactly one output. Many-one is a function.
+      - text: |-
+          $x \mapsto$ "a number whose square is $x$", for $x > 0$
+        correct: true
+        why: |-
+          Each input has two possible outputs ($\pm\sqrt{x}$). One input, two outputs: not a function.
+      - text: |-
+          $x \mapsto 2x + 1$ for $x \in \mathbb{R}$
+        why: |-
+          Every input gives exactly one output. A function (one-one, in fact).
+      - text: |-
+          $x \mapsto 5$ for $x \in \mathbb{R}$
+        why: |-
+          Boring but legal: every input gives exactly one output, which happens to be 5. A constant function is still a function.
+
+  - id: fdr-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.2.1"]
+    prompt: |-
+      The set of input values of a function is its {{1}}. The set of output values it actually produces is its {{2}}.
+    blanks:
+      - accept: [domain, the domain]
+      - accept: [range, the range]
+    explanation: |-
+      Inputs live in the **domain**; the outputs that come out form the **range**.
+
+  - id: fdr-reciprocal
+    format: mcq
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      Find the range of $f(x) = \dfrac{6}{x}$ for $x \geqslant 2$.
+    explanation: |-
+      $f(2) = 3$ is the largest value. As $x$ increases, $\dfrac6x$ decreases towards 0 but never reaches it. So $0 < f(x) \leqslant 3$.
+    options:
+      - text: |-
+          $f(x) \geqslant 2$
+        why: |-
+          That's the domain dressed up as $f(x)$. The outputs are $\dfrac62 = 3$ and smaller.
+      - text: |-
+          $0 \leqslant f(x) \leqslant 3$
+        why: |-
+          $\dfrac{6}{x} = 0$ has no solution, so 0 is not in the range. Use $<$ at that end.
+      - text: |-
+          $0 < f(x) \leqslant 3$
+        correct: true
+        why: |-
+          3 is reached at $x = 2$; 0 is approached but never reached.
+      - text: |-
+          $f(x) \leqslant 3$
+        why: |-
+          This includes negative values, but $\dfrac6x > 0$ for every $x \geqslant 2$.
+
+  - id: fdr-linear
+    format: numeric
+    difficulty: 2
+    objectives: ["1.2.2"]
+    prompt: |-
+      The function $f$ is defined by $f(x) = 5 - 2x$ for $-1 \leqslant x \leqslant 3$. Its range is $a \leqslant f(x) \leqslant b$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: -1
+      - label: "b ="
+        answer: 7
+    explanation: |-
+      The graph is a straight line with negative gradient, so the extreme values are at the ends of the domain:
+
+      $f(-1) = 5 + 2 = 7$ and $f(3) = 5 - 6 = -1$.
+
+      So $-1 \leqslant f(x) \leqslant 7$. Note the larger output comes from the *smaller* input, because the line slopes down.
+
+  - id: fdr-square
+    format: numeric
+    difficulty: 1
+    objectives: ["1.2.2"]
+    prompt: |-
+      The function $g$ is defined by $g(x) = x^2 - 5$ for $x \in \mathbb{R}$. Its range is $g(x) \geqslant k$. Find $k$.
+    fields:
+      - label: "k ="
+        answer: -5
+    explanation: |-
+      $x^2 \geqslant 0$ for all real $x$, so $x^2 - 5 \geqslant -5$, with equality at $x = 0$. Range: $g(x) \geqslant -5$.
+
+  - id: fdr-spot
+    format: spot-error
+    difficulty: 3
+    objectives: ["1.2.2"]
+    prompt: |-
+      A student finds the range of $f(x) = 4 - x^2$ for $x \geqslant 1$. Which line contains the first error?
+    lines:
+      - |-
+        The domain is $x \geqslant 1$.
+      - |-
+        $f(1) = 4 - 1^2 = 3$
+      - |-
+        For $x \geqslant 1$, $x^2 \geqslant 1$.
+      - |-
+        So $4 - x^2 \geqslant 4 - 1 = 3$.
+      - |-
+        Range: $f(x) \geqslant 3$.
+    errorLine: 4
+    fix: |-
+      Subtracting a bigger number gives a smaller answer, so the inequality flips: $4 - x^2 \leqslant 3$. The range is $f(x) \leqslant 3$.
+    explanation: |-
+      Test it: $f(2) = 0$, which is less than 3, so "$f(x) \geqslant 3$" can't be right. Taking $x^2$ away from 4 reverses the direction of the inequality, just like multiplying by $-1$.

@@ -1,0 +1,254 @@
+id: coordinate-geometry-line-meets-curve
+subject: "9709"
+topic: "1.3"
+title: "Cuts, touches or misses: lines and quadratic curves"
+summary: Slide a line across a curve and watch the meeting points go 2, 1, 0. The discriminant of the combined equation tells you which, and finds the k for a tangent.
+order: 11
+minutes: 5
+kind: core
+objectives: ["1.3.5"]
+prerequisites: [coordinate-geometry-graphs-and-equations, quadratics-unknown-constants]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.3 learning outcome "understand the
+    relationship between a graph and its associated algebraic equation, and use the relationship
+    between points of intersection of graphs and solutions of equations", including the note's
+    example of finding the set of values of k for which y = x + k intersects, touches or does not
+    meet a quadratic curve. All examples and questions are original; every discriminant and point
+    of contact checked in Python.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can decide whether a line **intersects**, **touches** or **does not meet** a quadratic curve, find the values of a constant for each case, and find the point where a tangent touches.
+
+  - type: explain
+    title: The sliding line
+    body: |-
+      Picture the curve $y = x^2 - 3x + 6$ and a family of parallel lines $y = x + k$. Changing $k$ slides the line up and down like a ruler.
+
+      - High up, the line slices through the curve: **two** meeting points.
+      - Lower down, it just kisses the curve: **one** point. That's a **tangent**.
+      - Lower still, it sails underneath: **none**.
+
+      The number of meeting points is the number of real roots of one quadratic, so the discriminant decides.
+
+  - type: diagram
+    diagram: coordinate-geometry-sliding-line
+    alt: >-
+      Graph of the U-shaped curve y = x² − 3x + 6, lowest near (1.5, 3.75), with three parallel
+      lines of gradient 1. The top line, y = x + 4, crosses the curve at two marked points, at
+      x ≈ 0.59 and x ≈ 3.41. The middle orange line, y = x + 2, touches the curve at the single
+      point (2, 4). The bottom dashed line, y = x, passes below the curve without meeting it. A
+      legend reads: lines y = x + k; k = 4, crosses twice, b² − 4ac greater than 0; k = 2, tangent
+      at (2, 4), b² − 4ac equal to 0; k = 0, misses, b² − 4ac less than 0.
+    caption: |-
+      Same gradient, different $k$. As the line slides down, the two crossing points move together, merge at the tangent point $(2, 4)$, and then vanish.
+
+  - type: example
+    title: All three cases at once
+    problem: |-
+      Find the values of $k$ for which the line $y = x + k$ (a) meets the curve $y = x^2 - 3x + 6$ at two distinct points, (b) is a tangent to the curve, (c) does not meet the curve.
+    steps:
+      - |-
+        Set equal: $x^2 - 3x + 6 = x + k$, so $x^2 - 4x + (6 - k) = 0$.
+      - |-
+        $a = 1$, $b = -4$, $c = 6 - k$. Discriminant: $16 - 4(6 - k) = 16 - 24 + 4k = 4k - 8$.
+      - |-
+        (a) Two distinct points: $4k - 8 > 0$, so $k > 2$.
+      - |-
+        (b) Tangent: $4k - 8 = 0$, so $k = 2$.
+      - |-
+        (c) No meeting: $4k - 8 < 0$, so $k < 2$.
+    answer: |-
+      (a) $k > 2$, (b) $k = 2$, (c) $k < 2$. Matches the picture: $k = 4$ cuts, $k = 2$ touches, $k = 0$ misses.
+
+  - type: explain
+    title: Translate the words
+    body: |-
+      | The question says the line … | You need |
+      | --- | --- |
+      | meets / intersects the curve at two distinct points | $b^2 - 4ac > 0$ |
+      | is a tangent to / touches the curve | $b^2 - 4ac = 0$ |
+      | meets / intersects the curve (at all) | $b^2 - 4ac \geqslant 0$ |
+      | does not meet / does not intersect the curve | $b^2 - 4ac < 0$ |
+
+      The discriminant belongs to the **combined** quadratic (after you set the equations equal and rearrange to $= 0$), not to the curve on its own.
+
+  - type: check
+    questions: [lm-words, lm-condition]
+
+  - type: example
+    title: Find the tangent, then the point of contact
+    problem: |-
+      Find the two values of $m$ for which the line $y = mx + 2$ is a tangent to the curve $y = x^2 - 2x + 6$. For each, find the point of contact.
+    steps:
+      - |-
+        Set equal: $x^2 - 2x + 6 = mx + 2$, so $x^2 - (2 + m)x + 4 = 0$.
+      - |-
+        Tangent: $(2 + m)^2 - 4(1)(4) = 0$, so $(2 + m)^2 = 16$ and $2 + m = \pm 4$.
+      - |-
+        So $m = 2$ or $m = -6$.
+      - |-
+        At a tangent the root is repeated, so $x = -\dfrac{b}{2a} = \dfrac{2 + m}{2}$.
+      - |-
+        $m = 2$: $x = 2$, $y = 2(2) + 2 = 6$. $\;m = -6$: $x = -2$, $y = -6(-2) + 2 = 14$.
+    answer: |-
+      $m = 2$, touching at $(2, 6)$; $\;m = -6$, touching at $(-2, 14)$. Check on the curve: $4 - 4 + 6 = 6$ ✓ and $4 + 4 + 6 = 14$ ✓
+
+  - type: check
+    questions: [lm-tangent-k, lm-set]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Use the discriminant of the curve $x^2 - 3x + 6$ to decide whether the line meets it.
+        right: |-
+          That only tells you whether the **curve** meets the $x$-axis. Combine the curve with the line first: $x^2 - 4x + 6 - k = 0$.
+      - wrong: |-
+          $16 - 4(6 - k) = 16 - 24 - 4k$.
+        right: |-
+          $-4 \times (-k) = +4k$, so it's $16 - 24 + 4k = 4k - 8$. Bracket and expand carefully.
+      - wrong: |-
+          "The line meets the curve" needs $b^2 - 4ac > 0$.
+        right: |-
+          A tangent meets the curve too, so it's $\geqslant 0$. Strict $>$ is only for "two distinct points".
+
+  - type: exam
+    body: |-
+      - Typical wording: *Find the set of values of $k$ for which the line $y = x + k$ does not meet the curve.* About 3–4 marks: combine, discriminant, inequality.
+      - If the discriminant is a quadratic in $k$ (like $k^2 - 16$), you'll need a quadratic inequality, with "between" or "outside" the roots. Sketch it.
+      - Insider hack: test one value from your answer on the original equations. For $k = 0$ above, $x^2 - 4x + 6 = 0$ has discriminant $-8$: no meeting ✓
+
+  - type: check
+    questions: [lm-gradient-m, lm-spot]
+
+  - type: takeaways
+    items:
+      - |-
+        Set the line equal to the curve and rearrange to a quadratic $= 0$.
+      - |-
+        Its discriminant: $> 0$ cuts twice, $= 0$ tangent, $< 0$ misses. "Meets" means $\geqslant 0$.
+      - |-
+        At a tangent the root is repeated, $x = -\dfrac{b}{2a}$. Use the line to get $y$.
+      - |-
+        Use the discriminant of the **combined** equation, never the curve's own.
+
+questions:
+  - id: lm-words
+    format: cloze
+    difficulty: 1
+    objectives: ["1.3.5"]
+    prompt: |-
+      When the discriminant of the combined quadratic is zero, the line {{1}} the curve at exactly one point: the line is a {{2}} to the curve.
+    blanks:
+      - accept: [touches, just touches, meets, touch, intersects]
+      - accept: [tangent, a tangent]
+    explanation: |-
+      A zero discriminant gives a repeated root: one meeting point, where the line **touches** the curve. Such a line is a **tangent**.
+
+  - id: lm-condition
+    format: mcq
+    difficulty: 1
+    objectives: ["1.3.5"]
+    prompt: |-
+      A line and a curve give the combined equation $x^2 + 2x + (3 - k) = 0$. The line does **not** meet the curve. Which condition on $k$ is correct?
+    explanation: |-
+      Does not meet: $b^2 - 4ac < 0$. Here $4 - 4(3 - k) = 4 - 12 + 4k = 4k - 8$, so $4k - 8 < 0$ and $k < 2$.
+    options:
+      - text: |-
+          $k > 2$
+        why: |-
+          That's $4k - 8 > 0$: the line meets the curve at two distinct points.
+      - text: |-
+          $k < 2$
+        correct: true
+        why: |-
+          $4k - 8 < 0$ gives $k < 2$.
+      - text: |-
+          $k = 2$
+        why: |-
+          That's a zero discriminant: the line is a tangent.
+      - text: |-
+          $k \leqslant 2$
+        why: |-
+          $k = 2$ is a tangent, which **does** meet the curve. "Does not meet" needs a strict inequality.
+
+  - id: lm-tangent-k
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.5"]
+    prompt: |-
+      The line $y = 2x + k$ is a tangent to the curve $y = x^2 - 4x + 7$. Find $k$ and the coordinates of the point of contact.
+    fields:
+      - label: "k ="
+        answer: -2
+      - label: "x ="
+        answer: 3
+      - label: "y ="
+        answer: 4
+    explanation: |-
+      $x^2 - 4x + 7 = 2x + k \Rightarrow x^2 - 6x + (7 - k) = 0$.
+
+      Tangent: $36 - 4(7 - k) = 0 \Rightarrow 8 + 4k = 0 \Rightarrow k = -2$.
+
+      Then $x^2 - 6x + 9 = (x - 3)^2 = 0$, so $x = 3$ and $y = 2(3) - 2 = 4$. Check on the curve: $9 - 12 + 7 = 4$ ✓
+
+  - id: lm-set
+    format: numeric
+    difficulty: 2
+    objectives: ["1.3.5"]
+    prompt: |-
+      The line $y = x + k$ meets the curve $y = x^2 + 5x + 1$ at two distinct points exactly when $k > c$. Find $c$.
+    fields:
+      - label: "c ="
+        answer: -3
+    explanation: |-
+      $x^2 + 5x + 1 = x + k \Rightarrow x^2 + 4x + (1 - k) = 0$.
+
+      Two distinct points: $16 - 4(1 - k) > 0 \Rightarrow 12 + 4k > 0 \Rightarrow k > -3$. So $c = -3$.
+
+  - id: lm-gradient-m
+    format: numeric
+    difficulty: 3
+    objectives: ["1.3.5"]
+    prompt: |-
+      The line $y = mx - 1$ is a tangent to the curve $y = 2x^2 + 1$. Find the two possible values of $m$.
+    fields:
+      - label: "smaller m ="
+        answer: -4
+      - label: "larger m ="
+        answer: 4
+    explanation: |-
+      $2x^2 + 1 = mx - 1 \Rightarrow 2x^2 - mx + 2 = 0$.
+
+      Tangent: $m^2 - 4(2)(2) = 0 \Rightarrow m^2 = 16 \Rightarrow m = \pm 4$.
+
+      (They touch at $x = \tfrac{m}{4}$: at $(1, 3)$ for $m = 4$ and $(-1, 3)$ for $m = -4$, mirror images, as the curve is symmetric about the $y$-axis.)
+
+  - id: lm-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.3.5"]
+    prompt: |-
+      A student finds the set of values of $k$ for which the line $y = 3x + k$ does not meet the curve $y = x^2 - x + 5$. Which line contains the first error?
+    lines:
+      - |-
+        $x^2 - x + 5 = 3x + k$
+      - |-
+        $x^2 - 4x + 5 + k = 0$
+      - |-
+        Does not meet: $b^2 - 4ac < 0$, so $16 - 4(5 + k) < 0$.
+      - |-
+        $16 - 20 - 4k < 0$, so $-4 - 4k < 0$.
+      - |-
+        So $k > -1$.
+    errorLine: 2
+    fix: |-
+      Subtracting $3x + k$ from both sides gives $x^2 - 4x + 5 - k = 0$. Then $16 - 4(5 - k) < 0$, so $4k - 4 < 0$ and $k < 1$.
+    explanation: |-
+      $k$ was moved across the equals sign without changing its sign. Lines 3–5 follow correctly from line 2, but they inherit its mistake. A quick test catches it: the student's answer includes $k = 3$, but then $x^2 - 4x + 2 = 0$ has discriminant $16 - 8 = 8 > 0$, so $y = 3x + 3$ actually cuts the curve twice.
