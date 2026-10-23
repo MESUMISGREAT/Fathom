@@ -1,0 +1,221 @@
+id: momentum-newton-weight
+subject: "9702"
+topic: "3.1"
+title: "Weight: a gravitational field acting on a mass"
+summary: Weight is the effect of a gravitational field on a mass, W = mg. Mass is the same everywhere; weight depends on where you are.
+order: 3
+minutes: 5
+objectives: ["3.1.6"]
+prerequisites: [momentum-newton-f-equals-ma, equations-motion-free-fall]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.1.6, describing weight as the effect of a gravitational field on
+    a mass and recalling that weight is mass multiplied by the acceleration of free fall), using
+    g = 9.81 m s⁻² from the 9702 data sheet. The Moon (1.62 N kg⁻¹) and Mars (3.71 N kg⁻¹) field
+    strengths are illustrative values given in the questions, not data-sheet constants. The
+    diagram is drawn to scale (weight arrows and spring extensions proportional to the weight).
+    All worked values and answer keys computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe **weight** as the effect of a gravitational field on a mass, calculate it with $W = mg$, and keep mass and weight firmly apart.
+
+  - type: explain
+    title: Your suitcase on the Moon
+    body: |
+      Pack a $23\ \text{kg}$ suitcase and fly it to the Moon. It still has $23\ \text{kg}$ of **mass**: just as hard to swing, and just as painful to catch if someone throws it at you.
+
+      Lifting it, though, is suddenly easy. The Moon's gravitational field pulls on each kilogram about six times less hard than the Earth's does. That pull is the suitcase's **weight**, and it's the one thing that changed.
+
+  - type: definition
+    term: Weight
+    body: |
+      Weight is the effect of a **gravitational field** on a mass: the gravitational force acting on an object.
+
+      $$W = mg$$
+
+      where $m$ is the mass and $g$ is the acceleration of free fall. Weight is a **force**, so it is a vector, measured in **newtons**; near the Earth it acts vertically downwards.
+
+  - type: explain
+    title: Mass and weight, side by side
+    body: |
+      | | Mass | Weight |
+      | --- | --- | --- |
+      | What it is | property that opposes change in motion | force from a gravitational field |
+      | Scalar or vector? | scalar | vector (downwards) |
+      | Unit | kg | N |
+      | Changes from place to place? | no | yes, with $g$ |
+
+      Near the Earth's surface $g = 9.81\ \text{N kg}^{-1}$, which is exactly the same as $9.81\ \text{m s}^{-2}$ (since $1\ \text{N kg}^{-1} = 1\ \text{kg m s}^{-2}\ \text{kg}^{-1} = 1\ \text{m s}^{-2}$). Every kilogram near the Earth weighs $9.81\ \text{N}$.
+
+  - type: diagram
+    diagram: phys-momentum-newton-weight-field
+    alt: >-
+      Two panels drawn to scale. Left, "On the Earth, g = 9.81 N kg⁻¹": a mass labelled m = 20 kg
+      hangs from a spring below a support. A long downward arrow W from its centre is labelled
+      W = 20 × 9.81 = 196 N. Behind it are vertical, parallel, evenly spaced gravitational field
+      lines pointing downwards. Right, "On the Moon, g = 1.62 N kg⁻¹": the same 20 kg mass hangs
+      from an identical spring that is stretched much less. Its weight arrow is about one sixth as
+      long, labelled W = 20 × 1.62 = 32.4 N. Its field lines are also parallel and downwards but
+      about six times further apart, showing a weaker field. A caption reads: same mass (same
+      inertia) everywhere; weight W = mg depends on the field.
+    caption: Same 20 kg, same inertia. The spring balance measures the weight, and that depends on the field strength.
+
+  - type: check
+    questions: [weight-calc, sugar-moon]
+
+  - type: intuition
+    title: Why everything falls with the same acceleration
+    body: |
+      A bowling ball weighs far more than a tennis ball, so why doesn't it fall faster? Put $W = mg$ into $F = ma$, with weight as the only force:
+
+      $$a = \frac{W}{m} = \frac{mg}{m} = g$$
+
+      The bigger pull on the bowling ball is cancelled exactly by its bigger inertia. Every object falling freely gets the same acceleration, $g$. That's why $g$ is called the **acceleration of free fall**, and why a hammer and a feather dropped on the airless Moon land together.
+
+  - type: example
+    title: A rover on Mars
+    problem: |
+      A rover has a mass of $900\ \text{kg}$. Find its weight on the Earth and on Mars, where $g = 3.71\ \text{N kg}^{-1}$. Its wheels then give it a horizontal resultant force of $450\ \text{N}$ on flat ground. What is its acceleration on each planet?
+    steps:
+      - |
+        Earth: $W = mg = 900 \times 9.81 = 8830\ \text{N}$ (8.83 kN).
+      - |
+        Mars: $W = 900 \times 3.71 = 3340\ \text{N}$ (3.34 kN), less than half as much.
+      - |
+        The mass is $900\ \text{kg}$ on both planets: mass doesn't depend on the field.
+      - |
+        Horizontal acceleration: $a = \dfrac{F}{m} = \dfrac{450}{900} = 0.50\ \text{m s}^{-2}$ on **both** planets.
+    answer: |
+      Weight $8.83\ \text{kN}$ on the Earth and $3.34\ \text{kN}$ on Mars; acceleration $0.50\ \text{m s}^{-2}$ on both. The weight changes from planet to planet; the inertia doesn't.
+
+  - type: check
+    questions: [moon-astronaut, crane-mass]
+
+  - type: misconceptions
+    items:
+      - wrong: Weight is measured in kilograms.
+        right: Weight is a force, measured in **newtons**. "I weigh 60 kg" is everyday talk for "my mass is 60 kg"; the weight is $60 \times 9.81 = 589\ \text{N}$.
+      - wrong: Astronauts in orbit have no mass, or no weight.
+        right: They keep all their mass. Even their weight is still about 90% of its surface value at the space station's height. They **feel** weightless because they and the station are falling together.
+      - wrong: g is a force.
+        right: $g$ is the gravitational field strength (newtons per kilogram), equal to the acceleration of free fall. The force is the weight, $mg$.
+      - wrong: Heavier objects fall faster.
+        right: With air resistance negligible, $a = W/m = g$ for every object, whatever its mass.
+
+  - type: exam
+    body: |
+      - "Distinguish between mass and weight" is a classic 2-marker. Mass: the property of an object that resists changes in its motion. Weight: the force on it due to a gravitational field, $W = mg$.
+      - Use $g = 9.81\ \text{m s}^{-2}$ from the data sheet unless the question gives another value (for the Moon, say).
+      - An object hanging at rest, or resting on a level floor, is held up by a force equal to $mg$ (first law). Divide a newtonmeter reading by $9.81$ and you have the mass.
+
+  - type: check
+    questions: [weight-cloze, same-fall]
+
+  - type: enrichment
+    title: g isn't quite the same all over the Earth
+    body: |
+      The Earth bulges at the equator and spins, so $g$ at sea level varies from about $9.78\ \text{m s}^{-2}$ at the equator to about $9.83\ \text{m s}^{-2}$ at the poles. A $70\ \text{kg}$ person weighs roughly $3.6\ \text{N}$ more in the Arctic than in Ecuador. Exams use $9.81\ \text{m s}^{-2}$ everywhere.
+
+  - type: takeaways
+    items:
+      - "Weight is the effect of a gravitational field on a mass: $W = mg$, a force measured in N."
+      - Mass (kg) is the same everywhere; weight changes with the field strength $g$.
+      - "Near the Earth, $g = 9.81\\ \\text{N kg}^{-1} = 9.81\\ \\text{m s}^{-2}$."
+      - "With weight the only force, $a = mg / m = g$ for every object."
+
+questions:
+  - id: weight-calc
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.6"]
+    prompt: |
+      A student has a mass of $65\ \text{kg}$. Calculate their weight on the Earth. Include the unit.
+    fields:
+      - answer: 637.65
+        tolerance: { abs: 3 }
+        acceptUnits: ["N"]
+    explanation: |
+      $W = mg = 65 \times 9.81 = 638\ \text{N}$ (or 640 N to 2 significant figures). The unit is the newton, because weight is a force; $65\ \text{kg}$ is the mass.
+
+  - id: sugar-moon
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.6"]
+    prompt: |
+      A $2.0\ \text{kg}$ bag of sugar is taken from the Earth to the Moon. Which statement is correct?
+    options:
+      - text: Its mass stays 2.0 kg, but its weight decreases.
+        correct: true
+        why: Correct. Mass belongs to the bag; weight depends on the field, which is weaker on the Moon.
+      - text: Its mass and its weight both decrease.
+        why: Mass is a property of the bag (its inertia), not of where it is. Only the weight changes.
+      - text: Its weight stays the same, but its mass decreases.
+        why: This is the wrong way round. The mass is fixed and the weight changes with $g$.
+      - text: Its mass and its weight both stay the same.
+        why: Weight is $mg$, and $g$ is about six times smaller on the Moon, so the weight falls.
+    explanation: |
+      On the Moon the bag still has $2.0\ \text{kg}$ of mass, but its weight drops from $2.0 \times 9.81 = 19.6\ \text{N}$ to about a sixth of that.
+
+  - id: moon-astronaut
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.6"]
+    prompt: |
+      An astronaut and spacesuit have a total mass of $140\ \text{kg}$ on the Earth. On the Moon, $g = 1.62\ \text{N kg}^{-1}$. Find the total mass and the total weight on the Moon.
+    fields:
+      - label: "mass on the Moon ="
+        answer: 140
+        tolerance: { abs: 0.5 }
+        unit: kg
+      - label: "weight on the Moon ="
+        answer: 226.8
+        tolerance: { abs: 1 }
+        unit: N
+    explanation: |
+      Mass doesn't depend on location: still $140\ \text{kg}$. Weight: $W = mg = 140 \times 1.62 = 227\ \text{N}$, compared with $140 \times 9.81 = 1370\ \text{N}$ on the Earth.
+
+  - id: crane-mass
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.6"]
+    prompt: |
+      A crane lifts a steel beam at constant velocity. The tension in the crane's cable is $2450\ \text{N}$. What is the mass of the beam?
+    fields:
+      - answer: 249.7
+        tolerance: { abs: 1.5 }
+        unit: kg
+    explanation: |
+      Constant velocity means zero resultant force, so the tension equals the weight: $W = 2450\ \text{N}$. Then $m = \dfrac{W}{g} = \dfrac{2450}{9.81} = 250\ \text{kg}$.
+
+  - id: weight-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.6"]
+    prompt: |
+      Weight is the effect of a gravitational {{1}} on a {{2}}, and it is calculated as mass multiplied by the {{3}} of free fall.
+    blanks:
+      - accept: [field]
+      - accept: [mass, object, body]
+      - accept: [acceleration]
+    explanation: |
+      Weight is the gravitational force on a mass: $W = mg$, where $g$ is the acceleration of free fall (the gravitational field strength).
+
+  - id: same-fall
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.6"]
+    prompt: |
+      A $5.0\ \text{kg}$ ball and a $0.50\ \text{kg}$ ball are dropped together from the same height. Air resistance is negligible. Use $W = mg$ and $F = ma$ to explain why they hit the ground at the same time.
+    model: |
+      The only force on each ball is its weight, $W = mg$, so the resultant force on each is $mg$. From $F = ma$, the acceleration is $a = \dfrac{mg}{m} = g$, which doesn't depend on the mass. The 5.0 kg ball has ten times the weight (49 N against 4.9 N) but also ten times the mass, so it has the same acceleration, $9.81\ \text{m s}^{-2}$. Both start from rest with the same acceleration, so they fall the same distance in the same time.
+    keyPoints:
+      - The only force on each ball is its weight, so the resultant force is mg
+      - Using F = ma, a = mg / m = g, independent of the mass
+      - The heavier ball has a bigger weight but proportionally more mass (inertia)
+      - Same acceleration from rest, so they fall the same distance in the same time
+    explanation: |
+      The cancellation of $m$ is the whole story. In air, a feather loses this race only because air resistance is large compared with its tiny weight.

@@ -1,0 +1,231 @@
+id: reacting-masses-burning-hydrocarbons
+subject: "9701"
+topic: "2.4"
+title: "Burning hydrocarbons: the gas-volume detective"
+summary: Using gas volumes from burning a hydrocarbon to find oxygen used, carbon dioxide made and, from the clues left behind, the hydrocarbon's formula.
+order: 4
+minutes: 5
+objectives: ["2.4.1"]
+prerequisites: [reacting-masses-gas-volumes, chemical-formulas-balancing-equations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 2.4, learning outcome 2.4.1(b) volumes of gases, e.g. in the
+    burning of hydrocarbons, and 2.4.1(e) deducing stoichiometric relationships). Molar gas
+    volume 24.0 dm³ mol⁻¹ and Ar values from the Cambridge Data Booklet. Combustion volumes
+    in the worked example and questions are illustrative values consistent with the
+    equations. All numerical answers were computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can calculate the volumes of oxygen used and carbon dioxide made when a hydrocarbon burns, and deduce a hydrocarbon's formula from gas-volume data.
+
+  - type: explain
+    title: Crime scene in a tube
+    body: |
+      Squirt a mystery hydrocarbon into a tube of oxygen. Spark it. *Bang.* The hydrocarbon is gone, but it left **evidence**: how much oxygen vanished and how much carbon dioxide appeared.
+
+      From just those volumes you can name the suspect. No mass spectrometer needed, just moles in disguise.
+
+  - type: explain
+    title: The general equation
+    body: |
+      Complete combustion of any hydrocarbon $\text{C}_x\text{H}_y$:
+
+      $$\text{C}_x\text{H}_y + \left(x + \frac{y}{4}\right)\text{O}_2 \rightarrow x\,\text{CO}_2 + \frac{y}{2}\,\text{H}_2\text{O}$$
+
+      - Each C atom becomes one $\text{CO}_2$, needing one $\text{O}_2$: that's the $x$.
+      - $y$ H atoms make $\frac{y}{2}$ water molecules. Those contain $\frac{y}{2}$ O atoms, which come from $\frac{y}{4}$ molecules of $\text{O}_2$.
+
+      Gases at the same temperature and pressure react in the ratio of their coefficients, so for propane ($x = 3$, $y = 8$): 10 cm³ of $\text{C}_3\text{H}_8$ needs 50 cm³ of $\text{O}_2$ and makes 30 cm³ of $\text{CO}_2$.
+
+  - type: check
+    title: Quick check
+    questions: [ethane-volumes, octane-co2-volume]
+
+  - type: explain
+    title: Three clues from the experiment
+    body: |
+      | what you do | what happens | what it tells you |
+      | --- | --- | --- |
+      | explode with **excess** oxygen, then cool to room temperature | water **condenses** to a liquid of negligible volume | the gas left is $\text{CO}_2$ + unreacted $\text{O}_2$ |
+      | pass the gas through **aqueous sodium hydroxide** (or potassium hydroxide) | $\text{CO}_2$, an **acidic** gas, is absorbed: $\text{CO}_2 + 2\text{NaOH} \rightarrow \text{Na}_2\text{CO}_3 + \text{H}_2\text{O}$ | the decrease in volume = volume of $\text{CO}_2$ |
+      | measure what's left | only unreacted $\text{O}_2$ remains | $\text{O}_2$ used = $\text{O}_2$ at start − $\text{O}_2$ left |
+
+  - type: diagram
+    diagram: chem-reacting-masses-combustion-volumes
+    alt: "Three stacked bars on an axis of gas volume in cm³ from 0 to 80, drawn to scale. Before: 10 cm³ of C3H8 at the bottom with 70 cm³ of O2 on top, total 80 cm³. An arrow labelled spark, then cool, minus 30 cm³, H2O condenses, about 0 cm³ of liquid, leads to the second bar. After explosion, cooled to room temperature: 30 cm³ of CO2 with 20 cm³ of O2 on top, total 50 cm³. An arrow labelled through NaOH(aq), minus 30 cm³ equals CO2, leads to the third bar. After NaOH(aq), CO2 absorbed: 20 cm³ of O2. Footer: x = 30 ÷ 10 = 3; O2 used = 70 − 20 = 50 cm³, so 3 + y/4 = 5 and y = 8; the hydrocarbon is C3H8, propane."
+    caption: Follow the volumes. Each step removes one suspect from the gas mixture.
+
+  - type: check
+    title: The clues
+    questions: [water-volume, naoh-cloze]
+
+  - type: example
+    title: Name the hydrocarbon
+    problem: |
+      10 cm³ of a gaseous hydrocarbon is exploded with 70 cm³ of oxygen (an excess). After cooling to room temperature, 50 cm³ of gas remains. Passing this through aqueous sodium hydroxide leaves 20 cm³. Find the formula. (All volumes at room conditions.)
+    steps:
+      - |
+        **$\text{CO}_2$:** NaOH absorbed $50 - 20 = 30\ \text{cm}^3$. So 10 cm³ of $\text{C}_x\text{H}_y$ gives 30 cm³ of $\text{CO}_2$: **x = 3**.
+      - |
+        **$\text{O}_2$ used:** 20 cm³ was left over, so $70 - 20 = 50\ \text{cm}^3$ reacted, which is 5 volumes per volume of hydrocarbon.
+      - |
+        $x + \dfrac{y}{4} = 5$, so $3 + \dfrac{y}{4} = 5$ and **y = 8**.
+      - |
+        Check with the equation: $\text{C}_3\text{H}_8 + 5\text{O}_2 \rightarrow 3\text{CO}_2 + 4\text{H}_2\text{O}$ ✓
+    answer: |
+      $\text{C}_3\text{H}_8$, propane.
+
+  - type: check
+    title: Detective work
+    questions: [ethene-spot-error, deduce-butene]
+
+  - type: deeper
+    title: The contraction shortcut
+    body: |
+      On exploding and cooling, the gas shrinks because hydrocarbon and oxygen disappear but only $\text{CO}_2$ appears as gas. Per volume of hydrocarbon:
+
+      $$\text{contraction} = 1 + \left(x + \frac{y}{4}\right) - x = 1 + \frac{y}{4}$$
+
+      In the example: $80 - 50 = 30\ \text{cm}^3$ from 10 cm³, so $1 + \frac{y}{4} = 3$ and $y = 8$. Same answer, different clue. Handy for checking yourself.
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          The water vapour counts in the final volume.
+        right: |
+          Volumes are measured at room temperature, where water is a **liquid**. Its volume is negligible, so it drops out of the gas total.
+      - wrong: |
+          The gas left after sodium hydroxide is the carbon dioxide.
+        right: |
+          Sodium hydroxide **absorbs** $\text{CO}_2$. The $\text{CO}_2$ volume is the **decrease**; what's left is unreacted oxygen.
+      - wrong: |
+          Oxygen used = the volume of oxygen at the start.
+        right: |
+          Oxygen is in excess, so some is left over. Oxygen used = start − left over.
+
+  - type: exam
+    body: |
+      - Lay it out as three labelled lines: $V(\text{CO}_2)$, $V(\text{O}_2)$ used, then the equation for $x$ and $y$. Each line is usually a mark.
+      - Always write the balanced equation for your answer and check it against **both** volumes.
+      - "Explain why the water is ignored" is worth a mark: it **condenses to a liquid** at room temperature.
+
+  - type: takeaways
+    items:
+      - "$\\text{C}_x\\text{H}_y + (x + \\frac{y}{4})\\text{O}_2 \\rightarrow x\\text{CO}_2 + \\frac{y}{2}\\text{H}_2\\text{O}$"
+      - "At the same temperature and pressure, gas volumes react in the ratio of the coefficients."
+      - "Cooling removes water (it condenses); NaOH(aq) removes $\\text{CO}_2$; what's left is unreacted $\\text{O}_2$."
+      - "$\\text{CO}_2$ volume gives $x$; oxygen used gives $x + \\frac{y}{4}$, and so $y$."
+
+questions:
+  - id: ethane-volumes
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      20 cm³ of ethane burns completely in excess oxygen: $2\text{C}_2\text{H}_6\text{(g)} + 7\text{O}_2\text{(g)} \rightarrow 4\text{CO}_2\text{(g)} + 6\text{H}_2\text{O(l)}$. All volumes are at room conditions. What volume of oxygen is used, and what volume of carbon dioxide forms?
+    fields:
+      - label: "oxygen used ="
+        answer: 70
+        tolerance: { abs: 0.5 }
+        unit: cm³
+      - label: "carbon dioxide ="
+        answer: 40
+        tolerance: { abs: 0.5 }
+        unit: cm³
+    explanation: |
+      Volume ratio = mole ratio. $\text{O}_2$ : $\text{C}_2\text{H}_6$ = 7 : 2, so $20 \times 7/2 = 70\ \text{cm}^3$. $\text{CO}_2$ : $\text{C}_2\text{H}_6$ = 4 : 2, so $20 \times 2 = 40\ \text{cm}^3$. (Or use $x + y/4 = 2 + 6/4 = 3.5$ volumes of $\text{O}_2$ per volume.)
+
+  - id: octane-co2-volume
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      Octane burns completely: $2\text{C}_8\text{H}_{18}\text{(l)} + 25\text{O}_2\text{(g)} \rightarrow 16\text{CO}_2\text{(g)} + 18\text{H}_2\text{O(l)}$. What volume of carbon dioxide, in dm³ at room conditions, forms when 1.00 g of octane burns? ($A_r$: C = 12.0, H = 1.0; $V_m = 24.0\ \text{dm}^3\ \text{mol}^{-1}$) Give your answer to 3 significant figures.
+    fields:
+      - answer: 1.68
+        tolerance: { abs: 0.005 }
+        sigFigs: 3
+        unit: dm³
+    explanation: |
+      Octane is a liquid, so start from mass: $M = 114.0$, $n = 1.00 \div 114.0 = 8.772 \times 10^{-3}$ mol. Ratio $\text{CO}_2$ : $\text{C}_8\text{H}_{18}$ = 16 : 2 = 8 : 1, so $n(\text{CO}_2) = 0.07018$ mol. $V = 0.07018 \times 24.0 = 1.68\ \text{dm}^3$.
+
+  - id: water-volume
+    format: mcq
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      A hydrocarbon is burned and the gas volumes are measured after cooling to room temperature. Why is the water formed not included in the final gas volume?
+    options:
+      - text: |
+          It condenses to a liquid, whose volume is negligible compared with the gases.
+        correct: true
+        why: |
+          At room temperature water is a liquid; a few drops take up almost no space.
+      - text: |
+          Hydrocarbons don't make water when they burn.
+        why: |
+          Every hydrocarbon contains hydrogen, which ends up as $\text{H}_2\text{O}$.
+      - text: |
+          The sodium hydroxide absorbs it.
+        why: |
+          The water is already gone before the gas reaches the sodium hydroxide, which is there to absorb $\text{CO}_2$.
+      - text: |
+          Water has no volume because it is made of very small molecules.
+        why: |
+          Molecule size isn't the point: as a gas, water vapour would count like any other gas. It drops out because it **condenses**.
+    explanation: |
+      Measure at room temperature and the steam becomes liquid water, so only $\text{CO}_2$ and leftover $\text{O}_2$ remain as gas.
+
+  - id: naoh-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.4.1"]
+    prompt: |
+      Passing the gas through aqueous sodium hydroxide removes {{1}}, because it is an {{2}} gas. The gas that remains is unreacted {{3}}.
+    blanks:
+      - accept: ["carbon dioxide", "CO2", "CO₂"]
+      - accept: ["acidic", "acid"]
+      - accept: ["oxygen", "O2", "O₂", "oxygen gas"]
+    explanation: |
+      $\text{CO}_2$ is acidic and reacts with the alkali. The decrease in volume is the volume of $\text{CO}_2$; the oxygen, which was in excess, is left.
+
+  - id: ethene-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.1"]
+    prompt: |
+      20 cm³ of a hydrocarbon is exploded with 100 cm³ of oxygen. After cooling, 80 cm³ of gas remains; after aqueous sodium hydroxide, 40 cm³ remains. A student deduces the formula. Which line contains the first error?
+    lines:
+      - |
+        After cooling, the 80 cm³ is $\text{CO}_2$ plus unreacted $\text{O}_2$; the water has condensed.
+      - |
+        NaOH absorbs $\text{CO}_2$, so $V(\text{CO}_2) = 80 - 40 = 40\ \text{cm}^3$ and $x = 40 \div 20 = 2$.
+      - |
+        The 40 cm³ left is unreacted $\text{O}_2$, so $\text{O}_2$ used $= 100 - 40 = 60\ \text{cm}^3$: 3 volumes per volume of hydrocarbon.
+      - |
+        Each $\text{C}_x\text{H}_y$ needs $(x + \frac{y}{2})$ $\text{O}_2$, so $2 + \frac{y}{2} = 3$ and $y = 2$.
+      - |
+        The hydrocarbon is $\text{C}_2\text{H}_2$.
+    errorLine: 4
+    fix: |
+      Each $\text{C}_x\text{H}_y$ needs $(x + \frac{y}{4})$ $\text{O}_2$, so $2 + \frac{y}{4} = 3$ and $y = 4$: the hydrocarbon is $\text{C}_2\text{H}_4$ (ethene).
+    explanation: |
+      $y$ H atoms make $\frac{y}{2}$ $\text{H}_2\text{O}$, which needs only $\frac{y}{4}$ $\text{O}_2$. Check: $\text{C}_2\text{H}_4 + 3\text{O}_2 \rightarrow 2\text{CO}_2 + 2\text{H}_2\text{O}$ ✓
+
+  - id: deduce-butene
+    format: numeric
+    difficulty: 3
+    objectives: ["2.4.1"]
+    prompt: |
+      15 cm³ of a gaseous hydrocarbon $\text{C}_x\text{H}_y$ is exploded with 120 cm³ of oxygen (an excess). After cooling to room temperature, 90 cm³ of gas remains. After passing through aqueous sodium hydroxide, 30 cm³ remains. Find $x$ and $y$.
+    fields:
+      - label: "x ="
+        answer: 4
+      - label: "y ="
+        answer: 8
+    explanation: |
+      $V(\text{CO}_2) = 90 - 30 = 60\ \text{cm}^3$, so $x = 60 \div 15 = 4$. $\text{O}_2$ used $= 120 - 30 = 90\ \text{cm}^3$, which is 6 per volume, so $4 + \frac{y}{4} = 6$ and $y = 8$: $\text{C}_4\text{H}_8$. Check: $\text{C}_4\text{H}_8 + 6\text{O}_2 \rightarrow 4\text{CO}_2 + 4\text{H}_2\text{O}$ ✓

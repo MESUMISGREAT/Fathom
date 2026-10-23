@@ -1,0 +1,286 @@
+id: circular-measure-arc-length-and-sector-area
+subject: "9709"
+topic: "1.4"
+title: Arc length and sector area
+summary: Use s = rθ and A = ½r²θ (θ in radians) to find arc lengths, sector areas and perimeters, and work backwards to find r or θ.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.4.2"]
+prerequisites: [circular-measure-radians]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.4 learning outcome "use the formulae s = rθ
+    and A = ½r²θ in solving problems concerning the arc length and sector area of a circle". All
+    examples and questions are original; the pizza analogy is illustrative. All arithmetic checked
+    in Python. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the **arc length** and **area** of any sector with $s = r\theta$ and $A = \tfrac12 r^2\theta$, find its perimeter, and run the formulas backwards to find $r$ or $\theta$.
+
+  - type: explain
+    title: Two formulas, one condition
+    body: |-
+      Think of a slice of pizza. The **sector** is the whole slice, the **arc** is the crust, and the two straight edges are radii.
+
+      For a sector with radius $r$ and angle $\theta$ at the centre:
+
+      $$s = r\theta \qquad\qquad A = \tfrac12 r^2 \theta$$
+
+      The condition that matters: **$\theta$ must be in radians.** Both formulas are wrong in degrees. (Where the pizza breaks down: real slices have thickness. Ours are perfectly flat.)
+
+  - type: diagram
+    diagram: circular-measure-sector-parts
+    alt: >-
+      A dashed full circle with centre O. A shaded sector of radius r and angle θ (drawn as 1.2 rad)
+      is cut out of it. Its curved edge is highlighted and labelled s = rθ, the shaded area is
+      labelled A, and both straight edges are labelled r. Notes beside it: θ in radians; fraction of
+      the circle = θ ÷ 2π; arc length (θ ÷ 2π) × 2πr = rθ; sector area (θ ÷ 2π) × πr² = ½r²θ;
+      perimeter of sector = 2r + rθ.
+
+  - type: intuition
+    title: Where the formulas come from
+    body: |-
+      A sector with angle $\theta$ is the fraction $\dfrac{\theta}{2\pi}$ of the whole circle. So take that fraction of the circumference and of the area:
+
+      $$\frac{\theta}{2\pi} \times 2\pi r = r\theta, \qquad \frac{\theta}{2\pi} \times \pi r^2 = \tfrac12 r^2 \theta$$
+
+      Even quicker for the arc: by definition, 1 radian cuts off an arc of length $r$. So $\theta$ radians cuts off $\theta$ lots of $r$.
+
+  - type: example
+    title: Arc, area and perimeter
+    problem: |-
+      A sector has radius $8$ cm and angle $0.9$ radians. Find its arc length, its area and its perimeter.
+    steps:
+      - |-
+        Arc: $s = r\theta = 8 \times 0.9 = 7.2$ cm.
+      - |-
+        Area: $A = \tfrac12 r^2\theta = \tfrac12 \times 8^2 \times 0.9 = \tfrac12 \times 64 \times 0.9 = 28.8 \text{ cm}^2$.
+      - |-
+        Perimeter: the crust **plus both** straight edges. $2r + s = 16 + 7.2 = 23.2$ cm.
+    answer: |-
+      Arc $7.2$ cm, area $28.8 \text{ cm}^2$, perimeter $23.2$ cm.
+
+  - type: check
+    questions: [arc-basic, area-exact]
+
+  - type: explain
+    title: Given the angle in degrees? Convert first
+    body: |-
+      A sector has radius $9$ cm and angle $40^\circ$. First: $40^\circ = 40 \times \tfrac{\pi}{180} = \tfrac{2\pi}{9}$ rad. Now the formulas work:
+
+      - $s = 9 \times \tfrac{2\pi}{9} = 2\pi \approx 6.28$ cm
+      - $A = \tfrac12 \times 81 \times \tfrac{2\pi}{9} = 9\pi \approx 28.3 \text{ cm}^2$
+
+      Plug in 40 instead and you'd claim an arc of 360 cm round a 9 cm circle. Bit long for a pizza crust.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $s = r\theta$ works with $\theta$ in degrees.
+        right: |-
+          Only radians. Convert with $\times\tfrac{\pi}{180}$ before using either formula.
+      - wrong: |-
+          The perimeter of a sector is $r + r\theta$.
+        right: |-
+          A sector has **two** straight edges: perimeter $= 2r + r\theta$.
+      - wrong: |-
+          $A = \tfrac12 r\theta$ or $A = r^2\theta$.
+        right: |-
+          $A = \tfrac12 r^2\theta$: the square **and** the half. Check with a full circle: $\theta = 2\pi$ gives $\tfrac12 r^2 (2\pi) = \pi r^2$ ✓
+      - wrong: |-
+          Use the diameter in $s = r\theta$.
+        right: |-
+          $r$ is the radius. Halve a diameter before you start.
+
+  - type: check
+    questions: [arc-degrees-mcq, perimeter-spot]
+
+  - type: explain
+    title: Running the formulas backwards
+    body: |-
+      Exams love giving you the answer and asking for the ingredients. Rearrange first, substitute second:
+
+      | Given | Use |
+      | --- | --- |
+      | area and radius | $\theta = \dfrac{2A}{r^2}$ |
+      | arc and radius | $\theta = \dfrac{s}{r}$ |
+      | perimeter and angle | $2r + r\theta = P$, so $r = \dfrac{P}{2 + \theta}$ |
+
+  - type: example
+    title: From perimeter to area
+    problem: |-
+      A sector has angle $1.5$ radians and perimeter $28$ cm. Find the radius and the area of the sector.
+    steps:
+      - |-
+        Perimeter $= 2r + r\theta = 2r + 1.5r = 3.5r$.
+      - |-
+        $3.5r = 28$, so $r = 8$ cm.
+      - |-
+        Area $= \tfrac12 r^2\theta = \tfrac12 \times 64 \times 1.5 = 48 \text{ cm}^2$.
+    answer: |-
+      $r = 8$ cm and the area is $48 \text{ cm}^2$.
+
+  - type: deeper
+    title: A shortcut that links the two formulas
+    body: |-
+      Since $s = r\theta$:
+
+      $$A = \tfrac12 r^2\theta = \tfrac12 r (r\theta) = \tfrac12 r s$$
+
+      Area is half the radius times the arc. Handy when a question gives you the arc length and the area but not the angle.
+
+  - type: check
+    questions: [theta-from-area, perimeter-to-radius, area-and-arc]
+
+  - type: exam
+    body: |-
+      - Arc and sector parts are usually the opening 2–4 marks of a longer circle question, so a slip here costs you later marks too.
+      - If the angle is given in degrees, show the conversion line. It's a method mark and it proves you used radians.
+      - Leave answers exact ($9\pi$) if the question says *exact* or *in terms of $\pi$*. Otherwise 3 s.f.
+      - Units: lengths in cm, areas in $\text{cm}^2$. Write them.
+
+  - type: takeaways
+    items:
+      - |-
+        Arc length $s = r\theta$, sector area $A = \tfrac12 r^2\theta$, with $\theta$ **in radians**.
+      - |-
+        Perimeter of a sector $= 2r + r\theta$: two radii plus the arc.
+      - |-
+        Degrees? Multiply by $\tfrac{\pi}{180}$ first.
+      - |-
+        Working backwards: rearrange, then substitute. $\theta = \tfrac{2A}{r^2}$, $\theta = \tfrac{s}{r}$, and $A = \tfrac12 rs$.
+
+questions:
+  - id: arc-basic
+    format: numeric
+    difficulty: 1
+    objectives: ["1.4.2"]
+    prompt: |-
+      A sector has radius $5$ cm and angle $1.4$ radians. Find the arc length.
+    fields:
+      - answer: 7
+        tolerance: { abs: 0.001 }
+        unit: cm
+    explanation: |-
+      $s = r\theta = 5 \times 1.4 = 7$ cm.
+
+  - id: area-exact
+    format: numeric
+    difficulty: 1
+    objectives: ["1.4.2"]
+    prompt: |-
+      A sector has radius $12$ cm and angle $\tfrac{\pi}{8}$ radians. Find its area, in terms of $\pi$. (Type, for example, `5π`.)
+    fields:
+      - answer: 28.274333882308138
+        tolerance: { abs: 0.01 }
+        unit: "cm²"
+    explanation: |-
+      $A = \tfrac12 r^2\theta = \tfrac12 \times 144 \times \tfrac{\pi}{8} = \tfrac{144\pi}{16} = 9\pi \text{ cm}^2$ (about $28.3 \text{ cm}^2$).
+
+  - id: arc-degrees-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A sector has radius $6$ cm and angle $50^\circ$. What is its arc length?
+    explanation: |-
+      Convert first: $50^\circ = 50 \times \tfrac{\pi}{180} = \tfrac{5\pi}{18}$ rad. Then $s = 6 \times \tfrac{5\pi}{18} = \tfrac{5\pi}{3} \approx 5.24$ cm.
+    options:
+      - text: |-
+          $\tfrac{5\pi}{3}$ cm
+        correct: true
+        why: |-
+          $6 \times \tfrac{5\pi}{18} = \tfrac{30\pi}{18} = \tfrac{5\pi}{3}$, about $5.24$ cm.
+      - text: |-
+          $300$ cm
+        why: |-
+          That's $6 \times 50$: the angle was left in degrees. A 300 cm arc on a 6 cm circle should set off alarm bells.
+      - text: |-
+          $5\pi$ cm
+        why: |-
+          That's $\tfrac12 r^2\theta = \tfrac12 \times 36 \times \tfrac{5\pi}{18}$, the **area** formula. And an area isn't measured in cm.
+      - text: |-
+          $\tfrac{10\pi}{3}$ cm
+        why: |-
+          That used the diameter, 12 cm, instead of the radius.
+
+  - id: perimeter-spot
+    format: spot-error
+    difficulty: 1
+    objectives: ["1.4.2"]
+    prompt: |-
+      A student finds the perimeter of a sector with radius $10$ cm and angle $1.2$ radians. Which line contains the first error?
+    lines:
+      - |-
+        Arc length $= r\theta = 10 \times 1.2 = 12$ cm.
+      - |-
+        Perimeter $=$ arc $+$ radius $= 12 + 10$
+      - |-
+        $= 22$ cm
+    errorLine: 2
+    fix: |-
+      A sector has two straight edges: perimeter $= 12 + 2 \times 10 = 32$ cm.
+    explanation: |-
+      The arc is right. But the boundary of a sector is the arc **and both radii**, so the perimeter is $2r + r\theta = 20 + 12 = 32$ cm.
+
+  - id: theta-from-area
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A sector of a circle of radius $4$ cm has area $20 \text{ cm}^2$. Find the angle of the sector in radians.
+    fields:
+      - label: "θ ="
+        answer: 2.5
+        tolerance: { abs: 0.001 }
+        unit: rad
+    explanation: |-
+      $\tfrac12 r^2\theta = 20$, so $\tfrac12 \times 16 \times \theta = 20$, giving $8\theta = 20$ and $\theta = 2.5$ rad.
+
+  - id: perimeter-to-radius
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A sector has angle $0.8$ radians and perimeter $42$ cm. Find its radius and its area.
+    fields:
+      - label: "r ="
+        answer: 15
+        tolerance: { abs: 0.01 }
+        unit: cm
+      - label: "area ="
+        answer: 90
+        tolerance: { abs: 0.05 }
+        unit: "cm²"
+    explanation: |-
+      $2r + 0.8r = 42$, so $2.8r = 42$ and $r = 15$ cm.
+
+      Area $= \tfrac12 \times 15^2 \times 0.8 = \tfrac12 \times 225 \times 0.8 = 90 \text{ cm}^2$.
+
+  - id: area-and-arc
+    format: numeric
+    difficulty: 3
+    objectives: ["1.4.2"]
+    prompt: |-
+      A sector has area $48 \text{ cm}^2$ and arc length $12$ cm. Find the radius and the angle of the sector.
+    fields:
+      - label: "r ="
+        answer: 8
+        tolerance: { abs: 0.01 }
+        unit: cm
+      - label: "θ ="
+        answer: 1.5
+        tolerance: { abs: 0.001 }
+        unit: rad
+    explanation: |-
+      Use $A = \tfrac12 rs$: $48 = \tfrac12 \times r \times 12 = 6r$, so $r = 8$ cm.
+
+      Then $\theta = \tfrac{s}{r} = \tfrac{12}{8} = 1.5$ rad. Check: $\tfrac12 \times 64 \times 1.5 = 48$ ✓
+
+      (Without the shortcut: $r\theta = 12$ and $\tfrac12 r^2\theta = 48$; dividing gives $\tfrac12 r = 4$.)

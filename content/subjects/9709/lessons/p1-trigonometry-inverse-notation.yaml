@@ -1,0 +1,239 @@
+id: p1-trigonometry-inverse-notation
+subject: "9709"
+topic: "1.5"
+title: sin⁻¹, cos⁻¹, tan⁻¹ and principal values
+summary: Understand sin⁻¹x, cos⁻¹x and tan⁻¹x as inverse functions of restricted trig functions, and know the range of principal values each one returns.
+order: 5
+minutes: 4
+kind: core
+objectives: ["1.5.3"]
+prerequisites: [p1-trigonometry-exact-values, functions-inverse-functions]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "use the notations
+    sin⁻¹x, cos⁻¹x, tan⁻¹x to denote the principal values of the inverse trigonometric relations",
+    and its note that no specialised knowledge is needed but they should be understood as examples
+    of inverse functions. All examples and questions are original; values checked in Python. Not
+    yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain what $\sin^{-1}x$, $\cos^{-1}x$ and $\tan^{-1}x$ mean, state the range of **principal values** for each, and evaluate them exactly for the special angles.
+
+  - type: explain
+    title: The undo button has a problem
+    body: |-
+      Ask "which angle has sine $\tfrac12$?" and the honest answer is: loads. $30^\circ$, $150^\circ$, $390^\circ$, $-210^\circ$… Sine isn't **one-one**, so it can't have an inverse as it stands.
+
+      The fix is the same trick as in topic 1.2: **restrict the domain** to a piece of the graph that is one-one, then invert that piece. The calculator's $\sin^{-1}$ button returns the one answer from that piece: the **principal value**.
+
+  - type: definition
+    term: Principal value
+    body: |-
+      $\sin^{-1}x$, $\cos^{-1}x$ and $\tan^{-1}x$ denote the **principal values**: the single angle in a fixed range whose sine, cosine or tangent is $x$.
+
+      | | Domain of $x$ | Principal values (radians) | (degrees) |
+      | --- | --- | --- | --- |
+      | $\sin^{-1}x$ | $-1 \leqslant x \leqslant 1$ | $-\tfrac{\pi}{2} \leqslant \sin^{-1}x \leqslant \tfrac{\pi}{2}$ | $-90^\circ$ to $90^\circ$ |
+      | $\cos^{-1}x$ | $-1 \leqslant x \leqslant 1$ | $0 \leqslant \cos^{-1}x \leqslant \pi$ | $0^\circ$ to $180^\circ$ |
+      | $\tan^{-1}x$ | all real $x$ | $-\tfrac{\pi}{2} < \tan^{-1}x < \tfrac{\pi}{2}$ | $-90^\circ$ to $90^\circ$ (not included) |
+
+  - type: diagram
+    diagram: p1-trigonometry-inverse-sine
+    alt: >-
+      Graph with equal scales on both axes. The part of y = sin x for −π/2 ≤ x ≤ π/2 is drawn solid,
+      rising from (−π/2, −1) to (π/2, 1); the rest of y = sin x is dashed and labelled "not used".
+      Its reflection in the dashed line y = x is the solid curve y = sin⁻¹x, rising from
+      (−1, −π/2) to (1, π/2), steepest at its ends. A legend explains each curve.
+    caption: |-
+      Restrict, then reflect in $y = x$: exactly how any inverse function graph works. The domain of $\sin^{-1}$ is $[-1, 1]$ because that's the range of sine.
+
+  - type: intuition
+    title: Which half of the circle?
+    body: |-
+      Picture the unit circle:
+
+      - $\sin^{-1}$ and $\tan^{-1}$ answer in the **right half** (quadrants 1 and 4): negative inputs give negative angles.
+      - $\cos^{-1}$ answers in the **top half** (quadrants 1 and 2): negative inputs give obtuse angles.
+
+      Each half covers every possible value of that ratio exactly once. That's why these ranges were chosen.
+
+  - type: check
+    questions: [meaning-mcq, cos-range-cloze]
+
+  - type: example
+    title: Exact principal values
+    problem: |-
+      Find the exact values, in radians, of (a) $\sin^{-1}\left(-\tfrac12\right)$ (b) $\cos^{-1}\left(-\tfrac12\right)$ (c) $\tan^{-1}(-1)$
+    steps:
+      - |-
+        (a) $\sin\tfrac{\pi}{6} = \tfrac12$. The input is negative, so go into the 4th quadrant (right half): $\sin^{-1}\left(-\tfrac12\right) = -\tfrac{\pi}{6}$.
+      - |-
+        (b) $\cos\tfrac{\pi}{3} = \tfrac12$. Negative input, so go into the 2nd quadrant (top half): $\pi - \tfrac{\pi}{3} = \tfrac{2\pi}{3}$.
+      - |-
+        (c) $\tan\tfrac{\pi}{4} = 1$. Negative input, right half: $\tan^{-1}(-1) = -\tfrac{\pi}{4}$.
+    answer: |-
+      $-\tfrac{\pi}{6}$, $\;\tfrac{2\pi}{3}$, $\;-\tfrac{\pi}{4}$. Notice (b) is **not** $-\tfrac{\pi}{3}$: that's outside the range of $\cos^{-1}$.
+
+  - type: check
+    questions: [arccos-numeric, arcsin-mcq, arctan-degrees]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\sin^{-1}x = \dfrac{1}{\sin x}$
+        right: |-
+          The $-1$ means **inverse function**, not reciprocal. $\tfrac{1}{\sin x}$ is a different thing entirely (written $(\sin x)^{-1}$).
+      - wrong: |-
+          $\cos^{-1}\left(-\tfrac12\right) = -\tfrac{\pi}{3}$
+        right: |-
+          $\cos^{-1}$ always gives an angle from $0$ to $\pi$. The answer is $\tfrac{2\pi}{3}$.
+      - wrong: |-
+          $\sin^{-1}(0.5)$ gives all the solutions of $\sin x = 0.5$.
+        right: |-
+          It gives just one, the principal value $\tfrac{\pi}{6}$. Finding the others is the next big skill in this topic.
+      - wrong: |-
+          $\sin^{-1}(2)$ is a big angle.
+        right: |-
+          It doesn't exist: no angle has sine 2. The domain of $\sin^{-1}$ is $-1 \leqslant x \leqslant 1$.
+
+  - type: deeper
+    title: Undo, then redo (carefully)
+    body: |-
+      $\sin\left(\sin^{-1}x\right) = x$ for every $x$ in $[-1, 1]$. But the other way round only works inside the principal range:
+
+      $$\sin^{-1}\left(\sin\tfrac{5\pi}{6}\right) = \sin^{-1}\left(\tfrac12\right) = \tfrac{\pi}{6}, \text{ not } \tfrac{5\pi}{6}.$$
+
+      The inverse can only hand back angles from its own range. Same logic as $\sqrt{x^2} = \lvert x \rvert$, not always $x$.
+
+  - type: check
+    questions: [arccos-of-cos]
+
+  - type: exam
+    body: |-
+      - P1 doesn't test these functions in depth. You'll use $\sin^{-1}$ and friends as the first step in solving equations, and occasionally as an example of an inverse function with a restricted domain.
+      - In radian questions, leave principal values exact when they're special angles: $\cos^{-1}\left(-\tfrac12\right) = \tfrac{2\pi}{3}$.
+      - Your calculator's answer is always the principal value. Knowing the ranges tells you when to go looking for more.
+
+  - type: takeaways
+    items:
+      - |-
+        $\sin^{-1}x$, $\cos^{-1}x$, $\tan^{-1}x$ give **principal values**: inverses of the trig functions on restricted, one-one domains.
+      - |-
+        Ranges: $\sin^{-1}$ in $\left[-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right]$, $\cos^{-1}$ in $[0, \pi]$, $\tan^{-1}$ in $\left(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right)$.
+      - |-
+        $\sin^{-1}$ and $\cos^{-1}$ only accept inputs from $-1$ to $1$.
+      - |-
+        $\sin^{-1}x$ is not $\tfrac{1}{\sin x}$.
+
+questions:
+  - id: meaning-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.3"]
+    prompt: |-
+      What does $\sin^{-1}0.4$ mean?
+    explanation: |-
+      $\sin^{-1}0.4$ is the principal value: the one angle between $-\tfrac{\pi}{2}$ and $\tfrac{\pi}{2}$ (that is, $-90^\circ$ and $90^\circ$) whose sine is 0.4. It's about $0.412$ rad or $23.6^\circ$.
+    options:
+      - text: |-
+          The angle between $-90^\circ$ and $90^\circ$ whose sine is $0.4$
+        correct: true
+        why: |-
+          That's the principal value, the single answer the inverse function gives.
+      - text: |-
+          $\dfrac{1}{\sin 0.4}$
+        why: |-
+          The $-1$ means inverse function, not reciprocal.
+      - text: |-
+          Every angle whose sine is $0.4$
+        why: |-
+          There are infinitely many of those. A function gives one output, so $\sin^{-1}$ picks the principal value.
+      - text: |-
+          The angle between $0^\circ$ and $180^\circ$ whose sine is $0.4$
+        why: |-
+          That range is for $\cos^{-1}$. And it wouldn't work for sine: both $23.6^\circ$ and $156.4^\circ$ are in it.
+
+  - id: cos-range-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.5.3"]
+    prompt: |-
+      In radians, the principal values of $\cos^{-1}x$ satisfy {{1}} $\leqslant \cos^{-1}x \leqslant$ {{2}}.
+    blanks:
+      - accept: ["0"]
+      - accept: ["π", "pi", "180°", "3.14", "3.142"]
+    explanation: |-
+      $\cos^{-1}$ answers in the top half of the unit circle: from $0$ to $\pi$ (that's $0^\circ$ to $180^\circ$).
+
+  - id: arccos-numeric
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.3"]
+    prompt: |-
+      Find the exact value of $\cos^{-1}\left(-\tfrac{\sqrt3}{2}\right)$ in radians, in terms of $\pi$.
+    fields:
+      - answer: 2.6179938779914944
+        tolerance: { abs: 0.002 }
+        unit: rad
+    explanation: |-
+      $\cos\tfrac{\pi}{6} = \tfrac{\sqrt3}{2}$. The input is negative, so the angle is in the 2nd quadrant: $\pi - \tfrac{\pi}{6} = \tfrac{5\pi}{6}$.
+
+  - id: arcsin-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.5.3"]
+    prompt: |-
+      What is the exact value of $\sin^{-1}\left(-\tfrac{\sqrt3}{2}\right)$?
+    explanation: |-
+      $\sin\tfrac{\pi}{3} = \tfrac{\sqrt3}{2}$, and $\sin^{-1}$ answers between $-\tfrac{\pi}{2}$ and $\tfrac{\pi}{2}$, so a negative input gives $-\tfrac{\pi}{3}$.
+    options:
+      - text: |-
+          $-\tfrac{\pi}{3}$
+        correct: true
+        why: |-
+          In the principal range, and $\sin\left(-\tfrac{\pi}{3}\right) = -\tfrac{\sqrt3}{2}$ ✓
+      - text: |-
+          $\tfrac{4\pi}{3}$
+        why: |-
+          $\sin\tfrac{4\pi}{3}$ is $-\tfrac{\sqrt3}{2}$, but $\tfrac{4\pi}{3}$ is outside the range $\left[-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right]$, so it isn't the principal value.
+      - text: |-
+          $\tfrac{5\pi}{3}$
+        why: |-
+          A solution of $\sin x = -\tfrac{\sqrt3}{2}$ in $[0, 2\pi]$, but not the principal value.
+      - text: |-
+          $-\tfrac{\pi}{6}$
+        why: |-
+          $\sin\left(-\tfrac{\pi}{6}\right) = -\tfrac12$. You need the angle whose sine is $-\tfrac{\sqrt3}{2}$.
+
+  - id: arctan-degrees
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.3"]
+    prompt: |-
+      Find $\tan^{-1}\left(-\sqrt3\right)$ in degrees.
+    fields:
+      - answer: -60
+        tolerance: { abs: 0.01 }
+        unit: "°"
+    explanation: |-
+      $\tan 60^\circ = \sqrt3$, and $\tan^{-1}$ answers between $-90^\circ$ and $90^\circ$, so a negative input gives $-60^\circ$. (Not $120^\circ$: that's outside the principal range.)
+
+  - id: arccos-of-cos
+    format: numeric
+    difficulty: 3
+    objectives: ["1.5.3"]
+    prompt: |-
+      Find the exact value of $\cos^{-1}\left(\cos\tfrac{5\pi}{3}\right)$, in terms of $\pi$.
+    fields:
+      - answer: 1.0471975511965976
+        tolerance: { abs: 0.002 }
+        unit: rad
+    explanation: |-
+      Inside first: $\cos\tfrac{5\pi}{3} = \cos\left(2\pi - \tfrac{\pi}{3}\right) = \tfrac12$.
+
+      Then $\cos^{-1}\tfrac12 = \tfrac{\pi}{3}$, because $\cos^{-1}$ only returns angles from $0$ to $\pi$. So the answer is $\tfrac{\pi}{3}$, not $\tfrac{5\pi}{3}$.

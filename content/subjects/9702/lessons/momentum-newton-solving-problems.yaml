@@ -1,0 +1,266 @@
+id: momentum-newton-solving-problems
+subject: "9702"
+topic: "3.1"
+title: "F = ma problems: lifts, tow bars and slopes"
+summary: Draw a free-body diagram, find the resultant force along the acceleration, then apply F = ma to one object or to a whole system of connected objects.
+order: 5
+minutes: 5
+objectives: ["3.1.2", "3.1.5", "3.1.6"]
+prerequisites: [momentum-newton-third-law, units-resolving-vectors]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 3.1.2, using F = ma in problem solving with the resultant force
+    and acceleration in the same direction; 3.1.5, applying Newton's laws, including the third law
+    for internal forces; and 3.1.6, weight W = mg), using g = 9.81 m s⁻² from the 9702 data sheet
+    and resolving forces as in 1.4.3. The lift diagram is drawn to scale (an 800 kg lift,
+    a = ±1.5 m s⁻²); the tow diagram labels the forces with arrow lengths not to scale. All worked
+    values and answer keys computed with Python. All questions are original; masses and forces
+    are illustrative values.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve multi-force problems with $F = ma$: lifts, objects pulling each other along, and objects on slopes.
+
+  - type: explain
+    title: The four-step method
+    body: |
+      Most dynamics problems fold in the face of the same four steps:
+
+      1. **Choose the object** (or group of objects) you'll apply $F = ma$ to.
+      2. **Draw its free-body diagram**: every force acting **on** it, and nothing else. Usual suspects: weight $mg$, tension, normal contact force, friction, drag, driving force.
+      3. **Take the direction of the acceleration as positive** and write the resultant: forces that way minus forces the other way.
+      4. **Set the resultant equal to $ma$** and solve. Add suvat if the question wants a speed, a distance or a time.
+
+  - type: explain
+    title: Lifts
+    body: |
+      Upwards positive. For a lift of mass $m$ hanging from a cable with tension $T$:
+
+      $$T - mg = ma$$
+
+      | What the lift is doing | Acceleration | Tension |
+      | --- | --- | --- |
+      | speeding up going up, or slowing down going down | upwards | $T > mg$ |
+      | at rest, or constant velocity | zero | $T = mg$ |
+      | speeding up going down, or slowing down going up | downwards | $T < mg$ |
+
+      The same goes for **you** standing in the lift: the floor's contact force $R$ obeys $R - mg = ma$. That's why you feel heavier as a lift sets off upwards. Bathroom scales measure that contact force, not your weight, so at that moment they'd read more than your weight.
+
+  - type: diagram
+    diagram: phys-momentum-newton-lift
+    alt: >-
+      Three free-body diagrams of an 800 kg lift, forces drawn to scale. Each shows a cab hanging
+      from a cable, with tension T pointing up from the top of the cab and weight W pointing down
+      from its centre; W is the same length in every panel. Left, "Accelerating up": T is longer
+      than W and an acceleration arrow a points upwards; T > W, T = m(g + a) = 9050 N. Middle,
+      "Constant velocity": T and W are the same length and a = 0; T = W, T = mg = 7850 N. Right,
+      "Accelerating down": T is shorter than W and the acceleration arrow points downwards; T < W,
+      T = m(g − a) = 6650 N.
+    caption: An 800 kg lift with a = 1.5 m s⁻². The weight never changes; the tension adjusts to give the resultant force $ma$.
+
+  - type: example
+    title: A lift setting off upwards
+    problem: |
+      A lift of total mass $800\ \text{kg}$ accelerates upwards from rest at $1.5\ \text{m s}^{-2}$. Find the tension in the cable.
+    steps:
+      - |
+        Upwards positive. Forces on the lift: $T$ upwards and $mg = 800 \times 9.81 = 7848\ \text{N}$ downwards.
+      - |
+        Resultant $= T - 7848$, and this equals $ma = 800 \times 1.5 = 1200\ \text{N}$.
+      - |
+        $T = 7848 + 1200 = 9048\ \text{N}$.
+    answer: |
+      $T = 9050\ \text{N}$ (3 s.f.). In one line: $T = m(g + a)$.
+
+  - type: check
+    questions: [lift-tension, scale-reading, lift-expression]
+
+  - type: explain
+    title: "Connected objects: whole system first"
+    body: |
+      Objects that move together (a car and trailer, a train of carriages) share the same acceleration. Treat them as **one system** to find it:
+
+      - include only **external** forces (driving force, friction, drag, weights);
+      - leave out the forces between the parts, such as the tow bar's pull: they come in **third-law pairs** that cancel **inside** the system;
+      - use the **total** mass.
+
+      Then apply $F = ma$ to **one part** on its own to find the force between the parts.
+
+  - type: diagram
+    diagram: phys-momentum-newton-tow
+    alt: >-
+      A car pulling a trailer to the right, with arrow lengths not to scale. Top, "Whole system:
+      car + trailer, 1600 kg": only external forces are drawn, a 2400 N driving force forwards at
+      the car's front and resistance of 300 N + 100 N backwards at the trailer's rear, with an
+      acceleration arrow labelled a = 2000 ÷ 1600 = 1.25 m s⁻² and a note that the tow-bar forces
+      are internal and left out. Bottom left, "Trailer alone, 400 kg": the tow bar pulls it forwards
+      with 600 N and resistance of 100 N acts backwards; 600 − 100 = 400 × 1.25. Bottom right, "Car
+      alone, 1200 kg": 2400 N forwards, and backwards the tow bar's 600 N and resistance of 300 N;
+      2400 − 300 − 600 = 1200 × 1.25. A note says the two 600 N tow-bar forces are a third-law
+      pair: equal, opposite, on different bodies.
+    caption: Whole system for the acceleration, then one part for the tow-bar force.
+
+  - type: example
+    title: Car and trailer
+    problem: |
+      A car of mass $1200\ \text{kg}$ tows a trailer of mass $400\ \text{kg}$ along a level road. The driving force is $2400\ \text{N}$. The resistive forces are $300\ \text{N}$ on the car and $100\ \text{N}$ on the trailer. Find the acceleration and the tension in the tow bar.
+    steps:
+      - |
+        Whole system ($1600\ \text{kg}$): resultant $= 2400 - 300 - 100 = 2000\ \text{N}$, so $a = \dfrac{2000}{1600} = 1.25\ \text{m s}^{-2}$.
+      - |
+        Trailer alone: tow-bar pull $T$ forwards, $100\ \text{N}$ backwards. $T - 100 = 400 \times 1.25 = 500$, so $T = 600\ \text{N}$.
+      - |
+        Check with the car alone: $2400 - 300 - T = 1200 \times 1.25 = 1500$, so $T = 600\ \text{N}$. ✓
+    answer: |
+      $a = 1.25\ \text{m s}^{-2}$ and $T = 600\ \text{N}$. The tow bar pulls the trailer forwards with 600 N and, by the third law, pulls the car backwards with 600 N.
+
+  - type: check
+    questions: [system-cloze, tow-tension, system-spot-error]
+
+  - type: explain
+    title: Slopes
+    body: |
+      On a slope at angle $\theta$, resolve the weight: $mg\sin\theta$ **down** the slope and $mg\cos\theta$ into it. If the object stays on the surface, the normal contact force balances $mg\cos\theta$, so the resultant acts along the slope:
+
+      $$ma = mg\sin\theta - \text{friction}$$
+
+      With no friction, $a = g\sin\theta$, whatever the mass. Sanity check: $\theta = 90°$ gives $a = g$, which is free fall.
+
+  - type: check
+    questions: [slope-sledge]
+
+  - type: misconceptions
+    items:
+      - wrong: The tension in a lift cable always equals the lift's weight.
+        right: Only when the acceleration is zero. Accelerating upwards needs $T > mg$; accelerating downwards means $T < mg$.
+      - wrong: In the whole-system method, include the tension in the tow bar.
+        right: Internal forces come in third-law pairs inside the system and cancel. Only external forces go in.
+      - wrong: A lift that is moving upwards always makes the scales read more than your weight.
+        right: It depends on the **acceleration**, not the velocity. Moving up but slowing down means a downward acceleration, so the scales read **less**.
+      - wrong: The normal contact force on a slope equals mg.
+        right: With no other forces perpendicular to the slope, it equals $mg\cos\theta$, which is less than $mg$.
+
+  - type: exam
+    body: |
+      - Sketch the free-body diagram even when the question doesn't ask for one. It's the best defence against sign errors.
+      - Write the equation in symbols first ("$T - mg = ma$"). Method marks are awarded there even if the arithmetic slips.
+      - Two unknowns (an acceleration and a tension)? Whole system for $a$, then one part for the tension, then check with the other part.
+
+  - type: takeaways
+    items:
+      - Free-body diagram, then the resultant along the acceleration, then $F_{\text{res}} = ma$, then suvat if needed.
+      - "Lifts (upwards positive): $T - mg = ma$. The direction of $a$ decides whether $T$ is more or less than $mg$."
+      - "Connected objects: whole system (external forces, total mass) for $a$; one part on its own for the internal force."
+      - "Frictionless slope: $a = g\\sin\\theta$."
+
+questions:
+  - id: lift-tension
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.2", "3.1.6"]
+    prompt: |
+      A lift of mass $650\ \text{kg}$ starts to move downwards from rest, accelerating at $1.2\ \text{m s}^{-2}$. Calculate the tension in the cable.
+    fields:
+      - answer: 5596.5
+        tolerance: { abs: 10 }
+        unit: N
+    explanation: |
+      Take downwards (the direction of $a$) as positive: $mg - T = ma$, so $T = m(g - a) = 650 \times (9.81 - 1.2) = 650 \times 8.61 = 5600\ \text{N}$. That is less than the weight, $650 \times 9.81 = 6380\ \text{N}$, as it must be for a downward acceleration.
+
+  - id: scale-reading
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.2", "3.1.6"]
+    prompt: |
+      A student of mass $50\ \text{kg}$ (weight $491\ \text{N}$) stands on bathroom scales in a lift. The lift is moving **upwards** and **slowing down** as it approaches the top floor. What do the scales read?
+    options:
+      - text: Less than 491 N
+        correct: true
+        why: Correct. Moving up but slowing down means the acceleration is downwards, so the resultant force is downwards and the contact force $R$ is less than $mg$.
+      - text: More than 491 N
+        why: That needs an upward acceleration, as when the lift sets off upwards. Here it is slowing down, so $a$ points down.
+      - text: Exactly 491 N, because the lift is still moving upwards
+        why: The reading equals the weight only at constant velocity ($a = 0$). The direction of motion doesn't decide it.
+      - text: Zero
+        why: The scales read zero only in free fall, when the acceleration is $g$ downwards.
+    explanation: |
+      The scales measure the contact force $R$. With downwards as positive (the direction of $a$): $mg - R = ma$, so $R = m(g - a) < mg$.
+
+  - id: lift-expression
+    format: expression
+    difficulty: 2
+    objectives: ["3.1.2", "3.1.6"]
+    prompt: |
+      A lift of mass $m$ is accelerating **downwards** with acceleration $a$. The acceleration of free fall is $g$. Write an expression for the tension $T$ in the cable, in terms of $m$, $g$ and $a$.
+    answer: m*(g - a)
+    variables: [m, g, a]
+    display: $T = m(g - a)$
+    explanation: |
+      Downwards positive: the resultant force is $mg - T$, and it equals $ma$. Rearranging, $T = mg - ma = m(g - a)$. Check: $a = 0$ gives $T = mg$, and free fall ($a = g$) gives $T = 0$.
+
+  - id: system-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.2", "3.1.5"]
+    prompt: |
+      To find the acceleration of a car and trailer moving together, treat them as one system: include only the {{1}} forces, leave out the forces between the two parts, and divide by the {{2}} mass.
+    blanks:
+      - accept: [external, outside]
+      - accept: [total, combined, whole]
+    explanation: |
+      The forces between the parts (the tow bar's pull) are a third-law pair inside the system, so they cancel. Only external forces change the motion of the system as a whole, and the whole system has the total mass.
+
+  - id: tow-tension
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.2", "3.1.5"]
+    prompt: |
+      A tractor of mass $3000\ \text{kg}$ pulls a trailer of mass $1500\ \text{kg}$ across a level field. The driving force on the tractor is $5400\ \text{N}$. The resistive forces are $300\ \text{N}$ on the tractor and $600\ \text{N}$ on the trailer. Calculate the acceleration and the tension in the coupling between them.
+    fields:
+      - label: "acceleration ="
+        answer: 1.0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻²
+      - label: "tension ="
+        answer: 2100
+        tolerance: { abs: 5 }
+        unit: N
+    explanation: |
+      Whole system: resultant $= 5400 - 300 - 600 = 4500\ \text{N}$ on $4500\ \text{kg}$, so $a = 1.0\ \text{m s}^{-2}$. Trailer alone: $T - 600 = 1500 \times 1.0$, so $T = 2100\ \text{N}$. Check with the tractor: $5400 - 300 - 2100 = 3000 = 3000 \times 1.0$. ✓
+
+  - id: system-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.2", "3.1.5"]
+    prompt: |
+      A locomotive of mass $60\,000\ \text{kg}$ pulls a carriage of mass $20\,000\ \text{kg}$. The driving force is $32\,000\ \text{N}$ and the resistive forces are negligible. The tension in the coupling is $T$. A student tries to find the acceleration. Which line contains the first error?
+    lines:
+      - |
+        Treat the locomotive and carriage as one system: total mass $= 80\,000\ \text{kg}$.
+      - |
+        The coupling pulls the locomotive backwards with force $T$, so the resultant force on the system is $32\,000 - T$.
+      - |
+        $a = \dfrac{32\,000 - T}{80\,000}$
+      - |
+        So $a$ can't be found until $T$ is known.
+    errorLine: 2
+    fix: |
+      $T$ is an internal force: the coupling also pulls the carriage forwards with $T$ (third law), so the two cancel within the system. The resultant is $32\,000\ \text{N}$, so $a = \dfrac{32\,000}{80\,000} = 0.40\ \text{m s}^{-2}$, and then $T = 20\,000 \times 0.40 = 8000\ \text{N}$.
+    explanation: |
+      Line 1 was the right idea; line 2 then smuggled an internal force into the system. Lines 3 and 4 only follow from that mistake.
+
+  - id: slope-sledge
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.2", "3.1.6"]
+    prompt: |
+      A sledge of mass $12\ \text{kg}$ slides down a snowy slope inclined at $20°$ to the horizontal. The friction force on it is $15\ \text{N}$, acting up the slope. Calculate its acceleration down the slope.
+    fields:
+      - answer: 2.105
+        tolerance: { abs: 0.03 }
+        unit: m s⁻²
+    explanation: |
+      Component of the weight down the slope: $mg\sin 20° = 12 \times 9.81 \times \sin 20° = 40.3\ \text{N}$. Resultant down the slope $= 40.3 - 15 = 25.3\ \text{N}$, so $a = \dfrac{25.3}{12} = 2.1\ \text{m s}^{-2}$. The normal contact force balances $mg\cos 20°$, so it doesn't appear in the equation along the slope.

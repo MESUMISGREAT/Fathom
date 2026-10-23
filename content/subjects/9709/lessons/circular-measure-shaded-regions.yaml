@@ -1,0 +1,259 @@
+id: circular-measure-shaded-regions
+subject: "9709"
+topic: "1.4"
+title: Shaded regions with tangents and triangles
+summary: Find angles and lengths in the triangles that come with circle diagrams (tangents, chords, radii), then add and subtract areas to find shaded regions.
+order: 4
+minutes: 5
+kind: core
+objectives: ["1.4.2"]
+prerequisites: [circular-measure-segments-and-triangles]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.4 learning outcome "use the formulae s = rθ
+    and A = ½r²θ in solving problems concerning the arc length and sector area of a circle", and
+    its note on calculating lengths and angles in triangles and areas of triangles. All examples,
+    figures and questions are original; all arithmetic checked in Python. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the angles and lengths hiding in a circle diagram (using tangents, radii and right-angled triangles), then break a **shaded region** into shapes you know and add or subtract.
+
+  - type: explain
+    title: Shaded regions are escape rooms
+    body: |-
+      The examiner shades a weird shape and asks for its area or perimeter. You never need a new formula. You need to spot which **known shapes** make it up:
+
+      $$\text{shaded} = \text{(shape you know)} \pm \text{(another shape you know)}$$
+
+      Your shapes: sectors ($\tfrac12 r^2\theta$), triangles ($\tfrac12 ab\sin C$ or $\tfrac12 \times$ base $\times$ height) and segments. The skill is finding the missing angle or length first.
+
+  - type: explain
+    title: Clues and what they unlock
+    body: |-
+      | Clue in the diagram | Fact to use |
+      | --- | --- |
+      | a **tangent** at $A$ | angle $OAT = \tfrac{\pi}{2}$ (tangent $\perp$ radius) |
+      | a right angle | Pythagoras and SOH CAH TOA |
+      | two radii $OA$, $OB$ | triangle $OAB$ is isosceles |
+      | a chord of known length | half-angle: $\sin\tfrac{\theta}{2} = \dfrac{\tfrac12 AB}{r}$ |
+      | any two sides and the angle between | $\tfrac12 ab\sin C$, cosine rule |
+
+      Find angles **in radians** (radian mode), because they'll go straight into $r\theta$ and $\tfrac12 r^2\theta$.
+
+  - type: diagram
+    diagram: circular-measure-tangent-region
+    alt: >-
+      A circle with centre O and radius OA = 5 cm, drawn to scale. A point T outside the circle has
+      OT = 13 cm along a horizontal line, which meets the circle at B. The tangent from T touches
+      the circle at A, with a right-angle mark at A between OA and AT. The angle AOT at the centre
+      is marked θ. The region bounded by the tangent AT, the straight line TB and the arc AB is
+      shaded. A note says shaded region = triangle OAT − sector OAB, and angle OAT = 90° because a
+      tangent is perpendicular to the radius.
+
+  - type: example
+    title: Find the angle, then the region
+    problem: |-
+      A circle has centre $O$ and radius $5$ cm. A point $T$ is $13$ cm from $O$. The tangent from $T$ touches the circle at $A$, and $OT$ meets the circle at $B$. Find the area and the perimeter of the region bounded by $AT$, $TB$ and the arc $AB$.
+    steps:
+      - |-
+        Tangent $\perp$ radius, so triangle $OAT$ has a right angle at $A$. Pythagoras: $AT = \sqrt{13^2 - 5^2} = 12$ cm.
+      - |-
+        Angle: $\cos\theta = \dfrac{OA}{OT} = \dfrac{5}{13}$, so $\theta = \cos^{-1}\tfrac{5}{13} = 1.1760\ldots$ rad (radian mode).
+      - |-
+        Area: triangle $OAT = \tfrac12 \times 5 \times 12 = 30$. Sector $OAB = \tfrac12 \times 25 \times 1.1760\ldots = 14.700\ldots$ So shaded $= 30 - 14.700\ldots = 15.30\ldots$
+      - |-
+        Perimeter: $AT + TB + \text{arc } AB$. $TB = OT - OB = 13 - 5 = 8$, arc $= 5 \times 1.1760\ldots = 5.880\ldots$
+      - |-
+        Total $= 12 + 8 + 5.880\ldots = 25.88\ldots$
+    answer: |-
+      Area $15.3 \text{ cm}^2$, perimeter $25.9$ cm (3 s.f.).
+
+  - type: check
+    questions: [tangent-why-mcq, tangent-lengths, tangent-region-area]
+
+  - type: example
+    title: A "show that" with exact answers
+    problem: |-
+      Sector $OAB$ has radius $6$ cm and angle $AOB = \tfrac{\pi}{3}$. The tangent to the circle at $A$ meets $OB$ extended at $T$. Show that $AT = 6\sqrt3$ cm, and find the exact area of the region bounded by $AT$, $TB$ and the arc $AB$.
+    steps:
+      - |-
+        Angle $OAT = \tfrac{\pi}{2}$ (tangent $\perp$ radius), so triangle $OAT$ is right-angled at $A$.
+      - |-
+        $\tan\tfrac{\pi}{3} = \dfrac{AT}{OA}$, so $AT = 6\tan\tfrac{\pi}{3} = 6\sqrt3$ cm, as required. (Using the exact value $\tan\tfrac{\pi}{3} = \sqrt3$.)
+      - |-
+        Triangle $OAT = \tfrac12 \times 6 \times 6\sqrt3 = 18\sqrt3$.
+      - |-
+        Sector $OAB = \tfrac12 \times 6^2 \times \tfrac{\pi}{3} = 6\pi$.
+      - |-
+        Region $= 18\sqrt3 - 6\pi \text{ cm}^2$ (about $12.3 \text{ cm}^2$).
+    answer: |-
+      $AT = 6\sqrt3$ cm and the area is $18\sqrt3 - 6\pi \text{ cm}^2$. (For the perimeter you'd also need $TB$: $OT = \tfrac{6}{\cos(\pi/3)} = 12$, so $TB = 6$.)
+
+  - type: check
+    questions: [chord-angle, exact-region]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $TB = OT$.
+        right: |-
+          $T$ is outside the circle, so $TB = OT - r$. Draw it and you'll see the radius is part of $OT$.
+      - wrong: |-
+          The angle from $\cos^{-1}\tfrac{5}{13}$ is $67.4$, so the sector is $\tfrac12 \times 25 \times 67.4$.
+        right: |-
+          $67.4$ is in degrees. Use radian mode ($1.176$) or convert, or the sector comes out 57 times too big.
+      - wrong: |-
+          Every triangle in a circle diagram is right-angled.
+        right: |-
+          Only where there's a reason: a tangent meeting a radius, or the perpendicular from the centre to a chord. Triangle $OAB$ with two radii is isosceles, not right-angled (unless $\theta = \tfrac{\pi}{2}$).
+
+  - type: check
+    questions: [perimeter-spot]
+
+  - type: exam
+    body: |-
+      - Typical shape: a "show that" for an angle or length (2 marks), then the perimeter (2–3 marks), then the area (2–3 marks) of a shaded region.
+      - **Insider hack:** for *"Show that angle $AOB = 1.85$ radians, correct to 3 significant figures"*, write more digits than asked ($1.8546\ldots$) before rounding. Writing just $1.85$ looks like you copied it.
+      - Then use the full calculator value, not the rounded one, in later parts.
+      - State the shapes you're combining in words: "shaded area $=$ triangle $OAT -$ sector $OAB$". Clear method gets credit even if a number slips.
+
+  - type: takeaways
+    items:
+      - |-
+        Shaded region $=$ known shapes added or subtracted: sectors, triangles, segments.
+      - |-
+        A tangent meets the radius at $\tfrac{\pi}{2}$: that unlocks Pythagoras and SOH CAH TOA.
+      - |-
+        Find angles in radians before using $r\theta$ or $\tfrac12 r^2\theta$.
+      - |-
+        For lengths along a line through the centre, subtract the radius: $TB = OT - r$.
+
+questions:
+  - id: tangent-why-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.4.2"]
+    prompt: |-
+      In the diagram, $TA$ is a tangent to the circle at $A$ and $O$ is the centre. Why is angle $OAT$ a right angle?
+    explanation: |-
+      A tangent to a circle is perpendicular to the radius drawn to the point of contact. That's the fact that turns triangle $OAT$ into a right-angled triangle.
+    options:
+      - text: |-
+          A tangent is perpendicular to the radius at the point of contact.
+        correct: true
+        why: |-
+          This is the circle fact every tangent question relies on.
+      - text: |-
+          The angle in a semicircle is a right angle.
+        why: |-
+          That fact needs a triangle drawn on a **diameter** with its third corner on the circle. $T$ isn't on the circle.
+      - text: |-
+          Triangle $OAT$ is isosceles.
+        why: |-
+          It isn't: $OA = 5$ cm, but $OT = 13$ cm and $AT = 12$ cm. And being isosceles wouldn't force a right angle anyway.
+      - text: |-
+          $OT$ is a diameter of the circle.
+        why: |-
+          A diameter joins two points of the circle through $O$. $T$ is outside the circle, so $OT$ isn't a diameter, or even a chord.
+
+  - id: tangent-lengths
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A circle has centre $O$ and radius $7$ cm. A point $T$ is $25$ cm from $O$, and the tangent from $T$ touches the circle at $A$. Find the length $AT$, and angle $AOT$ in radians correct to 3 significant figures.
+    fields:
+      - label: "AT ="
+        answer: 24
+        tolerance: { abs: 0.01 }
+        unit: cm
+      - label: "angle AOT ="
+        answer: 1.2870022175865687
+        sigFigs: 3
+        unit: rad
+    explanation: |-
+      Angle $OAT = \tfrac{\pi}{2}$, so $AT = \sqrt{25^2 - 7^2} = \sqrt{576} = 24$ cm.
+
+      $\cos(\angle AOT) = \tfrac{7}{25}$, so $\angle AOT = \cos^{-1}(0.28) = 1.287\ldots = 1.29$ rad.
+
+  - id: tangent-region-area
+    format: numeric
+    difficulty: 3
+    objectives: ["1.4.2"]
+    prompt: |-
+      Same circle: centre $O$, radius $7$ cm, $OT = 25$ cm, tangent $TA$, and $OT$ meets the circle at $B$. Find the area of the region bounded by $AT$, $TB$ and the arc $AB$, correct to 3 significant figures.
+    fields:
+      - answer: 52.46844566912907
+        sigFigs: 3
+        unit: "cm²"
+    explanation: |-
+      Triangle $OAT = \tfrac12 \times 7 \times 24 = 84$.
+
+      Sector $OAB = \tfrac12 \times 49 \times 1.2870\ldots = 31.53\ldots$
+
+      Region $= 84 - 31.53\ldots = 52.47\ldots$, so $52.5 \text{ cm}^2$.
+
+  - id: chord-angle
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A chord $AB$ of length $8$ cm is drawn in a circle with centre $O$ and radius $5$ cm. Find angle $AOB$ in radians, correct to 3 significant figures.
+    fields:
+      - label: "angle AOB ="
+        answer: 1.8545904360032246
+        sigFigs: 3
+        unit: rad
+    explanation: |-
+      The perpendicular from $O$ bisects the chord, making a right-angled triangle with hypotenuse 5 and opposite side 4.
+
+      $\sin\tfrac{\theta}{2} = \tfrac45$, so $\tfrac{\theta}{2} = 0.9272\ldots$ and $\theta = 1.8545\ldots = 1.85$ rad.
+
+      (Cosine rule check: $\cos\theta = \tfrac{25 + 25 - 64}{50} = -0.28$, and $\cos^{-1}(-0.28) = 1.85$ ✓)
+
+  - id: exact-region
+    format: numeric
+    difficulty: 3
+    objectives: ["1.4.2"]
+    prompt: |-
+      Sector $OAB$ has radius $6$ cm and angle $AOB = \tfrac{\pi}{6}$. The tangent at $A$ meets $OB$ extended at $T$. The area of the region bounded by $AT$, $TB$ and the arc $AB$ is $a\sqrt3 - b\pi \text{ cm}^2$. Find $a$ and $b$. (Use $\tan\tfrac{\pi}{6} = \tfrac{1}{\sqrt3}$.)
+    fields:
+      - label: "a ="
+        answer: 6
+      - label: "b ="
+        answer: 3
+    explanation: |-
+      $AT = 6\tan\tfrac{\pi}{6} = \tfrac{6}{\sqrt3} = 2\sqrt3$.
+
+      Triangle $OAT = \tfrac12 \times 6 \times 2\sqrt3 = 6\sqrt3$. Sector $= \tfrac12 \times 36 \times \tfrac{\pi}{6} = 3\pi$.
+
+      Region $= 6\sqrt3 - 3\pi$ (about $0.968 \text{ cm}^2$, a thin sliver), so $a = 6$, $b = 3$.
+
+  - id: perimeter-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      Circle centre $O$, radius $7$ cm, $OT = 25$ cm, tangent $TA$, and $OT$ meets the circle at $B$. A student finds the perimeter of the region bounded by $AT$, $TB$ and arc $AB$. Which line contains the first error?
+    lines:
+      - |-
+        Angle $AOT = \cos^{-1}\tfrac{7}{25} = 1.287$ rad
+      - |-
+        Arc $AB = 7 \times 1.287 = 9.009$ cm
+      - |-
+        $AT = \sqrt{25^2 - 7^2} = 24$ cm
+      - |-
+        $TB = OT = 25$ cm
+      - |-
+        Perimeter $= 24 + 25 + 9.009 = 58.0$ cm
+    errorLine: 4
+    fix: |-
+      $B$ is on the circle, so $TB = OT - OB = 25 - 7 = 18$ cm, and the perimeter is $24 + 18 + 9.009 = 51.0$ cm.
+    explanation: |-
+      $OT$ runs from the centre, through $B$, out to $T$. The radius $OB$ is part of it, so $TB$ is only $25 - 7 = 18$ cm.

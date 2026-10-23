@@ -1,0 +1,240 @@
+id: momentum-newton-f-equals-ma
+subject: "9702"
+topic: "3.1"
+title: "F = ma: resultant force and acceleration"
+summary: The resultant force on an object equals its mass times its acceleration, and the acceleration always points the same way as the resultant force.
+order: 2
+minutes: 5
+objectives: ["3.1.2"]
+prerequisites: [momentum-newton-mass-inertia]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.1.2, recalling F = ma and using it in problem solving,
+    understanding that the resultant force and the acceleration always act in the same
+    direction), with links to the equations of uniformly accelerated motion (2.1.7). Both
+    diagrams are drawn to scale (crate forces at 2 px per newton; a = F / m plotted for 0.50 kg
+    and 1.00 kg). All worked values and answer keys computed with Python. All questions are
+    original; masses, forces and speeds are illustrative values.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use $F = ma$ with the **resultant** force, and explain why the acceleration always points the same way as that resultant force, even when the object is moving the other way.
+
+  - type: explain
+    title: One equation, three ideas
+    body: |
+      Shove an empty shopping trolley and it zooms off; shove harder and it zooms off faster. Load it with 40 bottles of water and the same shove gives a lazy roll. That supermarket experiment is **Newton's second law**:
+
+      $$F = ma$$
+
+      | Symbol | Quantity | Unit |
+      | --- | --- | --- |
+      | $F$ | **resultant** force | N |
+      | $m$ | mass | kg |
+      | $a$ | acceleration | $\text{m s}^{-2}$ |
+
+      Double the resultant force and the acceleration doubles. Double the mass and it halves. (This is the second law for an object of **constant mass**; its full form uses momentum, later in this topic.)
+
+  - type: definition
+    term: The newton
+    body: |
+      One **newton** is the force that gives a mass of $1\ \text{kg}$ an acceleration of $1\ \text{m s}^{-2}$ in the direction of the force. So $1\ \text{N} = 1\ \text{kg m s}^{-2}$.
+
+  - type: explain
+    title: Resultant first, always
+    body: |
+      $F$ in $F = ma$ is the **resultant** force: add up every force on the object as vectors. Along a straight line, choose a positive direction and give each force a sign.
+
+      - Push $50\ \text{N}$ to the right, friction $20\ \text{N}$ to the left: resultant $= 50 - 20 = 30\ \text{N}$ to the right.
+      - On a $10\ \text{kg}$ crate that gives $a = 30 / 10 = 3.0\ \text{m s}^{-2}$, to the right.
+
+      Plugging the $50\ \text{N}$ push straight into $F = ma$ is the single most common way to lose this mark.
+
+  - type: diagram
+    diagram: phys-momentum-newton-force-direction
+    alt: >-
+      Two panels. Left, "Speeding up": a 10 kg crate on a floor. From its centre, a 50 N push
+      arrow points right and a shorter 20 N friction arrow points left, drawn to scale. Below, a
+      resultant force arrow points right, labelled 50 − 20 = 30 N, and under it an acceleration
+      arrow a points right, labelled 30 ÷ 10 = 3.0 m s⁻²; the panel is captioned "moving right,
+      accelerating right". Right, "Braking": a 1200 kg car on a road with a dashed velocity arrow v
+      pointing right, labelled "still moving forwards". A 6000 N braking force arrow points left.
+      Below, the resultant force (6000 N) and the acceleration (6000 ÷ 1200 = 5.0 m s⁻²) both
+      point left; the panel is captioned "moving right, accelerating left".
+    caption: The acceleration copies the direction of the **resultant force**, not the direction of motion.
+
+  - type: check
+    questions: [resultant-a, newton-units]
+
+  - type: intuition
+    title: Why the acceleration copies the force
+    body: |
+      In $F = ma$ the mass is a **positive scalar**. Multiplying a vector by a positive number changes its size but never its direction, so the acceleration always points along the resultant force.
+
+      Velocity is another story: it can point anywhere. A braking car has velocity forwards but acceleration backwards; a ball thrown upwards has velocity up but acceleration down. The resultant force decides how the velocity **changes**, not where the object happens to be heading.
+
+  - type: example
+    title: Braking to a stop
+    problem: |
+      A car of mass $1200\ \text{kg}$ is travelling at $20\ \text{m s}^{-1}$ when the driver brakes. The resultant braking force is $6000\ \text{N}$. Find the deceleration and the stopping distance.
+    steps:
+      - |
+        Forwards positive. The resultant force points backwards: $F = -6000\ \text{N}$.
+      - |
+        $a = \dfrac{F}{m} = \dfrac{-6000}{1200} = -5.0\ \text{m s}^{-2}$: a deceleration of $5.0\ \text{m s}^{-2}$, pointing backwards like the force.
+      - |
+        Stopping distance from $v^2 = u^2 + 2as$ with $v = 0$: $0 = 20^2 + 2(-5.0)s$, so $s = \dfrac{400}{10} = 40\ \text{m}$.
+    answer: |
+      Deceleration $5.0\ \text{m s}^{-2}$; the car stops in $40\ \text{m}$ (taking $4.0\ \text{s}$). $F = ma$ finds the acceleration, then suvat does the rest. That double act turns up all the time.
+
+  - type: check
+    questions: [ball-top, cyclist-spot-error]
+
+  - type: deeper
+    title: Testing F = ma with a trolley
+    body: |
+      In the lab, give a trolley of fixed mass several different resultant forces and measure each acceleration (light gates or a motion sensor). Plot $a$ against $F$:
+
+      - a straight line through the origin shows $a \propto F$;
+      - since $a = \dfrac{F}{m}$, the **gradient is $\dfrac{1}{m}$**, so $m = \dfrac{1}{\text{gradient}}$;
+      - a heavier trolley gives a less steep line.
+
+  - type: diagram
+    diagram: phys-momentum-newton-a-f-graph
+    alt: >-
+      A graph of acceleration a / m s⁻² (0 to 4.0) against resultant force F / N (0 to 2.0). Two
+      straight lines pass through the origin, each with data points every 0.25 N lying on it. The
+      steeper line, for m = 0.50 kg, reaches 4.0 m s⁻² at 2.0 N. The shallower line, for m = 1.00
+      kg, reaches 2.0 m s⁻² at 2.0 N. A dashed gradient triangle on the steeper line runs from
+      F = 0.5 N to 1.5 N, with ΔF = 1.0 N and Δa = 2.0 m s⁻². A note reads: straight line through
+      the origin, a ∝ F; gradient = 1 / m; 2.0 kg⁻¹ gives m = 0.50 kg.
+    caption: Twice the mass, half the gradient. The gradient of an a–F graph is 1/m.
+
+  - type: misconceptions
+    items:
+      - wrong: The F in F = ma is the applied force, or the biggest force.
+        right: It is the **resultant** of all the forces acting on the object.
+      - wrong: An object always moves in the direction of the resultant force.
+        right: It **accelerates** in that direction. A braking car moves forwards while accelerating backwards.
+      - wrong: An object that is momentarily at rest has no resultant force on it.
+        right: At the top of its flight a ball thrown upwards has $v = 0$ but $a = 9.81\ \text{m s}^{-2}$ downwards. The resultant force is its weight.
+      - wrong: A bigger force means a bigger speed.
+        right: A bigger resultant force means a bigger **acceleration**, so the velocity changes faster.
+
+  - type: exam
+    body: |
+      - Write the resultant as an expression before using it, e.g. $F_{\text{res}} = 2400 - 300$. Method marks live in that line, even if your arithmetic later slips.
+      - Mass in **kg** (convert grams first), force in N, acceleration in $\text{m s}^{-2}$.
+      - Asked why something accelerates in a particular direction? Say that **the acceleration is always in the same direction as the resultant force**, then identify which way the resultant points.
+
+  - type: check
+    questions: [trolley-gradient, stopping-force]
+
+  - type: takeaways
+    items:
+      - "$F = ma$, where $F$ is the **resultant** force (N), $m$ the mass (kg) and $a$ the acceleration ($\\text{m s}^{-2}$)."
+      - "One newton gives 1 kg an acceleration of $1\\ \\text{m s}^{-2}$, so $1\\ \\text{N} = 1\\ \\text{kg m s}^{-2}$."
+      - The acceleration always points the same way as the resultant force; the velocity need not.
+      - Find the resultant first, divide by the mass, then use suvat if the question wants speeds, distances or times.
+
+questions:
+  - id: resultant-a
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.2"]
+    prompt: |
+      A $4.0\ \text{kg}$ box is pushed across a floor with a horizontal force of $30\ \text{N}$. The friction force on it is $18\ \text{N}$. What is its acceleration?
+    fields:
+      - answer: 3.0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻²
+    explanation: |
+      Resultant $= 30 - 18 = 12\ \text{N}$ in the direction of the push, so $a = \dfrac{12}{4.0} = 3.0\ \text{m s}^{-2}$ in that direction.
+
+  - id: newton-units
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.2"]
+    prompt: |
+      Which of these is equal to $1\ \text{N}$?
+    options:
+      - text: $1\ \text{kg m s}^{-2}$
+        correct: true
+        why: Correct. From $F = ma$, force has the units of mass × acceleration, $\text{kg} \times \text{m s}^{-2}$.
+      - text: $1\ \text{kg m s}^{-1}$
+        why: That is the unit of momentum (mass × velocity), not of force.
+      - text: $1\ \text{kg m}^{2}\ \text{s}^{-2}$
+        why: That is the joule, the unit of energy (force × distance).
+      - text: $1\ \text{kg s}^{-2}$
+        why: The metre is missing. Acceleration is measured in $\text{m s}^{-2}$.
+    explanation: |
+      The newton is defined from $F = ma$: the force that gives $1\ \text{kg}$ an acceleration of $1\ \text{m s}^{-2}$.
+
+  - id: ball-top
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.2"]
+    prompt: |
+      A ball is thrown vertically upwards. Air resistance is negligible. At the very top of its flight the ball is momentarily at rest. Which statement about the ball at that instant is correct?
+    options:
+      - text: The resultant force on it is its weight, downwards, so its acceleration is $9.81\ \text{m s}^{-2}$ downwards.
+        correct: true
+        why: Correct. Gravity doesn't switch off at the top. The resultant force is the weight, and the acceleration points the same way.
+      - text: The resultant force on it is zero, because it is not moving.
+        why: Zero velocity is not zero acceleration. With no resultant force the ball would hover there for ever (first law).
+      - text: The resultant force on it is upwards, because it was moving upwards.
+        why: Moving upwards needed no upward force (first law). The only force acting is the weight, downwards.
+      - text: Its acceleration is zero, but the resultant force on it is its weight.
+        why: A resultant force always produces an acceleration in its own direction ($F = ma$), so they can't disagree.
+    explanation: |
+      At the top, $v = 0$ but the velocity is still **changing** (from upwards to downwards), so there is an acceleration: $g$ downwards, produced by the weight.
+
+  - id: cyclist-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.2"]
+    prompt: |
+      A cyclist and bicycle have a total mass of $80\ \text{kg}$. The driving force is $120\ \text{N}$ forwards and the total resistive force is $40\ \text{N}$. A student calculates the acceleration. Which line contains the first error?
+    lines:
+      - |
+        Forwards positive: driving force $+120\ \text{N}$, resistive force $-40\ \text{N}$.
+      - |
+        Resultant force $= 120 + 40 = 160\ \text{N}$
+      - |
+        $a = \dfrac{F}{m} = \dfrac{160}{80}$
+      - |
+        $a = 2.0\ \text{m s}^{-2}$ forwards
+    errorLine: 2
+    fix: |
+      The forces act in opposite directions, so the resultant is $120 - 40 = 80\ \text{N}$, giving $a = \dfrac{80}{80} = 1.0\ \text{m s}^{-2}$ forwards.
+    explanation: |
+      Line 1 set up the signs correctly, and then line 2 ignored them. Lines 3 and 4 are only wrong because they carry the error forward.
+
+  - id: trolley-gradient
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.2"]
+    prompt: |
+      In an experiment, the acceleration $a$ of a trolley is measured for several different resultant forces $F$. A graph of $a$ (vertical axis) against $F$ (horizontal axis) is a straight line through the origin with a gradient of $2.5\ \text{m s}^{-2}\ \text{N}^{-1}$. What is the mass of the trolley?
+    fields:
+      - answer: 0.40
+        tolerance: { abs: 0.005 }
+        unit: kg
+    explanation: |
+      $a = \dfrac{F}{m}$, so the gradient of $a$ against $F$ is $\dfrac{1}{m}$. Then $m = \dfrac{1}{2.5} = 0.40\ \text{kg}$. (The gradient's unit, $\text{m s}^{-2}\ \text{N}^{-1}$, is the same as $\text{kg}^{-1}$.)
+
+  - id: stopping-force
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.2"]
+    prompt: |
+      A car of mass $1500\ \text{kg}$ is travelling at $24\ \text{m s}^{-1}$. It brakes and stops in a distance of $48\ \text{m}$ with constant deceleration. Calculate the resultant braking force.
+    fields:
+      - answer: 9000
+        tolerance: { rel: 0.01 }
+        unit: N
+    explanation: |
+      First the acceleration, from $v^2 = u^2 + 2as$: $0 = 24^2 + 2a(48)$, so $a = -\dfrac{576}{96} = -6.0\ \text{m s}^{-2}$. Then $F = ma = 1500 \times 6.0 = 9000\ \text{N}$, backwards: opposite to the motion and in the same direction as the acceleration.

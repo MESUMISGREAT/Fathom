@@ -1,0 +1,227 @@
+id: momentum-newton-momentum-flow
+subject: "9702"
+topic: "3.1"
+title: "Hoses, helicopters and rockets: force from a flow of mass"
+summary: When mass flows steadily, force = rate of change of momentum becomes F = (Δm/Δt) × Δv, the idea behind hoses, jets, hovering helicopters and rockets.
+order: 8
+minutes: 5
+objectives: ["3.1.4", "3.1.5"]
+prerequisites: [momentum-newton-force-momentum, momentum-newton-third-law]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.1.4, using the definition of force as the rate of change of
+    momentum, here for a steady flow of mass, and learning outcome 3.1.5, applying Newton's laws,
+    with all three used for a hovering helicopter), using g = 9.81 m s⁻² from the 9702 data sheet.
+    The water-jet diagram is schematic (not to scale). All worked values and answer keys computed
+    with Python. All questions are original; flow rates, speeds and masses are illustrative
+    values, and the rocket thrust uses the simple model thrust = mass flow rate × exhaust speed.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use "force = rate of change of momentum" when a **stream** of mass is speeded up or stopped: $F = \dfrac{\Delta m}{\Delta t}\,\Delta v$.
+
+  - type: explain
+    title: No single object to F = ma
+    body: |
+      Firefighters brace themselves against their hoses, helicopters stay up by hurling air downwards, and rockets accelerate through empty space. None of these is "one object with one acceleration", so $F = ma$ is awkward. The momentum version of the second law handles all of them.
+
+      In a time $\Delta t$, a mass $\Delta m$ of water (or air, or exhaust gas) has its velocity changed by $\Delta v$. Its change in momentum is $\Delta m\,\Delta v$, so
+
+      $$F = \frac{\Delta p}{\Delta t} = \frac{\Delta m}{\Delta t}\,\Delta v$$
+
+      $\dfrac{\Delta m}{\Delta t}$ is the **mass flow rate**, in $\text{kg s}^{-1}$. Unit check: $\text{kg s}^{-1} \times \text{m s}^{-1} = \text{kg m s}^{-2} = \text{N}$. ✓
+
+  - type: explain
+    title: Mass per second from a jet
+    body: |
+      Sometimes you're given the jet's speed $v$, its cross-sectional area $A$ and the fluid's density $\rho$ instead. In a time $\Delta t$, a column of fluid of length $v\Delta t$ leaves the nozzle, with volume $Av\Delta t$, so
+
+      $$\frac{\Delta m}{\Delta t} = \rho A v$$
+
+      If the jet is brought completely to rest, $\Delta v = v$ and the force is $\rho A v \times v = \rho A v^2$.
+
+  - type: diagram
+    diagram: phys-momentum-newton-water-jet
+    alt: >-
+      A schematic, not to scale. A horizontal jet of water with speed v comes out of a hose on the
+      left and hits a vertical wall on the right, where it spreads out up and down the wall, so its
+      horizontal velocity becomes zero. A highlighted section of the jet, of cross-sectional area A
+      and length v Δt, is labelled mass Δm = ρ A v Δt: this is the water that reaches the wall in a
+      time Δt. Below the jet, an arrow pointing back towards the hose is labelled F on the water
+      (wall pushes it back). To the right of the wall, an arrow pointing away from the hose is
+      labelled F on the wall (water pushes it). Underneath: mass per second Δm / Δt = ρ A v; change
+      in velocity Δv = v − 0 = v; so F = (Δm / Δt) × Δv = ρ A v².
+    caption: The wall stops the water; the water pushes the wall. Equal and opposite forces, a third-law pair.
+
+  - type: example
+    title: A hose on a wall
+    problem: |
+      Water leaves a hose at $15\ \text{m s}^{-1}$ with a mass flow rate of $2.0\ \text{kg s}^{-1}$. It hits a wall horizontally and runs down it without bouncing back. What force does the water exert on the wall?
+    steps:
+      - |
+        Towards the wall positive. Every second, $2.0\ \text{kg}$ of water goes from $+15\ \text{m s}^{-1}$ to zero horizontal velocity: $\Delta v = -15\ \text{m s}^{-1}$.
+      - |
+        Force on the water: $F = \dfrac{\Delta m}{\Delta t}\,\Delta v = 2.0 \times (-15) = -30\ \text{N}$. The wall pushes the water back.
+      - |
+        Third law: the water pushes the wall with $+30\ \text{N}$.
+    answer: |
+      $30\ \text{N}$ on the wall, in the direction the water was travelling.
+
+  - type: check
+    questions: [garden-hose, wall-direction, nozzle-flow]
+
+  - type: example
+    title: A hovering helicopter
+    problem: |
+      A helicopter of mass $1200\ \text{kg}$ hovers. Its rotor pushes air, initially at rest, straight down at $20\ \text{m s}^{-1}$. What mass of air must it push down each second?
+    steps:
+      - |
+        **First law:** hovering means zero velocity that stays zero, so the upward force on the helicopter balances its weight, $1200 \times 9.81 = 11\,772\ \text{N}$.
+      - |
+        **Third law:** that upward push of the air on the rotor is the partner of the rotor's downward push on the air, also $11\,772\ \text{N}$.
+      - |
+        **Second law** for the air: $11\,772 = \dfrac{\Delta m}{\Delta t} \times 20$.
+      - |
+        $\dfrac{\Delta m}{\Delta t} = \dfrac{11\,772}{20} = 589\ \text{kg s}^{-1}$.
+    answer: |
+      About $590\ \text{kg}$ of air every second. All three of Newton's laws in one helicopter.
+
+  - type: check
+    questions: [drone-hover, double-speed]
+
+  - type: intuition
+    title: Rockets don't push on the air
+    body: |
+      A rocket engine throws exhaust gas backwards at high speed, so it exerts a backward force on the gas, changing the gas's momentum. By the third law the gas pushes the rocket **forwards** with an equal force, the **thrust**. No air is needed, which is why rockets work perfectly well in space.
+
+      In the simple model, thrust = mass flow rate × exhaust speed. Burning $250\ \text{kg}$ of propellant per second with an exhaust speed of $2500\ \text{m s}^{-1}$ gives a thrust of about $250 \times 2500 = 625\,000\ \text{N}$. The rocket's own mass keeps changing as it burns fuel, which is exactly why the momentum form of the second law is the more general one.
+
+  - type: misconceptions
+    items:
+      - wrong: Use F = ma with the mass of all the water in the hose.
+        right: Use the mass **per second** whose velocity changes, $F = (\Delta m / \Delta t)\,\Delta v$.
+      - wrong: If the water bounces back off the surface, the force is the same as when it stops.
+        right: It is **bigger**, because $\Delta v$ is bigger. A jet arriving at $20\ \text{m s}^{-1}$ and turned back at $16\ \text{m s}^{-1}$ has $\Delta v = 36\ \text{m s}^{-1}$ in size, not 20.
+      - wrong: Doubling the speed of a jet doubles the force.
+        right: For the same nozzle, the mass per second doubles **and** each kilogram's change in velocity doubles, so the force ($\rho A v^2$) becomes four times bigger.
+      - wrong: Rockets need air to push against.
+        right: They push on their own exhaust gas, and the gas pushes back on them (third law).
+
+  - type: exam
+    body: |
+      - Spot the flags: "mass per second", "$\text{kg s}^{-1}$", "volume per second", or a density with an area. They all mean: use $F = (\Delta m / \Delta t)\,\Delta v$.
+      - Volume per second × density = mass per second.
+      - In a "hovering" question, name the law at each step: first law (forces balance), third law (the pair on rotor and air), second law (rate of change of the air's momentum).
+
+  - type: check
+    questions: [rocket-explain]
+
+  - type: takeaways
+    items:
+      - "Steady flow of mass: $F = \\dfrac{\\Delta m}{\\Delta t}\\,\\Delta v$."
+      - "Jet of density $\\rho$, area $A$ and speed $v$: $\\dfrac{\\Delta m}{\\Delta t} = \\rho A v$; stopped completely, $F = \\rho A v^2$."
+      - The force on the stream and the force on the wall, hose or rotor are a third-law pair.
+      - "Hovering: weight = rate of change of momentum of the air pushed down."
+
+questions:
+  - id: garden-hose
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      A garden hose delivers water at $0.60\ \text{kg s}^{-1}$ with a speed of $12\ \text{m s}^{-1}$. The water hits a wall horizontally and stops (it does not bounce back). Calculate the force on the wall.
+    fields:
+      - answer: 7.2
+        tolerance: { abs: 0.05 }
+        unit: N
+    explanation: |
+      $F = \dfrac{\Delta m}{\Delta t}\,\Delta v = 0.60 \times 12 = 7.2\ \text{N}$ on the water (backwards), so by the third law $7.2\ \text{N}$ on the wall, in the direction the water was moving.
+
+  - id: wall-direction
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.5"]
+    prompt: |
+      A horizontal jet of water hits a vertical wall and stops. The wall exerts a force on the water, directed back towards the hose. Which statement describes the force that the water exerts on the wall?
+    options:
+      - text: Equal in size, directed towards the wall (away from the hose).
+        correct: true
+        why: Correct. It is the third-law partner of the wall's force on the water, so it is equal and opposite.
+      - text: Equal in size, directed back towards the hose.
+        why: That's the direction of the force on the **water**. Third-law partners point opposite ways.
+      - text: Zero, because the water comes to rest.
+        why: Stopping the water is exactly what takes a force. The wall feels the partner of that force.
+      - text: Smaller, because some of the water splashes sideways.
+        why: Third-law pairs are always equal. Splashing affects how big the pair of forces is, not whether they are equal.
+    explanation: |
+      Force of wall on water and force of water on wall: swap the letters, same size, opposite direction.
+
+  - id: nozzle-flow
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |
+      Water of density $1000\ \text{kg m}^{-3}$ leaves a nozzle of cross-sectional area $2.0 \times 10^{-4}\ \text{m}^2$ at $10\ \text{m s}^{-1}$. It hits a wall and stops. Calculate the mass of water leaving the nozzle per second, and the force on the wall.
+    fields:
+      - label: "mass per second ="
+        answer: 2.0
+        tolerance: { abs: 0.01 }
+        unit: kg s⁻¹
+      - label: "force ="
+        answer: 20
+        tolerance: { abs: 0.1 }
+        unit: N
+    explanation: |
+      $\dfrac{\Delta m}{\Delta t} = \rho A v = 1000 \times 2.0 \times 10^{-4} \times 10 = 2.0\ \text{kg s}^{-1}$. Then $F = 2.0 \times (10 - 0) = 20\ \text{N}$, which is also $\rho A v^2$.
+
+  - id: drone-hover
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4", "3.1.5"]
+    prompt: |
+      A drone of mass $2.4\ \text{kg}$ hovers by pushing air, initially at rest, downwards at $8.0\ \text{m s}^{-1}$. Calculate the mass of air it must push downwards each second.
+    fields:
+      - answer: 2.943
+        tolerance: { abs: 0.03 }
+        unit: kg s⁻¹
+    explanation: |
+      Hovering, so the upward force on the drone equals its weight, $2.4 \times 9.81 = 23.5\ \text{N}$ (first law). This is the third-law partner of the drone's downward force on the air, which equals the air's rate of change of momentum: $23.5 = \dfrac{\Delta m}{\Delta t} \times 8.0$, so $\dfrac{\Delta m}{\Delta t} = 2.9\ \text{kg s}^{-1}$.
+
+  - id: double-speed
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |
+      A jet of water from a nozzle hits a wall and stops. The speed of the water leaving the same nozzle is doubled. By what factor does the force on the wall increase?
+    options:
+      - text: "4"
+        correct: true
+        why: Correct. $F = \rho A v^2$. Twice the mass per second, each kilogram with twice the change in velocity.
+      - text: "2"
+        why: This counts only one of the two effects. The mass per second doubles **and** the change in velocity of each kilogram doubles.
+      - text: "8"
+        why: That would need $F \propto v^3$. The force is (mass per second) × (change in velocity) $= \rho A v \times v$.
+      - text: "1 (no change)"
+        why: A faster jet delivers more mass each second, and each kilogram has more momentum to lose.
+    explanation: |
+      $\dfrac{\Delta m}{\Delta t} = \rho A v$ and $\Delta v = v$, so $F = \rho A v^2$. Doubling $v$ multiplies $F$ by $2^2 = 4$.
+
+  - id: rocket-explain
+    format: explain
+    difficulty: 2
+    objectives: ["3.1.4", "3.1.5"]
+    prompt: |
+      Use Newton's laws to explain how a rocket can accelerate in empty space, where there is no air to push against.
+    model: |
+      The rocket engine forces exhaust gas out backwards at high speed, so the gas's momentum changes. By the second law, the rocket exerts a backward force on the gas equal to the gas's rate of change of momentum. By Newton's third law, the gas exerts an equal and opposite force on the rocket, forwards: the thrust. With no air resistance in space, this is a resultant forward force on the rocket, so the rocket's momentum increases and it accelerates. The rocket pushes on its own exhaust, not on the air, so no air is needed.
+    keyPoints:
+      - The engine pushes exhaust gas backwards, changing the gas's momentum
+      - The force on the gas equals its rate of change of momentum (second law)
+      - By the third law, the gas pushes the rocket forwards with an equal and opposite force
+      - With no other forces acting, this is a resultant forward force, so the rocket accelerates
+      - No air is needed, because the rocket pushes on its own exhaust
+    explanation: |
+      Rockets were once mocked because people thought they needed air to push on. The third law settles it: the rocket and its exhaust push on each other.

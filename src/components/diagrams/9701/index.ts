@@ -14,7 +14,11 @@ import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
 import MoleAvogadroMoleMap from './mole-avogadro-mole-map';
 import MoleAvogadroSameCount from './mole-avogadro-same-count';
 import OrbitalShapes from './orbital-shapes';
+import ReactingMassesCombustionVolumes from './reacting-masses-combustion-volumes';
+import ReactingMassesDilution from './reacting-masses-dilution';
+import ReactingMassesMolarVolume from './reacting-masses-molar-volume';
 import ReactingMassesMoleBridge from './reacting-masses-mole-bridge';
+import ReactingMassesYieldBars from './reacting-masses-yield-bars';
 import RelativeMassesCarbon_12Ruler from './relative-masses-carbon-12-ruler';
 import RelativeMassesMoleculeVsLattice from './relative-masses-molecule-vs-lattice';
 import RelativeMassesWeightedMean from './relative-masses-weighted-mean';
@@ -37,7 +41,11 @@ export const diagrams: DiagramRegistry = {
   'chem-mole-avogadro-mole-map': MoleAvogadroMoleMap,
   'chem-mole-avogadro-same-count': MoleAvogadroSameCount,
   'chem-orbital-shapes': OrbitalShapes,
+  'chem-reacting-masses-combustion-volumes': ReactingMassesCombustionVolumes,
+  'chem-reacting-masses-dilution': ReactingMassesDilution,
+  'chem-reacting-masses-molar-volume': ReactingMassesMolarVolume,
   'chem-reacting-masses-mole-bridge': ReactingMassesMoleBridge,
+  'chem-reacting-masses-yield-bars': ReactingMassesYieldBars,
   'chem-relative-masses-carbon-12-ruler': RelativeMassesCarbon_12Ruler,
   'chem-relative-masses-molecule-vs-lattice': RelativeMassesMoleculeVsLattice,
   'chem-relative-masses-weighted-mean': RelativeMassesWeightedMean,
