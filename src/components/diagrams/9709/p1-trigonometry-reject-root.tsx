@@ -28,7 +28,7 @@ export default function P1TrigonometryRejectRoot() {
         xTicks={[90, 180, 270, 360].map((v) => ({ v, label: `${v}°` }))}
         yTicks={[
           { v: 1, label: '1' },
-          { v: 0.5, label: '0.5' },
+          { v: 0.5, label: '1/2' },
           { v: -1, label: '−1' },
           { v: -2, label: '−2' },
         ]}
@@ -53,8 +53,8 @@ export default function P1TrigonometryRejectRoot() {
       </Label>
 
       <g>
-        <MathLabel x={555} y={90} w={125} h={46} tone="accent-2" tex={"\\cos\\theta = \\dfrac{1}{2}"} />
-        <Label x={555} y={110} className="dg-text-small">
+        <MathLabel x={555} y={84} w={125} h={46} tone="accent-2" tex={"\\cos\\theta = \\dfrac{1}{2}"} />
+        <Label x={555} y={116} className="dg-text-small">
           θ = 60°, 300°
         </Label>
         <Label x={555} y={204} className="dg-text dg-bold">

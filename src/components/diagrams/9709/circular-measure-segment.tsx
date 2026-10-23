@@ -23,7 +23,8 @@ export default function CircularMeasureSegment() {
   const seg = `${arcPath(O, R, aB, aA)} Z`;
   const rA = polar(O, R * 0.5, aA);
   const rB = polar(O, R * 0.5, aB);
-  const half = polar(O, 44, (aB + Math.PI / 2) / 2);
+  // θ/2 is a stacked fraction, so it sits further out along the bisector, where the angle is wide enough for it.
+  const half = polar(O, 72, (aB + Math.PI / 2) / 2);
   return (
     <Svg width={W} height={H}>
       <path d={`M${O.x},${O.y} L${A.x},${A.y} L${B.x},${B.y} Z`} className="dg-fill-muted" />
@@ -55,7 +56,7 @@ export default function CircularMeasureSegment() {
       <FracLabel x={rB.x + 12} y={rB.y} anchor="start" className="dg-text dg-italic">
         r
       </FracLabel>
-      <FracLabel x={half.x + 6} y={half.y - 4} anchor="start" className="dg-text-accent-2">
+      <FracLabel x={half.x} y={half.y} className="dg-text-accent-2">
         θ/2
       </FracLabel>
       <FracLabel x={(M.x + B.x) / 2} y={M.y + 15} className="dg-text-small">

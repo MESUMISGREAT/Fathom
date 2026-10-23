@@ -2,7 +2,7 @@ id: p1-differentiation-chain-rule
 subject: "9709"
 topic: "1.7"
 title: The chain rule
-summary: Differentiate a function inside a function, like (2x + 1)² or the square root of 2x³ + 5, with the chain rule.
+summary: Differentiate a bracket raised to a power, like (2x + 1)², in one line. Power down, then multiply by the derivative of the bracket.
 order: 3
 minutes: 5
 kind: core
@@ -19,60 +19,48 @@ provenance:
     example y = √(2x³ + 5), which is worked here. Other examples and all questions are original;
     all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
-    Opening rewritten on 2026-10-23 for first-time learners at the student's request (inside/outside
-    as a box, the cancelling-fractions way to remember the rule, an easy example checked by
-    expanding); needs a fresh independent review.
+    Opening rewritten on 2026-10-23 for first-time learners at the student's request.
+    Changes of 2026-10-23 independently re-checked line by line in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Rewritten again on 2026-10-23 at the student's request: taught as "power down, box stays the
+    same, then multiply by the derivative of the box", with no u or dy/du in the main teaching
+    (the textbook form is in an optional block); needs a fresh independent review.
 
 blocks:
   - type: objective
     body: |-
-      By the end you can differentiate a **composite function** like $(3x - 1)^5$ or $\sqrt{2x^3 + 5}$ with the **chain rule**, without expanding anything.
+      By the end you can differentiate a **bracket raised to a power**, like $(3x - 1)^5$ or $\sqrt{2x^3 + 5}$, in one line. This is called the **chain rule**.
 
   - type: explain
-    title: A function inside a function
+    title: Just one extra step
     body: |-
-      Look at $y = (2x + 1)^2$. There's a bracket, and the whole bracket is squared. Think of the bracket as a box:
+      You already know how to differentiate $x^3$: power down, take one off, so $3x^2$.
 
-      $$y = \big(\,\boxed{2x + 1}\,\big)^2$$
+      When there's a **bracket** with $x$ inside it, think of the bracket as a **box**. Then:
 
-      - The **inside** is what's in the box: $2x + 1$.
-      - The **outside** is what happens to the box: it gets squared.
+      1. Differentiate as normal: power down, take one off, and keep the box **exactly the same**.
+      2. **Multiply by the derivative of the box.**
 
-      A function inside another function is a **composite function**. The chain rule differentiates one without expanding anything.
+      That second step is the only new thing. That's the whole chain rule.
 
   - type: definition
     term: The chain rule
     body: |-
-      Call the inside $u$. Then $y$ is a function of $u$, and $u$ is a function of $x$, and
+      $$\frac{d}{dx}\big(\,\boxed{\;\text{box}\;}\,\big)^n = n\big(\,\boxed{\;\text{box}\;}\,\big)^{n-1} \times \big(\text{derivative of the box}\big)$$
 
-      $$\frac{dy}{dx} = \frac{dy}{du} \times \frac{du}{dx}.$$
-
-      In words: **differentiate the outside (leave the inside alone), then multiply by the derivative of the inside.**
-
-  - type: intuition
-    title: Remember it like fractions
-    body: |-
-      Pretend $\dfrac{dy}{du}$ and $\dfrac{du}{dx}$ are fractions:
-
-      $$\frac{dy}{\cancel{du}} \times \frac{\cancel{du}}{dx} = \frac{dy}{dx}$$
-
-      - The $du$ on the bottom cancels the $du$ on top.
-      - $dy$ stays on top and $dx$ stays on the bottom.
-      - That leaves exactly the derivative you want.
-
-      They aren't really fractions. But the cancelling always gives the right formula, so it's a safe way to remember which way round it goes.
+      - The power comes down and drops by 1, like always.
+      - The box doesn't change.
+      - Then **multiply by the derivative of the box**.
 
   - type: diagram
-    diagram: p1-differentiation-chain-cancel
+    diagram: p1-differentiation-chain-box
     alt: >-
-      Top: dy over du, times du over dx, equals dy over dx. Both du's are coloured and crossed out, with
-      the notes "treat them like fractions: the du's cancel" and "dy stays on top, dx stays on the
-      bottom". Below, the example y = (2x + 1)² in three boxes. 1, name the inside: u = 2x + 1, so
-      du/dx = 2. 2, do the outside: y = u², so dy/du = 2u. 3, multiply: dy/dx = 2u × 2 = 4(2x + 1).
-      Last line: check by expanding, (2x + 1)² = 4x² + 4x + 1, which differentiates to 8x + 4 =
-      4(2x + 1), with a tick.
+      At the top, y = (2x + 1)² with 2x + 1 drawn inside a coloured box. Three numbered steps
+      follow. Step 1, power down, box stays the same: 2 times (2x + 1) to the power 1, with 2x + 1
+      still boxed. Step 2, derivative of the box: 2x + 1 goes to 2. Step 3, multiply them: 2(2x +
+      1) times 2 equals 4(2x + 1). The bottom line checks it by expanding: y = 4x² + 4x + 1, so
+      dy/dx = 8x + 4 = 4(2x + 1), with a tick.
     caption: |-
-      Three steps: name the inside, do the outside, multiply. Expanding gives the same answer, so you can see the rule works before you trust it on harder ones.
+      Start with an easy one. Expanding gives the same answer, so you can see the extra step works before you use it on harder ones.
 
   - type: example
     title: Now one you wouldn't want to expand
@@ -80,28 +68,32 @@ blocks:
       Differentiate $y = (3x - 1)^5$.
     steps:
       - |-
-        Inside: $u = 3x - 1$, so $\dfrac{du}{dx} = 3$.
+        Power down, box stays the same: $5(3x - 1)^4$.
       - |-
-        Outside: $y = u^5$, so $\dfrac{dy}{du} = 5u^4$.
+        Derivative of the box: $3x - 1 \to 3$.
       - |-
-        Multiply: $\dfrac{dy}{dx} = 5u^4 \times 3 = 15(3x - 1)^4$.
+        Multiply: $5(3x - 1)^4 \times 3 = 15(3x - 1)^4$.
     answer: |-
-      $\dfrac{dy}{dx} = 15(3x - 1)^4$. Expanding $(3x - 1)^5$ first would take six terms; the chain rule takes one line. Shortcut for a straight-line inside: $\dfrac{d}{dx}(ax + b)^n = an(ax + b)^{n-1}$.
+      $\dfrac{dy}{dx} = 15(3x - 1)^4$.
+
+      Expanding first would give six terms to differentiate. This took one line.
 
   - type: check
     questions: [chain-linear, chain-mcq]
 
   - type: example
-    title: The syllabus example
+    title: A square root
     problem: |-
       Find $\dfrac{dy}{dx}$ given $y = \sqrt{2x^3 + 5}$.
     steps:
       - |-
-        Inside: $u = 2x^3 + 5$, so $\dfrac{du}{dx} = 6x^2$.
+        Write the root as a power: $y = (2x^3 + 5)^{\frac12}$.
       - |-
-        Outside: $y = \sqrt{u} = u^{\frac12}$, so $\dfrac{dy}{du} = \tfrac12 u^{-\frac12} = \dfrac{1}{2\sqrt{u}}$.
+        Power down, box stays the same: $\tfrac12(2x^3 + 5)^{-\frac12}$.
       - |-
-        Multiply: $\dfrac{dy}{dx} = \dfrac{1}{2\sqrt{2x^3 + 5}} \times 6x^2 = \dfrac{6x^2}{2\sqrt{2x^3 + 5}}$, then cancel the 2.
+        Derivative of the box: $2x^3 + 5 \to 6x^2$.
+      - |-
+        Multiply: $\tfrac12(2x^3 + 5)^{-\frac12} \times 6x^2 = 3x^2(2x^3 + 5)^{-\frac12}$.
     answer: |-
       $\dfrac{dy}{dx} = \dfrac{3x^2}{\sqrt{2x^3 + 5}}$
 
@@ -111,25 +103,31 @@ blocks:
       Differentiate $y = \dfrac{4}{(1 - 2x)^2}$.
     steps:
       - |-
-        Rewrite: $y = 4(1 - 2x)^{-2}$.
+        Write it as a power: $y = 4(1 - 2x)^{-2}$.
       - |-
-        Outer: $4 \times (-2)(1 - 2x)^{-3} = -8(1 - 2x)^{-3}$. Inner derivative: $\dfrac{d}{dx}(1 - 2x) = -2$.
+        Power down, box stays the same: $4 \times (-2)(1 - 2x)^{-3} = -8(1 - 2x)^{-3}$.
+      - |-
+        Derivative of the box: $1 - 2x \to -2$.
       - |-
         Multiply: $-8(1 - 2x)^{-3} \times (-2) = 16(1 - 2x)^{-3}$.
     answer: |-
-      $\dfrac{dy}{dx} = \dfrac{16}{(1 - 2x)^3}$. Two negatives made a positive, so watch the signs.
+      $\dfrac{dy}{dx} = \dfrac{16}{(1 - 2x)^3}$.
+
+      Two negatives made a positive, so watch the signs.
 
   - type: check
     questions: [chain-root, chain-reciprocal, spot-chain]
 
   - type: deeper
-    title: Gradient at a point with the chain rule
+    title: Gradient at a point
     body: |-
       *Find the gradient of $y = (x^2 + 1)^3$ at $x = 1$.*
 
-      $\dfrac{dy}{dx} = 3(x^2 + 1)^2 \times 2x = 6x(x^2 + 1)^2$. At $x = 1$: $6 \times 1 \times 2^2 = 24$.
+      - Power down, box stays: $3(x^2 + 1)^2$.
+      - Derivative of the box: $2x$.
+      - Multiply: $\dfrac{dy}{dx} = 6x(x^2 + 1)^2$. At $x = 1$: $6 \times 1 \times 2^2 = 24$.
 
-      Differentiate **first**, then substitute. If you put $x = 1$ in first, you get $y = 8$, a constant, whose derivative is a useless 0.
+      Differentiate **first**, then put the number in. Put $x = 1$ in first and you get $y = 8$, a constant, whose derivative is a useless 0.
 
   - type: check
     questions: [chain-value]
@@ -139,32 +137,40 @@ blocks:
       - wrong: |-
           $\dfrac{d}{dx}(5 - x^2)^3 = 3(5 - x^2)^2$
         right: |-
-          You forgot to multiply by the inner derivative, $-2x$: the answer is $-6x(5 - x^2)^2$.
+          You forgot the extra step: multiply by the derivative of the box, $-2x$. The answer is $-6x(5 - x^2)^2$.
       - wrong: |-
           $\dfrac{d}{dx}(5 - x^2)^3 = 3(5 - 2x)^2$
         right: |-
-          Leave the inside **alone** when you differentiate the outer function; its derivative goes outside as a multiplier.
+          The box stays **exactly** the same. Its derivative goes on the outside, as the multiplier.
       - wrong: |-
           $\dfrac{d}{dx}(x^3 + 1)^{-\frac12} = -\tfrac12(x^3 + 1)^{-\frac12} \times 3x^2$
         right: |-
-          The power still drops by 1: $-\tfrac12 - 1 = -\tfrac32$, giving $-\tfrac32 x^2(x^3 + 1)^{-\frac32}$.
+          The power still drops by 1: $-\tfrac12 - 1 = -\tfrac32$. So it's $-\tfrac32 x^2(x^3 + 1)^{-\frac32}$.
 
   - type: exam
     body: |-
-      - The chain rule turns up in many Paper 1 calculus questions: tangents, stationary points and rates of change all start with "differentiate", often of a composite function.
-      - Writing the substitution $u = \dots$ is optional once you're fluent, but it's a safe habit when the inside is complicated.
-      - Leave answers in factorised form, like $15(3x - 1)^4$. Expanding wastes time and invites errors.
+      - The chain rule turns up all over Paper 1: tangents, stationary points and rates of change often start with differentiating a bracket.
+      - Write the "multiply by the derivative of the box" step in your working, so the examiner can see it.
+      - Leave answers factorised, like $15(3x - 1)^4$. Expanding wastes time and invites mistakes.
+
+  - type: deeper
+    title: "Optional: how textbooks write it"
+    body: |-
+      Textbooks call the box $u$ and write the chain rule as $\dfrac{dy}{dx} = \dfrac{dy}{du} \times \dfrac{du}{dx}$.
+
+      - It says exactly the same thing: (power down, box the same) × (derivative of the box).
+      - You'll meet this form again in **connected rates of change**. For differentiating brackets, the box way is all you need.
 
   - type: takeaways
     items:
       - |-
-        $\dfrac{dy}{dx} = \dfrac{dy}{du} \times \dfrac{du}{dx}$: outer derivative (inside unchanged) × inner derivative.
+        Bracket with $x$ inside? Power down, keep the box the same, then **multiply by the derivative of the box**.
       - |-
-        Rewrite roots and reciprocals as powers first: $\dfrac{1}{\sqrt{u}} = u^{-\frac12}$.
+        Write roots and fractions as powers first: $\sqrt{2x + 1} = (2x + 1)^{\frac12}$ and $\dfrac{1}{(3x + 1)^2} = (3x + 1)^{-2}$.
       - |-
-        For a linear inside: $\dfrac{d}{dx}(ax + b)^n = an(ax + b)^{n-1}$.
+        If the box is $ax + b$, its derivative is just $a$: $\;\dfrac{d}{dx}(ax + b)^n = an(ax + b)^{n-1}$.
       - |-
-        Differentiate first, substitute values afterwards.
+        Differentiate first, put numbers in afterwards.
 
 questions:
   - id: chain-linear
@@ -178,7 +184,7 @@ questions:
     display: |-
       $8(2x + 7)^3$
     explanation: |-
-      Outer: $4(2x + 7)^3$. Inner derivative: 2. Product: $8(2x + 7)^3$.
+      Power down, box stays: $4(2x + 7)^3$. Derivative of the box: 2. Multiply: $8(2x + 7)^3$.
 
   - id: chain-mcq
     format: mcq
@@ -187,21 +193,21 @@ questions:
     prompt: |-
       What is $\dfrac{d}{dx}(5 - x^2)^3$?
     explanation: |-
-      Outer: $3(5 - x^2)^2$. Inner: $\dfrac{d}{dx}(5 - x^2) = -2x$. Product: $-6x(5 - x^2)^2$.
+      Power down, box stays: $3(5 - x^2)^2$. Derivative of the box: $-2x$. Multiply: $-6x(5 - x^2)^2$.
     options:
       - text: $-6x(5 - x^2)^2$
         correct: true
         why: |-
-          Outer derivative $3(5 - x^2)^2$ times inner derivative $-2x$.
+          Power down with the box unchanged, $3(5 - x^2)^2$, times the derivative of the box, $-2x$.
       - text: $3(5 - x^2)^2$
         why: |-
-          The inner derivative $-2x$ is missing. That's the most common chain-rule slip.
+          The derivative of the box, $-2x$, is missing. That's the most common chain-rule slip.
       - text: $6x(5 - x^2)^2$
         why: |-
-          Sign slip: the inside is $5 - x^2$, whose derivative is $-2x$, not $2x$.
+          Sign slip: the box is $5 - x^2$, whose derivative is $-2x$, not $2x$.
       - text: $-6x(5 - 2x)^2$
         why: |-
-          The inside of the bracket was differentiated too. It must stay as $(5 - x^2)$.
+          The box was changed. It must stay exactly as $(5 - x^2)$.
 
   - id: chain-root
     format: expression

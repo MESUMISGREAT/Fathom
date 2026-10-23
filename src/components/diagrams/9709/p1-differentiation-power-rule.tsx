@@ -6,12 +6,14 @@ import { Arrow, Label, MathLabel, Svg } from '../primitives';
 
 export const diagramKey = 'p1-differentiation-power-rule';
 
-const W = 580;
-const COL_Y = 100; // function
-const COL_STEP = 300; // power down, one off
-const COL_D = 490; // derivative
+const W = 480;
+const COL_Y = 64; // function
+const COL_STEP = 244; // power down, one off
+const COL_D = 404; // derivative
 const TOP = 70;
-const ROW = 54;
+const ROW = 60;
+// \Large keeps the small powers (especially the ½) readable when the diagram shrinks on a phone.
+const BIG = '\\Large ';
 
 const a = (s: string) => `\\htmlClass{dg-k-accent}{${s}}`;
 const b = (s: string) => `\\htmlClass{dg-k-accent-2}{${s}}`;
@@ -28,7 +30,7 @@ const ROWS: { fn: string; step: string; result: string }[] = [
 ];
 
 export default function P1DifferentiationPowerRule() {
-  const H = TOP + ROWS.length * ROW + 6;
+  const H = TOP - 22 + ROWS.length * ROW + 10;
   return (
     <Svg width={W} height={H}>
       <MathLabel x={COL_Y} y={24} w={60} tone="muted" size="large" tex="y" />
@@ -42,13 +44,13 @@ export default function P1DifferentiationPowerRule() {
       <line x1={24} y1={TOP - 22} x2={W - 24} y2={TOP - 22} className="dg-grid" />
 
       {ROWS.map((r, i) => {
-        const y = TOP + i * ROW + ROW / 2 - 18;
+        const y = TOP + i * ROW + ROW / 2 - 22;
         return (
           <g key={r.result}>
-            <MathLabel x={COL_Y} y={y} w={120} h={46} size="large" tex={r.fn} />
-            <Arrow x1={COL_Y + 56} y1={y} x2={COL_STEP - 76} y2={y} head={7} className="dg-thin" />
-            <MathLabel x={COL_STEP} y={y} w={150} h={46} size="large" tex={r.step} />
-            <MathLabel x={COL_D} y={y} w={130} h={46} size="large" tex={`= ${r.result}`} />
+            <MathLabel x={COL_Y} y={y} w={100} h={56} size="large" tex={BIG + r.fn} />
+            <Arrow x1={COL_Y + 40} y1={y} x2={COL_STEP - 62} y2={y} head={7} className="dg-thin" />
+            <MathLabel x={COL_STEP} y={y} w={130} h={56} size="large" tex={BIG + r.step} />
+            <MathLabel x={COL_D} y={y} w={140} h={56} size="large" tex={`${BIG}= ${r.result}`} />
             {i < ROWS.length - 1 && <line x1={24} y1={y + ROW / 2} x2={W - 24} y2={y + ROW / 2} className="dg-grid" />}
           </g>
         );

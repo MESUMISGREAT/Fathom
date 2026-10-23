@@ -36,7 +36,7 @@ import FunctionsTranslations from './functions-translations';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
 import P1DifferentiationBoxNet from './p1-differentiation-box-net';
-import P1DifferentiationChainCancel from './p1-differentiation-chain-cancel';
+import P1DifferentiationChainBox from './p1-differentiation-chain-box';
 import P1DifferentiationChainMachines from './p1-differentiation-chain-machines';
 import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
 import P1DifferentiationCurveSketch from './p1-differentiation-curve-sketch';
@@ -106,7 +106,7 @@ export const diagrams: DiagramRegistry = {
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
   'p1-differentiation-box-net': P1DifferentiationBoxNet,
-  'p1-differentiation-chain-cancel': P1DifferentiationChainCancel,
+  'p1-differentiation-chain-box': P1DifferentiationChainBox,
   'p1-differentiation-chain-machines': P1DifferentiationChainMachines,
   'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
   'p1-differentiation-curve-sketch': P1DifferentiationCurveSketch,

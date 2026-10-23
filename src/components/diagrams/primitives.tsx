@@ -101,7 +101,6 @@ export function Label({
   );
 }
 
-/** Build an SVG path from a function, e.g. a curve y = f(x), already mapped to screen space. */
 /**
  * A formula typeset by KaTeX, e.g. tex="\dfrac{dy}{dx} = 3x^2". It sits in a w × h box centred on
  * (x, y); with anchor 'start' or 'end' the box starts or ends at x instead. Make the box big
@@ -209,6 +208,7 @@ export function FracLabel({
   );
 }
 
+/** Build an SVG path from a function, e.g. a curve y = f(x), already mapped to screen space. */
 export function plotPath(f: (x: number) => number, from: number, to: number, steps = 120): string {
   let d = '';
   for (let i = 0; i <= steps; i++) {

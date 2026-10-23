@@ -37,10 +37,10 @@ export default function P1TrigonometryTanShift() {
       {[PI / 3, (4 * PI) / 3].map((a) => (
         <line key={a} x1={p.sx(a)} y1={top} x2={p.sx(a)} y2={bot} className="dg-accent-2 dg-dashed" style={{ strokeWidth: 1.5 }} />
       ))}
-      <FracLabel x={p.sx(PI / 3)} y={top - 12} className="dg-text-accent-2">
+      <FracLabel x={p.sx(PI / 3)} y={top - 16} className="dg-text-accent-2">
         x = π/3
       </FracLabel>
-      <FracLabel x={p.sx((4 * PI) / 3)} y={top - 12} className="dg-text-accent-2">
+      <FracLabel x={p.sx((4 * PI) / 3)} y={top - 16} className="dg-text-accent-2">
         x = 4π/3
       </FracLabel>
       <path d={graph(Math.tan, [0, 2 * PI], p, p.y, 600)} className="dg-muted dg-dashed" />
