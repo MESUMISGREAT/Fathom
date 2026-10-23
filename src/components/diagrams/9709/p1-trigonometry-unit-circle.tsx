@@ -94,7 +94,7 @@ export default function P1TrigonometryUnitCircle() {
           cos θ
         </Label>
         <Label
-          x={N.x - 6}
+          x={p.sx(-Math.sqrt(1 - (sind(TH) / 2) ** 2)) - 5}
           y={(N.y + P.y) / 2 + 2}
           anchor="end"
           className="dg-text-accent-2"

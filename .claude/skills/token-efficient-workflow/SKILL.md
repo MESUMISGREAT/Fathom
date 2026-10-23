@@ -1,6 +1,6 @@
 ---
 name: token-efficient-workflow
-description: Reduce Claude token usage during coding, research, and document work by loading only relevant file sections, searching before reading, keeping context compact, and avoiding redundant tool calls. Use whenever working in a repository, reading large Markdown or text files, or trying to conserve context/tokens.
+description: Reduce Claude token usage during coding, research, and document work by loading only relevant file sections, searching before reading, keeping context compact, avoiding redundant tool calls, and keeping agent use small and focused. Use whenever working in a repository, reading large Markdown or text files, or trying to conserve context/tokens.
 ---
 
 # Token-Efficient Workflow
@@ -93,6 +93,19 @@ python scripts/md_section.py docs/guide.md --headings
 - When using tools with unavoidable full-file output, use a script or command to extract the exact relevant range before returning content to the model.
 - If a requested change spans multiple areas, create a compact working map: `file → relevant symbol/section → line range`. Keep it updated only when useful.
 - When prior conversation already contains the necessary information, use it instead of re-fetching it.
+
+## Agent budget and token control
+
+- Default to a single agent for small tasks, writing, simple edits, and localized bug fixes.
+- Use multiple agents only when subtasks are genuinely independent and parallel execution adds value.
+- For routine work, use no more than 3 concurrent agents.
+- Never spawn agents merely to review work already completed by the main agent.
+- Before delegating, identify the exact files and requirements each agent needs. Avoid redundant repository exploration.
+- Never give every agent the entire requirements document when a relevant section is sufficient.
+- Prefer one focused verification pass over repeated review and verification loops.
+- Stop spawning agents when new agents are unlikely to add meaningful findings.
+- Preserve essential requirements, tests, and quality checks.
+- Prioritize correctness and finished output over exhaustive exploration for its own sake.
 
 ## Limits
 This skill guides Claude's behavior; it cannot guarantee a fixed token reduction. Token savings depend on file sizes, task type, tools, and how much context is genuinely required. Large files may still need broad reading for cross-cutting changes.

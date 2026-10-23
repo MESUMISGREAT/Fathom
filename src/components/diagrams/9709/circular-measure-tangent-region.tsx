@@ -4,7 +4,7 @@
  * OT cuts the circle at B. The shaded region is bounded by AT, TB and the arc AB,
  * and its area is triangle OAT − sector OAB.
  */
-import { Label, Svg } from '../primitives';
+import { Arrow, Label, Svg } from '../primitives';
 import { RightAngle, arcPath, polar } from './p1-trigonometry-kit';
 
 export const diagramKey = 'circular-measure-tangent-region';
@@ -54,7 +54,11 @@ export default function CircularMeasureTangentRegion() {
       <Label x={ang.x + 6} y={ang.y - 2} anchor="start" className="dg-text-accent-2">
         θ
       </Label>
-      <Label x={(B.x + T.x) / 2} y={O.y + 16} className="dg-text-small">
+      {/* Dimension line for the whole of OT (not just TB), below the figure. */}
+      <line x1={O.x} y1={O.y + 8} x2={O.x} y2={O.y + 36} className="dg-thin" />
+      <line x1={T.x} y1={T.y + 8} x2={T.x} y2={T.y + 36} className="dg-thin" />
+      <Arrow x1={O.x} y1={O.y + 30} x2={T.x} y2={T.y + 30} head={7} double className="dg-thin" />
+      <Label x={(B.x + T.x) / 2} y={O.y + 44} className="dg-text-small">
         OT = 13 cm
       </Label>
       <Label x={(A.x + T.x) / 2 + 14} y={(A.y + T.y) / 2 - 14} anchor="start" className="dg-text-small">

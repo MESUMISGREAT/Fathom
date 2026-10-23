@@ -35,6 +35,10 @@ import FunctionsStretches from './functions-stretches';
 import FunctionsTranslations from './functions-translations';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
+import P1DifferentiationChainMachines from './p1-differentiation-chain-machines';
+import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
+import P1DifferentiationGradientFunction from './p1-differentiation-gradient-function';
+import P1DifferentiationTangentNormal from './p1-differentiation-tangent-normal';
 import P1TrigonometryAmplitudePeriod from './p1-trigonometry-amplitude-period';
 import P1TrigonometryBasicGraphs from './p1-trigonometry-basic-graphs';
 import P1TrigonometryCast from './p1-trigonometry-cast';
@@ -94,6 +98,10 @@ export const diagrams: DiagramRegistry = {
   'functions-translations': FunctionsTranslations,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
+  'p1-differentiation-chain-machines': P1DifferentiationChainMachines,
+  'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
+  'p1-differentiation-gradient-function': P1DifferentiationGradientFunction,
+  'p1-differentiation-tangent-normal': P1DifferentiationTangentNormal,
   'p1-trigonometry-amplitude-period': P1TrigonometryAmplitudePeriod,
   'p1-trigonometry-basic-graphs': P1TrigonometryBasicGraphs,
   'p1-trigonometry-cast': P1TrigonometryCast,

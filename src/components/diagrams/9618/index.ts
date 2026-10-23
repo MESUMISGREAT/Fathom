@@ -24,6 +24,12 @@ import MultimediaSamplingResolutionCompare from './multimedia-sampling-resolutio
 import MultimediaSamplingWave from './multimedia-sampling-wave';
 import MultimediaSoundBits from './multimedia-sound-bits';
 import MultimediaZoomCompare from './multimedia-zoom-compare';
+import NetworksBusStar from './networks-bus-star';
+import NetworksClientServerP2p from './networks-client-server-p2p';
+import NetworksLanWan from './networks-lan-wan';
+import NetworksMeshHybrid from './networks-mesh-hybrid';
+import NetworksPublicPrivateCloud from './networks-public-private-cloud';
+import NetworksThinThick from './networks-thin-thick';
 import PrefixGap from './prefix-gap';
 import TwosComplementWeights from './twos-complement-weights';
 import TwosComplementWheel from './twos-complement-wheel';
@@ -54,6 +60,12 @@ export const diagrams: DiagramRegistry = {
   'cs-multimedia-sampling-wave': MultimediaSamplingWave,
   'cs-multimedia-sound-bits': MultimediaSoundBits,
   'cs-multimedia-zoom-compare': MultimediaZoomCompare,
+  'cs-networks-bus-star': NetworksBusStar,
+  'cs-networks-client-server-p2p': NetworksClientServerP2p,
+  'cs-networks-lan-wan': NetworksLanWan,
+  'cs-networks-mesh-hybrid': NetworksMeshHybrid,
+  'cs-networks-public-private-cloud': NetworksPublicPrivateCloud,
+  'cs-networks-thin-thick': NetworksThinThick,
   'cs-prefix-gap': PrefixGap,
   'cs-twos-complement-weights': TwosComplementWeights,
   'cs-twos-complement-wheel': TwosComplementWheel,

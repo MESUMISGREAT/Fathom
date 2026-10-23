@@ -1,0 +1,244 @@
+id: series-two-progressions
+subject: "9709"
+topic: "1.6"
+title: Problems with two progressions
+summary: Solve problems where an arithmetic and a geometric progression share terms, or race each other, by turning every condition into an equation.
+order: 8
+minutes: 5
+kind: core
+objectives: ["1.6.3", "1.6.2"]
+prerequisites: [series-arithmetic-sum, series-geometric-sum, series-sum-to-infinity]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.6 learning outcomes "recognise arithmetic
+    and geometric progressions" and "use the formulae for the nth term and for the sum of the
+    first n terms to solve problems involving arithmetic or geometric progressions", whose note
+    says questions may involve more than one progression (sum to infinity, outcome 1.6.4, also
+    appears). All examples and questions are original; the running and training scenarios use
+    made-up illustrative numbers. All arithmetic checked in Python. Not yet teacher-reviewed.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve problems that involve an arithmetic **and** a geometric progression at the same time, by naming the unknowns and turning each sentence into an equation.
+
+  - type: explain
+    title: The crossover episode
+    body: |-
+      Cambridge loves a crossover: the same numbers are terms of an AP *and* a GP. It looks scary. It isn't, if you follow a routine:
+
+      1. **Name the unknowns**: usually $a$ and $d$ for the AP, $r$ for the GP.
+      2. **Translate** every fact into an equation, using $u_n = a + (n - 1)d$ and $b^2 = ac$.
+      3. **Solve**, then use any condition like "$d \neq 0$" or "$|r| < 1$" to reject roots.
+
+  - type: explain
+    title: The translation table
+    body: |-
+      | The question says… | You write |
+      | --- | --- |
+      | the 3rd term of the AP | $a + 2d$ |
+      | the 1st, 3rd and 7th terms of an AP are in GP | $(a + 2d)^2 = a(a + 6d)$ |
+      | $p$, $q$, $r$ are in AP | $2q = p + r$ |
+      | $p$, $q$, $r$ are in GP | $q^2 = pr$ |
+      | the GP is convergent | $\lvert r \rvert < 1$ |
+
+      The key move is the second row: write each **term** of the AP in terms of $a$ and $d$, *then* apply the GP condition to those expressions.
+
+  - type: diagram
+    diagram: series-ap-gp-shared
+    alt: >-
+      A number line from 0 to about 18. The AP terms u₅ = 0, u₄ = 4, u₃ = 8, u₂ = 12 and u₁ = 16
+      are marked as dots with equal gaps, joined above the line by four arcs each labelled −4, under
+      the heading AP: subtract 4 each time (equal gaps). The dots at 16, 8 and 4 are larger and in a
+      second colour, joined below the line by two arcs labelled × ½, with the caption GP: 1st, 3rd
+      and 4th terms, 16, 8, 4 (r = ½).
+    caption: |-
+      The AP $16, 12, 8, 4, \dots$ has equal *gaps*. Its 1st, 3rd and 4th terms, $16, 8, 4$, have equal *ratios*: they form a GP with $r = \tfrac12$.
+
+  - type: example
+    title: Terms of an AP that form a GP
+    problem: |-
+      An arithmetic progression has first term 3 and common difference $d$, where $d \neq 0$. Its 1st, 2nd and 5th terms are the first three terms of a geometric progression. Find $d$ and the common ratio of the geometric progression.
+    steps:
+      - |-
+        The terms are $3$, $3 + d$ and $3 + 4d$.
+      - |-
+        GP condition (middle squared = product of the outer two): $(3 + d)^2 = 3(3 + 4d)$.
+      - |-
+        $9 + 6d + d^2 = 9 + 12d$, so $d^2 - 6d = 0$, i.e. $d(d - 6) = 0$.
+      - |-
+        $d \neq 0$, so $d = 6$. The terms are $3, 9, 27$, so $r = 3$.
+    answer: |-
+      $d = 6$ and $r = 3$. (The rejected root $d = 0$ gives $3, 3, 3$: technically a GP with $r = 1$, which is why questions say $d \neq 0$.)
+
+  - type: check
+    questions: [translate-mcq, find-d]
+
+  - type: example
+    title: Adding a sum to infinity
+    problem: |-
+      An arithmetic progression has first term 16 and common difference $d \neq 0$. Its 1st, 3rd and 4th terms are the first three terms of a geometric progression. Find $d$ and the sum to infinity of the geometric progression.
+    steps:
+      - |-
+        Terms: $16$, $16 + 2d$, $16 + 3d$. GP condition: $(16 + 2d)^2 = 16(16 + 3d)$.
+      - |-
+        $256 + 64d + 4d^2 = 256 + 48d$, so $4d^2 + 16d = 0$, i.e. $4d(d + 4) = 0$.
+      - |-
+        $d \neq 0$, so $d = -4$. The GP is $16, 8, 4, \dots$ with $r = \tfrac12$.
+      - |-
+        $|r| < 1$, so it converges: $S_\infty = \dfrac{16}{1 - \tfrac12} = 32$.
+    answer: |-
+      $d = -4$ and $S_\infty = 32$.
+
+  - type: check
+    questions: [spot-expand, sinf-crossover]
+
+  - type: explain
+    title: Two progressions racing
+    body: |-
+      The other kind of two-progression problem compares an AP with a GP side by side. Illustrative example:
+
+      - **Priya** runs 3 km on day 1 and adds 0.5 km each day (an AP).
+      - **Tom** runs 3 km on day 1 and adds 10% each day (a GP with $r = 1.1$).
+
+      After 10 days, Priya's total is $S_{10} = \tfrac12 \times 10 \times (6 + 9 \times 0.5) = 52.5$ km and Tom's is $\dfrac{3(1.1^{10} - 1)}{0.1} = 47.8$ km. Priya leads for now, but a GP with $r > 1$ always overtakes an AP eventually. Steady beats explosive... until it doesn't.
+
+  - type: check
+    questions: [race-totals, race-overtake]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "The 2nd, 5th and 11th terms are in GP", so $5^2 = 2 \times 11$.
+        right: |-
+          The numbers 2, 5, 11 are *positions*. Use the terms themselves: $(a + 4d)^2 = (a + d)(a + 10d)$.
+      - wrong: |-
+          $d^2 = 6d$, so divide by $d$: $d = 6$. Done.
+        right: |-
+          Dividing by $d$ silently drops $d = 0$. Factorise instead, $d(d - 6) = 0$, and reject $d = 0$ **using the condition given**.
+      - wrong: |-
+          Use the AP condition $2b = a + c$ because the terms come from an AP.
+        right: |-
+          The terms are *in an AP*, but the question says they form a **GP**, so the condition you need is $b^2 = ac$.
+
+  - type: exam
+    body: |-
+      - These are usually 5–7 mark questions near the end of the series section. Most marks are for setting up the equations correctly, so write them out in full before simplifying.
+      - State why you reject a root: "$d \neq 0$" or "$|r| < 1$ for a sum to infinity".
+      - In context questions, read whether they want a **term** (one day's distance) or a **sum** (the total so far). Mixing them up is the classic slip.
+
+  - type: takeaways
+    items:
+      - |-
+        Name the unknowns, translate each fact into an equation, solve, then reject roots using the conditions.
+      - |-
+        AP terms in GP: write the terms as $a + (n - 1)d$, then use (middle)² = product of outer two.
+      - |-
+        Positions are not terms: "the 2nd and 5th terms" means $a + d$ and $a + 4d$.
+      - |-
+        In context, decide whether you need $u_n$ (one term) or $S_n$ (a total).
+
+questions:
+  - id: translate-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.6.3"]
+    prompt: |-
+      The 2nd, 5th and 11th terms of an arithmetic progression with first term $a$ and common difference $d$ are consecutive terms of a geometric progression. Which equation is correct?
+    explanation: |-
+      The terms are $u_2 = a + d$, $u_5 = a + 4d$ and $u_{11} = a + 10d$. Three numbers are in GP when the middle one squared equals the product of the other two: $(a + 4d)^2 = (a + d)(a + 10d)$.
+    options:
+      - text: $(a + 4d)^2 = (a + d)(a + 10d)$
+        correct: true
+        why: |-
+          Correct terms ($u_n = a + (n - 1)d$) and the GP condition $b^2 = ac$.
+      - text: $(a + 5d)^2 = (a + 2d)(a + 11d)$
+        why: |-
+          This uses $a + nd$ for the $n$th term. The 5th term is $a + 4d$.
+      - text: $2(a + 4d) = (a + d) + (a + 10d)$
+        why: |-
+          That's the condition for three numbers in **AP**. The question says these terms form a **GP**, so you need $b^2 = ac$.
+      - text: $(a + 4d)^2 = a(a + 10d)$
+        why: |-
+          The first of the three terms is the 2nd term of the AP, $a + d$, not $a$.
+
+  - id: find-d
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      An arithmetic progression has first term 5 and common difference $d$, where $d \neq 0$. Its 1st, 2nd and 4th terms are consecutive terms of a geometric progression. Find $d$.
+    fields:
+      - label: "d ="
+        answer: 5
+    explanation: |-
+      Terms: $5$, $5 + d$, $5 + 3d$. GP: $(5 + d)^2 = 5(5 + 3d)$, so $25 + 10d + d^2 = 25 + 15d$, giving $d^2 - 5d = 0$ and $d(d - 5) = 0$. Since $d \neq 0$, $d = 5$: the terms are $5, 10, 20$ with ratio 2 ✓
+
+  - id: spot-expand
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.6.3"]
+    prompt: |-
+      An AP has first term 3 and common difference $d \neq 0$; its 1st, 2nd and 5th terms are in GP. A student solves for $d$. Which line contains the first error?
+    lines:
+      - |-
+        $(3 + d)^2 = 3(3 + 4d)$
+      - |-
+        $9 + d^2 = 9 + 12d$
+      - |-
+        $d^2 = 12d$, and $d \neq 0$, so $d = 12$.
+    errorLine: 2
+    fix: |-
+      $(3 + d)^2 = 9 + 6d + d^2$, so $d^2 - 6d = 0$ and $d = 6$.
+    explanation: |-
+      $(3 + d)^2$ is not $9 + d^2$: the cross term $2 \times 3 \times d = 6d$ is missing. Check the student's answer: $d = 12$ gives $3, 15, 51$, and $15^2 = 225 \neq 3 \times 51 = 153$, so it isn't a GP.
+
+  - id: sinf-crossover
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.3"]
+    prompt: |-
+      An arithmetic progression has first term 27 and common difference $d \neq 0$. Its 1st, 3rd and 4th terms are the first three terms of a geometric progression. Find the sum to infinity of the geometric progression.
+    fields:
+      - label: "S∞ ="
+        answer: 54
+    explanation: |-
+      $(27 + 2d)^2 = 27(27 + 3d)$ gives $729 + 108d + 4d^2 = 729 + 81d$, so $4d^2 + 27d = 0$ and $d = -\tfrac{27}{4}$ (as $d \neq 0$).
+
+      The GP is $27, 13.5, 6.75, \dots$, so $r = \tfrac12$ and $S_\infty = \dfrac{27}{1 - \tfrac12} = 54$.
+
+  - id: race-totals
+    format: numeric
+    difficulty: 2
+    objectives: ["1.6.3", "1.6.2"]
+    prompt: |-
+      Using the Priya and Tom example: Priya runs 3 km on day 1 and 0.5 km more each day; Tom runs 3 km on day 1 and 10% more each day. Find each runner's total distance over the first 10 days. Give Tom's to 3 significant figures.
+    fields:
+      - label: "Priya ="
+        answer: 52.5
+        unit: km
+      - label: "Tom ="
+        answer: 47.81227380
+        sigFigs: 3
+        unit: km
+    explanation: |-
+      Priya (AP, $a = 3$, $d = 0.5$): $\;S_{10} = \tfrac12 \times 10 \times (6 + 9 \times 0.5) = 5 \times 10.5 = 52.5$ km.
+
+      Tom (GP, $a = 3$, $r = 1.1$): $\;S_{10} = \dfrac{3(1.1^{10} - 1)}{1.1 - 1} = 30(1.1^{10} - 1) = 47.812\ldots = 47.8$ km.
+
+  - id: race-overtake
+    format: numeric
+    difficulty: 3
+    objectives: ["1.6.3"]
+    prompt: |-
+      Same runners. On which day does Tom first run further **in that single day** than Priya does?
+    fields:
+      - label: "day"
+        answer: 12
+    explanation: |-
+      Daily distances are **terms**, not sums. Priya: $u_n = 3 + 0.5(n - 1)$. Tom: $u_n = 3 \times 1.1^{n-1}$.
+
+      Day 11: Priya 8 km, Tom $3 \times 1.1^{10} = 7.78$ km. Day 12: Priya 8.5 km, Tom $3 \times 1.1^{11} = 8.56$ km. So day 12 is the first.

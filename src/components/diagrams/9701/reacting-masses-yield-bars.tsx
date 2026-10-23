@@ -71,7 +71,7 @@ export function ReactingMassesYieldBars() {
         where the missing product goes:
       </Label>
       {[
-        'reaction incomplete, or reversible and stops at equilibrium',
+        'reaction incomplete, or reversible so it reaches equilibrium',
         'side reactions make other products',
         'losses when transferring, filtering and purifying',
       ].map((t, i) => (
