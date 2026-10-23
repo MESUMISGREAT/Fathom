@@ -1,0 +1,248 @@
+id: networks-public-private-ip
+subject: "9618"
+topic: "2.1"
+title: "Public, private, static and dynamic IP addresses"
+summary: The difference between public and private IP addresses and what it means for security, static versus dynamic addresses, and how a device gets its address.
+order: 13
+minutes: 5
+kind: core
+objectives: ["2.1.14"]
+prerequisites: [networks-ip-addresses, networks-internet-hardware]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, fourteenth learning outcome
+    (2.1.14, how IP addresses are used in the transmission of data over the internet): how an IP
+    address is associated with a device; public vs private addresses and the security
+    implications; static vs dynamic addresses. Public addresses in the examples come from the
+    ranges reserved for documentation (198.51.100.0 and 203.0.113.0), standing in for real public
+    addresses. Address ranges checked with Python's ipaddress module. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the difference between **public** and **private** IP addresses (and why it matters for security), compare **static** and **dynamic** addresses, and describe how a device gets its IP address.
+
+  - type: explain
+    title: Millions of homes, one address each
+    body: |
+      Your laptop is probably `192.168.1.something`. So is your neighbour's. So is a laptop in Lima and one in Lahore.
+
+      That works because those are **private** addresses: they only have to be unique **inside each home**. To the rest of the internet, each home shows a single **public** address.
+
+  - type: definition
+    term: Public IP address
+    body: |
+      An IP address that is **unique across the whole internet**, allocated by an ISP, and can be **reached directly from anywhere on the internet**.
+
+  - type: definition
+    term: Private IP address
+    body: |
+      An IP address used **inside a LAN**. It only has to be unique within that network, and it **can't be routed across the internet**. Private addresses come from reserved ranges:
+
+      - `10.0.0.0` to `10.255.255.255`
+      - `172.16.0.0` to `172.31.255.255`
+      - `192.168.0.0` to `192.168.255.255`
+
+  - type: diagram
+    diagram: cs-networks-nat
+    alt: >-
+      A dashed box labelled home LAN: private addresses holds a laptop at 192.168.1.10, a phone at
+      192.168.1.11 and a console at 192.168.1.12, all linked to a router (NAT) on the edge of the
+      box. The router's LAN address is 192.168.1.1 and its public address is 203.0.113.25. A line
+      labelled internet leads to a web server at 198.51.100.7. Below: leaving the laptop, the packet
+      has source 192.168.1.10 and destination 198.51.100.7; after NAT, the source is 203.0.113.25
+      and the destination is still 198.51.100.7.
+    caption: |
+      Inside: private addresses. Outside: one public address. The router translates between them.
+
+  - type: explain
+    title: How private devices reach the internet
+    body: |
+      The router uses **NAT (network address translation)**. When a packet leaves the LAN, the router **replaces the private source address with its own public address** and records which device sent it. When the reply comes back, it looks up that record and passes the reply to the right device.
+
+  - type: explain
+    title: The security implications
+    body: |
+      - A device with a **private** address **can't be contacted directly from the internet**. Outsiders only see the router's public address, so the devices behind it are hidden. That's a big protection.
+      - A device with a **public** address is **visible and reachable by anyone** on the internet, so it's more exposed to attack and needs a **firewall** and careful security.
+
+  - type: check
+    title: Quick check
+    questions: [which-private, same-private, private-security]
+
+  - type: definition
+    term: Static IP address
+    body: |
+      An IP address that is **permanently assigned** to a device and **doesn't change**. It's set manually, or reserved for that device.
+
+  - type: definition
+    term: Dynamic IP address
+    body: |
+      An IP address **assigned automatically** (by a **DHCP** server) each time a device connects. It's taken from a pool of free addresses and **may change** next time.
+
+  - type: explain
+    title: How a device gets its address
+    body: |
+      - **Dynamic (DHCP)**: a device joining the network asks for an address; the **DHCP server** (usually built into the router) **leases** it a free address from its pool, recording it against the device's **MAC address**. When the lease runs out, the address can be renewed or given to another device.
+      - **Static**: an administrator types the address into the device's settings, or tells the DHCP server always to give that MAC address the same IP address.
+
+      | | Static | Dynamic |
+      | --- | --- | --- |
+      | Changes? | never | can change each connection |
+      | Set up | manually | automatic, so no clashes |
+      | Good for | **servers** (web, email), printers, remote access: others must always find them | ordinary computers and phones |
+      | Efficiency | uses an address even when the device is off | addresses are **reused** when devices disconnect |
+      | Security | a fixed target that's easier for attackers to find | harder to track or target |
+
+  - type: misconceptions
+    items:
+      - wrong: Two devices anywhere in the world can never have the same IP address.
+        right: |
+          **Public** addresses are unique. **Private** addresses are reused in millions of separate LANs.
+      - wrong: A dynamic IP address changes constantly while you're using it.
+        right: |
+          It's leased for a period and usually stays the same during that lease. It *may* change when the device reconnects.
+      - wrong: A private address is private because it's encrypted.
+        right: |
+          Nothing is encrypted. It's "private" because it's only used, and only reachable, inside its own network.
+
+  - type: exam
+    body: |
+      - Public vs private: say **unique on the internet / reachable from the internet** vs **unique only within the LAN / not routable on the internet**, then the **security** point.
+      - Static vs dynamic: say **who assigns it** (manual vs **DHCP**) and **whether it changes**, plus a use: a web server needs a static address so it can always be found.
+      - Naming the protocol **DHCP** usually earns a mark.
+
+  - type: check
+    title: Static or dynamic?
+    questions: [server-static, dhcp-cloze, explain-public-private]
+
+  - type: takeaways
+    items:
+      - "Public IP: unique on the internet and directly reachable. Private IP: unique only inside a LAN; not routable on the internet."
+      - "Private ranges: 10.x.x.x, 172.16.x.x to 172.31.x.x, 192.168.x.x."
+      - The router's NAT swaps private source addresses for its public address; devices behind it can't be contacted directly, which protects them.
+      - "Static: fixed, set manually, for servers. Dynamic: leased by a DHCP server and may change."
+
+questions:
+  - id: which-private
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.14"]
+    prompt: |
+      Which of these is a **private** IP address?
+    options:
+      - text: "`192.168.4.9`"
+        correct: true
+        why: |
+          It's in the private range 192.168.0.0 to 192.168.255.255.
+      - text: "`172.32.0.1`"
+        why: |
+          Close! The private range is 172.16 to **172.31**, so 172.32 is public.
+      - text: "`11.0.0.1`"
+        why: |
+          Only addresses starting 10 are private in that part of the range; 11 is public.
+      - text: "`192.169.1.1`"
+        why: |
+          Private addresses start 192.**168**; 192.169 is public.
+    explanation: |
+      Learn the three ranges exactly: 10.x.x.x, 172.16–31.x.x and 192.168.x.x.
+
+  - id: same-private
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      Two laptops in two different houses both have the IP address `192.168.1.10`. Why does this cause no problem?
+    options:
+      - text: It's a private address, which only has to be unique within each home's LAN
+        correct: true
+        why: |
+          Each home's router shows the internet a different public address.
+      - text: It does cause a problem; one laptop will stop working
+        why: |
+          That would only happen if both were on the **same** network.
+      - text: The two houses' ISPs encrypt the addresses so they look different
+        why: |
+          No encryption is involved; NAT at each router handles it.
+      - text: IP addresses don't need to be unique
+        why: |
+          They must be unique within a network, and public addresses must be unique across the internet.
+    explanation: |
+      Private addresses repeat across LANs; public addresses don't.
+
+  - id: private-security
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      What is the security benefit of devices in a home network using private IP addresses?
+    options:
+      - text: They can't be contacted directly from the internet, because outsiders see only the router's public address
+        correct: true
+        why: |
+          Private addresses aren't routable on the internet, so the devices are hidden behind the router.
+      - text: Their data is automatically encrypted
+        why: |
+          Private addressing doesn't encrypt anything.
+      - text: They can't download malware
+        why: |
+          Malware can still arrive in things you download or open.
+      - text: Their IP addresses change every few seconds
+        why: |
+          That isn't what private means, and addresses don't change that often.
+    explanation: |
+      Not directly reachable from the internet is the key security implication.
+
+  - id: server-static
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.14"]
+    prompt: |
+      Why is a web server normally given a **static** IP address?
+    options:
+      - text: So its address never changes and browsers (via the DNS) can always find it
+        correct: true
+        why: |
+          If the address changed, the DNS records pointing to it would be wrong.
+      - text: Because static addresses are faster
+        why: |
+          Static vs dynamic doesn't affect speed.
+      - text: Because static addresses are hidden from the internet
+        why: |
+          A public static address is visible, and it needs to be for a web server.
+      - text: Because DHCP can't give addresses to servers
+        why: |
+          DHCP could, but the address might change, which is the problem.
+    explanation: |
+      Servers need a fixed address so everyone can keep finding them.
+
+  - id: dhcp-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.14"]
+    prompt: |
+      Dynamic IP addresses are assigned automatically by a {{1}} server, usually built into the router.
+    blanks:
+      - accept: ["DHCP", "dynamic host configuration protocol"]
+    explanation: |
+      DHCP (Dynamic Host Configuration Protocol) leases free addresses from a pool to devices as they join.
+
+  - id: explain-public-private
+    format: explain
+    difficulty: 3
+    objectives: ["2.1.14"]
+    prompt: |
+      Explain the difference between a public IP address and a private IP address, and the implications of each for security.
+    model: |
+      A public IP address is unique across the whole internet, is allocated by an ISP and can be reached directly from anywhere on the internet. A private IP address is used inside a LAN, only needs to be unique within that network, and can't be routed across the internet; devices using one reach the internet through a router using NAT, which shares its public address. For security, a device with a private address can't be contacted directly from outside, so it is hidden and protected. A device with a public address is visible to everyone on the internet, so it is more exposed to attack and needs to be protected, for example with a firewall.
+    keyPoints:
+      - Public is unique on the internet and directly reachable
+      - Private is only unique within the LAN and not routable on the internet
+      - Private devices reach the internet through the router (NAT) using its public address
+      - Private devices can't be contacted directly from the internet, so are safer
+      - Public devices are exposed and need extra protection, such as a firewall
+    explanation: |
+      Define both, then give a security implication for each.

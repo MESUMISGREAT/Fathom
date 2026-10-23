@@ -1,0 +1,237 @@
+id: networks-ethernet-csma-cd
+subject: "9618"
+topic: "2.1"
+title: "Ethernet and CSMA/CD"
+summary: What Ethernet is, why devices sharing a cable collide, and how CSMA/CD detects collisions and stops them happening again.
+order: 9
+minutes: 5
+kind: core
+objectives: ["2.1.10"]
+prerequisites: [networks-bus-star, networks-lan-hardware]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, tenth learning outcome (2.1.10,
+    Ethernet and how collisions are detected and avoided, including CSMA/CD). The back-off and
+    CSMA/CA details are marked as enrichment. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what **Ethernet** is, why **collisions** happen, and describe how **CSMA/CD** detects them and stops them repeating.
+
+  - type: intuition
+    title: The dinner-table problem
+    body: |
+      Six people at a table, one conversation. Polite people **listen** before speaking. But sometimes two people start at exactly the same moment, both stop ("sorry, you go"), and then... both start again together. Awkward.
+
+      The fix is to wait a **random** moment before trying again. That's CSMA/CD in a nutshell.
+
+  - type: definition
+    term: Ethernet
+    body: |
+      The most widely used set of **protocols (standards) for wired LANs**. Data is sent in **frames**, each containing the destination and source **MAC addresses**, the data, and an error check.
+
+  - type: definition
+    term: Collision
+    body: |
+      When two devices transmit on a **shared medium at the same time**, their signals overlap and both frames are **corrupted**.
+
+  - type: explain
+    title: Why collisions happen
+    body: |
+      Early Ethernet ran on a **bus**: one shared cable. Only one device can transmit at a time, but nothing physically stops two from trying.
+
+      Even devices that listen first can collide. A signal takes time to travel along the cable, so two devices far apart can **both** hear silence and start transmitting a split second apart.
+
+  - type: definition
+    term: CSMA/CD
+    body: |
+      **Carrier Sense Multiple Access with Collision Detection**: the method Ethernet uses on a shared medium. Devices **listen** before transmitting, **detect** collisions while transmitting, and wait a **random time** before trying again.
+
+  - type: check
+    title: Quick check
+    questions: [csma-expansion, first-step]
+
+  - type: diagram
+    diagram: cs-networks-csma-cd
+    alt: >-
+      A flowchart. Frame ready to send leads to a decision: listen, is the channel idle? If no, wait
+      and keep listening, then ask again. If yes, transmit the frame while still listening. Next
+      decision: collision detected? If no, frame sent. If yes, stop and send a jam signal, then wait
+      a random time (back-off) and return to the listening decision.
+    caption: |
+      CSMA/CD: listen, talk, keep listening, and back off randomly if you collide.
+
+  - type: explain
+    title: CSMA/CD step by step
+    body: |
+      1. **Carrier sense**: the device listens to check whether the channel is **idle** (no one else transmitting).
+      2. If it's **busy**, the device **waits** and keeps listening until it's idle.
+      3. When it's idle, the device **starts transmitting**, and **keeps listening** while it does.
+      4. **Collision detection**: if it detects a collision (the signal on the line isn't what it sent), it **stops transmitting** and sends a **jam signal** so every device knows a collision has happened.
+      5. Each device involved **waits a random time** (back-off) and then goes back to step 1.
+      6. After too many failed attempts the device gives up and reports an error.
+
+      **Multiple access** just means many devices share the same medium.
+
+  - type: explain
+    title: How collisions are avoided
+    body: |
+      - **Listening first** stops a device from talking over a transmission that has already started.
+      - The **random wait** makes it unlikely that the same two devices collide again, because they almost certainly pick different times.
+      - Modern Ethernet uses a **switch**: each device has its **own** cable to a switch port and can send and receive at the same time (full duplex). With no shared medium, collisions don't happen, so CSMA/CD is rarely needed today.
+
+  - type: misconceptions
+    items:
+      - wrong: After a collision, both devices wait a fixed time and try again.
+        right: |
+          If they waited the **same** time they'd collide again. Each waits a **random** time.
+      - wrong: Listening before transmitting means collisions can never happen.
+        right: |
+          Signals take time to travel, so two devices can both sense an idle channel and start together. That's why the **CD** part exists.
+      - wrong: The jam signal fixes the corrupted frame.
+        right: |
+          It just tells all devices a collision has happened. The frames are **retransmitted** after the random wait.
+
+  - type: exam
+    body: |
+      - "Describe how CSMA/CD works" is usually 4–6 marks: one mark per step. Hit **listen / check idle**, **wait if busy**, **transmit while listening**, **collision detected → stop and send jam signal**, **wait random time**, **retry**.
+      - Say **random** time. "Waits a while" doesn't earn the mark.
+      - Expect to be asked why the wait must be random: so the devices don't collide again.
+
+  - type: check
+    title: Collisions
+    questions: [spot-backoff, why-random, why-still-collide, describe-csma]
+
+  - type: takeaways
+    items:
+      - Ethernet is the main set of protocols for wired LANs; data travels in frames with MAC addresses.
+      - A collision is two devices transmitting on a shared medium at once, corrupting both frames.
+      - "CSMA/CD: listen until idle, transmit while listening, on collision stop and send a jam signal, wait a random time, retry."
+      - Switched (full-duplex) Ethernet gives each device its own link, so collisions are avoided altogether.
+
+  - type: enrichment
+    title: Back-off maths and WiFi's different trick
+    body: |
+      - Classic Ethernet uses **binary exponential back-off**: after the $n$th collision a device waits a random number of time slots between 0 and $2^n - 1$, so the waiting range doubles each time (up to a cap of $2^{10} - 1 = 1023$ slots). It gives up after 16 attempts.
+      - WiFi devices can't hear a collision while they're transmitting, so WiFi uses **CSMA/CA** (collision **avoidance**): devices wait a random time before transmitting and the receiver acknowledges each frame.
+
+questions:
+  - id: csma-expansion
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.10"]
+    prompt: |
+      CSMA/CD stands for {{1}} Sense Multiple {{2}} with Collision {{3}}.
+    blanks:
+      - accept: ["carrier"]
+      - accept: ["access"]
+      - accept: ["detection", "detect"]
+    explanation: |
+      Carrier Sense (listen first), Multiple Access (shared medium), Collision Detection (notice when frames clash).
+
+  - id: first-step
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.10"]
+    prompt: |
+      Using CSMA/CD, what does a device do **first** when it has a frame to send?
+    options:
+      - text: Listens to check whether the channel is idle
+        correct: true
+        why: |
+          That's the "carrier sense" part: check nobody else is transmitting.
+      - text: Sends a jam signal
+        why: |
+          The jam signal is sent only after a collision is detected.
+      - text: Waits a random time
+        why: |
+          The random wait comes after a collision.
+      - text: Transmits immediately and listens for a collision
+        why: |
+          It must check the channel is idle before transmitting.
+    explanation: |
+      Listen first, then talk.
+
+  - id: spot-backoff
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.10"]
+    prompt: |
+      A student describes what happens after two devices collide using CSMA/CD. Which line contains the error?
+    lines:
+      - Both devices detect the collision while they are transmitting.
+      - Both devices stop transmitting and a jam signal is sent.
+      - Both devices wait exactly 1 millisecond.
+      - Both devices listen again and retransmit when the channel is idle.
+    errorLine: 3
+    fix: |
+      Each device waits a **random** time, so they are unlikely to retransmit at the same moment and collide again.
+    explanation: |
+      With a fixed wait, the two devices would restart together and collide forever.
+
+  - id: why-random
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.10"]
+    prompt: |
+      Why does CSMA/CD make each device wait a **random** time after a collision?
+    options:
+      - text: So the devices are unlikely to retransmit at the same time and collide again
+        correct: true
+        why: |
+          Different random waits separate their next attempts.
+      - text: To give the jam signal time to repair the damaged frames
+        why: |
+          The jam signal repairs nothing; the frames are resent.
+      - text: To let the switch decide which device goes first
+        why: |
+          On a shared medium there is no switch deciding; that's the point of CSMA/CD.
+      - text: To save power while the network is busy
+        why: |
+          Power isn't the reason; avoiding a repeat collision is.
+    explanation: |
+      Randomness breaks the tie.
+
+  - id: why-still-collide
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.10"]
+    prompt: |
+      Devices using CSMA/CD always listen before transmitting. Why can collisions still happen?
+    options:
+      - text: A signal takes time to travel along the cable, so two devices can both sense an idle channel and start transmitting together
+        correct: true
+        why: |
+          Each hears silence because the other's signal hasn't reached it yet.
+      - text: Devices stop listening once they have checked the channel
+        why: |
+          They keep listening while transmitting; that's how they detect collisions.
+      - text: The terminators reflect signals back along the cable
+        why: |
+          Terminators absorb signals to prevent reflections.
+      - text: Each device has its own cable to a switch
+        why: |
+          That arrangement actually prevents collisions.
+    explanation: |
+      Propagation delay opens a small window in which two "polite" devices can both start talking.
+
+  - id: describe-csma
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.10"]
+    prompt: |
+      Describe how CSMA/CD is used to manage transmissions on an Ethernet network with a shared medium.
+    model: |
+      A device that wants to transmit first listens to check whether the channel is idle. If it is busy, the device waits until it is idle. It then transmits its frame while continuing to listen. If it detects a collision, it stops transmitting and sends a jam signal so all devices know a collision has occurred. Each device involved waits a random time before listening and trying again. After too many attempts, it gives up and reports an error.
+    keyPoints:
+      - Listens to check whether the channel is idle; waits if it is busy
+      - Transmits when idle while continuing to listen
+      - On detecting a collision, stops transmitting and sends a jam signal
+      - Waits a random time before trying again
+      - Gives up after a maximum number of attempts
+    explanation: |
+      Each step is a separate mark point; the random wait is the one most often missed.

@@ -1,0 +1,253 @@
+id: networks-cloud-computing
+subject: "9618"
+topic: "2.1"
+title: "Cloud computing: public and private"
+summary: What cloud computing is, how public and private clouds differ, and the benefits and drawbacks of using the cloud.
+order: 4
+minutes: 5
+kind: core
+objectives: ["2.1.6"]
+prerequisites: [networks-thin-thick-client]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, sixth learning outcome (2.1.6,
+    cloud computing, including public and private clouds and the benefits and drawbacks). All
+    questions are original. The start-up, bank, shop, hospital and school scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what **cloud computing** is, tell a **public cloud** from a **private cloud**, and weigh up the benefits and drawbacks.
+
+  - type: explain
+    title: There is no cloud, it's just someone else's computer
+    body: |
+      That joke is nearly right. When you save a file "to the cloud", it lands on real servers in a real **data centre**, owned by someone else and reached over the internet.
+
+      What makes it "cloud" is that you rent the storage or computing power **on demand**, pay for what you use, and never see or maintain the hardware.
+
+  - type: definition
+    term: Cloud computing
+    body: |
+      The delivery of computing services, such as **storage**, **processing power** and **software**, over the **internet** from remote servers, on demand, usually paid for according to use.
+
+  - type: explain
+    title: What people use it for
+    body: |
+      - **Cloud storage**: files and backups kept on remote servers, reachable from any device.
+      - **Cloud software**: apps such as online office suites and email that run on the provider's servers in your browser.
+      - **Cloud computing power**: renting servers to run a website or crunch data, and scaling up when it gets busy.
+
+  - type: definition
+    term: Public cloud
+    body: |
+      Cloud services offered by a **third-party provider** over the internet to the **general public** and many organisations, which **share** the provider's infrastructure.
+
+  - type: definition
+    term: Private cloud
+    body: |
+      Cloud infrastructure **dedicated to a single organisation**. It can be on the organisation's own premises or hosted by a third party, and only that organisation can use it.
+
+  - type: diagram
+    diagram: cs-networks-public-private-cloud
+    alt: >-
+      Two panels. Left, public cloud: a provider's data centre with three servers, connected through
+      the internet to Organisation A, Organisation B and members of the public; caption shared by many
+      customers. Right, private cloud: a data centre, on site or hosted, with three servers connected
+      through a restricted-access link to one organisation only; caption dedicated to one
+      organisation.
+    caption: |
+      Public: one data centre, many tenants. Private: the whole thing is yours.
+
+  - type: check
+    title: Quick check
+    questions: [public-definition, private-cloud-text]
+
+  - type: explain
+    title: Benefits and drawbacks
+    body: |
+      | Benefits | Drawbacks |
+      | --- | --- |
+      | Access data and software from **anywhere, on any device** with internet | **Needs a reliable internet connection**; no connection, no access |
+      | No hardware to buy or maintain; the provider handles upgrades | **Ongoing subscription costs** that can add up |
+      | **Scalable**: pay for more storage or power only when needed | **Security and privacy**: data is held by a third party, possibly in another country with different data protection laws |
+      | Provider handles **backups** and software updates | **Less control**: if the provider has an outage or closes, you're stuck |
+      | Easy **collaboration** on shared files | Uploading and downloading large files can be slow |
+
+  - type: explain
+    title: Public vs private
+    body: |
+      | | Public cloud | Private cloud |
+      | --- | --- | --- |
+      | Who uses it | many organisations and the public | one organisation |
+      | Cost | lower; no hardware of your own | higher; dedicated hardware (and in-house staff if on site) |
+      | Scalability | very easy | limited by the hardware you have |
+      | Control and security | less control; shared with others | more control over where data is and who can reach it |
+
+  - type: example
+    title: Public or private?
+    problem: |
+      Recommend a type of cloud for (a) a new photo-sharing app that could have 100 users or 10 million, (b) a bank that must keep customer financial data under strict regulations.
+    steps:
+      - |
+        (a) Demand is unpredictable, and a start-up can't afford its own data centre. A **public cloud** scales up instantly and you pay only for what you use.
+      - |
+        (b) The bank needs to control exactly where its data is stored and who can reach it. A **private cloud** is dedicated to the bank, so it keeps that control.
+    answer: |
+      Start-up: public cloud. Bank: private cloud.
+
+  - type: misconceptions
+    items:
+      - wrong: Data in the cloud isn't stored on any physical hardware.
+        right: |
+          It's stored on physical servers in data centres. "Cloud" just means you reach them over the internet and don't manage them.
+      - wrong: A private cloud must be on the company's own premises.
+        right: |
+          It can be hosted by a third party, as long as the infrastructure is **dedicated to one organisation**.
+      - wrong: Files in the cloud are automatically safe and private.
+        right: |
+          Security depends on the provider, your settings and the law where the data is stored. That's one of the main drawbacks.
+
+  - type: exam
+    body: |
+      - Benefit and drawback questions want points **applied to the scenario**. "The school can access files from home" beats "it is accessible".
+      - Public vs private: the key words are **shared by many / third-party provider** and **dedicated to one organisation**.
+      - "It's cheaper" alone is weak. Say why: no hardware to buy, no maintenance staff, pay only for what is used.
+
+  - type: check
+    title: Weigh it up
+    questions: [cloud-drawback, black-friday, hospital-private, school-cloud]
+
+  - type: takeaways
+    items:
+      - Cloud computing provides storage, processing and software over the internet from remote servers, on demand.
+      - "Public cloud: a third party's infrastructure shared by many. Private cloud: dedicated to one organisation."
+      - "Benefits: access anywhere, no hardware to maintain, scalable, provider backups and updates."
+      - "Drawbacks: needs internet, ongoing costs, security and privacy worries, less control."
+
+questions:
+  - id: public-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.6"]
+    prompt: |
+      Which statement describes a **public cloud**?
+    options:
+      - text: Cloud services provided by a third party over the internet, with infrastructure shared by many customers
+        correct: true
+        why: |
+          Third-party provider plus shared infrastructure is exactly what makes a cloud public.
+      - text: Cloud infrastructure dedicated to a single organisation
+        why: |
+          That's a private cloud.
+      - text: Any website the public can visit
+        why: |
+          A website isn't cloud computing just because it's public.
+      - text: Data that anyone on the internet can read
+        why: |
+          Data in a public cloud is still protected by accounts and permissions; "public" describes who can rent the service.
+    explanation: |
+      Public cloud: shared, provided by a third party. Private cloud: dedicated to one organisation.
+
+  - id: private-cloud-text
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["2.1.6"]
+    prompt: |
+      Name the type of cloud whose infrastructure is dedicated to a single organisation.
+    accept: ["private cloud", "private", "a private cloud"]
+    model: |
+      A **private cloud**.
+    explanation: |
+      Private clouds are dedicated to one organisation, whether on site or hosted by a third party.
+
+  - id: cloud-drawback
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.6"]
+    prompt: |
+      A student keeps all their coursework only in cloud storage. Which problem is most likely?
+    options:
+      - text: They can't reach their work if they have no internet connection
+        correct: true
+        why: |
+          Cloud files live on remote servers, reached over the internet.
+      - text: Their computer will need a much larger hard disk
+        why: |
+          The files are stored remotely, so local storage matters less.
+      - text: They can only open the files on one particular computer
+        why: |
+          The opposite: cloud files can be reached from any device.
+      - text: They must buy and maintain the servers that store the files
+        why: |
+          The provider owns and maintains the servers.
+    explanation: |
+      Dependence on an internet connection is the classic cloud drawback.
+
+  - id: black-friday
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.6"]
+    prompt: |
+      An online shop gets ten times its normal traffic for one week each year. Why might a public cloud suit it?
+    options:
+      - text: It can rent extra processing power for that week and pay only for what it uses
+        correct: true
+        why: |
+          Scalability on demand: no need to buy extra servers that would sit unused for the other 51 weeks.
+      - text: Public clouds never have outages
+        why: |
+          Providers can and do have outages; that's a drawback, not a benefit.
+      - text: The shop's data will be stored on its own premises
+        why: |
+          A public cloud stores data in the provider's data centres.
+      - text: It removes the need for an internet connection
+        why: |
+          The cloud is reached over the internet.
+    explanation: |
+      Pay-as-you-go scaling is a key benefit of public cloud computing.
+
+  - id: hospital-private
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.6"]
+    prompt: |
+      Why might a hospital that stores patient records choose a **private** cloud rather than a public cloud?
+    options:
+      - text: It has more control over where its data is stored and who can access it
+        correct: true
+        why: |
+          The infrastructure is dedicated to the hospital, so it controls the security and where the confidential records are kept.
+      - text: It is cheaper than a public cloud
+        why: |
+          Usually it costs more, because the hardware isn't shared.
+      - text: It scales more easily than a public cloud
+        why: |
+          A private cloud is limited by its own hardware; public clouds scale more easily.
+      - text: It doesn't need any servers
+        why: |
+          Every cloud runs on servers.
+    explanation: |
+      Private cloud trades cost and easy scaling for control and security.
+
+  - id: school-cloud
+    format: explain
+    difficulty: 3
+    objectives: ["2.1.6"]
+    prompt: |
+      A school plans to move all its file storage from its own server to a public cloud. Explain **two** benefits and **two** drawbacks for the school.
+    model: |
+      Benefits: students and teachers can reach their files from home or anywhere else with an internet connection, on any device; and the school no longer has to buy, maintain and back up its own server, because the provider does this and the storage can be scaled up as needed. Drawbacks: if the school's internet connection fails, nobody can reach their files; and sensitive data such as student records would be held by a third party, possibly in another country, which raises security and data protection concerns. There are also ongoing subscription costs.
+    keyPoints:
+      - Files can be accessed from anywhere, on any device with internet
+      - No server hardware to buy or maintain; the provider handles backups and upgrades
+      - Storage can be scaled up as needed
+      - No access to files if the internet connection fails
+      - Sensitive data held by a third party raises security and privacy concerns
+      - Ongoing subscription costs
+    explanation: |
+      Two of each, applied to the school (students at home, student records), is what earns the marks.

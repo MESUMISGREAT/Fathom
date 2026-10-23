@@ -24,6 +24,23 @@ import MultimediaSamplingResolutionCompare from './multimedia-sampling-resolutio
 import MultimediaSamplingWave from './multimedia-sampling-wave';
 import MultimediaSoundBits from './multimedia-sound-bits';
 import MultimediaZoomCompare from './multimedia-zoom-compare';
+import NetworksBufferLevel from './networks-buffer-level';
+import NetworksBusStar from './networks-bus-star';
+import NetworksClientServerP2p from './networks-client-server-p2p';
+import NetworksCsmaCd from './networks-csma-cd';
+import NetworksDnsLookup from './networks-dns-lookup';
+import NetworksInternetAccess from './networks-internet-access';
+import NetworksIpv4Ipv6 from './networks-ipv4-ipv6';
+import NetworksLanHardware from './networks-lan-hardware';
+import NetworksLanWan from './networks-lan-wan';
+import NetworksMeshHybrid from './networks-mesh-hybrid';
+import NetworksNat from './networks-nat';
+import NetworksPublicPrivateCloud from './networks-public-private-cloud';
+import NetworksRouterHops from './networks-router-hops';
+import NetworksSubnetMask from './networks-subnet-mask';
+import NetworksThinThick from './networks-thin-thick';
+import NetworksUrlParts from './networks-url-parts';
+import NetworksWirelessLinks from './networks-wireless-links';
 import PrefixGap from './prefix-gap';
 import TwosComplementWeights from './twos-complement-weights';
 import TwosComplementWheel from './twos-complement-wheel';
@@ -54,6 +71,23 @@ export const diagrams: DiagramRegistry = {
   'cs-multimedia-sampling-wave': MultimediaSamplingWave,
   'cs-multimedia-sound-bits': MultimediaSoundBits,
   'cs-multimedia-zoom-compare': MultimediaZoomCompare,
+  'cs-networks-buffer-level': NetworksBufferLevel,
+  'cs-networks-bus-star': NetworksBusStar,
+  'cs-networks-client-server-p2p': NetworksClientServerP2p,
+  'cs-networks-csma-cd': NetworksCsmaCd,
+  'cs-networks-dns-lookup': NetworksDnsLookup,
+  'cs-networks-internet-access': NetworksInternetAccess,
+  'cs-networks-ipv4-ipv6': NetworksIpv4Ipv6,
+  'cs-networks-lan-hardware': NetworksLanHardware,
+  'cs-networks-lan-wan': NetworksLanWan,
+  'cs-networks-mesh-hybrid': NetworksMeshHybrid,
+  'cs-networks-nat': NetworksNat,
+  'cs-networks-public-private-cloud': NetworksPublicPrivateCloud,
+  'cs-networks-router-hops': NetworksRouterHops,
+  'cs-networks-subnet-mask': NetworksSubnetMask,
+  'cs-networks-thin-thick': NetworksThinThick,
+  'cs-networks-url-parts': NetworksUrlParts,
+  'cs-networks-wireless-links': NetworksWirelessLinks,
   'cs-prefix-gap': PrefixGap,
   'cs-twos-complement-weights': TwosComplementWeights,
   'cs-twos-complement-wheel': TwosComplementWheel,

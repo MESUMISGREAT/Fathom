@@ -1,0 +1,262 @@
+id: networks-bus-star
+subject: "9618"
+topic: "2.1"
+title: "Bus and star topologies"
+summary: How packets travel between two hosts in a bus and in a star network, and when each topology is the right choice.
+order: 5
+minutes: 5
+kind: core
+objectives: ["2.1.5"]
+prerequisites: [networks-why-network]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, fifth learning outcome (2.1.5,
+    the bus, star, mesh and hybrid topologies, how packets are transmitted between two hosts, and
+    justifying a topology). This lesson covers bus and star; mesh and hybrid follow in
+    networks-mesh-hybrid. All questions are original. The library, exhibition and call-centre
+    scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a packet travels between two hosts in a **bus** and a **star** network, and justify which topology fits a situation.
+
+  - type: explain
+    title: Who's plugged into what
+    body: |
+      **Topology** sounds fancy, but it just means the shape of the connections. Same computers, different wiring, very different behaviour when something breaks.
+
+  - type: definition
+    term: Network topology
+    body: |
+      The arrangement of the devices (**nodes**) in a network and the links between them.
+
+  - type: definition
+    term: Bus topology
+    body: |
+      All devices are connected to **one shared cable** (the **backbone**), with a **terminator** at each end to absorb signals so they don't reflect back along the cable.
+
+  - type: definition
+    term: Star topology
+    body: |
+      Each device is connected by **its own cable** to a **central device**, usually a **switch**.
+
+  - type: diagram
+    diagram: cs-networks-bus-star
+    alt: >-
+      Two panels showing a packet sent from device B to device E. Left, bus: devices A to E are
+      attached by short drop cables to one horizontal backbone with a terminator at each end. A
+      double-headed arrow along the backbone shows B's packet spreading in both directions. B is
+      labelled sends; A, C and D are labelled
+      ignores; E is labelled accepts. Caption: every device receives the packet; only E, the
+      destination, accepts it. Right, star: devices A to E each have their own cable to a switch in
+      the centre. An arrow goes from B to the switch and another from the switch to E only. Caption:
+      the switch forwards it only to E.
+    caption: |
+      The same packet, B to E. On a bus everyone hears it; in a star only E does.
+
+  - type: example
+    title: Follow one packet from B to E
+    problem: |
+      Describe how a packet is transmitted from host B to host E in (a) a bus network, (b) a star network with a switch.
+    steps:
+      - |
+        **(a) Bus.** B checks the backbone is free, then puts the packet on it.
+      - |
+        The signal travels along the backbone **in both directions**, so **every** device receives it.
+      - |
+        Each device reads the **destination address**. A, C and D see it isn't theirs and ignore it; E sees its own address and **accepts** it.
+      - |
+        When the signal reaches each end of the backbone, the **terminators absorb** it.
+      - |
+        **(b) Star.** B sends the packet along its own cable to the **switch**.
+      - |
+        The switch reads the destination address, looks up which port E is on, and forwards the packet **only to E**.
+    answer: |
+      Bus: broadcast to all, accepted only by the addressed host. Star: sent to the switch, forwarded only to the destination.
+
+  - type: check
+    title: Quick check
+    questions: [bus-who-receives, terminator-cloze, star-spot-error]
+
+  - type: explain
+    title: Benefits and drawbacks
+    body: |
+      | | Bus | Star |
+      | --- | --- | --- |
+      | Cost | **cheap**: little cable, no central device | more cable, plus a switch |
+      | Adding a device | easy: tap into the backbone | easy: plug a cable into the switch |
+      | A cable breaks | backbone break: **whole network fails** | only **that one device** is cut off |
+      | Central failure | no central device | switch fails: **whole network fails** |
+      | Heavy traffic | only one device can transmit at a time, so **collisions** increase and performance drops | each device has its own link, so few collisions and **good performance** |
+      | Security | every device sees every packet | packets go only to their destination |
+
+  - type: example
+    title: Justify a topology
+    problem: |
+      Justify a topology for (a) a library with 40 computers in daily use, (b) a temporary network of five laptops at a two-day exhibition, on a tight budget.
+    steps:
+      - |
+        (a) **Star**. A faulty cable takes out only one computer, so the library keeps running.
+      - |
+        Each computer has its own link to the switch, so performance stays good with 40 users, and faults are easy to find.
+      - |
+        (b) **Bus** is a reasonable choice. With only five laptops there is little traffic, so collisions won't matter much.
+      - |
+        It needs the least cable and no switch, so it's cheapest and quick to set up for two days.
+    answer: |
+      Library: star (reliable, good performance). Exhibition: bus (cheap, few devices, short-term).
+
+  - type: misconceptions
+    items:
+      - wrong: In a bus network the packet travels only to the device it's addressed to.
+        right: |
+          It travels along the whole backbone, so **every** device receives it. Only the addressed device accepts it.
+      - wrong: In a star network, if one computer fails, the whole network fails.
+        right: |
+          Only that computer is lost. The **switch** is the single point of failure.
+      - wrong: Terminators boost the signal at the end of the cable.
+        right: |
+          They **absorb** it, so it doesn't reflect back and interfere with later signals.
+
+  - type: exam
+    body: |
+      - "Describe how a packet is transmitted" questions give 1 mark per step. For a bus: **sent along the backbone in both directions, every device receives it, each checks the destination address, only the destination accepts it**. For a star: **sent to the switch, which forwards it only to the destination**.
+      - Name the device. "Central device" is weaker than "**switch**".
+      - For "justify", tie a feature to the scenario: number of devices, budget, how much downtime matters.
+
+  - type: check
+    title: Pick the topology
+    questions: [star-failure, call-centre-choice, bus-traffic]
+
+  - type: takeaways
+    items:
+      - "Bus: one shared backbone with a terminator at each end; every device receives every packet, and only the addressed device accepts it."
+      - "Star: each device has its own cable to a switch, which forwards each packet only to its destination."
+      - Bus is cheap but a backbone fault stops everything and heavy traffic causes collisions.
+      - Star is reliable and fast, but costs more and depends on the switch.
+
+questions:
+  - id: bus-who-receives
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.5"]
+    prompt: |
+      In a bus network, host A sends a packet addressed to host D. Which devices **receive** the signal?
+    options:
+      - text: Every device on the bus, but only D accepts the packet
+        correct: true
+        why: |
+          The signal spreads along the whole backbone; each device checks the address and only D keeps it.
+      - text: Only D
+        why: |
+          That's how a switch in a star behaves. A bus has no device choosing where the signal goes.
+      - text: Only the devices between A and D
+        why: |
+          The signal travels in both directions along the whole backbone.
+      - text: The terminators, which forward it to D
+        why: |
+          Terminators absorb signals; they don't forward anything.
+    explanation: |
+      On a bus every device receives every packet and filters by destination address.
+
+  - id: terminator-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.5"]
+    prompt: |
+      At each end of a bus backbone there is a {{1}}, which absorbs the signal so it doesn't {{2}} back along the cable.
+    blanks:
+      - accept: ["terminator", "terminators"]
+      - accept: ["reflect", "bounce", "echo", "reflect back", "bounce back"]
+    explanation: |
+      Without terminators the signal would reflect from the cable ends and interfere with later transmissions.
+
+  - id: star-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.1.5"]
+    prompt: |
+      A student describes how a packet travels from host P to host Q in a star network. Which line contains the error?
+    lines:
+      - P sends the packet along its own cable to the switch.
+      - The switch reads the destination address in the packet.
+      - The switch sends a copy of the packet to every device connected to it.
+      - Q receives the packet and accepts it.
+    errorLine: 3
+    fix: |
+      The switch looks up which port Q is connected to and forwards the packet **only to Q**.
+    explanation: |
+      Sending to every device is what happens on a bus (or with an old-fashioned hub). A switch forwards only to the destination.
+
+  - id: star-failure
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.5"]
+    prompt: |
+      Which failure would stop **every** device on a star network from communicating?
+    options:
+      - text: The central switch failing
+        correct: true
+        why: |
+          Every packet passes through the switch, so it's the single point of failure.
+      - text: One device's cable breaking
+        why: |
+          That cuts off only the one device on that cable.
+      - text: One computer crashing
+        why: |
+          The others carry on through the switch.
+      - text: A terminator coming loose
+        why: |
+          Star networks don't use terminators; those belong to a bus.
+    explanation: |
+      Star: individual links are independent, but everything relies on the switch.
+
+  - id: call-centre-choice
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.5"]
+    prompt: |
+      A call centre has 60 computers in constant use and can't afford the whole network going down. Which topology and justification fit best?
+    options:
+      - text: Star, because a cable fault affects only one computer and there are few collisions
+        correct: true
+        why: |
+          Reliability and performance with many busy users both point to a star.
+      - text: Bus, because it is the cheapest
+        why: |
+          Cheap, but one backbone fault would take all 60 computers down, and heavy traffic means many collisions.
+      - text: Bus, because packets go only to their destination
+        why: |
+          On a bus every device receives every packet.
+      - text: Star, because it doesn't need a central device
+        why: |
+          A star is built around a central switch.
+    explanation: |
+      Match the justification to the scenario: many users plus downtime matters means star.
+
+  - id: bus-traffic
+    format: mcq
+    difficulty: 3
+    objectives: ["2.1.5"]
+    prompt: |
+      Why does the performance of a bus network get worse as more devices are added?
+    options:
+      - text: All devices share one cable, so more of them try to transmit at once and collisions become more frequent
+        correct: true
+        why: |
+          Only one device can transmit at a time. More devices mean more collisions and more waiting.
+      - text: Each new device weakens the switch
+        why: |
+          A bus has no switch.
+      - text: The terminators can only absorb a limited number of packets
+        why: |
+          Terminators absorb any signal reaching the end; they don't run out.
+      - text: Each device must forward every packet to the next device
+        why: |
+          On a bus the signal travels along the shared cable; devices don't relay it.
+    explanation: |
+      A shared medium means contention: more devices, more collisions, more retransmissions.

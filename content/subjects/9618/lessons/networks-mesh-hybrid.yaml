@@ -1,0 +1,246 @@
+id: networks-mesh-hybrid
+subject: "9618"
+topic: "2.1"
+title: "Mesh and hybrid topologies"
+summary: How packets find a route through a mesh, why mesh networks survive failures, what a hybrid topology is, and when to use each.
+order: 6
+minutes: 5
+kind: core
+objectives: ["2.1.5"]
+prerequisites: [networks-bus-star]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, fifth learning outcome (2.1.5,
+    bus, star, mesh and hybrid topologies, how packets are transmitted between two hosts, and
+    justifying a topology). This lesson covers mesh and hybrid; bus and star are in
+    networks-bus-star. Link counts checked with Python. All questions are original. The data
+    centre and school scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a packet travels through a **mesh** and a **hybrid** network, count the links in a full mesh, and justify each topology for a situation.
+
+  - type: explain
+    title: Many roads to Rome
+    body: |
+      In a bus or a star there is exactly one route between two devices. Cut it and the conversation is over.
+
+      A mesh gives packets **lots of routes**. Cut one and they simply go another way, like traffic diverting round a closed road.
+
+  - type: definition
+    term: Mesh topology
+    body: |
+      Each device is connected to **several other devices**, so there are **multiple routes** between any two. In a **full mesh** every device is connected directly to every other device; in a **partial mesh** only some are.
+
+  - type: explain
+    title: How a packet crosses a mesh
+    body: |
+      1. The sending device chooses a route towards the destination, often the direct link if there is one.
+      2. If the packet isn't sent directly, each device along the way **forwards (relays)** it towards the destination.
+      3. If a link or device on the route has failed, the packet is **rerouted** along another path.
+      4. The destination device receives the packet.
+
+      Packets of the same message may even take **different routes** and arrive out of order; they're put back in order at the destination.
+
+  - type: diagram
+    diagram: cs-networks-mesh-hybrid
+    alt: >-
+      Two panels. Left, a full mesh of five devices A to E arranged in a pentagon, each linked to all
+      four others. The direct link between A and C is dashed and crossed out to show it has failed,
+      and highlighted arrows show the packet going A to B, then B to C instead. Caption: link A–C
+      fails, so the packet is rerouted A → B → C. Right, a hybrid star-bus network: a horizontal bus
+      backbone with a terminator at each end; two switches hang from it, each the centre of a star
+      of three hosts, labelled star 1 and star 2. A highlighted path runs from the left host of
+      star 1 up to its switch, along the backbone, down to the switch of star 2 and to its right
+      host. Caption: host → switch → backbone → switch → host.
+    caption: |
+      Mesh: a failed link just means a detour. Hybrid: stars stitched together by a backbone.
+
+  - type: example
+    title: Counting the cables in a full mesh
+    problem: |
+      How many links are needed for a full mesh of 6 devices?
+    steps:
+      - |
+        Each device links to every **other** device: $6 - 1 = 5$ links per device.
+      - |
+        $6 \times 5 = 30$ counts every link **twice** (once from each end).
+      - |
+        So the number of links is $\frac{30}{2} = 15$.
+      - |
+        In general, a full mesh of $n$ devices needs $\frac{n(n-1)}{2}$ links. That grows fast: 20 devices need 190.
+    answer: |
+      15 links
+
+  - type: check
+    title: Quick check
+    questions: [mesh-links, mesh-benefit]
+
+  - type: definition
+    term: Hybrid topology
+    body: |
+      A network that **combines two or more different topologies**, for example several star networks joined by a bus backbone or by a mesh.
+
+  - type: explain
+    title: Mesh and hybrid compared
+    body: |
+      | | Mesh | Hybrid |
+      | --- | --- | --- |
+      | Strength | **fault tolerant**: no single point of failure; many routes share heavy traffic | **flexible and scalable**: add another star; each part uses the topology that suits it |
+      | Weakness | **expensive**: lots of cabling and connections; complex to set up and manage | **complex** to design and manage; the link joining the parts can be a weak point |
+      | Packet travel | forwarded along one of several routes, rerouted round failures | follows the rules of each part in turn, e.g. host → switch → backbone → switch → host |
+      | Typical use | the **internet**'s core of routers, WANs, wireless mesh networks | large organisations: one star per floor or building, joined together |
+
+  - type: example
+    title: Justify the topology
+    problem: |
+      Justify a topology for (a) links between a bank's three data centres, which must never lose contact, (b) a school whose four buildings each have their own computer room.
+    steps:
+      - |
+        (a) **Mesh**. With every data centre linked to every other, losing one link just means traffic is rerouted, so there is no single point of failure.
+      - |
+        There are only three sites, so a full mesh needs just $\frac{3 \times 2}{2} = 3$ links: affordable for a bank.
+      - |
+        (b) **Hybrid**. Each building can be a star (reliable, good performance) and the four stars can be joined by a backbone.
+      - |
+        A fault in one building's star doesn't stop the other buildings, and a new building is just another star to connect.
+    answer: |
+      Data centres: mesh. School: hybrid (stars joined by a backbone).
+
+  - type: misconceptions
+    items:
+      - wrong: In a mesh, a packet is sent to every device, like on a bus.
+        right: |
+          It's **forwarded along one route** towards the destination, not broadcast to everyone.
+      - wrong: Hybrid is just another name for mesh.
+        right: |
+          Hybrid means **combining different topologies** (e.g. star + bus). A mesh is one topology.
+      - wrong: A full mesh of 10 devices needs 100 links.
+        right: |
+          $\frac{10 \times 9}{2} = 45$. Each device links to the 9 others, and each link is shared by two devices.
+
+  - type: exam
+    body: |
+      - Mesh benefit marks: **multiple routes / redundancy**, **no single point of failure**, **rerouting** if a link fails. Drawback marks: **cost of cabling**, **complexity**.
+      - If asked how a packet travels in a hybrid network, describe it part by part through each topology.
+      - Don't call the internet a star. Its core is a (partial) mesh of routers.
+
+  - type: check
+    title: Choose wisely
+    questions: [hybrid-cloze, hybrid-route, add-device, data-centres]
+
+  - type: takeaways
+    items:
+      - "Mesh: each device links to several others; packets are forwarded along one of several routes and rerouted round failures."
+      - "A full mesh of $n$ devices needs $\\frac{n(n-1)}{2}$ links, so it's robust but expensive."
+      - "Hybrid: two or more topologies combined, e.g. stars joined by a bus backbone."
+      - Mesh suits links that must not fail; hybrid suits large, growing organisations.
+
+questions:
+  - id: mesh-links
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.5"]
+    prompt: |
+      How many links are needed to connect **8** devices in a **full** mesh?
+    fields:
+      - answer: 28
+        unit: links
+    explanation: |
+      Each of the 8 devices links to 7 others: $8 \times 7 = 56$, but that counts each link twice, so $\frac{56}{2} = 28$.
+
+  - id: mesh-benefit
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.5"]
+    prompt: |
+      What is the main benefit of a mesh topology?
+    options:
+      - text: There are multiple routes, so if one link fails packets can be rerouted
+        correct: true
+        why: |
+          Redundancy means no single point of failure.
+      - text: It needs less cable than any other topology
+        why: |
+          It needs the **most** cable, which is its big drawback.
+      - text: Every device receives every packet
+        why: |
+          That describes a bus.
+      - text: It is the simplest topology to set up
+        why: |
+          With so many connections it's the most complex.
+    explanation: |
+      Mesh: robust thanks to multiple routes, but costly and complex.
+
+  - id: hybrid-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.5"]
+    prompt: |
+      A network made of several star networks joined by a bus backbone uses a {{1}} topology.
+    blanks:
+      - accept: ["hybrid", "hybrid topology", "star-bus hybrid", "star bus"]
+    explanation: |
+      Combining two or more different topologies gives a hybrid topology.
+
+  - id: hybrid-route
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.5"]
+    prompt: |
+      In a hybrid network, two star networks are joined by a bus backbone. How does a packet travel from a host in star 1 to a host in star 2?
+    options:
+      - text: Host → switch 1 → backbone → switch 2 → destination host
+        correct: true
+        why: |
+          It follows each part's rules in turn: star, then bus, then star.
+      - text: Host → every host in star 1 → backbone → destination host
+        why: |
+          Inside a star the switch forwards only to the right port; it doesn't go to every host.
+      - text: Host → destination host along a direct cable
+        why: |
+          There is no direct cable between hosts in different stars.
+      - text: Host → backbone → every host in star 2
+        why: |
+          The host connects to its switch, not straight to the backbone, and switch 2 forwards only to the destination.
+    explanation: |
+      Trace a hybrid network part by part.
+
+  - id: add-device
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.5"]
+    prompt: |
+      A full mesh has 9 devices. How many **extra** links are needed to add a 10th device and keep it a full mesh?
+    fields:
+      - answer: 9
+        unit: links
+    explanation: |
+      The new device must link to each of the 9 existing devices: 9 extra links. Check: $\frac{10 \times 9}{2} - \frac{9 \times 8}{2} = 45 - 36 = 9$.
+
+  - id: data-centres
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.5"]
+    prompt: |
+      An airline links its four booking centres. Bookings must keep flowing even if one link is cut. Which topology and justification fit best?
+    options:
+      - text: Mesh, because each centre has several routes to the others, so a cut link can be bypassed
+        correct: true
+        why: |
+          No single point of failure matches "must keep flowing".
+      - text: Bus, because it uses the least cable
+        why: |
+          One backbone break would stop every centre.
+      - text: Star, because the central device can never fail
+        why: |
+          The central device is exactly the single point of failure.
+      - text: Mesh, because packets are sent to every centre at once
+        why: |
+          Mesh packets are forwarded along a route, not broadcast to everyone.
+    explanation: |
+      When reliability is the priority, mesh wins, and with four sites a full mesh needs only 6 links.

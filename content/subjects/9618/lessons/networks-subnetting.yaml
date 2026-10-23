@@ -1,0 +1,242 @@
+id: networks-subnetting
+subject: "9618"
+topic: "2.1"
+title: "Subnetting and subnet masks"
+summary: Why networks are split into subnets, how a subnet mask separates the network ID from the host ID, and how a device decides whether a destination is local.
+order: 12
+minutes: 5
+kind: core
+objectives: ["2.1.14"]
+prerequisites: [networks-ip-addresses]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, fourteenth learning outcome
+    (2.1.14, how IP addresses are used in the transmission of data over the internet), the use of
+    subnetting in a network. Every AND, network address and host count checked with Python's
+    ipaddress module. All questions are original; the school and office addresses are
+    illustrative private addresses.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what **subnetting** is and why it's used, split an IPv4 address into **network ID** and **host ID** with a **subnet mask**, and decide whether two devices are on the same subnet.
+
+  - type: explain
+    title: One giant room vs classrooms
+    body: |
+      Imagine all 1500 students of a school in one hall, shouting messages to each other. Every broadcast reaches everyone, nobody's conversation is private, and when something goes wrong it's chaos.
+
+      Split them into **classrooms** and each room is quieter, more private and easier to manage. That's subnetting.
+
+  - type: definition
+    term: Subnetting
+    body: |
+      Dividing a network into **smaller logical networks (subnets)**. Each subnet has its own **network ID**, and devices on different subnets communicate through a **router**.
+
+  - type: explain
+    title: Network ID and host ID
+    body: |
+      An IPv4 address has two parts:
+
+      - the **network ID** (left-hand bits), which identifies the network or subnet;
+      - the **host ID** (right-hand bits), which identifies the device on that subnet.
+
+      A **subnet mask** shows where the split is. It's a 32-bit number with **1s for every network ID bit** and **0s for every host ID bit**, written like an IP address: `255.255.255.0` means 24 network bits and 8 host bits. It's often written in shorthand as **/24**.
+
+  - type: diagram
+    diagram: cs-networks-subnet-mask
+    alt: >-
+      Three rows of 32 bit boxes in four groups of 8. Row 1, IP address 192.168.10.77: 11000000
+      10101000 00001010 01001101; a bracket over the first 24 bits reads network ID (first 24
+      bits) and over the last 8 bits host ID (8 bits). Row 2, subnet mask 255.255.255.0: 24 ones
+      then 8 zeros. A line labelled AND separates row 3, network address 192.168.10.0: 11000000
+      10101000 00001010 00000000. Notes: 1 AND 1 = 1, anything AND 0 = 0, so the mask keeps the
+      network ID and clears the host ID; 8 host bits give 2 to the 8 minus 2 = 254 usable host
+      addresses.
+    caption: |
+      AND the address with the mask and the host ID vanishes, leaving the network address.
+
+  - type: check
+    title: Quick check
+    questions: [mask-purpose, and-network]
+
+  - type: example
+    title: Local or not?
+    problem: |
+      A computer at `192.168.10.77` with mask `255.255.255.0` sends a packet to `192.168.11.5`. Does it go straight to the destination or to the router?
+    steps:
+      - |
+        AND each address with the mask. A mask part of 255 keeps that part; a part of 0 clears it.
+      - |
+        Sender: `192.168.10.77` → network address `192.168.10.0`.
+      - |
+        Destination: `192.168.11.5` → network address `192.168.11.0`.
+      - |
+        The network addresses are **different**, so the destination is on another subnet. The packet goes to the **router** (the default gateway), which forwards it.
+    answer: |
+      Different subnets: the packet is sent to the router.
+
+  - type: deeper
+    title: How many devices fit on a subnet?
+    body: |
+      With $h$ host bits there are $2^h$ host IDs, but two are reserved:
+
+      - all host bits **0** is the **network address** itself;
+      - all host bits **1** is the **broadcast address** (to every device on the subnet).
+
+      So a subnet has $2^h - 2$ usable host addresses. With mask `255.255.255.0`, $h = 8$, giving $2^8 - 2 = 254$.
+
+  - type: explain
+    title: Why bother?
+    body: |
+      - **Less traffic**: broadcasts stay inside their own subnet, so the whole network isn't flooded.
+      - **Better security**: subnets can be kept apart (e.g. student, staff and finance subnets), and the router or firewall between them controls what can pass.
+      - **Easier management**: faults are confined to one subnet, and addresses can be organised by building or department.
+
+  - type: misconceptions
+    items:
+      - wrong: A subnet mask hides or encrypts the IP address.
+        right: |
+          It just marks which bits are the **network ID** (1s) and which are the **host ID** (0s).
+      - wrong: With 8 host bits you can connect 256 devices.
+        right: |
+          Two host IDs are reserved (network and broadcast addresses), so it's **254**.
+      - wrong: Devices on different subnets can't communicate at all.
+        right: |
+          They can, through a **router**. They just aren't on the same local network.
+
+  - type: exam
+    body: |
+      - "Explain the use of subnetting" wants the idea (**splitting a network into smaller subnets**, **network ID + host ID**) and benefits (**reduced traffic**, **security**, **easier management**).
+      - If you're given a mask, show the AND (or the "255 keeps, 0 clears" shortcut) to find the network address. Compare network addresses to decide whether two devices share a subnet.
+      - If you're asked how many devices a subnet can hold, don't forget the −2 for the network and broadcast addresses.
+
+  - type: check
+    title: Subnets in action
+    questions: [same-subnet, hosts-24, hosts-27, subnet-benefit]
+
+  - type: takeaways
+    items:
+      - Subnetting splits a network into smaller subnets, each with its own network ID.
+      - A subnet mask has 1s for the network ID bits and 0s for the host ID bits.
+      - IP address AND subnet mask = network address. Same network address means same subnet; otherwise send to the router.
+      - $h$ host bits give $2^h - 2$ usable host addresses.
+      - "Benefits: less broadcast traffic, better security, easier management."
+
+  - type: deeper
+    title: Splitting a /24 into four
+    body: |
+      Mask `255.255.255.192` is /26: the last part is `1100 0000`, so 2 extra bits go to the network and 6 bits are left for hosts.
+
+      - $2^2 = 4$ subnets: `192.168.10.0`, `192.168.10.64`, `192.168.10.128` and `192.168.10.192`.
+      - Each has $2^6 - 2 = 62$ usable host addresses.
+
+      A school could give one subnet to each building.
+
+questions:
+  - id: mask-purpose
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.14"]
+    prompt: |
+      What is the purpose of a **subnet mask**?
+    options:
+      - text: To show which bits of an IP address are the network ID and which are the host ID
+        correct: true
+        why: |
+          1s mark the network ID bits and 0s mark the host ID bits.
+      - text: To encrypt the IP address so hackers can't read it
+        why: |
+          A mask doesn't encrypt anything.
+      - text: To convert a domain name into an IP address
+        why: |
+          That's the DNS.
+      - text: To change a private IP address into a public one
+        why: |
+          That's NAT, done by the router.
+    explanation: |
+      The mask marks the network/host boundary in the address.
+
+  - id: and-network
+    format: cloze
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      A device has IP address `10.20.30.40` and subnet mask `255.255.0.0`. Its network address is {{1}}
+    blanks:
+      - accept: ["10.20.0.0"]
+    explanation: |
+      255 keeps a part and 0 clears it: `10.20` is kept and `30.40` is cleared, giving `10.20.0.0`. In binary, each bit is ANDed with the mask bit.
+
+  - id: same-subnet
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      Two computers have addresses `192.168.5.20` and `192.168.6.20`, both with mask `255.255.255.0`. Which statement is correct?
+    options:
+      - text: They are on different subnets, so packets between them go through a router
+        correct: true
+        why: |
+          Network addresses `192.168.5.0` and `192.168.6.0` differ.
+      - text: They are on the same subnet because their host IDs are both 20
+        why: |
+          Matching host IDs mean nothing; it's the **network** IDs that must match.
+      - text: They are on the same subnet because both addresses start 192.168
+        why: |
+          The mask makes the first **three** parts the network ID, and the third parts differ.
+      - text: They can't communicate at all
+        why: |
+          A router connects the subnets.
+    explanation: |
+      AND both with the mask and compare network addresses.
+
+  - id: hosts-24
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.14"]
+    prompt: |
+      A subnet uses mask `255.255.255.0`. How many **usable** host addresses does it have?
+    fields:
+      - answer: 254
+        unit: hosts
+    explanation: |
+      8 host bits: $2^8 = 256$ host IDs, minus the network address (all 0s) and the broadcast address (all 1s), gives 254.
+
+  - id: hosts-27
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.14"]
+    prompt: |
+      A subnet uses mask `255.255.255.224`. How many **usable** host addresses does it have?
+    fields:
+      - answer: 30
+        unit: hosts
+    explanation: |
+      224 is `1110 0000`, so the last part has 3 network bits and **5** host bits. $2^5 - 2 = 30$.
+
+  - id: subnet-benefit
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.14"]
+    prompt: |
+      A company puts its finance department on a separate subnet. Which is a benefit?
+    options:
+      - text: Traffic to and from finance can be controlled at the router, improving security
+        correct: true
+        why: |
+          Separate subnets let the router or firewall decide what crosses between them.
+      - text: Finance computers no longer need IP addresses
+        why: |
+          Every device on the subnet still needs one.
+      - text: Finance computers will process data faster
+        why: |
+          Subnetting affects network traffic, not processor speed.
+      - text: Finance computers can't be reached by anyone, including finance staff
+        why: |
+          Finance staff on that subnet can still reach each other; others are controlled, not blocked outright.
+    explanation: |
+      Subnetting: less broadcast traffic, more security, easier management.

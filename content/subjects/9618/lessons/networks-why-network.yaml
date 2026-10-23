@@ -1,0 +1,271 @@
+id: networks-why-network
+subject: "9618"
+topic: "2.1"
+title: "Why network? LANs and WANs"
+summary: Why devices are connected into networks, what that gains (and costs), and how a LAN differs from a WAN.
+order: 1
+minutes: 5
+kind: core
+objectives: ["2.1.1", "2.1.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1 Networks including the internet:
+    the first learning outcome (2.1.1, the purpose and benefits of networking devices) and the
+    second (2.1.2, the characteristics of a LAN and a WAN). All questions are original. The
+    school, studio and company scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain **why** devices are networked, list the benefits (and the catches), and tell a **LAN** from a **WAN** by its characteristics.
+
+  - type: explain
+    title: Thirty laptops, zero cables
+    body: |
+      Picture a school with 30 laptops and no network. Every laptop needs its own printer. Sharing homework means walking a USB stick around the room. Backups? "I emailed it to myself... oh wait, no email."
+
+      Connect them together and all of those problems disappear. That is the whole point of a network.
+
+  - type: definition
+    term: Network
+    body: |
+      Two or more computers or other devices **connected together** (by cable or wirelessly) so that they can **communicate** and **share data and resources**.
+
+  - type: explain
+    title: What networking gets you
+    body: |
+      | Benefit | What it looks like |
+      | --- | --- |
+      | **Share hardware** | One printer or scanner for the whole room |
+      | **Share an internet connection** | One connection serves every device |
+      | **Share files and software** | Everyone works on the same up-to-date file; software installed and updated centrally |
+      | **Communicate** | Email, messaging, video calls, shared calendars |
+      | **Central management** | Log in from any machine and see *your* files; access rights and backups handled in one place |
+
+      And the catches, because nothing is free:
+
+      - **Cost**: switches, cables, servers, plus someone to run them.
+      - **Malware spreads**: one infected device can infect the rest.
+      - **Security risk**: a network is a door that hackers can try to open.
+      - **Dependency**: if a central server fails, everyone is affected.
+
+  - type: check
+    title: Quick check
+    questions: [benefit-studio, drawback, central-server]
+
+  - type: definition
+    term: LAN (local area network)
+    body: |
+      A network covering a **small geographical area**, such as a single building or site, whose infrastructure is usually **owned and managed by the organisation** that uses it.
+
+  - type: definition
+    term: WAN (wide area network)
+    body: |
+      A network covering a **large geographical area** (cities, countries, the world), usually formed by **connecting LANs together** using communication links **leased from third parties** such as telecoms companies.
+
+  - type: diagram
+    diagram: cs-networks-lan-wan
+    alt: >-
+      Two dashed boxes, LAN 1 head office and LAN 2 branch office, each containing three PCs
+      connected to a switch, and the switch connected to a router. Under each box: one site, small
+      area, owned by the organisation. A long coloured line labelled WAN link, hundreds of km, joins
+      the two routers; it runs over lines leased from a telecoms company. A note says LAN 1 plus
+      LAN 2 plus the link make one WAN.
+    caption: |
+      Two LANs plus the long-distance link between them make a WAN.
+
+  - type: explain
+    title: LAN vs WAN side by side
+    body: |
+      | | LAN | WAN |
+      | --- | --- | --- |
+      | Area | small: one building or site | large: cities, countries, worldwide |
+      | Who owns the links | the organisation | usually **third parties** (leased lines, telecoms networks, satellites) |
+      | Typical data rate | high | usually lower |
+      | Errors | fewer | more likely over long distances |
+      | Joined by | switches (and WAPs) | routers |
+      | Example | a school's network | a bank linking its branches; **the internet** |
+
+  - type: intuition
+    title: Your house vs the motorway
+    body: |
+      A LAN is the corridors in your own house: short, quick, and *you* decide who walks in. A WAN is the motorway network: long distances, built and run by someone else, and you pay to use it.
+
+      Where it breaks down: a WAN isn't one road you drive on, it's lots of networks stitched together by routers.
+
+  - type: misconceptions
+    items:
+      - wrong: The W in WAN stands for wireless.
+        right: |
+          **Wide**. A WLAN (wireless LAN) is just a LAN that uses WiFi. WANs can use cables, fibre, microwaves or satellites.
+      - wrong: A network is a LAN or a WAN depending on how many computers it has.
+        right: |
+          It's about **geographical area** and **who owns the links**. Three computers in two countries form a WAN; 2000 computers in one school form a LAN.
+      - wrong: Networking makes each computer run programs faster.
+        right: |
+          Networking shares resources and data; it does not speed up a computer's own processor.
+
+  - type: exam
+    body: |
+      - "Describe the characteristics of a LAN" questions want 2–3 distinct points: **area**, **ownership of infrastructure**, and often **data rate** or **how it is connected**. One point per mark.
+      - "Give one benefit of networking" needs a real benefit tied to sharing or central management. "It's faster" or "it's easier" alone earns nothing.
+      - For a scenario, name the network type and link it to a fact in the question, e.g. "WAN, because the offices are in different countries".
+
+  - type: check
+    title: LAN or WAN?
+    questions: [bank-branches, lan-cloze, wan-feature, explain-lan-wan]
+
+  - type: takeaways
+    items:
+      - A network lets devices communicate and share data and resources.
+      - "Benefits: shared hardware, shared internet, shared files and software, communication, central management and backup."
+      - "Drawbacks: cost, malware spreading, security risks, dependence on central servers."
+      - A LAN covers a small area with infrastructure owned by the organisation; a WAN covers a large area, links LANs, and uses third-party links.
+
+questions:
+  - id: benefit-studio
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.1"]
+    prompt: |
+      A design studio connects its six computers into a network. Which of these is a **benefit** of doing so?
+    options:
+      - text: Files can be stored centrally and opened from any of the computers
+        correct: true
+        why: |
+          Sharing data is one of the main purposes of a network, and central storage also makes backups easier.
+      - text: Viruses can no longer spread from one computer to another
+        why: |
+          The opposite: a network gives malware a route from one computer to the others.
+      - text: Each computer will process data faster
+        why: |
+          Networking doesn't change a computer's own processor speed.
+      - text: The computers no longer need any security software
+        why: |
+          A network adds security risks, so security matters more, not less.
+    explanation: |
+      Networking is about sharing: data, hardware, software, an internet connection. Central storage of files is a classic benefit.
+
+  - id: drawback
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.1"]
+    prompt: |
+      Which of these is a **drawback** of networking computers, compared with leaving them standalone?
+    options:
+      - text: Malware on one computer can spread to the others
+        correct: true
+        why: |
+          The connections that let data be shared also let malware travel.
+      - text: Each computer needs its own printer
+        why: |
+          That's a drawback of *not* networking. A network lets one printer be shared.
+      - text: Users can't communicate by email
+        why: |
+          Networks are what make email possible.
+      - text: Files have to be copied around on USB sticks
+        why: |
+          That's life without a network.
+    explanation: |
+      Drawbacks of networking include cost, the spread of malware, extra security risks and dependence on central servers.
+
+  - id: central-server
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.1"]
+    prompt: |
+      A school stores every student's files on one central file server. Which statement about this is correct?
+    options:
+      - text: Backups are easy because all the files are in one place, but if the server fails nobody can reach their files
+        correct: true
+        why: |
+          Central storage gives a central backup (a benefit) and a single point of failure (a drawback).
+      - text: The files are safe from malware because they are on a server
+        why: |
+          Malware can spread across the network to the server, and then reach everyone's files.
+      - text: Students must use the same computer every day to find their files
+        why: |
+          The opposite: central storage lets them log in from any computer.
+      - text: The school no longer needs any network hardware
+        why: |
+          The computers still need NICs, cables and switches to reach the server.
+    explanation: |
+      Exam answers often need both sides: central storage makes management and backup easier but makes the server critical.
+
+  - id: bank-branches
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |
+      A bank links the networks in its 40 branches across three countries so staff can access the same customer records. What type of network is the bank's overall network?
+    options:
+      - text: A WAN
+        correct: true
+        why: |
+          It covers a large geographical area (three countries) and joins LANs together, which will need links from telecoms companies.
+      - text: A LAN, because it belongs to one organisation
+        why: |
+          One owner doesn't make it a LAN; the area does. A LAN covers one site.
+      - text: A WLAN
+        why: |
+          A WLAN is a wireless LAN, still a single small area.
+      - text: Not a network, because the branches are too far apart
+        why: |
+          Distance is exactly what WANs are for.
+    explanation: |
+      Each branch has its own LAN; joining them across countries makes a WAN.
+
+  - id: lan-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |
+      A LAN covers a {{1}} geographical area, and its infrastructure is usually owned by the organisation. A WAN covers a large area and often uses communication links {{2}} from third parties.
+    blanks:
+      - accept: ["small", "limited", "local", "small local"]
+      - accept: ["leased", "hired", "rented", "leased or hired"]
+    explanation: |
+      LAN: small area, owned infrastructure. WAN: large area, links leased or hired from telecoms companies.
+
+  - id: wan-feature
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      Which statement describes a WAN **rather than** a LAN?
+    options:
+      - text: It usually relies on infrastructure owned by third parties, such as leased lines or satellites
+        correct: true
+        why: |
+          An organisation can't lay its own cables between countries, so it leases them.
+      - text: It connects more than 100 devices
+        why: |
+          The number of devices doesn't decide it; a big school LAN can have thousands.
+      - text: It can use wireless links
+        why: |
+          Both can. WiFi LANs use radio waves; WANs can use microwave and satellite links.
+      - text: It is used to share a printer between computers in one room
+        why: |
+          One room is a small area: that's a LAN.
+    explanation: |
+      Area and ownership are the defining differences. Wireless vs wired and device count are not.
+
+  - id: explain-lan-wan
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |
+      A company has offices in Nairobi and Lagos. Each office has its own network. Explain why each office network is a LAN but the network joining them is a WAN.
+    model: |
+      Each office network covers a small geographical area (one building) and its cabling and hardware are owned and managed by the company, so each is a LAN. The network joining them covers a large geographical area (two countries, thousands of kilometres) and must use communication links leased from third parties such as telecoms companies, so it is a WAN.
+    keyPoints:
+      - Each office network covers a small area, such as one building
+      - The office infrastructure is owned and managed by the company
+      - The link between the offices covers a large area (different countries)
+      - The long-distance links are leased from third parties such as telecoms companies
+    explanation: |
+      Use both characteristics, area and ownership of infrastructure, for each network.

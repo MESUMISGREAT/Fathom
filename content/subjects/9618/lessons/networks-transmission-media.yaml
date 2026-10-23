@@ -1,0 +1,244 @@
+id: networks-transmission-media
+subject: "9618"
+topic: "2.1"
+title: "Wired and wireless: cables, waves and satellites"
+summary: The characteristics of copper cable, fibre-optic cable, radio waves, microwaves and satellites, and the implications of choosing wired or wireless.
+order: 7
+minutes: 5
+kind: core
+objectives: ["2.1.7"]
+prerequisites: [networks-why-network]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, seventh learning outcome
+    (2.1.7, differences between wireless and wired networks and their implications; the
+    characteristics of copper cable, fibre-optic cable, radio waves including WiFi, microwaves and
+    satellites). The satellite delay uses rounded figures (about 36 000 km altitude, about
+    300 000 km/s), checked with Python. All questions are original; scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe the characteristics of **copper cable**, **fibre-optic cable**, **radio waves**, **microwaves** and **satellites**, and explain the implications of choosing a wired or wireless network.
+
+  - type: explain
+    title: Three ways to move a bit
+    body: |
+      Your data can travel as **electricity** in copper, as **light** in glass, or as **electromagnetic waves** through the air (occasionally via a satellite about 36 000 km up).
+
+      Each has a personality. Copper is cheap and cheerful, fibre is a speed demon, and wireless lets you wander around with your laptop.
+
+  - type: explain
+    title: Wired media
+    body: |
+      | | Copper cable (twisted pair, coaxial) | Fibre-optic cable |
+      | --- | --- | --- |
+      | Carries data as | **electrical signals** | **pulses of light** through thin glass or plastic fibres |
+      | Bandwidth (data rate) | lower | **much higher** |
+      | Distance before the signal needs boosting | short: signals weaken (**attenuate**) quickly, so repeaters are needed sooner | long: very little attenuation |
+      | Interference | affected by **electromagnetic interference** (twisting the pairs, or shielding in coaxial cable, reduces it) | **immune** to electromagnetic interference |
+      | Security | easier to tap | very hard to tap without being noticed |
+      | Cost and handling | **cheap**, flexible, easy to install and join | **expensive**, more fragile, harder to install and join |
+
+  - type: check
+    title: Quick check
+    questions: [signal-cloze, fibre-immune]
+
+  - type: explain
+    title: Wireless media
+    body: |
+      - **Radio waves (including WiFi)**: spread out in all directions and **pass through walls**, though they weaken doing so. WiFi has a **short range** (tens of metres indoors) and shares the airwaves with neighbouring networks and devices, so it suffers **interference**.
+      - **Microwaves**: higher frequency than radio waves, so they carry **more data**, but they travel in straight lines and are easily blocked. They need **line of sight** between dishes on towers or buildings, typically tens of kilometres apart. Heavy rain can weaken them.
+      - **Satellites**: a communications satellite **relays microwave signals** between ground stations. It covers a **huge area**, including oceans and remote places with no cables, but it is **expensive** and has a long **delay (latency)** because of the distance travelled.
+
+      The pattern: **higher frequency → more bandwidth, but shorter range and more easily blocked**.
+
+  - type: diagram
+    diagram: cs-networks-wireless-links
+    alt: >-
+      A not-to-scale picture of long-distance wireless links. A curved line represents the Earth's
+      surface. Two microwave towers stand on it with a straight beam between their tops, labelled
+      microwave beam: line of sight, with a note that towers must be tall enough to see over the
+      curve. Above, a communications satellite has a dashed uplink from a ground station on the left
+      and a dashed downlink to a ground station far away on the right.
+    caption: |
+      Microwaves go in straight lines, so towers must see each other. Satellites relay signals over huge distances.
+
+  - type: example
+    title: Why gamers hate satellite internet
+    problem: |
+      A geostationary satellite is about 36 000 km above the equator. Signals travel at about 300 000 km per second. What is the minimum delay for a signal to go from one ground station, up to the satellite and down to another?
+    steps:
+      - |
+        Distance: up **and** down, so at least $2 \times 36\,000 = 72\,000$ km.
+      - |
+        Time $= \frac{\text{distance}}{\text{speed}} = \frac{72\,000}{300\,000} = 0.24$ s.
+      - |
+        A request and its reply both make the trip, so a game waits about **half a second** for each response. Nobody wins a shoot-out like that.
+    answer: |
+      About 0.24 s each way: noticeable latency.
+
+  - type: explain
+    title: Wired or wireless? The implications
+    body: |
+      | | Wired | Wireless |
+      | --- | --- | --- |
+      | Speed and reliability | usually **faster** and more **consistent** | usually slower; varies with distance, walls and interference |
+      | Security | an intruder needs a **physical connection** | signals can be **intercepted** by anyone in range, so data must be **encrypted** |
+      | Mobility | devices are tied to a socket | users can **move around** freely |
+      | Installation | cables cost money and are disruptive to fit | no cabling; easy to add devices |
+
+  - type: misconceptions
+    items:
+      - wrong: Fibre is fast because light travels faster than electricity.
+        right: |
+          Signals in both travel at a large fraction of the speed of light. Fibre wins on **bandwidth**, **low attenuation** and **immunity to interference**.
+      - wrong: WiFi and the internet are the same thing.
+        right: |
+          WiFi is a way of building a **wireless LAN** with radio waves. You can have WiFi with no internet connection at all.
+      - wrong: Microwaves can bend over hills like radio broadcasts.
+        right: |
+          Microwaves travel in **straight lines** and need **line of sight**. That's why microwave dishes sit on tall towers.
+
+  - type: exam
+    body: |
+      - "Describe a characteristic" means a **property**, not a use: "immune to electromagnetic interference" scores, "used in offices" doesn't.
+      - Comparisons need **both sides**: "fibre has a higher bandwidth than copper", not just "fibre is good".
+      - For WiFi security, say what happens (signals can be intercepted) **and** the fix (encrypt the data).
+
+  - type: check
+    title: Choose the medium
+    questions: [line-of-sight, river-link, wireless-security, satellite-delay]
+
+  - type: takeaways
+    items:
+      - "Copper: electrical signals; cheap and easy, but lower bandwidth, attenuates sooner, suffers interference."
+      - "Fibre: light pulses; very high bandwidth, long distances, immune to interference, secure, but expensive and fragile."
+      - "Radio waves (WiFi): pass through walls, short range, interference. Microwaves: more bandwidth, line of sight. Satellites: huge coverage, high latency."
+      - "Wired: faster, more reliable, more secure. Wireless: mobility and no cabling, but slower and must be encrypted."
+
+  - type: deeper
+    title: Is WiFi radio or microwave?
+    body: |
+      WiFi uses frequencies around 2.4 GHz and 5 GHz. Physicists sometimes call these microwaves, because the boundary between radio waves and microwaves isn't sharp. The syllabus lists WiFi under **radio waves**, so treat it that way in the exam.
+
+questions:
+  - id: signal-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["2.1.7"]
+    prompt: |
+      Copper cable carries data as {{1}} signals, whereas fibre-optic cable carries data as pulses of {{2}}.
+    blanks:
+      - accept: ["electrical", "electric", "electronic", "electricity"]
+      - accept: ["light", "laser light", "infrared light"]
+    explanation: |
+      Copper: voltages. Fibre: light, which is why electromagnetic interference doesn't affect it.
+
+  - id: fibre-immune
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.7"]
+    prompt: |
+      A factory full of powerful electric motors needs a network cable that won't be affected by electromagnetic interference. Which should it use?
+    options:
+      - text: Fibre-optic cable
+        correct: true
+        why: |
+          It carries light, so electromagnetic interference has no effect.
+      - text: Unshielded twisted-pair copper cable
+        why: |
+          Twisting reduces interference but doesn't remove it.
+      - text: WiFi radio waves
+        why: |
+          Radio waves are themselves electromagnetic and suffer interference.
+      - text: Coaxial copper cable
+        why: |
+          Shielding helps, but copper still carries electrical signals that can pick up interference.
+    explanation: |
+      Immunity to electromagnetic interference is one of fibre's defining characteristics.
+
+  - id: line-of-sight
+    format: mcq
+    difficulty: 1
+    objectives: ["2.1.7"]
+    prompt: |
+      Which transmission method **requires line of sight** between transmitter and receiver?
+    options:
+      - text: Microwaves
+        correct: true
+        why: |
+          They travel in straight lines and are easily blocked, so dishes must "see" each other.
+      - text: WiFi radio waves
+        why: |
+          Radio waves pass through walls, which is why WiFi works between rooms.
+      - text: Copper cable
+        why: |
+          A cable carries the signal wherever the cable goes.
+      - text: Fibre-optic cable
+        why: |
+          Light is guided along the fibre, round corners and all.
+    explanation: |
+      Line of sight is the classic microwave characteristic.
+
+  - id: river-link
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      A company needs a high-bandwidth link between two of its buildings 5 km apart, on hilltops on either side of a wide river. It isn't allowed to lay a cable across the river. What is the most suitable choice?
+    options:
+      - text: A microwave link between dishes on the two buildings
+        correct: true
+        why: |
+          The hilltops give line of sight, microwaves carry plenty of data, and no cable is needed.
+      - text: WiFi radio waves from a wireless access point
+        why: |
+          WiFi's range is tens of metres, nowhere near 5 km.
+      - text: A geostationary satellite link
+        why: |
+          It would work, but it's expensive and adds about half a second of delay for a link that's only 5 km.
+      - text: Fibre-optic cable
+        why: |
+          Excellent bandwidth, but the company can't lay a cable across the river.
+    explanation: |
+      Match each characteristic to the constraint: distance, no cable, line of sight available.
+
+  - id: wireless-security
+    format: mcq
+    difficulty: 2
+    objectives: ["2.1.7"]
+    prompt: |
+      Which is a security implication of using a wireless network instead of a wired one?
+    options:
+      - text: Signals can be picked up by anyone in range, so data should be encrypted
+        correct: true
+        why: |
+          An attacker doesn't need to plug anything in, so encryption is essential.
+      - text: Wireless networks can't be connected to the internet
+        why: |
+          Of course they can; most home internet use is over WiFi.
+      - text: Wireless signals can't be intercepted because they travel through the air
+        why: |
+          Travelling through the air is exactly what makes them easy to intercept.
+      - text: Wireless networks need no passwords because only nearby devices can join
+        why: |
+          "Nearby" includes the car parked outside. Access must still be controlled.
+    explanation: |
+      Wired: you need physical access. Wireless: you only need to be in range.
+
+  - id: satellite-delay
+    format: numeric
+    difficulty: 3
+    objectives: ["2.1.7"]
+    prompt: |
+      A communications satellite orbits about 30 000 km above the Earth. Signals travel at about 300 000 km per second. What is the minimum time, in seconds, for a signal to travel from a ground station up to the satellite and back down to the ground?
+    fields:
+      - answer: 0.2
+        tolerance: { abs: 0.005 }
+        unit: s
+    explanation: |
+      The signal goes up and down: $2 \times 30\,000 = 60\,000$ km. Time $= \frac{60\,000}{300\,000} = 0.2$ s. This delay (latency) is a key drawback of satellite links.
