@@ -1,0 +1,244 @@
+id: linear-momentum-elastic-inelastic
+subject: "9702"
+topic: "3.3"
+title: "Elastic or inelastic? Momentum always survives, kinetic energy might not"
+summary: Momentum is conserved in every interaction, but total kinetic energy is conserved only in an elastic collision; in an inelastic one some is transferred to other forms.
+order: 4
+minutes: 5
+objectives: ["3.3.3", "3.3.4", "3.3.2"]
+prerequisites: [linear-momentum-collisions-1d]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 3.3.3, recalling that an elastic collision conserves total kinetic
+    energy; 3.3.4, momentum is always conserved in an interaction while kinetic energy may change;
+    and 3.3.2, solving elastic and inelastic problems). The bar charts are drawn to scale (6.0 kg m s⁻¹
+    before and after; 9.0 J before and 6.0 J after). Masses and speeds are illustrative; all worked
+    values and answer keys were computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can recall what makes a collision **elastic**, explain why momentum is always conserved while **kinetic energy** may change, and decide whether a collision is elastic by calculating kinetic energies.
+
+  - type: explain
+    title: The bouncy ball and the lump of clay
+    body: |
+      Drop a super-bouncy ball and a lump of clay. The ball bounces back almost to where it started. The clay goes **splat** and stays put.
+
+      Momentum is conserved in both cases (the Earth takes up the difference). What's different is the **kinetic energy**: the ball keeps nearly all of it; the clay's goes into warming and squashing the clay, and a satisfying thud.
+
+  - type: explain
+    title: Four kinds of interaction
+    body: |
+      | Interaction | Total momentum | Total kinetic energy | Examples |
+      | --- | --- | --- | --- |
+      | **Elastic** collision | conserved | **conserved** | gas molecules; very nearly, snooker balls |
+      | **Inelastic** collision | conserved | **decreases** | most real collisions: cars, footballs |
+      | Objects **stick together** | conserved | decreases (by the most that momentum conservation allows) | clay, coupling trucks, a dart in a board |
+      | **Explosion** | conserved | **increases** | fireworks, recoil, a released spring |
+
+      The momentum column is boring on purpose. It never changes. All the drama is in the kinetic energy column.
+
+  - type: definition
+    term: Elastic collision
+    body: |
+      A collision in which the **total kinetic energy is conserved**. (Total momentum is conserved too, as it is in every collision.)
+
+  - type: definition
+    term: Inelastic collision
+    body: |
+      A collision in which the **total kinetic energy is not conserved**: some is transferred to other forms, such as thermal energy (internal energy) and sound. Total momentum and **total energy** are still conserved.
+
+  - type: diagram
+    diagram: phys-linear-momentum-ke-bars
+    alt: >-
+      Two bar charts for a 2.0 kg trolley at 3.0 m s⁻¹ that hits a stationary 1.0 kg trolley, after
+      which they stick together and move at 2.0 m s⁻¹. Left, "Total momentum" in kg m s⁻¹ on a scale
+      from 0 to 10: the before bar and the after bar are both 6.0, labelled "conserved: always".
+      Right, "Total kinetic energy" in joules on a scale from 0 to 10: the before bar is 9.0 and the
+      after bar is 6.0; a dashed outline shows the missing 3.0 J, labelled "3.0 J to thermal energy,
+      sound", and the chart is labelled "not conserved here".
+    caption: Same collision, two bookkeeping checks. Momentum balances; kinetic energy doesn't.
+
+  - type: example
+    title: Checking a collision
+    problem: |
+      A $2.0\ \text{kg}$ trolley at $3.0\ \text{m s}^{-1}$ hits a stationary $1.0\ \text{kg}$ trolley and they stick together. Find their common velocity, and show that the collision is inelastic.
+    steps:
+      - |
+        Momentum: $2.0 \times 3.0 = 3.0\,v$, so $v = 2.0\ \text{m s}^{-1}$.
+      - |
+        Kinetic energy before: $\tfrac{1}{2} \times 2.0 \times 3.0^2 = 9.0\ \text{J}$.
+      - |
+        Kinetic energy after: $\tfrac{1}{2} \times 3.0 \times 2.0^2 = 6.0\ \text{J}$. Use the **combined** mass here.
+      - |
+        $6.0\ \text{J} < 9.0\ \text{J}$, so the total kinetic energy is not conserved: the collision is inelastic.
+    answer: |
+      $2.0\ \text{m s}^{-1}$; $3.0\ \text{J}$ of kinetic energy (a third of it) is transferred to thermal energy and sound.
+
+  - type: check
+    questions: [elastic-meaning, ke-lost]
+
+  - type: intuition
+    title: Why momentum can't leak away, but kinetic energy can
+    body: |
+      **Momentum** is a vector. The forces between colliding objects are equal and opposite (Newton's third law) and act for the same time, so the momentum changes **cancel exactly**. There is also no "other form" of momentum for it to turn into.
+
+      **Kinetic energy** is a scalar and is never negative, so nothing cancels. And energy has plenty of other forms to escape into: thermal energy, sound, the work done permanently bending a car's bonnet. Total **energy** is still conserved; only the **kinetic** part changes.
+
+  - type: example
+    title: An elastic collision
+    problem: |
+      A $1.0\ \text{kg}$ ball moving right at $4.0\ \text{m s}^{-1}$ hits a stationary $3.0\ \text{kg}$ ball. Afterwards the $1.0\ \text{kg}$ ball moves left at $2.0\ \text{m s}^{-1}$ and the $3.0\ \text{kg}$ ball moves right at $2.0\ \text{m s}^{-1}$. Is the collision elastic?
+    steps:
+      - |
+        Momentum check (right positive): before $1.0 \times 4.0 = 4.0$; after $1.0 \times (-2.0) + 3.0 \times 2.0 = 4.0\ \text{kg m s}^{-1}$. ✓
+      - |
+        Kinetic energy before: $\tfrac{1}{2} \times 1.0 \times 4.0^2 = 8.0\ \text{J}$.
+      - |
+        Kinetic energy after: $\tfrac{1}{2} \times 1.0 \times 2.0^2 + \tfrac{1}{2} \times 3.0 \times 2.0^2 = 2.0 + 6.0 = 8.0\ \text{J}$.
+    answer: |
+      Total kinetic energy is $8.0\ \text{J}$ before and after, so the collision is **elastic**. (Kinetic energy has no direction, so the rebounding ball's $2.0\ \text{J}$ counts as positive.)
+
+  - type: check
+    questions: [elastic-test, energy-cloze]
+
+  - type: misconceptions
+    items:
+      - wrong: In an inelastic collision, momentum is lost.
+        right: Momentum is conserved in **every** collision (no resultant external force). Only kinetic energy is lost.
+      - wrong: Energy is lost in an inelastic collision.
+        right: Only the **kinetic** energy is transferred to other forms. Total energy is always conserved. Say "kinetic energy", every time.
+      - wrong: If the objects bounce apart, the collision must be elastic.
+        right: Most bouncing collisions still lose some kinetic energy. Elastic means total kinetic energy is **exactly** conserved; check it with numbers.
+      - wrong: The rebounding object's kinetic energy should be negative.
+        right: $\tfrac{1}{2}mv^2$ is never negative. Signs matter for momentum, not for kinetic energy.
+
+  - type: exam
+    body: |
+      - "State what is meant by an elastic collision": **total kinetic energy is conserved**. Writing "energy is conserved" scores nothing: energy is always conserved.
+      - "Show that the collision is inelastic": calculate the total kinetic energy before **and** after, quote both numbers and state the conclusion.
+      - After a stick-together collision, use the **combined mass** for the kinetic energy after. It's the most common slip.
+
+  - type: check
+    questions: [ke-spot-error, momentum-ke-explain]
+
+  - type: takeaways
+    items:
+      - Total momentum is conserved in every collision and explosion (no resultant external force).
+      - "Elastic collision: total kinetic energy is also conserved."
+      - "Inelastic collision: total kinetic energy decreases; it's transferred to thermal energy, sound and so on."
+      - Total energy is always conserved; only kinetic energy can change.
+      - To classify a collision, compare total kinetic energy before and after.
+
+questions:
+  - id: elastic-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["3.3.3"]
+    prompt: |
+      Which statement is true for every **elastic** collision?
+    options:
+      - text: Both the total momentum and the total kinetic energy are conserved
+        correct: true
+        why: Correct. Momentum is conserved in all collisions; in an elastic one, total kinetic energy is conserved as well.
+      - text: The total kinetic energy is conserved but the total momentum may change
+        why: Momentum is conserved in every collision, elastic or not (with no resultant external force).
+      - text: The total momentum is conserved but the total kinetic energy decreases
+        why: That describes an inelastic collision.
+      - text: The objects stick together after the collision
+        why: Sticking together always transfers some kinetic energy to other forms, so it is inelastic.
+    explanation: |
+      Elastic: total momentum **and** total kinetic energy conserved. Inelastic: total momentum conserved, total kinetic energy not.
+
+  - id: ke-lost
+    format: numeric
+    difficulty: 2
+    objectives: ["3.3.2", "3.3.4"]
+    prompt: |
+      A $1.2\ \text{kg}$ trolley moving at $3.0\ \text{m s}^{-1}$ collides with a stationary $0.80\ \text{kg}$ trolley and they stick together. Find their common speed and the kinetic energy transferred to other forms.
+    fields:
+      - label: "common speed ="
+        answer: 1.8
+        tolerance: { abs: 0.01 }
+        unit: m s⁻¹
+      - label: "kinetic energy transferred ="
+        answer: 2.16
+        tolerance: { abs: 0.02 }
+        unit: J
+    explanation: |
+      Momentum: $1.2 \times 3.0 = 3.6 = 2.0\,v$, so $v = 1.8\ \text{m s}^{-1}$. Kinetic energy before: $\tfrac{1}{2} \times 1.2 \times 3.0^2 = 5.4\ \text{J}$. After: $\tfrac{1}{2} \times 2.0 \times 1.8^2 = 3.24\ \text{J}$. Transferred: $5.4 - 3.24 = 2.16\ \text{J}$ (about $2.2\ \text{J}$, or 40% of the original).
+
+  - id: elastic-test
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.3"]
+    prompt: |
+      A $2.0\ \text{kg}$ ball moving at $3.0\ \text{m s}^{-1}$ hits a stationary $4.0\ \text{kg}$ ball head-on. Afterwards, the $2.0\ \text{kg}$ ball moves backwards at $1.0\ \text{m s}^{-1}$ and the $4.0\ \text{kg}$ ball moves forwards at $2.0\ \text{m s}^{-1}$. Is the collision elastic?
+    options:
+      - text: Yes, because the total kinetic energy is $9.0\ \text{J}$ both before and after
+        correct: true
+        why: Correct. Before $\tfrac{1}{2} \times 2.0 \times 3.0^2 = 9.0\ \text{J}$; after $1.0 + 8.0 = 9.0\ \text{J}$.
+      - text: No, because the $2.0\ \text{kg}$ ball changed direction, which wastes energy
+        why: Changing direction doesn't by itself mean kinetic energy is lost. Calculate the totals; they match.
+      - text: No, because the total momentum changes from $6.0$ to $10\ \text{kg m s}^{-1}$
+        why: This forgets that the $2.0\ \text{kg}$ ball moves backwards. With signs, the momentum after is $-2.0 + 8.0 = 6.0\ \text{kg m s}^{-1}$.
+      - text: It is impossible to tell without knowing the contact time
+        why: You don't need the time. Comparing total kinetic energy before and after decides it.
+    explanation: |
+      Momentum: $6.0$ before, $-2.0 + 8.0 = 6.0\ \text{kg m s}^{-1}$ after. Kinetic energy: $9.0\ \text{J}$ before, $\tfrac{1}{2}(2.0)(1.0)^2 + \tfrac{1}{2}(4.0)(2.0)^2 = 1.0 + 8.0 = 9.0\ \text{J}$ after. Conserved, so elastic.
+
+  - id: energy-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.3.4", "3.3.3"]
+    prompt: |
+      When objects interact with no resultant external force, the total {{1}} is always conserved. In an elastic collision the total {{2}} energy is also conserved. In an inelastic collision some of it is transferred to other forms, such as {{3}} energy.
+    blanks:
+      - accept: [momentum, linear momentum]
+      - accept: [kinetic]
+      - accept: [thermal, internal, sound, heat]
+    explanation: |
+      Momentum: always conserved. Kinetic energy: conserved only in elastic collisions; otherwise some becomes thermal (internal) energy, sound and so on. Total energy is always conserved.
+
+  - id: ke-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.3.4", "3.3.2"]
+    prompt: |
+      A $3.0\ \text{kg}$ block moving at $4.0\ \text{m s}^{-1}$ hits a stationary $1.0\ \text{kg}$ block and they stick together. Which line of this solution contains the first error?
+    lines:
+      - |
+        Momentum before $= 3.0 \times 4.0 = 12\ \text{kg m s}^{-1}$.
+      - |
+        Velocity after $= \dfrac{12}{4.0} = 3.0\ \text{m s}^{-1}$.
+      - |
+        Kinetic energy before $= \tfrac{1}{2} \times 3.0 \times 4.0^2 = 24\ \text{J}$.
+      - |
+        Kinetic energy after $= \tfrac{1}{2} \times 3.0 \times 3.0^2 = 13.5\ \text{J}$.
+      - |
+        So $10.5\ \text{J}$ of kinetic energy was transferred to other forms.
+    errorLine: 4
+    fix: |
+      Both blocks move after the collision, so use the combined mass: kinetic energy after $= \tfrac{1}{2} \times 4.0 \times 3.0^2 = 18\ \text{J}$, and $6.0\ \text{J}$ was transferred.
+    explanation: |
+      Line 2 correctly used the combined mass of $4.0\ \text{kg}$; line 4 forgot it. Use the same mass for momentum and kinetic energy after the collision.
+
+  - id: momentum-ke-explain
+    format: explain
+    difficulty: 2
+    objectives: ["3.3.4"]
+    prompt: |
+      Two cars collide and crumple. Explain why their total momentum is conserved but their total kinetic energy is not.
+    model: |
+      During the collision, each car exerts a force on the other. By Newton's third law these forces are equal in size and opposite in direction, and they act for the same time, so the cars' changes in momentum are equal and opposite. With no resultant external force, the total momentum is unchanged. Kinetic energy is a scalar, so the cars' changes in kinetic energy do not cancel; some kinetic energy is transferred to thermal energy, sound and the work done deforming the cars. Total energy is conserved, but total kinetic energy decreases.
+    keyPoints:
+      - The forces between the cars are equal and opposite (Newton's third law) and act for the same time
+      - So the changes in momentum are equal and opposite, and the total momentum is unchanged
+      - Kinetic energy is a scalar, so the changes do not cancel
+      - Kinetic energy is transferred to other forms (thermal energy, sound, deformation)
+      - Total energy is still conserved
+    explanation: |
+      Momentum is protected by Newton's third law; kinetic energy isn't. That's why "momentum always, kinetic energy sometimes" is the rule.

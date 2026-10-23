@@ -1,0 +1,221 @@
+id: linear-momentum-explosions-recoil
+subject: "9702"
+topic: "3.3"
+title: "Explosions and recoil: zero before, zero after"
+summary: When objects at rest push apart, their total momentum stays zero, so they move off in opposite directions with equal-sized momenta and the lighter one goes faster.
+order: 3
+minutes: 5
+objectives: ["3.3.2", "3.3.1", "3.3.4"]
+prerequisites: [linear-momentum-collisions-1d]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 3.3.2, solving problems with conservation of momentum, here for
+    explosions and recoil from rest; 3.3.1, the principle itself; and 3.3.4, momentum conserved
+    while kinetic energy changes). The skater diagram is drawn to scale (velocity and momentum
+    arrows). Masses and speeds are illustrative; all worked values and answer keys were computed
+    with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use conservation of momentum for **explosions and recoil**, where objects start at rest and push apart, and explain where their kinetic energy comes from.
+
+  - type: explain
+    title: Something from nothing?
+    body: |
+      Fire a cannon and the cannon jumps **backwards**. Before firing, the cannon and the ball are at rest: total momentum **zero**. Nothing external pushes them, so after firing the total momentum must **still be zero**.
+
+      The only way two moving objects can have zero total momentum is if their momenta are **equal in size and opposite in direction**:
+
+      $$m_1v_1 + m_2v_2 = 0 \quad\Rightarrow\quad m_1v_1 = -m_2v_2$$
+
+  - type: diagram
+    diagram: phys-linear-momentum-recoil
+    alt: >-
+      Two rows. "Before: both at rest": a large skater (75 kg) and a small skater (25 kg) stand
+      together on the ice; total momentum = 0. "After pushing off": the 75 kg skater glides left at
+      1.0 m s⁻¹ and the 25 kg skater glides right at 3.0 m s⁻¹, with velocity arrows to scale (the
+      right-hand arrow three times as long). Underneath, two momentum arrows of equal length point in
+      opposite directions, labelled p = −75 kg m s⁻¹ and p = +75 kg m s⁻¹, and the total momentum =
+      (−75) + (+75) = 0 still.
+    caption: Equal and opposite momenta, but not equal speeds. Three times less mass means three times the speed.
+
+  - type: explain
+    title: Lighter means faster
+    body: |
+      Equal-sized momenta means $m_1v_1 = m_2v_2$ (in size), so
+
+      $$\frac{v_1}{v_2} = \frac{m_2}{m_1}$$
+
+      The speeds are in the **inverse ratio** of the masses. The $25\ \text{kg}$ skater has a third of the mass, so she gets three times the speed. A bullet has a tiny mass, so it flies off fast; a rifle has a large mass, so it recoils slowly.
+
+  - type: example
+    title: Rifle recoil
+    problem: |
+      A rifle of mass $4.0\ \text{kg}$ fires a bullet of mass $0.010\ \text{kg}$ (10 g) horizontally at $400\ \text{m s}^{-1}$. Find the recoil velocity of the rifle, assuming it is free to move.
+    steps:
+      - |
+        Before firing: everything at rest, total momentum $= 0$.
+      - |
+        Take the bullet's direction as positive. After: $0.010 \times 400 + 4.0\,v = 0$.
+      - |
+        $4.0\,v = -4.0$, so $v = -1.0\ \text{m s}^{-1}$.
+    answer: |
+      $1.0\ \text{m s}^{-1}$, in the **opposite** direction to the bullet. Both have momentum of size $4.0\ \text{kg m s}^{-1}$.
+
+  - type: check
+    questions: [speed-ratio, rifle-recoil]
+
+  - type: deeper
+    title: Why you hold a rifle tight against your shoulder
+    body: |
+      Pressed firmly into the shoulder, the rifle and the shooter recoil **together**, so the recoiling mass is, say, $4.0 + 70 = 74\ \text{kg}$ instead of $4.0\ \text{kg}$. The momentum is still $4.0\ \text{kg m s}^{-1}$, so the recoil speed drops to about $0.054\ \text{m s}^{-1}$. Held loosely, the rifle gets up to $1.0\ \text{m s}^{-1}$ before it slams into you. Same momentum, much less pain.
+
+  - type: explain
+    title: Momentum stays at zero; kinetic energy doesn't
+    body: |
+      Before an explosion, the kinetic energy is zero too. Afterwards there's plenty of it. Where from? From a store inside the system: **chemical** energy in gunpowder, **elastic potential** energy in a compressed spring, or the muscles of the skaters.
+
+      So in an explosion, **momentum is conserved** (it stays zero) but **kinetic energy increases**. Momentum is a vector, so equal and opposite momenta cancel. Kinetic energy is a scalar and is never negative, so the two pieces' kinetic energies **add up**; they can't cancel.
+
+      Which piece gets more? With equal-sized momenta, $E_\text{k} = \dfrac{p^2}{2m}$, so the **lighter** piece takes more of the kinetic energy. The skaters: $\tfrac{1}{2} \times 75 \times 1.0^2 = 37.5\ \text{J}$ for the big one, but $\tfrac{1}{2} \times 25 \times 3.0^2 = 112.5\ \text{J}$ for the small one.
+
+  - type: check
+    questions: [explosion-conserved, astronaut-push]
+
+  - type: misconceptions
+    items:
+      - wrong: The bullet and the rifle move off at equal speeds.
+        right: They have equal-sized **momenta**. The speeds are in the inverse ratio of the masses.
+      - wrong: An explosion creates momentum.
+        right: It creates **kinetic energy** (from a chemical or elastic store). The momenta it produces are equal and opposite, so the total stays zero.
+      - wrong: The heavier piece gets more kinetic energy because it has more mass.
+        right: With equal momenta, $E_\text{k} = p^2/2m$, so the **lighter** piece gets more.
+
+  - type: exam
+    body: |
+      - Recoil questions are a gift: "total momentum before = 0" is the first line of every one. Write it.
+      - Give the recoil velocity's direction ("opposite to the bullet"), not just a number.
+      - If asked where the kinetic energy comes from, name the store (chemical, elastic potential). "Energy is created" loses the mark.
+
+  - type: check
+    questions: [spring-spot-error, shoulder-recoil]
+
+  - type: takeaways
+    items:
+      - "Objects starting at rest: total momentum before = 0, so total after = 0."
+      - The pieces have equal-sized momenta in opposite directions; speeds are in the inverse ratio of the masses.
+      - Kinetic energy increases in an explosion, supplied by a chemical or elastic store, while momentum is still conserved.
+      - The lighter piece gets the larger share of the kinetic energy.
+
+questions:
+  - id: speed-ratio
+    format: mcq
+    difficulty: 1
+    objectives: ["3.3.2"]
+    prompt: |
+      Two trolleys, of masses $0.50\ \text{kg}$ and $1.5\ \text{kg}$, are held at rest with a compressed spring between them. When released, the $1.5\ \text{kg}$ trolley moves off at $0.20\ \text{m s}^{-1}$. What is the speed of the $0.50\ \text{kg}$ trolley?
+    options:
+      - text: $0.60\ \text{m s}^{-1}$
+        correct: true
+        why: Correct. Its momentum must equal $1.5 \times 0.20 = 0.30\ \text{kg m s}^{-1}$ in size, so $v = 0.30 / 0.50 = 0.60\ \text{m s}^{-1}$.
+      - text: $0.20\ \text{m s}^{-1}$
+        why: Equal speeds would give unequal momenta. It's the momenta that must be equal in size.
+      - text: $0.067\ \text{m s}^{-1}$
+        why: This uses the mass ratio the wrong way up. The lighter trolley must move **faster**.
+      - text: $0.30\ \text{m s}^{-1}$
+        why: That's the size of the momentum in $\text{kg m s}^{-1}$, not the speed. Divide by the mass.
+    explanation: |
+      Total momentum stays zero, so the momenta are equal and opposite: $0.50\,v = 1.5 \times 0.20$, giving $v = 0.60\ \text{m s}^{-1}$ in the opposite direction.
+
+  - id: rifle-recoil
+    format: numeric
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      A rifle of mass $3.5\ \text{kg}$, free to move, fires a bullet of mass $12\ \text{g}$ horizontally at $350\ \text{m s}^{-1}$. Calculate the speed at which the rifle recoils.
+    fields:
+      - answer: 1.2
+        tolerance: { abs: 0.01 }
+        unit: m s⁻¹
+    explanation: |
+      Convert: $12\ \text{g} = 0.012\ \text{kg}$. Total momentum is zero, so $3.5\,v = 0.012 \times 350 = 4.2\ \text{kg m s}^{-1}$ and $v = 1.2\ \text{m s}^{-1}$, opposite to the bullet.
+
+  - id: explosion-conserved
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.1", "3.3.4"]
+    prompt: |
+      A firework, at rest in mid-air, explodes into two pieces that fly apart horizontally. Ignoring external forces during the explosion, which quantity has the same value just before and just after the explosion?
+    options:
+      - text: The total momentum of the pieces
+        correct: true
+        why: Correct. With no resultant external force, the total momentum is conserved. It was zero, so it is still zero.
+      - text: The total kinetic energy of the pieces
+        why: Before the explosion the kinetic energy is zero; afterwards it is large. It came from the chemical energy of the explosive.
+      - text: The momentum of each piece
+        why: Each piece starts with zero momentum and ends with a lot. Only the **total** is conserved.
+      - text: The speed of each piece
+        why: The pieces start at rest and end up moving, so their speeds change.
+    explanation: |
+      Momentum: conserved (zero before, zero after). Kinetic energy: increases, supplied by the chemical energy store of the firework.
+
+  - id: astronaut-push
+    format: numeric
+    difficulty: 3
+    objectives: ["3.3.2", "3.3.4"]
+    prompt: |
+      In space, a $60\ \text{kg}$ astronaut and a $240\ \text{kg}$ satellite are at rest relative to each other. The astronaut pushes off the satellite and moves away at $0.80\ \text{m s}^{-1}$. Find the speed of the satellite and the total kinetic energy gained by the astronaut and satellite.
+    fields:
+      - label: "speed of satellite ="
+        answer: 0.20
+        tolerance: { abs: 0.002 }
+        unit: m s⁻¹
+      - label: "total kinetic energy ="
+        answer: 24
+        tolerance: { abs: 0.2 }
+        unit: J
+    explanation: |
+      Momenta are equal and opposite: $240\,v = 60 \times 0.80 = 48$, so $v = 0.20\ \text{m s}^{-1}$. Kinetic energy: astronaut $\tfrac{1}{2} \times 60 \times 0.80^2 = 19.2\ \text{J}$, satellite $\tfrac{1}{2} \times 240 \times 0.20^2 = 4.8\ \text{J}$, total $24\ \text{J}$. It came from the astronaut's muscles. The lighter astronaut got four times as much kinetic energy as the satellite.
+
+  - id: spring-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      A $2.0\ \text{kg}$ trolley and a $0.50\ \text{kg}$ trolley are at rest, held together with a compressed spring between them. When released, the $2.0\ \text{kg}$ trolley moves left at $0.30\ \text{m s}^{-1}$. Which line of this solution contains the first error?
+    lines:
+      - |
+        The total momentum before is zero, so the total momentum after is zero.
+      - |
+        Taking right as positive, the $2.0\ \text{kg}$ trolley has momentum $2.0 \times (-0.30) = -0.60\ \text{kg m s}^{-1}$.
+      - |
+        So the $0.50\ \text{kg}$ trolley has momentum $+0.60\ \text{kg m s}^{-1}$, and its velocity is $+0.30\ \text{m s}^{-1}$.
+      - |
+        The kinetic energy of the trolleys came from the elastic potential energy of the spring.
+    errorLine: 3
+    fix: |
+      Its momentum is $+0.60\ \text{kg m s}^{-1}$, so its velocity is $\dfrac{0.60}{0.50} = +1.2\ \text{m s}^{-1}$ (to the right). The momenta are equal in size, not the speeds.
+    explanation: |
+      The student got the momentum right and then copied the other trolley's speed. A quarter of the mass means four times the speed.
+
+  - id: shoulder-recoil
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      Why does holding a rifle firmly against your shoulder reduce the speed at which it recoils?
+    options:
+      - text: The rifle and the shooter recoil together, so the same momentum is shared by a much larger mass
+        correct: true
+        why: Correct. The recoil momentum equals the bullet's momentum; dividing it by a larger mass gives a smaller velocity.
+      - text: It reduces the momentum of the bullet
+        why: Holding the rifle doesn't change the bullet's mass or speed, so its momentum is unchanged.
+      - text: The shoulder absorbs the momentum, so momentum is not conserved
+        why: Momentum is still conserved. It's shared with the shooter (and, through their feet, the Earth).
+      - text: It increases the time of the explosion, so the force on the bullet is smaller
+        why: The bullet still leaves at the same speed, so the recoil momentum is the same. The difference is the mass that recoils.
+    explanation: |
+      Total momentum after = 0, so the recoil momentum equals the bullet's momentum. A bigger recoiling mass means a smaller recoil velocity.

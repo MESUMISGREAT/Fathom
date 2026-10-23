@@ -4,7 +4,7 @@
 # published lessons are never overwritten. Safe to run more than once.
 set -eu
 cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
-git fetch -q origin wip-snapshot
+git fetch -q origin +wip-snapshot:refs/remotes/origin/wip-snapshot   # explicit refspec: a shallow single-branch clone has none
 mapfile -t FILES < <(git diff --name-only --diff-filter=A HEAD origin/wip-snapshot -- content/subjects src/components/diagrams \
   | grep -E '^(content/subjects/[^/]+/lessons/[^/]+\.yaml|src/components/diagrams/[^/]+/[^/]+\.tsx)$' || true)
 if [ ${#FILES[@]} -eq 0 ]; then echo "no drafts to restore"; exit 0; fi

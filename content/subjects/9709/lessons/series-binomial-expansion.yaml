@@ -10,7 +10,7 @@ objectives: ["1.6.1"]
 prerequisites: []
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.6 learning outcome "use the expansion of
@@ -18,6 +18,7 @@ provenance:
     coefficient (greatest term and properties of coefficients excluded, as the syllabus says).
     All examples and questions are original; all arithmetic checked in Python. Not yet
     teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -131,8 +132,8 @@ blocks:
 
   - type: exam
     body: |-
-      - Typical wording: *Find the first three terms in the expansion of $(3 - x)^5$ in ascending powers of $x$.* **Ascending** means start from the constant: $243 - 405x + 270x^2$. **Descending** starts from the highest power.
-      - "Simplify each term" means numbers multiplied out, so $270x^2$, not $10 \times 27x^2$.
+      - Typical wording: *Find the first three terms in the expansion of $(2 - x)^5$ in ascending powers of $x$.* **Ascending** means start from the constant: $32 - 80x + 80x^2$. **Descending** starts from the highest power.
+      - "Simplify each term" means numbers multiplied out, so $80x^2$, not $10 \times 8x^2$.
       - The $x = 1$ check above takes ten seconds and catches most arithmetic slips.
 
   - type: takeaways
@@ -177,7 +178,7 @@ questions:
     prompt: |-
       The expansion of $(a + b)^n$ has {{1}} terms. In each term, the powers of $a$ and $b$ add up to {{2}}.
     blanks:
-      - accept: ["n + 1", "n+1", "1 + n"]
+      - accept: ["n + 1", "n+1", "1 + n", "1+n", "(n + 1)", "(n+1)"]
       - accept: ["n"]
     explanation: |-
       The power of $b$ runs $0, 1, 2, \dots, n$: that's $n + 1$ values, so $n + 1$ terms. Each term is $a^{n-r}b^r$, and $(n - r) + r = n$.

@@ -23,7 +23,7 @@ if (keys.length === 0) {
 await mkdir(out, { recursive: true });
 const css = (await readFile('src/styles/tokens.css', 'utf8')) + (await readFile('src/styles/diagrams.css', 'utf8'));
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined }).catch(() =>
-  chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' }),
+  chromium.launch({ executablePath: '/opt/pw-browsers/chromium' }), // cloud sessions: link to the installed version
 );
 const page = await browser.newPage({ viewport: { width: 760, height: 600 }, deviceScaleFactor: 2 });
 for (const key of keys) {

@@ -10,12 +10,13 @@ objectives: ["2.1.10"]
 prerequisites: [networks-bus-star, networks-lan-hardware]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, tenth learning outcome (2.1.10,
     Ethernet and how collisions are detected and avoided, including CSMA/CD). The back-off and
     CSMA/CA details are marked as enrichment. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -115,7 +116,7 @@ blocks:
   - type: enrichment
     title: Back-off maths and WiFi's different trick
     body: |
-      - Classic Ethernet uses **binary exponential back-off**: after the $n$th collision a device waits a random number of time slots between 0 and $2^n - 1$, so the waiting range doubles each time. It gives up after 16 attempts.
+      - Classic Ethernet uses **binary exponential back-off**: after the $n$th collision a device waits a random number of time slots between 0 and $2^n - 1$, so the waiting range doubles each time (up to a cap of $2^{10} - 1 = 1023$ slots). It gives up after 16 attempts.
       - WiFi devices can't hear a collision while they're transmitting, so WiFi uses **CSMA/CA** (collision **avoidance**): devices wait a random time before transmitting and the receiver acknowledges each frame.
 
 questions:

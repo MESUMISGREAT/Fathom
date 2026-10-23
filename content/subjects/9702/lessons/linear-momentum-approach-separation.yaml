@@ -1,0 +1,232 @@
+id: linear-momentum-approach-separation
+subject: "9702"
+topic: "3.3"
+title: "Elastic collisions: they part as fast as they met"
+summary: In an elastic collision the relative speed of approach equals the relative speed of separation; combine this with conservation of momentum to find two unknown velocities.
+order: 5
+minutes: 5
+objectives: ["3.3.3", "3.3.2"]
+prerequisites: [linear-momentum-elastic-inelastic]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 3.3.3, recalling that in an elastic collision the relative speed
+    of approach equals the relative speed of separation, and 3.3.2, solving elastic problems in one
+    dimension; the coefficient of restitution is not used). The diagram's velocity arrows are to
+    scale (2.0 kg at 6.0 m s⁻¹ hitting 1.0 kg at rest; 2.0 and 8.0 m s⁻¹ after; 36 J before and
+    after). Masses and speeds are illustrative; all worked values and answer keys were computed with
+    Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can recall that in an **elastic** collision the **relative speed of approach equals the relative speed of separation**, and use this with conservation of momentum to find unknown velocities.
+
+  - type: explain
+    title: The gap closes, the gap opens
+    body: |
+      Watch the **gap** between two colliding balls. Before the collision it shrinks at some rate: the **relative speed of approach**. After, it grows at some rate: the **relative speed of separation**.
+
+      In an elastic collision those two rates are **equal**. The objects fly apart exactly as fast as they came together. A perfectly bouncy ball hitting a wall at $8\ \text{m s}^{-1}$ comes back at $8\ \text{m s}^{-1}$; two snooker balls do the same thing relative to each other.
+
+  - type: explain
+    title: Working out relative speeds
+    body: |
+      Take the direction from A towards B as positive and give every velocity a sign. Then, for ball A hitting ball B:
+
+      $$\text{approach} = u_A - u_B \qquad \text{separation} = v_B - v_A$$
+
+      In words:
+
+      - moving in the **same** direction: **subtract** the speeds;
+      - moving in **opposite** directions (towards or away from each other): **add** the speeds.
+
+      For an **elastic** collision: $u_A - u_B = v_B - v_A$.
+
+  - type: diagram
+    diagram: phys-linear-momentum-approach-separation
+    alt: >-
+      Two rows with right as positive. Before: ball A (2.0 kg) moves right at 6.0 m s⁻¹ towards ball B
+      (1.0 kg), which is at rest; relative speed of approach = 6.0 − 0 = 6.0 m s⁻¹. After: A moves
+      right at 2.0 m s⁻¹ and B moves right at 8.0 m s⁻¹; relative speed of separation = 8.0 − 2.0 =
+      6.0 m s⁻¹. A note says these are equal because the collision is elastic, with total kinetic
+      energy 36 J before and after. Velocity arrows are drawn to scale.
+    caption: B runs away from A at 6.0 m s⁻¹, exactly as fast as A was closing in.
+
+  - type: check
+    questions: [approach-opposite, relative-cloze]
+
+  - type: explain
+    title: Two equations, two unknowns
+    body: |
+      An elastic collision problem usually has two unknowns: both final velocities. You need two equations:
+
+      1. **Momentum:** $m_Au_A + m_Bu_B = m_Av_A + m_Bv_B$
+      2. **Speeds:** $u_A - u_B = v_B - v_A$
+
+      Both are **linear**, so they solve quickly. You could use kinetic energy instead of equation 2, but that brings in squares and a quadratic. The speeds rule is the shortcut, and it's on the syllabus, so use it.
+
+  - type: example
+    title: Solving the collision in the diagram
+    problem: |
+      A $2.0\ \text{kg}$ ball moving right at $6.0\ \text{m s}^{-1}$ collides elastically and head-on with a stationary $1.0\ \text{kg}$ ball. Find both velocities after the collision.
+    steps:
+      - |
+        Momentum (right positive): $2.0 \times 6.0 = 2.0\,v_A + 1.0\,v_B$, so $2.0\,v_A + v_B = 12$.
+      - |
+        Elastic, so speeds: $6.0 - 0 = v_B - v_A$, so $v_B = v_A + 6.0$.
+      - |
+        Substitute: $2.0\,v_A + v_A + 6.0 = 12$, so $3.0\,v_A = 6.0$ and $v_A = 2.0\ \text{m s}^{-1}$.
+      - |
+        Then $v_B = 2.0 + 6.0 = 8.0\ \text{m s}^{-1}$.
+      - |
+        Check the kinetic energy: before $\tfrac{1}{2}(2.0)(6.0)^2 = 36\ \text{J}$; after $\tfrac{1}{2}(2.0)(2.0)^2 + \tfrac{1}{2}(1.0)(8.0)^2 = 4.0 + 32 = 36\ \text{J}$. ✓
+    answer: |
+      A: $2.0\ \text{m s}^{-1}$ to the right; B: $8.0\ \text{m s}^{-1}$ to the right.
+
+  - type: check
+    questions: [elastic-check, solve-elastic]
+
+  - type: deeper
+    title: Three special cases worth recognising
+    body: |
+      All of these come straight out of the two equations:
+
+      - **Equal masses, one at rest:** they **swap velocities**. The moving ball stops dead and the other leaves with its velocity (Newton's cradle, a straight snooker shot).
+      - **Light object hits a very heavy one at rest** (a ball and a wall): the light one rebounds with the **same speed**; the heavy one hardly moves.
+      - **Heavy object hits a light one at rest:** the heavy one carries on almost unchanged, and the light one leaves at almost **twice** the heavy one's speed.
+
+  - type: misconceptions
+    items:
+      - wrong: The relative speed of approach always equals the relative speed of separation.
+        right: Only in an **elastic** collision. In an inelastic one the objects separate more slowly; if they stick together, the separation speed is zero.
+      - wrong: The relative speed is always the difference between the two speeds.
+        right: Only when the objects move in the **same** direction. Towards each other (or apart), **add** the speeds.
+      - wrong: In an elastic collision, each object keeps its own speed.
+        right: The **relative** speed is kept, not the individual speeds. In the diagram, A slows from 6.0 to 2.0 m s⁻¹.
+
+  - type: exam
+    body: |
+      - Only use the speeds rule if the question says the collision is **elastic** (or "perfectly elastic"). Otherwise it's false.
+      - In multiple-choice questions, it's the fastest elasticity test: compare relative speeds instead of calculating four kinetic energies.
+      - In a written answer, it's still worth checking total kinetic energy at the end; it catches sign slips.
+
+  - type: check
+    questions: [equal-mass-swap, relative-spot-error]
+
+  - type: takeaways
+    items:
+      - "Elastic collision: relative speed of approach = relative speed of separation (and total kinetic energy is conserved)."
+      - "Same direction: subtract the speeds. Opposite directions: add them."
+      - "With signs: u_A − u_B = v_B − v_A."
+      - Pair the speeds equation with conservation of momentum to find two unknown velocities.
+
+questions:
+  - id: approach-opposite
+    format: mcq
+    difficulty: 1
+    objectives: ["3.3.3"]
+    prompt: |
+      Ball X moves right at $5.0\ \text{m s}^{-1}$ and ball Y moves left at $3.0\ \text{m s}^{-1}$, heading straight for each other. What is their relative speed of approach?
+    options:
+      - text: $8.0\ \text{m s}^{-1}$
+        correct: true
+        why: Correct. They move towards each other, so the gap closes at $5.0 + 3.0 = 8.0\ \text{m s}^{-1}$. With signs, $5.0 - (-3.0) = 8.0$.
+      - text: $2.0\ \text{m s}^{-1}$
+        why: Subtracting the speeds only works when the objects move in the same direction.
+      - text: $4.0\ \text{m s}^{-1}$
+        why: That's the average of the two speeds, which isn't a relative speed.
+      - text: $15\ \text{m s}^{-1}$
+        why: Speeds aren't multiplied. The gap closes at the sum of the two speeds.
+    explanation: |
+      Relative speed of approach $= u_X - u_Y = (+5.0) - (-3.0) = 8.0\ \text{m s}^{-1}$.
+
+  - id: relative-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.3.3"]
+    prompt: |
+      In an elastic collision, the total {{1}} energy is conserved. Also, the speed at which the objects come together, the relative speed of {{2}}, equals the speed at which they move apart, the relative speed of {{3}}.
+    blanks:
+      - accept: [kinetic]
+      - accept: [approach]
+      - accept: [separation]
+    explanation: |
+      Both are features of an elastic collision: total kinetic energy is conserved, and the relative speed of approach equals the relative speed of separation. The objects fly apart exactly as fast as they came together.
+
+  - id: elastic-check
+    format: numeric
+    difficulty: 2
+    objectives: ["3.3.3"]
+    prompt: |
+      A $0.20\ \text{kg}$ ball moving right at $5.0\ \text{m s}^{-1}$ hits a stationary $0.30\ \text{kg}$ ball head-on. Afterwards the $0.20\ \text{kg}$ ball moves left at $1.0\ \text{m s}^{-1}$ and the $0.30\ \text{kg}$ ball moves right at $4.0\ \text{m s}^{-1}$. Find the relative speed of approach and the relative speed of separation.
+    fields:
+      - label: "approach ="
+        answer: 5.0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻¹
+      - label: "separation ="
+        answer: 5.0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻¹
+    explanation: |
+      Approach: $5.0 - 0 = 5.0\ \text{m s}^{-1}$. Separation: the balls move **apart in opposite directions**, so add: $4.0 + 1.0 = 5.0\ \text{m s}^{-1}$ (with signs, $4.0 - (-1.0)$). They're equal, so the collision is elastic. Momentum checks too: $1.0$ before, $-0.20 + 1.2 = 1.0\ \text{kg m s}^{-1}$ after.
+
+  - id: solve-elastic
+    format: numeric
+    difficulty: 3
+    objectives: ["3.3.2", "3.3.3"]
+    prompt: |
+      Trolley A ($1.0\ \text{kg}$) moves right at $4.0\ \text{m s}^{-1}$ and trolley B ($2.0\ \text{kg}$) moves left at $2.0\ \text{m s}^{-1}$. They collide head-on, elastically. Taking right as positive, find the velocity of each trolley after the collision (include signs).
+    fields:
+      - label: "velocity of A ="
+        answer: -4.0
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+      - label: "velocity of B ="
+        answer: 2.0
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+    explanation: |
+      Momentum: $1.0(4.0) + 2.0(-2.0) = 0$, so $v_A + 2.0\,v_B = 0$. Speeds: $4.0 - (-2.0) = 6.0 = v_B - v_A$. Substituting $v_A = -2.0\,v_B$: $3.0\,v_B = 6.0$, so $v_B = +2.0\ \text{m s}^{-1}$ and $v_A = -4.0\ \text{m s}^{-1}$. Each trolley simply reverses. Kinetic energy: $8.0 + 4.0 = 12\ \text{J}$ before and after. ✓
+
+  - id: equal-mass-swap
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.3", "3.3.2"]
+    prompt: |
+      A snooker ball hits an identical stationary ball head-on. The collision is elastic. What happens?
+    options:
+      - text: The first ball stops and the second moves off with the first ball's original velocity
+        correct: true
+        why: Correct. Momentum is conserved ($mu = 0 + mu$), and the separation speed $u$ equals the approach speed $u$.
+      - text: Both balls move off together at half the original speed
+        why: Momentum would be conserved, but the separation speed would be zero and half the kinetic energy would be lost. That's a stick-together collision.
+      - text: The first ball rebounds at its original speed and the second stays at rest
+        why: That would reverse the total momentum, which can't happen with no external force.
+      - text: Both balls move off at the original speed
+        why: That would double both the momentum and the kinetic energy.
+    explanation: |
+      For equal masses, one at rest, an elastic collision makes the balls swap velocities. It's why Newton's cradle passes the motion along the line.
+
+  - id: relative-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.3.3"]
+    prompt: |
+      Ball P moves right at $6.0\ \text{m s}^{-1}$ and ball Q moves left at $2.0\ \text{m s}^{-1}$. They collide elastically. Which line of this working contains the first error?
+    lines:
+      - |
+        Taking right as positive, $u_P = +6.0\ \text{m s}^{-1}$ and $u_Q = -2.0\ \text{m s}^{-1}$.
+      - |
+        The relative speed of approach is $6.0 - 2.0 = 4.0\ \text{m s}^{-1}$.
+      - |
+        The collision is elastic, so the relative speed of separation equals the relative speed of approach.
+      - |
+        So after the collision the balls move apart at $4.0\ \text{m s}^{-1}$ relative to each other.
+    errorLine: 2
+    fix: |
+      The balls move towards each other, so the approach speed is $u_P - u_Q = 6.0 - (-2.0) = 8.0\ \text{m s}^{-1}$, and they separate at $8.0\ \text{m s}^{-1}$.
+    explanation: |
+      Line 1 set up the signs correctly, then line 2 ignored them. Opposite directions: add the speeds.

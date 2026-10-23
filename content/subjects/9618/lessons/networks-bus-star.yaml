@@ -10,14 +10,15 @@ objectives: ["2.1.5"]
 prerequisites: [networks-why-network]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus for 2027-2029 (Version 2, December 2025), topic 2.1, fifth learning outcome (2.1.5,
     the bus, star, mesh and hybrid topologies, how packets are transmitted between two hosts, and
     justifying a topology). This lesson covers bus and star; mesh and hybrid follow in
-    networks-mesh-hybrid. All questions are original. The library and exhibition scenarios are
-    illustrative.
+    networks-mesh-hybrid. All questions are original. The library, exhibition and call-centre
+    scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -47,8 +48,9 @@ blocks:
     diagram: cs-networks-bus-star
     alt: >-
       Two panels showing a packet sent from device B to device E. Left, bus: devices A to E are
-      attached by short drop cables to one horizontal backbone with a terminator at each end. Arrows
-      show B's packet spreading along the backbone in both directions. A, C and D are labelled
+      attached by short drop cables to one horizontal backbone with a terminator at each end. A
+      double-headed arrow along the backbone shows B's packet spreading in both directions. B is
+      labelled sends; A, C and D are labelled
       ignores; E is labelled accepts. Caption: every device receives the packet; only E, the
       destination, accepts it. Right, star: devices A to E each have their own cable to a switch in
       the centre. An arrow goes from B to the switch and another from the switch to E only. Caption:
@@ -128,7 +130,7 @@ blocks:
 
   - type: check
     title: Pick the topology
-    questions: [star-failure, library-choice, bus-traffic]
+    questions: [star-failure, call-centre-choice, bus-traffic]
 
   - type: takeaways
     items:
@@ -213,20 +215,20 @@ questions:
     explanation: |
       Star: individual links are independent, but everything relies on the switch.
 
-  - id: library-choice
+  - id: call-centre-choice
     format: mcq
     difficulty: 2
     objectives: ["2.1.5"]
     prompt: |
-      A library has 40 computers in heavy daily use and can't afford the whole network going down. Which topology and justification fit best?
+      A call centre has 60 computers in constant use and can't afford the whole network going down. Which topology and justification fit best?
     options:
       - text: Star, because a cable fault affects only one computer and there are few collisions
         correct: true
         why: |
-          Reliability and performance with many users both point to a star.
+          Reliability and performance with many busy users both point to a star.
       - text: Bus, because it is the cheapest
         why: |
-          Cheap, but one backbone fault would take all 40 computers down, and heavy traffic means many collisions.
+          Cheap, but one backbone fault would take all 60 computers down, and heavy traffic means many collisions.
       - text: Bus, because packets go only to their destination
         why: |
           On a bus every device receives every packet.

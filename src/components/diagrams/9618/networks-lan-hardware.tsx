@@ -74,8 +74,11 @@ export function NetworksLanHardware() {
       <Dev x={150} y={250} w={44} label="PC" tag="NIC" />
       <Dev x={248} y={226} w={74} label="repeater" kind="join" />
       <Dev x={248} y={296} w={44} label="PC" tag="NIC" />
-      <Label x={220} y={300} anchor="end" className="dg-text-small dg-text-muted">
-        long cable
+      <Label x={254} y={255} anchor="start" className="dg-text-small dg-text-muted">
+        long
+      </Label>
+      <Label x={254} y={269} anchor="start" className="dg-text-small dg-text-muted">
+        cable
       </Label>
       <Dev x={320} y={160} w={58} label="bridge" kind="join" />
       <Dev x={sw2.x} y={sw2.y} w={64} label="switch" kind="net" />

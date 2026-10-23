@@ -96,10 +96,10 @@ export default function SeriesGpSumShift() {
         a
       </Label>
       <Label x={X0 + 2.5 * STEP + BW / 2} y={226} className="dg-text-muted">
-        − (everything in between cancels) −
+        (everything in between cancels)
       </Label>
       <Label x={X0 + 5 * STEP + BW / 2} y={226} className="dg-text-accent-2">
-        arⁿ
+        − arⁿ
       </Label>
       <Label x={W / 2} y={268} className="dg-text">
         Sₙ(1 − r) = a(1 − rⁿ), so Sₙ = a(1 − rⁿ) ⁄ (1 − r) for r ≠ 1

@@ -73,7 +73,11 @@ export default function SeriesPascalTriangle() {
         Row 4: (a + b)⁴ = 1a⁴ + 4a³b + 6a²b² + 4ab³ + 1b⁴
       </Label>
       <Label x={W / 2} y={TOP + 6 * DY + 76} className="dg-text-muted">
-        Entry r of row n (counting r from 0) is ⁿCᵣ, e.g. ⁶C₃ = 20
+        Entry r of row n (counting r from 0) is{' '}
+        <tspan dy={-6} fontSize="75%">
+          n
+        </tspan>
+        <tspan dy={6}>Cᵣ, e.g. ⁶C₃ = 20</tspan>
       </Label>
     </Svg>
   );

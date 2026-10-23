@@ -18,6 +18,7 @@ import EquationsMotionVtGradient from './equations-motion-vt-gradient';
 import ErrorGraphs from './error-graphs';
 import LinearMomentumApproachSeparation from './linear-momentum-approach-separation';
 import LinearMomentumCollision_1d from './linear-momentum-collision-1d';
+import LinearMomentumExplosionTriangle from './linear-momentum-explosion-triangle';
 import LinearMomentumGlancing from './linear-momentum-glancing';
 import LinearMomentumJunctionCrash from './linear-momentum-junction-crash';
 import LinearMomentumKeBars from './linear-momentum-ke-bars';
@@ -64,6 +65,7 @@ export const diagrams: DiagramRegistry = {
   'phys-error-graphs': ErrorGraphs,
   'phys-linear-momentum-approach-separation': LinearMomentumApproachSeparation,
   'phys-linear-momentum-collision-1d': LinearMomentumCollision_1d,
+  'phys-linear-momentum-explosion-triangle': LinearMomentumExplosionTriangle,
   'phys-linear-momentum-glancing': LinearMomentumGlancing,
   'phys-linear-momentum-junction-crash': LinearMomentumJunctionCrash,
   'phys-linear-momentum-ke-bars': LinearMomentumKeBars,

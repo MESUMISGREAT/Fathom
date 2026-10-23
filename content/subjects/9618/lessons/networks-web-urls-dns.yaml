@@ -10,7 +10,7 @@ objectives: ["2.1.12", "2.1.15"]
 prerequisites: [networks-ip-addresses, networks-public-private-ip]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus for 2027-2029 (Version 2, December 2025), topic 2.1: the twelfth learning outcome
@@ -18,6 +18,7 @@ provenance:
     is used to locate a resource on the WWW, and the role of the DNS). Example domains use the
     reserved example.org and example.net names and the documentation address 198.51.100.7. All
     questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -51,7 +52,7 @@ blocks:
 
   - type: check
     title: Quick check
-    questions: [www-or-internet, not-the-web, url-stands-for]
+    questions: [www-or-internet, not-the-web, explain-internet-www]
 
   - type: definition
     term: URL (Uniform Resource Locator)
@@ -78,10 +79,14 @@ blocks:
       - `example` is the organisation's own domain, registered under `.org`.
       - `www` names the particular web server (host) in that domain.
 
+  - type: check
+    title: Read the URL
+    questions: [url-stands-for, url-parts]
+
   - type: definition
     term: DNS (Domain Name Service)
     body: |
-      A **hierarchical, distributed** system of **DNS servers** that translates (resolves) **domain names into IP addresses**, so that browsers can find web servers by name.
+      A **hierarchical, distributed** system of **DNS servers** that translates (resolves) **domain names into IP addresses**, so that browsers can find web servers by name. (You'll also see it called the Domain Name **System**.)
 
   - type: diagram
     diagram: cs-networks-dns-lookup
@@ -128,7 +133,7 @@ blocks:
 
   - type: check
     title: Find that page
-    questions: [url-parts, dns-role, dns-spot-error, ip-works-name-fails]
+    questions: [dns-role, dns-spot-error, ip-works-name-fails]
 
   - type: takeaways
     items:
@@ -183,6 +188,23 @@ questions:
           Images on web pages are web resources, identified by URLs.
     explanation: |
       The internet carries many services: email, VoIP, online games, file transfer, and the web is just one of them.
+
+  - id: explain-internet-www
+    format: explain
+    difficulty: 2
+    objectives: ["2.1.12"]
+    prompt: |
+      A friend says: "The internet and the World Wide Web are the same thing." Explain why they are wrong.
+    model: |
+      The internet is a global network of interconnected networks: the infrastructure of hardware (routers, cables, servers) and protocols (TCP/IP) that carries data between devices. The World Wide Web is a collection of web pages and other resources, linked by hyperlinks and stored on web servers, which are accessed over the internet using HTTP or HTTPS, usually in a browser. So the web is one service that runs on the internet. The internet also carries services that aren't part of the web, such as email and VoIP calls.
+    keyPoints:
+      - The internet is a global network of interconnected networks (the infrastructure)
+      - The internet is made of hardware, such as routers and cables, and protocols such as TCP/IP
+      - The WWW is a collection of linked web pages and resources stored on web servers
+      - The WWW is accessed over the internet using HTTP/HTTPS, usually in a browser
+      - The web is only one service on the internet; email and VoIP use the internet without the web
+    explanation: |
+      Define each one, then show how they relate: the web runs **on** the internet, and the internet carries more than just the web.
 
   - id: url-stands-for
     format: text
