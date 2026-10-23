@@ -1,8 +1,14 @@
 # Handoff: how to carry on Fathom in a new chat
 
-Start a new Claude Code chat on this repo and say:
+Start a new Claude Code chat **with the `MESUMISGREAT/Fathom` repository selected**. Pick it in
+the repository picker before sending the first message, then say:
 
 > Read docs/HANDOFF.md and carry on from where the last chat stopped.
+
+If the chat can't find this file, the repository isn't attached. Attach it (`add_repo`,
+owner `MESUMISGREAT`, repo `Fathom`), clone it, then read this file from the clone. Every
+command below runs from the repo root, wherever it was cloned to. In the agent prompts,
+replace `<repo root>` with that absolute path.
 
 This file gives a new chat what it needs to continue without asking the user again. The
 user's full specs live in the docs it links to. Read those docs **by section** (see
@@ -115,8 +121,8 @@ node scripts/lessons/prompts.mjs write "9701 3.1+3.2"     # or: review "9709 1.6
 Launch it as a **background general-purpose Agent**. The Workflow tool may not exist, and
 it isn't needed. Use this prompt, word for word:
 
-- **Writer:** `Read your complete instructions from <path> and follow them exactly. Work in /home/user/fathom. End your reply with a short summary: each lesson (id, objectives, number of questions, diagrams), any objectives not covered, and whether the validator is clean for your files.`
-- **Reviewer:** `Read your complete instructions from <path> and follow them exactly. Work in /home/user/fathom. <one or two sentences passing on the writer's summary: lesson count, file prefix, and any judgement calls it flagged>. End your reply with a short summary: lessons reviewed, problems found and fixed, lessons marked ai-checked, lessons left as draft (and why), and whether the validator is clean for your files.`
+- **Writer:** `Read your complete instructions from <path> and follow them exactly. Work in <repo root>. End your reply with a short summary: each lesson (id, objectives, number of questions, diagrams), any objectives not covered, and whether the validator is clean for your files.`
+- **Reviewer:** `Read your complete instructions from <path> and follow them exactly. Work in <repo root>. <one or two sentences passing on the writer's summary: lesson count, file prefix, and any judgement calls it flagged>. End your reply with a short summary: lessons reviewed, problems found and fixed, lessons marked ai-checked, lessons left as draft (and why), and whether the validator is clean for your files.`
 
 The prompt files already contain everything else:
 

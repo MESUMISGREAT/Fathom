@@ -1,4 +1,7 @@
 // Writer and reviewer prompt templates for lesson agents. Used by prompts.mjs.
+import { fileURLToPath } from 'node:url';
+
+const ROOT = fileURLToPath(new URL('../..', import.meta.url)).replace(/\/$/, '');
 const SUBJECTS = {
   '9709': { name: 'Mathematics', key: '', ex: ['quadratics-completing-the-square', 'quadratics-discriminant'], dg: ['discriminant-cases.tsx', 'kit.tsx'],
     notes: '9709: use standard Cambridge notation, exact forms where the syllabus expects them (surds, π, ln), radians vs degrees made explicit, and answers to 3 s.f. unless exact. For "show that" style, model full working in examples. Mechanics uses g = 10 m s⁻² as the 9709 syllabus states. Statistics: use the notation in the syllabus (e.g. X ~ B(n, p), N(μ, σ²)).' },
@@ -26,7 +29,7 @@ const COMMON_RULES = (u) => `Ground rules (other agents are writing other topics
 
 function writerPrompt(u, date) {
   const s = SUBJECTS[u.subject]
-  return `You are an expert Cambridge International AS & A Level ${s.name} (${u.subject}) teacher and a brilliant, funny explainer, writing lessons for Fathom, a study app built for students (many with ADHD). Repository root: /home/user/fathom (your working directory).
+  return `You are an expert Cambridge International AS & A Level ${s.name} (${u.subject}) teacher and a brilliant, funny explainer, writing lessons for Fathom, a study app built for students (many with ADHD). Repository root: ${ROOT} (your working directory).
 
 Your unit (${u.level} level):
 ${topicLines(u)}
