@@ -23,14 +23,14 @@ Production: set `DATABASE_URL` to a PostgreSQL server. On Vercel, connect a Neon
 | Accounts (scrypt passwords, hashed session tokens, rate limits), settings, data export, account deletion | Working, tested |
 | Syllabus trees for 9709, 9618, 9702, 9701 (2025–2027), transcribed from the official PDFs | Present and checked against the PDFs in a second, independent AI pass. Not checked by a teacher |
 | Lessons: block renderer, step-by-step player, 7 question formats, deterministic checker (units, s.f., algebraic equivalence) | Working, tested |
-| Real lessons in `/content` | 38 lessons, 216 questions, all pass `content:check`. Topic 1.1 (9709 Quadratics, 9618 Data representation) and section 1 (9702 Physical quantities and units, 9701 Atomic structure). Marked **AI-checked**: AI-written, re-checked line by line in a separate AI review, not yet reviewed by a teacher. Each lesson shows this label |
+| Real lessons in `/content` | 133 lessons, 807 questions, all pass `content:check` (9709: 42, 9618: 27, 9702: 31, 9701: 33; the rest are being written, see `docs/HANDOFF.md`). Marked **AI-checked**: AI-written, re-checked line by line in a separate AI review, not yet reviewed by a teacher. Each lesson shows this label |
 | Progress/mastery, Leitner review, dashboard, search, saved, history, coverage | Working, tested |
 | Report a problem (on every question and lesson) and an editor triage page at `/reports` | Working, tested |
 | Points: XP for real progress (no farming), levels, daily goal (optional), badges, `/achievements`, "Show points and badges" switch | Working, tested. Rules: `docs/design/fun-and-points.md` |
 | Redesign: warm palette with subject colours, new logo, self-hosted fonts, interaction states, lesson-complete celebration | Done; axe WCAG 2.1 AA clean in light and dark |
 | Exam practice, AI tutor, grade prediction | Not built. Pages say "Not built yet"; the designs are in `docs/design/` |
 
-Tests: 159 vitest tests and 25 Playwright tests (including axe WCAG 2.1 AA scans in light and dark mode and a phone-width overflow check).
+Tests: 162 vitest tests and 25 Playwright tests (including axe WCAG 2.1 AA scans in light and dark mode and a phone-width overflow check).
 
 ## Docs
 - `docs/PLAN.md`: architecture, data model, pages and journeys, the hard problems, deterministic vs AI split, risks and the phased plan.
