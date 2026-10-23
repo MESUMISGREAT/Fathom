@@ -14,6 +14,7 @@ import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
 import MoleAvogadroMoleMap from './mole-avogadro-mole-map';
 import MoleAvogadroSameCount from './mole-avogadro-same-count';
 import OrbitalShapes from './orbital-shapes';
+import ReactingMassesMoleBridge from './reacting-masses-mole-bridge';
 import RelativeMassesCarbon_12Ruler from './relative-masses-carbon-12-ruler';
 import RelativeMassesMoleculeVsLattice from './relative-masses-molecule-vs-lattice';
 import RelativeMassesWeightedMean from './relative-masses-weighted-mean';
@@ -36,6 +37,7 @@ export const diagrams: DiagramRegistry = {
   'chem-mole-avogadro-mole-map': MoleAvogadroMoleMap,
   'chem-mole-avogadro-same-count': MoleAvogadroSameCount,
   'chem-orbital-shapes': OrbitalShapes,
+  'chem-reacting-masses-mole-bridge': ReactingMassesMoleBridge,
   'chem-relative-masses-carbon-12-ruler': RelativeMassesCarbon_12Ruler,
   'chem-relative-masses-molecule-vs-lattice': RelativeMassesMoleculeVsLattice,
   'chem-relative-masses-weighted-mean': RelativeMassesWeightedMean,

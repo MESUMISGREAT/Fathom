@@ -47,7 +47,7 @@ export default function P1TrigonometryInverseSine() {
       ].map(([x, y, c]) => (
         <circle key={`${x},${y}`} cx={p.sx(x as number)} cy={p.sy(y as number)} r={4} className={c as string} />
       ))}
-      <Label x={p.sx(1.95)} y={p.sy(2) + 14} anchor="end" className="dg-text-small">
+      <Label x={p.sx(2) + 6} y={p.sy(2) + 4} anchor="start" className="dg-text-small">
         y = x
       </Label>
 

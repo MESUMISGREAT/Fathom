@@ -38,8 +38,12 @@ import LineCurvePivot from './line-curve-pivot';
 import P1TrigonometryAmplitudePeriod from './p1-trigonometry-amplitude-period';
 import P1TrigonometryBasicGraphs from './p1-trigonometry-basic-graphs';
 import P1TrigonometryCast from './p1-trigonometry-cast';
+import P1TrigonometryDoubleAngle from './p1-trigonometry-double-angle';
 import P1TrigonometryExactTriangles from './p1-trigonometry-exact-triangles';
+import P1TrigonometryIdentityTriangle from './p1-trigonometry-identity-triangle';
 import P1TrigonometryInverseSine from './p1-trigonometry-inverse-sine';
+import P1TrigonometryRejectRoot from './p1-trigonometry-reject-root';
+import P1TrigonometrySolveGraphs from './p1-trigonometry-solve-graphs';
 import P1TrigonometryTanShift from './p1-trigonometry-tan-shift';
 import P1TrigonometryTransformedCos from './p1-trigonometry-transformed-cos';
 import P1TrigonometryUnitCircle from './p1-trigonometry-unit-circle';
@@ -86,8 +90,12 @@ export const diagrams: DiagramRegistry = {
   'p1-trigonometry-amplitude-period': P1TrigonometryAmplitudePeriod,
   'p1-trigonometry-basic-graphs': P1TrigonometryBasicGraphs,
   'p1-trigonometry-cast': P1TrigonometryCast,
+  'p1-trigonometry-double-angle': P1TrigonometryDoubleAngle,
   'p1-trigonometry-exact-triangles': P1TrigonometryExactTriangles,
+  'p1-trigonometry-identity-triangle': P1TrigonometryIdentityTriangle,
   'p1-trigonometry-inverse-sine': P1TrigonometryInverseSine,
+  'p1-trigonometry-reject-root': P1TrigonometryRejectRoot,
+  'p1-trigonometry-solve-graphs': P1TrigonometrySolveGraphs,
   'p1-trigonometry-tan-shift': P1TrigonometryTanShift,
   'p1-trigonometry-transformed-cos': P1TrigonometryTransformedCos,
   'p1-trigonometry-unit-circle': P1TrigonometryUnitCircle,

@@ -33,7 +33,7 @@ export default function CoordinateGeometryChordMidpoint() {
     <Svg width={W} height={H}>
       <Grid p={p} />
       {/* no y tick label at 2: M(1, 2) is labelled there */}
-      <AxesXY p={p} xTicks={[-2, 2, 4, 5, 6]} yTicks={[-2, 4]} />
+      <AxesXY p={p} xTicks={[-2, 2, 4, 6]} yTicks={[-2, 4]} />
       <circle cx={p.sx(C.x)} cy={p.sy(C.y)} r={r} className="dg-accent" />
       <path d={graph(line, X, p, [Y[0], Y[1] - 0.45])} className="dg-muted" />
       <line x1={p.sx(A.x)} y1={p.sy(A.y)} x2={p.sx(B.x)} y2={p.sy(B.y)} className="dg-accent-2" />

@@ -116,7 +116,7 @@ export default function CoordinateGeometryCircleProperties() {
       {/* 3: perpendicular bisector of a chord */}
       <g transform={`translate(${2 * PW}, 0)`}>
         <line x1={0} y1={10} x2={0} y2={H - 10} className="dg-grid" />
-        <Heading title="bisector of a chord" sub="passes through the centre" />
+        <Heading title="perpendicular bisector" sub="of a chord: through the centre" />
         <circle cx={O.x} cy={O.y} r={R} className="dg-thin" />
         <line x1={A3.x} y1={A3.y} x2={B3.x} y2={B3.y} className="dg-accent" />
         <line x1={O.x} y1={O.y - R - 8} x2={O.x} y2={O.y + R + 8} className="dg-accent-2 dg-dashed" />

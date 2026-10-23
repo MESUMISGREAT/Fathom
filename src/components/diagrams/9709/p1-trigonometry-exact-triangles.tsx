@@ -11,16 +11,16 @@ import { RightAngle, arcPath, polar, rad } from './p1-trigonometry-kit';
 export const diagramKey = 'p1-trigonometry-exact-triangles';
 
 const W = 620;
-const H = 330;
+const H = 290;
 
 export default function P1TrigonometryExactTriangles() {
   const s = 88;
-  const Bl = { x: 50, y: 262 };
+  const Bl = { x: 50, y: 222 };
   const Br = { x: Bl.x + 2 * s, y: Bl.y };
   const M = { x: Bl.x + s, y: Bl.y };
   const T = { x: M.x, y: Bl.y - Math.sqrt(3) * s };
   const k = 150;
-  const Q = { x: 390, y: 262 };
+  const Q = { x: 390, y: 222 };
   const R1 = { x: Q.x + k, y: Q.y };
   const U = { x: Q.x, y: Q.y - k };
   const a30 = polar(T, 42, rad(285));
