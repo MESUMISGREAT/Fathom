@@ -70,8 +70,9 @@ Rules the user stressed:
   - "pause" means stop all agents and disable scheduled tasks.
   - "resume" means pick the queue back up.
   - Ask before starting big new work they didn't request.
-  - **Budget:** the user asked not to use more than 80% of the session limit. You can't see
-    the meter: run about one round of 3 agents, then stop starting new ones. `get_session`
+  - **Budget:** when the session limit reaches about 80%, stop and **ask the user** whether
+    to continue (their rule, 23 Oct). You can't see the meter: check `get_session` between
+    rounds, and after about an hour of 3 agents assume you're close and ask. `get_session`
     shows `rate_limit_info` when a limit is near (on 23 Oct the weekly limit was at
     "warning", resetting 30 Oct).
 
