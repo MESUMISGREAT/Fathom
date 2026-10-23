@@ -2,8 +2,9 @@
  * Periods 1–5 of the Periodic Table with the charge of the simple ion each
  * main group usually forms: group 1 → 1+, group 2 → 2+, group 13 → 3+
  * (aluminium at AS), groups 15, 16, 17 → 3−, 2−, 1− (shaded for the
- * non-metals N, P, O, S, Se, F, Cl, Br, I, which form these anions). Group 14
- * usually bonds covalently and group 18 forms no ions. Many d-block metals
+ * non-metals N, P, O, S, Se, F, Cl, Br, I, which form these anions). In group
+ * 14, carbon and silicon bond covalently (tin and lead form 2+ ions, e.g.
+ * lead(II)); group 18 forms no ions. Many d-block metals
  * have variable charges, shown by a Roman numeral oxidation number; zinc
  * (Zn²⁺) and silver (Ag⁺) are outlined because their charges are fixed.
  */
@@ -104,7 +105,7 @@ export function ChemicalFormulasIonCharges() {
         </g>
       ))}
       <Label x={X0} y={340} anchor="start" className="dg-text-small">
-        Group 14 usually bonds covalently; group 18 (noble gases) forms no ions.
+        Group 14: C and Si bond covalently (Sn and Pb form 2+ ions). Group 18 forms no ions.
       </Label>
     </Svg>
   );

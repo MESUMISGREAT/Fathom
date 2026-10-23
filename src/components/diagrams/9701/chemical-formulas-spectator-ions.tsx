@@ -69,7 +69,8 @@ export function ChemicalFormulasSpectatorIons() {
       </Label>
 
       <Beaker x={b3} w={200} />
-      <Ions list={[[b3 + 40, TOP + 56, 'Na⁺', true], [b3 + 100, TOP + 60, 'NO₃⁻', true], [b3 + 162, TOP + 54, 'Na⁺', true], [b3 + 52, TOP + 92, 'NO₃⁻', true], [b3 + 108, TOP + 96, 'Na⁺', true], [b3 + 164, TOP + 90, 'NO₃⁻', true]]} />
+      {/* the same two Na⁺ and two NO₃⁻ as before mixing: spectators are unchanged */}
+      <Ions list={[[b3 + 45, TOP + 60, 'Na⁺', true], [b3 + 145, TOP + 56, 'NO₃⁻', true], [b3 + 75, TOP + 94, 'NO₃⁻', true], [b3 + 160, TOP + 92, 'Na⁺', true]]} />
       {/* precipitate of AgCl at the bottom */}
       {Array.from({ length: 9 }, (_, i) => (
         <rect key={i} x={b3 + 20 + i * 12} y={TOP + DEPTH - 24 + (i % 2) * 4} width={10} height={10} rx={2} className="dg-fill-muted dg-thin" />
