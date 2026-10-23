@@ -1,0 +1,241 @@
+id: p1-trigonometry-proving-identities
+subject: "9709"
+topic: "1.5"
+title: Proving trig identities
+summary: Prove identities by working from one side to the other, using tan ≡ sin/cos, sin² + cos² ≡ 1, combining fractions and factorising.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.5.4"]
+prerequisites: [p1-trigonometry-two-identities]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "use the identities sin
+    θ / cos θ ≡ tan θ and sin²θ + cos²θ ≡ 1", with its note on proving identities. All
+    identities, proofs and questions are original; every identity verified numerically at
+    several angles in Python. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **prove** a trig identity: start from one side, transform it line by line using the two identities and some algebra, and arrive exactly at the other side.
+
+  - type: explain
+    title: The rules of the game
+    body: |-
+      A proof is a chain, not an equation to solve:
+
+      1. **Pick the messier side** (usually the left) and work on it alone.
+      2. Transform it one step at a time, each line identical to the last.
+      3. Stop when it looks exactly like the other side, and say so: "$=$ RHS".
+
+      What you must **not** do: write the identity down and start doing things to both sides (cross-multiplying, squaring, moving terms across). That assumes the thing you're trying to prove.
+
+  - type: explain
+    title: The toolbox
+    body: |-
+      | Move | When to use it |
+      | --- | --- |
+      | $\tan\theta \to \dfrac{\sin\theta}{\cos\theta}$ | any time tan appears; get everything in sin and cos |
+      | $\sin^2\theta + \cos^2\theta \to 1$ | the moment you see both squares added |
+      | $1 - \sin^2\theta \to \cos^2\theta$ (and vice versa) | to swap one square for the other |
+      | combine fractions | two fractions added or subtracted |
+      | factorise, e.g. $1 - \cos^2\theta = (1 - \cos\theta)(1 + \cos\theta)$ | to cancel a bracket in a denominator |
+      | expand brackets | squared brackets like $(\sin\theta + \cos\theta)^2$ |
+
+  - type: example
+    title: Expand and tidy
+    problem: |-
+      Prove that $(\sin\theta + \cos\theta)^2 + (\sin\theta - \cos\theta)^2 \equiv 2$.
+    steps:
+      - |-
+        Start with the LHS and expand both brackets: $\left(\sin^2\theta + 2\sin\theta\cos\theta + \cos^2\theta\right) + \left(\sin^2\theta - 2\sin\theta\cos\theta + \cos^2\theta\right)$
+      - |-
+        The $\pm 2\sin\theta\cos\theta$ terms cancel: $= 2\sin^2\theta + 2\cos^2\theta$
+      - |-
+        Factorise: $= 2\left(\sin^2\theta + \cos^2\theta\right)$
+      - |-
+        Use the identity: $= 2 \times 1 = 2 = $ RHS ✓
+    answer: |-
+      LHS $\equiv$ RHS. Every line follows from the one before; nothing was done to the right-hand side.
+
+  - type: check
+    questions: [first-step-mcq, sum-to-one]
+
+  - type: example
+    title: Everything into sin and cos
+    problem: |-
+      Prove that $\tan\theta + \dfrac{1}{\tan\theta} \equiv \dfrac{1}{\sin\theta\cos\theta}$.
+    steps:
+      - |-
+        LHS $= \dfrac{\sin\theta}{\cos\theta} + \dfrac{\cos\theta}{\sin\theta}$ (flipping $\tfrac{\sin}{\cos}$ gives $\tfrac{\cos}{\sin}$).
+      - |-
+        Common denominator $\sin\theta\cos\theta$: $= \dfrac{\sin^2\theta + \cos^2\theta}{\sin\theta\cos\theta}$
+      - |-
+        Top is 1: $= \dfrac{1}{\sin\theta\cos\theta} = $ RHS ✓
+    answer: |-
+      Proved. The pattern "convert to sin and cos, combine fractions, spot $\sin^2 + \cos^2$" cracks most P1 identities.
+
+  - type: deeper
+    title: The difference-of-two-squares trick
+    body: |-
+      Prove $\dfrac{\sin^2\theta}{1 - \cos\theta} \equiv 1 + \cos\theta$:
+
+      $$\text{LHS} = \frac{1 - \cos^2\theta}{1 - \cos\theta} = \frac{(1 - \cos\theta)(1 + \cos\theta)}{1 - \cos\theta} = 1 + \cos\theta = \text{RHS}$$
+
+      Whenever you see $1 - \cos\theta$ or $1 + \sin\theta$ next to a square, think difference of two squares: $1 - \cos^2\theta = (1 - \cos\theta)(1 + \cos\theta)$ and $1 - \sin^2\theta = (1 - \sin\theta)(1 + \sin\theta)$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Cross-multiply both sides, simplify, get $1 = 1$, done.
+        right: |-
+          That starts from the statement you're meant to prove. Work on one side only and turn it into the other.
+      - wrong: |-
+          $\dfrac{\sin\theta}{\sin\theta + \cos\theta} = \dfrac{1}{\cos\theta}$ (cancelling the sines)
+        right: |-
+          You can only cancel **factors**, not terms in a sum. $\sin\theta$ is a term of the denominator, not a factor.
+      - wrong: |-
+          Checking with $\theta = 30^\circ$ proves the identity.
+        right: |-
+          One value is evidence, not a proof. (It's a great way to catch a typo before you start, though.)
+      - wrong: |-
+          $-\sin\theta(1 - \sin\theta) = -\sin\theta - \sin^2\theta$
+        right: |-
+          Minus times minus: $-\sin\theta(1 - \sin\theta) = -\sin\theta + \sin^2\theta$. Sign slips in brackets wreck more proofs than anything else.
+
+  - type: check
+    questions: [quotient-mcq, proof-spot]
+
+  - type: exam
+    body: |-
+      - Wording: *Prove that …* or *Show that …*, usually 3–4 marks. Every step needs to be visible; a jump to the answer scores the first mark at most.
+      - Write "LHS $=$" at the start and "$=$ RHS" at the end. It shows the examiner you know the structure of a proof.
+      - Stuck? Convert everything to sin and cos, put it over one denominator, and look for $\sin^2 + \cos^2$.
+      - Often part (a) is an identity and part (b) says *hence solve…*: the identity is your simplification for the equation.
+
+  - type: check
+    questions: [prove-explain]
+
+  - type: takeaways
+    items:
+      - |-
+        Work on one side only (the messier one) until it becomes the other side.
+      - |-
+        Convert tan to $\tfrac{\sin}{\cos}$, combine fractions, and replace $\sin^2 + \cos^2$ with 1.
+      - |-
+        $1 - \cos^2\theta = (1 - \cos\theta)(1 + \cos\theta)$, and similarly for sin: perfect for cancelling.
+      - |-
+        Cancel factors, never terms. Watch signs when expanding.
+
+questions:
+  - id: first-step-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.4"]
+    prompt: |-
+      You need to prove $\dfrac{\sin\theta}{1 + \cos\theta} + \dfrac{1 + \cos\theta}{\sin\theta} \equiv \dfrac{2}{\sin\theta}$. What is the best first step?
+    explanation: |-
+      Two fractions added on the left: combine them over the common denominator $\sin\theta(1 + \cos\theta)$. The top becomes $\sin^2\theta + 1 + 2\cos\theta + \cos^2\theta = 2 + 2\cos\theta = 2(1 + \cos\theta)$, which cancels to $\tfrac{2}{\sin\theta}$.
+    options:
+      - text: |-
+          Write the left side as a single fraction over $\sin\theta(1 + \cos\theta)$.
+        correct: true
+        why: |-
+          Combining fractions is the natural move, and $\sin^2\theta + \cos^2\theta$ appears in the numerator straight away.
+      - text: |-
+          Multiply both sides by $\sin\theta(1 + \cos\theta)$.
+        why: |-
+          Doing things to both sides treats the identity as an equation you already know is true. Work on one side only.
+      - text: |-
+          Replace $\sin\theta$ everywhere with $\sqrt{1 - \cos^2\theta}$.
+        why: |-
+          That brings in square roots and a $\pm$ sign problem, and makes everything harder.
+      - text: |-
+          Substitute $\theta = 30^\circ$ into both sides.
+        why: |-
+          That checks one value. It can't prove the identity holds for all $\theta$.
+
+  - id: sum-to-one
+    format: expression
+    difficulty: 2
+    objectives: ["1.5.4"]
+    prompt: |-
+      Simplify $\sin x\cos x\tan x + \cos^2 x$ as far as possible.
+    answer: "1"
+    variables: [x]
+    display: |-
+      $1$
+    explanation: |-
+      $\sin x\cos x \times \dfrac{\sin x}{\cos x} = \sin^2 x$, so the expression is $\sin^2 x + \cos^2 x = 1$ (wherever $\tan x$ is defined).
+
+  - id: quotient-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.5.4"]
+    prompt: |-
+      Which expression is identical to $\dfrac{1 - \sin^2\theta}{1 - \cos^2\theta}$?
+    explanation: |-
+      Top: $1 - \sin^2\theta = \cos^2\theta$. Bottom: $1 - \cos^2\theta = \sin^2\theta$. So it's $\dfrac{\cos^2\theta}{\sin^2\theta} = \dfrac{1}{\tan^2\theta}$.
+    options:
+      - text: |-
+          $\dfrac{1}{\tan^2\theta}$
+        correct: true
+        why: |-
+          $\dfrac{\cos^2\theta}{\sin^2\theta} = \left(\dfrac{\cos\theta}{\sin\theta}\right)^2 = \dfrac{1}{\tan^2\theta}$.
+      - text: |-
+          $\tan^2\theta$
+        why: |-
+          Upside down: the top becomes $\cos^2\theta$, not $\sin^2\theta$.
+      - text: |-
+          $1$
+        why: |-
+          You can't cancel the 1s: they're terms in a subtraction, not factors.
+      - text: |-
+          $\dfrac{\cos\theta}{\sin\theta}$
+        why: |-
+          Right idea, but the squares stay: $\tfrac{\cos^2\theta}{\sin^2\theta}$.
+
+  - id: proof-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.5.4"]
+    prompt: |-
+      A student tries to prove $\dfrac{\cos\theta}{1 - \sin\theta} - \tan\theta \equiv \dfrac{1}{\cos\theta}$. Which line contains the first error?
+    lines:
+      - |-
+        LHS $= \dfrac{\cos\theta}{1 - \sin\theta} - \dfrac{\sin\theta}{\cos\theta}$
+      - |-
+        $= \dfrac{\cos^2\theta - \sin\theta(1 - \sin\theta)}{\cos\theta(1 - \sin\theta)}$
+      - |-
+        $= \dfrac{\cos^2\theta - \sin\theta - \sin^2\theta}{\cos\theta(1 - \sin\theta)}$
+      - |-
+        $= \dfrac{1 - \sin\theta}{\cos\theta(1 - \sin\theta)}$
+      - |-
+        $= \dfrac{1}{\cos\theta} = $ RHS
+    errorLine: 3
+    fix: |-
+      $-\sin\theta(1 - \sin\theta) = -\sin\theta + \sin^2\theta$, so the numerator is $\cos^2\theta + \sin^2\theta - \sin\theta = 1 - \sin\theta$. Then lines 4 and 5 follow correctly.
+    explanation: |-
+      A sign slip when expanding: $-\sin\theta \times (-\sin\theta) = +\sin^2\theta$. Line 4 is actually right, but it doesn't follow from line 3 as written, so the chain is broken at line 3.
+
+  - id: prove-explain
+    format: explain
+    difficulty: 3
+    objectives: ["1.5.4"]
+    prompt: |-
+      Prove that $\dfrac{1}{1 - \sin\theta} + \dfrac{1}{1 + \sin\theta} \equiv \dfrac{2}{\cos^2\theta}$.
+    explanation: |-
+      Combine the fractions, simplify the top, and recognise $1 - \sin^2\theta$ in the denominator as a difference of two squares that equals $\cos^2\theta$.
+    model: |-
+      LHS $= \dfrac{(1 + \sin\theta) + (1 - \sin\theta)}{(1 - \sin\theta)(1 + \sin\theta)} = \dfrac{2}{1 - \sin^2\theta}$. Since $\sin^2\theta + \cos^2\theta \equiv 1$, $1 - \sin^2\theta \equiv \cos^2\theta$, so LHS $= \dfrac{2}{\cos^2\theta} =$ RHS.
+    keyPoints:
+      - Work on the left-hand side only
+      - Combine over the common denominator (1 − sin θ)(1 + sin θ)
+      - The numerator simplifies to 2
+      - The denominator expands to 1 − sin²θ, which equals cos²θ
+      - Conclude that the LHS equals the RHS

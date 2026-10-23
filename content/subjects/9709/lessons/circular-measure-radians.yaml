@@ -1,0 +1,280 @@
+id: circular-measure-radians
+subject: "9709"
+topic: "1.4"
+title: Radians, the circle's own unit
+summary: Define the radian, convert between radians and degrees, and know the key angles (π/6, π/4, π/3, π/2, π…) by heart.
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.4.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.4 learning outcome "understand the
+    definition of a radian, and use the relationship between radians and degrees". All examples
+    and questions are original (the clock context is illustrative); all arithmetic checked in
+    Python. Independently re-checked line by line (facts, worked examples, every answer key) in
+    a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can say exactly what **one radian** is, convert any angle between degrees and radians, and rattle off the key angles like $\tfrac{\pi}{6} = 30^\circ$ without thinking.
+
+  - type: explain
+    title: Why 360 anyway?
+    body: |-
+      Nobody knows for sure why a full turn is $360^\circ$. The best guess: ancient Babylonians liked numbers that divide nicely, and a year is roughly 360 days. It's a human choice, not a maths one.
+
+      **Radians** are the circle's own unit. Instead of chopping a turn into 360 arbitrary bits, you ask: *how many radius-lengths of arc does this angle cut off?*
+
+  - type: definition
+    term: Radian
+    body: |-
+      One **radian** (1 rad) is the angle subtended at the centre of a circle by an arc whose length is equal to the radius of the circle.
+
+  - type: diagram
+    diagram: circular-measure-radian-definition
+    alt: >-
+      A circle with centre O and radius r. Two radii OA and OB enclose a shaded sector whose arc AB
+      is highlighted and labelled "arc AB = r". The angle AOB at the centre is marked "1 rad". It is
+      drawn to scale, a little under 60 degrees. Notes beside the circle say: 1 radian is the angle
+      at the centre when the arc is as long as the radius; 1 rad ≈ 57.3°; a full turn fits
+      2π ≈ 6.28 radius-lengths of arc; 2π rad = 360°.
+    caption: |-
+      Wrap the radius around the edge of the circle. The angle it reaches at the centre is one radian, about $57.3^\circ$.
+
+  - type: intuition
+    title: Where π comes from
+    body: |-
+      The whole circumference is $2\pi r$. That's $2\pi$ radius-lengths of arc, so a full turn is $2\pi$ radians (about 6.28).
+
+      $$2\pi \text{ rad} = 360^\circ \quad\Longrightarrow\quad \pi \text{ rad} = 180^\circ$$
+
+      That one line is the whole conversion machine. Everything else is just multiplying.
+
+  - type: check
+    questions: [radian-definition, pi-is-180]
+
+  - type: explain
+    title: Converting both ways
+    body: |-
+      | To go from… | multiply by | Sanity check |
+      | --- | --- | --- |
+      | degrees to radians | $\dfrac{\pi}{180}$ | answers are small: one turn is only about 6.28 |
+      | radians to degrees | $\dfrac{180}{\pi}$ | answers are big: 1 rad is about $57.3^\circ$ |
+
+      **Insider hack:** for angles written with $\pi$, just swap $\pi$ for $180^\circ$. So $\tfrac{2\pi}{3} \to \tfrac{2 \times 180^\circ}{3} = 120^\circ$. Done in your head.
+
+  - type: diagram
+    diagram: circular-measure-key-angles
+    alt: >-
+      A semicircular protractor from 0° on the right to 180° on the left, centre O. Spokes mark the
+      key angles, with degrees written inside the arc and radians outside: 0° is 0, 30° is π/6,
+      45° is π/4, 60° is π/3, 90° is π/2, 120° is 2π/3, 135° is 3π/4, 150° is 5π/6 and 180° is π.
+      The centre is labelled "π rad = 180°".
+    caption: |-
+      Learn these like your phone number. They come up in almost every trig question, and $270^\circ = \tfrac{3\pi}{2}$, $360^\circ = 2\pi$ finish the set.
+
+  - type: example
+    title: One conversion each way
+    problem: |-
+      (a) Express $75^\circ$ in radians, in terms of $\pi$.
+      (b) Convert $2.4$ radians to degrees, correct to 1 decimal place.
+    steps:
+      - |-
+        (a) Degrees to radians: multiply by $\dfrac{\pi}{180}$. So $75 \times \dfrac{\pi}{180} = \dfrac{75\pi}{180}$.
+      - |-
+        Simplify the fraction (divide top and bottom by 15): $\dfrac{75\pi}{180} = \dfrac{5\pi}{12}$.
+      - |-
+        (b) Radians to degrees: multiply by $\dfrac{180}{\pi}$. So $2.4 \times \dfrac{180}{\pi} = 137.509\ldots$
+      - |-
+        Sanity check: 2.4 rad is a bit over 2 rad $\approx 115^\circ$, so about $137^\circ$ is believable. Round to 1 d.p.: $137.5^\circ$.
+    answer: |-
+      (a) $75^\circ = \dfrac{5\pi}{12}$ rad. (b) $2.4 \text{ rad} = 137.5^\circ$ (1 d.p.).
+
+  - type: check
+    questions: [degrees-to-radians, radians-to-degrees, clock-hand, pentagon-angle]
+
+  - type: explain
+    title: How to spot radians
+    body: |-
+      - **No degree sign means radians.** $\theta = 1.2$ is $1.2$ rad. $\theta = 1.2^\circ$ is a tiny angle.
+      - Cambridge often writes fractions of $\pi$ as $\tfrac12\pi$, $\tfrac14\pi$, and so on. Same thing as $\tfrac{\pi}{2}$, $\tfrac{\pi}{4}$.
+      - Your **calculator mode** must match the question. DEG for degrees, RAD for radians. Get it wrong and every answer is silently rubbish.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\pi = 180$
+        right: |-
+          $\pi \approx 3.14$ is a number. It's **$\pi$ radians** that equals $180^\circ$. Write the units and the confusion disappears.
+      - wrong: |-
+          An angle in radians must have $\pi$ in it.
+        right: |-
+          $1.2$ rad and $2.4$ rad are perfectly good angles. $\pi$ only shows up for "nice" fractions of a turn.
+      - wrong: |-
+          To change $1.5$ rad to degrees, multiply by $\tfrac{\pi}{180}$.
+        right: |-
+          That gives $0.026$, a silly answer. Radians to degrees uses $\tfrac{180}{\pi}$: $1.5 \times \tfrac{180}{\pi} = 85.9^\circ$. If the result goes the wrong way in size, flip the fraction.
+      - wrong: |-
+          The calculator knows whether I mean degrees or radians.
+        right: |-
+          It doesn't. In RAD mode, $\sin 30$ means the sine of 30 **radians**, which is $-0.988$. Check the little D or R on the screen before every trig question.
+
+  - type: check
+    questions: [calculator-mode]
+
+  - type: exam
+    body: |-
+      - Radians are compulsory for the arc and sector formulas in the next lessons, so expect to convert at the start of many questions.
+      - *"Give your answer in terms of $\pi$"* means exact: $\tfrac{5\pi}{12}$, not $1.31$.
+      - The paper's own rule: non-exact answers to **3 significant figures**, angles in **degrees to 1 decimal place**, unless the question says otherwise.
+      - A question in radians wants radian answers. Don't switch to degrees halfway and forget to switch back.
+
+  - type: enrichment
+    title: Why mathematicians are obsessed with radians
+    body: |-
+      In calculus (later in A Level), the rule "the derivative of $\sin x$ is $\cos x$" is only true when $x$ is in radians. In degrees you'd get an ugly extra factor of $\tfrac{\pi}{180}$ everywhere. Radians are the unit that makes the maths clean, which is why they're the default from here on.
+
+  - type: takeaways
+    items:
+      - |-
+        1 radian is the angle at the centre subtended by an arc equal in length to the radius.
+      - |-
+        $\pi \text{ rad} = 180^\circ$ and $2\pi \text{ rad} = 360^\circ$; $1 \text{ rad} \approx 57.3^\circ$.
+      - |-
+        Degrees to radians: $\times \tfrac{\pi}{180}$. Radians to degrees: $\times \tfrac{180}{\pi}$. Or swap $\pi$ for $180^\circ$.
+      - |-
+        No degree sign means radians, and your calculator mode must match.
+
+questions:
+  - id: radian-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["1.4.1"]
+    prompt: |-
+      Which statement defines one radian?
+    explanation: |-
+      One radian is the angle at the centre of a circle subtended by an arc whose length equals the radius. It's about $57.3^\circ$.
+    options:
+      - text: |-
+          The angle subtended at the centre of a circle by an arc equal in length to the radius.
+        correct: true
+        why: |-
+          This is the definition, word for word the way mark schemes like it.
+      - text: |-
+          The angle subtended at the centre of a circle by a chord equal in length to the radius.
+        why: |-
+          A chord equal to the radius makes an equilateral triangle with the centre, so the angle is $60^\circ = \tfrac{\pi}{3} \approx 1.047$ rad. Close, but it's the **arc** that matters.
+      - text: |-
+          The angle subtended at the centre of a circle by an arc equal in length to the diameter.
+        why: |-
+          An arc of length $2r$ gives an angle of 2 radians, not 1.
+      - text: |-
+          One 360th of a full turn.
+        why: |-
+          That's one degree. A radian is much bigger: about $57.3^\circ$.
+
+  - id: pi-is-180
+    format: cloze
+    difficulty: 1
+    objectives: ["1.4.1"]
+    prompt: |-
+      $\pi$ radians $=$ {{1}} degrees, so one full turn is {{2}} radians.
+    blanks:
+      - accept: ["180", "180°", "180 degrees"]
+      - accept: ["2π", "2 π", "2pi", "2 pi", "2*pi", "6.28", "6.283"]
+    explanation: |-
+      The circumference is $2\pi r$, so a full turn cuts off $2\pi$ radius-lengths: $2\pi$ rad $= 360^\circ$, and halving gives $\pi$ rad $= 180^\circ$.
+
+  - id: degrees-to-radians
+    format: numeric
+    difficulty: 1
+    objectives: ["1.4.1"]
+    prompt: |-
+      Express $210^\circ$ in radians, in terms of $\pi$. (Type it as, for example, `3π/4`.)
+    fields:
+      - label: "210° ="
+        answer: 3.665191429188092
+        tolerance: { abs: 0.001 }
+        unit: rad
+    explanation: |-
+      $210 \times \dfrac{\pi}{180} = \dfrac{210\pi}{180} = \dfrac{7\pi}{6}$.
+
+      Quick check with the hack: $\tfrac{7 \times 180^\circ}{6} = 210^\circ$ ✓
+
+  - id: radians-to-degrees
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.1"]
+    prompt: |-
+      Convert $1.2$ radians to degrees, correct to 1 decimal place.
+    fields:
+      - answer: 68.75493541569878
+        tolerance: { abs: 0.05 }
+        unit: "°"
+    explanation: |-
+      $1.2 \times \dfrac{180}{\pi} = 68.754\ldots = 68.8^\circ$ (1 d.p.).
+
+      Sense check: 1 rad is about $57^\circ$, so 1.2 rad should be a bit more. ✓
+
+  - id: clock-hand
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.1"]
+    prompt: |-
+      The minute hand of a clock turns from 3:00 to 3:40. Through what angle does it turn? Give your answer in radians, in terms of $\pi$.
+    fields:
+      - answer: 4.1887902047863905
+        tolerance: { abs: 0.005 }
+        unit: rad
+    explanation: |-
+      40 minutes is $\tfrac{40}{60} = \tfrac23$ of a full turn, and a full turn is $2\pi$ rad.
+
+      $$\tfrac23 \times 2\pi = \tfrac{4\pi}{3} \text{ rad} \;(= 240^\circ).$$
+
+  - id: calculator-mode
+    format: mcq
+    difficulty: 1
+    objectives: ["1.4.1"]
+    prompt: |-
+      Mo types $\sin 30$ into a calculator, expecting the sine of $30^\circ$, and gets $-0.988$. What has gone wrong?
+    explanation: |-
+      $\sin 30^\circ = 0.5$. The calculator was in radian mode, so it worked out the sine of 30 **radians** (almost 5 full turns), which is $-0.988$.
+    options:
+      - text: |-
+          The calculator is in radian mode, so it found the sine of 30 radians.
+        correct: true
+        why: |-
+          Exactly. Switch to degree mode and $\sin 30$ gives $0.5$.
+      - text: |-
+          Nothing: $\sin 30^\circ$ really is $-0.988$.
+        why: |-
+          $\sin 30^\circ = \tfrac12$. And $30^\circ$ is in the first quadrant, where sine is positive.
+      - text: |-
+          $-0.988$ is just $0.5$ converted into radians.
+        why: |-
+          Only **angles** have units. The value of a sine is a plain number, so there's nothing to convert.
+      - text: |-
+          The calculator needs the angle typed as $\tfrac{30\pi}{180}$ in degree mode.
+        why: |-
+          In degree mode, $\tfrac{30\pi}{180} \approx 0.52$ is treated as $0.52^\circ$. Type 30 in degree mode, or $\tfrac{\pi}{6}$ in radian mode.
+
+  - id: pentagon-angle
+    format: numeric
+    difficulty: 3
+    objectives: ["1.4.1"]
+    prompt: |-
+      Find the size of each interior angle of a regular pentagon, in radians, in terms of $\pi$.
+    fields:
+      - answer: 1.8849555921538759
+        tolerance: { abs: 0.002 }
+        unit: rad
+    explanation: |-
+      Split the pentagon into 3 triangles from one corner: the interior angles add up to $3 \times \pi = 3\pi$ radians (that's $540^\circ$).
+
+      Five equal angles: $\dfrac{3\pi}{5}$ each ($= 108^\circ$, which you might already know).

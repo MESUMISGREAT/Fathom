@@ -1,0 +1,270 @@
+id: circular-measure-segments-and-triangles
+subject: "9709"
+topic: "1.4"
+title: Chords, triangles and segments
+summary: Find the area of triangle OAB with ½r² sin θ, the chord length with 2r sin(θ/2), and the area and perimeter of a segment.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.4.2"]
+prerequisites: [circular-measure-arc-length-and-sector-area]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.4 learning outcome "use the formulae s =
+    rθ and A = ½r²θ in solving problems concerning the arc length and sector area of a circle",
+    including its note on calculating lengths and angles in triangles and areas of triangles.
+    All examples and questions are original; all arithmetic checked in Python. Independently
+    re-checked line by line (facts, worked examples, every answer key) in a separate AI review
+    on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can split a sector into a **triangle** and a **segment**, find the triangle's area and the chord's length, and so find the segment's area and perimeter.
+
+  - type: explain
+    title: Slice the slice
+    body: |-
+      Take a sector $OAB$ and draw the straight line $AB$ joining the ends of the arc. That line is a **chord**, and it splits the sector into two pieces:
+
+      - the **triangle** $OAB$ (two sides are radii, so it's isosceles)
+      - the **segment**: the thin strip between the chord and the arc
+
+      Pizza version: the triangle is the cheesy middle, the segment is the crust you leave on the plate.
+
+  - type: definition
+    term: Segment
+    body: |-
+      A **segment** of a circle is the region bounded by a chord and the arc it cuts off. The **minor segment** is the smaller of the two; the **major segment** is the larger.
+
+  - type: diagram
+    diagram: circular-measure-segment
+    alt: >-
+      A sector OAB pointing upwards with centre O at the bottom, radius r and angle θ drawn as
+      1.2 rad. The chord AB splits it into the shaded triangle OAB below and a thin highlighted
+      segment above, between the chord and the arc. A dashed line from O meets AB at right angles at
+      its midpoint M; the angle between OM and OB is labelled θ/2 and MB is labelled r sin(θ/2).
+      Notes beside it: sector = ½r²θ; triangle = ½r² sin θ; segment = ½r²θ − ½r² sin θ = ½r²(θ − sin θ);
+      chord AB = 2r sin(θ/2); θ in radians.
+
+  - type: explain
+    title: The three formulas you need
+    body: |-
+      | Piece | Formula | Where it comes from |
+      | --- | --- | --- |
+      | Triangle $OAB$ | $\tfrac12 r^2 \sin\theta$ | $\tfrac12 ab\sin C$ with $a = b = r$, $C = \theta$ |
+      | Segment | $\tfrac12 r^2\theta - \tfrac12 r^2\sin\theta = \tfrac12 r^2(\theta - \sin\theta)$ | sector minus triangle |
+      | Chord $AB$ | $2r\sin\tfrac{\theta}{2}$ | half the triangle is right-angled: $MB = r\sin\tfrac{\theta}{2}$ |
+
+      The chord can also come from the cosine rule: $AB^2 = r^2 + r^2 - 2r^2\cos\theta$. Same answer, pick whichever you trust.
+
+  - type: check
+    questions: [triangle-area, segment-formula-mcq]
+
+  - type: example
+    title: A segment, start to finish
+    problem: |-
+      A sector $OAB$ has radius $10$ cm and angle $AOB = 1.2$ radians. Find (a) the length of the chord $AB$, (b) the perimeter of the segment, (c) the area of the segment.
+    steps:
+      - |-
+        Calculator in **radian** mode first. Seriously.
+      - |-
+        (a) $AB = 2r\sin\tfrac{\theta}{2} = 20\sin 0.6 = 11.29\ldots$ cm.
+      - |-
+        (b) The segment's boundary is the arc plus the chord. Arc $= r\theta = 12$ cm, so perimeter $= 12 + 11.29\ldots = 23.29\ldots$ cm.
+      - |-
+        (c) Sector $= \tfrac12 \times 100 \times 1.2 = 60$. Triangle $= \tfrac12 \times 100 \times \sin 1.2 = 46.60\ldots$
+      - |-
+        Segment $= 60 - 46.60\ldots = 13.398\ldots \text{ cm}^2$.
+    answer: |-
+      (a) $11.3$ cm (b) $23.3$ cm (c) $13.4 \text{ cm}^2$, all to 3 s.f.
+
+  - type: check
+    questions: [chord-length, segment-area, segment-perimeter]
+
+  - type: example
+    title: An exact one
+    problem: |-
+      A sector has radius $6$ cm and angle $\tfrac{\pi}{3}$. Find the exact area of the minor segment.
+    steps:
+      - |-
+        Use $\sin\tfrac{\pi}{3} = \tfrac{\sqrt3}{2}$ (one of the exact values in the trigonometry topic; it's worth knowing early).
+      - |-
+        Sector $= \tfrac12 \times 36 \times \tfrac{\pi}{3} = 6\pi$.
+      - |-
+        Triangle $= \tfrac12 \times 36 \times \tfrac{\sqrt3}{2} = 9\sqrt3$.
+      - |-
+        Segment $= 6\pi - 9\sqrt3 \text{ cm}^2$ (about $3.26 \text{ cm}^2$).
+    answer: |-
+      $6\pi - 9\sqrt3 \text{ cm}^2$. Bonus fact: with angle $\tfrac{\pi}{3}$ the triangle is equilateral, so the chord is exactly 6 cm.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\sin 1.2 = 0.0209$
+        right: |-
+          That's $\sin 1.2^\circ$ (degree mode). In radians $\sin 1.2 = 0.932$. Radian questions need radian mode for the sine too.
+      - wrong: |-
+          Segment $=$ triangle $-$ sector.
+        right: |-
+          The segment is what's left of the **sector** after removing the triangle: sector $-$ triangle. A negative area is your warning sign.
+      - wrong: |-
+          The chord $AB$ is the same length as the arc $AB$.
+        right: |-
+          The chord is the straight shortcut, so it's always shorter: here $11.3$ cm against $12$ cm.
+      - wrong: |-
+          The perimeter of a segment is arc $+ 2r$.
+        right: |-
+          That's the sector's perimeter. The segment's boundary is the arc and the **chord**.
+
+  - type: deeper
+    title: The major segment
+    body: |-
+      The **major** segment is the rest of the circle: $\pi r^2 - \tfrac12 r^2(\theta - \sin\theta)$.
+
+      Equivalently, it's the major sector (angle $2\pi - \theta$) **plus** the triangle. For $r = 10$, $\theta = 1.2$: $\pi(100) - 13.398\ldots = 300.76\ldots$, so about $301 \text{ cm}^2$.
+
+  - type: check
+    questions: [segment-exact-form, degree-mode-spot]
+
+  - type: exam
+    body: |-
+      - The classic three-parter: chord length, perimeter of the segment, area of the segment. Each part feeds the next, so keep unrounded values in your calculator.
+      - Write the formula with numbers substituted before the answer: "$\tfrac12 \times 10^2 \times (1.2 - \sin 1.2)$". If your final digit slips, the method mark is safe.
+      - *Exact* answers look like $6\pi - 9\sqrt3$. Don't round.
+      - If the angle comes in degrees, $\tfrac12 r^2\sin\theta$ still works in degree mode, but the sector part needs radians. Converting once at the start avoids mixing.
+
+  - type: takeaways
+    items:
+      - |-
+        Triangle $OAB$: $\tfrac12 r^2\sin\theta$.
+      - |-
+        Segment $=$ sector $-$ triangle $= \tfrac12 r^2(\theta - \sin\theta)$.
+      - |-
+        Chord $AB = 2r\sin\tfrac{\theta}{2}$ (or use the cosine rule).
+      - |-
+        Segment perimeter $=$ arc $+$ chord. Radian mode throughout.
+
+questions:
+  - id: triangle-area
+    format: numeric
+    difficulty: 1
+    objectives: ["1.4.2"]
+    prompt: |-
+      $O$ is the centre of a circle of radius $8$ cm, and $A$ and $B$ lie on the circle with angle $AOB = 0.9$ radians. Find the area of triangle $OAB$, correct to 3 significant figures.
+    fields:
+      - answer: 25.06646110807947
+        sigFigs: 3
+        unit: "cm²"
+    explanation: |-
+      $\tfrac12 r^2\sin\theta = \tfrac12 \times 64 \times \sin 0.9 = 32 \times 0.7833\ldots = 25.07\ldots$, so $25.1 \text{ cm}^2$ (radian mode).
+
+  - id: segment-formula-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.4.2"]
+    prompt: |-
+      A chord cuts off a minor segment from a sector of radius $r$ and angle $\theta$ radians. Which expression gives the area of the segment?
+    explanation: |-
+      Segment $=$ sector $-$ triangle $= \tfrac12 r^2\theta - \tfrac12 r^2\sin\theta = \tfrac12 r^2(\theta - \sin\theta)$.
+    options:
+      - text: |-
+          $\tfrac12 r^2(\theta - \sin\theta)$
+        correct: true
+        why: |-
+          Sector $\tfrac12 r^2\theta$ minus triangle $\tfrac12 r^2\sin\theta$, with the common factor taken out.
+      - text: |-
+          $\tfrac12 r^2(\sin\theta - \theta)$
+        why: |-
+          That's triangle minus sector. For $0 < \theta < \pi$ it's negative, which no area can be.
+      - text: |-
+          $\tfrac12 r^2(\theta - \cos\theta)$
+        why: |-
+          The triangle's area uses $\tfrac12 ab\sin C$, so it's sine, not cosine.
+      - text: |-
+          $r(\theta - \sin\theta)$
+        why: |-
+          This mixes up the arc length $r\theta$ with an area. Areas need $r^2$.
+
+  - id: chord-length
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      $A$ and $B$ lie on a circle with centre $O$ and radius $5$ cm, and angle $AOB = 2$ radians. Find the length of the chord $AB$, correct to 3 significant figures.
+    fields:
+      - answer: 8.414709848078965
+        sigFigs: 3
+        unit: cm
+    explanation: |-
+      $AB = 2r\sin\tfrac{\theta}{2} = 10\sin 1 = 8.414\ldots$, so $8.41$ cm.
+
+      Cosine rule check: $AB^2 = 25 + 25 - 50\cos 2 = 70.8\ldots$, and $\sqrt{70.8\ldots} = 8.41$ ✓
+
+  - id: segment-area
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      Find the area of the minor segment cut off by a chord that subtends an angle of $1.5$ radians at the centre of a circle of radius $12$ cm. Give your answer to 3 significant figures.
+    fields:
+      - answer: 36.18036096450808
+        sigFigs: 3
+        unit: "cm²"
+    explanation: |-
+      $\tfrac12 r^2(\theta - \sin\theta) = \tfrac12 \times 144 \times (1.5 - \sin 1.5) = 72 \times (1.5 - 0.9975\ldots) = 36.18\ldots$, so $36.2 \text{ cm}^2$.
+
+  - id: segment-perimeter
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A chord $PQ$ of a circle with centre $O$ and radius $9$ cm subtends angle $POQ = 2.2$ radians. Find the perimeter of the minor segment, correct to 3 significant figures.
+    fields:
+      - answer: 35.841732481105836
+        sigFigs: 3
+        unit: cm
+    explanation: |-
+      Arc $= 9 \times 2.2 = 19.8$ cm. Chord $= 2 \times 9 \times \sin 1.1 = 16.04\ldots$ cm.
+
+      Perimeter $= 19.8 + 16.04\ldots = 35.84\ldots$, so $35.8$ cm.
+
+  - id: segment-exact-form
+    format: numeric
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A sector of a circle of radius $4$ cm has angle $\tfrac{\pi}{2}$. The area of the minor segment is $a\pi - b \text{ cm}^2$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: 4
+      - label: "b ="
+        answer: 8
+    explanation: |-
+      Sector $= \tfrac12 \times 16 \times \tfrac{\pi}{2} = 4\pi$. Triangle $= \tfrac12 \times 16 \times \sin\tfrac{\pi}{2} = 8$ (it's a right-angled triangle, half of a 4 by 4 square).
+
+      Segment $= 4\pi - 8$, so $a = 4$ and $b = 8$.
+
+  - id: degree-mode-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.4.2"]
+    prompt: |-
+      A student finds the area of the segment cut off by a chord subtending $1.2$ radians at the centre of a circle of radius $10$ cm. Which line contains the first error?
+    lines:
+      - |-
+        Sector area $= \tfrac12 \times 10^2 \times 1.2 = 60$
+      - |-
+        Triangle area $= \tfrac12 \times 10^2 \times \sin 1.2 = 50 \times 0.0209 = 1.05$
+      - |-
+        Segment area $= 60 - 1.05 = 58.95$
+      - |-
+        So the segment is about $59.0 \text{ cm}^2$.
+    errorLine: 2
+    fix: |-
+      In radian mode $\sin 1.2 = 0.932$, so the triangle is $50 \times 0.932 = 46.6$ and the segment is $60 - 46.6 = 13.4 \text{ cm}^2$.
+    explanation: |-
+      $0.0209$ is $\sin 1.2^\circ$: the calculator was in degree mode. A segment taking up almost the whole sector should look suspicious, since the triangle is the bulk of a sector this size.

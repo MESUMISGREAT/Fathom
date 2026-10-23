@@ -1,0 +1,264 @@
+id: p1-trigonometry-transformed-graphs
+subject: "9709"
+topic: "1.5"
+title: Stretching and shifting trig graphs
+summary: Sketch graphs like y = 3 sin x, y = 1 − 2cos 2x and y = tan(x + π/6) by reading off amplitude, period, shifts and asymptotes.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.5.1"]
+prerequisites: [p1-trigonometry-graphs-of-sin-cos-tan, functions-combined-transformations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "sketch and use graphs
+    of the sine, cosine and tangent functions (for angles of any size, and using either degrees
+    or radians)" and its note on graphs such as y = 3 sin x, y = 1 − cos 2x and y = tan(x + ¼π).
+    The worked example and questions use original functions (y = 1 − 2cos 2x, y = tan(x + π/6)
+    and others), plotted from the real functions; all values checked in Python. Independently
+    re-checked line by line (facts, worked examples, every answer key) in a separate AI review
+    on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can sketch $y = a\sin bx + c$, $y = a\cos bx + c$ and shifted tan graphs, reading off the **amplitude**, **period**, range, key points and asymptotes, and work backwards from a graph to its constants.
+
+  - type: explain
+    title: Same moves as topic 1.2, trig flavour
+    body: |-
+      Every change to $y = \sin x$ is a transformation you already know:
+
+      | Graph | Transformation | Effect |
+      | --- | --- | --- |
+      | $y = a\sin x$ | stretch parallel to the $y$-axis, factor $a$ | **amplitude** $\lvert a \rvert$, range $-\lvert a \rvert$ to $\lvert a \rvert$ |
+      | $y = \sin bx$ | stretch parallel to the $x$-axis, factor $\tfrac1b$ | **period** $\tfrac{360^\circ}{b}$ (or $\tfrac{2\pi}{b}$) |
+      | $y = \sin x + c$ | translation $c$ up | centre line $y = c$ |
+      | $y = \sin(x + d)$ | translation $d$ to the **left** | everything slides sideways |
+      | $y = -\sin x$ | reflection in the $x$-axis | maxima become minima |
+
+      The same works for cos, and for tan (which has no amplitude, but stretches and shifts just the same).
+
+  - type: diagram
+    diagram: p1-trigonometry-amplitude-period
+    alt: >-
+      Two graphs for 0° ≤ x ≤ 360°, each with y = sin x drawn dashed for comparison. Left:
+      y = 3 sin x, the same wave stretched vertically so it reaches 3 at 90° and −3 at 270°:
+      amplitude 3, period 360°. Right: y = sin 2x, squashed horizontally so it completes two full
+      waves in 360°, with maxima at 45° and 225° and minima at 135° and 315°: amplitude 1,
+      period 180°.
+    caption: |-
+      The number in front changes the **height**; the number multiplying $x$ changes the **width**. And the $x$ one works backwards: $\times 2$ inside makes it half as wide.
+
+  - type: check
+    questions: [period-numeric, period-spot]
+
+  - type: explain
+    title: Reading max, min and the centre line
+    body: |-
+      For $y = c + a\sin bx$ or $y = c + a\cos bx$ (with $a > 0$):
+
+      - maximum $= c + a$, minimum $= c - a$, centre line $y = c$
+      - working backwards from a graph: $c = \dfrac{\max + \min}{2}$ and $a = \dfrac{\max - \min}{2}$
+
+      If $a$ is negative, the graph is flipped: $y = 1 - 2\cos 2x$ starts at a **minimum**, because $\cos 0 = 1$ gives $1 - 2 = -1$.
+
+  - type: example
+    title: Sketch y = 1 − 2cos 2x for 0 ≤ x ≤ π
+    problem: |-
+      Sketch the graph of $y = 1 - 2\cos 2x$ for $0 \leqslant x \leqslant \pi$, showing the coordinates of the turning points and where it crosses the $x$-axis.
+    steps:
+      - |-
+        **Period:** $\cos 2x$ has period $\tfrac{2\pi}{2} = \pi$, so exactly one full wave fits in $0 \leqslant x \leqslant \pi$.
+      - |-
+        **Shape:** $-2\cos 2x$ is $\cos 2x$ stretched by 2 and flipped, so it starts at a minimum. Then $+1$ lifts everything: centre line $y = 1$, range $-1 \leqslant y \leqslant 3$.
+      - |-
+        **Key points** every quarter period: $x = 0, \tfrac{\pi}{4}, \tfrac{\pi}{2}, \tfrac{3\pi}{4}, \pi$ give $y = -1, 1, 3, 1, -1$.
+      - |-
+        **Crossings:** $1 - 2\cos 2x = 0$ means $\cos 2x = \tfrac12$, so $2x = \tfrac{\pi}{3}$ or $\tfrac{5\pi}{3}$ and $x = \tfrac{\pi}{6}$ or $\tfrac{5\pi}{6}$. (Solving equations like this properly is coming up later in this topic.)
+      - |-
+        Join with a smooth curve: minima $(0, -1)$ and $(\pi, -1)$, maximum $\left(\tfrac{\pi}{2}, 3\right)$.
+    answer: |-
+      One smooth wave from $(0, -1)$ up through $\left(\tfrac{\pi}{6}, 0\right)$ to the maximum $\left(\tfrac{\pi}{2}, 3\right)$, then down through $\left(\tfrac{5\pi}{6}, 0\right)$ to $(\pi, -1)$.
+
+  - type: diagram
+    diagram: p1-trigonometry-transformed-cos
+    alt: >-
+      Graph of y = 1 − 2cos 2x for 0 ≤ x ≤ π, with y = cos 2x dashed for comparison and a dashed
+      centre line y = 1. The curve starts at the minimum (0, −1), crosses the x-axis at π/6, rises to
+      the maximum (π/2, 3), crosses the x-axis again at 5π/6 and falls to the minimum (π, −1). The
+      x-axis is marked at π/4, π/2, 3π/4 and π; the y-axis at −1, 1, 2 and 3.
+
+  - type: check
+    questions: [max-min, constants-from-graph, max-points]
+
+  - type: explain
+    title: Shifting tan
+    body: |-
+      For $y = \tan(x + d)$, everything slides $d$ to the left, **asymptotes included**. Find them by asking where the bracket hits an old asymptote:
+
+      For $y = \tan\left(x + \tfrac{\pi}{6}\right)$ on $0 \leqslant x \leqslant 2\pi$:
+
+      - asymptotes: $x + \tfrac{\pi}{6} = \tfrac{\pi}{2}$ or $\tfrac{3\pi}{2}$, so $x = \tfrac{\pi}{3}$ or $\tfrac{4\pi}{3}$
+      - zeros: $x + \tfrac{\pi}{6} = \pi$ or $2\pi$, so $x = \tfrac{5\pi}{6}$ or $\tfrac{11\pi}{6}$
+      - $y$-intercept: $\tan\tfrac{\pi}{6} = \tfrac{1}{\sqrt3} \approx 0.577$
+
+  - type: diagram
+    diagram: p1-trigonometry-tan-shift
+    alt: >-
+      Graph of y = tan(x + π/6) for 0 ≤ x ≤ 2π drawn solid, with y = tan x dashed. The solid
+      curve has dashed vertical asymptotes at x = π/3 and x = 4π/3, crosses the x-axis at 5π/6 and
+      11π/6, and meets the y-axis at 1/√3. An arrow shows the dashed tan x curve moved π/6 to the
+      left onto the solid one. The x-axis is marked at π/2, π, 3π/2 and 2π.
+
+  - type: check
+    questions: [tan-asymptote-mcq]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $y = \sin 2x$ has period $720^\circ$.
+        right: |-
+          Multiplying $x$ by 2 squashes the graph: period $\tfrac{360^\circ}{2} = 180^\circ$.
+      - wrong: |-
+          $y = \sin(x + 30^\circ)$ is $y = \sin x$ moved $30^\circ$ to the right.
+        right: |-
+          $+30^\circ$ inside the bracket moves it $30^\circ$ to the **left**. Check a point: the new curve is 0 at $x = -30^\circ$.
+      - wrong: |-
+          $y = 3\sin x$ has its maximum at $x = 270^\circ$ because $3 \times 90 = 270$.
+        right: |-
+          The 3 multiplies the **height**, not the angle. The maximum is $3$ at $x = 90^\circ$, same place as before.
+      - wrong: |-
+          $y = 2 + \cos x$ has range $-1 \leqslant y \leqslant 1$.
+        right: |-
+          Lifted by 2, so the range is $1 \leqslant y \leqslant 3$.
+
+  - type: exam
+    body: |-
+      - Sketches are usually 2–3 marks: correct shape, correct number of cycles for the interval, and key values marked on the axes.
+      - "State the coordinates of the turning points" means exact $x$ values like $\tfrac{\pi}{2}$, not 1.57.
+      - A favourite follow-up: *find the constants $a$ and $b$* from given max and min values, or *state the number of solutions of …* using your sketch.
+      - Do a two-point check: substitute $x = 0$ and one more value into the equation and make sure your sketch agrees.
+
+  - type: takeaways
+    items:
+      - |-
+        $y = a\sin bx + c$: amplitude $\lvert a \rvert$, period $\tfrac{360^\circ}{b}$ ($\tfrac{2\pi}{b}$), centre line $y = c$.
+      - |-
+        Max $= c + \lvert a \rvert$, min $= c - \lvert a \rvert$. Backwards: $c = \tfrac{\max + \min}{2}$, $\lvert a \rvert = \tfrac{\max - \min}{2}$.
+      - |-
+        $+d$ inside the bracket moves the graph $d$ to the **left**, asymptotes and all.
+      - |-
+        Plot key points every quarter period, then join smoothly.
+
+questions:
+  - id: period-numeric
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      What is the period of $y = 4\sin 3x$, in degrees?
+    fields:
+      - answer: 120
+        tolerance: { abs: 0.01 }
+        unit: "°"
+    explanation: |-
+      Period $= \tfrac{360^\circ}{3} = 120^\circ$. The 4 only changes the amplitude.
+
+  - id: period-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      A student describes the graph of $y = 3\cos\left(\tfrac12 x\right)$. Which line contains the first error?
+    lines:
+      - |-
+        The amplitude is 3, so the range is $-3 \leqslant y \leqslant 3$.
+      - |-
+        The period is $360^\circ \times \tfrac12 = 180^\circ$.
+      - |-
+        So the graph completes two full cycles for $0^\circ \leqslant x \leqslant 360^\circ$.
+    errorLine: 2
+    fix: |-
+      The period is $\dfrac{360^\circ}{\tfrac12} = 720^\circ$, so only half a cycle fits in $0^\circ \leqslant x \leqslant 360^\circ$.
+    explanation: |-
+      Multiplying $x$ by $\tfrac12$ is a stretch with factor 2: the graph gets **wider**. Period $= 360^\circ \div \tfrac12 = 720^\circ$.
+
+  - id: max-min
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      Find the maximum and minimum values of $y = 5 - 2\sin x$.
+    fields:
+      - label: "max ="
+        answer: 7
+      - label: "min ="
+        answer: 3
+    explanation: |-
+      $\sin x$ runs from $-1$ to $1$, so $-2\sin x$ runs from $-2$ to $2$.
+
+      Max $= 5 + 2 = 7$ (when $\sin x = -1$); min $= 5 - 2 = 3$ (when $\sin x = 1$).
+
+  - id: constants-from-graph
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      The graph of $y = a + b\cos x$, where $b > 0$, has maximum value $7$ and minimum value $1$. Find $a$ and $b$.
+    fields:
+      - label: "a ="
+        answer: 4
+      - label: "b ="
+        answer: 3
+    explanation: |-
+      Centre line: $a = \tfrac{7 + 1}{2} = 4$. Amplitude: $b = \tfrac{7 - 1}{2} = 3$.
+
+      Check: $4 + 3\cos x$ runs from $4 - 3 = 1$ to $4 + 3 = 7$ ✓
+
+  - id: max-points
+    format: numeric
+    difficulty: 3
+    objectives: ["1.5.1"]
+    prompt: |-
+      Find the $x$-coordinates of the maximum points of $y = 2\sin 2x$ for $0 \leqslant x \leqslant 2\pi$. Give them in terms of $\pi$.
+    fields:
+      - label: "smaller x ="
+        answer: 0.7853981633974483
+        tolerance: { abs: 0.002 }
+      - label: "larger x ="
+        answer: 3.9269908169872414
+        tolerance: { abs: 0.002 }
+    explanation: |-
+      The maximum value 2 happens when $\sin 2x = 1$, so $2x = \tfrac{\pi}{2}$ or $\tfrac{5\pi}{2}$ (one per period, and $2x$ runs up to $4\pi$).
+
+      So $x = \tfrac{\pi}{4}$ or $\tfrac{5\pi}{4}$. The period is $\pi$, so the two peaks are $\pi$ apart ✓
+
+  - id: tan-asymptote-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      The graph of $y = \tan\left(x + \tfrac{\pi}{3}\right)$ has one vertical asymptote in the interval $0 < x < \pi$. What is its equation?
+    explanation: |-
+      Tan has asymptotes where its bracket equals $\tfrac{\pi}{2}$ (plus multiples of $\pi$). $x + \tfrac{\pi}{3} = \tfrac{\pi}{2}$ gives $x = \tfrac{\pi}{6}$.
+    options:
+      - text: |-
+          $x = \tfrac{\pi}{6}$
+        correct: true
+        why: |-
+          $x + \tfrac{\pi}{3} = \tfrac{\pi}{2}$, so $x = \tfrac{\pi}{2} - \tfrac{\pi}{3} = \tfrac{\pi}{6}$: the old asymptote moved $\tfrac{\pi}{3}$ left.
+      - text: |-
+          $x = \tfrac{\pi}{2}$
+        why: |-
+          That's the asymptote of $y = \tan x$. The shift moves it.
+      - text: |-
+          $x = \tfrac{5\pi}{6}$
+        why: |-
+          That's $\tfrac{\pi}{2} + \tfrac{\pi}{3}$: shifted the wrong way. $+\tfrac{\pi}{3}$ inside means left.
+      - text: |-
+          $x = \tfrac{2\pi}{3}$
+        why: |-
+          There $x + \tfrac{\pi}{3} = \pi$ and $\tan\pi = 0$: that's where the graph crosses the $x$-axis, not an asymptote.

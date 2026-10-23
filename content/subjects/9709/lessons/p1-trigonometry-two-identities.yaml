@@ -1,0 +1,260 @@
+id: p1-trigonometry-two-identities
+subject: "9709"
+topic: "1.5"
+title: "The two identities: tan θ ≡ sin θ ÷ cos θ and sin²θ + cos²θ ≡ 1"
+summary: Use tan θ ≡ sin θ / cos θ and sin²θ + cos²θ ≡ 1 to find exact trig values from one given ratio and to simplify expressions.
+order: 6
+minutes: 5
+kind: core
+objectives: ["1.5.4"]
+prerequisites: [p1-trigonometry-exact-values]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "use the identities sin
+    θ / cos θ ≡ tan θ and sin²θ + cos²θ ≡ 1", with its note on simplifying expressions (proving
+    identities and solving equations follow in the next lessons). All examples and questions are
+    original; every value and simplification checked numerically in Python. Independently
+    re-checked line by line (facts, worked examples, every answer key) in a separate AI review
+    on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use $\tan\theta \equiv \dfrac{\sin\theta}{\cos\theta}$ and $\sin^2\theta + \cos^2\theta \equiv 1$ to find the other ratios from one given value (with the right signs), and to simplify expressions.
+
+  - type: definition
+    term: Identity
+    body: |-
+      An **identity** is an equation that is true for **every** value of the variable for which both sides are defined. It's written with $\equiv$ ("is identically equal to") instead of $=$.
+
+      $\sin^2\theta$ means $(\sin\theta)^2$: square the sine, not the angle.
+
+  - type: explain
+    title: The two you need
+    body: |-
+      $$\tan\theta \equiv \frac{\sin\theta}{\cos\theta} \qquad\qquad \sin^2\theta + \cos^2\theta \equiv 1$$
+
+      The second one rearranges two ways, and you'll use both all the time:
+
+      $$\sin^2\theta \equiv 1 - \cos^2\theta \qquad \cos^2\theta \equiv 1 - \sin^2\theta$$
+
+  - type: diagram
+    diagram: p1-trigonometry-identity-triangle
+    alt: >-
+      A quarter of the unit circle in the first quadrant. The radius OP of length 1 makes angle θ
+      (drawn as 40°) with the x-axis, and P is labelled P(cos θ, sin θ). The perpendicular from P
+      meets the x-axis at N, making a shaded right-angled triangle ONP with base ON = cos θ, height
+      NP = sin θ and hypotenuse 1. Notes: Pythagoras in ONP gives cos²θ + sin²θ = 1; the gradient
+      of OP gives tan θ = sin θ ÷ cos θ.
+    caption: |-
+      Pythagoras on the unit circle. For any angle, $P = (\cos\theta, \sin\theta)$ lies on $x^2 + y^2 = 1$, so the identity holds for every $\theta$, not just acute ones.
+
+  - type: check
+    questions: [identity-mcq]
+
+  - type: example
+    title: One ratio in, two out
+    problem: |-
+      Given that $\sin\theta = \tfrac35$ and $\theta$ is obtuse, find the exact values of $\cos\theta$ and $\tan\theta$.
+    steps:
+      - |-
+        $\cos^2\theta = 1 - \sin^2\theta = 1 - \tfrac{9}{25} = \tfrac{16}{25}$, so $\cos\theta = \pm\tfrac45$.
+      - |-
+        **Pick the sign.** Obtuse means $90^\circ < \theta < 180^\circ$: the 2nd quadrant, where cos is negative. So $\cos\theta = -\tfrac45$.
+      - |-
+        $\tan\theta = \dfrac{\sin\theta}{\cos\theta} = \dfrac{3/5}{-4/5} = -\tfrac34$.
+    answer: |-
+      $\cos\theta = -\tfrac45$, $\tan\theta = -\tfrac34$. The square root gives $\pm$; the quadrant decides.
+
+  - type: check
+    questions: [cos-to-sin, obtuse-values, sign-spot]
+
+  - type: example
+    title: Starting from tan
+    problem: |-
+      Given that $\tan\theta = 2$ and $180^\circ < \theta < 270^\circ$, find the exact values of $\sin\theta$ and $\cos\theta$.
+    steps:
+      - |-
+        Sketch a right-angled triangle with opposite 2 and adjacent 1 (so $\tan = 2$). Hypotenuse $= \sqrt{2^2 + 1^2} = \sqrt5$.
+      - |-
+        So the basic sizes are $\sin = \tfrac{2}{\sqrt5}$ and $\cos = \tfrac{1}{\sqrt5}$.
+      - |-
+        Third quadrant: sin and cos are both negative (only tan is positive). So $\sin\theta = -\tfrac{2}{\sqrt5}$, $\cos\theta = -\tfrac{1}{\sqrt5}$.
+      - |-
+        Check with the identities: $\tfrac{\sin}{\cos} = \tfrac{-2}{-1} = 2$ ✓ and $\tfrac45 + \tfrac15 = 1$ ✓
+    answer: |-
+      $\sin\theta = -\tfrac{2}{\sqrt5}$, $\cos\theta = -\tfrac{1}{\sqrt5}$.
+
+  - type: example
+    title: Simplifying
+    problem: |-
+      Simplify $\dfrac{1 - \cos^2\theta}{\cos\theta\tan\theta}$.
+    steps:
+      - |-
+        Top: $1 - \cos^2\theta = \sin^2\theta$.
+      - |-
+        Bottom: $\cos\theta\tan\theta = \cos\theta \times \dfrac{\sin\theta}{\cos\theta} = \sin\theta$.
+      - |-
+        So the expression is $\dfrac{\sin^2\theta}{\sin\theta} = \sin\theta$.
+    answer: |-
+      $\sin\theta$ (wherever the original is defined). The usual moves: replace $\tan$ with $\tfrac{\sin}{\cos}$, and swap $1 - \cos^2$ for $\sin^2$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\sin^2\theta = \sin(\theta^2)$
+        right: |-
+          $\sin^2\theta = (\sin\theta)^2$. For $\theta = 30^\circ$: $\sin^2 30^\circ = \tfrac14$, but $\sin(900^\circ) = 0$.
+      - wrong: |-
+          $\cos\theta = \sqrt{1 - \sin^2\theta}$, always positive.
+        right: |-
+          $\cos\theta = \pm\sqrt{1 - \sin^2\theta}$. Use the quadrant (words like *obtuse*, *reflex*, or the given interval) to choose.
+      - wrong: |-
+          $\sin\theta + \cos\theta = 1$
+        right: |-
+          It's the **squares** that add to 1. At $45^\circ$: $\sin + \cos = \sqrt2 \neq 1$, but $\tfrac12 + \tfrac12 = 1$ ✓
+      - wrong: |-
+          $\tan\theta = \dfrac{\cos\theta}{\sin\theta}$
+        right: |-
+          Tan is "opposite over adjacent", which is $\tfrac{\sin}{\cos}$. Check: $\tan 45^\circ = 1$ either way, so test with $60^\circ$: $\tfrac{\sqrt3/2}{1/2} = \sqrt3$ ✓
+
+  - type: check
+    questions: [tan-quadrant, simplify-root]
+
+  - type: exam
+    body: |-
+      - Typical: *Given that $\cos\theta = -\tfrac{1}{3}$ and $\theta$ is reflex, find the exact value of $\tan\theta$.* Show the identity line, then justify the sign in a few words ("$\theta$ is in the third quadrant, so $\sin\theta < 0$").
+      - Answers like $-\tfrac{2}{\sqrt5}$ and $-\tfrac{2\sqrt5}{5}$ are both exact. Don't round.
+      - These identities are the engine for proving identities (next lesson) and, later in this topic, for solving equations like $2\sin^2\theta = 3\cos\theta$.
+
+  - type: takeaways
+    items:
+      - |-
+        $\tan\theta \equiv \tfrac{\sin\theta}{\cos\theta}$ and $\sin^2\theta + \cos^2\theta \equiv 1$, for every angle.
+      - |-
+        Rearrangements: $\sin^2\theta \equiv 1 - \cos^2\theta$, $\cos^2\theta \equiv 1 - \sin^2\theta$.
+      - |-
+        Square roots give $\pm$: the quadrant chooses the sign.
+      - |-
+        From $\tan\theta$: draw a right-angled triangle, find the hypotenuse, then fix the signs with CAST.
+
+questions:
+  - id: identity-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.4"]
+    prompt: |-
+      Which of these is true for every value of $\theta$?
+    explanation: |-
+      Rearranging $\sin^2\theta + \cos^2\theta \equiv 1$ gives $1 - \sin^2\theta \equiv \cos^2\theta$. The others fail for most angles.
+    options:
+      - text: |-
+          $1 - \sin^2\theta \equiv \cos^2\theta$
+        correct: true
+        why: |-
+          Subtract $\sin^2\theta$ from both sides of $\sin^2\theta + \cos^2\theta \equiv 1$.
+      - text: |-
+          $\sin\theta + \cos\theta \equiv 1$
+        why: |-
+          At $\theta = 45^\circ$ the left side is $\sqrt2$. Only the squares add to 1.
+      - text: |-
+          $\sin^2\theta \equiv \sin(\theta^2)$
+        why: |-
+          $\sin^2\theta$ squares the sine, not the angle.
+      - text: |-
+          $\tan\theta \equiv \dfrac{\cos\theta}{\sin\theta}$
+        why: |-
+          Upside down: $\tan\theta \equiv \tfrac{\sin\theta}{\cos\theta}$.
+
+  - id: cos-to-sin
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.4"]
+    prompt: |-
+      Given that $\cos\theta = \tfrac{5}{13}$ and $\theta$ is acute, find the exact value of $\sin\theta$.
+    fields:
+      - label: "sin θ ="
+        answer: 0.9230769230769231
+        tolerance: { abs: 0.0005 }
+    explanation: |-
+      $\sin^2\theta = 1 - \tfrac{25}{169} = \tfrac{144}{169}$, so $\sin\theta = \pm\tfrac{12}{13}$.
+
+      Acute means first quadrant, so $\sin\theta = \tfrac{12}{13}$.
+
+  - id: obtuse-values
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.4"]
+    prompt: |-
+      Given that $\sin\theta = \tfrac23$ and $\theta$ is obtuse, find the exact values of $\cos\theta$ and $\tan\theta$. (Surds are fine, for example `-√5/3`.)
+    fields:
+      - label: "cos θ ="
+        answer: -0.7453559924999299
+        tolerance: { abs: 0.0005 }
+      - label: "tan θ ="
+        answer: -0.8944271909999159
+        tolerance: { abs: 0.0005 }
+    explanation: |-
+      $\cos^2\theta = 1 - \tfrac49 = \tfrac59$, so $\cos\theta = \pm\tfrac{\sqrt5}{3}$. Obtuse means 2nd quadrant, so $\cos\theta = -\tfrac{\sqrt5}{3}$.
+
+      $\tan\theta = \dfrac{2/3}{-\sqrt5/3} = -\tfrac{2}{\sqrt5}$ $\left(= -\tfrac{2\sqrt5}{5}\right)$.
+
+  - id: sign-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.5.4"]
+    prompt: |-
+      A student is told $\sin\theta = 0.6$ with $90^\circ < \theta < 180^\circ$, and finds $\tan\theta$. Which line contains the first error?
+    lines:
+      - |-
+        $\cos^2\theta = 1 - \sin^2\theta = 1 - 0.36 = 0.64$
+      - |-
+        $\cos\theta = \sqrt{0.64} = 0.8$
+      - |-
+        $\tan\theta = \dfrac{\sin\theta}{\cos\theta} = \dfrac{0.6}{0.8}$
+      - |-
+        $= 0.75$
+    errorLine: 2
+    fix: |-
+      $\cos\theta = \pm 0.8$, and $\theta$ is obtuse, so $\cos\theta = -0.8$. Then $\tan\theta = \tfrac{0.6}{-0.8} = -0.75$.
+    explanation: |-
+      Taking a square root gives two possibilities. In the second quadrant cos is negative, so the student needed $-0.8$. Sanity check: tan is negative for obtuse angles.
+
+  - id: tan-quadrant
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.4"]
+    prompt: |-
+      Given that $\tan\theta = 3$ and $180^\circ < \theta < 270^\circ$, find the exact values of $\sin\theta$ and $\cos\theta$.
+    fields:
+      - label: "sin θ ="
+        answer: -0.9486832980505138
+        tolerance: { abs: 0.0005 }
+      - label: "cos θ ="
+        answer: -0.31622776601683794
+        tolerance: { abs: 0.0005 }
+    explanation: |-
+      Right-angled triangle with opposite 3, adjacent 1: hypotenuse $\sqrt{10}$. So the sizes are $\tfrac{3}{\sqrt{10}}$ and $\tfrac{1}{\sqrt{10}}$.
+
+      Third quadrant: both negative. $\sin\theta = -\tfrac{3}{\sqrt{10}}$, $\cos\theta = -\tfrac{1}{\sqrt{10}}$. Check: $\tfrac{9}{10} + \tfrac{1}{10} = 1$ ✓
+
+  - id: simplify-root
+    format: expression
+    difficulty: 3
+    objectives: ["1.5.4"]
+    prompt: |-
+      Simplify $\tan x\sqrt{1 - \sin^2 x}$, given that $-\tfrac{\pi}{2} < x < \tfrac{\pi}{2}$.
+    answer: sin(x)
+    variables: [x]
+    domain: { min: -1.5, max: 1.5 }
+    display: |-
+      $\sin x$
+    explanation: |-
+      $\sqrt{1 - \sin^2 x} = \sqrt{\cos^2 x} = \lvert\cos x\rvert$. For $-\tfrac{\pi}{2} < x < \tfrac{\pi}{2}$, $\cos x > 0$, so this is just $\cos x$.
+
+      Then $\tan x \cos x = \dfrac{\sin x}{\cos x} \times \cos x = \sin x$.
+
+      (Outside that interval, where $\cos x < 0$, the answer would be $-\sin x$. That's why the interval was given.)

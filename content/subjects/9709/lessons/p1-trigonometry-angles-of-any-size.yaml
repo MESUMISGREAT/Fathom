@@ -1,0 +1,290 @@
+id: p1-trigonometry-angles-of-any-size
+subject: "9709"
+topic: "1.5"
+title: Sine, cosine and tangent of any angle
+summary: Define sin, cos and tan for any angle with the unit circle, read their signs from the CAST diagram, and rewrite them using an acute basic angle.
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.5.1"]
+prerequisites: [circular-measure-radians]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "sketch and use graphs
+    of the sine, cosine and tangent functions (for angles of any size, and using either degrees
+    or radians)"; this lesson builds the "angles of any size" foundation (unit circle, signs by
+    quadrant, basic angles) that the graph lessons use. All examples and questions are original;
+    values checked in Python. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find $\sin\theta$, $\cos\theta$ and $\tan\theta$ for **any** angle (obtuse, reflex, negative, bigger than $360^\circ$), say whether each is positive or negative, and rewrite it using an acute angle.
+
+  - type: explain
+    title: SOH CAH TOA has a 90° problem
+    body: |-
+      Right-angled triangles can't have an angle of $150^\circ$. Yet your calculator happily tells you $\sin 150^\circ = 0.5$. So what *is* it the sine of?
+
+      The fix: stop using triangles as the definition and use a circle instead.
+
+  - type: definition
+    term: Sine and cosine of any angle
+    body: |-
+      Start at $(1, 0)$ on the **unit circle** $x^2 + y^2 = 1$ and turn through angle $\theta$ (anticlockwise for positive $\theta$, clockwise for negative). You land at the point $P$, and
+
+      $$P = (\cos\theta, \sin\theta), \qquad \tan\theta = \frac{\sin\theta}{\cos\theta} \;\; (\cos\theta \neq 0).$$
+
+  - type: diagram
+    diagram: p1-trigonometry-unit-circle
+    alt: >-
+      A unit circle centred at the origin O with axes from −1 to 1. A radius OP of length 1 makes
+      an angle θ = 150° measured anticlockwise from the positive x-axis, so P is in the upper-left
+      quadrant and is labelled P(cos θ, sin θ). A vertical line from P down to the x-axis is labelled
+      sin θ and the horizontal distance from O is labelled cos θ. The acute angle between OP and the
+      negative x-axis is marked 30°. Notes: P = (cos 150°, sin 150°) = (−0.866, 0.5); x < 0 so
+      cos 150° < 0; y > 0 so sin 150° > 0; tan θ = y ÷ x = sin θ ÷ cos θ.
+    caption: |-
+      For acute angles this is just SOH CAH TOA with hypotenuse 1. For bigger angles the coordinates simply go negative.
+
+  - type: intuition
+    title: Why this agrees with triangles
+    body: |-
+      For an acute angle, drop a perpendicular from $P$: you get a right-angled triangle with hypotenuse $1$. Then "opposite over hypotenuse" is just the height $y$, and "adjacent over hypotenuse" is the width $x$. Same answers as GCSE, but now the definition keeps working past $90^\circ$.
+
+      Turning through more than $360^\circ$ just goes round again, so $\sin 400^\circ = \sin 40^\circ$.
+
+  - type: check
+    questions: [unit-circle-cloze]
+
+  - type: explain
+    title: Signs by quadrant (CAST)
+    body: |-
+      Because $\cos\theta$ is the $x$-coordinate and $\sin\theta$ the $y$-coordinate, the signs depend only on the quadrant. Going anticlockwise from the first quadrant, the positive ones are **A**ll, **S**in, **T**an, **C**os. Start in the fourth quadrant instead and the letters spell **CAST**.
+
+      | Quadrant | Angles (degrees) | Angles (radians) | Positive |
+      | --- | --- | --- | --- |
+      | 1st | $0^\circ$ to $90^\circ$ | $0$ to $\tfrac{\pi}{2}$ | all three |
+      | 2nd | $90^\circ$ to $180^\circ$ | $\tfrac{\pi}{2}$ to $\pi$ | sin only |
+      | 3rd | $180^\circ$ to $270^\circ$ | $\pi$ to $\tfrac{3\pi}{2}$ | tan only |
+      | 4th | $270^\circ$ to $360^\circ$ | $\tfrac{3\pi}{2}$ to $2\pi$ | cos only |
+
+      Mnemonic, if you want one: **A**ll **S**tudents **T**ake **C**alculus, starting top right and going anticlockwise.
+
+  - type: diagram
+    diagram: p1-trigonometry-cast
+    alt: >-
+      Axes divided into four quadrants. Top right is labelled A, all positive; top left S, sin
+      positive; bottom left T, tan positive; bottom right C, cos positive. Four rays from the origin
+      each make the same acute angle α (drawn as 30°) with the x-axis: one in the first quadrant
+      labelled α, one in the second labelled 180° − α, one in the third labelled 180° + α and one in
+      the fourth labelled 360° − α. Below: in radians these are α, π − α, π + α, 2π − α.
+
+  - type: check
+    questions: [cast-quadrant, which-negative]
+
+  - type: explain
+    title: The basic-angle method
+    body: |-
+      To rewrite a trig ratio of any angle in terms of an acute angle:
+
+      1. Find the quadrant the angle lands in.
+      2. Find the **basic angle** $\alpha$: the acute angle between the radius and the **$x$-axis** (never the $y$-axis).
+      3. Same ratio of $\alpha$, with the sign from CAST.
+
+  - type: example
+    title: Three angles, one method
+    problem: |-
+      Write each in terms of an acute angle: (a) $\sin 200^\circ$ (b) $\cos(-70^\circ)$ (c) $\cos\tfrac{5\pi}{4}$
+    steps:
+      - |-
+        (a) $200^\circ$ is in the 3rd quadrant. Basic angle $200^\circ - 180^\circ = 20^\circ$. Only tan is positive there, so sine is negative: $\sin 200^\circ = -\sin 20^\circ$.
+      - |-
+        (b) $-70^\circ$ means turn $70^\circ$ clockwise: 4th quadrant, basic angle $70^\circ$. Cos is positive there: $\cos(-70^\circ) = \cos 70^\circ$.
+      - |-
+        (c) $\tfrac{5\pi}{4} = \pi + \tfrac{\pi}{4}$: 3rd quadrant, basic angle $\tfrac{\pi}{4}$. Cos is negative there: $\cos\tfrac{5\pi}{4} = -\cos\tfrac{\pi}{4}$.
+    answer: |-
+      $-\sin 20^\circ$, $\;\cos 70^\circ$, $\;-\cos\tfrac{\pi}{4}$. Check each on a calculator: they match.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The basic angle of $230^\circ$ is $270^\circ - 230^\circ = 40^\circ$.
+        right: |-
+          Measure to the **$x$-axis**: $230^\circ - 180^\circ = 50^\circ$. So $\sin 230^\circ = -\sin 50^\circ$.
+      - wrong: |-
+          A negative sine means the angle is negative.
+        right: |-
+          $\sin 200^\circ < 0$ and $\sin(-200^\circ) > 0$. The sign of the ratio comes from the quadrant, not the sign of the angle.
+      - wrong: |-
+          Negative angles are measured anticlockwise.
+        right: |-
+          Positive angles go anticlockwise from the positive $x$-axis; negative angles go **clockwise**.
+
+  - type: check
+    questions: [sin-230-mcq, same-cosine, same-sine-radians, cos-500-mcq]
+
+  - type: exam
+    body: |-
+      - You'll rarely be asked "which quadrant?" on its own. This is the engine behind exact values, graph sketching and, above all, finding every solution of a trig equation later in this topic.
+      - Draw a quick CAST sketch in the margin. It takes five seconds and stops sign errors.
+      - Radians work identically: swap $180^\circ$ for $\pi$ and $360^\circ$ for $2\pi$.
+
+  - type: takeaways
+    items:
+      - |-
+        On the unit circle, $P = (\cos\theta, \sin\theta)$ and $\tan\theta = \tfrac{\sin\theta}{\cos\theta}$.
+      - |-
+        CAST: positive ratios are All, Sin, Tan, Cos in quadrants 1, 2, 3, 4.
+      - |-
+        Basic angle: acute angle to the $x$-axis. Then same ratio, sign from CAST.
+      - |-
+        Related angles: $180^\circ - \alpha$, $180^\circ + \alpha$, $360^\circ - \alpha$ (or $\pi - \alpha$, $\pi + \alpha$, $2\pi - \alpha$).
+
+questions:
+  - id: unit-circle-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      Turning through angle $\theta$ from $(1, 0)$ around the unit circle lands at the point ( {{1}} , {{2}} ).
+    blanks:
+      - accept: ["cos θ", "cosθ", "cos(θ)", "cos theta", "costheta", "cos(theta)", "cos x"]
+      - accept: ["sin θ", "sinθ", "sin(θ)", "sin theta", "sintheta", "sin(theta)", "sin x"]
+    explanation: |-
+      The $x$-coordinate is $\cos\theta$ and the $y$-coordinate is $\sin\theta$. That's the definition that works for every angle.
+
+  - id: cast-quadrant
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      An angle $\theta$ has $\cos\theta < 0$ and $\tan\theta > 0$. Which quadrant is $\theta$ in?
+    explanation: |-
+      Tan is positive in quadrants 1 and 3; cos is negative in quadrants 2 and 3. Both hold only in the **third** quadrant, where tan is the only positive ratio.
+    options:
+      - text: The first quadrant
+        why: |-
+          In the first quadrant all three ratios are positive, so $\cos\theta$ can't be negative.
+      - text: The second quadrant
+        why: |-
+          Cos is negative there, but so is tan (only sin is positive in the second quadrant).
+      - text: The third quadrant
+        correct: true
+        why: |-
+          Here $x$ and $y$ are both negative: $\cos\theta < 0$ and $\tan\theta = \tfrac{y}{x} > 0$.
+      - text: The fourth quadrant
+        why: |-
+          Only cos is positive in the fourth quadrant, the opposite of what we need.
+
+  - id: which-negative
+    format: mcq
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      Which one of these is negative?
+    explanation: |-
+      $-100^\circ$ is $100^\circ$ clockwise: the third quadrant, where sine is negative. The others are in quadrants where that ratio is positive.
+    options:
+      - text: |-
+          $\sin 170^\circ$
+        why: |-
+          $170^\circ$ is in the 2nd quadrant, where sin is positive ($\sin 170^\circ = \sin 10^\circ \approx 0.174$).
+      - text: |-
+          $\cos 300^\circ$
+        why: |-
+          $300^\circ$ is in the 4th quadrant, where cos is positive ($\cos 300^\circ = 0.5$).
+      - text: |-
+          $\tan 200^\circ$
+        why: |-
+          $200^\circ$ is in the 3rd quadrant, where tan is positive ($\tan 200^\circ = \tan 20^\circ \approx 0.364$).
+      - text: |-
+          $\sin(-100^\circ)$
+        correct: true
+        why: |-
+          Clockwise $100^\circ$ lands in the 3rd quadrant: $\sin(-100^\circ) = -\sin 80^\circ \approx -0.985$.
+
+  - id: sin-230-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      Which of these is equal to $\sin 230^\circ$?
+    explanation: |-
+      $230^\circ$ is in the 3rd quadrant with basic angle $230^\circ - 180^\circ = 50^\circ$, and sine is negative there. So $\sin 230^\circ = -\sin 50^\circ \approx -0.766$.
+    options:
+      - text: |-
+          $-\sin 50^\circ$
+        correct: true
+        why: |-
+          Basic angle $50^\circ$, third quadrant, sine negative.
+      - text: |-
+          $\sin 50^\circ$
+        why: |-
+          Right basic angle, wrong sign: only tan is positive in the third quadrant.
+      - text: |-
+          $-\sin 40^\circ$
+        why: |-
+          $40^\circ$ is the angle to the $y$-axis ($270^\circ - 230^\circ$). Basic angles are measured to the $x$-axis.
+      - text: |-
+          $\sin 130^\circ$
+        why: |-
+          $\sin 130^\circ = \sin 50^\circ$ is positive; $\sin 230^\circ$ is negative.
+
+  - id: same-cosine
+    format: numeric
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      Find the angle between $0^\circ$ and $360^\circ$, other than $40^\circ$, whose cosine equals $\cos 40^\circ$.
+    fields:
+      - answer: 320
+        tolerance: { abs: 0.01 }
+        unit: "°"
+    explanation: |-
+      Cos is positive in quadrants 1 and 4. The 4th-quadrant angle with basic angle $40^\circ$ is $360^\circ - 40^\circ = 320^\circ$.
+
+  - id: same-sine-radians
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      Find the angle $\theta$, with $0 < \theta < 2\pi$ and $\theta \neq \tfrac{\pi}{5}$, for which $\sin\theta = \sin\tfrac{\pi}{5}$. Give it in terms of $\pi$.
+    fields:
+      - label: "θ ="
+        answer: 2.5132741228718345
+        tolerance: { abs: 0.002 }
+        unit: rad
+    explanation: |-
+      Sin is positive in quadrants 1 and 2. The 2nd-quadrant angle with basic angle $\tfrac{\pi}{5}$ is $\pi - \tfrac{\pi}{5} = \tfrac{4\pi}{5}$.
+
+  - id: cos-500-mcq
+    format: mcq
+    difficulty: 3
+    objectives: ["1.5.1"]
+    prompt: |-
+      Which of these is equal to $\cos 500^\circ$?
+    explanation: |-
+      $500^\circ = 360^\circ + 140^\circ$, so it lands in the same place as $140^\circ$: the 2nd quadrant, basic angle $180^\circ - 140^\circ = 40^\circ$, where cos is negative. So $\cos 500^\circ = -\cos 40^\circ \approx -0.766$.
+    options:
+      - text: |-
+          $-\cos 40^\circ$
+        correct: true
+        why: |-
+          One full turn plus $140^\circ$; basic angle $40^\circ$; cos negative in the 2nd quadrant.
+      - text: |-
+          $\cos 40^\circ$
+        why: |-
+          Right basic angle, but cos is negative in the 2nd quadrant.
+      - text: |-
+          $-\cos 50^\circ$
+        why: |-
+          $50^\circ$ is the angle to the $y$-axis ($140^\circ - 90^\circ$). Basic angles are measured to the $x$-axis.
+      - text: |-
+          It is undefined, because angles can't be more than $360^\circ$.
+        why: |-
+          Angles can be any size: keep turning round the circle. $500^\circ$ is just one lap plus $140^\circ$.

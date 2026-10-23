@@ -1,0 +1,254 @@
+id: p1-trigonometry-graphs-of-sin-cos-tan
+subject: "9709"
+topic: "1.5"
+title: The graphs of sin, cos and tan
+summary: Sketch y = sin x, y = cos x and y = tan x for any interval in degrees or radians, and use their period, range, symmetry and asymptotes.
+order: 2
+minutes: 5
+kind: core
+objectives: ["1.5.1"]
+prerequisites: [p1-trigonometry-angles-of-any-size]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.5 learning outcome "sketch and use graphs
+    of the sine, cosine and tangent functions (for angles of any size, and using either degrees
+    or radians)". All examples and questions are original; graphs plotted from the real
+    functions and solution counts checked in Python. Independently re-checked line by line
+    (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet
+    reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can sketch $y = \sin x$, $y = \cos x$ and $y = \tan x$ over any interval, in degrees or radians, and use their key features to count and locate solutions.
+
+  - type: explain
+    title: Unroll the circle
+    body: |-
+      Walk a point $P$ round the unit circle and plot what happens as the angle $x$ grows:
+
+      - its **height** ($y$-coordinate) traces out $y = \sin x$
+      - its **sideways position** ($x$-coordinate) traces out $y = \cos x$
+      - the ratio height $\div$ sideways traces $y = \tan x$, which blows up whenever the sideways position is zero
+
+      Every lap of the circle repeats the pattern. That repeat length is the **period**.
+
+  - type: diagram
+    diagram: p1-trigonometry-basic-graphs
+    alt: >-
+      Three graphs stacked on the same horizontal scale from −180° to 360°, with dashed vertical
+      lines every 90° and a second row of labels in radians from −π to 2π. Top: y = sin x, a smooth
+      wave between −1 and 1 through the origin, with maximum 1 at 90° and minimum −1 at −90° and
+      270°; period 360°. Middle: y = cos x, the same wave shifted, with maximum 1 at 0° and 360°,
+      minimum −1 at −180° and 180°, and zeros at −90°, 90° and 270°; period 360°. Bottom:
+      y = tan x, repeating S-shaped branches through 0°, ±180° and 360°, with dashed vertical
+      asymptotes at −90°, 90° and 270°; period 180°.
+
+  - type: explain
+    title: Key features
+    body: |-
+      | | $y = \sin x$ | $y = \cos x$ | $y = \tan x$ |
+      | --- | --- | --- | --- |
+      | Period | $360^\circ$ ($2\pi$) | $360^\circ$ ($2\pi$) | $180^\circ$ ($\pi$) |
+      | Range | $-1 \leqslant y \leqslant 1$ | $-1 \leqslant y \leqslant 1$ | all real $y$ |
+      | Zeros ($0^\circ$ to $360^\circ$) | $0^\circ, 180^\circ, 360^\circ$ | $90^\circ, 270^\circ$ | $0^\circ, 180^\circ, 360^\circ$ |
+      | Maximum $1$ at | $90^\circ$ | $0^\circ, 360^\circ$ | none |
+      | Minimum $-1$ at | $270^\circ$ | $180^\circ$ | none |
+      | Asymptotes | none | none | $x = 90^\circ, 270^\circ$ |
+
+      Beyond $0^\circ$ to $360^\circ$, keep repeating: the graphs go on forever in both directions.
+
+  - type: check
+    questions: [tan-period-mcq, features-cloze]
+
+  - type: intuition
+    title: Symmetry you get for free
+    body: |-
+      - $y = \sin x$ is symmetric about $x = 90^\circ$, so $\sin(180^\circ - x) = \sin x$.
+      - $y = \cos x$ is symmetric about the $y$-axis, so $\cos(-x) = \cos x$, and about $x = 180^\circ$, so $\cos(360^\circ - x) = \cos x$.
+      - $y = \cos x$ is just $y = \sin x$ slid $90^\circ$ to the left: $\cos x = \sin(x + 90^\circ)$.
+
+      These mirror lines are exactly why trig equations have more than one solution. Hold that thought for later in this topic.
+
+  - type: explain
+    title: Sketching the way examiners want
+    body: |-
+      1. Draw axes and label the $x$-axis with a sensible scale ($90^\circ$ steps, or $\tfrac{\pi}{2}$ steps in radians).
+      2. Mark $1$ and $-1$ on the $y$-axis for sin and cos.
+      3. Plot the key points (zeros, maxima, minima) for the **whole** interval asked, then join them with smooth curves: rounded peaks, never sharp corners.
+      4. For tan, draw the asymptotes as dashed lines first, then the branches hugging them.
+
+  - type: check
+    questions: [which-graph-mcq, cos-shift-mcq]
+
+  - type: explain
+    title: Counting solutions with a graph
+    body: |-
+      The solutions of $\sin x = k$ are the $x$-values where $y = \sin x$ meets the horizontal line $y = k$. So the number of solutions in an interval is just the number of crossings you can see.
+
+      For $-1 < k < 1$, sin and cos give **two crossings per period**, and tan gives **one per period** (for any $k$).
+
+  - type: check
+    questions: [count-sin, count-tan]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\tan x$ has period $360^\circ$, like sin and cos.
+        right: |-
+          Its branches repeat every $180^\circ$: $\tan(x + 180^\circ) = \tan x$.
+      - wrong: |-
+          $\tan x$ has asymptotes at $0^\circ$ and $180^\circ$.
+        right: |-
+          Those are its zeros. The asymptotes are where $\cos x = 0$: $x = 90^\circ$, $270^\circ$ (odd multiples of $\tfrac{\pi}{2}$).
+      - wrong: |-
+          The peaks of a sine curve are pointy.
+        right: |-
+          They're smooth and rounded. Sharp corners in a sketch lose the shape mark.
+      - wrong: |-
+          The graphs stop at $0^\circ$ and $360^\circ$.
+        right: |-
+          They repeat forever both ways. Sketch whatever interval the question gives, including negative angles.
+
+  - type: exam
+    body: |-
+      - Common wording: *Sketch the graph of $y = \cos x$ for $0 \leqslant x \leqslant 2\pi$*, often followed by *Hence state the number of solutions of …*. "Hence" means read it off your sketch.
+      - Match the interval exactly: if it's $-\pi \leqslant x \leqslant \pi$, start and finish there.
+      - Label the axes and the key values. An unlabelled wave is just a squiggle.
+
+  - type: takeaways
+    items:
+      - |-
+        sin and cos: period $360^\circ$ ($2\pi$), range $-1 \leqslant y \leqslant 1$. tan: period $180^\circ$ ($\pi$), every real value.
+      - |-
+        tan has asymptotes where $\cos x = 0$: $x = \pm 90^\circ, 270^\circ, \ldots$
+      - |-
+        $\sin(180^\circ - x) = \sin x$, $\cos(-x) = \cos x$, $\cos x = \sin(x + 90^\circ)$.
+      - |-
+        Number of solutions of $\sin x = k$ = number of times the line $y = k$ meets the curve.
+
+questions:
+  - id: tan-period-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      What is the period of $y = \tan x$, with $x$ in degrees?
+    explanation: |-
+      Each branch of the tan graph repeats every $180^\circ$ (that's $\pi$ radians): $\tan(x + 180^\circ) = \tan x$.
+    options:
+      - text: |-
+          $180^\circ$
+        correct: true
+        why: |-
+          One branch runs from asymptote $-90^\circ$ to asymptote $90^\circ$, then it repeats.
+      - text: |-
+          $360^\circ$
+        why: |-
+          That's the period of sin and cos. Tan repeats twice as often.
+      - text: |-
+          $90^\circ$
+        why: |-
+          That's the gap between a zero and the next asymptote, half a branch.
+      - text: |-
+          It has no period, because of the asymptotes.
+        why: |-
+          Asymptotes don't stop a graph repeating. Tan repeats exactly every $180^\circ$.
+
+  - id: features-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      For $0^\circ \leqslant x \leqslant 360^\circ$, the graph of $y = \cos x$ has its minimum value $-1$ at $x =$ {{1}}°, and the graph of $y = \tan x$ has asymptotes at $x = 90^\circ$ and $x =$ {{2}}°.
+    blanks:
+      - accept: ["180", "180°"]
+      - accept: ["270", "270°"]
+    explanation: |-
+      $\cos 180^\circ = -1$ (the point $(-1, 0)$ on the unit circle). Tan has asymptotes where $\cos x = 0$: at $90^\circ$ and $270^\circ$.
+
+  - id: which-graph-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.5.1"]
+    prompt: |-
+      A graph passes through $(0, 1)$, falls to a minimum of $-1$ at $x = \pi$ and is back at $1$ when $x = 2\pi$. Which graph is it?
+    explanation: |-
+      Starting at a maximum of 1 when $x = 0$ is the signature of cosine: $\cos 0 = 1$, $\cos\pi = -1$, $\cos 2\pi = 1$.
+    options:
+      - text: |-
+          $y = \cos x$
+        correct: true
+        why: |-
+          $\cos 0 = 1$, $\cos \pi = -1$, $\cos 2\pi = 1$. All three points fit.
+      - text: |-
+          $y = \sin x$
+        why: |-
+          $\sin 0 = 0$, so the sine graph passes through the origin, not $(0, 1)$.
+      - text: |-
+          $y = \tan x$
+        why: |-
+          $\tan 0 = 0$, and tan has no maximum or minimum values at all.
+      - text: |-
+          $y = -\cos x$
+        why: |-
+          That starts at $-1$, at a minimum, and reaches its maximum $1$ at $x = \pi$.
+
+  - id: cos-shift-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      Which statement is correct?
+    explanation: |-
+      $\cos x = \sin(x + 90^\circ)$, and replacing $x$ by $x + 90^\circ$ translates a graph $90^\circ$ to the **left**. Check: the sine peak at $90^\circ$ moves to $0^\circ$, where the cosine peak is.
+    options:
+      - text: |-
+          The graph of $y = \cos x$ is the graph of $y = \sin x$ translated $90^\circ$ to the left.
+        correct: true
+        why: |-
+          $\sin(x + 90^\circ) = \cos x$. The peak of sin at $90^\circ$ slides to $0^\circ$.
+      - text: |-
+          The graph of $y = \cos x$ is the graph of $y = \sin x$ translated $90^\circ$ to the right.
+        why: |-
+          Sliding right would move the sine peak from $90^\circ$ to $180^\circ$, where cos has its minimum.
+      - text: |-
+          The graph of $y = \cos x$ is the graph of $y = \sin x$ reflected in the $x$-axis.
+        why: |-
+          That gives $y = -\sin x$, which is $0$ at $x = 0$. Cos is $1$ there.
+      - text: |-
+          The graphs of $y = \sin x$ and $y = \cos x$ have different periods.
+        why: |-
+          Both have period $360^\circ$.
+
+  - id: count-sin
+    format: numeric
+    difficulty: 2
+    objectives: ["1.5.1"]
+    prompt: |-
+      How many solutions does the equation $\sin x = 0.3$ have in the interval $0^\circ \leqslant x \leqslant 720^\circ$?
+    fields:
+      - answer: 4
+    explanation: |-
+      $0^\circ$ to $720^\circ$ is two full periods of $y = \sin x$. The line $y = 0.3$ crosses each period twice (once going up, once coming down), so there are $2 \times 2 = 4$ solutions.
+
+  - id: count-tan
+    format: numeric
+    difficulty: 3
+    objectives: ["1.5.1"]
+    prompt: |-
+      How many solutions does $\tan x = 2$ have in the interval $-180^\circ \leqslant x \leqslant 360^\circ$?
+    fields:
+      - answer: 3
+    explanation: |-
+      Tan takes every value once per branch, and $\tan x = 2$ needs a branch where tan is positive. The branches are cut by asymptotes at $-90^\circ$, $90^\circ$ and $270^\circ$:
+
+      - $-180^\circ$ to $-90^\circ$: one solution ($x \approx -116.6^\circ$)
+      - $-90^\circ$ to $90^\circ$: one ($x \approx 63.4^\circ$)
+      - $90^\circ$ to $270^\circ$: one ($x \approx 243.4^\circ$)
+      - $270^\circ$ to $360^\circ$: tan rises from $-\infty$ to $0$, so none
+
+      Total: 3.
