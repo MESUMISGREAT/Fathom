@@ -1,0 +1,228 @@
+id: linear-momentum-2d-vectors
+subject: "9702"
+topic: "3.3"
+title: "Momentum in two dimensions: add the arrows"
+summary: Momentum is a vector, so in two dimensions you add momenta tip to tail; for objects meeting at right angles, Pythagoras and tan give the total.
+order: 6
+minutes: 5
+objectives: ["3.3.2"]
+prerequisites: [linear-momentum-explosions-recoil, units-adding-vectors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.3.2, solving problems with conservation of momentum in two
+    dimensions, using vector addition from 1.4). Both diagrams are drawn to scale: the junction
+    crash momenta (18 000 and 16 000 kg m s⁻¹, total 24 100 kg m s⁻¹ at 41.6°) and the explosion
+    momenta (6.0, 3.0 and 6.7 kg m s⁻¹). Masses and speeds are illustrative; all worked values and
+    answer keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can apply conservation of momentum when objects move in **two dimensions**, by adding momentum vectors, and find the speed and direction of the result.
+
+  - type: explain
+    title: Why does the wreck go diagonally?
+    body: |
+      A car heading east and a car heading north collide at a junction and lock together. The wreck slides off **north-east**-ish.
+
+      Not east, not north: somewhere in between, closer to whichever car brought more momentum.
+
+      The rule hasn't changed: **total momentum before = total momentum after**. But momentum is a **vector**, so "total" now means **vector sum**: add the arrows tip to tail, exactly as you added forces in topic 1.
+
+  - type: diagram
+    diagram: phys-linear-momentum-junction-crash
+    alt: >-
+      Left, "Top view": a crossroads. Car A (1200 kg) approaches from the west travelling east at
+      15 m s⁻¹, and car B (1600 kg) approaches from the south travelling north at 10 m s⁻¹. A dashed
+      arrow from the centre of the junction, labelled "wreck after", points up and to the right,
+      north of east. A compass arrow shows north. Right, "Momentum, to scale": a right-angled
+      vector triangle. Car A's momentum, 18 000, points right; from its tip, car B's momentum,
+      16 000, points up, with a right-angle mark between them. The total, 24 100, runs from the
+      start of A's arrow to the tip of B's, at 41.6° above the horizontal. All values in kg m s⁻¹.
+    caption: The wreck's momentum is the vector sum of the two cars' momenta.
+
+  - type: example
+    title: The junction crash
+    problem: |
+      Car A ($1200\ \text{kg}$) travels east at $15\ \text{m s}^{-1}$ and car B ($1600\ \text{kg}$) travels north at $10\ \text{m s}^{-1}$. They collide and lock together. Find the velocity of the wreck just after the collision.
+    steps:
+      - |
+        Momenta before: $p_A = 1200 \times 15 = 18\,000\ \text{kg m s}^{-1}$ east; $p_B = 1600 \times 10 = 16\,000\ \text{kg m s}^{-1}$ north.
+      - |
+        They are at right angles, so the total is $\sqrt{18\,000^2 + 16\,000^2} = 24\,083 \approx 24\,100\ \text{kg m s}^{-1}$.
+      - |
+        Direction: $\tan\theta = \dfrac{16\,000}{18\,000}$, so $\theta = 41.6°$ north of east.
+      - |
+        The wreck has this momentum, so $v = \dfrac{24\,083}{1200 + 1600} = 8.60\ \text{m s}^{-1}$.
+    answer: |
+      $8.60\ \text{m s}^{-1}$ at $41.6°$ north of east. Car A had more momentum, so the wreck heads closer to east than to north.
+
+  - type: check
+    questions: [equal-pucks, junction-velocity]
+
+  - type: explain
+    title: "Explosions in 2D: the arrows must close"
+    body: |
+      An object at rest has zero momentum. If it bursts into three pieces, their momenta must **add to zero**.
+
+      Drawn tip to tail, the three arrows form a **closed triangle**: you end up back where you started.
+
+      That's how investigators work out where the third piece went: it must carry exactly the momentum that cancels the other two.
+
+  - type: diagram
+    diagram: phys-linear-momentum-explosion-triangle
+    alt: >-
+      Left, "After: three pieces fly apart" (before: at rest, total momentum = 0). From one point,
+      three momentum arrows: 0.20 kg at 30 m s⁻¹ east (momentum 6.0, pointing right), 0.30 kg at
+      10 m s⁻¹ north (momentum 3.0, pointing up), and 0.10 kg at 67 m s⁻¹ (momentum 6.7) pointing
+      down and to the left at 26.6° below west, with the angle marked. Right, "Momenta tip to tail":
+      the same three arrows joined head to tail form a closed right-angled triangle: 6.0 to the
+      right, then 3.0 up, then 6.7 back to the starting point. A note says the arrows end where
+      they started, so the total momentum after = 0. Momenta are in kg m s⁻¹, to the same scale in
+      both panels.
+    caption: The third piece's momentum is equal and opposite to the sum of the other two.
+
+  - type: example
+    title: Find the third piece
+    problem: |
+      An object at rest explodes into three pieces. A $0.20\ \text{kg}$ piece flies east at $30\ \text{m s}^{-1}$ and a $0.30\ \text{kg}$ piece flies north at $10\ \text{m s}^{-1}$. The third piece has mass $0.10\ \text{kg}$. Find its velocity.
+    steps:
+      - |
+        Momenta: $0.20 \times 30 = 6.0\ \text{kg m s}^{-1}$ east and $0.30 \times 10 = 3.0\ \text{kg m s}^{-1}$ north.
+      - |
+        Their sum: $\sqrt{6.0^2 + 3.0^2} = 6.71\ \text{kg m s}^{-1}$ at $\tan^{-1}(3.0/6.0) = 26.6°$ north of east.
+      - |
+        The third piece must cancel this: $6.71\ \text{kg m s}^{-1}$ at $26.6°$ **south of west**.
+      - |
+        Speed: $v = \dfrac{6.71}{0.10} = 67\ \text{m s}^{-1}$.
+    answer: |
+      $67\ \text{m s}^{-1}$ at $26.6°$ south of west. The lightest piece flies off fastest.
+
+  - type: check
+    questions: [three-pieces, two-pieces-line]
+
+  - type: misconceptions
+    items:
+      - wrong: Add the two momenta as numbers to get the total.
+        right: Only when they point the same way. At right angles, use **Pythagoras**; at other angles, resolve (next lesson) or draw to scale.
+      - wrong: The wreck moves in the direction of the faster car.
+        right: The direction is set by the **momenta**, so mass matters as much as speed. A slow, heavy lorry can carry more momentum than a fast, light car.
+      - wrong: Momentum can't be conserved in 2D because the objects change direction.
+        right: The **vector** total is conserved, in size **and** direction. Individual directions change; the total doesn't.
+
+  - type: exam
+    body: |
+      - Sketch the momentum vector triangle, even when you then calculate. It shows the examiner your method and shows you which angle you've found.
+      - Always give a direction with the answer, as an angle from a stated reference ("41.6° north of east").
+      - Keep unrounded values in your calculator until the end; rounding the total momentum early can shift the last significant figure.
+
+  - type: check
+    questions: [vector-spot-error]
+
+  - type: takeaways
+    items:
+      - In 2D, total momentum before = total momentum after as **vectors**.
+      - |
+        Momenta at right angles: total $= \sqrt{p_1^2 + p_2^2}$, direction from $\tan\theta = \dfrac{p_2}{p_1}$.
+      - For an object at rest that breaks up, the momentum arrows of the pieces form a closed polygon (total zero).
+      - Give every answer as a magnitude and a direction.
+
+questions:
+  - id: equal-pucks
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      Two identical pucks, each of mass $m$ and speed $v$, slide on smooth ice: one due east, one due north. They collide and stick together. What is the velocity of the combined puck?
+    options:
+      - text: $0.71v$, towards the north-east
+        correct: true
+        why: Correct. Total momentum $= \sqrt{(mv)^2 + (mv)^2} = 1.41mv$ at 45°; dividing by the mass $2m$ gives $0.71v$.
+      - text: $v$, towards the north-east
+        why: This would need a total momentum of $2mv$, which is the sum of the two as numbers. At right angles they add by Pythagoras.
+      - text: $1.41v$, towards the north-east
+        why: $1.41mv$ is the total momentum, but the combined mass is $2m$, not $m$.
+      - text: Zero, because the two momenta cancel
+        why: Momenta cancel only if they point in opposite directions. These are at right angles.
+    explanation: |
+      $p = \sqrt{2}\,mv$ at 45° (north-east). Combined mass $2m$, so speed $= \dfrac{\sqrt{2}\,mv}{2m} = \dfrac{v}{\sqrt{2}} \approx 0.71v$.
+
+  - id: junction-velocity
+    format: numeric
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      A $900\ \text{kg}$ car travelling north at $20\ \text{m s}^{-1}$ collides with a $1500\ \text{kg}$ van travelling east at $8.0\ \text{m s}^{-1}$. They lock together. Find the speed of the wreck just after the collision, and the angle of its velocity measured east of north. Give both to 3 significant figures.
+    fields:
+      - label: "speed ="
+        answer: 9.014
+        tolerance: { abs: 0.015 }
+        sigFigs: 3
+        unit: m s⁻¹
+      - label: "angle east of north ="
+        answer: 33.69
+        sigFigs: 3
+        unit: °
+    explanation: |
+      Car: $900 \times 20 = 18\,000\ \text{kg m s}^{-1}$ north. Van: $1500 \times 8.0 = 12\,000\ \text{kg m s}^{-1}$ east. Total $= \sqrt{18\,000^2 + 12\,000^2} = 21\,633 \approx 21\,600\ \text{kg m s}^{-1}$, so $v = \dfrac{21\,633}{2400} = 9.01\ \text{m s}^{-1}$. Angle east of north: $\tan^{-1}\left(\dfrac{12\,000}{18\,000}\right) = 33.7°$.
+
+  - id: three-pieces
+    format: numeric
+    difficulty: 3
+    objectives: ["3.3.2"]
+    prompt: |
+      A stationary object explodes into three pieces. A $0.25\ \text{kg}$ piece moves east at $24\ \text{m s}^{-1}$ and a $0.50\ \text{kg}$ piece moves north at $16\ \text{m s}^{-1}$. The third piece has mass $0.25\ \text{kg}$. Find its speed, and the angle of its velocity measured south of west.
+    fields:
+      - label: "speed ="
+        answer: 40
+        tolerance: { abs: 0.2 }
+        unit: m s⁻¹
+      - label: "angle south of west ="
+        answer: 53.13
+        tolerance: { abs: 0.2 }
+        unit: °
+    explanation: |
+      Momenta: $0.25 \times 24 = 6.0\ \text{kg m s}^{-1}$ east and $0.50 \times 16 = 8.0\ \text{kg m s}^{-1}$ north. Their sum is $\sqrt{6.0^2 + 8.0^2} = 10\ \text{kg m s}^{-1}$ at $\tan^{-1}(8.0/6.0) = 53.1°$ north of east. The third piece cancels it: $10\ \text{kg m s}^{-1}$ at $53.1°$ south of west, so $v = \dfrac{10}{0.25} = 40\ \text{m s}^{-1}$.
+
+  - id: two-pieces-line
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      An object at rest explodes into exactly **two** pieces. Which statement must be true?
+    options:
+      - text: The pieces move off in exactly opposite directions
+        correct: true
+        why: Correct. Their momenta must add to zero, so they must be equal in size and opposite in direction, along one line.
+      - text: The pieces can move off at right angles to each other
+        why: Two arrows at right angles can never add to zero. That needs at least three pieces.
+      - text: The pieces move off with equal speeds
+        why: Their momenta are equal in size; their speeds are equal only if their masses are.
+      - text: The pieces have equal kinetic energies
+        why: With equal-sized momenta, the lighter piece has more kinetic energy ($E_\text{k} = \dfrac{p^2}{2m}$).
+    explanation: |
+      Zero total momentum with two vectors means they cancel exactly: same size, opposite directions. A third piece is needed for a triangle.
+
+  - id: vector-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      Car P ($1000\ \text{kg}$) moves east at $12\ \text{m s}^{-1}$ and car Q ($1500\ \text{kg}$) moves north at $6.0\ \text{m s}^{-1}$. They collide and lock together. Which line of this solution contains the first error?
+    lines:
+      - |
+        Momentum of P $= 1000 \times 12 = 12\,000\ \text{kg m s}^{-1}$ east.
+      - |
+        Momentum of Q $= 1500 \times 6.0 = 9000\ \text{kg m s}^{-1}$ north.
+      - |
+        Total momentum $= 12\,000 + 9000 = 21\,000\ \text{kg m s}^{-1}$.
+      - |
+        Speed after $= \dfrac{21\,000}{2500} = 8.4\ \text{m s}^{-1}$.
+    errorLine: 3
+    fix: |
+      The momenta are at right angles, so add them as vectors: $\sqrt{12\,000^2 + 9000^2} = 15\,000\ \text{kg m s}^{-1}$ at $36.9°$ north of east. The speed is $\dfrac{15\,000}{2500} = 6.0\ \text{m s}^{-1}$.
+    explanation: |
+      Adding momenta as plain numbers only works when they point the same way. At right angles it overestimates the total, so the speed comes out too big (8.4 instead of 6.0 m s⁻¹).

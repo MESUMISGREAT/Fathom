@@ -1,0 +1,225 @@
+id: linear-momentum-conservation-principle
+subject: "9702"
+topic: "3.3"
+title: "Conservation of momentum: the universe's strictest accountant"
+summary: When no resultant external force acts on a system, its total momentum stays constant; whatever momentum one object gains, another loses.
+order: 1
+minutes: 5
+objectives: ["3.3.1", "3.3.2"]
+prerequisites: [momentum-newton-linear-momentum, momentum-newton-force-momentum, momentum-newton-third-law]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.3.1, stating the principle of conservation of momentum, with a
+    first simple application under 3.3.2). The justification uses Newton's third law and force as
+    rate of change of momentum (3.1.4, 3.1.5). The force–time graph is a qualitative sketch with
+    equal and opposite areas (no scale). Masses and speeds are illustrative; all worked values and
+    answer keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **state the principle of conservation of momentum** in the words examiners reward, explain why it's true using Newton's third law, and use it on a simple collision.
+
+  - type: explain
+    title: Momentum is never made or destroyed, only passed on
+    body: |
+      Snooker ball hits snooker ball; car rear-ends car; skater shoves skater. Each time, the objects **pass momentum** between them: whatever one gains, the other loses, to the last $\text{kg m s}^{-1}$.
+
+      Think of a bank where money only moves between accounts and never leaves the building: the **total** in the bank never changes.
+
+      Where the analogy breaks: momentum is a **vector**, so it can be negative. Two objects can both be moving and still have a total momentum of zero.
+
+  - type: definition
+    term: Principle of conservation of momentum
+    body: |
+      The **total momentum of a system** of interacting objects **remains constant**, provided **no resultant external force** acts on the system.
+
+      Equivalently, for a closed (isolated) system: **total momentum before** an interaction **= total momentum after** it.
+
+  - type: explain
+    title: What counts as "the system"?
+    body: |
+      The **system** is whichever objects you choose to include. Then sort the forces:
+
+      - **Internal forces** act between objects inside the system (the push of trolley A on trolley B, and B on A). They can't change the total.
+      - **External forces** come from outside it (friction from the track, a push from your hand, the weight of an object if the Earth isn't in your system). A **resultant** external force changes the total momentum.
+
+      So "no resultant external force" is the condition, not "no forces". During a collision there are huge forces; they're just internal.
+
+  - type: check
+    questions: [principle-cloze, principle-condition]
+
+  - type: diagram
+    diagram: phys-linear-momentum-third-law-proof
+    alt: >-
+      Top: trolley A, on the left, in contact with trolley B during a collision on a level track. An
+      arrow pointing right is labelled "force on B by A = +F"; an arrow pointing left is labelled
+      "force on A by B = −F". A note says "Newton's third law: equal size, opposite direction, same
+      contact time". Bottom: a force–time graph with rightwards positive. The force on B is a smooth
+      hump above the time axis and the force on A is its mirror image below the axis, both lasting
+      the same contact time Δt. The area above is labelled "Δp of B = + area" and the area below
+      "Δp of A = − area". A heading reads "Total change in momentum = (+area) + (−area) = 0".
+    caption: The forces are equal and opposite at every instant, so the momentum changes are equal and opposite too.
+
+  - type: intuition
+    title: Why it has to be true
+    body: |
+      While A and B are touching, A pushes B with force $F$ and, by **Newton's third law**, B pushes A with $-F$: at every instant, for exactly the same time $\Delta t$.
+
+      Force is the **rate of change of momentum**, so $\Delta p_B = +F\Delta t$ and $\Delta p_A = -F\Delta t$. Add them: the total change is **zero**.
+
+      The force can rise and fall however it likes during the crash. The areas under the two force–time graphs are always equal and opposite.
+
+  - type: check
+    questions: [third-law-proof-error]
+
+  - type: example
+    title: Two railway trucks couple together
+    problem: |
+      A railway truck of mass $12\,000\ \text{kg}$ rolls at $3.0\ \text{m s}^{-1}$ into a stationary truck of mass $8000\ \text{kg}$. They couple together and move off as one. Find their common velocity just after coupling.
+    steps:
+      - |
+        System: both trucks. Friction from the rails is small compared with the coupling forces, so momentum is conserved during the collision.
+      - |
+        Total momentum before $= 12\,000 \times 3.0 + 8000 \times 0 = 36\,000\ \text{kg m s}^{-1}$.
+      - |
+        Total momentum after $= (12\,000 + 8000)\,v = 20\,000\,v$.
+      - |
+        Conservation: $20\,000\,v = 36\,000$, so $v = 1.8\ \text{m s}^{-1}$, in the original direction of the first truck.
+    answer: |
+      $1.8\ \text{m s}^{-1}$, in the direction the first truck was moving. The first truck lost $14\,400\ \text{kg m s}^{-1}$; the second gained exactly that.
+
+  - type: misconceptions
+    items:
+      - wrong: Momentum is only conserved in some collisions (the elastic ones).
+        right: Momentum is conserved in **every** collision and explosion, provided no resultant external force acts. It's **kinetic energy** that is only sometimes conserved.
+      - wrong: A falling apple gains momentum, so momentum isn't conserved.
+        right: The apple on its own isn't an isolated system, because its **weight** is an external force. In the apple + Earth system, the Earth gains an equal momentum upwards, and the total stays constant.
+      - wrong: Conservation means each object keeps the same momentum.
+        right: Only the **total** is constant. Individual momenta change; that's the whole point of a collision.
+      - wrong: The condition is "no forces act on the objects".
+        right: The condition is **no resultant external force**. Internal forces between the objects can be enormous.
+
+  - type: exam
+    body: |
+      "State the principle of conservation of momentum" is usually **2 marks**, and examiners look for two ideas:
+
+      1. the **total** momentum of a **system** is constant (or total before = total after), and
+      2. **no resultant external force** acts (or the system is closed/isolated).
+
+      Insider hack: leave out "total" or the condition and you drop a mark. "Momentum is conserved" on its own scores nothing; it just repeats the question.
+
+  - type: check
+    questions: [trolley-stick, falling-apple, principle-statement]
+
+  - type: takeaways
+    items:
+      - The total momentum of a system is constant provided no resultant external force acts on it.
+      - Internal forces come in Newton's third law pairs, so the momentum changes they cause cancel exactly.
+      - Choose your system, then check for external forces; a falling object alone is not an isolated system.
+      - "To solve: total momentum before = total momentum after."
+
+questions:
+  - id: principle-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.3.1"]
+    prompt: |
+      The {{1}} momentum of a system remains constant, provided no resultant {{2}} force acts on the system.
+    blanks:
+      - accept: [total, overall, combined, sum of the, sum of]
+      - accept: [external]
+    explanation: |
+      The principle is about the **total** momentum of the whole system, and its condition is **no resultant external force**. Internal forces between the objects can't change the total.
+
+  - id: principle-condition
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.1"]
+    prompt: |
+      In which situation is the total momentum of the named system conserved?
+    options:
+      - text: "Two pucks colliding on smooth, level ice. System: both pucks."
+        correct: true
+        why: Correct. The forces between the pucks are internal; with no friction, the external forces (weight and normal contact force) balance, so there is no resultant external force.
+      - text: "A car braking to a stop on a road. System: the car."
+        why: Friction from the road is an external force on the car, so the car's momentum changes.
+      - text: "A stone accelerating as it falls through the air. System: the stone."
+        why: The stone's weight is an external force (the Earth isn't in the system), so its momentum increases.
+      - text: "A trolley pushed along a track by a hand. System: the trolley."
+        why: The hand is outside the system, so its push is an external force.
+    explanation: |
+      Check for a resultant **external** force. Only the pucks on frictionless ice have none; in the others, something outside the system pushes or pulls.
+
+  - id: third-law-proof-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.3.1"]
+    prompt: |
+      A student explains why momentum is conserved when trolley A collides with trolley B. Which line contains the error?
+    lines:
+      - |
+        During the collision, A exerts a force $F$ on B for a time $\Delta t$.
+      - |
+        By Newton's third law, B exerts a force $-F$ on A for the same time $\Delta t$.
+      - |
+        Force is the rate of change of momentum, so the change in momentum of B is $F\Delta t$.
+      - |
+        The change in momentum of A is also $+F\Delta t$, because the two forces are equal in size.
+      - |
+        So the total change in momentum of the system is zero.
+    errorLine: 4
+    fix: |
+      The force on A is $-F$, so A's change in momentum is $-F\Delta t$. The changes are equal in size and **opposite** in direction, so they add to zero.
+    explanation: |
+      With $+F\Delta t$ for both, the total change would be $2F\Delta t$, not zero. The minus sign from Newton's third law is what makes the momentum changes cancel.
+
+  - id: trolley-stick
+    format: numeric
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      A trolley of mass $0.80\ \text{kg}$ moving at $1.5\ \text{m s}^{-1}$ collides with a stationary trolley of mass $0.40\ \text{kg}$. They stick together. Calculate their common speed just after the collision.
+    fields:
+      - answer: 1.0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻¹
+    explanation: |
+      Momentum before $= 0.80 \times 1.5 = 1.2\ \text{kg m s}^{-1}$. After, the combined mass is $1.20\ \text{kg}$, so $v = \dfrac{1.2}{1.20} = 1.0\ \text{m s}^{-1}$, in the original direction.
+
+  - id: falling-apple
+    format: mcq
+    difficulty: 3
+    objectives: ["3.3.1"]
+    prompt: |
+      An apple falls from a tree and its momentum increases. How is this consistent with the principle of conservation of momentum?
+    options:
+      - text: The apple's weight is an external force on the apple; in the apple + Earth system, the Earth gains an equal and opposite momentum, so the total is constant
+        correct: true
+        why: Correct. The Earth pulls the apple down and the apple pulls the Earth up with an equal force, so their momentum changes cancel.
+      - text: Momentum is not conserved when gravity acts
+        why: Momentum is always conserved for an isolated system. Include the Earth and gravity becomes an internal force.
+      - text: Air resistance removes exactly the momentum that gravity adds
+        why: If that were true the apple wouldn't speed up at all. Its momentum does increase.
+      - text: Conservation of momentum only applies to collisions, not to falling objects
+        why: It applies to every interaction, including gravitational ones. You just have to choose the system correctly.
+    explanation: |
+      The apple alone isn't isolated. The Earth's change in momentum is equal and opposite to the apple's, but the Earth is so massive that its change in velocity is far too small to notice.
+
+  - id: principle-statement
+    format: explain
+    difficulty: 1
+    objectives: ["3.3.1"]
+    prompt: |
+      State the principle of conservation of momentum.
+    model: |
+      The total momentum of a system of interacting objects remains constant, provided no resultant external force acts on the system. (Equivalently: for a closed system, the total momentum before an interaction equals the total momentum after it.)
+    keyPoints:
+      - Refers to the total momentum (sum of momenta) of a system
+      - The total stays constant, or total before = total after
+      - "The condition: no resultant external force acts (a closed or isolated system)"
+    explanation: |
+      Both parts earn marks: what is conserved (the **total** momentum) and when (**no resultant external force**).

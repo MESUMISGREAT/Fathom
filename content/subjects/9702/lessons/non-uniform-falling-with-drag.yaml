@@ -1,0 +1,257 @@
+id: non-uniform-falling-with-drag
+subject: "9702"
+topic: "3.2"
+title: "Falling with air resistance: the skydiver's story"
+summary: A falling object speeds up, so the air resistance grows, so its acceleration shrinks from g towards zero until drag balances weight at terminal velocity.
+order: 2
+minutes: 5
+objectives: ["3.2.2", "3.2.3"]
+prerequisites: [non-uniform-friction-drag, momentum-newton-weight, equations-motion-free-fall]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 3.2.2, describing and explaining qualitatively the motion of an
+    object falling in a uniform gravitational field with air resistance, and 3.2.3, reaching a
+    terminal velocity against a resistive force). The graphs are computed for an illustrative
+    skydiver with drag proportional to v² and terminal velocity 50 m s⁻¹, using g = 9.81 m s⁻²;
+    the free-body diagram arrows are to scale (D = 0, W/2, W). Masses and drag values are
+    illustrative; all worked values and answer keys were computed with Python. All questions are
+    original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe and explain, step by step, how the velocity and acceleration of a falling object change when air resistance acts, and why it ends up at a **terminal velocity**.
+
+  - type: explain
+    title: The air is your friend
+    body: |
+      A skydiver jumps from $3000\ \text{m}$. With no air, she'd hit about $240\ \text{m s}^{-1}$ by the ground: airliner cruising speed.
+
+      With air, she never goes faster than about $55\ \text{m s}^{-1}$ (roughly $200\ \text{km h}^{-1}$), however long she falls. Two forces act on her:
+
+      - her **weight** $W = mg$, which is constant;
+      - **air resistance** $D$, which **increases as her speed increases**.
+
+      Everything that happens comes from the fight between them.
+
+  - type: explain
+    title: The story in three acts
+    body: |
+      | | Speed | Air resistance $D$ | Resultant force | Acceleration |
+      | --- | --- | --- | --- | --- |
+      | **1. Just released** | zero | zero | $W$ | $g$ |
+      | **2. Speeding up** | increasing | increasing | $W - D$, decreasing | less than $g$, decreasing |
+      | **3. Terminal velocity** | constant | $= W$ | zero | zero |
+
+      The crucial bit is act 2. She is **still speeding up**, just less and less quickly, because each extra bit of speed brings extra drag, which eats into the resultant force.
+
+  - type: diagram
+    diagram: phys-non-uniform-skydiver-forces
+    alt: >-
+      Three free-body diagrams of a belly-down skydiver, side by side. In each, an arrow W of the
+      same length points down from the skydiver. Panel 1, "Just released": there is no upward
+      arrow, with the label "no air resistance yet"; underneath, "v = 0, so D = 0", "resultant =
+      W", "a = g". Panel 2, "Speeding up": an upward arrow D half as long as W; underneath, "v
+      bigger, so D bigger", "resultant = W − D", "0 < a < g". Panel 3, "Terminal velocity": an
+      upward arrow D the same length as W; underneath, "D has grown to equal W", "resultant = 0",
+      "a = 0, v constant".
+    caption: The weight never changes. The drag arrow grows until it matches it.
+
+  - type: explain
+    title: The one equation you need
+    body: |
+      Newton's second law, with downwards positive:
+
+      $$a = \frac{W - D}{m} = g - \frac{D}{m}$$
+
+      - At release, $D = 0$, so $a = g$.
+      - As $D$ grows, $a$ falls.
+      - When $D = W$, $a = 0$.
+
+  - type: example
+    title: Halfway through the story
+    problem: |
+      A skydiver of mass $75\ \text{kg}$ is falling. At one instant the air resistance on her is $450\ \text{N}$. Find her acceleration at that instant, and the air resistance when she reaches terminal velocity. Use $g = 9.81\ \text{m s}^{-2}$.
+    steps:
+      - |
+        Weight: $W = mg = 75 \times 9.81 = 735.75\ \text{N}$, so about $736\ \text{N}$.
+      - |
+        Resultant force (downwards): $W - D = 735.75 - 450 = 285.75\ \text{N}$.
+      - |
+        $a = \dfrac{285.75}{75} = 3.81\ \text{m s}^{-2}$ downwards. She's still speeding up, at well under $g$.
+      - |
+        At terminal velocity the resultant is zero, so $D = W = 736\ \text{N}$.
+    answer: |
+      $a = 3.81\ \text{m s}^{-2}$ downwards; at terminal velocity $D = 736\ \text{N}$.
+
+  - type: check
+    questions: [release-acceleration, skydiver-acceleration]
+
+  - type: definition
+    term: Terminal velocity
+    body: |
+      The constant velocity reached by an object moving against a resistive force, when the resistive force has changed until the forces on the object **balance** (for an object falling through air: air resistance = weight). The **resultant force is zero**, so the acceleration is zero.
+
+  - type: diagram
+    diagram: phys-non-uniform-fall-graphs
+    alt: >-
+      Two graphs against time t in seconds from 0 to 20. Left, "Velocity against time", v in m s⁻¹
+      from 0 to 70: a curve starts at the origin, rising steeply at first along a dashed straight
+      line labelled "no air: gradient g", then bends over and levels off at a dashed horizontal
+      line at 50 m s⁻¹ labelled "terminal velocity", which it reaches by about 12 s. A note says
+      "gradient (= a) falls from g to zero". Right, "Acceleration against time", a in m s⁻² from 0
+      to 12: the curve starts at 9.81 ("starts at g = 9.81 m s⁻²"), stays near it briefly, then
+      falls in an S-shape towards zero by about 15 s, labelled "a → 0 as D → W".
+    caption: Illustrative skydiver with a terminal velocity of 50 m s⁻¹. The gradient of the v–t graph is the acceleration.
+
+  - type: explain
+    title: Reading the graphs
+    body: |
+      - **v–t graph**: starts at the origin with gradient $g$ (it begins exactly like free fall), the gradient **decreases**, and the curve levels off at the terminal velocity. It never overshoots.
+      - **a–t graph**: starts at $9.81\ \text{m s}^{-2}$ and decreases to zero.
+      - The **area** under the v–t graph is still the distance fallen.
+      - Because the acceleration keeps changing, **suvat does not apply** here. Graphs and force arguments do the work instead.
+
+  - type: check
+    questions: [vt-shape, shuttlecock-drag]
+
+  - type: misconceptions
+    items:
+      - wrong: As air resistance increases, the skydiver slows down.
+        right: Until drag equals weight, the resultant force is still **downwards**, so she keeps **speeding up**, just with a smaller acceleration.
+      - wrong: At terminal velocity there are no forces on the skydiver.
+        right: Both forces are still there and still large. They are **balanced**, so the resultant force is zero.
+      - wrong: The acceleration decreases because gravity gets weaker.
+        right: Near the Earth's surface the weight is constant. The acceleration decreases because the **air resistance** grows.
+      - wrong: Terminal velocity means the object has stopped accelerating, so it has stopped moving.
+        right: Zero acceleration means **constant velocity**, here about $55\ \text{m s}^{-1}$ downwards. Very much moving.
+
+  - type: exam
+    body: |
+      "Describe and explain the motion" questions are worth 3–4 marks, and the marks sit on a **chain of cause and effect**. Write each link:
+
+      1. Speed increases, so **air resistance increases**.
+      2. So the **resultant force** (weight − air resistance) **decreases**.
+      3. So the **acceleration decreases** (it starts at $g$).
+      4. Eventually air resistance **equals the weight**: resultant force zero, acceleration zero, **constant (terminal) velocity**.
+
+      Insider hack: say "resultant force", not just "force". And never write that the object "slows down" before terminal velocity; examiners hunt for that.
+
+  - type: check
+    questions: [chain-spot-error, terminal-explain]
+
+  - type: takeaways
+    items:
+      - "At release: v = 0, so air resistance is zero and a = g."
+      - As speed increases, air resistance increases, so the resultant force and the acceleration decrease.
+      - The object keeps speeding up until air resistance equals its weight.
+      - "At terminal velocity: air resistance = weight, resultant force = 0, a = 0, velocity constant."
+      - The v–t graph starts with gradient g and levels off; the a–t graph falls from g to zero.
+
+questions:
+  - id: release-acceleration
+    format: mcq
+    difficulty: 1
+    objectives: ["3.2.2"]
+    prompt: |
+      A skydiver steps out of the basket of a hot-air balloon that is stationary in still air. What is her acceleration at the instant she leaves the basket?
+    options:
+      - text: Equal to $g$, $9.81\ \text{m s}^{-2}$ downwards
+        correct: true
+        why: Correct. Her speed is zero, so the air resistance is zero and the only force is her weight.
+      - text: Zero, because she is momentarily at rest
+        why: Being at rest doesn't mean zero acceleration. Her weight is an unbalanced force, so she accelerates straight away.
+      - text: Less than $g$, because of air resistance
+        why: Air resistance depends on speed. At the instant of release her speed is zero, so there's no air resistance yet.
+      - text: More than $g$, because her weight is large
+        why: A bigger weight comes with a bigger mass; $a = W/m = g$ whatever her mass. Nothing can make it exceed $g$ here.
+    explanation: |
+      At release $v = 0$, so $D = 0$ and $a = W/m = g$. The air resistance only builds up as she speeds up.
+
+  - id: skydiver-acceleration
+    format: numeric
+    difficulty: 2
+    objectives: ["3.2.2"]
+    prompt: |
+      A skydiver of mass $60\ \text{kg}$ is falling and speeding up. At one instant the air resistance on him is $300\ \text{N}$. Calculate his acceleration at that instant, to 3 significant figures. Use $g = 9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 4.81
+        tolerance: { abs: 0.02 }
+        unit: m s⁻²
+    explanation: |
+      $W = 60 \times 9.81 = 588.6\ \text{N}$. Resultant $= 588.6 - 300 = 288.6\ \text{N}$ downwards. $a = \dfrac{288.6}{60} = 4.81\ \text{m s}^{-2}$ downwards: about half of $g$, because the drag is about half of his weight.
+
+  - id: vt-shape
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.2", "3.2.3"]
+    prompt: |
+      A ball is dropped from rest from a tall tower and reaches terminal velocity before it lands. Which describes its velocity–time graph during the fall?
+    options:
+      - text: A curve whose gradient starts at $9.81\ \text{m s}^{-2}$ and gradually decreases to zero, so the curve levels off
+        correct: true
+        why: Correct. The gradient is the acceleration, which starts at g and falls to zero as the drag grows to equal the weight.
+      - text: A straight line of gradient $9.81\ \text{m s}^{-2}$, then a sudden switch to a horizontal line
+        why: The drag grows gradually with speed, so the acceleration decreases gradually. There's no sudden change, so no sharp corner.
+      - text: A curve that gets steeper and steeper
+        why: That would mean the acceleration increases. With air resistance growing, the acceleration decreases.
+      - text: A curve that rises to a maximum and then falls back towards zero
+        why: The velocity never decreases here. Drag can only grow until it equals the weight, so the velocity levels off rather than falling.
+    explanation: |
+      Gradient of v–t = acceleration. It starts at g (no drag at zero speed), decreases as drag increases, and reaches zero at terminal velocity.
+
+  - id: shuttlecock-drag
+    format: numeric
+    difficulty: 1
+    objectives: ["3.2.3"]
+    prompt: |
+      A badminton shuttlecock of mass $5.0\ \text{g}$ falls vertically at its terminal velocity. What is the air resistance on it? Include the unit. Use $g = 9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 0.04905
+        tolerance: { rel: 0.02 }
+        acceptUnits: ["N"]
+    explanation: |
+      At terminal velocity the resultant force is zero, so air resistance = weight $= 0.0050 \times 9.81 = 0.049\ \text{N}$. Remember to convert grams to kilograms first.
+
+  - id: chain-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.2.2", "3.2.3"]
+    prompt: |
+      A student explains the motion of a skydiver after she jumps from a stationary balloon. Which line contains the first error?
+    lines:
+      - |
+        At the start her speed is zero, so there is no air resistance and her acceleration is $g$.
+      - |
+        As her speed increases, the air resistance on her increases.
+      - |
+        So the resultant force on her decreases and she begins to slow down.
+      - |
+        Eventually the air resistance equals her weight.
+      - |
+        The resultant force is then zero, so she falls at a constant (terminal) velocity.
+    errorLine: 3
+    fix: |
+      The resultant force decreases, so her **acceleration decreases**. The resultant force is still downwards, so she is still speeding up, only less quickly.
+    explanation: |
+      A smaller downward resultant force means a smaller downward acceleration, not a deceleration. She would only slow down if the air resistance became **bigger** than her weight, which happens when a parachute opens.
+
+  - id: terminal-explain
+    format: explain
+    difficulty: 2
+    objectives: ["3.2.2", "3.2.3"]
+    prompt: |
+      A skydiver jumps from a stationary balloon. Explain why she eventually falls at a constant velocity.
+    model: |
+      At first her speed is zero, so there is no air resistance and the resultant force is her weight: she accelerates at $g$. As her speed increases, the air resistance increases, so the resultant force (weight minus air resistance) decreases and her acceleration decreases. Eventually the air resistance becomes equal to her weight. The resultant force is then zero, so her acceleration is zero and she falls at a constant velocity, the terminal velocity.
+    keyPoints:
+      - Initially the only force is weight, so acceleration = g
+      - As speed increases, air resistance increases
+      - The resultant force, and so the acceleration, decreases
+      - Air resistance eventually equals weight
+      - Resultant force zero, so acceleration zero and velocity constant (terminal velocity)
+    explanation: |
+      Each step causes the next: speed → drag → resultant force → acceleration. Missing a link is the most common way to drop a mark.

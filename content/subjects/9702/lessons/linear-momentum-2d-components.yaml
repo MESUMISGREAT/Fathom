@@ -1,0 +1,224 @@
+id: linear-momentum-2d-components
+subject: "9702"
+topic: "3.3"
+title: "Glancing collisions: conserve momentum along x and along y"
+summary: Resolve every momentum into two perpendicular components; momentum is conserved separately in each direction, giving two equations for two unknowns.
+order: 7
+minutes: 5
+objectives: ["3.3.2", "3.3.3"]
+prerequisites: [linear-momentum-2d-vectors, units-resolving-vectors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 3.3.2, solving two-dimensional, elastic and inelastic collision
+    problems with conservation of momentum, and 3.3.3, an elastic collision conserves total kinetic
+    energy), using resolution of vectors from 1.4. The glancing-collision diagram is drawn to scale
+    (2.0 m s⁻¹ before; 1.0 m s⁻¹ at 60° and 1.73 m s⁻¹ at 30° after). The 90° rule for equal masses
+    is given as enrichment only. Masses and speeds are illustrative; all worked values and answer
+    keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve **glancing** (two-dimensional) collisions by resolving momenta into perpendicular components and conserving momentum **separately in each direction**.
+
+  - type: explain
+    title: The snooker cut shot
+    body: |
+      In snooker you rarely hit a ball dead centre. The cue ball strikes the object ball off-centre, and the two shoot off at angles, like a pair of scissors opening.
+
+      Vector triangles get awkward when nothing is at right angles. The cleaner method: **resolve everything into two perpendicular directions**, $x$ and $y$.
+
+      Momentum is conserved in **each direction separately**, so one 2D problem becomes two 1D problems.
+
+  - type: explain
+    title: The recipe
+    body: |
+      1. Choose $x$ along the **original direction** of motion and $y$ at right angles to it.
+      2. Resolve each momentum: a momentum $p$ at angle $\theta$ to the $x$-axis has components $p\cos\theta$ along $x$ and $p\sin\theta$ along $y$.
+      3. Write two equations, with signs:
+         $$\textstyle\sum p_x \text{ before} = \sum p_x \text{ after} \qquad \sum p_y \text{ before} = \sum p_y \text{ after}$$
+      4. Solve, then recombine the components of the unknown velocity with Pythagoras and $\tan^{-1}$.
+
+      Bonus: if everything moved along $x$ before, the total $y$-momentum before is **zero**, so the $y$-momenta after must be **equal and opposite**. One ball heads off on each side of the $x$-axis.
+
+  - type: diagram
+    diagram: phys-linear-momentum-glancing
+    alt: >-
+      A glancing collision between two snooker balls of equal mass, seen from above, with velocities
+      to scale. Before: the cue ball moves to the right along the x-axis at 2.0 m s⁻¹ (dashed arrow)
+      towards the stationary object ball. After: from the point of impact, the cue ball moves at
+      1.0 m s⁻¹ at 60° above the x-axis and the object ball moves at 1.73 m s⁻¹ at 30° below it.
+      Dashed lines drop from each arrow tip to the x-axis, labelled +0.87 and −0.87 for the
+      y-components. A note says equal masses, so m cancels and velocities can be compared. Below:
+      "along x: 2.0 = 1.0 cos 60° + 1.73 cos 30° → 0.50 + 1.50 = 2.0" and "along y: 0 = 1.0 sin
+      60° − 1.73 sin 30° → (+0.87) + (−0.87) = 0", both ticked.
+    caption: Along x the components add back up to 2.0; along y they cancel, as the zero y-momentum before demands.
+
+  - type: example
+    title: Finding the object ball's velocity
+    problem: |
+      A cue ball moving at $2.0\ \text{m s}^{-1}$ hits a stationary object ball of the **same mass** $m$. Afterwards the cue ball moves at $1.0\ \text{m s}^{-1}$ at $60°$ to its original direction. Find the speed and direction of the object ball.
+    steps:
+      - |
+        Equal masses, so $m$ cancels from every term: work with velocities. Let the object ball's components after be $v_x$ and $v_y$.
+      - |
+        Along $x$: $2.0 = 1.0\cos 60° + v_x = 0.50 + v_x$, so $v_x = 1.50\ \text{m s}^{-1}$.
+      - |
+        Along $y$: $0 = 1.0\sin 60° + v_y = 0.866 + v_y$, so $v_y = -0.866\ \text{m s}^{-1}$ (below the $x$-axis).
+      - |
+        Recombine: $v = \sqrt{1.50^2 + 0.866^2} = 1.73\ \text{m s}^{-1}$ at $\tan^{-1}\left(\dfrac{0.866}{1.50}\right) = 30°$ below the original direction.
+      - |
+        Bonus check, kinetic energy: before $\tfrac{1}{2}m(2.0)^2 = 2.0m$; after $\tfrac{1}{2}m(1.0^2 + 1.73^2) = \tfrac{1}{2}m(1.0 + 3.0) = 2.0m$. Equal, so this collision is **elastic**.
+    answer: |
+      $1.73\ \text{m s}^{-1}$ at $30°$ to the original direction, on the opposite side from the cue ball.
+
+  - type: check
+    questions: [components-cloze, y-momentum-after, glancing-elastic]
+
+  - type: misconceptions
+    items:
+      - wrong: The speeds are conserved along each direction.
+        right: It's the **momentum** components that are conserved. Velocity components only work as a shortcut when all the masses are equal and cancel.
+      - wrong: Before the collision there's some y-momentum, because the balls end up moving in y.
+        right: If everything moved along $x$ before, the total $y$-momentum before is **zero**. The $y$-momenta after must cancel.
+      - wrong: The component along x always uses sin.
+        right: The component **next to** the angle uses $\cos$. If the angle is measured from the $x$-axis, the $x$-component is $p\cos\theta$.
+
+  - type: exam
+    body: |
+      - Draw and label your $x$ and $y$ axes on the diagram before writing any equation.
+      - Write the two conservation equations separately and label them ("along x", "along y"). Each is often worth its own mark.
+      - Classify the collision by comparing **total kinetic energy** before and after; kinetic energy is a scalar, so don't resolve it.
+
+  - type: check
+    questions: [glancing-velocity, puck-collision, resolve-spot-error]
+
+  - type: enrichment
+    title: The 90° rule
+    body: |
+      In the diagram, the two balls leave at exactly $90°$ to each other ($60° + 30°$). That isn't a coincidence.
+
+      Whenever an elastic collision happens between **equal masses** with one **initially at rest**, the two paths afterwards are at right angles (unless it's a head-on hit, when one ball just stops).
+
+      - Snooker players use it all the time.
+      - Particle physicists used it to spot collisions between equal-mass particles in particle-track photographs.
+
+      You won't be asked to prove it at AS level.
+
+  - type: takeaways
+    items:
+      - In 2D, momentum is conserved separately in any two perpendicular directions.
+      - Take x along the original motion; then the total y-momentum before is often zero, so the y-momenta after are equal and opposite.
+      - "Resolve with p cos θ (next to the angle) and p sin θ; recombine with Pythagoras and tan⁻¹."
+      - Check total kinetic energy (a scalar, not resolved) to decide whether the collision is elastic.
+
+questions:
+  - id: components-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.3.2"]
+    prompt: |
+      In a two-dimensional collision, total momentum is conserved {{1}} in each of two {{2}} directions.
+    blanks:
+      - accept: [separately, independently, individually]
+      - accept: [perpendicular, right-angled, orthogonal, "at right angles", mutually perpendicular]
+    explanation: |
+      Momentum is a vector, so each perpendicular component of the total is conserved on its own. That gives two equations.
+
+  - id: y-momentum-after
+    format: mcq
+    difficulty: 1
+    objectives: ["3.3.2"]
+    prompt: |
+      Ball A moves along the $x$-axis and strikes a stationary ball B. Afterwards both balls move at angles to the $x$-axis. What must be true of their $y$-components of momentum after the collision?
+    options:
+      - text: They are equal in size and opposite in direction
+        correct: true
+        why: Correct. The total $y$-momentum before was zero, so the total after must be zero too.
+      - text: They are both zero
+        why: Then both balls would move along the $x$-axis. They can have $y$-momentum, as long as it cancels.
+      - text: They are equal in size and in the same direction
+        why: Then the total $y$-momentum after would not be zero, but it was zero before.
+      - text: They add up to A's original momentum
+        why: A's original momentum was along $x$, so it is the **$x$-components** that add up to it.
+    explanation: |
+      Along $y$: total before $= 0$, so $p_{Ay} + p_{By} = 0$ after. One ball heads to one side of the line, the other to the other side.
+
+  - id: glancing-elastic
+    format: mcq
+    difficulty: 2
+    objectives: ["3.3.3"]
+    prompt: |
+      In the glancing collision in the diagram (equal masses; $2.0\ \text{m s}^{-1}$ before; $1.0\ \text{m s}^{-1}$ and $1.73\ \text{m s}^{-1}$ after), how can you tell whether the collision is elastic?
+    options:
+      - text: "Compare total kinetic energy: $\\tfrac{1}{2}m(2.0)^2$ before equals $\\tfrac{1}{2}m(1.0^2 + 1.73^2)$ after, so it is elastic"
+        correct: true
+        why: Correct. Both equal $2.0m$; the mass cancels, so you don't even need its value.
+      - text: "Add the speeds: $1.0 + 1.73 = 2.73$, which is more than $2.0$, so kinetic energy has increased"
+        why: Speeds in different directions don't add like that, and kinetic energy depends on speed squared.
+      - text: The balls move off in different directions, so kinetic energy must have been lost
+        why: Direction doesn't matter for kinetic energy, which is a scalar. Calculate the totals.
+      - text: You can't tell without knowing the mass of a ball
+        why: The mass is the same for both balls and cancels from the comparison.
+    explanation: |
+      Kinetic energy before: $\tfrac{1}{2}m \times 4.0 = 2.0m$. After: $\tfrac{1}{2}m(1.0 + 3.0) = 2.0m$. Total kinetic energy is conserved, so the collision is elastic.
+
+  - id: glancing-velocity
+    format: numeric
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      A cue ball moving at $2.5\ \text{m s}^{-1}$ strikes a stationary object ball of the same mass. Afterwards the cue ball moves at $1.2\ \text{m s}^{-1}$ at $50°$ to its original direction. Find the speed of the object ball and the angle its velocity makes with the cue ball's original direction, both to 3 significant figures.
+    fields:
+      - label: "speed ="
+        answer: 1.958
+        sigFigs: 3
+        unit: m s⁻¹
+      - label: "angle ="
+        answer: 28.0
+        sigFigs: 3
+        unit: °
+    explanation: |
+      Equal masses, so work with velocities. Along $x$: $2.5 = 1.2\cos 50° + v_x$, so $v_x = 2.5 - 0.771 = 1.729\ \text{m s}^{-1}$. Along $y$: $0 = 1.2\sin 50° + v_y$, so $v_y = -0.919\ \text{m s}^{-1}$. Speed $= \sqrt{1.729^2 + 0.919^2} = 1.96\ \text{m s}^{-1}$; angle $= \tan^{-1}(0.919/1.729) = 28.0°$, on the other side of the original line from the cue ball.
+
+  - id: puck-collision
+    format: numeric
+    difficulty: 3
+    objectives: ["3.3.2"]
+    prompt: |
+      On an air table, puck A ($0.40\ \text{kg}$) moving at $5.0\ \text{m s}^{-1}$ hits a stationary puck B ($0.60\ \text{kg}$). Afterwards A moves at $2.0\ \text{m s}^{-1}$ at $50°$ to its original direction. Find the speed of B and the angle its velocity makes with A's original direction.
+    fields:
+      - label: "speed of B ="
+        answer: 2.679
+        tolerance: { abs: 0.02 }
+        unit: m s⁻¹
+      - label: "angle ="
+        answer: 22.41
+        tolerance: { abs: 0.3 }
+        unit: °
+    explanation: |
+      Masses differ, so use momenta. Along $x$: $0.40 \times 5.0 = 0.40 \times 2.0\cos 50° + 0.60\,v_x$, so $2.0 = 0.514 + 0.60\,v_x$ and $v_x = 2.476\ \text{m s}^{-1}$. Along $y$: $0 = 0.40 \times 2.0\sin 50° + 0.60\,v_y$, so $v_y = -1.021\ \text{m s}^{-1}$. Speed $= \sqrt{2.476^2 + 1.021^2} = 2.68\ \text{m s}^{-1}$ at $\tan^{-1}(1.021/2.476) = 22.4°$ to the original direction, on the opposite side from A. (Kinetic energy falls from $5.0\ \text{J}$ to $2.95\ \text{J}$, so it's inelastic.)
+
+  - id: resolve-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.3.2"]
+    prompt: |
+      Ball A ($0.50\ \text{kg}$) moves along the $x$-axis at $4.0\ \text{m s}^{-1}$ and hits a stationary ball B. Afterwards A moves at $2.0\ \text{m s}^{-1}$ at $60°$ to the $x$-axis. Which line of this working contains the first error?
+    lines:
+      - |
+        Total $x$-momentum before $= 0.50 \times 4.0 = 2.0\ \text{kg m s}^{-1}$.
+      - |
+        Total $y$-momentum before $= 0$.
+      - |
+        $x$-momentum of A after $= 0.50 \times 2.0 \times \sin 60° = 0.87\ \text{kg m s}^{-1}$.
+      - |
+        So the $x$-momentum of B after $= 2.0 - 0.87 = 1.13\ \text{kg m s}^{-1}$.
+    errorLine: 3
+    fix: |
+      The angle is measured from the $x$-axis, so the $x$-component uses $\cos$: $0.50 \times 2.0 \times \cos 60° = 0.50\ \text{kg m s}^{-1}$. Then B's $x$-momentum is $2.0 - 0.50 = 1.5\ \text{kg m s}^{-1}$.
+    explanation: |
+      $0.87\ \text{kg m s}^{-1}$ is A's $y$-momentum. Sketch the triangle: the side next to the $60°$ angle is the $\cos$ one.

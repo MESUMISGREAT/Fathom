@@ -1,0 +1,256 @@
+id: non-uniform-thrown-with-drag
+subject: "9702"
+topic: "3.2"
+title: "Thrown up, thrown across: air resistance changes the trip"
+summary: With air resistance, a ball thrown upwards decelerates by more than g going up and accelerates by less than g coming down; a projectile's path is lower, shorter and lopsided.
+order: 4
+minutes: 5
+objectives: ["3.2.2"]
+prerequisites: [non-uniform-falling-with-drag, equations-motion-projectiles-angle]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 3.2.2, describing and explaining qualitatively the motion of an
+    object in a uniform gravitational field when air resistance acts on it, here for objects
+    thrown upwards and projectiles). Both diagrams are computed, not sketched: the v–t graph steps
+    dv/dt = −g − kv|v| for a ball thrown up at 20 m s⁻¹ with an illustrative terminal speed of
+    20 m s⁻¹ (top at 1.60 s, lands at 3.40 s at 14.1 m s⁻¹), and the paths are for a 25 m s⁻¹
+    launch at 45° with an illustrative terminal speed of 30 m s⁻¹ (range 43 m against 64 m), all
+    with g = 9.81 m s⁻². Masses and drag forces are illustrative; all worked values and answer
+    keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe and explain how air resistance changes the motion of a ball thrown **upwards** and of a **projectile**, and sketch the velocity–time graph and the path.
+
+  - type: explain
+    title: One force flips, one doesn't
+    body: |
+      Throw a ball straight up. Two forces act on it, and they behave very differently:
+
+      - **Weight** is constant and always **downwards**.
+      - **Air resistance** always acts **opposite to the velocity**, and it's zero when the ball is momentarily at rest.
+
+      So when the ball turns round at the top, the air resistance **flips direction** and the weight doesn't. That single fact explains everything in this lesson.
+
+  - type: explain
+    title: The round trip, stage by stage
+    body: |
+      | Stage | Velocity | Air resistance $D$ | Resultant force | Size of acceleration |
+      | --- | --- | --- | --- | --- |
+      | **Going up** | upwards | downwards | $W + D$, down | **more than** $g$ |
+      | **At the top** | zero | zero | $W$, down | **exactly** $g$ |
+      | **Coming down** | downwards | upwards | $W - D$, down | **less than** $g$ |
+
+      Notice that the acceleration is **downwards at every stage**, even at the top. Going up, the weight and the drag gang up on the ball; coming down, the drag fights the weight.
+
+  - type: example
+    title: Same ball, same drag, different direction
+    problem: |
+      A ball of mass $0.20\ \text{kg}$ is thrown vertically upwards. At one moment on the way up, the air resistance on it is $0.50\ \text{N}$. At a later moment, on the way down, the air resistance is again $0.50\ \text{N}$. Find the acceleration at each moment. Use $g = 9.81\ \text{m s}^{-2}$.
+    steps:
+      - |
+        Weight: $W = mg = 0.20 \times 9.81 = 1.962\ \text{N}$, downwards.
+      - |
+        Going up, both forces act downwards: resultant $= 1.962 + 0.50 = 2.462\ \text{N}$, so $a = \dfrac{2.462}{0.20} = 12.3\ \text{m s}^{-2}$ downwards.
+      - |
+        Coming down, the drag acts upwards: resultant $= 1.962 - 0.50 = 1.462\ \text{N}$, so $a = \dfrac{1.462}{0.20} = 7.31\ \text{m s}^{-2}$ downwards.
+    answer: |
+      $12.3\ \text{m s}^{-2}$ going up and $7.31\ \text{m s}^{-2}$ coming down, both downwards. In general $a = g + \dfrac{D}{m}$ going up and $a = g - \dfrac{D}{m}$ coming down.
+
+  - type: check
+    questions: [top-acceleration, up-acceleration]
+
+  - type: diagram
+    diagram: phys-non-uniform-throw-vt
+    alt: >-
+      A velocity–time graph with upwards positive: v in m s⁻¹ from −20 to +20 against t in seconds
+      from 0 to 4.5. A dashed straight line (no air resistance) runs from +20 m s⁻¹ at t = 0
+      through zero at about 2.0 s to −20 m s⁻¹ at about 4.1 s; it has gradient −g throughout. A
+      solid curve (with air resistance) also starts at +20 m s⁻¹ but drops more steeply, with the
+      note "going up: W and drag both down, so steeper than −g". It crosses zero earlier, at 1.6 s,
+      where a short highlighted tangent shows the gradient is exactly −g ("at the top v = 0, so drag
+      = 0"). After that the curve becomes less steep than the dashed line ("coming down: drag up,
+      so shallower than −g") and ends at 3.4 s at about −14 m s⁻¹ ("lands at 14 m s⁻¹, not 20").
+      The shaded area between the curve and the time axis above the axis equals the shaded area
+      below it. A side note reads "up: 1.6 s, down: 1.8 s (2.0 s each with no air)".
+    caption: Computed for a ball thrown up at 20 m s⁻¹ with illustrative drag. The gradient is the acceleration; the areas are the distances up and down.
+
+  - type: explain
+    title: What the graph is telling you
+    body: |
+      - **Steeper than $-g$ going up**: the ball loses speed faster than in a vacuum, so it reaches a **lower maximum height** sooner.
+      - **Gradient exactly $-g$ at the top**: $v = 0$, so no drag, so $a = g$. The curve crosses the axis smoothly; it does **not** go flat there.
+      - **Less steep than $-g$ coming down**: the ball speeds up more slowly than in free fall. Fall far enough and it would level off at terminal velocity.
+      - **Equal areas** above and below the axis: it falls the same height it rose.
+      - **Down takes longer than up**: work done against drag has transferred some kinetic energy to thermal energy. So at every height the ball moves **more slowly** coming down than going up: same distance, lower speeds, more time.
+      - For the same reason, it **lands more slowly** than it was thrown.
+
+  - type: check
+    questions: [throw-vt-gradient, up-down-time]
+
+  - type: diagram
+    diagram: phys-non-uniform-projectile-drag
+    alt: >-
+      Paths of a ball launched at 25 m s⁻¹ at 45° above the horizontal, drawn with the same scale on
+      both axes: height in metres from 0 to 20 against horizontal distance in metres from 0 to 70.
+      A dashed curve (no air resistance) is a symmetric parabola peaking at about 16 m halfway
+      along and landing at 64 m. A solid curve (with air resistance) follows it at first, then
+      peaks lower, at about 12.6 m, at about 23 m along, slightly past halfway, and comes down more
+      steeply than it went up, landing at 43 m. A note says "lower, shorter, steeper on the way
+      down".
+    caption: Computed with illustrative drag. Without air the path is a symmetric parabola; with air it is lopsided.
+
+  - type: explain
+    title: Projectiles with drag
+    body: |
+      For a projectile, the drag points opposite to the velocity, which is at an angle. So the drag has a **horizontal component**, and that changes the rules you used for projectiles in topic 2:
+
+      - The **horizontal velocity is no longer constant**: it decreases throughout the flight.
+      - The vertical motion behaves like the thrown-up ball: a lower peak, a slower descent.
+      - Result: **lower** maximum height, **shorter** range, and a lopsided path that comes down **more steeply** than it went up, because by the end there is little horizontal velocity left.
+
+  - type: misconceptions
+    items:
+      - wrong: At the highest point the acceleration is zero.
+        right: The **velocity** is zero there. The weight is still acting, so the acceleration is exactly $g$ downwards (the drag is zero at that instant).
+      - wrong: Air resistance always acts upwards, against gravity.
+        right: It acts opposite to the **velocity**. For a rising ball that is **downwards**, alongside the weight.
+      - wrong: The ball comes back down at the speed it was thrown.
+        right: Only with no air resistance. With drag it lands **more slowly**, because work done against air resistance has transferred kinetic energy to thermal energy.
+      - wrong: A projectile's horizontal velocity is always constant.
+        right: Only when air resistance is negligible. Drag has a horizontal component, so the horizontal velocity decreases.
+
+  - type: exam
+    body: |
+      - **Sketching the v–t graph** for a ball thrown upwards? The marks go for:
+        - a curve (not a straight line), steeper than the no-drag line going up;
+        - crossing the time axis with the **same** gradient as the no-drag line;
+        - less steep than the no-drag line afterwards;
+        - a final speed **smaller** than the launch speed.
+      - Always state your sign convention ("upwards positive") before sketching or calculating.
+      - "Explain why it takes longer to fall than to rise" needs the energy link: **work done against air resistance** means a lower speed at each height on the way down.
+
+  - type: check
+    questions: [projectile-drag-effect, thrown-spot-error]
+
+  - type: takeaways
+    items:
+      - Weight is always down; air resistance is always opposite to the velocity, so it flips at the top.
+      - "Going up: acceleration greater than g. At the top: exactly g. Coming down: less than g."
+      - With drag the ball rises less high, takes longer to come down than to go up, and lands more slowly.
+      - "Projectile with drag: horizontal velocity decreases; lower, shorter, steeper on the way down."
+
+questions:
+  - id: top-acceleration
+    format: mcq
+    difficulty: 1
+    objectives: ["3.2.2"]
+    prompt: |
+      A ball is thrown vertically upwards and air resistance acts on it. What is its acceleration at the instant it reaches its highest point?
+    options:
+      - text: Exactly $g$, downwards
+        correct: true
+        why: Correct. Its velocity is zero, so the air resistance is zero; the only force is the weight, giving $a = g$.
+      - text: Zero
+        why: The velocity is zero at the top, not the acceleration. The weight still acts, so the ball still accelerates downwards.
+      - text: More than $g$, downwards
+        why: That's the acceleration on the way up, when the air resistance acts downwards alongside the weight. At the top there's no air resistance.
+      - text: Less than $g$, downwards
+        why: That's the acceleration on the way down, when the air resistance acts upwards. At the top there's no air resistance yet.
+    explanation: |
+      Air resistance depends on speed. At the top the speed is zero, so the drag is zero, and the ball is in free fall for an instant: $a = g$ downwards.
+
+  - id: up-acceleration
+    format: numeric
+    difficulty: 2
+    objectives: ["3.2.2"]
+    prompt: |
+      A ball of mass $0.15\ \text{kg}$ is moving vertically upwards. At one instant the air resistance on it is $0.45\ \text{N}$. Calculate the magnitude of its acceleration at that instant, to 3 significant figures. Use $g = 9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 12.81
+        tolerance: { abs: 0.05 }
+        unit: m s⁻²
+    explanation: |
+      $W = 0.15 \times 9.81 = 1.4715\ \text{N}$. Going up, the air resistance acts downwards too, so the resultant is $1.4715 + 0.45 = 1.9215\ \text{N}$ downwards and $a = \dfrac{1.9215}{0.15} = 12.8\ \text{m s}^{-2}$. That is more than $g$, as it should be on the way up.
+
+  - id: throw-vt-gradient
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.2"]
+    prompt: |
+      A ball is thrown vertically upwards and air resistance is **not** negligible. Its velocity–time graph is drawn with upwards positive. How does the gradient of the graph compare with $-9.81\ \text{m s}^{-2}$?
+    options:
+      - text: Steeper than $-9.81$ on the way up, exactly $-9.81$ at the highest point, less steep on the way down
+        correct: true
+        why: Correct. The gradient is the acceleration, which is greater than $g$ going up, equal to $g$ at the top and less than $g$ coming down.
+      - text: Exactly $-9.81$ throughout, because only gravity makes the ball accelerate
+        why: That's the graph with no air resistance. Drag changes the resultant force, so it changes the gradient.
+      - text: Zero at the highest point, because the ball stops there
+        why: The velocity is zero at the top, but the gradient (the acceleration) is $-g$ there. The graph crosses the axis; it doesn't flatten.
+      - text: Less steep than $-9.81$ on the way up and steeper on the way down
+        why: This is the wrong way round. Going up, drag adds to the weight, so the deceleration is bigger than $g$.
+    explanation: |
+      Gradient = acceleration. Going up: $W + D$ downwards, $|a| > g$. At the top: $D = 0$, $a = g$. Coming down: $W - D$ downwards, $|a| < g$.
+
+  - id: up-down-time
+    format: mcq
+    difficulty: 3
+    objectives: ["3.2.2"]
+    prompt: |
+      A ball is thrown vertically upwards and returns to the same height. Air resistance acts on it throughout. How does the time taken to fall compare with the time taken to rise?
+    options:
+      - text: The fall takes longer, because at every height the ball is moving more slowly on the way down than on the way up
+        correct: true
+        why: Correct. Work done against air resistance transfers kinetic energy to thermal energy, so it covers the same distance at lower speeds on the way down.
+      - text: The times are equal, because the ball travels the same distance up and down
+        why: Equal distances only give equal times if the speeds match. With drag, the speeds on the way down are lower.
+      - text: The rise takes longer, because air resistance opposes the ball more strongly on the way up
+        why: The deceleration on the way up is indeed bigger than $g$, which makes the rise **quicker**, not slower.
+      - text: It depends only on the mass of the ball
+        why: Mass affects how big the effect is, but with any air resistance at all the fall takes longer than the rise.
+    explanation: |
+      Going up, the ball decelerates at more than $g$, so it stops quickly. Coming down, it accelerates at less than $g$ and never gets back up to its launch speed. Same height, lower speeds, longer time.
+
+  - id: projectile-drag-effect
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.2"]
+    prompt: |
+      A ball is kicked at an angle above the horizontal. Air resistance is **not** negligible. Which statement about its flight is correct?
+    options:
+      - text: The horizontal component of its velocity decreases during the flight
+        correct: true
+        why: Correct. The drag acts opposite to the velocity, so it has a horizontal component backwards.
+      - text: The horizontal component of its velocity stays constant, because gravity acts only vertically
+        why: That's true only with no air resistance. Here the drag has a horizontal component.
+      - text: Its path is still symmetrical about the highest point
+        why: With drag the path is lopsided. The ball comes down more steeply than it went up.
+      - text: Its range is the same, but its maximum height is lower
+        why: The range is shorter too, because the horizontal velocity keeps decreasing.
+    explanation: |
+      Air resistance opposes the velocity, so it slows the ball horizontally as well as changing its vertical motion. Result: lower, shorter and steeper at the end.
+
+  - id: thrown-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.2.2"]
+    prompt: |
+      A student describes the motion of a ball thrown vertically upwards when air resistance acts. Which line contains the error?
+    lines:
+      - |
+        As the ball rises, its weight and the air resistance both act downwards.
+      - |
+        So on the way up its deceleration is greater than $g$.
+      - |
+        At the highest point its velocity is zero, so its acceleration is also zero.
+      - |
+        On the way down, the air resistance acts upwards, so its acceleration is less than $g$.
+    errorLine: 3
+    fix: |
+      At the highest point the velocity is zero, so the **air resistance** is zero. The weight still acts, so the acceleration is $g$ ($9.81\ \text{m s}^{-2}$) downwards.
+    explanation: |
+      Zero velocity does not mean zero acceleration. If the acceleration were zero at the top, the ball would hover there forever.
