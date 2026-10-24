@@ -1,11 +1,12 @@
 /**
  * Pauling electronegativity values (to 1 d.p.) laid out as part of the Periodic Table:
  * groups 1, 2 and 13–17 for periods 2 and 3, plus groups 1, 2 and 17 further down
- * (K, Ca, Br; Rb, I). Each cell has a bar whose length is proportional to the value
+ * (K, Ca, Br; I). Each cell has a bar whose length is proportional to the value
  * (full width = 4.0). Arrows: electronegativity increases across a period and decreases
  * down a group, so fluorine (4.0, top right) is the most electronegative element.
  * Values: Li 1.0, Be 1.6, B 2.0, C 2.6, N 3.0, O 3.4, F 4.0; Na 0.9, Mg 1.3, Al 1.6,
- * Si 1.9, P 2.2, S 2.6, Cl 3.2; K 0.8, Ca 1.0, Br 3.0; Rb 0.8, I 2.7.
+ * Si 1.9, P 2.2, S 2.6, Cl 3.2; K 0.8, Ca 1.0, Br 3.0; I 2.7. Rubidium is left out: at 1 d.p.
+ * it equals potassium (0.8), which would muddle the down-a-group arrow for a first-timer.
  */
 import { Arrow, Label, Svg } from '../primitives';
 
@@ -26,7 +27,7 @@ const CELLS: Array<[string, number, number, number]> = [
   ['Li', 0, 0, 1.0], ['Be', 1, 0, 1.6], ['B', 2, 0, 2.0], ['C', 3, 0, 2.6], ['N', 4, 0, 3.0], ['O', 5, 0, 3.4], ['F', 6, 0, 4.0],
   ['Na', 0, 1, 0.9], ['Mg', 1, 1, 1.3], ['Al', 2, 1, 1.6], ['Si', 3, 1, 1.9], ['P', 4, 1, 2.2], ['S', 5, 1, 2.6], ['Cl', 6, 1, 3.2],
   ['K', 0, 2, 0.8], ['Ca', 1, 2, 1.0], ['Br', 6, 2, 3.0],
-  ['Rb', 0, 3, 0.8], ['I', 6, 3, 2.7],
+  ['I', 6, 3, 2.7],
 ];
 
 export function ElectronegativityBondingPeriodicTable() {

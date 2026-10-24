@@ -12,7 +12,11 @@ import CompressionSimilarColours from './compression-similar-colours';
 import CompressionSizeBars from './compression-size-bars';
 import CompressionSoundMasking from './compression-sound-masking';
 import CompressionVectorSimplify from './compression-vector-simplify';
+import ComputerComponents_3dPrinter from './computer-components-3d-printer';
+import ComputerComponentsHddPlatter from './computer-components-hdd-platter';
+import ComputerComponentsLaserPrinter from './computer-components-laser-printer';
 import ComputerComponentsMicrocontroller from './computer-components-microcontroller';
+import ComputerComponentsSpeaker from './computer-components-speaker';
 import ComputerComponentsSystemOverview from './computer-components-system-overview';
 import HexNibbles from './hex-nibbles';
 import MultimediaBitPlanes from './multimedia-bit-planes';
@@ -61,7 +65,11 @@ export const diagrams: DiagramRegistry = {
   'cs-compression-size-bars': CompressionSizeBars,
   'cs-compression-sound-masking': CompressionSoundMasking,
   'cs-compression-vector-simplify': CompressionVectorSimplify,
+  'cs-computer-components-3d-printer': ComputerComponents_3dPrinter,
+  'cs-computer-components-hdd-platter': ComputerComponentsHddPlatter,
+  'cs-computer-components-laser-printer': ComputerComponentsLaserPrinter,
   'cs-computer-components-microcontroller': ComputerComponentsMicrocontroller,
+  'cs-computer-components-speaker': ComputerComponentsSpeaker,
   'cs-computer-components-system-overview': ComputerComponentsSystemOverview,
   'cs-hex-nibbles': HexNibbles,
   'cs-multimedia-bit-planes': MultimediaBitPlanes,

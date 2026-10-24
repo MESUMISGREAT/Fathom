@@ -195,11 +195,12 @@ changes alongside lessons:
 
 ## 5. Current state (24 Oct 2026, third chat)
 
-- On `main`: **176 reviewed lessons, 1066 questions** (9709: 59, 9618: 42, 9702: 42, 9701: 33).
+- On `main`: **181 reviewed lessons, 1097 questions** (9709: 59, 9618: 42, 9702: 42, 9701: 38).
   All are live. Tests: 166 vitest and 25 Playwright e2e.
 - Done in the second and third chats:
-  - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation) and 9702 3.2+3.3
-    (non-uniform motion, linear momentum);
+  - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
+    (non-uniform motion, linear momentum) and 9701 3.1+3.2 (electronegativity, ionic bonding;
+    "a difference above about 1.8 means ionic" is taught as a rule of thumb, books use 1.7–2.0);
   - every 9709 diagram now has proper fractions and roots;
   - the chain rule was rewritten the box way;
   - **all eight other 1.7 differentiation lessons were rewritten in the "one question type,
@@ -210,8 +211,8 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 11 published, 143 todo. Next: the `todo` units in order (9701 3.1+3.2 is
-  being written now, then 9709 1.8, 9618 3.1, 9702 4.1+4.2, …).
+- Queue: 12 published, 142 todo. Next: the `todo` units in order (9709 1.8 and 9618 3.1 are
+  being written now, then 9702 4.1+4.2, 9701 3.3+3.4+3.5, …).
 - **Open question for the user (asked 23 Oct, no answer yet):** restyle the 165 existing
   lessons to the new short-chunk style? It's a big job (a writer and a reviewer per batch).
   Ask before starting it, and ask whether it goes before or after the new topics.

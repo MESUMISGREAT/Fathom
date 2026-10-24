@@ -19,7 +19,7 @@ function Box({ x, y, w, h, title, lines, tone = 'plain' }: { x: number; y: numbe
     <g>
       <rect x={x} y={y} width={w} height={h} rx={8} className="dg-fill-surface" />
       <rect x={x} y={y} width={w} height={h} rx={8} className={cls} />
-      <Label x={x + w / 2} y={y + 18} className="dg-text dg-bold">
+      <Label x={x + w / 2} y={lines.length ? y + 18 : y + h / 2} className="dg-text dg-bold">
         {title}
       </Label>
       {lines.map((l, i) => (

@@ -23,7 +23,7 @@ Production: set `DATABASE_URL` to a PostgreSQL server. On Vercel, connect a Neon
 | Accounts (scrypt passwords, hashed session tokens, rate limits), settings, data export, account deletion | Working, tested |
 | Syllabus trees for 9709, 9618, 9702, 9701 (2025–2027), transcribed from the official PDFs | Present and checked against the PDFs in a second, independent AI pass. Not checked by a teacher |
 | Lessons: block renderer, step-by-step player, 7 question formats, deterministic checker (units, s.f., algebraic equivalence) | Working, tested |
-| Real lessons in `/content` | 176 lessons, 1066 questions, all pass `content:check` (9709: 59, 9618: 42, 9702: 42, 9701: 33; the rest are being written, see `docs/HANDOFF.md`). Marked **AI-checked**: AI-written, re-checked line by line in a separate AI review, not yet reviewed by a teacher. Each lesson shows this label |
+| Real lessons in `/content` | 181 lessons, 1097 questions, all pass `content:check` (9709: 59, 9618: 42, 9702: 42, 9701: 38; the rest are being written, see `docs/HANDOFF.md`). Marked **AI-checked**: AI-written, re-checked line by line in a separate AI review, not yet reviewed by a teacher. Each lesson shows this label |
 | Progress/mastery, Leitner review, dashboard, search, saved, history, coverage | Working, tested |
 | Report a problem (on every question and lesson) and an editor triage page at `/reports` | Working, tested |
 | Points: XP for real progress (no farming), levels, daily goal (optional), badges, `/achievements`, "Show points and badges" switch | Working, tested. Rules: `docs/design/fun-and-points.md` |

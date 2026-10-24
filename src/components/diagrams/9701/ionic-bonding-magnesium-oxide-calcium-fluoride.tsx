@@ -1,6 +1,6 @@
 /**
  * Dot-and-cross diagrams (outer shells only) for the ions in magnesium oxide and calcium
- * fluoride. Crosses are electrons that came from the metal, dots are the non-metal's own.
+ * fluoride. Crosses are the metal's electrons, dots are the non-metal's.
  * MgO: [Mg]2+ (2,8) and [O]2− with six dots and the two crosses from magnesium (2,8):
  * two electrons move, ratio 1 : 1. CaF2: [F]− [Ca]2+ [F]−; calcium (2,8,8,2) gives one
  * electron to each of two fluorine atoms, so each F− has seven dots and one cross (2,8)
@@ -92,11 +92,11 @@ export function IonicBondingMagnesiumOxideCalciumFluoride() {
       {/* key */}
       <Electron x={24} y={H - 18} mark="cross" />
       <Label x={36} y={H - 18} anchor="start" className="dg-text-small">
-        electron that came from the metal
+        the metal&apos;s electron
       </Label>
-      <Electron x={276} y={H - 18} mark="dot" />
-      <Label x={288} y={H - 18} anchor="start" className="dg-text-small">
-        the non-metal&apos;s own electron
+      <Electron x={200} y={H - 18} mark="dot" />
+      <Label x={212} y={H - 18} anchor="start" className="dg-text-small">
+        the non-metal&apos;s electron
       </Label>
       <Label x={W - 16} y={H - 18} anchor="end" className="dg-text-muted">
         outer shells only

@@ -48,6 +48,15 @@ import P1DifferentiationRatesChain from './p1-differentiation-rates-chain';
 import P1DifferentiationStationaryPoints from './p1-differentiation-stationary-points';
 import P1DifferentiationTangentNormal from './p1-differentiation-tangent-normal';
 import P1DifferentiationTangentSteps from './p1-differentiation-tangent-steps';
+import P1IntegrationAreaBetween from './p1-integration-area-between';
+import P1IntegrationAreaSigns from './p1-integration-area-signs';
+import P1IntegrationBracketSteps from './p1-integration-bracket-steps';
+import P1IntegrationCurveFamily from './p1-integration-curve-family';
+import P1IntegrationDefiniteTriangle from './p1-integration-definite-triangle';
+import P1IntegrationImproperAreas from './p1-integration-improper-areas';
+import P1IntegrationReverseRule from './p1-integration-reverse-rule';
+import P1IntegrationVolumeDisc from './p1-integration-volume-disc';
+import P1IntegrationVolumeWasher from './p1-integration-volume-washer';
 import P1TrigonometryAmplitudePeriod from './p1-trigonometry-amplitude-period';
 import P1TrigonometryBasicGraphs from './p1-trigonometry-basic-graphs';
 import P1TrigonometryCast from './p1-trigonometry-cast';
@@ -120,6 +129,15 @@ export const diagrams: DiagramRegistry = {
   'p1-differentiation-stationary-points': P1DifferentiationStationaryPoints,
   'p1-differentiation-tangent-normal': P1DifferentiationTangentNormal,
   'p1-differentiation-tangent-steps': P1DifferentiationTangentSteps,
+  'p1-integration-area-between': P1IntegrationAreaBetween,
+  'p1-integration-area-signs': P1IntegrationAreaSigns,
+  'p1-integration-bracket-steps': P1IntegrationBracketSteps,
+  'p1-integration-curve-family': P1IntegrationCurveFamily,
+  'p1-integration-definite-triangle': P1IntegrationDefiniteTriangle,
+  'p1-integration-improper-areas': P1IntegrationImproperAreas,
+  'p1-integration-reverse-rule': P1IntegrationReverseRule,
+  'p1-integration-volume-disc': P1IntegrationVolumeDisc,
+  'p1-integration-volume-washer': P1IntegrationVolumeWasher,
   'p1-trigonometry-amplitude-period': P1TrigonometryAmplitudePeriod,
   'p1-trigonometry-basic-graphs': P1TrigonometryBasicGraphs,
   'p1-trigonometry-cast': P1TrigonometryCast,
