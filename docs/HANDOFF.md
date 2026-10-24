@@ -195,13 +195,14 @@ changes alongside lessons:
 
 ## 5. Current state (24 Oct 2026, third chat)
 
-- On `main`: **190 reviewed lessons, 1145 questions** (9709: 68, 9618: 42, 9702: 42, 9701: 38).
+- On `main`: **207 reviewed lessons, 1246 questions** (9709: 68, 9618: 59, 9702: 42, 9701: 38).
   All are live. Tests: 166 vitest and 25 Playwright e2e.
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
-    (non-uniform motion, linear momentum) and 9701 3.1+3.2 (electronegativity, ionic bonding;
-    "a difference above about 1.8 means ionic" is taught as a rule of thumb, books use 1.7–2.0)
-    and 9709 1.8 (integration: 9 lessons in the one-method style);
+    (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
+    "a difference above about 1.8 means ionic" is taught as a rule of thumb, books use 1.7–2.0),
+    9709 1.8 (integration: 9 lessons in the one-method style) and 9618 3.1 (computer
+    components: 17 lessons; pseudocode constants are written `CONSTANT Name ← value`);
   - every 9709 diagram now has proper fractions and roots;
   - the chain rule was rewritten the box way;
   - **all eight other 1.7 differentiation lessons were rewritten in the "one question type,
@@ -212,18 +213,17 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 13 published, 141 todo.
-- **START HERE** (updated 24 Oct, 14:20 UTC). `main` holds only reviewed work; drafts are
+- Queue: 14 published, 140 todo.
+- **START HERE** (updated 24 Oct, 19:00 UTC). `main` holds only reviewed work; drafts are
   only on `wip-snapshot`.
   1. In a fresh container, run `bash scripts/lessons/restore-drafts.sh` to bring the drafts
      back, then `npm run diagrams:gen`.
   2. **9709 1.8 Integration: published 24 Oct** (ef055f1, reviewed; marker tests 166/166).
-  3. **9618 3.1 Computers and their components: written, not reviewed.**
-     - 17 draft lessons `computer-components-*` with 101 questions, covering all of 3.1.1–3.1.8.
-     - 17 diagrams. The writer recomputed every key with python3, and content-check reports 0 errors.
-     - Next: `node scripts/lessons/prompts.mjs review "9618 3.1" <today>`, run one reviewer, then `publish.sh`.
-  4. Then the next `todo` units in order: 9702 4.1+4.2, 9701 3.3+3.4+3.5, 9709 2.1+2.2,
-     9618 3.2, …
+  3. **9618 3.1 Computers and their components: published 24 Oct** (5960250, reviewed).
+  4. **Being written (started 18:44 UTC, Opus writers):** 9702 4.1+4.2 and 9701 3.3+3.4+3.5.
+     If the chat ended before they finished, their drafts are on `wip-snapshot`, possibly
+     incomplete: give a writer a "finish these drafts" brief, as was done for 9618 3.1.
+     Then the next `todo` units in order: 9709 2.1+2.2, 9618 3.2, …
   5. **Models (the user's choice, 24 Oct):** run writer agents with `model: "sonnet"`.
      Reviewers stay on Opus, the default, because they are the quality gate. Don't use
      Haiku for lesson work.
