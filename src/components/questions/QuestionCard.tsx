@@ -383,10 +383,10 @@ function Feedback({
       </div>
       {r.note && <p className="small" style={{ marginBottom: 8 }}>{r.note}</p>}
 
-      {reveal.expected && r.outcome !== 'correct' && (
+      {reveal.expectedHtml && r.outcome !== 'correct' && (
         <div className="feedback-section">
           <div className="feedback-label">Expected</div>
-          <p className="mono">{reveal.expected.join(';  ')}</p>
+          <p className="mono" dangerouslySetInnerHTML={{ __html: reveal.expectedHtml }} />
         </div>
       )}
       {reveal.blanks && r.outcome !== 'correct' && (

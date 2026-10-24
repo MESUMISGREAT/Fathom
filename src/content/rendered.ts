@@ -7,6 +7,8 @@ import { toSigFigs } from '@/domain/answers/numbers';
 import { renderCloze, renderInline, renderMd } from './markdown';
 import type { Block, LessonFile, Question } from './schema';
 
+const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 export type RenderedBlock =
   | { type: 'objective'; html: string }
   | { type: 'explain'; title?: string; html: string }
@@ -39,7 +41,8 @@ export interface QuestionReveal {
   explanationHtml: string;
   correctOption?: number;
   whyHtml?: Array<string | null>;
-  expected?: string[];
+  /** Numeric questions: each field's label and model answer, as HTML. */
+  expectedHtml?: string;
   answerHtml?: string;
   blanks?: string[];
   errorLine?: number;
@@ -123,11 +126,13 @@ export function renderQuestion(q: Question, lessonId: string): { view: QuestionV
         },
         reveal: {
           explanationHtml,
-          expected: q.fields.map((f) => {
-            const v = f.sigFigs ? toSigFigs(f.answer, f.sigFigs) : String(f.answer);
-            const unit = f.acceptUnits?.[0] ?? f.unit;
-            return `${f.label ? `${f.label.replace(/\$/g, '')} ` : ''}${v}${unit ? ` ${unit}` : ''}`;
-          }),
+          expectedHtml: q.fields
+            .map((f) => {
+              const v = f.sigFigs ? toSigFigs(f.answer, f.sigFigs) : String(f.answer);
+              const unit = f.acceptUnits?.[0] ?? f.unit;
+              return `${f.label ? `${renderInline(f.label)} ` : ''}${escapeHtml(`${v}${unit ? ` ${unit}` : ''}`)}`;
+            })
+            .join(';&ensp; '),
         },
       };
     case 'expression':
