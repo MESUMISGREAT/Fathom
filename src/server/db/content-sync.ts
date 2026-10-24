@@ -17,7 +17,7 @@ import type { Db } from './index';
 import * as t from './schema';
 
 /** Bump when the importer's output format changes, to force a re-import. */
-const IMPORTER_VERSION = '3';
+const IMPORTER_VERSION = '4';
 
 export class ContentInvalidError extends Error {
   constructor(public issues: Issue[]) {

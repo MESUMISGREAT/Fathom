@@ -10,7 +10,7 @@ objectives: ["1.7.3"]
 prerequisites: [p1-differentiation-powers-of-x, quadratics-inequalities, quadratics-completing-the-square]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "apply differentiation
@@ -18,7 +18,8 @@ provenance:
     change" (the increasing and decreasing functions part). All examples and questions are
     original; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
-    Rewritten on 2026-10-23 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -59,7 +60,7 @@ blocks:
 
       1. Differentiate.
       2. Write the inequality: increasing means $f'(x) > 0$, decreasing means $f'(x) < 0$.
-      3. Solve it. If $f'(x)$ is a quadratic, factorise it, then **sketch the U to see which part you need: below the axis between the roots, above it outside them.**
+      3. Solve it. If $f'(x)$ is a quadratic, factorise it, then **sketch it to see which part you need.** For a U shape (positive $x^2$ term) it's below the axis between the roots and above it outside them.
       4. Answer with an inequality in $x$, like $1 < x < 3$.
 
       For "show that $f$ is increasing", step 3 is completing the square instead, and step 4 is a sentence.
@@ -125,22 +126,33 @@ blocks:
   - type: check
     questions: [complete-square-cloze, increasing-explain]
 
-  - type: deeper
-    title: Restricted domains, and why this links to inverses
-    body: |-
-      Some functions only increase on part of the $x$-axis, so the question gives a domain.
+  - type: example
+    title: "Exam-style: increasing on a given domain"
+    problem: |-
+      Show that $f(x) = x + \dfrac{4}{x}$ is increasing for $x > 2$.
+    steps:
+      - |-
+        **Differentiate:** $\;f(x) = x + 4x^{-1}$, so $f'(x) = 1 - 4x^{-2} = 1 - \dfrac{4}{x^2}$.
+      - |-
+        **Write the inequality:** you need $f'(x) > 0$ for every $x > 2$.
+      - |-
+        **Solve it:** for $x > 2$, $x^2 > 4$, so $\dfrac{4}{x^2} < 1$. That makes $1 - \dfrac{4}{x^2} > 0$.
+      - |-
+        **Answer with a sentence:** $f'(x) > 0$ for all $x > 2$, so $f$ is increasing for $x > 2$.
+    answer: |-
+      Shown.
 
-      *Show that $f(x) = x + \dfrac{4}{x}$ is increasing for $x > 2$.*
-
-      - **Differentiate:** $f'(x) = 1 - \dfrac{4}{x^2}$.
-      - **Solve:** for $x > 2$, $x^2 > 4$, so $\dfrac{4}{x^2} < 1$ and $f'(x) > 0$.
-
-      Why it matters: an increasing (or decreasing) function is **one-one**, so it has an inverse.
-
-      One more detail: $f$ still counts as increasing if $f'(x) = 0$ only at single points, like $x^3$ at $x = 0$.
+      Why they ask: an increasing (or decreasing) function is **one-one**, so it has an inverse. That's why this often comes with an inverse-function question.
 
   - type: check
     questions: [restricted-domain]
+
+  - type: deeper
+    title: "Detail: a zero gradient at a single point"
+    body: |-
+      A function still counts as increasing if $f'(x) = 0$ only at single points.
+
+      For example, $y = x^3$ has $\dfrac{dy}{dx} = 3x^2$, which is 0 only at $x = 0$. It's increasing for every $x$.
 
   - type: misconceptions
     items:
@@ -170,7 +182,7 @@ blocks:
       - |-
         The method: differentiate, write the inequality ($> 0$ increasing, $< 0$ decreasing), solve it, answer in $x$.
       - |-
-        Quadratic $f'(x)$? **Sketch the U**: negative between the roots, positive outside.
+        Quadratic $f'(x)$ with a positive $x^2$ term? **Sketch the U**: negative between the roots, positive outside.
       - |-
         To show "increasing for every $x$", complete the square on $f'(x)$ and say why it's always positive.
       - |-
@@ -256,7 +268,9 @@ questions:
     explanation: |-
       Step 3 has to prove $f'(x) > 0$ for **every** $x$, not just check a few values. Completing the square does that in one line, and step 4 is the sentence.
     model: |-
-      $f'(x) = 3x^2 - 12x + 15 = 3(x^2 - 4x + 5) = 3\left[(x - 2)^2 + 1\right] = 3(x - 2)^2 + 3$. Since $(x - 2)^2 \geqslant 0$ for all $x$, $f'(x) \geqslant 3 > 0$ for all $x$. So $f$ is an increasing function.
+      $f'(x) = 3x^2 - 12x + 15 = 3(x^2 - 4x + 5) = 3\left[(x - 2)^2 + 1\right] = 3(x - 2)^2 + 3$.
+
+      Since $(x - 2)^2 \geqslant 0$ for all $x$, $f'(x) \geqslant 3 > 0$ for all $x$. So $f$ is an increasing function.
     keyPoints:
       - Correct derivative f′(x) = 3x² − 12x + 15
       - Completed square 3(x − 2)² + 3 (or discriminant 144 − 180 < 0 with positive x² coefficient)

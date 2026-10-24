@@ -10,7 +10,7 @@ objectives: ["1.7.3"]
 prerequisites: [p1-differentiation-chain-rule]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "apply differentiation
@@ -19,7 +19,8 @@ provenance:
     formula V = (4/3)πr³ is stated in the questions. All examples and questions are original,
     with made-up illustrative rates; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
-    Rewritten on 2026-10-23 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -43,7 +44,7 @@ blocks:
 
       1. Know and want: write the rate you're given and the rate you want, e.g. know $\dfrac{dr}{dt} = 0.5$, want $\dfrac{dA}{dt}$.
       2. Differentiate the formula that links the two letters, e.g. $A = \pi r^2$ gives $\dfrac{dA}{dr} = 2\pi r$.
-      3. **Chain: write $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt}$ with your letters, before any numbers.**
+      3. **Chain: write $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt}$ with your letters, before any numbers.** Check it like fractions: the $dr$s cancel to leave $\dfrac{dA}{dt}$.
       4. Numbers: put the values in and solve for the rate you want.
 
   - type: diagram
@@ -80,12 +81,13 @@ blocks:
   - type: diagram
     diagram: p1-differentiation-growing-circle
     alt: >-
-      A shaded circle of radius r, labelled area A = πr², surrounded by a thin ring of width δr drawn
-      with a dashed outer edge. Text beside it: the new ring is approximately a strip 2πr long and
-      δr wide, so δA ≈ 2πr × δr and δA/δr ≈ 2πr; hence dA/dr = 2πr, the circumference. Below a
+      A shaded circle of radius r, labelled area A = πr², surrounded by a thin ring with a dashed
+      outer edge; a small double arrow marks the ring's width. Text beside it: the new ring is
+      approximately a strip 2πr long and very thin, so the extra area is approximately 2πr times
+      the extra radius, so A grows 2πr times as fast as r: dA/dr = 2πr, the circumference. Below a
       line: if r grows with time t, dA/dt = dA/dr × dr/dt.
     caption: |-
-      Why is $\dfrac{dA}{dr} = 2\pi r$? A tiny bit more radius adds a thin ring, which is almost a strip $2\pi r$ long. That's the circumference.
+      Why is $\dfrac{dA}{dr} = 2\pi r$? A tiny bit more radius adds a thin ring, which is almost a strip as long as the circumference, $2\pi r$.
 
   - type: example
     title: "Example 2: exam-style"
@@ -146,7 +148,9 @@ questions:
     difficulty: 1
     objectives: ["1.7.3"]
     prompt: |-
-      $V\ \text{cm}^3$ is the volume of water in a tank $t$ seconds after a tap is opened. At one moment $\dfrac{dV}{dt} = -3$. What does this mean?
+      $V\ \text{cm}^3$ is the volume of water in a tank $t$ seconds after a tap is opened.
+
+      At one moment $\dfrac{dV}{dt} = -3$. What does this mean?
     explanation: |-
       Know and want (step 1) starts with reading rates like this. $\dfrac{dV}{dt}$ is how fast the volume changes each second, and negative means it's going down: by $3\ \text{cm}^3$ every second.
     options:
@@ -184,7 +188,9 @@ questions:
     difficulty: 2
     objectives: ["1.7.3"]
     prompt: |-
-      The radius of a circle increases at $0.4\ \text{cm s}^{-1}$. Find the rate of increase of its area when the radius is 10 cm. Give an exact answer or 3 significant figures.
+      The radius of a circle increases at $0.4\ \text{cm s}^{-1}$. Find the rate of increase of its area when the radius is 10 cm.
+
+      Give an exact answer or 3 significant figures.
     fields:
       - answer: 25.132741228718345
         tolerance: { abs: 0.05 }
@@ -216,7 +222,9 @@ questions:
     difficulty: 2
     objectives: ["1.7.3"]
     prompt: |-
-      The volume of a cube of side $x$ cm is increasing at $6\ \text{cm}^3\,\text{s}^{-1}$. A student finds the rate of increase of $x$ when $x = 2$. Which line contains the first error?
+      The volume of a cube of side $x$ cm is increasing at $6\ \text{cm}^3\,\text{s}^{-1}$. A student finds the rate of increase of $x$ when $x = 2$.
+
+      Which line contains the first error?
     lines:
       - |-
         $V = x^3$, so $\dfrac{dV}{dx} = 3x^2 = 12$ when $x = 2$.

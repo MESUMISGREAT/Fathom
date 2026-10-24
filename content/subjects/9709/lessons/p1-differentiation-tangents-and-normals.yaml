@@ -10,7 +10,7 @@ objectives: ["1.7.3"]
 prerequisites: [p1-differentiation-chain-rule, coordinate-geometry-equation-of-a-line, coordinate-geometry-parallel-and-perpendicular]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.7 learning outcome "apply differentiation
@@ -18,7 +18,8 @@ provenance:
     change" (the gradients, tangents and normals part). All examples and questions are
     original; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
-    Rewritten on 2026-10-23 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -58,8 +59,8 @@ blocks:
     diagram: p1-differentiation-tangent-steps
     alt: >-
       Five numbered steps for the curve y = x² − 2x + 3 at x = 2. Step 1, find the point: y = 2² −
-      2(2) + 3 = 3, giving (2, 3). Step 2, differentiate: dy by dx = 2x − 2. Step 3, put x in to get
-      the gradient: m = 2(2) − 2 = 2. Step 4, highlighted, normal? flip and change sign: minus 1
+      2(2) + 3 = 3, giving (2, 3). Step 2, differentiate: dy by dx = 2x − 2. Step 3, put x in, the
+      gradient: m = 2(2) − 2 = 2. Step 4, highlighted, normal? flip and change sign: minus 1
       over m = minus one half. Step 5, put into the line: y − y₁ = m(x − x₁). Below a rule, the two
       answers. Tangent: y − 3 = 2(x − 2), so y = 2x − 1. Normal: y − 3 = minus one half times
       (x − 2), so x + 2y − 8 = 0.
@@ -110,18 +111,28 @@ blocks:
   - type: check
     questions: [normal-gradient, normal-eqn]
 
-  - type: deeper
-    title: "Variant: they give the gradient, you find the point"
+  - type: explain
+    title: "The other type: they give the gradient"
     body: |-
-      *Find the points on $y = x^3 - 3x^2 + 2$ where the tangent is parallel to the line $y = 9x$.*
+      *Find the points where the tangent is parallel to $y = 9x$*, or *where the gradient is 9*.
 
-      Same tools, run backwards:
+      Run the method backwards: set $\dfrac{dy}{dx}$ equal to the gradient, solve for $x$, then find $y$.
 
-      1. Parallel means the same gradient, so set $\dfrac{dy}{dx} = 9$.
-      2. Solve: $3x^2 - 6x = 9$, so $x^2 - 2x - 3 = 0$ and $(x - 3)(x + 1) = 0$.
-      3. Find the points: $x = 3$ gives $y = 2$, and $x = -1$ gives $y = -2$.
-
-      So the points are $(3, 2)$ and $(-1, -2)$.
+  - type: example
+    title: "Given the gradient: find the points"
+    problem: |-
+      Find the points on $y = x^3 - 3x^2 + 2$ where the tangent is parallel to the line $y = 9x$.
+    steps:
+      - |-
+        **Differentiate:** $\;\dfrac{dy}{dx} = 3x^2 - 6x$.
+      - |-
+        **Set $\dfrac{dy}{dx}$ equal to the gradient:** parallel lines have the same gradient, and $y = 9x$ has gradient 9. So $3x^2 - 6x = 9$.
+      - |-
+        **Solve for $x$:** $\;x^2 - 2x - 3 = 0$, so $(x - 3)(x + 1) = 0$ and $x = 3$ or $x = -1$.
+      - |-
+        **Find the points:** put each $x$ into the curve's equation. $x = 3$ gives $y = 27 - 27 + 2 = 2$, and $x = -1$ gives $y = -1 - 3 + 2 = -2$.
+    answer: |-
+      $(3, 2)$ and $(-1, -2)$
 
   - type: check
     questions: [find-x-gradient]
@@ -176,6 +187,8 @@ blocks:
         Normal gradient is $-\dfrac{1}{m}$: a tangent gradient of 3 gives a normal gradient of $-\dfrac13$.
       - |-
         A flat tangent ($m = 0$) has a vertical normal, $x = x_1$.
+      - |-
+        Given the gradient instead? Set $\dfrac{dy}{dx}$ equal to it, solve for $x$, then find $y$.
 
 questions:
   - id: gradient-at-point
@@ -269,7 +282,9 @@ questions:
     difficulty: 3
     objectives: ["1.7.3"]
     prompt: |-
-      The normal to the curve $y = \dfrac{6}{x}$ at the point $(2, 3)$ meets the curve again at $Q$. Find the coordinates of $Q$. Fractions or decimals to 3 s.f. are fine.
+      The normal to the curve $y = \dfrac{6}{x}$ at the point $(2, 3)$ meets the curve again at $Q$. Find the coordinates of $Q$.
+
+      Fractions or decimals to 3 s.f. are fine.
     fields:
       - label: "x ="
         answer: -4.5
