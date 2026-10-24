@@ -23,6 +23,7 @@ import ComputerComponentsMicrocontroller from './computer-components-microcontro
 import ComputerComponentsMonitorVsControl from './computer-components-monitor-vs-control';
 import ComputerComponentsOpticalRead from './computer-components-optical-read';
 import ComputerComponentsPrinterBuffer from './computer-components-printer-buffer';
+import ComputerComponentsRomFamily from './computer-components-rom-family';
 import ComputerComponentsSpeaker from './computer-components-speaker';
 import ComputerComponentsSystemOverview from './computer-components-system-overview';
 import ComputerComponentsThermostatGraph from './computer-components-thermostat-graph';
@@ -86,6 +87,7 @@ export const diagrams: DiagramRegistry = {
   'cs-computer-components-monitor-vs-control': ComputerComponentsMonitorVsControl,
   'cs-computer-components-optical-read': ComputerComponentsOpticalRead,
   'cs-computer-components-printer-buffer': ComputerComponentsPrinterBuffer,
+  'cs-computer-components-rom-family': ComputerComponentsRomFamily,
   'cs-computer-components-speaker': ComputerComponentsSpeaker,
   'cs-computer-components-system-overview': ComputerComponentsSystemOverview,
   'cs-computer-components-thermostat-graph': ComputerComponentsThermostatGraph,

@@ -18,7 +18,7 @@ export default function P1IntegrationImproperAreas() {
   // left panel: y = 1/x², x from 1 to 6 shown
   const L = makePlot({ width: PW, height: H - TOP, pad: 30, x: [-0.5, 6.2], y: [-0.4, 2.6] });
   const f = (x: number) => 1 / (x * x);
-  // right panel: y = 1/√x, x from 0 to 1.6 shown
+  // right panel: y = 1/√x, x from 0 to 2.2 shown, region shaded from 0 to 1
   const R = makePlot({ width: PW, height: H - TOP, pad: 30, x: [-0.3, 2.2], y: [-0.6, 5.4] });
   const g = (x: number) => 1 / Math.sqrt(x);
   const gTop = 5.4;

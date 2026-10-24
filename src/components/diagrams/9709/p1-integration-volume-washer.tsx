@@ -31,7 +31,8 @@ export default function P1IntegrationVolumeWasher() {
   return (
     <Svg width={W} height={H}>
       <path d={regionPath(p, f, () => 1, -2, 2)} className="dg-fill-accent" />
-      <AxesXY p={p} xTicks={[-2, -1, 2]} yTicks={[-4, 4, 5]} />
+      {/* no tick at 5: the curve's vertex sits on it */}
+      <AxesXY p={p} xTicks={[-2, -1, 2]} yTicks={[-4, 4]} />
       {/* mirror image below the axis */}
       <path d={graph((x) => -f(x), [-2, 2], p, Y)} className="dg-muted dg-dashed" />
       <line x1={p.sx(-2)} y1={p.sy(-1)} x2={p.sx(2)} y2={p.sy(-1)} className="dg-muted dg-dashed" />

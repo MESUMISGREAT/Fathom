@@ -1,8 +1,8 @@
 /**
  * Volume of revolution as a stack of discs: the region under y = √x from x = 0 to x = 4 (shaded)
  * spun about the x-axis. The solid's outline is the curve and its mirror image y = −√x, with an
- * elliptical end face at x = 4. One thin disc at x = 2.25 has radius y = 1.5 and thickness δx,
- * so its volume is about πy²δx; adding them all gives V = π∫y² dx.
+ * elliptical end face at x = 4. One thin disc at x = 2.25 has radius y = 1.5 and a small
+ * thickness, so its volume is about πy² × thickness; adding them all gives V = π∫y² dx.
  */
 import { Arrow, Label, MathLabel, Svg, graph } from '../primitives';
 import { AxesXY, makePlot } from './kit';
@@ -53,7 +53,7 @@ export default function P1IntegrationVolumeDisc() {
       </Label>
       <Arrow x1={x1 - 8} y1={y0 - ry - 18} x2={x2 + 8} y2={y0 - ry - 18} className="dg-thin" head={6} double />
       <Label x={(x1 + x2) / 2} y={y0 - ry - 34} className="dg-text dg-bold">
-        δx
+        thickness
       </Label>
       <MathLabel x={p.sx(3.2)} y={p.sy(2.35)} anchor="start" w={110} h={36} tone="accent" tex="y = \sqrt{x}" />
 
@@ -64,7 +64,7 @@ export default function P1IntegrationVolumeDisc() {
         w={W - 20}
         h={50}
         size="large"
-        tex="\text{one disc} \approx \pi y^2\,\delta x \quad\Longrightarrow\quad V = \pi\int_a^b y^2\,dx"
+        tex="\text{one disc} \approx \pi y^2 \times \text{thickness} \quad\Longrightarrow\quad V = \pi\int_a^b y^2\,dx"
       />
     </Svg>
   );

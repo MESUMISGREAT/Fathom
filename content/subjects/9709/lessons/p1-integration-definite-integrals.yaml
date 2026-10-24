@@ -10,14 +10,14 @@ objectives: ["1.8.3"]
 prerequisites: [p1-integration-brackets]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "evaluate definite
     integrals" (ordinary limits; the improper cases in the syllabus guidance are in
     p1-integration-improper-integrals). All examples and questions are original; all arithmetic
-    checked in Python. Written in the one-question-type, one-method style. Not yet independently
-    reviewed; not reviewed by a teacher.
+    checked in Python. Written in the one-question-type, one-method style.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -40,12 +40,10 @@ blocks:
       3. **Put the top limit in, then subtract the bottom limit put in. Keep each in its own bracket**, so the minus sign hits all of the second one.
       4. Simplify. If they say *exact*, keep fractions and roots.
 
-      In symbols: if $F$ integrates to give $f$, then $\displaystyle\int_a^b f(x)\,dx = \Big[F(x)\Big]_a^b = F(b) - F(a)$.
-
   - type: intuition
     title: Why no + c?
     body: |-
-      It cancels: $\big(F(b) + c\big) - \big(F(a) + c\big) = F(b) - F(a)$.
+      Try keeping it: $\Big[x^2 + c\Big]_0^2 = (4 + c) - (0 + c) = 4$. The $c$ cancels, and it always will.
 
       So leave it out of definite integrals. It's still needed in every *indefinite* one (no limits).
 
@@ -122,9 +120,9 @@ blocks:
         right: |-
           The bottom limit needs its own bracket: $(16 - 6) - (1 - 3) = 10 + 2 = 12$.
       - wrong: |-
-          $\Big[F(x)\Big]_a^b = F(a) - F(b)$
+          $\Big[x^2\Big]_1^3 = 1 - 9 = -8$
         right: |-
-          It's **top minus bottom**: $F(b) - F(a)$. The other way round flips the sign.
+          It's **top minus bottom**: $9 - 1 = 8$. The other way round flips the sign.
       - wrong: |-
           Put the limits into the original $f(x)$ and subtract.
         right: |-
@@ -132,7 +130,7 @@ blocks:
 
   - type: exam
     body: |-
-      - Write the square-bracket line, then both substitutions. Each one is worth a mark.
+      - Write the square-bracket line, then both substitutions. That working earns the method marks.
       - "Exact value" means fractions, roots or $\pi$, not a rounded decimal.
       - Your calculator can evaluate definite integrals: use it to **check**, but always show the working.
 
@@ -213,7 +211,9 @@ questions:
     fix: |-
       $2(-1)^2 = +2$, so the bottom bracket is $(-1 + 2) = 1$. The answer is $16 - 1 = 15$.
     explanation: |-
-      Lines 1 and 2 are right. In line 3, $(-1)^2 = 1$ is positive, so $2(-1)^2 = 2$, not $-2$. Negative limits need extra care with powers.
+      Lines 1 and 2 are right. In line 3, $(-1)^2 = 1$ is positive, so $2(-1)^2 = 2$, not $-2$.
+
+      Negative limits need extra care with powers.
 
   - id: definite-unknown
     format: numeric

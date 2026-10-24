@@ -10,15 +10,15 @@ objectives: ["1.8.3"]
 prerequisites: [p1-integration-definite-integrals]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "evaluate definite
     integrals", including the guidance's simple cases of improper integrals (the syllabus's two
     examples, x^(−½) from 0 to 1 and x^(−2) from 1 to ∞, are worked here as the easy examples).
     All other examples and all questions are original; all arithmetic checked in Python. Written
-    in the one-question-type, one-method style. Not yet independently reviewed; not reviewed by a
-    teacher.
+    in the one-question-type, one-method style.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -40,8 +40,8 @@ blocks:
     alt: >-
       Two graphs side by side. Left: y = 1 over x², with the region under it from x = 1 to the right
       edge shaded and an arrow saying it carries on for ever. Its title says the integral from 1 to
-      infinity of 1 over x² dx equals 1. Right: y = 1 over root x for x between 0 and 1, rising
-      steeply beside the y-axis, with the region under it from 0 to 1 shaded and a note that it
+      infinity of 1 over x² dx equals 1. Right: y = 1 over root x, rising steeply beside the
+      y-axis, with the region under it from x = 0 to x = 1 shaded and a note that it
       shoots up beside the y-axis. Its title says the integral from 0 to 1 of 1 over root x dx
       equals 2.
     caption: |-
@@ -51,8 +51,8 @@ blocks:
     title: The method
     body: |-
       1. Write it as powers and integrate as normal.
-      2. **Never put $\infty$ in as a number. Say what each term does as $x \to \infty$** instead. Fractions like $\dfrac{1}{x}$ and $\dfrac{3}{x^2}$ get closer and closer to 0.
-      3. For a limit of 0, put 0 into the **integrated** expression. $2\sqrt{x}$ is fine at 0, even though $\dfrac{1}{\sqrt{x}}$ isn't.
+      2. **Never put $\infty$ in as a number. Say what each term does as $x \to \infty$** instead: fractions like $\dfrac{1}{x}$ and $\dfrac{3}{x^2}$ get closer and closer to 0.
+      3. For a limit where the function is undefined, like $x = 0$ in $\dfrac{1}{\sqrt{x}}$, put it into the integrated expression. $2\sqrt{x}$ is fine at 0, even though $\dfrac{1}{\sqrt{x}}$ isn't.
       4. Top minus bottom, as usual.
 
   - type: example
@@ -71,11 +71,11 @@ blocks:
     answer: |-
       $1$
 
-      Check another way: stop at a big number $N$ instead of $\infty$. The integral is $1 - \dfrac{1}{N}$:
+      Check another way: stop at a big number instead of $\infty$. For example, $\displaystyle\int_1^{10} \dfrac{1}{x^2}\,dx = -\dfrac{1}{10} + 1 = 0.9$.
 
-      | $N$ | $10$ | $100$ | $1000$ |
+      | Stop at | $10$ | $100$ | $1000$ |
       | --- | --- | --- | --- |
-      | $1 - \dfrac{1}{N}$ | $0.9$ | $0.99$ | $0.999$ |
+      | Integral | $0.9$ | $0.99$ | $0.999$ |
 
       It's heading for 1 ✓.
 
@@ -148,7 +148,7 @@ blocks:
   - type: exam
     body: |-
       - Improper integrals usually appear as one part of a definite-integral question, worth 2 or 3 marks.
-      - Write the words: "as $x \to \infty$, $\dfrac{2}{3x - 2} \to 0$". Arithmetic with $\infty$ in it loses the mark.
+      - Write the words: "as $x \to \infty$, $\dfrac{2}{3x - 2} \to 0$". Writing $\infty$ into the working, like $-\dfrac{2}{\infty}$, can cost you that mark.
       - Same square-bracket layout as any definite integral.
 
   - type: takeaways

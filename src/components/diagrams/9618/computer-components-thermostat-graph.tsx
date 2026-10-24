@@ -1,5 +1,5 @@
 /**
- * Feedback keeping a greenhouse near 25 °C, from a simple model. Temperature (14 to 30 °C)
+ * Feedback keeping a greenhouse near 25 °C, from a simple model. Temperature (16 to 28 °C)
  * against time (0 to 60 minutes). The heater starts on at 18 °C and the temperature climbs
  * along a curve; when it reaches 26 °C the processor switches the heater off and the
  * temperature falls; at 24 °C the heater goes back on. So after the first warm-up the
@@ -14,12 +14,12 @@ export const diagramKey = 'cs-computer-components-thermostat-graph';
 const W = 600;
 const H = 340;
 const L = 64;
-const R = 560;
+const R = 480;
 const TOP = 34;
 const BOT = 250;
 const T_MAX = 60;
-const Y_MIN = 14;
-const Y_MAX = 30;
+const Y_MIN = 16;
+const Y_MAX = 28;
 
 const sx = (t: number) => L + (t / T_MAX) * (R - L);
 const sy = (v: number) => BOT - ((v - Y_MIN) / (Y_MAX - Y_MIN)) * (BOT - TOP);
@@ -63,7 +63,7 @@ export function ComputerComponentsThermostatGraph() {
           </Label>
         </g>
       ))}
-      {[15, 20, 25, 30].map((v) => (
+      {[16, 18, 20, 22, 24, 26, 28].map((v) => (
         <g key={v}>
           <line x1={L - 5} y1={sy(v)} x2={L} y2={sy(v)} className="dg-thin" />
           <Label x={L - 9} y={sy(v)} anchor="end" className="dg-text-small">
@@ -82,14 +82,14 @@ export function ComputerComponentsThermostatGraph() {
       <line x1={L} y1={sy(26)} x2={R} y2={sy(26)} className="dg-grid dg-dashed" />
       <line x1={L} y1={sy(24)} x2={R} y2={sy(24)} className="dg-grid dg-dashed" />
       <line x1={L} y1={sy(25)} x2={R} y2={sy(25)} className="dg-accent-2 dg-dashed" />
-      <Label x={R + 4} y={sy(26) - 8} anchor="end" className="dg-text-small dg-text-muted">
+      <Label x={R + 8} y={sy(26)} anchor="start" className="dg-text-small dg-text-muted">
         26: heater off
       </Label>
-      <Label x={R + 4} y={sy(24) + 10} anchor="end" className="dg-text-small dg-text-muted">
-        24: heater on
+      <Label x={R + 8} y={sy(25)} anchor="start" className="dg-text-small dg-text-accent-2">
+        25: target
       </Label>
-      <Label x={sx(2)} y={sy(25) - 10} anchor="start" className="dg-text-small dg-text-accent-2">
-        target 25
+      <Label x={R + 8} y={sy(24)} anchor="start" className="dg-text-small dg-text-muted">
+        24: heater on
       </Label>
 
       <path d={d} className="dg-accent" />

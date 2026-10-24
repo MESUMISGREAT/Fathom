@@ -2,7 +2,7 @@ id: p1-integration-finding-the-curve
 subject: "9709"
 topic: "1.8"
 title: Finding a curve from its gradient
-summary: Given dy/dx and a point on the curve, integrate with + c, then put the point into y = … to find c.
+summary: Given the gradient and one point on the curve, integrate with + c, then put the point into y = … to find c.
 order: 3
 minutes: 5
 kind: core
@@ -10,15 +10,15 @@ objectives: ["1.8.2"]
 prerequisites: [p1-integration-brackets]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "solve problems involving
     the evaluation of a constant of integration", following the syllabus's example type (the
     curve through a given point with a given dy/dx involving a root of a linear bracket), worked
     here with different numbers. All examples and questions are original; all arithmetic checked
-    in Python. Written in the one-question-type, one-method style. Not yet independently
-    reviewed; not reviewed by a teacher.
+    in Python. Written in the one-question-type, one-method style.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -95,7 +95,7 @@ blocks:
     questions: [curve-bracket, spot-curve]
 
   - type: deeper
-    title: "Harder: an unknown in dy/dx as well"
+    title: "Harder: an unknown in the gradient as well"
     body: |-
       *A curve has $\dfrac{dy}{dx} = 3x^2 + kx$ and a stationary point at $(2, -1)$. Find its equation.*
 
@@ -127,7 +127,7 @@ blocks:
   - type: exam
     body: |-
       - These are typically 3 to 5 marks: integrate (method and accuracy marks), substitute the point, state the equation.
-      - Show the line where you substitute, like "$4 = 9 + c$". It's a mark on its own.
+      - Show the line where you substitute, like "$4 = 9 + c$". It usually earns a mark of its own.
       - Finish with "$y = \ldots$" and a number for $c$. A later part often uses your curve.
 
   - type: takeaways
@@ -148,6 +148,8 @@ questions:
     objectives: ["1.8.2"]
     prompt: |-
       A curve has $\dfrac{dy}{dx} = 6x^2 - 4$ and passes through $(2, 7)$. Find $y$ in terms of $x$.
+
+      Type just the expression for $y$.
     answer: 2x^3 - 4x - 1
     variables: [x]
     display: |-
@@ -186,6 +188,8 @@ questions:
     objectives: ["1.8.2"]
     prompt: |-
       A curve has $\dfrac{dy}{dx} = \dfrac{8}{(2x - 1)^2}$ and passes through $(1, 3)$. Find $y$ in terms of $x$.
+
+      Type just the expression for $y$.
     answer: 7 - 4/(2x - 1)
     variables: [x]
     domain: { min: 1, max: 4 }
@@ -222,7 +226,9 @@ questions:
     difficulty: 3
     objectives: ["1.8.2"]
     prompt: |-
-      A curve has $\dfrac{dy}{dx} = k - 3x^2$, where $k$ is a constant, and a stationary point at $(1, 5)$. Its equation is $y = kx - x^3 + c$. Find $k$ and $c$.
+      A curve has $\dfrac{dy}{dx} = k - 3x^2$, where $k$ is a constant, and a stationary point at $(1, 5)$.
+
+      Its equation is $y = kx - x^3 + c$. Find $k$ and $c$.
     fields:
       - label: "k ="
         answer: 3

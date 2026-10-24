@@ -10,7 +10,7 @@ objectives: ["1.8.4"]
 prerequisites: [p1-integration-definite-integrals]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
     for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "use definite integration
@@ -18,8 +18,8 @@ provenance:
     curve and a line, or between two curves; and to find a volume of revolution about one of the
     axes" (the part on a curve and lines parallel to the axes, including a region against the
     y-axis). All examples and questions are original; all arithmetic checked in Python. Written in
-    the one-question-type, one-method style. Not yet independently reviewed; not reviewed by a
-    teacher.
+    the one-question-type, one-method style.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -45,7 +45,8 @@ blocks:
     body: |-
       1. Find the limits: the lines they give you, or where the curve meets the $x$-axis (solve $y = 0$).
       2. Integrate $y$ and work out top limit minus bottom limit.
-      3. **Check which side of the axis the region is on.** Below the axis, the integral comes out negative: the area is its size. If the region crosses the axis, split it at the crossing and add the sizes.
+      3. **Check which side of the axis the region is on.** Below it, the integral comes out negative, and the area is its size.
+      4. Region crossing the axis? Split it at the crossing and add the sizes.
 
   - type: example
     title: "The easiest one: check it with a trapezium"
@@ -76,7 +77,7 @@ blocks:
       four thirds plus four thirds, which is 0, but the area is four thirds plus four thirds, which is
       eight thirds.
     caption: |-
-      Why step 3 matters: one integral from 0 to 3 gives 0, as if there were no area at all.
+      Why steps 3 and 4 matter: one integral from 0 to 3 gives 0, as if there were no area at all.
 
   - type: example
     title: "Exam-style: a region below the axis"
@@ -146,7 +147,7 @@ blocks:
       - |-
         Limits: the lines given, or where $y = 0$.
       - |-
-        **Below the axis, the integral is negative**: take its size. Crossing the axis? Split at the crossing.
+        **Below the axis, the integral is negative**: take its size. If the region crosses the axis, split it there.
       - |-
         Against the $y$-axis: $\displaystyle\int_c^d x\,dy$ with $y$-limits.
 
@@ -185,7 +186,7 @@ questions:
     difficulty: 2
     objectives: ["1.8.4"]
     prompt: |-
-      Find the area of the region enclosed by $y = x^2 - 6x + 8$ and the $x$-axis. Give the exact value or 3 significant figures.
+      Find the area of the region enclosed by $y = x^2 - 6x + 8$ and the $x$-axis. Give the exact value (you can type a fraction like 7/2) or 3 significant figures.
     fields:
       - answer: 1.3333333333333333
         tolerance: { rel: 0.005 }
@@ -217,7 +218,7 @@ questions:
           That's only one of the two parts.
       - text: $2$
         why: |-
-          Check the integration: $x^3 \to \dfrac{x^4}{4}$, so each part is $\dfrac14$.
+          That's $1 + 1$: $x^4$ without dividing by 4. In fact $x^3 \to \dfrac{x^4}{4}$, so each part is $\dfrac14$.
 
   - id: area-y-axis
     format: numeric

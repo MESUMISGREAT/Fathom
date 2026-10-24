@@ -26,7 +26,8 @@ export default function P1IntegrationAreaBetween() {
       <Grid p={p} />
       <path d={regionPath(p, line, curve, 1, 4)} className="dg-fill-accent" />
       <AxesXY p={p} xTicks={[1, 2, 3, 4, 5]} yTicks={[1, 2, 3, 4, 5, 6, 7]} />
-      <path d={graph(curve, X, p, Y)} className="dg-line" />
+      {/* start just left of the y-axis so the curve doesn't run through the tick labels 6 and 7 */}
+      <path d={graph(curve, [-0.17, X[1]], p, Y)} className="dg-line" />
       <path d={graph(line, [-0.6, 6.4], p, Y)} className="dg-accent-2" />
 
       <Arrow x1={p.sx(3)} y1={p.sy(curve(3))} x2={p.sx(3)} y2={p.sy(line(3))} className="dg-thin" head={7} double />

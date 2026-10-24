@@ -71,7 +71,12 @@ blocks:
   - type: example
     title: "Easy first: read the bits"
     problem: |
-      Ten equal cells of track are `L L L P P P L L L L` (L = land, P = pit). A cell is 1 if the surface changes (pit to land, or land to pit) at its start, otherwise 0. The first cell is 0. What bits are read?
+      Ten equal cells of track are `L L L P P P L L L L` (L = land, P = pit).
+
+      - A cell is 1 if the surface changes (pit to land, or land to pit) at its start; otherwise it is 0.
+      - The first cell is 0.
+
+      What bits are read?
     steps:
       - |
         Cells 1 to 3 are all L: no changes, so `000`.
@@ -169,12 +174,19 @@ questions:
     difficulty: 2
     objectives: ["3.1.3"]
     prompt: |
-      Fifteen equal cells of track read `P P P P L L L P P P L L L L L` (P = pit, L = land). A cell is 1 if the surface changes at its start, otherwise 0. The first cell is 0. Write the 15 bits read.
+      Fifteen equal cells of track read `P P P P L L L P P P L L L L L` (P = pit, L = land).
+
+      - A cell is 1 if the surface changes at its start; otherwise it is 0.
+      - The first cell is 0.
+
+      Write the 15 bits read.
     accept: ["000010010010000", "0000 1001 0010 000", "0 0 0 0 1 0 0 1 0 0 1 0 0 0 0", "0000 100 100 10000"]
     model: |
       `000010010010000`: changes at the starts of cells 5, 8 and 11.
     explanation: |
-      Runs: 4 pits, 3 lands, 3 pits, 5 lands. Each new run starts with a 1, except the very first. So `0000` `100` `100` `10000`.
+      Runs: 4 pits, 3 lands, 3 pits, 5 lands. Each new run starts with a 1, except the very first.
+
+      So `0000` `100` `100` `10000`.
 
   - id: why-pits-differ
     format: mcq
