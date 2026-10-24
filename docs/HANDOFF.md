@@ -214,19 +214,42 @@ changes alongside lessons:
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
 - Queue: 14 published, 140 todo.
-- **START HERE** (updated 24 Oct, 19:00 UTC). `main` holds only reviewed work; drafts are
+- **START HERE** (updated 24 Oct, 19:20 UTC). `main` holds only reviewed work; drafts are
   only on `wip-snapshot`.
   1. In a fresh container, run `bash scripts/lessons/restore-drafts.sh` to bring the drafts
      back, then `npm run diagrams:gen`.
   2. **9709 1.8 Integration: published 24 Oct** (ef055f1, reviewed; marker tests 166/166).
   3. **9618 3.1 Computers and their components: published 24 Oct** (5960250, reviewed).
-  4. **In progress (19:00 UTC):**
-     - 9701 3.3+3.4+3.5 (13 lessons, 82 questions) and 9702 4.1+4.2 (10 lessons) are
-       written and being reviewed (the briefs list the writers' flagged points).
-     - 9709 2.1+2.2 is being written (first Sonnet writer).
-     - If the chat ended mid-way, the drafts are on `wip-snapshot`. Lessons already set to
-       ai-checked can be published; rerun the review for the rest. A half-written unit gets
-       a "finish these drafts" brief, as for 9618 3.1.
+  4. **Halted by the user on 24 Oct at 19:20 UTC ("we will continue next week").** No agents
+     are running. Restore the drafts first (step 1). Then start this round:
+     - **9701 3.3+3.4+3.5:** written, not reviewed. 13 draft lessons (`metallic-bonding-*`,
+       `covalent-bonding-*`, `shapes-molecules-*`) with 82 questions, 15 diagrams and the
+       helpers `covalent-bonding-kit.tsx` and `shapes-molecules-kit.tsx`. A reviewer had
+       started but changed nothing. Next: regenerate the review brief and append the
+       writer's flags:
+       - the bond energies were recalled from memory, so check each against the Data
+         Booklet;
+       - expanded octets use the "empty 3d orbitals" story;
+       - the angles are VSEPR predictions;
+       - the stretch examples are ClF₃, hydrazine, propenenitrile, solid PCl₅ and SF₆
+         angles;
+       - count every electron in each dot-and-cross diagram.
+     - **9702 4.1+4.2:** written, not reviewed. 10 draft lessons (`turning-effects-*`,
+       `equilibrium-forces-*`), 13 diagrams and the helper `turning-effects-kit.tsx`. A
+       reviewer had started but changed nothing. Next: regenerate the review brief and
+       append the writer's flags:
+       - the marker treats N m and J as the same dimension, so N m is a fixed label and an
+         MCQ tests N m vs J;
+       - `tension-expression` uses w for W and t for θ; test it with the marker;
+       - check the scope of the hinged-beam "deeper" block, the sine rule, and toppling
+         with the plumb line;
+       - `hinge-components` uses a rounded 163 N, with tolerances ±1 N and ±0.6 N;
+       - the hinge arrow in `phys-equilibrium-forces-hinged-beam` overlaps the beam by a
+         few pixels.
+     - **9709 2.1+2.2:** not started; the writer was stopped before writing any file. Next:
+       run `prompts.mjs write "9709 2.1+2.2" <today>`, append the MATHS STYLE block (the
+       Maths review checks below, written as writing rules, with the p1-integration
+       lessons as the model), and run the writer on Sonnet.
      - Then the next `todo` units in order: 9618 3.2, …
   5. **Models (the user's choice, 24 Oct):** run writer agents with `model: "sonnet"`.
      Reviewers stay on Opus, the default, because they are the quality gate. Don't use
