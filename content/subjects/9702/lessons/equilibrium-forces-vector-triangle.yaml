@@ -1,0 +1,216 @@
+id: equilibrium-forces-vector-triangle
+subject: "9702"
+topic: "4.2"
+title: Closed vector triangles
+summary: Three coplanar forces in equilibrium, drawn tip to tail, form a closed triangle, so you can find unknown forces by scale drawing or trigonometry.
+order: 4
+minutes: 5
+objectives: ["4.2.3"]
+prerequisites: [equilibrium-forces-two-conditions, units-adding-vectors, units-resolving-vectors]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 4.2.3, represent coplanar forces in equilibrium using a vector
+    triangle). Both diagrams are drawn to scale (the 30 N, 40 N, 50 N lamp; a 50 N block on a 30°
+    slope). Forces and angles are illustrative values; all worked values and answer keys were
+    computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can represent three coplanar forces in equilibrium as a **closed vector triangle** and use it to find unknown forces.
+
+  - type: explain
+    title: The 3-4-5 lamp
+    body: |
+      Hang a $30\ \text{N}$ lamp from a cable and hold it to one side with a horizontal $40\ \text{N}$ pull. The tension in the cable comes out at exactly $50\ \text{N}$.
+
+      That's no coincidence: the three forces make a 3-4-5 right-angled triangle.
+
+  - type: explain
+    title: Tip to tail, and back home
+    body: |
+      Forces add like any vectors: draw them **tip to tail**, and the resultant runs from the very start to the very end.
+
+      In equilibrium the resultant is zero, so the end lands back on the start. Three forces in equilibrium make a **closed triangle**.
+
+  - type: diagram
+    diagram: phys-equilibrium-forces-closed-triangle
+    alt: >-
+      Two panels, drawn to scale. Left, the free-body diagram of a lamp: the tension T = 50 N
+      points up and to the left along the cable towards the ceiling, the weight W = 30 N points
+      straight down, and a horizontal pull of 40 N points to the right, all from the lamp. Right,
+      the same three forces drawn tip to tail: 30 N straight down from a starting point, then 40
+      N to the right, then 50 N diagonally back up to the starting point, which is labelled start
+      = finish. There is a right angle between the 30 N and 40 N sides, and the arrows all go the
+      same way round the triangle.
+    caption: The arrows chase each other round and finish where they started, so the resultant is zero.
+
+  - type: explain
+    title: Drawing one
+    body: |
+      1. Sketch the free-body diagram so you know each force's direction.
+      2. Choose a scale, for example 1 cm to 10 N.
+      3. Draw a known force (usually the weight) as an arrow to scale.
+      4. From its tip, draw a line in the direction of the second force.
+      5. From the tail of the first arrow, draw a line in the direction of the third force. Where the two lines cross closes the triangle.
+      6. Measure the sides and angles, and convert back using your scale.
+
+      The arrows must chase each other round the triangle, all in the same sense.
+
+  - type: check
+    questions: [closed-cloze, arrow-direction]
+
+  - type: example
+    title: The lamp, by calculation
+    problem: |
+      A $30\ \text{N}$ lamp hangs from a cable and is held to one side by a horizontal force of $40\ \text{N}$. Find the tension in the cable and the angle the cable makes with the vertical.
+    steps:
+      - |
+        The weight (down) and the pull (across) are at right angles, so the triangle is right-angled with the tension as its hypotenuse.
+      - |
+        $T = \sqrt{30^2 + 40^2} = 50\ \text{N}$.
+      - |
+        Angle to the vertical: $\tan\theta = \dfrac{40}{30}$, so $\theta = 53.1°$.
+      - |
+        Check by resolving: vertically, $50\cos 53.1° = 30\ \text{N}$ ✓; horizontally, $50\sin 53.1° = 40\ \text{N}$ ✓.
+    answer: |
+      $50\ \text{N}$, at $53.1°$ to the vertical.
+
+  - type: explain
+    title: A block resting on a slope
+    body: |
+      A block at rest on a rough slope has three forces on it: its weight $W$, the normal contact force $R$ (at right angles to the slope) and friction $F$ (up the slope).
+
+      $R$ and $F$ are at right angles, so the triangle is right-angled. The angle between $W$ and $R$ equals the slope angle $\theta$:
+
+      $$R = W\cos\theta \qquad F = W\sin\theta$$
+
+      That's exactly what resolving along and at right angles to the slope gives. Two methods, one answer.
+
+  - type: diagram
+    diagram: phys-equilibrium-forces-slope-triangle
+    alt: >-
+      Two panels. Left: a square block resting on a slope inclined at θ (30°) to the horizontal.
+      From the centre of the block, the weight W points straight down, the normal contact force R
+      points away from the slope at right angles to it, and the friction force F points up the
+      slope. Right: the same three forces tip to tail. W points straight down; from its tip, R
+      points up and to the left; from R's tip, F points up and to the right, back to the start.
+      There is a right angle between R and F, and the angle between W and R is marked θ. The R
+      side is labelled R = W cos θ and the F side F = W sin θ.
+    caption: The slope angle reappears inside the triangle, between W and R.
+
+  - type: check
+    questions: [lamp-tension, slope-forces]
+
+  - type: misconceptions
+    items:
+      - wrong: In the triangle, two arrows meet head to head at the end of the third.
+        right: That's the triangle for adding two forces to find their resultant. For equilibrium, all three arrows go the same way round.
+      - wrong: Any three forces can balance if you arrange them cleverly.
+        right: Only if they can form a triangle. The largest force can't be bigger than the other two added together.
+      - wrong: The vector triangle shows where each force acts on the object.
+        right: It shows only sizes and directions. Where the forces act matters for moments, which is a separate condition.
+
+  - type: check
+    questions: [triangle-possible]
+
+  - type: exam
+    body: |
+      - For a **scale drawing**: state your scale, draw it big, and measure carefully. An answer within a few per cent usually gets full marks.
+      - If the triangle has a right angle, use Pythagoras and trigonometry. It's quicker and more precise.
+      - **Coplanar** means all the forces lie in one plane, like a flat page.
+
+  - type: takeaways
+    items:
+      - Three coplanar forces in equilibrium form a closed triangle when drawn tip to tail.
+      - The arrows all go the same way round the triangle.
+      - Solve it by scale drawing, or by trigonometry when there's a right angle.
+      - "On a slope at rest: R = W cos θ and F = W sin θ."
+
+questions:
+  - id: closed-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.2.3"]
+    prompt: |
+      Three coplanar forces in equilibrium, drawn tip to tail, form a {{1}} triangle.
+    blanks:
+      - accept: [closed]
+    explanation: |
+      The resultant is zero, so the last arrow ends exactly where the first one started: a **closed** triangle.
+
+  - id: arrow-direction
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.3"]
+    prompt: |
+      Three forces act on an object in equilibrium. In the vector triangle that represents them, how do the arrows go?
+    options:
+      - text: All the same way round the triangle, each starting where the last one ends
+        correct: true
+        why: Correct. Tip to tail all the way round, ending back at the start.
+      - text: Two go one way round and the third goes the other way
+        why: That's the triangle for finding a resultant, where two forces add up to the third. In equilibrium there's no resultant.
+      - text: All three start from the same corner
+        why: That's a free-body diagram, not a vector triangle.
+      - text: It doesn't matter; only the lengths count
+        why: Direction is half of what a vector is. The triangle only closes with every arrow pointing the right way.
+    explanation: |
+      Tip to tail, all in the same sense, and the last tip lands on the first tail: zero resultant.
+
+  - id: lamp-tension
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      A $24\ \text{N}$ hanging basket is pulled sideways by a horizontal force of $10\ \text{N}$ and hangs at rest from a rope. Find the tension in the rope and the angle the rope makes with the vertical.
+    fields:
+      - label: "tension ="
+        answer: 26
+        tolerance: { abs: 0.05 }
+        unit: N
+      - label: "angle to the vertical ="
+        answer: 22.62
+        tolerance: { abs: 0.1 }
+        unit: °
+    explanation: |
+      Weight and pull are at right angles, so $T = \sqrt{24^2 + 10^2} = 26\ \text{N}$ (a 5-12-13 triangle, doubled). The angle to the vertical is $\tan^{-1}\left(\dfrac{10}{24}\right) = 22.6°$.
+
+  - id: slope-forces
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      A box of weight $50\ \text{N}$ rests on a rough ramp inclined at $20°$ to the horizontal. Find the friction force and the normal contact force on the box, to 3 significant figures.
+    fields:
+      - label: "friction ="
+        answer: 17.10
+        tolerance: { abs: 0.1 }
+        unit: N
+      - label: "normal contact force ="
+        answer: 46.98
+        tolerance: { abs: 0.1 }
+        unit: N
+    explanation: |
+      The closed triangle is right-angled, with $W$ as the hypotenuse and $20°$ between $W$ and $R$. Friction $F = 50\sin 20° = 17.1\ \text{N}$; normal force $R = 50\cos 20° = 47.0\ \text{N}$.
+
+  - id: triangle-possible
+    format: mcq
+    difficulty: 3
+    objectives: ["4.2.3"]
+    prompt: |
+      Which set of three forces could keep an object in equilibrium?
+    options:
+      - text: $5\ \text{N}$, $7\ \text{N}$ and $10\ \text{N}$
+        correct: true
+        why: Correct. $5 + 7 = 12$, which is more than $10$, so the three arrows can close a triangle.
+      - text: $3\ \text{N}$, $4\ \text{N}$ and $8\ \text{N}$
+        why: $3 + 4 = 7$, less than $8$. The two smaller arrows can't reach far enough to close the triangle.
+      - text: $2\ \text{N}$, $9\ \text{N}$ and $4\ \text{N}$
+        why: $2 + 4 = 6$, less than $9$. However you arrange them, there's a gap.
+      - text: None of these, because three forces can only balance if two of them are at right angles
+        why: Any angles will do, as long as the arrows close a triangle. A right angle just makes the maths easier.
+    explanation: |
+      Three forces can balance only if they can form a closed triangle, so the largest can't exceed the sum of the other two. Only $5$, $7$ and $10\ \text{N}$ pass.

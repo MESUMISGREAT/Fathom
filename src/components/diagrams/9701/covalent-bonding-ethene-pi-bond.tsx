@@ -92,10 +92,10 @@ export function CovalentBondingEthenePiBond() {
       <line x1={344} y1={y} x2={536} y2={y} className="dg-line" />
       <circle cx={s1} cy={y} r={4} className="dg-dot" />
       <circle cx={s2} cy={y} r={4} className="dg-dot" />
-      <Label x={s1} y={y + 14} className="dg-text-small dg-bold">
+      <Label x={s1 - 18} y={y + 10} className="dg-text-small dg-bold">
         C
       </Label>
-      <Label x={s2} y={y + 14} className="dg-text-small dg-bold">
+      <Label x={s2 + 18} y={y + 10} className="dg-text-small dg-bold">
         C
       </Label>
       <Label x={548} y={y} anchor="start" className="dg-text-small">

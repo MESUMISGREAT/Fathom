@@ -15,6 +15,13 @@ import EquationsMotionSuvatArea from './equations-motion-suvat-area';
 import EquationsMotionThrowGraphs from './equations-motion-throw-graphs';
 import EquationsMotionVtArea from './equations-motion-vt-area';
 import EquationsMotionVtGradient from './equations-motion-vt-gradient';
+import EquilibriumForcesClosedTriangle from './equilibrium-forces-closed-triangle';
+import EquilibriumForcesHingedBeam from './equilibrium-forces-hinged-beam';
+import EquilibriumForcesPlank from './equilibrium-forces-plank';
+import EquilibriumForcesSeesaw from './equilibrium-forces-seesaw';
+import EquilibriumForcesSlopeTriangle from './equilibrium-forces-slope-triangle';
+import EquilibriumForcesTensionAngle from './equilibrium-forces-tension-angle';
+import EquilibriumForcesTwoStrings from './equilibrium-forces-two-strings';
 import ErrorGraphs from './error-graphs';
 import LinearMomentumApproachSeparation from './linear-momentum-approach-separation';
 import LinearMomentumCollision_1d from './linear-momentum-collision-1d';
@@ -42,6 +49,9 @@ import NonUniformResistiveForces from './non-uniform-resistive-forces';
 import NonUniformSkydiverForces from './non-uniform-skydiver-forces';
 import NonUniformThrowVt from './non-uniform-throw-vt';
 import PrefixLadder from './prefix-ladder';
+import TurningEffectsAngledForce from './turning-effects-angled-force';
+import TurningEffectsCoupleEffects from './turning-effects-couple-effects';
+import TurningEffectsCoupleTorque from './turning-effects-couple-torque';
 import TurningEffectsPlumbLine from './turning-effects-plumb-line';
 import TurningEffectsSpannerDoor from './turning-effects-spanner-door';
 import TurningEffectsToppling from './turning-effects-toppling';
@@ -65,6 +75,13 @@ export const diagrams: DiagramRegistry = {
   'phys-equations-motion-throw-graphs': EquationsMotionThrowGraphs,
   'phys-equations-motion-vt-area': EquationsMotionVtArea,
   'phys-equations-motion-vt-gradient': EquationsMotionVtGradient,
+  'phys-equilibrium-forces-closed-triangle': EquilibriumForcesClosedTriangle,
+  'phys-equilibrium-forces-hinged-beam': EquilibriumForcesHingedBeam,
+  'phys-equilibrium-forces-plank': EquilibriumForcesPlank,
+  'phys-equilibrium-forces-seesaw': EquilibriumForcesSeesaw,
+  'phys-equilibrium-forces-slope-triangle': EquilibriumForcesSlopeTriangle,
+  'phys-equilibrium-forces-tension-angle': EquilibriumForcesTensionAngle,
+  'phys-equilibrium-forces-two-strings': EquilibriumForcesTwoStrings,
   'phys-error-graphs': ErrorGraphs,
   'phys-linear-momentum-approach-separation': LinearMomentumApproachSeparation,
   'phys-linear-momentum-collision-1d': LinearMomentumCollision_1d,
@@ -92,6 +109,9 @@ export const diagrams: DiagramRegistry = {
   'phys-non-uniform-skydiver-forces': NonUniformSkydiverForces,
   'phys-non-uniform-throw-vt': NonUniformThrowVt,
   'phys-prefix-ladder': PrefixLadder,
+  'phys-turning-effects-angled-force': TurningEffectsAngledForce,
+  'phys-turning-effects-couple-effects': TurningEffectsCoupleEffects,
+  'phys-turning-effects-couple-torque': TurningEffectsCoupleTorque,
   'phys-turning-effects-plumb-line': TurningEffectsPlumbLine,
   'phys-turning-effects-spanner-door': TurningEffectsSpannerDoor,
   'phys-turning-effects-toppling': TurningEffectsToppling,

@@ -1,0 +1,219 @@
+id: turning-effects-forces-at-angles
+subject: "9702"
+topic: "4.1"
+title: Moments of forces at an angle
+summary: When a force isn't at right angles to the lever, multiply it by the perpendicular distance to its line of action, or use only its perpendicular component.
+order: 3
+minutes: 5
+objectives: ["4.1.2"]
+prerequisites: [turning-effects-centre-of-gravity, units-resolving-vectors]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 4.1.2, define the moment of a force and apply the definition, here
+    for forces not perpendicular to the lever). The diagram is drawn to scale (force at 40° to
+    the lever). Forces, lengths and angles are illustrative values; all worked values and answer
+    keys were computed with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can find the moment of a force acting at **any** angle, using either the perpendicular distance or the perpendicular component.
+
+  - type: explain
+    title: The rope trick
+    body: |
+      Tie a rope to a door handle and pull. Pull at right angles to the door and it swings open.
+
+      Pull almost along the door, towards the hinge, and nothing happens however hard you heave. Same force: what changed is the **perpendicular distance** from the hinge to the force's line of action.
+
+  - type: explain
+    title: "Easy cases first"
+    body: |
+      A $20\ \text{N}$ force acts on the end of a $0.50\ \text{m}$ lever:
+
+      | Angle between force and lever | Perpendicular distance | Moment |
+      | --- | --- | --- |
+      | 90° | $0.50\ \text{m}$ | $10\ \text{N m}$ |
+      | 30° | $0.50\sin 30° = 0.25\ \text{m}$ | $5.0\ \text{N m}$ |
+      | 0° (along the lever) | $0$ | $0$ |
+
+      At 30° you get exactly half the right-angle moment, because $\sin 30° = 0.5$.
+
+  - type: diagram
+    diagram: phys-turning-effects-angled-force
+    alt: >-
+      Two panels showing the same lever of length L, pivoted at O on the left, with a force F
+      acting at its right-hand end at angle θ (40°) above the line of the lever. Left, "Method 1:
+      perpendicular distance": the line of action of F is extended backwards as a dashed line
+      below the lever, and a line from O meets it at a right angle; this perpendicular is
+      labelled d = L sin θ. Below: moment = F × L sin θ. Right, "Method 2: perpendicular
+      component": F is resolved at the end of the lever into F cos θ along the lever, pointing
+      away from O, and F sin θ at right angles to the lever, with dashed lines completing the
+      rectangle. A note says F cos θ acts along the lever, through O, so it has no moment about
+      O. Below: moment = F sin θ × L.
+    caption: Two pictures, one answer, $FL\sin\theta$, where $\theta$ is the angle between the force and the lever.
+
+  - type: explain
+    title: Two methods, same answer
+    body: |
+      For a force $F$ at angle $\theta$ to a lever of length $L$:
+
+      1. **Perpendicular distance.** Extend the line of action and drop a perpendicular onto it from the pivot. Its length is $d = L\sin\theta$, so the moment is $F \times L\sin\theta$.
+      2. **Perpendicular component.** Resolve $F$ into $F\sin\theta$ (at right angles to the lever) and $F\cos\theta$ (along it). $F\cos\theta$ points straight through the pivot, so it has no moment. The moment is $F\sin\theta \times L$.
+
+      Pick whichever picture you find easier.
+
+  - type: example
+    title: A spanner at an angle
+    problem: |
+      A force of $60\ \text{N}$ acts on the end of a $0.30\ \text{m}$ spanner at $50°$ to the spanner. Find its moment about the nut.
+    steps:
+      - |
+        Method 1: $d = 0.30\sin 50° = 0.230\ \text{m}$, so moment $= 60 \times 0.230 = 13.8\ \text{N m}$.
+      - |
+        Method 2: perpendicular component $= 60\sin 50° = 46.0\ \text{N}$, so moment $= 46.0 \times 0.30 = 13.8\ \text{N m}$.
+      - |
+        Sanity check: at 90° it would be $60 \times 0.30 = 18\ \text{N m}$. Ours is smaller, as it must be.
+    answer: |
+      $13.8\ \text{N m}$
+
+  - type: check
+    questions: [which-distance, rope-lever]
+
+  - type: explain
+    title: Weights on tilted objects
+    body: |
+      Weight always acts **vertically**. So its perpendicular distance from a pivot is the **horizontal** distance from the pivot to the centre of gravity.
+
+      For a rod tilted at $\alpha$ above the horizontal, with G a distance $x$ along it from the pivot, that horizontal distance is $x\cos\alpha$.
+
+  - type: example
+    title: Holding up a pole
+    problem: |
+      A uniform pole $1.2\ \text{m}$ long, of weight $20\ \text{N}$, is pivoted at its lower end and held at $30°$ above the horizontal. Find the moment of its weight about the pivot.
+    steps:
+      - |
+        G is at the middle, $0.60\ \text{m}$ along the pole.
+      - |
+        Weight is vertical, so use the horizontal distance to G: $0.60\cos 30° = 0.520\ \text{m}$.
+      - |
+        Moment $= 20 \times 0.520 = 10.4\ \text{N m}$.
+    answer: |
+      $10.4\ \text{N m}$. Lower the pole to horizontal and it rises to $20 \times 0.60 = 12\ \text{N m}$: that's why a pole feels heaviest when you hold it flat.
+
+  - type: check
+    questions: [pole-moment, angle-for-half]
+
+  - type: misconceptions
+    items:
+      - wrong: The distance in a moment is from the pivot to where the force is applied.
+        right: It's the **perpendicular** distance to the force's **line of action**. The two are equal only when the force is at right angles to the lever.
+      - wrong: Use cos, because the angle is next to the lever.
+        right: |
+          With $\theta$ between the force and the lever, the perpendicular part is $\sin\theta$. Test $\theta = 0$ (force along the lever): the moment must be zero, and $\sin 0 = 0$.
+      - wrong: For a tilted rod, multiply the weight by the distance along the rod to G.
+        right: Weight is vertical, so use the **horizontal** distance to G. It's smaller than the distance along the rod unless the rod is horizontal.
+
+  - type: check
+    questions: [rod-spot-error]
+
+  - type: exam
+    body: |
+      - Draw the line of action as a dashed line and mark the right angle. That five-second sketch prevents most sin/cos mix-ups.
+      - Check the limits: force along the lever gives zero; force at 90° gives the maximum, $FL$.
+      - In bigger equilibrium questions (topic 4.2), getting this distance right is usually the first mark.
+
+  - type: takeaways
+    items:
+      - Moment = force × perpendicular distance from the pivot to the line of action.
+      - For a force at θ to a lever of length L, the moment is F L sin θ.
+      - The component along the lever passes through the pivot and has no moment.
+      - For a weight, the perpendicular distance is the horizontal distance to the centre of gravity.
+
+questions:
+  - id: which-distance
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: |
+      A force acts on a lever but not at right angles to it. To find the force's moment about the pivot, which distance do you multiply the force by?
+    options:
+      - text: The perpendicular distance from the pivot to the line of action of the force
+        correct: true
+        why: Correct. That's the definition of a moment.
+      - text: The distance from the pivot to the point where the force is applied
+        why: That only works when the force is at right angles to the lever.
+      - text: The length of the force's line of action
+        why: A line of action has no length; it extends forever in both directions.
+      - text: The horizontal distance from the pivot to the force, whatever direction the force acts in
+        why: The horizontal distance works for vertical forces such as weight, but not in general.
+    explanation: |
+      Moment = force × **perpendicular** distance from the pivot to the force's **line of action**. Draw the line of action and drop a perpendicular onto it from the pivot.
+
+  - id: rope-lever
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      A rope pulls on the end of a $0.80\ \text{m}$ lever with a tension of $25\ \text{N}$. The rope makes an angle of $40°$ with the lever. Find the moment of the tension about the pivot at the other end of the lever, to 3 significant figures.
+    fields:
+      - answer: 12.856
+        sigFigs: 3
+        unit: N m
+    explanation: |
+      Moment $= F \times L\sin\theta = 25 \times 0.80 \times \sin 40° = 12.9\ \text{N m}$. If you got $15.3\ \text{N m}$ you used $\cos 40°$.
+
+  - id: pole-moment
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      A uniform flagpole $3.0\ \text{m}$ long, of weight $150\ \text{N}$, is pivoted at its base and held at $55°$ above the horizontal. Find the moment of its weight about the base, to 3 significant figures.
+    fields:
+      - answer: 129.05
+        sigFigs: 3
+        unit: N m
+    explanation: |
+      G is $1.5\ \text{m}$ along the pole. Weight is vertical, so the perpendicular distance is the horizontal distance $1.5\cos 55° = 0.860\ \text{m}$. Moment $= 150 \times 0.860 = 129\ \text{N m}$.
+
+  - id: angle-for-half
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      A $30\ \text{N}$ force acts on the end of a $0.50\ \text{m}$ spanner. At what angle to the spanner must it act to give a moment of $7.5\ \text{N m}$?
+    options:
+      - text: 30°
+        correct: true
+        why: Correct. $30 \times 0.50 \times \sin 30° = 7.5\ \text{N m}$, half the maximum of $15\ \text{N m}$.
+      - text: 60°
+        why: That gives $30 \times 0.50 \times \sin 60° = 13.0\ \text{N m}$. You solved $\cos\theta = 0.5$ instead of $\sin\theta = 0.5$.
+      - text: 45°
+        why: $\sin 45° = 0.71$, giving $10.6\ \text{N m}$. Half the maximum moment needs $\sin\theta = 0.5$.
+      - text: 90°
+        why: At 90° the moment is the maximum, $30 \times 0.50 = 15\ \text{N m}$.
+    explanation: |
+      The maximum moment is $FL = 15\ \text{N m}$. You need half of it, so $\sin\theta = 0.5$ and $\theta = 30°$.
+
+  - id: rod-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.1.2"]
+    prompt: |
+      A uniform rod $2.0\ \text{m}$ long, of weight $40\ \text{N}$, is pivoted at one end and held at $20°$ above the horizontal. A student calculates the moment of its weight about the pivot. Which line contains the first error?
+    lines:
+      - |
+        The weight acts at the centre of the rod, $1.0\ \text{m}$ from the pivot.
+      - |
+        The weight acts vertically downwards.
+      - |
+        Perpendicular distance from the pivot to the weight's line of action $= 1.0\sin 20° = 0.342\ \text{m}$
+      - |
+        Moment $= 40 \times 0.342 = 13.7\ \text{N m}$
+    errorLine: 3
+    fix: |
+      The perpendicular distance to a vertical line of action is the **horizontal** distance to G: $1.0\cos 20° = 0.940\ \text{m}$. The moment is $40 \times 0.940 = 37.6\ \text{N m}$.
+    explanation: |
+      A rod only $20°$ above horizontal should have a moment close to the horizontal maximum, $40 \times 1.0 = 40\ \text{N m}$. $37.6\ \text{N m}$ passes that test; $13.7\ \text{N m}$ doesn't.

@@ -1,0 +1,207 @@
+id: equilibrium-forces-hinged-beams
+subject: "9702"
+topic: "4.2"
+title: "Beams, hinges and cables"
+summary: For a beam hinged to a wall and held by an angled cable, take moments about the hinge to find the tension, then resolve to find the hinge force.
+order: 3
+minutes: 5
+objectives: ["4.2.1", "4.2.2"]
+prerequisites: [equilibrium-forces-two-conditions, turning-effects-forces-at-angles]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 4.2.1, apply the principle of moments, and 4.2.2, no resultant
+    force and no resultant torque for equilibrium). The diagram is drawn to scale (2.0 m beam,
+    cable at 30°, hinge force drawn at the calculated 8.2° above the horizontal). Weights,
+    lengths and angles are illustrative values; all worked values and answer keys were computed
+    with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve equilibrium problems with angled forces: find a cable's tension using moments, then the force at a hinge by resolving.
+
+  - type: explain
+    title: Three unknowns, one clever pivot
+    body: |
+      Shop signs, drawbridges, cranes: a beam sticks out from a wall, a cable holds it up, and a hinge stops it falling. The tension and the hinge force (size **and** direction) are all unknown.
+
+      One clever choice of point makes the hinge force vanish completely.
+
+  - type: diagram
+    diagram: phys-equilibrium-forces-hinged-beam
+    alt: >-
+      A horizontal beam, 2.0 m long, is hinged to a wall on the left; its far end is labelled E.
+      A cable runs from E up to a point on the wall, at 30° to the beam. Forces on the beam: the
+      tension T along the cable, pointing from E towards the wall; 80 N downwards at the middle of
+      the beam; 120 N (the load) downwards at E; and the hinge force H at the wall, pointing away
+      from the wall and slightly upwards. A dashed line from the hinge meets the cable at a right
+      angle and is labelled d = 1.0 m, the perpendicular distance from the hinge to the cable's
+      line of action.
+    caption: The dashed line is the perpendicular distance that goes into the moment of T.
+
+  - type: explain
+    title: The plan
+    body: |
+      1. **Moments about the hinge.** The hinge force acts at the hinge, so it has no moment there. Only the tension is unknown.
+      2. **Resolve horizontally.** The hinge's horizontal component balances the horizontal component of the tension.
+      3. **Resolve vertically.** The hinge's vertical component makes up whatever upward force the cable doesn't supply.
+      4. Combine the two components with Pythagoras and $\tan^{-1}$ if you need the hinge force itself.
+
+  - type: example
+    title: "Step 1: the tension"
+    problem: |
+      A uniform beam $2.0\ \text{m}$ long, of weight $80\ \text{N}$, is hinged to a wall and held horizontal by a cable attached to its far end at $30°$ to the beam. A $120\ \text{N}$ load hangs from the far end. Find the tension $T$.
+    steps:
+      - |
+        Perpendicular distance from the hinge to the cable's line of action: $2.0\sin 30° = 1.0\ \text{m}$.
+      - |
+        Clockwise moments about the hinge: $80 \times 1.0 + 120 \times 2.0 = 320\ \text{N m}$.
+      - |
+        Anticlockwise moment: $T \times 1.0$.
+      - |
+        So $T = 320\ \text{N}$. (Component method: $T\sin 30° \times 2.0 = 320$ gives the same.)
+    answer: |
+      $T = 320\ \text{N}$, more than the $200\ \text{N}$ of weight it helps to hold up. A shallow cable has a short lever arm, so it has to pull hard.
+
+  - type: check
+    questions: [why-hinge, cable-moment-arm, sign-tension]
+
+  - type: example
+    title: "Step 2: the hinge force"
+    problem: |
+      For the same beam, find the force $H$ that the hinge exerts on the beam.
+    steps:
+      - |
+        Horizontally: $H_x = T\cos 30° = 320 \times 0.866 = 277\ \text{N}$, pushing away from the wall (the cable pulls the beam towards the wall).
+      - |
+        Vertically: total up = total down, so $H_y + T\sin 30° = 80 + 120$, giving $H_y = 200 - 160 = 40\ \text{N}$ upwards.
+      - |
+        $H = \sqrt{277^2 + 40^2} = 280\ \text{N}$, at $\tan^{-1}\left(\dfrac{40}{277}\right) = 8.2°$ above the horizontal.
+    answer: |
+      $280\ \text{N}$ at $8.2°$ above the horizontal, pointing away from the wall.
+
+  - type: check
+    questions: [hinge-components]
+
+  - type: misconceptions
+    items:
+      - wrong: The hinge force acts along the beam.
+        right: Not usually. Here it's $8.2°$ above the beam. Its direction is something you calculate, not something you assume.
+      - wrong: The moment of the tension is T × (length of the beam).
+        right: Only the perpendicular distance counts, $L\sin\theta$. Equivalently, only the component $T\sin\theta$ has a moment about the hinge.
+      - wrong: A steeper cable needs more tension.
+        right: A steeper cable has a bigger perpendicular distance from the hinge, so it needs **less** tension for the same loads.
+
+  - type: check
+    questions: [steeper-cable]
+
+  - type: deeper
+    title: Three forces meet at one point
+    body: |
+      If just three non-parallel forces act on an object in equilibrium, their lines of action pass through **one point**. Take moments about the point where two of them cross: the third must have zero moment there too, so it passes through that point as well.
+
+      Check it here. The two weights act like a single $200\ \text{N}$ force $1.6\ \text{m}$ from the hinge. The cable crosses that vertical line $0.23\ \text{m}$ above the beam, and $\tan^{-1}\left(\dfrac{0.23}{1.6}\right) = 8.2°$: exactly the hinge force's direction. ✓
+
+  - type: exam
+    body: |
+      - Hinge questions are classic multi-mark questions: a mark for the perpendicular distance, a mark for the moments equation, a mark for the answer.
+      - Say which point you're taking moments about. It makes your working easy to follow, and easy to give marks to.
+      - Keep 3 s.f. in intermediate values and round only the final answer.
+
+  - type: takeaways
+    items:
+      - Take moments about the hinge to remove the unknown hinge force.
+      - The moment of a cable's tension is T × L sin θ.
+      - Then resolve horizontally and vertically to find the hinge force's components.
+      - The hinge force is generally not along the beam.
+
+questions:
+  - id: why-hinge
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.1"]
+    prompt: |
+      Why do we usually take moments about the hinge in a hinged-beam problem?
+    options:
+      - text: The hinge force is unknown in size and direction, and its moment about the hinge is zero, so it drops out
+        correct: true
+        why: Correct. That leaves the tension as the only unknown in the moments equation.
+      - text: The hinge force is always zero
+        why: It's often one of the biggest forces on the beam. It just has no moment about the hinge.
+      - text: Moments can only be taken about a pivot or a hinge
+        why: For an object in equilibrium you can take moments about any point.
+      - text: The beam's weight acts at the hinge
+        why: A uniform beam's weight acts at its midpoint.
+    explanation: |
+      Taking moments about the point where an unknown force acts removes that force from the equation. For a hinge, whose force is unknown in both size and direction, that's a big win.
+
+  - id: cable-moment-arm
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |
+      A cable is attached to the end of a horizontal beam of length $L$ and makes an angle $\theta$ with the beam. The other end of the beam is hinged to a wall. What is the perpendicular distance from the hinge to the cable's line of action?
+    options:
+      - text: $L\sin\theta$
+        correct: true
+        why: Correct. Check $\theta = 0$, a cable along the beam, which would pass through the hinge and give zero.
+      - text: $L\cos\theta$
+        why: That would be largest when the cable lies along the beam, when its line of action actually passes through the hinge.
+      - text: $L$
+        why: Only true when the cable is at right angles to the beam.
+      - text: $L\tan\theta$
+        why: That's the height up the wall where the cable is fixed, not the perpendicular distance to the cable.
+    explanation: |
+      Drop a perpendicular from the hinge onto the cable's line of action: it forms a right-angled triangle with the beam as hypotenuse, so $d = L\sin\theta$.
+
+  - id: sign-tension
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |
+      A uniform horizontal rod $1.5\ \text{m}$ long, of weight $30\ \text{N}$, is hinged to a wall. A $90\ \text{N}$ sign hangs from its far end, and a cable from the far end to the wall makes $40°$ with the rod. Find the tension in the cable, to 3 significant figures.
+    fields:
+      - answer: 163.35
+        sigFigs: 3
+        unit: N
+    explanation: |
+      Moments about the hinge: $T \times 1.5\sin 40° = 30 \times 0.75 + 90 \times 1.5 = 157.5\ \text{N m}$. The perpendicular distance is $1.5\sin 40° = 0.964\ \text{m}$, so $T = \dfrac{157.5}{0.964} = 163\ \text{N}$.
+
+  - id: hinge-components
+    format: numeric
+    difficulty: 3
+    objectives: ["4.2.2"]
+    prompt: |
+      A uniform horizontal rod $1.5\ \text{m}$ long, of weight $30\ \text{N}$, is hinged to a wall. A $90\ \text{N}$ sign hangs from its far end. A cable from the far end to the wall makes $40°$ with the rod and has a tension of $163\ \text{N}$. Find the horizontal and vertical components of the force from the hinge on the rod.
+    fields:
+      - label: "horizontal ="
+        answer: 125
+        tolerance: { abs: 1 }
+        unit: N
+      - label: "vertical ="
+        answer: 15
+        tolerance: { abs: 0.6 }
+        unit: N
+    explanation: |
+      Horizontally: $H_x = 163\cos 40° = 125\ \text{N}$, away from the wall. Vertically: $H_y = (30 + 90) - 163\sin 40° = 120 - 105 = 15\ \text{N}$ upwards. Most of the weight is held by the cable; the hinge mainly pushes outwards.
+
+  - id: steeper-cable
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |
+      The cable holding up a hinged horizontal beam is moved higher up the wall, so it makes a larger angle with the beam. It is still fixed to the same end of the beam, and the loads don't change. What happens to the tension?
+    options:
+      - text: It decreases, because the perpendicular distance from the hinge to the cable increases
+        correct: true
+        why: Correct. The same moment is needed, and $L\sin\theta$ is now bigger, so $T$ is smaller.
+      - text: It increases, because the cable is steeper
+        why: Steeper means a longer lever arm about the hinge, so less tension is needed.
+      - text: It stays the same, because the loads haven't changed
+        why: The moment needed is the same, but the perpendicular distance has changed, so the tension must change.
+      - text: It falls to zero once the cable is at 90° to the beam
+        why: At 90° the tension is smallest, but not zero; it still has to supply the whole moment of the loads.
+    explanation: |
+      From moments about the hinge, $T \times L\sin\theta$ = (moment of the loads), which is fixed. A larger $\theta$ means a larger $\sin\theta$ and so a smaller $T$.

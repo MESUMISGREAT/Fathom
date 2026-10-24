@@ -33,7 +33,7 @@ function Block({ O, tilt, title, note, turn }: { O: Pt; tilt: number; title: str
       <polygon points={corners.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ')} className="dg-fill-accent dg-accent" />
       <line x1={G.x} y1={G.y} x2={G.x} y2={GROUND} className="dg-muted dg-dashed" />
       <path d={`M${G.x - 5},${GROUND - 5} L${G.x + 5},${GROUND + 5} M${G.x - 5},${GROUND + 5} L${G.x + 5},${GROUND - 5}`} className="dg-accent-2" />
-      <Force p={G} u={{ x: 0, y: 1 }} l={58} label="W" dx={inside ? -12 : 12} dy={-10} anchor={inside ? 'end' : 'start'} />
+      <Force p={G} u={{ x: 0, y: 1 }} l={58} label="W" dx={-12} dy={-24} anchor="end" />
       <circle cx={G.x} cy={G.y} r={4} className="dg-dot" />
       <Label x={G.x + (inside ? 10 : -10)} y={G.y - 10} anchor={inside ? 'start' : 'end'} className="dg-text dg-bold">
         G

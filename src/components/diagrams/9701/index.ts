@@ -11,9 +11,12 @@ import ChemicalFormulasIonPatterns from './chemical-formulas-ion-patterns';
 import ChemicalFormulasSpectatorIons from './chemical-formulas-spectator-ions';
 import CovalentBondingAluminiumChlorideDimer from './covalent-bonding-aluminium-chloride-dimer';
 import CovalentBondingAmmoniumIon from './covalent-bonding-ammonium-ion';
+import CovalentBondingEnergyVsLength from './covalent-bonding-energy-vs-length';
 import CovalentBondingEthenePiBond from './covalent-bonding-ethene-pi-bond';
 import CovalentBondingExpandedOctets from './covalent-bonding-expanded-octets';
+import CovalentBondingHybridisation from './covalent-bonding-hybridisation';
 import CovalentBondingMultipleBonds from './covalent-bonding-multiple-bonds';
+import CovalentBondingReactivityBars from './covalent-bonding-reactivity-bars';
 import CovalentBondingSigmaPiOverlap from './covalent-bonding-sigma-pi-overlap';
 import CovalentBondingSingleBonds from './covalent-bonding-single-bonds';
 import ElectronegativityBondingDifferenceScale from './electronegativity-bonding-difference-scale';
@@ -24,6 +27,7 @@ import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
 import IonicBondingLatticeSlice from './ionic-bonding-lattice-slice';
 import IonicBondingMagnesiumOxideCalciumFluoride from './ionic-bonding-magnesium-oxide-calcium-fluoride';
 import IonicBondingSodiumChloride from './ionic-bonding-sodium-chloride';
+import MetallicBondingSeaOfElectrons from './metallic-bonding-sea-of-electrons';
 import MoleAvogadroMoleMap from './mole-avogadro-mole-map';
 import MoleAvogadroSameCount from './mole-avogadro-same-count';
 import OrbitalShapes from './orbital-shapes';
@@ -38,6 +42,10 @@ import ReactingMassesYieldBars from './reacting-masses-yield-bars';
 import RelativeMassesCarbon_12Ruler from './relative-masses-carbon-12-ruler';
 import RelativeMassesMoleculeVsLattice from './relative-masses-molecule-vs-lattice';
 import RelativeMassesWeightedMean from './relative-masses-weighted-mean';
+import ShapesMoleculesFiveShapes from './shapes-molecules-five-shapes';
+import ShapesMoleculesLonePairs from './shapes-molecules-lone-pairs';
+import ShapesMoleculesPairCounting from './shapes-molecules-pair-counting';
+import ShapesMoleculesSeveralCentres from './shapes-molecules-several-centres';
 import SubshellEnergyLevels from './subshell-energy-levels';
 import SuccessiveIonisationSodium from './successive-ionisation-sodium';
 
@@ -54,9 +62,12 @@ export const diagrams: DiagramRegistry = {
   'chem-chemical-formulas-spectator-ions': ChemicalFormulasSpectatorIons,
   'chem-covalent-bonding-aluminium-chloride-dimer': CovalentBondingAluminiumChlorideDimer,
   'chem-covalent-bonding-ammonium-ion': CovalentBondingAmmoniumIon,
+  'chem-covalent-bonding-energy-vs-length': CovalentBondingEnergyVsLength,
   'chem-covalent-bonding-ethene-pi-bond': CovalentBondingEthenePiBond,
   'chem-covalent-bonding-expanded-octets': CovalentBondingExpandedOctets,
+  'chem-covalent-bonding-hybridisation': CovalentBondingHybridisation,
   'chem-covalent-bonding-multiple-bonds': CovalentBondingMultipleBonds,
+  'chem-covalent-bonding-reactivity-bars': CovalentBondingReactivityBars,
   'chem-covalent-bonding-sigma-pi-overlap': CovalentBondingSigmaPiOverlap,
   'chem-covalent-bonding-single-bonds': CovalentBondingSingleBonds,
   'chem-electronegativity-bonding-difference-scale': ElectronegativityBondingDifferenceScale,
@@ -67,6 +78,7 @@ export const diagrams: DiagramRegistry = {
   'chem-ionic-bonding-lattice-slice': IonicBondingLatticeSlice,
   'chem-ionic-bonding-magnesium-oxide-calcium-fluoride': IonicBondingMagnesiumOxideCalciumFluoride,
   'chem-ionic-bonding-sodium-chloride': IonicBondingSodiumChloride,
+  'chem-metallic-bonding-sea-of-electrons': MetallicBondingSeaOfElectrons,
   'chem-mole-avogadro-mole-map': MoleAvogadroMoleMap,
   'chem-mole-avogadro-same-count': MoleAvogadroSameCount,
   'chem-orbital-shapes': OrbitalShapes,
@@ -81,6 +93,10 @@ export const diagrams: DiagramRegistry = {
   'chem-relative-masses-carbon-12-ruler': RelativeMassesCarbon_12Ruler,
   'chem-relative-masses-molecule-vs-lattice': RelativeMassesMoleculeVsLattice,
   'chem-relative-masses-weighted-mean': RelativeMassesWeightedMean,
+  'chem-shapes-molecules-five-shapes': ShapesMoleculesFiveShapes,
+  'chem-shapes-molecules-lone-pairs': ShapesMoleculesLonePairs,
+  'chem-shapes-molecules-pair-counting': ShapesMoleculesPairCounting,
+  'chem-shapes-molecules-several-centres': ShapesMoleculesSeveralCentres,
   'chem-subshell-energy-levels': SubshellEnergyLevels,
   'chem-successive-ionisation-sodium': SuccessiveIonisationSodium,
 };

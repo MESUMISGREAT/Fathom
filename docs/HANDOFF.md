@@ -220,10 +220,14 @@ changes alongside lessons:
      back, then `npm run diagrams:gen`.
   2. **9709 1.8 Integration: published 24 Oct** (ef055f1, reviewed; marker tests 166/166).
   3. **9618 3.1 Computers and their components: published 24 Oct** (5960250, reviewed).
-  4. **Being written (started 18:44 UTC, Opus writers):** 9702 4.1+4.2 and 9701 3.3+3.4+3.5.
-     If the chat ended before they finished, their drafts are on `wip-snapshot`, possibly
-     incomplete: give a writer a "finish these drafts" brief, as was done for 9618 3.1.
-     Then the next `todo` units in order: 9709 2.1+2.2, 9618 3.2, …
+  4. **In progress (19:00 UTC):**
+     - 9701 3.3+3.4+3.5 (13 lessons, 82 questions) and 9702 4.1+4.2 (10 lessons) are
+       written and being reviewed (the briefs list the writers' flagged points).
+     - 9709 2.1+2.2 is being written (first Sonnet writer).
+     - If the chat ended mid-way, the drafts are on `wip-snapshot`. Lessons already set to
+       ai-checked can be published; rerun the review for the rest. A half-written unit gets
+       a "finish these drafts" brief, as for 9618 3.1.
+     - Then the next `todo` units in order: 9618 3.2, …
   5. **Models (the user's choice, 24 Oct):** run writer agents with `model: "sonnet"`.
      Reviewers stay on Opus, the default, because they are the quality gate. Don't use
      Haiku for lesson work.
