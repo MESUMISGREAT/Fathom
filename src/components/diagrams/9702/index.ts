@@ -44,6 +44,7 @@ import NonUniformThrowVt from './non-uniform-throw-vt';
 import PrefixLadder from './prefix-ladder';
 import TurningEffectsPlumbLine from './turning-effects-plumb-line';
 import TurningEffectsSpannerDoor from './turning-effects-spanner-door';
+import TurningEffectsToppling from './turning-effects-toppling';
 import VectorComponents from './vector-components';
 import VectorTriangle from './vector-triangle';
 
@@ -93,6 +94,7 @@ export const diagrams: DiagramRegistry = {
   'phys-prefix-ladder': PrefixLadder,
   'phys-turning-effects-plumb-line': TurningEffectsPlumbLine,
   'phys-turning-effects-spanner-door': TurningEffectsSpannerDoor,
+  'phys-turning-effects-toppling': TurningEffectsToppling,
   'phys-vector-components': VectorComponents,
   'phys-vector-triangle': VectorTriangle,
 };

@@ -11,8 +11,10 @@ import ChemicalFormulasIonPatterns from './chemical-formulas-ion-patterns';
 import ChemicalFormulasSpectatorIons from './chemical-formulas-spectator-ions';
 import CovalentBondingAluminiumChlorideDimer from './covalent-bonding-aluminium-chloride-dimer';
 import CovalentBondingAmmoniumIon from './covalent-bonding-ammonium-ion';
+import CovalentBondingEthenePiBond from './covalent-bonding-ethene-pi-bond';
 import CovalentBondingExpandedOctets from './covalent-bonding-expanded-octets';
 import CovalentBondingMultipleBonds from './covalent-bonding-multiple-bonds';
+import CovalentBondingSigmaPiOverlap from './covalent-bonding-sigma-pi-overlap';
 import CovalentBondingSingleBonds from './covalent-bonding-single-bonds';
 import ElectronegativityBondingDifferenceScale from './electronegativity-bonding-difference-scale';
 import ElectronegativityBondingFluorineVsChlorine from './electronegativity-bonding-fluorine-vs-chlorine';
@@ -52,8 +54,10 @@ export const diagrams: DiagramRegistry = {
   'chem-chemical-formulas-spectator-ions': ChemicalFormulasSpectatorIons,
   'chem-covalent-bonding-aluminium-chloride-dimer': CovalentBondingAluminiumChlorideDimer,
   'chem-covalent-bonding-ammonium-ion': CovalentBondingAmmoniumIon,
+  'chem-covalent-bonding-ethene-pi-bond': CovalentBondingEthenePiBond,
   'chem-covalent-bonding-expanded-octets': CovalentBondingExpandedOctets,
   'chem-covalent-bonding-multiple-bonds': CovalentBondingMultipleBonds,
+  'chem-covalent-bonding-sigma-pi-overlap': CovalentBondingSigmaPiOverlap,
   'chem-covalent-bonding-single-bonds': CovalentBondingSingleBonds,
   'chem-electronegativity-bonding-difference-scale': ElectronegativityBondingDifferenceScale,
   'chem-electronegativity-bonding-fluorine-vs-chlorine': ElectronegativityBondingFluorineVsChlorine,
