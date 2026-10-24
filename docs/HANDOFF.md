@@ -213,7 +213,7 @@ changes alongside lessons:
   - the snapshot, restore and browser tooling was fixed.
 - Queue: 12 published, 142 todo.
 - **START HERE.** The user halted all work on 24 Oct at about 13:15 UTC. No agents are
-  running and `main` is clean (17ac1b2). Drafts are only on `wip-snapshot`.
+  running, `main` holds only reviewed work and the drafts are only on `wip-snapshot`.
   1. In a fresh container, run `bash scripts/lessons/restore-drafts.sh` to bring the drafts
      back, then `npm run diagrams:gen`.
   2. **9709 1.8 Integration: written, not reviewed.**
