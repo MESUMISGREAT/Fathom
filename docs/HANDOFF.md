@@ -195,12 +195,13 @@ changes alongside lessons:
 
 ## 5. Current state (24 Oct 2026, third chat)
 
-- On `main`: **181 reviewed lessons, 1097 questions** (9709: 59, 9618: 42, 9702: 42, 9701: 38).
+- On `main`: **190 reviewed lessons, 1145 questions** (9709: 68, 9618: 42, 9702: 42, 9701: 38).
   All are live. Tests: 166 vitest and 25 Playwright e2e.
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum) and 9701 3.1+3.2 (electronegativity, ionic bonding;
-    "a difference above about 1.8 means ionic" is taught as a rule of thumb, books use 1.7–2.0);
+    "a difference above about 1.8 means ionic" is taught as a rule of thumb, books use 1.7–2.0)
+    and 9709 1.8 (integration: 9 lessons in the one-method style);
   - every 9709 diagram now has proper fractions and roots;
   - the chain rule was rewritten the box way;
   - **all eight other 1.7 differentiation lessons were rewritten in the "one question type,
@@ -211,23 +212,12 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 12 published, 142 todo.
-- **START HERE.** The user halted all work on 24 Oct at about 13:15 UTC. No agents are
-  running, `main` holds only reviewed work and the drafts are only on `wip-snapshot`.
+- Queue: 13 published, 141 todo.
+- **START HERE** (updated 24 Oct, 14:15 UTC). `main` holds only reviewed work; drafts are
+  only on `wip-snapshot`.
   1. In a fresh container, run `bash scripts/lessons/restore-drafts.sh` to bring the drafts
      back, then `npm run diagrams:gen`.
-  2. **9709 1.8 Integration: written, not reviewed.**
-     - 9 draft lessons `p1-integration-*`: powers-of-x, brackets, finding-the-curve,
-       definite-integrals, improper-integrals, area-under-a-curve, area-between-graphs,
-       volume-of-revolution, volume-with-a-hole.
-     - 48 questions, 9 diagrams, plus the helper `p1-integration-kit.tsx` (no diagramKey).
-     - Written in the one-method style. The writer checked every key with sympy, and
-       content-check reports 0 errors.
-     - A reviewer was started, then halted before it changed anything.
-     - Next:
-       - run `node scripts/lessons/prompts.mjs review "9709 1.8" <today>`;
-       - append the Maths checks below to the brief;
-       - run one reviewer, then `publish.sh`.
+  2. **9709 1.8 Integration: published 24 Oct** (ef055f1, reviewed; marker tests 166/166).
   3. **9618 3.1 Computers and their components: the writer was halted part-way through.**
      - 12 draft lessons `computer-components-*` with 70 questions. Together they tag
        objectives 3.1.1–3.1.5; nothing teaches 3.1.6–3.1.8 yet.
