@@ -38,13 +38,16 @@ import LineCurvePivot from './line-curve-pivot';
 import P1DifferentiationBoxNet from './p1-differentiation-box-net';
 import P1DifferentiationChainBox from './p1-differentiation-chain-box';
 import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
+import P1DifferentiationCountRoots from './p1-differentiation-count-roots';
 import P1DifferentiationCurveSketch from './p1-differentiation-curve-sketch';
 import P1DifferentiationGradientFunction from './p1-differentiation-gradient-function';
 import P1DifferentiationGrowingCircle from './p1-differentiation-growing-circle';
 import P1DifferentiationIncreasingDecreasing from './p1-differentiation-increasing-decreasing';
 import P1DifferentiationPowerRule from './p1-differentiation-power-rule';
+import P1DifferentiationRatesChain from './p1-differentiation-rates-chain';
 import P1DifferentiationStationaryPoints from './p1-differentiation-stationary-points';
 import P1DifferentiationTangentNormal from './p1-differentiation-tangent-normal';
+import P1DifferentiationTangentSteps from './p1-differentiation-tangent-steps';
 import P1TrigonometryAmplitudePeriod from './p1-trigonometry-amplitude-period';
 import P1TrigonometryBasicGraphs from './p1-trigonometry-basic-graphs';
 import P1TrigonometryCast from './p1-trigonometry-cast';
@@ -107,13 +110,16 @@ export const diagrams: DiagramRegistry = {
   'p1-differentiation-box-net': P1DifferentiationBoxNet,
   'p1-differentiation-chain-box': P1DifferentiationChainBox,
   'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
+  'p1-differentiation-count-roots': P1DifferentiationCountRoots,
   'p1-differentiation-curve-sketch': P1DifferentiationCurveSketch,
   'p1-differentiation-gradient-function': P1DifferentiationGradientFunction,
   'p1-differentiation-growing-circle': P1DifferentiationGrowingCircle,
   'p1-differentiation-increasing-decreasing': P1DifferentiationIncreasingDecreasing,
   'p1-differentiation-power-rule': P1DifferentiationPowerRule,
+  'p1-differentiation-rates-chain': P1DifferentiationRatesChain,
   'p1-differentiation-stationary-points': P1DifferentiationStationaryPoints,
   'p1-differentiation-tangent-normal': P1DifferentiationTangentNormal,
+  'p1-differentiation-tangent-steps': P1DifferentiationTangentSteps,
   'p1-trigonometry-amplitude-period': P1TrigonometryAmplitudePeriod,
   'p1-trigonometry-basic-graphs': P1TrigonometryBasicGraphs,
   'p1-trigonometry-cast': P1TrigonometryCast,
