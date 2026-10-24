@@ -19,11 +19,20 @@ import CovalentBondingMultipleBonds from './covalent-bonding-multiple-bonds';
 import CovalentBondingReactivityBars from './covalent-bonding-reactivity-bars';
 import CovalentBondingSigmaPiOverlap from './covalent-bonding-sigma-pi-overlap';
 import CovalentBondingSingleBonds from './covalent-bonding-single-bonds';
+import DotCrossCoordinate from './dot-cross-coordinate';
+import DotCrossIonicTransfer from './dot-cross-ionic-transfer';
+import DotCrossMultipleBonds from './dot-cross-multiple-bonds';
+import DotCrossOctetExceptions from './dot-cross-octet-exceptions';
+import DotCrossSingleBonds from './dot-cross-single-bonds';
 import ElectronegativityBondingDifferenceScale from './electronegativity-bonding-difference-scale';
 import ElectronegativityBondingFluorineVsChlorine from './electronegativity-bonding-fluorine-vs-chlorine';
 import ElectronegativityBondingPeriodicTable from './electronegativity-bonding-periodic-table';
 import ElectronsInBoxes from './electrons-in-boxes';
 import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
+import IntermolecularForcesHydrogenBonds from './intermolecular-forces-hydrogen-bonds';
+import IntermolecularForcesMolecularDipoles from './intermolecular-forces-molecular-dipoles';
+import IntermolecularForcesTypes from './intermolecular-forces-types';
+import IntermolecularForcesWaterStructure from './intermolecular-forces-water-structure';
 import IonicBondingLatticeSlice from './ionic-bonding-lattice-slice';
 import IonicBondingMagnesiumOxideCalciumFluoride from './ionic-bonding-magnesium-oxide-calcium-fluoride';
 import IonicBondingSodiumChloride from './ionic-bonding-sodium-chloride';
@@ -70,11 +79,20 @@ export const diagrams: DiagramRegistry = {
   'chem-covalent-bonding-reactivity-bars': CovalentBondingReactivityBars,
   'chem-covalent-bonding-sigma-pi-overlap': CovalentBondingSigmaPiOverlap,
   'chem-covalent-bonding-single-bonds': CovalentBondingSingleBonds,
+  'chem-dot-cross-coordinate': DotCrossCoordinate,
+  'chem-dot-cross-ionic-transfer': DotCrossIonicTransfer,
+  'chem-dot-cross-multiple-bonds': DotCrossMultipleBonds,
+  'chem-dot-cross-octet-exceptions': DotCrossOctetExceptions,
+  'chem-dot-cross-single-bonds': DotCrossSingleBonds,
   'chem-electronegativity-bonding-difference-scale': ElectronegativityBondingDifferenceScale,
   'chem-electronegativity-bonding-fluorine-vs-chlorine': ElectronegativityBondingFluorineVsChlorine,
   'chem-electronegativity-bonding-periodic-table': ElectronegativityBondingPeriodicTable,
   'chem-electrons-in-boxes': ElectronsInBoxes,
   'chem-first-ionisation-energy-trend': FirstIonisationEnergyTrend,
+  'chem-intermolecular-forces-hydrogen-bonds': IntermolecularForcesHydrogenBonds,
+  'chem-intermolecular-forces-molecular-dipoles': IntermolecularForcesMolecularDipoles,
+  'chem-intermolecular-forces-types': IntermolecularForcesTypes,
+  'chem-intermolecular-forces-water-structure': IntermolecularForcesWaterStructure,
   'chem-ionic-bonding-lattice-slice': IonicBondingLatticeSlice,
   'chem-ionic-bonding-magnesium-oxide-calcium-fluoride': IonicBondingMagnesiumOxideCalciumFluoride,
   'chem-ionic-bonding-sodium-chloride': IonicBondingSodiumChloride,
