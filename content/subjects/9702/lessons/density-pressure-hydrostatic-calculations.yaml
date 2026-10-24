@@ -1,0 +1,169 @@
+id: density-pressure-hydrostatic-calculations
+subject: "9702"
+topic: "4.3"
+title: Calculating pressure changes in a liquid
+summary: Use liquid density, gravitational field strength and vertical depth to calculate a hydrostatic pressure difference.
+order: 4
+minutes: 4
+objectives: ["4.3.4"]
+prerequisites: [density-pressure-hydrostatic-derivation]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcome 4.3.4 (use the hydrostatic pressure equation). All questions
+    are original. Numerical values are illustrative teaching examples, not measured data.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end, you can use $\Delta p=\rho g\Delta h$ to find the pressure difference between two levels in a liquid.
+
+  - type: explain
+    title: The equation, in plain language
+    body: |
+      A deeper point has a greater pressure because more liquid sits above it. The pressure **difference** depends on how dense the liquid is, how far apart the levels are vertically and gravity's strength.
+
+      In the equation, $\Delta p$ means the pressure difference in pascals; $\rho$ is the liquid density in $\text{kg m}^{-3}$; $g=9.81\ \text{m s}^{-2}$ is acceleration of free fall; and $\Delta h$ is the vertical separation in metres. Then:
+
+      $$\Delta p = \rho g\Delta h$$
+
+  - type: check
+    questions: [liquid-pressure-depth, liquid-pressure-direction]
+
+  - type: example
+    title: Pressure difference 2.5 m underwater
+    problem: |
+      Find the pressure difference between the water surface and a point $2.5\ \text{m}$ below it. Take $\rho=1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    steps:
+      - |
+        Identify the vertical separation: $\Delta h=2.5\ \text{m}$.
+      - |
+        Substitute the liquid density and the syllabus value of $g$: $\Delta p=1000\times9.81\times2.5$.
+      - |
+        Multiply: $\Delta p=24\,525\ \text{Pa}$, which to 3 significant figures is $2.45\times10^4\ \text{Pa}$.
+    answer: |
+      $2.45\times10^4\ \text{Pa}$
+
+  - type: explain
+    title: Keep the height vertical
+    body: |
+      The equation gives the pressure difference between two points in the same stationary liquid. Use the **vertical** distance between those points, not the distance along a sloping pipe or container.
+
+      If a question gives pressure at the top as well, add the calculated difference to that starting pressure to find the pressure at the lower point.
+
+  - type: check
+    questions: [liquid-pressure-other-fluid, liquid-pressure-from-difference]
+
+  - type: misconceptions
+    items:
+      - wrong: Double the depth and the pressure difference stays the same.
+        right: At fixed liquid density and gravity, doubling $\Delta h$ doubles $\Delta p$.
+      - wrong: The equation always gives the absolute pressure at the lower point.
+        right: It gives a pressure **difference**. Add the pressure at the upper point if the absolute pressure is needed.
+
+  - type: exam
+    body: |
+      - Convert every depth to metres before substituting.
+      - Use the density of the liquid, not the density of the object in it.
+      - Write the answer in pascals and keep enough significant figures for the data.
+
+  - type: check
+    questions: [liquid-pressure-height, liquid-pressure-check]
+
+  - type: takeaways
+    items:
+      - $\Delta p=\rho g\Delta h$ gives a pressure difference.
+      - A denser liquid or greater vertical separation gives a greater difference.
+      - Use $g=9.81\ \text{m s}^{-2}$ and put height in metres.
+
+questions:
+  - id: liquid-pressure-depth
+    format: numeric
+    difficulty: 1
+    objectives: ["4.3.4"]
+    prompt: |
+      What pressure difference is produced by a $0.50\ \text{m}$ vertical depth of water? Give your answer to 2 significant figures. Use $\rho=1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 4905
+        tolerance: { rel: 0.02 }
+        sigFigs: 2
+        unit: Pa
+    explanation: |
+      $\Delta p=\rho g\Delta h=1000\times9.81\times0.50=4905\ \text{Pa}$, which is $4.9\times10^3\ \text{Pa}$ to 2 significant figures.
+
+  - id: liquid-pressure-direction
+    format: mcq
+    difficulty: 1
+    objectives: ["4.3.4"]
+    prompt: |
+      In the same stationary liquid, how does pressure change as vertical depth increases?
+    options:
+      - text: It increases.
+        correct: true
+        why: More liquid lies above the deeper point, so its pressure is greater.
+      - text: It decreases.
+        why: This gives the depth effect backwards.
+      - text: It stays constant at every depth.
+        why: The hydrostatic equation shows a greater depth difference produces a greater pressure difference.
+    explanation: |
+      Pressure increases with depth by $\Delta p=\rho g\Delta h$.
+
+  - id: liquid-pressure-other-fluid
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.4"]
+    prompt: |
+      A point is $3.0\ \text{m}$ below another point in a liquid of density $800\ \text{kg m}^{-3}$. Calculate the pressure difference to 2 significant figures using $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 23544
+        tolerance: { rel: 0.03 }
+        sigFigs: 2
+        unit: Pa
+    explanation: |
+      $\Delta p=800\times9.81\times3.0=23\,544\ \text{Pa}$, which is $2.4\times10^4\ \text{Pa}$ to 2 significant figures.
+
+  - id: liquid-pressure-from-difference
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.4"]
+    prompt: |
+      Water pressure increases by $9810\ \text{Pa}$ between two levels. Find their vertical separation. Use $\rho=1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 1
+        unit: m
+    explanation: |
+      Rearrange to $\Delta h=\Delta p/(\rho g)=9810/(1000\times9.81)=1.0\ \text{m}$.
+
+  - id: liquid-pressure-height
+    format: mcq
+    difficulty: 2
+    objectives: ["4.3.4"]
+    prompt: |
+      A liquid is in a straight tube tilted at an angle. Which distance should be used for $\Delta h$ between two points?
+    options:
+      - text: Their vertical separation.
+        correct: true
+        why: Hydrostatic pressure depends on vertical depth, not the path taken through the liquid.
+      - text: Distance along the tilted tube.
+        why: This is not the height difference in $\Delta p=\rho g\Delta h$.
+      - text: The tube's full length.
+        why: Only the vertical separation of the two points matters.
+    explanation: |
+      $\Delta h$ is the vertical height difference between the points.
+
+  - id: liquid-pressure-check
+    format: numeric
+    difficulty: 3
+    objectives: ["4.3.4"]
+    prompt: |
+      At the upper point the pressure is $1.20\times10^5\ \text{Pa}$. The lower point is $2.0\ \text{m}$ below it in water. Find the pressure at the lower point to 2 significant figures, using $\rho=1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 139620
+        tolerance: { rel: 0.01 }
+        sigFigs: 2
+        unit: Pa
+    explanation: |
+      First find the difference: $\Delta p=1000\times9.81\times2.0=19\,620\ \text{Pa}$. Add it to the upper pressure: $120\,000+19\,620=139\,620\ \text{Pa}$, which is $1.4\times10^5\ \text{Pa}$ to 2 significant figures.

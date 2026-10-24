@@ -1,0 +1,165 @@
+id: density-pressure-upthrust-archimedes
+subject: "9702"
+topic: "4.3"
+title: "Upthrust: pressure pushes back"
+summary: Pressure is greater on the lower face of a submerged object, producing upthrust equal to the weight of displaced fluid.
+order: 5
+minutes: 5
+objectives: ["4.3.5", "4.3.6"]
+prerequisites: [density-pressure-hydrostatic-derivation, density-pressure-hydrostatic-calculations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcomes 4.3.5 (explain upthrust as arising from a difference in
+    hydrostatic pressure) and 4.3.6 (use F = rho g V, Archimedes' principle, to calculate
+    upthrust). All questions are original. Numerical values and the force diagram are illustrative
+    teaching examples, not measured data. Independently re-checked line by line (facts, worked
+    examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a
+    teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end, you can explain why a fluid pushes upwards on an object and calculate that **upthrust** using the weight of displaced fluid.
+
+  - type: explain
+    title: The bottom gets a bigger push
+    body: |
+      A submerged object has fluid pressing on every side. The fluid pressure is greater lower down, so the upward force on the bottom is greater than the downward force on the top.
+
+      Forces on opposite sides balance sideways. The remaining resultant force is upwards: this is **upthrust**.
+
+  - type: diagram
+    diagram: phys-density-pressure-upthrust
+    alt: >-
+      A rectangular object is submerged. Small downward pressure-force arrows act on its top face;
+      larger upward arrows act on its bottom face. Horizontal arrows on opposite sides point inward
+      and balance. The bottom force is greater than the top force, so the resultant upthrust is upward.
+    caption: Greater pressure at the object's lower face makes the upward force larger than the downward force.
+
+  - type: check
+    questions: [upthrust-pressure-reason]
+
+  - type: explain
+    title: Archimedes' principle turns that into a calculation
+    body: |
+      The resultant upthrust equals the **weight of the fluid displaced** by the object. The displaced volume is the volume of fluid pushed out of the object's way.
+
+      Call the upthrust $F$, the fluid density $\rho$, and the displaced volume $V$. The displaced fluid's mass is $m=\rho V$; with $g=9.81\ \text{m s}^{-2}$ as acceleration of free fall, its weight is $mg=\rho Vg$. So:
+
+      $$F = \rho gV$$
+
+      The force $F$ is in newtons. Use the **fluid's** density; for an object partly submerged, $V$ is only the submerged volume.
+
+  - type: example
+    title: A submerged block
+    problem: |
+      A block displaces $3.0\times10^{-3}\ \text{m}^3$ of water. Find its upthrust. Use $\rho_{\text{water}}=1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    steps:
+      - |
+        The displaced volume is already in cubic metres, and the given density is the water's density.
+      - |
+        Substitute: $F=\rho gV=1000\times9.81\times3.0\times10^{-3}$.
+      - |
+        Multiply: $F=29.43\ \text{N}$, or $29\ \text{N}$ to 2 significant figures.
+    answer: |
+      $29\ \text{N}$ to 2 significant figures.
+
+  - type: check
+    questions: [upthrust-displaced-fluid, upthrust-calculate, upthrust-partial]
+
+  - type: misconceptions
+    items:
+      - wrong: Use the object's full volume even when only part of it is underwater.
+        right: Use the volume of fluid displaced. For a floating or partly submerged object, that is its submerged volume.
+      - wrong: Use the object's density in $F=\rho gV$.
+        right: $\rho$ is the density of the surrounding fluid.
+      - wrong: Upthrust exists because the object is lighter than the fluid.
+        right: Upthrust comes from the pressure difference across the object; it acts whether the object floats, sinks or stays suspended.
+
+  - type: check
+    questions: [upthrust-volume]
+
+  - type: exam
+    body: |
+      - Identify the **fluid** density and the volume of fluid displaced before substituting.
+      - Give upthrust in newtons. If the object is only partly immersed, do not use its total volume.
+
+  - type: takeaways
+    items:
+      - Pressure is greater on an object's lower surface, so the resultant fluid force is upwards.
+      - Upthrust equals the weight of displaced fluid.
+      - Use $F=\rho gV$ with the fluid density and displaced volume.
+
+questions:
+  - id: upthrust-pressure-reason
+    format: mcq
+    difficulty: 1
+    objectives: ["4.3.5"]
+    prompt: |
+      Why does a stationary fluid exert an upward resultant force on a fully submerged object?
+    options:
+      - text: Pressure is greater on the object's lower surface than on its upper surface.
+        correct: true
+        why: Greater pressure below means a greater upward force on the bottom face than the downward force on the top.
+      - text: Pressure is greater on the object's upper surface.
+        why: Pressure increases with depth, so the lower surface has greater pressure.
+      - text: The fluid's sideways forces all point upwards.
+        why: Sideways forces act horizontally and balance in opposite pairs.
+      - text: The object pulls the fluid upwards with its weight.
+        why: Upthrust comes from the pressure difference, not from the object's weight.
+    explanation: |
+      Hydrostatic pressure rises with depth. The greater upward force on the lower surface leaves a net upward force called upthrust.
+
+  - id: upthrust-displaced-fluid
+    format: cloze
+    difficulty: 1
+    objectives: ["4.3.6"]
+    prompt: |
+      Archimedes' principle says upthrust equals the {{1}} of the fluid displaced by the object.
+    blanks:
+      - accept: [weight]
+    explanation: |
+      Upthrust is the weight of the displaced fluid, which leads to $F=\rho gV$.
+
+  - id: upthrust-calculate
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.6"]
+    prompt: |
+      A submerged object displaces $3.0\times10^{-3}\ \text{m}^3$ of water. Calculate its upthrust to 2 significant figures using $\rho_{\text{water}}=1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 29.43
+        tolerance: { rel: 0.02 }
+        sigFigs: 2
+        unit: N
+    explanation: |
+      $F=\rho gV=1000\times9.81\times3.0\times10^{-3}=29.43\ \text{N}$, which is $29\ \text{N}$ to 2 significant figures.
+
+  - id: upthrust-partial
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.6"]
+    prompt: |
+      An object is partly submerged in a liquid of density $750\ \text{kg m}^{-3}$, displacing $4.0\times10^{-3}\ \text{m}^3$. Calculate its upthrust to 2 significant figures using $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 29.43
+        tolerance: { rel: 0.02 }
+        sigFigs: 2
+        unit: N
+    explanation: |
+      Use the displaced volume, not the object's total volume: $F=750\times9.81\times4.0\times10^{-3}=29.43\ \text{N}$, which is $29\ \text{N}$ to 2 significant figures.
+
+  - id: upthrust-volume
+    format: numeric
+    difficulty: 3
+    objectives: ["4.3.5", "4.3.6"]
+    prompt: |
+      A fluid exerts an upthrust of $19.62\ \text{N}$ on a submerged object. Find the volume of fluid displaced to 2 significant figures. The fluid density is $1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 0.002
+        sigFigs: 2
+        unit: m^3
+    explanation: |
+      Rearrange $F=\rho gV$ to $V=F/(\rho g)$. Then $V=19.62/(1000\times9.81)=0.0020\ \text{m}^3$.
