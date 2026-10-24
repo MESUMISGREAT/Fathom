@@ -224,8 +224,12 @@ changes alongside lessons:
      - Next: `node scripts/lessons/prompts.mjs review "9618 3.1" <today>`, run one reviewer, then `publish.sh`.
   4. Then the next `todo` units in order: 9702 4.1+4.2, 9701 3.3+3.4+3.5, 9709 2.1+2.2,
      9618 3.2, …
-  5. **Ask the user before starting each new round of agents.** They are watching their
-     session limit and want to be asked at about 80%.
+  5. **Models (the user's choice, 24 Oct):** run writer agents with `model: "sonnet"`.
+     Reviewers stay on Opus, the default, because they are the quality gate. Don't use
+     Haiku for lesson work.
+  6. **Agent rounds.** On 24 Oct the user said "hurry up, I want progress": keep chaining
+     rounds (start each reviewer as soon as its writer finishes, publish what passes) and
+     stop only when they say so. They want a check-in at about 80% of the session limit.
 - **Maths review checks.** Append these to every 9709 review brief; the briefs are
   gitignored.
   - Every lesson has "What they ask", then a numbered "The method" with the forgotten step
