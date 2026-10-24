@@ -1,0 +1,230 @@
+id: equilibrium-forces-principle-of-moments
+subject: "9702"
+topic: "4.2"
+title: "The principle of moments: balancing acts"
+summary: For an object in equilibrium, the sum of the clockwise moments about any point equals the sum of the anticlockwise moments about that same point.
+order: 1
+minutes: 5
+objectives: ["4.2.1"]
+prerequisites: [turning-effects-moment-of-a-force, turning-effects-centre-of-gravity]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 4.2.1, state the principle of moments and apply it). The see-saw
+    diagram is drawn to scale (400 N at 1.5 m balancing 600 N at 1.0 m). Weights and distances are
+    illustrative values; all worked values and answer keys were computed with Python. All
+    questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **state** the principle of moments and use it to find an unknown force or distance on a balanced object.
+
+  - type: explain
+    title: How a small child balances a grown-up
+    body: |
+      A small child can balance an adult on a see-saw. The trick: sit much further from the pivot.
+
+      Balance doesn't need equal **forces**. It needs equal **moments**.
+
+  - type: definition
+    term: Principle of moments
+    body: |
+      For an object in **equilibrium**, the sum of the **clockwise** moments about any point equals the sum of the **anticlockwise** moments about the **same** point.
+
+  - type: diagram
+    diagram: phys-equilibrium-forces-seesaw
+    alt: >-
+      A see-saw plank balanced on a triangular pivot at its centre, drawn to scale. A 400 N
+      weight pushes down on the plank 1.5 m to the left of the pivot and a 600 N weight pushes
+      down 1.0 m to the right, shown by dimension arrows under the plank. An upward arrow at the
+      pivot is labelled R = 1000 N, with the note: acts through the pivot, no moment. Underneath:
+      anticlockwise moment 400 × 1.5 = 600 N m, and clockwise moment 600 × 1.0 = 600 N m.
+    caption: Unequal forces, equal moments, so the plank balances.
+
+  - type: example
+    title: "Easy one first: the see-saw"
+    problem: |
+      A $400\ \text{N}$ child sits $1.5\ \text{m}$ from the pivot of a see-saw. How far from the pivot, on the other side, must a $600\ \text{N}$ parent sit to balance?
+    steps:
+      - |
+        Anticlockwise moment (child): $400 \times 1.5 = 600\ \text{N m}$.
+      - |
+        Clockwise moment (parent): $600 \times x$.
+      - |
+        Balance: $600x = 600$, so $x = 1.0\ \text{m}$.
+      - |
+        Check: the parent is $\frac{600}{400} = 1.5$ times heavier, so sits $1.5$ times closer. ✓
+    answer: |
+      $1.0\ \text{m}$ from the pivot.
+
+  - type: check
+    questions: [pom-cloze, seesaw-distance]
+
+  - type: explain
+    title: The method, every time
+    body: |
+      1. Draw every force on the object, including its own weight at its centre of gravity.
+      2. Choose a point to take moments about (the pivot is a good start).
+      3. For each force, find its perpendicular distance from that point and whether it turns clockwise or anticlockwise.
+      4. Write: sum of clockwise moments = sum of anticlockwise moments.
+      5. Solve for the unknown.
+
+      The pivot's own push on the object passes **through** the pivot, so its moment about the pivot is zero. Taking moments there makes it vanish from your equation.
+
+  - type: example
+    title: Three weights on a metre rule
+    problem: |
+      A uniform metre rule is balanced on a pivot at its 50 cm mark, so its own weight acts through the pivot. A $2.0\ \text{N}$ weight hangs at the 20 cm mark and a $1.0\ \text{N}$ weight at the 90 cm mark.
+
+      What weight must hang at the 70 cm mark to keep it balanced?
+    steps:
+      - |
+        Distances from the pivot: 20 cm mark, $0.30\ \text{m}$ left; 90 cm mark, $0.40\ \text{m}$ right; 70 cm mark, $0.20\ \text{m}$ right.
+      - |
+        Anticlockwise: $2.0 \times 0.30 = 0.60\ \text{N m}$.
+      - |
+        Clockwise: $1.0 \times 0.40 + W \times 0.20 = 0.40 + 0.20W$.
+      - |
+        Balance: $0.40 + 0.20W = 0.60$, so $W = 1.0\ \text{N}$.
+    answer: |
+      $1.0\ \text{N}$
+
+  - type: check
+    questions: [beam-unknown-force, pivot-force-ignored]
+
+  - type: misconceptions
+    items:
+      - wrong: Balanced means the forces on each side are equal.
+        right: Balanced means the **moments** are equal. $400\ \text{N}$ at $1.5\ \text{m}$ balances $600\ \text{N}$ at $1.0\ \text{m}$.
+      - wrong: Measure each distance from the end of the beam.
+        right: Measure from the point you're taking moments about, at right angles to each force's line of action.
+      - wrong: The principle of moments only works about the pivot.
+        right: It works about **any** point, as long as the object is in equilibrium. The pivot is usually just the most convenient.
+
+  - type: explain
+    title: "Lab trick: weighing a ruler without scales"
+    body: |
+      Pivot a uniform metre rule **off-centre** and balance it with a known weight hung on the short side.
+
+      The rule's own weight, acting at the 50 cm mark, supplies the other moment. The principle of moments then tells you what the rule weighs.
+
+  - type: check
+    questions: [metre-rule-weight, moments-spot-error]
+
+  - type: exam
+    body: |
+      - **State the principle of moments** (2 marks): *sum of clockwise moments = sum of anticlockwise moments* **and** *for a body in equilibrium, about the same point*. Missing either half costs a mark.
+      - Write the moments equation in words first, then numbers. A correct equation earns method marks even if the arithmetic slips.
+      - Distances in cm are fine inside an equation as long as every distance is in cm. Convert at the end if the answer is a moment.
+
+  - type: takeaways
+    items:
+      - "In equilibrium: sum of clockwise moments = sum of anticlockwise moments, about the same point."
+      - It works about any point; choose the one that makes unknown forces vanish.
+      - Include the object's own weight, acting at its centre of gravity.
+      - The force at a pivot has no moment about that pivot.
+
+questions:
+  - id: pom-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.2.1"]
+    prompt: |
+      For an object in {{1}}, the sum of the clockwise moments about any point is {{2}} to the sum of the anticlockwise moments about the {{3}} point.
+    blanks:
+      - accept: [equilibrium]
+      - accept: [equal]
+      - accept: [same]
+    explanation: |
+      For a body in **equilibrium**, the sum of the clockwise moments about any point is **equal** to the sum of the anticlockwise moments about the **same** point.
+
+  - id: seesaw-distance
+    format: numeric
+    difficulty: 1
+    objectives: ["4.2.1"]
+    prompt: |
+      A $250\ \text{N}$ child sits $2.0\ \text{m}$ from the pivot of a see-saw. How far from the pivot, on the other side, must a $400\ \text{N}$ adult sit for the see-saw to balance?
+    fields:
+      - answer: 1.25
+        tolerance: { abs: 0.01 }
+        unit: m
+    explanation: |
+      Clockwise = anticlockwise: $400x = 250 \times 2.0 = 500$, so $x = 1.25\ \text{m}$. The heavier person sits closer.
+
+  - id: beam-unknown-force
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |
+      A uniform beam is balanced on a pivot at its centre. On the left, a $30\ \text{N}$ load hangs $1.2\ \text{m}$ from the pivot and a $20\ \text{N}$ load hangs $0.60\ \text{m}$ from the pivot.
+
+      What load must hang $0.80\ \text{m}$ to the right of the pivot to keep the beam balanced?
+    fields:
+      - answer: 60
+        tolerance: { abs: 0.1 }
+        unit: N
+    explanation: |
+      Anticlockwise: $30 \times 1.2 + 20 \times 0.60 = 36 + 12 = 48\ \text{N m}$. Clockwise: $W \times 0.80$.
+
+      So $W = \dfrac{48}{0.80} = 60\ \text{N}$. The beam's own weight acts at the pivot, so it has no moment.
+
+  - id: pivot-force-ignored
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |
+      When you take moments about the pivot of a balanced beam, why can you leave out the force that the pivot exerts on the beam?
+    options:
+      - text: Its line of action passes through the pivot, so its moment about the pivot is zero
+        correct: true
+        why: Correct. Zero perpendicular distance means zero moment, however big the force.
+      - text: It is always much smaller than the other forces
+        why: It's often the biggest force of all, since it holds everything up.
+      - text: It is cancelled out by the weight of the beam
+        why: A force can't cancel a moment, and the pivot force is usually bigger than the beam's weight anyway.
+      - text: It is a reaction force, so it doesn't count
+        why: Reaction forces count like any other force. This one just has no moment about the pivot.
+    explanation: |
+      The pivot force acts at the pivot, so its perpendicular distance from the pivot is zero. Choosing to take moments about a point where an unknown force acts removes that force from the equation.
+
+  - id: metre-rule-weight
+    format: numeric
+    difficulty: 3
+    objectives: ["4.2.1"]
+    prompt: |
+      A uniform metre rule balances on a pivot at its 32 cm mark when a $0.40\ \text{N}$ weight hangs at its 10 cm mark. Find the weight of the metre rule, to 2 significant figures.
+    fields:
+      - answer: 0.49
+        sigFigs: 2
+        tolerance: { abs: 0.005 }
+        unit: N
+    explanation: |
+      The known weight is $32 - 10 = 22\ \text{cm}$ left of the pivot. The rule's weight acts at the 50 cm mark, $18\ \text{cm}$ right of the pivot.
+
+      So $0.40 \times 0.22 = W \times 0.18$, giving $W = 0.49\ \text{N}$.
+
+  - id: moments-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |
+      A uniform plank $3.0\ \text{m}$ long is pivoted at its centre. A $200\ \text{N}$ weight sits at its left end.
+
+      A student works out where a $300\ \text{N}$ weight must sit, to the right of the pivot, to balance it. Which line contains the first error?
+    lines:
+      - |
+        The pivot is at the centre, so the plank's own weight has no moment about it.
+      - |
+        Anticlockwise moment $= 200 \times 3.0 = 600\ \text{N m}$
+      - |
+        Clockwise moment $= 300 \times x$
+      - |
+        $300x = 600$, so $x = 2.0\ \text{m}$ from the pivot.
+    errorLine: 2
+    fix: |
+      The left end is $1.5\ \text{m}$ from the pivot, so the anticlockwise moment is $200 \times 1.5 = 300\ \text{N m}$. Then $300x = 300$ and $x = 1.0\ \text{m}$.
+    explanation: |
+      The student measured from the far end of the plank, not from the pivot. There was a warning sign: $x = 2.0\ \text{m}$ would put the weight off the end of a plank that only reaches $1.5\ \text{m}$ from the pivot.

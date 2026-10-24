@@ -1,0 +1,255 @@
+id: equilibrium-forces-triangle-calculations
+subject: "9702"
+topic: "4.2"
+title: "Solving force triangles: two strings and a washing line"
+summary: Use the sine rule on the closed vector triangle, or resolve in two directions, to find tensions in strings at any angles, and see why a loaded line can never be straight.
+order: 5
+minutes: 5
+objectives: ["4.2.3"]
+prerequisites: [equilibrium-forces-vector-triangle]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 4.2.3, represent coplanar forces in equilibrium using a vector
+    triangle, solved with the sine rule from the syllabus's mathematical requirements). The
+    graph plots T/W = 1/(2 cos θ) exactly; the two-string triangle is drawn to scale (60 N
+    weight, strings at 35° and 50° to the vertical). Weights and angles are illustrative values;
+    all worked values and answer keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can find unknown forces when three forces in equilibrium make a triangle that **isn't** right-angled, using the sine rule or by resolving.
+
+  - type: explain
+    title: The washing-line puzzle
+    body: |
+      Hang a wet coat in the middle of a washing line and the line sags. Pull the ends as hard as you like: it never goes perfectly straight.
+
+      The vector triangle explains why, and the answer is a little shocking.
+
+  - type: explain
+    title: "Easy case first: two equal strings"
+    body: |
+      A weight $W$ hangs from two strings, each at $\theta$ to the vertical. By symmetry the two tensions are equal.
+
+      Only the vertical components hold the weight up:
+
+      $$2T\cos\theta = W \quad\Rightarrow\quad T = \frac{W}{2\cos\theta}$$
+
+      Check: at $\theta = 0$ (both strings vertical) each takes half the weight, $T = \frac{W}{2}$. ✓
+
+  - type: diagram
+    diagram: phys-equilibrium-forces-tension-angle
+    alt: >-
+      Left: a graph of T divided by W, from 0 to 4, against the angle θ of each string to the
+      vertical, from 0° to 90°. The curve T/W = 1/(2 cos θ) starts at 0.5 at 0°, rises slowly to 1
+      at 60° (marked with a dot and the label T = W at 60°), then climbs steeply, passing 2 near
+      75° and leaving the top of the graph at 4 near 83°, never reaching the dashed line at 90°.
+      Right: a picture hanging from a nail by two strings, each at θ to a dashed vertical line,
+      with tension T along each string and the weight W downwards, and the equation 2T cos θ =
+      W.
+    caption: Flatter strings need far bigger tensions. At 90° no finite tension would do.
+
+  - type: intuition
+    title: Why the line can't be straight
+    body: |
+      As the strings flatten, $\cos\theta$ shrinks, so $T$ grows:
+
+      - at $60°$, each tension equals the **whole** weight;
+      - at $80°$, it's nearly **3 times** the weight;
+      - at $90°$ (perfectly straight) the strings have no vertical component at all, so no tension, however large, could hold the weight up.
+
+      That's why power lines sag and a tightrope dips under the walker.
+
+  - type: check
+    questions: [tension-expression, two-straps, washing-line]
+
+  - type: explain
+    title: "Uneven strings: the sine rule"
+    body: |
+      When the angles differ, draw the closed triangle and use the **sine rule** with the angles **inside** the triangle, each one **opposite** its force:
+
+      $$\frac{T_1}{\sin A} = \frac{T_2}{\sin B} = \frac{W}{\sin C}$$
+
+      For string 1 at $\alpha$ and string 2 at $\beta$ to the vertical:
+
+      - the angle opposite $T_1$ is $\beta$;
+      - the angle opposite $T_2$ is $\alpha$;
+      - the angle opposite $W$ is $180° - (\alpha + \beta)$.
+
+  - type: diagram
+    diagram: phys-equilibrium-forces-two-strings
+    alt: >-
+      Left: a knot hanging from a ceiling by two strings. String 1 goes up and to the left at 35°
+      to a dashed vertical line, with tension T1 along it; string 2 goes up and to the right at
+      50° to the vertical, with tension T2; the weight W = 60 N points straight down from the
+      knot. Right: the closed vector triangle, drawn to scale. W points straight down; from its
+      tip T1 points up and to the left; from T1's tip T2 points up and to the right, back to the
+      start. The angle between W and T1 is 35°, the angle between T2 and W is 50°, and the angle
+      between T1 and T2 is 95°. Below: T1 over sin 50° = T2 over sin 35° = W over sin 95°.
+    caption: Each force sits opposite its own angle. String 1's tension goes with string 2's angle.
+
+  - type: example
+    title: A weight on two uneven strings
+    problem: |
+      A $60\ \text{N}$ weight hangs from two strings. String 1 makes $35°$ with the vertical and string 2 makes $50°$ with the vertical.
+
+      Find both tensions.
+    steps:
+      - |
+        Angles inside the triangle: opposite $T_1$ is $50°$, opposite $T_2$ is $35°$, opposite $W$ is $180° - 85° = 95°$.
+      - |
+        $T_1 = \dfrac{60\sin 50°}{\sin 95°} = 46.1\ \text{N}$
+      - |
+        $T_2 = \dfrac{60\sin 35°}{\sin 95°} = 34.5\ \text{N}$
+      - |
+        Check by resolving horizontally: $46.1\sin 35° = 26.5\ \text{N}$ and $34.5\sin 50° = 26.5\ \text{N}$. They balance. ✓
+    answer: |
+      $T_1 = 46.1\ \text{N}$ and $T_2 = 34.5\ \text{N}$. The steeper string takes more of the load.
+
+  - type: deeper
+    title: Or resolve instead
+    body: |
+      No sine rule? Resolve at the knot:
+
+      - horizontally: $T_1\sin 35° = T_2\sin 50°$;
+      - vertically: $T_1\cos 35° + T_2\cos 50° = 60$.
+
+      Solve the pair simultaneously and you get the same tensions. The triangle is quicker; resolving always works, even with four or more forces.
+
+  - type: check
+    questions: [opposite-angle-cloze, uneven-strings, sine-rule-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: In the sine rule, each tension goes with its own string's angle to the vertical.
+        right: Each force goes with the angle **opposite** it inside the triangle. For string 1, that's string 2's angle.
+      - wrong: A string's tension can't be more than the weight it holds.
+        right: It can be far more. At $60°$ to the vertical each string already carries the whole weight, and flatter strings carry even more.
+      - wrong: The steeper string carries less of the load.
+        right: The steeper (more nearly vertical) string carries **more**, because it lines up better with the weight.
+
+  - type: exam
+    body: |
+      - The sine rule, the cosine rule and an accurate scale drawing are all fair ways to solve a vector triangle. Use whichever you're fastest at.
+      - Label the triangle's angles before you start. Most lost marks come from using an outside angle.
+      - Finish with a quick resolving check: if the horizontal components don't balance, something's wrong.
+
+  - type: takeaways
+    items:
+      - |
+        Two equal strings at $\theta$ to the vertical: $T = \dfrac{W}{2\cos\theta}$.
+      - The flatter the strings, the bigger the tension; a loaded line can never be straight.
+      - In the sine rule, each force goes with the angle opposite it inside the triangle.
+      - Resolving horizontally and vertically always gives the same answer.
+
+questions:
+  - id: two-straps
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      A $50\ \text{N}$ bag hangs from a hook by two straps, each at $40°$ to the vertical. Find the tension in each strap, to 3 significant figures.
+    fields:
+      - answer: 32.6
+        sigFigs: 3
+        unit: N
+    explanation: |
+      $2T\cos 40° = 50$, so $T = \dfrac{50}{2\cos 40°} = 32.6\ \text{N}$. Each strap carries more than half the weight because it isn't vertical.
+
+  - id: washing-line
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      Why can't a washing line with a coat hanging from its middle ever be pulled perfectly straight?
+    options:
+      - text: A straight line would be horizontal, so the tension would have no vertical component to hold up the coat's weight
+        correct: true
+        why: Correct. The vertical components must add up to the weight, and a horizontal line has none.
+      - text: The line stretches, so it always sags a little
+        why: Even a line that couldn't stretch would sag. The reason is the forces, not the material.
+      - text: The tension would drop to zero when the line is straight
+        why: The opposite. The tension needed grows without limit as the line straightens.
+      - text: The coat's weight acts at an angle to the vertical
+        why: Weight always acts vertically downwards.
+    explanation: |
+      For a weight $W$ at the middle, $2T\cos\theta = W$, where $\theta$ is the line's angle to the vertical. As the line straightens, $\theta \to 90°$ and $\cos\theta \to 0$, so $T$ would have to be infinite.
+
+  - id: opposite-angle-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.2.3"]
+    prompt: |
+      When you use the sine rule on a closed triangle of forces, each force is divided by the sine of the angle {{1}} it, measured {{2}} the triangle.
+    blanks:
+      - accept: [opposite, opposite to]
+      - accept: [inside, within, in]
+    explanation: |
+      Each side of the triangle (a force) pairs with the angle **opposite** it, and the angles are the ones **inside** the triangle, not the angles the strings make outside it.
+
+  - id: uneven-strings
+    format: numeric
+    difficulty: 3
+    objectives: ["4.2.3"]
+    prompt: |
+      An $80\ \text{N}$ lamp hangs from two cables. Cable A makes $30°$ with the vertical and cable B makes $45°$ with the vertical.
+
+      Find the tension in each cable, to 3 significant figures.
+    fields:
+      - label: "tension in A ="
+        answer: 58.6
+        sigFigs: 3
+        tolerance: { abs: 0.15 }
+        unit: N
+      - label: "tension in B ="
+        answer: 41.4
+        sigFigs: 3
+        tolerance: { abs: 0.15 }
+        unit: N
+    explanation: |
+      The angle opposite $W$ is $180° - 75° = 105°$, and $\sin 105° = \sin 75°$. The sine rule gives $T_A = \dfrac{80\sin 45°}{\sin 105°} = 58.6\ \text{N}$ and $T_B = \dfrac{80\sin 30°}{\sin 105°} = 41.4\ \text{N}$.
+
+      Check: $58.6\sin 30° = 29.3$ and $41.4\sin 45° = 29.3$, so the horizontal components balance.
+
+  - id: sine-rule-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.2.3"]
+    prompt: |
+      A $40\ \text{N}$ weight hangs from two strings: string P at $20°$ to the vertical and string Q at $60°$ to the vertical. A student finds the tension in P.
+
+      Which line contains the first error?
+    lines:
+      - |
+        In the closed triangle, the angle opposite $W$ is $180° - (20° + 60°) = 100°$.
+      - |
+        The angle opposite $T_P$ is $20°$.
+      - |
+        $T_P = \dfrac{40\sin 20°}{\sin 100°} = 13.9\ \text{N}$
+      - |
+        So the steeper string, P, carries the smaller tension.
+    errorLine: 2
+    fix: |
+      The angle opposite $T_P$ is Q's angle, $60°$. So $T_P = \dfrac{40\sin 60°}{\sin 100°} = 35.2\ \text{N}$.
+    explanation: |
+      Each force goes with the angle opposite it in the triangle, and for string P that's string Q's angle. Line 4 was a warning sign: the steeper string should carry **more** of the load, not less.
+
+  - id: tension-expression
+    format: expression
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      A weight $W$ hangs from two strings, each at angle $\theta$ to the vertical.
+
+      Write an expression for the tension $T$ in each string. Type `w` for $W$ and `t` for $\theta$ (for example `w*sin(t)`).
+    answer: "w/(2*cos(t))"
+    variables: [w, t]
+    domain: { min: 0.1, max: 1.3 }
+    display: |
+      $T = \dfrac{W}{2\cos\theta}$
+    explanation: |
+      Resolve vertically: the two vertical components $T\cos\theta$ hold up the weight, so $2T\cos\theta = W$ and $T = \dfrac{W}{2\cos\theta}$.

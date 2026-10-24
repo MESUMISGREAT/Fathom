@@ -1,0 +1,205 @@
+id: turning-effects-centre-of-gravity
+subject: "9702"
+topic: "4.1"
+title: "Centre of gravity: where all the weight seems to act"
+summary: An object's weight can be treated as one force acting at a single point, its centre of gravity; for a uniform, symmetrical object that's its geometric centre.
+order: 2
+minutes: 5
+objectives: ["4.1.1"]
+prerequisites: [turning-effects-moment-of-a-force, momentum-newton-weight]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 4.1.1, an object's weight may be treated as acting at one point,
+    its centre of gravity). The plumb-line diagram computes the lamina's centre of gravity as its
+    area centroid and hangs the shape so that G is exactly below each hole. The separate toppling
+    diagram is to scale (a uniform block with width : height = 1 : 2, which topples beyond 26.6°).
+    Dimensions and weights are illustrative values; all worked values and answer keys were
+    computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what the **centre of gravity** is, find it for uniform objects and by experiment for a flat card, and use it to work out moments due to weight.
+
+  - type: explain
+    title: The one-finger ruler trick
+    body: |
+      Balance a uniform ruler on one finger. It only balances in one place: the 50 cm mark.
+
+      Every tiny bit of the ruler has its own weight pulling down. Yet the ruler behaves as if **all** of its weight acted at one point, right above your finger.
+
+  - type: definition
+    term: Centre of gravity
+    body: |
+      The **centre of gravity** of an object is the point at which the whole weight of the object may be considered to act.
+
+  - type: intuition
+    title: Why one point is allowed
+    body: |
+      Gravity pulls on every particle. Add up all those little weights and you get one total force, $W = mg$, acting downwards.
+
+      The centre of gravity is the point where that single force has the **same turning effect** about any pivot as all the little weights together. So in a diagram you draw one arrow, $W$, from the centre of gravity.
+
+  - type: explain
+    title: Where is it?
+    body: |
+      For a **uniform** object (mass spread evenly) with a symmetrical shape, it's at the geometric centre:
+
+      | Uniform object | Centre of gravity |
+      | --- | --- |
+      | rod, ruler, plank | at its midpoint |
+      | rectangular sheet | where the diagonals cross |
+      | disc or solid sphere | at its centre |
+      | ring or hollow tube | at the centre, in thin air |
+
+      A non-uniform object, like a hammer or a cricket bat, has its centre of gravity nearer the heavy end.
+
+  - type: example
+    title: "Easy one first: an off-centre pivot"
+    problem: |
+      A uniform metre rule of weight $1.2\ \text{N}$ is pivoted at its 30 cm mark, with the 0 cm end on the left. What is the moment of its weight about the pivot?
+    steps:
+      - |
+        Uniform, so its weight acts at the 50 cm mark.
+      - |
+        The weight's line of action is vertical, so the perpendicular distance from the pivot is $50 - 30 = 20\ \text{cm} = 0.20\ \text{m}$.
+      - |
+        Moment $= 1.2 \times 0.20 = 0.24\ \text{N m}$, clockwise: the weight acts to the right of the pivot.
+    answer: |
+      $0.24\ \text{N m}$ clockwise, so the long end drops (just as you'd expect).
+
+  - type: check
+    questions: [cg-cloze, cg-ring, plank-weight-moment]
+
+  - type: explain
+    title: Finding it for an odd-shaped card
+    body: |
+      For a flat card of any shape, use a **plumb line** (a thread with a small weight on the end):
+
+      1. Make a small hole near the edge and hang the card from a pin so it swings freely.
+      2. When it stops, hang the plumb line from the same pin and mark the vertical line on the card.
+      3. Repeat from a second hole.
+      4. The centre of gravity is where the two lines cross.
+
+      Why does it work? If G were off to one side of the pin, the weight would have a moment about the pin, and the card would swing until that moment was zero: with G directly below the pin.
+
+  - type: diagram
+    diagram: phys-turning-effects-plumb-line
+    alt: >-
+      Two panels showing the same irregular six-sided card. Left, "1. Hang it from hole A": the
+      card hangs from a pin through hole A near its top. A vertical line is marked on the card
+      from A down to the bottom edge, and a plumb line continues below the card to a small
+      weight. Hole B is near the lower right edge. Caption: G is somewhere on the line marked
+      through A. Right, "2. Hang it from hole B": the card now hangs from B, so it has turned. A
+      new vertical line runs down from B, and the first line, from A, now crosses the card at a
+      slant as a dashed line. The two lines cross at a dot labelled G. Caption: the two lines
+      cross at the centre of gravity G.
+    caption: Each hanging gives one line through G. Two lines pin it down.
+
+  - type: enrichment
+    title: Toppling and stability
+    body: |
+      Tilt a box onto one bottom edge and let go. Its weight creates a moment about that edge.
+
+      - If the vertical line through G passes **inside** the edge, the weight's moment turns the box **back**.
+      - If the line passes **outside** the edge, the moment turns the box further **over**: it topples.
+
+      A **low** centre of gravity and a **wide** base make an object harder to topple. This is an application beyond the examinable objectives in this unit.
+
+  - type: check
+    questions: [suspended-card]
+
+  - type: misconceptions
+    items:
+      - wrong: The centre of gravity must be inside the object.
+        right: Not for a ring, a horseshoe or a boomerang. Their centre of gravity is in empty space.
+      - wrong: Gravity only pulls on the centre of gravity.
+        right: Gravity pulls on every particle. One force at G is a model that gives the same total force and the same moments.
+      - wrong: A uniform plank's own weight never has a moment.
+        right: Only about its midpoint. About any other pivot, its weight (acting at the midpoint) has a moment, and you must include it.
+
+  - type: exam
+    body: |
+      - **Define the centre of gravity**: *the point where the whole weight of an object may be considered to act*. Writing "mass" instead of "weight" loses the mark.
+      - In moments questions, a **uniform** beam's weight acts at its midpoint. Draw that arrow first: forgetting the beam's own weight is the most common slip.
+
+  - type: enrichment
+    title: Centre of gravity vs centre of mass
+    body: |
+      The **centre of mass** is the average position of an object's mass. In a uniform gravitational field, like anything human-sized near the Earth, it's at the same point as the centre of gravity.
+
+      They only separate for something so tall that $g$ changes noticeably from top to bottom, like a space elevator.
+
+  - type: takeaways
+    items:
+      - The centre of gravity is the point where the whole weight of an object may be considered to act.
+      - For a uniform, symmetrical object it's the geometric centre, even if that's in thin air.
+      - A freely hanging object comes to rest with its centre of gravity directly below the pivot.
+
+questions:
+  - id: cg-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: |
+      The centre of gravity of an object is the point at which the whole {{1}} of the object may be considered to act.
+    blanks:
+      - accept: [weight]
+    explanation: |
+      It's the **weight** (a force), not the mass, that is treated as acting at the centre of gravity.
+
+  - id: cg-ring
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: |
+      Where is the centre of gravity of a uniform, thin, circular ring?
+    options:
+      - text: At the centre of the ring, where there is no material
+        correct: true
+        why: Correct. By symmetry every bit of the ring is balanced by an identical bit opposite it, so G is at the centre.
+      - text: Somewhere on the ring itself
+        why: No point on the ring is special. Symmetry puts G at the centre, even though it's empty.
+      - text: At the bottom of the ring
+        why: That's where it touches a table, but G doesn't depend on which way up the ring is.
+      - text: It has no centre of gravity
+        why: Every object has one. Its weight can always be treated as acting at a single point.
+    explanation: |
+      The centre of gravity doesn't have to be inside the material. For a uniform ring it's at the centre of the circle.
+
+  - id: plank-weight-moment
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.1"]
+    prompt: |
+      A uniform plank is $4.0\ \text{m}$ long and weighs $300\ \text{N}$. It rests on a pivot $1.5\ \text{m}$ from its left end.
+
+      What is the moment of the plank's weight about the pivot?
+    fields:
+      - answer: 150
+        tolerance: { abs: 0.5 }
+        unit: N m
+    explanation: |
+      Uniform, so the weight acts at the midpoint, $2.0\ \text{m}$ from the left end. That's $2.0 - 1.5 = 0.50\ \text{m}$ from the pivot, so the moment is $300 \times 0.50 = 150\ \text{N m}$ (clockwise: the right-hand end drops).
+
+  - id: suspended-card
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.1"]
+    prompt: |
+      A flat card hangs freely from a pin through a hole near its edge and has stopped swinging. Where is its centre of gravity?
+    options:
+      - text: Directly below the pin
+        correct: true
+        why: Correct. Then the weight's line of action passes through the pin, so it has no moment about the pin.
+      - text: At the same height as the pin, to one side
+        why: Then the weight would have a moment about the pin and the card would swing.
+      - text: At the pin itself
+        why: Only if you happened to hang the card from its centre of gravity. Through a hole near the edge, it isn't.
+      - text: Exactly halfway between the pin and the bottom edge of the card
+        why: Only by coincidence. Where G is depends on the card's shape, not on where you hang it.
+    explanation: |
+      A hanging object swings until its weight has no moment about the pivot. That happens when the centre of gravity is directly below the pivot, which is why the plumb-line method works.

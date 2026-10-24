@@ -1,0 +1,242 @@
+id: turning-effects-torque-of-a-couple
+subject: "9702"
+topic: "4.1"
+title: The torque of a couple
+summary: The torque of a couple is one of the forces times the perpendicular distance between their lines of action, and it's the same about every point.
+order: 5
+minutes: 5
+objectives: ["4.1.4"]
+prerequisites: [turning-effects-couples, turning-effects-forces-at-angles]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 4.1.4, define the torque of a couple and apply the definition).
+    The right-hand panel of the diagram is drawn to scale (forces at 50° to the rod). Forces and
+    distances are illustrative values; all worked values and answer keys were computed with
+    Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **define** the torque of a couple, calculate it (including when the forces act at an angle) and explain why it's the same about every point.
+
+  - type: explain
+    title: How hard is it turning?
+    body: |
+      A couple's resultant force is zero, so we can't measure its strength in newtons. Instead we measure how hard it turns: its **torque**.
+
+      Old lorries without power steering had huge steering wheels. A wider grip gives a bigger torque for the same push from each hand.
+
+  - type: definition
+    term: Torque of a couple
+    body: |
+      The **torque of a couple** is the product of **one** of the forces and the **perpendicular distance between** the lines of action of the two forces.
+
+      $$\text{torque} = F \times d$$
+
+      Unit: **N m**.
+
+  - type: example
+    title: "Easy one first: a steering wheel"
+    problem: |
+      Each hand pushes with $15\ \text{N}$, tangentially, on opposite sides of a steering wheel of diameter $0.40\ \text{m}$. Find the torque.
+    steps:
+      - |
+        The lines of action are a diameter apart, so $d = 0.40\ \text{m}$.
+      - |
+        Torque $= F \times d = 15 \times 0.40 = 6.0\ \text{N m}$.
+      - |
+        Check by adding moments about the centre. Each hand is $0.20\ \text{m}$ from it and both turn the same way: $15 \times 0.20 + 15 \times 0.20 = 6.0\ \text{N m}$. ✓
+    answer: |
+      $6.0\ \text{N m}$
+
+  - type: check
+    questions: [tap-torque, torque-cloze, couple-not-double]
+
+  - type: intuition
+    title: The same torque about every point
+    body: |
+      A single force's moment depends on where the pivot is. A couple's torque doesn't. Take any point P, a distance $x$ from the nearer force:
+
+      - the far force has a moment $F(x + d)$ one way;
+      - the near force has a moment $Fx$ the other way;
+      - the resultant is $F(x + d) - Fx = Fd$.
+
+      The $x$ cancels, wherever P is. That's why a couple has one torque, not a different one for each pivot.
+
+  - type: diagram
+    diagram: phys-turning-effects-couple-torque
+    alt: >-
+      Two panels. Left, "Torque about any point P": a horizontal bar with a force F pointing up at
+      its left end and a force F pointing down at its right end. Faint vertical lines mark the
+      two lines of action. A point P lies on the extended line of the bar, to the left of the
+      bar. Dimension arrows show the distance x from P to the upward force and the distance d
+      between the two forces. Below: F(x + d) − Fx = Fd. Right, "Forces at an angle to the rod":
+      a rod of length l with a force F at its right end pointing up and to the right at angle θ
+      to the rod, and a force F at its left end pointing down and to the left at the same angle.
+      Both lines of action are extended as dashed parallel lines, and a solid line from the
+      right-hand end of the rod meets the other line of action at a right angle; it is labelled
+      d = l sin θ. Below: torque = F × l sin θ.
+    caption: The torque is $Fd$ about any point, and $d$ is always measured between the lines of action.
+
+  - type: explain
+    title: Forces at an angle
+    body: |
+      If the forces aren't at right angles to the rod, use the perpendicular distance **between their lines of action**, not the length of the rod.
+
+      For forces at angle $\theta$ to a rod of length $l$: $d = l\sin\theta$, so the torque is $F \times l\sin\theta$.
+
+  - type: example
+    title: Turning a bar at an angle
+    problem: |
+      Two forces of $8.0\ \text{N}$ act at the ends of a bar $0.50\ \text{m}$ long, in opposite directions, each at $60°$ to the bar. Find the torque of the couple.
+    steps:
+      - |
+        Perpendicular distance between the lines of action: $d = 0.50\sin 60° = 0.433\ \text{m}$.
+      - |
+        Torque $= 8.0 \times 0.433 = 3.46\ \text{N m}$.
+      - |
+        At $90°$ it would be $8.0 \times 0.50 = 4.0\ \text{N m}$, the most this couple could give. Ours is a bit less. ✓
+    answer: |
+      $3.5\ \text{N m}$ (to 2 s.f.)
+
+  - type: check
+    questions: [angled-couple, wheel-force]
+
+  - type: explain
+    title: Moment or torque?
+    body: |
+      | | Moment of a force | Torque of a couple |
+      | --- | --- | --- |
+      | made by | one force | a pair of forces |
+      | formula | force × perpendicular distance from the **point** | one force × perpendicular distance **between** the forces |
+      | depends on the point? | yes | no |
+      | unit | N m | N m |
+
+      In topic 4.2, "resultant torque" just means the total turning effect of all the forces on an object.
+
+  - type: misconceptions
+    items:
+      - wrong: Torque of a couple = 2 × F × d, because there are two forces.
+        right: It's **one** force × the separation. Adding the two moments about the midpoint, $F \times \frac{d}{2}$ twice, gives the same $Fd$.
+      - wrong: d is the length of the rod.
+        right: d is the perpendicular distance between the lines of action. It equals the rod's length only when the forces are at right angles to the rod.
+      - wrong: Torque is measured in joules.
+        right: Like any moment, torque is measured in N m.
+
+  - type: check
+    questions: [torque-spot-error]
+
+  - type: exam
+    body: |
+      - **Define the torque of a couple** (2 marks): *one of the forces* × *perpendicular distance between the (lines of action of the) forces*. "Force × distance" alone scores nothing.
+      - Draw both lines of action and the perpendicular between them before you calculate.
+
+  - type: takeaways
+    items:
+      - Torque of a couple = one force × perpendicular distance between the lines of action.
+      - The torque is the same about every point.
+      - For forces at θ to a rod of length l, d = l sin θ.
+      - The unit is N m.
+
+questions:
+  - id: tap-torque
+    format: numeric
+    difficulty: 1
+    objectives: ["4.1.4"]
+    prompt: |
+      You turn a tap by pushing with your thumb and finger in opposite directions. Each force is $12\ \text{N}$ and their lines of action are $0.080\ \text{m}$ apart.
+
+      What is the torque of the couple?
+    fields:
+      - answer: 0.96
+        tolerance: { abs: 0.005 }
+        unit: N m
+    explanation: |
+      Torque $= F \times d = 12 \times 0.080 = 0.96\ \text{N m}$. Use one force, not both.
+
+  - id: torque-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.1.4"]
+    prompt: |
+      The torque of a couple is the product of {{1}} of the forces and the {{2}} distance between their lines of action.
+    blanks:
+      - accept: [one, either, either one, "1", only one]
+      - accept: [perpendicular]
+    explanation: |
+      Torque = **one** of the forces × **perpendicular** distance between the lines of action of the forces.
+
+  - id: couple-not-double
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.4"]
+    prompt: |
+      A couple is made of two $5.0\ \text{N}$ forces whose lines of action are $0.30\ \text{m}$ apart. What is its torque?
+    options:
+      - text: $1.5\ \text{N m}$
+        correct: true
+        why: Correct. One force × separation $= 5.0 \times 0.30$.
+      - text: $3.0\ \text{N m}$
+        why: You used both forces. The torque is one force × the separation.
+      - text: $0.75\ \text{N m}$
+        why: That's the moment of one force about the midpoint. Both forces contribute that much, so the total is twice it.
+      - text: Zero
+        why: The forces cancel, but their moments don't; they act in the same sense.
+    explanation: |
+      Torque $= F \times d = 5.0 \times 0.30 = 1.5\ \text{N m}$. Check about the midpoint: $5.0 \times 0.15 + 5.0 \times 0.15 = 1.5\ \text{N m}$.
+
+  - id: angled-couple
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.4"]
+    prompt: |
+      Two forces of $20\ \text{N}$ act at opposite ends of a rod $0.60\ \text{m}$ long, in opposite directions, each at $30°$ to the rod. Find the torque of the couple.
+    fields:
+      - answer: 6.0
+        tolerance: { abs: 0.05 }
+        unit: N m
+    explanation: |
+      Perpendicular distance between the lines of action: $d = 0.60\sin 30° = 0.30\ \text{m}$. Torque $= 20 \times 0.30 = 6.0\ \text{N m}$.
+
+      Using the rod's full length would give $12\ \text{N m}$, twice too much.
+
+  - id: wheel-force
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.4"]
+    prompt: |
+      A driver needs a torque of $9.0\ \text{N m}$ to turn a steering wheel of diameter $0.36\ \text{m}$. She pushes tangentially on opposite sides of the rim with equal forces.
+
+      What force does each hand exert?
+    fields:
+      - answer: 25
+        tolerance: { abs: 0.1 }
+        unit: N
+    explanation: |
+      The lines of action are a diameter apart, so $F = \dfrac{\text{torque}}{d} = \dfrac{9.0}{0.36} = 25\ \text{N}$.
+
+  - id: torque-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.1.4"]
+    prompt: |
+      A couple is made of two $6.0\ \text{N}$ forces, one up and one down, whose lines of action are $0.20\ \text{m}$ apart. A student takes moments about a point P that lies $0.10\ \text{m}$ to the left of the upward force (the downward force is further to the right).
+
+      Which line contains the first error?
+    lines:
+      - |
+        Distance from P to the upward force $= 0.10\ \text{m}$; to the downward force $= 0.30\ \text{m}$.
+      - |
+        Moment of the upward force about P $= 6.0 \times 0.10 = 0.60\ \text{N m}$, anticlockwise.
+      - |
+        Moment of the downward force about P $= 6.0 \times 0.30 = 1.8\ \text{N m}$, anticlockwise.
+      - |
+        Resultant $= 0.60 + 1.8 = 2.4\ \text{N m}$, so the torque depends on where P is.
+    errorLine: 3
+    fix: |
+      A downward force to the right of P turns **clockwise** about P: $1.8\ \text{N m}$ clockwise. The resultant is $1.8 - 0.60 = 1.2\ \text{N m}$ clockwise, which is exactly $Fd = 6.0 \times 0.20$.
+    explanation: |
+      Get the senses right and the distance to P cancels out, as it always does for a couple. The torque is $1.2\ \text{N m}$ about every point.
