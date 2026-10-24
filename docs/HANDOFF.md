@@ -211,15 +211,64 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 12 published, 142 todo. Next: the `todo` units in order (9709 1.8 and 9618 3.1 are
-  being written now, then 9702 4.1+4.2, 9701 3.3+3.4+3.5, …).
-- **Open question for the user (asked 23 Oct, no answer yet):** restyle the 165 existing
-  lessons to the new short-chunk style? It's a big job (a writer and a reviewer per batch).
+- Queue: 12 published, 142 todo.
+- **START HERE.** The user halted all work on 24 Oct at about 13:15 UTC. No agents are
+  running and `main` is clean (17ac1b2). Drafts are only on `wip-snapshot`.
+  1. In a fresh container, run `bash scripts/lessons/restore-drafts.sh` to bring the drafts
+     back, then `npm run diagrams:gen`.
+  2. **9709 1.8 Integration: written, not reviewed.**
+     - 9 draft lessons `p1-integration-*`: powers-of-x, brackets, finding-the-curve,
+       definite-integrals, improper-integrals, area-under-a-curve, area-between-graphs,
+       volume-of-revolution, volume-with-a-hole.
+     - 48 questions, 9 diagrams, plus the helper `p1-integration-kit.tsx` (no diagramKey).
+     - Written in the one-method style. The writer checked every key with sympy, and
+       content-check reports 0 errors.
+     - A reviewer was started, then halted before it changed anything.
+     - Next:
+       - run `node scripts/lessons/prompts.mjs review "9709 1.8" <today>`;
+       - append the Maths checks below to the brief;
+       - run one reviewer, then `publish.sh`.
+  3. **9618 3.1 Computers and their components: the writer was halted part-way through.**
+     - 12 draft lessons `computer-components-*` with 70 questions. Together they tag
+       objectives 3.1.1–3.1.5; nothing teaches 3.1.6–3.1.8 yet.
+     - 16 diagrams, 4 of them not used by any lesson yet: `cs-computer-components-dram-refresh`,
+       `-memory-pyramid`, `-monitor-vs-control` and `-thermostat-graph`.
+     - The writer had **not** yet recomputed its answer keys.
+     - Next:
+       - regenerate `prompts.mjs write "9618 3.1" <today>` and give it to one writer;
+       - tell the writer the drafts exist and must be finished, not restarted;
+       - the writer covers 3.1.6–3.1.8, uses or deletes the unused diagrams, and checks
+         every key with python3;
+       - then one reviewer, then `publish.sh`.
+  4. Then the next `todo` units in order: 9702 4.1+4.2, 9701 3.3+3.4+3.5, 9709 2.1+2.2,
+     9618 3.2, …
+  5. **Ask the user before starting each new round of agents.** They are watching their
+     session limit and want to be asked at about 80%.
+- **Maths review checks.** Append these to every 9709 review brief; the briefs are
+  gitignored.
+  - Every lesson has "What they ask", then a numbered "The method" with the forgotten step
+    in bold, then an easy example, a check, an exam-style example and another check. Each
+    question appears in exactly one check.
+  - Plain words, and no notation a first-timer doesn't need. Paragraphs are at most
+    2 sentences, with bullets wherever possible.
+  - Fractions use `\dfrac` and roots cover the whole expression, everywhere, including
+    diagram and field labels. No slash fractions.
+  - Not every diagram is a graph, and each diagram must actually help.
+  - `expression` answers containing + c: test the marker with a short `npx tsx` script.
+    The right answer and a capital C must be accepted. A missing + c and a wrong
+    coefficient must be rejected.
+  - Exact answers with `rel: 0.005`: a 3 s.f. decimal must be accepted, and a value 1% off
+    must be rejected.
+  - Nothing is copied from any teacher's material or past paper.
+- Answered 24 Oct: the user wants the 9701 electronegativity "1.7–2.0" note kept as it is.
+  The lessons teach "about 1.8" as a rule of thumb.
+- **Open question for the user (asked 23 Oct, no answer yet):** restyle the existing
+  lessons (165 at the time) to the new short-chunk style? It's a big job (a writer and a reviewer per batch).
   Ask before starting it, and ask whether it goes before or after the new topics.
 - The user asked to "recheck all the Maths lessons first". Done so far: the notation in every
   Maths diagram, and the whole of 1.7 (differentiation). A full restyle of the other
   Maths lessons is part of the open question above.
-- No agents running. The old scheduled task `trig_01NiVSUy5PGKorMtJZ6y9aSt` stays disabled.
+- The old scheduled task `trig_01NiVSUy5PGKorMtJZ6y9aSt` stays disabled.
 
 ## 6. Other follow-ups (small, do when convenient)
 
