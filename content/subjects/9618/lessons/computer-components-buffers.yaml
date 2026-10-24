@@ -1,0 +1,283 @@
+id: computer-components-buffers
+subject: "9618"
+topic: "3.1"
+title: "Buffers: smoothing out speed differences"
+summary: What a buffer is, why it is needed between devices that work at different speeds, and how a print buffer and interrupts let the processor keep working.
+order: 11
+minutes: 5
+kind: core
+objectives: ["3.1.4"]
+prerequisites: [computer-components-io-memory-storage]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.4 (the use of buffers). Buffer and file sizes in the examples are illustrative;
+    calculations checked with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can say what a **buffer** is, why it's needed, and describe step by step how a **print buffer** is used.
+
+  - type: explain
+    title: The sushi conveyor belt
+    body: |
+      A sushi chef works far faster than customers eat. So the chef loads a **conveyor belt** in a burst, then goes off to do other jobs while customers take plates at their own pace.
+
+      When the belt runs empty, a customer calls the chef back. That belt is a buffer.
+
+      Where the analogy breaks: a real buffer has a **fixed size**, and data leaves in **strict order** (first in, first out), not whichever plate looks tastiest.
+
+  - type: definition
+    term: Buffer
+    body: |
+      A temporary area of memory (usually RAM) that holds data while it is being transferred between two devices or processes that work at **different speeds**, such as the processor and a printer.
+
+  - type: explain
+    title: Why bother?
+    body: |
+      - The processor works **far faster** than a printer. Without a buffer it would sit idle, feeding the printer a little data at a time.
+      - With a buffer, the processor fills it in one quick burst and is then **free to do other tasks**.
+      - Buffers also **smooth out** uneven data flow, so a video keeps playing when the network stutters.
+
+  - type: explain
+    title: Buffers you already use
+    body: |
+      | Buffer | Holds | Why |
+      | --- | --- | --- |
+      | print buffer | data waiting to be printed | printer is far slower than the processor |
+      | keyboard buffer | keypresses not yet read by the program | you can type ahead while the computer is busy |
+      | streaming buffer | the next few seconds of video or audio | playback continues through network hiccups |
+      | disk buffer | data on its way to or from a disk | disk access is slow compared with RAM |
+
+  - type: check
+    title: Quick check
+    questions: [what-is-buffer, buffer-benefit]
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Explain** how a buffer is used when a document is sent to a printer." Usually 4 to 5 marks.
+
+      The marks are for the **cycle**: fill the buffer, printer empties it slowly, processor does other work, **interrupt**, refill.
+
+  - type: explain
+    title: The method
+    body: |
+      1. The processor sends a block of the document's data to the **print buffer**.
+      2. The buffer fills quickly, at the processor's speed.
+      3. The printer takes data from the buffer, **in order**, and prints it at its own slower speed.
+      4. Meanwhile the processor is **free to carry out other tasks**; it doesn't wait for the printer.
+      5. **When the buffer is empty, the printer sends an interrupt to the processor to request more data.**
+      6. The processor sends the next block to refill the buffer. Steps 3 to 6 repeat until the whole document is printed.
+
+      Step 5 is the forgotten one. Without the **interrupt**, the processor has no way of knowing the printer is ready for more.
+
+  - type: diagram
+    diagram: cs-computer-components-printer-buffer
+    alt: >-
+      A processor box labelled fast on the left sends data, filling it in a burst, into a buffer
+      drawn as a row of eight memory slots, labelled buffer (memory in the printer); five of the
+      slots are full. The buffer is labelled a queue, first in, first out. An arrow from the buffer
+      to a printer box labelled slow says prints at own speed. A dashed arrow runs from the printer
+      back round to the processor, labelled interrupt: buffer empty, send the next block. A note at
+      the top left says meanwhile, the processor carries on with other tasks.
+    caption: |
+      Fill fast, print slow, interrupt, refill. The processor only steps in when it's asked.
+
+  - type: example
+    title: "Easy first: how many refills?"
+    problem: |
+      A 9 MB document is sent to a printer with a 2 MB buffer. How many times does the processor send a block of data to the buffer?
+    steps:
+      - |
+        Each block fills the buffer with up to 2 MB, so divide: $9 \div 2 = 4.5$.
+      - |
+        You can't send half a block, so **round up**: 5 blocks (four full 2 MB blocks, then a final 1 MB).
+      - |
+        Check by adding: $2 + 2 + 2 + 2 + 1 = 9$ MB ✓
+      - |
+        Between blocks, the printer interrupts each time the buffer empties, so the processor is only needed 5 times.
+    answer: |
+      5 blocks. The rest of the time, the processor is doing other work.
+
+  - type: check
+    title: Your turn
+    questions: [refills-count, when-interrupt]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A student prints a 40-page essay and carries on editing a spreadsheet while it prints. Explain how a buffer is used so that she can keep working. [5]
+    steps:
+      - |
+        "The processor sends part of the essay's data to the print buffer, filling it quickly."
+      - |
+        "The printer prints the data from the buffer at its own slower speed."
+      - |
+        "Meanwhile the processor is free to run the spreadsheet instead of waiting for the printer."
+      - |
+        "When the buffer is empty, the printer sends an interrupt to the processor asking for more data."
+      - |
+        "The processor sends the next block of the essay to the buffer, and this repeats until all 40 pages are printed."
+    answer: |
+      Five steps of the cycle, each linked to the essay and the spreadsheet.
+
+  - type: check
+    title: Exam check
+    questions: [spot-buffer-full, keyboard-queue]
+
+  - type: misconceptions
+    items:
+      - wrong: A buffer makes the printer print faster.
+        right: |
+          The printer prints at the same speed. The buffer frees the **processor** from waiting.
+      - wrong: A buffer is permanent storage.
+        right: |
+          It's **temporary** memory, usually RAM. Data passes through it and is gone once used.
+      - wrong: The printer interrupts when the buffer is full.
+        right: |
+          It interrupts when the buffer is **empty** (or nearly empty), to ask for more data.
+
+  - type: exam
+    body: |
+      - Always include the **interrupt** and **when** it's sent: buffer empty.
+      - Say **why** it helps: the processor can do **other tasks** instead of waiting for a slow device.
+      - "Temporary storage" and "different speeds" belong in any definition of a buffer.
+
+  - type: takeaways
+    items:
+      - A buffer is temporary memory holding data in transit between devices that work at different speeds.
+      - The processor fills the buffer in a burst, then gets on with other tasks.
+      - The device empties the buffer at its own speed, in order (first in, first out).
+      - When the buffer is empty, the device sends an interrupt asking for the next block.
+
+questions:
+  - id: what-is-buffer
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.4"]
+    prompt: |
+      What is a buffer?
+    options:
+      - text: A temporary area of memory that holds data being transferred between devices working at different speeds
+        correct: true
+        why: |
+          Temporary, in memory, and there because of a speed difference.
+      - text: A permanent store for files when the computer is switched off
+        why: |
+          That's secondary storage. A buffer is temporary.
+      - text: A device that makes a printer print faster
+        why: |
+          A buffer doesn't change the printer's speed.
+      - text: A copy of frequently used data kept close to the processor for reuse
+        why: |
+          That describes a cache. A buffer holds data that is passing through.
+    explanation: |
+      Buffer = temporary memory for data in transit, smoothing out the speed difference.
+
+  - id: buffer-benefit
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      What is the main benefit of using a print buffer?
+    options:
+      - text: The processor can carry out other tasks instead of waiting for the slow printer.
+        correct: true
+        why: |
+          It fills the buffer quickly and moves on.
+      - text: The printer prints each page faster.
+        why: |
+          The printer's speed is unchanged.
+      - text: The document is kept safely if the power fails.
+        why: |
+          Buffers are usually RAM, which is volatile.
+      - text: The printer can print without being connected.
+        why: |
+          It still needs a connection to receive each block of data.
+    explanation: |
+      The buffer absorbs the speed difference so the fast processor isn't held back by the slow printer.
+
+  - id: refills-count
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      A printer has a 4 MB buffer, and a 25 MB file is printed.
+
+      How many times does the processor send a block of data to the buffer (each block fills it, except possibly the last)?
+    fields:
+      - answer: 7
+        unit: blocks
+    explanation: |
+      $25 \div 4 = 6.25$, so round **up** to 7 blocks: six full 4 MB blocks (24 MB) and a final 1 MB block.
+
+  - id: when-interrupt
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      During printing, when does the printer send an interrupt to the processor?
+    options:
+      - text: When the buffer is empty and it needs more data
+        correct: true
+        why: |
+          The interrupt is the printer's request for the next block.
+      - text: When the buffer is full
+        why: |
+          A full buffer means the printer has plenty to do; nothing is needed yet.
+      - text: After every single character is printed
+        why: |
+          That would remove the whole point of having a buffer.
+      - text: Only before the first page is printed
+        why: |
+          It interrupts every time the buffer runs out, not just once.
+    explanation: |
+      Buffer empty → interrupt → processor sends the next block. That's the cycle.
+
+  - id: spot-buffer-full
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      A student explains how a print buffer is used. Which line contains the error?
+    lines:
+      - The processor sends a block of data to the print buffer.
+      - The printer prints data from the buffer at its own speed.
+      - The processor carries out other tasks while the printer prints.
+      - When the buffer is full, the printer sends an interrupt to the processor.
+      - The processor sends the next block of data to the buffer.
+    errorLine: 4
+    fix: |
+      The printer sends an interrupt when the buffer is **empty**, requesting more data.
+    explanation: |
+      A full buffer is the start of the cycle. The interrupt is a request for more, so it comes when the buffer has run out.
+
+  - id: keyboard-queue
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |
+      A user types "cat" quickly while a program is busy. When the program catches up, the letters appear as "cat", not "tac".
+
+      How must the keyboard buffer behave?
+    options:
+      - text: As a queue (first in, first out)
+        correct: true
+        why: |
+          The first key pressed is the first one read.
+      - text: As a stack (last in, first out)
+        why: |
+          A stack would give the most recent key first: "tac".
+      - text: As random access, reading any key in any order
+        why: |
+          Order matters for typing; random order would scramble the word.
+      - text: As permanent storage
+        why: |
+          Keypresses are only held until they are read.
+    explanation: |
+      Buffers are queues: data leaves in the same order it arrived.

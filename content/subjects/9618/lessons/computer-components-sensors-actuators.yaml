@@ -1,0 +1,260 @@
+id: computer-components-sensors-actuators
+subject: "9618"
+topic: "3.1"
+title: "Sensors and actuators: the system's senses and muscles"
+summary: What temperature, pressure, infra-red and sound sensors measure, how to pick the right sensor for a job, and how actuators let a computer change the world.
+order: 16
+minutes: 4
+kind: core
+objectives: ["3.1.8"]
+prerequisites: [computer-components-monitoring-control]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.8 (monitoring and control systems: the use of sensors, including temperature, pressure,
+    infra-red and sound, and actuators). All questions are original; the scenarios are
+    illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can choose the right **sensor** for a monitoring or control job, and say what an **actuator** does in a control system.
+
+  - type: explain
+    title: Senses and muscles
+    body: |
+      A processor in a box knows nothing about the room it's in. **Sensors** are its senses: they measure the world and turn it into signals.
+
+      **Actuators** are its muscles. They turn the processor's signals back into movement in the real world.
+
+  - type: definition
+    term: Sensor
+    body: |
+      An input device that **measures a physical quantity** (such as temperature or pressure) and sends the measurement to the computer as a signal. Most sensors give an **analogue** signal, so an **ADC** converts it to digital.
+
+  - type: explain
+    title: The four you must know
+    body: |
+      | Sensor | Measures | Example uses |
+      | --- | --- | --- |
+      | **temperature** | how hot or cold something is | central heating, greenhouse, fridge, car engine |
+      | **pressure** | the force pressing on it, or the pressure of a gas or liquid | burglar alarm pressure pad, car tyre warning, water level in a washing machine |
+      | **infra-red** | infra-red radiation: body heat moving, or a beam being broken | burglar alarm motion detector, automatic doors, counting people through a gate |
+      | **sound** | sound level (a microphone) | noise monitoring near an airport, detecting breaking glass, voice-activated devices |
+
+      Others you may meet: **light** (street lights), **humidity** or **moisture** (greenhouses, watering), **pH** (river pollution).
+
+  - type: example
+    title: "Easy first: pick the sensor"
+    problem: |
+      A home security system must notice three things. Choose a sensor for each.
+
+      - **A** someone stepping on the doormat inside the front door;
+      - **B** someone walking across a dark hallway;
+      - **C** a window being smashed.
+    steps:
+      - |
+        **A: pressure sensor** in a pad under the mat. Standing on it increases the pressure.
+      - |
+        **B: infra-red sensor.** It detects the body heat of a person moving, even in total darkness. (A light sensor would see nothing change in the dark.)
+      - |
+        **C: sound sensor.** Breaking glass makes a sudden loud, high-pitched sound.
+      - |
+        Check each one: name the **physical quantity** that changes, then pick the sensor that measures it.
+    answer: |
+      Pressure, infra-red, sound. Ask "what actually changes?" and the sensor picks itself.
+
+  - type: check
+    title: Quick check
+    questions: [intruder-sensor, tyre-sensor, adc-cloze]
+
+  - type: definition
+    term: Actuator
+    body: |
+      A device that receives a signal from the computer and turns it into **physical action**, such as movement, so a control system can change the conditions.
+
+  - type: explain
+    title: Common actuators
+    body: |
+      | Actuator | What it does | Example |
+      | --- | --- | --- |
+      | **motor** | turns or moves something | opens greenhouse windows, turns a washing machine drum |
+      | **solenoid** | pushes or pulls a rod when current flows | locks a door, opens a valve |
+      | **valve** | lets a liquid or gas flow, or stops it | lets water into a washing machine |
+      | **pump** | moves a liquid | waters plants automatically |
+      | **relay** | an electrically operated switch | switches a heater or lights on and off |
+
+      If an actuator needs a varying (analogue) signal, such as a motor running at different speeds, a **DAC** converts the processor's digital output first.
+
+  - type: check
+    title: Apply it
+    questions: [which-actuator, noise-sensor]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      An automatic greenhouse keeps the soil moist and stops the air getting too hot. Identify **two** sensors and **two** actuators it would use, and give the purpose of each. [4]
+    steps:
+      - |
+        "A **moisture sensor** measures how wet the soil is."
+      - |
+        "A **temperature sensor** measures the air temperature."
+      - |
+        "A **pump** (or a valve) is switched on to water the soil when it is too dry."
+      - |
+        "A **motor** opens the windows when the temperature is above the stored value."
+    answer: |
+      Each mark needs the device **and** its job in this greenhouse.
+
+  - type: check
+    title: Exam check
+    questions: [greenhouse-set]
+
+  - type: misconceptions
+    items:
+      - wrong: A heat sensor measures the temperature.
+        right: |
+          Say **temperature sensor**. "Heat sensor" is vague and is often not given the mark.
+      - wrong: Sensors decide when to switch things on.
+        right: |
+          Sensors only **measure**. The **processor** compares the reading with stored values and decides.
+      - wrong: An infra-red sensor only works with a TV remote.
+        right: |
+          Infra-red sensors detect **body heat** and **broken beams** too, which is why alarms and automatic doors use them.
+      - wrong: A screen or a warning light is an actuator.
+        right: |
+          They are output devices, but they don't move or change anything physically. An actuator **acts** on the world: a motor, valve, pump or switch.
+
+  - type: exam
+    body: |
+      - Name sensors by the **quantity** they measure: temperature, pressure, infra-red, sound, light, moisture.
+      - "Motion sensor" is risky; **infra-red sensor** is the safe name.
+      - Always say what the sensor or actuator **does in the scenario**. A bare list of names rarely scores.
+
+  - type: takeaways
+    items:
+      - Sensors measure physical quantities; most give analogue signals, which an ADC converts to digital.
+      - "Know the four: temperature, pressure, infra-red (body heat, broken beams), sound."
+      - Pick a sensor by asking which physical quantity actually changes.
+      - Actuators (motors, solenoids, valves, pumps, relays) turn the processor's signals into physical action.
+
+questions:
+  - id: intruder-sensor
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.8"]
+    prompt: |
+      A sensor mounted high on the wall of a dark storeroom must detect a person moving anywhere in the room. Which sensor is most suitable?
+    options:
+      - text: Infra-red sensor
+        correct: true
+        why: |
+          It detects the body heat of a moving person, with or without light.
+      - text: Light sensor
+        why: |
+          In a dark room the light level doesn't change when someone walks in.
+      - text: Pressure sensor
+        why: |
+          A pressure sensor on the wall would only notice someone pressing on it.
+      - text: Temperature sensor
+        why: |
+          One person barely changes the room's air temperature.
+    explanation: |
+      Infra-red sensors pick up the heat a body gives off, so they're the standard intruder detector.
+
+  - id: tyre-sensor
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.8"]
+    prompt: |
+      A car warns the driver when a tyre is losing air. Which sensor does it use in each tyre?
+    options:
+      - text: Pressure sensor
+        correct: true
+        why: |
+          A tyre losing air has a falling air pressure.
+      - text: Sound sensor
+        why: |
+          A slow leak is far too quiet to detect reliably.
+      - text: Infra-red sensor
+        why: |
+          That detects body heat or broken beams, not air in a tyre.
+      - text: Light sensor
+        why: |
+          The light level inside a tyre doesn't change.
+    explanation: |
+      Ask what physical quantity changes: here it's the air pressure, so a pressure sensor.
+
+  - id: adc-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.8"]
+    prompt: |
+      Most sensors produce an {{1}} signal, so it must pass through an {{2}} before the processor can use the reading.
+    blanks:
+      - accept: ["analogue", "analog"]
+      - accept: ["ADC", "analogue to digital converter", "analogue-to-digital converter", "analog to digital converter", "analog-to-digital converter"]
+    explanation: |
+      Physical quantities vary smoothly, so sensor signals are analogue. The processor only handles digital data, so an ADC converts them.
+
+  - id: which-actuator
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.8"]
+    prompt: |
+      Which of these is an **actuator**?
+    options:
+      - text: A solenoid that slides a bolt to lock a door
+        correct: true
+        why: |
+          It turns a signal from the processor into physical movement.
+      - text: A thermistor that measures the room temperature
+        why: |
+          That's a temperature sensor: an input, not an actuator.
+      - text: A microphone in a noise monitor
+        why: |
+          That's a sound sensor: an input.
+      - text: An ADC that converts sensor readings
+        why: |
+          An ADC converts signals; it doesn't move anything.
+    explanation: |
+      Sensors bring readings in; actuators carry decisions out as physical action.
+
+  - id: noise-sensor
+    format: text
+    style: one-line
+    difficulty: 2
+    objectives: ["3.1.8"]
+    prompt: |
+      An airport records how loud each plane is as it takes off, and fines airlines whose planes are too noisy. Name the sensor it uses.
+    accept: ["sound sensor", "sound sensors", "a sound sensor", "microphone", "a microphone", "microphones", "noise sensor", "sound level sensor", "acoustic sensor"]
+    model: |
+      A **sound sensor** (a microphone).
+    explanation: |
+      The quantity that changes is the sound level, so a sound sensor. This is monitoring: recording the noise doesn't make the plane quieter.
+
+  - id: greenhouse-set
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.8"]
+    prompt: |
+      An automatic greenhouse must keep the soil moist and stop the air getting above 30 °C. Which set of devices would do both jobs?
+    options:
+      - text: "Sensors: moisture and temperature. Actuators: a pump for watering and a motor to open the windows."
+        correct: true
+        why: |
+          Each condition has a sensor to measure it and an actuator to change it.
+      - text: "Sensors: temperature only. Actuators: a motor to open the windows."
+        why: |
+          Nothing measures the soil or waters it, so the moisture job isn't done.
+      - text: "Sensors: moisture and temperature. Output: a screen showing both readings."
+        why: |
+          That's a monitoring system. Nothing changes the conditions.
+      - text: "Sensors: infra-red and sound. Actuators: a pump and a motor."
+        why: |
+          Neither sensor measures soil moisture or air temperature.
+    explanation: |
+      A control system needs a sensor for every quantity it controls and an actuator to change each one.

@@ -1,0 +1,257 @@
+id: computer-components-vr-headset
+subject: "9618"
+topic: "3.1"
+title: "Virtual reality headsets: fooling your eyes"
+summary: How a VR headset uses two screens, lenses, motion sensors and fast processing to make a 3D world that responds as you move your head.
+order: 10
+minutes: 4
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [computer-components-io-memory-storage]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.3 (principal operations of hardware devices: virtual reality headset). Refresh rates
+    are typical illustrative values. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a **virtual reality (VR) headset** makes the user see a 3D world, and how it keeps that world in step with their head movements.
+
+  - type: explain
+    title: Two tricks at once
+    body: |
+      A VR headset has to fool you twice:
+
+      - that a flat screen centimetres from your face is a **3D world** with depth;
+      - that the world **stays put** when you turn your head, like the real one does.
+
+      Trick one is optics. Trick two is sensors plus a very fast processor.
+
+  - type: explain
+    title: The parts
+    body: |
+      - **Two screens** (or one screen split in half), one in front of **each eye**.
+      - **Lenses** between each eye and its screen. They focus the image so your eye can see a screen that close, and stretch it to fill your **field of view**.
+      - **Sensors**: a **gyroscope** (measures rotation), an **accelerometer** (measures movement), often a magnetometer, and cameras for tracking position.
+      - A **processor** (in the headset or a connected computer) that redraws the scene.
+      - **Headphones** for sound that matches where you're looking.
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Describe** how a VR headset gives the user the experience of being in a 3D world." Usually 3 to 4 marks.
+
+      The marks are for **two images**, **lenses**, **sensors tracking the head**, and **updating the images in real time**.
+
+  - type: explain
+    title: The method
+    body: |
+      1. Two screens show **two slightly different images** of the scene, one for each eye (like the two views your eyes get in real life).
+      2. **Lenses** focus each image onto the eye and widen it to fill the field of view.
+      3. The brain combines the two images into one scene with **depth**: a **stereoscopic** 3D effect.
+      4. **Sensors** (gyroscope, accelerometer) detect the user's head movement.
+      5. **The processor uses the sensor data to redraw both images in real time, so the view changes to match where the user is looking.**
+      6. Headphones play sound that also changes with head direction.
+
+      Step 5 is the forgotten one. Sensors alone don't change anything; the processor has to **re-render** the view, many times a second.
+
+  - type: diagram
+    diagram: cs-computer-components-vr-loop
+    alt: >-
+      A loop of four boxes joined clockwise by arrows. Top: 1 sensors detect head movement
+      (gyroscope, accelerometer). Right: 2 processor works out the new viewpoint. Bottom: 3 renders
+      two slightly different images, one for each eye. Left: 4 two screens plus lenses show them,
+      you see 3D. The arrow from box 4 back to box 1 is labelled you turn your head. The centre
+      reads repeats many times every second.
+    caption: |
+      Sense, compute, render, display, repeat. If the loop is too slow, people feel sick.
+
+  - type: example
+    title: "Easy first: why two images?"
+    problem: |
+      Hold a finger in front of your face and close each eye in turn. What do you notice, and why does a VR headset show each eye a different image?
+    steps:
+      - |
+        The finger seems to **jump** sideways against the background, because each eye sees it from a slightly different position.
+      - |
+        Your brain uses that difference to judge **depth**: the bigger the jump, the closer the object.
+      - |
+        A VR headset copies this by drawing the scene from **two viewpoints** about an eye-width apart, one on each screen. The brain merges them into one 3D view.
+    answer: |
+      Two slightly different images → stereoscopic depth. One image for both eyes would look flat.
+
+  - type: check
+    title: Your turn
+    questions: [two-images, stereo-cloze, gyroscope-role]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A museum lets visitors explore an ancient city wearing VR headsets. Describe how the headset lets a visitor look around the virtual city. [4]
+    steps:
+      - |
+        "Two screens, one for each eye, show slightly different images of the city, so the visitor sees it in 3D."
+      - |
+        "Lenses focus each screen's image onto the eye and fill the visitor's field of view."
+      - |
+        "When the visitor turns their head, sensors such as a gyroscope and accelerometer detect the movement."
+      - |
+        "The processor redraws both images in real time to match the new direction the visitor is facing."
+    answer: |
+      Screens, lenses, sensors, real-time update. Four marks in the order the loop runs.
+
+  - type: check
+    title: Exam check
+    questions: [lens-job, lag-sickness, spot-vr]
+
+  - type: misconceptions
+    items:
+      - wrong: The headset shows the same image to both eyes.
+        right: |
+          Each eye gets a **slightly different** image. That difference creates the 3D depth.
+      - wrong: The sensors change the picture.
+        right: |
+          Sensors only **measure** head movement. The **processor** uses that data to redraw the images.
+      - wrong: The lenses make the image 3D.
+        right: |
+          The lenses **focus and widen** the image. The 3D effect comes from the two different images.
+
+  - type: exam
+    body: |
+      - Key words: **two screens / two images**, **lenses**, **stereoscopic**, **gyroscope**, **accelerometer**, **real time**.
+      - Separate the jobs: lenses focus, two images give depth, sensors track, processor redraws.
+      - VR is both output (screens, sound) and input (head tracking, hand controllers).
+
+  - type: takeaways
+    items:
+      - Two screens show each eye a slightly different image; the brain fuses them into a stereoscopic 3D scene.
+      - Lenses focus each image and stretch it across the field of view.
+      - Sensors (gyroscope, accelerometer) track head movement.
+      - The processor redraws both images in real time, many times a second, so the world moves correctly.
+
+questions:
+  - id: two-images
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Why does a VR headset show each eye a slightly different image?
+    options:
+      - text: The brain combines the two views into one scene with depth, giving a 3D effect.
+        correct: true
+        why: |
+          That's how your eyes judge depth in real life, too.
+      - text: So that if one screen fails, the other still works.
+        why: |
+          It isn't a backup system; both images are needed for 3D.
+      - text: To make the image brighter.
+        why: |
+          Brightness has nothing to do with it.
+      - text: Because each eye needs a different colour to see clearly.
+        why: |
+          The images differ in viewpoint, not colour.
+    explanation: |
+      Two viewpoints an eye-width apart give stereoscopic depth.
+
+  - id: stereo-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Showing each eye a slightly different image, so the brain sees depth, is called a {{1}} effect.
+    blanks:
+      - accept: ["stereoscopic", "stereoscopic 3D", "stereo", "stereoscopy"]
+    explanation: |
+      Stereoscopic means "seeing solid": two flat images, one solid-looking scene.
+
+  - id: gyroscope-role
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A user turns their head to the left. Which part of the headset detects this rotation?
+    options:
+      - text: A gyroscope
+        correct: true
+        why: |
+          A gyroscope measures rotation (turning).
+      - text: The lenses
+        why: |
+          Lenses focus the images; they don't sense anything.
+      - text: The headphones
+        why: |
+          Headphones output sound; they don't detect movement.
+      - text: The screens
+        why: |
+          Screens are output devices.
+    explanation: |
+      Head tracking is input: gyroscopes measure rotation and accelerometers measure movement.
+
+  - id: lens-job
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      What is the main job of the lenses in a VR headset?
+    options:
+      - text: To focus the image from a screen very close to the eye and spread it across the field of view
+        correct: true
+        why: |
+          Without lenses your eyes couldn't focus on a screen a few centimetres away.
+      - text: To create the 3D effect by splitting one image into two
+        why: |
+          The two different images are drawn by the processor; lenses don't make them.
+      - text: To detect where the user is looking
+        why: |
+          That's done by sensors (and, in some headsets, eye-tracking cameras).
+      - text: To protect the screens from scratches
+        why: |
+          Not their purpose; they're there for focusing.
+    explanation: |
+      Lenses are optics: they let the eye focus up close and make the picture fill your vision.
+
+  - id: lag-sickness
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |
+      Why must a VR headset update its images very quickly after the user moves their head?
+    options:
+      - text: Any delay between moving and the view changing feels wrong and can cause motion sickness.
+        correct: true
+        why: |
+          Your inner ear feels the movement; if your eyes see it late, your brain gets mixed signals.
+      - text: The screens turn off if they aren't updated quickly.
+        why: |
+          Screens don't switch off; the problem is a mismatch between movement and view.
+      - text: The sensors can only store one reading at a time.
+        why: |
+          Storage isn't the issue; it's the delay the user experiences.
+      - text: Slow updates use up the headset's storage.
+        why: |
+          Speed of updating doesn't affect storage space.
+    explanation: |
+      Headsets redraw both images many times a second (often 90 or more) so the view keeps up with the head.
+
+  - id: spot-vr
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A student describes how a VR headset works. Which line contains the error?
+    lines:
+      - Each eye has its own screen.
+      - Lenses focus the images and fill the user's field of view.
+      - Both screens show exactly the same image so the scene looks the same to each eye.
+      - A gyroscope and an accelerometer detect head movement.
+      - The processor redraws the images in real time.
+    errorLine: 3
+    fix: |
+      The screens show **slightly different** images, one from each eye's viewpoint, which the brain combines into a 3D scene.
+    explanation: |
+      Identical images would look flat. The small difference between them is what creates depth.

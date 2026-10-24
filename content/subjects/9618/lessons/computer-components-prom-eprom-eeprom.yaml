@@ -1,0 +1,279 @@
+id: computer-components-prom-eprom-eeprom
+subject: "9618"
+topic: "3.1"
+title: "PROM, EPROM and EEPROM: ROM you can write"
+summary: How PROM, EPROM and EEPROM are programmed and erased, how they differ, and which one suits a device's job.
+order: 14
+minutes: 4
+kind: core
+objectives: ["3.1.7"]
+prerequisites: [computer-components-ram-rom]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.7 (differences between PROM, EPROM and EEPROM). Erase times are typical illustrative
+    values. All questions are original; scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the differences between **PROM**, **EPROM** and **EEPROM**: how each is written, how (or whether) it can be erased, and where each is used.
+
+  - type: explain
+    title: Oops, there's a bug
+    body: |
+      You've built a robot and put its control program on a ROM chip. Then you spot a bug.
+
+      What happens next depends on the chip:
+
+      - **PROM**: bin the chip and program a new one.
+      - **EPROM**: pull it out, bake it under ultraviolet light for about 20 minutes, reprogram it, plug it back in.
+      - **EEPROM**: send an update and it's rewritten where it sits.
+
+  - type: explain
+    title: Start from plain ROM
+    body: |
+      Plain ROM (sometimes called **mask ROM**) has its contents built in **during manufacture**. Nobody can ever change them.
+
+      The other three are all **non-volatile**, like ROM. Each one adds a bit more freedom to write: **P**rogrammable, then **E**rasable, then **E**lectrically **E**rasable.
+
+  - type: definition
+    term: PROM (programmable ROM)
+    body: |
+      ROM that is made blank and can be **programmed once** after manufacture, by using a high voltage to **blow fuses** in the chip. After that, its contents **cannot be erased or changed**.
+
+  - type: definition
+    term: EPROM (erasable PROM)
+    body: |
+      PROM that can be **erased by strong ultraviolet (UV) light** shone through a **quartz window** on the chip, then reprogrammed. The chip must be **removed from the circuit**, and the **whole chip** is erased at once.
+
+  - type: definition
+    term: EEPROM (electrically erasable PROM)
+    body: |
+      PROM that can be **erased and rewritten using an electrical signal (voltage)** while it is **still in the circuit**. Data can be rewritten **byte by byte**.
+
+  - type: diagram
+    diagram: cs-computer-components-rom-family
+    alt: >-
+      Three panels side by side. Left, PROM (programmable ROM): a grid of twelve tiny fuses
+      between pairs of dots; most are intact lines, four are blown and drawn broken. Text: written
+      once, can't be erased, mistake = new chip. Middle, EPROM (erasable PROM): a UV lamp shines
+      dashed rays down onto a round quartz window in the top of a chip. Text: erased by UV light,
+      whole chip at once, out of the circuit. Right, EEPROM (electrically erasable PROM): a chip
+      soldered to a circuit board, its memory drawn as eight small byte boxes; an arrow labelled
+      rewrite one byte points to one highlighted box. Text: erased electrically, byte by byte,
+      stays in the circuit. An arrow along the bottom points right, labelled easier to rewrite.
+    caption: |
+      Left to right, each chip is easier to change than the one before.
+
+  - type: example
+    title: "Easy first: fixing the robot's bug"
+    problem: |
+      The robot's control program has a bug. Describe how the fix is put onto each type of chip.
+    steps:
+      - |
+        **PROM**: its fuses are already blown and can't be un-blown. Program a **new** PROM with the fixed program and swap it in.
+      - |
+        **EPROM**: take the chip **out of the circuit** and put it under **UV light** to erase the whole chip. Then reprogram it with the fixed program and refit it.
+      - |
+        **EEPROM**: leave it where it is. An **electrical signal** erases and rewrites just the bytes that need to change.
+      - |
+        Check: each step needs less effort than the one before, matching the order P, E, EE.
+    answer: |
+      New chip; UV erase out of the circuit; electrical rewrite in place.
+
+  - type: check
+    title: Quick check
+    questions: [uv-which, eeprom-stands, prom-cloze]
+
+  - type: explain
+    title: Side by side
+    body: |
+      | | PROM | EPROM | EEPROM |
+      | --- | --- | --- | --- |
+      | Written | **once**, by blowing fuses | many times | many times |
+      | Erased by | **can't be erased** | **UV light** through a quartz window | an **electrical signal** |
+      | How much is erased | (nothing) | the **whole chip** | **individual bytes** |
+      | Out of the circuit to rewrite? | n/a (new chip) | **yes** | **no** |
+      | Typical use | firmware that will never need changing, written once after the chip is made | developing and testing firmware (mostly older systems) | firmware that can be updated; settings that must survive power-off |
+
+  - type: explain
+    title: Where flash fits
+    body: |
+      **Flash memory** is a type of EEPROM. It is erased electrically too, but in **blocks** rather than single bytes, which makes erasing large amounts much faster.
+
+      That's why updatable firmware (such as a PC's BIOS) and SSDs use flash. Small EEPROMs are still used for things like a device's saved settings.
+
+  - type: check
+    title: Apply it
+    questions: [why-remove, spot-eprom]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      Explain the differences between EPROM and EEPROM. [3]
+    steps:
+      - |
+        "EPROM is erased using **ultraviolet light**, but EEPROM is erased using an **electrical signal** (voltage)."
+      - |
+        "EPROM has to be **removed from the circuit** to be erased and reprogrammed, but EEPROM can be rewritten **while still in the device**."
+      - |
+        "EPROM erases the **whole chip** at once, but EEPROM can erase and rewrite data **byte by byte**."
+    answer: |
+      Three differences, each written as a pair with "but". Erasing method, in or out of the circuit, how much is erased.
+
+  - type: check
+    title: Exam check
+    questions: [tv-channels]
+
+  - type: misconceptions
+    items:
+      - wrong: A PROM can be reprogrammed if you're careful.
+        right: |
+          A PROM is programmed **once**. A blown fuse can't be repaired, so a mistake means a new chip.
+      - wrong: EPROM is erased electrically.
+        right: |
+          EPROM is erased by **UV light**. Electrical erasing is the extra "E" in **EEPROM**.
+      - wrong: Because you can write to them, these are types of RAM.
+        right: |
+          They are **ROM**: non-volatile, and mostly read. Writing to them is slow or needs special equipment, so they hold programs and settings, not working data.
+      - wrong: An EEPROM can be rewritten forever.
+        right: |
+          Each cell survives only a **limited number** of erase/write cycles, so EEPROM isn't used for data that changes every second.
+
+  - type: exam
+    body: |
+      - Unpack the letters: **P** = programmable (once); **E** = erasable (by UV); **EE** = electrically erasable.
+      - Compare in **pairs** with "but". One-sided facts often score nothing.
+      - Key words: **blow fuses**, **ultraviolet light**, **quartz window**, **whole chip**, **electrical signal / voltage**, **byte by byte**, **in the circuit**.
+
+  - type: takeaways
+    items:
+      - "PROM: programmed once by blowing fuses; can't be erased."
+      - "EPROM: erased by UV light through a quartz window; the whole chip, out of the circuit; then reprogrammed."
+      - "EEPROM: erased and rewritten electrically, byte by byte, without leaving the circuit."
+      - All three are non-volatile. Flash is a type of EEPROM that erases in blocks.
+
+questions:
+  - id: uv-which
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.7"]
+    prompt: |
+      Which type of memory is erased by shining ultraviolet light onto the chip?
+    options:
+      - text: EPROM
+        correct: true
+        why: |
+          UV light through a quartz window erases the whole chip.
+      - text: PROM
+        why: |
+          A PROM can't be erased at all; its fuses are blown permanently.
+      - text: EEPROM
+        why: |
+          EEPROM is erased electrically, without UV light.
+      - text: DRAM
+        why: |
+          DRAM is volatile RAM; switching off the power clears it.
+    explanation: |
+      E = erasable by UV. EE = electrically erasable.
+
+  - id: eeprom-stands
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["3.1.7"]
+    prompt: |
+      What does **EEPROM** stand for?
+    accept:
+      - "electrically erasable programmable read only memory"
+      - "electrically erasable programmable read-only memory"
+      - "electrically-erasable programmable read-only memory"
+      - "electrically-erasable programmable read only memory"
+      - "electrically erasable programmable rom"
+      - "electrically erasable programmable read only memories"
+    model: |
+      **E**lectrically **E**rasable **P**rogrammable **R**ead-**O**nly **M**emory.
+    explanation: |
+      Read it from the end: it's ROM, it's programmable, and it can be erased electrically.
+
+  - id: prom-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.7"]
+    prompt: |
+      A PROM is programmed by using a high voltage to blow {{1}} in the chip. After that, its contents can {{2}} be changed.
+    blanks:
+      - accept: ["fuses", "fuse", "the fuses", "fusible links", "links"]
+      - accept: ["never", "not", "no longer"]
+    explanation: |
+      A blown fuse can't be repaired, so a PROM is programmed once only.
+
+  - id: why-remove
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.7"]
+    prompt: |
+      Why does an EPROM have to be taken out of its circuit to be erased?
+    options:
+      - text: It is erased by strong UV light shone through its quartz window, which needs a special eraser; it can't be erased electrically in place.
+        correct: true
+        why: |
+          The UV light has to reach the window, so the chip goes into an eraser.
+      - text: It is volatile, so it must be unplugged to clear it.
+        why: |
+          EPROM is non-volatile; unplugging it doesn't clear anything.
+      - text: It erases one byte at a time, which needs a special reader.
+        why: |
+          An EPROM erases the whole chip at once. Byte-by-byte erasing is EEPROM.
+      - text: Its fuses must be replaced by hand.
+        why: |
+          That's mixing it up with PROM, whose fuses can't be replaced at all.
+    explanation: |
+      UV erasing is the reason an EPROM leaves its circuit. EEPROM fixed this by erasing electrically, in place.
+
+  - id: spot-eprom
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.7"]
+    prompt: |
+      A student describes how the program on an EPROM is changed. Which line contains the error?
+    lines:
+      - The chip is removed from the circuit.
+      - It is placed under strong ultraviolet light, which shines through a quartz window.
+      - Only the bytes that need changing are erased; the rest of the chip is untouched.
+      - The chip is reprogrammed using a special device called a programmer.
+      - The chip is put back into the circuit.
+    errorLine: 3
+    fix: |
+      UV light erases the **whole chip** at once, so the entire program has to be written again.
+    explanation: |
+      Erasing selected bytes is a feature of EEPROM, which uses an electrical signal instead of UV light.
+
+  - id: tv-channels
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.7"]
+    prompt: |
+      A TV stores the user's list of channels so that it survives being unplugged. The list changes whenever the user retunes.
+
+      Why is EEPROM the best choice for storing it?
+    options:
+      - text: It is non-volatile and can be rewritten electrically, a few bytes at a time, without removing it from the TV.
+        correct: true
+        why: |
+          Keeps the list with the power off, and the TV can update it by itself.
+      - text: It can be programmed once at the factory, so the list can never be lost.
+        why: |
+          That's PROM, and the list could never be updated after retuning.
+      - text: It is erased with UV light, which keeps the data secure.
+        why: |
+          That's EPROM, and nobody wants to take a chip out of the TV to retune it.
+      - text: It is volatile, so old channels are cleared automatically.
+        why: |
+          A volatile memory would lose the whole list every time the TV was unplugged.
+    explanation: |
+      The data must survive power-off (non-volatile) and change occasionally in place (electrically rewritable): exactly EEPROM.

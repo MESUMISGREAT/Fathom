@@ -1,0 +1,259 @@
+id: computer-components-ram-rom
+subject: "9618"
+topic: "3.1"
+title: "RAM and ROM: what's different and who uses which"
+summary: The differences between RAM and ROM, and how a range of devices use each one, including the boot process of a computer.
+order: 12
+minutes: 5
+kind: core
+objectives: ["3.1.5"]
+prerequisites: [computer-components-io-memory-storage]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.5 (differences between RAM and ROM, including their use in a range of devices and
+    systems). Device examples are illustrative. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the differences between **RAM** and **ROM**, and explain why a device uses each one for the job it does.
+
+  - type: explain
+    title: The notebook and the instruction manual
+    body: |
+      **RAM** is a scribbling notebook: you write, rub out and rewrite all day, and it's wiped every night.
+
+      **ROM** is the instruction manual glued inside the lid: always there when you open the box, and you can't (easily) change it.
+
+  - type: explain
+    title: Side by side
+    body: |
+      | | RAM (random access memory) | ROM (read-only memory) |
+      | --- | --- | --- |
+      | Volatile? | **volatile**: lost when power is off | **non-volatile**: kept with no power |
+      | Read or write? | read **and write** | **read only** (contents fixed, or changed only by special means) |
+      | Holds | the OS, programs and data **currently in use** | start-up instructions (**bootstrap loader**), BIOS, firmware |
+      | Contents change? | constantly, while the device runs | not in normal use |
+      | Size in a PC | large (several GB) | small |
+
+      Both are **primary memory**: the processor can access them directly.
+
+  - type: diagram
+    diagram: cs-computer-components-boot-sequence
+    alt: >-
+      A processor (CPU) box at the top with three boxes below it. ROM (bootstrap loader,
+      non-volatile, read-only) on the left, RAM (OS and running apps, volatile, read-write) in the
+      middle, and SSD or hard disk (OS and app files, kept with the power off) on the right.
+      Arrow 1 goes from ROM up to the CPU; arrow 2 goes from the SSD into RAM; a two-way arrow 3
+      joins RAM and the CPU. Captions underneath say: 1 power on, the CPU runs the bootstrap
+      loader stored in ROM; 2 the bootstrap loader copies the operating system from storage into
+      RAM; 3 the CPU runs the operating system, then your apps, from RAM.
+    caption: |
+      At switch-on, RAM is empty. ROM is the only memory with instructions in it, so it has to go first.
+
+  - type: check
+    title: Quick check
+    questions: [true-statement, boot-cloze, why-not-ram]
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Explain why** [a device] uses **both** RAM and ROM." Usually 4 marks: two for each.
+
+      A list of contents scores half. The other half comes from **why** each one suits its contents.
+
+  - type: explain
+    title: The method
+    body: |
+      1. Say what the device keeps in **ROM**: start-up instructions, the control program or firmware.
+      2. **Give ROM's reason: it is non-volatile, so the program is there as soon as the device is switched on, and read-only, so it can't be changed or deleted by accident.**
+      3. Say what the device keeps in **RAM**: the data that changes as it runs (settings chosen, sensor readings, running apps, files being edited).
+      4. Give RAM's reason: it can be written to and changed quickly while the device runs; it doesn't matter that it is lost at power-off.
+
+      Step 2 is where marks are lost. Naming "the BIOS" isn't enough; say why it **must** be non-volatile and read-only.
+
+  - type: example
+    title: "Easy first: a microwave oven"
+    problem: |
+      Explain why a microwave oven uses both ROM and RAM. [4]
+    steps:
+      - |
+        ROM contents: "ROM stores the **control program** that runs the cooking modes and the timer."
+      - |
+        ROM reason: "It is **non-volatile**, so the program is there whenever the oven is plugged in, and **read-only**, so it can't be corrupted."
+      - |
+        RAM contents: "RAM stores the **cooking time and power level** the user has just entered, and the **countdown**."
+      - |
+        RAM reason: "These values **change** every use and every second, so they need memory that can be **written to**."
+    answer: |
+      Contents plus reason, twice. Swap in any device and the method still works.
+
+  - type: check
+    title: Your turn
+    questions: [washing-machine-rom]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A games console has 16 GB of RAM and a small ROM chip. Explain the purpose of each memory in the console. [4]
+    steps:
+      - |
+        "The ROM holds the **bootstrap loader / firmware** that starts the console and loads the operating system from storage."
+      - |
+        "ROM is needed because it is **non-volatile**: the start-up instructions must be present when the console is switched on, and RAM is empty at that point."
+      - |
+        "The RAM holds the **operating system, the game being played and its current data** (level, positions, scores) loaded from storage."
+      - |
+        "RAM is needed because the game's data **changes constantly** and must be read and written quickly by the processor."
+    answer: |
+      Again: ROM, why; RAM, why. The 16 GB is a hint that RAM holds big, changing data.
+
+  - type: check
+    title: Exam check
+    questions: [spot-ram-rom, phone-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: ROM is where your files are stored.
+        right: |
+          Files go in **secondary storage** (SSD, hard disk). ROM is a small chip of fixed start-up or control instructions.
+      - wrong: RAM stands for "read and memorise" or "read access memory".
+        right: |
+          **Random Access Memory**: any location can be read or written directly, in the same time, whatever its address.
+      - wrong: ROM can never be changed by anyone.
+        right: |
+          Pure ROM can't, but many devices use **flash or EEPROM** for firmware, which can be updated by special means (next lessons).
+
+  - type: exam
+    body: |
+      - For "differences", give **pairs**: "RAM is volatile **but** ROM is non-volatile." One-sided statements often score half.
+      - Use the scenario. In a washing machine, ROM = wash programs; RAM = the settings for this wash.
+      - "Bootstrap loader" (or "boot program") is the classic ROM content for a computer.
+
+  - type: takeaways
+    items:
+      - RAM is volatile and read-write; it holds the programs and data currently in use.
+      - ROM is non-volatile and read-only; it holds start-up instructions and fixed control programs.
+      - At power-on RAM is empty, so the processor runs the bootstrap loader from ROM, which loads the OS into RAM.
+      - In any device, ROM holds what must never be lost; RAM holds what keeps changing.
+
+questions:
+  - id: true-statement
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.5"]
+    prompt: |
+      Which statement about RAM and ROM is correct?
+    options:
+      - text: RAM is volatile and can be written to; ROM is non-volatile and read-only.
+        correct: true
+        why: |
+          Both differences in one line.
+      - text: RAM is non-volatile; ROM is volatile.
+        why: |
+          Swapped. RAM loses its contents when the power is off.
+      - text: ROM holds the programs currently running; RAM holds the start-up instructions.
+        why: |
+          Swapped again. RAM holds running programs; ROM holds start-up instructions.
+      - text: Both RAM and ROM are types of secondary storage.
+        why: |
+          Both are primary memory, accessed directly by the processor.
+    explanation: |
+      RAM: volatile, read-write, current work. ROM: non-volatile, read-only, start-up and fixed programs.
+
+  - id: boot-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.5"]
+    prompt: |
+      When a computer is switched on, the {{1}} loader stored in ROM runs and loads the operating system into {{2}}.
+    blanks:
+      - accept: ["bootstrap", "boot", "bootstrap program"]
+      - accept: ["RAM", "random access memory", "main memory", "primary memory"]
+    explanation: |
+      The bootstrap loader is in ROM because it must be there at switch-on. It copies the OS from secondary storage into RAM, where the processor runs it.
+
+  - id: why-not-ram
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.5"]
+    prompt: |
+      Why can't a computer's start-up instructions be kept only in RAM?
+    options:
+      - text: RAM is volatile, so it is empty when the computer is switched on.
+        correct: true
+        why: |
+          The instructions would have vanished at the last power-off.
+      - text: RAM is too slow to run start-up instructions.
+        why: |
+          RAM is fast; speed isn't the problem.
+      - text: RAM is read-only, so the instructions couldn't be loaded into it.
+        why: |
+          RAM is read-write. ROM is the read-only one.
+      - text: RAM is too small to hold them.
+        why: |
+          Start-up instructions are small; RAM is usually far bigger than ROM.
+    explanation: |
+      Volatile memory can't hold anything that must survive a power cut. That's ROM's job.
+
+  - id: washing-machine-rom
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.5"]
+    prompt: |
+      In a washing machine, which of these is stored in **ROM**?
+    options:
+      - text: The program that controls each wash cycle
+        correct: true
+        why: |
+          It must never be lost or changed, and must be there at switch-on.
+      - text: The temperature the user has just selected
+        why: |
+          That changes every wash, so it's kept in RAM.
+      - text: The time remaining on the current wash
+        why: |
+          It changes every second, so it's in RAM.
+      - text: The current water level reading from the sensor
+        why: |
+          Sensor readings change constantly; they're held in RAM.
+    explanation: |
+      The fixed control program goes in ROM; everything that changes during a wash goes in RAM.
+
+  - id: spot-ram-rom
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.5"]
+    prompt: |
+      A student lists facts about RAM and ROM. Which line contains the error?
+    lines:
+      - RAM holds the programs and data currently in use.
+      - RAM is volatile.
+      - ROM holds the bootstrap loader.
+      - ROM loses its contents when the power is switched off.
+      - The processor can access both RAM and ROM directly.
+    errorLine: 4
+    fix: |
+      ROM is **non-volatile**: it keeps its contents when the power is switched off.
+    explanation: |
+      That's the whole reason the bootstrap loader lives in ROM: it must be there at the next switch-on.
+
+  - id: phone-explain
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.5"]
+    prompt: |
+      Explain why a smartphone needs both RAM and ROM.
+    model: |
+      The phone's ROM holds the firmware and start-up (bootstrap) instructions. These must be non-volatile so they are present when the phone is switched on, and read-only so they can't be accidentally changed or deleted. The RAM holds the operating system and apps that are running and the data they are using, such as an open message or a game's current state. This data changes constantly, so it must be in memory that can be written to quickly; it doesn't matter that RAM is volatile because this data is reloaded or saved to storage.
+    keyPoints:
+      - ROM holds the firmware / start-up (bootstrap) instructions
+      - ROM is non-volatile, so instructions are there at switch-on
+      - ROM is read-only, so it can't be changed or deleted by accident
+      - RAM holds the running OS, apps and their current data
+      - RAM can be written to quickly as the data changes
+    explanation: |
+      Contents plus reason for each. The two memories do jobs the other can't.

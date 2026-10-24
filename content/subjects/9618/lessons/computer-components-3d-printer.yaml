@@ -1,0 +1,241 @@
+id: computer-components-3d-printer
+subject: "9618"
+topic: "3.1"
+title: "3D printers: building objects layer by layer"
+summary: How a 3D printer turns a CAD design into a solid object by slicing it into layers and adding material one layer at a time.
+order: 4
+minutes: 4
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [computer-components-io-memory-storage]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.3 (principal operations of hardware devices: the 3D printer). Layer heights in the
+    examples are illustrative; calculations checked with Python. All questions
+    are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a **3D printer** makes a solid object from a digital design, and work out how many layers a print needs.
+
+  - type: explain
+    title: A hot glue gun with a satnav
+    body: |
+      Picture a hot glue gun that a computer steers with perfect precision. It draws one flat shape, then another on top, then another, hundreds of times.
+
+      That's a 3D printer. It's called **additive manufacturing** because it **adds** material layer by layer, instead of cutting it away from a block.
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Describe** how a 3D printer produces an object." Usually 3 to 5 marks.
+
+      Marks come from the **journey**: design, slice, print layer by layer, solidify, finish.
+
+  - type: explain
+    title: The method
+    body: |
+      1. The object is designed using **CAD** (computer-aided design) software, or scanned with a 3D scanner.
+      2. **Slicing software** cuts the design into many thin horizontal **layers** and turns them into instructions for the printer.
+      3. The printer builds the object **one layer at a time, from the bottom up**. In the common type, plastic filament is melted in a heated nozzle that moves in x and y, laying down material only where that layer needs it.
+      4. **Each layer cools and hardens before the next layer is added on top; the build plate drops (or the nozzle rises) by one layer height.**
+      5. Repeat until the object is complete, then remove any support material and clean or finish it.
+
+      Step 4 is the one people forget. Without it, there's nothing explaining how a flat drawing becomes a tall solid.
+
+  - type: diagram
+    diagram: cs-computer-components-3d-printer
+    alt: >-
+      Top: three boxes joined by arrows, 1 design in CAD (a 3D model on screen), 2 slice (cut into
+      thin layers), 3 print (build it layer by layer). Bottom: a side view of a 3D printer. Plastic
+      filament runs from a spool into a heated nozzle that melts it. The nozzle, with a double
+      arrow labelled nozzle moves in x and y, is part-way through laying layer 6 on top of five
+      finished layers, labelled cooled and solid, which sit on a build plate. An arrow by the plate
+      notes that after each layer the plate drops by one layer.
+    caption: |
+      Design, slice, print. The nozzle only ever draws flat shapes; height comes from stacking them.
+
+  - type: explain
+    title: Not just plastic
+    body: |
+      | Method | Material | How a layer is made |
+      | --- | --- | --- |
+      | Fused deposition | plastic filament | melted in a nozzle and laid down |
+      | Resin (stereolithography) | liquid resin | a UV laser or light hardens it |
+      | Powder | plastic or metal powder | a laser fuses it, or a binder glues it |
+
+      Uses include prototypes, custom medical parts (prosthetic limbs, dental models), spare parts and architects' models.
+
+  - type: example
+    title: "Easy first: how many layers?"
+    problem: |
+      A 20 mm tall cube is printed with layers 0.2 mm thick. How many layers does the printer lay down?
+    steps:
+      - |
+        Each layer adds 0.2 mm of height, so divide the height by the layer thickness: $20 \div 0.2$.
+      - |
+        $20 \div 0.2 = 100$ layers.
+      - |
+        Check another way: 5 layers make 1 mm, so 20 mm needs $20 \times 5 = 100$ layers. ✓
+    answer: |
+      100 layers. Thinner layers give a smoother finish but more layers, so a longer print.
+
+  - type: check
+    title: Your turn
+    questions: [layers-count, additive-meaning, slicing-cloze]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A dentist scans a patient's teeth and 3D prints a model of them. Describe how the 3D printer produces the model. [4]
+    steps:
+      - |
+        "The scan is turned into a 3D design in CAD software." (design)
+      - |
+        "Slicing software splits the design into thin horizontal layers." (slice)
+      - |
+        "The printer builds the model one layer at a time from the bottom up, depositing (or hardening) material only where each layer needs it." (print)
+      - |
+        "Each layer hardens before the next is added on top, until the whole model is complete." (solidify and repeat)
+    answer: |
+      Four stages, four marks. Naming CAD, slicing and layer-by-layer building does most of the work.
+
+  - type: check
+    title: Exam check
+    questions: [why-harden, spot-top-first, describe-print]
+
+  - type: misconceptions
+    items:
+      - wrong: A 3D printer carves the object out of a block.
+        right: |
+          That's **subtractive** manufacturing (like a CNC mill). 3D printing is **additive**: material is added only where it's needed.
+      - wrong: The printer prints the whole object at once.
+        right: |
+          It prints **one thin layer at a time**, from the bottom up.
+      - wrong: The printer reads the CAD drawing directly.
+        right: |
+          The design is first **sliced** into layers, and the printer follows the instructions made from those slices.
+
+  - type: exam
+    body: |
+      - Use the key words: **CAD**, **slice/layers**, **layer by layer**, **additive**, **hardens/solidifies**.
+      - Describe **one** printing method clearly (melted filament is the easiest) rather than three vaguely.
+      - If the question names a context (dentist, car parts), mention it once, but the marks are for the process.
+
+  - type: takeaways
+    items:
+      - 3D printing is additive manufacturing; it builds an object layer by layer.
+      - "The journey: design in CAD, slice into thin layers, print from the bottom up."
+      - Each layer hardens before the next is added; the plate drops one layer height each time.
+      - Number of layers = height ÷ layer thickness.
+
+questions:
+  - id: layers-count
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A phone stand is 45 mm tall and is printed with layers 0.15 mm thick. How many layers does the printer lay down?
+    fields:
+      - answer: 300
+        unit: layers
+    explanation: |
+      $45 \div 0.15 = 300$ layers. Check: 0.15 mm × 300 = 45 mm ✓
+
+  - id: additive-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Why is 3D printing called **additive** manufacturing?
+    options:
+      - text: The object is built up by adding material one layer at a time.
+        correct: true
+        why: |
+          Material is only put where the object needs it.
+      - text: Material is cut away from a solid block until the shape is left.
+        why: |
+          That's subtractive manufacturing, the opposite.
+      - text: Several colours are added together to make the final colour.
+        why: |
+          Nothing to do with colour; it's about how the shape is built.
+      - text: It adds layers of ink to a sheet of paper.
+        why: |
+          That describes a 2D printer, not a 3D one.
+    explanation: |
+      Additive = build up; subtractive = cut away. 3D printing builds up, so little material is wasted.
+
+  - id: slicing-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Before printing, {{1}} software splits the 3D design into thin horizontal {{2}}.
+    blanks:
+      - accept: ["slicing", "slicer", "slicer software"]
+      - accept: ["layers", "slices", "layer"]
+    explanation: |
+      Slicing turns a 3D model into a stack of flat layers, each one a path the nozzle can follow.
+
+  - id: why-harden
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      Why must each layer harden before the next one is printed on top?
+    options:
+      - text: So it keeps its shape and can support the layer printed on top of it.
+        correct: true
+        why: |
+          Soft material would sag or squash under the next layer.
+      - text: So the slicing software can scan it.
+        why: |
+          Slicing happens before printing starts, on the computer.
+      - text: Because the laser in every 3D printer needs a cold surface.
+        why: |
+          Many 3D printers have no laser at all.
+      - text: So the printer can save the layer to its memory.
+        why: |
+          The layer instructions are already in memory; hardening is about the material.
+    explanation: |
+      The object grows upwards, so each layer is the foundation for the next. It has to be solid first.
+
+  - id: spot-top-first
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A student describes 3D printing. Which line contains the error?
+    lines:
+      - The object is designed using CAD software.
+      - Slicing software splits the design into thin layers.
+      - The printer starts with the top layer and works downwards.
+      - Melted plastic is deposited only where each layer needs it.
+      - Each layer hardens before the next is added.
+    errorLine: 3
+    fix: |
+      The printer starts with the **bottom** layer, on the build plate, and works **upwards**.
+    explanation: |
+      Each layer rests on the one below, so you can't print the top first: there would be nothing to hold it up.
+
+  - id: describe-print
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |
+      A school uses a 3D printer to make replacement knobs for old lab equipment. Describe how the 3D printer produces a knob from a design.
+    model: |
+      The knob is designed using CAD software (or scanned from an old knob). Slicing software splits the design into many thin horizontal layers and turns them into instructions for the printer. The printer builds the knob one layer at a time from the bottom up: plastic filament is melted in a heated nozzle that moves in x and y, depositing material only where that layer needs it. Each layer cools and hardens before the next is added on top, and the build plate drops by one layer height each time, until the knob is complete.
+    keyPoints:
+      - The object is designed using CAD software (or scanned)
+      - Slicing software splits the design into thin horizontal layers
+      - The printer builds it layer by layer, from the bottom up (additive manufacturing)
+      - Material is melted in a heated nozzle and deposited only where each layer needs it
+      - Each layer hardens before the next layer is added on top
+    explanation: |
+      Design, slice, print layer by layer, harden, repeat. Those are the ideas a mark scheme looks for, whatever the object.

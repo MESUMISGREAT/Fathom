@@ -1,0 +1,289 @@
+id: computer-components-optical-discs
+subject: "9618"
+topic: "3.1"
+title: "Optical discs: reading with reflected light"
+summary: How an optical disc reader uses a laser and a photodiode to read pits and lands on a spiral track, and how discs are written and rewritten.
+order: 8
+minutes: 5
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [computer-components-io-memory-storage]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.3 (principal operations of hardware devices: optical disc reader/writer). The pit and
+    land patterns in examples and questions are illustrative and their bit strings were checked
+    with Python. Capacities are typical single-layer values. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how an **optical disc** (CD, DVD, Blu-ray) is **read** with a laser, and how recordable and rewritable discs are **written**.
+
+  - type: explain
+    title: Morse code in a mirror
+    body: |
+      Hold a CD up to the light and you see a rainbow. That's light bouncing off billions of microscopic bumps arranged along one track.
+
+      The drive reads them like Morse code made of reflections: bright, dim, bright, bright, dim…
+
+  - type: explain
+    title: The disc
+    body: |
+      - Data is stored along a **single spiral track** that runs from the centre outwards. (Not rings and sectors like a hard disk.)
+      - The track is a sequence of **pits** (dips) and **lands** (the flat surface between pits), under a thin reflective layer.
+      - **Lands** reflect the laser light strongly back. **Pits** reflect much less back towards the sensor.
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Describe** how data is read from an optical disc." Usually 3 to 5 marks.
+
+      The marks are for: spinning disc, **laser**, **pits and lands**, the **reflected light detected**, and turning that into **binary**.
+
+  - type: explain
+    title: The method (reading)
+    body: |
+      1. A motor **spins the disc**.
+      2. A low-power **laser beam** is focused by a lens onto the **spiral track**.
+      3. Lands reflect the light strongly; pits reflect much less.
+      4. **A photodiode (light sensor) detects the reflected light and turns the changes into an electrical signal.**
+      5. A **change** between pit and land is read as a **1**; no change is read as **0**s. This gives the binary data.
+      6. The laser assembly moves steadily outwards to follow the spiral track as the disc turns.
+
+      Step 4 is the forgotten one. "The laser reads the pits" misses the sensor that actually sees the light.
+
+  - type: diagram
+    diagram: cs-computer-components-optical-read
+    alt: >-
+      A laser at the top shines a beam down through a lens onto a disc track drawn in side view.
+      The beam reflects back up to a photodiode. The track is a row of 24 equal cells: lands
+      (raised) and pits (lowered), in runs of 3 lands, 4 pits, 3 lands, 5 pits, 3 lands, 3 pits and
+      3 lands. Below it, a reflected light trace is high over lands and low over pits. Below that,
+      one bit per cell: 1 under each cell where the surface changes between pit and land, 0
+      elsewhere, giving 000100010010000100100100. A caption reads change between pit and land
+      equals 1, no change equals 0.
+    caption: |
+      The edges carry the 1s. Long runs with no edge are strings of 0s.
+
+  - type: example
+    title: "Easy first: read the bits"
+    problem: |
+      Ten equal cells of track are `L L L P P P L L L L` (L = land, P = pit).
+
+      - A cell is 1 if the surface changes (pit to land, or land to pit) at its start; otherwise it is 0.
+      - The first cell is 0.
+
+      What bits are read?
+    steps:
+      - |
+        Cells 1 to 3 are all L: no changes, so `000`.
+      - |
+        Cell 4 is the first P: a change, so `1`. Cells 5 and 6 stay P: `00`.
+      - |
+        Cell 7 is L again: a change, so `1`. Cells 8 to 10 stay L: `000`.
+      - |
+        Check: there are two edges in the pattern and two 1s in the answer. ✓
+    answer: |
+      `0001001000`
+
+  - type: check
+    title: Your turn
+    questions: [read-bits, why-pits-differ, spiral-track]
+
+  - type: explain
+    title: Writing discs
+    body: |
+      - **CD-R / DVD-R** (write once): a **higher-power laser** heats spots on an organic **dye layer**, making them less reflective. These dark marks act like pits.
+      - **CD-RW / DVD-RW** (rewritable): the recording layer is a **phase-change** alloy. The laser heats spots so they turn **amorphous** (less reflective) or, at a lower temperature, back to **crystalline** (reflective), so data can be erased and rewritten.
+      - **CD-ROM / DVD-ROM** discs have their pits **pressed** in at the factory and can't be written at all.
+
+  - type: explain
+    title: CD, DVD, Blu-ray
+    body: |
+      | Disc | Laser | Typical capacity (one layer) |
+      | --- | --- | --- |
+      | CD | infrared, 780 nm | 700 MB |
+      | DVD | red, 650 nm | 4.7 GB |
+      | Blu-ray | blue-violet, 405 nm | 25 GB |
+
+      A **shorter wavelength** can be focused to a **smaller spot**, so pits can be smaller and tracks closer together. More data fits on the same size disc.
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A film is sold on Blu-ray. Describe how the Blu-ray player reads the data from the disc, and explain why a Blu-ray disc can hold more data than a DVD. [5]
+    steps:
+      - |
+        "The disc is spun by a motor and a laser beam is focused onto the spiral track."
+      - |
+        "The track has pits and lands; lands reflect the light strongly and pits reflect less."
+      - |
+        "A photodiode detects the reflected light, and the changes between pit and land are converted into 1s and 0s."
+      - |
+        "Blu-ray uses a blue-violet laser with a shorter wavelength than a DVD's red laser."
+      - |
+        "So the beam can be focused to a smaller spot, allowing smaller pits and tracks closer together: more data per disc."
+    answer: |
+      Three marks for reading, two for the wavelength argument (shorter wavelength → smaller pits and closer tracks).
+
+  - type: check
+    title: Exam check
+    questions: [bluray-more, rewrite-cloze, spot-pits-reflect]
+
+  - type: misconceptions
+    items:
+      - wrong: Optical discs store data in tracks and sectors, like hard disks.
+        right: |
+          An optical disc has **one long spiral track**, from the centre outwards.
+      - wrong: A pit is a 0 and a land is a 1.
+        right: |
+          It's the **change** between pit and land that gives a 1. A long pit or a long land is a run of 0s.
+      - wrong: Optical discs store data magnetically.
+        right: |
+          They are read with **light**: a laser and a photodiode. No magnetism involved.
+
+  - type: exam
+    body: |
+      - Always mention the **photodiode** (or "light sensor") detecting the **reflected** light.
+      - Write "**pits and lands**", and say they reflect light **differently**.
+      - For recordable discs, the difference is **dye** (write once) versus **phase change** (rewritable).
+      - Capacity questions: shorter wavelength → smaller pits, closer tracks → more data.
+
+  - type: takeaways
+    items:
+      - Data sits on one spiral track as pits and lands under a reflective layer.
+      - A laser is focused on the track; lands reflect strongly, pits reflect less.
+      - A photodiode detects the reflected light; changes between pit and land are 1s, no change gives 0s.
+      - "Writing: a stronger laser marks a dye layer (R) or switches a phase-change layer (RW)."
+      - Shorter laser wavelength (Blu-ray) means smaller pits and more data.
+
+  - type: deeper
+    title: Why does a pit reflect less?
+    body: |
+      A pit is about a quarter of a wavelength deep (for the laser light inside the disc's plastic). Light reflected from the bottom of a pit travels half a wavelength further than light from the land around it.
+
+      The two reflections arrive **out of step** and largely cancel out (destructive interference), so much less light reaches the photodiode.
+
+questions:
+  - id: read-bits
+    format: text
+    style: one-line
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      Fifteen equal cells of track read `P P P P L L L P P P L L L L L` (P = pit, L = land).
+
+      - A cell is 1 if the surface changes at its start; otherwise it is 0.
+      - The first cell is 0.
+
+      Write the 15 bits read.
+    accept: ["000010010010000", "0000 1001 0010 000", "0 0 0 0 1 0 0 1 0 0 1 0 0 0 0", "0000 100 100 10000"]
+    model: |
+      `000010010010000`: changes at the starts of cells 5, 8 and 11.
+    explanation: |
+      Runs: 4 pits, 3 lands, 3 pits, 5 lands. Each new run starts with a 1, except the very first.
+
+      So `0000` `100` `100` `10000`.
+
+  - id: why-pits-differ
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      How can an optical drive tell a pit from a land?
+    options:
+      - text: Lands reflect the laser light strongly back to the photodiode; pits reflect much less.
+        correct: true
+        why: |
+          The photodiode sees bright for land and dim for pit.
+      - text: Pits are magnetised and lands are not.
+        why: |
+          Optical discs don't use magnetism.
+      - text: The laser feels the depth of each pit by touching it.
+        why: |
+          Nothing touches the disc; it's read with light.
+      - text: Pits are a different colour that the laser can see.
+        why: |
+          It's the amount of reflected light, not colour, that changes.
+    explanation: |
+      Reading is about reflection: strong from lands, weak from pits, detected by a photodiode.
+
+  - id: spiral-track
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      How is data arranged on an optical disc?
+    options:
+      - text: Along a single spiral track from the centre outwards
+        correct: true
+        why: |
+          One continuous track, like a very long, very tight groove.
+      - text: In concentric tracks divided into sectors
+        why: |
+          That's a magnetic hard disk.
+      - text: In a grid of cells, each with a floating gate
+        why: |
+          That's flash memory.
+      - text: In separate rings, one for each file
+        why: |
+          Files aren't given their own rings; everything follows the spiral.
+    explanation: |
+      Optical discs use one spiral track, which the laser follows outwards as the disc spins.
+
+  - id: bluray-more
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      Why can a single-layer Blu-ray disc hold much more data than a single-layer DVD of the same size?
+    options:
+      - text: Its blue-violet laser has a shorter wavelength, so it focuses to a smaller spot and pits can be smaller and tracks closer.
+        correct: true
+        why: |
+          Smaller features, packed tighter, means more data on the same area.
+      - text: Its laser is more powerful, so it can read deeper into the disc.
+        why: |
+          Power isn't what limits capacity; spot size is.
+      - text: Blu-ray stores data magnetically as well as optically.
+        why: |
+          Blu-ray is purely optical.
+      - text: Blu-ray discs spin faster, so more data passes the laser.
+        why: |
+          Spinning faster increases reading speed, not capacity.
+    explanation: |
+      405 nm (Blu-ray) is shorter than 650 nm (DVD), so the laser spot is smaller and the data can be packed more densely.
+
+  - id: rewrite-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A DVD-R is written once by a laser heating spots on a {{1}} layer. A DVD-RW can be rewritten because its recording layer uses {{2}} change: spots are switched between a reflective crystalline state and a less reflective amorphous state.
+    blanks:
+      - accept: ["dye", "organic dye", "dye recording"]
+      - accept: ["phase"]
+    explanation: |
+      Dye marks are permanent, so R discs are write-once. A phase-change layer can be switched back by heating it again, so RW discs can be erased and rewritten.
+
+  - id: spot-pits-reflect
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A student describes how a DVD is read. Which line contains the error?
+    lines:
+      - The DVD is spun by a motor.
+      - A red laser is focused onto the spiral track.
+      - The pits reflect more light than the lands.
+      - A photodiode detects the reflected light.
+      - The changes in the reflected light are converted into binary.
+    errorLine: 3
+    fix: |
+      The **lands** reflect more light; the **pits** reflect much less back to the photodiode.
+    explanation: |
+      Light from the bottom of a pit and from the land around it cancel out, so a pit looks dim to the sensor.

@@ -1,0 +1,270 @@
+id: computer-components-hard-disk
+subject: "9618"
+topic: "3.1"
+title: "Magnetic hard disks: spinning platters and flying heads"
+summary: How a hard disk drive stores bits as magnetised areas on spinning platters and how its heads find, read and write data in tracks and sectors.
+order: 6
+minutes: 5
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [computer-components-io-memory-storage]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.3 (principal operations of hardware devices: magnetic hard disk). Disk speeds are typical
+    illustrative values; timing calculations checked with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how data is stored on a **magnetic hard disk**, and how it is **read** and **written** using tracks, sectors and a moving head.
+
+  - type: explain
+    title: A record player on steroids
+    body: |
+      Inside a hard disk drive (HDD), metal or glass discs called **platters** spin thousands of times a minute. A head on an arm swings across them, like the needle on a record player.
+
+      Except this needle never touches the surface. It **flies** a few nanometres above it, on a cushion of air.
+
+  - type: explain
+    title: The parts
+    body: |
+      - **Platters**: both surfaces are coated in a **magnetic material**. They spin together on a **spindle** at a constant speed (e.g. 7200 revolutions per minute).
+      - Each surface is divided into concentric rings called **tracks**, and each track into **sectors** (fixed-size blocks of data).
+      - One **read/write head** per surface, all fixed to an **actuator arm** that moves them across the platters.
+      - Each bit is a tiny area of the coating **magnetised in one of two directions**: one direction for 1, the other for 0.
+
+  - type: diagram
+    diagram: cs-computer-components-hdd-platter
+    alt: >-
+      Top view of a hard disk platter: a large circle labelled platter with a magnetic coating,
+      spinning at constant speed around a central spindle. Faint concentric rings divide it into
+      tracks; one ring is highlighted and labelled track. Faint radial lines split the rings into
+      sectors; one block of the highlighted ring is shaded and labelled sector, one block of a
+      track. A thick actuator arm pivots from the bottom right and holds the read/write head over
+      the shaded sector. A label says the actuator arm swings the head across tracks.
+    caption: |
+      Two motions find any sector: the arm picks the **track**, the spin brings round the **sector**.
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Describe** how data is read from (or written to) a hard disk." Usually 3 to 5 marks.
+
+      The marks are for **finding the data** (track, then sector) and then **how the head reads or writes the magnetism**.
+
+  - type: explain
+    title: The method (reading)
+    body: |
+      1. The platters spin at a constant high speed.
+      2. The disk controller works out which **track and sector** hold the data.
+      3. The **actuator arm** moves the read/write head to the correct **track**.
+      4. **The head waits for the correct sector to spin round underneath it.**
+      5. As the sector passes, the head **detects the direction of magnetisation** of each tiny area and turns it into an electrical signal: 1s and 0s.
+      6. The data is sent to the computer.
+
+      Step 4 is the forgotten one. Moving the arm only gets you to the right ring; the spin does the rest.
+
+  - type: example
+    title: "Easy first: finding one sector"
+    problem: |
+      A file starts in sector 7 of track 40. The head is currently over track 10.
+
+      Describe what the drive does to read the start of the file.
+    steps:
+      - |
+        The actuator arm swings the head **across from track 10 to track 40**. The time this takes is the **seek time**.
+      - |
+        The platter keeps spinning, and the head **waits until sector 7 comes round** under it.
+
+        This wait is the **rotational latency**.
+      - |
+        As sector 7 passes, the head senses the magnetic direction of each area, giving the bits of the file.
+    answer: |
+      Move to the track, wait for the sector, read the magnetism. Exactly the method.
+
+  - type: deeper
+    title: How long is the wait?
+    body: |
+      At 7200 revolutions per minute, one turn takes $60 \div 7200 = 0.00833$ s, which is about **8.3 ms**.
+
+      On average the sector you want is half a turn away, so the average **rotational latency** is about **4.2 ms**. That sounds tiny, but a processor can run millions of instructions in that time, which is why the moving parts make HDDs slow compared with SSDs and RAM.
+
+  - type: check
+    title: Your turn
+    questions: [tracks-sectors, actuator-job, bit-stored-as]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A photographer saves an image to the hard disk of her computer. Describe how the data is **written** to the disk. [4]
+    steps:
+      - |
+        "The disk controller finds free sectors to store the data; the platters spin at constant speed."
+      - |
+        "The actuator arm moves the read/write head to the correct track."
+      - |
+        "The head waits until the correct sector spins underneath it."
+      - |
+        "A current in the write head creates a magnetic field that magnetises tiny areas of the surface in one direction for 1 and the other direction for 0."
+    answer: |
+      Same journey as reading; only the last step changes, from **detecting** the magnetism to **setting** it.
+
+  - type: check
+    title: Exam check
+    questions: [spot-head-touches, latency-calc, fragmented]
+
+  - type: misconceptions
+    items:
+      - wrong: The head touches the platter, like a record needle.
+        right: |
+          It floats just above the surface. If it ever touches, that's a **head crash**, which can destroy data.
+      - wrong: The arm moves to the sector.
+        right: |
+          The arm only moves **in and out**, choosing the **track**. The **spin** brings the sector to the head.
+      - wrong: Data is stored as pits, like a DVD.
+        right: |
+          A hard disk is **magnetic**: each bit is an area magnetised one way or the other.
+
+  - type: exam
+    body: |
+      - Use the vocabulary: **platter**, **track**, **sector**, **read/write head**, **actuator arm**, **magnetised**.
+      - For reading, say the head **detects** the magnetic field (direction of magnetisation). For writing, it **changes** it.
+      - Because of the moving parts, HDDs are slower to access data than SSDs, and can be damaged if dropped while running.
+
+  - type: takeaways
+    items:
+      - Bits are tiny areas of a magnetic coating, magnetised in one of two directions.
+      - Platters spin at a constant speed; surfaces are divided into tracks and sectors.
+      - The actuator arm moves the head to the track; the head waits for the sector to spin round.
+      - The head detects magnetisation to read, and sets it with a magnetic field to write.
+
+questions:
+  - id: tracks-sectors
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Each platter surface is divided into concentric rings called {{1}}, and each ring is divided into fixed-size blocks called {{2}}.
+    blanks:
+      - accept: ["tracks", "track"]
+      - accept: ["sectors", "sector"]
+    explanation: |
+      Tracks are the rings; sectors are the pieces of a ring. A track and sector number together locate a block of data.
+
+  - id: actuator-job
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      What is the job of the actuator arm in a hard disk drive?
+    options:
+      - text: It moves the read/write heads across the platters to the required track.
+        correct: true
+        why: |
+          It swings in and out to pick the track.
+      - text: It spins the platters.
+        why: |
+          The spindle motor spins the platters.
+      - text: It magnetises the surface of the platter.
+        why: |
+          The write head does that; the arm just carries it.
+      - text: It stores the data while the disk is switched off.
+        why: |
+          The magnetic coating stores the data.
+    explanation: |
+      Arm chooses the track; spindle spins the platter so the sector comes round; head reads or writes.
+
+  - id: bit-stored-as
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      How is a single bit stored on a magnetic hard disk?
+    options:
+      - text: As a tiny area of the coating magnetised in one of two directions
+        correct: true
+        why: |
+          One direction represents 1, the other 0.
+      - text: As a pit or a land made by a laser
+        why: |
+          That's an optical disc.
+      - text: As electrons trapped on a floating gate
+        why: |
+          That's flash memory (SSDs).
+      - text: As charge on a capacitor that must be refreshed
+        why: |
+          That's DRAM, which is volatile; a hard disk is non-volatile.
+    explanation: |
+      Four storage technologies, four different physical tricks. Hard disks use magnetism.
+
+  - id: spot-head-touches
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A student describes how data is read from a hard disk. Which line contains the error?
+    lines:
+      - The platters spin at a constant speed.
+      - The actuator arm moves the read/write head to the correct track.
+      - The head waits for the correct sector to spin underneath it.
+      - The head touches the surface so it can feel the magnetism of each area.
+      - The magnetic directions are converted into 1s and 0s.
+    errorLine: 4
+    fix: |
+      The head **floats just above** the surface and detects the magnetic field without touching it.
+    explanation: |
+      Contact would scratch the platter (a head crash). The head flies on a thin cushion of air created by the spinning platter.
+
+  - id: latency-calc
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |
+      A hard disk spins at 5400 revolutions per minute. Work out, in milliseconds:
+
+      - (a) the time for one complete revolution;
+      - (b) the average rotational latency (the time for half a revolution).
+
+      Give each to 3 significant figures.
+    fields:
+      - label: "(a)"
+        answer: 11.1
+        unit: ms
+        sigFigs: 3
+        tolerance: { abs: 0.05 }
+      - label: "(b)"
+        answer: 5.56
+        unit: ms
+        sigFigs: 3
+        tolerance: { abs: 0.005 }
+    explanation: |
+      (a) Revolutions per second: $5400 \div 60 = 90$. One revolution: $1 \div 90 = 0.01111$ s $= 11.1$ ms.
+
+      (b) Half a revolution: $11.11 \div 2 = 5.56$ ms.
+
+  - id: fragmented
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |
+      A large file is stored in sectors scattered across many different tracks. Why does reading it take longer than reading a file stored in neighbouring sectors?
+    options:
+      - text: The head must move between tracks many times, and wait for each sector to spin round.
+        correct: true
+        why: |
+          Every jump adds a seek and a rotational wait.
+      - text: Scattered sectors are stored with weaker magnetism.
+        why: |
+          Every sector is written the same way.
+      - text: The platters slow down when reading scattered data.
+        why: |
+          The platters spin at a constant speed all the time.
+      - text: The file has to be copied to the cache first.
+        why: |
+          Any file read may pass through a buffer; that isn't what makes scattered files slow.
+    explanation: |
+      The slow part of a hard disk is mechanical: moving the arm and waiting for the spin. Scattered (fragmented) files need lots of both.

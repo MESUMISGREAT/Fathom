@@ -1,0 +1,248 @@
+id: computer-components-embedded-systems
+subject: "9618"
+topic: "3.1"
+title: "Embedded systems: tiny computers hiding everywhere"
+summary: What an embedded system is, what is inside one, and the benefits and drawbacks of using one in a device.
+order: 2
+minutes: 4
+kind: core
+objectives: ["3.1.2"]
+prerequisites: [computer-components-io-memory-storage]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.2 (embedded systems, including their benefits and drawbacks). All questions are original.
+    Device examples are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can say what an **embedded system** is, spot one in a device, and give its **benefits and drawbacks** in context.
+
+  - type: explain
+    title: Count the computers in your kitchen
+    body: |
+      Microwave, washing machine, fridge, kettle with temperature buttons, the oven timer. Each one hides a small computer that does exactly one job.
+
+      You never install apps on them, and you never think of them as computers. That's the point.
+
+  - type: definition
+    term: Embedded system
+    body: |
+      A computer system built **into a larger device**, with its own microprocessor (or microcontroller) and memory, designed to carry out **one dedicated task** (or a small set of related tasks). Its program is usually fixed and not changed by the user.
+
+  - type: explain
+    title: What's inside
+    body: |
+      Most embedded systems are built around a **microcontroller**: a single chip containing
+
+      - a processor;
+      - **ROM** (or flash) holding the fixed control program, often called **firmware**;
+      - **RAM** for the current settings and readings;
+      - input/output ports.
+
+      Inputs are often **sensors** and buttons; outputs are often **actuators** (motors, valves) and small displays.
+
+  - type: diagram
+    diagram: cs-computer-components-microcontroller
+    alt: >-
+      A washing machine drawn as a large rounded box labelled the larger device. In its centre is
+      a microcontroller chip containing four parts: CPU (runs the program), ROM (control program),
+      RAM (settings, readings) and I/O (ports to outside), labelled all on one chip. Arrows from the
+      left bring in inputs: door sensor, water level sensor, temperature sensor, buttons and dial.
+      Arrows on the right go out to outputs: drum motor, water valve, heater, display. A note at
+      the bottom says one dedicated task: run the wash programs.
+    caption: |
+      One chip, one job. The program sits in ROM, so it's there every time you switch on.
+
+  - type: explain
+    title: Embedded or general-purpose?
+    body: |
+      | Embedded system | General-purpose computer |
+      | --- | --- |
+      | inside a larger device | is the device |
+      | one dedicated task | runs any software you install |
+      | program fixed in ROM or flash | programs loaded from storage |
+      | e.g. car engine management, pacemaker, smart thermostat, traffic lights | e.g. laptop, desktop PC |
+
+  - type: check
+    title: Spot it
+    questions: [not-embedded, name-it, firmware-memory]
+
+  - type: explain
+    title: Benefits
+    body: |
+      - **Small and light**, so it fits inside the device.
+      - **Cheap to mass-produce**: simple, standard chips made in huge numbers.
+      - **Low power consumption**, so battery devices last a long time.
+      - **Fast and reliable** at its one job, often responding in real time.
+      - **Easy to use**: it just works, with little or no setting up.
+
+  - type: explain
+    title: Drawbacks
+    body: |
+      - **Hard to upgrade**: the program is fixed in ROM (some allow firmware updates, many don't).
+      - **Hard to repair**: troubleshooting needs a specialist, and often the whole unit is replaced, adding to electronic waste.
+      - **Limited**: it can't be used for anything except its task.
+      - If **connected to a network**, it can be **hacked**, and many never get security updates.
+      - Small buttons and screens can make the **interface awkward** to use.
+
+  - type: example
+    title: Benefits and drawbacks in context
+    problem: |
+      A fitness tracker worn on the wrist uses an embedded system. Give one benefit and one drawback, each linked to the tracker.
+    steps:
+      - |
+        Pick a benefit that matters **for this device**. A wristband runs on a tiny battery, so: "it has **low power consumption**, so the battery lasts days between charges."
+      - |
+        Pick a drawback that fits too. It syncs with a phone over Bluetooth, so: "it is **connected**, so it could be **hacked** and personal health data could be stolen."
+      - |
+        Check each answer names the property **and** says why it matters for a tracker. A bare "cheap" or "can be hacked" with no context often scores nothing.
+    answer: |
+      Benefit: low power, so long battery life (or small, so it fits on a wrist). Drawback: could be hacked through its wireless link (or hard to upgrade or repair).
+
+  - type: misconceptions
+    items:
+      - wrong: An embedded system doesn't have a processor or memory; it's just a circuit.
+        right: |
+          It's a real computer: processor, ROM, RAM and I/O, usually all on one microcontroller chip.
+      - wrong: A smartphone is an embedded system because it is small.
+        right: |
+          Size isn't the test. A phone is **general-purpose**: it runs any app you install.
+
+          But it **contains** embedded systems, such as the camera's controller.
+      - wrong: Embedded systems can never be updated.
+        right: |
+          Many can't, but some store firmware in flash memory and can be updated. "Difficult to upgrade" is the safe exam phrase.
+
+  - type: exam
+    body: |
+      - **"Explain why X is an embedded system"**: (1) it is **inside a larger device**, (2) it does **one dedicated task**, (3) it has its own **microprocessor and memory** (program in ROM).
+      - **Benefits and drawbacks**: always tie each one to the device in the question. "Low power, so the doorbell's battery lasts a year" beats "low power".
+      - Don't say one idea twice. "Fast" and "quick to respond" earn one mark, not two.
+
+  - type: check
+    title: Pros and cons
+    questions: [toothbrush-benefit, doorbell-drawback, washing-machine-explain]
+
+  - type: takeaways
+    items:
+      - An embedded system is a computer built into a larger device to do one dedicated task.
+      - It usually uses a microcontroller (processor, ROM, RAM, I/O on one chip), with the program fixed in ROM or flash.
+      - "Benefits: small, cheap to mass-produce, low power, fast and reliable at its task."
+      - "Drawbacks: hard to upgrade or repair, limited to one task, can be hacked if connected."
+
+questions:
+  - id: not-embedded
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.2"]
+    prompt: |
+      Which of these is **not** an embedded system?
+    options:
+      - text: A desktop PC used for homework, games and video editing
+        correct: true
+        why: |
+          It's general-purpose: it runs whatever software is installed.
+      - text: The controller in a microwave oven
+        why: |
+          Built into the oven, one dedicated job: heating food to the selected program.
+      - text: The engine management unit in a car
+        why: |
+          Built into the car, one job: controlling fuel and ignition from sensor readings.
+      - text: A digital central heating thermostat
+        why: |
+          Built into the heating system, one job: keeping the temperature at the setting.
+    explanation: |
+      The tests are: inside a larger device, and dedicated to one task. A PC fails both.
+
+  - id: name-it
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["3.1.2"]
+    prompt: |
+      What is the name for a computer system built into a larger device to carry out one dedicated task?
+    accept: ["embedded system", "embedded systems", "an embedded system", "embedded computer system", "embedded computer"]
+    model: |
+      An **embedded system**.
+    explanation: |
+      "Embedded" means built in: the computer is part of something else, like a washing machine or a car.
+
+  - id: firmware-memory
+    format: cloze
+    difficulty: 2
+    objectives: ["3.1.2"]
+    prompt: |
+      The control program of an embedded system is usually stored in {{1}}, so it is still there every time the device is switched on.
+    blanks:
+      - accept: ["ROM", "read only memory", "read-only memory", "flash", "flash memory", "flash ROM", "EEPROM", "EPROM", "PROM", "non-volatile memory", "nonvolatile memory"]
+    explanation: |
+      The program must survive power-off and shouldn't be changed by accident, so it lives in non-volatile memory: ROM, or flash/EEPROM if it can be updated.
+
+  - id: toothbrush-benefit
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.2"]
+    prompt: |
+      An electric toothbrush has a timer and a pressure warning controlled by an embedded system rather than a general-purpose computer. What is the best reason?
+    options:
+      - text: It is small, cheap to mass-produce and uses little power, which suits a battery-powered handheld device.
+        correct: true
+        why: |
+          Each benefit is linked to what a toothbrush needs.
+      - text: The user can easily install new apps on it.
+        why: |
+          Embedded systems are dedicated to one task; being hard to change is a drawback, not a reason.
+      - text: It has a large hard disk to store brushing videos.
+        why: |
+          Embedded systems have small amounts of memory, and a toothbrush doesn't need that.
+      - text: It can be repaired cheaply by the owner.
+        why: |
+          Embedded systems are usually hard to repair; the unit is often replaced.
+    explanation: |
+      Small size, low cost and low power are the classic benefits, and all three matter for a cheap battery gadget.
+
+  - id: doorbell-drawback
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.2"]
+    prompt: |
+      A video doorbell is connected to the home Wi-Fi network. Which is a drawback that comes from it being **connected**?
+    options:
+      - text: It could be hacked, giving an attacker access to the camera or the home network.
+        correct: true
+        why: |
+          Connected embedded devices often have weak security and few updates.
+      - text: It uses too much electricity.
+        why: |
+          Embedded systems are low power; this isn't a drawback of being connected.
+      - text: It is too large to fit by the door.
+        why: |
+          Small size is a benefit of embedded systems.
+      - text: It can only do one task.
+        why: |
+          True of all embedded systems, but nothing to do with the network connection.
+    explanation: |
+      Being connected brings convenience (alerts on your phone) and a risk: anything on a network can be attacked.
+
+  - id: washing-machine-explain
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.2"]
+    prompt: |
+      A washing machine is controlled by an embedded system. Give **two benefits** and **two drawbacks** of this, each linked to the washing machine.
+    model: |
+      Benefits: the microcontroller is small and cheap to mass-produce, so it fits inside the machine without adding much to its price; it uses little power; it is reliable and reacts quickly to sensor readings such as water level, so the wash runs safely. Drawbacks: its program is fixed in ROM, so new wash programs can't easily be added; if it fails it is hard to repair, so the whole control board is usually replaced; if the machine is connected to an app it could be hacked.
+    keyPoints:
+      - Small and cheap to mass-produce, so it fits inside without raising the price much
+      - Low power consumption
+      - Fast and reliable at controlling the wash using sensor readings
+      - Hard to upgrade because the program is fixed in ROM
+      - Hard to repair; the control board is often replaced
+      - Could be hacked if connected to a network
+    explanation: |
+      Two of each, with the washing machine named in every point. Context is what turns a list into marks.

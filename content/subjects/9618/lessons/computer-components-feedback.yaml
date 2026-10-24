@@ -1,0 +1,285 @@
+id: computer-components-feedback
+subject: "9618"
+topic: "3.1"
+title: "Feedback: how a control system checks its own work"
+summary: What feedback is in a control system, why it matters, and how a greenhouse heater uses it to hold the temperature near a target, in words, a graph and pseudocode.
+order: 17
+minutes: 5
+kind: core
+objectives: ["3.1.8"]
+prerequisites: [computer-components-sensors-actuators]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.8 (monitoring and control systems: the importance of feedback). The greenhouse graph comes
+    from a simple illustrative heating and cooling model; its switching times and the percentage
+    calculation were checked with Python. Pseudocode follows the Cambridge 9618 pseudocode guide.
+    All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what **feedback** is, why a control system needs it, and trace how a greenhouse heater uses it.
+
+  - type: explain
+    title: Steering with your eyes shut
+    body: |
+      When you ride a bike, you watch where you're going and correct the handlebars every second. Each correction changes what you see, and what you see decides the next correction.
+
+      Shut your eyes and you're in a hedge within seconds. A control system without feedback is riding blind.
+
+  - type: definition
+    term: Feedback
+    body: |
+      In a control system, the **output affects the next input**. The sensors measure the effect of the actuators' action, and the processor uses these new readings to decide its next action.
+
+  - type: explain
+    title: The loop, step by step
+    body: |
+      A greenhouse heater must hold the air near 25 °C.
+
+      1. A **temperature sensor** measures the air temperature.
+      2. An **ADC** converts the reading to digital.
+      3. The processor **compares** it with the stored values: 24 °C (too cold) and 26 °C (too warm).
+      4. At 24 °C or below it sends a signal to switch the heater **on**; at 26 °C or above, **off**.
+      5. The heater changes the air temperature.
+      6. **The sensor measures the new temperature, and the loop starts again.** That's the feedback.
+
+  - type: diagram
+    diagram: cs-computer-components-thermostat-graph
+    alt: >-
+      Line graph of greenhouse temperature in degrees Celsius (16 to 28) against time in minutes
+      (0 to 60). Dashed horizontal lines mark 26 (heater off), 25 (target) and 24 (heater on). The
+      temperature starts at 18 and curves up to 26 at about 14 minutes. After that it zigzags:
+      down to 24, up to 26, and so on, about every 8 to 9 minutes, staying within the 24 to 26
+      band. A strip under the graph shows when the heater is on: from 0 to about 14 minutes, then
+      for about 4 and a half minutes in every cycle, each time the temperature is rising.
+    caption: |
+      Every zig and zag is the processor reacting to a fresh sensor reading. Without feedback, there'd be no zigzag, just a line heading off the chart.
+
+  - type: example
+    title: "Easy first: read the graph"
+    problem: |
+      Look at the graph. At about 14 minutes the temperature reaches 26 °C.
+
+      What does the system do, and what happens over the next few minutes?
+    steps:
+      - |
+        The sensor reading (26 °C) reaches the stored upper value, so the processor sends a signal to switch the heater **off**.
+      - |
+        With the heater off, the greenhouse cools. The sensor keeps measuring, so the processor **sees** the temperature falling.
+      - |
+        At about 18 minutes the reading reaches 24 °C, so the processor switches the heater back **on**, and the temperature rises again.
+      - |
+        Check against the heater strip under the graph: off from about 14 to 18 minutes, then on again. ✓
+    answer: |
+      Heater off at 26 °C, temperature falls, heater on again at 24 °C. The output (heating or not) changed the next input (the temperature).
+
+  - type: check
+    title: Quick check
+    questions: [what-feedback, heater-percent]
+
+  - type: explain
+    title: Why feedback matters
+    body: |
+      - It keeps conditions **close to the target automatically**, without a person checking.
+      - It responds to **changes the system didn't cause**: a door left open, the sun coming out.
+      - The processor can **check its action worked**, and do more or less as needed.
+      - It **prevents overheating**: the heater is switched off as soon as the upper value is reached.
+
+      Compare a heater on a **timer** with no sensor. It heats for a fixed time whatever the weather, so it may overheat on a sunny day and do too little on a freezing night.
+
+  - type: check
+    title: Apply it
+    questions: [timer-heater, spot-feedback, explain-feedback]
+
+  - type: explain
+    title: The same loop in pseudocode
+    body: |
+      `ReadTemperature()` returns the sensor reading (after the ADC). `SetHeater()` sends the signal to the heater's actuator, and `Wait()` pauses for a number of seconds.
+
+      ```
+      CONSTANT Lower ← 24.0
+      CONSTANT Upper ← 26.0
+      DECLARE Temperature : REAL
+
+      REPEAT
+         Temperature ← ReadTemperature()
+         IF Temperature <= Lower
+            THEN
+               CALL SetHeater(TRUE)
+         ENDIF
+         IF Temperature >= Upper
+            THEN
+               CALL SetHeater(FALSE)
+         ENDIF
+         CALL Wait(5)
+      UNTIL FALSE
+      ```
+
+      - The reading is taken **inside** the loop, so every pass sees the effect of the last decision. That's feedback in code.
+      - `UNTIL FALSE` means the loop never ends: a control system runs for as long as it is switched on.
+
+  - type: check
+    title: Code check
+    questions: [code-feedback]
+
+  - type: misconceptions
+    items:
+      - wrong: Feedback means the system tells the user what it is doing.
+        right: |
+          Feedback means the **output affects the next input**: the sensor measures the effect of the actuator.
+      - wrong: Monitoring systems use feedback too.
+        right: |
+          A monitoring system's output (a display or alarm) doesn't change what it measures, so there's no feedback loop.
+      - wrong: Once the heater has been switched on, the job is done.
+        right: |
+          The processor has to keep **reading the sensor**, or it won't know when to switch the heater off.
+
+  - type: exam
+    body: |
+      - Define it: "the **output** of the system **affects the next input**."
+      - Explain the importance with the loop: sensor measures the **effect** of the actuator → processor compares with the stored value → adjusts the actuator → conditions stay near the target.
+      - Use the scenario's own devices and values (the greenhouse heater, 24 °C and 26 °C).
+
+  - type: takeaways
+    items:
+      - Feedback is when the output of a control system affects its next input.
+      - The sensor measures the effect of the actuator's action, and the processor adjusts its next action.
+      - Feedback keeps conditions near the target, responds to outside changes and prevents overheating.
+      - In code, the sensor is read inside the loop, so each decision uses a fresh reading.
+
+  - type: deeper
+    title: Why switch at 24 °C and 26 °C, not exactly 25 °C?
+    body: |
+      If the heater switched on below 25 °C and off above it, tiny wobbles in the reading would flick it on and off many times a minute.
+
+      A small **gap** between the on and off values lets each switch last a few minutes, which saves wear on the relay and the heater. The temperature still stays within 1 °C of the target.
+
+questions:
+  - id: what-feedback
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.8"]
+    prompt: |
+      What is meant by **feedback** in a control system?
+    options:
+      - text: The output of the system affects the next input, because the sensors measure the effect of the actuators.
+        correct: true
+        why: |
+          That's the loop: act, measure the result, act again.
+      - text: The system displays its readings so the user can see them.
+        why: |
+          That's output to a user, which monitoring systems do too.
+      - text: The user tells the system whether it is working well.
+        why: |
+          Feedback here is automatic, from sensors, not opinions from users.
+      - text: The sensor sends its reading to the ADC.
+        why: |
+          That's one step of the chain, not the loop from output back to input.
+    explanation: |
+      Output changes the conditions, the sensor measures the change, and that new input drives the next output.
+
+  - id: heater-percent
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.8"]
+    prompt: |
+      Once a greenhouse has warmed up, its heater cycles steadily: on for 4.5 minutes while the temperature rises from 24 °C to 26 °C, then off for 4 minutes while it falls back to 24 °C.
+
+      For what percentage of the time is the heater on? Give your answer to 3 significant figures.
+    fields:
+      - answer: 52.9
+        sigFigs: 3
+        tolerance: { abs: 0.05 }
+        unit: "%"
+    explanation: |
+      - One full cycle lasts $4.5 + 4 = 8.5$ minutes.
+      - On for $4.5 \div 8.5 = 0.5294$ of the time, which is **52.9%**.
+
+  - id: timer-heater
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.8"]
+    prompt: |
+      A greenhouse heater runs on a timer: on for 20 minutes, off for 40 minutes, every hour. It has no temperature sensor.
+
+      What is the main problem?
+    options:
+      - text: There is no feedback, so it can't respond to the actual temperature; it may overheat on a sunny day or leave plants too cold on a freezing night.
+        correct: true
+        why: |
+          Without a sensor reading, the heater's output never affects its next input.
+      - text: The timer makes the heater switch on and off too often, wearing it out.
+        why: |
+          Twice an hour isn't often. The real problem is ignoring the temperature.
+      - text: It is a monitoring system, so it can't switch the heater on at all.
+        why: |
+          It does switch the heater; it just never measures the effect.
+      - text: It needs a DAC to read the timer.
+        why: |
+          A timer is part of the program; the missing piece is a sensor.
+    explanation: |
+      A control system needs a sensor measuring the result of its actions. Otherwise it's riding with its eyes shut.
+
+  - id: spot-feedback
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.8"]
+    prompt: |
+      A student describes how a greenhouse control system keeps the temperature near 25 °C. Which line contains the error?
+    lines:
+      - A temperature sensor measures the air temperature.
+      - The analogue reading is converted to digital by an ADC.
+      - The processor compares the reading with the stored values.
+      - If the temperature is too high, the processor sends a signal to switch the heater on.
+      - The sensor measures the new temperature, so the output affects the next input.
+    errorLine: 4
+    fix: |
+      If the temperature is too **low**, the heater is switched **on**. If it is too high, the heater is switched off (or a motor opens a window).
+    explanation: |
+      Heating an already-hot greenhouse moves the temperature further from the target. The action must push the reading back towards it.
+
+  - id: explain-feedback
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.8"]
+    prompt: |
+      An oven uses a control system to stay at the temperature the user sets. Explain why **feedback** is important in this system.
+    model: |
+      A temperature sensor in the oven measures the temperature, and the processor compares the reading with the temperature the user set. If it is too low, the heating element is switched on; if too high, it is switched off. The sensor then measures the effect of that action, so the output affects the next input. Because the processor keeps getting new readings, it keeps the oven close to the set temperature automatically, reacts to changes such as the door being opened or cold food being put in, and stops the oven overheating.
+    keyPoints:
+      - The sensor measures the effect of the system's action (output affects the next input)
+      - The processor compares each new reading with the set temperature
+      - The heating element is switched on or off depending on the comparison
+      - Keeps the temperature near the set value automatically
+      - Responds to changes such as the door being opened
+      - Prevents overheating
+    explanation: |
+      Without feedback the oven would heat blindly. The loop of measure, compare and adjust is what holds the temperature steady.
+
+  - id: code-feedback
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.8"]
+    prompt: |
+      In the greenhouse pseudocode, why is `Temperature ← ReadTemperature()` **inside** the `REPEAT … UNTIL` loop rather than before it?
+    options:
+      - text: Each pass then uses a fresh reading that shows the effect of the last heater decision, so the output affects the next input.
+        correct: true
+        why: |
+          That's feedback: every decision is based on the current temperature.
+      - text: Functions can only be called inside a loop.
+        why: |
+          Functions can be called anywhere; this is about getting a new reading each time.
+      - text: It makes the constants Lower and Upper change on each pass.
+        why: |
+          Constants never change; only the reading changes.
+      - text: It switches the heater on at the start of each pass.
+        why: |
+          Reading the sensor doesn't switch anything; SetHeater does that.
+    explanation: |
+      Read once before the loop and the processor would keep acting on an old temperature forever, with no feedback at all.

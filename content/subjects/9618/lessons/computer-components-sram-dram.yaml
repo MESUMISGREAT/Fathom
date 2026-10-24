@@ -1,0 +1,319 @@
+id: computer-components-sram-dram
+subject: "9618"
+topic: "3.1"
+title: "SRAM and DRAM: two ways to build RAM"
+summary: How static RAM and dynamic RAM store bits, why DRAM must be refreshed, and why cache uses SRAM while main memory uses DRAM.
+order: 13
+minutes: 5
+kind: core
+objectives: ["3.1.6"]
+prerequisites: [computer-components-ram-rom]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.6 (differences between SRAM and DRAM, including their use in a range of devices and
+    systems and the reasons for choosing one or the other). The 64 ms refresh period is a typical
+    illustrative value; the calculation was checked with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the differences between **static RAM (SRAM)** and **dynamic RAM (DRAM)**, and say which one a device uses for a job, and why.
+
+  - type: explain
+    title: Same job, different engineering
+    body: |
+      Your laptop has two kinds of RAM, and you've probably only heard of one. The "16 GB of memory" on the box is **DRAM**; the few megabytes of **cache** inside the processor are **SRAM**.
+
+      Both are **RAM**: read-write, directly accessed by the processor, and **volatile**. The difference is how each one physically holds a bit.
+
+  - type: intuition
+    title: A leaky bucket and a light switch
+    body: |
+      - **DRAM** stores a bit like water in a **leaky bucket**: full is 1, empty is 0. Someone has to keep topping the buckets up, or every 1 drains into a 0.
+      - **SRAM** stores a bit like a **light switch**: flip it and it stays put. No topping up needed.
+
+      Where the picture breaks: a real light switch stays put in a power cut. SRAM doesn't: like DRAM, it loses everything when the power goes off.
+
+  - type: definition
+    term: Dynamic RAM (DRAM)
+    body: |
+      RAM in which each bit is stored as **charge on a capacitor**, controlled by a transistor. The charge leaks away, so every cell must be **refreshed** (read and recharged) many times a second.
+
+  - type: definition
+    term: Static RAM (SRAM)
+    body: |
+      RAM in which each bit is held by a **flip-flop** (a small circuit of several transistors). It keeps its value for as long as power is supplied, so it **does not need refreshing**.
+
+  - type: diagram
+    diagram: cs-computer-components-dram-refresh
+    alt: >-
+      Graph of the charge on a DRAM capacitor holding a 1 against time. A dashed horizontal line
+      part-way up is labelled threshold: below this, the 1 reads as 0. A solid sawtooth line starts
+      at full and slopes gently down; at four regular moments labelled refresh it jumps straight
+      back up to full, so it never gets near the threshold. A dashed curve branches off at the
+      first refresh and keeps falling instead, crossing the threshold at a dot labelled no refresh:
+      data lost.
+    caption: |
+      Refreshing tops each capacitor up before its charge leaks below the threshold. Skip it and the 1s quietly turn into 0s.
+
+  - type: example
+    title: "Easy first: is that still a 1?"
+    problem: |
+      A DRAM cell was charged to full to store a 1. A cell reads as 1 if its charge is above 50% of full.
+
+      Since its last refresh, its charge has leaked to 70%. What is read, and what does the next refresh do?
+    steps:
+      - |
+        70% is above the 50% threshold, so the cell still reads as **1**.
+      - |
+        The refresh reads the cell and **recharges it to full**, so the 1 is safe for another cycle.
+      - |
+        Check the danger case: left unrefreshed, the charge keeps leaking. Once it drops below 50% the cell reads as **0**, and the data is corrupted.
+    answer: |
+      It reads as 1; the refresh tops it back up to full before it can fall below the threshold.
+
+  - type: deeper
+    title: How often is DRAM refreshed?
+    body: |
+      A typical DRAM chip refreshes **every row once every 64 ms**, working through the rows in turn.
+
+      While a row is being refreshed it can't be read. That waiting is one more reason DRAM is slower than SRAM.
+
+  - type: check
+    title: Quick check
+    questions: [dram-bit, sram-cloze, why-refresh]
+
+  - type: explain
+    title: Side by side
+    body: |
+      | | SRAM (static) | DRAM (dynamic) |
+      | --- | --- | --- |
+      | Stores a bit using | a **flip-flop** (about 6 transistors) | a **capacitor** plus 1 transistor |
+      | Refreshing | **not needed** | **needed** constantly |
+      | Access time | **faster** | slower |
+      | Bits per chip (density) | lower | **higher** |
+      | Cost per bit | higher | **lower** |
+      | Volatile? | yes | yes |
+      | Typical use | **cache memory** | **main memory** |
+
+  - type: intuition
+    title: Why the trade-off exists
+    body: |
+      A DRAM cell is tiny: one transistor and one capacitor. An SRAM cell needs about six transistors, so it takes several times the space on the chip.
+
+      - Smaller cells mean **more bits per chip**, so DRAM is **cheaper per bit** and comes in big capacities.
+      - SRAM has no refreshing to wait for and its flip-flops switch very quickly, so it is **faster**.
+
+  - type: diagram
+    diagram: cs-computer-components-memory-pyramid
+    alt: >-
+      A pyramid split into four horizontal layers. From the narrow top: registers; cache, made of
+      SRAM; main memory, made of DRAM; and the wide base, secondary storage such as SSD and hard
+      disk. An arrow on the left points up, labelled faster, costs more per bit. An arrow on the
+      right points down, labelled more capacity.
+    caption: |
+      Small, fast and pricey at the top; big, slower and cheap at the bottom. SRAM and DRAM sit next to each other in the middle.
+
+  - type: explain
+    title: Who uses which, and why
+    body: |
+      | Device or part | Uses | Reason |
+      | --- | --- | --- |
+      | **cache** in a PC, laptop or phone processor | SRAM | must keep up with the processor; only a few MB needed, so the high cost per bit is affordable |
+      | **main memory** in a PC, laptop, phone or games console | DRAM | many GB needed at a sensible price; high density fits it in a small space |
+      | **graphics card** memory | DRAM | large, cheap capacity for textures and frames |
+      | **microcontroller** in a thermostat or washing machine | SRAM | only a few KB needed; no refresh circuits; built onto the same chip as the processor |
+
+      The rule of thumb: **speed and simplicity, small amount → SRAM**. **Lots of capacity, low cost → DRAM**.
+
+  - type: check
+    title: Apply it
+    questions: [cache-sram, spot-sram-dram, refresh-rate]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A laptop has 12 MB of cache memory and 16 GB of main memory. Explain why the cache is made of SRAM and the main memory is made of DRAM. [4]
+    steps:
+      - |
+        "SRAM has a faster access time than DRAM, partly because it doesn't need refreshing."
+      - |
+        "Cache must supply data and instructions as fast as the processor can use them, and only a small amount is needed, so SRAM's higher cost per bit is acceptable."
+      - |
+        "DRAM has a higher density (more bits per chip) and a lower cost per bit."
+      - |
+        "Main memory has to hold many GB (the OS and all open programs), so DRAM gives a large capacity at a sensible price."
+    answer: |
+      One property and one reason for each memory. The sizes in the question are the hint: small and fast versus big and cheap.
+
+  - type: check
+    title: Exam check
+    questions: [explain-thermostat]
+
+  - type: misconceptions
+    items:
+      - wrong: SRAM is non-volatile because "static" means it keeps its data.
+        right: |
+          "Static" only means **no refreshing while the power is on**. SRAM is still **volatile**: switch off and the data is gone.
+      - wrong: DRAM is refreshed because it is volatile.
+        right: |
+          Refreshing happens **while the power is on**, because the capacitors **leak charge**. Volatile is about what happens when the power goes **off**.
+      - wrong: DRAM is used for main memory because it is faster.
+        right: |
+          DRAM is **slower** than SRAM. It's chosen for main memory because it is **cheaper per bit** and **denser**.
+      - wrong: SRAM and DRAM are types of ROM.
+        right: |
+          Both are **RAM**: read-write and volatile.
+
+  - type: exam
+    body: |
+      - Answer in **pairs**: "DRAM needs refreshing **but** SRAM doesn't." A one-sided fact often scores nothing.
+      - Name the parts: **flip-flops** for SRAM, **capacitors** (and transistors) for DRAM.
+      - For "why use…" questions, link the property to the job: cache → **speed**; main memory → **capacity at low cost**.
+      - Leave **power use** out unless you're asked: which one uses less depends on the situation, so it's easy to get backwards.
+
+  - type: takeaways
+    items:
+      - "DRAM: each bit is charge on a capacitor, which leaks, so it must be refreshed constantly."
+      - "SRAM: each bit is held by a flip-flop, so no refreshing is needed while the power is on."
+      - SRAM is faster but costs more per bit and holds fewer bits per chip; DRAM is slower but denser and cheaper.
+      - Cache uses SRAM (speed); main memory uses DRAM (large capacity, low cost). Both are volatile.
+
+questions:
+  - id: dram-bit
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.6"]
+    prompt: |
+      How does DRAM store a single bit?
+    options:
+      - text: As charge on a capacitor, controlled by a transistor
+        correct: true
+        why: |
+          Charged or not charged gives the 1 or 0. The charge leaks, which is why DRAM needs refreshing.
+      - text: Using a flip-flop made of several transistors
+        why: |
+          That's SRAM, which needs no refreshing.
+      - text: As electrons trapped on a floating gate
+        why: |
+          That's flash memory, which is non-volatile.
+      - text: As a tiny area magnetised in one of two directions
+        why: |
+          That's a magnetic hard disk.
+    explanation: |
+      DRAM = capacitor (leaks, needs refreshing). SRAM = flip-flop (holds its value while powered).
+
+  - id: sram-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.6"]
+    prompt: |
+      SRAM holds each bit in a {{1}}, so unlike DRAM it does not need to be {{2}}.
+    blanks:
+      - accept: ["flip-flop", "flip flop", "flipflop", "flip-flops", "flip flops", "flipflops"]
+      - accept: ["refreshed", "refreshed constantly", "constantly refreshed", "refreshed regularly", "regularly refreshed"]
+    explanation: |
+      A flip-flop keeps its state as long as it has power. DRAM's capacitors leak, so they must be refreshed.
+
+  - id: why-refresh
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.6"]
+    prompt: |
+      Why does DRAM need to be refreshed?
+    options:
+      - text: The charge on its capacitors leaks away, so each cell must be recharged before a 1 turns into a 0.
+        correct: true
+        why: |
+          Refreshing reads each cell and tops its charge back up.
+      - text: DRAM is volatile, so it is refreshed to keep its data when the power is switched off.
+        why: |
+          No refresh can save data with the power off. Refreshing happens while the power is on.
+      - text: Its flip-flops switch state randomly unless they are reset.
+        why: |
+          DRAM has no flip-flops; those are in SRAM, which is stable while powered.
+      - text: Refreshing makes DRAM faster than SRAM.
+        why: |
+          Refreshing is overhead; it's one reason DRAM is slower.
+    explanation: |
+      Capacitors leak. Without regular refreshing, stored 1s would drain into 0s and the data would be corrupted.
+
+  - id: cache-sram
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.6"]
+    prompt: |
+      Why is a processor's cache memory made from SRAM rather than DRAM?
+    options:
+      - text: SRAM has a faster access time, and only a small amount of cache is needed, so its higher cost per bit is acceptable.
+        correct: true
+        why: |
+          Speed is what cache is for, and the small size keeps the cost down.
+      - text: SRAM is cheaper per bit than DRAM.
+        why: |
+          It's the other way round: SRAM costs more per bit.
+      - text: SRAM is non-volatile, so the cache keeps its contents when the computer is off.
+        why: |
+          SRAM is volatile, like DRAM.
+      - text: SRAM holds more bits per chip, so the cache can be very large.
+        why: |
+          DRAM is the denser one. SRAM cells need more transistors, so fewer fit on a chip.
+    explanation: |
+      Cache is small and must be fast: exactly where SRAM's speed is worth its price.
+
+  - id: spot-sram-dram
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.6"]
+    prompt: |
+      A student lists differences between SRAM and DRAM. Which line contains the error?
+    lines:
+      - DRAM stores each bit as charge on a capacitor.
+      - SRAM uses flip-flops to store each bit.
+      - SRAM must be refreshed constantly, but DRAM does not need refreshing.
+      - SRAM has a faster access time than DRAM.
+      - DRAM has a higher density and a lower cost per bit than SRAM.
+    errorLine: 3
+    fix: |
+      It's the other way round: **DRAM** must be refreshed constantly (its capacitors leak); **SRAM** does not need refreshing.
+    explanation: |
+      The "D" in DRAM (dynamic) is the one that needs constant attention. "Static" RAM holds its value while powered.
+
+  - id: refresh-rate
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.6"]
+    prompt: |
+      A DRAM chip refreshes every row once every 64 ms.
+
+      How many times is each row refreshed in one second? Give your answer to 3 significant figures.
+    fields:
+      - answer: 15.6
+        sigFigs: 3
+        tolerance: { abs: 0.05 }
+        unit: times per second
+    explanation: |
+      - One second is 1000 ms.
+      - $1000 \div 64 = 15.625$, which is **15.6** to 3 significant figures.
+
+      So every row is topped up over fifteen times a second, all day, just to stand still.
+
+  - id: explain-thermostat
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.6"]
+    prompt: |
+      The microcontroller in a smart thermostat has 32 KB of SRAM and no DRAM. Explain why SRAM is a sensible choice for this device.
+    model: |
+      The thermostat only needs a small amount of memory, so SRAM's higher cost per bit and lower density don't matter much. SRAM doesn't need refreshing, so no refresh circuitry is needed, which keeps the design simple, and it can be built onto the same chip as the processor. SRAM also has a fast access time, so the processor can read its settings and readings quickly.
+    keyPoints:
+      - Only a small amount of memory is needed, so the higher cost per bit / lower density doesn't matter
+      - SRAM doesn't need refreshing, so no refresh circuitry is needed
+      - Simpler design; it can be built onto the same chip as the processor
+      - SRAM has a fast access time
+    explanation: |
+      DRAM wins when you need gigabytes cheaply. A thermostat needs kilobytes, so SRAM's speed and simplicity win instead.
