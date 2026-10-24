@@ -1,0 +1,240 @@
+id: p1-integration-finding-the-curve
+subject: "9709"
+topic: "1.8"
+title: Finding a curve from its gradient
+summary: Given the gradient and one point on the curve, integrate with + c, then put the point into y = … to find c.
+order: 3
+minutes: 5
+kind: core
+objectives: ["1.8.2"]
+prerequisites: [p1-integration-brackets]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "solve problems involving
+    the evaluation of a constant of integration", following the syllabus's example type (the
+    curve through a given point with a given dy/dx involving a root of a linear bracket), worked
+    here with different numbers. All examples and questions are original; all arithmetic checked
+    in Python. Written in the one-question-type, one-method style.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the **equation of a curve** when you know its gradient $\dfrac{dy}{dx}$ and one point on it.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *A curve has $\dfrac{dy}{dx} = 6x^2 - 4$ and passes through the point $(2, 7)$. Find the equation of the curve.*
+
+      Other wordings mean the same: "the gradient of the curve is given by…", or "find $y$ in terms of $x$".
+
+  - type: explain
+    title: Why you need the point
+    body: |-
+      Integrating $\dfrac{dy}{dx}$ gives $y = \ldots + c$. That's a whole **family** of curves: same shape, slid up or down.
+
+      All of them have the right gradient. The point tells you which one is yours.
+
+  - type: diagram
+    diagram: p1-integration-curve-family
+    alt: >-
+      Six parabolas y = x² + c, for c = −2, −1, 0, 1, 2 and 3, stacked one above the other, each
+      labelled with its value of c just right of the y-axis. Where x = 1, each curve has a short
+      tangent segment, and all six segments are parallel with gradient 2. Only the highlighted
+      curve y = x² + 3 passes through the marked point (1, 4).
+    caption: |-
+      Every curve here has $\dfrac{dy}{dx} = 2x$. Only one goes through $(1, 4)$: the one with $c = 3$.
+
+  - type: explain
+    title: The method
+    body: |-
+      Three steps:
+
+      1. Integrate $\dfrac{dy}{dx}$ to get $y = \ldots + c$.
+      2. **Put the point's $x$ and $y$ into $y = \ldots + c$ and solve for $c$.** Not into $\dfrac{dy}{dx}$: the point is on the curve.
+      3. Write the curve's equation with the number in place of $c$.
+
+  - type: example
+    title: "The easiest one"
+    problem: |-
+      A curve has $\dfrac{dy}{dx} = 2x$ and passes through $(1, 4)$. Find its equation.
+    steps:
+      - |-
+        **Integrate:** $\;y = x^2 + c$.
+      - |-
+        **Put the point in:** $x = 1$, $y = 4$ gives $4 = 1^2 + c$, so $c = 3$.
+      - |-
+        **Write it:** $\;y = x^2 + 3$.
+    answer: |-
+      $y = x^2 + 3$
+
+      Check: at $x = 1$, $y = 1 + 3 = 4$ ✓, and differentiating gives $2x$ ✓.
+
+  - type: check
+    questions: [curve-poly, curve-family-mcq]
+
+  - type: example
+    title: "Exam-style: a root of a bracket"
+    problem: |-
+      A curve has $\dfrac{dy}{dx} = \sqrt{2x + 5}$ and passes through $(2, 4)$. Find the equation of the curve.
+    steps:
+      - |-
+        **Integrate:** $\sqrt{2x + 5} = (2x + 5)^{\frac12}$. Add 1 to the power, then divide by $\dfrac32$ and by 2: $\;y = \dfrac{(2x + 5)^{\frac32}}{\frac32 \times 2} + c = \dfrac13(2x + 5)^{\frac32} + c$.
+      - |-
+        **Put the point in:** at $x = 2$, $2x + 5 = 9$ and $9^{\frac32} = (\sqrt9)^3 = 27$. So $4 = \dfrac13 \times 27 + c = 9 + c$, and $c = -5$.
+      - |-
+        **Write it:** $\;y = \dfrac13(2x + 5)^{\frac32} - 5$.
+    answer: |-
+      $y = \dfrac13(2x + 5)^{\frac32} - 5$
+
+  - type: check
+    questions: [curve-bracket, spot-curve]
+
+  - type: deeper
+    title: "Harder: an unknown in the gradient as well"
+    body: |-
+      *A curve has $\dfrac{dy}{dx} = 3x^2 + kx$ and a stationary point at $(2, -1)$. Find its equation.*
+
+      - **Stationary** means $\dfrac{dy}{dx} = 0$ there: $12 + 2k = 0$, so $k = -6$.
+      - Integrate $3x^2 - 6x$: $\;y = x^3 - 3x^2 + c$.
+      - Put the point in: $-1 = 8 - 12 + c$, so $c = 3$.
+      - The curve is $y = x^3 - 3x^2 + 3$.
+
+      Two unknowns need two facts. A stationary point gives you both: $\dfrac{dy}{dx} = 0$ there, and the point is on the curve.
+
+  - type: check
+    questions: [curve-stationary]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\dfrac{dy}{dx} = 3x^2$, through $(2, 3)$: $\;3 = 3(2)^2 + c$, so $c = -9$.
+        right: |-
+          The point is on the **curve**, so it goes into $y = x^3 + c$: $\;3 = 8 + c$, and $c = -5$.
+      - wrong: |-
+          The curve passes through $(2, 4)$, so $c = 4$.
+        right: |-
+          $c$ isn't the point's $y$-value. Put both coordinates in and solve: in the exam-style example, $c = -5$.
+      - wrong: |-
+          Final answer: $y = x^3 - 3x^2 + c$.
+        right: |-
+          The question gave you a point so you could find $c$. An answer with $c$ still in it is unfinished.
+
+  - type: exam
+    body: |-
+      - These are typically 3 to 5 marks: integrate (method and accuracy marks), substitute the point, state the equation.
+      - Show the line where you substitute, like "$4 = 9 + c$". It usually earns a mark of its own.
+      - Finish with "$y = \ldots$" and a number for $c$. A later part often uses your curve.
+
+  - type: takeaways
+    items:
+      - |-
+        Integrating $\dfrac{dy}{dx}$ gives a family $y = \ldots + c$; a point picks one.
+      - |-
+        Put the point into $y = \ldots + c$, **not** into $\dfrac{dy}{dx}$, and solve for $c$.
+      - |-
+        A stationary point also tells you $\dfrac{dy}{dx} = 0$ there.
+      - |-
+        Check: your curve should pass through the point, and differentiate back to $\dfrac{dy}{dx}$.
+
+questions:
+  - id: curve-poly
+    format: expression
+    difficulty: 1
+    objectives: ["1.8.2"]
+    prompt: |-
+      A curve has $\dfrac{dy}{dx} = 6x^2 - 4$ and passes through $(2, 7)$. Find $y$ in terms of $x$.
+
+      Type just the expression for $y$.
+    answer: 2x^3 - 4x - 1
+    variables: [x]
+    display: |-
+      $y = 2x^3 - 4x - 1$
+    explanation: |-
+      - Integrate: $y = 2x^3 - 4x + c$.
+      - Put in $(2, 7)$: $7 = 16 - 8 + c$, so $c = -1$.
+      - So $y = 2x^3 - 4x - 1$.
+
+  - id: curve-family-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.8.2"]
+    prompt: |-
+      The curves $y = x^3 + c$ all have $\dfrac{dy}{dx} = 3x^2$. Which one passes through $(2, 3)$?
+    explanation: |-
+      Put $x = 2$, $y = 3$ into $y = x^3 + c$: $\;3 = 8 + c$, so $c = -5$ and the curve is $y = x^3 - 5$.
+    options:
+      - text: $y = x^3 - 5$
+        correct: true
+        why: |-
+          At $x = 2$: $8 - 5 = 3$ ✓.
+      - text: $y = x^3 + 3$
+        why: |-
+          $c$ isn't the $y$-coordinate. At $x = 2$ this gives $11$, not $3$.
+      - text: $y = x^3 - 9$
+        why: |-
+          That came from putting the point into $\dfrac{dy}{dx}$: $3 = 12 + c$. The point is on the curve, so use $y = x^3 + c$.
+      - text: $y = x^3 + 11$
+        why: |-
+          Sign slip: $3 = 8 + c$ gives $c = 3 - 8 = -5$, not $3 + 8$.
+
+  - id: curve-bracket
+    format: expression
+    difficulty: 2
+    objectives: ["1.8.2"]
+    prompt: |-
+      A curve has $\dfrac{dy}{dx} = \dfrac{8}{(2x - 1)^2}$ and passes through $(1, 3)$. Find $y$ in terms of $x$.
+
+      Type just the expression for $y$.
+    answer: 7 - 4/(2x - 1)
+    variables: [x]
+    domain: { min: 1, max: 4 }
+    display: |-
+      $y = 7 - \dfrac{4}{2x - 1}$
+    explanation: |-
+      - Integrate $8(2x - 1)^{-2}$: power up to $-1$, then divide by $-1$ and by 2: $\;y = \dfrac{8(2x - 1)^{-1}}{-1 \times 2} + c = -\dfrac{4}{2x - 1} + c$.
+      - Put in $(1, 3)$: $3 = -\dfrac{4}{1} + c$, so $c = 7$.
+      - So $y = 7 - \dfrac{4}{2x - 1}$.
+
+  - id: spot-curve
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.8.2"]
+    prompt: |-
+      A curve has $\dfrac{dy}{dx} = 3x^2 + 2$ and passes through $(1, 6)$. Which line of this solution has the first error?
+    lines:
+      - |-
+        $y = x^3 + 2x + c$
+      - |-
+        At $(1, 6)$: $\;6 = 3(1)^2 + 2 + c$
+      - |-
+        $c = 1$
+      - |-
+        $y = x^3 + 2x + 1$
+    errorLine: 2
+    fix: |-
+      Put the point into $y = x^3 + 2x + c$: $\;6 = 1 + 2 + c$, so $c = 3$ and $y = x^3 + 2x + 3$.
+    explanation: |-
+      Line 1 integrates correctly. Line 2 puts the point into $\dfrac{dy}{dx}$ instead of into the curve's equation.
+
+  - id: curve-stationary
+    format: numeric
+    difficulty: 3
+    objectives: ["1.8.2"]
+    prompt: |-
+      A curve has $\dfrac{dy}{dx} = k - 3x^2$, where $k$ is a constant, and a stationary point at $(1, 5)$.
+
+      Its equation is $y = kx - x^3 + c$. Find $k$ and $c$.
+    fields:
+      - label: "k ="
+        answer: 3
+      - label: "c ="
+        answer: 3
+    explanation: |-
+      - Stationary at $x = 1$: $\dfrac{dy}{dx} = 0$, so $k - 3 = 0$ and $k = 3$.
+      - So $y = 3x - x^3 + c$. Put in $(1, 5)$: $5 = 3 - 1 + c$, so $c = 3$.
+      - The curve is $y = 3x - x^3 + 3$.

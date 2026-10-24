@@ -1,0 +1,240 @@
+id: p1-integration-volume-of-revolution
+subject: "9709"
+topic: "1.8"
+title: Volumes of revolution
+summary: Spin a region about an axis and find the volume. Square y first, then V = π∫y² dx (or π∫x² dy about the y-axis).
+order: 8
+minutes: 5
+kind: core
+objectives: ["1.8.4"]
+prerequisites: [p1-integration-area-under-a-curve]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "use definite integration
+    to find the area of a region bounded by a curve and lines parallel to the axes, or between a
+    curve and a line, or between two curves; and to find a volume of revolution about one of the
+    axes" (volumes about the x-axis and the y-axis for a region against the axis of rotation;
+    regions not touching the axis are in p1-integration-volume-with-a-hole). All examples and
+    questions are original; all arithmetic checked in Python. Written in the one-question-type,
+    one-method style.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the **volume of revolution** made by spinning a region about the $x$-axis or the $y$-axis.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *The region under $y = \sqrt{x}$ from $x = 0$ to $x = 4$ is rotated through $360°$ about the $x$-axis. Find the volume of the solid formed, giving your answer in terms of $\pi$.*
+
+      Picture the region spinning round the axis like a potter's wheel: it sweeps out a solid.
+
+  - type: diagram
+    diagram: p1-integration-volume-disc
+    alt: >-
+      The region under y = root x from x = 0 to x = 4 is shaded above the x-axis. Its mirror image
+      below the axis is dashed, and an ellipse at x = 4 shows the circular end of the solid made by
+      spinning the region about the x-axis. A thin coloured disc stands at about x = 2.25: an
+      arrow from the axis up to the curve is labelled radius y, and a double arrow across it is
+      labelled thickness. Underneath: one disc is about pi y² times its thickness, so V = pi times
+      the integral from a to b of y² dx.
+    caption: |-
+      Slice the solid into thin discs. Each is a cylinder of radius $y$, so its volume is about $\pi y^2 \times$ its thickness.
+
+      Add them all up and you get the formula.
+
+  - type: definition
+    term: Volume of revolution
+    body: |-
+      About the $x$-axis, between $x = a$ and $x = b$:
+
+      $$V = \pi\int_a^b y^2\,dx$$
+
+      About the $y$-axis, between $y = c$ and $y = d$:
+
+      $$V = \pi\int_c^d x^2\,dy$$
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Find the limits (about the $x$-axis these are $x$-values).
+      2. **Square $y$ first, then simplify it.** Expand any bracket: $(x^2 + 1)^2 = x^4 + 2x^2 + 1$.
+      3. Integrate $y^2$ and work out top limit minus bottom limit.
+      4. Multiply by $\pi$. Leave it as "something $\pi$" if they say *in terms of $\pi$* or *exact*.
+
+  - type: example
+    title: "The easiest one: a cone"
+    problem: |-
+      The region under $y = x$ from $x = 0$ to $x = 3$ is rotated $360°$ about the $x$-axis. Find the volume.
+    steps:
+      - |-
+        **Limits:** $x = 0$ to $x = 3$.
+      - |-
+        **Square $y$:** $y^2 = x^2$.
+      - |-
+        **Integrate:** $\displaystyle\int_0^3 x^2\,dx = \Big[\dfrac{x^3}{3}\Big]_0^3 = 9$.
+      - |-
+        **Times $\pi$:** $V = 9\pi$.
+    answer: |-
+      $V = 9\pi$
+
+      Check: spinning that triangle makes a cone with radius 3 and height 3. The cone formula gives $\dfrac13\pi r^2 h = \dfrac13 \pi \times 9 \times 3 = 9\pi$ ✓.
+
+  - type: check
+    questions: [vol-sqrt, vol-square-mcq]
+
+  - type: example
+    title: "Exam-style: square a bracket"
+    problem: |-
+      The region under $y = x^2 + 1$ from $x = 0$ to $x = 1$ is rotated $360°$ about the $x$-axis. Find the exact volume.
+    steps:
+      - |-
+        **Limits:** $x = 0$ to $x = 1$.
+      - |-
+        **Square $y$ and expand:** $(x^2 + 1)^2 = x^4 + 2x^2 + 1$.
+      - |-
+        **Integrate:** $\Big[\dfrac{x^5}{5} + \dfrac{2x^3}{3} + x\Big]_0^1 = \dfrac15 + \dfrac23 + 1 = \dfrac{3 + 10 + 15}{15} = \dfrac{28}{15}$.
+      - |-
+        **Times $\pi$:** $V = \dfrac{28\pi}{15}$.
+    answer: |-
+      $V = \dfrac{28\pi}{15}$
+
+  - type: check
+    questions: [vol-expand, spot-vol]
+
+  - type: deeper
+    title: "About the y-axis"
+    body: |-
+      Same method with $x$ and $y$ swapped: $V = \pi\displaystyle\int_c^d x^2\,dy$, with **$y$-limits**.
+
+      *The region between $y = x^2$ ($x \geq 0$), the $y$-axis, and $y = 1$ to $y = 4$ is rotated about the $y$-axis.*
+
+      - Rearrange for $x^2$: here $x^2 = y$. (You need $x^2$, not $x$, so there's no square root to take.)
+      - $V = \pi\displaystyle\int_1^4 y\,dy = \pi\Big[\dfrac{y^2}{2}\Big]_1^4 = \pi\left(8 - \dfrac12\right) = \dfrac{15\pi}{2}$.
+
+  - type: check
+    questions: [vol-y-axis]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $(x + 1)^2 = x^2 + 1$
+        right: |-
+          Square the whole bracket: $(x + 1)^2 = x^2 + 2x + 1$. The middle term is the one that goes missing.
+      - wrong: |-
+          $V = \pi\displaystyle\int_0^4 \sqrt{x}\,dx$
+        right: |-
+          Square $y$ first: $y^2 = x$, so $V = \pi\displaystyle\int_0^4 x\,dx = 8\pi$.
+      - wrong: |-
+          About the $y$-axis: $V = \pi\displaystyle\int_1^4 y^2\,dx$
+        right: |-
+          Swap **everything**: $x^2$ in terms of $y$, $dy$, and $y$-limits.
+
+  - type: exam
+    body: |-
+      - Typically 3 to 5 marks. Write $V = \pi\displaystyle\int y^2\,dx$ with your $y^2$ in it before you integrate.
+      - "In terms of $\pi$" or "exact" means answers like $\dfrac{28\pi}{15}$. Otherwise 3 s.f.
+      - Forgetting $\pi$ is a common lost mark. Write it at the front from the start.
+
+  - type: takeaways
+    items:
+      - |-
+        About the $x$-axis: $V = \pi\displaystyle\int_a^b y^2\,dx$, with $x$-limits.
+      - |-
+        **Square $y$ first**, and expand brackets properly.
+      - |-
+        About the $y$-axis: $V = \pi\displaystyle\int_c^d x^2\,dy$, with $y$-limits.
+      - |-
+        Don't forget the $\pi$.
+
+questions:
+  - id: vol-sqrt
+    format: numeric
+    difficulty: 1
+    objectives: ["1.8.4"]
+    prompt: |-
+      The region under $y = \sqrt{x}$ from $x = 0$ to $x = 4$ is rotated $360°$ about the $x$-axis. Find the volume, in terms of $\pi$. (Type it as, for example, `5π`.)
+    fields:
+      - answer: 25.132741228718345
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      $y^2 = x$, so $V = \pi\displaystyle\int_0^4 x\,dx = \pi\Big[\dfrac{x^2}{2}\Big]_0^4 = 8\pi \approx 25.1$.
+
+  - id: vol-square-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.8.4"]
+    prompt: |-
+      The region under $y = x + 1$ from $x = 0$ to $x = 2$ is rotated $360°$ about the $x$-axis. Which integral gives the volume?
+    explanation: |-
+      $V = \pi\displaystyle\int y^2\,dx$, so square the whole of $y = x + 1$: $\;\pi\displaystyle\int_0^2 (x + 1)^2\,dx$.
+    options:
+      - text: $\pi\displaystyle\int_0^2 (x + 1)^2\,dx$
+        correct: true
+        why: |-
+          $\pi$, then $y^2$ with the whole bracket squared, between the $x$-limits.
+      - text: $\pi\displaystyle\int_0^2 (x^2 + 1)\,dx$
+        why: |-
+          Each term was squared separately. $(x + 1)^2 = x^2 + 2x + 1$.
+      - text: $\pi\displaystyle\int_0^2 (x + 1)\,dx$
+        why: |-
+          $y$ wasn't squared. The discs have area $\pi y^2$.
+      - text: $\displaystyle\int_0^2 (x + 1)^2\,dx$
+        why: |-
+          The $\pi$ is missing.
+
+  - id: vol-expand
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      The region under $y = 2x + 1$ from $x = 0$ to $x = 1$ is rotated $360°$ about the $x$-axis. Find the exact volume. (Type it as, for example, `5π/3`.)
+    fields:
+      - answer: 13.613568165555769
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      $y^2 = (2x + 1)^2 = 4x^2 + 4x + 1$.
+
+      $V = \pi\displaystyle\int_0^1 (4x^2 + 4x + 1)\,dx = \pi\Big[\dfrac{4x^3}{3} + 2x^2 + x\Big]_0^1 = \pi\left(\dfrac43 + 2 + 1\right) = \dfrac{13\pi}{3} \approx 13.6$.
+
+  - id: spot-vol
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      A student finds the volume when the region under $y = \dfrac{3}{x}$ from $x = 1$ to $x = 3$ is rotated $360°$ about the $x$-axis. Which line has the first error?
+    lines:
+      - |-
+        $V = \pi\displaystyle\int_1^3 \left(\dfrac{3}{x}\right)^2 dx$
+      - |-
+        $= \pi\displaystyle\int_1^3 \dfrac{3}{x^2}\,dx$
+      - |-
+        $= \pi\Big[-\dfrac{3}{x}\Big]_1^3$
+      - |-
+        $= \pi(-1 + 3) = 2\pi$
+    errorLine: 2
+    fix: |-
+      $\left(\dfrac{3}{x}\right)^2 = \dfrac{9}{x^2}$, so $V = \pi\Big[-\dfrac{9}{x}\Big]_1^3 = \pi(-3 + 9) = 6\pi$.
+    explanation: |-
+      Line 1 is right. Line 2 squares only the bottom of the fraction: the 3 on top must be squared too.
+
+  - id: vol-y-axis
+    format: numeric
+    difficulty: 3
+    objectives: ["1.8.4"]
+    prompt: |-
+      The region bounded by the curve $y = x^2 + 2$ (for $x \geq 0$), the $y$-axis and the line $y = 5$ is rotated $360°$ about the $y$-axis. Find the exact volume. (Type it as, for example, `5π/3`.)
+    fields:
+      - answer: 14.137166941154069
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      About the $y$-axis, so use $V = \pi\displaystyle\int x^2\,dy$. Here $x^2 = y - 2$.
+
+      The region runs from the curve's lowest point, $y = 2$, up to $y = 5$.
+
+      $V = \pi\displaystyle\int_2^5 (y - 2)\,dy = \pi\Big[\dfrac{y^2}{2} - 2y\Big]_2^5 = \pi\big((12.5 - 10) - (2 - 4)\big) = \dfrac{9\pi}{2} \approx 14.1$.
