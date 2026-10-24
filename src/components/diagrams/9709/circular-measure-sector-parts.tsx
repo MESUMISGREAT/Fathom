@@ -55,20 +55,16 @@ export default function CircularMeasureSectorParts() {
         <Label x={460} y={40} className="dg-text dg-bold">
           θ in radians
         </Label>
-        <Label x={460} y={70} className="dg-text-small">
-          fraction of the circle = θ ÷ 2π
-        </Label>
-        <Label x={460} y={112} className="dg-text-accent">
+        <MathLabel x={460} y={72} w={239} h={46} size="small" tex={"\\text{fraction of the circle} = \\dfrac{\\theta}{2\\pi}"} />
+        <Label x={460} y={110} className="dg-text-accent">
           arc length
         </Label>
-        <Label x={460} y={134} className="dg-text-small">
-          (θ ÷ 2π) × 2πr = rθ
-        </Label>
-        <Label x={460} y={176} className="dg-text dg-bold">
+        <MathLabel x={460} y={138} w={239} h={46} size="small" tex={"\\dfrac{\\theta}{2\\pi} \\times 2\\pi r = r\\theta"} />
+        <Label x={460} y={178} className="dg-text dg-bold">
           sector area
         </Label>
-        <MathLabel x={460} y={198} w={239} h={46} size="small" tex={"\\dfrac{\\theta}{2\\pi} \\times \\pi r^2 = \\dfrac{1}{2} r^2\\theta"} />
-        <Label x={460} y={240} className="dg-text-small">
+        <MathLabel x={460} y={206} w={239} h={46} size="small" tex={"\\dfrac{\\theta}{2\\pi} \\times \\pi r^2 = \\dfrac{1}{2} r^2\\theta"} />
+        <Label x={460} y={246} className="dg-text-small">
           perimeter of sector = 2r + rθ
         </Label>
       </g>
