@@ -76,7 +76,7 @@ function Chart({
       <Label x={b1 + BW / 2} y={Y0 - before * PX - 12} className="dg-text-small dg-bold">
         {before.toFixed(1)}
       </Label>
-      <Label x={b2 + BW / 2} y={Y0 - after * PX + 14} className="dg-text-small dg-bold">
+      <Label x={b2 + BW / 2} y={after < before ? Y0 - after * PX + 14 : Y0 - after * PX - 12} className="dg-text-small dg-bold">
         {after.toFixed(1)}
       </Label>
       <Label x={b1 + BW / 2} y={Y0 + 16} className="dg-text-small">

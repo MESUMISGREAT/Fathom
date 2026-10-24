@@ -75,7 +75,7 @@ export function NonUniformThrowVt() {
       ))}
       {[-20, -10, 0, 10, 20].map((v) => (
         <Label key={v} x={X0 - 7} y={sy(v)} anchor="end" className="dg-text-small">
-          {v}
+          {v < 0 ? `−${-v}` : v}
         </Label>
       ))}
       <Label x={X1 + 4} y={sy(0) - 12} anchor="end" className="dg-text-small dg-italic">

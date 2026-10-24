@@ -9,7 +9,7 @@ objectives: ["3.3.2", "3.3.1", "3.3.4"]
 prerequisites: [linear-momentum-collisions-1d]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcomes 3.3.2, solving problems with conservation of momentum, here for
@@ -17,6 +17,7 @@ provenance:
     while kinetic energy changes). The skater diagram is drawn to scale (velocity and momentum
     arrows). Masses and speeds are illustrative; all worked values and answer keys were computed
     with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -25,7 +26,10 @@ blocks:
   - type: explain
     title: Something from nothing?
     body: |
-      Fire a cannon and the cannon jumps **backwards**. Before firing, the cannon and the ball are at rest: total momentum **zero**. Nothing external pushes them, so after firing the total momentum must **still be zero**.
+      Fire a cannon and the cannon jumps **backwards**. Here's why:
+
+      - Before firing, the cannon and the ball are at rest: total momentum **zero**.
+      - With no resultant external force, the total momentum after firing must **still be zero**.
 
       The only way two moving objects can have zero total momentum is if their momenta are **equal in size and opposite in direction**:
 
@@ -49,7 +53,10 @@ blocks:
 
       $$\frac{v_1}{v_2} = \frac{m_2}{m_1}$$
 
-      The speeds are in the **inverse ratio** of the masses. The $25\ \text{kg}$ skater has a third of the mass, so she gets three times the speed. A bullet has a tiny mass, so it flies off fast; a rifle has a large mass, so it recoils slowly.
+      The speeds are in the **inverse ratio** of the masses:
+
+      - the $25\ \text{kg}$ skater has a third of the mass, so she gets three times the speed;
+      - a bullet has a tiny mass, so it flies off fast, while the much heavier rifle recoils slowly.
 
   - type: example
     title: Rifle recoil
@@ -71,16 +78,30 @@ blocks:
   - type: deeper
     title: Why you hold a rifle tight against your shoulder
     body: |
-      Pressed firmly into the shoulder, the rifle and the shooter recoil **together**, so the recoiling mass is, say, $4.0 + 70 = 74\ \text{kg}$ instead of $4.0\ \text{kg}$. The momentum is still $4.0\ \text{kg m s}^{-1}$, so the recoil speed drops to about $0.054\ \text{m s}^{-1}$. Held loosely, the rifle gets up to $1.0\ \text{m s}^{-1}$ before it slams into you. Same momentum, much less pain.
+      Pressed firmly into the shoulder, the rifle and the shooter recoil **together**. The recoiling mass is then, say, $4.0 + 70 = 74\ \text{kg}$ instead of $4.0\ \text{kg}$.
+
+      The momentum is still $4.0\ \text{kg m s}^{-1}$, so the recoil speed drops to about $0.054\ \text{m s}^{-1}$.
+
+      Held loosely, the rifle reaches $1.0\ \text{m s}^{-1}$ before it slams into you. Same momentum, much more pain.
 
   - type: explain
     title: Momentum stays at zero; kinetic energy doesn't
     body: |
-      Before an explosion, the kinetic energy is zero too. Afterwards there's plenty of it. Where from? From a store inside the system: **chemical** energy in gunpowder, **elastic potential** energy in a compressed spring, or the muscles of the skaters.
+      Before an explosion, the kinetic energy is zero too. Afterwards there's plenty of it, supplied by an energy store inside the system:
 
-      So in an explosion, **momentum is conserved** (it stays zero) but **kinetic energy increases**. Momentum is a vector, so equal and opposite momenta cancel. Kinetic energy is a scalar and is never negative, so the two pieces' kinetic energies **add up**; they can't cancel.
+      - **chemical** energy in gunpowder, or in the skaters' muscles;
+      - **elastic potential** energy in a compressed spring.
 
-      Which piece gets more? With equal-sized momenta, $E_\text{k} = \dfrac{p^2}{2m}$, so the **lighter** piece takes more of the kinetic energy. The skaters: $\tfrac{1}{2} \times 75 \times 1.0^2 = 37.5\ \text{J}$ for the big one, but $\tfrac{1}{2} \times 25 \times 3.0^2 = 112.5\ \text{J}$ for the small one.
+      So in an explosion, **momentum is conserved** (it stays zero) but **kinetic energy increases**.
+
+      Momentum is a vector, so equal and opposite momenta cancel. Kinetic energy is a scalar and is never negative, so the pieces' kinetic energies **add up**.
+
+  - type: explain
+    title: Who gets the kinetic energy?
+    body: |
+      With equal-sized momenta, $E_\text{k} = \dfrac{p^2}{2m}$, so the **lighter** piece takes more of the kinetic energy.
+
+      For the skaters: $\tfrac{1}{2} \times 75 \times 1.0^2 = 37.5\ \text{J}$ for the big one, but $\tfrac{1}{2} \times 25 \times 3.0^2 = 112.5\ \text{J}$ for the small one.
 
   - type: check
     questions: [explosion-conserved, astronaut-push]
@@ -92,7 +113,7 @@ blocks:
       - wrong: An explosion creates momentum.
         right: It creates **kinetic energy** (from a chemical or elastic store). The momenta it produces are equal and opposite, so the total stays zero.
       - wrong: The heavier piece gets more kinetic energy because it has more mass.
-        right: With equal momenta, $E_\text{k} = p^2/2m$, so the **lighter** piece gets more.
+        right: With equal-sized momenta, $E_\text{k} = \dfrac{p^2}{2m}$, so the **lighter** piece gets more.
 
   - type: exam
     body: |
@@ -178,7 +199,7 @@ questions:
         tolerance: { abs: 0.2 }
         unit: J
     explanation: |
-      Momenta are equal and opposite: $240\,v = 60 \times 0.80 = 48$, so $v = 0.20\ \text{m s}^{-1}$. Kinetic energy: astronaut $\tfrac{1}{2} \times 60 \times 0.80^2 = 19.2\ \text{J}$, satellite $\tfrac{1}{2} \times 240 \times 0.20^2 = 4.8\ \text{J}$, total $24\ \text{J}$. It came from the astronaut's muscles. The lighter astronaut got four times as much kinetic energy as the satellite.
+      Momenta are equal and opposite: $240\,v = 60 \times 0.80 = 48$, so $v = 0.20\ \text{m s}^{-1}$. Kinetic energy: astronaut $\tfrac{1}{2} \times 60 \times 0.80^2 = 19.2\ \text{J}$, satellite $\tfrac{1}{2} \times 240 \times 0.20^2 = 4.8\ \text{J}$, total $24\ \text{J}$. It came from the chemical energy store in the astronaut's muscles. The lighter astronaut got four times as much kinetic energy as the satellite.
 
   - id: spring-spot-error
     format: spot-error

@@ -9,7 +9,7 @@ objectives: ["3.2.1"]
 prerequisites: [momentum-newton-mass-inertia, momentum-newton-f-equals-ma]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcome 3.2.1, a qualitative understanding of friction and of viscous
@@ -18,6 +18,7 @@ provenance:
     the enrichment block). The drag graph is a qualitative sketch (shape D ∝ v², no scale). The
     cyclist forces and masses are illustrative values; all worked values and answer keys were
     computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -26,12 +27,14 @@ blocks:
   - type: explain
     title: Why doesn't anything keep going?
     body: |
-      Shove a shopping trolley and let go. Newton's first law says it should roll on forever. It stops after a few metres, because two sneaky forces are pushing back the whole time: **friction** and **drag**.
+      Shove a shopping trolley and let go. With no resultant force on it, Newton's first law says it would roll on forever.
+
+      It stops after a few metres, because two sneaky forces push back the whole time: **friction** and **drag**.
 
       Together they're called **resistive forces**. Every resistive force:
 
       - acts in the direction that **opposes the motion** (more precisely, the relative motion);
-      - transfers kinetic energy into **thermal energy** (and a bit of sound). That's why brakes and re-entering spacecraft get hot.
+      - transfers kinetic energy to **thermal energy** (and a bit of sound) while something moves against it. That's why brakes and re-entering spacecraft get hot.
 
   - type: explain
     title: Two kinds of pushback
@@ -43,7 +46,11 @@ blocks:
       | Effect of speed | Roughly **constant** once sliding | **Increases as speed increases**; zero at zero speed |
       | Everyday name | grip, rubbing | air resistance, water resistance |
 
-      **Air resistance** is simply drag in air. Drag is bigger for a larger **cross-sectional area**, a less **streamlined** shape, and a "thicker" fluid: try running through a swimming pool, then through honey (actually, don't).
+      **Air resistance** is simply drag in air. At the same speed, drag is bigger for:
+
+      - a larger **cross-sectional area**;
+      - a less **streamlined** shape;
+      - a "thicker" fluid: try running through a swimming pool, then through honey (actually, don't).
 
   - type: diagram
     diagram: phys-non-uniform-resistive-forces
@@ -68,7 +75,7 @@ blocks:
   - type: definition
     term: Drag (viscous force)
     body: |
-      The resistive force on an object moving through a **fluid**. It acts in the **opposite direction to the object's velocity** relative to the fluid and **increases as the speed increases**. Air resistance is drag in air.
+      The resistive force on an object moving through a **fluid**. It acts in the **opposite direction to the object's velocity** relative to the fluid and **increases as the speed increases**.
 
   - type: check
     questions: [drag-direction, drag-cloze]
@@ -76,9 +83,13 @@ blocks:
   - type: intuition
     title: Why speed makes drag worse
     body: |
-      Moving through air means shoving air molecules out of the way. Go faster and you shove **more** air every second, and you shove each bit **harder**. Both effects grow with speed, so drag climbs steeply: for a cyclist, doubling the speed roughly quadruples the air resistance.
+      Moving through air means shoving air molecules out of the way. Go faster and you shove **more** air every second, and you shove each bit **harder**.
 
-      Think of walking through a crowded corridor versus sprinting through it. Sprinting, you bump more people per second and you hit each one harder. (Where the analogy breaks: air flows smoothly around a streamlined shape, and people mostly don't.)
+      Both effects grow with speed, so drag climbs steeply. For a cyclist, doubling the speed roughly quadruples the air resistance.
+
+      Think of walking through a crowded corridor versus sprinting through it. Sprinting, you bump more people per second and you hit each one harder.
+
+      Where the analogy breaks: air flows smoothly around a streamlined shape, and people mostly don't.
 
   - type: example
     title: Same pedalling, less acceleration
@@ -100,7 +111,7 @@ blocks:
   - type: misconceptions
     items:
       - wrong: Friction always acts backwards, against the way you're going.
-        right: Friction opposes the **sliding of the surfaces** over each other. When you walk, your foot pushes backwards on the ground, so friction on your foot acts **forwards**. That's what moves you (try walking on ice).
+        right: Friction opposes the **sliding of the surfaces** over each other. When you walk, your foot pushes backwards on the ground, so friction on your foot acts **forwards** and moves you (try walking on ice).
       - wrong: If an object isn't moving, there's no friction on it.
         right: Friction also opposes **attempted** motion. Push a heavy crate that doesn't budge and friction matches your push exactly, up to a maximum.
       - wrong: Air resistance is a fixed amount for each object.
@@ -121,7 +132,11 @@ blocks:
   - type: enrichment
     title: How big is drag, exactly?
     body: |
-      For a small sphere moving slowly through a viscous liquid, drag is proportional to speed (Stokes' law, $F = 6\pi\eta r v$, where $\eta$ is the viscosity). For everyday objects moving quickly through air, drag is closer to proportional to $v^2$. For friction between dry surfaces, the maximum friction is about $\mu R$, where $R$ is the normal contact force and $\mu$ is the coefficient of friction. None of these formulae is needed for 9702; the simple model "drag increases with speed" is enough.
+      None of these formulae is needed for 9702. The simple model "drag increases with speed" is enough.
+
+      - **A small sphere moving slowly through a viscous liquid:** drag is proportional to speed (Stokes' law, $F = 6\pi\eta r v$, where $\eta$ is the viscosity).
+      - **Everyday objects moving quickly through air:** drag is roughly proportional to $v^2$.
+      - **Dry surfaces:** the maximum friction is about $\mu R$, where $R$ is the normal contact force and $\mu$ is the coefficient of friction.
 
   - type: takeaways
     items:

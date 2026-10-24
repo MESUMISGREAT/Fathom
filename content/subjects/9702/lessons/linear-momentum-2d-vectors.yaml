@@ -9,7 +9,7 @@ objectives: ["3.3.2"]
 prerequisites: [linear-momentum-explosions-recoil, units-adding-vectors]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcome 3.3.2, solving problems with conservation of momentum in two
@@ -17,6 +17,7 @@ provenance:
     crash momenta (18 000 and 16 000 kg m s⁻¹, total 24 100 kg m s⁻¹ at 41.6°) and the explosion
     momenta (6.0, 3.0 and 6.7 kg m s⁻¹). Masses and speeds are illustrative; all worked values and
     answer keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -25,7 +26,9 @@ blocks:
   - type: explain
     title: Why does the wreck go diagonally?
     body: |
-      A car heading east and a car heading north collide at a junction and lock together. The wreck slides off **north-east**-ish. Not east, not north: somewhere in between, closer to whichever car brought more momentum.
+      A car heading east and a car heading north collide at a junction and lock together. The wreck slides off **north-east**-ish.
+
+      Not east, not north: somewhere in between, closer to whichever car brought more momentum.
 
       The rule hasn't changed: **total momentum before = total momentum after**. But momentum is a **vector**, so "total" now means **vector sum**: add the arrows tip to tail, exactly as you added forces in topic 1.
 
@@ -49,7 +52,7 @@ blocks:
       - |
         Momenta before: $p_A = 1200 \times 15 = 18\,000\ \text{kg m s}^{-1}$ east; $p_B = 1600 \times 10 = 16\,000\ \text{kg m s}^{-1}$ north.
       - |
-        They are at right angles, so the total is $\sqrt{18\,000^2 + 16\,000^2} = 24\,100\ \text{kg m s}^{-1}$.
+        They are at right angles, so the total is $\sqrt{18\,000^2 + 16\,000^2} = 24\,083 \approx 24\,100\ \text{kg m s}^{-1}$.
       - |
         Direction: $\tan\theta = \dfrac{16\,000}{18\,000}$, so $\theta = 41.6°$ north of east.
       - |
@@ -63,7 +66,9 @@ blocks:
   - type: explain
     title: "Explosions in 2D: the arrows must close"
     body: |
-      An object at rest has zero momentum. If it bursts into three pieces, their momenta must **add to zero**. Drawn tip to tail, the three arrows form a **closed triangle**: you end up back where you started.
+      An object at rest has zero momentum. If it bursts into three pieces, their momenta must **add to zero**.
+
+      Drawn tip to tail, the three arrows form a **closed triangle**: you end up back where you started.
 
       That's how investigators work out where the third piece went: it must carry exactly the momentum that cancels the other two.
 
@@ -120,7 +125,8 @@ blocks:
   - type: takeaways
     items:
       - In 2D, total momentum before = total momentum after as **vectors**.
-      - "Momenta at right angles: total = √(p₁² + p₂²), direction from tan θ = p₂/p₁."
+      - |
+        Momenta at right angles: total $= \sqrt{p_1^2 + p_2^2}$, direction from $\tan\theta = \dfrac{p_2}{p_1}$.
       - For an object at rest that breaks up, the momentum arrows of the pieces form a closed polygon (total zero).
       - Give every answer as a magnitude and a direction.
 
@@ -161,7 +167,7 @@ questions:
         sigFigs: 3
         unit: °
     explanation: |
-      Car: $900 \times 20 = 18\,000\ \text{kg m s}^{-1}$ north. Van: $1500 \times 8.0 = 12\,000\ \text{kg m s}^{-1}$ east. Total $= \sqrt{18\,000^2 + 12\,000^2} = 21\,600\ \text{kg m s}^{-1}$, so $v = \dfrac{21\,633}{2400} = 9.01\ \text{m s}^{-1}$. Angle east of north: $\tan^{-1}\left(\dfrac{12\,000}{18\,000}\right) = 33.7°$.
+      Car: $900 \times 20 = 18\,000\ \text{kg m s}^{-1}$ north. Van: $1500 \times 8.0 = 12\,000\ \text{kg m s}^{-1}$ east. Total $= \sqrt{18\,000^2 + 12\,000^2} = 21\,633 \approx 21\,600\ \text{kg m s}^{-1}$, so $v = \dfrac{21\,633}{2400} = 9.01\ \text{m s}^{-1}$. Angle east of north: $\tan^{-1}\left(\dfrac{12\,000}{18\,000}\right) = 33.7°$.
 
   - id: three-pieces
     format: numeric
@@ -196,7 +202,7 @@ questions:
       - text: The pieces move off with equal speeds
         why: Their momenta are equal in size; their speeds are equal only if their masses are.
       - text: The pieces have equal kinetic energies
-        why: With equal-sized momenta, the lighter piece has more kinetic energy ($E_\text{k} = p^2/2m$).
+        why: With equal-sized momenta, the lighter piece has more kinetic energy ($E_\text{k} = \dfrac{p^2}{2m}$).
     explanation: |
       Zero total momentum with two vectors means they cancel exactly: same size, opposite directions. A third piece is needed for a triangle.
 

@@ -111,10 +111,10 @@ export function NonUniformResistiveForces() {
       <Label x={gx(8.1)} y={gy(7.6) + 18} anchor="end" className="dg-text-small">
         grows as speed grows
       </Label>
-      <Label x={gx(9.9)} y={gy(FRICTION) - 30} anchor="end" className="dg-text-accent-2">
+      <Label x={gx(9.9)} y={gy(FRICTION) + 18} anchor="end" className="dg-text-accent-2">
         sliding friction
       </Label>
-      <Label x={gx(9.9)} y={gy(FRICTION) - 13} anchor="end" className="dg-text-small">
+      <Label x={gx(9.9)} y={gy(FRICTION) + 35} anchor="end" className="dg-text-small">
         roughly constant
       </Label>
       <Label x={GX0 - 4} y={GY0 + 20} anchor="start" className="dg-text-small">

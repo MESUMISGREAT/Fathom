@@ -30,6 +30,12 @@ export function LinearMomentumGlancing() {
   };
   return (
     <Svg width={W} height={H}>
+      <Label x={24} y={22} anchor="start" className="dg-text-small dg-text-muted">
+        equal masses, so m cancels:
+      </Label>
+      <Label x={24} y={40} anchor="start" className="dg-text-small dg-text-muted">
+        compare velocities directly
+      </Label>
       {/* axis through the collision */}
       <line x1={40} y1={c.y} x2={c.x + 170} y2={c.y} className="dg-grid" />
       <Label x={c.x + 176} y={c.y} anchor="start" className="dg-text-small dg-italic">
@@ -78,7 +84,7 @@ export function LinearMomentumGlancing() {
 
       {/* bookkeeping */}
       <Label x={W / 2} y={266} className="dg-text-small">
-        along x: 2.0 = 1.0 cos 60° + 1.5 → 0.50 + 1.50 = 2.0 ✓
+        along x: 2.0 = 1.0 cos 60° + 1.73 cos 30° → 0.50 + 1.50 = 2.0 ✓
       </Label>
       <Label x={W / 2} y={286} className="dg-text-small">
         along y: 0 = 1.0 sin 60° − 1.73 sin 30° → (+0.87) + (−0.87) = 0 ✓

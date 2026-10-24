@@ -64,11 +64,20 @@ export function LinearMomentumExplosionTriangle() {
       <Label x={c.x + 10} y={c.y - 14} anchor="start" className="dg-text-small dg-text-accent">
         0.20 kg at 30 m s⁻¹ E
       </Label>
+      <Label x={c.x + 3 * KP} y={c.y + 16} className="dg-text-small dg-text-accent">
+        p = 6.0
+      </Label>
       <Label x={c.x} y={e2.y - 14} className="dg-text-small dg-text-accent-2">
         0.30 kg at 10 m s⁻¹ N
       </Label>
+      <Label x={c.x - 10} y={c.y - 1.5 * KP} anchor="end" className="dg-text-small dg-text-accent-2">
+        p = 3.0
+      </Label>
       <Label x={24} y={e3.y + 22} anchor="start" className="dg-text-small">
         0.10 kg at 67 m s⁻¹
+      </Label>
+      <Label x={24} y={e3.y + 40} anchor="start" className="dg-text-small">
+        p = 6.7
       </Label>
       {/* compass */}
       <Arrow x1={40} y1={92} x2={40} y2={62} head={7} className="dg-thin" />

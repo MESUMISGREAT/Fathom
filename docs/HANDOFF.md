@@ -195,10 +195,11 @@ changes alongside lessons:
 
 ## 5. Current state (24 Oct 2026, third chat)
 
-- On `main`: **165 reviewed lessons, 1001 questions** (9709: 59, 9618: 42, 9702: 31, 9701: 33).
+- On `main`: **176 reviewed lessons, 1066 questions** (9709: 59, 9618: 42, 9702: 42, 9701: 33).
   All are live. Tests: 166 vitest and 25 Playwright e2e.
 - Done in the second and third chats:
-  - published 9618 2.1 (networks) and 9709 1.6+1.7 (series, differentiation);
+  - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation) and 9702 3.2+3.3
+    (non-uniform motion, linear momentum);
   - every 9709 diagram now has proper fractions and roots;
   - the chain rule was rewritten the box way;
   - **all eight other 1.7 differentiation lessons were rewritten in the "one question type,
@@ -209,10 +210,8 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 10 published, 1 drafted, 143 todo. Next actions, in order:
-  1. Run a reviewer on **9702 3.2+3.3** (drafted, 11 lessons: 4 `non-uniform-*`, 7
-     `linear-momentum-*`; backed up on `wip-snapshot`).
-  2. Then the `todo` units in order: 9701 3.1+3.2, 9709 1.8, 9618 3.1, 9702 4.1+4.2, …
+- Queue: 11 published, 143 todo. Next: the `todo` units in order (9701 3.1+3.2 is
+  being written now, then 9709 1.8, 9618 3.1, 9702 4.1+4.2, …).
 - **Open question for the user (asked 23 Oct, no answer yet):** restyle the 165 existing
   lessons to the new short-chunk style? It's a big job (a writer and a reviewer per batch).
   Ask before starting it, and ask whether it goes before or after the new topics.
@@ -222,9 +221,6 @@ changes alongside lessons:
 - No agents running. The old scheduled task `trig_01NiVSUy5PGKorMtJZ6y9aSt` stays disabled.
 
 ## 6. Other follow-ups (small, do when convenient)
-
-- `circular-measure-sector-parts` mixes "θ ÷ 2π" with a stacked θ over 2π fraction; make
-  them match. The reviewer flagged this.
 
 - Keep the README status line (lesson and question counts) current after each publish.
 - `docs/PLAN.md` section 2.2 should list the points tables now built: `xp_events`,
