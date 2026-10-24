@@ -2,7 +2,7 @@ id: p1-differentiation-gradient-of-a-curve
 subject: "9709"
 topic: "1.7"
 title: The gradient of a curve
-summary: The gradient of a curve at a point is the limit of the gradients of chords as the second point slides in; we write it dy/dx or f′(x).
+summary: Find the gradient of a chord PQ in terms of h, cancel the h, then let h shrink to zero to get the gradient of the curve at P. That gradient is written d y by d x, or f′(x).
 order: 1
 minutes: 5
 kind: core
@@ -21,27 +21,27 @@ provenance:
     taught in the next lesson. All examples and questions are original; all arithmetic checked in
     Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
     body: |-
-      By the end you can explain the gradient of a curve at a point as the **limit of the gradients of chords**, work out chord gradients like the one on $y = x^3$ from $x = 2$ to $x = 2 + h$, and use the notations $\dfrac{dy}{dx}$ and $f'(x)$.
+      By the end you can find the gradient of a **chord** in terms of $h$, and use it to get the **gradient of the curve** at a point.
 
   - type: explain
-    title: A hill doesn't have one gradient
+    title: What they ask
     body: |-
-      A straight line has one gradient, everywhere. A curve is more like a road over a hill: gentle at the bottom, steep halfway up, flat at the top.
+      *$P(2, 8)$ is on $y = x^3$, and $Q$ is the point on the curve where $x = 2 + h$. Find the gradient of the chord $PQ$ in terms of $h$. Hence find the gradient of the curve at $P$.*
 
-      So for a curve we ask: *how steep is it right here, at this point?* The answer is the gradient of the **tangent** at that point, the line that just grazes the curve there.
-
-      Snag: a gradient needs **two** points ($\frac{\text{rise}}{\text{run}}$), and a tangent only gives us one. Time for a trick.
+      Giveaway words: **chord**, **$x = 2 + h$**, **in terms of $h$**, **hence the gradient at $P$**.
 
   - type: explain
-    title: Chords that close in
+    title: The idea in two lines
     body: |-
-      Take the point $P$ you care about, and a second point $Q$ on the curve a little further along. The straight line $PQ$ is a **chord**, and you *can* find its gradient.
+      A **chord** is a straight line joining two points on a curve. The gradient of the curve at $P$ is the gradient of the **tangent** there, the line that just touches the curve at $P$.
 
-      Now slide $Q$ towards $P$. The chords swing round and get closer and closer to the tangent. Their gradients settle down to a single number: the gradient of the curve at $P$.
+      Slide $Q$ towards $P$ (make $h$ smaller and smaller) and the chord swings round onto the tangent. So the chord gradients close in on the gradient at $P$.
 
   - type: diagram
     diagram: p1-differentiation-chords-to-tangent
@@ -54,77 +54,114 @@ blocks:
     caption: |-
       As $Q$ slides down to $P$, the chord gradients $19, 15.25, 13.24, \dots$ close in on $12$: the gradient of the tangent at $P(2, 8)$.
 
-  - type: check
-    questions: [chord-basic, limit-cloze, best-description]
+  - type: explain
+    title: The method
+    body: |-
+      Same four steps every time:
+
+      1. Write $Q$: put its $x$-value (like $2 + h$) into the curve's equation to get its $y$-value.
+      2. Chord gradient: $\dfrac{\text{rise}}{\text{run}}$. The run from $P$ to $Q$ is just $h$.
+      3. **Cancel the $h$: expand the top, then divide every term by $h$.** This is the step people skip.
+      4. Let $h \to 0$: every term with an $h$ in it vanishes. The number left is the gradient of the curve at $P$.
 
   - type: example
-    title: The chord from x = 2 to x = 2 + h on y = x³
+    title: "The easiest one: y = x² at P(1, 1)"
     problem: |-
-      $P$ is the point $(2, 8)$ on $y = x^3$ and $Q$ is the point on the curve with $x$-coordinate $2 + h$. Find the gradient of the chord $PQ$ in terms of $h$, and hence the gradient of the curve at $P$.
+      $P(1, 1)$ is on $y = x^2$, and $Q$ is the point on the curve where $x = 1 + h$. Find the gradient of $PQ$ in terms of $h$, and hence the gradient of the curve at $P$.
     steps:
       - |-
-        $Q$ is $\left(2 + h,\ (2 + h)^3\right)$. Gradient of $PQ$ $= \dfrac{(2 + h)^3 - 8}{(2 + h) - 2} = \dfrac{(2 + h)^3 - 8}{h}$.
+        **Write $Q$:** $\;Q = \big(1 + h,\ (1 + h)^2\big)$.
       - |-
-        Expand (binomial, row 3): $(2 + h)^3 = 8 + 12h + 6h^2 + h^3$.
+        **Chord gradient:** $\;\dfrac{(1 + h)^2 - 1}{h}$.
       - |-
-        So the gradient is $\dfrac{12h + 6h^2 + h^3}{h} = 12 + 6h + h^2$ (for $h \neq 0$).
+        **Cancel the $h$:** $\;(1 + h)^2 = 1 + 2h + h^2$, so the top is $2h + h^2$. Divide by $h$: $\;2 + h$.
       - |-
-        As $Q$ slides towards $P$, $h \to 0$, so $6h + h^2 \to 0$ and the gradient $\to 12$.
+        **Let $h \to 0$:** $\;2 + h \to 2$.
     answer: |-
-      The chord gradient is $12 + 6h + h^2$, and the gradient of $y = x^3$ at $(2, 8)$ is $12$. That matches the table: $h = 0.01$ gives $12.0601$.
+      The chord gradient is $2 + h$, and the gradient of the curve at $P$ is $2$.
 
-  - type: intuition
-    title: Zoom in far enough and it's straight
-    body: |-
-      Zoom in on a smooth curve, again and again, and the bit around $P$ looks more and more like a straight line. That line is the tangent; its gradient is what we're after.
-
-      It's like the Earth looking flat from where you're standing. The analogy breaks at sharp corners: zoom in on the point of a V shape and it never straightens out, so there's no single gradient there.
-
-  - type: definition
-    term: Gradient of a curve and the derivative
-    body: |-
-      The **gradient of a curve** at a point $P$ is the gradient of the tangent at $P$. It is the **limit** of the gradients of the chords $PQ$ as $Q$ approaches $P$ along the curve.
-
-      For $y = f(x)$, the gradient at a general point is a function of $x$, called the **derivative** (or gradient function). It is written
-
-      $$\frac{dy}{dx} \quad \text{or} \quad f'(x).$$
-
-      For example, if $f(x) = x^3$ then $f'(2) = 12$.
+      Check it another way: $h = 0.1$ puts $Q$ at $(1.1, 1.21)$, and $\dfrac{1.21 - 1}{0.1} = 2.1$, which is $2 + 0.1$ ✓
 
   - type: check
-    questions: [chord-expression, chord-limit, chord-find-h]
+    questions: [chord-basic, chord-expression, chord-limit]
+
+  - type: example
+    title: "Exam-style: y = x³ at P(2, 8)"
+    problem: |-
+      $P(2, 8)$ is on $y = x^3$, and $Q$ is the point on the curve where $x = 2 + h$. Find the gradient of the chord $PQ$ in terms of $h$, and hence the gradient of the curve at $P$.
+    steps:
+      - |-
+        **Write $Q$:** $\;Q = \big(2 + h,\ (2 + h)^3\big)$.
+      - |-
+        **Chord gradient:** $\;\dfrac{(2 + h)^3 - 8}{h}$.
+      - |-
+        **Cancel the $h$:** $\;(2 + h)^3 = 8 + 12h + 6h^2 + h^3$ (binomial expansion), so the top is $12h + 6h^2 + h^3$. Divide by $h$: $\;12 + 6h + h^2$.
+      - |-
+        **Let $h \to 0$:** $\;6h$ and $h^2$ both vanish, so the gradient $\to 12$.
+    answer: |-
+      The chord gradient is $12 + 6h + h^2$, and the gradient of the curve at $P$ is $12$.
+
+      That matches the table in the picture: $h = 0.01$ gives $12.0601$.
+
+  - type: check
+    questions: [chord-find-h]
+
+  - type: definition
+    term: Gradient of a curve, and the derivative
+    body: |-
+      The **gradient of a curve** at $P$ is the gradient of the tangent at $P$. It is the **limit** of the chord gradients as $Q$ slides into $P$.
+
+      Worked out at every $x$, it becomes a function called the **derivative**. It is written $\dfrac{dy}{dx}$ or $f'(x)$.
+
+      So for $f(x) = x^3$, $\;f'(2) = 12$ means "the gradient at $x = 2$ is 12".
+
+  - type: check
+    questions: [limit-cloze, best-description]
+
+  - type: deeper
+    title: "Why it works: zoom in"
+    body: |-
+      Zoom in on a smooth curve again and again, and the bit around $P$ looks more and more like a straight line. That line is the tangent.
+
+      It's like the Earth looking flat where you're standing.
+
+      The idea breaks at a sharp corner. Zoom in on the point of a V shape and it never straightens out, so there's no single gradient there.
 
   - type: misconceptions
     items:
       - wrong: |-
-          Just put $h = 0$ into $\dfrac{(2 + h)^3 - 8}{h}$.
+          Skip the cancelling and put $h = 0$ straight into $\dfrac{(2 + h)^3 - 8}{h}$.
         right: |-
-          That gives $\dfrac00$, which means nothing. Simplify first (cancel the $h$), *then* let $h \to 0$.
+          That gives $\dfrac00$, which means nothing. **Cancel the $h$** first, *then* let $h \to 0$.
       - wrong: |-
-          The gradient of the chord from $(1, 1)$ to $(3, 27)$ on $y = x^3$ is the gradient of the curve at $x = 2$.
+          The chord from $(1, 1)$ to $(3, 27)$ on $y = x^3$ gives the gradient of the curve at $x = 2$.
         right: |-
-          A chord gives an *average* gradient over a stretch. The gradient at a point needs the chord to shrink right down to that point.
+          A chord only gives an *average* gradient over a stretch. For the gradient at a point, the chord has to shrink right down to that point.
       - wrong: |-
           $\dfrac{dy}{dx}$ means $dy$ divided by $dx$, so you can cancel the $d$s.
         right: |-
-          At this level treat $\dfrac{dy}{dx}$ as one symbol meaning "the derivative of $y$ with respect to $x$". Nothing cancels.
+          Treat $\dfrac{dy}{dx}$ as one symbol: "the derivative of $y$ with respect to $x$". Nothing cancels.
 
   - type: exam
     body: |-
-      - You won't be asked to differentiate from first principles in general, but a chord question like the example above can appear. Show the expansion, the cancelled $h$, and a clear "as $h \to 0$" step.
-      - In almost every other question you'll use the rules for differentiating (next lesson). This lesson is *why* those rules mean "gradient".
-      - Notation is examined: know that $f'(3)$ means the gradient of $y = f(x)$ where $x = 3$.
+      Write one line for each step, so the examiner can tick each one:
+
+      - **Write $Q$ and the chord gradient:** $\dfrac{(2 + h)^3 - 8}{h}$.
+      - **Cancel the $h$:** show the expansion, then $12 + 6h + h^2$.
+      - **Let $h \to 0$:** write "as $h \to 0$, gradient $\to 12$".
+
+      You won't be asked to do this for a general curve. Everywhere else you'll use the quick rules in the next lesson.
 
   - type: takeaways
     items:
       - |-
-        The gradient of a curve at a point is the gradient of the tangent there.
+        The method: write $Q$, chord gradient over $h$, **cancel the $h$**, then let $h \to 0$.
       - |-
-        It's the limit of chord gradients as the second point slides in: on $y = x^3$, $12 + 6h + h^2 \to 12$ at $x = 2$.
+        The gradient of a curve at $P$ is the gradient of the tangent at $P$: the limit of the chord gradients.
       - |-
-        Simplify before letting $h \to 0$; putting $h = 0$ straight in gives $\frac00$.
+        Never put $h = 0$ straight in. You get $\dfrac00$.
       - |-
-        The gradient function is written $\dfrac{dy}{dx}$ or $f'(x)$.
+        The gradient function is written $\dfrac{dy}{dx}$ or $f'(x)$, and $f'(2)$ is the gradient where $x = 2$.
 
 questions:
   - id: chord-basic
@@ -136,7 +173,9 @@ questions:
     fields:
       - answer: 4
     explanation: |-
-      Gradient $= \dfrac{9 - 1}{3 - 1} = \dfrac82 = 4$. That's the *average* steepness between $x = 1$ and $x = 3$, not the gradient at any one point (though for $y = x^2$ it happens to equal the gradient at the midpoint $x = 2$).
+      **Chord gradient:** $\;\dfrac{\text{rise}}{\text{run}} = \dfrac{9 - 1}{3 - 1} = \dfrac82 = 4$.
+
+      That's the *average* steepness from $x = 1$ to $x = 3$, not the gradient at one point.
 
   - id: limit-cloze
     format: cloze
@@ -147,7 +186,7 @@ questions:
     blanks:
       - accept: ["tangent", "tangent line", "the tangent"]
     explanation: |-
-      The chords approach the **tangent** at $P$, so their gradients approach the gradient of the tangent, which is the gradient of the curve at $P$.
+      As $h \to 0$ the chords swing onto the **tangent** at $P$. So their gradients close in on the gradient of the tangent, which is the gradient of the curve at $P$.
 
   - id: chord-expression
     format: expression
@@ -161,7 +200,9 @@ questions:
     display: |-
       $6 + h$
     explanation: |-
-      $\dfrac{(3 + h)^2 - 9}{h} = \dfrac{9 + 6h + h^2 - 9}{h} = \dfrac{6h + h^2}{h} = 6 + h$.
+      - **Write $Q$:** $\;\big(3 + h,\ (3 + h)^2\big)$.
+      - **Chord gradient:** $\;\dfrac{(3 + h)^2 - 9}{h}$.
+      - **Cancel the $h$:** $\;\dfrac{9 + 6h + h^2 - 9}{h} = \dfrac{6h + h^2}{h} = 6 + h$.
 
   - id: chord-limit
     format: numeric
@@ -172,7 +213,9 @@ questions:
     fields:
       - answer: 6
     explanation: |-
-      As $h \to 0$, $6 + h \to 6$. So the gradient of $y = x^2$ at $(3, 9)$ is 6. (Check with $h = 0.1$: the chord gradient is $6.1$, just above 6.)
+      **Let $h \to 0$:** $\;6 + h \to 6$. So the gradient of $y = x^2$ at $(3, 9)$ is 6.
+
+      Check with $h = 0.1$: the chord gradient is $6.1$, just above 6.
 
   - id: best-description
     format: mcq
@@ -181,21 +224,21 @@ questions:
     prompt: |-
       Which statement best describes the gradient of a curve at a point $P$?
     explanation: |-
-      The gradient at $P$ is the limit of the chord gradients as $Q \to P$; equivalently, the gradient of the tangent at $P$.
+      The gradient at $P$ is the limit of the chord gradients as $Q$ slides into $P$. That's the same as the gradient of the tangent at $P$.
     options:
       - text: The limit of the gradients of the chords $PQ$ as $Q$ approaches $P$ along the curve
         correct: true
         why: |-
-          That's exactly the definition: the chords close in on the tangent, and their gradients close in on the gradient at $P$.
+          That's the definition: the chords close in on the tangent, and their gradients close in on the gradient at $P$.
       - text: The gradient of the line from the origin to $P$
         why: |-
-          That line usually cuts through the curve; it has nothing to do with how steep the curve is at $P$.
+          That line usually cuts through the curve. It has nothing to do with how steep the curve is at $P$.
       - text: The $y$-coordinate of $P$ divided by the $x$-coordinate of $P$
         why: |-
-          That's the same origin-line gradient in disguise. On $y = x^3$ at $(2, 8)$ it gives 4, but the true gradient is 12.
+          That's the origin-line gradient in disguise. On $y = x^3$ at $(2, 8)$ it gives 4, but the true gradient is 12.
       - text: The gradient of the chord $PQ$ when $Q$ is exactly at $P$
         why: |-
-          When $Q$ is at $P$ there's only one point, so the gradient formula gives $\frac00$. You need the *limit* as $Q$ gets close.
+          With $Q$ on top of $P$ there's only one point, so the gradient is $\dfrac00$. You need the *limit* as $h \to 0$, after cancelling the $h$.
 
   - id: chord-find-h
     format: numeric
@@ -209,6 +252,8 @@ questions:
       - label: "gradient at (1, 1) ="
         answer: 3
     explanation: |-
-      $3 + 3h + h^2 = 7$ gives $h^2 + 3h - 4 = 0$, so $(h + 4)(h - 1) = 0$ and $h = 1$ (positive). Check: the chord from $(1, 1)$ to $(2, 8)$ has gradient $7$ ✓
+      **Chord gradient = 7:** $\;3 + 3h + h^2 = 7$ gives $h^2 + 3h - 4 = 0$, so $(h + 4)(h - 1) = 0$ and $h = 1$ (the positive one).
 
-      As $h \to 0$, $3 + 3h + h^2 \to 3$, so the gradient of the curve at $(1, 1)$ is 3.
+      Check: the chord from $(1, 1)$ to $(2, 8)$ has gradient $\dfrac{8 - 1}{2 - 1} = 7$ ✓
+
+      **Let $h \to 0$:** $\;3 + 3h + h^2 \to 3$, so the gradient of the curve at $(1, 1)$ is 3.

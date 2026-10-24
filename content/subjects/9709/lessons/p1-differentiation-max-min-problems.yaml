@@ -2,7 +2,7 @@ id: p1-differentiation-max-min-problems
 subject: "9709"
 topic: "1.7"
 title: Maximum and minimum problems
-summary: Model a practical situation with one variable, then use a stationary point to find the greatest or least value and prove which it is.
+summary: Turn a "largest" or "smallest" word problem into a formula in one letter, find its stationary point, prove it's a maximum or minimum, and answer the question with units.
 order: 9
 minutes: 5
 kind: core
@@ -18,24 +18,53 @@ provenance:
     examples and questions are original, with made-up illustrative dimensions; all arithmetic
     checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
     body: |-
-      By the end you can turn a practical "largest" or "smallest" problem into a function of one variable, find its stationary point, and **prove** whether it's a maximum or a minimum.
+      By the end you can answer *"find the maximum volume"* (or the least area, or the greatest product) in a word problem, and **show** that it really is a maximum.
 
   - type: explain
-    title: Calculus is the cheat code for "best"
+    title: What they ask
     body: |-
-      Biggest box from a sheet of card. Least metal for a can. Largest field for a fixed length of fence. Every one of these is a stationary point in disguise.
+      A typical question: *Show that the volume of the box is $V = 144x - 48x^2 + 4x^3$. Find the maximum volume, and show that it is a maximum.*
 
-      The recipe:
+      Giveaway words: **greatest**, **least**, **maximum**, **minimum**, **largest possible**. There's often a **show that** first.
 
-      1. Write the quantity you want to optimise (volume, area, cost) as a formula, often in **two** variables.
-      2. Use the **constraint** (fixed perimeter, fixed volume…) to eliminate one variable.
-      3. Differentiate, set the derivative to 0, and solve.
-      4. Use the second derivative to show it's a maximum (or minimum).
-      5. Answer the actual question, with units.
+      It's the stationary-points method again, with a word problem wrapped round it.
+
+  - type: explain
+    title: The method
+    body: |-
+      The same four steps every time:
+
+      1. Formula: write the thing they want (volume, area…) using **one** letter. Use the fixed fact they give you (a fixed perimeter, a fixed volume) to get rid of any second letter.
+      2. Solve: differentiate, set it equal to 0 and solve. Throw out impossible values, like zero or negative lengths.
+      3. Prove: differentiate again. Negative means maximum, positive means minimum. Say so in words.
+      4. **Answer: put the value back in to get the maximum volume (or area, or cost) they asked for, with units.**
+
+  - type: example
+    title: "Example 1: the easiest case"
+    problem: |-
+      A rectangle has a perimeter of 20 m. Find its greatest possible area.
+    steps:
+      - |-
+        Formula: call the sides $x$ and $y$, so the perimeter gives $2x + 2y = 20$ and $y = 10 - x$. Then the area is $A = xy = x(10 - x) = 10x - x^2$.
+      - |-
+        Solve: $\dfrac{dA}{dx} = 10 - 2x = 0$, so $x = 5$.
+      - |-
+        Prove: $\dfrac{d^2A}{dx^2} = -2 < 0$, so this is a **maximum**.
+      - |-
+        Answer: $y = 10 - 5 = 5$, so $A = 5 \times 5 = 25\ \text{m}^2$.
+    answer: |-
+      The greatest area is $25\ \text{m}^2$, from a 5 m by 5 m square.
+
+      Check by trying another rectangle: 4 m by 6 m gives only $24\ \text{m}^2$.
+
+  - type: check
+    questions: [product-max, spot-constraint]
 
   - type: diagram
     diagram: p1-differentiation-box-net
@@ -49,78 +78,75 @@ blocks:
       Cut too little and the box is shallow; cut too much and the base vanishes. The best cut is in between, at the stationary point.
 
   - type: example
-    title: The open box
+    title: "Example 2: exam-style"
     problem: |-
-      Squares of side $x$ cm are cut from the corners of a 12 cm by 12 cm sheet of card, and the sides are folded up to make an open box. Find the maximum volume.
+      Squares of side $x$ cm are cut from the corners of a 12 cm by 12 cm sheet of card, and the sides are folded up to make an open box. Show that the volume is $V = 144x - 48x^2 + 4x^3$, and find the maximum volume.
     steps:
       - |-
-        Base $(12 - 2x)$ by $(12 - 2x)$, height $x$: $\;V = x(12 - 2x)^2 = 144x - 48x^2 + 4x^3$, for $0 < x < 6$.
+        Formula: the base is $(12 - 2x)$ by $(12 - 2x)$ and the height is $x$. So $V = x(12 - 2x)^2 = x(144 - 48x + 4x^2) = 144x - 48x^2 + 4x^3$, as required.
       - |-
-        $\dfrac{dV}{dx} = 144 - 96x + 12x^2 = 12(x^2 - 8x + 12) = 12(x - 2)(x - 6)$.
+        Solve: $\dfrac{dV}{dx} = 144 - 96x + 12x^2 = 12(x - 2)(x - 6) = 0$, so $x = 2$ or $x = 6$. Throw out $x = 6$: the base would be 0 cm wide.
       - |-
-        $\dfrac{dV}{dx} = 0$ at $x = 2$ or $x = 6$. Reject $x = 6$: the base would have zero width.
+        Prove: $\dfrac{d^2V}{dx^2} = 24x - 96$, which is $-48 < 0$ at $x = 2$. So it's a **maximum**.
       - |-
-        $\dfrac{d^2V}{dx^2} = 24x - 96 = -48 < 0$ at $x = 2$, so it's a maximum.
-      - |-
-        $V = 2 \times 8^2 = 128$.
+        Answer: $V = 2 \times (12 - 4)^2 = 2 \times 64 = 128$.
     answer: |-
       The maximum volume is $128\ \text{cm}^3$, when $x = 2$.
 
   - type: check
     questions: [justify-mcq, box-18]
 
-  - type: example
-    title: A "show that" first, then the minimum
-    problem: |-
-      A closed cylinder has radius $r$ cm, height $h$ cm and volume $128\pi\ \text{cm}^3$. Show that its total surface area is $S = 2\pi r^2 + \dfrac{256\pi}{r}$, and find the minimum value of $S$.
-    steps:
-      - |-
-        Volume: $\pi r^2 h = 128\pi$, so $h = \dfrac{128}{r^2}$.
-      - |-
-        Surface area: two circles plus the curved side: $S = 2\pi r^2 + 2\pi r h = 2\pi r^2 + 2\pi r \times \dfrac{128}{r^2} = 2\pi r^2 + \dfrac{256\pi}{r}$, as required.
-      - |-
-        $\dfrac{dS}{dr} = 4\pi r - \dfrac{256\pi}{r^2} = 0$ gives $4\pi r^3 = 256\pi$, so $r^3 = 64$ and $r = 4$.
-      - |-
-        $\dfrac{d^2S}{dr^2} = 4\pi + \dfrac{512\pi}{r^3} > 0$ for $r > 0$, so it's a minimum.
-      - |-
-        $S = 2\pi(16) + \dfrac{256\pi}{4} = 32\pi + 64\pi = 96\pi$.
-    answer: |-
-      The minimum surface area is $96\pi \approx 302\ \text{cm}^2$, when $r = 4$ and $h = 8$. (Fun fact: the best can has height = diameter.)
+  - type: deeper
+    title: "Harder: a minimum, with a show that"
+    body: |-
+      *A closed cylinder has radius $r$ cm, height $h$ cm and volume $128\pi\ \text{cm}^3$. Show that its surface area is $S = 2\pi r^2 + \dfrac{256\pi}{r}$, and find the minimum value of $S$.*
+
+      - Formula: the volume gives $\pi r^2 h = 128\pi$, so $h = \dfrac{128}{r^2}$. The surface is two circles plus the curved side: $S = 2\pi r^2 + 2\pi r h = 2\pi r^2 + \dfrac{256\pi}{r}$, as required.
+      - Solve: $\dfrac{dS}{dr} = 4\pi r - \dfrac{256\pi}{r^2} = 0$, so $4\pi r^3 = 256\pi$, $r^3 = 64$ and $r = 4$.
+      - Prove: $\dfrac{d^2S}{dr^2} = 4\pi + \dfrac{512\pi}{r^3}$, which is positive. So it's a **minimum**.
+      - Answer: $S = 2\pi(16) + \dfrac{256\pi}{4} = 32\pi + 64\pi = 96\pi \approx 302\ \text{cm}^2$.
+
+      Fun fact: then $h = 8$, so the best can is exactly as tall as it is wide.
 
   - type: check
-    questions: [product-max, spot-constraint, open-cylinder]
+    questions: [open-cylinder]
 
   - type: misconceptions
     items:
       - wrong: |-
           $\dfrac{dV}{dx} = 0$ at $x = 2$, so the maximum volume is 2.
         right: |-
-          $x = 2$ is *where* the maximum happens. The question wants $V$: substitute back to get $128\ \text{cm}^3$.
+          $x = 2$ is *where* the maximum happens. Step 4: put it back in to get $V = 128\ \text{cm}^3$.
       - wrong: |-
-          It's a word problem, so obviously it's a maximum. No need to check.
+          It's a word problem, so it's obviously a maximum. No need to check.
         right: |-
-          Questions say "determine whether it is a maximum or a minimum". Show $\dfrac{d^2V}{dx^2} < 0$ (or the sign change) and say so.
+          The marks need step 3: the second derivative's value or sign, and the word "maximum".
       - wrong: |-
           Keep both $x = 2$ and $x = 6$ as answers.
         right: |-
-          Reject values outside the sensible range: $x = 6$ gives a box with no base. State the reason.
+          Throw out $x = 6$, and say why: the box would have no base.
+      - wrong: |-
+          From $2x + y = 40$, $y = 40 - x$.
+        right: |-
+          Move **both** $x$'s: $y = 40 - 2x$. A slip in step 1 ruins everything after it.
 
   - type: exam
     body: |-
-      - These questions often begin with *Show that $V = \dots$*. The answer is given, so every step of the algebra must be shown; then use the given formula even if you couldn't derive it.
-      - "Determine the nature" needs the second derivative's value or sign **and** a conclusion.
-      - Give the quantity asked for (area, volume, cost), with units, exact or to 3 s.f.
+      - These usually start with *show that $V = \dots$*. The answer is given, so show every line of algebra.
+      - Couldn't do the *show that*? Use the given formula for the rest; those marks are still there.
+      - For step 3, write the second derivative's value or sign **and** the conclusion, e.g. "$-48 < 0$, so maximum".
+      - Finish with the quantity asked for, with units, exact or to 3 significant figures.
 
   - type: takeaways
     items:
       - |-
-        Write the target quantity in one variable using the constraint, then differentiate.
+        The method: formula in one letter, solve, prove, **answer the actual question**.
       - |-
-        Solve the derivative $= 0$, rejecting impossible values (negative lengths, zero widths).
+        Use the fixed fact (perimeter, volume) to get rid of the second letter.
       - |-
-        Prove the nature with the second derivative.
+        Throw out impossible values, and say why.
       - |-
-        Answer the question: the maximum *value*, with units, not just the $x$ where it happens.
+        Finish with the value they asked for, with units, not just the $x$ where it happens.
 
 questions:
   - id: justify-mcq
@@ -130,21 +156,21 @@ questions:
     prompt: |-
       A student finds that $\dfrac{dA}{dx} = 0$ when $x = 5$ and $\dfrac{d^2A}{dx^2} = -4$ for all $x$. Which statement completes the argument correctly?
     explanation: |-
-      A negative second derivative at the stationary point means the gradient goes from positive to negative: a maximum.
+      Prove (step 3): a negative second derivative at the stationary point means a ∩ shape, so it's a **maximum**.
     options:
       - text: $\dfrac{d^2A}{dx^2} = -4 < 0$ at $x = 5$, so $A$ has a maximum value there.
         correct: true
         why: |-
-          Value, sign and conclusion: exactly what the mark scheme wants.
+          Value, sign and conclusion: exactly what step 3 needs.
       - text: $\dfrac{d^2A}{dx^2} = -4$, so $A$ has a minimum value at $x = 5$.
         why: |-
           Backwards. Negative second derivative means maximum.
       - text: $A$ is positive at $x = 5$, so it is a maximum.
         why: |-
-          The sign of $A$ itself says nothing about the nature of the stationary point.
+          The sign of $A$ itself says nothing about the nature. Step 3 uses the second derivative.
       - text: $\dfrac{dA}{dx} = 0$, so it must be a maximum.
         why: |-
-          $\dfrac{dA}{dx} = 0$ only tells you it's stationary. It could be a minimum; you have to test.
+          $\dfrac{dA}{dx} = 0$ only tells you it's stationary (step 2). It could be a minimum, so you still need step 3.
 
   - id: box-18
     format: numeric
@@ -160,9 +186,10 @@ questions:
         answer: 432
         unit: cm³
     explanation: |-
-      $V = 324x - 72x^2 + 4x^3$, so $\dfrac{dV}{dx} = 324 - 144x + 12x^2 = 12(x^2 - 12x + 27) = 12(x - 3)(x - 9)$.
-
-      $x = 9$ leaves no base, so $x = 3$. $\;\dfrac{d^2V}{dx^2} = 24x - 144 = -72 < 0$: maximum. $\;V = 3 \times 12^2 = 432\ \text{cm}^3$.
+      - Formula: $V = x(18 - 2x)^2 = 324x - 72x^2 + 4x^3$.
+      - Solve: $\dfrac{dV}{dx} = 324 - 144x + 12x^2 = 12(x - 3)(x - 9) = 0$. Throw out $x = 9$, which leaves no base, so $x = 3$.
+      - Prove: $\dfrac{d^2V}{dx^2} = 24x - 144 = -72 < 0$, so maximum.
+      - Answer: $V = 3 \times 12^2 = 432\ \text{cm}^3$.
 
   - id: product-max
     format: numeric
@@ -174,16 +201,19 @@ questions:
       - label: "P ="
         answer: 256
     explanation: |-
-      $y = 12 - x$, so $P = x^2(12 - x) = 12x^2 - x^3$. $\;\dfrac{dP}{dx} = 24x - 3x^2 = 3x(8 - x) = 0$ at $x = 0$ or $x = 8$; $x$ is positive, so $x = 8$.
-
-      $\dfrac{d^2P}{dx^2} = 24 - 6x = -24 < 0$: maximum. $\;y = 4$ and $P = 64 \times 4 = 256$.
+      - Formula: $y = 12 - x$, so $P = x^2(12 - x) = 12x^2 - x^3$.
+      - Solve: $\dfrac{dP}{dx} = 24x - 3x^2 = 3x(8 - x) = 0$, so $x = 0$ or $x = 8$. $x$ is positive, so $x = 8$.
+      - Prove: $\dfrac{d^2P}{dx^2} = 24 - 6x = -24 < 0$, so maximum.
+      - Answer: $y = 4$, so $P = 64 \times 4 = 256$.
 
   - id: spot-constraint
     format: spot-error
     difficulty: 2
     objectives: ["1.7.4"]
     prompt: |-
-      A rectangular pen is built against a long wall, using 40 m of fencing for the other three sides. The two sides perpendicular to the wall are each $x$ m and the side parallel to it is $y$ m. A student finds the maximum area. Which line contains the first error?
+      A rectangular pen is built against a long wall, using 40 m of fencing for the other three sides. The two sides perpendicular to the wall are each $x$ m and the side parallel to it is $y$ m.
+
+      A student finds the maximum area. Which line contains the first error?
     lines:
       - |-
         Fencing: $2x + y = 40$
@@ -199,7 +229,9 @@ questions:
     fix: |-
       $y = 40 - 2x$, so $A = 40x - 2x^2$, $\dfrac{dA}{dx} = 40 - 4x = 0$ at $x = 10$, and the maximum area is $10 \times 20 = 200\ \text{m}^2$.
     explanation: |-
-      Line 1 is right, but rearranging it for $y$ must subtract **both** $x$'s. Check the student's answer: $x = 20$ and $y = 20$ would use $2(20) + 20 = 60$ m of fencing, not 40.
+      The slip is in step 1, the formula. Line 1 is right, but rearranging it for $y$ must move **both** $x$'s.
+
+      Check the student's answer: $x = 20$ and $y = 20$ would use $2(20) + 20 = 60$ m of fencing, not 40.
 
   - id: open-cylinder
     format: numeric
@@ -217,6 +249,7 @@ questions:
         sigFigs: 3
         unit: cm²
     explanation: |-
-      $\dfrac{dS}{dr} = 2\pi r - \dfrac{2000}{r^2} = 0$ gives $r^3 = \dfrac{1000}{\pi}$, so $r = 6.8278\ldots = 6.83$ cm.
-
-      $\dfrac{d^2S}{dr^2} = 2\pi + \dfrac{4000}{r^3} > 0$: minimum. $\;S = \pi(6.8278\ldots)^2 + \dfrac{2000}{6.8278\ldots} = 146.46\ldots + 292.92\ldots = 439\ \text{cm}^2$ (3 s.f.).
+      - Formula: given, $S = \pi r^2 + \dfrac{2000}{r}$.
+      - Solve: $\dfrac{dS}{dr} = 2\pi r - \dfrac{2000}{r^2} = 0$ gives $r^3 = \dfrac{1000}{\pi}$, so $r = 6.8278\ldots = 6.83$ cm.
+      - Prove: $\dfrac{d^2S}{dr^2} = 2\pi + \dfrac{4000}{r^3} > 0$, so minimum.
+      - Answer: $S = \pi(6.8278\ldots)^2 + \dfrac{2000}{6.8278\ldots} = 146.46\ldots + 292.92\ldots = 439\ \text{cm}^2$ (3 s.f.).

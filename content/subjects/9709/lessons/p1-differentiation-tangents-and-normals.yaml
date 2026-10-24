@@ -2,7 +2,7 @@ id: p1-differentiation-tangents-and-normals
 subject: "9709"
 topic: "1.7"
 title: Tangents and normals
-summary: Use dy/dx to find the gradient at a point, then write the equations of the tangent and the normal there.
+summary: Find the equation of a tangent or normal in five steps. Find the point, differentiate, put x in to get the gradient, flip it and change its sign for a normal, then use the straight-line formula.
 order: 4
 minutes: 5
 kind: core
@@ -18,28 +18,21 @@ provenance:
     change" (the gradients, tangents and normals part). All examples and questions are
     original; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
     body: |-
-      By the end you can find the gradient of a curve at a given point, and the equations of the **tangent** and the **normal** to the curve there.
+      By the end you can find the **equation of the tangent** or the **equation of the normal** to a curve at a given point.
 
   - type: explain
-    title: The line that kisses, and the line that stands up straight
+    title: What they ask
     body: |-
-      The **tangent** at a point just grazes the curve there, running in exactly the same direction as the curve. So its gradient is $\dfrac{dy}{dx}$ at that point.
+      *Find the equation of the tangent (or normal) to the curve at the point where $x = 2$.* Often they add "in the form $ax + by + c = 0$".
 
-      The **normal** sticks straight out of the curve at right angles to the tangent, like a post driven into a hillside square to the slope. Not vertical: perpendicular to the ground at that spot.
-
-  - type: definition
-    term: Tangent and normal
-    body: |-
-      At the point $(x_1, y_1)$ on a curve, where the gradient is $m = \dfrac{dy}{dx}$:
-
-      - the **tangent** is the line through $(x_1, y_1)$ with gradient $m$;
-      - the **normal** is the line through $(x_1, y_1)$ perpendicular to the tangent, with gradient $-\dfrac{1}{m}$ (for $m \neq 0$).
-
-      Both equations come from $y - y_1 = m(x - x_1)$.
+      - The **tangent** touches the curve at the point, with the same gradient as the curve there.
+      - The **normal** goes through the same point, at right angles to the tangent.
 
   - type: diagram
     diagram: p1-differentiation-tangent-normal
@@ -49,54 +42,111 @@ blocks:
       dashed normal line y = −½x + 4 with gradient −½ crosses it, with a small right-angle marker
       between the two lines at P.
     caption: |-
-      At $P(2, 3)$: $\dfrac{dy}{dx} = 2$, so the tangent has gradient $2$ and the normal has gradient $-\tfrac12$. Equal scales on the axes, so the right angle really looks like one.
+      At $P(2, 3)$: $\dfrac{dy}{dx} = 2$, so the tangent has gradient $2$ and the normal has gradient $-\dfrac12$. Equal scales on the axes, so the right angle really looks like one.
+
+  - type: explain
+    title: The method
+    body: |-
+      Same five steps every time:
+
+      1. Find the point: if you only have $x$, put it into the curve's equation to get $y$.
+      2. Differentiate.
+      3. Put the $x$-value into $\dfrac{dy}{dx}$. That number is the tangent's gradient $m$.
+      4. **Normal? Flip the gradient and change its sign: $-\dfrac{1}{m}$.** This is the step people forget.
+      5. Put the point and the gradient into $y - y_1 = m(x - x_1)$. Then rearrange into the form they ask for.
+
+  - type: diagram
+    diagram: p1-differentiation-tangent-steps
+    alt: >-
+      Five numbered steps for the curve y = x² − 2x + 3 at x = 2. Step 1, find the point: y = 2² −
+      2(2) + 3 = 3, giving (2, 3). Step 2, differentiate: dy by dx = 2x − 2. Step 3, put x in, the
+      gradient: m = 2(2) − 2 = 2. Step 4, highlighted, normal? flip and change sign: minus 1
+      over m = minus one half. Step 5, put into the line: y − y₁ = m(x − x₁). Below a rule, the two
+      answers. Tangent: y − 3 = 2(x − 2), so y = 2x − 1. Normal: y − 3 = minus one half times
+      (x − 2), so x + 2y − 8 = 0.
+    caption: |-
+      The method on the curve in the graph above. Only step 4 is different for the normal.
 
   - type: example
-    title: Tangent and normal at a point
+    title: "The easiest one: a tangent to y = x²"
     problem: |-
-      Find the equations of the tangent and the normal to $y = x^2 - 2x + 3$ at the point $P(2, 3)$.
+      Find the equation of the tangent to $y = x^2$ at the point $(3, 9)$.
     steps:
       - |-
-        Differentiate: $\dfrac{dy}{dx} = 2x - 2$.
+        **Find the point:** it's given, $(3, 9)$.
       - |-
-        Gradient at $P$: put $x = 2$, giving $m = 2$.
+        **Differentiate:** $\;\dfrac{dy}{dx} = 2x$.
       - |-
-        Tangent: $y - 3 = 2(x - 2)$, so $y = 2x - 1$.
+        **Put $x$ in:** $\;m = 2(3) = 6$.
       - |-
-        Normal gradient: $-\dfrac{1}{2}$. Normal: $y - 3 = -\tfrac12(x - 2)$, so $y = -\tfrac12x + 4$, or $x + 2y - 8 = 0$.
+        **Normal?** No, it's the tangent, so keep $m = 6$.
+      - |-
+        **Put into the line:** $\;y - 9 = 6(x - 3)$, so $y = 6x - 9$.
     answer: |-
-      Tangent $y = 2x - 1$; normal $x + 2y = 8$.
+      $y = 6x - 9$
+
+      Check: at $x = 3$ the line gives $y = 18 - 9 = 9$ ✓, so it goes through the point.
 
   - type: check
-    questions: [gradient-at-point, normal-gradient, tangent-eqn]
+    questions: [gradient-at-point, tangent-eqn]
 
   - type: example
-    title: Working backwards from a gradient
+    title: "Exam-style: a normal, with only x given"
     problem: |-
-      Find the coordinates of the points on $y = x^3 - 3x^2 + 2$ where the tangent is parallel to the line $y = 9x$.
+      Find the equation of the normal to the curve $y = x^3 - 5x + 2$ at the point where $x = 2$. Give your answer in the form $ax + by + c = 0$.
     steps:
       - |-
-        Parallel means equal gradients, so we need $\dfrac{dy}{dx} = 9$.
+        **Find the point:** $\;y = 8 - 10 + 2 = 0$, so the point is $(2, 0)$.
       - |-
-        $\dfrac{dy}{dx} = 3x^2 - 6x = 9$, so $x^2 - 2x - 3 = 0$, i.e. $(x - 3)(x + 1) = 0$.
+        **Differentiate:** $\;\dfrac{dy}{dx} = 3x^2 - 5$.
       - |-
-        $x = 3$: $y = 27 - 27 + 2 = 2$. $\;x = -1$: $y = -1 - 3 + 2 = -2$.
+        **Put $x$ in:** $\;m = 3(4) - 5 = 7$.
+      - |-
+        **Normal? Flip and change sign:** $\;-\dfrac{1}{7}$.
+      - |-
+        **Put into the line:** $\;y - 0 = -\dfrac{1}{7}(x - 2)$. Multiply by 7: $\;7y = -x + 2$.
     answer: |-
-      $(3, 2)$ and $(-1, -2)$.
+      $x + 7y - 2 = 0$
 
   - type: check
-    questions: [find-x-gradient, normal-eqn]
+    questions: [normal-gradient, normal-eqn]
+
+  - type: explain
+    title: "The other type: they give the gradient"
+    body: |-
+      *Find the points where the tangent is parallel to $y = 9x$*, or *where the gradient is 9*.
+
+      Run the method backwards: set $\dfrac{dy}{dx}$ equal to the gradient, solve for $x$, then find $y$.
+
+  - type: example
+    title: "Given the gradient: find the points"
+    problem: |-
+      Find the points on $y = x^3 - 3x^2 + 2$ where the tangent is parallel to the line $y = 9x$.
+    steps:
+      - |-
+        **Differentiate:** $\;\dfrac{dy}{dx} = 3x^2 - 6x$.
+      - |-
+        **Set $\dfrac{dy}{dx}$ equal to the gradient:** parallel lines have the same gradient, and $y = 9x$ has gradient 9. So $3x^2 - 6x = 9$.
+      - |-
+        **Solve for $x$:** $\;x^2 - 2x - 3 = 0$, so $(x - 3)(x + 1) = 0$ and $x = 3$ or $x = -1$.
+      - |-
+        **Find the points:** put each $x$ into the curve's equation. $x = 3$ gives $y = 27 - 27 + 2 = 2$, and $x = -1$ gives $y = -1 - 3 + 2 = -2$.
+    answer: |-
+      $(3, 2)$ and $(-1, -2)$
+
+  - type: check
+    questions: [find-x-gradient]
 
   - type: deeper
-    title: Where does the normal meet the curve again?
+    title: "Follow-up: where does the normal meet the curve again?"
     body: |-
       *The normal to $y = \dfrac{8}{x}$ at $(2, 4)$ meets the curve again at $Q$. Find $Q$.*
 
-      $\dfrac{dy}{dx} = -\dfrac{8}{x^2} = -2$ at $x = 2$, so the normal has gradient $\tfrac12$: $\;y - 4 = \tfrac12(x - 2)$, i.e. $y = \tfrac12x + 3$.
+      - Steps 1 to 5: $\dfrac{dy}{dx} = -\dfrac{8}{x^2} = -2$ at $x = 2$, so the normal gradient is $\dfrac12$ and the normal is $y = \dfrac12x + 3$.
+      - Solve with the curve: $\dfrac12x + 3 = \dfrac{8}{x}$ gives $x^2 + 6x - 16 = 0$, so $(x + 8)(x - 2) = 0$.
+      - $x = 2$ is the point you started at, so $Q$ has $x = -8$ and $Q = (-8, -1)$.
 
-      Solve with the curve: $\tfrac12x + 3 = \dfrac{8}{x}$ gives $x^2 + 6x - 16 = 0$, so $(x + 8)(x - 2) = 0$. We already know $x = 2$ (that's $P$), so $x = -8$ and $Q = (-8, -1)$.
-
-      Spotting that $x = 2$ *must* be a root is a great check on your algebra.
+      Knowing $x = 2$ *must* be a root is a great check on your algebra.
 
   - type: check
     questions: [normal-meets-again]
@@ -106,32 +156,39 @@ blocks:
       - wrong: |-
           The tangent to $y = x^2 - 2x + 3$ at $(2, 3)$ is $y - 3 = (2x - 2)(x - 2)$.
         right: |-
-          $2x - 2$ is the gradient *function*. Substitute $x = 2$ first to get the number $m = 2$, then write $y - 3 = 2(x - 2)$.
+          You skipped step 3. $2x - 2$ is the gradient *function*: put $x = 2$ in to get the number $m = 2$, then write $y - 3 = 2(x - 2)$.
       - wrong: |-
-          If the tangent has gradient 3, the normal has gradient $-3$ (or $\tfrac13$).
+          If the tangent has gradient 3, the normal has gradient $-3$ (or $\dfrac13$).
         right: |-
-          Perpendicular gradients multiply to $-1$: flip **and** change sign, so the normal has gradient $-\tfrac13$.
+          Step 4 is flip **and** change sign, so the normal has gradient $-\dfrac13$. Check: $3 \times \left(-\dfrac13\right) = -1$.
       - wrong: |-
           At a point where $\dfrac{dy}{dx} = 0$, the normal has gradient $-\dfrac{1}{0}$.
         right: |-
-          The tangent is horizontal ($y = y_1$), so the normal is vertical: $x = x_1$.
+          The tangent is flat ($y = y_1$), so the normal is vertical: $x = x_1$.
 
   - type: exam
     body: |-
-      - Typical wording: *Find the equation of the normal to the curve at the point where $x = 2$.* If only $x$ is given, find $y$ from the curve's equation.
-      - Many questions say "in the form $ax + by + c = 0$" or "$y = mx + c$". Match the form exactly, with integer coefficients if asked.
-      - Follow-ups are common: where the normal crosses an axis, the area of a triangle formed by the tangent, normal and axes, or a second intersection with the curve.
+      Write one line for each step, so the examiner can see the method:
+
+      - the point: "when $x = 2$, $y = 0$";
+      - $\dfrac{dy}{dx}$, then its value at the point;
+      - the normal's gradient, if it's a normal;
+      - $y - y_1 = m(x - x_1)$ with your numbers in, then the exact form they asked for (whole numbers for $ax + by + c = 0$).
+
+      Follow-ups are common: where the line crosses an axis, the area of a triangle, or where the normal meets the curve again.
 
   - type: takeaways
     items:
       - |-
-        Gradient at a point: differentiate, then substitute the $x$-coordinate.
+        The method: find the point, differentiate, put $x$ in for $m$, **normal? flip and change sign**, then $y - y_1 = m(x - x_1)$.
       - |-
-        Tangent: gradient $m$. Normal: gradient $-\dfrac1m$. Both through the point, using $y - y_1 = m(x - x_1)$.
+        $m$ is a number. Put $x$ into $\dfrac{dy}{dx}$ before writing the line.
       - |-
-        "Parallel to a line" means "same gradient": set $\dfrac{dy}{dx}$ equal to it and solve for $x$.
+        Normal gradient is $-\dfrac{1}{m}$: a tangent gradient of 3 gives a normal gradient of $-\dfrac13$.
       - |-
-        A horizontal tangent has a vertical normal, $x = x_1$.
+        A flat tangent ($m = 0$) has a vertical normal, $x = x_1$.
+      - |-
+        Given the gradient instead? Set $\dfrac{dy}{dx}$ equal to it, solve for $x$, then find $y$.
 
 questions:
   - id: gradient-at-point
@@ -143,30 +200,31 @@ questions:
     fields:
       - answer: 10
     explanation: |-
-      $\dfrac{dy}{dx} = 3x^2 - 2$. At $x = 2$: $12 - 2 = 10$.
+      - **Differentiate:** $\dfrac{dy}{dx} = 3x^2 - 2$.
+      - **Put $x$ in:** $3(4) - 2 = 10$.
 
   - id: normal-gradient
     format: mcq
     difficulty: 1
     objectives: ["1.7.3"]
     prompt: |-
-      The tangent to a curve at a point $P$ has gradient $\tfrac34$. What is the gradient of the normal at $P$?
+      The tangent to a curve at a point $P$ has gradient $\dfrac34$. What is the gradient of the normal at $P$?
     explanation: |-
-      The normal is perpendicular to the tangent, so the gradients multiply to $-1$: $\tfrac34 \times m_N = -1$ gives $m_N = -\tfrac43$.
+      **Normal? Flip and change sign:** $\dfrac34$ flips to $\dfrac43$, then the sign changes to give $-\dfrac43$. Check: $\dfrac34 \times \left(-\dfrac43\right) = -1$ ✓
     options:
       - text: $-\tfrac43$
         correct: true
         why: |-
-          Negative reciprocal: flip $\tfrac34$ to $\tfrac43$ and change the sign. Check: $\tfrac34 \times (-\tfrac43) = -1$ ✓
+          Flipped **and** sign changed. The two gradients multiply to $-1$, so the lines are at right angles.
       - text: $-\tfrac34$
         why: |-
-          Only the sign changed. $\tfrac34 \times (-\tfrac34) = -\tfrac{9}{16}$, not $-1$, so these lines aren't perpendicular.
+          Only the sign changed, no flip. $\dfrac34 \times \left(-\dfrac34\right) = -\dfrac{9}{16}$, not $-1$.
       - text: $\tfrac43$
         why: |-
-          Flipped but no sign change. Two positive gradients can't be perpendicular.
+          Flipped but the sign didn't change. Two positive gradients can't be at right angles.
       - text: $\tfrac34$
         why: |-
-          That's the tangent's own gradient. The normal is a different line, at right angles to it.
+          That's the tangent's own gradient. Step 4 was skipped.
 
   - id: tangent-eqn
     format: numeric
@@ -180,9 +238,10 @@ questions:
       - label: "c ="
         answer: -2
     explanation: |-
-      At $x = 1$: $y = 1 + 3 - 1 = 3$. $\;\dfrac{dy}{dx} = 2x + 3 = 5$.
-
-      Tangent: $y - 3 = 5(x - 1)$, so $y = 5x - 2$.
+      - **Find the point:** $y = 1 + 3 - 1 = 3$, so $(1, 3)$.
+      - **Differentiate:** $\dfrac{dy}{dx} = 2x + 3$.
+      - **Put $x$ in:** $m = 2 + 3 = 5$.
+      - **Put into the line:** $y - 3 = 5(x - 1)$, so $y = 5x - 2$.
 
   - id: find-x-gradient
     format: numeric
@@ -196,7 +255,9 @@ questions:
       - label: "larger x ="
         answer: 3
     explanation: |-
-      $\dfrac{dy}{dx} = 3x^2 - 12x = -9$, so $3x^2 - 12x + 9 = 0$, i.e. $x^2 - 4x + 3 = 0$ and $(x - 1)(x - 3) = 0$. So $x = 1$ or $x = 3$.
+      - **Set $\dfrac{dy}{dx}$ equal to the gradient:** $3x^2 - 12x = -9$.
+      - **Solve:** $3x^2 - 12x + 9 = 0$, so $x^2 - 4x + 3 = 0$ and $(x - 1)(x - 3) = 0$.
+      - So $x = 1$ or $x = 3$.
 
   - id: normal-eqn
     format: numeric
@@ -210,16 +271,20 @@ questions:
       - label: "c ="
         answer: 12
     explanation: |-
-      At $x = 4$: $y = 4 \times 2 = 8$. $\;y = 4x^{\frac12}$ gives $\dfrac{dy}{dx} = 2x^{-\frac12} = \dfrac{2}{\sqrt{x}} = 1$ at $x = 4$.
-
-      Normal gradient $= -1$: $\;y - 8 = -(x - 4)$, so $y = -x + 12$.
+      - **Find the point:** $y = 4 \times 2 = 8$, so $(4, 8)$.
+      - **Differentiate:** $y = 4x^{\frac12}$, so $\dfrac{dy}{dx} = 2x^{-\frac12} = \dfrac{2}{\sqrt{x}}$.
+      - **Put $x$ in:** $m = \dfrac{2}{2} = 1$.
+      - **Normal? Flip and change sign:** $-1$.
+      - **Put into the line:** $y - 8 = -(x - 4)$, so $y = -x + 12$.
 
   - id: normal-meets-again
     format: numeric
     difficulty: 3
     objectives: ["1.7.3"]
     prompt: |-
-      The normal to the curve $y = \dfrac{6}{x}$ at the point $(2, 3)$ meets the curve again at $Q$. Find the coordinates of $Q$. Fractions or decimals to 3 s.f. are fine.
+      The normal to the curve $y = \dfrac{6}{x}$ at the point $(2, 3)$ meets the curve again at $Q$. Find the coordinates of $Q$.
+
+      Fractions or decimals to 3 s.f. are fine.
     fields:
       - label: "x ="
         answer: -4.5
@@ -227,6 +292,8 @@ questions:
         answer: -1.3333333333
         tolerance: { abs: 0.004 }
     explanation: |-
-      $\dfrac{dy}{dx} = -\dfrac{6}{x^2} = -\tfrac32$ at $x = 2$, so the normal has gradient $\tfrac23$: $\;y - 3 = \tfrac23(x - 2)$, i.e. $y = \tfrac23x + \tfrac53$.
-
-      Meet the curve: $\tfrac23x + \tfrac53 = \dfrac6x$. Multiply by $3x$: $2x^2 + 5x - 18 = 0$, so $(2x + 9)(x - 2) = 0$. Apart from $x = 2$, $x = -\tfrac92$, and $y = 6 \div (-\tfrac92) = -\tfrac43$. So $Q = \left(-\tfrac92, -\tfrac43\right)$.
+      - **Differentiate and put $x$ in:** $\dfrac{dy}{dx} = -\dfrac{6}{x^2} = -\dfrac32$ at $x = 2$.
+      - **Normal? Flip and change sign:** $\dfrac23$.
+      - **Put into the line:** $y - 3 = \dfrac23(x - 2)$, so $y = \dfrac23x + \dfrac53$.
+      - **Meet the curve:** $\dfrac23x + \dfrac53 = \dfrac6x$. Multiply by $3x$: $2x^2 + 5x - 18 = 0$, so $(2x + 9)(x - 2) = 0$.
+      - $x = 2$ is where you started, so $x = -\dfrac92$ and $y = 6 \div \left(-\dfrac92\right) = -\dfrac43$. So $Q = \left(-\dfrac92, -\dfrac43\right)$.

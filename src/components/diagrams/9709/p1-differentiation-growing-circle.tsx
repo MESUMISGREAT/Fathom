@@ -1,7 +1,8 @@
 /**
- * Why dA/dr = 2πr: a circle of radius r grows by a thin ring of width δr.
- * The ring is almost a long thin strip, circumference × width, so
- * δA ≈ 2πr × δr and δA/δr → 2πr. With time involved, dA/dt = dA/dr × dr/dt.
+ * Why dA/dr = 2πr: a circle of radius r grows by a thin ring. The ring is
+ * almost a long thin strip, circumference × width, so the extra area is about
+ * 2πr × the extra radius. No extra notation (no δ): this is for first-timers.
+ * With time involved, dA/dt = dA/dr × dr/dt.
  */
 import { Arrow, Label, Svg, MathLabel } from '../primitives';
 
@@ -31,9 +32,6 @@ export default function P1DifferentiationGrowingCircle() {
         r
       </Label>
       <Arrow x1={CX + R} y1={CY + 18} x2={CX + R + DR} y2={CY + 18} head={6} double className="dg-thin" />
-      <Label x={CX + R + DR + 10} y={CY + 19} anchor="start" className="dg-text-small dg-italic">
-        δr
-      </Label>
       <Label x={CX} y={CY + 40} className="dg-text-accent">
         area A = πr²
       </Label>
@@ -43,13 +41,15 @@ export default function P1DifferentiationGrowingCircle() {
         the new ring
       </Label>
       <Label x={316} y={86} anchor="start" className="dg-text">
-        ≈ a strip 2πr long, δr wide
+        ≈ a strip 2πr long, very thin
       </Label>
       <Label x={316} y={116} anchor="start" className="dg-text">
-        so δA ≈ 2πr × δr
+        extra area ≈ 2πr × extra radius
       </Label>
-      <MathLabel x={316} y={154} anchor="start" w={201} h={46} tex={"\\text{and } \\dfrac{\\delta A}{\\delta r} \\approx 2\\pi r"} />
-      <MathLabel x={316} y={204} anchor="start" w={334} h={46} tex={"\\dfrac{dA}{dr} = 2\\pi r\\ \\text{(the circumference)}"} />
+      <Label x={316} y={146} anchor="start" className="dg-text">
+        so A grows 2πr times as fast as r:
+      </Label>
+      <MathLabel x={316} y={192} anchor="start" w={334} h={46} tex={"\\dfrac{dA}{dr} = 2\\pi r\\ \\text{(the circumference)}"} />
       <line x1={316} y1={236} x2={W - 20} y2={236} className="dg-grid" />
       <Label x={316} y={260} anchor="start" className="dg-text">
         If r grows with time t:
