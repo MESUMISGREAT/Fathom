@@ -1,0 +1,209 @@
+id: p2-trigonometry-double-angle-identities
+subject: "9709"
+topic: "2.3"
+title: Double angles and choosing identities
+summary: Build double-angle identities from compound angles, then choose identities to simplify or solve trig equations.
+order: 3
+minutes: 5
+kind: core
+objectives: ["2.3.2"]
+prerequisites: [p2-trigonometry-compound-angles]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027, topic 2.3 learning outcome 2.3.2: double-angle identities, sec^2 theta = 1 + tan^2 theta,
+    cosec^2 theta = 1 + cot^2 theta, and selecting identities to simplify expressions and solve equations.
+    All questions are original; no illustrative data are used. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end, you can use double-angle and reciprocal identities to simplify expressions and solve equations without changing an equation into a different one.
+  - type: example
+    title: Doubling an angle
+    problem: |-
+      Find sin(2x) in terms of sin x and cos x.
+    steps:
+      - |-
+        Start from the compound-angle rule and put A = x, B = x: sin(x + x) = sin x cos x + cos x sin x.
+      - |-
+        The two terms are equal, so add them: sin 2x = 2 sin x cos x.
+      - |-
+        Similarly, cos 2x = cos^2x - sin^2x. Since sin^2x + cos^2x = 1, equivalent forms are 1 - 2 sin^2x and 2 cos^2x - 1.
+      - |-
+        The tangent formula gives tan 2x = 2 tan x/(1 - tan^2x), when the expression is defined.
+    answer: |-
+      sin 2x = 2 sin x cos x; cos 2x = cos^2x - sin^2x; tan 2x = 2 tan x/(1 - tan^2x).
+  - type: check
+    questions: [sine-double, cosine-double]
+  - type: explain
+    title: Two useful identities from reciprocals
+    body: |-
+      Since sec x = 1/cos x and cosec x = 1/sin x, the identity sin^2x + cos^2x = 1 can be rearranged:
+
+      sec^2x = 1 + tan^2x     cosec^2x = 1 + cot^2x
+
+      These are **identities**: true for every angle where the functions are defined. They are useful when an equation contains sec and tan together, or cosec and cot together.
+  - type: example
+    title: Pick the identity that matches the equation
+    problem: |-
+      Solve tan x + cot x = 4 for 0 degrees <= x < 180 degrees.
+    steps:
+      - |-
+        Rewrite cot as 1/tan. Put t = tan x just to shorten the algebra: t + 1/t = 4.
+      - |-
+        Multiply by t (cot is defined only when t is not zero): t^2 + 1 = 4t.
+      - |-
+        Rearrange: t^2 - 4t + 1 = 0, so t = 2 +/- sqrt(3).
+      - |-
+        Both values are positive. In the interval, they give x = 15 degrees and x = 75 degrees.
+    answer: |-
+      x = 15 degrees, 75 degrees.
+  - type: check
+    questions: [reciprocal-identity, tan-cot-equation]
+  - type: example
+    title: A sec-and-tan equation
+    problem: |-
+      Solve 2 sec^2x - tan x = 5 for 0 degrees <= x < 360 degrees.
+    steps:
+      - |-
+        Replace sec^2x by 1 + tan^2x: 2(1 + tan^2x) - tan x = 5.
+      - |-
+        Put t = tan x: 2t^2 - t - 3 = 0 = (2t - 3)(t + 1).
+      - |-
+        So tan x = 3/2 or tan x = -1. Tangent repeats every 180 degrees.
+      - |-
+        The solutions are approximately 56.3 degrees, 135 degrees, 236.3 degrees and 315 degrees.
+    answer: |-
+      x approximately 56.3 degrees, 135 degrees, 236.3 degrees, 315 degrees.
+  - type: check
+    questions: [sec-tan-mcq, cosec-cot-identity]
+  - type: misconceptions
+    items:
+      - wrong: |-
+          cos 2x = cos^2x + sin^2x.
+        right: |-
+          Expand the compound-angle formula: cos 2x = cos^2x - sin^2x; the terms are subtracted.
+      - wrong: |-
+          Squaring sec x = 1 + tan x gives sec^2x = 1 + tan^2x.
+        right: |-
+          The identity comes from sin^2x + cos^2x = 1 after division by cos^2x; you cannot square a sum term by term.
+  - type: exam
+    body: |-
+      - Choose the identity that matches the functions already in the question; do not expand everything at random.
+      - When replacing tan x with a temporary letter, return to the trig equation and list every angle in the given interval.
+      - Use the correct period: tangent repeats every 180 degrees.
+  - type: takeaways
+    items:
+      - |-
+        sin 2x = 2 sin x cos x.
+      - |-
+        cos 2x = cos^2x - sin^2x = 1 - 2 sin^2x = 2 cos^2x - 1.
+      - |-
+        tan 2x = 2 tan x/(1 - tan^2x).
+      - |-
+        sec^2x = 1 + tan^2x and cosec^2x = 1 + cot^2x.
+questions:
+  - id: sine-double
+    format: expression
+    difficulty: 1
+    objectives: ["2.3.2"]
+    prompt: |-
+      Write sin 2x in terms of sin x and cos x.
+    answer: "2*sin(x)*cos(x)"
+    variables: [x]
+    display: |-
+      2 sin x cos x
+    explanation: |-
+      Put both angles equal to x in the sine sum formula, then add the equal products.
+  - id: cosine-double
+    format: mcq
+    difficulty: 1
+    objectives: ["2.3.2"]
+    prompt: |-
+      Which is a correct form of cos 2x?
+    options:
+      - text: |-
+          1 - 2 sin^2x
+        correct: true
+        why: |-
+          It follows from cos^2x - sin^2x and cos^2x = 1 - sin^2x.
+      - text: |-
+          2 sin^2x - 1
+        why: |-
+          That is the negative of this valid form.
+      - text: |-
+          2 sin x cos x
+        why: |-
+          That is sin 2x.
+      - text: |-
+          1 + 2 sin^2x
+        why: |-
+          The sign is minus, not plus.
+    explanation: |-
+      The equivalent cosine forms are cos^2x - sin^2x, 1 - 2 sin^2x and 2 cos^2x - 1.
+  - id: reciprocal-identity
+    format: cloze
+    difficulty: 1
+    objectives: ["2.3.2"]
+    prompt: |-
+      sec^2x = 1 + {{1}} and cosec^2x = 1 + {{2}}.
+    blanks:
+      - accept: ["tan^2x", "tan^2x"]
+      - accept: ["cot^2x", "cot^2x"]
+    explanation: |-
+      These are the reciprocal identities Cambridge expects for tangent and cotangent.
+  - id: tan-cot-equation
+    format: numeric
+    difficulty: 2
+    objectives: ["2.3.2"]
+    prompt: |-
+      Solve tan x + cot x = 4 for 0 degrees <= x < 180 degrees. Give the smaller solution in degrees.
+    fields: [{answer: 15}]
+    explanation: |-
+      Put t = tan x to get t + 1/t = 4, so t = 2 +/- sqrt(3). The smaller positive value is tan 15 degrees.
+  - id: sec-tan-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["2.3.2"]
+    prompt: |-
+      Which identity is the most direct first move in 2 sec^2x - tan x = 5?
+    options:
+      - text: |-
+          Replace sec^2x with 1 + tan^2x
+        correct: true
+        why: |-
+          This turns the equation into a quadratic in tangent.
+      - text: |-
+          Replace sec^2x with 1 - tan^2x
+        why: |-
+          The reciprocal identity has a plus sign.
+      - text: |-
+          Replace tan x with sec^2x - 1
+        why: |-
+          The identity gives tan^2x, not tan x.
+    explanation: |-
+      The matching identity is sec^2x = 1 + tan^2x.
+  - id: cosec-cot-identity
+    format: mcq
+    difficulty: 2
+    objectives: ["2.3.2"]
+    prompt: |-
+      Which is equivalent to cosec^2x - cot^2x?
+    options:
+      - text: |-
+          1
+        correct: true
+        why: |-
+          Subtract cot^2x from both sides of cosec^2x = 1 + cot^2x.
+      - text: |-
+          0
+        why: |-
+          The identity has an extra 1.
+      - text: |-
+          tan^2x
+        why: |-
+          This mixes the tangent and cotangent identities.
+    explanation: |-
+      Rearrange cosec^2x = 1 + cot^2x.

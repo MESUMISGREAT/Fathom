@@ -71,9 +71,12 @@ import P1TrigonometryTransformedCos from './p1-trigonometry-transformed-cos';
 import P1TrigonometryUnitCircle from './p1-trigonometry-unit-circle';
 import P2AlgebraDivisionTable from './p2-algebra-division-table';
 import P2AlgebraModulusGraph from './p2-algebra-modulus-graph';
+import P2IntegrationTrapeziumRule from './p2-integration-trapezium-rule';
 import P2LogarithmicExponentialGraphs from './p2-logarithmic-exponential-graphs';
 import P2LogarithmicExponentialLinearising from './p2-logarithmic-exponential-linearising';
 import P2LogarithmicExponentialLogLaws from './p2-logarithmic-exponential-log-laws';
+import P2TrigonometryRForm from './p2-trigonometry-r-form';
+import P2TrigonometryReciprocalGraphs from './p2-trigonometry-reciprocal-graphs';
 import QuadraticInequality from './quadratic-inequality';
 import QuadraticVertex from './quadratic-vertex';
 import SeriesApGpShared from './series-ap-gp-shared';
@@ -157,9 +160,12 @@ export const diagrams: DiagramRegistry = {
   'p1-trigonometry-unit-circle': P1TrigonometryUnitCircle,
   'p2-algebra-division-table': P2AlgebraDivisionTable,
   'p2-algebra-modulus-graph': P2AlgebraModulusGraph,
+  'p2-integration-trapezium-rule': P2IntegrationTrapeziumRule,
   'p2-logarithmic-exponential-graphs': P2LogarithmicExponentialGraphs,
   'p2-logarithmic-exponential-linearising': P2LogarithmicExponentialLinearising,
   'p2-logarithmic-exponential-log-laws': P2LogarithmicExponentialLogLaws,
+  'p2-trigonometry-r-form': P2TrigonometryRForm,
+  'p2-trigonometry-reciprocal-graphs': P2TrigonometryReciprocalGraphs,
   'quadratic-inequality': QuadraticInequality,
   'quadratic-vertex': QuadraticVertex,
   'series-ap-gp-shared': SeriesApGpShared,

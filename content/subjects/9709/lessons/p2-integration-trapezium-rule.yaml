@@ -1,0 +1,197 @@
+id: p2-integration-trapezium-rule
+subject: "9709"
+topic: "2.5"
+title: Estimate an area with the trapezium rule
+summary: Approximate a definite integral from equally spaced values and decide whether the estimate is high or low.
+order: 3
+minutes: 5
+kind: core
+objectives: ["2.5.3"]
+prerequisites: [p1-integration-definite-integrals]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027, topic 2.5 learning outcome 2.5.3: understand and use the trapezium rule to
+    estimate definite integrals, including using sketches to determine over- or under-estimation.
+    All questions are original; illustrative function values are explicitly labelled as invented.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end, you can estimate an area under a curve using trapezia and tell when the estimate is too high or too low.
+  - type: explain
+    title: Replace a curve with straight edges
+    body: |-
+      A definite integral gives the signed area under a curve. When a curve is awkward, split the interval into equal widths and replace each curved strip with a trapezium.
+
+      Each trapezium has parallel sides equal to the curve heights at the ends. Adding their areas gives an estimate, not usually the exact area.
+  - type: diagram
+    diagram: p2-integration-trapezium-rule
+    alt: >-
+      A smooth increasing convex curve from x = 0 to x = 4 split into three equal strips. Straight
+      chords connect successive points on the curve, creating three shaded trapezia. The chords sit
+      above the convex curve, showing an over-estimate.
+    caption: |-
+      Equal-width trapezia follow the curve's endpoints. Here the curve bends upwards, so each chord sits above it.
+  - type: example
+    title: Four heights, three trapezia
+    problem: |-
+      The values of a function at x = 0, 1, 2, 3, 4 are 2, 3, 5, 6, 10. Estimate the integral from 0 to 4 using the trapezium rule. These are invented example values.
+    steps:
+      - |-
+        There are 4 equal intervals across width 4, so each width is h = 1.
+      - |-
+        Add the two end heights: 2 + 10 = 12.
+      - |-
+        Add the middle heights and double them: 2(3 + 5 + 6) = 28.
+      - |-
+        Multiply the total by h/2: (1/2)(12 + 28) = 20 square units.
+    answer: |-
+      The estimate is 20 square units.
+  - type: check
+    questions: [trapezium-calc, trapezium-width]
+  - type: explain
+    title: The reusable rule
+    body: |-
+      If the interval is split into n equal strips, each has width h. Call the endpoint heights y0 and yn, and the interior heights y1, y2, and so on:
+
+      estimate = (h/2) * [y0 + yn + 2(y1 + y2 + ... + y(n-1))]
+
+      The first and last heights appear once. Every height in the middle appears twice because it belongs to two neighbouring trapezia.
+  - type: check
+    questions: [trapezium-formula, trapezium-endpoints]
+  - type: explain
+    title: Is the estimate above or below the curve?
+    body: |-
+      Sketch the curve before deciding. If the curve bends upwards (concave up), the straight chords sit above it, so the rule overestimates the area.
+
+      If it bends downwards (concave down), the chords sit below, so it underestimates. This comparison assumes the curve stays on the same side of the x-axis.
+
+      For signed area or a curve crossing the axis, inspect each part carefully.
+  - type: check
+    questions: [curve-estimate, concavity-mcq]
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Double the first and last heights.
+        right: |-
+          The endpoints appear once; only the interior heights are doubled.
+      - wrong: |-
+          The step width is the number of intervals divided by the total width.
+        right: |-
+          h = (right endpoint - left endpoint)/number of equal intervals.
+      - wrong: |-
+          A trapezium estimate is always an over-estimate.
+        right: |-
+          The curve's concavity decides: upward bend gives over, downward bend gives under in the simple positive-area case.
+  - type: exam
+    body: |-
+      - Count the intervals, not the number of listed heights: 5 heights make 4 strips.
+      - Show h, the endpoint sum, the doubled interior sum, and the final estimate.
+      - For over/under, sketch the curve and state how the chords sit relative to it.
+  - type: takeaways
+    items:
+      - |-
+        h = interval width divided by number of equal strips.
+      - |-
+        Half h times (first + last + twice the interior heights).
+      - |-
+        Upward bend: chords above, so over-estimate; downward bend: chords below, so under-estimate.
+questions:
+  - id: trapezium-calc
+    format: numeric
+    difficulty: 2
+    objectives: ["2.5.3"]
+    prompt: |-
+      Heights at x = 0, 1, 2 are 1, 4, 3. Use the trapezium rule to estimate the integral from 0 to 2.
+    fields: [{answer: 6}]
+    explanation: |-
+      Here h = 1. Estimate = (1/2)[1 + 3 + 2(4)] = 6.
+  - id: trapezium-width
+    format: numeric
+    difficulty: 1
+    objectives: ["2.5.3"]
+    prompt: |-
+      The interval from x = 2 to x = 14 is divided into 6 equal strips. Find the width h.
+    fields: [{answer: 2}]
+    explanation: |-
+      h = (14 - 2)/6 = 2.
+  - id: trapezium-formula
+    format: cloze
+    difficulty: 1
+    objectives: ["2.5.3"]
+    prompt: |-
+      In the trapezium rule, the first and last heights appear {{1}}; each interior height is {{2}}.
+    blanks:
+      - accept: ["once", "one time"]
+      - accept: ["doubled", "multiplied by 2", "twice"]
+    explanation: |-
+      The bracket is first height + last height + 2 * (sum of interior heights).
+  - id: trapezium-endpoints
+    format: mcq
+    difficulty: 2
+    objectives: ["2.5.3"]
+    prompt: |-
+      A table has five equally spaced heights. How many trapezia does the rule use?
+    options:
+      - text: |-
+          Four
+        correct: true
+        why: |-
+          The five points create four gaps, one trapezium per gap.
+      - text: |-
+          Five
+        why: |-
+          Count the spaces between the five points, not the points themselves.
+      - text: |-
+          Three
+        why: |-
+          Five heights create four intervals.
+    explanation: |-
+      The number of trapezia is one fewer than the number of listed heights.
+  - id: curve-estimate
+    format: mcq
+    difficulty: 2
+    objectives: ["2.5.3"]
+    prompt: |-
+      The graph is positive and bends upwards throughout the interval. What does the trapezium rule give?
+    options:
+      - text: |-
+          An over-estimate
+        correct: true
+        why: |-
+          Chords joining points on a convex upward curve lie above the curve.
+      - text: |-
+          An under-estimate
+        why: |-
+          That is the simple result for a curve bending downwards.
+      - text: |-
+          The exact area
+        why: |-
+          The straight edges do not exactly follow a curved graph.
+    explanation: |-
+      The straight chords lie above the upward-bending curve.
+  - id: concavity-mcq
+    format: mcq
+    difficulty: 3
+    objectives: ["2.5.3"]
+    prompt: |-
+      A positive curve bends downwards throughout the interval. Where do the trapezium-rule chords lie?
+    options:
+      - text: |-
+          Below the curve, giving an under-estimate
+        correct: true
+        why: |-
+          A concave-down curve arches above the straight chords.
+      - text: |-
+          Above the curve, giving an over-estimate
+        why: |-
+          That describes a curve bending upwards.
+      - text: |-
+          Exactly on the curve
+        why: |-
+          Curved arcs and straight chords do not coincide except in a straight-line case.
+    explanation: |-
+      The curve arches above the chords, so their total area is too small.

@@ -1,0 +1,161 @@
+id: p2-trigonometry-compound-angles
+subject: "9709"
+topic: "2.3"
+title: Compound-angle formulae
+summary: Expand sine, cosine and tangent of a sum or difference, then use the formulae for exact values.
+order: 2
+minutes: 5
+kind: core
+objectives: ["2.3.2"]
+prerequisites: [p1-trigonometry-exact-values]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027, topic 2.3 learning outcome 2.3.2: expansions of sin(A-B), cos(A-B) and
+    tan(A-B), and exact evaluation using identities. All questions are original; no illustrative
+    data are used. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end, you can expand a trig function of two joined angles and use the expansion to find an exact value.
+  - type: explain
+    title: Start with one sum
+    body: |-
+      To find sin(A + B), split it into two products: sine-times-cosine, then cosine-times-sine.
+
+      sin(A + B) = sin A cos B + cos A sin B
+
+      For a difference, the second product changes sign: sin(A+B) = sin A cos B + cos A sin B; sin(A-B) = sin A cos B - cos A sin B.
+  - type: check
+    questions: [sum-sign, sin-sum]
+  - type: explain
+    title: Cosine and tangent
+    body: |-
+      Cosine uses cosine-cosine first, then sine-sine. The sign is the opposite of the sign inside the bracket:
+
+      cos(A+B) = cos A cos B - sin A sin B; cos(A-B) = cos A cos B + sin A sin B
+
+      Tangent is built from sine divided by cosine:
+
+      tan(A+B) = (tan A + tan B)/(1 - tan A tan B); tan(A-B) = (tan A - tan B)/(1 + tan A tan B)
+
+      The denominator must not be zero. Write the version you need before substituting values; that prevents sign-flipping chaos.
+  - type: example
+    title: Exact value of sin 75 degrees
+    problem: |-
+      Find the exact value of sin 75 degrees.
+    steps:
+      - |-
+        Split 75 degrees into familiar angles: 75 degrees = 45 degrees + 30 degrees.
+      - |-
+        Use the sine sum formula: sin 75 degrees = sin 45 degrees cos 30 degrees + cos 45 degrees sin 30 degrees.
+      - |-
+        Substitute exact values: (1/sqrt(2))*(sqrt(3)/2) + (1/sqrt(2))*(1/2).
+      - |-
+        Combine: (sqrt(6) + sqrt(2))/4.
+    answer: |-
+      sin 75 degrees = (sqrt(6) + sqrt(2))/4.
+  - type: check
+    questions: [cos-difference, tangent-sum]
+  - type: misconceptions
+    items:
+      - wrong: |-
+          cos(A + B) = cos A cos B + sin A sin B.
+        right: |-
+          Cosine uses a minus for a sum: cos(A + B) = cos A cos B - sin A sin B.
+      - wrong: |-
+          sin(A-B) = sin A cos B + cos A sin B.
+        right: |-
+          For sine, the sign follows the bracket: a minus in A-B gives a minus between the products.
+  - type: exam
+    body: |-
+      - Keep the order of the two products exactly as in the formula.
+      - For an exact value, leave roots and fractions exact; do not round mid-way.
+      - If using tan, check that its denominator is non-zero for the angles in question.
+  - type: takeaways
+    items:
+      - |-
+        sin(A+B) = sin A cos B + cos A sin B; sin(A-B) = sin A cos B - cos A sin B.
+      - |-
+        cos(A+B) = cos A cos B - sin A sin B; cos(A-B) = cos A cos B + sin A sin B.
+      - |-
+        tan(A+B) = (tan A + tan B)/(1 - tan A tan B); tan(A-B) = (tan A - tan B)/(1 + tan A tan B).
+      - |-
+        Split awkward angles into familiar ones, then substitute exact values.
+  - type: check
+    questions: [cos-60-sum, sin-15-value]
+questions:
+  - id: sum-sign
+    format: mcq
+    difficulty: 1
+    objectives: ["2.3.2"]
+    prompt: |-
+      Which sign joins the products in sin(A - B)?
+    options:
+      - text: |-
+          Minus
+        correct: true
+        why: |-
+          Sine keeps the sign between A and B.
+      - text: |-
+          Plus
+        why: |-
+          Plus belongs to the sine sum formula.
+      - text: |-
+          There is no joining sign
+        why: |-
+          The formula is a sum or difference of two products.
+    explanation: |-
+      sin(A+B) = sin A cos B + cos A sin B; sin(A-B) = sin A cos B - cos A sin B.
+  - id: sin-sum
+    format: numeric
+    difficulty: 2
+    objectives: ["2.3.2"]
+    prompt: |-
+      Given sin A = 3/5, cos A = 4/5, sin B = 5/13 and cos B = 12/13, find sin(A + B).
+    fields: [{answer: 0.8615384615, tolerance: {abs: 0.000001}}]
+    explanation: |-
+      sin(A + B) = (3/5)(12/13) + (4/5)(5/13) = 56/65.
+  - id: cos-difference
+    format: numeric
+    difficulty: 2
+    objectives: ["2.3.2"]
+    prompt: |-
+      Given cos A = 4/5, sin A = 3/5, cos B = 12/13 and sin B = 5/13, find cos(A-B).
+    fields: [{answer: 0.9692307692, tolerance: {abs: 0.000001}}]
+    explanation: |-
+      cos(A-B) = cos A cos B + sin A sin B = 48/65 + 15/65 = 63/65.
+  - id: tangent-sum
+    format: numeric
+    difficulty: 2
+    objectives: ["2.3.2"]
+    prompt: |-
+      If tan A = 1/2 and tan B = 1/3, find tan(A + B).
+    fields: [{answer: 1}]
+    explanation: |-
+      tan(A + B) = (1/2 + 1/3)/(1 - (1/2)(1/3)) = (5/6)/(5/6) = 1.
+  - id: cos-60-sum
+    format: expression
+    difficulty: 2
+    objectives: ["2.3.2"]
+    prompt: |-
+      Expand cos(x + 60 degrees) and simplify the exact constants.
+    answer: "0.5*cos(x) - sqrt(3)/2*sin(x)"
+    variables: [x]
+    display: |-
+      (1/2) cos x - (sqrt(3)/2) sin x
+    explanation: |-
+      Cosine reverses the sign: cos x cos 60 degrees - sin x sin 60 degrees.
+  - id: sin-15-value
+    format: text
+    difficulty: 3
+    objectives: ["2.3.2"]
+    prompt: |-
+      Find sin 15 degrees exactly in simplified surd form.
+    accept: ["(sqrt(6) - sqrt(2))/4", "(sqrt(6)-sqrt(2))/4"]
+    model: |-
+      sin 15 degrees = (sqrt(6) - sqrt(2))/4.
+    explanation: |-
+      15 degrees = 45 degrees - 30 degrees. The sine difference formula gives (sqrt(6) - sqrt(2))/4.
