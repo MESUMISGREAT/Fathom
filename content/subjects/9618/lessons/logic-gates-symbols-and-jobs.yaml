@@ -1,0 +1,130 @@
+﻿id: logic-gates-symbols-and-jobs
+subject: "9618"
+topic: "3.2"
+title: Six gate symbols, six jobs
+summary: Recognise the six logic gate symbols and explain the output each one produces.
+order: 1
+minutes: 4
+kind: core
+objectives: ["3.2.1", "3.2.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, learning outcomes 3.2.1 and 3.2.2. Gate examples use illustrative binary inputs;
+    all questions are original. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can recognise NOT, AND, OR, NAND, NOR and XOR symbols, and say exactly when each outputs 1.
+  - type: explain
+    title: A gate is a tiny rule machine
+    body: |
+      Each input is either **0** (false/off) or **1** (true/on). The gate applies one simple rule and sends out one result.
+
+      For a two-input gate, call the inputs A and B. For example, with A=1 and B=0, AND gives 0 because both inputs are not 1; OR gives 1 because at least one input is 1.
+
+      The standard symbols are worth learning by sight. A small output circle, called an **inversion bubble**, means “flip the output”.
+  - type: diagram
+    diagram: cs-logic-gates-symbols
+    alt: >-
+      Six standard gate symbols in two rows: NOT, AND and OR above NAND, NOR and XOR.
+      NOT has one input; the other gates have two. NAND and NOR have output circles indicating
+      an inverted result; XOR is the different-inputs gate.
+  - type: definition
+    term: Logic gate functions
+    body: |
+      - **NOT** outputs the opposite of its single input.
+      - **AND** outputs 1 only when both inputs are 1.
+      - **OR** outputs 1 when at least one input is 1.
+      - **NAND** is NOT-AND: it outputs 0 only when both inputs are 1.
+      - **NOR** is NOT-OR: it outputs 1 only when both inputs are 0.
+      - **XOR** (also called **EOR**) outputs 1 when the two inputs differ — exactly one is 1.
+
+      Every gate except NOT has two inputs. A bubble at the output flips the usual result: AND becomes NAND; OR becomes NOR.
+  - type: check
+    title: Read the symbol
+    questions: [bubble-means-nand, not-has-one-input]
+  - type: explain
+    title: XOR is the “exactly one” gate
+    body: |
+      If A and B disagree, XOR sends out 1. If they match, it sends out 0.
+
+      It is **not** the same as OR: OR also outputs 1 when both inputs are 1.
+  - type: example
+    title: Try three quick inputs
+    problem: A=1 and B=0. What do AND, OR and XOR output?
+    steps:
+      - AND asks whether both inputs are 1. B is 0, so AND outputs 0.
+      - OR asks whether at least one is 1. A is 1, so OR outputs 1.
+      - XOR asks whether they differ. They do, so XOR outputs 1.
+    answer: AND 0; OR 1; XOR 1.
+  - type: check
+    title: Name the job
+    questions: [xor-different, and-versus-or]
+  - type: misconceptions
+    items:
+      - wrong: OR and XOR both output 0 when both inputs are 1.
+        right: OR outputs 1 because at least one input is 1; XOR outputs 0 because the inputs match.
+      - wrong: An output bubble means the gate has an extra input.
+        right: The bubble means the output is inverted. Input count is shown by the input wires.
+  - type: takeaways
+    items:
+      - NOT uses one input; the other five gates use two.
+      - NAND flips AND; NOR flips OR.
+      - XOR/EOR means “inputs differ”, or “exactly one input is 1”.
+questions:
+  - id: bubble-means-nand
+    format: mcq
+    difficulty: 1
+    objectives: ["3.2.1", "3.2.2"]
+    prompt: An AND-shaped symbol has a small circle at its output. Which gate is it?
+    options:
+      - text: NAND
+        correct: true
+        why: The output bubble inverts AND, giving NOT-AND.
+      - text: NOR
+        why: NOR is an OR gate with an output bubble.
+      - text: XOR
+        why: XOR has an extra curved line at its input side, not an output bubble.
+      - text: NOT
+        why: NOT has one input and a triangle ending in a bubble, not an AND shape.
+    explanation: The shape is AND and its bubble flips the output, so it is NAND.
+  - id: not-has-one-input
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["3.2.1", "3.2.2"]
+    prompt: How many inputs does a NOT gate have?
+    accept: ["one", "1", "one input", "a single input", "1 input"]
+    model: A NOT gate has one input.
+    explanation: NOT reverses one input value; the other five gates combine two.
+  - id: xor-different
+    format: mcq
+    difficulty: 1
+    objectives: ["3.2.2"]
+    prompt: When does an XOR (EOR) gate output 1?
+    options:
+      - text: When its two inputs are different
+        correct: true
+        why: XOR is 1 when exactly one input is 1, so the inputs disagree.
+      - text: Only when both inputs are 1
+        why: That is AND; XOR is 0 when both inputs match.
+      - text: Whenever at least one input is 1
+        why: That is OR, which also outputs 1 when both are 1.
+      - text: Whenever both inputs are 0
+        why: That is when NOR outputs 1; XOR is 0 when both inputs match.
+    explanation: >-
+      XOR means the inputs differ: 0,1 or 1,0 gives output 1.
+  - id: and-versus-or
+    format: cloze
+    difficulty: 2
+    objectives: ["3.2.2"]
+    prompt: Inputs A=1 and B=0 give AND output {{1}}, OR output {{2}}, and XOR output {{3}}.
+    blanks:
+      - accept: ["0"]
+      - accept: ["1"]
+      - accept: ["1"]
+    explanation: AND needs both inputs at 1; OR needs at least one; XOR needs them to differ.

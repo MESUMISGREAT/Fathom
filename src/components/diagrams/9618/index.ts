@@ -30,6 +30,9 @@ import ComputerComponentsThermostatGraph from './computer-components-thermostat-
 import ComputerComponentsTouchscreens from './computer-components-touchscreens';
 import ComputerComponentsVrLoop from './computer-components-vr-loop';
 import HexNibbles from './hex-nibbles';
+import LogicGatesExpressionCircuit from './logic-gates-expression-circuit';
+import LogicGatesSymbols from './logic-gates-symbols';
+import LogicGatesTruthTable from './logic-gates-truth-table';
 import MultimediaBitPlanes from './multimedia-bit-planes';
 import MultimediaBitmapFileLayout from './multimedia-bitmap-file-layout';
 import MultimediaColourDepthBanding from './multimedia-colour-depth-banding';
@@ -94,6 +97,9 @@ export const diagrams: DiagramRegistry = {
   'cs-computer-components-touchscreens': ComputerComponentsTouchscreens,
   'cs-computer-components-vr-loop': ComputerComponentsVrLoop,
   'cs-hex-nibbles': HexNibbles,
+  'cs-logic-gates-expression-circuit': LogicGatesExpressionCircuit,
+  'cs-logic-gates-symbols': LogicGatesSymbols,
+  'cs-logic-gates-truth-table': LogicGatesTruthTable,
   'cs-multimedia-bit-planes': MultimediaBitPlanes,
   'cs-multimedia-bitmap-file-layout': MultimediaBitmapFileLayout,
   'cs-multimedia-colour-depth-banding': MultimediaColourDepthBanding,

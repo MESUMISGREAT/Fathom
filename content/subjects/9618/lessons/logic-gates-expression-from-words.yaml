@@ -1,0 +1,138 @@
+﻿id: logic-gates-expression-from-words
+subject: "9618"
+topic: "3.2"
+title: Turn a rule into a logic expression
+summary: Translate conditions in a short problem statement into a logic-gate expression.
+order: 3
+minutes: 4
+kind: core
+objectives: ["3.2.6"]
+prerequisites: [logic-gates-symbols-and-jobs]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, learning outcome 3.2.6. Switches and system signals are illustrative binary data;
+    all questions are original. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can turn a sentence about when an output should be 1 into a logic expression.
+  - type: explain
+    title: Give each condition a signal name
+    body: |
+      For a simple example, let A and B name yes/no inputs and Y name the output. If Y is on only when both inputs are true, write `Y = A AND B`.
+
+      First choose a capital letter for each yes/no condition. Here, 1 means that condition is true.
+
+      - `D` = door is open.
+      - `M` = manual alarm button is pressed.
+      - `P` = system power is on.
+  - type: definition
+    term: Logic expression
+    body: |
+      A **logic expression** combines input variables using operations such as `NOT`, `AND`, `OR` and `XOR` to state when an output is 1.
+
+      Use brackets to make the intended order unmistakable. Read the expression in words before drawing gates.
+  - type: example
+    title: The powered alarm
+    problem: The alarm sounds if the door is open OR the manual button is pressed, but only when system power is on.
+    steps:
+      - “Door open OR manual button” gives `(D OR M)`.
+      - >-
+        “Only when power is on” adds an AND condition: `P AND (D OR M)`.
+      - >-
+        Read it back: the alarm needs power and at least one of the door or button conditions.
+    answer: >-
+      `Alarm = P AND (D OR M)`.
+  - type: check
+    title: Translate the sentence
+    questions: [alarm-expression, both-switches]
+  - type: explain
+    title: Keep “both” and “either” distinct
+    body: |
+      - “A and B are both true” means `A AND B`.
+      - “A or B, or both” means `A OR B`.
+      - “A or B but not both” means `A XOR B`.
+      - “A is false” means `NOT A`.
+
+      Parentheses matter. `P AND (D OR M)` does not mean `(P AND D) OR M`: the second version lets M sound the alarm without power.
+  - type: check
+    title: Catch the grouping
+    questions: [grouping-matters, xor-wording]
+  - type: misconceptions
+    items:
+      - wrong: “A or B” always means XOR.
+        right: Ordinary OR includes the case where both A and B are 1. Use XOR only when wording excludes both together or says exactly one.
+      - wrong: Write gates in the order words appear and ignore brackets.
+        right: Translate each condition, then use brackets to preserve which conditions are grouped.
+  - type: takeaways
+    items:
+      - Give each true/false condition a clear input letter.
+      - “Both” maps to AND; “at least one” to OR; “exactly one” to XOR.
+      - Use NOT for a condition that must be false.
+      - Brackets protect meaning when a condition has more than one part.
+questions:
+  - id: alarm-expression
+    format: cloze
+    difficulty: 2
+    objectives: ["3.2.6"]
+    prompt: >-
+      For the example, complete: `Alarm = {{1}} AND ({{2}} OR {{3}})`.
+    blanks:
+      - accept: ["P"]
+      - accept: ["D"]
+      - accept: ["M"]
+    explanation: Power is required as well as at least one of the door-open or manual-button conditions.
+  - id: both-switches
+    format: mcq
+    difficulty: 1
+    objectives: ["3.2.6"]
+    prompt: A lamp is on only if switches A and B are both on. Which expression matches?
+    options:
+      - text: A AND B
+        correct: true
+        why: AND outputs 1 only when both named conditions are 1.
+      - text: A OR B
+        why: OR would turn the lamp on if only one switch were on.
+      - text: A XOR B
+        why: XOR would turn it on when exactly one switch were on.
+      - text: NOT A AND B
+        why: This requires A to be off and B to be on.
+    explanation: “Both on” is the defining condition for AND.
+  - id: grouping-matters
+    format: mcq
+    difficulty: 3
+    objectives: ["3.2.6"]
+    prompt: Power P must be on, and either sensor A or button B can trigger Y. Which expression keeps that rule?
+    options:
+      - text: P AND (A OR B)
+        correct: true
+        why: The bracket groups the two triggers; the whole group also requires power.
+      - text: (P AND A) OR B
+        why: This lets B trigger Y even when power is off.
+      - text: P OR (A AND B)
+        why: This allows P alone to trigger Y and requires both A and B otherwise.
+      - text: P AND A AND B
+        why: This requires both triggers together, rather than either one.
+    explanation: The rule requires power and at least one of A or B.
+  - id: xor-wording
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.6"]
+    prompt: A warning is active when exactly one of sensors A and B is active. Which expression matches?
+    options:
+      - text: A XOR B
+        correct: true
+        why: XOR outputs 1 only when the inputs differ, meaning exactly one is active.
+      - text: A OR B
+        why: OR also outputs 1 when both are active, which the wording excludes.
+      - text: A AND B
+        why: AND outputs 1 only when both sensors are active.
+      - text: NOT A AND NOT B
+        why: This requires both sensors to be inactive.
+    explanation: “Exactly one” excludes both-on and both-off; that is XOR.
+
+
+

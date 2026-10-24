@@ -1,0 +1,153 @@
+﻿id: logic-gates-expression-from-table
+subject: "9618"
+topic: "3.2"
+title: Turn a table or circuit into an expression
+summary: Build a logic expression from a truth table or from the gates and wires in a circuit.
+order: 5
+minutes: 4
+kind: core
+objectives: ["3.2.6"]
+prerequisites: [logic-gates-truth-tables]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, learning outcome 3.2.6. Truth-table rows are illustrative binary data; all questions
+    are original. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can write an expression that matches a truth table.
+  - type: explain
+    title: Focus on rows that switch the output on
+    body: |
+      A and B are the input names; Y is the output. For example, row A=0, B=1, Y=1 becomes `(NOT A) AND B`: NOT A is 1 and B is 1, so this term matches the row.
+
+      A systematic route: for each row where Y=1, write an AND-term that matches the row. Then join those terms with OR.
+
+      In each row's term, write an input normally if it is 1; put `NOT` before it if it is 0.
+  - type: example
+    title: The two “different” rows
+    problem: |
+      Write a logic expression for this truth table.
+
+      | A | B | Y |
+      |---|---|---|
+      | 0 | 0 | 0 |
+      | 0 | 1 | 1 |
+      | 1 | 0 | 1 |
+      | 1 | 1 | 0 |
+    steps:
+      - Row 01 has Y=1. A is 0 and B is 1, so its term is `(NOT A) AND B`.
+      - Row 10 also has Y=1. A is 1 and B is 0, so its term is `A AND (NOT B)`.
+      - Either row can turn Y on, so join the terms with OR.
+    answer: >-
+      `Y = ((NOT A) AND B) OR (A AND (NOT B))`.
+  - type: check
+    title: Make a row-term
+    questions: [row-term-01, join-terms]
+  - type: explain
+    title: Why the recipe works
+    body: |
+      Each AND-term is true for its own input row and false for the other rows. OR combines the selected rows: if any selected row's term is true, Y becomes 1.
+
+      Ignore rows where Y=0; they do not need a term in this method.
+  - type: check
+    title: Match the table
+    questions: [identify-expression, zero-rows]
+  - type: explain
+    title: Read the same rule from a circuit
+    body: |
+      A circuit shows the operations as gates and wires. Follow the signal from each input to the output, writing down each operation.
+
+      Here, A passes through NOT, then NOT A and B enter AND. The expression is `Y = (NOT A) AND B`.
+  - type: diagram
+    diagram: cs-logic-gates-expression-circuit
+    alt: >-
+      Input A passes through a NOT gate. Its output and input B feed an AND gate, whose output
+      is Y; the circuit represents Y equals NOT A AND B.
+    caption: "Read from the inputs towards Y: invert A, then AND it with B."
+  - type: check
+    title: Name the circuit's expression
+    questions: [expression-from-circuit]
+  - type: misconceptions
+    items:
+      - wrong: For row A=0, B=1, write A AND (NOT B).
+        right: That term describes row 10. For row 01, A is 0 so use NOT A, and B is 1 so use B.
+      - wrong: Join the 1-row terms with AND.
+        right: Either selected row should turn the output on, so join their terms with OR.
+  - type: takeaways
+    items:
+      - Only rows where output is 1 need an AND-term.
+      - In a row-term, invert inputs that are 0; leave inputs that are 1 unchanged.
+      - AND the inputs within each term; OR together the different row-terms.
+      - Check that the expression matches every 1-row in the table.
+questions:
+  - id: row-term-01
+    format: cloze
+    difficulty: 2
+    objectives: ["3.2.6"]
+    prompt: For row A=0, B=1, Y=1, the AND-term is `({{1}}) AND {{2}}`.
+    blanks:
+      - accept: ["NOT A"]
+      - accept: ["B"]
+    explanation: A is 0 in this row, so use NOT A; B is 1, so use B unchanged.
+  - id: join-terms
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.6"]
+    prompt: A truth table has Y=1 for rows 01 and 10. How do you combine their row-terms?
+    options:
+      - text: Join them with OR
+        correct: true
+        why: Either selected row should be enough to make Y=1.
+      - text: Join them with AND
+        why: That would require both different row-terms to be true at once.
+      - text: Put NOT before the whole expression
+        why: That would invert the output and make it 0 on the selected rows.
+      - text: Delete one of the terms
+        why: One row that should produce Y=1 would be missed.
+    explanation: >-
+      OR combines alternative 1-rows: either matching term can turn Y on.
+  - id: identify-expression
+    format: mcq
+    difficulty: 3
+    objectives: ["3.2.6"]
+    prompt: Which expression gives Y=1 for rows 01 and 10 only?
+    options:
+      - text: ((NOT A) AND B) OR (A AND (NOT B))
+        correct: true
+        why: The first term matches 01, the second 10; OR accepts either.
+      - text: (A AND B) OR ((NOT A) AND (NOT B))
+        why: This is true for matching inputs 11 and 00, not different inputs.
+      - text: A AND B
+        why: This is true only for row 11.
+      - text: A OR B
+        why: This is also true for row 11, which should give Y=0.
+    explanation: The table's 1-rows are 01 and 10; make a matching AND-term for each, joined with OR.
+  - id: zero-rows
+    format: text
+    style: one-line
+    difficulty: 2
+    objectives: ["3.2.6"]
+    prompt: In the row-term method, do rows with output Y=0 get their own AND-term?
+    accept: ["no", "no, only rows with output 1", "no, only the 1 rows", "no, only rows where y is 1"]
+    model: No. Write row-terms only for rows where Y=1.
+    explanation: The OR of selected 1-row terms reproduces the rows where Y should switch on.
+  - id: expression-from-circuit
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.6"]
+    prompt: Which expression matches the circuit shown above?
+    options:
+      - text: (NOT A) AND B
+        correct: true
+        why: A is inverted first, then its result is combined with B using AND.
+      - text: A AND B
+        why: This skips the NOT gate on A.
+      - text: NOT (A AND B)
+        why: This would invert the output of an AND gate, not A before the AND gate.
+      - text: A OR (NOT B)
+        why: This inverts B and uses OR, neither of which matches the circuit.
+    explanation: Follow A through NOT, then combine that result with B at the AND gate.
