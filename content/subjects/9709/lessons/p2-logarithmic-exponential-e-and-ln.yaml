@@ -1,0 +1,203 @@
+id: p2-logarithmic-exponential-e-and-ln
+subject: "9709"
+topic: "2.2"
+title: Exponential functions and natural logs
+summary: Understand what e^x and ln x are, how they are inverses, and how their graphs behave for positive and negative k.
+order: 2
+minutes: 5
+kind: core
+objectives: ["2.2.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): learning outcome 2.2.2, "Understand the definition
+    and properties of e^x and ln x, including their relationship as inverse functions and their
+    graphs." The guidance includes graphs of y = e^{kx} for both positive and negative values of k;
+    examples and questions are original, and calculations have been checked in Python. Not yet
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can describe the graphs of $y = e^x$ and $y = \ln x$, explain why they are inverse functions, and recognise what changes when $k$ is positive or negative.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *Sketch* the graph of $y = e^x$, or *solve* $\ln x = 2$.
+
+      - $e$ is a special number, about $2.72$ to 3 significant figures.
+      - $\ln x$ is the power you raise $e$ to in order to get $x$.
+
+  - type: definition
+    term: Natural exponential and logarithm
+    body: |-
+      The exponential function is $y = e^x$, where $e \approx 2.72$.
+
+      The natural logarithm is $\ln x$, the inverse of $e^x$.
+
+      - $\ln(e^x)=x$ for every real $x$.
+      - $e^{\ln x}=x$ for $x>0$.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. **Forgotten step: use the inverse pair in the right direction.** $e^x$ and $\ln x$ undo each other.
+      2. Graph the exponential by its key point $(0,1)$ and the fact that it is always positive.
+      3. Graph the logarithm by its key point $(1,0)$ and the fact that it exists only for $x>0$.
+      4. If the exponent is $kx$, the sign of $k$ decides whether it rises or falls.
+
+      The big idea is that $e^x$ and $\ln x$ are mirror images in the line $y = x$.
+
+  - type: diagram
+    diagram: p2-logarithmic-exponential-graphs
+    alt: >-
+      Two graphs on the same axes: y = e^x rises through the marked point (0, 1), and y = ln x rises through the marked point (1, 0). A dashed diagonal y = x shows the mirror line that makes the graphs inverses.
+    caption: |-
+      $y=e^x$ and $y=\ln x$ are inverse functions, so one is the reflection of the other in the line $y=x$.
+
+  - type: example
+    title: Easy example with a check
+    problem: |-
+      Solve $\ln x = 3$.
+    steps:
+      - |-
+        The inverse of $\ln$ is $e^x$.
+      - |-
+        So $x = e^3$.
+      - |-
+        The answer is not a decimal unless the question asks for one.
+    answer: |-
+      $x = e^3$.
+
+      Check: $\ln(e^3)=3$, so it satisfies the original equation.
+
+  - type: check
+    questions: [ln-solve, e-mcq]
+
+  - type: example
+    title: Exam-style exponential slope
+    problem: |-
+      Compare the graphs of $y = e^{2x}$ and $y = e^{-2x}$.
+    steps:
+      - |-
+        $k = 2 > 0$, so $e^{2x}$ increases as $x$ increases.
+      - |-
+        $k = -2 < 0$, so $e^{-2x}$ decreases as $x$ increases.
+      - |-
+        Both curves are always positive and cross the $y$-axis at $(0,1)$.
+    answer: |-
+      $e^{2x}$ rises and $e^{-2x}$ falls, and both pass through $(0,1)$.
+
+      Check: at $x=0$, both give $e^0=1$; at $x=1$, their values are $e^2$ and $e^{-2}$.
+
+  - type: check
+    questions: [exp-k-sign, ln-inverse]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\ln x$ is defined for all $x$.
+        right: |-
+          $\ln x$ is only defined for $x>0$.
+      - wrong: |-
+          $e^{\ln x} = x$ only if $x$ is an integer.
+        right: |-
+          This identity works for all positive $x$.
+      - wrong: |-
+          If $k<0$, then $y = e^{kx}$ rises.
+        right: |-
+          A negative $k$ flips the exponential to a decreasing curve.
+
+  - type: exam
+    body: |-
+      - The key points are $(0,1)$ on $y=e^x$ and $(1,0)$ on $y=\ln x$.
+      - The graph of $y = e^{kx}$ has the same basic shape; only the steepness and direction change depending on the sign of $k$.
+      -       For a question asking “solve $\ln x=a$”, the answer is $x=e^a$.
+
+  - type: takeaways
+    items:
+      - |-
+        $\ln x$ is the inverse of $e^x$.
+      - |-
+        $\ln(e^x)=x$ and $e^{\ln x}=x$ for $x>0$.
+      - |-
+        $y=e^x$ passes through $(0,1)$ and is always positive.
+      - |-
+        $y=\ln x$ passes through $(1,0)$ and is only defined for $x>0$.
+
+questions:
+  - id: ln-solve
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["2.2.2"]
+    prompt: |-
+      Solve $\ln x = 3$.
+    accept:
+      - x = e^3
+      - e^3
+      - x=e^3
+    model: |-
+      $x = e^3$
+    explanation: |-
+      The inverse of $\ln$ is $e$, so raising $e$ to both sides gives $x = e^3$.
+
+  - id: e-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["2.2.2"]
+    prompt: |-
+      Which statement is true for $y = e^x$?
+    explanation: |-
+      $e^x$ is always positive, passes through $(0,1)$, and increases as $x$ increases.
+    options:
+      - text: It is always positive and passes through $(0,1)$
+        correct: true
+        why: |-
+          $e^0 = 1$, and any positive power of $e$ is positive.
+      - text: It is always negative for $x>0$
+        why: |-
+          $e^x$ is positive for every real $x$.
+      - text: It passes through $(1,0)$
+        why: |-
+          That point is on the graph of $y = \ln x$, not on $y = e^x$.
+      - text: It only exists for $x>0$
+        why: |-
+          Exponential functions are defined for all real $x$.
+
+  - id: exp-k-sign
+    format: mcq
+    difficulty: 2
+    objectives: ["2.2.2"]
+    prompt: |-
+      Which curve decreases as $x$ increases?
+    explanation: |-
+      A negative coefficient in the exponent means the output shrinks as $x$ grows: $e^{-2x}$ decreases.
+    options:
+      - text: $y = e^{-2x}$
+        correct: true
+        why: |-
+          The exponent is negative, so the curve falls as $x$ increases.
+      - text: $y = e^{2x}$
+        why: |-
+          $e^{2x}$ rises as $x$ grows.
+      - text: $y = \ln x$
+        why: |-
+          $\ln x$ rises for $x>0$.
+      - text: $y = 1$
+        why: |-
+          A constant graph does not change with $x$.
+
+  - id: ln-inverse
+    format: cloze
+    difficulty: 1
+    objectives: ["2.2.2"]
+    prompt: |-
+      $\ln(e^k) = {{1}}$.
+    blanks:
+      - accept: [k, "k", "the value k"]
+    explanation: |-
+      The logarithm and the exponential are inverse functions. They cancel each other out.

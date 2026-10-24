@@ -1,0 +1,210 @@
+id: p2-logarithmic-exponential-linearising
+subject: "9709"
+topic: "2.2"
+title: Linearising exponential and power laws
+summary: Turn y = kx^n and y = k(a^x) into straight-line form by taking logarithms and reading off the gradient and intercept.
+order: 4
+minutes: 5
+kind: core
+objectives: ["2.2.4"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): learning outcome 2.2.4, "Use logarithms to transform
+    a given relationship to linear form, and hence determine unknown constants by considering the
+    gradient and/or intercept." Examples include y = kx^n and y = k(a^x). All examples and questions
+    are original; calculations have been checked in Python. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can linearise relationships of the form $y = kx^n$ and $y = k(a^x)$ and read off the constants from the gradient and intercept.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *Given* a relationship such as $y = 5x^3$, or a data set that fits $y = ka^x$, find the constants by plotting a linear graph.
+
+      - You do not guess the constants from one point.
+      - You use logs to turn a curved model into straight-line form.
+
+  - type: definition
+    term: Linearisation
+    body: |-
+      The logarithms require positive values. For $y=kx^n$, assume $x>0$ and $k>0$, so $y>0$.
+
+      Take logs:
+
+      $$\ln y=\ln k+n\ln x$$
+
+      So plotting $\ln y$ against $\ln x$ gives a straight line with gradient $n$ and intercept $\ln k$.
+
+      For $y=k(a^x)$, with $k>0$ and $a>0$, take logs:
+
+      $$\ln y=\ln k+x\ln a$$
+
+      So plotting $\ln y$ against $x$ gives a straight line with gradient $\ln a$ and intercept $\ln k$.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. **Forgotten step: take logs of the whole model.** This turns powers into multiples.
+      2. Match the transformed equation to $Y = mX + c$.
+      3. Read off the gradient and intercept.
+      4. Undo the logs at the end: if the intercept is $\ln k$, then $k = e^{c}$.
+
+      The hidden trick is not to take logs of individual numbers like a random formula; take logs of the whole model.
+
+  - type: diagram
+    diagram: p2-logarithmic-exponential-linearising
+    alt: >-
+      Two panels show straight-line plots. For the power law, the horizontal axis is ln x, the vertical axis is ln y, the gradient is n and the vertical intercept is ln k; for the exponential law, the axes are x and ln y, with gradient ln a and vertical intercept ln k.
+    caption: |-
+      The straight-line graph is the clue. Its gradient gives the power or $\ln a$, and its vertical intercept gives $\ln k$.
+
+  - type: example
+    title: "Easy example: read the power law"
+    problem: |-
+      A straight-line plot of $\ln y$ against $\ln x$ has gradient $3$ and intercept $\ln4$. Find $k$ and $n$ in $y=kx^n$.
+    steps:
+      - |-
+        The transformed equation is $\ln y=\ln k+n\ln x$.
+      - |-
+        Match gradient and intercept: $n=3$ and $\ln k=\ln4$.
+      - |-
+        So $k=4$.
+    answer: |-
+      $k=4$ and $n=3$.
+
+      Check: at $x=2$, the model gives $y=4(2^3)=32$, and $\ln32=\ln4+3\ln2$.
+
+  - type: check
+    questions: [linear-power-k, linear-power-graph]
+
+  - type: example
+    title: Exam-style exponential law
+    problem: |-
+      A straight-line plot of $\ln y$ against $x$ has gradient $\ln2$ and intercept $\ln5$. Find $k$ and $a$ in $y=ka^x$.
+    steps:
+      - |-
+        The transformed equation is $\ln y=\ln k+x\ln a$.
+      - |-
+        Match gradient and intercept: $\ln a=\ln2$ and $\ln k=\ln5$.
+      - |-
+        So $a=2$ and $k=5$.
+    answer: |-
+      $a=2$ and $k=5$.
+
+      Check: at $x=1$, $y=5\cdot2=10$, so $\ln y=\ln5+\ln2$ as the straight-line equation predicts.
+
+  - type: check
+    questions: [linear-exponential-a, linear-exponential-graph]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          For $y = kx^n$, plotting $y$ against $x$ gives a straight line.
+        right: |-
+          It is the transformed variables $\ln y$ against $\ln x$ that are linear.
+      - wrong: |-
+          For $y = ka^x$, the gradient is $a$.
+        right: |-
+          The gradient is $\ln a$, so the base is obtained by undoing the log: $a = e^{m}$.
+      - wrong: |-
+          The intercept is $k$.
+        right: |-
+          The intercept is $\ln k$, so $k = e^c$.
+
+  - type: exam
+    body: |-
+      - If the model is a power law, use $\ln y$ and $\ln x$.
+      - If the model is exponential, use $\ln y$ and $x$.
+      - Always finish by undoing the logarithm: if the intercept is $\ln k$, then $k = e^c$.
+
+  - type: takeaways
+    items:
+      - |-
+        For $y = kx^n$, take logs to get $\ln y = \ln k + n\ln x$.
+      - |-
+        For $y = k(a^x)$, take logs to get $\ln y = \ln k + x\ln a$.
+      - |-
+        The gradient gives the power or $\ln a$.
+      - |-
+        The intercept gives $\ln k$; undo the log to recover $k$.
+
+questions:
+  - id: linear-power-k
+    format: numeric
+    difficulty: 1
+    objectives: ["2.2.4"]
+    prompt: |-
+      A plot of $\ln y$ against $\ln x$ has gradient $3$ and intercept $\ln4$. Find $n$ and $k$ for $y=kx^n$.
+    fields:
+      - label: "n ="
+        answer: 3
+      - label: "k ="
+        answer: 4
+    explanation: |-
+      Compare $\ln y=\ln k+n\ln x$ with the straight-line form.
+
+      The gradient gives $n=3$, and the intercept gives $\ln k=\ln4$, so $k=4$.
+
+  - id: linear-power-graph
+    format: mcq
+    difficulty: 1
+    objectives: ["2.2.4"]
+    prompt: |-
+      Which pair of transformed variables gives a straight line for $y = kx^n$?
+    explanation: |-
+      Taking logs gives $\ln y = \ln k + n\ln x$, which is linear in $\ln y$ and $\ln x$.
+    options:
+      - text: $\ln y$ against $\ln x$
+        correct: true
+        why: |-
+          It becomes a straight line with gradient $n$ and intercept $\ln k$.
+      - text: $y$ against $x$
+        why: |-
+          The original relationship is not linear.
+      - text: $\ln y$ against $x$
+        why: |-
+          That is the exponential case, not the power law.
+      - text: $y$ against $\ln x$
+        why: |-
+          That would still not match the linear form.
+
+  - id: linear-exponential-a
+    format: numeric
+    difficulty: 2
+    objectives: ["2.2.4"]
+    prompt: |-
+      A plot of $\ln y$ against $x$ has gradient $\ln2$ and intercept $\ln5$. Find $a$ in $y=ka^x$.
+    fields:
+      - label: "a ="
+        answer: 2
+    explanation: |-
+      The gradient is $\ln a$. Since $\ln a=\ln2$, the base is $a=2$.
+
+  - id: linear-exponential-graph
+    format: mcq
+    difficulty: 1
+    objectives: ["2.2.4"]
+    prompt: |-
+      For $y = ka^x$, which transformed graph is linear?
+    explanation: |-
+      Taking logs gives $\ln y = \ln k + x\ln a$, which is linear in $x$ and $\ln y$.
+    options:
+      - text: $\ln y$ against $x$
+        correct: true
+        why: |-
+          The gradient is $\ln a$ and the intercept is $\ln k$.
+      - text: $\ln y$ against $\ln x$
+        why: |-
+          That matches the power law, not the exponential law.
+      - text: $y$ against $x$
+        why: |-
+          The original relationship is exponential, not linear.
+      - text: $\ln x$ against $\ln y$
+        why: |-
+          The variables are swapped, so the gradient and intercept would be wrong.
