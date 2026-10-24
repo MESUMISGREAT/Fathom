@@ -19,8 +19,11 @@ provenance:
     formula V = (4/3)πr³ is stated in the questions. All examples and questions are original,
     with made-up illustrative rates; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
-    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
+    Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; independently reviewed below.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Independently re-checked this revision line by line, including units, worked examples and every
+    answer key, in a separate AI review on 2026-10-25. Clarified rate units and that rate symbols
+    are not fractions to cancel.
 
 blocks:
   - type: objective
@@ -34,17 +37,17 @@ blocks:
 
       Giveaway words: **rate of change**, **rate of increase**, **per second**, **at the instant when**.
 
-      - A **rate** is how fast something changes with time $t$. It has $dt$ on the bottom: $\dfrac{dr}{dt}$ is how fast $r$ changes.
-      - Increasing means a positive rate. **Decreasing** means a **negative** rate.
+      - A **rate** tells you how much a quantity changes each second. Here $\dfrac{dr}{dt}=0.5\ \text{cm s}^{-1}$ means the radius grows by 0.5 cm each second.
+      - $\dfrac{dA}{dt}$ means how many square centimetres the area changes by each second. Increasing means a positive rate; **decreasing** means a **negative** rate.
 
   - type: explain
     title: The method
     body: |-
       The same four steps every time:
 
-      1. Know and want: write the rate you're given and the rate you want, e.g. know $\dfrac{dr}{dt} = 0.5$, want $\dfrac{dA}{dt}$.
-      2. Differentiate the formula that links the two letters, e.g. $A = \pi r^2$ gives $\dfrac{dA}{dr} = 2\pi r$.
-      3. **Chain: write $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt}$ with your letters, before any numbers.** Check it like fractions: the $dr$s cancel to leave $\dfrac{dA}{dt}$.
+      1. Know and want: write the rate you're given and the rate you want. In the circle example, the radius grows by $0.5$ cm each second; we want the area change in square centimetres each second.
+      2. Differentiate the formula that links area and radius: $A = \pi r^2$ gives $\dfrac{dA}{dr} = 2\pi r$. This tells how much the area changes for each extra centimetre of radius.
+      3. **Chain: write $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt}$ with your letters, before any numbers.** This rule links the two rates; it is not about cancelling the symbols as if they were fractions.
       4. Numbers: put the values in and solve for the rate you want.
 
   - type: diagram
@@ -54,8 +57,7 @@ blocks:
       with dA/dt labelled want, dA/dr labelled differentiate and dr/dt labelled know. Beside it:
       want is on the left, so multiply. Bottom row, balloon (radius from volume): dV/dt = dV/dr ×
       dr/dt, with dV/dt labelled know, dV/dr labelled differentiate and dr/dt labelled want. Beside
-      it: want is on the right, so divide. Bottom line: right way round? The dr's cancel: dA/dr
-      times dr/dt equals dA/dt, with both dr's crossed out.
+      it: want is on the right, so divide. The chain rule connects the rates in the correct order.
     caption: |-
       You never have to guess whether to multiply or divide. Write the chain, then see where the rate you want sits.
 
@@ -65,13 +67,13 @@ blocks:
       The radius of a circle is increasing at $0.5\ \text{cm s}^{-1}$. Find the rate at which its area is increasing when the radius is 6 cm.
     steps:
       - |-
-        Know and want: know $\dfrac{dr}{dt} = 0.5$. Want $\dfrac{dA}{dt}$ when $r = 6$.
+        The radius grows by $0.5$ cm each second, so $\dfrac{dr}{dt}=0.5\ \text{cm s}^{-1}$. We want the area change in $\text{cm}^2$ each second, $\dfrac{dA}{dt}$, when $r=6$ cm.
       - |-
-        Differentiate: $A = \pi r^2$, so $\dfrac{dA}{dr} = 2\pi r$.
+        Differentiate: $A = \pi r^2$, so $\dfrac{dA}{dr} = 2\pi r$. At $r=6$, this is $12\pi\ \text{cm}^2$ of area per extra centimetre of radius.
       - |-
         Chain: $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt}$.
       - |-
-        Numbers: $\dfrac{dA}{dt} = 2\pi(6) \times 0.5 = 6\pi$.
+        Numbers: $\dfrac{dA}{dt} = 12\pi\ \text{cm} \times 0.5\ \text{cm s}^{-1} = 6\pi\ \text{cm}^2\,\text{s}^{-1}$.
     answer: |-
       The area is increasing at $6\pi \approx 18.8\ \text{cm}^2\,\text{s}^{-1}$.
 
@@ -196,10 +198,10 @@ questions:
         tolerance: { abs: 0.05 }
         unit: cm² s⁻¹
     explanation: |-
-      - Know and want: know $\dfrac{dr}{dt} = 0.4$. Want $\dfrac{dA}{dt}$ when $r = 10$.
-      - Differentiate: $\dfrac{dA}{dr} = 2\pi r = 20\pi$ at $r = 10$.
+      - The radius grows by $0.4$ cm each second, so $\dfrac{dr}{dt}=0.4\ \text{cm s}^{-1}$. We want the area change in $\text{cm}^2$ each second.
+      - Differentiate: $\dfrac{dA}{dr}=2\pi r=20\pi$ cm of area per extra centimetre of radius when $r=10$ cm.
       - Chain: $\dfrac{dA}{dt} = \dfrac{dA}{dr} \times \dfrac{dr}{dt}$.
-      - Numbers: $\dfrac{dA}{dt} = 20\pi \times 0.4 = 8\pi \approx 25.1\ \text{cm}^2\,\text{s}^{-1}$.
+      - Numbers: $\dfrac{dA}{dt} = 20\pi\ \text{cm} \times 0.4\ \text{cm s}^{-1} = 8\pi \approx 25.1\ \text{cm}^2\,\text{s}^{-1}$.
 
   - id: sphere-rate
     format: numeric

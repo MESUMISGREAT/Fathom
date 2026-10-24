@@ -7,7 +7,7 @@ order: 4
 minutes: 5
 kind: core
 objectives: ["2.2.4"]
-prerequisites: []
+prerequisites: [p2-logarithmic-exponential-laws-of-logarithms, p2-logarithmic-exponential-e-and-ln]
 provenance:
   origin: ai-drafted
   status: ai-checked
@@ -16,7 +16,12 @@ provenance:
     for 2026-2027 (Version 4, December 2025): learning outcome 2.2.4, "Use logarithms to transform
     a given relationship to linear form, and hence determine unknown constants by considering the
     gradient and/or intercept." Examples include y = kx^n and y = k(a^x). All examples and questions
-    are original; calculations have been checked in Python. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+    are original; calculations have been checked in Python. Independently re-checked line by line
+    (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet
+    reviewed by a teacher. Clarity rewrite requested by the user; independently reviewed below.
+    Independently re-checked this revision line by line, including both transformations and every
+    answer key, in a separate AI review on 2026-10-25. Removed an unnecessary variable from the
+    introductory logarithm example.
 blocks:
   - type: objective
     body: |-
@@ -35,27 +40,31 @@ blocks:
     body: |-
       The logarithms require positive values. For $y=kx^n$, assume $x>0$ and $k>0$, so $y>0$.
 
-      Take logs:
+      Since $2^3=8$, $\log_2 8=3$. A logarithm is an **exponent finder**: it tells you which power makes a number.
 
-      $$\ln y=\ln k+n\ln x$$
+      Taking logs helps here because the power law brings an exponent down where we can read it.
+
+      For $y=kx^n$, take $\ln$ of both sides. The product law splits the multiplication, and the power law brings $n$ down:
+
+      $$\ln y=\ln(kx^n)=\ln k+\ln(x^n)=\ln k+n\ln x$$
 
       So plotting $\ln y$ against $\ln x$ gives a straight line with gradient $n$ and intercept $\ln k$.
 
-      For $y=k(a^x)$, with $k>0$ and $a>0$, take logs:
+      For $y=k(a^x)$, with $k>0$ and $a>0$, take $\ln$ of both sides. The same two log laws give:
 
-      $$\ln y=\ln k+x\ln a$$
+      $$\ln y=\ln(ka^x)=\ln k+\ln(a^x)=\ln k+x\ln a$$
 
       So plotting $\ln y$ against $x$ gives a straight line with gradient $\ln a$ and intercept $\ln k$.
 
   - type: explain
     title: The method
     body: |-
-      1. **Forgotten step: take logs of the whole model.** This turns powers into multiples.
-      2. Match the transformed equation to $Y = mX + c$.
-      3. Read off the gradient and intercept.
-      4. Undo the logs at the end: if the intercept is $\ln k$, then $k = e^{c}$.
+      1. **Forgotten step: take $\ln$ of both sides of the whole model.**
+      2. Use the product law to split the multiplication, then the power law to bring the exponent down.
+      3. Read the gradient and intercept from the resulting straight-line equation.
+      4. Undo the log at the end: if the intercept is $\ln k$, then $k$ is $e$ raised to that intercept.
 
-      The hidden trick is not to take logs of individual numbers like a random formula; take logs of the whole model.
+      Taking logs of the whole model is what turns the curved relationship into a straight line.
 
   - type: diagram
     diagram: p2-logarithmic-exponential-linearising
@@ -70,7 +79,7 @@ blocks:
       A straight-line plot of $\ln y$ against $\ln x$ has gradient $3$ and intercept $\ln4$. Find $k$ and $n$ in $y=kx^n$.
     steps:
       - |-
-        The transformed equation is $\ln y=\ln k+n\ln x$.
+        Take $\ln$ of both sides: $\ln y=\ln(kx^n)$. The product and power laws give $\ln y=\ln k+n\ln x$.
       - |-
         Match gradient and intercept: $n=3$ and $\ln k=\ln4$.
       - |-
@@ -89,7 +98,7 @@ blocks:
       A straight-line plot of $\ln y$ against $x$ has gradient $\ln2$ and intercept $\ln5$. Find $k$ and $a$ in $y=ka^x$.
     steps:
       - |-
-        The transformed equation is $\ln y=\ln k+x\ln a$.
+        Take $\ln$ of both sides: $\ln y=\ln(ka^x)$. The product and power laws give $\ln y=\ln k+x\ln a$.
       - |-
         Match gradient and intercept: $\ln a=\ln2$ and $\ln k=\ln5$.
       - |-
@@ -147,7 +156,7 @@ questions:
       - label: "k ="
         answer: 4
     explanation: |-
-      Compare $\ln y=\ln k+n\ln x$ with the straight-line form.
+      Take $\ln$ of both sides: $\ln y=\ln(kx^n)=\ln k+n\ln x$, using the product and power laws. Compare this with the straight-line plot.
 
       The gradient gives $n=3$, and the intercept gives $\ln k=\ln4$, so $k=4$.
 
@@ -158,7 +167,7 @@ questions:
     prompt: |-
       Which pair of transformed variables gives a straight line for $y = kx^n$?
     explanation: |-
-      Taking logs gives $\ln y = \ln k + n\ln x$, which is linear in $\ln y$ and $\ln x$.
+      Taking $\ln$ of both sides and using the product and power laws gives $\ln y = \ln k + n\ln x$, which is linear in $\ln y$ and $\ln x$.
     options:
       - text: $\ln y$ against $\ln x$
         correct: true
@@ -193,7 +202,7 @@ questions:
     prompt: |-
       For $y = ka^x$, which transformed graph is linear?
     explanation: |-
-      Taking logs gives $\ln y = \ln k + x\ln a$, which is linear in $x$ and $\ln y$.
+      Taking $\ln$ of both sides and using the product and power laws gives $\ln y = \ln k + x\ln a$, which is linear in $x$ and $\ln y$.
     options:
       - text: $\ln y$ against $x$
         correct: true
