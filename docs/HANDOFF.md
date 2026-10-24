@@ -193,15 +193,21 @@ changes alongside lessons:
   include draft diagrams) and untracked draft lessons are expected in `git status`.
   `publish.sh` handles both.
 
-## 5. Current state (23 Oct 2026, end of the second chat)
+## 5. Current state (24 Oct 2026, third chat)
 
-- On `main`: **165 reviewed lessons, 998 questions** (9709: 59, 9618: 42, 9702: 31, 9701: 33).
-  All are live. Tests: 165 vitest and 25 Playwright e2e.
-- Done in this chat:
+- On `main`: **165 reviewed lessons, 1001 questions** (9709: 59, 9618: 42, 9702: 31, 9701: 33).
+  All are live. Tests: 166 vitest and 25 Playwright e2e.
+- Done in the second and third chats:
   - published 9618 2.1 (networks) and 9709 1.6+1.7 (series, differentiation);
   - every 9709 diagram now has proper fractions and roots;
   - the chain rule was rewritten the box way;
-  - a power-rule table was added to the powers-of-x lesson;
+  - **all eight other 1.7 differentiation lessons were rewritten in the "one question type,
+    one method" style** the user asked for (modelled on how Sir Zain of Zainematics teaches,
+    nothing copied): "What they ask", a numbered "The method" with the forgotten step in
+    bold, an easy example, a check, an exam-style example, a check. The brief is
+    `data/lesson-prompts/rewrite-differentiation.txt` (gitignored; regenerate it from this
+    description if needed). Use this structure for new Maths lessons too;
+  - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
 - Queue: 10 published, 1 drafted, 143 todo. Next actions, in order:
   1. Run a reviewer on **9702 3.2+3.3** (drafted, 11 lessons: 4 `non-uniform-*`, 7
@@ -211,7 +217,7 @@ changes alongside lessons:
   lessons to the new short-chunk style? It's a big job (a writer and a reviewer per batch).
   Ask before starting it, and ask whether it goes before or after the new topics.
 - The user asked to "recheck all the Maths lessons first". Done so far: the notation in every
-  Maths diagram, and the differentiation diagrams and chain rule. A full restyle of the other
+  Maths diagram, and the whole of 1.7 (differentiation). A full restyle of the other
   Maths lessons is part of the open question above.
 - No agents running. The old scheduled task `trig_01NiVSUy5PGKorMtJZ6y9aSt` stays disabled.
 
