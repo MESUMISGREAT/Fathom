@@ -1,0 +1,266 @@
+id: electronegativity-bonding-ionic-or-covalent
+subject: "9701"
+topic: "3.1"
+title: "Ionic or covalent? Ask the electronegativity difference"
+summary: Use the difference between two Pauling electronegativity values to predict whether a bond is ionic or covalent, and which bond is the most ionic.
+order: 3
+minutes: 5
+objectives: ["3.1.4"]
+prerequisites: [electronegativity-bonding-trends]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus 2025-2027 (topic 3.1, learning outcome 3.1.4; covalent character in ionic
+    compounds is not assessed, and Pauling values are given where needed). Electronegativities
+    are Pauling values rounded to 1 d.p. The cut-off of about 1.8 is presented as a rule of
+    thumb, with the note that textbooks use values from about 1.7 to 2.0; every question that
+    asks for a classification uses a difference of 1.4 or less, or 2.1 or more, so the answer
+    does not depend on the exact cut-off. Pauling's ionic-character relation (about 51% at a
+    difference of 1.7) was computed with Python and is enrichment. Aluminium chloride
+    sublimes at about 180 °C and sodium chloride melts at 801 °C. All differences were
+    computed with Python. All questions are original.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can use the **difference** in Pauling electronegativity values to predict whether a bond is ionic or covalent, and pick out the most ionic bond in a list.
+
+  - type: explain
+    title: From sharing to stealing
+    body: |
+      Back to the tug-of-war. What happens to the electrons depends on the **difference** between the two atoms' pulls:
+
+      - **Equal pull** (difference 0): electrons shared equally. **Non-polar covalent**, like $\text{Cl}_2$.
+      - **Somewhat unequal** (small difference): still shared, but unevenly. **Polar covalent**, like $\text{HCl}$.
+      - **Hugely unequal** (large difference): the stronger atom takes the electron completely. Ions form, and the bond is **ionic**, like $\text{NaCl}$.
+
+  - type: diagram
+    diagram: chem-electronegativity-bonding-difference-scale
+    alt: "A number line of difference in Pauling electronegativity from 0 to 3.5, drawn to scale. The left part, from 0 to 1.7, is shaded and labelled covalent: non-polar at 0, polar above 0. A narrow strip from 1.7 to 2.0 is shaded differently and labelled borderline, with a dashed line at about 1.8. The right part, from 2.0 to 3.5, is labelled ionic, with oppositely charged ions. Above the line, the left end says electrons shared and the right end says electrons transferred, ions. Example bonds are marked at their differences: Cl–Cl 0, C–H 0.4, H–Cl 1.0, O–H 1.2, Na–Cl 2.3, Ca–F 3.0 and K–F 3.2."
+    caption: One sliding scale, from sharing to transferring.
+
+  - type: explain
+    title: Where's the line?
+    body: |
+      **Rule of thumb:** a difference of more than about **1.8** means ionic. Less than that means covalent (polar, unless the difference is 0).
+
+      It's a sliding scale, not a cliff. Books draw the line anywhere from about 1.7 to 2.0, so treat a difference close to it as borderline.
+
+  - type: explain
+    title: What they ask
+    body: |
+      The Pauling values are given in the question. You'll be asked to:
+
+      - **predict** whether the bonding between two elements is ionic or covalent;
+      - **explain** why one compound is ionic and another is covalent;
+      - **pick** the pair of elements that forms the most ionic (or most covalent) bonding.
+
+  - type: explain
+    title: The method
+    body: |
+      1. Find the two elements joined by the bond, and write down their Pauling values.
+      2. Subtract: bigger value minus smaller value.
+      3. **Ignore the subscripts in the formula: the difference is per bond, so $\text{CaCl}_2$ uses 3.2 − 1.0, never 2 × 3.2.**
+      4. Place the difference on the scale: 0 is non-polar covalent, small is polar covalent, above about 1.8 is ionic.
+      5. For "most ionic", pick the largest difference.
+      6. In a written answer, quote both values and the difference, then link it: "large difference, so electrons transferred, so ionic".
+
+  - type: example
+    title: Salt and chlorine gas
+    problem: |
+      Pauling values: Na 0.9, Cl 3.2. Predict the bonding in sodium chloride, $\text{NaCl}$, and in chlorine, $\text{Cl}_2$.
+    steps:
+      - |
+        $\text{NaCl}$: the bond is Na–Cl. Difference $= 3.2 - 0.9 = 2.3$. Well above 1.8, so **ionic**.
+      - |
+        $\text{Cl}_2$: the bond is Cl–Cl. Difference $= 3.2 - 3.2 = 0$. A perfectly fair share: **non-polar covalent**.
+      - |
+        Check it another way: sodium is a reactive metal and chlorine a reactive non-metal, the classic ionic pair. $\text{Cl}_2$ is two identical atoms, which can only share. Both agree.
+    answer: |
+      $\text{NaCl}$ is ionic (difference 2.3); $\text{Cl}_2$ is non-polar covalent (difference 0).
+
+  - type: check
+    title: Your turn
+    questions: [lithium-fluoride-difference, nitrogen-trichloride]
+
+  - type: example
+    title: Four compounds, one table (exam-style)
+    problem: |
+      Pauling values: K 0.8, Mg 1.3, C 2.6, Cl 3.2, O 3.4.
+
+      (a) Predict whether the bonding in $\text{KCl}$, $\text{MgO}$, $\text{CO}_2$ and $\text{CCl}_4$ is ionic or covalent.
+
+      (b) Which of these compounds has the most ionic bonding?
+    steps:
+      - |
+        **Bonds:** K–Cl, Mg–O, C–O and C–Cl. Ignore the subscripts: $\text{CO}_2$ and $\text{CCl}_4$ still use one C value and one O or Cl value.
+      - |
+        **Differences:** K–Cl $3.2 - 0.8 = 2.4$; Mg–O $3.4 - 1.3 = 2.1$; C–O $3.4 - 2.6 = 0.8$; C–Cl $3.2 - 2.6 = 0.6$.
+      - |
+        **(a)** $\text{KCl}$ (2.4) and $\text{MgO}$ (2.1) are above 1.8: **ionic**. $\text{CO}_2$ (0.8) and $\text{CCl}_4$ (0.6) are well below: **covalent**, with polar bonds.
+      - |
+        **(b)** The largest difference is K–Cl, 2.4, so **$\text{KCl}$** has the most ionic bonding.
+    answer: |
+      $\text{KCl}$ and $\text{MgO}$ are ionic; $\text{CO}_2$ and $\text{CCl}_4$ are covalent. $\text{KCl}$ is the most ionic.
+
+  - type: check
+    title: Exam-style practice
+    questions: [most-ionic-pair, calcium-chloride-error]
+
+  - type: deeper
+    title: Metal + non-metal isn't a guarantee
+    body: |
+      Aluminium chloride: Al 1.6, Cl 3.2, difference **1.6**. That's below the line, so covalent.
+
+      And it really is: aluminium chloride turns to vapour at about 180 °C, while ionic sodium chloride doesn't even melt until 801 °C. "Metal + non-metal = ionic" is a shortcut that sometimes fails; the electronegativity difference is the better guide.
+
+  - type: misconceptions
+    items:
+      - wrong: For $\text{CaCl}_2$, the difference is $2 \times 3.2 - 1.0 = 5.4$.
+        right: |
+          The difference is per bond: $3.2 - 1.0 = 2.2$. Subscripts don't count.
+      - wrong: You add the two values.
+        right: You **subtract**. It's the imbalance between the two pulls that matters.
+      - wrong: Two very electronegative non-metals, like nitrogen and chlorine, form an ionic bond.
+        right: |
+          Both pull hard, so neither wins. N–Cl has a difference of only 0.2, so it's covalent.
+      - wrong: A bigger difference means a stronger bond.
+        right: The difference tells you the **type** of bond, not its strength. $\text{MgO}$ (2.1) has much stronger ionic bonding than $\text{KCl}$ (2.4), because its ions carry 2+ and 2− charges.
+
+  - type: check
+    title: Stretch
+    questions: [mystery-metal, calcium-fluoride-vs-cf4]
+
+  - type: exam
+    body: |
+      - Always quote the two values **and** the difference: "Ca 1.0, F 4.0, difference 3.0".
+      - Then use the link words: "large difference, so electrons transferred, so ions form: ionic". Or: "small difference, so electrons shared: covalent".
+      - How much covalent character an ionic compound has is **not** assessed here, so stick to ionic vs covalent.
+
+  - type: enrichment
+    title: Where do these numbers come from?
+    body: |
+      Linus Pauling worked out electronegativities from bond energies, starting in 1932.
+
+      His formula links a difference of about 1.7 to a bond that is roughly 50% ionic. That's one reason books put the line near 1.7 to 2.0.
+
+  - type: takeaways
+    items:
+      - "Subtract the two Pauling values: it's the **difference** that decides the bond type."
+      - "0: non-polar covalent. Small: polar covalent. Large (above about 1.8): ionic."
+      - "Ignore subscripts: the difference is per bond."
+      - "Largest difference means most ionic. Quote the values and the difference in every answer."
+
+questions:
+  - id: lithium-fluoride-difference
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.4"]
+    prompt: |
+      Pauling values: Li 1.0, F 4.0. Calculate the electronegativity difference for the bond in lithium fluoride, $\text{LiF}$.
+    fields:
+      - answer: 3.0
+        tolerance: { abs: 0.001 }
+    explanation: |
+      $4.0 - 1.0 = 3.0$. That's far above 1.8, so lithium fluoride is ionic.
+
+  - id: nitrogen-trichloride
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.4"]
+    prompt: |
+      Pauling values: N 3.0, Cl 3.2. Predict the bonding in nitrogen trichloride, $\text{NCl}_3$.
+    options:
+      - text: |
+          Ionic, because chlorine is very electronegative.
+        why: |
+          Nitrogen is very electronegative too. What matters is the **difference**, and it's tiny.
+      - text: |
+          Covalent, because the difference is only 0.2.
+        correct: true
+        why: |
+          $3.2 - 3.0 = 0.2$: neither atom wins the tug-of-war, so the electrons are shared.
+      - text: |
+          Ionic, because the difference is 6.2.
+        why: |
+          6.2 is the sum. You subtract the two values.
+      - text: |
+          No bond forms, because both atoms attract electrons strongly.
+        why: |
+          They can still share. A small difference means the electrons are shared: a covalent bond.
+    explanation: |
+      Small difference (0.2), so the electrons are shared: the N–Cl bonds are covalent.
+
+  - id: most-ionic-pair
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      Pauling values: Cs 0.8, Li 1.0, I 2.7, F 4.0. Which pair of elements forms the compound with the **most** ionic bonding?
+    options:
+      - text: |
+          Lithium and iodine
+        why: |
+          Difference $2.7 - 1.0 = 1.7$: the smallest of the four.
+      - text: |
+          Caesium and iodine
+        why: |
+          Difference $2.7 - 0.8 = 1.9$. Iodine pulls much less hard than fluorine.
+      - text: |
+          Lithium and fluorine
+        why: |
+          Difference $4.0 - 1.0 = 3.0$: close, but caesium is even less electronegative than lithium.
+      - text: |
+          Caesium and fluorine
+        correct: true
+        why: |
+          Difference $4.0 - 0.8 = 3.2$: the largest, so the most ionic.
+    explanation: |
+      The most ionic bond pairs the **least** electronegative element (Cs, bottom left) with the **most** electronegative (F, top right).
+
+  - id: calcium-chloride-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      A student predicts the bonding in calcium chloride. Which line contains the error?
+    lines:
+      - "Calcium chloride is $\\text{CaCl}_2$, so the bonds are between Ca and Cl."
+      - "The Pauling values are Ca 1.0 and Cl 3.2."
+      - "There are two chlorine atoms, so the difference is $2 \\times 3.2 - 1.0 = 5.4$."
+      - "This difference is well above 1.8, so the bonding is ionic."
+    errorLine: 3
+    fix: |
+      The difference is per bond: $3.2 - 1.0 = 2.2$. That's still above 1.8, so the bonding is still ionic, but now for the right reason.
+    explanation: |
+      Subscripts tell you how many ions there are, not how hard each atom pulls. A difference of 5.4 is impossible anyway: the whole Pauling scale only runs up to 4.0.
+
+  - id: mystery-metal
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |
+      A metal M forms a chloride. The Pauling value of chlorine is 3.2, and the electronegativity difference in the M–Cl bond is 2.2. What is the Pauling value of M?
+    fields:
+      - answer: 1.0
+        tolerance: { abs: 0.001 }
+    explanation: |
+      Either $3.2 - 2.2 = 1.0$ or $3.2 + 2.2 = 5.4$. No element goes above 4.0 (fluorine), and metals have low values, so M is 1.0. (That's calcium.)
+
+  - id: calcium-fluoride-vs-cf4
+    format: explain
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |
+      Pauling values: Ca 1.0, C 2.6, F 4.0. Use them to explain why calcium fluoride, $\text{CaF}_2$, is ionic, but tetrafluoromethane, $\text{CF}_4$, is covalent.
+    model: |
+      Ca–F: difference $4.0 - 1.0 = 3.0$. This is large, so fluorine takes electrons from calcium completely, forming $\text{Ca}^{2+}$ and $\text{F}^-$ ions: the bonding is ionic. C–F: difference $4.0 - 2.6 = 1.4$. This is much smaller (below about 1.8), so the electrons are shared, unequally: the C–F bonds are polar covalent.
+    keyPoints:
+      - "Ca–F difference = 4.0 − 1.0 = 3.0, which is large."
+      - "Large difference, so electrons are transferred from Ca to F, forming ions: ionic."
+      - "C–F difference = 4.0 − 2.6 = 1.4, which is smaller (below about 1.8)."
+      - "Smaller difference, so electrons are shared (unequally): polar covalent."
+    explanation: |
+      Same partner (fluorine), different outcome: it's the **difference** that decides, not fluorine on its own.
