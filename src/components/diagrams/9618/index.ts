@@ -12,6 +12,8 @@ import CompressionSimilarColours from './compression-similar-colours';
 import CompressionSizeBars from './compression-size-bars';
 import CompressionSoundMasking from './compression-sound-masking';
 import CompressionVectorSimplify from './compression-vector-simplify';
+import ComputerComponentsMicrocontroller from './computer-components-microcontroller';
+import ComputerComponentsSystemOverview from './computer-components-system-overview';
 import HexNibbles from './hex-nibbles';
 import MultimediaBitPlanes from './multimedia-bit-planes';
 import MultimediaBitmapFileLayout from './multimedia-bitmap-file-layout';
@@ -59,6 +61,8 @@ export const diagrams: DiagramRegistry = {
   'cs-compression-size-bars': CompressionSizeBars,
   'cs-compression-sound-masking': CompressionSoundMasking,
   'cs-compression-vector-simplify': CompressionVectorSimplify,
+  'cs-computer-components-microcontroller': ComputerComponentsMicrocontroller,
+  'cs-computer-components-system-overview': ComputerComponentsSystemOverview,
   'cs-hex-nibbles': HexNibbles,
   'cs-multimedia-bit-planes': MultimediaBitPlanes,
   'cs-multimedia-bitmap-file-layout': MultimediaBitmapFileLayout,

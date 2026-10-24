@@ -16,22 +16,20 @@ const inputs = ['door sensor', 'water level sensor', 'temperature sensor', 'butt
 const outputs = ['drum motor', 'water valve', 'heater', 'display'];
 const ys = [108, 152, 196, 240];
 
-function Part({ x, y, title, sub }: { x: number; y: number; title: string; sub: string }) {
+function Part({ x, y, title, sub }: { x: number; y: number; title: string; sub: [string, string] }) {
   return (
     <g>
       <rect x={x} y={y} width={76} height={62} rx={5} className="dg-fill-surface" />
       <rect x={x} y={y} width={76} height={62} rx={5} className="dg-fill-muted dg-thin" />
-      <Label x={x + 38} y={y + 20} className="dg-text dg-bold">
+      <Label x={x + 38} y={y + 18} className="dg-text dg-bold">
         {title}
       </Label>
-      <Label x={x + 38} y={y + 38} className="dg-text-small">
-        {sub[0] === '|' ? sub.slice(1) : sub.split('|')[0]}
+      <Label x={x + 38} y={y + 36} className="dg-text-small">
+        {sub[0]}
       </Label>
-      {sub.includes('|') && sub[0] !== '|' && (
-        <Label x={x + 38} y={y + 52} className="dg-text-small">
-          {sub.split('|')[1]}
-        </Label>
-      )}
+      <Label x={x + 38} y={y + 50} className="dg-text-small">
+        {sub[1]}
+      </Label>
     </g>
   );
 }
@@ -49,10 +47,10 @@ export function ComputerComponentsMicrocontroller() {
       <Label x={310} y={88} className="dg-text dg-bold">
         microcontroller
       </Label>
-      <Part x={228} y={104} title="CPU" sub="runs the|program" />
-      <Part x={316} y={104} title="ROM" sub="control|program" />
-      <Part x={228} y={176} title="RAM" sub="settings,|readings" />
-      <Part x={316} y={176} title="I/O" sub="ports to|the outside" />
+      <Part x={228} y={104} title="CPU" sub={['runs the', 'program']} />
+      <Part x={316} y={104} title="ROM" sub={['control', 'program']} />
+      <Part x={228} y={176} title="RAM" sub={['settings,', 'readings']} />
+      <Part x={316} y={176} title="I/O" sub={['ports to', 'outside']} />
       <Label x={310} y={262} className="dg-text-small">
         all on one chip
       </Label>
