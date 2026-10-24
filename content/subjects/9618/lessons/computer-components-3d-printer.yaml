@@ -10,13 +10,14 @@ objectives: ["3.1.3"]
 prerequisites: [computer-components-io-memory-storage]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
-    3.1.3 (principal operations of hardware devices: the 3D printer). Layer heights and print
-    times in the examples are illustrative; calculations checked with Python. All questions
+    3.1.3 (principal operations of hardware devices: the 3D printer). Layer heights in the
+    examples are illustrative; calculations checked with Python. All questions
     are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -106,7 +107,7 @@ blocks:
 
   - type: check
     title: Exam check
-    questions: [why-harden, spot-top-first, print-time]
+    questions: [why-harden, spot-top-first, describe-print]
 
   - type: misconceptions
     items:
@@ -222,18 +223,19 @@ questions:
     explanation: |
       Each layer rests on the one below, so you can't print the top first: there would be nothing to hold it up.
 
-  - id: print-time
-    format: numeric
+  - id: describe-print
+    format: explain
     difficulty: 3
     objectives: ["3.1.3"]
     prompt: |
-      A model 30 mm tall is printed with layers 0.2 mm thick. Each layer takes 40 seconds to print.
-
-      How many **minutes** does the whole print take?
-    fields:
-      - answer: 100
-        unit: minutes
+      A school uses a 3D printer to make replacement knobs for old lab equipment. Describe how the 3D printer produces a knob from a design.
+    model: |
+      The knob is designed using CAD software (or scanned from an old knob). Slicing software splits the design into many thin horizontal layers and turns them into instructions for the printer. The printer builds the knob one layer at a time from the bottom up: plastic filament is melted in a heated nozzle that moves in x and y, depositing material only where that layer needs it. Each layer cools and hardens before the next is added on top, and the build plate drops by one layer height each time, until the knob is complete.
+    keyPoints:
+      - The object is designed using CAD software (or scanned)
+      - Slicing software splits the design into thin horizontal layers
+      - The printer builds it layer by layer, from the bottom up (additive manufacturing)
+      - Material is melted in a heated nozzle and deposited only where each layer needs it
+      - Each layer hardens before the next layer is added on top
     explanation: |
-      - Layers: $30 \div 0.2 = 150$.
-      - Time: $150 \times 40 = 6000$ s.
-      - In minutes: $6000 \div 60 = 100$ minutes.
+      Design, slice, print layer by layer, harden, repeat. Those are the ideas a mark scheme looks for, whatever the object.

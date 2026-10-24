@@ -10,13 +10,14 @@ objectives: ["3.1.6"]
 prerequisites: [computer-components-ram-rom]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
     3.1.6 (differences between SRAM and DRAM, including their use in a range of devices and
     systems and the reasons for choosing one or the other). The 64 ms refresh period is a typical
     illustrative value; the calculation was checked with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -74,6 +75,13 @@ blocks:
         Check the danger case: left unrefreshed, the charge keeps leaking. Once it drops below 50% the cell reads as **0**, and the data is corrupted.
     answer: |
       It reads as 1; the refresh tops it back up to full before it can fall below the threshold.
+
+  - type: deeper
+    title: How often is DRAM refreshed?
+    body: |
+      A typical DRAM chip refreshes **every row once every 64 ms**, working through the rows in turn.
+
+      While a row is being refreshed it can't be read. That waiting is one more reason DRAM is slower than SRAM.
 
   - type: check
     title: Quick check
@@ -174,13 +182,6 @@ blocks:
       - "SRAM: each bit is held by a flip-flop, so no refreshing is needed while the power is on."
       - SRAM is faster but costs more per bit and holds fewer bits per chip; DRAM is slower but denser and cheaper.
       - Cache uses SRAM (speed); main memory uses DRAM (large capacity, low cost). Both are volatile.
-
-  - type: deeper
-    title: How often is DRAM refreshed?
-    body: |
-      A typical DRAM chip refreshes **every row once every 64 ms**, working through the rows in turn.
-
-      While a row is being refreshed it can't be read. That waiting is one more reason DRAM is slower than SRAM.
 
 questions:
   - id: dram-bit

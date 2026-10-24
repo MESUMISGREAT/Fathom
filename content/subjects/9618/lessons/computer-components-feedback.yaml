@@ -10,7 +10,7 @@ objectives: ["3.1.8"]
 prerequisites: [computer-components-sensors-actuators]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
@@ -18,6 +18,7 @@ provenance:
     from a simple illustrative heating and cooling model; its switching times and the percentage
     calculation were checked with Python. Pseudocode follows the Cambridge 9618 pseudocode guide.
     All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -87,7 +88,7 @@ blocks:
       - It keeps conditions **close to the target automatically**, without a person checking.
       - It responds to **changes the system didn't cause**: a door left open, the sun coming out.
       - The processor can **check its action worked**, and do more or less as needed.
-      - It stops **overshoot**, so the heater is switched off before it gets dangerously hot.
+      - It **prevents overheating**: the heater is switched off as soon as the upper value is reached.
 
       Compare a heater on a **timer** with no sensor. It heats for a fixed time whatever the weather, so it may overheat on a sunny day and do too little on a freezing night.
 
@@ -101,8 +102,8 @@ blocks:
       `ReadTemperature()` returns the sensor reading (after the ADC). `SetHeater()` sends the signal to the heater's actuator, and `Wait()` pauses for a number of seconds.
 
       ```
-      CONSTANT Lower = 24.0
-      CONSTANT Upper = 26.0
+      CONSTANT Lower ← 24.0
+      CONSTANT Upper ← 26.0
       DECLARE Temperature : REAL
 
       REPEAT
@@ -148,7 +149,7 @@ blocks:
     items:
       - Feedback is when the output of a control system affects its next input.
       - The sensor measures the effect of the actuator's action, and the processor adjusts its next action.
-      - Feedback keeps conditions near the target, responds to outside changes and prevents overshoot.
+      - Feedback keeps conditions near the target, responds to outside changes and prevents overheating.
       - In code, the sensor is read inside the loop, so each decision uses a fresh reading.
 
   - type: deeper

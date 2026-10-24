@@ -9,6 +9,11 @@ import ChemicalFormulasHeatingCrucible from './chemical-formulas-heating-crucibl
 import ChemicalFormulasIonCharges from './chemical-formulas-ion-charges';
 import ChemicalFormulasIonPatterns from './chemical-formulas-ion-patterns';
 import ChemicalFormulasSpectatorIons from './chemical-formulas-spectator-ions';
+import CovalentBondingAluminiumChlorideDimer from './covalent-bonding-aluminium-chloride-dimer';
+import CovalentBondingAmmoniumIon from './covalent-bonding-ammonium-ion';
+import CovalentBondingExpandedOctets from './covalent-bonding-expanded-octets';
+import CovalentBondingMultipleBonds from './covalent-bonding-multiple-bonds';
+import CovalentBondingSingleBonds from './covalent-bonding-single-bonds';
 import ElectronegativityBondingDifferenceScale from './electronegativity-bonding-difference-scale';
 import ElectronegativityBondingFluorineVsChlorine from './electronegativity-bonding-fluorine-vs-chlorine';
 import ElectronegativityBondingPeriodicTable from './electronegativity-bonding-periodic-table';
@@ -45,6 +50,11 @@ export const diagrams: DiagramRegistry = {
   'chem-chemical-formulas-ion-charges': ChemicalFormulasIonCharges,
   'chem-chemical-formulas-ion-patterns': ChemicalFormulasIonPatterns,
   'chem-chemical-formulas-spectator-ions': ChemicalFormulasSpectatorIons,
+  'chem-covalent-bonding-aluminium-chloride-dimer': CovalentBondingAluminiumChlorideDimer,
+  'chem-covalent-bonding-ammonium-ion': CovalentBondingAmmoniumIon,
+  'chem-covalent-bonding-expanded-octets': CovalentBondingExpandedOctets,
+  'chem-covalent-bonding-multiple-bonds': CovalentBondingMultipleBonds,
+  'chem-covalent-bonding-single-bonds': CovalentBondingSingleBonds,
   'chem-electronegativity-bonding-difference-scale': ElectronegativityBondingDifferenceScale,
   'chem-electronegativity-bonding-fluorine-vs-chlorine': ElectronegativityBondingFluorineVsChlorine,
   'chem-electronegativity-bonding-periodic-table': ElectronegativityBondingPeriodicTable,

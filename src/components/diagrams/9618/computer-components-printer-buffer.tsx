@@ -18,7 +18,7 @@ export function ComputerComponentsPrinterBuffer() {
   return (
     <Svg width={W} height={H}>
       <Label x={16} y={30} anchor="start" className="dg-text-small dg-text-muted">
-        meanwhile it carries on with other tasks
+        meanwhile, the processor carries on with other tasks
       </Label>
       <rect x={16} y={70} width={120} height={60} rx={8} className="dg-fill-accent dg-accent" />
       <Label x={76} y={92} className="dg-text dg-bold">

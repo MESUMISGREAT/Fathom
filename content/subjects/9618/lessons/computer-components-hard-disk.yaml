@@ -10,12 +10,13 @@ objectives: ["3.1.3"]
 prerequisites: [computer-components-io-memory-storage]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
     3.1.3 (principal operations of hardware devices: magnetic hard disk). Disk speeds are typical
     illustrative values; timing calculations checked with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -85,6 +86,13 @@ blocks:
     answer: |
       Move to the track, wait for the sector, read the magnetism. Exactly the method.
 
+  - type: deeper
+    title: How long is the wait?
+    body: |
+      At 7200 revolutions per minute, one turn takes $60 \div 7200 = 0.00833$ s, which is about **8.3 ms**.
+
+      On average the sector you want is half a turn away, so the average **rotational latency** is about **4.2 ms**. That sounds tiny, but a processor can run millions of instructions in that time, which is why the moving parts make HDDs slow compared with SSDs and RAM.
+
   - type: check
     title: Your turn
     questions: [tracks-sectors, actuator-job, bit-stored-as]
@@ -133,13 +141,6 @@ blocks:
       - Platters spin at a constant speed; surfaces are divided into tracks and sectors.
       - The actuator arm moves the head to the track; the head waits for the sector to spin round.
       - The head detects magnetisation to read, and sets it with a magnetic field to write.
-
-  - type: deeper
-    title: How long is the wait?
-    body: |
-      At 7200 revolutions per minute, one turn takes $60 \div 7200 = 0.00833$ s, which is about **8.3 ms**.
-
-      On average the sector you want is half a turn away, so the average **rotational latency** is about **4.2 ms**. That sounds tiny, but a processor can run millions of instructions in that time, which is why the moving parts make HDDs slow compared with SSDs and RAM.
 
 questions:
   - id: tracks-sectors

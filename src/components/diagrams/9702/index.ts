@@ -42,6 +42,8 @@ import NonUniformResistiveForces from './non-uniform-resistive-forces';
 import NonUniformSkydiverForces from './non-uniform-skydiver-forces';
 import NonUniformThrowVt from './non-uniform-throw-vt';
 import PrefixLadder from './prefix-ladder';
+import TurningEffectsPlumbLine from './turning-effects-plumb-line';
+import TurningEffectsSpannerDoor from './turning-effects-spanner-door';
 import VectorComponents from './vector-components';
 import VectorTriangle from './vector-triangle';
 
@@ -89,6 +91,8 @@ export const diagrams: DiagramRegistry = {
   'phys-non-uniform-skydiver-forces': NonUniformSkydiverForces,
   'phys-non-uniform-throw-vt': NonUniformThrowVt,
   'phys-prefix-ladder': PrefixLadder,
+  'phys-turning-effects-plumb-line': TurningEffectsPlumbLine,
+  'phys-turning-effects-spanner-door': TurningEffectsSpannerDoor,
   'phys-vector-components': VectorComponents,
   'phys-vector-triangle': VectorTriangle,
 };

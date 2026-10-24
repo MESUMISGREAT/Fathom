@@ -63,19 +63,13 @@ export function LonePair({
 }
 
 /**
- * Electrons shared between two overlapping shells A and B, placed in the lens where the
- * circles overlap. 2 marks: one pair stacked across the bond. 4 marks: two pairs (a double
- * bond). 6 marks: three pairs (a triple bond). Each pair is listed [A's electron, B's electron].
+ * A group of 2, 4 or 6 electrons centred on (x, y), arranged relative to a bond pointing at
+ * `angle` degrees. 2 marks: one pair stacked across the bond. 4: two pairs (a double bond).
+ * 6: three pairs (a triple bond). List each pair as [first atom's electron, second atom's].
  */
-export function Shared({ a, ra, b, rb, marks }: { a: Pt; ra: number; b: Pt; rb: number; marks: Mark[] }) {
-  const dx = b[0] - a[0];
-  const dy = b[1] - a[1];
-  const d = Math.hypot(dx, dy);
-  const ux = dx / d;
-  const uy = dy / d;
-  const t = (d - rb + ra) / 2;
-  const mx = a[0] + ux * t;
-  const my = a[1] + uy * t;
+export function PairGroup({ x, y, angle, marks }: { x: number; y: number; angle: number; marks: Mark[] }) {
+  const ux = Math.cos(rad(angle));
+  const uy = Math.sin(rad(angle));
   // offsets as [along the bond, across the bond]
   const layout: Pt[] =
     marks.length === 2
@@ -102,10 +96,20 @@ export function Shared({ a, ra, b, rb, marks }: { a: Pt; ra: number; b: Pt; rb: 
     <g>
       {marks.map((mark, i) => {
         const [al, ac] = layout[i]!;
-        return <Electron key={i} x={mx + ux * al - uy * ac} y={my + uy * al + ux * ac} mark={mark} />;
+        return <Electron key={i} x={x + ux * al - uy * ac} y={y + uy * al + ux * ac} mark={mark} />;
       })}
     </g>
   );
+}
+
+/** Electrons shared between two overlapping shells A and B, placed in the lens where they overlap. */
+export function Shared({ a, ra, b, rb, marks }: { a: Pt; ra: number; b: Pt; rb: number; marks: Mark[] }) {
+  const dx = b[0] - a[0];
+  const dy = b[1] - a[1];
+  const d = Math.hypot(dx, dy);
+  const t = (d - rb + ra) / 2;
+  const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+  return <PairGroup x={a[0] + (dx / d) * t} y={a[1] + (dy / d) * t} angle={angle} marks={marks} />;
 }
 
 /** Point at distance `dist` from (cx, cy) in direction `angle` degrees (0 = right, 90 = down). */

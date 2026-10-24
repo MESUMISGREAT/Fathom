@@ -10,13 +10,14 @@ objectives: ["3.1.3"]
 prerequisites: [computer-components-hard-disk]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Computer Science 9618
     syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
     3.1.3 (principal operations of hardware devices: solid state (flash) memory). Describes NAND
     flash with floating gate transistors, using the industry convention that an erased cell
     reads as 1. All questions are original; scenarios are illustrative.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -103,6 +104,13 @@ blocks:
       | Cost per GB | higher | lower |
       | Lifetime | each block survives a limited number of erase/write cycles | parts wear mechanically |
 
+  - type: deeper
+    title: Why flash wears out, and how controllers cope
+    body: |
+      Every erase forces electrons through the thin insulator, which slowly damages it. After many thousands of erase/write cycles a block can no longer hold charge reliably.
+
+      So the SSD controller uses **wear levelling**: it spreads writes evenly over all blocks, so no single block wears out early. Flash is a kind of **EEPROM** that erases in blocks rather than byte by byte (more in the PROM, EPROM and EEPROM lesson).
+
   - type: example
     title: Exam-style
     problem: |
@@ -151,13 +159,6 @@ blocks:
       - A voltage on the control gate makes electrons tunnel through the thin insulator onto the floating gate.
       - The insulator keeps them there with the power off, so flash is non-volatile.
       - "SSDs beat HDDs on speed, robustness, power, noise and weight; HDDs win on cost per GB."
-
-  - type: deeper
-    title: Why flash wears out, and how controllers cope
-    body: |
-      Every erase forces electrons through the thin insulator, which slowly damages it. After many thousands of erase/write cycles a block can no longer hold charge reliably.
-
-      So the SSD controller uses **wear levelling**: it spreads writes evenly over all blocks, so no single block wears out early. Flash is a kind of **EEPROM** that erases in blocks rather than byte by byte (more in the PROM, EPROM and EEPROM lesson).
 
 questions:
   - id: bit-is-what
