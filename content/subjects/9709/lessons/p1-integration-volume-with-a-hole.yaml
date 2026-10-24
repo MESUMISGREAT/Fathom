@@ -1,0 +1,214 @@
+id: p1-integration-volume-with-a-hole
+subject: "9709"
+topic: "1.8"
+title: Volumes with a hole
+summary: When the region doesn't touch the axis, the solid has a hole. Use V = π∫(R² − r²) dx, squaring each radius on its own.
+order: 9
+minutes: 5
+kind: core
+objectives: ["1.8.4"]
+prerequisites: [p1-integration-volume-of-revolution, p1-integration-area-between-graphs]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "use definite integration
+    ... to find a volume of revolution about one of the axes", covering the guidance note that the
+    region need not be bounded by the axis of rotation (the syllabus's example type, a curve and a
+    horizontal line rotated about the x-axis, is worked here with different numbers). All
+    examples and questions are original; all arithmetic checked in Python. Written in the
+    one-question-type, one-method style. Not yet independently reviewed; not reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the volume when a region that **doesn't touch the axis** is rotated about the $x$-axis.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *The region between the curve $y = 5 - x^2$ and the line $y = 1$ is rotated $360°$ about the $x$-axis. Find the volume.*
+
+      The region floats above the axis, so the solid has a tunnel through the middle, like a bead or a doughnut.
+
+  - type: diagram
+    diagram: p1-integration-volume-washer
+    alt: >-
+      The region between the curve y = 5 − x² and the line y = 1, from x = −2 to x = 2, shaded above
+      the x-axis, with its mirror image below the axis dashed. At x = 1 a coloured slice is drawn as
+      a washer: an outer ellipse reaching up to the curve, marked R = 5 − x², and an unshaded inner
+      ellipse reaching up to the line, marked r = 1. Underneath: V = pi times the integral from −2
+      to 2 of R² minus r², dx.
+    caption: |-
+      Each slice is a **washer**: a disc of radius $R$ with a hole of radius $r$ cut out. Its area is $\pi R^2 - \pi r^2$.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Find the limits: where the two graphs meet.
+      2. Name the radii: $R$ is the graph **farther** from the axis (the outer edge), $r$ the **nearer** one (the hole).
+      3. **Square each radius on its own: $V = \pi\displaystyle\int_a^b \big(R^2 - r^2\big)\,dx$.** Not $(R - r)^2$. This is the step people get wrong.
+      4. Integrate, then top limit minus bottom limit.
+
+  - type: example
+    title: "The easiest one: a tube"
+    problem: |-
+      The rectangle between $y = 3$ and $y = 1$, from $x = 0$ to $x = 2$, is rotated $360°$ about the $x$-axis. Find the volume.
+    steps:
+      - |-
+        **Limits:** $x = 0$ to $x = 2$.
+      - |-
+        **Radii:** outer $R = 3$, inner $r = 1$.
+      - |-
+        **Square each:** $V = \pi\displaystyle\int_0^2 \big(3^2 - 1^2\big)\,dx = \pi\displaystyle\int_0^2 8\,dx$.
+      - |-
+        **Integrate:** $\pi\Big[8x\Big]_0^2 = 16\pi$.
+    answer: |-
+      $V = 16\pi$
+
+      Check: it's a cylinder of radius 3 and length 2 ($\pi \times 9 \times 2 = 18\pi$) with a cylinder of radius 1 removed ($\pi \times 1 \times 2 = 2\pi$). $18\pi - 2\pi = 16\pi$ ✓.
+
+      With $(R - r)^2$ you'd get $\pi \times 4 \times 2 = 8\pi$, which is wrong.
+
+  - type: check
+    questions: [washer-easy, washer-mcq]
+
+  - type: example
+    title: "Exam-style: a curve and a line"
+    problem: |-
+      The region between $y = 5 - x^2$ and $y = 1$ is rotated $360°$ about the $x$-axis. Find the exact volume.
+    steps:
+      - |-
+        **Limits:** $5 - x^2 = 1$ gives $x^2 = 4$, so $x = -2$ and $x = 2$.
+      - |-
+        **Radii:** the curve is farther from the axis, so $R = 5 - x^2$; the line gives $r = 1$.
+      - |-
+        **Square each:** $R^2 - r^2 = (5 - x^2)^2 - 1 = 25 - 10x^2 + x^4 - 1 = x^4 - 10x^2 + 24$.
+      - |-
+        **Integrate:** $\Big[\dfrac{x^5}{5} - \dfrac{10x^3}{3} + 24x\Big]_{-2}^{2}$.
+      - |-
+        **Top minus bottom limit:** $\left(\dfrac{32}{5} - \dfrac{80}{3} + 48\right) - \left(-\dfrac{32}{5} + \dfrac{80}{3} - 48\right) = \dfrac{416}{15} + \dfrac{416}{15} = \dfrac{832}{15}$.
+    answer: |-
+      $V = \dfrac{832\pi}{15}$ (about $174$)
+
+  - type: check
+    questions: [washer-curve-line, washer-two-graphs, spot-washer]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $V = \pi\displaystyle\int_{-2}^{2} \big((5 - x^2) - 1\big)^2\,dx$
+        right: |-
+          That squares the difference, $(R - r)^2$. Square each radius first: $\pi\displaystyle\int \big((5 - x^2)^2 - 1^2\big)\,dx$.
+      - wrong: |-
+          $V = \pi\displaystyle\int_{-2}^{2} (5 - x^2)^2\,dx$
+        right: |-
+          That's the solid with no hole. Subtract the hole: $-\,r^2$ inside the integral.
+      - wrong: |-
+          $(5 - x^2)^2 = 25 - x^4$
+        right: |-
+          Expand it properly: $(5 - x^2)^2 = 25 - 10x^2 + x^4$.
+
+  - type: exam
+    body: |-
+      - Usually 4 to 6 marks: limits, a correct $\pi\displaystyle\int (R^2 - r^2)\,dx$, integration, substitution.
+      - You can also do it as (volume of the outer solid) − (volume of the inner cylinder). Same answer, same marks.
+      - Symmetric limits like $-2$ to $2$: substitute both carefully, or use symmetry and say so.
+
+  - type: takeaways
+    items:
+      - |-
+        Region not touching the axis → the solid has a hole → washers.
+      - |-
+        $R$ = farther graph, $r$ = nearer graph.
+      - |-
+        $V = \pi\displaystyle\int_a^b \big(R^2 - r^2\big)\,dx$. **Square each radius on its own**, never $(R - r)^2$.
+
+questions:
+  - id: washer-easy
+    format: numeric
+    difficulty: 1
+    objectives: ["1.8.4"]
+    prompt: |-
+      The rectangle between $y = 4$ and $y = 2$, from $x = 0$ to $x = 3$, is rotated $360°$ about the $x$-axis. Find the volume, in terms of $\pi$. (Type it as, for example, `5π`.)
+    fields:
+      - answer: 113.09733552923255
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      $R = 4$, $r = 2$: $\;V = \pi\displaystyle\int_0^3 (16 - 4)\,dx = \pi\Big[12x\Big]_0^3 = 36\pi \approx 113$.
+
+  - id: washer-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.8.4"]
+    prompt: |-
+      The region between $y = x + 2$ and $y = 1$, from $x = 0$ to $x = 2$, is rotated $360°$ about the $x$-axis. Which integral gives the volume?
+    explanation: |-
+      $R = x + 2$ (farther from the axis), $r = 1$. Square each on its own: $\pi\displaystyle\int_0^2 \big((x + 2)^2 - 1\big)\,dx$.
+    options:
+      - text: $\pi\displaystyle\int_0^2 \big((x + 2)^2 - 1\big)\,dx$
+        correct: true
+        why: |-
+          $R^2 - r^2$ with $R = x + 2$ and $r = 1$.
+      - text: $\pi\displaystyle\int_0^2 (x + 2 - 1)^2\,dx$
+        why: |-
+          That's $(R - r)^2$. Square each radius first, then subtract.
+      - text: $\pi\displaystyle\int_0^2 \big((x + 2)^2 + 1\big)\,dx$
+        why: |-
+          The hole's volume is taken away, not added.
+      - text: $\pi\displaystyle\int_0^2 (x + 2)^2\,dx$
+        why: |-
+          That's the solid without the hole.
+
+  - id: washer-curve-line
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      The region between $y = 6 - x^2$ and $y = 2$ is rotated $360°$ about the $x$-axis. Find the exact volume. (Type it as, for example, `7π/5`.)
+    fields:
+      - answer: 241.27431579569688
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      Limits: $6 - x^2 = 2$, so $x = \pm 2$. $R = 6 - x^2$, $r = 2$.
+
+      $R^2 - r^2 = 36 - 12x^2 + x^4 - 4 = x^4 - 12x^2 + 32$.
+
+      $V = \pi\Big[\dfrac{x^5}{5} - 4x^3 + 32x\Big]_{-2}^{2} = \pi\left(\dfrac{192}{5} - \left(-\dfrac{192}{5}\right)\right) = \dfrac{384\pi}{5} \approx 241$.
+
+  - id: washer-two-graphs
+    format: numeric
+    difficulty: 3
+    objectives: ["1.8.4"]
+    prompt: |-
+      The region between $y = x$ and $y = x^2$, from $x = 0$ to $x = 1$, is rotated $360°$ about the $x$-axis. Find the exact volume. (Type it as, for example, `7π/5`.)
+    fields:
+      - answer: 0.41887902047863906
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      For $0 < x < 1$, $x > x^2$, so the line is farther from the axis: $R = x$, $r = x^2$.
+
+      $V = \pi\displaystyle\int_0^1 \big(x^2 - x^4\big)\,dx = \pi\Big[\dfrac{x^3}{3} - \dfrac{x^5}{5}\Big]_0^1 = \pi\left(\dfrac13 - \dfrac15\right) = \dfrac{2\pi}{15} \approx 0.419$.
+
+  - id: spot-washer
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      A student finds the volume when the region between $y = x^2 + 1$ and $y = 2$ is rotated $360°$ about the $x$-axis. Which line has the first error?
+    lines:
+      - |-
+        They meet where $x^2 + 1 = 2$, so $x = -1$ and $x = 1$.
+      - |-
+        Outer radius $R = 2$, inner radius $r = x^2 + 1$.
+      - |-
+        $V = \pi\displaystyle\int_{-1}^{1} \big(2 - (x^2 + 1)\big)^2\,dx$
+      - |-
+        $= \pi\displaystyle\int_{-1}^{1} (1 - x^2)^2\,dx = \dfrac{16\pi}{15}$
+    errorLine: 3
+    fix: |-
+      Square each radius on its own: $V = \pi\displaystyle\int_{-1}^{1} \big(2^2 - (x^2 + 1)^2\big)\,dx = \dfrac{64\pi}{15}$.
+    explanation: |-
+      Lines 1 and 2 are right: between $-1$ and $1$ the line $y = 2$ is farther from the axis. Line 3 squares the difference, $(R - r)^2$, instead of $R^2 - r^2$.

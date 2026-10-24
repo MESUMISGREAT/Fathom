@@ -25,7 +25,7 @@ const ROWS: { from: string; to: string }[] = [
 ];
 
 export default function P1IntegrationReverseRule() {
-  const H = TABLE_TOP + ROWS.length * ROW + 16;
+  const H = TABLE_TOP + ROWS.length * ROW + 30;
   return (
     <Svg width={W} height={H}>
       {/* the two boxes */}
@@ -44,8 +44,8 @@ export default function P1IntegrationReverseRule() {
       <Label x={W / 2} y={BOX_Y + 62} className="dg-text-accent">
         integrate: add one to the power, divide by the new power
       </Label>
-      <Label x={LEFT_X} y={BOX_Y + 88} className="dg-text-small">
-        any constant c vanishes when you differentiate
+      <Label x={W / 2} y={BOX_Y + 88} className="dg-text-small">
+        the constant c vanishes when you differentiate, so put it back when you integrate
       </Label>
 
       {/* rule table */}

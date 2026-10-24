@@ -1,0 +1,232 @@
+id: p1-integration-area-between-graphs
+subject: "9709"
+topic: "1.8"
+title: Area between two graphs
+summary: Find where the graphs meet, then integrate top minus bottom between those x-values.
+order: 7
+minutes: 5
+kind: core
+objectives: ["1.8.4"]
+prerequisites: [p1-integration-area-under-a-curve, coordinate-geometry-line-meets-curve]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "use definite integration
+    to find the area of a region bounded by a curve and lines parallel to the axes, or between a
+    curve and a line, or between two curves; and to find a volume of revolution about one of the
+    axes" (the parts on the area between a curve and a line, and between two curves). All
+    examples and questions are original; all arithmetic checked in Python. Written in the
+    one-question-type, one-method style. Not yet independently reviewed; not reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the **area between two graphs**: a curve and a line, or two curves.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *The line $y = x + 1$ meets the curve $y = x^2 - 4x + 5$ at $A$ and $B$. Find the area of the region enclosed between them.*
+
+      Sometimes the meeting points are given; often finding them is part (a).
+
+  - type: diagram
+    diagram: p1-integration-area-between
+    alt: >-
+      Graph on equal-scale axes of the U-shaped curve y = x² − 4x + 5 and the straight line
+      y = x + 1. They cross at A(1, 2) and B(4, 5). The region between them, from x = 1 to x = 4,
+      is shaded. A double-headed vertical arrow at x = 3 runs from the curve up to the line and is
+      labelled top minus bottom. A key says top: y = x + 1, bottom: y = x² − 4x + 5.
+    caption: |-
+      Between $A$ and $B$, the line is on top. Each strip of the region is (top − bottom) tall.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Find where they meet: set the two equations equal and solve. These $x$-values are your limits.
+      2. Decide which graph is on top between the limits. A sketch, or one test value in between, settles it.
+      3. **Subtract first: integrate (top − bottom) in one go.**
+      4. Top limit minus bottom limit, as usual.
+
+      Bonus: top − bottom is positive even if the region dips below the $x$-axis, so no splitting is needed.
+
+  - type: example
+    title: "The easiest one: check with a rectangle"
+    problem: |-
+      Find the area of the region between $y = x^2$ and the line $y = 4$.
+    steps:
+      - |-
+        **Where they meet:** $x^2 = 4$, so $x = -2$ and $x = 2$.
+      - |-
+        **Which is on top?** At $x = 0$: the line gives 4, the curve gives 0. The line is on top.
+      - |-
+        **Integrate top − bottom:** $\displaystyle\int_{-2}^{2} (4 - x^2)\,dx = \Big[4x - \dfrac{x^3}{3}\Big]_{-2}^{2}$.
+      - |-
+        **Top minus bottom limit:** $\left(8 - \dfrac83\right) - \left(-8 + \dfrac83\right) = \dfrac{16}{3} + \dfrac{16}{3} = \dfrac{32}{3}$.
+    answer: |-
+      $\dfrac{32}{3}$
+
+      Check: the rectangle under $y = 4$ from $-2$ to $2$ has area 16. The area under $y = x^2$ there is $\Big[\dfrac{x^3}{3}\Big]_{-2}^{2} = \dfrac{16}{3}$. And $16 - \dfrac{16}{3} = \dfrac{32}{3}$ ✓.
+
+  - type: check
+    questions: [between-easy, between-mcq, spot-between]
+
+  - type: example
+    title: "Exam-style: a curve and a line"
+    problem: |-
+      Find the area of the region enclosed by $y = x^2 - 4x + 5$ and $y = x + 1$.
+    steps:
+      - |-
+        **Where they meet:** $x^2 - 4x + 5 = x + 1$ gives $x^2 - 5x + 4 = 0$, so $(x - 1)(x - 4) = 0$: $x = 1$ and $x = 4$.
+      - |-
+        **Which is on top?** At $x = 2$: the line gives 3, the curve gives 1. The line is on top.
+      - |-
+        **Top − bottom:** $(x + 1) - (x^2 - 4x + 5) = -x^2 + 5x - 4$.
+      - |-
+        **Integrate:** $\Big[-\dfrac{x^3}{3} + \dfrac{5x^2}{2} - 4x\Big]_1^4$.
+      - |-
+        **Top minus bottom limit:** $\left(-\dfrac{64}{3} + 40 - 16\right) - \left(-\dfrac13 + \dfrac52 - 4\right) = \dfrac83 - \left(-\dfrac{11}{6}\right) = \dfrac{16}{6} + \dfrac{11}{6} = \dfrac{27}{6}$.
+    answer: |-
+      Area $= \dfrac92$
+
+  - type: check
+    questions: [between-line-curve, between-two-curves, between-unknown]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Area $= \displaystyle\int_1^4 \big((x^2 - 4x + 5) - (x + 1)\big)\,dx = -\dfrac92$
+        right: |-
+          That's bottom − top, which gives a negative. Check which graph is higher between the limits, and subtract that way round.
+      - wrong: |-
+          $(x + 1) - (x^2 - 4x + 5) = -x^2 - 3x + 6$
+        right: |-
+          Bracket the bottom graph and the minus hits every term: $x + 1 - x^2 + 4x - 5 = -x^2 + 5x - 4$.
+      - wrong: |-
+          Integrate the line from 0 to 4 and the curve from 1 to 4, then subtract.
+        right: |-
+          Both graphs use the **same** limits: the $x$-values where they meet.
+
+  - type: exam
+    body: |-
+      - Usually 4 to 6 marks: finding the meeting points, setting up $\displaystyle\int (\text{top} - \text{bottom})\,dx$, integrating and substituting.
+      - Exact answers are expected: keep fractions like $\dfrac92$.
+      - You can also find the area under the top graph and subtract the area under the bottom one. Same answer, but more places to slip.
+
+  - type: takeaways
+    items:
+      - |-
+        Limits: where the graphs meet (set them equal).
+      - |-
+        Area $= \displaystyle\int_a^b (\text{top} - \text{bottom})\,dx$. Subtract first, then integrate once.
+      - |-
+        Test a value between the limits to see which graph is on top.
+      - |-
+        Bracket the bottom graph when you subtract it.
+
+questions:
+  - id: between-easy
+    format: numeric
+    difficulty: 1
+    objectives: ["1.8.4"]
+    prompt: |-
+      Find the area of the region between the curve $y = x^2$ and the line $y = 9$.
+    fields:
+      - answer: 36
+    explanation: |-
+      They meet where $x^2 = 9$: $x = -3$ and $x = 3$. The line is on top.
+
+      $\displaystyle\int_{-3}^{3} (9 - x^2)\,dx = \Big[9x - \dfrac{x^3}{3}\Big]_{-3}^{3} = (27 - 9) - (-27 + 9) = 18 + 18 = 36$.
+
+  - id: between-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.8.4"]
+    prompt: |-
+      The line $y = x$ and the curve $y = x^2$ meet at $x = 0$ and $x = 1$. Which integral gives the area between them?
+    explanation: |-
+      Test $x = \dfrac12$: the line gives $\dfrac12$, the curve gives $\dfrac14$. The line is on top, so integrate $x - x^2$ from 0 to 1 (it's $\dfrac16$).
+    options:
+      - text: $\displaystyle\int_0^1 (x - x^2)\,dx$
+        correct: true
+        why: |-
+          Top ($y = x$) minus bottom ($y = x^2$), between the meeting points.
+      - text: $\displaystyle\int_0^1 (x^2 - x)\,dx$
+        why: |-
+          That's bottom minus top, so it comes out negative ($-\dfrac16$).
+      - text: $\displaystyle\int_0^1 x\,dx$
+        why: |-
+          That's the whole area under the line, including the part under the curve.
+      - text: $\displaystyle\int_0^1 (x + x^2)\,dx$
+        why: |-
+          Areas between graphs need a subtraction, not an addition.
+
+  - id: between-line-curve
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      Find the area of the region enclosed by the curve $y = x^2$ and the line $y = x + 6$. Give the exact value (you can type a fraction like 7/2) or 3 significant figures.
+    fields:
+      - answer: 20.833333333333332
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      Meet: $x^2 = x + 6$ gives $(x - 3)(x + 2) = 0$, so $x = -2$ and $x = 3$. At $x = 0$ the line (6) is above the curve (0).
+
+      $\displaystyle\int_{-2}^{3} (x + 6 - x^2)\,dx = \Big[\dfrac{x^2}{2} + 6x - \dfrac{x^3}{3}\Big]_{-2}^{3} = \dfrac{27}{2} - \left(-\dfrac{22}{3}\right) = \dfrac{125}{6} \approx 20.8$.
+
+  - id: between-two-curves
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      Find the area of the region enclosed by the curves $y = x^2$ and $y = 8 - x^2$. Give the exact value or 3 significant figures.
+    fields:
+      - answer: 21.333333333333332
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      Meet: $x^2 = 8 - x^2$, so $x^2 = 4$ and $x = \pm 2$. At $x = 0$, $8 - x^2$ is on top.
+
+      Top − bottom $= 8 - 2x^2$.
+
+      $\displaystyle\int_{-2}^{2} (8 - 2x^2)\,dx = \Big[8x - \dfrac{2x^3}{3}\Big]_{-2}^{2} = \left(16 - \dfrac{16}{3}\right) - \left(-16 + \dfrac{16}{3}\right) = \dfrac{64}{3} \approx 21.3$.
+
+  - id: spot-between
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      A student finds the area between $y = 2x$ and $y = x^2$. Which line has the first error?
+    lines:
+      - |-
+        They meet where $x^2 = 2x$, so $x = 0$ or $x = 2$.
+      - |-
+        Area $= \displaystyle\int_0^2 (x^2 - 2x)\,dx$
+      - |-
+        $= \Big[\dfrac{x^3}{3} - x^2\Big]_0^2 = \dfrac83 - 4$
+      - |-
+        So the area is $-\dfrac43$.
+    errorLine: 2
+    fix: |-
+      Between 0 and 2 the line is on top (at $x = 1$: $2 > 1$). So the area is $\displaystyle\int_0^2 (2x - x^2)\,dx = 4 - \dfrac83 = \dfrac43$.
+    explanation: |-
+      Line 1 is right. Line 2 does bottom − top, which is why the "area" comes out negative at the end.
+
+  - id: between-unknown
+    format: numeric
+    difficulty: 3
+    objectives: ["1.8.4"]
+    prompt: |-
+      The line $y = kx$, where $k > 0$, and the curve $y = x^2$ enclose a region of area $36$. Find $k$.
+    fields:
+      - label: "k ="
+        answer: 6
+    explanation: |-
+      They meet where $x^2 = kx$: $x = 0$ and $x = k$. In between, the line is on top.
+
+      Area $= \displaystyle\int_0^k (kx - x^2)\,dx = \Big[\dfrac{kx^2}{2} - \dfrac{x^3}{3}\Big]_0^k = \dfrac{k^3}{2} - \dfrac{k^3}{3} = \dfrac{k^3}{6}$.
+
+      So $\dfrac{k^3}{6} = 36$, $k^3 = 216$ and $k = 6$.

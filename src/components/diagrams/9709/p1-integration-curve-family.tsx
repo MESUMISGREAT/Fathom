@@ -36,20 +36,20 @@ export default function P1IntegrationCurveFamily() {
           className={c === KEY ? 'dg-accent-2' : 'dg-thin'}
         />
       ))}
-      {/* curve labels, just left of the y-axis on each curve's lowest point */}
+      {/* curve labels, right of the y-axis, in the gap between each curve and the next */}
       {CS.map((c) => (
         <Label
           key={`l${c}`}
-          x={p.sx(-0.1)}
-          y={p.sy(c) - 9}
-          anchor="end"
+          x={p.sx(0.08)}
+          y={p.sy(c + 0.62)}
+          anchor="start"
           className={c === KEY ? 'dg-text-accent' : 'dg-text-small'}
         >
           {`c = ${c < 0 ? '−' : ''}${Math.abs(c)}`}
         </Label>
       ))}
       <circle cx={p.sx(1)} cy={p.sy(4)} r={5} className="dg-dot" />
-      <Label x={p.sx(1) + 14} y={p.sy(4) + 6} anchor="start" className="dg-text dg-bold">
+      <Label x={p.sx(0.88)} y={p.sy(4.45)} anchor="end" className="dg-text dg-bold">
         (1, 4)
       </Label>
       <Label x={p.sx(1.05)} y={p.sy(8.0)} anchor="start" className="dg-text-accent">

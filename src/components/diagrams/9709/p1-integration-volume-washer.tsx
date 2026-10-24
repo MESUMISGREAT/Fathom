@@ -31,7 +31,7 @@ export default function P1IntegrationVolumeWasher() {
   return (
     <Svg width={W} height={H}>
       <path d={regionPath(p, f, () => 1, -2, 2)} className="dg-fill-accent" />
-      <AxesXY p={p} xTicks={[-2, -1, 2]} yTicks={[-4, -1, 1, 4, 5]} />
+      <AxesXY p={p} xTicks={[-2, -1, 2]} yTicks={[-4, 4, 5]} />
       {/* mirror image below the axis */}
       <path d={graph((x) => -f(x), [-2, 2], p, Y)} className="dg-muted dg-dashed" />
       <line x1={p.sx(-2)} y1={p.sy(-1)} x2={p.sx(2)} y2={p.sy(-1)} className="dg-muted dg-dashed" />
@@ -46,9 +46,10 @@ export default function P1IntegrationVolumeWasher() {
         className="dg-accent-2 dg-fill-accent-2"
       />
       <Arrow x1={cx} y1={y0} x2={cx} y2={y0 - R + 3} className="dg-line" head={8} />
-      <Arrow x1={cx} y1={y0} x2={cx} y2={y0 + r - 2} className="dg-line" head={7} />
+      <Arrow x1={cx} y1={y0} x2={cx} y2={y0 - r + 2} className="dg-line" head={7} />
       <MathLabel x={cx + R * PERSP + 6} y={p.sy(3.1)} anchor="start" w={150} h={34} tex="R = 5 - x^2" />
-      <MathLabel x={cx + R * PERSP + 6} y={p.sy(-1.6)} anchor="start" w={80} h={34} tex="r = 1" />
+      <line x1={cx + 4} y1={p.sy(0.5)} x2={p.sx(2.28)} y2={p.sy(0.5)} className="dg-thin" />
+      <MathLabel x={p.sx(2.32)} y={p.sy(0.5)} anchor="start" w={70} h={34} tex="r = 1" />
 
       <MathLabel x={p.sx(-2.8)} y={p.sy(5.2)} anchor="start" w={130} h={34} tone="accent" tex="y = 5 - x^2" />
       <Label x={p.sx(3.25)} y={p.sy(1) - 12} anchor="end" className="dg-text">

@@ -13,11 +13,21 @@ import CompressionSizeBars from './compression-size-bars';
 import CompressionSoundMasking from './compression-sound-masking';
 import CompressionVectorSimplify from './compression-vector-simplify';
 import ComputerComponents_3dPrinter from './computer-components-3d-printer';
+import ComputerComponentsBootSequence from './computer-components-boot-sequence';
+import ComputerComponentsDramRefresh from './computer-components-dram-refresh';
+import ComputerComponentsFloatingGate from './computer-components-floating-gate';
 import ComputerComponentsHddPlatter from './computer-components-hdd-platter';
 import ComputerComponentsLaserPrinter from './computer-components-laser-printer';
+import ComputerComponentsMemoryPyramid from './computer-components-memory-pyramid';
 import ComputerComponentsMicrocontroller from './computer-components-microcontroller';
+import ComputerComponentsMonitorVsControl from './computer-components-monitor-vs-control';
+import ComputerComponentsOpticalRead from './computer-components-optical-read';
+import ComputerComponentsPrinterBuffer from './computer-components-printer-buffer';
 import ComputerComponentsSpeaker from './computer-components-speaker';
 import ComputerComponentsSystemOverview from './computer-components-system-overview';
+import ComputerComponentsThermostatGraph from './computer-components-thermostat-graph';
+import ComputerComponentsTouchscreens from './computer-components-touchscreens';
+import ComputerComponentsVrLoop from './computer-components-vr-loop';
 import HexNibbles from './hex-nibbles';
 import MultimediaBitPlanes from './multimedia-bit-planes';
 import MultimediaBitmapFileLayout from './multimedia-bitmap-file-layout';
@@ -66,11 +76,21 @@ export const diagrams: DiagramRegistry = {
   'cs-compression-sound-masking': CompressionSoundMasking,
   'cs-compression-vector-simplify': CompressionVectorSimplify,
   'cs-computer-components-3d-printer': ComputerComponents_3dPrinter,
+  'cs-computer-components-boot-sequence': ComputerComponentsBootSequence,
+  'cs-computer-components-dram-refresh': ComputerComponentsDramRefresh,
+  'cs-computer-components-floating-gate': ComputerComponentsFloatingGate,
   'cs-computer-components-hdd-platter': ComputerComponentsHddPlatter,
   'cs-computer-components-laser-printer': ComputerComponentsLaserPrinter,
+  'cs-computer-components-memory-pyramid': ComputerComponentsMemoryPyramid,
   'cs-computer-components-microcontroller': ComputerComponentsMicrocontroller,
+  'cs-computer-components-monitor-vs-control': ComputerComponentsMonitorVsControl,
+  'cs-computer-components-optical-read': ComputerComponentsOpticalRead,
+  'cs-computer-components-printer-buffer': ComputerComponentsPrinterBuffer,
   'cs-computer-components-speaker': ComputerComponentsSpeaker,
   'cs-computer-components-system-overview': ComputerComponentsSystemOverview,
+  'cs-computer-components-thermostat-graph': ComputerComponentsThermostatGraph,
+  'cs-computer-components-touchscreens': ComputerComponentsTouchscreens,
+  'cs-computer-components-vr-loop': ComputerComponentsVrLoop,
   'cs-hex-nibbles': HexNibbles,
   'cs-multimedia-bit-planes': MultimediaBitPlanes,
   'cs-multimedia-bitmap-file-layout': MultimediaBitmapFileLayout,

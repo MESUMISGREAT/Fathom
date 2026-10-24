@@ -1,0 +1,246 @@
+id: computer-components-mic-speakers
+subject: "9618"
+topic: "3.1"
+title: "Microphones and speakers: the same trick, both ways"
+summary: How a speaker turns a digital sound file into sound using a DAC, an amplifier, a coil and a magnet, and how a microphone does the reverse.
+order: 5
+minutes: 5
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [computer-components-io-memory-storage, multimedia-sound-sampling]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.3 (principal operations of hardware devices: microphone and speakers). Describes the
+    moving-coil (dynamic) design. Frequencies in the questions are illustrative and checked with
+    Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a **speaker** produces sound from digital data, and how a **microphone** turns sound into digital data.
+
+  - type: explain
+    title: One device, run forwards or backwards
+    body: |
+      A speaker and a dynamic microphone are built from the **same three parts**: a **coil** of wire, a **permanent magnet** and a **diaphragm** (a cone or thin sheet).
+
+      - Speaker: electric current in, movement out, sound out.
+      - Microphone: sound in, movement in, electric current out.
+
+      Learn one direction properly and you get the other almost free.
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Describe** how sound is produced by a speaker from a digital sound file", or the microphone version. Usually 3 to 5 marks.
+
+      The marks are for the **chain**: digital ↔ analogue conversion, amplification, coil and magnet, vibration, sound waves.
+
+  - type: explain
+    title: The method (speaker)
+    body: |
+      1. The digital sound data is sent to a **DAC** (digital-to-analogue converter), which turns it into a varying analogue electrical signal.
+      2. The signal is **amplified**.
+      3. The varying current flows through the **coil**, making it an electromagnet whose magnetic field keeps changing.
+      4. **The coil's changing field interacts with the permanent magnet, so the coil is pushed and pulled back and forth.**
+      5. The coil is fixed to the **cone (diaphragm)**, so the cone vibrates too.
+      6. The cone pushes and pulls on the air, making **sound waves** that match the signal.
+
+      Step 4 is where marks vanish. "The current makes the cone move" skips the physics: it's the **magnet** pushing on the **coil**.
+
+  - type: diagram
+    diagram: cs-computer-components-speaker
+    alt: >-
+      Cross-section of a loudspeaker. On the left is a permanent magnet with a short central pole.
+      A coil, drawn as several loops, is wound around the pole, and two wires lead from it to a
+      label saying varying current from the amplifier. The coil is attached to the narrow end of a
+      large cone (diaphragm) that opens to the right. A double arrow on the cone says vibrates.
+      Curved sound waves spread out to the right of the cone.
+    caption: |
+      Changing current, coil pushed and pulled by the magnet, cone vibrates, air vibrates.
+
+  - type: explain
+    title: The microphone, run backwards
+    body: |
+      1. Sound waves (pressure changes in the air) make the **diaphragm** vibrate.
+      2. The diaphragm moves a **coil** back and forth inside the field of a **permanent magnet**.
+      3. Moving a coil in a magnetic field **induces** a small varying electric current: an analogue signal with the same pattern as the sound.
+      4. The signal is **amplified**, then an **ADC** (analogue-to-digital converter) samples it to produce digital data.
+
+  - type: example
+    title: "Easy first: pitch and loudness"
+    problem: |
+      A speaker is sent a signal that repeats 440 times every second. The volume is then turned up. What happens to the cone?
+    steps:
+      - |
+        The current changes direction in step with the signal, so the cone moves back and forth **440 times a second**. That's a 440 Hz note (the A that orchestras tune to).
+      - |
+        Turning up the volume makes the amplifier send a **larger** current. The magnetic push is bigger, so the cone moves **further** each time.
+      - |
+        Further movement means bigger pressure waves, so a **louder** sound. The pitch doesn't change, because the cone still vibrates 440 times a second.
+    answer: |
+      Frequency of the signal sets the pitch; size (amplitude) of the signal sets the loudness.
+
+  - type: check
+    title: Your turn
+    questions: [louder-cone, vibrations-count, converters-cloze]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      Describe how a laptop's speaker plays a song stored as an MP3 file. [4]
+    steps:
+      - |
+        "The digital data is converted to an analogue signal by a DAC, and the signal is amplified."
+      - |
+        "The varying current passes through a coil, creating a changing magnetic field."
+      - |
+        "The coil is attracted and repelled by a permanent magnet, so it moves back and forth."
+      - |
+        "The coil moves the cone, which vibrates and creates sound waves in the air."
+    answer: |
+      Four links in the chain, four marks. (The MP3 is decompressed first, but that's software, not the speaker.)
+
+  - type: check
+    title: Exam check
+    questions: [spot-adc-speaker, mic-current, mic-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: A speaker uses an ADC.
+        right: |
+          A speaker needs a **DAC**: data goes **from digital to analogue**. A microphone's signal goes through an **ADC**.
+      - wrong: The magnet in a speaker is what changes with the music.
+        right: |
+          The **permanent** magnet stays the same. The **coil's** field changes with the current, and that's what moves.
+      - wrong: A microphone produces binary directly.
+        right: |
+          It produces an **analogue** signal. The ADC turns that into binary by sampling it.
+
+  - type: exam
+    body: |
+      - Name the converter the right way round: **DAC for output** (speaker), **ADC for input** (microphone).
+      - Mention **amplify** in both directions; microphone signals are tiny and speakers need a strong current.
+      - The magic phrase is "coil **moves** in the magnetic field of a **permanent magnet**".
+
+  - type: takeaways
+    items:
+      - "Speaker: digital data → DAC → amplifier → varying current in coil → coil pushed and pulled by permanent magnet → cone vibrates → sound."
+      - "Microphone: sound → diaphragm vibrates → coil moves in magnet's field → current induced → amplified → ADC → digital."
+      - The frequency of the signal sets the pitch; its amplitude sets the loudness.
+
+  - type: enrichment
+    title: Condenser microphones
+    body: |
+      Many studio and phone microphones are **condenser** (capacitor) types. The diaphragm is one plate of a capacitor; as sound moves it, the gap changes, which changes the capacitance and so the voltage.
+
+      Same overall job, no magnet or coil. Phones use tiny versions etched onto silicon chips (MEMS microphones).
+
+questions:
+  - id: louder-cone
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      The amplifier sends a **larger-amplitude** current to a speaker, at the same frequency. What happens?
+    options:
+      - text: The cone moves further back and forth, so the sound is louder.
+        correct: true
+        why: |
+          Bigger current, bigger force between coil and magnet, bigger movement.
+      - text: The cone vibrates more times per second, so the pitch is higher.
+        why: |
+          Pitch depends on frequency, which hasn't changed.
+      - text: The permanent magnet becomes stronger.
+        why: |
+          A permanent magnet's strength is fixed; only the coil's field changes.
+      - text: The cone stops moving because the coil overheats.
+        why: |
+          Not at normal volumes; the cone simply moves further.
+    explanation: |
+      Amplitude of the signal → size of the cone's movement → loudness. Frequency → pitch.
+
+  - id: vibrations-count
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A speaker plays a steady 880 Hz tone. How many complete back-and-forth vibrations does the cone make in 0.5 seconds?
+    fields:
+      - answer: 440
+        unit: vibrations
+    explanation: |
+      880 Hz means 880 vibrations each second, so in 0.5 s: $880 \times 0.5 = 440$.
+
+  - id: converters-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      A microphone's analogue signal goes through an {{1}} to become digital data. A speaker needs a {{2}} to turn digital data back into an analogue signal.
+    blanks:
+      - accept: ["ADC", "analogue to digital converter", "analogue-to-digital converter", "analog to digital converter", "analog-to-digital converter"]
+      - accept: ["DAC", "digital to analogue converter", "digital-to-analogue converter", "digital to analog converter", "digital-to-analog converter"]
+    explanation: |
+      The converter is named after the direction: **A**nalogue **to** **D**igital for input, **D**igital **to** **A**nalogue for output.
+
+  - id: spot-adc-speaker
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A student describes how a speaker plays a digital sound file. Which line contains the error?
+    lines:
+      - The digital data is sent to an ADC to convert it into an analogue signal.
+      - The analogue signal is amplified.
+      - The varying current flows through a coil next to a permanent magnet.
+      - The coil is pushed and pulled, moving the cone back and forth.
+      - The vibrating cone creates sound waves.
+    errorLine: 1
+    fix: |
+      The data is sent to a **DAC** (digital-to-analogue converter).
+    explanation: |
+      Digital to analogue is a DAC. An ADC goes the other way and belongs in a microphone's chain.
+
+  - id: mic-current
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      In a moving-coil microphone, what produces the electrical signal?
+    options:
+      - text: The diaphragm moves a coil in the field of a permanent magnet, which induces a varying current.
+        correct: true
+        why: |
+          A coil moving in a magnetic field has a current induced in it.
+      - text: The diaphragm turns the sound directly into binary.
+        why: |
+          The microphone's output is analogue; an ADC makes the binary.
+      - text: A DAC inside the microphone creates the signal.
+        why: |
+          A DAC is for output devices like speakers.
+      - text: A laser detects the vibrations of the diaphragm.
+        why: |
+          There's no laser in a microphone.
+    explanation: |
+      Sound moves the diaphragm, the diaphragm moves the coil, and the moving coil in the magnet's field generates the signal.
+
+  - id: mic-explain
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |
+      Describe how a microphone and a computer turn a singer's voice into digital data.
+    model: |
+      The sound waves from the voice make the microphone's diaphragm vibrate. The diaphragm is attached to a coil, which moves back and forth in the magnetic field of a permanent magnet. This induces a varying electric current, an analogue signal that copies the sound wave. The signal is amplified and then an ADC samples it at regular intervals, turning each sample into a binary value.
+    keyPoints:
+      - Sound waves make the diaphragm vibrate
+      - The diaphragm moves a coil in the field of a permanent magnet
+      - A varying current (analogue signal) is induced
+      - The signal is amplified
+      - An ADC samples the signal and converts it to digital
+    explanation: |
+      It's the speaker chain run backwards: sound → movement → current → digital.

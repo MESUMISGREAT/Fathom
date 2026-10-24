@@ -1,0 +1,253 @@
+id: p1-integration-improper-integrals
+subject: "9709"
+topic: "1.8"
+title: Improper integrals
+summary: When a limit is ∞, or the function blows up at a limit, integrate as normal, then ask what each term does there.
+order: 5
+minutes: 5
+kind: core
+objectives: ["1.8.3"]
+prerequisites: [p1-integration-definite-integrals]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "evaluate definite
+    integrals", including the guidance's simple cases of improper integrals (the syllabus's two
+    examples, x^(−½) from 0 to 1 and x^(−2) from 1 to ∞, are worked here as the easy examples).
+    All other examples and all questions are original; all arithmetic checked in Python. Written
+    in the one-question-type, one-method style. Not yet independently reviewed; not reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can evaluate simple **improper integrals**, like $\displaystyle\int_1^{\infty} \dfrac{1}{x^2}\,dx$ and $\displaystyle\int_0^1 \dfrac{1}{\sqrt{x}}\,dx$.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      Two kinds, both of which look impossible:
+
+      - **A limit of $\infty$**, like $\displaystyle\int_1^{\infty} \dfrac{6}{x^3}\,dx$. The region goes on for ever.
+      - **A limit where the function is undefined**, like $\displaystyle\int_0^4 \dfrac{1}{\sqrt{x}}\,dx$. You can't put $x = 0$ into $\dfrac{1}{\sqrt{x}}$.
+
+      Plot twist: both can still have a perfectly ordinary answer.
+
+  - type: diagram
+    diagram: p1-integration-improper-areas
+    alt: >-
+      Two graphs side by side. Left: y = 1 over x², with the region under it from x = 1 to the right
+      edge shaded and an arrow saying it carries on for ever. Its title says the integral from 1 to
+      infinity of 1 over x² dx equals 1. Right: y = 1 over root x for x between 0 and 1, rising
+      steeply beside the y-axis, with the region under it from 0 to 1 shaded and a note that it
+      shoots up beside the y-axis. Its title says the integral from 0 to 1 of 1 over root x dx
+      equals 2.
+    caption: |-
+      An endless region with a finite area. The curve gets close to the axis fast enough that the area adds up to a number.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Write it as powers and integrate as normal.
+      2. **Never put $\infty$ in as a number. Say what each term does as $x \to \infty$** instead. Fractions like $\dfrac{1}{x}$ and $\dfrac{3}{x^2}$ get closer and closer to 0.
+      3. For a limit of 0, put 0 into the **integrated** expression. $2\sqrt{x}$ is fine at 0, even though $\dfrac{1}{\sqrt{x}}$ isn't.
+      4. Top minus bottom, as usual.
+
+  - type: example
+    title: "The easiest one (from the syllabus)"
+    problem: |-
+      Evaluate $\displaystyle\int_1^{\infty} \dfrac{1}{x^2}\,dx$.
+    steps:
+      - |-
+        **Integrate:** $x^{-2} \to \dfrac{x^{-1}}{-1} = -\dfrac{1}{x}$, so $\Big[-\dfrac{1}{x}\Big]_1^{\infty}$.
+      - |-
+        **Top limit:** as $x \to \infty$, $-\dfrac{1}{x} \to 0$.
+      - |-
+        **Bottom limit:** $-\dfrac{1}{1} = -1$.
+      - |-
+        **Subtract:** $0 - (-1) = 1$.
+    answer: |-
+      $1$
+
+      Check another way: stop at a big number $N$ instead of $\infty$. The integral is $1 - \dfrac{1}{N}$:
+
+      | $N$ | $10$ | $100$ | $1000$ |
+      | --- | --- | --- | --- |
+      | $1 - \dfrac{1}{N}$ | $0.9$ | $0.99$ | $0.999$ |
+
+      It's heading for 1 ✓.
+
+  - type: example
+    title: "The other kind (also from the syllabus)"
+    problem: |-
+      Evaluate $\displaystyle\int_0^1 x^{-\frac12}\,dx$.
+    steps:
+      - |-
+        **Integrate:** $\dfrac{x^{\frac12}}{\frac12} = 2x^{\frac12} = 2\sqrt{x}$.
+      - |-
+        **Top minus bottom:** $2\sqrt{1} - 2\sqrt{0} = 2 - 0$.
+    answer: |-
+      $2$
+
+      $x^{-\frac12}$ can't be worked out at $x = 0$, but $2\sqrt{x}$ can. That's all you need.
+
+  - type: check
+    questions: [improper-infinity, improper-limit-mcq]
+
+  - type: example
+    title: "Exam-style: a bracket, out to infinity"
+    problem: |-
+      Evaluate $\displaystyle\int_2^{\infty} \dfrac{6}{(3x - 2)^2}\,dx$.
+    steps:
+      - |-
+        **Powers:** $6(3x - 2)^{-2}$.
+      - |-
+        **Integrate** (bracket rule: power up, divide by $-1$ and by 3): $\dfrac{6(3x - 2)^{-1}}{-1 \times 3} = -\dfrac{2}{3x - 2}$.
+      - |-
+        **Top limit:** as $x \to \infty$, $3x - 2 \to \infty$, so $-\dfrac{2}{3x - 2} \to 0$.
+      - |-
+        **Bottom limit:** at $x = 2$, $-\dfrac{2}{4} = -\dfrac12$.
+      - |-
+        **Subtract:** $0 - \left(-\dfrac12\right) = \dfrac12$.
+    answer: |-
+      $\dfrac12$
+
+  - type: check
+    questions: [improper-zero, improper-bracket]
+
+  - type: deeper
+    title: When there's no answer
+    body: |-
+      *Try $\displaystyle\int_1^{\infty} \dfrac{1}{\sqrt{x}}\,dx$.* It integrates to $\Big[2\sqrt{x}\Big]_1^{\infty}$.
+
+      - As $x \to \infty$, $2\sqrt{x}$ just keeps growing. It never settles on a number.
+      - So this integral has **no finite value**.
+
+      The test: at the improper limit, the integrated expression must settle down to a number.
+
+  - type: check
+    questions: [improper-diverge-mcq]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\Big[-\dfrac{1}{x}\Big]_1^{\infty} = -\dfrac{1}{\infty} + 1$
+        right: |-
+          $\infty$ isn't a number, so don't put it in. Write "as $x \to \infty$, $-\dfrac{1}{x} \to 0$", then $0 - (-1) = 1$.
+      - wrong: |-
+          $\displaystyle\int_0^1 \dfrac{1}{\sqrt{x}}\,dx$ can't be done, because $\dfrac{1}{\sqrt{0}}$ is undefined.
+        right: |-
+          You never put 0 into the original function. Put it into the integrated one: $2\sqrt{0} = 0$, so the answer is $2$.
+      - wrong: |-
+          $\Big[-\dfrac{1}{x}\Big]_1^{\infty} = 0 - 1 = -1$
+        right: |-
+          The bottom limit gives $-\dfrac{1}{1} = -1$, and subtracting it adds 1: $0 - (-1) = 1$.
+
+  - type: exam
+    body: |-
+      - Improper integrals usually appear as one part of a definite-integral question, worth 2 or 3 marks.
+      - Write the words: "as $x \to \infty$, $\dfrac{2}{3x - 2} \to 0$". Arithmetic with $\infty$ in it loses the mark.
+      - Same square-bracket layout as any definite integral.
+
+  - type: takeaways
+    items:
+      - |-
+        Integrate as normal; only the limits need care.
+      - |-
+        **Never put $\infty$ in.** Say what each term does as $x \to \infty$: $\dfrac{k}{x^n} \to 0$ for $n > 0$.
+      - |-
+        A limit where the function is undefined (like 0 in $\dfrac{1}{\sqrt{x}}$): put it into the **integrated** expression.
+      - |-
+        If the integrated expression keeps growing, the integral has no finite value.
+
+questions:
+  - id: improper-infinity
+    format: numeric
+    difficulty: 1
+    objectives: ["1.8.3"]
+    prompt: |-
+      Evaluate $\displaystyle\int_2^{\infty} \dfrac{8}{x^3}\,dx$.
+    fields:
+      - answer: 1
+    explanation: |-
+      $8x^{-3}$ integrates to $\dfrac{8x^{-2}}{-2} = -\dfrac{4}{x^2}$.
+
+      - As $x \to \infty$, $-\dfrac{4}{x^2} \to 0$.
+      - At $x = 2$: $-\dfrac{4}{4} = -1$.
+      - So the value is $0 - (-1) = 1$.
+
+  - id: improper-limit-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.8.3"]
+    prompt: |-
+      In $\displaystyle\int_1^{\infty} \dfrac{1}{x^2}\,dx = \Big[-\dfrac{1}{x}\Big]_1^{\infty}$, what happens to $-\dfrac{1}{x}$ as $x \to \infty$?
+    explanation: |-
+      The bigger $x$ gets, the smaller $\dfrac{1}{x}$ gets: $-\dfrac{1}{1000} = -0.001$. So $-\dfrac{1}{x} \to 0$.
+    options:
+      - text: It gets closer and closer to $0$
+        correct: true
+        why: |-
+          $-0.1$, $-0.01$, $-0.001$, … heading for 0.
+      - text: It goes to $-\infty$
+        why: |-
+          A bigger bottom makes a fraction smaller, not bigger. $-\dfrac{1}{1000}$ is tiny.
+      - text: It stays at $-1$
+        why: |-
+          $-1$ is its value at $x = 1$, the bottom limit.
+      - text: You can't tell, because $\infty$ isn't a number
+        why: |-
+          True that $\infty$ isn't a number, but you can see where the values are heading: towards 0.
+
+  - id: improper-zero
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.3"]
+    prompt: |-
+      Evaluate $\displaystyle\int_0^4 \dfrac{3}{\sqrt{x}}\,dx$.
+    fields:
+      - answer: 12
+    explanation: |-
+      $3x^{-\frac12}$ integrates to $\dfrac{3x^{\frac12}}{\frac12} = 6\sqrt{x}$.
+
+      $\Big[6\sqrt{x}\Big]_0^4 = 6 \times 2 - 6 \times 0 = 12$.
+
+  - id: improper-bracket
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.3"]
+    prompt: |-
+      Evaluate $\displaystyle\int_0^{\infty} \dfrac{10}{(5x + 1)^2}\,dx$.
+    fields:
+      - answer: 2
+    explanation: |-
+      $10(5x + 1)^{-2}$ integrates to $\dfrac{10(5x + 1)^{-1}}{-1 \times 5} = -\dfrac{2}{5x + 1}$.
+
+      - As $x \to \infty$, $-\dfrac{2}{5x + 1} \to 0$.
+      - At $x = 0$: $-\dfrac{2}{1} = -2$.
+      - So the value is $0 - (-2) = 2$.
+
+  - id: improper-diverge-mcq
+    format: mcq
+    difficulty: 3
+    objectives: ["1.8.3"]
+    prompt: |-
+      Which of these improper integrals has a finite value?
+    explanation: |-
+      Integrate each one and see what happens as $x \to \infty$. Only $-\dfrac{1}{2x^2}$ settles down (to 0), giving $0 - \left(-\dfrac12\right) = \dfrac12$.
+    options:
+      - text: $\displaystyle\int_1^{\infty} \dfrac{1}{x^3}\,dx$
+        correct: true
+        why: |-
+          It integrates to $-\dfrac{1}{2x^2}$, which tends to 0. The value is $\dfrac12$.
+      - text: $\displaystyle\int_1^{\infty} \dfrac{1}{\sqrt{x}}\,dx$
+        why: |-
+          It integrates to $2\sqrt{x}$, which keeps growing as $x \to \infty$.
+      - text: $\displaystyle\int_1^{\infty} \sqrt{x}\,dx$
+        why: |-
+          It integrates to $\dfrac23 x^{\frac32}$, which keeps growing.
+      - text: $\displaystyle\int_1^{\infty} 1\,dx$
+        why: |-
+          It integrates to $x$, which keeps growing.

@@ -26,13 +26,13 @@ export default function P1IntegrationDefiniteTriangle() {
       <Grid p={p} />
       <path d={regionPath(p, f, () => 0, 0, 2)} className="dg-fill-accent" />
       <AxesXY p={p} xTicks={[1, 2, 3]} yTicks={[1, 2, 3, 4, 5]} />
-      <path d={graph(f, [-0.25, 2.65], p, Y)} className="dg-accent" />
+      <path d={graph(f, [0, 2.65], p, Y)} className="dg-accent" />
       <line x1={p.sx(2)} y1={p.sy(0)} x2={p.sx(2)} y2={p.sy(4)} className="dg-line dg-dashed" />
       <circle cx={p.sx(2)} cy={p.sy(4)} r={4.5} className="dg-dot" />
       <Label x={p.sx(2) + 10} y={p.sy(4) + 2} anchor="start" className="dg-text-small">
         (2, 4)
       </Label>
-      <Label x={p.sx(1.5) + 8} y={p.sy(2.2)} anchor="start" className="dg-text-accent">
+      <Label x={p.sx(1.05)} y={p.sy(2.5)} anchor="end" className="dg-text-accent">
         y = 2x
       </Label>
 

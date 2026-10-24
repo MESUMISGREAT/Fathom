@@ -1,0 +1,235 @@
+id: p1-integration-area-under-a-curve
+subject: "9709"
+topic: "1.8"
+title: Area under a curve
+summary: The area between a curve and the x-axis is a definite integral. Below the axis the integral is negative, so take its size, and split regions that cross the axis.
+order: 6
+minutes: 5
+kind: core
+objectives: ["1.8.4"]
+prerequisites: [p1-integration-definite-integrals]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "use definite integration
+    to find the area of a region bounded by a curve and lines parallel to the axes, or between a
+    curve and a line, or between two curves; and to find a volume of revolution about one of the
+    axes" (the part on a curve and lines parallel to the axes, including a region against the
+    y-axis). All examples and questions are original; all arithmetic checked in Python. Written in
+    the one-question-type, one-method style. Not yet independently reviewed; not reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the **area of a region** between a curve, the $x$-axis and lines like $x = 1$ and $x = 3$, including regions below the axis.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *Find the area of the region bounded by the curve, the $x$-axis and the lines $x = 1$ and $x = 3$.*
+
+      Or there's a shaded region on a diagram, and you find the limits yourself from where the curve crosses the $x$-axis.
+
+  - type: definition
+    term: Area under a curve
+    body: |-
+      For a curve **above** the $x$-axis from $x = a$ to $x = b$:
+
+      $$\text{Area} = \int_a^b y\,dx$$
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Find the limits: the lines they give you, or where the curve meets the $x$-axis (solve $y = 0$).
+      2. Integrate $y$ and work out top limit minus bottom limit.
+      3. **Check which side of the axis the region is on.** Below the axis, the integral comes out negative: the area is its size. If the region crosses the axis, split it at the crossing and add the sizes.
+
+  - type: example
+    title: "The easiest one: check it with a trapezium"
+    problem: |-
+      Find the area between the line $y = 2x + 1$, the $x$-axis, and the lines $x = 1$ and $x = 3$.
+    steps:
+      - |-
+        **Limits:** given, $x = 1$ and $x = 3$.
+      - |-
+        **Integrate:** $\displaystyle\int_1^3 (2x + 1)\,dx = \Big[x^2 + x\Big]_1^3 = (9 + 3) - (1 + 1) = 10$.
+      - |-
+        **Which side?** The line is above the axis here, so the area is $10$.
+    answer: |-
+      $10$
+
+      Check: the region is a trapezium with parallel sides $3$ and $7$ (the heights at $x = 1$ and $x = 3$) and width $2$. Area $= \dfrac12(3 + 7) \times 2 = 10$ ✓.
+
+  - type: check
+    questions: [area-basic, area-hump]
+
+  - type: diagram
+    diagram: p1-integration-area-signs
+    alt: >-
+      Graph of y = x² − 2x on equal-scale axes, crossing the x-axis at 0 and 2. The region between
+      the curve and the x-axis from x = 0 to 2 lies below the axis, is shaded in a second colour and
+      labelled minus four thirds. The region from x = 2 to the dashed line x = 3 lies above the axis
+      and is labelled plus four thirds. Underneath: the integral from 0 to 3 of x² − 2x is minus
+      four thirds plus four thirds, which is 0, but the area is four thirds plus four thirds, which is
+      eight thirds.
+    caption: |-
+      Why step 3 matters: one integral from 0 to 3 gives 0, as if there were no area at all.
+
+  - type: example
+    title: "Exam-style: a region below the axis"
+    problem: |-
+      Find the area of the region enclosed by the curve $y = x^2 - 5x + 4$ and the $x$-axis.
+    steps:
+      - |-
+        **Limits:** $x^2 - 5x + 4 = 0$ gives $(x - 1)(x - 4) = 0$, so $x = 1$ and $x = 4$.
+      - |-
+        **Integrate:** $\Big[\dfrac{x^3}{3} - \dfrac{5x^2}{2} + 4x\Big]_1^4$.
+      - |-
+        **Top in:** $\dfrac{64}{3} - 40 + 16 = -\dfrac83$. **Bottom in:** $\dfrac13 - \dfrac52 + 4 = \dfrac{11}{6}$.
+      - |-
+        **Subtract:** $-\dfrac83 - \dfrac{11}{6} = -\dfrac{16}{6} - \dfrac{11}{6} = -\dfrac{27}{6} = -\dfrac92$.
+      - |-
+        **Which side?** Negative, because the region is below the axis. The area is $\dfrac92$.
+    answer: |-
+      Area $= \dfrac92$
+
+      It's a U-shaped curve crossing the axis at 1 and 4, so between them it dips below. That matches the minus sign.
+
+  - type: check
+    questions: [area-below, area-split-mcq]
+
+  - type: deeper
+    title: "Against the y-axis instead"
+    body: |-
+      Sometimes the region is bounded by the curve, the **$y$-axis** and lines like $y = 1$ and $y = 4$. Swap the roles of $x$ and $y$:
+
+      $$\text{Area} = \int_c^d x\,dy$$
+
+      *Example: $y = x^2$ for $x \geq 0$, the $y$-axis, and $y = 1$ to $y = 4$.*
+
+      - Rearrange: $x = \sqrt{y} = y^{\frac12}$.
+      - $\displaystyle\int_1^4 y^{\frac12}\,dy = \Big[\dfrac23 y^{\frac32}\Big]_1^4 = \dfrac23(8 - 1) = \dfrac{14}{3}$.
+
+      The limits are now $y$-values.
+
+  - type: check
+    questions: [area-y-axis]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The area between $y = x^2 - 2x$, the axis, $x = 0$ and $x = 3$ is $\displaystyle\int_0^3 (x^2 - 2x)\,dx = 0$.
+        right: |-
+          The region crosses the axis at $x = 2$. Split it: $\left|-\dfrac43\right| + \dfrac43 = \dfrac83$.
+      - wrong: |-
+          Area $= -\dfrac92$.
+        right: |-
+          An area is never negative. A negative integral means the region is below the axis: the area is $\dfrac92$.
+      - wrong: |-
+          For $\displaystyle\int \ldots\,dx$, the limits are the $y$-values where the region starts and stops.
+        right: |-
+          With $dx$, the limits are **$x$-values**. Only $\displaystyle\int x\,dy$ uses $y$-values.
+
+  - type: exam
+    body: |-
+      - Area questions are often the last part of a curve question, worth 3 to 5 marks.
+      - Show the limits clearly. If you find them by solving $y = 0$, that working earns marks.
+      - If the integral comes out negative, write a sentence: "the region is below the $x$-axis, so the area is $\dfrac92$".
+
+  - type: takeaways
+    items:
+      - |-
+        Area between a curve and the $x$-axis: $\displaystyle\int_a^b y\,dx$.
+      - |-
+        Limits: the lines given, or where $y = 0$.
+      - |-
+        **Below the axis, the integral is negative**: take its size. Crossing the axis? Split at the crossing.
+      - |-
+        Against the $y$-axis: $\displaystyle\int_c^d x\,dy$ with $y$-limits.
+
+questions:
+  - id: area-basic
+    format: numeric
+    difficulty: 1
+    objectives: ["1.8.4"]
+    prompt: |-
+      Find the area of the region bounded by $y = 3x^2 + 2$, the $x$-axis, and the lines $x = 1$ and $x = 2$.
+    fields:
+      - answer: 9
+    explanation: |-
+      $\displaystyle\int_1^2 (3x^2 + 2)\,dx = \Big[x^3 + 2x\Big]_1^2 = (8 + 4) - (1 + 2) = 9$.
+
+      The curve is above the axis, so the area is $9$.
+
+  - id: area-hump
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      Find the area of the region enclosed by $y = 4x - x^2$ and the $x$-axis. Give the exact value (you can type a fraction like 7/2) or 3 significant figures.
+    fields:
+      - answer: 10.666666666666666
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      Limits: $4x - x^2 = 0$ gives $x(4 - x) = 0$, so $x = 0$ and $x = 4$.
+
+      $\displaystyle\int_0^4 (4x - x^2)\,dx = \Big[2x^2 - \dfrac{x^3}{3}\Big]_0^4 = 32 - \dfrac{64}{3} = \dfrac{32}{3} \approx 10.7$.
+
+      Positive, because this hump is above the axis.
+
+  - id: area-below
+    format: numeric
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      Find the area of the region enclosed by $y = x^2 - 6x + 8$ and the $x$-axis. Give the exact value or 3 significant figures.
+    fields:
+      - answer: 1.3333333333333333
+        tolerance: { rel: 0.005 }
+    explanation: |-
+      Limits: $(x - 2)(x - 4) = 0$, so $x = 2$ and $x = 4$.
+
+      $\Big[\dfrac{x^3}{3} - 3x^2 + 8x\Big]_2^4 = \dfrac{16}{3} - \dfrac{20}{3} = -\dfrac43$.
+
+      Negative, because the region is below the axis. The area is $\dfrac43 \approx 1.33$.
+
+  - id: area-split-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["1.8.4"]
+    prompt: |-
+      $\displaystyle\int_{-1}^{1} x^3\,dx = 0$. What is the total area between $y = x^3$, the $x$-axis and the lines $x = -1$ and $x = 1$?
+    explanation: |-
+      The curve is below the axis for $-1 < x < 0$ and above it for $0 < x < 1$. Each part has integral of size $\dfrac14$, so the area is $\dfrac14 + \dfrac14 = \dfrac12$.
+    options:
+      - text: $\dfrac12$
+        correct: true
+        why: |-
+          Split at $x = 0$: $\displaystyle\int_0^1 x^3\,dx = \dfrac14$, and the part below the axis has the same size by symmetry.
+      - text: $0$
+        why: |-
+          The two parts cancel in the integral, but there's clearly area there. Split at the crossing.
+      - text: $\dfrac14$
+        why: |-
+          That's only one of the two parts.
+      - text: $2$
+        why: |-
+          Check the integration: $x^3 \to \dfrac{x^4}{4}$, so each part is $\dfrac14$.
+
+  - id: area-y-axis
+    format: numeric
+    difficulty: 3
+    objectives: ["1.8.4"]
+    prompt: |-
+      Find the area of the region bounded by the curve $y = x^3$ (for $x \geq 0$), the $y$-axis and the line $y = 8$.
+    fields:
+      - answer: 12
+    explanation: |-
+      Against the $y$-axis, so use $\displaystyle\int x\,dy$ with $x = y^{\frac13}$, from $y = 0$ to $y = 8$:
+
+      $\displaystyle\int_0^8 y^{\frac13}\,dy = \Big[\dfrac34 y^{\frac43}\Big]_0^8 = \dfrac34 \times 16 = 12$.
+
+      Check: the rectangle from $x = 0$ to $2$ and $y = 0$ to $8$ has area 16, and the area under $y = x^3$ from 0 to 2 is $4$. $16 - 4 = 12$ ✓.

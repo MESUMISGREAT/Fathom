@@ -30,7 +30,7 @@ export default function P1IntegrationAreaSigns() {
       <line x1={p.sx(3)} y1={p.sy(0)} x2={p.sx(3)} y2={p.sy(3)} className="dg-thin dg-dashed" />
       <path d={graph(f, X, p, Y)} className="dg-line" />
 
-      <MathLabel x={p.sx(1)} y={p.sy(-0.42)} w={80} h={46} size="large" tone="accent-2" tex="-\dfrac{4}{3}" />
+      <MathLabel x={p.sx(1)} y={p.sy(-0.56)} w={80} h={46} tone="accent-2" tex="-\dfrac{4}{3}" />
       <Label x={p.sx(1)} y={p.sy(-1.25)} className="dg-text-small">
         below the axis
       </Label>
@@ -38,7 +38,7 @@ export default function P1IntegrationAreaSigns() {
       <Label x={p.sx(3.08)} y={p.sy(1.5)} anchor="start" className="dg-text-small">
         above
       </Label>
-      <Label x={p.sx(-0.7)} y={p.sy(2.75)} anchor="start" className="dg-text">
+      <Label x={p.sx(3.14)} y={p.sy(3.15)} anchor="start" className="dg-text">
         y = x² − 2x
       </Label>
 

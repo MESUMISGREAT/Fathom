@@ -18,8 +18,8 @@ function Electrons({ xs, y, r = 6 }: { xs: number[]; y: number; r?: number }) {
     <g>
       {xs.map((x) => (
         <g key={x}>
-          <circle cx={x} cy={y} r={r} className="dg-dot-accent-2" />
-          <line x1={x - r / 2} y1={y} x2={x + r / 2} y2={y} className="dg-fill-surface" style={{ stroke: 'var(--surface)', strokeWidth: 1.5 }} />
+          <circle cx={x} cy={y} r={r} className="dg-fill-surface dg-thin" />
+          <line x1={x - r / 2} y1={y} x2={x + r / 2} y2={y} className="dg-thin" />
         </g>
       ))}
     </g>
@@ -54,10 +54,10 @@ export function ComputerComponentsFloatingGate() {
       <rect x={150} y={74} width={150} height={34} className="dg-fill-accent dg-accent" />
       <Electrons xs={[170, 192, 214, 236]} y={91} />
       <rect x={150} y={108} width={150} height={8} className="dg-thin" />
-      <rect x={70} y={116} width={310} height={88} className="dg-fill-muted dg-thin" />
-      <rect x={80} y={116} width={70} height={36} className="dg-fill-accent-2 dg-thin" />
+      <rect x={96} y={116} width={284} height={88} className="dg-fill-muted dg-thin" />
+      <rect x={100} y={116} width={50} height={36} className="dg-fill-accent-2 dg-thin" />
       <rect x={300} y={116} width={70} height={36} className="dg-fill-accent-2 dg-thin" />
-      <Label x={115} y={134} className="dg-text-small">
+      <Label x={125} y={134} className="dg-text-small">
         source
       </Label>
       <Label x={335} y={134} className="dg-text-small">
@@ -66,8 +66,8 @@ export function ComputerComponentsFloatingGate() {
       <Label x={225} y={190} className="dg-text-small dg-text-muted">
         silicon
       </Label>
-      <Arrow x1={272} y1={176} x2={272} y2={96} head={8} className="dg-accent-2" headClassName="dg-dot-accent-2" />
-      <Label x={225} y={164} className="dg-text-small">
+      <Arrow x1={284} y1={176} x2={284} y2={96} head={8} className="dg-accent-2" headClassName="dg-dot-accent-2" />
+      <Label x={212} y={164} className="dg-text-small">
         electrons tunnel in
       </Label>
 

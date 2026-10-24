@@ -1,0 +1,305 @@
+id: p1-integration-powers-of-x
+subject: "9709"
+topic: "1.8"
+title: Integrating powers of x
+summary: Integration undoes differentiation. Add one to the power, divide by the new power, and never forget + c.
+order: 1
+minutes: 5
+kind: core
+objectives: ["1.8.1"]
+prerequisites: [p1-differentiation-powers-of-x]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 1.8 learning outcome "understand integration
+    as the reverse process of differentiation, and integrate (ax + b)ⁿ (for any rational n except
+    −1), together with constant multiples, sums and differences" (the powers of x, sums,
+    differences and constant multiples part; brackets are in p1-integration-brackets). The
+    syllabus's example ∫(2x³ − 5x + 1) dx is worked here. Other examples and all questions are
+    original; all arithmetic checked in Python. Written in the one-question-type, one-method
+    style. Not yet independently reviewed; not reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **integrate** sums of powers of $x$, like $\displaystyle\int (2x^3 - 5x + 1)\,dx$, and say why every answer ends in $+\,c$.
+
+  - type: explain
+    title: Differentiation, in reverse
+    body: |-
+      Differentiate $x^3$ and you get $3x^2$.
+
+      **Integration** runs that backwards. It starts from $3x^2$ and asks: *what did I differentiate to get this?* Think of it as the undo button for differentiation.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *Find $\displaystyle\int (6x^2 - 4x + 3)\,dx$.*
+
+      - The long S, $\displaystyle\int$, means "integrate".
+      - The $dx$ at the end says the letter is $x$.
+      - Your answer is a function of $x$, ending in $+\,c$.
+
+  - type: definition
+    term: Integrating a power of x
+    body: |-
+      $$\int x^n\,dx = \dfrac{x^{n+1}}{n+1} + c \qquad (n \neq -1)$$
+
+      - Add 1 to the power, then divide by the new power.
+      - $c$ is the **constant of integration**: it can be any number.
+      - It works for negative and fractional powers too. The only exception is $n = -1$, because then you'd divide by 0.
+
+  - type: intuition
+    title: Why + c?
+    body: |-
+      $x^3$, $\;x^3 + 7\;$ and $\;x^3 - 2\;$ all differentiate to $3x^2$, because a constant differentiates to 0.
+
+      So when you integrate $3x^2$, you can't know which constant was there. Writing $+\,c$ says "plus some number we don't know yet".
+
+  - type: diagram
+    diagram: p1-integration-reverse-rule
+    alt: >-
+      Two boxes. The left box holds x³ + c and the right box holds 3x². An arrow labelled
+      "differentiate: power down, take one off" goes from left to right. A coloured arrow labelled
+      "integrate: add one to the power, divide by the new power" comes back from right to left.
+      A note says the constant c vanishes when you differentiate, so put it back when you
+      integrate. Below is a table, "Integrate this" then "You get": x² gives x³ over 3 plus c;
+      4x³ gives 4x⁴ over 4 plus c, which is x⁴ + c; 5, written 5x⁰, gives 5x + c; 1 over x²,
+      written x to the minus 2, gives x to the minus 1 over minus 1 plus c, which is minus 1 over
+      x plus c; root x, written x to the half, gives x to the three halves over three halves plus
+      c, which is two thirds x to the three halves plus c.
+    caption: |-
+      Every row is the same two moves, then $+\,c$. A plain number like $5$ is $5x^0$, so it integrates to $5x$.
+
+  - type: explain
+    title: The method
+    body: |-
+      Same four steps every time:
+
+      1. Write every term as a number times a power of $x$. Expand brackets, split fractions, and turn roots into powers: $\sqrt{x} = x^{\frac12}$ and $\dfrac{1}{x^2} = x^{-2}$.
+      2. Add 1 to each power.
+      3. Divide each term by its new power.
+      4. **Add $+\,c$.** This is the step people forget, and it costs a mark.
+
+      Numbers in front just come along for the ride, and you integrate a sum one term at a time.
+
+  - type: example
+    title: "The easiest one: check it by differentiating"
+    problem: |-
+      Find $\displaystyle\int 6x^2\,dx$.
+    steps:
+      - |-
+        **Powers of $x$:** it already is one, $6x^2$.
+      - |-
+        **Add 1 to the power:** $2 + 1 = 3$, so $6x^3$.
+      - |-
+        **Divide by the new power:** $\dfrac{6x^3}{3} = 2x^3$.
+      - |-
+        **Add $+\,c$:** $\;2x^3 + c$.
+    answer: |-
+      $2x^3 + c$
+
+      Check: differentiate it. $\dfrac{d}{dx}(2x^3 + c) = 6x^2$ ✓. That 5-second check catches most slips.
+
+  - type: example
+    title: Several terms (the syllabus example)
+    problem: |-
+      Find $\displaystyle\int (2x^3 - 5x + 1)\,dx$.
+    steps:
+      - |-
+        **Powers of $x$:** $2x^3 - 5x^1 + 1x^0$.
+      - |-
+        **Add 1 to each power:** $2x^4 - 5x^2 + x^1$.
+      - |-
+        **Divide by the new powers:** $\dfrac{2x^4}{4} - \dfrac{5x^2}{2} + \dfrac{x}{1} = \dfrac12 x^4 - \dfrac52 x^2 + x$.
+      - |-
+        **Add $+\,c$.**
+    answer: |-
+      $\dfrac12 x^4 - \dfrac52 x^2 + x + c$
+
+  - type: check
+    questions: [int-power-mcq, int-poly, plus-c-mcq]
+
+  - type: example
+    title: "Exam-style: a root and a fraction"
+    problem: |-
+      Find $\displaystyle\int \left(3\sqrt{x} - \dfrac{4}{x^3}\right)dx$.
+    steps:
+      - |-
+        **Powers of $x$:** $3\sqrt{x} = 3x^{\frac12}$ and $\dfrac{4}{x^3} = 4x^{-3}$. So it's $\displaystyle\int \left(3x^{\frac12} - 4x^{-3}\right)dx$.
+      - |-
+        **Add 1 to each power:** $\dfrac12 + 1 = \dfrac32$ and $-3 + 1 = -2$.
+      - |-
+        **Divide by the new powers:** $\dfrac{3x^{\frac32}}{\frac32} - \dfrac{4x^{-2}}{-2} = 2x^{\frac32} + 2x^{-2}$. Dividing by $\dfrac32$ is the same as multiplying by $\dfrac23$.
+      - |-
+        **Add $+\,c$.**
+    answer: |-
+      $2x^{\frac32} + \dfrac{2}{x^2} + c$
+
+      Two minus signs met in the second term: $-4 \div (-2) = +2$. Watch for that.
+
+  - type: check
+    questions: [int-root-recip, int-split-fraction, spot-integral]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\displaystyle\int (x + 3)(x - 1)\,dx = \left(\dfrac{x^2}{2} + 3x\right)\left(\dfrac{x^2}{2} - x\right) + c$
+        right: |-
+          You can't integrate a product one bracket at a time. Expand first: $\displaystyle\int (x^2 + 2x - 3)\,dx = \dfrac{x^3}{3} + x^2 - 3x + c$.
+      - wrong: |-
+          $\displaystyle\int \dfrac{1}{x^2}\,dx = \dfrac{1}{\;\frac{x^3}{3}\;} + c$
+        right: |-
+          Never integrate the bottom of a fraction. Write it as a power first: $x^{-2}$ integrates to $\dfrac{x^{-1}}{-1} = -\dfrac{1}{x}$, plus $c$.
+      - wrong: |-
+          $\displaystyle\int x^{-3}\,dx = \dfrac{x^{-4}}{-4} + c$
+        right: |-
+          Adding 1 to $-3$ gives $-2$, not $-4$. So it's $\dfrac{x^{-2}}{-2} + c = -\dfrac{1}{2x^2} + c$.
+      - wrong: |-
+          $\displaystyle\int 5\,dx = 0$
+        right: |-
+          That's differentiating. $5 = 5x^0$, so it integrates to $5x + c$.
+
+  - type: exam
+    body: |-
+      - A "Find $\displaystyle\int \ldots\,dx$" part is usually worth 2 to 4 marks: a method mark for raising a power, then accuracy marks for the terms.
+      - **No $+\,c$ usually loses a mark.** Write it every time.
+      - Simplify the numbers: write $2x^{\frac32}$, not $\dfrac{3x^{\frac32}}{\frac32}$.
+
+  - type: takeaways
+    items:
+      - |-
+        Integration is differentiation in reverse.
+      - |-
+        Rewrite every term as a power of $x$ first: expand brackets, split fractions, roots become fractional powers.
+      - |-
+        Add 1 to the power, divide by the new power: $\displaystyle\int x^n\,dx = \dfrac{x^{n+1}}{n+1} + c$ for $n \neq -1$.
+      - |-
+        **Always add $+\,c$**, and check by differentiating your answer.
+
+questions:
+  - id: int-power-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.8.1"]
+    prompt: |-
+      What is $\displaystyle\int x^5\,dx$?
+    explanation: |-
+      Add 1 to the power ($5 + 1 = 6$), divide by the new power, then add $+\,c$: $\;\dfrac{x^6}{6} + c$.
+    options:
+      - text: $\dfrac{x^6}{6} + c$
+        correct: true
+        why: |-
+          Power up to 6, divide by 6, and $+\,c$. Check: differentiating gives $\dfrac{6x^5}{6} = x^5$ ✓.
+      - text: $5x^4$
+        why: |-
+          That's the derivative. Integration goes the other way: the power goes **up**.
+      - text: $\dfrac{x^6}{6}$
+        why: |-
+          Right integral, but the $+\,c$ is missing. That loses a mark.
+      - text: $\dfrac{x^6}{5} + c$
+        why: |-
+          Divide by the **new** power, 6, not the old one.
+
+  - id: int-poly
+    format: expression
+    difficulty: 1
+    objectives: ["1.8.1"]
+    prompt: |-
+      Find $\displaystyle\int (4x^3 + 6x - 2)\,dx$. Include $+\,c$ in your answer.
+    answer: x^4 + 3x^2 - 2x + c
+    variables: [x, c]
+    display: |-
+      $x^4 + 3x^2 - 2x + c$
+    explanation: |-
+      One term at a time:
+
+      - $4x^3 \to \dfrac{4x^4}{4} = x^4$
+      - $6x \to \dfrac{6x^2}{2} = 3x^2$
+      - $-2 \to -2x$
+
+      Then add $+\,c$.
+
+  - id: plus-c-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["1.8.1"]
+    prompt: |-
+      Amir says $\displaystyle\int 2x\,dx = x^2 + 5$. Bea says it's $x^2 - 3$. Who is right?
+    explanation: |-
+      $x^2 + 5$ and $x^2 - 3$ both differentiate to $2x$, and so does $x^2$ plus any other number. With no extra information, the full answer is $x^2 + c$.
+    options:
+      - text: Both could be, so the answer is $x^2 + c$
+        correct: true
+        why: |-
+          Each one differentiates to $2x$. The $+\,c$ covers every possible constant at once.
+      - text: Only Amir
+        why: |-
+          Bea's $x^2 - 3$ also differentiates to $2x$, so it's just as good.
+      - text: Neither, it's exactly $x^2$
+        why: |-
+          $x^2$ is one answer, but not the only one. That's why we write $+\,c$.
+      - text: Neither, it's $2$
+        why: |-
+          $2$ is the derivative of $2x$. Integration goes the other way.
+
+  - id: int-root-recip
+    format: expression
+    difficulty: 2
+    objectives: ["1.8.1"]
+    prompt: |-
+      Find $\displaystyle\int \left(6\sqrt{x} + \dfrac{2}{x^2}\right)dx$. Include $+\,c$.
+    answer: 4x^(3/2) - 2/x + c
+    variables: [x, c]
+    domain: { min: 0.5, max: 4 }
+    display: |-
+      $4x^{\frac32} - \dfrac{2}{x} + c$
+    explanation: |-
+      Powers first: $6x^{\frac12} + 2x^{-2}$.
+
+      - $6x^{\frac12} \to \dfrac{6x^{\frac32}}{\frac32} = 4x^{\frac32}$
+      - $2x^{-2} \to \dfrac{2x^{-1}}{-1} = -2x^{-1} = -\dfrac{2}{x}$
+
+      Then add $+\,c$.
+
+  - id: int-split-fraction
+    format: expression
+    difficulty: 3
+    objectives: ["1.8.1"]
+    prompt: |-
+      Find $\displaystyle\int \dfrac{x^2 + 1}{\sqrt{x}}\,dx$. Include $+\,c$.
+    answer: (2/5)x^(5/2) + 2x^(1/2) + c
+    variables: [x, c]
+    domain: { min: 0.5, max: 4 }
+    display: |-
+      $\dfrac25 x^{\frac52} + 2x^{\frac12} + c$
+    explanation: |-
+      Split the fraction, then use powers: $\dfrac{x^2}{x^{\frac12}} + \dfrac{1}{x^{\frac12}} = x^{\frac32} + x^{-\frac12}$.
+
+      - $x^{\frac32} \to \dfrac{x^{\frac52}}{\frac52} = \dfrac25 x^{\frac52}$
+      - $x^{-\frac12} \to \dfrac{x^{\frac12}}{\frac12} = 2x^{\frac12}$
+
+      Then add $+\,c$.
+
+  - id: spot-integral
+    format: spot-error
+    difficulty: 2
+    objectives: ["1.8.1"]
+    prompt: |-
+      A student finds $\displaystyle\int \dfrac{4}{\sqrt{x}}\,dx$. Which line has the first error?
+    lines:
+      - |-
+        $\displaystyle\int \dfrac{4}{\sqrt{x}}\,dx = \int 4x^{-\frac12}\,dx$
+      - |-
+        $= \dfrac{4x^{\frac12}}{\frac12} + c$
+      - |-
+        $= 2x^{\frac12} + c$
+      - |-
+        $= 2\sqrt{x} + c$
+    errorLine: 3
+    fix: |-
+      Dividing by $\dfrac12$ means multiplying by 2: $\;\dfrac{4x^{\frac12}}{\frac12} = 8x^{\frac12}$, so the answer is $8\sqrt{x} + c$.
+    explanation: |-
+      Lines 1 and 2 are right: $-\dfrac12 + 1 = \dfrac12$, and you divide by that new power. Line 3 halves the 4 instead of doubling it. Dividing by a fraction flips it: $\div \dfrac12 = \times 2$.
