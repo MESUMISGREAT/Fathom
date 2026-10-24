@@ -1,0 +1,272 @@
+id: computer-components-flash-memory
+subject: "9618"
+topic: "3.1"
+title: "Solid state (flash) memory: trapping electrons"
+summary: How flash memory stores bits as electrons trapped on floating gates, why it is non-volatile, and how an SSD compares with a hard disk.
+order: 7
+minutes: 5
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [computer-components-hard-disk]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.3 (principal operations of hardware devices: solid state (flash) memory). Describes NAND
+    flash with floating gate transistors, using the industry convention that an erased cell
+    reads as 1. All questions are original; scenarios are illustrative.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how **solid state (flash) memory** stores data, explain why it keeps data with the power off, and compare an **SSD** with a hard disk.
+
+  - type: explain
+    title: Electrons in a locked room
+    body: |
+      A hard disk stores bits as magnetism on a spinning platter. Flash memory has **no moving parts** at all.
+
+      Instead, each bit is a tiny room where you can lock some **electrons** in, or let them out. Locked in, they stay put for years, power or no power.
+
+  - type: explain
+    title: Where you find it
+    body: |
+      - **Solid state drives (SSDs)** in laptops and PCs
+      - **USB flash drives** and **SD cards**
+      - the storage in phones, tablets and cameras
+
+      Most use **NAND flash**: chips holding a huge grid of memory cells, managed by a **controller** chip.
+
+  - type: explain
+    title: What they ask
+    body: |
+      "**Describe** how data is stored in solid state (flash) memory." Usually 3 to 4 marks.
+
+      Often followed by "Give **reasons** why an SSD is used instead of a hard disk in [device]". Both are below.
+
+  - type: explain
+    title: The method
+    body: |
+      1. Flash memory is a grid of cells; each cell is a **floating gate transistor**, with a **control gate** above a **floating gate**, separated by thin layers of insulator.
+      2. To write, a voltage is applied to the **control gate**.
+      3. **Electrons pass (tunnel) through the thin insulating layer and become trapped on the floating gate.**
+      4. Because the floating gate is surrounded by insulator, the electrons **stay trapped with the power off**: flash is **non-volatile**.
+      5. Whether a cell's floating gate holds trapped electrons or not represents a **0 or a 1**. The controller reads it by testing whether the transistor conducts.
+      6. To erase, a voltage pulls the electrons back out. This is done a whole **block** of cells at a time.
+
+      Step 3 is the forgotten one. "Flash stores charge" isn't enough; say **where** the charge goes and **why it stays**.
+
+  - type: diagram
+    diagram: cs-computer-components-floating-gate
+    alt: >-
+      Left: a cross-section of one flash memory cell. From the top: a control gate; an insulator; a
+      floating gate holding four electrons, drawn as circles with minus signs; a thin insulator;
+      then silicon with a source on the left and a drain on the right. An arrow from the silicon up
+      into the floating gate is labelled electrons tunnel in. Right, headed the two states (NAND
+      flash): a cell with no electrons trapped is erased and reads as 1; a cell with electrons
+      trapped is programmed and reads as 0. A note says trapped electrons stay with the power off,
+      so the memory is non-volatile.
+    caption: |
+      The floating gate is wrapped in insulator, so trapped electrons can't wander off. That's why your photos survive a flat battery.
+
+  - type: example
+    title: "Easy first: programming one cell"
+    problem: |
+      An erased flash cell (no trapped electrons) needs to store the other bit value. Describe what happens.
+    steps:
+      - |
+        A voltage is applied to the cell's **control gate**.
+      - |
+        Electrons **tunnel through the thin insulator** onto the **floating gate**, where they are trapped.
+      - |
+        The cell is now **programmed**. In NAND flash, a programmed cell reads as **0**, so the stored bit has changed from 1 to 0.
+      - |
+        Check: switch off the power. The insulator still surrounds the floating gate, so the electrons, and the 0, stay.
+    answer: |
+      Voltage on the control gate, electrons tunnel onto the floating gate and are trapped. The cell keeps its value without power.
+
+  - type: check
+    title: Your turn
+    questions: [bit-is-what, why-nonvolatile, floating-gate-name]
+
+  - type: explain
+    title: SSD or hard disk?
+    body: |
+      | | SSD (flash) | HDD (magnetic) |
+      | --- | --- | --- |
+      | Moving parts | none | spinning platters, moving arm |
+      | Access speed | faster: no seek or spin wait | slower |
+      | Robustness | survives knocks and vibration | can be damaged if knocked while running |
+      | Power and noise | lower power, silent | more power, some noise |
+      | Size and weight | smaller, lighter | bigger, heavier |
+      | Cost per GB | higher | lower |
+      | Lifetime | each block survives a limited number of erase/write cycles | parts wear mechanically |
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A travel journalist's laptop uses an SSD. Describe how the SSD stores data, and give **two** reasons an SSD suits her laptop better than a hard disk. [5]
+    steps:
+      - |
+        Storage: "The SSD is made of NAND flash memory cells. A voltage on the control gate makes electrons tunnel onto the floating gate, where they are trapped by the insulating layer. Trapped or not trapped represents 0 or 1, and the electrons stay with the power off." (3 marks)
+      - |
+        Reason 1: "It has **no moving parts**, so it won't be damaged when the laptop is knocked or moved in a bag."
+      - |
+        Reason 2: "It uses **less power**, so the battery lasts longer away from a socket." (Also fine: faster to load files, lighter, silent.)
+    answer: |
+      Describe the floating gate, then give reasons that fit someone who carries her laptop everywhere.
+
+  - type: check
+    title: Exam check
+    questions: [helmet-camera, ssd-hdd-cloze, wear-levelling]
+
+  - type: misconceptions
+    items:
+      - wrong: Flash memory is RAM because it's made of chips.
+        right: |
+          Flash is **non-volatile secondary storage**. RAM is volatile primary memory. Both are chips, but they work differently.
+      - wrong: An SSD stores data magnetically, just without the spinning.
+        right: |
+          It stores data as **electrical charge** (electrons) trapped on floating gates. No magnetism.
+      - wrong: You can rewrite a single bit in flash whenever you like.
+        right: |
+          Cells are written in pages but **erased in whole blocks**, so changing data means the controller copies and rewrites blocks.
+
+  - type: exam
+    body: |
+      - Key words: **floating gate**, **control gate**, **electrons trapped**, **insulating (oxide) layer**, **non-volatile**.
+      - For "why SSD?" questions, pick reasons that match the **device**: portable → robust and low power; editing big files → fast access.
+      - Don't claim an SSD lasts forever: limited write/erase cycles is a fair drawback.
+
+  - type: takeaways
+    items:
+      - Flash stores each bit as electrons trapped (or not) on a floating gate.
+      - A voltage on the control gate makes electrons tunnel through the thin insulator onto the floating gate.
+      - The insulator keeps them there with the power off, so flash is non-volatile.
+      - "SSDs beat HDDs on speed, robustness, power, noise and weight; HDDs win on cost per GB."
+
+  - type: deeper
+    title: Why flash wears out, and how controllers cope
+    body: |
+      Every erase forces electrons through the thin insulator, which slowly damages it. After many thousands of erase/write cycles a block can no longer hold charge reliably.
+
+      So the SSD controller uses **wear levelling**: it spreads writes evenly over all blocks, so no single block wears out early. Flash is a kind of **EEPROM** that erases in blocks rather than byte by byte (more in the PROM, EPROM and EEPROM lesson).
+
+questions:
+  - id: bit-is-what
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      In flash memory, what physically represents whether a cell holds a 0 or a 1?
+    options:
+      - text: Whether electrons are trapped on the cell's floating gate
+        correct: true
+        why: |
+          Trapped charge or no trapped charge: that's the bit.
+      - text: The direction an area of the surface is magnetised
+        why: |
+          That's a magnetic hard disk.
+      - text: Whether there is a pit or a land at that point
+        why: |
+          That's an optical disc.
+      - text: Whether a capacitor is charged, which has to be refreshed constantly
+        why: |
+          That's DRAM, which is volatile.
+    explanation: |
+      Flash uses floating gate transistors. Electrons trapped on the floating gate change how the transistor behaves when the cell is read.
+
+  - id: why-nonvolatile
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      Why does a USB flash drive keep its files after it is unplugged?
+    options:
+      - text: The electrons stay trapped on the floating gates because they are surrounded by insulating layers.
+        correct: true
+        why: |
+          With nowhere to go, the charge stays put without any power.
+      - text: A small battery inside keeps the memory powered.
+        why: |
+          Flash needs no battery; that's the whole point of non-volatile memory.
+      - text: The files are copied to the computer's RAM, which keeps them.
+        why: |
+          RAM is volatile, and the drive has left the computer anyway.
+      - text: The data is constantly refreshed by the controller.
+        why: |
+          Refreshing is what DRAM needs while it has power; flash doesn't.
+    explanation: |
+      Non-volatile because of the insulator: the trapped electrons have no path to leak away.
+
+  - id: floating-gate-name
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |
+      Name the part of a flash memory cell on which electrons are trapped.
+    accept: ["floating gate", "floating-gate", "the floating gate", "floating gates"]
+    model: |
+      The **floating gate**.
+    explanation: |
+      "Floating" because it isn't connected to anything: it's surrounded by insulator, which is what traps the electrons.
+
+  - id: helmet-camera
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      A mountain biker's helmet camera records video to a flash memory card rather than a tiny hard disk. What is the best reason?
+    options:
+      - text: Flash has no moving parts, so bumps and vibration won't damage it or interrupt recording.
+        correct: true
+        why: |
+          A hard disk's head and platters are vulnerable to knocks while spinning.
+      - text: Flash is cheaper per gigabyte than a hard disk.
+        why: |
+          It's the other way round: hard disks are cheaper per GB.
+      - text: Flash memory is volatile, so the video is saved faster.
+        why: |
+          Flash is non-volatile, and that isn't why it's fast.
+      - text: Flash can be rewritten an unlimited number of times.
+        why: |
+          Each block has a limited number of erase/write cycles.
+    explanation: |
+      Pick the reason that fits the context. On a bike, robustness matters most.
+
+  - id: ssd-hdd-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |
+      Compared with a hard disk of the same capacity, an SSD is usually {{1}} to access data but more {{2}} per gigabyte.
+    blanks:
+      - accept: ["faster", "quicker"]
+      - accept: ["expensive", "costly"]
+    explanation: |
+      No seek time and no spin wait makes an SSD faster. Hard disks still win on cost per gigabyte, so they're used for very large, cheap storage.
+
+  - id: wear-levelling
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |
+      An SSD controller spreads data writes evenly across all its blocks instead of reusing the same blocks. Why?
+    options:
+      - text: Each block can only be erased and rewritten a limited number of times, so spreading writes stops some blocks wearing out early.
+        correct: true
+        why: |
+          This is wear levelling. It makes the whole drive last longer.
+      - text: Writing to the same block twice would erase the other blocks.
+        why: |
+          Blocks are erased one at a time; others are unaffected.
+      - text: It keeps the platters balanced while they spin.
+        why: |
+          An SSD has no platters.
+      - text: Data in a block is lost unless it is refreshed by being moved.
+        why: |
+          That's the idea of DRAM refreshing; flash keeps its data without being moved.
+    explanation: |
+      Every erase slightly damages the thin insulator. Spreading the wear evenly delays the point where any block fails.
