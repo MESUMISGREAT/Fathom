@@ -9,8 +9,14 @@ import ChemicalFormulasHeatingCrucible from './chemical-formulas-heating-crucibl
 import ChemicalFormulasIonCharges from './chemical-formulas-ion-charges';
 import ChemicalFormulasIonPatterns from './chemical-formulas-ion-patterns';
 import ChemicalFormulasSpectatorIons from './chemical-formulas-spectator-ions';
+import ElectronegativityBondingDifferenceScale from './electronegativity-bonding-difference-scale';
+import ElectronegativityBondingFluorineVsChlorine from './electronegativity-bonding-fluorine-vs-chlorine';
+import ElectronegativityBondingPeriodicTable from './electronegativity-bonding-periodic-table';
 import ElectronsInBoxes from './electrons-in-boxes';
 import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
+import IonicBondingLatticeSlice from './ionic-bonding-lattice-slice';
+import IonicBondingMagnesiumOxideCalciumFluoride from './ionic-bonding-magnesium-oxide-calcium-fluoride';
+import IonicBondingSodiumChloride from './ionic-bonding-sodium-chloride';
 import MoleAvogadroMoleMap from './mole-avogadro-mole-map';
 import MoleAvogadroSameCount from './mole-avogadro-same-count';
 import OrbitalShapes from './orbital-shapes';
@@ -39,8 +45,14 @@ export const diagrams: DiagramRegistry = {
   'chem-chemical-formulas-ion-charges': ChemicalFormulasIonCharges,
   'chem-chemical-formulas-ion-patterns': ChemicalFormulasIonPatterns,
   'chem-chemical-formulas-spectator-ions': ChemicalFormulasSpectatorIons,
+  'chem-electronegativity-bonding-difference-scale': ElectronegativityBondingDifferenceScale,
+  'chem-electronegativity-bonding-fluorine-vs-chlorine': ElectronegativityBondingFluorineVsChlorine,
+  'chem-electronegativity-bonding-periodic-table': ElectronegativityBondingPeriodicTable,
   'chem-electrons-in-boxes': ElectronsInBoxes,
   'chem-first-ionisation-energy-trend': FirstIonisationEnergyTrend,
+  'chem-ionic-bonding-lattice-slice': IonicBondingLatticeSlice,
+  'chem-ionic-bonding-magnesium-oxide-calcium-fluoride': IonicBondingMagnesiumOxideCalciumFluoride,
+  'chem-ionic-bonding-sodium-chloride': IonicBondingSodiumChloride,
   'chem-mole-avogadro-mole-map': MoleAvogadroMoleMap,
   'chem-mole-avogadro-same-count': MoleAvogadroSameCount,
   'chem-orbital-shapes': OrbitalShapes,
