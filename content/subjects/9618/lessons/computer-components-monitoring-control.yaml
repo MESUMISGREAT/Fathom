@@ -1,0 +1,248 @@
+id: computer-components-monitoring-control
+subject: "9618"
+topic: "3.1"
+title: "Monitoring or control: watching versus doing"
+summary: The difference between a monitoring system and a control system, and the parts each one uses, from sensor and ADC to processor and actuator.
+order: 15
+minutes: 4
+kind: core
+objectives: ["3.1.8"]
+prerequisites: [computer-components-embedded-systems]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2027-2029, Version 2), topic 3.1 Computers and their components, learning outcome
+    3.1.8 (monitoring and control systems: the difference between monitoring and control). The
+    systems and sampling interval in the examples are illustrative; the calculation was checked
+    with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the difference between a **monitoring system** and a **control system**, and sort a real system into the right one.
+
+  - type: explain
+    title: Watching versus doing
+    body: |
+      Your smartwatch measures your heart rate all day. It shows it, logs it, maybe buzzes if it's odd, but it never changes your heart rate. That's **monitoring**.
+
+      Your central heating measures the room temperature, then **switches the boiler on or off** to change it. That's **control**.
+
+  - type: definition
+    term: Monitoring system
+    body: |
+      A system that uses **sensors** to measure physical quantities; the computer **records, displays or analyses** the readings and may give a **warning** if they go outside set limits. It **does not change** the conditions it is measuring.
+
+  - type: definition
+    term: Control system
+    body: |
+      A system that uses **sensors** to measure physical quantities; the processor **compares** the readings with stored values and sends signals to **actuators** that **change** the conditions. The output affects the next input (**feedback**).
+
+  - type: explain
+    title: The parts
+    body: |
+      - **Sensor**: measures a physical quantity (temperature, pressure…) and sends a signal, usually **analogue**.
+      - **ADC** (analogue-to-digital converter): turns that signal into digital data the processor can use.
+      - **Processor**: reads the sensors at regular intervals, **compares** each reading with stored values and decides what to do.
+      - **Actuator** (control only): turns a signal from the processor into **physical action**, such as a motor turning or a valve opening.
+
+      Sensors never decide anything. They only measure; the **processor** makes every decision.
+
+  - type: diagram
+    diagram: cs-computer-components-monitor-vs-control
+    alt: >-
+      Two rows of boxes joined by arrows. Top row, monitoring system: sensor (measures), ADC (to
+      digital), processor (records, checks), output (screen, alarm), with a note saying watches
+      and warns, changes nothing. Bottom row, control system: sensor (measures), ADC (to digital),
+      processor (compares), actuator (motor, valve), process (for example heats room). A dashed
+      arrow runs from the process back to the sensor, labelled feedback: the sensor measures the
+      effect of the change.
+    caption: |
+      Same front half. A control system adds an actuator that changes the world, and a loop back to the sensor.
+
+  - type: example
+    title: "Easy first: watch or act?"
+    problem: |
+      Sort each system into monitoring or control.
+
+      - **A** A weather station logs wind speed and rainfall.
+      - **B** A greenhouse opens its windows when it gets too hot.
+      - **C** A burglar alarm sounds a siren when its sensor detects movement.
+      - **D** A fridge switches its cooling on when the inside warms above 5 °C.
+    steps:
+      - |
+        Use one test: **does the system's output change the thing its sensor measures?**
+      - |
+        **A: monitoring.** Logging the rain doesn't change the weather.
+      - |
+        **B: control.** Opening the windows lowers the temperature, which the sensor then measures.
+      - |
+        **C: monitoring.** The siren warns people, but it doesn't change what the sensor detects.
+      - |
+        **D: control.** The cooling (switched by an actuator) lowers the temperature, and the sensor measures the result.
+    answer: |
+      A and C monitor; B and D control. Warnings and displays are outputs, but they don't change the conditions.
+
+  - type: check
+    title: Quick check
+    questions: [which-control, weather-monitoring, readings-per-day]
+
+  - type: example
+    title: Exam-style
+    problem: |
+      A hospital uses a computer system to check patients' heart rate and blood pressure. Explain why this is a **monitoring** system and not a **control** system. [2]
+    steps:
+      - |
+        "Sensors measure the patient's heart rate and blood pressure, and the computer displays the readings and sounds an alarm if they go outside safe limits."
+      - |
+        "The system does not change the patient's heart rate or blood pressure; there are no actuators and the output doesn't affect the next input. Nurses take any action."
+    answer: |
+      Say what it does (measures, displays, warns) and what it doesn't do (change the conditions).
+
+  - type: check
+    title: Apply it
+    questions: [actuator-name, spot-monitor]
+
+  - type: misconceptions
+    items:
+      - wrong: A monitoring system has no output.
+        right: |
+          It has plenty: displays, graphs, stored logs, alarms. What it lacks is output that **changes the conditions** being measured.
+      - wrong: Sounding an alarm makes it a control system.
+        right: |
+          An alarm only **warns** people. It doesn't change what the sensor measures, so it's still monitoring.
+      - wrong: The sensor decides when to switch the heater on.
+        right: |
+          The sensor only **measures**. The **processor** compares the reading with a stored value and decides.
+      - wrong: A control system just follows its program, so it doesn't need sensors.
+        right: |
+          Without sensors it can't know the current conditions, so it can't decide what to do or check that its action worked.
+
+  - type: exam
+    body: |
+      - The one-line difference: "monitoring **measures and reports** but doesn't change the conditions; control **uses actuators to change** the conditions."
+      - Mention **feedback** for control: the output affects the next input.
+      - In a scenario, name the **sensor**, what the **processor compares**, and the **actuator** (if any).
+
+  - type: check
+    title: Exam check
+    questions: [explain-difference]
+
+  - type: takeaways
+    items:
+      - Monitoring measures, records and warns, but never changes the conditions.
+      - Control measures, compares with stored values, then uses actuators to change the conditions.
+      - "Chain: sensor → ADC → processor (→ actuator in control)."
+      - In control, the output affects the next input. That loop is called feedback.
+
+questions:
+  - id: which-control
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.8"]
+    prompt: |
+      Which of these is a **control** system?
+    options:
+      - text: A garden sprinkler that switches its water valve on when the soil moisture sensor reads too dry
+        correct: true
+        why: |
+          The valve (actuator) waters the soil, changing the moisture the sensor measures.
+      - text: A river sensor that records pollution levels and emails a report each day
+        why: |
+          It measures and reports but changes nothing: monitoring.
+      - text: A fitness watch that displays the wearer's heart rate
+        why: |
+          It shows the heart rate but doesn't change it: monitoring.
+      - text: A seismometer that logs earth tremors
+        why: |
+          It records tremors; it can't change them.
+    explanation: |
+      Control systems act on the world through actuators, and the sensor then measures the result.
+
+  - id: weather-monitoring
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.8"]
+    prompt: |
+      A school weather station measures temperature and wind speed and shows them on a website. Why is it a monitoring system?
+    options:
+      - text: It measures and displays the readings but does nothing to change the temperature or wind speed.
+        correct: true
+        why: |
+          Measuring and reporting without changing the conditions is the definition of monitoring.
+      - text: It has sensors, and only monitoring systems use sensors.
+        why: |
+          Control systems use sensors too.
+      - text: It sends its output to a website instead of a screen.
+        why: |
+          Where the output goes doesn't decide it; whether it changes the conditions does.
+      - text: It takes readings at regular intervals.
+        why: |
+          Control systems also read their sensors at regular intervals.
+    explanation: |
+      The deciding question: does the output change what's being measured? Here it doesn't.
+
+  - id: readings-per-day
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.8"]
+    prompt: |
+      A weather station records the temperature every 10 minutes, all day and all night.
+
+      How many temperature readings does it record in one day?
+    fields:
+      - answer: 144
+        unit: readings
+    explanation: |
+      - One day is $24 \times 60 = 1440$ minutes.
+      - $1440 \div 10 = 144$ readings.
+
+  - id: actuator-name
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["3.1.8"]
+    prompt: |
+      What is the name for a device that receives a signal from a computer and turns it into physical movement, such as opening a valve?
+    accept: ["actuator", "actuators", "an actuator"]
+    model: |
+      An **actuator** (for example a motor, a solenoid or a valve).
+    explanation: |
+      Sensors bring the world into the computer; actuators let the computer act on the world.
+
+  - id: spot-monitor
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.1.8"]
+    prompt: |
+      A student describes a hospital heart-rate **monitoring** system. Which line contains the error?
+    lines:
+      - Sensors attached to the patient measure the heart rate.
+      - An ADC converts the analogue readings into digital data.
+      - The processor compares each reading with stored safe limits.
+      - If a reading is outside the limits, the processor uses an actuator to bring the heart rate back to normal.
+      - The readings are displayed and stored for the doctors.
+    errorLine: 4
+    fix: |
+      The processor **sounds an alarm or shows a warning** so that staff can act. A monitoring system doesn't change the quantity it measures.
+    explanation: |
+      Using an actuator to change the heart rate would make it a control system. A monitoring system only measures, records and warns.
+
+  - id: explain-difference
+    format: explain
+    difficulty: 3
+    objectives: ["3.1.8"]
+    prompt: |
+      Explain the difference between a monitoring system and a control system. Use a greenhouse as an example of each.
+    model: |
+      Both use sensors to measure physical quantities, with an ADC converting the readings to digital. In a monitoring system the computer only records, displays or analyses the readings and may warn the user, but it does not change the conditions; for example, a greenhouse system that logs the temperature and humidity and shows them on a screen. In a control system the processor compares the readings with stored values and sends signals to actuators that change the conditions; for example, if the temperature is above the stored value it uses a motor to open a window. The output then affects the next input, which is feedback.
+    keyPoints:
+      - Both use sensors (and an ADC) to measure physical quantities
+      - Monitoring only records, displays or warns; it does not change the conditions
+      - Monitoring example, e.g. logging greenhouse temperature on a screen
+      - Control compares readings with stored values and uses actuators to change the conditions
+      - Control example, e.g. a motor opens a window when it is too hot
+      - In control the output affects the next input (feedback)
+    explanation: |
+      The difference is action: monitoring watches, control changes things, and control's changes are measured again by the sensors.
