@@ -143,6 +143,16 @@ Priority order:
 2. Writers for `partial` units.
 3. The next `todo` writers, in queue order.
 
+**Keep cycling until the entire queue is complete.** After each batch, re-run
+`node scripts/lessons/status.mjs`, then continue writing missing/partial units, independently
+reviewing drafted units, fixing issues, publishing reviewed lessons, confirming the deploy, and
+snapshotting remaining drafts. Repeat this write → review → fix/revalidate → publish → verify
+cycle across the queue until every in-scope syllabus unit is `published` and no `todo`,
+`partial`, `drafted`, or `reviewed` units remain. Do not treat finishing one batch, one subject,
+or one chat session as completion. Preserve the AS-first-then-A2 queue order, required checks,
+agent limits and user session-budget rule. If blocked by limits or an external dependency, report
+the exact remaining states and resume from the status queue; never claim completion early.
+
 Never run more than 3 agents at once. A writer and the reviewer for that same unit never
 run at the same time. For each agent:
 
