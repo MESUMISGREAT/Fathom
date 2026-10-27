@@ -1,0 +1,276 @@
+id: cpu-architecture-registers
+subject: "9618"
+topic: "4.1"
+title: "Registers: the CPU's own tiny worktop"
+summary: What a register is, how general-purpose registers differ from special-purpose ones, and the jobs of the accumulator, index register and status register.
+order: 2
+minutes: 4
+kind: core
+objectives: ["4.1.2"]
+prerequisites: [cpu-architecture-von-neumann]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, second learning outcome (the purpose and role of registers,
+    including general purpose and special purpose registers; here the accumulator, index
+    register and status register — PC, MAR, MDR and CIR are covered in
+    cpu-architecture-fetch-registers). All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can say what a **register** is, tell **general purpose** from
+      **special purpose** registers, and explain the jobs of the **accumulator (ACC)**, the
+      **index register (IX)** and the **status register**.
+
+  - type: explain
+    title: Why the CPU needs its own tiny storage
+    body: |
+      Main memory is where the program lives, but it is *slow to reach* from inside the CPU.
+      The instructions currently being worked on need somewhere faster.
+
+      A **register** is a tiny storage location **inside the CPU**, holding a fixed number
+      of bits (usually one **word** — 32 or 64 bits on a modern machine).
+
+      Registers are the fastest storage in the computer, and there are only a handful of
+      them. That is why they are used for the one thing happening *right now*.
+
+  - type: definition
+    term: Register
+    body: |
+      A small, very fast storage location **inside the processor**, typically holding one
+      word of data or one address, used during the fetch–execute cycle.
+
+  - type: diagram
+    diagram: cs-cpu-architecture-register-file
+    alt: >-
+      Inside the CPU: a row of small boxes labelled registers — ACC, IX, PC, MAR, MDR, CIR
+      and status register — sitting beside the ALU and Control Unit, with main memory shown
+      outside the CPU as a much larger stack of cells.
+    caption: Registers are few and fast; main memory is large and slower.
+
+  - type: explain
+    title: General purpose vs special purpose
+    body: |
+      The syllabus splits registers into two groups:
+
+      | Kind | Who decides what it holds | Examples |
+      | --- | --- | --- |
+      | **General purpose registers (GPR)** | *The programmer or compiler* — whatever is convenient: a value, a total, an address | Often named R1, R2 … |
+      | **Special purpose registers** | *The CPU itself*, for one fixed job | PC, MAR, MDR, CIR, ACC, IX, status register |
+
+      The difference to write down in an exam: a general-purpose register has **no fixed
+      job**, while a special-purpose register always does **one specific job**.
+
+  - type: explain
+    title: The three special registers of this lesson
+    body: |
+      - **Accumulator (ACC).** The ALU's own register. Arithmetic and logic results land
+        here — hence the name: it *accumulates* the results. Almost every calculation passes
+        through it.
+      - **Index register (IX).** Holds a value used as an **offset** — a position relative
+        to a starting point. Its classic job is stepping through the elements of an array:
+        the base address stays put, IX counts 0, 1, 2 … along it.
+      - **Status register** (also called the **flags register**). Holds single-bit
+        **flags** that record the outcome of the last operation: the **zero flag** (result
+        was 0), **carry flag**, **negative flag** and **overflow flag**. Conditional
+        instructions ("jump only if the result was negative") read these flags.
+
+  - type: example
+    title: Using ACC and IX
+    problem: |
+      A program adds up the 4 values in an array starting at address 500.
+    steps:
+      - |
+        Put 0 in the **accumulator (ACC)** — this will be the running total.
+      - |
+        Put the starting address 500 in the **index register (IX)**.
+      - |
+        Load the value at the address *in* IX into the accumulator. ACC now holds the first
+        value.
+      - |
+        `ADD` the value already in ACC to the total, then **increment IX by 1** so it points
+        at the next element.
+      - |
+        Repeat until all 4 elements are added. IX walked along the array; ACC accumulated
+        the total.
+    answer: |
+      ACC holds the total; IX counted along the array from the base address.
+
+  - type: check
+    title: Quick check
+    questions: [register-def, register-purpose-split, what-is-acc]
+
+  - type: misconceptions
+    items:
+      - wrong: Registers are just very small pieces of memory.
+        right: |
+          They are **inside the CPU** and wired directly into it, which is what makes them
+          far faster than main memory. "Smaller and faster, and in the processor" is the
+          answer examiners want.
+      - wrong: The status register holds a number the program asked for.
+        right: |
+          It holds **flags** set by the CPU itself — zero, carry, negative, overflow — after
+          the last operation.
+      - wrong: The index register is just an extra general purpose register.
+        right: |
+          It is **special purpose**: its defined role is holding an offset for addressing,
+          such as walking along an array.
+
+  - type: exam
+    body: |
+      - "**State two functions**" questions are 1 mark each — write the register's name and
+        its single job, no essay.
+      - A favourite comparison question: *compare general purpose and special purpose
+        registers*. Answer it with **who decides what the register holds**, not with size
+        or speed.
+      - If a question says "describe", name the register **and** the effect on the program.
+
+  - type: check
+    title: Check yourself
+    questions: [flags-meaning, index-register-use, explain-register-vs-memory]
+
+  - type: takeaways
+    items:
+      - A **register** is tiny, fast storage **inside the CPU**, usually one word wide.
+      - >-
+        **General purpose** registers do whatever the program needs; **special purpose**
+        registers do one fixed job.
+      - >-
+        **ACC** accumulates ALU results, **IX** holds an offset (array walking), the
+        **status register** holds flags such as zero, carry, negative and overflow.
+
+questions:
+  - id: register-def
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: |
+      Which description of a **register** is correct?
+    options:
+      - text: A small, fast storage location inside the CPU, typically holding one word
+        correct: true
+        why: |
+          Location, size and speed are all part of the definition: inside the CPU, tiny,
+          fastest storage in the system.
+      - text: A permanent storage chip that keeps files when the computer is switched off
+        why: |
+          That describes secondary storage (SSD, hard disk), not a register.
+      - text: A section of main memory reserved for the operating system
+        why: |
+          Registers are **in the processor**; memory areas are still memory, which is much
+          slower to reach.
+      - text: A device that converts analogue signals into digital ones
+        why: |
+          That is an analogue-to-digital converter, a piece of hardware outside the CPU.
+    explanation: |
+      Registers live inside the CPU, are a word or so in size, and are the fastest storage
+      there is.
+
+  - id: register-purpose-split
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      What is the real difference between a **general purpose** register and a **special
+      purpose** register?
+    options:
+      - text: >-
+          A special purpose register has one fixed job set by the CPU; a general purpose
+          register holds whatever the program needs
+        correct: true
+        why: |
+          This is the distinction that matters: fixed, CPU-defined job versus free to use.
+      - text: General purpose registers are larger than special purpose ones
+        why: |
+          Size is not the defining difference; both are word-sized storage inside the CPU.
+      - text: Special purpose registers are only found in supercomputers
+        why: |
+          Every processor has them — PC, MAR, MDR and CIR are needed by every fetch–execute
+          cycle.
+      - text: General purpose registers can be accessed by devices, special purpose ones cannot
+        why: |
+          Neither type is directly accessible by devices; that is not the distinction the
+          syllabus draws.
+    explanation: |
+      The split is about **role**: one fixed job decided by the CPU, or free for the
+      program to use as it likes.
+
+  - id: what-is-acc
+    format: text
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: |
+      Which special purpose register stores the results of arithmetic and logic operations
+      as they are produced?
+    style: one-line
+    accept: ["accumulator", "acc", "the accumulator", "accumulator register"]
+    model: |
+      The accumulator (ACC).
+    explanation: |
+      The ALU works through the accumulator, which *accumulates* each result.
+
+  - id: flags-meaning
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      The {{1}} register stores single-bit flags such as the zero, carry, negative and
+      overflow flags. A program can test these flags to make a {{2}} about what to do next.
+    blanks:
+      - accept: ["status", "flags", "status (flags)", "flags (status)"]
+      - accept: ["decision", "choice"]
+    explanation: |
+      Flags record the outcome of the last operation; conditional instructions use them to
+      decide whether to branch.
+
+  - id: index-register-use
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      A program loops through every element of an array, starting at a fixed base address.
+      Which register is most useful for keeping track of *where* in the array the program
+      currently is?
+    options:
+      - text: The index register (IX)
+        correct: true
+        why: |
+          IX holds an offset from the base address — 0, 1, 2 … — so the program can walk
+          along the array without rewriting the base address.
+      - text: The status register
+        why: |
+          It holds flags about the last operation, not an address or an offset.
+      - text: The accumulator
+        why: |
+          ACC holds the values being added up, not the position in the array.
+      - text: The program counter
+        why: |
+          The PC tracks the address of the **next instruction**, not the position in a data
+          array. (Using it that way would break the program.)
+    explanation: |
+      An offset from a base address is exactly what an index register is for.
+
+  - id: explain-register-vs-memory
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.2"]
+    prompt: |
+      Explain why a processor uses registers in addition to main memory, even though both
+      store binary values.
+    model: |
+      Registers are inside the CPU, so the processor can read and write them in a tiny
+      fraction of the time it takes to reach main memory, which is outside the CPU and
+      connected through the buses. During the fetch–execute cycle the CPU needs the current
+      instruction and data immediately, so it keeps them in fast registers. Registers are
+      also extremely limited in number and size, so they can only hold what is being worked
+      on right now — main memory is needed for the much larger program and data set.
+    keyPoints:
+      - Registers are inside the CPU; main memory is outside it
+      - Register access is much faster than memory access
+      - Registers hold only the current working values
+      - Main memory holds the full program and data, but is slower to reach
+    explanation: |
+      The mark goes to **location + speed + capacity trade-off**, not to "registers are
+      smaller" alone.

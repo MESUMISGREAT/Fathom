@@ -1,0 +1,236 @@
+id: cpu-architecture-clock-ias
+subject: "9618"
+topic: "4.1"
+title: The system clock and the Immediate Access Store
+summary: What sets the beat the CPU works to, how clock speed converts into a cycle time, and where the CPU keeps the values it needs right now.
+order: 5
+minutes: 4
+kind: core
+objectives: ["4.1.3"]
+prerequisites: [cpu-architecture-alu-cu]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, third learning outcome (system clock and Immediate Access Store).
+    Clock period is computed as 1/frequency with Python. All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what the **system clock** does, relate **clock speed** to
+      a **clock cycle time**, and say what the **Immediate Access Store (IAS)** is for.
+
+  - type: explain
+    title: The metronome inside the computer
+    body: |
+      Every part of a computer has to act at exactly the right moment — otherwise data
+      would arrive while the receiving register was still busy.
+
+      The **system clock** is a small **quartz crystal** that vibrates when electricity
+      passes through it, producing a steady stream of electrical pulses. Each rising pulse
+      is a **clock cycle**: one beat in time for the whole machine.
+
+      The clock's signal is broadcast to the CPU and the buses, so every component steps
+      through its work on the same beat. The Control Unit uses those beats to time its
+      control signals.
+
+  - type: definition
+    term: Clock speed
+    body: |
+      The number of clock cycles per second, measured in **hertz (Hz)** — 1 Hz means one
+      cycle per second. Computers use **MHz** ($10^6$ Hz) and **GHz** ($10^9$ Hz).
+
+  - type: diagram
+    diagram: cs-cpu-architecture-clock-ias
+    alt: >-
+      Top: a square-wave clock signal with equal pulses, three pulses highlighted as clock
+      cycles, labelled clock speed 3 GHz. Bottom: a tick of one nanosecond under one cycle,
+      with a calculation 1 divided by 3 times 10 to the power 9 equals 0.33 nanoseconds.
+      Beside it, a nested box showing the small Immediate Access Store inside the CPU
+      holding the current instruction and data, with main memory shown much larger outside.
+    caption: Faster clock, shorter cycle. The IAS keeps today's values one step from the CPU.
+
+  - type: example
+    title: From gigahertz to nanoseconds
+    problem: |
+      A processor runs at $3.0 \times 10^9$ Hz. How long does one clock cycle take?
+    steps:
+      - |
+        One cycle is one beat, and the clock gives $3.0 \times 10^9$ beats every second. So
+        the cycles divide the second into $3.0 \times 10^9$ equal slices.
+      - |
+        Cycle time is therefore
+
+        $$T = \frac{1}{f} = \frac{1}{3.0 \times 10^9}$$
+
+      - |
+        Evaluate: $T \approx 3.33 \times 10^{-10}\ \text{s} = 0.33\ \text{ns}$.
+    answer: |
+      One clock cycle lasts about $0.33$ nanoseconds ($3.3 \times 10^{-10}$ s).
+
+  - type: explain
+    title: The Immediate Access Store (IAS)
+    body: |
+      Main memory is large but comparatively slow to reach. The CPU often needs the same few
+      values over and over.
+
+      The **Immediate Access Store** is a **small, very fast store inside the processor**
+      that keeps the data and instructions currently being used, so the CPU can reach them
+      without going out to main memory each time.
+
+      It is far smaller than main memory — it holds the *current working set*, not the whole
+      program.
+
+  - type: check
+    title: Quick check
+    questions: [clock-purpose, cycle-time, ias-purpose]
+
+  - type: misconceptions
+    items:
+      - wrong: A faster clock always makes a computer twice as fast.
+        right: |
+          Clock speed is **one** factor. Bus width, number of cores, cache size and the
+          processor's design all matter too — see the next lessons.
+      - wrong: The clock stores the time and date.
+        right: |
+          It produces **timing pulses**. A real-time clock chip keeps the date; the system
+          clock is about synchronising operations.
+      - wrong: The IAS is another name for main memory.
+        right: |
+          The IAS is much **smaller and faster**, and sits inside or next to the CPU. Main
+          memory holds everything; the IAS holds what is in use now.
+
+  - type: exam
+    body: |
+      - The conversion $T = 1/f$ earns a mark — always show it, then the substitution, then
+        the answer with units.
+      - Convert prefixes explicitly ($1\ \text{GHz} = 10^9\ \text{Hz}$); a missing unit
+        costs the final mark.
+      - For "state the purpose of the IAS", the two keywords are **fast** and **currently
+        in use**.
+
+  - type: check
+    title: Check yourself
+    questions: [clock-signal-source, explain-clock-role]
+
+  - type: takeaways
+    items:
+      - The **system clock** (a quartz crystal) produces regular pulses that **synchronise**
+        every part of the computer.
+      - >-
+        **Clock speed** = cycles per second, in Hz, MHz or GHz.
+      - >-
+        $T = 1/f$: a 3 GHz clock has a cycle of about **0.33 ns**.
+      - The **Immediate Access Store** is a tiny, very fast store inside the CPU holding the
+        values currently in use.
+
+questions:
+  - id: clock-purpose
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.3"]
+    prompt: |
+      What is the main purpose of the **system clock**?
+    options:
+      - text: To produce regular timing pulses that synchronise the operations of all the components
+        correct: true
+        why: |
+          Every component works to the same beat, so data and control signals line up
+          correctly.
+      - text: To keep the date and time for the user
+        why: |
+          That is a real-time clock. The system clock is about synchronising the processor,
+          not telling the time.
+      - text: To count how many instructions the program has executed
+        why: |
+          The clock counts cycles, not instructions. Instruction counts come from software
+          profiling.
+      - text: To store the program while it runs
+        why: |
+          That is main memory's job. The clock produces pulses; it stores nothing.
+    explanation: |
+      Synchronisation is the point: one heartbeat for the whole machine.
+
+  - id: cycle-time
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.3"]
+    prompt: |
+      A processor's clock runs at $4.0 \times 10^9\ \text{Hz}$. How long is one clock cycle?
+    fields:
+      - label: "T ="
+        answer: 0.25
+        unit: ns
+        tolerance: { abs: 0.01 }
+    explanation: |
+      $T = 1/f = 1/(4.0 \times 10^9) = 2.5 \times 10^{-10}\ \text{s} = 0.25\ \text{ns}$.
+      One second divided into four billion equal beats.
+
+  - id: ias-purpose
+    format: text
+    difficulty: 1
+    objectives: ["4.1.3"]
+    prompt: |
+      What is the purpose of the Immediate Access Store (IAS)?
+    style: definition
+    accept:
+      - "to hold the data and instructions currently in use so the CPU can reach them quickly"
+      - "to hold data and instructions currently in use so the CPU can reach them quickly"
+      - "fast storage inside the CPU for data and instructions currently being used"
+      - "it stores data and instructions currently in use for quick access by the CPU"
+      - "to provide very fast access to the data and instructions currently being used"
+      - "to store the data and instructions currently being used by the CPU"
+      - "holds the data and instructions currently in use so the CPU can reach them quickly"
+    model: |
+      The IAS is a small, very fast store inside the CPU that holds the data and
+      instructions currently being used, so the CPU can access them without the delay of
+      going out to main memory.
+    explanation: |
+      Keywords examiners look for: **fast**, **inside the CPU**, **currently in use**.
+
+  - id: clock-signal-source
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.3"]
+    prompt: |
+      The clock signal in a computer comes from a vibrating **quartz crystal**. If that
+      crystal vibrates at $2.5 \times 10^9$ times per second, what is the clock speed in GHz?
+    options:
+      - text: 2.5 GHz
+        correct: true
+        why: |
+          $1\ \text{GHz} = 10^9\ \text{Hz}$, so $2.5 \times 10^9\ \text{Hz} = 2.5\ \text{GHz}$.
+      - text: 25 GHz
+        why: |
+          That would be $25 \times 10^9$ Hz — an extra factor of 10 in the conversion.
+      - text: 0.25 GHz
+        why: |
+          That is the conversion the wrong way, $2.5 \times 10^8$ Hz.
+      - text: 2.5 MHz
+        why: |
+          MHz is $10^6$ Hz; $2.5 \times 10^9$ Hz is a thousand times bigger.
+    explanation: |
+      GHz = $10^9$ Hz. Count the nines in the power of ten.
+
+  - id: explain-clock-role
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.3"]
+    prompt: |
+      Explain why a computer needs a system clock, and what would happen if components
+      worked without one.
+    model: |
+      The system clock produces regular electrical pulses that are sent to every component,
+      so operations happen on a shared beat. The Control Unit times its control signals to
+      those pulses, and data is transferred only when both the sending and receiving parts
+      are ready. Without a shared clock, one component could change a value while another
+      was still reading it, or a signal could arrive too early or too late, so transfers
+      would be unreliable and instructions would not be carried out in the correct order.
+    keyPoints:
+      - The clock produces regular pulses shared by all components
+      - Control signals and data transfers are timed to those pulses
+      - Parts act only when the timing is right
+      - Without it, signals arrive out of step and operations go wrong
+    explanation: |
+      The key idea is **synchronisation**, not speed: the clock keeps every part in step.

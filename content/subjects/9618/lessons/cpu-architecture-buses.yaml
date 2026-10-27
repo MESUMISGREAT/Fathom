@@ -1,0 +1,219 @@
+id: cpu-architecture-buses
+subject: "9618"
+topic: "4.1"
+title: The address, data and control buses
+summary: What travels along each of the three buses, which way it flows, and how to work out what happens during a memory read.
+order: 6
+minutes: 4
+kind: core
+objectives: ["4.1.4"]
+prerequisites: [cpu-architecture-von-neumann, cpu-architecture-fetch-registers]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, fourth learning outcome (how data are transferred between
+    components using the address bus, data bus and control bus). All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can name the three buses, say what each one carries and in which
+      **direction**, and describe a memory read or write in terms of buses.
+
+  - type: explain
+    title: Three kinds of wire
+    body: |
+      The CPU, memory and the devices are joined by a **bus**: a bundle of parallel wires
+      shared by every component connected to it.
+
+      There are always three buses, and the trick is remembering **what** travels on each:
+
+      | Bus | Carries | Direction |
+      | --- | --- | --- |
+      | **Address bus** | The *location* being accessed — a memory or device address | Usually **one way**: CPU → memory/devices |
+      | **Data bus** | The *actual data* being read or written | **Both ways**: in and out |
+      | **Control bus** | *Control signals* — read/write commands, the clock signal, interrupt requests, acknowledgements | **Both ways** |
+
+      The **width** of a bus is how many wires it has, so how many bits it carries at once.
+      A 64-bit data bus moves 64 bits per transfer.
+
+  - type: definition
+    term: Bus
+    body: |
+      A set of parallel electrical connections (wires) that carries **addresses**, **data**
+      or **control signals** between the CPU, main memory and the peripheral devices.
+
+  - type: diagram
+    diagram: cs-cpu-architecture-buses
+    alt: >-
+      Three horizontal buses running between the CPU on the left and main memory and an
+      input/output device on the right: the address bus with an arrow pointing from the CPU
+      outwards and labelled addresses, a wider data bus with arrows at both ends labelled
+      data, and a control bus with arrows at both ends labelled read, write and interrupt.
+    caption: Addresses go out, data moves both ways, control signals travel both ways.
+
+  - type: example
+    title: Reading a value from memory
+    problem: |
+      The CPU needs the value stored at memory address 600. Describe the transfer using the
+      three buses.
+    steps:
+      - |
+        The Control Unit puts 600 into the MAR, and 600 goes out along the **address bus**.
+        Only the CPU can *initiate* an address, so this bus runs one way.
+      - |
+        The Control Unit sends a **read** signal along the **control bus** so memory knows
+        what is wanted.
+      - |
+        Memory places the contents of address 600 onto the **data bus**, which carries it
+        back into the CPU, where it lands in the MDR.
+      - |
+        For a **write**, the flow changes: the address still goes out on the address bus,
+        but the data goes *out* on the data bus, with a **write** signal on the control bus.
+    answer: |
+      Read: address out → read signal out → data in. Write: address out → write signal
+      out → data out.
+
+  - type: check
+    title: Quick check
+    questions: [which-bus, bus-directions, bus-width-meaning]
+
+  - type: misconceptions
+    items:
+      - wrong: The address bus carries the data itself.
+        right: |
+          The address bus carries the **location**; the data bus carries the **contents**.
+          Address 600 and "the value in cell 600" travel on different buses.
+      - wrong: All three buses are two-way.
+        right: |
+          The data and control buses carry signals in both directions, but the address bus
+          is normally **one way**, from the CPU outwards.
+      - wrong: A wider bus makes everything faster automatically.
+        right: |
+          A wider bus moves **more bits per transfer**, which helps — but speed also depends
+          on clock speed, cache and how many transfers are needed. (See 4.1.5.)
+
+  - type: exam
+    body: |
+      - Bus questions are usually "name + carry + direction". Give all three and you get
+        all the marks: "the **address bus** carries memory **addresses** from the CPU to
+        memory".
+      - "Describe a memory read" wants a **sequence**: address, control signal, data.
+      - Marks slip when you say data flows "to the CPU" only — reads go in, writes come
+        out.
+
+  - type: check
+    title: Check yourself
+    questions: [bus-cloze, explain-read-write]
+
+  - type: takeaways
+    items:
+      - >-
+        **Address bus**: locations, normally CPU → memory/devices, one way.
+      - >-
+        **Data bus**: the data itself, both ways, and its **width** sets bits per transfer.
+      - >-
+        **Control bus**: read/write, clock and interrupt signals, both ways.
+      - A transfer is always **address + control signal + data**.
+
+questions:
+  - id: which-bus
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.4"]
+    prompt: |
+      The CPU wants to write the value 42 into memory location 800. Which bus carries the
+      number 800?
+    options:
+      - text: The address bus
+        correct: true
+        why: |
+          800 identifies *where* — that is an address, and addresses travel on the address
+          bus, normally from the CPU outwards.
+      - text: The data bus
+        why: |
+          The data bus carries 42, the value being written — not the location it is going to.
+      - text: The control bus
+        why: |
+          The control bus carries the **write** signal telling memory to accept the value,
+          not either number.
+      - text: The address bus, but only after the data has been written
+        why: |
+          The address is always sent **first**, so memory knows where the incoming data
+          belongs.
+    explanation: |
+      Location → address bus; contents → data bus; command → control bus.
+
+  - id: bus-directions
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.4"]
+    prompt: |
+      Complete the sentence. The {{1}} bus normally carries signals in one direction only,
+      from the CPU outwards, while the {{2}} bus carries data both into and out of the CPU.
+    blanks:
+      - accept: ["address", "the address"]
+      - accept: ["data", "the data"]
+    explanation: |
+      The CPU is the one that names addresses; data has to flow both ways because the CPU
+      both reads and writes.
+
+  - id: bus-width-meaning
+    format: text
+    difficulty: 1
+    objectives: ["4.1.4"]
+    prompt: |
+      A computer has a 64-bit data bus. What does "64-bit" tell you about each transfer?
+    style: short
+    accept:
+      - "64 bits of data are transferred at once"
+      - "64 bits are transferred at a time"
+      - "it can carry 64 bits of data at once"
+      - "64 bits of data can be moved at one time"
+      - "64 bits are moved in one transfer"
+      - "it transfers 64 bits at a time"
+      - "64 bits of data per transfer"
+    model: |
+      64 bits of data can be transferred in a single transfer (the bus has 64 parallel
+      wires).
+    explanation: |
+      Bus **width** = how many bits travel together. It applies to the data bus.
+
+  - id: bus-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.4"]
+    prompt: |
+      A memory read uses all three buses: the address of the cell goes out on the
+      {{1}} bus, a read command goes out on the {{2}} bus, and the contents come back on
+      the {{3}} bus.
+    blanks:
+      - accept: ["address", "the address"]
+      - accept: ["control", "the control"]
+      - accept: ["data", "the data"]
+    explanation: |
+      Address first, then the control signal, then the data returns. Learn this as a
+      three-beat sequence.
+
+  - id: explain-read-write
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.4"]
+    prompt: |
+      Describe how the CPU **writes** a value to main memory, saying what each of the three
+      buses carries.
+    model: |
+      The CPU places the destination address in the MAR, and the address is sent out along
+      the address bus. The Control Unit sends a write signal along the control bus so that
+      memory knows a write is taking place. The value to be written is placed in the MDR and
+      travels out along the data bus to the addressed cell, which stores it. Unlike a read,
+      the data flows away from the CPU rather than towards it.
+    keyPoints:
+      - The address goes out on the address bus
+      - A write signal goes out on the control bus
+      - The value goes out on the data bus (from the MDR)
+      - The data direction is away from the CPU, the opposite of a read
+    explanation: |
+      Three buses, three sentences. Naming the direction of the data bus earns the last
+      mark.

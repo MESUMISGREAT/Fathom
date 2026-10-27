@@ -1,0 +1,245 @@
+id: cpu-architecture-performance
+subject: "9618"
+topic: "4.1"
+title: "What makes a computer fast: clock speed, cores, bus width and cache"
+summary: The four performance factors in the syllabus, what each one actually changes, and why the biggest number on the box does not always win.
+order: 7
+minutes: 5
+kind: core
+objectives: ["4.1.5"]
+prerequisites: [cpu-architecture-clock-ias, cpu-architecture-buses]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, fifth learning outcome (factors contributing to computer system
+    performance: processor type and number of cores, bus width, clock speed and cache
+    memory). All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain how **clock speed**, **number of cores**, **bus width**,
+      **cache memory** and **processor type** affect performance, and justify a choice of
+      machine for a given task.
+
+  - type: explain
+    title: Performance means less waiting
+    body: |
+      A computer performs well when it finishes work quickly — when instructions are
+      carried out without the processor sitting idle waiting for memory.
+
+      Four factors decide most of that, and the syllabus names them:
+
+      | Factor | What it changes |
+      | --- | --- |
+      | **Clock speed** | How many cycles happen per second — the pace of everything |
+      | **Number of cores** | How many instruction streams can run **at the same time** |
+      | **Bus width** | How many bits move per transfer — the size of each delivery |
+      | **Cache memory** | How often the CPU has to wait for slow main memory |
+      | **Processor type** | How much work the design gets done **per cycle** |
+
+  - type: diagram
+    diagram: cs-cpu-architecture-performance
+    alt: >-
+      Four speed-up bars comparing a machine with 2.0 GHz, 2 cores, an 8-bit bus and no
+      cache against one with 3.5 GHz, 8 cores, a 64-bit bus and a large cache. Each bar is
+      labelled with what it improves: cycles per second, parallel work, bits per transfer,
+      fewer waits for memory.
+    caption: Each factor speeds up a different part of the journey.
+
+  - type: explain
+    title: The four factors, one at a time
+    body: |
+      - **Clock speed.** More cycles per second means more steps per second, so an
+        instruction takes less real time. It is usually quoted in GHz.
+      - **Number of cores.** A **core** is a complete processor. Two cores can execute two
+        instruction streams simultaneously, so a machine with more cores can run several
+        tasks at once — *if* the software can share the work out.
+      - **Bus width.** A wider data bus moves more bits per transfer, so more data arrives
+        with each trip: a 64-bit bus delivers eight times as much as an 8-bit bus.
+      - **Cache memory.** Cache is fast memory close to the CPU (the IAS you met earlier).
+        A bigger cache keeps more of the current working set nearby, cutting waits for main
+        memory — so the CPU spends its cycles working instead of waiting.
+      - **Processor type.** A newer design may do more useful work in a single cycle than an
+        older one at the same clock speed, so GHz alone never tells the whole story.
+
+  - type: example
+    title: Two laptops, same price
+    problem: |
+      Laptop A: 3.4 GHz, 2 cores, 2 MB cache. Laptop B: 2.8 GHz, 8 cores, 12 MB cache.
+      Which is faster for editing video, and which for a single-threaded spreadsheet?
+    steps:
+      - |
+        Video editing splits frames and effects across several cores, so laptop **B** wins
+        despite the lower clock speed: 8 cores and a large cache mean far less waiting.
+      - |
+        A single-threaded spreadsheet task runs mostly on **one** core, so the extra cores
+        sit idle. Laptop **A's** higher clock speed helps more here.
+      - |
+        Neither machine is simply "faster": performance depends on **what the software can
+        use**.
+    answer: |
+      Laptop B for video editing (cores + cache); laptop A for the single-threaded
+      spreadsheet (clock speed).
+
+  - type: check
+    title: Quick check
+    questions: [clock-speed-effect, cache-effect, cores-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: More cores always make a computer twice as fast.
+        right: |
+          Only if the program can be **split** across cores. A single-threaded program uses
+          one core and leaves the others idle.
+      - wrong: Clock speed alone tells you which CPU is faster.
+        right: |
+          Design (processor type), cores, cache and bus width matter too. Two CPUs at the
+          same GHz can differ a lot.
+      - wrong: Cache is just extra main memory.
+        right: |
+          Cache is **much faster and much smaller**, and sits inside or next to the CPU. Its
+          job is to *avoid* trips to main memory.
+
+  - type: exam
+    body: |
+      - Performance questions reward **factor → mechanism → effect**: "larger cache → fewer
+        memory waits → more instructions completed per second".
+      - Comparison questions ("which is faster, and why?") need a **justified choice**, not
+        just a bigger number. Name the task, then the factor that matters for it.
+      - Watch for "state **two** factors": pick two *different* mechanisms from the table,
+        not two versions of the same one.
+
+  - type: check
+    title: Check yourself
+    questions: [which-factor, faster-cpu-choice]
+
+  - type: takeaways
+    items:
+      - >-
+        **Clock speed** = pace; **cores** = how much runs in parallel.
+      - >-
+        **Bus width** = bits per transfer; **cache** = fewer waits for main memory.
+      - >-
+        **Processor type** means work done per cycle — GHz alone is not the whole story.
+      - >-
+        Match the machine to the **task**: parallel work needs cores, single-threaded work
+        needs speed.
+
+questions:
+  - id: clock-speed-effect
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.5"]
+    prompt: |
+      What is the direct effect of increasing a processor's **clock speed**?
+    options:
+      - text: More clock cycles per second, so more steps of work are completed per second
+        correct: true
+        why: |
+          Clock speed counts cycles each second. More cycles means the machine gets through
+          more work in the same time — all else equal.
+      - text: More instructions can be executed at exactly the same time
+        why: |
+          Simultaneous instructions need **more cores**. A single core works through them
+          one at a time, faster or slower.
+      - text: More data is transferred in each bus transfer
+        why: |
+          Bits per transfer is set by the **bus width**, not by the clock.
+      - text: The computer can run more programs without them interfering
+        why: |
+          Running programs side by side is about cores and the operating system; clock
+          speed only changes how fast each step happens.
+    explanation: |
+      Clock speed changes the *pace* of the machine — cycles per second.
+
+  - id: cache-effect
+    format: text
+    difficulty: 2
+    objectives: ["4.1.5"]
+    prompt: |
+      Explain, in one or two sentences, why increasing the size of a CPU's cache memory can
+      improve performance.
+    style: short
+    accept:
+      - "because the CPU has to wait less for main memory"
+      - "the CPU does not have to wait for main memory as often"
+      - "it avoids trips to slower main memory"
+      - "more of the current data and instructions are kept close to the CPU"
+      - "fewer accesses to main memory are needed"
+      - "the CPU can access data faster than from main memory"
+      - "it reduces the time waiting for main memory"
+    model: |
+      A larger cache can hold more of the data and instructions currently in use, so the
+      CPU reads them from the fast cache instead of waiting for the much slower main
+      memory. Fewer waits means more cycles spent doing actual work.
+    explanation: |
+      The mechanism is **fewer waits for main memory**, not "more memory in general".
+
+  - id: cores-explain
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.5"]
+    prompt: |
+      A student says: "An 8-core 2.5 GHz processor is always four times faster than a
+      2-core 2.5 GHz processor." What is wrong with this?
+    options:
+      - text: It is only true if the software can share its work across all the cores
+        correct: true
+        why: |
+          Cores only help when the program can be split into independent parts. Otherwise
+          the extra cores sit idle.
+      - text: Nothing — the statement is correct
+        why: |
+          It ignores software: single-threaded programs gain nothing from extra cores.
+      - text: Clock speed must also be doubled for the extra cores to work
+        why: |
+          Cores run at their own clock speed; there is no rule that doubling cores requires
+          doubling the clock.
+      - text: More cores always slow a processor down because they share the bus
+        why: |
+          Shared resources can limit gains, but more cores do not make a processor slower —
+          they just cannot be used by every program.
+    explanation: |
+      Hardware capacity and software parallelism have to match for cores to pay off.
+
+  - id: which-factor
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.5"]
+    prompt: |
+      Match the factor to what it changes: clock speed sets the number of {{1}} per second;
+      the number of {{2}} sets how many instruction streams run simultaneously; bus width
+      sets how many {{3}} move per transfer.
+    blanks:
+      - accept: ["cycles", "clock cycles", "the cycles"]
+      - accept: ["cores", "processors"]
+      - accept: ["bits", "the bits"]
+    explanation: |
+      Pace (clock), parallelism (cores), and delivery size (bus width) — three different
+      mechanisms.
+
+  - id: faster-cpu-choice
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.5"]
+    prompt: |
+      A school must buy machines for a classroom where students run a browser, a word
+      processor and educational software **at the same time**. Explain which hardware
+      features would make those machines feel fastest, and why.
+    model: |
+      Several programs run simultaneously, so a processor with **multiple cores** matters
+      most: each core can handle a different program, so they progress together instead of
+      queueing. A reasonably high **clock speed** keeps each program responsive. A decent
+        amount of **cache** reduces waiting for main memory when the working set switches
+        between programs, and a wide **data bus** moves the data needed by those programs
+        quickly. Top-end clock speed alone would not help much if only one core were
+        available, because the programs would take turns.
+    keyPoints:
+      - Multiple cores let the programs run at the same time
+      - Clock speed keeps each individual program responsive
+      - Cache reduces waiting when switching between programs
+      - A wider bus moves each program's data faster
+    explanation: |
+      Link each feature to the multitasking requirement — that is where the marks are.

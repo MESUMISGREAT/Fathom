@@ -29,6 +29,16 @@ import ComputerComponentsSystemOverview from './computer-components-system-overv
 import ComputerComponentsThermostatGraph from './computer-components-thermostat-graph';
 import ComputerComponentsTouchscreens from './computer-components-touchscreens';
 import ComputerComponentsVrLoop from './computer-components-vr-loop';
+import CpuArchitectureBuses from './cpu-architecture-buses';
+import CpuArchitectureClockIas from './cpu-architecture-clock-ias';
+import CpuArchitectureCpuBlocks from './cpu-architecture-cpu-blocks';
+import CpuArchitectureFetchExecute from './cpu-architecture-fetch-execute';
+import CpuArchitectureInterrupts from './cpu-architecture-interrupts';
+import CpuArchitectureKeyRegisters from './cpu-architecture-key-registers';
+import CpuArchitecturePerformance from './cpu-architecture-performance';
+import CpuArchitecturePorts from './cpu-architecture-ports';
+import CpuArchitectureRegisters from './cpu-architecture-registers';
+import CpuArchitectureVonNeumann from './cpu-architecture-von-neumann';
 import HexNibbles from './hex-nibbles';
 import LogicGatesExpressionCircuit from './logic-gates-expression-circuit';
 import LogicGatesSymbols from './logic-gates-symbols';
@@ -96,6 +106,16 @@ export const diagrams: DiagramRegistry = {
   'cs-computer-components-thermostat-graph': ComputerComponentsThermostatGraph,
   'cs-computer-components-touchscreens': ComputerComponentsTouchscreens,
   'cs-computer-components-vr-loop': ComputerComponentsVrLoop,
+  'cs-cpu-architecture-buses': CpuArchitectureBuses,
+  'cs-cpu-architecture-clock-ias': CpuArchitectureClockIas,
+  'cs-cpu-architecture-cpu-blocks': CpuArchitectureCpuBlocks,
+  'cs-cpu-architecture-fetch-execute': CpuArchitectureFetchExecute,
+  'cs-cpu-architecture-interrupts': CpuArchitectureInterrupts,
+  'cs-cpu-architecture-key-registers': CpuArchitectureKeyRegisters,
+  'cs-cpu-architecture-performance': CpuArchitecturePerformance,
+  'cs-cpu-architecture-ports': CpuArchitecturePorts,
+  'cs-cpu-architecture-register-file': CpuArchitectureRegisters,
+  'cs-cpu-architecture-von-neumann': CpuArchitectureVonNeumann,
   'cs-hex-nibbles': HexNibbles,
   'cs-logic-gates-expression-circuit': LogicGatesExpressionCircuit,
   'cs-logic-gates-symbols': LogicGatesSymbols,

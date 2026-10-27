@@ -1,0 +1,232 @@
+id: cpu-architecture-ports
+subject: "9618"
+topic: "4.1"
+title: "Ports: how peripherals plug in"
+summary: What a port is, and how USB, HDMI and VGA differ in what they carry and whether the signal is digital or analogue.
+order: 8
+minutes: 4
+kind: core
+objectives: ["4.1.6"]
+prerequisites: [cpu-architecture-von-neumann]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, sixth learning outcome (how different ports provide connection to
+    peripheral devices, including USB, HDMI and VGA). All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can say what a **port** is, and compare **USB**, **HDMI** and **VGA**
+      by what they carry and how they carry it.
+
+  - type: explain
+    title: Ports, plugs and peripherals
+    body: |
+      A **port** is a socket on the computer that lets an external device — a
+      **peripheral** such as a keyboard, printer or monitor — connect and communicate with
+      it.
+
+      Different ports carry different signals:
+
+      | Port | Carries | Signal type |
+      | --- | --- | --- |
+      | **USB** (Universal Serial Bus) | Data, and power to run or charge the device | **Digital** |
+      | **HDMI** (High Definition Multimedia Interface) | Video **and** audio | **Digital** |
+      | **VGA** (Video Graphics Array) | Video only | **Analogue** |
+
+  - type: definition
+    term: Port
+    body: |
+      A physical socket on a computer through which data and control signals travel between
+      the computer and a peripheral device.
+
+  - type: diagram
+    diagram: cs-cpu-architecture-ports
+    alt: >-
+      Three ports side by side with the signals each carries: a USB port labelled data and
+      power going both ways, an HDMI port labelled digital video plus digital audio, and a
+      VGA port labelled analogue video only with no audio.
+    caption: USB carries any data plus power; HDMI carries digital video and audio; VGA carries analogue video only.
+
+  - type: explain
+    title: The three the syllabus names
+    body: |
+      - **USB.** One connector style for many device types — mouse, printer, phone, memory
+        stick. It sends **data both ways**, can **supply power** to the device, and supports
+        **hot-swapping**: plugging in while the computer is on. Different versions (USB 2.0,
+        USB 3.x) differ mainly in speed.
+      - **HDMI.** One cable carrying **digital video and digital audio** to a monitor or TV.
+        Because it is digital, the picture arrives exactly as it left the graphics card.
+      - **VGA.** The older blue 15-pin connector. It carries an **analogue video** signal
+        only — **no sound** — so a monitor needs a separate speaker cable.
+
+  - type: example
+    title: Choosing a connection
+    problem: |
+      Match each job to the best port from USB, HDMI and VGA.
+    steps:
+      - |
+        Plugging in a memory stick: **USB** — it is a general data port, and it can power
+        small devices too.
+      - |
+        Showing a film with sound on a TV in one cable: **HDMI** — digital video *and*
+        audio together.
+      - |
+        Driving an old projector that only has a blue 15-pin socket: **VGA** — analogue
+        video only, so sound needs its own connection.
+    answer: |
+      Memory stick → USB; film with sound → HDMI; old projector → VGA.
+
+  - type: check
+    title: Quick check
+    questions: [port-definition, hdmi-vs-vga, usb-features]
+
+  - type: misconceptions
+    items:
+      - wrong: VGA carries digital video, just like HDMI.
+        right: |
+          VGA is **analogue**; HDMI is **digital**. That is the headline difference.
+      - wrong: HDMI also carries power, so monitors never need a mains lead.
+        right: |
+          HDMI carries video and audio. Small devices can draw a little power over some
+          connections, but a monitor still needs its own supply.
+      - wrong: A port and a cable are two names for the same thing.
+        right: |
+          The **port** is the socket in the computer; the **cable** is what plugs into it.
+          A question about "ports" wants the socket.
+
+  - type: exam
+    body: |
+      - "State **two** advantages of USB over VGA" is a classic: one connector for many
+        devices, and digital transfer (plus hot-swap and power — pick two).
+      - When asked to compare, use the syllabus words **analogue** and **digital**; they are
+        the marks.
+      - Do not claim VGA carries audio — that loses the mark outright.
+
+  - type: check
+    title: Check yourself
+    questions: [which-port, explain-vga-limit]
+
+  - type: takeaways
+    items:
+      - A **port** is the socket a peripheral connects to.
+      - >-
+        **USB**: digital data both ways, supplies power, hot-swappable, many device types.
+      - >-
+        **HDMI**: digital video **and** audio in one cable.
+      - >-
+        **VGA**: analogue video only, no sound.
+
+questions:
+  - id: port-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.6"]
+    prompt: |
+      What is a **port** on a computer?
+    options:
+      - text: A socket that lets a peripheral device connect and exchange data with the computer
+        correct: true
+        why: |
+          The port is the physical connection point — USB, HDMI and VGA are all port types.
+      - text: A program that moves files between folders
+        why: |
+          That is software. A port is a physical socket on the machine.
+      - text: A section of memory used for input and output
+        why: |
+          Memory can be *addressed* like a port, but the syllabus meaning here is the
+          physical connector.
+      - text: The slot where the processor is fitted on the motherboard
+        why: |
+          That is the CPU socket, not a peripheral port.
+    explanation: |
+      Port = socket for a peripheral, where data and signals pass in and out.
+
+  - id: hdmi-vs-vga
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.6"]
+    prompt: |
+      A student connects a monitor using VGA and hears no sound through it. What is the
+      correct explanation?
+    options:
+      - text: VGA carries only an analogue video signal, so audio must use a separate connection
+        correct: true
+        why: |
+          VGA is analogue video only. HDMI is the one that carries digital video and audio
+          together.
+      - text: VGA is digital but the driver was missing
+        why: |
+          VGA is analogue by design; a driver would not add audio to its video-only signal.
+      - text: HDMI cables are the only cables that carry data at all
+        why: |
+          VGA does carry data — video. It simply carries no audio.
+      - text: The monitor's speakers were switched off in Windows
+        why: |
+          Even with the speakers on, a VGA connection has no audio signal to play.
+    explanation: |
+      VGA = analogue video, no audio. HDMI = digital video + audio.
+
+  - id: usb-features
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.6"]
+    prompt: |
+      USB stands for Universal Serial {{1}}. It can supply {{2}} to a small device, and a
+      device may be plugged in while the computer is running because it supports
+      {{3}}.
+    blanks:
+      - accept: ["bus"]
+      - accept: ["power", "electricity", "electric power"]
+      - accept: ["hot-swapping", "hot swapping", "hot-plug", "hot plugging", "hotplug", "hot-plugging"]
+    explanation: |
+      Universal Serial Bus: one connector family, power for the device, and safe
+      hot-swapping.
+
+  - id: which-port
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.6"]
+    prompt: |
+      Which port should be used to send **digital video and digital audio** to a TV in a
+      single cable?
+    options:
+      - text: HDMI
+        correct: true
+        why: |
+          HDMI carries digital video and digital audio together in one cable.
+      - text: VGA
+        why: |
+          VGA carries analogue video only — no audio at all.
+      - text: USB
+        why: |
+          USB carries general data (and power). It is not the standard connection for
+          sending video and audio to a display.
+      - text: The address bus
+        why: |
+          That is a set of wires inside the computer, not a port on the case.
+    explanation: |
+      Digital video + audio in one cable = HDMI.
+
+  - id: explain-vga-limit
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.6"]
+    prompt: |
+      Explain two ways in which an HDMI connection is more suitable than VGA for connecting
+      a modern monitor.
+    model: |
+      First, HDMI carries a **digital** signal, so the video arrives exactly as the
+      graphics card produced it with no conversion, while VGA carries an **analogue**
+      signal that can lose quality. Second, HDMI carries **audio as well as video** in the
+      same cable, whereas VGA carries video only, so a VGA setup needs a separate cable and
+      speakers for sound.
+    keyPoints:
+      - HDMI is digital, VGA is analogue
+      - A digital signal avoids quality-losing conversion
+      - HDMI carries audio and video together
+      - VGA needs a separate connection for sound
+    explanation: |
+      Two points: **digital vs analogue** and **audio included**.
