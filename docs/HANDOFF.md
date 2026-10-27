@@ -65,6 +65,7 @@ Rules the user stressed:
   2–5 minute duration is a guideline, never a cap. Short paragraphs, bullets and focused blocks
   govern presentation, not lesson depth. Never cut necessary teaching to fit a screen or save
   tokens; split only when it improves the learning sequence. Optimise wasted effort, not learning.
+- **Fun, engaging lesson writing.** Lessons must be genuinely fun, conversational and easy to read. Use accessible explanations, short paragraphs, clear structure, useful examples, relatable analogies and appropriate humour. Avoid dry textbook-style exposition and dense walls of text. Fun should support learning, not distract from it; never remove necessary reasoning or syllabus content to make a lesson feel lighter.
 - **Accessible teaching, not missing rigour.** Avoid notation that is genuinely unnecessary for
   a first-timer, but explain every symbol and method needed for the syllabus. The chain rule can
   start with "power down, box stays the same, then multiply by the derivative of the box" before
