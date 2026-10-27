@@ -17,9 +17,11 @@ user's full specs live in the docs it links to. Read those docs **by section** (
 ## 1. What Fathom is
 
 A free learning site for Cambridge International AS & A Level: 9709 Maths, 9618 Computer
-Science, 9702 Physics and 9701 Chemistry. Each lesson is one short concept (2–5 min) with
-recall questions, worked examples and SVG diagrams. Spaced review, XP, levels and badges are
-included. It is built for students with ADHD: short chunks, instant feedback, no shame.
+Science, 9702 Physics and 9701 Chemistry. Each lesson teaches one concept with recall
+questions, worked examples and SVG diagrams; its length is determined by what students need
+to understand and apply it. The 2–5 minute target is guidance, never a cap. Spaced review, XP,
+levels and badges are included. It is built for students with ADHD: clear structure, instant
+feedback, no shame. Readability must never mean cutting necessary teaching.
 
 - Live: https://fathom-steel-ten.vercel.app. Every push to `main` deploys to production.
 - Repo: https://github.com/MESUMISGREAT/Fathom (branch `main`).
