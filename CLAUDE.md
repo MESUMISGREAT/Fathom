@@ -123,6 +123,20 @@ Points work the same way:
 - Sessions store only SHA-256 hashes of their tokens, and passwords are hashed with scrypt.
 - `INSECURE_COOKIES=1` lets e2e tests run over plain http.
 
+## Lesson-writing philosophy: understanding before brevity
+
+**Teach for understanding, not for the shortest lesson or lowest token count.** Fathom is for students who may be encountering a concept for the first time. A longer lesson that enables a beginner to solve questions independently is better than a short lesson that leaves them confused. Never remove necessary teaching to hit a word count, duration, or token target.
+
+- **Start from the student's level.** Define unfamiliar terms, symbols, variables, notation and prerequisites before relying on them. Do not assume students know what an expert considers obvious.
+- **Show the reasoning.** Explain both what to do and why. Include necessary intermediate steps, explain why a formula or method applies, and state important conditions, limits and exceptions. Never skip a step merely to make the lesson look concise.
+- **Build understanding progressively.** Where useful, move from a concrete example to plain-language intuition, an analogy (including where it stops being accurate), a visual or diagram, a fully explained worked example, and then the general rule. Add another example when it addresses a genuinely different difficulty.
+- **Format for readability, not omission.** Use short paragraphs, headings, bullets, numbered steps, tables, diagrams and well-separated blocks. Short paragraphs must not mean missing explanations. Longer lessons are acceptable when the topic needs them; split a large topic into a clear sequence only when that preserves all required learning.
+- **Keep academic precision.** Use Cambridge syllabus terminology and definitions accurately. Distinguish formal definitions from intuitive explanations; include units, conditions and required notation. Keep content aligned to the applicable syllabus version and objectives. Label enrichment that is beyond the syllabus. Write original material; never copy past-paper questions or source text.
+- **Optimise effort, not teaching.** Save tokens by avoiding repeated instructions, redundant examples, unnecessary research, duplicate explanations and needless rewrites. Do not save tokens by omitting intermediate reasoning, making language more advanced, assuming prior knowledge, reducing syllabus coverage or weakening accuracy/review checks.
+- **Before accepting a lesson, check:** Could a beginner follow every step? Are all new terms and symbols explained before use? Does each worked solution explain why its steps work? Is any reasoning skipped as “obvious”? Can the student apply the idea independently? Remove repetition, but restore any explanation needed for understanding.
+
+The usual 2–5 minute lesson target is a guideline, not a hard limit. Understanding and syllabus coverage take priority. Follow `docs/CONTENT_GUIDE.md` and the lesson templates for the detailed content contract; run the required validation and independent review. Never mark content `human-reviewed` unless a teacher actually reviewed it.
+
 ## Rules for this repo
 
 - **Lessons:** only lessons with `provenance.status: ai-checked` (independently AI-reviewed)
