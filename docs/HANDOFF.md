@@ -193,10 +193,10 @@ changes alongside lessons:
   include draft diagrams) and untracked draft lessons are expected in `git status`.
   `publish.sh` handles both.
 
-## 5. Current state (24 Oct 2026, third chat)
+## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **207 reviewed lessons, 1246 questions** (9709: 68, 9618: 59, 9702: 42, 9701: 38).
-  All are live. Tests: 166 vitest and 25 Playwright e2e.
+- On `main`: **279 reviewed lessons, 1620 questions** (9709: 86, 9618: 75, 9702: 57, 9701: 61).
+  All are live. Latest publish: 9618 4.1 CPU architecture, 27 Oct (a8198e7).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -214,10 +214,32 @@ changes alongside lessons:
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
 - Queue: 14 published, 140 todo.
-- **START HERE** (updated 24 Oct, 19:20 UTC). `main` holds only reviewed work; drafts are
-  only on `wip-snapshot`.
-  1. In a fresh container, run `bash scripts/lessons/restore-drafts.sh` to bring the drafts
-     back, then `npm run diagrams:gen`.
+- **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
+  are only on `wip-snapshot`.
+  - **9618 4.1 CPU architecture is published** (27 Oct, a8198e7): 10 lessons, 52 questions,
+    10 diagrams plus the shared `src/components/diagrams/9618/cpu-architecture-kit.tsx`
+    helper. Objectives 4.1.1–4.1.8 are all covered (lesson and question); `content:check` is
+    clean; `tsc` and the diagram registry/notation tests pass; every diagram was rendered and
+    looked at in light and dark.
+    - The review was a second, adversarial pass by the **same agent** — that cloud chat had
+      no separate reviewer model. Run a reviewer over these 10 files if independent review
+      is required.
+    - Rendering diagrams in a fresh cloud VM needs extra setup: `npx playwright install
+      chromium`, extract `fonts-dejavu-core` and the missing X11/NSS/Cairo libraries from
+      Ubuntu packages to a local directory, set `LD_LIBRARY_PATH` to it, and point
+      `CHROMIUM_PATH` at a wrapper that adds `--no-sandbox`. A VM with no fonts renders every
+      label invisibly (shapes only).
+  - **Queue order** (`node scripts/lessons/status.mjs`): 9702 5.1, then 9701 4.1+4.2,
+    9709 2.6, 9618 4.2+4.3, 9702 5.2, 9701 5.1, …
+  - `scripts/lessons/templates.mjs` was repaired on 27 Oct: the writer prompt template had
+    unescaped backticks inside a template literal, so the module no longer parsed and
+    `prompts.mjs` failed. Keep `\`minutes\`` and `\`objectives\`` escaped.
+  - Leftovers in the cloud worktree are expected and ignored by `publish.sh`: regenerated
+    `src/components/diagrams/*/index.ts`, the unreferenced draft
+    `src/components/diagrams/9702/turning-effects-toppling.tsx`, and the restored drafts.
+  1. Older round (24 Oct), kept for reference: in a fresh container, run
+     `bash scripts/lessons/restore-drafts.sh` to bring the drafts back, then
+     `npm run diagrams:gen`.
   2. **9709 1.8 Integration: published 24 Oct** (ef055f1, reviewed; marker tests 166/166).
   3. **9618 3.1 Computers and their components: published 24 Oct** (5960250, reviewed).
   4. **Halted by the user on 24 Oct at 19:20 UTC ("we will continue next week").** No agents
