@@ -284,6 +284,12 @@ changes alongside lessons:
     gitignored. Rendering in a fresh VM also needs `FONTCONFIG_PATH` pointing at an
     extracted `fontconfig-config`'s `etc/fonts` — fonts alone still render every label
     invisibly.
+  - **Running the e2e suite in this VM:** set the same `LD_LIBRARY_PATH` and
+    `FONTCONFIG_PATH` as for rendering, plus `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1`
+    (without it all 25 tests fail at browser launch with "Host system is missing
+    dependencies"). With them, `npx playwright test` passes 25/25 in about 1.2 minutes; it
+    serves on :3210 with `tests/fixtures/content` and its own throwaway DB in
+    `data/e2e-pglite`, so the real `data/pglite` stays clean.
   - **9618 4.1 CPU architecture is published** (27 Oct, a8198e7): 10 lessons, 52 questions,
     10 diagrams plus the shared `src/components/diagrams/9618/cpu-architecture-kit.tsx`
     helper. The review there was also a same-agent second pass — run a reviewer over those 10
