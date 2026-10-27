@@ -1,0 +1,247 @@
+id: p2-numerical-solution-using-iteration
+subject: "9709"
+topic: "2.6"
+title: Iterating to a root
+summary: Use a given iteration formula repeatedly until the values agree to the required number of decimal places, then state the root to that accuracy.
+order: 3
+minutes: 7
+kind: core
+objectives: ["2.6.3"]
+prerequisites: [p2-numerical-solution-approximations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 2.6 outcome "use a given iteration … to determine a root to a
+    prescribed degree of accuracy". All iteration tables and answer keys computed in Python;
+    questions are original.
+
+    Reviewed line by line on 27 Oct 2026 in a second, adversarial AI pass (same
+    agent as the writer, not a human teacher): every algebraic step checked, every
+    iteration table and answer key recomputed in Python, syllabus coverage confirmed
+    against 9709 topic 2.6, and all three diagrams rendered and inspected in light
+    and dark.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can take a given iteration $x_{n+1} = F(x_n)$, run it from a starting value, stop at the right moment, and state the root **correct to the accuracy the question asks for**.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      A typical question gives you an equation, tells you a root is in some interval, supplies the iteration, and asks for the answer to a set number of decimal places:
+
+      > The equation $x^2 - x - 3 = 0$ has a root between $2$ and $3$. Use the iteration $x_{n+1} = \sqrt{x_n + 3}$ with $x_1 = 2$ to find the root correct to $3$ decimal places.
+
+      Notice what is given: the starting value, the formula, and the accuracy. You are not inventing anything. You are running the machine and reading off the answer.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. **Set up a table** with a row for $n$ and a row for $x_n$.
+      2. **Put $x_1$ into the formula** to get $x_2$, keeping at least one more decimal place than the answer needs (so 4 d.p. or more when the answer is 3 d.p.).
+      3. **Feed each answer forward**: $x_3$ comes from $x_2$, $x_4$ from $x_3$, and so on.
+      4. **Stop when two successive values round to the same required accuracy.** If $x_6$ and $x_7$ both give $2.303$ to 3 d.p., the root is $2.303$ to 3 d.p.
+      5. **Write the answer** with its accuracy: "the root is $2.303$ (3 d.p.)".
+
+      **The forgotten step:** do not round as you go. If you round $2.236068$ to $2.24$ and feed that in, the error grows and your final digits are wrong.
+
+      **Why the stopping rule works:** once two consecutive values agree to 3 d.p., the next values change by less than $0.001$, so the root is pinned down to that accuracy. Stopping earlier (when consecutive values still differ in the third decimal) is the classic lost mark.
+
+  - type: example
+    title: "Example 1: a square-root iteration"
+    problem: |-
+      The equation $x^2 - x - 3 = 0$ has a root between $2$ and $3$. Use $x_{n+1} = \sqrt{x_n + 3}$ with $x_1 = 2$ to find the root correct to $3$ decimal places.
+    steps:
+      - |-
+        Set out the table, keeping 6 decimal places while working.
+
+        | $n$ | $1$ | $2$ | $3$ | $4$ | $5$ | $6$ | $7$ |
+        | --- | --- | --- | --- | --- | --- | --- | --- |
+        | $x_n$ | $2$ | $2.236068$ | $2.288246$ | $2.299619$ | $2.302090$ | $2.302627$ | $2.302743$ |
+      - |-
+        Check the first step by hand: $x_2 = \sqrt{2 + 3} = \sqrt{5} = 2.236068$.
+      - |-
+        Each value is made from the one before: $x_3 = \sqrt{2.236068 + 3} = \sqrt{5.236068} = 2.288246$.
+      - |-
+        Now round to 3 d.p.: $x_6 = 2.303$ and $x_7 = 2.303$. Two in a row agree, so stop.
+      - |-
+        Confirm it is sensible: $\sqrt{2} \approx 1.414$ and $\sqrt{3} \approx 1.732$, so the root should be between $2$ and $3$, as the question said.
+    answer: |-
+      The root is $2.303$ (3 d.p.).
+
+  - type: check
+    questions: [iter-second, iter-third]
+
+  - type: example
+    title: "Example 2: an iteration with a fraction"
+    problem: |-
+      Use the iteration $x_{n+1} = \dfrac{2x_n + 3}{x_n + 2}$ with $x_1 = 1.5$ to find the root of $x^2 = 3$ correct to $3$ decimal places.
+    steps:
+      - |-
+        $x_2 = \dfrac{2(1.5) + 3}{1.5 + 2} = \dfrac{6}{3.5} = 1.714286$.
+      - |-
+        $x_3 = \dfrac{2(1.714286) + 3}{1.714286 + 2} = \dfrac{6.428572}{3.714286} = 1.730769$.
+      - |-
+        $x_4 = \dfrac{6.461538}{3.730769} = 1.731959$.
+      - |-
+        $x_5 = \dfrac{6.463918}{3.731959} = 1.732044$ and $x_6 = 1.732050$.
+      - |-
+        To 3 d.p., $x_4 = 1.732$, $x_5 = 1.732$ and $x_6 = 1.732$: the values have settled.
+      - |-
+        Sanity check: $\sqrt{3} = 1.732051\ldots$, so $1.732$ is right.
+    answer: |-
+      The root is $1.732$ (3 d.p.).
+
+  - type: intuition
+    title: Why the accuracy rule is "two in a row"
+    body: |-
+      Imagine the true root is $2.302776$. Round each approximation to 3 d.p.:
+
+      - $2.302090 \to 2.302$ (wrong in the last place)
+      - $2.302627 \to 2.303$
+      - $2.302743 \to 2.303$
+
+      The first value that rounds correctly could be a fluke if the sequence were still moving fast. Once **two consecutive** values round to the same 3 d.p., the sequence is changing by less than $0.001$ per step, so that rounded value is stable. That is why the rule asks for two, not one.
+
+  - type: check
+    questions: [iter-stop, iter-fraction]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Stop as soon as $x_3$ looks close.
+        right: |-
+          Keep going until two consecutive values agree at the accuracy asked for. "Looks close" is not a rule and loses the accuracy mark.
+      - wrong: |-
+          Round each value to 3 d.p. before feeding it back in.
+        right: |-
+          Keep 4–6 d.p. while calculating, and round only the final answer. Early rounding pushes the error forward.
+      - wrong: |-
+          Give the answer as $2.3$ because the question said "3 decimal places" and $2.3$ is close.
+        right: |-
+          $2.3$ is 1 d.p. Write $2.303$, with exactly the decimal places requested.
+      - wrong: |-
+          The root is $x_7$ because that is the last number in the table.
+        right: |-
+          The root is the value the sequence has settled on, quoted to the required accuracy — $2.303$, not $2.302743$ and not "$x_7$".
+
+  - type: exam
+    body: |-
+      - Show the table of values; the method marks live in the substitutions.
+      - Write the stopping sentence: *"$x_6$ and $x_7$ both equal $2.303$ to 3 d.p., so the root is $2.303$."*
+      - Quote the accuracy every time: "$2.303$ (3 d.p.)".
+      - If the question gives an interval, use it as a sanity check: an answer outside the interval means an arithmetic slip.
+      - A common variant asks for the root "correct to 3 significant figures" — count significant figures, not decimal places.
+
+  - type: check
+    questions: [iter-root-3dp, iter-why-keep-dp]
+
+  - type: takeaways
+    items:
+      - |-
+        Run the iteration by feeding each answer into the formula; keep more decimal places than the answer needs.
+      - |-
+        Stop when two successive values round to the same required accuracy.
+      - |-
+        State the root to the accuracy asked for, with the accuracy written after it.
+      - |-
+        Use the given interval to check the answer is sensible.
+
+questions:
+  - id: iter-second
+    format: numeric
+    difficulty: 1
+    objectives: ["2.6.3"]
+    prompt: |-
+      For $x_{n+1} = \sqrt{x_n + 3}$ with $x_1 = 2$, find $x_2$ correct to 4 decimal places.
+    fields:
+      - label: "x₂ ="
+        answer: 2.2361
+        tolerance: { rel: 0.002 }
+        sigFigs: 5
+    explanation: |-
+      $x_2 = \sqrt{2 + 3} = \sqrt{5} = 2.2360679\ldots = 2.2361$ to 4 d.p.
+
+  - id: iter-third
+    format: numeric
+    difficulty: 2
+    objectives: ["2.6.3"]
+    prompt: |-
+      Continuing $x_{n+1} = \sqrt{x_n + 3}$ from $x_2 = 2.2361$, find $x_3$ correct to 4 decimal places.
+    fields:
+      - label: "x₃ ="
+        answer: 2.2882
+        tolerance: { rel: 0.002 }
+        sigFigs: 5
+    explanation: |-
+      $x_3 = \sqrt{2.2361 + 3} = \sqrt{5.2361} = 2.28825\ldots = 2.2882$ to 4 d.p. (using the unrounded $x_2$ gives $2.288246$, which rounds the same way).
+
+  - id: iter-stop
+    format: mcq
+    difficulty: 1
+    objectives: ["2.6.3"]
+    prompt: |-
+      You need a root correct to $3$ decimal places. When may you stop iterating?
+    explanation: |-
+      The root is pinned to 3 d.p. once the sequence has settled to that accuracy, which the rule detects as two consecutive values rounding to the same 3 d.p. value.
+    options:
+      - text: When two consecutive values round to the same value at 3 d.p.
+        correct: true
+        why: |-
+          Two in a row means the sequence is changing by less than $0.001$ per step, so the 3 d.p. value is stable.
+      - text: When one value has 3 decimal places.
+        why: |-
+          Every value can be written to 3 d.p. What matters is that the sequence has stopped changing at that accuracy.
+      - text: After exactly seven iterations.
+        why: |-
+          The number of steps depends on the iteration and the starting value. Use the accuracy rule, not a fixed count.
+      - text: When the value first looks the same as the previous one to 1 d.p.
+        why: |-
+          1 d.p. agreement is far too coarse for a 3 d.p. answer; keep going until the third decimal place stops moving.
+
+  - id: iter-fraction
+    format: numeric
+    difficulty: 2
+    objectives: ["2.6.3"]
+    prompt: |-
+      For $x_{n+1} = \dfrac{2x_n + 3}{x_n + 2}$ with $x_1 = 1.5$, find $x_2$ correct to 4 decimal places.
+    fields:
+      - label: "x₂ ="
+        answer: 1.7143
+        tolerance: { rel: 0.002 }
+        sigFigs: 5
+    explanation: |-
+      $x_2 = \dfrac{2(1.5) + 3}{1.5 + 2} = \dfrac{6}{3.5} = 1.714285\ldots = 1.7143$ to 4 d.p.
+
+  - id: iter-root-3dp
+    format: numeric
+    difficulty: 2
+    objectives: ["2.6.3"]
+    prompt: |-
+      The iteration $x_{n+1} = \sqrt{x_n + 3}$, started at $x_1 = 2$, settles on a root of $x^2 - x - 3 = 0$. Use it to find the root correct to $3$ decimal places.
+    fields:
+      - label: "root ="
+        answer: 2.303
+        tolerance: { rel: 0.0005 }
+        sigFigs: 4
+    explanation: |-
+      The values are $2,\ 2.2361,\ 2.2882,\ 2.2996,\ 2.3021,\ 2.3026,\ 2.3027,\ldots$; $x_6$ and $x_7$ both round to $2.303$, so the root is $2.303$ (3 d.p.). The exact root is $\tfrac{1 + \sqrt{13}}{2} = 2.302776\ldots$.
+
+  - id: iter-why-keep-dp
+    format: text
+    difficulty: 2
+    objectives: ["2.6.3"]
+    prompt: |-
+      Why should you keep extra decimal places while iterating, instead of rounding each value to the accuracy of the final answer?
+    accept:
+      - rounding each value makes the error grow, so the final answer can be wrong in the last place
+      - the rounded value is not the real value, so feeding it back in changes the sequence and can give the wrong final digits
+      - the error is carried forward from one step to the next, so rounding early makes the answer less accurate
+      - because each value is used to calculate the next, so rounding it introduces an error that accumulates
+      - rounding early loses information, and the error builds up over the iterations
+    model: |-
+      Each value is fed into the next step. Rounding it first introduces an error, and that error is carried forward and can grow, so the final decimal places can be wrong. Keep 4–6 d.p. while working and round only the answer.
+    explanation: |-
+      An iteration is a chain: an error in one link changes every later link. That is why the working values are kept to more places than the final answer.

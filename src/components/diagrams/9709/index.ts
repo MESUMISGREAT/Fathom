@@ -75,6 +75,9 @@ import P2IntegrationTrapeziumRule from './p2-integration-trapezium-rule';
 import P2LogarithmicExponentialGraphs from './p2-logarithmic-exponential-graphs';
 import P2LogarithmicExponentialLinearising from './p2-logarithmic-exponential-linearising';
 import P2LogarithmicExponentialLogLaws from './p2-logarithmic-exponential-log-laws';
+import P2NumericalSolutionDivergence from './p2-numerical-solution-divergence';
+import P2NumericalSolutionSignChange from './p2-numerical-solution-sign-change';
+import P2NumericalSolutionStaircase from './p2-numerical-solution-staircase';
 import P2TrigonometryRForm from './p2-trigonometry-r-form';
 import P2TrigonometryReciprocalGraphs from './p2-trigonometry-reciprocal-graphs';
 import QuadraticInequality from './quadratic-inequality';
@@ -164,6 +167,9 @@ export const diagrams: DiagramRegistry = {
   'p2-logarithmic-exponential-graphs': P2LogarithmicExponentialGraphs,
   'p2-logarithmic-exponential-linearising': P2LogarithmicExponentialLinearising,
   'p2-logarithmic-exponential-log-laws': P2LogarithmicExponentialLogLaws,
+  'p2-numerical-solution-divergence': P2NumericalSolutionDivergence,
+  'p2-numerical-solution-sign-change': P2NumericalSolutionSignChange,
+  'p2-numerical-solution-staircase': P2NumericalSolutionStaircase,
   'p2-trigonometry-r-form': P2TrigonometryRForm,
   'p2-trigonometry-reciprocal-graphs': P2TrigonometryReciprocalGraphs,
   'quadratic-inequality': QuadraticInequality,
