@@ -260,7 +260,20 @@ Every lesson records where it came from and how it has been checked:
 AI-drafted content is never labelled as teacher-reviewed. Review happens in code review
 (pull requests); the reviewer updates `provenance` in the same change.
 
-## 6. Copyright
+## 6. Completion cycle: write, review, publish, repeat
+
+Lesson creation is not complete when a writer finishes a draft or when a batch passes review.
+For the full syllabus queue, repeat this cycle until every in-scope unit is published:
+
+1. **Write or complete** lessons for every objective, including missing objectives in partial units.
+2. **Validate and independently review** every lesson, question, answer key and diagram. Fix findings and re-run the required checks until clean.
+3. **Publish** only eligible `ai-checked` content using the repository's publishing workflow.
+4. **Verify deployment** and confirm the published content is live.
+5. **Update status and snapshot** remaining drafts, then inspect the queue and repeat.
+
+Use `node scripts/lessons/status.mjs` as the source of truth. Completion means every in-scope unit is `published`, with no `todo`, `partial`, `drafted` or `reviewed` units left. A finished batch or subject is not proof that the whole queue is done. Never bypass independent review, validation, publication checks or honest provenance to finish faster. If progress is blocked by usage limits or external dependencies, record the exact remaining states and resume from there.
+
+## 7. Copyright
 
 * Do not copy Cambridge past-paper questions, mark schemes, examiner reports or textbook
   text. Write original questions that test the same skills.
