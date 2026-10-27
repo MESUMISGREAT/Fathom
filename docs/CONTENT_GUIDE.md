@@ -63,16 +63,104 @@ Rules:
 
 ### Teaching philosophy: understanding before brevity
 
-Fathom is for students who may be meeting a concept for the first time. **A longer lesson that enables a beginner to solve questions independently is better than a short lesson that leaves them confused.** Never sacrifice understanding to hit a word count, token budget, reading-time target or block limit.
+**Core principle:** It is better to write a longer lesson that genuinely teaches a beginner than a shorter lesson that leaves them confused. Never sacrifice understanding to reduce tokens, word count, lesson duration or the number of explanation blocks. Aim for the clearest, most complete explanation without unnecessary repetition.
 
-- **Teach from zero.** Define unfamiliar terminology, symbols, variables and notation before relying on them. Explain prerequisites when they are genuinely needed. Do not assume students know what an expert considers obvious.
-- **Show the reasoning.** Explain both what to do and why it works. Include the intermediate steps a beginner needs, why a formula or method applies, and the conditions, limits and exceptions. Do not jump from the question to the answer or skip algebraic, scientific or programming steps without explanation.
-- **Build intuition progressively.** Where useful, begin with a concrete example, explain the idea in plain language, use an analogy and clarify where it stops being accurate, then show a diagram or table, a fully worked example, and the general rule. Add another example when it teaches a genuinely different case or prevents a likely misconception.
-- **Format long explanations for scanning.** Use short paragraphs, headings, bullets, numbered steps, tables, diagrams and separate blocks. Short paragraphs are a formatting rule, not permission to delete reasoning. Avoid walls of text without turning a full explanation into fragments that lack connections.
-- **Keep every required objective teachable and testable.** Do not hide required syllabus content in enrichment or remove important details to keep a lesson short. Use progressive disclosure only when it helps the student, and keep examinable content accessible in the core lesson.
-- **Preserve academic precision.** Use Cambridge terminology and definitions accurately. Separate formal definitions from intuitive explanations. Include units, conditions and required notation. Keep content aligned with the applicable syllabus version; label beyond-syllabus enrichment clearly. Write original material.
-- **Optimise wasted effort, not teaching.** Save tokens by avoiding redundant examples, repeated explanations, duplicated research, unnecessary file reads and needless rewrites. Never save tokens by omitting necessary steps, making explanations more advanced, assuming prior knowledge, reducing coverage or weakening verification.
-- **Final beginner test:** Can a student who has never learned this follow every step? Are terms and symbols explained before use? Does each worked example explain why the steps work? Is any reasoning skipped as “obvious”? Can the student attempt a new question independently? Remove repetition, but restore any missing explanation.
+Assume the student is encountering the concept for the first time. They may know syllabus prerequisites, but do not assume they understand the new concept, its notation, its reasoning or steps an expert considers obvious.
+
+#### 1. Teach from zero
+
+- Introduce unfamiliar terminology and notation before relying on them.
+- Explain what each symbol represents, what it means and why it is being used.
+- Break complicated equations, expressions and processes into manageable steps. Never jump from the starting expression to the final answer without explaining necessary intermediate reasoning.
+- Explain both **what** to do and **why** it works.
+- Briefly explain prerequisites when the student cannot reasonably follow the current step without them.
+- Do not use an unexplained formula to explain another unexplained formula.
+- State when a rule applies, when it does not, and which conditions must hold.
+
+#### 2. Prefer complete explanations over artificial concision
+
+- Do not impose arbitrary word limits or remove reasoning to fit a preferred lesson length.
+- A lesson may exceed the typical 2–5 minute reading time when needed. Split it if that improves learning, never merely to enforce brevity.
+- Add examples, intermediate steps, comparisons, diagrams, tables or alternative explanations when they materially improve understanding.
+- Do not compress several unfamiliar ideas into one sentence just because it is technically correct.
+- Avoid “obvious”, “simply”, “clearly” or “just do this” when those words conceal reasoning the student needs.
+- Concise writing is not incomplete teaching. Include every necessary step even if the lesson becomes longer.
+
+#### 3. Make difficult ideas accessible
+
+Use whichever techniques suit the concept; this is not a mandatory template:
+
+1. **Concrete example:** Start with an easy case using familiar numbers or a relatable situation.
+2. **Plain-language intuition:** Explain what is happening and why it makes sense before adding unnecessary formalism.
+3. **Analogy:** Compare the concept with something familiar and explain where the analogy stops being accurate.
+4. **Visual representation:** Use a diagram, table, labelled equation or sequence of boxes when it helps.
+5. **Step-by-step method:** Work through the example without skipping algebraic, mathematical, scientific or logical steps.
+6. **General rule:** Introduce the formal formula, terminology or method once the student has some intuition.
+7. **Independent application:** Ask the student to solve a new question without copying the worked example, then explain the answer's reasoning.
+
+#### 4. Never assume unfamiliar notation is self-explanatory
+
+- Identify unfamiliar variables, constants, subscripts, superscripts, operators and functions.
+- Explain how an expression is constructed and how its parts relate.
+- Show intermediate transformations and explain why each is valid.
+- Explain why a formula or method applies before substituting values.
+- Introduce multiple unfamiliar variables or terms separately before combining them.
+- Explain rearranging, substitution, differentiation, integration, resolving, balancing and other manipulations at the level required by the stated prerequisites.
+- Do not skip steps merely because an expert would perform them mentally.
+- Apply the same principle to pseudocode, programming logic, circuit diagrams, chemical mechanisms, physical models and scientific terminology.
+
+#### 5. Use formatting to make depth manageable
+
+**Longer explanations are acceptable. Walls of text are not.**
+
+- Keep paragraphs short, but never delete information just to shorten a paragraph. Divide it into multiple paragraphs or blocks.
+- Use numbered steps for procedures and worked examples.
+- Use tables to compare concepts, symbols, cases and common mistakes.
+- Use bullets for parallel ideas, assumptions, conditions and key points.
+- Use labelled diagrams and visual breakdowns when they reduce cognitive load.
+- Place a recall question immediately after the material it tests.
+- Use progressive disclosure for optional detail, but never hide essential syllabus content in an optional section.
+- Give each block one clear purpose and use as many blocks as necessary.
+
+#### 6. Use examples that reveal the reasoning
+
+- Start with the simplest useful example before increasing complexity.
+- Explain the reasoning behind each important step, not just the operations performed.
+- Where useful, show a common incorrect approach, explain why it fails and demonstrate the correct method.
+- Use another example when the first does not establish independent application.
+- Avoid repetitive examples that test exactly the same skill without adding insight.
+- Ensure examples and practice questions cover syllabus objectives and relevant edge cases.
+
+#### 7. Preserve academic rigour
+
+- Use precise Cambridge terminology and mark-scheme-worthy definitions.
+- Do not replace technical definitions with loose analogies; explain intuition separately from the formal definition.
+- Preserve examinable conditions, exceptions, units, assumptions and syllabus guidance.
+- Keep enrichment clearly labelled as not examinable.
+- Write original examples and questions; never copy past papers or mark schemes.
+- Verify every worked calculation and answer key.
+
+#### 8. Optimise tokens without reducing learning quality
+
+Reduce wasted tokens by avoiding repeated instructions, redundant research, duplicated explanations, unnecessary rewrites and repeated tool calls.
+
+Do **not** reduce tokens by omitting essential explanations, skipping intermediate steps, removing helpful examples, making language more advanced, assuming unknown prior knowledge, reducing coverage or weakening verification.
+
+**Optimise for minimum wasted effort per student who successfully learns the concept, not minimum tokens per lesson.** When choosing between a shorter incomplete explanation and a longer explanation that enables a beginner to understand and apply the concept, choose the longer explanation.
+
+#### Final self-check
+
+Before submitting a lesson, ask:
+
+- Could a student who knows only the stated prerequisites follow every step?
+- Are all new terms, symbols and formulas explained before use?
+- Does every worked example explain why the method works, not merely what to write?
+- Have any steps been skipped because they seemed obvious to the author?
+- Would an analogy, diagram, comparison or additional example resolve a likely confusion?
+- Can the student apply the idea independently after the lesson?
+- Is any content genuinely redundant, or is it merely longer than expected?
+
+If a beginner would be confused, improve the teaching before trying to shorten the lesson.
 
 ### Writing style
 
