@@ -125,6 +125,10 @@ Points work the same way:
 - Sessions store only SHA-256 hashes of their tokens, and passwords are hashed with scrypt.
 - `INSECURE_COOKIES=1` lets e2e tests run over plain http.
 
+## Lesson-writing style: fun and easy to read
+
+Lessons must be genuinely fun, engaging, conversational and easy to read. Use accessible explanations, short paragraphs, clear structure, useful examples, relatable analogies and appropriate humour. Avoid dry textbook-style exposition and dense walls of text. Keep the writing accessible without removing necessary reasoning, examples or syllabus content. Fun should support learning, not distract from it. Follow `docs/CONTENT_GUIDE.md` and `scripts/lessons/templates.mjs` for the full writing requirements.
+
 ## Lesson-writing philosophy: understanding before brevity
 
 **Teach for understanding, not for the shortest lesson or lowest token count.** Fathom is for students who may be encountering a concept for the first time. A longer lesson that enables a beginner to solve questions independently is better than a short lesson that leaves them confused. Never remove necessary teaching to hit a word count, duration, or token target.
