@@ -195,8 +195,8 @@ changes alongside lessons:
 
 ## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **279 reviewed lessons, 1620 questions** (9709: 86, 9618: 75, 9702: 57, 9701: 61).
-  All are live. Latest publish: 9618 4.1 CPU architecture, 27 Oct (a8198e7).
+- On `main`: **287 reviewed lessons, 1660 questions** (9709: 86, 9618: 75, 9702: 65, 9701: 61).
+  All are live. Latest publish: 9702 5.1 Work, energy and power, 27 Oct (595af22).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -213,24 +213,41 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 14 published, 140 todo.
+- Queue: 23 published, 131 todo (`node scripts/lessons/status.mjs`).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
+  - **9702 5.1 Work, energy and power is published** (27 Oct, 595af22): 8 lessons
+    (`energy-conservation-*`), 40 original questions, 8 diagrams. Objectives 5.1.1–5.1.7 are
+    each taught by a core lesson and tested by questions (`content:check` clean, `tsc` clean,
+    diagram registry/notation tests pass, all 8 diagrams rendered and inspected in light and
+    dark).
+    - Same caveat as 9618 4.1 below: the review was a second, adversarial pass by the **same
+      agent** (no separate reviewer model in this environment); the provenance notes say so.
+      A reviewer should still be run over `energy-conservation-*` before treating it as final.
+    - The batch was written in one lesson per objective except 5.1.1 (two lessons: work done,
+      then work at an angle and zero-work cases). `\dfrac` is used everywhere; the checker
+      rejects display maths split across lines, so keep each `$$…$$` on one line.
+  - **Publishing in this cloud VM:** plain `git push` has no credentials, so `publish.sh`
+    always ends with "push failed" *after* it has verified and committed (it does not run its
+    final `git reset` on failure). Recover its commit instead of rebuilding it:
+    `git fsck --unreachable --no-reflogs | awk '$2=="commit"{print $3}'`, find the one whose
+    subject is `Add N reviewed lessons`, then `git reset --soft <sha> && git reset -q`,
+    `git commit --amend` (fix the boilerplate message: it claims a *separate* reviewer), and
+    push with the `cloud_git` tool. Docs commits: plain `git commit`, then `cloud_git` again.
+    `snapshot.sh`'s push also fails here; the drafts stay in the worktree.
+  - **Rendering diagrams in a fresh cloud VM:** `npx playwright install chromium`, extract
+    `fonts-dejavu-core` plus the missing X11/NSS/Cairo/fontconfig debs with `dpkg-deb -x`
+    into one directory (this chat used `/tmp/libs/x`), copy the DejaVu TTFs into `$HOME/.fonts`
+    (a VM with no fonts renders every label invisibly), then run with
+    `LD_LIBRARY_PATH=<extract>/usr/lib/x86_64-linux-gnu:<extract>/usr/lib` and
+    `CHROMIUM_PATH` pointing at a wrapper that execs
+    `$HOME/.cache/ms-playwright/chromium-*/chrome-linux/chrome --no-sandbox "$@"`.
+  - **Queue order** (`node scripts/lessons/status.mjs`): 9701 4.1+4.2, then 9709 2.6,
+    9618 4.2+4.3, 9702 5.2, 9701 5.1, 9709 3.1+3.2, …
   - **9618 4.1 CPU architecture is published** (27 Oct, a8198e7): 10 lessons, 52 questions,
     10 diagrams plus the shared `src/components/diagrams/9618/cpu-architecture-kit.tsx`
-    helper. Objectives 4.1.1–4.1.8 are all covered (lesson and question); `content:check` is
-    clean; `tsc` and the diagram registry/notation tests pass; every diagram was rendered and
-    looked at in light and dark.
-    - The review was a second, adversarial pass by the **same agent** — that cloud chat had
-      no separate reviewer model. Run a reviewer over these 10 files if independent review
-      is required.
-    - Rendering diagrams in a fresh cloud VM needs extra setup: `npx playwright install
-      chromium`, extract `fonts-dejavu-core` and the missing X11/NSS/Cairo libraries from
-      Ubuntu packages to a local directory, set `LD_LIBRARY_PATH` to it, and point
-      `CHROMIUM_PATH` at a wrapper that adds `--no-sandbox`. A VM with no fonts renders every
-      label invisibly (shapes only).
-  - **Queue order** (`node scripts/lessons/status.mjs`): 9702 5.1, then 9701 4.1+4.2,
-    9709 2.6, 9618 4.2+4.3, 9702 5.2, 9701 5.1, …
+    helper. The review there was also a same-agent second pass — run a reviewer over those 10
+    files if independent review is required.
   - `scripts/lessons/templates.mjs` was repaired on 27 Oct: the writer prompt template had
     unescaped backticks inside a template literal, so the module no longer parsed and
     `prompts.mjs` failed. Keep `\`minutes\`` and `\`objectives\`` escaped.
