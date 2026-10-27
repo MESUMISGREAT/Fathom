@@ -19,6 +19,7 @@ lesson-writing pipeline (`scripts/lessons/`), the current state and the next ste
 - Read docs by section with its `md_section.py`.
 - Never skip correctness checks.
 - **Teaching quality before brevity:** follow the full "Teaching philosophy: understanding before brevity" section in `docs/CONTENT_GUIDE.md`. Readability rules control formatting, never teaching depth; longer lessons are fine when needed.
+- **Finish the whole lesson queue:** follow `docs/HANDOFF.md` and keep cycling through writing, independent review, fixes/revalidation, publishing and deployment verification until every in-scope unit is `published`. Recheck `node scripts/lessons/status.mjs` after each batch; never stop or claim completion after one batch. If blocked, report the remaining states.
 
 ## Commands
 
