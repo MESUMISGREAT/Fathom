@@ -98,6 +98,10 @@ python scripts/md_section.py docs/guide.md --headings
 
 When writing or reviewing lessons, token efficiency must never come at the expense of student understanding. Explain concepts for a beginner: define unfamiliar notation, include necessary intermediate steps, explain why methods work, and use examples or visual structure where useful. Prefer removing redundant research, repeated instructions and duplicated explanations over cutting teaching. A 2–5 minute lesson is a guideline, not a reason to omit necessary content. Follow the project's `docs/CONTENT_GUIDE.md` and lesson templates.
 
+## Completion loops for multi-batch work
+
+For workflows that require many content units or files, do not stop after the first successful batch. Track the authoritative queue/status, then repeat the appropriate write → review → fix and revalidate → publish → deployment check cycle until the explicit completion condition is met. After each batch, inspect what remains and choose the next work from the current state rather than relying on memory. Never skip review or validation to finish sooner. If a limit or external dependency prevents completion, report the remaining work precisely and resume from the queue later.
+
 ## Agent budget and token control
 
 - Default to a single agent for small tasks, writing, simple edits, and localized bug fixes.
