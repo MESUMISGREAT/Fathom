@@ -56,7 +56,7 @@ Rules the user stressed:
     (`showPoints`), and they are stored on the server.
 - **Write lessons for every syllabus topic.** This is the main remaining job (section 4).
   Keep the queue order: all AS units first, then A2 (the user confirmed this on 23 Oct).
-- **Easy to read for ADHD (user, 23 Oct).** Paragraphs of at most 2 sentences, bullets wherever
+- **Easy to navigate for ADHD (user, 23 Oct).** Paragraphs of at most 2 sentences, bullets wherever
   possible, white space, one idea per block. Start with an easy example the student can check
   another way. This is in `docs/CONTENT_GUIDE.md` ("Writing style") and in the writer and
   reviewer prompts.
