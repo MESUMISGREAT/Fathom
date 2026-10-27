@@ -203,8 +203,9 @@ changes alongside lessons:
 
 ## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **287 reviewed lessons, 1660 questions** (9709: 86, 9618: 75, 9702: 65, 9701: 61).
-  All are live. Latest publish: 9702 5.1 Work, energy and power, 27 Oct (595af22).
+- On `main`: **298 reviewed lessons, 1701 questions** (9709: 86, 9618: 75, 9702: 65,
+  9701: 72). All are live. Latest publish: 9701 4.1+4.2 The gaseous state + Bonding and
+  structure, 27 Oct (d1ab38f).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -221,9 +222,32 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 23 published, 131 todo (`node scripts/lessons/status.mjs`).
+- Queue: 24 published, 130 todo (`node scripts/lessons/status.mjs`).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
+  - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
+    `docs/CONTENT_GUIDE.md` §"Teaching philosophy: understanding before brevity" and both
+    prompt templates in `scripts/lessons/templates.mjs` now forbid shortening a lesson for
+    brevity: assume zero prior knowledge, define notation before use, show every needed
+    intermediate step, explain why a method works, and let a lesson exceed 2–5 minutes when
+    the concept needs it. Read that section before writing or reviewing anything. The 9701
+    batch below was written in the same understanding-first structure before the expansion
+    landed; if you touch it, deepen it, never trim it for length.
+  - **9701 4.1+4.2 The gaseous state + Bonding and structure is published** (27 Oct,
+    d1ab38f): 11 lessons (`gases-*` 4 files, `bonding-structure-*` 7 files), 41 questions,
+    6 diagrams (`chem-gases-molecular-collisions`, `chem-bonding-structure-ionic-lattice`,
+    `-simple-molecular`, `-giant-molecular`, `-giant-metallic`, `-melting-points`). All six
+    objectives 4.1.1–4.1.3, 4.2.1–4.2.3 are taught and tested (`content:check` clean,
+    `tsc` clean, diagram tests pass, all 6 diagrams rendered and inspected in light and
+    dark). The lesson pages are live at `/subjects/chemistry/4-1/...` and `4-2/...`.
+    - Same caveat as below: the review was a second, adversarial pass by the **same agent**,
+      cross-checked against web sources (R, melting points, graphite sublimation and
+      conduction, Cu⁺ model); the provenance notes say so. A reviewer should still be run
+      over `gases-*` and `bonding-structure-*` before treating them as final.
+    - Corrections made during review, keep them: copper's lattice is Cu⁺ cores with one
+      delocalised 4s electron per atom (not Cu²⁺); graphite's delocalised electrons are
+      *within* the layers; diamond and graphite sublime near 3800 °C rather than melt at
+      1 atm.
   - **9702 5.1 Work, energy and power is published** (27 Oct, 595af22): 8 lessons
     (`energy-conservation-*`), 40 original questions, 8 diagrams. Objectives 5.1.1–5.1.7 are
     each taught by a core lesson and tested by questions (`content:check` clean, `tsc` clean,
@@ -250,8 +274,16 @@ changes alongside lessons:
     `LD_LIBRARY_PATH=<extract>/usr/lib/x86_64-linux-gnu:<extract>/usr/lib` and
     `CHROMIUM_PATH` pointing at a wrapper that execs
     `$HOME/.cache/ms-playwright/chromium-*/chrome-linux/chrome --no-sandbox "$@"`.
-  - **Queue order** (`node scripts/lessons/status.mjs`): 9701 4.1+4.2, then 9709 2.6,
+  - **Queue order** (`node scripts/lessons/status.mjs`): **9709 2.6 next**, then
     9618 4.2+4.3, 9702 5.2, 9701 5.1, 9709 3.1+3.2, …
+  - **Tooling fixes (27 Oct, later cloud chat):** `scripts/render-diagram.tsx` dropped the
+    first key whenever `--out` was omitted (it treated `outIdx + 1 = 0` as the value to
+    skip) — fixed; `scripts/lessons/snapshot.sh` now copies the index via
+    `git rev-parse --git-path index` so it also works in cloud worktrees where `.git` is a
+    gitdir file; `.work-logs/` (render scratch: extracted debs, fonts, wrapper) is now
+    gitignored. Rendering in a fresh VM also needs `FONTCONFIG_PATH` pointing at an
+    extracted `fontconfig-config`'s `etc/fonts` — fonts alone still render every label
+    invisibly.
   - **9618 4.1 CPU architecture is published** (27 Oct, a8198e7): 10 lessons, 52 questions,
     10 diagrams plus the shared `src/components/diagrams/9618/cpu-architecture-kit.tsx`
     helper. The review there was also a same-agent second pass — run a reviewer over those 10
