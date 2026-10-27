@@ -18,6 +18,7 @@ lesson-writing pipeline (`scripts/lessons/`), the current state and the next ste
 - Use at most 3 agents, with one review pass.
 - Read docs by section with its `md_section.py`.
 - Never skip correctness checks.
+- **Teaching quality before brevity:** follow the full "Teaching philosophy: understanding before brevity" section in `docs/CONTENT_GUIDE.md`. Readability rules control formatting, never teaching depth; longer lessons are fine when needed.
 
 ## Commands
 
