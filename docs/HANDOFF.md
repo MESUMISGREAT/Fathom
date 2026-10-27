@@ -214,9 +214,9 @@ changes alongside lessons:
 
 ## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **298 reviewed lessons, 1701 questions** (9709: 86, 9618: 75, 9702: 65,
-  9701: 72). All are live. Latest publish: 9701 4.1+4.2 The gaseous state + Bonding and
-  structure, 27 Oct (d1ab38f).
+- On `main`: **302 reviewed lessons, 1725 questions** (9709: 90, 9618: 75, 9702: 65,
+  9701: 72). All are live. Latest publish: 9709 2.6 Numerical solution of equations,
+  27 Oct (3935a04).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -233,7 +233,7 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 24 published, 130 todo (`node scripts/lessons/status.mjs`).
+- Queue: 25 published, 129 todo (`node scripts/lessons/status.mjs`).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
   - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
@@ -285,8 +285,22 @@ changes alongside lessons:
     `LD_LIBRARY_PATH=<extract>/usr/lib/x86_64-linux-gnu:<extract>/usr/lib` and
     `CHROMIUM_PATH` pointing at a wrapper that execs
     `$HOME/.cache/ms-playwright/chromium-*/chrome-linux/chrome --no-sandbox "$@"`.
-  - **Queue order** (`node scripts/lessons/status.mjs`): **9709 2.6 next**, then
-    9618 4.2+4.3, 9702 5.2, 9701 5.1, 9709 3.1+3.2, …
+  - **9709 2.6 Numerical solution of equations is published** (27 Oct, 3935a04): 4 lessons
+    (`p2-numerical-solution-*`: sign change, approximations, using iteration, rearranging),
+    24 questions, 3 diagrams (`math-p2-numerical-solution-sign-change`, `-staircase`,
+    `-divergence`). Objectives 2.6.1–2.6.3 are each taught and tested. Written in the Maths
+    "one question type, one method" structure above. `content:check` clean, `tsc` clean,
+    diagram notation tests pass, all 3 diagrams rendered and inspected in light and dark
+    (label collisions and a clipped footer were fixed). Same review caveat: the review was a
+    second adversarial pass by the **same agent**, and the provenance notes say so.
+  - **Fun-writing rules landed on 27 Oct (e4d3816 + 5 earlier commits) after that batch was
+    written.** CLAUDE.md §"Lesson-writing style: fun and easy to read", CONTENT_GUIDE §6 and
+    HANDOFF §2 now require conversational, genuinely engaging lessons with analogies and
+    appropriate humour. The four `p2-numerical-solution-*` lessons are conversational and
+    analogy-led but predate the rule, so give them a fun/engagement pass when you next touch
+    9709 2.6; write every new lesson in that voice from the start.
+  - **Queue order** (`node scripts/lessons/status.mjs`): **9618 4.2+4.3 next**, then
+    9702 5.2, 9701 5.1, 9709 3.1+3.2, …
   - **Tooling fixes (27 Oct, later cloud chat):** `scripts/render-diagram.tsx` dropped the
     first key whenever `--out` was omitted (it treated `outIdx + 1 = 0` as the value to
     skip) — fixed; `scripts/lessons/snapshot.sh` now copies the index via
