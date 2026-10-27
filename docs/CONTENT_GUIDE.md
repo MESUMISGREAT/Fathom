@@ -34,8 +34,7 @@ against that document. It is not written from memory.
 
 ## 2. Lessons
 
-One lesson teaches **one main concept** in **2–5 minutes**. If it runs longer, split it.
-The validator warns when reading time exceeds `minutes`.
+One lesson teaches **one main concept**. **2–5 minutes is a typical target, not a hard limit.** Split a lesson when doing so creates a clearer learning sequence, not merely to force a short reading time. If a concept needs more explanation for a beginner to understand and apply it, keep the necessary teaching and set `minutes` to a realistic reading time. The validator warns when reading time exceeds `minutes`.
 
 ### Blocks (use what the concept needs, in a sensible order)
 
@@ -61,6 +60,19 @@ Rules:
 * Every question appears in exactly one `check` block.
 * `deeper` is for detail a strong student needs but that would interrupt the main flow
   (an extra derivation, an edge case). Do not hide required content in `enrichment`.
+
+### Teaching philosophy: understanding before brevity
+
+Fathom is for students who may be meeting a concept for the first time. **A longer lesson that enables a beginner to solve questions independently is better than a short lesson that leaves them confused.** Never sacrifice understanding to hit a word count, token budget, reading-time target or block limit.
+
+- **Teach from zero.** Define unfamiliar terminology, symbols, variables and notation before relying on them. Explain prerequisites when they are genuinely needed. Do not assume students know what an expert considers obvious.
+- **Show the reasoning.** Explain both what to do and why it works. Include the intermediate steps a beginner needs, why a formula or method applies, and the conditions, limits and exceptions. Do not jump from the question to the answer or skip algebraic, scientific or programming steps without explanation.
+- **Build intuition progressively.** Where useful, begin with a concrete example, explain the idea in plain language, use an analogy and clarify where it stops being accurate, then show a diagram or table, a fully worked example, and the general rule. Add another example when it teaches a genuinely different case or prevents a likely misconception.
+- **Format long explanations for scanning.** Use short paragraphs, headings, bullets, numbered steps, tables, diagrams and separate blocks. Short paragraphs are a formatting rule, not permission to delete reasoning. Avoid walls of text without turning a full explanation into fragments that lack connections.
+- **Keep every required objective teachable and testable.** Do not hide required syllabus content in enrichment or remove important details to keep a lesson short. Use progressive disclosure only when it helps the student, and keep examinable content accessible in the core lesson.
+- **Preserve academic precision.** Use Cambridge terminology and definitions accurately. Separate formal definitions from intuitive explanations. Include units, conditions and required notation. Keep content aligned with the applicable syllabus version; label beyond-syllabus enrichment clearly. Write original material.
+- **Optimise wasted effort, not teaching.** Save tokens by avoiding redundant examples, repeated explanations, duplicated research, unnecessary file reads and needless rewrites. Never save tokens by omitting necessary steps, making explanations more advanced, assuming prior knowledge, reducing coverage or weakening verification.
+- **Final beginner test:** Can a student who has never learned this follow every step? Are terms and symbols explained before use? Does each worked example explain why the steps work? Is any reasoning skipped as “obvious”? Can the student attempt a new question independently? Remove repetition, but restore any missing explanation.
 
 ### Writing style
 
