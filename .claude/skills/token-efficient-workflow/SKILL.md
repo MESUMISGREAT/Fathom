@@ -94,6 +94,10 @@ python scripts/md_section.py docs/guide.md --headings
 - If a requested change spans multiple areas, create a compact working map: `file → relevant symbol/section → line range`. Keep it updated only when useful.
 - When prior conversation already contains the necessary information, use it instead of re-fetching it.
 
+## Educational-content rule
+
+When writing or reviewing lessons, token efficiency must never come at the expense of student understanding. Explain concepts for a beginner: define unfamiliar notation, include necessary intermediate steps, explain why methods work, and use examples or visual structure where useful. Prefer removing redundant research, repeated instructions and duplicated explanations over cutting teaching. A 2–5 minute lesson is a guideline, not a reason to omit necessary content. Follow the project's `docs/CONTENT_GUIDE.md` and lesson templates.
+
 ## Agent budget and token control
 
 - Default to a single agent for small tasks, writing, simple edits, and localized bug fixes.
