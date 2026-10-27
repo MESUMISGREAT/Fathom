@@ -56,14 +56,20 @@ Rules the user stressed:
     (`showPoints`), and they are stored on the server.
 - **Write lessons for every syllabus topic.** This is the main remaining job (section 4).
   Keep the queue order: all AS units first, then A2 (the user confirmed this on 23 Oct).
-- **Easy to navigate for ADHD (user, 23 Oct).** Paragraphs of at most 2 sentences, bullets wherever
-  possible, white space, one idea per block. Start with an easy example the student can check
-  another way. This is in `docs/CONTENT_GUIDE.md` ("Writing style") and in the writer and
-  reviewer prompts.
-- **Keep the teaching simple (user, 23 Oct).** Don't add notation a first-timer doesn't need.
-  The chain rule is taught as "power down, box stays the same, then multiply by the derivative
-  of the box"; dy/du × du/dx appears only in an optional block. Not every diagram has to be a
-  graph: a rule table (x² → 2x) or numbered steps are often clearer.
+- **Teaching philosophy: understanding before brevity.** The complete rules are in
+  `docs/CONTENT_GUIDE.md` under "Teaching philosophy: understanding before brevity"; the writer
+  and reviewer prompts in `scripts/lessons/templates.mjs` must enforce them. Teach from zero:
+  define unfamiliar terms and notation, explain what to do and why it works, show necessary
+  intermediate steps, use examples and visuals when they improve understanding, preserve
+  Cambridge requirements, and check that a beginner can apply the concept independently. The
+  2–5 minute duration is a guideline, never a cap. Short paragraphs, bullets and focused blocks
+  govern presentation, not lesson depth. Never cut necessary teaching to fit a screen or save
+  tokens; split only when it improves the learning sequence. Optimise wasted effort, not learning.
+- **Accessible teaching, not missing rigour.** Avoid notation that is genuinely unnecessary for
+  a first-timer, but explain every symbol and method needed for the syllabus. The chain rule can
+  start with "power down, box stays the same, then multiply by the derivative of the box" before
+  introducing dy/du × du/dx where it helps understanding. Not every diagram has to be a graph:
+  a rule table (x² → 2x) or numbered steps are often clearer.
 - **Proper maths typesetting (user, 23 Oct).** Real fraction bars and root signs that cover the
   whole expression, never slash fractions like 1 ⁄ (2√u). Diagrams use `MathLabel` / `FracLabel`
   (see "Diagrams" in `docs/CONTENT_GUIDE.md`); `tests/diagram-notation.test.ts` enforces it.
