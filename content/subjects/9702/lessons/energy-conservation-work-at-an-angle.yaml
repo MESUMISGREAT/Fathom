@@ -1,0 +1,266 @@
+id: energy-conservation-work-at-an-angle
+subject: "9702"
+topic: "5.1"
+title: "Work when the force is at an angle — and when it is zero"
+summary: Only the component of a force along the displacement transfers energy; a force perpendicular to the motion does no work at all.
+order: 2
+minutes: 5
+kind: core
+objectives: ["5.1.1"]
+prerequisites: [energy-conservation-what-is-work]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 5.1.1, work done = force × displacement in the direction of
+    the force). This lesson extends it to forces at an angle, using resolution of forces
+    (topic 1.4). Values and every answer key were computed with Python (cosines to full
+    precision, then rounded). All questions are original.
+    Adversarially re-checked line by line (syllabus coverage, facts, worked examples, every
+    answer key, MCQ distractors, tolerances and spot-error lines) on 2026-10-27 in the same
+    cloud chat, which has no separate reviewer model; every numeric key was recomputed
+    independently with Python, and all eight diagrams were rendered and inspected in light
+    and dark. Not yet reviewed by a separate reviewer or by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can find the work done by a force that is **not** along the
+      motion, by using only the **component** of the force in the direction of
+      the displacement, and you can explain why a perpendicular force does
+      **no** work.
+
+  - type: explain
+    title: Only the part along the motion counts
+    body: |
+      A suitcase is dragged along the floor by a strap that goes up at an angle.
+      The pull does two different jobs:
+
+      - the **horizontal component** moves the case along the floor — this part
+        transfers energy;
+      - the **vertical component** just lifts a little — it does not move the
+        case horizontally.
+
+      So we split the force up (**resolve** it) and use only the component
+      **along** the displacement.
+
+  - type: definition
+    term: Work done by a force at an angle
+    body: |
+      If a force $F$ acts at an angle $\theta$ to the displacement $s$, the work
+      done is
+
+      $$W = F s \cos\theta$$
+
+      because $F\cos\theta$ is the component of the force **along** the
+      displacement. When $\theta = 0^\circ$ this is $W = Fs$, the case you already
+      know; when $\theta = 90^\circ$ it gives **zero**.
+
+  - type: explain
+    title: Why cos θ, and not sin θ
+    body: |
+      Put the **displacement** along the x-axis. The component of the force along
+      that axis is next to the angle, so it is the cosine:
+
+      $$F_\text{along} = F\cos\theta$$
+
+      Multiplying that component by the distance gives the work:
+
+      $$W = (F\cos\theta)\,s = Fs\cos\theta$$
+
+      Only that component can transfer energy along the motion.
+
+  - type: diagram
+    diagram: phys-energy-conservation-work-angle
+    alt: >-
+      Two panels. Left: a suitcase pulled along the floor by a strap at 30° to
+      the horizontal, force 50 N. Dashed lines show the force resolved into a
+      horizontal component 50 cos 30° = 43.3 N, which moves the case 4.0 m, and a
+      vertical component 50 sin 30° = 25 N, which does not move it along the
+      floor. Below: W = F s cos θ = 50 × 4.0 × cos 30° = 173 J. Right: a person
+      carrying a basket at a steady height along a level floor; a long horizontal
+      arrow marks the 12 m walked and an upward arrow marks the support force,
+      labelled "90°, so W = 0".
+    caption: Resolve the force, then multiply the **along-the-motion** component by the distance.
+
+  - type: example
+    title: "Worked example: pulling a suitcase"
+    problem: |
+      A suitcase is pulled $4.0\ \text{m}$ along the floor by a strap with a
+      force of $50\ \text{N}$ at $30^\circ$ above the horizontal. How much work
+      does the pull do on the case?
+    steps:
+      - |
+        The displacement is horizontal, so use the horizontal component of the
+        pull:
+
+        $$F_\text{along} = F\cos\theta = 50\cos 30^\circ = 43.3\ \text{N}$$
+      - |
+        $$W = Fs\cos\theta = 50 \times 4.0 \times \cos 30^\circ = 173\ \text{J}$$
+      - |
+        Compare with pulling horizontally with the same $50\ \text{N}$:
+        $50 \times 4.0 = 200\ \text{J}$. Tilting the strap upwards wastes part of
+        the effort, so less energy is transferred.
+    answer: |
+      $1.7 \times 10^2\ \text{J}$ (about $173\ \text{J}$) — always give the
+      unrounded value and round only at the end.
+
+  - type: check
+    title: Quick check
+    questions: [component-cloze, suitcase-pull, carrying-basket]
+  - type: explain
+    title: Forces that do no work
+    body: |
+      Set $\theta = 90^\circ$ in $W = Fs\cos\theta$ and the work is zero, because
+      $\cos 90^\circ = 0$.
+
+      That covers a surprising number of everyday forces:
+
+      - the **support force** on a basket carried along a level floor: the force
+        is upward, the motion is horizontal;
+      - the **normal contact force** on a box sliding along level ground;
+      - the **tension** in a stone whirling on a string, at every instant
+        (the string pulls sideways to the motion).
+
+      These forces can be large, but they transfer no energy along the motion.
+
+  - type: misconceptions
+    items:
+      - wrong: The whole force does work, whatever the angle.
+        right: |
+          Only the component **along** the displacement transfers energy, so use
+          $F\cos\theta$. The perpendicular component changes the direction or
+          balances another force, but does no work.
+      - wrong: A bigger force always means more work.
+        right: |
+          The angle matters too. $80\ \text{N}$ at $60^\circ$ does
+          $80 \times s \times \cos 60^\circ = 40s\ \text{J}$, less than
+          $50\ \text{N}$ straight along the motion ($50s\ \text{J}$).
+      - wrong: Carrying a heavy basket horizontally is hard work, so work is being done on it.
+        right: |
+          Your muscles tire because they keep making small adjustments, but the
+          **support force on the basket** is perpendicular to its motion, so no
+          energy is transferred to the basket along the way.
+      - wrong: Friction does no work because it opposes the motion.
+        right: |
+          Friction acts **along** the motion (backwards), so it does work — a
+          **negative** amount, removing kinetic energy and warming the surfaces.
+
+  - type: exam
+    body: |
+      - If the force is at an angle, state clearly that you are using the
+        component along the displacement, then substitute into
+        $W = Fs\cos\theta$ — showing the component earns the method mark.
+      - Keep the angle between the **force** and the **displacement**. If a
+        question gives the angle to the vertical, adjust before using cosine.
+      - "Explain why the force does no work": the wanted words are
+        **perpendicular** (or at $90^\circ$) and **no displacement along the force**.
+
+  - type: check
+    title: Check yourself
+    questions: [sledge-component, explain-perpendicular]
+  - type: takeaways
+    items:
+      - >-
+        $W = Fs\cos\theta$: use the component of the force **along** the
+        displacement.
+      - The angle is measured between the force and the displacement.
+      - >-
+        A force perpendicular to the motion ($\theta = 90^\circ$) does **no**
+        work, however large it is.
+      - Friction can do negative work, removing energy from the moving object.
+
+questions:
+  - id: component-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["5.1.1"]
+    prompt: |
+      Only the {{1}} of the force that lies along the direction of motion does
+      work. For a force at angle $\theta$ to the displacement, that component is
+      $F$ {{2}} $\theta$.
+    blanks:
+      - accept: [component, part, resolved part]
+      - accept: [cos, cosine, cos of, cosine of]
+    explanation: |
+      Work uses the component of the force **along** the displacement, and that
+      component is $F\cos\theta$, giving $W = Fs\cos\theta$.
+
+  - id: suitcase-pull
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.1"]
+    prompt: |
+      A suitcase is pulled $4.0\ \text{m}$ along a level floor by a strap that
+      makes $30^\circ$ with the horizontal; the pull is $50\ \text{N}$.
+
+      What is the work done by the pull?
+    fields:
+      - answer: 173
+        tolerance: { abs: 3 }
+        unit: J
+    explanation: |
+      $W = Fs\cos\theta = 50 \times 4.0 \times \cos 30^\circ
+      = 200 \times 0.866 = 173\ \text{J}$.
+
+      Only the horizontal component, $50\cos 30^\circ = 43.3\ \text{N}$, does work.
+
+  - id: carrying-basket
+    format: numeric
+    difficulty: 1
+    objectives: ["5.1.1"]
+    prompt: |
+      A shopper carries a basket $12\ \text{m}$ along a level floor. The upward
+      support force on the basket is $30\ \text{N}$.
+
+      How much work does that support force do on the basket?
+    fields:
+      - answer: 0
+        tolerance: { abs: 0.01 }
+        unit: J
+    explanation: |
+      The support force is vertical and the motion is horizontal: the angle is
+      $90^\circ$, so $\cos 90^\circ = 0$ and the work done is zero.
+
+  - id: sledge-component
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.1"]
+    prompt: |
+      A sledge is dragged $8.0\ \text{m}$ along the snow by a rope with a force
+      of $200\ \text{N}$ at $40^\circ$ above the horizontal.
+
+      How much work does the rope do? Give your answer to 3 significant figures.
+    fields:
+      - answer: 1226
+        tolerance: { abs: 30 }
+        unit: J
+    explanation: |
+      $W = Fs\cos\theta = 200 \times 8.0 \times \cos 40^\circ
+      = 1600 \times 0.766 = 1226\ \text{J}$, about
+      $1.2 \times 10^3\ \text{J}$.
+
+      The component along the snow is $200\cos 40^\circ = 153\ \text{N}$.
+
+  - id: explain-perpendicular
+    format: explain
+    difficulty: 3
+    objectives: ["5.1.1"]
+    prompt: |
+      A satellite moves in a circle around the Earth with a constant speed.
+      Explain why the gravitational force on it does no work.
+    model: |
+      Work done equals the component of the force along the displacement
+      multiplied by the displacement. For motion in a circle the force is
+      always directed towards the centre, which is at $90^\circ$ to the
+      velocity — and so at $90^\circ$ to the displacement over any short time.
+      Because $\cos 90^\circ = 0$, the component of the force along the motion is
+      zero, so no work is done and the satellite's kinetic energy stays constant.
+    keyPoints:
+      - The force is perpendicular to the velocity (towards the centre)
+      - The component of the force along the displacement is zero
+      - cos 90° = 0, so the work done is zero
+      - No work means no change in kinetic energy, so the speed stays constant
+    explanation: |
+      Perpendicular force, zero component along the motion, zero work. The force
+      changes the **direction** of the motion, not the energy.

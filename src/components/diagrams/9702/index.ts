@@ -5,6 +5,14 @@ import DensityPressureDensityCubes from './density-pressure-density-cubes';
 import DensityPressureLiquidColumn from './density-pressure-liquid-column';
 import DensityPressurePressureArea from './density-pressure-pressure-area';
 import DensityPressureUpthrust from './density-pressure-upthrust';
+import EnergyConservationEfficiencyBlocks from './energy-conservation-efficiency-blocks';
+import EnergyConservationPowerFv from './energy-conservation-power-fv';
+import EnergyConservationPowerLift from './energy-conservation-power-lift';
+import EnergyConservationPowerRate from './energy-conservation-power-rate';
+import EnergyConservationPrinciple from './energy-conservation-principle';
+import EnergyConservationSankey from './energy-conservation-sankey';
+import EnergyConservationWorkAngle from './energy-conservation-work-angle';
+import EnergyConservationWorkDone from './energy-conservation-work-done';
 import EquationsMotionCliffThrow from './equations-motion-cliff-throw';
 import EquationsMotionGApparatus from './equations-motion-g-apparatus';
 import EquationsMotionGGraph from './equations-motion-g-graph';
@@ -68,6 +76,14 @@ export const diagrams: DiagramRegistry = {
   'phys-density-pressure-liquid-column': DensityPressureLiquidColumn,
   'phys-density-pressure-pressure-area': DensityPressurePressureArea,
   'phys-density-pressure-upthrust': DensityPressureUpthrust,
+  'phys-energy-conservation-efficiency-blocks': EnergyConservationEfficiencyBlocks,
+  'phys-energy-conservation-power-fv': EnergyConservationPowerFv,
+  'phys-energy-conservation-power-lift': EnergyConservationPowerLift,
+  'phys-energy-conservation-power-rate': EnergyConservationPowerRate,
+  'phys-energy-conservation-principle': EnergyConservationPrinciple,
+  'phys-energy-conservation-sankey': EnergyConservationSankey,
+  'phys-energy-conservation-work-angle': EnergyConservationWorkAngle,
+  'phys-energy-conservation-work-done': EnergyConservationWorkDone,
   'phys-equations-motion-cliff-throw': EquationsMotionCliffThrow,
   'phys-equations-motion-g-apparatus': EquationsMotionGApparatus,
   'phys-equations-motion-g-graph': EquationsMotionGGraph,
