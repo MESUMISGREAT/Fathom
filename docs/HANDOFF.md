@@ -229,8 +229,8 @@ changes alongside lessons:
   `todo` and a future writer would have duplicated 15 lessons. `status.mjs` now says
   **33 published, 121 todo**, with 9618 6.1 next.
 - On `main`: **382 reviewed lessons, 2202 questions** (9709: 118, 9618: 100, 9702: 81,
-  9701: 83). All are live. Latest content: 9618 6.1 data security (a93ff08, published by
-  the other chat) and 9702 6.2 elastic and plastic behaviour (77f2e9c), both 28 Oct.
+  9701: 83). All are live. Latest content: 9618 6.1 data security (a93ff08) and 9702 6.2
+  elastic and plastic behaviour (77f2e9c), both 28 Oct.
 - **9702 6.2 Elastic and plastic behaviour is published** (28 Oct, 77f2e9c): 5 lessons
   (`elastic-plastic-deformation`, `-elastic-limit`, `-work-done-area`, `-strain-energy`,
   `-energy-past-limit`), 25 questions, 3 diagrams
@@ -253,6 +253,36 @@ changes alongside lessons:
     - Another cloud chat was writing 9618 6.1 (and restyling 9709) at the same time. This chat
       checked for in-flight files before starting and took 9702 6.2 instead. Check again before
       the next unit: the two chats share this VM and both push to `main`; rebase, never force.
+- **9618 6.1 Data Security is published** (28 Oct, a93ff08): 7 lessons, 42 questions, 6
+  diagrams. `data-security-privacy-integrity` (6.1.1), `-system-and-data` (6.1.2),
+  `-accounts-authentication` and `-system-measures` (6.1.3, split into identity then
+  firewall/anti-malware/encryption), `-network-threats` (6.1.4), `-restricting-risk`
+  (6.1.5), `-encryption-access-rights` (6.1.6). Diagrams: `cs-data-security-privacy-integrity`,
+  `-system-vs-data`, `-authentication-factors`, `-defence-layers`, `-phishing-vs-pharming`,
+  `-access-rights`. `content:check` 0/0, `tsc` clean, 166 tests pass, all six diagrams
+  rendered and inspected in light and dark.
+    - Teaching choices worth keeping: digital signatures are taught as hash → sign with the
+      **private** key → verify with the **public** key, with an explicit warning that this is
+      the reverse of encryption-for-confidentiality (lesson 7 repeats the warning, because the
+      two lessons would otherwise contradict each other). Phishing vs pharming is separated by
+      **who is fooled** (the user vs the name lookup), with pharming shown as needing no click.
+      Anti-virus vs anti-spyware is contrasted by purpose (replication/damage vs secret data
+      collection), and a firewall is explicitly said **not** to scan file contents.
+    - Review caveat, same as other batches: the review was a second adversarial pass by the
+      **same agent** (no separate reviewer model in this environment), and every provenance
+      note says so. A reviewer should still be run over `data-security-*` before treating it
+      as final.
+    - Cloud-VM rendering: Chromium cannot run here (no libnss3/atk/cups and no root), so the
+      six diagrams were rasterised with `@resvg/resvg-js` into `.work-logs/previews/` by
+      `.work-logs/render-preview.tsx` (both gitignored/untracked work files), using the DejaVu
+      TTFs bundled with matplotlib and inlined `dg-*` colours from `src/styles/tokens.css`.
+      That catches geometry, overlaps, clipping and dark-mode contrast, but **not** KaTeX
+      overflow: none of these six diagrams uses `MathLabel`, so the proper check is still
+      `npm run diagram:render` on a machine that can launch Chromium.
+      Caught that way: a clipped footer in `-defence-layers`, notes overlapping the last box in
+      `-phishing-vs-pharming`, a stray icon dot in `-privacy-integrity`, and an ambiguous
+      "two factors" caption in `-authentication-factors` (now "any two from different
+      columns").
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -340,7 +370,16 @@ changes alongside lessons:
 - Queue: 35 published, 119 todo (`node scripts/lessons/status.mjs`). **Next unit is 9701 6.1
   (redox processes)**; check the sibling worktree again before starting in case the other chat
   has taken it. 9709 units are being restyled by that chat, so prefer non-9709 work.
+  9702 6.2 was published by that chat on 28 Oct.
   (Then 9709 3.6+3.7, 9618 6.2, 9702 7.1, 9701 7.1, 9709 3.8, ...).
+- **Pushing now needs a rebase, not just a push.** Two chats published from the same
+  `77cd89e` base on 28 Oct, so the first `cloud_git` push succeeded and the other was
+  rejected as non-fast-forward. The working recovery, repeated twice:
+  `cloud_git fetch` → `git log --oneline HEAD..FETCH_HEAD` and
+  `git diff --name-only` to confirm no overlap → `git rebase FETCH_HEAD` → `cloud_git push`.
+  Never force. `publish.sh` itself still ends in "push failed" here (no git credentials in the
+  VM) after it has verified and committed; recover its commit with
+  `git fsck --unreachable --no-reflogs` and reset --soft to it, as described below.
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
   - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
