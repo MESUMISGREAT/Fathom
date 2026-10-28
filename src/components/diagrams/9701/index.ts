@@ -6,6 +6,11 @@ import BondingStructureIonicLattice from './bonding-structure-ionic-lattice';
 import BondingStructureMeltingPoints from './bonding-structure-melting-points';
 import BondingStructureMetallicLattice from './bonding-structure-metallic-lattice';
 import BondingStructureSimpleMolecular from './bonding-structure-simple-molecular';
+import ChemEquilibriaApproachEquilibrium from './chem-equilibria-approach-equilibrium';
+import ChemEquilibriaCountGasMoles from './chem-equilibria-count-gas-moles';
+import ChemEquilibriaHaberTradeoff from './chem-equilibria-haber-tradeoff';
+import ChemEquilibriaMoleFraction from './chem-equilibria-mole-fraction';
+import ChemEquilibriaTemperatureEnergyProfile from './chem-equilibria-temperature-energy-profile';
 import ChemicalFormulasBalancingParticles from './chemical-formulas-balancing-particles';
 import ChemicalFormulasChargeBalance from './chemical-formulas-charge-balance';
 import ChemicalFormulasCombustionTracking from './chemical-formulas-combustion-tracking';
@@ -123,6 +128,11 @@ export const diagrams: DiagramRegistry = {
   'chem-enthalpy-change-named-changes': EnthalpyChangeNamedChanges,
   'chem-enthalpy-change-pathway': EnthalpyChangePathway,
   'chem-enthalpy-change-standard-state': EnthalpyChangeStandardState,
+  'chem-equilibria-approach-equilibrium': ChemEquilibriaApproachEquilibrium,
+  'chem-equilibria-count-gas-moles': ChemEquilibriaCountGasMoles,
+  'chem-equilibria-haber-tradeoff': ChemEquilibriaHaberTradeoff,
+  'chem-equilibria-mole-fraction': ChemEquilibriaMoleFraction,
+  'chem-equilibria-temperature-energy-profile': ChemEquilibriaTemperatureEnergyProfile,
   'chem-first-ionisation-energy-trend': FirstIonisationEnergyTrend,
   'chem-gases-molecular-collisions': GasesMolecularCollisions,
   'chem-hess-law-bond-energy-route': HessLawBondEnergyRoute,

@@ -1,0 +1,331 @@
+id: chemical-equilibria-le-chatelier
+subject: "9701"
+topic: "7.1"
+title: "Le Chatelier's principle: concentration and pressure"
+summary: Push an equilibrium and it pushes back. Change a concentration or a pressure and the position of equilibrium moves to oppose the change — you can predict the direction without any numbers.
+order: 2
+minutes: 10
+kind: core
+objectives: ["7.1.2", "7.1.3"]
+prerequisites: [chemical-equilibria-reversible-dynamic]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 7.1, learning outcomes 7.1.2 and 7.1.3 (the statement of Le Chatelier's
+    principle and its qualitative use for changes in concentration and pressure; temperature and
+    catalysts are covered in the next lesson). Every gas-mole count was re-checked in Python on
+    2026-10-28. All questions are original.
+
+    Independently re-checked line by line on 2026-10-28 in a second adversarial pass by the same
+    agent: every worked value was recomputed and substituted back, every answer key was checked
+    against the site's own checker, all ten outcomes 7.1.1-7.1.10 were confirmed taught and tested,
+    and each diagram was rendered and inspected in light and dark. No separate reviewer model or
+    teacher reviewed this lesson.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can state Le Chatelier's principle, say which way the position of equilibrium moves when a concentration or a pressure is changed, and justify it by counting gas molecules.
+
+  - type: explain
+    title: A system that resists being pushed
+    body: |-
+      At equilibrium a reaction is balanced, but the balance is not fixed. Change the conditions and the system responds by opposing your change.
+
+      That single idea is **Le Chatelier's principle**, and it turns equilibrium from a fact you memorise into something you can reason with.
+
+  - type: definition
+    term: Le Chatelier's principle
+    body: |-
+      If a change is made to a system at dynamic equilibrium, the **position of equilibrium moves to minimise this change**.
+
+      "Minimise" is the key word. The system does not cancel the change completely — that is usually impossible — it just reduces its effect as far as it can.
+
+  - type: explain
+    title: The position of equilibrium
+    body: |-
+      The **position of equilibrium** describes the balance of amounts in the equilibrium mixture.
+
+      - **Shifts right** (towards the products): the forward reaction is favoured, so there is more product at the new equilibrium.
+      - **Shifts left** (towards the reactants): the reverse reaction is favoured, so there is more reactant at the new equilibrium.
+      - **No shift**: the change has no effect on the amounts.
+
+      A shift is not a change in rate. At the new equilibrium the two rates are equal again, only at different concentrations from before.
+
+  - type: explain
+    title: Changing a concentration
+    body: |-
+      Suppose you add more of a reactant. The forward reaction now has more to work with, so it speeds up and makes extra product — which uses up part of what you added.
+
+      The result: the position of equilibrium moves to the **opposite side from the substance you added**.
+
+      - Add a reactant → shifts **right**.
+      - Remove a product → shifts **right**.
+      - Add a product → shifts **left**.
+      - Remove a reactant → shifts **left**.
+
+      Removing a substance works the same way in reverse: the reaction that replaces it is favoured.
+
+  - type: example
+    title: "Worked example: the blood-red complex"
+    problem: |-
+      Iron(III) ions react with thiocyanate ions to give a deep blood-red complex:
+
+      $$\text{Fe}^{3+}(aq) + \text{SCN}^-(aq) \rightleftharpoons \text{FeSCN}^{2+}(aq)$$
+
+      The mixture is pale orange at equilibrium. Predict the colour change when a few drops of iron(III) chloride solution are added.
+    steps:
+      - |-
+        Adding iron(III) chloride adds $\text{Fe}^{3+}$, a reactant on the left.
+      - |-
+        By Le Chatelier's principle the system minimises the increase, so it uses up some of the extra $\text{Fe}^{3+}$.
+      - |-
+        Using up $\text{Fe}^{3+}$ means the forward reaction is favoured: the position of equilibrium shifts **right**.
+      - |-
+        More $\text{FeSCN}^{2+}$ forms, so the solution becomes a deeper red.
+    answer: |-
+      The mixture turns a deeper red, because the equilibrium shifts right to use up the added $\text{Fe}^{3+}$.
+
+  - type: explain
+    title: Changing a pressure
+    body: |-
+      Pressure only matters for equilibria that involve **gases**, because only gases can be squeezed.
+
+      Raising the pressure pushes the system towards whichever side has **fewer gas molecules**, since that reduces the pressure again.
+
+      Count the gas molecules using the **coefficients** in the equation — ignore solids and liquids entirely.
+
+  - type: diagram
+    diagram: chem-equilibria-count-gas-moles
+    alt: >-
+      Three equilibrium equations with the number of gas molecules counted on each side. Nitrogen
+      plus three hydrogen gives two ammonia: four gas molecules on the left, two on the right, so
+      raising the pressure shifts the equilibrium right. Hydrogen plus iodine gives two hydrogen
+      iodide: two gas molecules on each side, so changing the pressure has no effect. Two nitrogen
+      dioxide gives one dinitrogen tetroxide: two on the left, one on the right, so raising the
+      pressure shifts the equilibrium right.
+    caption: |-
+      Count gas molecules with the coefficients. The system shifts towards the side with fewer.
+
+  - type: example
+    title: "Worked example: squeezing nitrogen dioxide"
+    problem: |-
+      Brown nitrogen dioxide dimerises to colourless dinitrogen tetroxide:
+
+      $$2\text{NO}_2(g) \rightleftharpoons \text{N}_2\text{O}_4(g)$$
+
+      A sealed gas syringe at equilibrium is brown. The plunger is pushed in, halving the volume at constant temperature. Predict what happens to the colour, and explain why the colour does not simply double in intensity.
+    steps:
+      - |-
+        Halving the volume doubles every concentration, so both rates increase and the mixture is no longer at equilibrium.
+      - |-
+        The pressure has risen. Count the gas molecules: $2$ on the left, $1$ on the right.
+      - |-
+        To reduce the pressure the system moves to the side with **fewer** gas molecules, so the position of equilibrium shifts **right**.
+      - |-
+        Some brown $\text{NO}_2$ is converted into colourless $\text{N}_2\text{O}_4$, so the mixture becomes **paler** than it was immediately after compression.
+      - |-
+        The colour is still darker than the original, because the compression effect is only partly opposed — that is what "minimise" means.
+    answer: |-
+      The mixture darkens at first as the gas is compressed, then becomes paler as the equilibrium shifts right. The final colour is darker than before compression, because the change is minimised, not cancelled.
+
+  - type: intuition
+    title: Why "minimise" is not "cancel"
+    body: |-
+      A shift can only undo part of a change. Squeezing a gas always increases its concentration, even though the shift uses some of it up.
+
+      Think of a spring: it resists being compressed, but it still ends up shorter than it started.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Increasing the pressure always shifts the equilibrium to the right.
+        right: |-
+          It shifts towards the side with **fewer gas molecules**, which may be the left. If both sides have the same number, there is no shift at all.
+      - wrong: |-
+          Adding a catalyst shifts the equilibrium to the products.
+        right: |-
+          A catalyst speeds up both directions equally, so it only helps the system reach equilibrium sooner. It does not change the position.
+      - wrong: |-
+          Changing the pressure changes the value of $K_c$.
+        right: |-
+          $K_c$ depends only on temperature. A pressure change alters the concentrations, not the constant.
+      - wrong: |-
+          Adding more reactant increases the amount of product without limit.
+        right: |-
+          It shifts the position right, but the new equilibrium still contains all three substances; the extra reactant is only partly used up.
+      - wrong: |-
+          A shift right means the reaction is now faster.
+        right: |-
+          The rates change briefly, but a shift is about the final amounts at the new equilibrium, not about speed.
+
+  - type: exam
+    body: |-
+      - State the principle in full: **"the position of equilibrium moves to minimise the change"**, not just "the reaction opposes the change".
+      - Always **count gas molecules** before predicting a pressure effect, and say the count out loud in your answer: "3 mol of gas form 2 mol, so the equilibrium shifts to the right".
+      - For pressure questions, note that solids and liquids are ignored — only gases count.
+      - Distinguish **rate** from **position** in every explanation. "Shifts right" is about amounts; "reaches equilibrium faster" is about rate.
+      - When a colour is involved, name the species responsible for the colour and say how its concentration changes.
+
+  - type: check
+    title: Checking the idea
+    questions: [eq2-mcq-statement, eq2-mcq-pressure-shift, eq2-mcq-no-shift]
+
+  - type: check
+    title: End-of-lesson check
+    questions: [eq2-cloze-concentration, eq2-numeric-mole-count, eq2-spot-error, eq2-explain-haber]
+
+  - type: takeaways
+    items:
+      - "Le Chatelier's principle: the position of equilibrium moves to minimise a change."
+      - Adding a reactant or removing a product shifts the equilibrium to the opposite side.
+      - Raising the pressure shifts the equilibrium towards the side with fewer gas molecules.
+      - A catalyst changes the rate, never the position.
+      - A shift reduces a change; it never cancels it.
+
+questions:
+  - id: eq2-mcq-statement
+    format: mcq
+    difficulty: 1
+    objectives: ["7.1.2"]
+    prompt: |-
+      Which statement is Le Chatelier's principle?
+    options:
+      - text: If a change is made to a system at dynamic equilibrium, the position of equilibrium moves to minimise this change.
+        correct: true
+        why: |-
+          That is the definition word for word; "minimise" is the part that is often lost.
+      - text: If a change is made to a system at dynamic equilibrium, the reaction stops until conditions return to normal.
+        why: |-
+          The reaction never stops; only the position of equilibrium moves.
+      - text: At equilibrium the rate of the forward reaction is greater than the rate of the reverse reaction.
+        why: |-
+          At equilibrium the two rates are equal. This describes a system that is not at equilibrium.
+      - text: A catalyst changes the position of equilibrium so that more product is formed.
+        why: |-
+          Catalysts affect rate only, and Le Chatelier's principle says nothing about catalysts shifting a position.
+    explanation: |-
+      Le Chatelier's principle predicts the direction of the shift by asking how the system can reduce the effect of a change.
+
+  - id: eq2-mcq-pressure-shift
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.3"]
+    prompt: |-
+      The Haber equilibrium is
+
+      $$\text{N}_2(g) + 3\text{H}_2(g) \rightleftharpoons 2\text{NH}_3(g)$$
+
+      The pressure is increased at constant temperature. What happens?
+    options:
+      - text: The equilibrium shifts to the right, because 4 mol of gas becomes 2 mol of gas.
+        correct: true
+        why: |-
+          Fewer gas molecules means lower pressure, which minimises the increase.
+      - text: The equilibrium shifts to the left, because ammonia is the substance being compressed.
+        why: |-
+          The side with fewer gas molecules is favoured, and that is the ammonia side, so the shift is right, not left.
+      - text: There is no shift, because the number of moles of gas is unchanged.
+        why: |-
+          The counts are 4 on the left and 2 on the right, so they are not unchanged.
+      - text: The equilibrium is unaffected, because pressure never affects equilibria.
+        why: |-
+          Pressure affects any equilibrium in which the number of gas molecules differs between the two sides.
+    explanation: |-
+      Increasing the pressure shifts the equilibrium towards the side with fewer gas molecules — here the products.
+
+  - id: eq2-mcq-no-shift
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.3"]
+    prompt: |-
+      Hydrogen reacts with iodine vapour:
+
+      $$\text{H}_2(g) + \text{I}_2(g) \rightleftharpoons 2\text{HI}(g)$$
+
+      A mixture at equilibrium is compressed at constant temperature. What is the effect on the position of equilibrium?
+    options:
+      - text: There is no shift, because there are 2 mol of gas on each side.
+        correct: true
+        why: |-
+          Both sides have the same number of gas molecules, so squeezing does not favour either direction.
+      - text: It shifts to the right, towards the hydrogen iodide.
+        why: |-
+          The right-hand side has 2 mol of gas, exactly as many as the left, so there is no reason to favour it.
+      - text: It shifts to the left, towards the hydrogen and iodine.
+        why: |-
+          A shift left would not reduce the pressure, since the gas-molecule count is the same on both sides.
+      - text: It shifts to the right because there are two product molecules rather than two reactant molecules.
+        why: |-
+          Count the molecules, not the terms: 2 product molecules and 2 reactant molecules balance exactly.
+    explanation: |-
+      When both sides have equal numbers of gas molecules, changing the pressure changes the concentrations but not the position of equilibrium.
+
+  - id: eq2-cloze-concentration
+    format: cloze
+    difficulty: 2
+    objectives: ["7.1.3"]
+    prompt: |-
+      In the equilibrium $\text{CH}_3\text{COOH} + \text{C}_2\text{H}_5\text{OH} \rightleftharpoons \text{CH}_3\text{COOC}_2\text{H}_5 + \text{H}_2\text{O}$, adding more ethanoic acid shifts the position of equilibrium to the {{1}}, and removing some water shifts it to the {{2}}. Neither change alters the value of the equilibrium constant, because that depends only on {{3}}.
+    blanks:
+      - accept: [right]
+      - accept: [right]
+      - accept: [temperature]
+    explanation: |-
+      Adding a reactant and removing a product both favour the forward reaction, while the equilibrium constant depends only on temperature.
+
+  - id: eq2-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["7.1.3"]
+    prompt: |-
+      A student predicts the effect of raising the pressure on this equilibrium. Which line contains the first error?
+
+      $$2\text{SO}_2(g) + \text{O}_2(g) \rightleftharpoons 2\text{SO}_3(g)$$
+    lines:
+      - The left-hand side has 3 mol of gas and the right-hand side has 2 mol of gas.
+      - Raising the pressure favours the side with fewer gas molecules.
+      - So the equilibrium shifts to the left, towards the sulfur dioxide and oxygen.
+      - The concentration of sulfur trioxide therefore falls at the new equilibrium.
+    errorLine: 3
+    fix: |-
+      The side with fewer gas molecules is the **right**, so the equilibrium shifts to the **right**. Line 4 is wrong as a consequence.
+    explanation: |-
+      Lines 1 and 2 are correct, so the direction in line 3 must be the error: fewer gas molecules are on the product side.
+
+  - id: eq2-explain-haber
+    format: explain
+    difficulty: 3
+    objectives: ["7.1.2", "7.1.3"]
+    prompt: |-
+      Ammonia is made by the Haber process:
+
+      $$\text{N}_2(g) + 3\text{H}_2(g) \rightleftharpoons 2\text{NH}_3(g)$$
+
+      The reaction is exothermic in the forward direction. Use Le Chatelier's principle to explain the effect on the equilibrium yield of ammonia of (i) increasing the pressure and (ii) removing ammonia as it forms.
+    model: |-
+      Increasing the pressure shifts the position of equilibrium towards the side with fewer gas molecules, because that reduces the pressure and so minimises the change. The left-hand side has 4 mol of gas and the right-hand side has 2 mol, so the equilibrium shifts to the right and the equilibrium yield of ammonia increases. Removing ammonia as it forms lowers the concentration of a product, so the reverse reaction slows and the forward reaction is favoured. The position of equilibrium shifts to the right to replace some of the removed ammonia, again increasing the yield. Neither change alters the value of the equilibrium constant, which depends only on temperature.
+    keyPoints:
+      - Higher pressure favours the side with fewer gas molecules (2 mol against 4 mol).
+      - The equilibrium therefore shifts right, raising the yield.
+      - Removing a product shifts the equilibrium right to replace it.
+      - The equilibrium constant itself is unchanged, since temperature is constant.
+    explanation: |-
+      Both changes move the position of equilibrium right, but only the pressure change acts by counting gas molecules; removing ammonia acts on the concentration of a product.
+
+  - id: eq2-numeric-mole-count
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.3"]
+    prompt: |-
+      For the equilibrium
+
+      $$4\text{NH}_3(g) + 5\text{O}_2(g) \rightleftharpoons 4\text{NO}(g) + 6\text{H}_2\text{O}(g)$$
+
+      how many more gas molecules are there on the right-hand side than on the left?
+    fields:
+      - answer: 1
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      The left has $4 + 5 = 9$ gas molecules and the right has $4 + 6 = 10$, so the right has one more. Raising the pressure would therefore shift this equilibrium to the left.

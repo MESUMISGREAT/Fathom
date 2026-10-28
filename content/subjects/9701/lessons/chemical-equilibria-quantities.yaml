@@ -1,0 +1,356 @@
+id: chemical-equilibria-quantities
+subject: "9701"
+topic: "7.1"
+title: "Finding the quantities at equilibrium"
+summary: Work backwards from the constant to the mixture. One unknown, one table, one substitution — and the arithmetic stays simple because the syllabus avoids quadratics.
+order: 8
+minutes: 10
+kind: core
+objectives: ["7.1.8"]
+prerequisites: [chemical-equilibria-kc-kp-calculations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 7.1, learning outcome 7.1.8 (calculating the quantities present at
+    equilibrium, given appropriate data), within the guidance that quadratic equations are not
+    required. Every answer was solved and re-substituted in Python on 2026-10-28. All questions
+    are original.
+
+    Independently re-checked line by line on 2026-10-28 in a second adversarial pass by the same
+    agent: every worked value was recomputed and substituted back, every answer key was checked
+    against the site's own checker, all ten outcomes 7.1.1-7.1.10 were confirmed taught and tested,
+    and each diagram was rendered and inspected in light and dark. No separate reviewer model or
+    teacher reviewed this lesson.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can set up a table of initial, change and equilibrium amounts, solve for a single unknown using $K_c$ or $K_p$, and check your answer by substituting it back.
+
+  - type: explain
+    title: The question runs backwards
+    body: |-
+      Until now you were given the equilibrium mixture and asked for the constant. This lesson reverses the direction: you are given the constant and asked for the mixture.
+
+      The method is still one unknown at a time. Call the amount that reacts $x$, express everything else in terms of $x$, then substitute.
+
+  - type: explain
+    title: The three-row table
+    body: |-
+      For a reaction $a\text{A} \rightleftharpoons c\text{C}$, write three rows:
+
+      | | A | C |
+      | --- | --- | --- |
+      | initial | $n_0$ | $0$ |
+      | change | $-ax$ | $+cx$ |
+      | equilibrium | $n_0 - ax$ | $cx$ |
+
+      The **change** row always follows the coefficients. If 2 mol of a substance react, the change is $-2x$, not $-x$.
+
+      Then divide the equilibrium row by the volume (for $K_c$) or by the total moles (for $K_p$).
+
+  - type: example
+    title: "Worked example: hydrogen and iodine"
+    problem: |-
+      Hydrogen and iodine are mixed in a $1.00\ \text{dm}^3$ flask at $700\ \text{K}$, $1.00\ \text{mol}$ of each:
+
+      $$\text{H}_2(g) + \text{I}_2(g) \rightleftharpoons 2\text{HI}(g) \qquad K_c = 64$$
+
+      Calculate the equilibrium concentration of each gas.
+    steps:
+      - |-
+        Let $x$ mol of $\text{H}_2$ react. The equation uses 1:1:2, so $x$ mol of $\text{I}_2$ also reacts and $2x$ mol of $\text{HI}$ forms.
+      - |-
+        Equilibrium amounts:
+
+        $$n_{\text{H}_2} = 1.00 - x \qquad n_{\text{I}_2} = 1.00 - x \qquad n_{\text{HI}} = 2x$$
+      - |-
+        The volume is $1.00\ \text{dm}^3$, so concentrations equal amounts.
+      - |-
+        Substitute into the expression:
+
+        $$64 = \frac{(2x)^2}{(1.00 - x)^2}$$
+      - |-
+        Both sides are perfect squares, so take the square root, recalling that $\sqrt{64} = 8$:
+
+        $$8 = \frac{2x}{1.00 - x}$$
+      - |-
+        Rearrange and solve:
+
+        $$8(1.00 - x) = 2x$$
+
+        $$8.00 - 8x = 2x$$
+
+        $$10x = 8.00 \Rightarrow x = 0.80$$
+      - |-
+        So the equilibrium amounts are $0.20\ \text{mol}$ of $\text{H}_2$, $0.20\ \text{mol}$ of $\text{I}_2$ and $1.60\ \text{mol}$ of $\text{HI}$.
+      - |-
+        Check: $\dfrac{(1.60)^2}{0.20 \times 0.20} = \dfrac{2.56}{0.040} = 64\ \checkmark$
+    answer: |-
+      $[\text{H}_2] = [\text{I}_2] = 0.20\ \text{mol dm}^{-3}$ and $[\text{HI}] = 1.60\ \text{mol dm}^{-3}$.
+
+  - type: explain
+    title: Recognising the friendly case
+    body: |-
+      Cambridge questions are built so the algebra collapses. Two patterns cover nearly all of them.
+
+      **Pattern 1 — a perfect square.** If the expression is a ratio of two squares, such as
+
+      $$K_c = \frac{x^2}{(c - x)^2}$$
+
+      take the square root of both sides first. That turns it into a linear equation.
+
+      **Pattern 2 — a single unknown on one side.** If the expression is linear in $x$ after multiplying out, no quadratic appears at all.
+
+      If you find yourself facing a genuine quadratic, stop and re-read the question: something has been transcribed wrongly.
+
+  - type: example
+    title: "Worked example: a perfect square"
+    problem: |-
+      Hydrogen iodide decomposes in a $1.00\ \text{dm}^3$ vessel:
+
+      $$2\text{HI}(g) \rightleftharpoons \text{H}_2(g) + \text{I}_2(g) \qquad K_c = 0.0200$$
+
+      Initially the vessel contains $1.00\ \text{mol}$ of $\text{HI}$. Calculate the equilibrium concentration of $\text{H}_2$.
+    steps:
+      - |-
+        Let $x$ mol of $\text{H}_2$ form. The equation needs $2x$ mol of $\text{HI}$ to react, so the equilibrium amounts are:
+
+        $$n_{\text{HI}} = 1.00 - 2x \qquad n_{\text{H}_2} = x \qquad n_{\text{I}_2} = x$$
+      - |-
+        With a volume of $1.00\ \text{dm}^3$, concentrations equal amounts:
+
+        $$K_c = \frac{[\text{H}_2][\text{I}_2]}{[\text{HI}]^2} = \frac{x^2}{(1.00 - 2x)^2}$$
+      - |-
+        Both sides are perfect squares, so take the square root:
+
+        $$\sqrt{0.0200} = \frac{x}{1.00 - 2x} = 0.141$$
+      - |-
+        Rearrange:
+
+        $$x = 0.141(1.00 - 2x) = 0.141 - 0.283x$$
+      - |-
+        Collect the $x$ terms:
+
+        $$1.283x = 0.141$$
+
+        $$x = 0.110$$
+      - |-
+        So $[\text{H}_2] = [\text{I}_2] = 0.110\ \text{mol dm}^{-3}$ and $[\text{HI}] = 1.00 - 0.220 = 0.780\ \text{mol dm}^{-3}$.
+      - |-
+        Check by substituting back:
+
+        $$K_c = \frac{(0.110)^2}{(0.780)^2} = 0.0199 \approx 0.0200 \ \checkmark$$
+    answer: |-
+      $[\text{H}_2] = 0.110\ \text{mol dm}^{-3}$, $[\text{I}_2] = 0.110\ \text{mol dm}^{-3}$ and $[\text{HI}] = 0.780\ \text{mol dm}^{-3}$.
+
+  - type: example
+    title: "Worked example: a $K_p$ composition"
+    problem: |-
+      Hydrogen and iodine are mixed in a 1:1 mole ratio and reach equilibrium at a total pressure of $2.0\ \text{atm}$:
+
+      $$\text{H}_2(g) + \text{I}_2(g) \rightleftharpoons 2\text{HI}(g) \qquad K_p = 49$$
+
+      Calculate the mole fraction of $\text{HI}$ at equilibrium.
+    steps:
+      - |-
+        Start with $1.00\ \text{mol}$ of each reactant and let $z$ mol of each react.
+      - |-
+        Equilibrium amounts: $\text{H}_2 = 1.00 - z$, $\text{I}_2 = 1.00 - z$, $\text{HI} = 2z$.
+      - |-
+        Total moles: $(1.00 - z) + (1.00 - z) + 2z = 2.00$ — constant, because 2 mol of gas gives 2 mol of gas.
+      - |-
+        Mole fractions:
+
+        $$x_{\text{H}_2} = x_{\text{I}_2} = \frac{1.00 - z}{2.00} \qquad x_{\text{HI}} = \frac{2z}{2.00} = z$$
+      - |-
+        Partial pressures (total $2.0\ \text{atm}$):
+
+        $$p_{\text{H}_2} = p_{\text{I}_2} = (1.00 - z)\ \text{atm} \qquad p_{\text{HI}} = 2z\ \text{atm}$$
+      - |-
+        Substitute into $K_p$, which is unitless here:
+
+        $$49 = \frac{(2z)^2}{(1.00 - z)^2}$$
+      - |-
+        Take the square root of both sides:
+
+        $$7 = \frac{2z}{1.00 - z}$$
+      - |-
+        Rearrange:
+
+        $$7 - 7z = 2z \Rightarrow 9z = 7 \Rightarrow z = 0.778$$
+      - |-
+        So $x_{\text{HI}} = z = 0.778$, and $x_{\text{H}_2} = x_{\text{I}_2} = 0.111$. Check: these add to $1.000$.
+    answer: |-
+      $x_{\text{HI}} = 0.778$ (3 significant figures), with $0.111$ for each reactant.
+
+  - type: intuition
+    title: Check, then check again
+    body: |-
+      Substitute your answer back into the expression — it takes ten seconds and catches nearly every slip.
+
+      Then sanity-check the chemistry: a large $K$ should give mostly products, and a small $K$ should leave most of the reactant unconverted. If the numbers say otherwise, the algebra is wrong.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The change in amount is always $-x$, whatever the coefficient.
+        right: |-
+          The change follows the coefficients: for $2\text{HI}$ reacting, the change is $-2x$.
+      - wrong: |-
+          The total number of moles always stays the same.
+        right: |-
+          It stays the same only when the gas-molecule counts match. In the Haber equilibrium, 4 mol becomes 2 mol.
+      - wrong: |-
+          You can take the square root of $x/(1-x)^2$ to solve for $x$.
+        right: |-
+          Square roots only help when **both** sides are perfect squares, as in $x^2/(1-x)^2$.
+      - wrong: |-
+          A negative value of $x$ can be discarded without comment.
+        right: |-
+          Say why: a negative $x$ would mean a negative amount, which is impossible. State it, then keep the positive root.
+      - wrong: |-
+          The calculated $x$ is the equilibrium amount of the reactant.
+        right: |-
+          $x$ is the amount that **reacted**; subtract it from the starting amount to get what remains.
+
+  - type: exam
+    body: |-
+      - Define $x$ in words before using it: "let $x$ mol of $\text{H}_2$ react".
+      - Show the three-row table; it is quick and earns method marks.
+      - Take the square root when both sides are perfect squares, and say that you are doing so.
+      - Reject a negative root explicitly.
+      - Finish with a substitution check and give the amount or concentration the question asked for — not $x$ itself.
+
+  - type: check
+    title: Checking the idea
+    questions: [eq8-mcq-change-row, eq8-cloze-total, eq8-numeric-hcl]
+
+  - type: check
+    title: End-of-lesson check
+    questions: [eq8-numeric-hi, eq8-spot-error, eq8-explain]
+
+  - type: takeaways
+    items:
+      - Let $x$ be the amount that reacts, and build a row for every substance.
+      - The change row follows the coefficients, not just $-x$.
+      - Take the square root when both sides are perfect squares.
+      - Reject negative roots and say why.
+      - Substitute back to check.
+
+questions:
+  - id: eq8-mcq-change-row
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.8"]
+    prompt: |-
+      For the equilibrium
+
+      $$2\text{SO}_2(g) + \text{O}_2(g) \rightleftharpoons 2\text{SO}_3(g)$$
+
+      a mixture starts with $2.0\ \text{mol}$ of $\text{SO}_2$ and $1.5\ \text{mol}$ of $\text{O}_2$. If $x$ mol of $\text{O}_2$ reacts, what is the equilibrium amount of $\text{SO}_2$?
+    options:
+      - text: $2.0 - 2x$
+        correct: true
+        why: |-
+          1 mol of $\text{O}_2$ reacts with 2 mol of $\text{SO}_2$, so $x$ mol of $\text{O}_2$ uses $2x$ mol of $\text{SO}_2$.
+      - text: $2.0 - x$
+        why: |-
+          This ignores the coefficient 2 in front of $\text{SO}_2$.
+      - text: $2.0 + 2x$
+        why: |-
+          $\text{SO}_2$ is a reactant, so its amount falls rather than rises.
+      - text: $1.5 - x$
+        why: |-
+          That is the equilibrium amount of $\text{O}_2$, not of $\text{SO}_2$.
+    explanation: |-
+      The change row follows the coefficients, so the amount of $\text{SO}_2$ falls by $2x$.
+
+  - id: eq8-cloze-total
+    format: cloze
+    difficulty: 2
+    objectives: ["7.1.8"]
+    prompt: |-
+      In the equilibrium $2\text{NO}_2(g) \rightleftharpoons \text{N}_2\text{O}_4(g)$, starting with $1.00\ \text{mol}$ of $\text{NO}_2$ and letting $x$ mol react, the equilibrium amount of $\text{NO}_2$ is $1.00 - {{1}}x$ and the total number of moles at equilibrium is $1.00 - {{2}}x$.
+    blanks:
+      - accept: ["2"]
+      - accept: ["1"]
+    explanation: |-
+      $x$ mol of $\text{N}_2\text{O}_4$ forms, using $2x$ mol of $\text{NO}_2$: amounts are $1.00 - 2x$ and $x$, so the total is $1.00 - x$.
+
+  - id: eq8-numeric-hcl
+    format: numeric
+    difficulty: 3
+    objectives: ["7.1.8"]
+    prompt: |-
+      In a $1.00\ \text{dm}^3$ flask, $1.00\ \text{mol}$ of $\text{H}_2$ and $1.00\ \text{mol}$ of $\text{Cl}_2$ reach equilibrium at a temperature where
+
+      $$\text{H}_2(g) + \text{Cl}_2(g) \rightleftharpoons 2\text{HCl}(g) \qquad K_c = 9.00$$
+
+      Calculate the equilibrium concentration of $\text{HCl}$, in $\text{mol dm}^{-3}$, to 2 significant figures.
+    fields:
+      - label: "[HCl] ="
+        answer: 1.2
+        tolerance: { abs: 0.05 }
+        sigFigs: 2
+        unit: mol dm^-3
+    explanation: |-
+      With $x$ mol of $\text{H}_2$ reacting,
+
+      $$K_c = \frac{(2x)^2}{(1.00-x)^2} = 9.00$$
+
+      so $\dfrac{2x}{1.00-x} = 3$, giving $x = 0.60$ and $[\text{HCl}] = 2x = 1.20\ \text{mol dm}^{-3}$.
+
+  - id: eq8-numeric-hi
+    format: numeric
+    difficulty: 3
+    objectives: ["7.1.8"]
+    prompt: |-
+      In a $1.00\ \text{dm}^3$ vessel, $1.00\ \text{mol}$ of $\text{HI}$ is left to reach equilibrium at $700\ \text{K}$:
+
+      $$2\text{HI}(g) \rightleftharpoons \text{H}_2(g) + \text{I}_2(g) \qquad K_c = 0.0200$$
+
+      Calculate the equilibrium concentration of $\text{H}_2$, in $\text{mol dm}^{-3}$, to 2 significant figures.
+    fields:
+      - label: "[H2] ="
+        answer: 0.11
+        tolerance: { abs: 0.01 }
+        sigFigs: 2
+        unit: mol dm^-3
+    explanation: |-
+      $\sqrt{0.0200} = \dfrac{x}{1.00 - 2x} = 0.141$, so $x = 0.110\ \text{mol dm}^{-3}$, which is $[\text{H}_2]$.
+
+  - id: eq8-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["7.1.8"]
+    prompt: |-
+      A student sets up an equilibrium calculation. Which line contains the first error?
+    lines:
+      - The equilibrium is $2\text{HI}(g) \rightleftharpoons \text{H}_2(g) + \text{I}_2(g)$, starting with $1.00\ \text{mol}$ of $\text{HI}$ in a $1.00\ \text{dm}^3$ vessel.
+      - Let $x$ mol of $\text{H}_2$ form, so $x$ mol of $\text{HI}$ reacts.
+      - The equilibrium concentrations are $[\text{HI}] = 1.00 - x$, $[\text{H}_2] = x$ and $[\text{I}_2] = x$.
+      - So $K_c = \dfrac{x^2}{(1.00 - x)^2}$.
+    errorLine: 2
+    fix: |-
+      Forming $x$ mol of $\text{H}_2$ uses **$2x$** mol of $\text{HI}$, because the coefficient of $\text{HI}$ is 2. The correct concentrations are $[\text{HI}] = 1.00 - 2x$, $[\text{H}_2] = [\text{I}_2] = x$.
+    explanation: |-
+      Line 1 is correct, so line 2 is the first error: the coefficient 2 has been ignored in the change row.
+
+  - id: eq8-explain
+    format: explain
+    difficulty: 3
+    objectives: ["7.1.8"]
+    prompt: |-
+      Explain how you would calculate the equilibrium concentrations in a reaction when you are given the starting amounts, the volume and the value of $K_c$, and explain why taking a square root is often the quickest way to finish the calculation.
+    model: |-
+      Define $x$ as the amount of one substance that reacts, then use the coefficients to write the change in every other substance as a multiple of $x$. Combine the starting amounts with these changes to get the equilibrium amount of each substance, and divide by the volume to get concentrations. Write the $K_c$ expression and substitute these expressions in $x$, which produces an equation with a single unknown. When the resulting equation has a squared expression on both the top and the bottom, both sides are perfect squares, so taking the square root converts it into a linear equation in $x$ that can be solved by simple rearrangement. This avoids expanding brackets and solving a quadratic, which the syllabus does not require. A square root gives one positive and one negative possibility in general, so reject any negative root because a negative amount is impossible, and check the accepted answer by substituting it back into the original expression.
+    keyPoints:
+      - Define $x$ and use coefficients for the change in every substance.
+      - Convert equilibrium amounts to concentrations using the volume.
+      - Substitute into $K_c$ to get one equation in one unknown.
+      - If both sides are perfect squares, square-root both sides to get a linear equation.
+      - Reject negative roots and check by substitution.
+    explanation: |-
+      The table reduces the problem to one unknown, and the perfect-square structure of typical Cambridge data lets you avoid quadratics entirely.

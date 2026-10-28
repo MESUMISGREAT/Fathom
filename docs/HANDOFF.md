@@ -248,12 +248,34 @@ changes alongside lessons:
 - **The other chat’s worktree is gone from this VM.** `/workspace/chats/` contains only this
   chat, so its uncommitted 9701 7.1 drafts are not visible here. Treat 9701 7.1 as claimed
   until proven otherwise, and check `git log --all` plus `wip-snapshot` before writing it.
-- **CLAIMED by chat `0b8e8fe21ee9b5f6eaa0ce13` from 28 Oct ~11:45: 9701 7.1 Chemical
-  equilibria** (10 objectives, prefix `chemical-equilibria`). That chat is writing it now; do
-  not start 9701 7.1 as well. The duplicate 9702 7.1 drafts listed in the warning below were
-  deleted on 28 Oct (never committed), so only the six live `progressive-waves-*` lessons exist.
-  Before starting anything, check this bullet and the `status.mjs` queue; before *publishing*,
-  check both again plus `git fetch`.
+- **9701 7.1 Chemical equilibria is PUBLISHED** (28 Oct, from chat `0b8e8fe21ee9b5f6eaa0ce13`):
+  10 lessons, 63 questions, 5 diagrams, covering all ten outcomes 7.1.1-7.1.10 one lesson per
+  outcome (`chemical-equilibria-reversible-dynamic` 7.1.1, `-le-chatelier` 7.1.2+7.1.3,
+  `-temperature-catalyst` 7.1.2+7.1.3, `-kc-expressions` 7.1.4, `-mole-fraction-partial-pressure`
+  7.1.5, `-kp-expressions` 7.1.6, `-kc-kp-calculations` 7.1.7, `-quantities` 7.1.8,
+  `-what-changes-k` 7.1.9, `-haber-contact` 7.1.10), 2,000-2,600 words each, 6-7 questions each.
+  Diagrams: `chem-equilibria-approach-equilibrium`, `-count-gas-moles`,
+  `-temperature-energy-profile`, `-mole-fraction`, `-haber-tradeoff`; each was rasterised with
+  resvg and inspected in light and dark (`npx tsx .work-logs/render-preview.tsx`), which caught
+  and fixed five label collisions and a clipped caption.
+  - **This unit REPLACED the four thin `chemical-equilibria-rebuild-*` lessons** published earlier
+    the same day (735-982 words each, 19 questions between them, no diagrams, one lesson covering
+    four outcomes). Those four were deleted in the same commit; they remain in history at
+    `9bb1a35` if anyone wants to recover them. Reason: two sets for one topic would collide on
+    `order` and the thin set could not teach 7.1.4-7.1.7 in 982 words. Do not resurrect them
+    alongside the ten-lesson unit.
+  - **Diagram labels in this unit are plain SVG text, not `MathLabel`.** `MathLabel` renders via
+    `foreignObject`, which resvg cannot draw, so any KaTeX label is invisible in local previews
+    and cannot be inspected. Subscripts are real `<tspan>` shifts (`dy=4`, `fontSize=11`) because
+    DejaVu Sans has no U+2080-2089 glyphs and falls back to full-size digits.
+  - **`src/components/diagrams/9709/index.ts` was broken on `main`** (commit `085c64b`): it
+    imported twelve `p3-vectors-*`/`p3-numerical-solution-*` modules that do not exist in the
+    repo, so `tsc` failed for anyone starting from `main`. `npm run diagrams:gen` regenerated it
+    and the repair is included in this batch. If you see that file churn, it is this fix.
+  - Review caveat, as elsewhere: the re-check was a second adversarial pass by the **same agent**
+    (no separate reviewer model was available), with every worked value recomputed and
+    substituted back in Python, every answer key checked against the site's own checker, and all
+    ten outcomes confirmed taught *and* tested. A teacher review is still outstanding.
 - **Before starting a unit, check that no other chat has it in flight.** Two cloud chats
   share this VM (`/workspace/chats/0b8e8fe21ee9b5f6eaa0ce13` and this one). On 28 Oct the
   other chat was writing **9618 6.1** (three `data-security-*` lessons on disk) and touching
