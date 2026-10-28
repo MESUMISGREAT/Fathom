@@ -1,0 +1,277 @@
+id: p3-vectors-scalar-product
+subject: "9709"
+topic: "3.7"
+title: Scalar product — angles, perpendiculars, and projections
+summary: Learn the dot product (scalar product) of vectors. Use it to find angles between lines, test for perpendicularity, and find the foot of the perpendicular from a point to a line.
+order: 6
+minutes: 9
+kind: core
+objectives: ["3.7.6"]
+prerequisites: [p3-vectors-line-relationships]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.7 outcome "Use formulae to calculate the scalar product
+    of two vectors, and use scalar products in problems involving lines and points. For
+    example, finding the angle between two lines, and finding the foot of the perpendicular
+    from a point to a line; questions may involve 3D objects such as cuboids and tetrahedra
+    (pyramids). Knowledge of the vector product is not required." All examples, questions
+    and diagrams are original.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can compute the scalar (dot) product, use it to find angles between vectors and lines, test for perpendicularity, and find the foot of a perpendicular from a point to a line.
+
+  - type: explain
+    title: The scalar product (dot product)
+    body: |-
+      The **scalar product** of two vectors a = (a₁, a₂, a₃) and b = (b₁, b₂, b₃) is:
+
+      **a · b = a₁b₁ + a₂b₂ + a₃b₃**
+
+      In i/j/k notation: (a₁i + a₂j + a₃k) · (b₁i + b₂j + b₃k) = a₁b₁ + a₂b₂ + a₃b₃.
+
+      **Result is a SCALAR (a number), not a vector.** That's why it's called the "scalar product".
+
+      **Geometric meaning:** a · b = |a| |b| cos θ, where θ is the angle between the vectors (0 ≤ θ ≤ π).
+
+  - type: diagram
+    diagram: p3-vectors-scalar-product
+    alt: >-
+      Two vectors a and b with angle θ between them. The scalar product is |a||b|cos θ.
+      Right panel: a perpendicular to b, so cos 90° = 0, so a·b = 0.
+    caption: |-
+      Left: a · b = |a||b|cos θ. Right: if a ⟂ b, then a · b = 0.
+
+  - type: example
+    title: "Example 1: computing the scalar product"
+    problem: |-
+      Find a · b for a = 2i - 3j + k and b = i + 4j - 2k.
+    steps:
+      - |-
+        a · b = (2)(1) + (-3)(4) + (1)(-2) = 2 - 12 - 2 = -12.
+    answer: |-
+      -12
+
+  - type: check
+    questions: [vec-dot-product]
+
+  - type: explain
+    title: Finding the angle between two vectors
+    body: |-
+      From a · b = |a| |b| cos θ, we get:
+
+      **cos θ = (a · b) / (|a| |b|)**
+
+      Then θ = arccos((a · b) / (|a| |b|)).
+
+      **Important:** The angle between vectors is always 0 ≤ θ ≤ π (0° to 180°). The acute angle between two lines is the smaller of θ and π - θ.
+
+  - type: example
+    title: "Example 2: angle between vectors"
+    problem: |-
+      Find the angle between a = (1, 2, 2) and b = (2, -2, 1).
+    steps:
+      - |-
+        a · b = 1(2) + 2(-2) + 2(1) = 2 - 4 + 2 = 0.
+      - |-
+        |a| = √(1+4+4) = 3. |b| = √(4+4+1) = 3.
+      - |-
+        cos θ = 0 / (3×3) = 0 → θ = 90° (π/2).
+      - |-
+        The vectors are perpendicular.
+    answer: |-
+      90° (the vectors are perpendicular)
+
+  - type: check
+    questions: [vec-angle]
+
+  - type: explain
+    title: Perpendicular vectors
+    body: |-
+      **a ⟂ b  ⇔  a · b = 0**
+
+      This is the most useful test for perpendicularity. No need to find angles — just compute the dot product and check if it's zero.
+
+      Works in 2D and 3D. Works for direction vectors of lines (lines are perpendicular if their direction vectors are perpendicular).
+
+  - type: example
+    title: "Example 3: finding a value for perpendicular lines"
+    problem: |-
+      Line L₁ has direction vector d₁ = (2, k, 1). Line L₂ has direction vector d₂ = (1, -2, 3). Find k if L₁ ⟂ L₂.
+    steps:
+      - |-
+        Perpendicular means d₁ · d₂ = 0.
+      - |-
+        2(1) + k(-2) + 1(3) = 0 → 2 - 2k + 3 = 0 → 5 - 2k = 0 → 2k = 5 → k = 2.5.
+    answer: |-
+      k = 2.5
+
+  - type: check
+    questions: [vec-perpendicular]
+
+  - type: explain
+    title: Foot of the perpendicular from a point to a line
+    body: |-
+      Given line L: r = a + t d, and point P with position vector p. We want the point F on L such that PF ⟂ L.
+
+      **Method:**
+      1. Let F be the point on L with parameter t. Then f = a + t d.
+      2. Vector PF = f - p = (a + t d) - p.
+      3. Since PF ⟂ L, we need PF · d = 0.
+      4. Solve (a + t d - p) · d = 0 for t.
+         → (a - p) · d + t (d · d) = 0
+         → t = -((a - p) · d) / |d|²
+      5. Substitute t back to get f = a + t d.
+
+      **The foot F is the closest point on the line to P.** Distance PF is the shortest distance from P to the line.
+
+  - type: example
+    title: "Example 4: foot of perpendicular"
+    problem: |-
+      Line L: r = (i + 2j - k) + t(2i - j + 2k). Point P has position vector 3i + j + 4k.
+      Find the foot of the perpendicular from P to L, and the perpendicular distance.
+    steps:
+      - |-
+        a = (1, 2, -1), d = (2, -1, 2), p = (3, 1, 4).
+      - |-
+        a - p = (-2, 1, -5).
+      - |-
+        (a - p) · d = (-2)(2) + (1)(-1) + (-5)(2) = -4 - 1 - 10 = -15.
+      - |-
+        |d|² = 2² + (-1)² + 2² = 4 + 1 + 4 = 9.
+      - |-
+        t = -(-15) / 9 = 15/9 = 5/3.
+      - |-
+        f = a + t d = (1, 2, -1) + (5/3)(2, -1, 2) = (1 + 10/3, 2 - 5/3, -1 + 10/3) = (13/3, 1/3, 7/3).
+      - |-
+        PF = f - p = (13/3 - 3, 1/3 - 1, 7/3 - 4) = (4/3, -2/3, -5/3).
+      - |-
+        Distance = |PF| = √((16+4+25)/9) = √(45/9) = √5.
+    answer: |-
+      Foot F = (13/3, 1/3, 7/3). Distance = √5.
+
+  - type: check
+    questions: [vec-foot-perpendicular]
+
+  - type: intuition
+    title: Why the scalar product is powerful
+    body: |-
+      The scalar product converts geometry into algebra:
+      - **Angle** → cos θ = (a·b)/(|a||b|)
+      - **Perpendicular** → a·b = 0
+      - **Parallel** → |a·b| = |a||b| (cos θ = ±1)
+      - **Projection** of a onto b = (a·b/|b|²) b
+      - **Foot of perpendicular** → minimises distance
+
+      It's the bridge between vector arithmetic and geometric properties. Every 3D geometry problem (angles, distances, perpendiculars) ultimately uses the scalar product.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          a · b is a vector.
+        right: |-
+          a · b is a SCALAR (a number). The vector product (cross product) gives a vector, but that's not in the 9709 syllabus.
+      - wrong: |-
+          The angle between lines is found using position vectors of points on the lines.
+        right: |-
+          Use the DIRECTION vectors of the lines, not position vectors. The angle between lines is the angle between their direction vectors.
+      - wrong: |-
+          If a · b = 0, then a = 0 or b = 0.
+        right: |-
+          a · b = 0 means they are perpendicular (or one is the zero vector). Non-zero vectors can have dot product zero!
+      - wrong: |-
+          To find the foot of perpendicular, I need to find the intersection of the line with a perpendicular line through P.
+        right: |-
+          That works but is more work. The formula t = -((a-p)·d)/|d|² is direct and always works. Use it.
+      - wrong: |-
+          The scalar product of a vector with itself is its magnitude.
+        right: |-
+          a · a = |a|² (magnitude squared). √(a·a) = |a|.
+
+  - type: exam
+    body: |-
+      - "Find the angle between the lines..." → use DIRECTION vectors in cos θ = (d₁·d₂)/(|d₁||d₂|).
+      - "Find the value of k for which the lines are perpendicular" → set d₁·d₂ = 0, solve for k.
+      - "Find the foot of the perpendicular from P to the line" → use the formula t = -((a-p)·d)/|d|².
+      - "Find the shortest distance from P to the line" → find foot F, then distance = |PF|.
+      - "Cuboid/tetrahedron problems" → label vertices with position vectors, compute needed vectors, use dot products.
+      - Always state clearly: angle is acute (or specify obtuse if asked). 0 ≤ θ ≤ π.
+
+  - type: takeaways
+    items:
+      - |-
+        a · b = a₁b₁ + a₂b₂ + a₃b₃ = |a||b|cos θ. Result is a scalar.
+      - |-
+        Perpendicular ⇔ a · b = 0. Use direction vectors for lines.
+      - |-
+        Angle between lines: cos θ = (d₁·d₂)/(|d₁||d₂|).
+      - |-
+        Foot of perpendicular from P to r = a + td: t = -((a-p)·d)/|d|², then f = a + td.
+      - |-
+        Works in 2D and 3D. No cross product needed for 9709.
+
+questions:
+  - id: vec-dot-product
+    format: numeric
+    difficulty: 1
+    objectives: ["3.7.6"]
+    prompt: |-
+      Find the scalar product of a = (3, -2, 4) and b = (1, 5, -2).
+    fields:
+      - label: "a · b ="
+        answer: -15
+    explanation: |-
+      3(1) + (-2)(5) + 4(-2) = 3 - 10 - 8 = -15.
+
+  - id: vec-angle
+    format: mcq
+    difficulty: 2
+    objectives: ["3.7.6"]
+    prompt: |-
+      The angle between vectors a = (1, 1, 0) and b = (0, 1, 1) is:
+    options:
+      - text: 60°
+        correct: true
+        why: |-
+          a·b = 1. |a| = √2, |b| = √2. cos θ = 1/2 → θ = 60°.
+      - text: 45°
+        why: |-
+          cos 45° = √2/2 ≈ 0.707, not 0.5.
+      - text: 90°
+        why: |-
+          a·b = 1 ≠ 0, so not perpendicular.
+      - text: 30°
+        why: |-
+          cos 30° = √3/2 ≈ 0.866, not 0.5.
+
+  - id: vec-perpendicular
+    format: numeric
+    difficulty: 2
+    objectives: ["3.7.6"]
+    prompt: |-
+      The vectors (2, k, 3) and (1, -2, 4) are perpendicular. Find k.
+    fields:
+      - label: "k ="
+        answer: 7
+    explanation: |-
+      (2)(1) + k(-2) + 3(4) = 0 → 2 - 2k + 12 = 0 → 14 - 2k = 0 → k = 7.
+
+  - id: vec-foot-perpendicular
+    format: text
+    difficulty: 2
+    objectives: ["3.7.6"]
+    prompt: |-
+      Line L: r = (1, 2, -1) + t(2, -1, 2). Point P = (3, 1, 4). Find the foot of the perpendicular from P to L.
+    accept:
+      - (13/3, 1/3, 7/3)
+      - (4.33, 0.33, 2.33)
+      - 13/3, 1/3, 7/3
+    model: |-
+      (13/3, 1/3, 7/3)
+    explanation: |-
+      a = (1, 2, -1), d = (2, -1, 2), p = (3, 1, 4). a-p = (-2, 1, -5).
+      (a-p)·d = -4 -1 -10 = -15. |d|² = 9. t = -(-15)/9 = 5/3.
+      f = a + (5/3)d = (1+10/3, 2-5/3, -1+10/3) = (13/3, 1/3, 7/3).

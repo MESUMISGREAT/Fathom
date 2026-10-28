@@ -1,0 +1,162 @@
+id: p3-numerical-solution-using-iteration
+subject: "9709"
+topic: "3.6"
+title: Running a given iteration to find a root
+summary: Use a given iterative formula xₙ₊₁ = F(xₙ) to compute successive approximations and state the root to a prescribed accuracy.
+order: 3
+minutes: 8
+kind: core
+objectives: ["3.6.3"]
+prerequisites: [p3-numerical-solution-approximations]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.6 outcome "Understand how a given simple iterative formula
+    of the form xₙ₊₁ = F(xₙ) relates to the equation being solved, and use a given iteration...
+    to determine a root to a prescribed degree of accuracy". All examples, questions and
+    diagrams are original; every value and answer key was computed in Python.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can take a given iteration formula, carry out the calculations accurately, and state the root to the requested number of decimal places or significant figures.
+
+  - type: explain
+    title: The routine
+    body: |-
+      Exam questions give you everything: the equation, the iteration formula xₙ₊₁ = F(xₙ), and the starting value x₁. Your job is to execute it.
+
+      Standard steps:
+
+      1. **Substitute** x₁ into F(xₙ) to get x₂. Write it down.
+      2. **Substitute** x₂ to get x₃. Write it down.
+      3. **Continue** until two consecutive values agree to the required accuracy (usually 2–4 d.p. or 3–4 s.f.).
+      4. **State the root** clearly: "The root is 1.414 (3 d.p.)" or "α = 2.09 (2 d.p.)".
+
+      **Tip:** keep 5–6 decimal places in your working, even if the answer only needs 2–3. Rounding too early accumulates error.
+
+  - type: diagram
+    diagram: p3-numerical-solution-iteration-steps
+    alt: >-
+      Flow chart: Start with equation f(x) = 0 → rearrange to x = F(x) → choose x₁ → iterate
+      x₂ = F(x₁), x₃ = F(x₂)… → check if consecutive values agree to required accuracy → state root.
+    caption: |-
+      The standard workflow: given the iteration, just compute until the values settle.
+
+  - type: example
+    title: "Example 1: basic cubic"
+    problem: |-
+      The iteration xₙ₊₁ = ∛(3xₙ + 4) with x₁ = 2 is used to find a root of x³ − 3x − 4 = 0.
+      Find x₂, x₃, x₄ and state the root correct to 3 decimal places.
+    steps:
+      - |-
+        x₂ = ∛(3×2 + 4) = ∛10 = 2.15443469…
+      - |-
+        x₃ = ∛(3×2.15443469… + 4) = ∛10.463304… = 2.186833…
+      - |-
+        x₄ = ∛(3×2.186833… + 4) = ∛10.5605… = 2.19237…
+      - |-
+        x₅ = ∛(3×2.19237… + 4) = ∛10.5771… = 2.19307…
+      - |-
+        x₆ = ∛(3×2.19307… + 4) = ∛10.5792… = 2.19315…
+      - |-
+        x₅ and x₆ both round to 2.193 (3 d.p.). The root is 2.193.
+    answer: |-
+      x₂ ≈ 2.15443, x₃ ≈ 2.18683, x₄ ≈ 2.19237. The root is 2.193 (3 d.p.).
+
+  - type: check
+    questions: [iter-compute, iter-stop-rule]
+
+  - type: example
+    title: "Example 2: finding a negative root"
+    problem: |-
+      The equation x³ + 2x + 1 = 0 has a root near x = −0.5. The iteration xₙ₊₁ = −(xₙ³ + 1)/2 with x₁ = −0.5 is used. Find the root to 3 d.p.
+    steps:
+      - |-
+        x₂ = −((−0.5)³ + 1)/2 = −(−0.125 + 1)/2 = −0.875/2 = −0.4375
+      - |-
+        x₃ = −((−0.4375)³ + 1)/2 = −(−0.08374… + 1)/2 = −0.91626…/2 = −0.45813…
+      - |-
+        x₄ = −((−0.45813…)³ + 1)/2 = −(−0.09617… + 1)/2 = −0.45191…
+      - |-
+        x₅ = −0.45340…, x₆ = −0.45316…, x₇ = −0.45320…
+      - |-
+        x₆ and x₇ agree to 3 d.p. (−0.453). The root is −0.453.
+    answer: |-
+      x₂ = −0.4375, x₃ ≈ −0.45813, x₄ ≈ −0.45191. The root is −0.453 (3 d.p.).
+
+  - type: intuition
+    title: What if it doesn't settle?
+    body: |-
+      Sometimes the values bounce or drift away. The syllabus says: "candidates are expected to understand that an iteration may fail to converge." If the question gives you the formula, it will converge. If you're rearranging yourself (next lesson), you need to pick a form that does.
+
+      **Exam hint:** if your values are getting larger in magnitude, or alternating wildly without closing in, check your algebra. You may have mis-copied the formula or the starting value.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The iteration always gives the root exactly after a few steps.
+        right: |-
+          The sequence approaches the root. You stop when consecutive terms agree to the requested accuracy. You never get the "exact" root in finitely many steps (unless the root is rational and the iteration hits it exactly, which is rare).
+      - wrong: |-
+          Round each step to the final accuracy (e.g., 3 d.p.) as you go.
+        right: |-
+          Rounding early creates rounding error. Keep 5–6 d.p. in working; only round the final answer.
+      - wrong: |-
+          xₙ₊₁ = F(xₙ) means xₙ = F(xₙ₊₁) (reversing the formula).
+        right: |-
+          The subscript order matters. xₙ₊₁ is the *next* value, computed from xₙ. You cannot run it backwards.
+      - wrong: |-
+          If x₁ = 2 and x₂ = 2.15, the root is roughly 2.15.
+        right: |-
+          x₂ is just the second approximation. You need several more steps to see where it settles. x₂ can be quite far from the true root.
+
+  - type: takeaways
+    items:
+      - |-
+        Follow the recipe: compute x₂, x₃, x₄… until consecutive values agree to the required accuracy.
+      - |-
+        Keep 5–6 decimal places in working; round only the final answer.
+      - |-
+        Write down every value you compute — it shows the examiner the sequence is converging.
+      - |-
+        State the root clearly with the requested precision and units if applicable.
+
+questions:
+  - id: iter-compute
+    format: numeric
+    difficulty: 1
+    objectives: ["3.6.3"]
+    prompt: |-
+      xₙ₊₁ = √(2xₙ + 5) with x₁ = 2. Find x₂ and x₃.
+    fields:
+      - label: "x₂ ="
+        answer: 3
+        tolerance: { rel: 0.001 }
+      - label: "x₃ ="
+        answer: 3.31662479
+        tolerance: { rel: 0.001 }
+    explanation: |-
+      x₂ = √(2×2 + 5) = √9 = 3. x₃ = √(2×3 + 5) = √11 ≈ 3.31662479.
+
+  - id: iter-stop-rule
+    format: mcq
+    difficulty: 1
+    objectives: ["3.6.3"]
+    prompt: |-
+      You are using an iteration to find a root correct to 2 decimal places. You have x₄ = 1.41421 and x₅ = 1.41421. What should you do?
+    options:
+      - text: Stop and state the root as 1.41 (2 d.p.)
+        correct: true
+        why: |-
+          Consecutive values agree to at least 4 d.p., which guarantees they agree to 2 d.p. The root is 1.41.
+      - text: Continue to x₆ to be safe
+        why: |-
+          Unnecessary. If consecutive values agree to the required accuracy (and a couple more places), you can stop.
+      - text: State the root as 1.41421
+        why: |-
+          The question asks for 2 d.p., not the full calculator display.
+      - text: Check x₃ to see if it was different
+        why: |-
+          The convergence check is between consecutive terms. If x₄ and x₅ agree, you're done.

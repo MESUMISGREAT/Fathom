@@ -1,0 +1,210 @@
+id: p3-numerical-solution-approximations
+subject: "9709"
+topic: "3.6"
+title: When the sequence settles down
+summary: Understand how a sequence of approximations converges to a root, and use the notation x₁, x₂, x₃… to track the values.
+order: 2
+minutes: 7
+kind: core
+objectives: ["3.6.2"]
+prerequisites: [p3-numerical-solution-sign-change]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.6 outcome "Understand the idea of, and use the notation for,
+    a sequence of approximations that converges to a root of an equation". All examples,
+    questions and diagrams are original; every value and answer key was computed in Python.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can read and write the notation for a sequence of approximations (x₁, x₂, x₃, …) and recognise when the values are closing in on a root.
+
+  - type: explain
+    title: The idea
+    body: |-
+      The sign-change method tells you *where* a root is. An **iterative sequence** is a practical way to *find* it.
+
+      You start with a guess x₁, then apply a formula to get a better guess x₂, then x₃, and so on. If the formula is well chosen, the values x₁, x₂, x₃, … get closer and closer to the actual root. We say the sequence **converges**.
+
+      In Cambridge notation:
+
+      - x₁ is your starting value (sometimes called the "initial approximation").
+      - x₂, x₃, … are the successive approximations.
+      - The formula linking them is written as **xₙ₊₁ = F(xₙ)**.
+      - The true root is often denoted α (alpha).
+
+      **Convergence** means: as n gets larger, xₙ gets arbitrarily close to α. The differences |xₙ − α| shrink toward zero.
+
+  - type: diagram
+    diagram: p3-numerical-solution-approximations
+    alt: >-
+      Number line from 1.0 to 1.5 showing the sequence of approximations for √2. Points marked
+      at 1.0 (x₁), 1.5 (x₂), 1.4167 (x₃), 1.4142 (x₄) with arrows showing them clustering
+      around the true value √2 ≈ 1.4142. The gap between successive points shrinks visibly.
+    caption: |-
+      The approximations x₁, x₂, x₃, x₄ close in on the root α. The distance between successive terms shrinks.
+
+  - type: example
+    title: "Example 1: the classic iteration for √2"
+    problem: |-
+      The iteration xₙ₊₁ = ½(xₙ + 2/xₙ) with x₁ = 1 is used to find √2. Find x₂, x₃ and x₄.
+    steps:
+      - |-
+        x₂ = ½(1 + 2/1) = ½(3) = 1.5
+      - |-
+        x₃ = ½(1.5 + 2/1.5) = ½(1.5 + 1.3333…) = ½(2.8333…) = 1.41666…
+      - |-
+        x₄ = ½(1.41666… + 2/1.41666…) = ½(1.41666… + 1.41176…) = 1.41421…
+    answer: |-
+      x₂ = 1.5, x₃ ≈ 1.4167, x₄ ≈ 1.4142. The values are converging to √2 ≈ 1.41421356…
+
+  - type: intuition
+    title: Why does it work?
+    body: |-
+      The formula xₙ₊₁ = ½(xₙ + 2/xₙ) is just the average of xₙ and 2/xₙ. If xₙ is an underestimate of √2, then 2/xₙ is an overestimate, and vice versa. Their average is always *closer* to √2 than either one. The errors cancel out.
+
+      This is the essence of a good iterative formula: the errors shrink at each step.
+
+  - type: check
+    questions: [approx-notation, approx-compute]
+
+  - type: explain
+    title: What the syllabus asks you to do
+    body: |-
+      1. **Recognise the notation** xₙ₊₁ = F(xₙ) and the subscript pattern x₁, x₂, x₃…
+      2. **Compute successive values** accurately, keeping enough decimal places (usually 4–6 d.p. is safe).
+      3. **Decide when to stop**: typically when xₙ and xₙ₊₁ agree to the required decimal places, or when the question says "hence find the root correct to 3 d.p."
+      4. **Say it converges** (or not) and state the root to the requested accuracy.
+
+      You are **not** asked to prove convergence or derive the iteration formula — that comes in the next lesson.
+
+  - type: example
+    title: "Example 2: using a given iteration"
+    problem: |-
+      The iteration xₙ₊₁ = ∛(2xₙ + 5) with x₁ = 2 is used to find a root of x³ − 2x − 5 = 0. Find x₂, x₃, x₄ and state the root correct to 2 decimal places.
+    steps:
+      - |-
+        x₂ = ∛(2×2 + 5) = ∛9 = 2.08008…
+      - |-
+        x₃ = ∛(2×2.08008… + 5) = ∛9.16016… = 2.0929…
+      - |-
+        x₄ = ∛(2×2.0929… + 5) = ∛9.1858… = 2.0943…
+      - |-
+        x₅ = ∛(2×2.0943… + 5) = ∛9.1887… = 2.0945…
+      - |-
+        x₄ and x₅ both round to 2.09 (2 d.p.), so the root is 2.09.
+    answer: |-
+      x₂ ≈ 2.0801, x₃ ≈ 2.0929, x₄ ≈ 2.0943. The values settle at 2.09 (2 d.p.).
+
+  - type: check
+    questions: [approx-given-iteration, approx-stop]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          x₁ is the root.
+        right: |-
+          x₁ is just a starting guess. The root is the limit of the sequence, denoted α (or sometimes x∞). You only reach it after many iterations, or in theory after infinitely many.
+      - wrong: |-
+          The sequence must strictly decrease (or increase).
+        right: |-
+          A convergent sequence can bounce above and below the root (oscillate), or approach from one side. What matters is that the *distance to the root* shrinks.
+      - wrong: |-
+          Stop when xₙ = xₙ₊₁ on the calculator.
+        right: |-
+          Calculators have finite precision. Stop when the values agree to the *required accuracy* (e.g., 3 d.p.), not when the display looks identical. Write down the intermediate values to show your working.
+      - wrong: |-
+          Every iteration formula converges.
+        right: |-
+          Some formulas diverge (the values fly away) or oscillate forever. The next lesson covers this.
+
+  - type: takeaways
+    items:
+      - |-
+        Notation: x₁, x₂, x₃, … are successive approximations; xₙ₊₁ = F(xₙ) is the recurrence.
+      - |-
+        Convergence means the terms get closer and closer to a limit α (the root).
+      - |-
+        Compute each step with enough decimal places; stop when the required accuracy is reached.
+      - |-
+        Show your working: write down x₂, x₃, x₄ explicitly.
+
+questions:
+  - id: approx-notation
+    format: mcq
+    difficulty: 1
+    objectives: ["3.6.2"]
+    prompt: |-
+      In the iteration xₙ₊₁ = F(xₙ), what does the subscript n+1 represent?
+    options:
+      - text: The next approximation after xₙ
+        correct: true
+        why: |-
+          xₙ₊₁ is the value obtained by applying the formula to xₙ. The sequence is x₁, x₂ = F(x₁), x₃ = F(x₂), …
+      - text: The previous approximation before xₙ
+        why: |-
+          That would be xₙ₋₁.
+      - text: The true root α
+        why: |-
+          The root is the limit, not a specific term in the sequence.
+      - text: The derivative of xₙ
+        why: |-
+          The subscript is just an index, not a derivative.
+
+  - id: approx-compute
+    format: numeric
+    difficulty: 1
+    objectives: ["3.6.2"]
+    prompt: |-
+      xₙ₊₁ = ½(xₙ + 10/xₙ) with x₁ = 3. Find x₂ and x₃.
+    fields:
+      - label: "x₂ ="
+        answer: 3.1666666667
+        tolerance: { rel: 0.001 }
+      - label: "x₃ ="
+        answer: 3.1622807018
+        tolerance: { rel: 0.001 }
+    explanation: |-
+      x₂ = ½(3 + 10/3) = ½(6.3333…) = 3.16666…; x₃ = ½(3.16666… + 10/3.16666…) = ½(6.32456…) = 3.16228…. This sequence converges to √10 ≈ 3.16227766…
+
+  - id: approx-given-iteration
+    format: numeric
+    difficulty: 2
+    objectives: ["3.6.2"]
+    prompt: |-
+      The iteration xₙ₊₁ = √(2xₙ + 3) with x₁ = 2 is used to solve x² − 2x − 3 = 0. Find x₂, x₃, x₄ and state the root to 2 d.p.
+    fields:
+      - label: "x₂ ="
+        answer: 2.645751311
+        tolerance: { rel: 0.001 }
+      - label: "x₃ ="
+        answer: 2.853664795
+        tolerance: { rel: 0.001 }
+      - label: "x₄ ="
+        answer: 2.925171621
+        tolerance: { rel: 0.001 }
+    explanation: |-
+      x₂ = √(2×2 + 3) = √7 ≈ 2.64575; x₃ = √(2×2.64575 + 3) = √8.2915 ≈ 2.85366; x₄ = √(2×2.85366 + 3) = √8.7073 ≈ 2.92517. The values are converging to 3.00 (the positive root of x² − 2x − 3 = 0 is x = 3). Continue to x₅ ≈ 2.962, x₆ ≈ 2.981, x₇ ≈ 2.990… to see it settle at 3.00.
+
+  - id: approx-stop
+    format: mcq
+    difficulty: 2
+    objectives: ["3.6.2"]
+    prompt: |-
+      You have x₄ = 1.41421 and x₅ = 1.41421 from an iteration. The question asks for the root correct to 3 decimal places. What should you write?
+    options:
+      - text: The root is 1.414 (3 d.p.)
+        correct: true
+        why: |-
+          x₄ and x₅ agree to at least 4 d.p., so they certainly agree to 3 d.p. The root is 1.414.
+      - text: The root is 1.41 (2 d.p.)
+        why: |-
+          You can give more precision, not less, than requested.
+      - text: The root is 1.41421
+        why: |-
+          The question asks for 3 d.p., not the full calculator display.
+      - text: Keep iterating until x₆
+        why: |-
+          If consecutive values already agree to the required accuracy, you can stop. More iterations add no marks.
