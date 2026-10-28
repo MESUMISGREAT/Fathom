@@ -214,8 +214,9 @@ changes alongside lessons:
 
 ## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **323 reviewed lessons, 1853 questions** (9709: 90, 9618: 84, 9702: 70,
-  9701: 79). All are live. Latest publish: 9701 5.1 Enthalpy change, 28 Oct (f31adaa).
+- On `main`: **336 reviewed lessons, 1935 questions** (9709: 103, 9618: 84, 9702: 70,
+  9701: 79). All are live. Latest publish: 9709 3.1+3.2 Algebra + logs/exponentials,
+  28 Oct (48ddba4).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -232,7 +233,8 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 28 published, 126 todo (`node scripts/lessons/status.mjs`). Next unit: **9709 3.1+3.2**.
+- Queue: 29 published, 125 todo (`node scripts/lessons/status.mjs`). Next unit: **9618 5.1+5.2**
+  (then 9702 6.1, 9701 5.2, 9709 3.3+3.4+3.5).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
   - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
@@ -243,6 +245,35 @@ changes alongside lessons:
     the concept needs it. Read that section before writing or reviewing anything. The 9701
     batch below was written in the same understanding-first structure before the expansion
     landed; if you touch it, deepen it, never trim it for length.
+  - **9709 3.1+3.2 Algebra and logarithmic/exponential functions is published** (28 Oct,
+    48ddba4): 13 lessons (`p3-algebra-*` 9 files, `p3-logarithmic-exponential-*` 4 files),
+    79 questions, 7 diagrams (`math-p3-algebra-long-division`, `-modulus-graph`,
+    `-modulus-inequality`, `-binomial-validity`, `math-p3-logarithmic-exponential-inverse-graphs`,
+    `-index-graph`, `-linear-form-plot`). Every objective 3.1.1–3.1.5 and 3.2.1–3.2.4 is
+    taught and tested (`content:check` clean, `tsc` clean, 166 tests pass, all diagrams
+    rendered and inspected in light and dark).
+    - Written in the maths "one question type, one method" style: what they ask, a numbered
+      method with the forgotten step in bold, easy example, check, exam-style example, check,
+      misconceptions, exam technique, takeaways, one deeper section.
+    - Coverage traps worth remembering: factor/remainder theorem must include divisors of the
+      form `(ax + b)` and answer "factorise completely" by dividing then factorising the
+      quotient; partial fractions need all three syllabus forms, including the `(cx + d)^2`
+      and irreducible-quadratic cases; 3.1.5 includes adapting the series (factor out the
+      constant **and** raise it to the power n) and stating the new validity range.
+    - Same caveat as the other batches: the review was a second adversarial pass by the **same
+      agent**, recomputing every key from the question's own data in Python. It caught two
+      wrong keys written into the first draft (`4^x = 3^(x+2)` answered 3.82 instead of 7.64,
+      and a `3x + 5` partial-fraction check answered 1 instead of 3) plus three questions left
+      outside a check block. A separate reviewer should still be run before treating them as
+      final.
+    - **New YAML traps this batch hit** (all now in the "YAML traps" list below): an unquoted
+      `title:` containing `: ` ("Inequalities: the one extra rule"); a `summary:` or `title:`
+      in **double** quotes holding `\ln` (`\l` is an invalid escape — use single quotes); and
+      every question must be listed in a `type: check` block, so a lesson with 7 questions
+      needs a second check block (`title: Practice`) or content:check errors out.
+    - `scripts/lessons/publish.sh`'s commit body was reworded this session: it no longer claims
+      a "separate AI reviewer" when the second pass is the same agent.
+
   - **9701 5.1 Enthalpy change is published** (28 Oct, f31adaa): 7 lessons (`enthalpy-change-*`),
     43 questions, 7 diagrams (`chem-enthalpy-change-exo-endo`, `-pathway`, `-standard-state`,
     `-named-changes`, `-bonds`, `-bond-energy-steps`, `-calorimetry`). Objectives 5.1.1–5.1.7 are

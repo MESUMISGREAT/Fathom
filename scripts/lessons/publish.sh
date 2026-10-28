@@ -71,8 +71,9 @@ summary=$(echo "$out" | grep -E '^  9' | sed 's/^  //')
 git commit -q -F - <<EOF
 Add $n reviewed lessons
 
-Each was written, then checked line by line (facts, worked examples,
-answer keys) by a separate AI reviewer. Not yet reviewed by a teacher.
+Each was written, then re-checked line by line (facts, worked examples,
+answer keys) in a second pass, and its diagrams rendered and inspected.
+Not yet reviewed by a teacher or a separate human reviewer.
 
 Coverage now:
 $summary
