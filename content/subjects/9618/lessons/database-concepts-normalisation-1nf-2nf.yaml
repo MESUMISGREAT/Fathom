@@ -1,0 +1,311 @@
+id: database-concepts-normalisation-1nf-2nf
+subject: "9618"
+topic: "8.1"
+title: Normalisation, 1NF and 2NF
+summary: Remove repeating groups and partial dependencies step by step, and see the update anomalies they cause.
+order: 5
+minutes: 6
+kind: core
+objectives: ["8.1.5"]
+prerequisites: [database-concepts-tables-keys-terminology]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus,
+    topic 8.1 Database Concepts, learning outcome 8.1.5 (First, Second and Third Normal Form).
+    This lesson covers the reasons for normalisation and 1NF to 2NF; 3NF and full design follow
+    in database-concepts-normalisation-3nf. All questions and example data are original.
+    Re-checked line by line on 2026-10-29: every fact, worked example and answer key was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why a database is normalised, test a table against **First Normal Form (1NF)** and **Second Normal Form (2NF)**, and split a table that fails either test.
+
+  - type: explain
+    title: Normalisation is tidying with a purpose
+    body: |
+      **Normalisation** is the process of organising tables so that each fact is stored once, in the table where it belongs.
+
+      It is not tidiness for its own sake. A badly organised table causes three **anomalies** — problems that appear when you insert, update or delete data.
+
+      | Anomaly | What happens in a badly designed table |
+      | --- | --- |
+      | **Insertion** | You cannot add a course until at least one student enrols on it, because the course details only exist inside a student row. |
+      | **Update** | A course title is repeated for every enrolled student, so changing it means changing many rows. Miss one and the table contradicts itself. |
+      | **Deletion** | Deleting the last student on a course erases the course details too, because they were stored only in that student's row. |
+
+      Normalisation removes the repetition that creates these anomalies. It happens in stages called **normal forms**, and each stage assumes the previous one is satisfied.
+
+  - type: definition
+    term: First Normal Form (1NF)
+    body: |
+      A table is in 1NF when every field contains a **single atomic value** — no lists, no repeating groups, and no multiple values in one field — and every record can be uniquely identified by a primary key.
+
+  - type: example
+    title: From a repeating group to 1NF
+    problem: |
+      A school stores enrolments like this:
+
+      | StudentID | StudentName | Courses |
+      | --- | --- | --- |
+      | S01 | Amina Khan | CS101, MA102 |
+      | S02 | Ben Osei | CS101 |
+
+      Explain why this is not in 1NF, and convert it.
+    steps:
+      - |
+        The `Courses` field holds two values for Amina. It is not atomic, so the table is not in 1NF.
+      - |
+        A field that holds a list is called a **repeating group**. You cannot search it reliably, index it properly, or enforce a foreign key on part of it.
+      - |
+        Fix it by giving each course its own row. The primary key becomes the combination `(StudentID, CourseCode)`.
+      - |
+        The result is `Enrolment(StudentID, CourseCode)` and `Student(StudentID, StudentName)`:
+
+        | StudentID | CourseCode |
+        | --- | --- |
+        | S01 | CS101 |
+        | S01 | MA102 |
+        | S02 | CS101 |
+
+      - |
+        Every field now holds one value, and `(StudentID, CourseCode)` identifies each row. The table is in 1NF.
+    answer: |
+      1NF removes the list by storing one value per field, which usually means one row per item in the list.
+
+  - type: definition
+    term: Second Normal Form (2NF)
+    body: |
+      A table is in 2NF when it is in 1NF and **every non-key field depends on the whole primary key**, not just part of it. A field that depends on only part of a composite key is a **partial dependency**.
+
+  - type: explain
+    title: The partial dependency trap
+    body: |
+      2NF only causes trouble when the primary key is **composite** (made of more than one field). If the primary key is a single field, a 1NF table is automatically in 2NF, because there is no "part of the key" for a field to depend on.
+
+      Suppose the enrolment table also stored the course title:
+
+      | StudentID | CourseCode | StudentName | CourseTitle |
+      | --- | --- | --- | --- |
+      | S01 | CS101 | Amina Khan | Introduction to Programming |
+      | S01 | MA102 | Amina Khan | Calculus |
+      | S02 | CS101 | Ben Osei | Introduction to Programming |
+
+      The primary key is `(StudentID, CourseCode)`. Now ask what each non-key field depends on.
+
+      - `StudentName` depends on `StudentID` alone. Amina's name does not change when she takes a different course.
+      - `CourseTitle` depends on `CourseCode` alone. The title does not change when a different student enrols.
+      - Neither field needs the whole key. Both are partial dependencies, so the table is **not in 2NF**.
+
+  - type: example
+    title: Splitting into 2NF
+    problem: |
+      Normalise the enrolment table above into 2NF.
+    steps:
+      - |
+        Put each fact in the table where its key lives. `StudentName` belongs with `StudentID`.
+      - |
+        `CourseTitle` belongs with `CourseCode`.
+      - |
+        What is left — the fact that this student is on this course — depends on both parts, so it stays in the junction table.
+
+        Result:
+
+        `Student(StudentID, StudentName)`
+
+        | StudentID | StudentName |
+        | --- | --- |
+        | S01 | Amina Khan |
+        | S02 | Ben Osei |
+
+        `Course(CourseCode, CourseTitle)`
+
+        | CourseCode | CourseTitle |
+        | --- | --- |
+        | CS101 | Introduction to Programming |
+        | MA102 | Calculus |
+
+        `Enrolment(StudentID, CourseCode)`
+
+        | StudentID | CourseCode |
+        | --- | --- |
+        | S01 | CS101 |
+        | S01 | MA102 |
+        | S02 | CS101 |
+
+      - |
+        Each non-key field now depends on the whole key of its table. `StudentName` depends on `StudentID`; `CourseTitle` depends on `CourseCode`; `Enrolment` has no non-key fields to depend partially on anything.
+    answer: |
+      Three tables: `Student`, `Course`, and the junction `Enrolment`. The partial dependencies have become full dependencies on smaller keys.
+
+  - type: intuition
+    title: One fact, one home
+    body: |
+      Think of each table as a room, and each fact as belonging in exactly one room. A student's name lives in the student room. A course title lives in the course room. The enrolment room holds only the links between them.
+
+      When a fact is stored in the wrong room, you have to update it in every copy. Normalisation is the rule that every fact gets one home, reachable through its key.
+
+  - type: misconceptions
+    items:
+      - wrong: A table is in 1NF if it has a primary key.
+        right: |
+          A primary key is necessary but not sufficient. A field holding a list, such as "CS101, MA102", still breaks 1NF even if the table has a key.
+      - wrong: Every table needs fixing to reach 2NF.
+        right: |
+          A table whose primary key is a single field is already in 2NF once it is in 1NF. Partial dependency needs a composite key to exist.
+      - wrong: Normalising always means more tables, which is always worse.
+        right: |
+          It usually means more tables, but each is simpler and each fact is stored once. The cost is extra joins; the benefit is data that cannot contradict itself.
+      - wrong: Splitting a table loses data.
+        right: |
+          The split keeps every fact and adds keys to reconnect them. A join reconstructs the original view. What is removed is the **duplication**, not the information.
+
+  - type: exam
+    body: |
+      - To test 1NF, look for lists or repeating groups in a field, and check that a primary key exists.
+      - To test 2NF, first confirm 1NF. Then, if the key is composite, ask of every non-key field: "does this depend on the whole key, or only part of it?"
+      - When you split, **state the new tables with their keys**. A mark scheme wants `Student(StudentID, StudentName)` and so on, not just a sentence saying "separate the students".
+      - Explain the anomaly you are removing. "StudentName depends only on StudentID, so repeating it for every course would duplicate Amina's name and risk inconsistency" is a complete answer.
+      - Do not jump to 3NF in a question that asks for 2NF. Do the stage asked, then stop.
+
+  - type: takeaways
+    items:
+      - Normalisation stores each fact once to avoid insertion, update and deletion anomalies.
+      - '1NF: atomic values only, no repeating groups, with a primary key.'
+      - '2NF: 1NF plus no non-key field depending on only part of a composite key.'
+      - A single-field primary key means 1NF is automatically 2NF.
+      - Splitting a table adds keys and removes duplication; it does not lose data.
+
+  - type: check
+    title: Normal forms
+    questions: [first-normal-form-test, atomic-values, single-key-2nf]
+
+  - type: check
+    title: Fix the table
+    questions: [partial-dependency-definition, split-to-2nf, anomaly-question]
+
+questions:
+  - id: first-normal-form-test
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.5"]
+    prompt: |
+      Which table is **not** in First Normal Form?
+    options:
+      - text: A student table whose `Subjects` field contains "Computer Science, Mathematics"
+        correct: true
+        why: |
+          The field holds a list of values, so it is not atomic. Lists and repeating groups break 1NF.
+      - text: A student table with `StudentID`, `Forename` and `Surname`
+        why: |
+          Each field holds one value and `StudentID` identifies the row, so this is in 1NF.
+      - text: A loan table with `LoanID`, `StudentID`, `BookID` and `DueDate`
+        why: |
+          Each field is atomic and `LoanID` is a primary key, so this is in 1NF.
+      - text: A course table with `CourseCode` and `CourseTitle`
+        why: |
+          Both fields hold single values, so this is in 1NF.
+    explanation: |
+      1NF requires atomic values. A comma-separated list in one field is a repeating group.
+
+  - id: atomic-values
+    format: text
+    difficulty: 1
+    objectives: ["8.1.5"]
+    style: definition
+    prompt: |
+      A table is in First Normal Form when every field holds a single ______ value.
+    accept:
+      - atomic
+      - indivisible
+    model: |
+      Atomic: each field contains one indivisible value, with no lists or repeating groups.
+    explanation: |
+      "Atomic" means you cannot sensibly split the value into separate data items.
+
+  - id: single-key-2nf
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.5"]
+    prompt: |
+      A table is in 1NF and its primary key is the single field `BookID`. What can you conclude about 2NF?
+    options:
+      - text: It is automatically in 2NF, because no field can depend on only part of a single-field key
+        correct: true
+        why: |
+          Partial dependency requires part of a composite key. With one key field, there is no part to depend on.
+      - text: It cannot be in 2NF without splitting it
+        why: |
+          Splitting is needed only when there is a partial dependency, which needs a composite key.
+      - text: It is in 2NF only if every field is unique
+        why: |
+          Non-key fields may repeat. 2NF is about what each field depends on, not whether it is unique.
+      - text: There is not enough information, because 2NF also requires 3NF
+        why: |
+          The normal forms are cumulative in the other direction: 3NF requires 2NF, not the reverse.
+    explanation: |
+      With a single-field primary key, every non-key field depends on the whole key, so 1NF implies 2NF.
+
+  - id: partial-dependency-definition
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.5"]
+    prompt: |
+      A table has primary key `(OrderID, ProductID)` and also stores `ProductName`. `ProductName` depends only on `ProductID`. What is this called, and which normal form does it break?
+    options:
+      - text: A partial dependency, which breaks 2NF
+        correct: true
+        why: |
+          The field depends on part of the composite key rather than the whole key, which is exactly what 2NF forbids.
+      - text: A transitive dependency, which breaks 3NF
+        why: |
+          Transitive dependency is a non-key field depending on another non-key field. Here the dependency is on part of the key.
+      - text: A repeating group, which breaks 1NF
+        why: |
+          A repeating group is a list of values in one field. `ProductName` holds one value.
+      - text: Referential integrity, which breaks no normal form
+        why: |
+          Referential integrity is about foreign keys matching primary keys, not about normal forms.
+    explanation: |
+      2NF removes partial dependencies: non-key fields must depend on the whole composite key.
+
+  - id: split-to-2nf
+    format: mcq
+    difficulty: 3
+    objectives: ["8.1.5"]
+    prompt: |
+      `OrderLine(OrderID, ProductID, ProductName, Quantity)` has primary key `(OrderID, ProductID)`. `ProductName` depends only on `ProductID`; `Quantity` depends on both. Which split puts the tables in 2NF?
+    options:
+      - text: "`Product(ProductID, ProductName)` and `OrderLine(OrderID, ProductID, Quantity)`"
+        correct: true
+        why: |
+          The partial dependency moves to a table keyed by its own determinant, leaving only the full dependency in the order line.
+      - text: "`Order(OrderID, Quantity)` and `Product(ProductID, ProductName)`"
+        why: |
+          Quantity describes one product within one order. Moving it to `Order` would lose which product it refers to.
+      - text: "`OrderLine(OrderID, ProductID, ProductName)` and `Quantity(Quantity)`"
+        why: |
+          Splitting off a single non-key field with no key of its own creates a table that cannot identify its rows and still leaves the partial dependency.
+      - text: "`Order(OrderID, ProductID, ProductName, Quantity)`"
+        why: |
+          Combining the fields into one table does not remove the partial dependency.
+    explanation: |
+      Put `ProductName` where its determinant, `ProductID`, is the key. `Quantity` stays with the full key it depends on.
+
+  - id: anomaly-question
+    format: explain
+    difficulty: 2
+    objectives: ["8.1.5"]
+    prompt: |
+      A table stores `StudentID`, `StudentName`, `CourseCode` and `CourseTitle`, with primary key `(StudentID, CourseCode)`. Explain one update anomaly this design causes, and how normalising to 2NF removes it.
+    model: |
+      The course title is repeated once for every student enrolled on that course. If the title changes, every one of those rows must be updated. If one row is missed, the same course has two different titles, so the data is inconsistent. Normalising to 2NF moves `CourseCode` and `CourseTitle` into a separate `Course` table, where the title is stored once. Changing it then means changing a single row, so no copies can disagree.
+    keyPoints:
+      - The course title is duplicated for every enrolment
+      - An update must change every copy or the data becomes inconsistent
+      - 2NF moves CourseTitle into a Course table keyed by CourseCode
+      - The fact is then stored once and updated once
+    explanation: |
+      The anomaly comes from a partial dependency: `CourseTitle` depends only on `CourseCode`, so it repeats for every student on the course.

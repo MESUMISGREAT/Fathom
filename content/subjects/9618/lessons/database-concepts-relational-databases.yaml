@@ -1,0 +1,252 @@
+id: database-concepts-relational-databases
+subject: "9618"
+topic: "8.1"
+title: Relational databases and the DBMS
+summary: How tables linked by keys, managed by a DBMS, fix the problems of separate files.
+order: 2
+minutes: 6
+kind: core
+objectives: ["8.1.2"]
+prerequisites: [database-concepts-file-based-limitations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus,
+    topic 8.1 Database Concepts, learning outcome 8.1.2 (features of a relational database that
+    address the limitations of a file-based approach). All questions are original; the school
+    database is illustrative data written for this lesson.
+    Re-checked line by line on 2026-10-29: every fact, worked example and answer key was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe the features of a **relational database** that fix the limitations of the file-based approach, and explain the role of the **database management system (DBMS)**.
+
+  - type: explain
+    title: A database is not just one big file
+    body: |
+      A **relational database** stores data in a set of **tables**. Each table holds one kind of thing: students, courses, loans. Tables are linked by **keys**, which are values that identify a row or refer to a row in another table.
+
+      Instead of repeating a student's address in every file that needs it, the address is stored once, in the student table. Other tables refer to the student by an ID.
+
+      The data and the programs are separated by a **database management system (DBMS)**. Programs ask the DBMS for data; they never read the storage directly. That single change is what makes the rest of the fixes possible.
+
+  - type: definition
+    term: Relational database
+    body: |
+      A collection of data organised as a set of **tables** (relations) that are linked by shared key fields, where each table stores one type of entity and each row is uniquely identified by a primary key.
+
+  - type: diagram
+    diagram: cs-database-concepts-dbms-layer
+    alt: 'Three application programs on the left connect to a database management system in the middle, which manages a single database of linked tables on the right. Labels list the DBMS services: access control, integrity rules, concurrent access, backup and recovery, and queries.'
+    caption: |
+      Programs no longer open files directly. They go through the DBMS, which controls how the shared data is used.
+
+  - type: explain
+    title: Matching each limitation to its fix
+    body: |
+      Exam questions often ask how a relational database **addresses** the limitations you met in the previous lesson. Learn the pairs.
+
+      | File-based limitation | Relational database feature that addresses it |
+      | --- | --- |
+      | Data redundancy | Each fact is stored once, in one table. Other tables refer to it by key. |
+      | Data inconsistency | There is only one copy to update, so all programs see the same value. |
+      | Program-data dependence | **Data independence**: programs use field names, and the DBMS handles physical storage. |
+      | Concurrent access conflicts | The DBMS controls simultaneous access with locking and transactions. |
+      | Weak security | The DBMS grants **access rights** to users, tables, and even particular fields or views. |
+      | Integrity problems | **Integrity constraints** (such as uniqueness and referential integrity) are enforced centrally. |
+      | No ad hoc queries | Users can write queries in **SQL** without writing a new program. |
+      | Slow searches on large data | **Indexes** let the DBMS find rows without scanning the whole table. |
+      | Recovery after a failure | The DBMS keeps logs and performs backup and recovery. |
+
+      A database does not remove every problem by magic. It gives one central place where each rule can be enforced, instead of hoping every program behaves.
+
+  - type: example
+    title: The school office again
+    problem: |
+      The school replaces its three files with a database containing `Student(StudentID, Forename, Surname, Address)` and `Loan(StudentID, BookID, DueDate)`. A student moves house. Explain why the database handles this better than the three separate files did.
+    steps:
+      - |
+        The address exists in exactly one place: the `Address` field of that student's row. There is no second copy to forget.
+      - |
+        Office staff update one field. Every program that displays the address now reads the new value, because they all read the same row.
+      - |
+        `Loan` does not store the address at all. It stores `StudentID`, which links each loan to the right student.
+      - |
+        If a loan is entered with a `StudentID` that does not exist, a **referential integrity** rule can reject it, so the database cannot contain a loan to a phantom student.
+      - |
+        A new question, such as "which students have overdue books?", can be answered with a query rather than a new program.
+    answer: |
+      The data is stored once and linked by keys, so updates cannot leave copies disagreeing, and the DBMS can enforce the rules centrally.
+
+  - type: misconceptions
+    items:
+      - wrong: The DBMS is another name for the data.
+        right: |
+          The DBMS is the **software** that manages the data: it stores, retrieves, protects and controls access to it. The database is the organised collection of data itself.
+      - wrong: Tables are related just because they are in the same database.
+        right: |
+          Tables are related when a key in one table refers to a key in another. Two tables sitting side by side with no key link are independent.
+      - wrong: A relational database never contains duplicate values.
+        right: |
+          It avoids unnecessary duplication of facts. The same value can legitimately appear in several rows, for example a `StudentID` in many loan rows, because those rows each describe a different loan by that student.
+
+  - type: exam
+    body: |
+      - "Describe how a relational database addresses the limitations of a file-based approach" usually wants **two or three developed pairs**. Say which limitation, then which feature fixes it, then how.
+      - Use the vocabulary: redundancy, inconsistency, data independence, integrity, concurrency, access rights. Examiners look for these terms used correctly.
+      - If the question asks about the DBMS specifically, describe software functions, not the data. A common slip is to describe tables when the question asked about the DBMS.
+      - Do not claim a database is always faster or always smaller. It removes unnecessary duplication and gives central control; performance still depends on design and indexing.
+
+  - type: takeaways
+    items:
+      - A relational database stores data in tables linked by keys, with each fact kept in one place.
+      - A DBMS is the software layer between programs and data. It provides access control, integrity, concurrency, backup and queries.
+      - Central storage removes the copies that caused redundancy and inconsistency.
+      - Data independence means programs can survive changes to how data is physically stored.
+      - SQL lets users ask new questions without writing a new application.
+
+  - type: check
+    title: Database or DBMS?
+    questions: [dbms-role, dbms-not-data, concurrency-fix]
+
+  - type: check
+    title: Applying it
+    questions: [data-independence, relational-fixes, redundancy-fix, spot-the-overclaim]
+
+questions:
+  - id: dbms-role
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.2"]
+    prompt: |
+      What is the main role of a database management system (DBMS)?
+    options:
+      - text: To provide software that controls storing, retrieving, protecting and sharing the data
+        correct: true
+        why: |
+          The DBMS sits between the programs and the stored data and provides all of those services centrally.
+      - text: To hold the data in the same file as the programs that use it
+        why: |
+          Mixing programs and data is closer to the file-based approach. The DBMS separates them.
+      - text: To replace the need for tables and keys
+        why: |
+          A relational DBMS manages tables and keys; it does not remove them.
+      - text: To write the application programs for the user
+        why: |
+          The DBMS provides services to programs; it does not author them.
+    explanation: |
+      The DBMS is the software layer that manages the database and controls access to it.
+
+  - id: dbms-not-data
+    format: text
+    difficulty: 1
+    objectives: ["8.1.2"]
+    style: one-line
+    prompt: |
+      A student says "the DBMS is the collection of tables". In one or two words, what is the DBMS actually?
+    accept:
+      - software
+      - the software
+      - database software
+      - management software
+    model: |
+      The DBMS is software: the program (or programs) that manage the database and control access to the data.
+    explanation: |
+      The tables are the data. The DBMS is the software that stores, retrieves, secures and shares that data.
+
+  - id: concurrency-fix
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.2"]
+    prompt: |
+      Two users try to update the same record at the same moment. Which database feature stops one update silently overwriting the other?
+    options:
+      - text: Concurrency control, such as locking the record while it is being changed
+        correct: true
+        why: |
+          Locking or transaction control makes one user wait, so the updates happen one after the other instead of colliding.
+      - text: An index on the record
+        why: |
+          An index speeds up finding rows. It does not coordinate simultaneous writes.
+      - text: A view of the table
+        why: |
+          A view is a saved query that presents selected data. It does not by itself prevent lost updates.
+      - text: Referential integrity
+        why: |
+          Referential integrity checks that a foreign key matches an existing primary key. It does not manage two users writing at once.
+    explanation: |
+      Concurrent access is controlled by the DBMS, typically with locks or transactions, so updates do not overwrite each other.
+
+  - id: data-independence
+    format: text
+    difficulty: 2
+    objectives: ["8.1.2"]
+    style: definition
+    prompt: |
+      The DBMS lets the way data is physically stored change without the programs that use it being rewritten. What is this property called?
+    accept:
+      - data independence
+      - data independence.
+    model: |
+      Data independence: programs are written against the logical view of the data, so changes to physical storage do not require changes to the programs.
+    explanation: |
+      Data independence is the database answer to program-data dependence.
+
+  - id: relational-fixes
+    format: explain
+    difficulty: 2
+    objectives: ["8.1.2"]
+    prompt: |
+      Describe two features of a relational database that address limitations of the file-based approach.
+    model: |
+      A relational database stores each fact once, in one table, and links tables using keys. This removes the unnecessary duplication that caused data redundancy, and because there is only one copy, an update cannot leave different files disagreeing, which addresses data inconsistency. A DBMS also provides central access control, so different users can be given different rights to tables, fields or views. This is stronger than file-level security, where a user who can open the file can usually see everything in it.
+    keyPoints:
+      - Each fact stored once, with tables linked by keys, removes redundancy
+      - A single copy updated once prevents inconsistency
+      - Central access rights or views improve security
+      - Integrity constraints are enforced by the DBMS
+    explanation: |
+      Each feature must be tied to the limitation it fixes. Naming the feature without saying what it solves earns little.
+
+  - id: redundancy-fix
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.2"]
+    prompt: |
+      In a school database, the `Student` table holds the address and the `Loan` table holds only `StudentID`. Why does this reduce redundancy?
+    options:
+      - text: The address is stored once per student, and loans refer to the student by key
+        correct: true
+        why: |
+          Each loan points at the student row instead of copying the student's details, so the address is not repeated for every loan.
+      - text: The `Loan` table has fewer rows than the `Student` table
+        why: |
+          Row counts do not determine redundancy. What matters is whether the same fact is stored repeatedly.
+      - text: '`StudentID` is shorter than an address'
+        why: |
+          Saving a few characters is not the point. The point is not duplicating the address itself.
+      - text: Every loan must have a different `StudentID`
+        why: |
+          A student can have many loans, so `StudentID` certainly repeats. That repetition is a key link, not duplicated address data.
+    explanation: |
+      Normalised design stores each fact once and uses keys to link to it, which is the database answer to redundancy.
+
+  - id: spot-the-overclaim
+    format: spot-error
+    difficulty: 3
+    objectives: ["8.1.2"]
+    prompt: |
+      A student explains why databases are better than files. Which line is the first that overclaims?
+    lines:
+      - "A relational database stores related data in tables linked by keys."
+      - "The DBMS enforces rules such as referential integrity centrally."
+      - "Because the data is in a database, it will always be faster to search than in files."
+      - "Access rights can be granted to particular users, tables or views."
+      - "SQL lets users ask new questions without writing a new program."
+    errorLine: 3
+    fix: |
+      A database is not automatically faster. A search is faster when the DBMS can use an **index**; without one, it may still have to scan every row. Databases improve control and reduce duplication, not guaranteed speed.
+    explanation: |
+      Claims about performance need a reason. Indexing is the database feature that makes searches fast.

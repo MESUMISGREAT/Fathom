@@ -1,0 +1,219 @@
+id: database-concepts-file-based-limitations
+subject: "9618"
+topic: "8.1"
+title: File-based storage and its limitations
+summary: Why keeping data in a separate file for each program causes duplication, inconsistency and fragile code.
+order: 1
+minutes: 5
+kind: core
+objectives: ["8.1.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus,
+    topic 8.1 Database Concepts, learning outcome 8.1.1 (limitations of the file-based approach).
+    All questions are original. The school-office scenario and the address example are
+    illustrative data written for this lesson.
+    Re-checked line by line on 2026-10-29: every fact, worked example and answer key was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what a **file-based approach** is, and describe several limitations of storing and retrieving data in separate files.
+
+  - type: explain
+    title: One program, one file
+    body: |
+      Imagine a school office with three programs. The reports program reads `students.txt`. The attendance program reads `attendance.csv`. The library program reads `library.csv`.
+
+      Each file was designed for one job, by one person, at one time. Nothing forces the three files to agree with each other.
+
+      That is the **file-based approach**: data is stored in separate files, and each application program knows the layout of the file it uses and reads or writes it directly.
+
+  - type: explain
+    title: Where it goes wrong
+    body: |
+      Because every file is an island, the same fact gets copied, and copies drift apart. Here are the limitations examiners expect you to know.
+
+      | Limitation | What it looks like in practice |
+      | --- | --- |
+      | **Data redundancy** | The same data is stored in more than one file, wasting space. |
+      | **Data inconsistency** | A change is made in one copy but not the others, so the files disagree. |
+      | **Program-data dependence** | The file's structure is written into each program, so changing the file means changing the programs. |
+      | **Difficult sharing and concurrent access** | Two programs updating the same file at once can overwrite each other's changes. |
+      | **Weak security** | Access is controlled file by file, so it is hard to give one user access to some fields but not others. |
+      | **Integrity is hard to enforce** | Nothing stops a program writing an invalid value, such as a date of birth in the future. |
+      | **No easy ad hoc queries** | A new question means writing a new program, not just asking the data. |
+
+      You do not need all seven in every answer. Pick the ones the question's context makes relevant, and explain them with an example.
+
+  - type: example
+    title: The address that moved
+    problem: |
+      A student's address is stored in `students.txt` and also in `library.csv`. The student moves house. The office updates `students.txt` but nobody updates the library file. What has gone wrong, and what could happen next?
+    steps:
+      - |
+        The same fact now exists in two versions: the old address in the library file and the new one in the student file.
+      - |
+        That is **data redundancy**: one fact, stored twice.
+      - |
+        Because only one copy was updated, the files are now **inconsistent**.
+      - |
+        The library program still posts reminders to the old house, so a real letter goes to the wrong place.
+      - |
+        A database would store the address once. Updating it once updates it everywhere it is used.
+    answer: |
+      The duplication caused inconsistency. The library's copy is now wrong, and any output based on it is wrong too.
+
+  - type: misconceptions
+    items:
+      - wrong: A file-based system has no redundancy, because each file is separate.
+        right: |
+          Separation is exactly the problem. Each file keeps its own copy of shared facts such as names and addresses, so the same data is stored many times.
+      - wrong: A spreadsheet is always a database.
+        right: |
+          A spreadsheet is a single file that a program opens directly. A relational database is managed by a **database management system**, which controls access, enforces rules and links tables through keys. The two can look similar on screen but behave very differently.
+      - wrong: Program-data dependence just means the program needs the file to exist.
+        right: |
+          It means the program contains knowledge of the file's **structure** — field order, field widths, record layout. Change the structure and the program may read the wrong bytes or crash.
+
+  - type: exam
+    body: |
+      - A typical question asks you to **describe limitations** of the file-based approach, or to **explain** them in a given scenario. One mark per developed point.
+      - Name the limitation, then say what it causes. "Data redundancy, because the same address is stored in three files, which wastes space and makes updates unreliable" earns more than the bare phrase.
+      - If the question gives a scenario, use its details. Generic answers that ignore the scenario often score half marks.
+      - Do not confuse **redundancy** (the duplication) with **inconsistency** (the copies disagreeing). They are different limitations, and one causes the other.
+
+  - type: deeper
+    title: Why changing a file breaks programs
+    body: |
+      Suppose a program reads each student record as exactly 80 bytes: 30 for the name, 10 for the date of birth, 40 for the address. Those numbers live inside the program's code.
+
+      Now the school needs longer addresses, so the record becomes 100 bytes. The program still reads 80-byte records. Every record after the first is now read from the wrong position, and the output is nonsense.
+
+      In a database, the DBMS sits between the programs and the stored data. Programs ask for fields by name, such as `Student.Forename`, not by byte offset. The DBMS can change how the data is physically stored without the programs noticing. That separation is called **data independence**, and it is one of the main reasons databases replaced file-based systems.
+
+  - type: takeaways
+    items:
+      - The file-based approach stores data in separate files, each read directly by its own program.
+      - Duplicated data causes redundancy, and updates to only some copies cause inconsistency.
+      - Programs depend on the file layout, so changing the file can break them.
+      - File-based systems struggle with sharing, concurrent updates, security, integrity and ad hoc queries.
+
+  - type: check
+    title: Spot the limitations
+    questions: [which-is-a-limitation, name-the-problem, redundancy-example]
+
+  - type: check
+    title: Explain it
+    questions: [program-data-dependence-cloze, file-based-explanation, spot-the-false-claim]
+
+questions:
+  - id: which-is-a-limitation
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.1"]
+    prompt: |
+      Which of these is a limitation of the file-based approach to storing data?
+    options:
+      - text: The same data can be stored in more than one file
+        correct: true
+        why: |
+          That is data redundancy. Each application keeps its own copy of shared facts, so storage is wasted and the copies can disagree.
+      - text: Several programs can read the data at the same time
+        why: |
+          That is a strength of a database, not a limitation of file-based storage. File-based systems struggle to coordinate simultaneous updates.
+      - text: Access to particular fields can be restricted for particular users
+        why: |
+          Fine-grained access control is a database feature. In a file-based system, access is usually all-or-nothing at the file level.
+      - text: Rules such as uniqueness are enforced automatically
+        why: |
+          Automatic enforcement of integrity rules is provided by a database management system, not by separate data files.
+    explanation: |
+      File-based systems duplicate shared data across files. That redundancy is the root of inconsistency, wasted space and unreliable updates.
+
+  - id: name-the-problem
+    format: text
+    difficulty: 1
+    objectives: ["8.1.1"]
+    style: definition
+    prompt: |
+      A student's address is stored in the student file and in the library file. The student moves and only the student file is updated, so the two files now disagree. What is this problem called?
+    accept:
+      - data inconsistency
+      - inconsistency
+      - inconsistent data
+    model: |
+      Data inconsistency: the same fact is held in more than one place, and the copies no longer agree because only one was updated.
+    explanation: |
+      The duplication is **redundancy**; the disagreement between copies is **inconsistency**. Updating one copy and not the other is the classic cause.
+
+  - id: redundancy-example
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.1"]
+    prompt: |
+      Which situation best illustrates **data redundancy**?
+    options:
+      - text: A student's home address is stored in the student file, the attendance file and the library file
+        correct: true
+        why: |
+          The same fact is stored three times, which is exactly what redundancy means.
+      - text: A program refuses to save a date of birth in the future
+        why: |
+          That is an integrity check, and it is a good thing. It does not involve storing the same fact twice.
+      - text: Two users read the same table at the same time
+        why: |
+          Reading shared data is normal in a database. Redundancy is about duplicated storage, not shared access.
+      - text: A query joins the student table to the loan table
+        why: |
+          A join combines tables for one result without permanently duplicating the stored data.
+    explanation: |
+      Redundancy is the unnecessary storing of the same data in more than one place.
+
+  - id: program-data-dependence-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["8.1.1"]
+    prompt: |
+      The structure of a file — the order, type and size of its fields — is written into the programs that use it. Changing that structure therefore means rewriting those programs. This limitation is called program-data {{1}}.
+    blanks:
+      - accept: [dependence, dependency]
+    explanation: |
+      Program-data dependence means the program is tied to the physical layout of the data. A database management system provides data independence instead.
+
+  - id: file-based-explanation
+    format: explain
+    difficulty: 2
+    objectives: ["8.1.1"]
+    prompt: |
+      Explain two limitations of using a file-based approach to store and retrieve data.
+    model: |
+      One limitation is data redundancy. The same data, such as a customer's address, is stored in several separate files because each application keeps its own copy. This wastes storage space. A second limitation is data inconsistency. If the data is updated in one file but not in the others, the files disagree, so different programs produce different answers about the same person. Another limitation is program-data dependence: each program contains the layout of its file, so changing the file structure means rewriting every program that uses it.
+    keyPoints:
+      - Data redundancy, because the same data is duplicated across files
+      - Data inconsistency, because copies are updated separately and disagree
+      - Program-data dependence, because programs depend on the file layout
+      - Difficult concurrent access or weak security
+    explanation: |
+      A strong answer names each limitation, says what causes it and describes the effect. Two fully explained limitations beat a list of seven unexplained phrases.
+
+  - id: spot-the-false-claim
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.1.1"]
+    prompt: |
+      A student lists advantages and disadvantages of the file-based approach. One line is wrong. Which line contains the first error?
+    lines:
+      - "Data is stored in separate files, each used by its own application."
+      - "The same data may be duplicated in several files, which is data redundancy."
+      - "Separate files make it easy for two programs to update the same data at the same time without conflicts."
+      - "Changing the structure of a file can require changes to the programs that read it."
+      - "Producing a new report usually means writing a new program."
+    errorLine: 3
+    fix: |
+      Separate files make concurrent updating **harder**, not easier: two programs can overwrite each other's changes because nothing coordinates them. Coordinated concurrent access is a benefit of a database management system.
+    explanation: |
+      File-based systems have no central control over simultaneous updates. A database uses locking and transactions to prevent lost updates.
