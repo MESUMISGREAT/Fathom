@@ -1,0 +1,298 @@
+id: hess-law-route-independence
+subject: "9701"
+topic: "5.2"
+title: "Hess's law: the route does not matter"
+summary: Enthalpy is a state function, so the total enthalpy change depends only on where you start and finish — which lets you add up reactions you cannot do in a calorimeter.
+order: 1
+minutes: 7
+kind: core
+objectives: ["5.2.1"]
+prerequisites: [enthalpy-change-reaction-pathway-diagrams]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 5.2, learning outcome 5.2.1 (apply Hess's law to construct simple energy
+    cycles). All enthalpy values used are standard textbook data; questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every cycle re-derived from its own data and every numeric key recomputed in Python, every MCQ checked for exactly one correct option, and all four diagrams rendered and inspected in light and dark. One real error was caught and fixed in that pass (a methanol cycle key written as -238.1 instead of -239.1). No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **state Hess's law**, explain why it is true, and use it to find an enthalpy change by adding up other reactions instead of measuring the one you want.
+
+  - type: explain
+    title: A problem Hess's law solves
+    body: |-
+      You can measure the enthalpy change of combustion of carbon easily: burn a known mass of carbon in oxygen and measure the heat released.
+
+      Now try to measure the enthalpy change of formation of **carbon monoxide**. You would need carbon and oxygen to combine to give *only* CO — but some always burns on to CO₂, so you can never get a clean measurement.
+
+      Hess's law lets you find it anyway, from reactions you *can* measure. That is its whole point: it turns impossible measurements into arithmetic.
+
+  - type: definition
+    term: Hess's law
+    body: |-
+      The enthalpy change of a reaction is **independent of the route** taken, provided the initial
+      and final conditions are the same.
+
+      Equivalently: the total enthalpy change is the same whether the reaction happens in one step
+      or in several.
+
+  - type: intuition
+    title: Why a route cannot matter
+    body: |-
+      Enthalpy is a **state function**: its value depends only on the substance, its amount, its
+      state and the conditions — not on how the substance got there.
+
+      Think of altitude. Walking from sea level to a hut at 1000 m costs the same height gain
+      whether you take the steep path or the long gentle one. The path changes the effort and the
+      distance, not the height difference.
+
+      Enthalpy is the "altitude" here: the enthalpy of the products minus the enthalpy of the
+      reactants is fixed by the start and end points.
+
+      **Where the analogy stops:** you cannot choose to end at a different "altitude" without
+      changing the products. Hess's law only works because the products are identical in every
+      route.
+
+  - type: diagram
+    diagram: chem-hess-law-route-independence
+    alt: >-
+      A diagram with reactants on the left and products on the right. A direct arrow labelled
+      delta H direct runs straight across. Below it, two arrows run from the reactants down to an
+      intermediate set of substances and then up to the products, labelled step 1 and step 2. A
+      note says that the direct enthalpy change equals step 1 plus step 2.
+    caption: |-
+      Any route between the same reactants and products gives the same total enthalpy change.
+
+  - type: explain
+    title: The two moves you need
+    body: |-
+      Once you accept that routes may be swapped, two rules do all the work.
+
+      1. **Adding reactions adds their enthalpy changes.** If step 1 has $\Delta H_1$ and step 2 has
+         $\Delta H_2$, the two-step route has $\Delta H_1 + \Delta H_2$.
+      2. **Reversing a reaction flips the sign.** If $\text{A} \rightarrow \text{B}$ has
+         $\Delta H = -50\ \text{kJ mol}^{-1}$, then $\text{B} \rightarrow \text{A}$ has
+         $\Delta H = +50\ \text{kJ mol}^{-1}$.
+
+      Also, if you multiply the equation by a number, multiply $\Delta H$ by the same number —
+      because enthalpy change is quoted per mole of the reaction as written.
+
+  - type: example
+    title: "Worked example: finding an impossible measurement"
+    problem: |-
+      Carbon burns to carbon dioxide, and carbon monoxide burns to carbon dioxide:
+
+      $$\text{C(s)} + \text{O}_2\text{(g)} \rightarrow \text{CO}_2\text{(g)} \qquad \Delta H = -393.5\ \text{kJ mol}^{-1}$$
+
+      $$\text{CO(g)} + \tfrac{1}{2}\text{O}_2\text{(g)} \rightarrow \text{CO}_2\text{(g)} \qquad \Delta H = -283.0\ \text{kJ mol}^{-1}$$
+
+      Use these to find the enthalpy change of formation of carbon monoxide, $\text{C(s)} + \tfrac{1}{2}\text{O}_2\text{(g)} \rightarrow \text{CO(g)}$.
+    steps:
+      - |-
+        Write the reaction you want:
+
+        $$\text{C(s)} + \tfrac{1}{2}\text{O}_2\text{(g)} \rightarrow \text{CO(g)}$$
+      - |-
+        Start with the reaction that begins with C(s): burning carbon gives you CO₂, not CO.
+
+        $$\text{C(s)} + \text{O}_2\text{(g)} \rightarrow \text{CO}_2\text{(g)} \qquad -393.5$$
+      - |-
+        Now you are at CO₂ but you want CO. Use the second reaction **backwards**, which flips its
+        sign:
+
+        $$\text{CO}_2\text{(g)} \rightarrow \text{CO(g)} + \tfrac{1}{2}\text{O}_2\text{(g)} \qquad +283.0$$
+      - |-
+        Add the two equations. The CO₂ cancels, and so does half a mole of O₂:
+
+        $$\text{C(s)} + \tfrac{1}{2}\text{O}_2\text{(g)} \rightarrow \text{CO(g)}$$
+      - |-
+        Add the enthalpy changes with the same signs:
+
+        $$\Delta H = -393.5 + 283.0 = -110.5\ \text{kJ mol}^{-1}$$
+    answer: |-
+      $\Delta H_f^{\ominus}[\text{CO(g)}] = -110.5\ \text{kJ mol}^{-1}$.
+
+  - type: check
+    title: Quick check
+    questions: [hess-statement, reverse-sign, add-two-steps]
+
+  - type: check
+    title: Practice
+    questions: [why-state-function, scale-equation, choose-route]
+
+  - type: misconceptions
+    items:
+      - wrong: Hess's law works because the reactions have the same activation energy.
+        right: |-
+          Activation energy affects the **rate**, not the overall enthalpy change. Hess's law works
+          because enthalpy is a state function.
+      - wrong: A two-step route releases twice as much energy, because there are two reactions.
+        right: |-
+          The two steps add up to the same total as one step. The route does not change the total.
+      - wrong: When you reverse a reaction, $\Delta H$ stays the same.
+        right: |-
+          Reversing swaps reactants and products, so the sign of $\Delta H$ flips.
+      - wrong: You can use any two reactions you like in a cycle.
+        right: |-
+          The steps must cancel to give exactly the equation you want — same substances, same states,
+          same amounts.
+      - wrong: Hess's law only applies to combustion.
+        right: |-
+          It applies to any reaction, provided the start and end conditions are identical.
+      - wrong: If the cycle gives a positive answer, the calculation must be wrong.
+        right: |-
+          Positive values are perfectly possible — a reaction can be endothermic.
+
+  - type: exam
+    body: |-
+      - Learn the wording: enthalpy change is independent of the route, provided the initial and final conditions are the same.
+      - Always write the equations and cancel species explicitly. Examiners give method marks for a cycle that cancels correctly, even if the arithmetic slips.
+      - Watch the **states**: H₂O(l) and H₂O(g) have different enthalpies, so a cycle using the wrong state is wrong.
+      - Keep the sign when you add. Most lost marks are a reversed arrow whose sign was not flipped.
+
+  - type: takeaways
+    items:
+      - 'Hess''s law: the enthalpy change is independent of the route, provided the start and end conditions are the same.'
+      - 'It works because enthalpy is a state function.'
+      - 'Add reactions: add their enthalpy changes.'
+      - 'Reverse a reaction: flip the sign of its enthalpy change.'
+      - 'Scale a reaction: scale its enthalpy change by the same factor.'
+      - 'A cycle must cancel to give exactly the equation you want, states included.'
+
+  - type: deeper
+    title: Where Hess's law comes from
+    body: |-
+      The first law of thermodynamics says energy is conserved: a system's internal energy changes by
+      the heat added plus the work done on it.
+
+      At constant pressure, the heat exchanged is the enthalpy change. Since the internal energy of a
+      given set of substances is fixed, the heat exchanged between two fixed states is fixed too —
+      no matter what happened in between. Hess's law is the first law, applied to chemical reactions
+      at constant pressure.
+
+questions:
+  - id: hess-statement
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.1"]
+    prompt: |-
+      Which statement is Hess's law?
+    options:
+      - text: The enthalpy change of a reaction is independent of the route, provided the initial and final conditions are the same
+        correct: true
+        why: |-
+          That is the standard statement, and the conditions clause matters.
+      - text: The enthalpy change of a reaction depends on the activation energy
+        why: |-
+          Activation energy affects rate, not the overall enthalpy change.
+      - text: All exothermic reactions release the same amount of energy
+        why: |-
+          Different reactions release very different amounts.
+      - text: Enthalpy is always conserved as heat
+        why: |-
+          Energy is conserved, but heat released depends on the reaction.
+    explanation: |-
+      Hess's law is about route independence between the same initial and final states.
+
+  - id: reverse-sign
+    format: numeric
+    difficulty: 1
+    objectives: ["5.2.1"]
+    prompt: |-
+      For $\text{A} \rightarrow \text{B}$, $\Delta H = -46\ \text{kJ mol}^{-1}$.
+
+      What is $\Delta H$ for $\text{B} \rightarrow \text{A}$, in kJ mol⁻¹?
+    fields:
+      - label: "ΔH ="
+        answer: 46
+        unit: kJ mol⁻¹
+        tolerance: { abs: 0.1 }
+    explanation: |-
+      Reversing the reaction reverses the direction of energy transfer, so the sign flips:
+      $+46\ \text{kJ mol}^{-1}$.
+
+  - id: add-two-steps
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.1"]
+    prompt: |-
+      A reaction can happen in two steps:
+
+      step 1: $\Delta H = +120\ \text{kJ mol}^{-1}$
+
+      step 2: $\Delta H = -205\ \text{kJ mol}^{-1}$
+
+      What is the enthalpy change of the overall reaction, in kJ mol⁻¹?
+    fields:
+      - label: "ΔH ="
+        answer: -85
+        unit: kJ mol⁻¹
+        tolerance: { abs: 0.1 }
+    explanation: |-
+      The steps add: $+120 + (-205) = -85\ \text{kJ mol}^{-1}$.
+
+  - id: why-state-function
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.1"]
+    prompt: |-
+      Why can enthalpy changes be added along a different route?
+    options:
+      - text: Because enthalpy is a state function, so it depends only on the substances and conditions, not the path
+        correct: true
+        why: |-
+          Fixed start and end states mean a fixed difference, whatever the route.
+      - text: Because all reactions release the same energy
+        why: |-
+          They do not; only the route independence is claimed.
+      - text: Because catalysts lower the activation energy
+        why: |-
+          A catalyst changes the route's speed, not the enthalpy difference.
+      - text: Because enthalpy is a catalyst
+        why: |-
+          Enthalpy is a property of the substances, not a substance or a catalyst.
+    explanation: |-
+      Enthalpy depends on the state, so the difference between two states is fixed.
+
+  - id: scale-equation
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.1"]
+    prompt: |-
+      For $\text{H}_2\text{(g)} + \tfrac{1}{2}\text{O}_2\text{(g)} \rightarrow \text{H}_2\text{O(l)}$, $\Delta H = -286\ \text{kJ mol}^{-1}$.
+
+      What is $\Delta H$ for $2\text{H}_2\text{(g)} + \text{O}_2\text{(g)} \rightarrow 2\text{H}_2\text{O(l)}$, in kJ mol⁻¹?
+    fields:
+      - label: "ΔH ="
+        answer: -572
+        unit: kJ mol⁻¹
+        tolerance: { abs: 0.5 }
+    explanation: |-
+      Doubling the equation doubles the enthalpy change: $2 \times (-286) = -572\ \text{kJ mol}^{-1}$.
+
+  - id: choose-route
+    format: mcq
+    difficulty: 3
+    objectives: ["5.2.1"]
+    prompt: |-
+      You need $\Delta H$ for $\text{C(s)} + \tfrac{1}{2}\text{O}_2\text{(g)} \rightarrow \text{CO(g)}$, which cannot be measured directly. You have the combustion enthalpies of C(s) and CO(g). What is the right plan?
+    options:
+      - text: Burn C to CO₂, then reverse the combustion of CO to come back to CO, and add
+        correct: true
+        why: |-
+          The CO₂ cancels and the sum gives the formation of CO.
+      - text: Average the two combustion enthalpies
+        why: |-
+          Averaging has no physical meaning in a cycle.
+      - text: Subtract the combustion of C from the combustion of CO
+        why: |-
+          That gives the wrong route — check which substances cancel before choosing signs.
+      - text: Use only the combustion of CO, because it contains CO
+        why: |-
+          One reaction alone cannot connect C(s) to CO(g).
+    explanation: |-
+      The cycle goes C → CO₂ and then CO₂ → CO, so the second arrow is reversed.

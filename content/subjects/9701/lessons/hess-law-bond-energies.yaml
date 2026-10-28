@@ -1,0 +1,317 @@
+id: hess-law-bond-energies
+subject: "9701"
+topic: "5.2"
+title: "Bond energies: break first, then form"
+summary: Every reaction can be imagined as pulling all the reactant bonds apart into gaseous atoms, then making the product bonds — which turns bond enthalpies into a Hess cycle.
+order: 4
+minutes: 7
+kind: core
+objectives: ["5.2.2", "5.2.1"]
+prerequisites: [enthalpy-change-bonds-broken-and-made, hess-law-route-independence]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 5.2, learning outcomes 5.2.2(b) (use of bond energy data) and 5.2.1. Bond
+    enthalpy values are the usual textbook averages; worked answers were checked with Python.
+    Questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every cycle re-derived from its own data and every numeric key recomputed in Python, every MCQ checked for exactly one correct option, and all four diagrams rendered and inspected in light and dark. One real error was caught and fixed in that pass (a methanol cycle key written as -238.1 instead of -239.1). No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can calculate a reaction's enthalpy change from bond enthalpies, using the "bonds broken minus bonds formed" route through gaseous atoms — and say why the answer is only approximate for a real compound.
+
+  - type: explain
+    title: The two-step imagination
+    body: |-
+      Bond enthalpies are defined for **gaseous** species. Breaking a bond always **costs** energy;
+      making a bond always **releases** energy.
+
+      So picture any reaction as two steps:
+
+      1. **Break every bond** in the reactants, giving separate gaseous atoms. This costs the sum of
+         the reactant bond enthalpies.
+      2. **Form every bond** in the products from those atoms. This releases the sum of the product
+         bond enthalpies.
+
+      The atoms in the middle are the same in both steps, so the cycle closes — that is Hess's law
+      doing the work again.
+
+      $$\Delta H_r = \sum \text{bonds broken} - \sum \text{bonds formed}$$
+
+  - type: definition
+    term: Mean bond enthalpy
+    body: |-
+      The average energy needed to break **one mole** of a particular covalent bond, with the
+      species in the **gaseous** state, averaged over a range of compounds.
+
+      It is an average because the same bond (say C–H) is not quite identical in every molecule.
+      That is why bond-enthalpy calculations give values close to, but not exactly, the measured
+      enthalpy change.
+
+  - type: diagram
+    diagram: chem-hess-law-bond-energy-route
+    alt: >-
+      An energy-level style diagram. Reactants sit low on the left. An upward arrow labelled
+      "break bonds: plus the sum of reactant bond enthalpies" leads to a high plateau of separate
+      gaseous atoms. A downward arrow labelled "form bonds: minus the sum of product bond
+      enthalpies" leads to the products on the right, lower than the reactants. A dashed horizontal
+      arrow across the bottom is labelled "delta H reaction, negative".
+    caption: |-
+      Breaking bonds takes you up to gaseous atoms; forming bonds brings you down to the products.
+      The net change is bonds broken minus bonds formed.
+
+  - type: intuition
+    title: Why "broken minus formed" and not the other way round
+    body: |-
+      Breaking bonds **costs** energy, so it appears with a positive sign. Forming bonds
+      **releases** energy, so it appears with a negative sign.
+
+      If the bonds you make are stronger than the bonds you break, more energy is released than
+      taken in, and the reaction is exothermic: $\Delta H$ is negative.
+
+      That is the whole idea of an exothermic reaction in bond terms — stronger bonds on the product
+      side.
+
+  - type: example
+    title: "Worked example: hydrogen and chlorine"
+    problem: |-
+      Calculate $\Delta H_r$ for
+
+      $$\text{H}_2\text{(g)} + \text{Cl}_2\text{(g)} \rightarrow 2\text{HCl(g)}$$
+
+      using bond enthalpies: H–H $= 436$, Cl–Cl $= 242$, H–Cl $= 431\ \text{kJ mol}^{-1}$.
+    steps:
+      - |-
+        Count the bonds **broken** in the reactants:
+
+        $$\text{H–H} + \text{Cl–Cl} = 436 + 242 = 678\ \text{kJ mol}^{-1}$$
+      - |-
+        Count the bonds **formed** in the products. There are **two** HCl molecules, so two H–Cl
+        bonds:
+
+        $$2 \times 431 = 862\ \text{kJ mol}^{-1}$$
+      - |-
+        Subtract:
+
+        $$\Delta H_r = 678 - 862 = -184\ \text{kJ mol}^{-1}$$
+      - |-
+        Negative, as expected: two strong H–Cl bonds replace one H–H and one Cl–Cl.
+    answer: |-
+      $\Delta H_r = -184\ \text{kJ mol}^{-1}$.
+
+  - type: example
+    title: "Worked example: substituting on methane"
+    problem: |-
+      Calculate $\Delta H_r$ for
+
+      $$\text{CH}_4\text{(g)} + \text{Cl}_2\text{(g)} \rightarrow \text{CH}_3\text{Cl(g)} + \text{HCl(g)}$$
+
+      using C–H $= 412$, Cl–Cl $= 242$, C–Cl $= 338$, H–Cl $= 431\ \text{kJ mol}^{-1}$.
+    steps:
+      - |-
+        Bonds broken: one C–H in methane and one Cl–Cl.
+
+        $$412 + 242 = 654\ \text{kJ mol}^{-1}$$
+      - |-
+        Bonds formed: one C–Cl and one H–Cl.
+
+        $$338 + 431 = 769\ \text{kJ mol}^{-1}$$
+      - |-
+        $$\Delta H_r = 654 - 769 = -115\ \text{kJ mol}^{-1}$$
+      - |-
+        Note that three C–H bonds are untouched — they appear on both sides and cancel, so there is
+        no need to count them.
+    answer: |-
+      $\Delta H_r = -115\ \text{kJ mol}^{-1}$.
+
+  - type: check
+    title: Quick check
+    questions: [broken-minus-formed, breaking-sign, count-hcl]
+
+  - type: check
+    title: Practice
+    questions: [calculate-from-bonds, approximate-why, no-change-bonds]
+
+  - type: misconceptions
+    items:
+      - wrong: Forming bonds releases energy, so it is added with a positive sign.
+        right: |-
+          Energy released is subtracted: $\Delta H = \text{broken} - \text{formed}$.
+      - wrong: Bond breaking releases energy.
+        right: |-
+          Breaking always **requires** energy; forming releases it.
+      - wrong: Count each type of bond once, regardless of how many there are.
+        right: |-
+          Multiply by the number of that bond in the balanced equation — two H–Cl bonds in
+          2HCl, four C–H bonds in CH₄.
+      - wrong: Bond-enthalpy calculations give exact enthalpy changes.
+        right: |-
+          Mean bond enthalpies are averages over different compounds, so the answer is only
+          approximate — often within about 5–10%.
+      - wrong: Bond enthalpies apply to liquids and solids too.
+        right: |-
+          They are defined for gaseous species. If a product is liquid, you would also need its
+          enthalpy of vaporisation.
+      - wrong: If $\Delta H$ comes out positive, the bonds formed must be stronger.
+        right: |-
+          A positive value means the bonds broken were stronger overall.
+
+  - type: exam
+    body: |-
+      - Draw the two-step route, or at least list "bonds broken" and "bonds formed" with counts, before doing arithmetic.
+      - Multiply by the number of each bond; write the count down so the examiner can see it.
+      - Quote the unit, kJ mol⁻¹, and check the sign: most simple combustion and addition reactions are exothermic.
+      - If a question asks why the value differs from a data-book value, say that mean bond enthalpies are averages for the same bond in different environments.
+
+  - type: takeaways
+    items:
+      - '$\Delta H_r = \sum$ bonds broken $-$ $\sum$ bonds formed.'
+      - 'Breaking bonds costs energy; forming bonds releases energy.'
+      - 'Mean bond enthalpies are averages for gaseous species, so answers are approximate.'
+      - 'Count bonds by the balanced equation, not by the formula alone.'
+      - 'Bonds that appear unchanged on both sides cancel and need not be counted.'
+
+  - type: deeper
+    title: Why mean values are not exact
+    body: |-
+      The C–H bond in methane needs about $439\ \text{kJ mol}^{-1}$ to break the first hydrogen, but
+      the fourth C–H bond is easier to break because the remaining CH₃ radical is different.
+
+      The tabulated "C–H" value of about $412\ \text{kJ mol}^{-1}$ is an average over many compounds.
+      That averaging is why a calculation for one specific molecule can differ from a calorimetric
+      measurement by several $\text{kJ mol}^{-1}$.
+
+questions:
+  - id: broken-minus-formed
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.2"]
+    prompt: |-
+      Which expression gives the enthalpy change of a reaction from bond enthalpies?
+    options:
+      - text: Bonds broken minus bonds formed
+        correct: true
+        why: |-
+          Breaking costs energy (positive) and forming releases it (negative).
+      - text: Bonds formed minus bonds broken
+        why: |-
+          That reverses the sign: you would predict exothermic reactions as endothermic.
+      - text: Bonds broken plus bonds formed
+        why: |-
+          Adding both ignores that forming releases energy.
+      - text: Bonds formed divided by bonds broken
+        why: |-
+          Dividing energies has no physical meaning here.
+    explanation: |-
+      $\Delta H = \sum(\text{broken}) - \sum(\text{formed})$.
+
+  - id: breaking-sign
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.2"]
+    prompt: |-
+      What happens to the energy when a covalent bond is broken?
+    options:
+      - text: Energy is taken in from the surroundings
+        correct: true
+        why: |-
+          Bond breaking is endothermic; the energy is stored in the separated atoms.
+      - text: Energy is released to the surroundings
+        why: |-
+          That happens when a bond forms, not when it breaks.
+      - text: No energy is involved
+        why: |-
+          Every bond has a bond enthalpy, so breaking always involves energy.
+      - text: Energy is converted into mass
+        why: |-
+          Chemical bond energies are far too small for measurable mass changes.
+    explanation: |-
+      Breaking bonds requires energy.
+
+  - id: count-hcl
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      For $\text{H}_2\text{(g)} + \text{Cl}_2\text{(g)} \rightarrow 2\text{HCl(g)}$, what is the total bond enthalpy of the bonds **formed**, in kJ mol⁻¹?
+
+      Use H–Cl $= 431\ \text{kJ mol}^{-1}$.
+    fields:
+      - label: "Σ formed ="
+        answer: 862
+        unit: kJ mol⁻¹
+        tolerance: { abs: 1 }
+    explanation: |-
+      There are two HCl molecules, so two H–Cl bonds: $2 \times 431 = 862\ \text{kJ mol}^{-1}$.
+
+  - id: approximate-why
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      Why does a calculation using mean bond enthalpies usually give a value slightly different from a measured enthalpy change?
+    options:
+      - text: Mean bond enthalpies are averages over the same bond in different compounds, so none of them is exact for this molecule
+        correct: true
+        why: |-
+          The same bond has slightly different strengths in different environments; averaging loses
+          that detail.
+      - text: Because bond breaking does not really absorb energy
+        why: |-
+          Bond breaking always absorbs energy.
+      - text: Because the calculation ignores the number of moles
+        why: |-
+          The calculation does count moles; that is not the source of the discrepancy.
+      - text: Because Hess's law only applies to formation reactions
+        why: |-
+          Hess's law applies to any reaction.
+    explanation: |-
+      Tabulated bond enthalpies are averages, so the result is an estimate.
+
+  - id: no-change-bonds
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      In the reaction $\text{CH}_4 + \text{Cl}_2 \rightarrow \text{CH}_3\text{Cl} + \text{HCl}$, three C–H bonds appear on both sides of the equation. What should you do with them?
+    options:
+      - text: Ignore them — bonds that are unchanged cancel out
+        correct: true
+        why: |-
+          They are both broken and formed, so their contributions cancel exactly.
+      - text: Count all four C–H bonds as broken
+        why: |-
+          Only one C–H bond is actually broken; the other three are still there at the end.
+      - text: Count them as formed only
+        why: |-
+          They were not formed — they were already present.
+      - text: Count them twice to be safe
+        why: |-
+          Double counting would give the wrong answer.
+    explanation: |-
+      Unchanged bonds cancel, so only the bonds that actually change need counting.
+
+  - id: calculate-from-bonds
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.2"]
+    prompt: |-
+      Calculate $\Delta H_r$ for
+
+      $$\text{CH}_4\text{(g)} + 2\text{Cl}_2\text{(g)} \rightarrow \text{CH}_2\text{Cl}_2\text{(g)} + 2\text{HCl(g)}$$
+
+      using C–H $= 412$, Cl–Cl $= 242$, C–Cl $= 338$, H–Cl $= 431\ \text{kJ mol}^{-1}$.
+
+      Give your answer in kJ mol⁻¹.
+    fields:
+      - label: "ΔH ="
+        answer: -230
+        unit: kJ mol⁻¹
+        tolerance: { abs: 2 }
+    explanation: |-
+      Broken: two C–H ($2 \times 412 = 824$) plus two Cl–Cl ($2 \times 242 = 484$), total $1308$.
+      Formed: two C–Cl ($2 \times 338 = 676$) plus two H–Cl ($2 \times 431 = 862$), total $1538$.
+      So $\Delta H = 1308 - 1538 = -230\ \text{kJ mol}^{-1}$.

@@ -42,6 +42,10 @@ import EnthalpyChangePathway from './enthalpy-change-pathway';
 import EnthalpyChangeStandardState from './enthalpy-change-standard-state';
 import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
 import GasesMolecularCollisions from './gases-molecular-collisions';
+import HessLawBondEnergyRoute from './hess-law-bond-energy-route';
+import HessLawCombustionCycle from './hess-law-combustion-cycle';
+import HessLawFormationCycle from './hess-law-formation-cycle';
+import HessLawRouteIndependence from './hess-law-route-independence';
 import IntermolecularForcesHydrogenBonds from './intermolecular-forces-hydrogen-bonds';
 import IntermolecularForcesMolecularDipoles from './intermolecular-forces-molecular-dipoles';
 import IntermolecularForcesTypes from './intermolecular-forces-types';
@@ -115,6 +119,10 @@ export const diagrams: DiagramRegistry = {
   'chem-enthalpy-change-standard-state': EnthalpyChangeStandardState,
   'chem-first-ionisation-energy-trend': FirstIonisationEnergyTrend,
   'chem-gases-molecular-collisions': GasesMolecularCollisions,
+  'chem-hess-law-bond-energy-route': HessLawBondEnergyRoute,
+  'chem-hess-law-combustion-cycle': HessLawCombustionCycle,
+  'chem-hess-law-formation-cycle': HessLawFormationCycle,
+  'chem-hess-law-route-independence': HessLawRouteIndependence,
   'chem-intermolecular-forces-hydrogen-bonds': IntermolecularForcesHydrogenBonds,
   'chem-intermolecular-forces-molecular-dipoles': IntermolecularForcesMolecularDipoles,
   'chem-intermolecular-forces-types': IntermolecularForcesTypes,
