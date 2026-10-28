@@ -214,9 +214,8 @@ changes alongside lessons:
 
 ## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **316 reviewed lessons, 1810 questions** (9709: 90, 9618: 84, 9702: 70,
-  9701: 72). All are live. Latest publish: 9702 5.2 Gravitational potential energy and
-  kinetic energy, 28 Oct (2df96dc).
+- On `main`: **323 reviewed lessons, 1853 questions** (9709: 90, 9618: 84, 9702: 70,
+  9701: 79). All are live. Latest publish: 9701 5.1 Enthalpy change, 28 Oct (f31adaa).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -233,7 +232,7 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 27 published, 127 todo (`node scripts/lessons/status.mjs`). Next unit: **9701 5.1**.
+- Queue: 28 published, 126 todo (`node scripts/lessons/status.mjs`). Next unit: **9709 3.1+3.2**.
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
   - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
@@ -244,6 +243,19 @@ changes alongside lessons:
     the concept needs it. Read that section before writing or reviewing anything. The 9701
     batch below was written in the same understanding-first structure before the expansion
     landed; if you touch it, deepen it, never trim it for length.
+  - **9701 5.1 Enthalpy change is published** (28 Oct, f31adaa): 7 lessons (`enthalpy-change-*`),
+    43 questions, 7 diagrams (`chem-enthalpy-change-exo-endo`, `-pathway`, `-standard-state`,
+    `-named-changes`, `-bonds`, `-bond-energy-steps`, `-calorimetry`). Objectives 5.1.1–5.1.7 are
+    each taught by a core lesson and tested (`content:check` clean, `tsc` clean, 166 tests pass,
+    all 7 diagrams rendered and inspected in light and dark).
+    - Definitions follow the mark-scheme wording: "one mole of…", "standard conditions",
+      "standard states", plus "completely"/"excess oxygen" for combustion and "from its elements"
+      for formation. ⦵ is written `$\Delta H^{\ominus}$` in maths (the raw ⦵ glyph is not in the
+      bundled fonts and renders as a tofu box in diagrams).
+    - Same caveat: the review was a second adversarial pass by the **same agent**. That pass
+      caught three real errors — a gas-phase hydrogen calculation using a whole mole of O=O
+      instead of half, a wrong key in a calorimetry question, and an inconsistent vaporisation
+      figure. A reviewer should still be run over these before treating them as final.
   - **9702 5.2 Gravitational and kinetic energy is published** (28 Oct, 2df96dc): 5 lessons
     (`gpe-ke-*`), 31 questions, 5 diagrams (`phys-gpe-ke-work-to-gpe`, `-gpe-height-graph`,
     `-derivation`, `-v-squared`, `-falling-exchange`). Objectives 5.2.1–5.2.4 are each taught
