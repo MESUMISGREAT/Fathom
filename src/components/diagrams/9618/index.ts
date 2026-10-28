@@ -48,6 +48,12 @@ import CpuArchitecturePerformance from './cpu-architecture-performance';
 import CpuArchitecturePorts from './cpu-architecture-ports';
 import CpuArchitectureRegisters from './cpu-architecture-registers';
 import CpuArchitectureVonNeumann from './cpu-architecture-von-neumann';
+import DataSecurityAccessRights from './data-security-access-rights';
+import DataSecurityAuthenticationFactors from './data-security-authentication-factors';
+import DataSecurityDefenceLayers from './data-security-defence-layers';
+import DataSecurityPhishingVsPharming from './data-security-phishing-vs-pharming';
+import DataSecurityPrivacyIntegrity from './data-security-privacy-integrity';
+import DataSecuritySystemVsData from './data-security-system-vs-data';
 import HexNibbles from './hex-nibbles';
 import LanguageTranslatorsCompileVsInterpret from './language-translators-compile-vs-interpret';
 import LanguageTranslatorsIdeLayout from './language-translators-ide-layout';
@@ -143,6 +149,12 @@ export const diagrams: DiagramRegistry = {
   'cs-cpu-architecture-ports': CpuArchitecturePorts,
   'cs-cpu-architecture-register-file': CpuArchitectureRegisters,
   'cs-cpu-architecture-von-neumann': CpuArchitectureVonNeumann,
+  'cs-data-security-access-rights': DataSecurityAccessRights,
+  'cs-data-security-authentication-factors': DataSecurityAuthenticationFactors,
+  'cs-data-security-defence-layers': DataSecurityDefenceLayers,
+  'cs-data-security-phishing-vs-pharming': DataSecurityPhishingVsPharming,
+  'cs-data-security-privacy-integrity': DataSecurityPrivacyIntegrity,
+  'cs-data-security-system-vs-data': DataSecuritySystemVsData,
   'cs-hex-nibbles': HexNibbles,
   'cs-language-translators-compile-vs-interpret': LanguageTranslatorsCompileVsInterpret,
   'cs-language-translators-ide-layout': LanguageTranslatorsIdeLayout,
