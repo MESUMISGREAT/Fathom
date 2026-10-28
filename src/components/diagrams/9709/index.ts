@@ -78,6 +78,16 @@ import P2LogarithmicExponentialLogLaws from './p2-logarithmic-exponential-log-la
 import P2NumericalSolutionDivergence from './p2-numerical-solution-divergence';
 import P2NumericalSolutionSignChange from './p2-numerical-solution-sign-change';
 import P2NumericalSolutionStaircase from './p2-numerical-solution-staircase';
+import P3NumericalSolutionSignChange from './p3-numerical-solution-sign-change';
+import P3NumericalSolutionApproximations from './p3-numerical-solution-approximations';
+import P3NumericalSolutionIterationSteps from './p3-numerical-solution-iteration-steps';
+import P3NumericalSolutionRearrangingCobweb from './p3-numerical-solution-rearranging-cobweb';
+import P3VectorsNotation from './p3-vectors-notation';
+import P3VectorsAdditionScalar from './p3-vectors-addition-scalar';
+import P3VectorsMagnitudeUnit from './p3-vectors-magnitude-unit';
+import P3VectorsLineEquation from './p3-vectors-line-equation';
+import P3VectorsLineRelationships from './p3-vectors-line-relationships';
+import P3VectorsScalarProduct from './p3-vectors-scalar-product';
 import P2TrigonometryRForm from './p2-trigonometry-r-form';
 import P2TrigonometryReciprocalGraphs from './p2-trigonometry-reciprocal-graphs';
 import P3AlgebraBinomialValidity from './p3-algebra-binomial-validity';
@@ -184,6 +194,16 @@ export const diagrams: DiagramRegistry = {
   'p2-numerical-solution-divergence': P2NumericalSolutionDivergence,
   'p2-numerical-solution-sign-change': P2NumericalSolutionSignChange,
   'p2-numerical-solution-staircase': P2NumericalSolutionStaircase,
+  'p3-numerical-solution-sign-change': P3NumericalSolutionSignChange,
+  'p3-numerical-solution-approximations': P3NumericalSolutionApproximations,
+  'p3-numerical-solution-iteration-steps': P3NumericalSolutionIterationSteps,
+  'p3-numerical-solution-rearranging-cobweb': P3NumericalSolutionRearrangingCobweb,
+  'p3-vectors-notation': P3VectorsNotation,
+  'p3-vectors-addition-scalar': P3VectorsAdditionScalar,
+  'p3-vectors-magnitude-unit': P3VectorsMagnitudeUnit,
+  'p3-vectors-line-equation': P3VectorsLineEquation,
+  'p3-vectors-line-relationships': P3VectorsLineRelationships,
+  'p3-vectors-scalar-product': P3VectorsScalarProduct,
   'p2-trigonometry-r-form': P2TrigonometryRForm,
   'p2-trigonometry-reciprocal-graphs': P2TrigonometryReciprocalGraphs,
   'quadratic-inequality': QuadraticInequality,
