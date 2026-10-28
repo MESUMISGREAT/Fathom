@@ -1,0 +1,300 @@
+id: bit-manipulation-masking
+subject: "9618"
+topic: "4.3"
+title: "Masks: testing, setting and clearing one bit"
+summary: Use AND to test a bit, OR to set one and XOR to flip one, with masks written as binary, denary or hexadecimal.
+order: 2
+minutes: 8
+kind: core
+objectives: ["4.3.2"]
+prerequisites: [bit-manipulation-shifts, data-rep-binary-addition]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.3 outcome 4.3.2 ("understand how bit
+    manipulation can be used to monitor or control a device") and its guidance: carry out bit
+    manipulation operations, test and set a bit using bit masking, and the bitwise AND, OR and XOR
+    instructions with an operand of the form #n, Bn or &n or the contents of an address. Every mask
+    and result was computed in Python. All questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use AND to test and clear bits, OR to set bits and XOR to flip bits, and write the mask needed to change exactly the bit you want.
+
+  - type: explain
+    title: A stencil for bits
+    body: |-
+      Think of a **mask** as a stencil laid over a row of bits. Where the stencil has a hole, you see (or paint) the bit underneath; where it is solid, nothing gets through.
+
+      In computing the stencil is another bit pattern, and the operation combines it with ACC bit by bit. Each of the three bitwise operations does a different job:
+
+      | Operation | What it is good for | The mask bit that does the work |
+      | --- | --- | --- |
+      | `AND` | **testing** a bit, and **clearing** bits | `1` keeps a bit, `0` clears it |
+      | `OR` | **setting** bits to 1 | `1` sets a bit, `0` leaves it alone |
+      | `XOR` | **flipping** bits | `1` flips a bit, `0` leaves it alone |
+
+      The operations work on all eight bits at once, independently. No carries, no borrowing — bit 3 cannot affect bit 4.
+
+  - type: definition
+    term: Truth tables for one bit
+    body: |-
+      Everything follows from these three tiny tables. Read them as "ACC bit *op* mask bit".
+
+      | ACC bit | Mask bit | AND | OR | XOR |
+      | --- | --- | --- | --- | --- |
+      | 0 | 0 | 0 | 0 | 0 |
+      | 0 | 1 | 0 | 1 | 1 |
+      | 1 | 0 | 0 | 1 | 1 |
+      | 1 | 1 | 1 | 1 | 0 |
+
+      Two facts worth memorising:
+
+      - "`AND` with 0 always gives 0; `AND` with 1 gives back the original bit. That is why AND can test and clear."
+      - "`OR` with 1 always gives 1; `OR` with 0 gives back the original bit. That is why OR can set."
+
+  - type: example
+    title: Testing bit 3
+    problem: |-
+      ACC holds `0101 1010`. Is bit 3 set? (Number the bits from 0 on the right, so bit 3 is the 8s column.)
+    steps:
+      - |-
+        Build a mask with a 1 only in bit 3: `0000 1000`, which is 8 in denary, or `AND B0000 1000`.
+      - |-
+        Line the patterns up and AND each column:
+
+        ```text
+        ACC    0101 1010
+        mask   0000 1000
+        AND    0000 1000
+        ```
+      - |-
+        The result is non-zero (8), so **bit 3 is set**. If the result had been `0000 0000`, the bit would be clear.
+      - |-
+        Notice what the mask threw away: every other bit became 0, whether it was 0 or 1. The mask isolated exactly the bit being asked about.
+    answer: |-
+      The result is `0000 1000` = 8, which is not zero, so bit 3 is set.
+
+  - type: diagram
+    diagram: cs-bit-manipulation-masking
+    alt: >-
+      Three stacked panels, all starting from ACC = 0101 1010. The AND panel masks with 0000 1000 and
+      gives 0000 1000, with the single surviving 1 highlighted: the test succeeds. The OR panel masks
+      with 0000 0100 and gives 0101 1110, with the newly set bit highlighted. The XOR panel masks with
+      0000 1111 and gives 0101 0101, with the four flipped low bits highlighted.
+    caption: |-
+      Same accumulator, three masks, three different jobs: isolate, set, flip.
+
+  - type: explain
+    title: Setting a bit with OR
+    body: |-
+      To switch a bit **on**, OR it with a 1. Every other bit gets OR-ed with 0, which leaves it exactly as it was.
+
+      ACC holds `0101 1010` and you want bit 2 (the 4s column) set. Bit 2 is already 0, so:
+
+      ```text
+      ACC    0101 1010
+      mask   0000 0100
+      OR     0101 1110   (94)
+      ```
+
+      If bit 2 had already been 1, the result would be identical — OR cannot tell the difference. That is a feature: setting something that is already set does no harm.
+
+  - type: explain
+    title: Clearing a bit with AND
+    body: |-
+      To switch a bit **off**, AND it with a 0. The rest of the mask is all 1s, so every other bit is preserved.
+
+      ACC holds `0101 1010` and you want bit 3 cleared:
+
+      ```text
+      ACC    0101 1010
+      mask   1111 0111   (247)
+      AND    0101 0010   (82)
+      ```
+
+      The mask `1111 0111` is "all ones except bit 3" — the opposite of the mask you would use to test it. Working it out is easy: take the single-bit mask `0000 1000` and invert every bit.
+
+  - type: check
+    title: Test, set, clear
+    questions: [mask-and-test, mask-or, mask-clear]
+
+  - type: explain
+    title: Flipping a bit with XOR
+    body: |-
+      XOR gives 1 when the two bits are **different**. With a mask of 1 it inverts the bit; with a mask of 0 it leaves the bit alone.
+
+      ```text
+      ACC    0101 1010
+      mask   0000 1111
+      XOR    0101 0101   (85)
+      ```
+
+      The whole low nibble flipped: `1010` became `0101`. XOR is how you invert a group of bits or toggle a switch (on → off, off → on) with one instruction.
+
+  - type: explain
+    title: Writing the mask in the 9618 instruction set
+    body: |-
+      The bitwise instructions take an operand in the same three number formats as everything else, or a memory address:
+
+      | Written | Meaning |
+      | --- | --- |
+      | `AND B0000 1000` | AND with the binary pattern (spaces are optional) |
+      | `AND #8` | the same mask, written in denary |
+      | `AND &08` | the same mask, written in hexadecimal |
+      | `AND 300` | AND with the contents of address 300 |
+
+      `OR` and `XOR` work the same way. The result always replaces ACC — these instructions have no destination operand, because ACC is the only general purpose register.
+
+      The two shift instructions from the previous lesson, `LSL #n` and `LSR #n`, are often used alongside masks: shift first to bring a bit into a known position, then mask it.
+
+  - type: check
+    title: Masks in instructions
+    questions: [mask-xor, mask-mcq, mask-spot-error]
+
+  - type: check
+    title: One more check
+    questions: [mask-cloze]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          `AND #8` adds 8 to ACC.
+        right: |-
+          `AND` is bitwise, with no carries: each bit of ACC is combined with the matching bit of 8. `ADD #8` is the arithmetic one.
+      - wrong: |-
+          OR-ing a bit with 1 clears it.
+        right: |-
+          OR with 1 **sets** the bit; AND with 0 clears it. Remember: OR is generous, AND is strict.
+      - wrong: |-
+          A test with AND returns the value of the bit (a 1 or a 0).
+        right: |-
+          It returns the mask with the bit still in position: `0000 1000`, not `1`. You interpret "non-zero means set".
+      - wrong: |-
+          To clear bit 3 you AND with `0000 1000`.
+        right: |-
+          That keeps bit 3 and clears everything else. To clear bit 3 you need `1111 0111` — the inverse mask.
+
+  - type: exam
+    body: |-
+      - Show the working as three aligned rows: ACC, mask, result. Examiners award the method even when one bit slips.
+      - Convert the mask carefully. `B0000 1000` is 8; `B0000 0100` is 4; `B1111 0111` is 247. Getting the denary form wrong is the most common error in this topic.
+      - Read the question's verb: **test** → AND; **set** → OR; **clear** → AND with an inverse mask; **toggle** or **invert** → XOR.
+      - Bit numbering starts at 0 on the right. Bit 0 is the 1s column, bit 7 is the 128s column.
+
+  - type: takeaways
+    items:
+      - "`AND` tests a bit (non-zero result means set) and clears bits (mask 0)."
+      - "`OR` sets bits (mask 1) and leaves others unchanged (mask 0)."
+      - "`XOR` flips bits (mask 1) and leaves others unchanged (mask 0)."
+      - Masks can be written `#n`, `Bn`, `&n` or as an address in the 9618 instruction set.
+      - "To clear a bit, use the inverse of its single-bit mask: `1111 0111` clears bit 3."
+
+questions:
+  - id: mask-and-test
+    format: numeric
+    difficulty: 1
+    objectives: ["4.3.2"]
+    prompt: |-
+      ACC holds `0101 1010`. The instruction `AND B0000 1000` is executed. What denary value is now in ACC?
+    fields:
+      - label: "ACC ="
+        answer: 8
+    explanation: |-
+      Only the bit where the mask has a 1 can survive: `0101 1010 AND 0000 1000 = 0000 1000`, which is **8**. A non-zero result means bit 3 was set.
+
+  - id: mask-or
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |-
+      ACC holds `0101 1010`. The instruction `OR B0000 0100` is executed. What denary value is now in ACC?
+    fields:
+      - label: "ACC ="
+        answer: 94
+    explanation: |-
+      `0101 1010 OR 0000 0100 = 0101 1110`. That is 64 + 16 + 8 + 4 + 2 = **94**. Bit 2 has been set; every other bit is unchanged.
+
+  - id: mask-clear
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |-
+      ACC holds `0101 1010`. Which mask clears bit 3 while leaving every other bit unchanged? Give the mask as a **denary** number.
+    fields:
+      - label: "mask ="
+        answer: 247
+    explanation: |-
+      Bit 3 is the 8s column. Clearing it needs a 0 there and 1s everywhere else: `1111 0111` (denary 247). The inverse of the single-bit mask `0000 1000`.
+
+  - id: mask-xor
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |-
+      ACC holds `0101 1010` (90). The instruction `XOR B0000 1111` is executed. What denary value is now in ACC?
+    fields:
+      - label: "ACC ="
+        answer: 85
+    explanation: |-
+      `0101 1010 XOR 0000 1111 = 0101 0101`, because each of the low four bits is flipped. 64 + 16 + 4 + 1 = **85**.
+
+  - id: mask-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["4.3.2"]
+    prompt: |-
+      Which operation should you use to **set** a particular bit to 1, leaving the other bits unchanged?
+    options:
+      - text: OR with a mask that has a 1 in that position
+        correct: true
+        why: |-
+          OR with 1 always gives 1, and OR with 0 returns the original bit, so the other bits are untouched.
+      - text: AND with a mask that has a 1 in that position
+        why: |-
+          That isolates the bit (a test) and clears all the others.
+      - text: XOR with a mask that has a 1 in that position
+        why: |-
+          That flips the bit: if it was already 1 it becomes 0.
+      - text: AND with a mask that has a 0 in that position
+        why: |-
+          That clears the bit.
+    explanation: |-
+      OR sets, AND clears (with a 0), XOR flips. Setting a bit means forcing it to 1 without disturbing anything else.
+
+  - id: mask-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.3.2"]
+    prompt: |-
+      To test whether a bit is set, combine ACC with a mask using {{1}}. To invert a group of bits, use {{2}} with a mask of 1s.
+    blanks:
+      - accept: [AND, and, "AND (bitwise AND)"]
+      - accept: [XOR, xor, "exclusive OR", EOR]
+    explanation: |-
+      AND isolates the bit: the result is non-zero if the bit was 1. XOR with 1s flips the bits under the mask.
+
+  - id: mask-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.3.2"]
+    prompt: |-
+      A student tests whether bit 2 of `0101 1010` is set. Which line contains the first error?
+    lines:
+      - Bit 2 is in the 4s column, so the mask is 0000 0100.
+      - "The mask as a denary number is 4."
+      - "Combine ACC and the mask with OR: 0101 1010 OR 0000 0100 = 0101 1110."
+      - Since the result is not zero, bit 2 is set.
+    errorLine: 3
+    fix: |-
+      Testing uses **AND**, not OR. `0101 1010 AND 0000 0100 = 0000 0000`, so bit 2 was actually **not** set. The OR result happened to be non-zero because other bits were already 1.
+    explanation: |-
+      Lines 1 and 2 are right (bit 2 is worth 4). Line 3 uses OR, which cannot test anything: it returns the other bits as well, so a non-zero answer proves nothing. The correct conclusion is that bit 2 is clear.

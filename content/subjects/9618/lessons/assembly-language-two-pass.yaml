@@ -1,0 +1,312 @@
+id: assembly-language-two-pass
+subject: "9618"
+topic: "4.2"
+title: "The two-pass assembler: finding everything before building anything"
+summary: Follow a program through pass 1 (build a symbol table) and pass 2 (generate object code), and see why a forward jump forces the assembler to read the code twice.
+order: 2
+minutes: 8
+kind: core
+objectives: ["4.2.2"]
+prerequisites: [assembly-language-machine-code]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.2 outcome 4.2.2 ("describe the
+    different stages of the assembly process for a two-pass assembler") together with its
+    guidance ("apply the two-pass assembler process to a given simple assembly language
+    program"). The pass 1 / pass 2 division of work follows Cambridge's mark-scheme wording:
+    reads the source one line at a time in both passes, adds labels to the symbol table and
+    removes white space and comments in pass 1, generates object code in pass 2. Addresses,
+    symbol-table entries and the trace were computed with Python. All questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can describe what a **two-pass assembler** does in each pass, build a **symbol table** for a small program, and explain why one pass would not be enough.
+
+  - type: explain
+    title: "The problem: a jump into the future"
+    body: |-
+      Read this program from the top, the way an assembler would:
+
+      ```text
+      100  LDM #3
+      101  STO 200
+      102  loop  LDD 200
+      103        SUB 201
+      104        STO 200
+      105        CMP #0
+      106        JPN loop
+      107        END
+      ```
+
+      Line 106 says `JPN loop`. The assembler has to put the *address* of `loop` into the machine code.
+
+      But `loop` is at address 102, and when the assembler reaches line 106 it has already passed it. In a one-pass assembler it would have needed that address before it knew it.
+
+      A label used **before** it is defined is called a **forward reference**. It is the entire reason assembling takes two passes.
+
+  - type: explain
+    title: Pass 1 — find out where everything is
+    body: |-
+      Pass 1 reads the source code **one line at a time** and builds a map of the program. It does four jobs:
+
+      1. **Reads each line** in turn.
+      2. **Removes white space and comments** — they are for humans, and the processor has no use for them.
+      3. **Keeps a count of the address** each instruction will occupy, so it knows where it is in memory (start at 100 and add 1 per instruction here).
+      4. **Adds every label to the symbol table** — a list of label names and the addresses they stand for.
+
+      For the program above, pass 1 produces this symbol table:
+
+      | Label | Address |
+      | --- | --- |
+      | `loop` | 102 |
+
+      Nothing is translated yet. Pass 1 is pure bookkeeping — but now `loop` has a known address even when the code jumps backwards or forwards to it.
+
+  - type: diagram
+    diagram: cs-assembly-language-two-pass
+    alt: >-
+      Two stacked panels. Pass 1 reads the source listing one line at a time and produces a symbol
+      table mapping the label loop to address 102, while discarding comments and white space. Pass 2
+      reads the source again, replaces the label with its address from the symbol table, and outputs
+      machine code: the JPN instruction becomes JPN 102.
+    caption: |-
+      Pass 1 builds the map; pass 2 uses it. Both passes read the source code one line at a time.
+
+  - type: explain
+    title: Pass 2 — build the machine code
+    body: |-
+      Pass 2 reads the source code **one line at a time again**, and this time it produces output:
+
+      - every label is **replaced by its address**, looked up in the symbol table (`JPN loop` → `JPN 102`);
+      - each instruction is **translated into machine code** — one machine code instruction per assembly instruction;
+      - the object code is written out, ready to run.
+
+      It is also the pass that can finally complain about a label that is never defined. Pass 1 cannot: it only knows a label is missing once it has read the whole program.
+
+  - type: check
+    title: Which pass does what
+    questions: [twopass-which-pass, twopass-symbol-table, twopass-forward]
+
+  - type: explain
+    title: The table examiners mark
+    body: |-
+      Cambridge asks you to tick the pass where each job happens, and the wording matters:
+
+      | Job | Pass 1 | Pass 2 |
+      | --- | --- | --- |
+      | reads the source code one line at a time | ✔ | ✔ |
+      | removes white space and comments | ✔ | |
+      | adds labels to the symbol table | ✔ | |
+      | generates object code | ✔ | |
+
+      Two rows catch people out. Both passes read the code — the second pass is not a clever shortcut, it is a genuine second reading. And "removes white space" belongs to pass 1, because the cleaned listing is what pass 2 works from.
+
+  - type: check
+    title: Stages and errors
+    questions: [twopass-stages, twopass-undefined]
+
+  - type: example
+    title: Doing it by hand
+    problem: |-
+      A program starts at address 400. Assemble the labels, then work out what `JPE done` becomes.
+
+      ```text
+      400        LDM #0
+      401        STO 300
+      402  again LDD 300
+      403        ADD 301
+      404        STO 300
+      405        CMP #5
+      406        JPE done
+      407        JMP again
+      408  done  END
+      ```
+    steps:
+      - |-
+        **Pass 1:** start counting at 400, one address per instruction. `again` is on the third line, so `again = 402`.
+      - |-
+        Keep going: `done` is the ninth instruction, so `done = 408`. The symbol table is `again → 402`, `done → 408`.
+      - |-
+        **Pass 2:** `JPE done` becomes `JPE 408`. `JMP again` becomes `JMP 402`.
+      - |-
+        Every other line is translated as it stands. The output is the object code for all nine instructions.
+    answer: |-
+      `JPE done` assembles to `JPE 408`; `JMP again` assembles to `JMP 402`.
+
+  - type: check
+    title: Your turn
+    questions: [twopass-addresses]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The second pass exists to check the first pass for mistakes.
+        right: |-
+          It exists to **generate the object code** now that all addresses are known. Finding an undefined label is a side effect of having the complete symbol table, not the purpose.
+      - wrong: |-
+          Pass 1 writes the machine code, and pass 2 just adds the labels.
+        right: |-
+          The other way round. Pass 1 builds the symbol table; pass 2 generates the object code, substituting label addresses.
+      - wrong: |-
+          A label's address is the address of the instruction *after* it.
+        right: |-
+          A label gives the address of the instruction it names. In the example, `again` is the `LDD 300` at 402, not 403.
+      - wrong: |-
+          Comments are stored in the object code so the program can be read later.
+        right: |-
+          Pass 1 removes white space and comments: the processor has no use for them, and they would waste memory.
+
+  - type: exam
+    body: |-
+      - "Describe the stages of the assembly process for a two-pass assembler" is two lists, not a story. Name the pass, then the jobs.
+      - Use Cambridge's phrases: *reads the source code one line at a time*, *adds labels to the symbol table*, *removes white space and comments*, *generates object code*.
+      - When asked to **apply** the process, show a two-column symbol table (label | address) with the addresses worked out from the starting address. One mark often depends on counting the first instruction correctly.
+      - If a question says "state why two passes are needed", the answer is forward references: a label may be used before it is defined, so its address is unknown during the first reading.
+
+  - type: takeaways
+    items:
+      - A **forward reference** (a label used before it is defined) is why one pass is not enough.
+      - "**Pass 1** reads one line at a time, removes white space and comments, counts addresses, and builds the **symbol table**."
+      - "**Pass 2** reads the code again, replaces labels with addresses, and **generates object code**."
+      - An undefined label can only be reported in pass 2, once the whole symbol table exists.
+      - Both passes read the source code one line at a time.
+
+questions:
+  - id: twopass-which-pass
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.2"]
+    prompt: |-
+      In which pass of a two-pass assembler is the **symbol table** built?
+    options:
+      - text: Pass 1
+        correct: true
+        why: |-
+          Pass 1 records each label with the address the instruction will occupy, before any code is generated.
+      - text: Pass 2
+        why: |-
+          Pass 2 *uses* the symbol table to replace labels with addresses; it does not build it.
+      - text: Both passes build half each
+        why: |-
+          The table has to be complete before pass 2 starts, so it is entirely a pass 1 job.
+      - text: Neither — the programmer supplies it
+        why: |-
+          The assembler builds it automatically from the labels in the source code.
+    explanation: |-
+      Pass 1: build the symbol table, remove white space and comments. Pass 2: generate object code, using the symbol table.
+
+  - id: twopass-symbol-table
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.2"]
+    prompt: |-
+      A program starts at address 500.
+
+      ```text
+      500  LDM #0
+      501  STO 250
+      502  top  LDD 250
+      503       INC ACC
+      504       STO 250
+      505       CMP #4
+      506       JPN top
+      507       END
+      ```
+
+      What address is stored in the symbol table for the label `top`?
+    fields:
+      - label: "top ="
+        answer: 502
+    explanation: |-
+      Count one address per instruction from 500: `LDM #0` is 500, `STO 250` is 501, so `top` (the `LDD 250`) is **502**. The label names the instruction it sits on, not the one after it.
+
+  - id: twopass-forward
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["4.2.2"]
+    prompt: |-
+      Explain why a single-pass assembler would struggle with a jump to a label that appears later in the program.
+    accept:
+      - forward reference
+      - the label is not known yet
+      - the address of the label is not yet known
+      - it has not reached the label yet
+      - the address has not been calculated
+      - the symbol table is incomplete
+      - it does not know the address until later
+    model: |-
+      Because the label has not been reached yet, so its address is unknown when the jump instruction is translated. This is a forward reference. A two-pass assembler solves it by recording the address in pass 1 and filling it in during pass 2.
+    explanation: |-
+      The assembler must know the target address to generate the machine code for a jump. Reading the whole program once first turns every unknown label into a known address.
+
+  - id: twopass-stages
+    format: cloze
+    difficulty: 2
+    objectives: ["4.2.2"]
+    prompt: |-
+      During pass 1 the assembler removes white space and {{1}}, and adds each label to the {{2}}. During pass 2 it generates {{3}}.
+    blanks:
+      - accept: [comments, comment]
+      - accept: [symbol table, symbol-table, table of symbols]
+      - accept: [object code, machine code, the object code, the machine code]
+    explanation: |-
+      Pass 1: read one line at a time, remove white space and **comments**, record addresses and add labels to the **symbol table**. Pass 2: read again and generate **object code** (machine code).
+
+  - id: twopass-undefined
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.2"]
+    prompt: |-
+      A program uses the label `finish`, but `finish` is never defined anywhere. When can the assembler report this?
+    options:
+      - text: In pass 2, when the label is not found in the symbol table
+        correct: true
+        why: |-
+          The symbol table only exists once the whole source has been read in pass 1, so a missing label is detected when pass 2 looks it up.
+      - text: In pass 1, as soon as the jump is read
+        why: |-
+          In pass 1 the assembler has not yet seen the rest of the program, so a label that appears later would look missing too.
+      - text: While the program is running
+        why: |-
+          The assembler must produce object code before the program can run; an undefined label is an assembly-time error.
+      - text: It cannot be reported at all
+        why: |-
+          It is reported every time — the object code cannot contain an address that does not exist.
+    explanation: |-
+      Pass 1 builds the complete symbol table. Pass 2 then looks up `finish`, fails to find it, and reports an undefined label.
+
+  - id: twopass-addresses
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.2"]
+    prompt: |-
+      A program starts at address 300 and every instruction takes one address.
+
+      ```text
+      300  LDM #1
+      301  STO 400
+      302  again  LDD 400
+      303         ADD 401
+      304         STO 400
+      305         CMP #6
+      306         JPE stop
+      307         JMP again
+      308  stop   END
+      ```
+
+      After assembly, the operand of `JMP again` is replaced by an address. What address is it?
+    fields:
+      - label: "JMP"
+        answer: 302
+    explanation: |-
+      `again` is the third instruction, at 300 + 2 = **302**. Pass 2 replaces the label with the number, so `JMP again` becomes `JMP 302`. (`JPE stop` becomes `JPE 308`.)

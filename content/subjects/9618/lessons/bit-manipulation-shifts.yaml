@@ -1,0 +1,282 @@
+id: bit-manipulation-shifts
+subject: "9618"
+topic: "4.3"
+title: "Shifting bits: logical, arithmetic and cyclic"
+summary: Move the bits in a register left or right, see what happens to the bits that fall off, and learn why arithmetic shifts keep a negative number negative.
+order: 1
+minutes: 8
+kind: core
+objectives: ["4.3.1"]
+prerequisites: [data-rep-twos-complement]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.3 outcome 4.3.1 ("understand and
+    carry out binary shifts") and its guidance (logical, arithmetic and cyclic shifts; left and
+    right shifts), together with the `LSL #n` and `LSR #n` instructions listed under 4.3.2.
+    Every pattern in this lesson was computed in Python, including the overflow example and the
+    arithmetic right shift of a negative two's complement value. All questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can carry out logical, arithmetic and cyclic shifts on an 8-bit pattern, say what happens to the bits that fall off, and explain when a shift is the same as multiplying or dividing by a power of 2.
+
+  - type: explain
+    title: A row of boxes, and everything moves
+    body: |-
+      A register is just a row of bits. A **shift** slides the whole row one or more places left or right.
+
+      Two things have to be decided every time:
+
+      1. **What goes into the empty end?**
+      2. **What happens to a bit pushed past the edge?**
+
+      The three kinds of shift differ only in their answers to those two questions.
+
+  - type: definition
+    term: Logical shift
+    body: |-
+      Bits move one place left or right; **zeros** enter the empty positions, and any bit pushed past the end is **lost**.
+
+      - **Left** (`LSL`, logical shift left): every bit moves towards the most significant end, zeros enter at the right.
+      - **Right** (`LSR`, logical shift right): every bit moves towards the least significant end, zeros enter at the left.
+
+      Losing bits is not a malfunction. It is what happens when the answer does not fit.
+
+  - type: example
+    title: Shifting 45 to the left, then to the right
+    problem: |-
+      ACC holds `0010 1101` (denary 45). Carry out (a) a logical shift left by 2, (b) a logical shift right by 2.
+    steps:
+      - |-
+        **(a) Left by 2.** Every bit moves two places towards the left and two zeros enter on the right:
+
+        `0010 1101` → `1011 0100`
+
+        Nothing was pushed off the left end, so nothing is lost.
+      - |-
+        The result `1011 0100` is 128 + 32 + 16 + 4 = **180**.
+      - |-
+        Check the arithmetic: 45 × 4 = 180. A left shift of 2 multiplies by $2^2$.
+      - |-
+        **(b) Right by 2.** Every bit moves two places towards the right and two zeros enter on the left:
+
+        `0010 1101` → `0000 1011`
+
+        The two bits that fell off the right end (`0` and `1`) are gone.
+      - |-
+        The result `0000 1011` is **11**, and 45 ÷ 4 = 11.25, so the shift divided by 4 and threw away the remainder.
+    answer: |-
+      (a) `1011 0100` = 180, which is 45 × 4. (b) `0000 1011` = 11, which is 45 ÷ 4 rounded down.
+
+  - type: diagram
+    diagram: cs-bit-manipulation-shifts
+    alt: >-
+      Four bit patterns showing shifts of the byte 1001 0110. Logical left by one: 0010 1100, with a
+      zero entering on the right and the lost 1 shown falling off the left. Logical right by one:
+      0100 1011, with a zero entering on the left. Arithmetic right by one: 1100 1011, with a copy of
+      the sign bit entering on the left. Cyclic left by one: 0010 1101, with the bit that fell off the
+      left re-entering on the right.
+    caption: |-
+      The only differences are the bit that enters and whether the bit that leaves comes back.
+
+  - type: explain
+    title: The multiply and divide rule (and its limits)
+    body: |-
+      For **unsigned** binary, a logical shift is arithmetic in disguise:
+
+      - left shift by $n$ → multiply by $2^n$
+      - right shift by $n$ → divide by $2^n$, discarding the remainder
+
+      It is a fast way for a processor to multiply or divide by 2, 4, 8 and so on — no multiplier circuit needed.
+
+      The rule has a hard limit: **the answer must fit**. `1100 0011` is 195. Shift it left by 1:
+
+      ```text
+      1100 0011   (195)
+      1000 0110   (134)
+      ```
+
+      The leading 1 fell off the end and vanished. 195 × 2 = 390, which needs nine bits, and the register only has eight. The result is not 390 and it is not an error either — it is what a register does when a bit runs out of room. That is **overflow**, and it is why a left shift is only "multiply by 2" while the answer still fits.
+
+  - type: check
+    title: Shift and check
+    questions: [shift-lsl, shift-lsr, shift-overflow]
+
+  - type: explain
+    title: "Arithmetic shift: keeping the sign"
+    body: |-
+      Negative numbers in two's complement have a 1 in the most significant bit. A logical right shift would slide a 0 into that position and turn a negative number positive — which is nonsense as arithmetic.
+
+      An **arithmetic shift** protects the sign bit:
+
+      - **Arithmetic right shift**: the sign bit is copied into the empty positions on the left. The number stays negative and its size halves.
+      - **Arithmetic left shift**: identical to the logical left shift; bits move left and zeros enter on the right.
+
+      Example — ACC holds `1110 1000`, which is −24 in two's complement:
+
+      | Shift | Result | Value |
+      | --- | --- | --- |
+      | arithmetic right by 2 | `1111 1010` | −6 |
+      | logical right by 2 | `0011 1010` | 58 |
+
+      −24 ÷ 4 = −6, so the arithmetic shift did the job and the logical one destroyed the number. (Right-shifting a negative value rounds *down*: −25 arithmetic-shifted by 2 gives −7, not −6, because −6.25 rounds towards negative infinity.)
+
+  - type: definition
+    term: Cyclic shift
+    body: |-
+      Also called a **rotate**. Bits that fall off one end re-enter at the other end; nothing is lost and nothing is invented.
+
+      `1001 0110` rotated left by 2 gives `0101 1010`: the two bits that left on the left (`10`) come back on the right.
+
+      Cyclic shifts are used when the bits are not one number but a set of flags or a checksum, and every bit matters.
+
+  - type: check
+    title: Signs and wraps
+    questions: [shift-arithmetic-mcq, shift-cyclic-cloze]
+
+  - type: check
+    title: Spot the slip
+    questions: [shift-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A left shift always multiplies by 2.
+        right: |-
+          Only while the result fits and the value is unsigned. `1100 0011` shifted left by 1 loses its leading 1, so the result is 134 rather than 390.
+      - wrong: |-
+          A right shift rounds to the nearest whole number.
+        right: |-
+          It discards the bits that fall off, so it rounds **down** (towards −∞ for a negative value under an arithmetic shift). 45 ÷ 4 becomes 11, not 11.25.
+      - wrong: |-
+          Arithmetic right shift and logical right shift give the same answer for negative numbers.
+        right: |-
+          They differ exactly when the sign bit is 1: arithmetic copies the sign in, logical inserts 0 and produces a positive number.
+      - wrong: |-
+          A cyclic shift can lose bits if you shift too far.
+        right: |-
+          Cyclic shifts never lose bits; they wrap. Only logical and arithmetic shifts lose the bits that leave the register.
+
+  - type: exam
+    body: |-
+      - Write the bit pattern with spaces every four bits (`1011 0100`) so the movement is visible. Sloppy alignment is the main cause of shift errors.
+      - If the question gives a denary value, convert first, shift the pattern, then convert back and say what happened to any lost bit.
+      - The instructions in this syllabus are `LSL #n` and `LSR #n`, which shift ACC **logically** by n places. If a question asks about arithmetic or cyclic shifts, it will describe them rather than name an opcode.
+      - "State the effect of the shift" wants both the bits and the arithmetic: *shifted left by 2, giving 1011 0100 = 180, which is 45 × 4*.
+
+  - type: takeaways
+    items:
+      - "Logical shift: zeros enter, bits that leave the register are lost."
+      - Left shift by n multiplies an unsigned value by $2^n$; right shift divides by $2^n$ and rounds down — while the result fits.
+      - Overflow is a lost 1 bit, not an error message.
+      - Arithmetic right shift copies the sign bit, keeping negative numbers negative.
+      - Cyclic shift wraps bits round from one end to the other, losing nothing.
+
+questions:
+  - id: shift-lsl
+    format: numeric
+    difficulty: 1
+    objectives: ["4.3.1"]
+    prompt: |-
+      The 8-bit pattern `0010 1101` is logically shifted left by 2 places. What is the denary value of the result?
+    fields:
+      - label: "value ="
+        answer: 180
+    explanation: |-
+      `0010 1101` → `1011 0100` (two zeros enter on the right). That is 128 + 32 + 16 + 4 = **180**, which is 45 × 4.
+
+  - id: shift-lsr
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.1"]
+    prompt: |-
+      The 8-bit pattern `0110 1000` is logically shifted right by 3 places. What is the denary value of the result?
+    fields:
+      - label: "value ="
+        answer: 13
+    explanation: |-
+      `0110 1000` is 104. Shifting right by 3 gives `0000 1101` = 8 + 4 + 1 = **13**. That is 104 ÷ 8, with the remainder discarded.
+
+  - id: shift-overflow
+    format: mcq
+    difficulty: 3
+    objectives: ["4.3.1"]
+    prompt: |-
+      `1100 0011` (195) is logically shifted left by 1 place. What is in the register, and what has happened?
+    options:
+      - text: "`1000 0110` — the leading 1 was lost, so the result is 134"
+        correct: true
+        why: |-
+          Every bit moves left, a zero enters on the right, and the top bit falls off the end. The register now holds 134, not 390.
+      - text: "`1 1000 0110` — the result is 390"
+        why: |-
+          The register is only 8 bits wide; there is no ninth bit to keep it in.
+      - text: "`1000 0110` — the result is 390 stored across two bytes"
+        why: |-
+          The bit pattern is right but the value is not: 390 would need a second byte that this operation never writes.
+      - text: "`0110 0001` — the bits were shifted right instead"
+        why: |-
+          A left shift moves towards the most significant bit, not away from it.
+    explanation: |-
+      The leading 1 is shifted out and lost: this is overflow. It is why "left shift multiplies by 2" only holds while the answer still fits in the register.
+
+  - id: shift-arithmetic-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["4.3.1"]
+    prompt: |-
+      Why is an **arithmetic** right shift used instead of a logical right shift for negative numbers?
+    options:
+      - text: It copies the sign bit, so the number stays negative
+        correct: true
+        why: |-
+          A logical shift would insert 0 into the sign position, turning −24 into +58. Copying the sign bit preserves the value's sign and halves its size.
+      - text: It shifts by more than one place at a time
+        why: |-
+          How far you shift is separate from what enters the empty positions.
+      - text: It rounds to the nearest whole number
+        why: |-
+          It rounds down, not to nearest; that is not the reason it is used.
+      - text: It works on the index register only
+        why: |-
+          Which register is shifted has nothing to do with the mode of the shift.
+    explanation: |-
+      Arithmetic right shift copies the most significant bit into the vacated positions: `1110 1000` (−24) becomes `1111 1010` (−6), whereas a logical shift would give `0011 1010` (58).
+
+  - id: shift-cyclic-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["4.3.1"]
+    prompt: |-
+      In a {{1}} shift, a bit that leaves one end of the register re-enters at the other end. In a logical shift, the vacated positions are filled with {{2}}.
+    blanks:
+      - accept: [cyclic, circular, rotate, rotating]
+      - accept: [zero, zeros, "0", "0s"]
+    explanation: |-
+      Cyclic (rotate) shifts wrap bits round and lose nothing. Logical shifts fill the empty end with zeros and discard whatever leaves the other end.
+
+  - id: shift-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.3.1"]
+    prompt: |-
+      A student shifts `1100 0011` logically left by 1. Which line contains the first error?
+    lines:
+      - The pattern is 1100 0011, which is 195.
+      - Shift every bit one place to the left and put a 0 on the right.
+      - "The result is 1000 0110, which is 390."
+      - The leading 1 was shifted out of the register.
+    errorLine: 3
+    fix: |-
+      `1000 0110` is **134**, not 390. 390 would need nine bits; the leading 1 has been lost, which is overflow.
+    explanation: |-
+      Lines 1, 2 and 4 are all correct — the pattern, the method and the lost bit. Line 3 reads the new pattern as if the lost bit still counted.

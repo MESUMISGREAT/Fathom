@@ -1,0 +1,278 @@
+id: bit-manipulation-device-control
+subject: "9618"
+topic: "4.3"
+title: "One byte, eight devices: monitoring and control"
+summary: Pack eight on/off devices into a single byte, test sensor flags with AND, and switch devices on or off with OR and an inverse mask.
+order: 3
+minutes: 8
+kind: core
+objectives: ["4.3.2"]
+prerequisites: [bit-manipulation-masking]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.3 outcome 4.3.2 ("understand how bit
+    manipulation can be used to monitor or control a device") and its guidance on testing and
+    setting bits with masks, bitwise AND/OR/XOR, and shifts. Device registers are modelled as memory
+    addresses, which is how the syllabus's instruction set reaches them (LDD/STO). Every control
+    byte value in this lesson was computed in Python. The greenhouse is an invented, illustrative
+    system; all questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain how a single byte can monitor or control up to eight devices, test one flag with a mask, and build a control byte by setting and clearing individual bits.
+
+  - type: explain
+    title: Eight switches, one byte
+    body: |-
+      A greenhouse controller has to switch a heater, a fan, a pump, a lamp, an alarm and a door lock. That is six devices, each either on or off.
+
+      You could run six separate wires and six separate yes/no values. Or you could use one byte, where each bit is one device:
+
+      | Bit | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+      | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+      | Device | spare | spare | door lock | alarm | lamp | pump | fan | heater |
+
+      One byte carries all six states. The processor can read them all at once, but it is usually interested in exactly one — and that is where masks come back.
+
+      Two different jobs use the same trick:
+
+      - **Monitoring** — reading a bit to find out what is happening (is it too hot? is the door open?).
+      - **Control** — writing a bit to make something happen (switch the fan on).
+
+  - type: explain
+    title: "Monitoring: read the byte, mask the bit"
+    body: |-
+      A sensor's status byte arrives in ACC (from its address with `LDD`, or from an input port). Each bit of that byte is a flag set by the hardware.
+
+      Suppose bit 2 of the status byte means "too hot". To find out:
+
+      ```text
+      100  LDD 400        ; read the status byte from address 400
+      101  AND B0000 0100 ; keep only bit 2
+      102  CMP #0         ; is it zero?
+      103  JPE cool       ; equal to zero -> not too hot
+      104  ; too hot: switch the fan on (see below)
+      ```
+
+      `AND` throws away the seven other flags, so the result is either `0000 0100` (bit set) or `0000 0000` (bit clear). Comparing with 0 then turns that into True or False, which `JPE`/`JPN` can act on.
+
+      One warning: test a bit with `AND`, never with `OR`. `OR` leaves the other bits in place, so a non-zero answer would tell you nothing about bit 2 specifically.
+
+  - type: diagram
+    diagram: cs-bit-manipulation-device-control
+    alt: >-
+      An 8-bit control byte in the middle, bit 7 on the left, with the pattern 0000 1101. Each cell is
+      numbered above and named below: spare on bits 7 and 6, lock on bit 5, alarm on bit 4, lamp on
+      bit 3, pump on bit 2, fan on bit 1, heater on bit 0, so lamp, pump and heater are on. Above, a
+      status byte 0000 0110 passes through AND B0000 0100 and the result 0000 0100 shows the flag is
+      set. Below, three lines give OR 0000 0010 to switch the fan on, AND 1111 1110 to switch the
+      heater off and XOR 0000 0100 to toggle the pump.
+    caption: |-
+      Monitoring flows in (status byte → mask → test). Control flows out (set/clear bits → control byte → devices).
+
+  - type: example
+    title: Building a control byte
+    problem: |-
+      The control byte starts at `0000 0000` (everything off). Carry out these steps, giving the byte each time:
+
+      a) switch the heater and fan on
+      b) also switch the pump on
+      c) also switch the lamp on
+      d) switch the heater off
+    steps:
+      - |-
+        **(a) Heater and fan** are bits 0 and 1: mask `0000 0011` (3).
+
+        ```text
+        0000 0000 OR 0000 0011 = 0000 0011   (3)
+        ```
+      - |-
+        **(b) Pump** is bit 2: OR with `0000 0100` (4).
+
+        ```text
+        0000 0011 OR 0000 0100 = 0000 0111   (7)
+        ```
+      - |-
+        **(c) Lamp** is bit 3: OR with `0000 1000` (8).
+
+        ```text
+        0000 0111 OR 0000 1000 = 0000 1111   (15)
+        ```
+      - |-
+        **(d) Heater off** is bit 0: AND with everything except bit 0, which is `1111 1110` (254).
+
+        ```text
+        0000 1111 AND 1111 1110 = 0000 1110   (14)
+        ```
+      - |-
+        The byte is then written to the device's control address with `STO`, and the hardware switches accordingly.
+    answer: |-
+      (a) `0000 0011` = 3 · (b) `0000 0111` = 7 · (c) `0000 1111` = 15 · (d) `0000 1110` = 14.
+
+  - type: check
+    title: Build the byte
+    questions: [dev-or, dev-clear, dev-test]
+
+  - type: intuition
+    title: Why bother packing bits?
+    body: |-
+      Three practical reasons:
+
+      - **Fewer wires and pins.** One 8-bit connection handles eight devices. On a microcontroller with 20 pins, that matters.
+      - **One operation changes several devices at once.** `OR B0000 0011` switches two things on in a single instruction, with no chance of them disagreeing.
+      - **No interference.** Bit 2 cannot affect bit 3: there are no carries in a bitwise operation. Arithmetic on a packed byte would be a disaster, which is exactly why bitwise operations exist.
+
+      The trade-off is that the code must agree with the hardware about what each bit means. That layout is usually written down in a data sheet, and getting it wrong switches on the wrong device.
+
+  - type: explain
+    title: Toggling and shifting
+    body: |-
+      **Toggling** is useful for a device with a single button: XOR with the device's bit flips on to off and off to on, whatever the current state.
+
+      ```text
+      0000 1110 XOR 0000 0100 = 0000 1010   ; pump now off, everything else unchanged
+      ```
+
+      **Shifting** is useful when the interesting bit is not in a convenient position. If a status byte puts the "too hot" flag in bit 6, you can either mask bit 6 directly (`AND B0100 0000`) or shift the byte right six places so the flag lands in bit 0 (`LSR #6`), then test bit 0. Both work; the mask is usually clearer to read.
+
+      A common real pattern combines them: shift a sensor reading into a known position, mask off the bits you do not want, then compare.
+
+  - type: check
+    title: Monitoring and control
+    questions: [dev-mcq, dev-xor]
+
+  - type: check
+    title: Explain it yourself
+    questions: [dev-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A control byte of 3 means "three devices on".
+        right: |-
+          It means "the devices mapped to bits 0 and 1 are on". The value is a pattern, not a count.
+      - wrong: |-
+          To switch a device off you OR its bit with 0.
+        right: |-
+          OR with 0 changes nothing. Clearing needs AND with a 0 in that position, i.e. the inverse mask.
+      - wrong: |-
+          You can test a bit by OR-ing with its mask and checking for a non-zero result.
+        right: |-
+          Use AND. OR keeps the other bits, so a non-zero result proves nothing about the bit you asked about.
+      - wrong: |-
+          Writing the control byte affects only the bits you changed.
+        right: |-
+          The processor cannot change single bits in memory — it reads the byte, changes bits in ACC, and writes the whole byte back. That is why the masks must preserve the other bits.
+
+  - type: exam
+    body: |-
+      - State the layout first if the question gives you one ("bit 0 = heater, bit 1 = fan, …"). Then every mask is easy to justify.
+      - For a "test whether bit 3 is set" question, show the AND with the mask and say explicitly "non-zero, so the bit is set".
+      - For "switch the device off", show the inverse mask and say why: AND with 0 clears, and the 1s preserve everything else.
+      - Watch the wording "monitor" versus "control": monitoring reads an input and tests it; control writes an output byte.
+
+  - type: takeaways
+    items:
+      - One byte can carry the state of up to eight on/off devices, one bit each.
+      - "Monitoring: read the status byte, `AND` with a single-bit mask, and test for zero or non-zero."
+      - "Control: `OR` a mask to switch a device on, `AND` with an inverse mask to switch it off, `XOR` to toggle."
+      - The whole byte is written back after the bits are changed, so the masks must leave other bits untouched.
+      - Shifts move a flag to a convenient position; masks isolate the flag you want.
+
+questions:
+  - id: dev-or
+    format: numeric
+    difficulty: 1
+    objectives: ["4.3.2"]
+    prompt: |-
+      A control byte starts at `0000 0000`. The program performs `OR B0000 0011`, then `OR B0000 0100`. What denary value is in ACC?
+    fields:
+      - label: "ACC ="
+        answer: 7
+    explanation: |-
+      `0000 0000 OR 0000 0011 = 0000 0011` (3), then `0000 0011 OR 0000 0100 = 0000 0111`, which is **7**: heater, fan and pump on.
+
+  - id: dev-clear
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |-
+      The control byte holds `0000 1111` (heater, fan, pump and lamp on). The heater is bit 0. A mask switches the heater off and leaves the rest on. What is that mask as a **denary** number?
+    fields:
+      - label: "mask ="
+        answer: 254
+    explanation: |-
+      Bit 0 must become 0; every other bit must stay 1 so it is preserved: `1111 1110` (254). The result is `0000 1110` = 14.
+
+  - id: dev-test
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |-
+      The status byte reads `0000 0110`. Bit 2 is the "too hot" flag. What is the result of `AND B0000 0100`, in denary?
+    fields:
+      - label: "ACC ="
+        answer: 4
+    explanation: |-
+      `0000 0110 AND 0000 0100 = 0000 0100`, which is **4**. Non-zero, so the too-hot flag is set (bit 1's flag is also on, but the mask deliberately ignores it).
+
+  - id: dev-xor
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |-
+      The control byte holds `0000 1110`. The program executes `XOR B0000 0100`. What denary value is in ACC?
+    fields:
+      - label: "ACC ="
+        answer: 10
+    explanation: |-
+      Bit 2 flips from 1 to 0 and nothing else changes: `0000 1110 XOR 0000 0100 = 0000 1010` = **10**. XOR is how a single button toggles one device.
+
+  - id: dev-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |-
+      A program must switch a device **off**, whatever its current state, without altering any other device. Which operation does this?
+    options:
+      - text: AND with a mask that has a 0 in the device's bit and 1s elsewhere
+        correct: true
+        why: |-
+          AND with 0 forces that bit to 0; the 1s return the other bits unchanged, so it works whether the device was on or off.
+      - text: OR with a mask that has a 0 in the device's bit
+        why: |-
+          OR with 0 leaves the bit exactly as it was — it might stay on.
+      - text: XOR with a mask that has a 1 in the device's bit
+        why: |-
+          XOR flips the bit, so an "off" device would switch on.
+      - text: AND with a mask that has a 1 in the device's bit
+        why: |-
+          That keeps the bit and clears all the others, which turns every other device off.
+    explanation: |-
+      Clearing a bit needs AND with 0 (an inverse mask). OR sets, XOR toggles, and only AND-with-0 guarantees the bit ends up off.
+
+  - id: dev-explain
+    format: explain
+    difficulty: 3
+    objectives: ["4.3.2"]
+    prompt: |-
+      A greenhouse controller must check whether a sensor's "too hot" flag (bit 2 of the status byte) is set, and if it is, switch on the fan (bit 1 of the control byte). Describe how bit manipulation does this.
+    explanation: |-
+      A good answer separates monitoring (read and test an input) from control (change an output), and names the operation used for each step.
+    model: |-
+      The processor reads the status byte from the sensor's address into ACC. It ANDs ACC with `0000 0100`, the mask with a 1 only in bit 2. If the result is zero the flag is clear; if it is non-zero the flag is set. When the flag is set, the processor reads the control byte, ORs it with `0000 0010` so bit 1 becomes 1 while the other device bits are unchanged, and writes the control byte back to the device's address. If the flag is clear, it could AND with `1111 1101` to switch the fan off.
+    keyPoints:
+      - Read the status byte into ACC
+      - AND with 0000 0100 to isolate bit 2, then test for zero / non-zero
+      - Read the control byte and OR with 0000 0010 to set bit 1
+      - Write the control byte back to the device
+      - Optionally clear the bit with AND 1111 1101 to switch the fan off

@@ -1,0 +1,298 @@
+id: assembly-language-instruction-set
+subject: "9618"
+topic: "4.2"
+title: "The instruction set: nineteen opcodes and two registers"
+summary: Meet ACC and IX, learn what every instruction in the 9618 set does, and decode operands written with #, B and &.
+order: 3
+minutes: 9
+kind: core
+objectives: ["4.2.3"]
+prerequisites: [assembly-language-machine-code]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.2 outcome 4.2.3 ("trace a given
+    simple assembly language program") and its guidance, which lists the example instruction set
+    (LDM, LDD, LDI, LDX, LDR, MOV, STO, ADD, SUB, INC, DEC, JMP, CMP, CMI, JPE, JPN, IN, OUT,
+    END), the single general purpose register ACC, the index register IX, absolute or symbolic
+    addresses, and the #/B/& number prefixes. Instruction meanings were checked against Cambridge
+    question-paper front matter for 9618: MOV <register> moves the contents of ACC to the given
+    register, LDR #n loads a number into IX, CMP #n compares ACC with a number, CMI <address>
+    compares indirectly. All questions are original; the operand values were checked with Python.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can say what each instruction in the 9618 instruction set does, decode operands written as `#12`, `B0101` or `&4A`, and follow the contents of ACC and IX through a short program.
+
+  - type: explain
+    title: One accumulator, one index register
+    body: |-
+      Questions in this topic assume a deliberately tiny processor. It has **one** general purpose register — everything is loaded into it, worked on, and stored back out.
+
+      - **ACC** — the accumulator. The working register: arithmetic happens here, comparisons compare it, output comes from it.
+      - **IX** — the index register. A helper register that holds a number used as an offset, which matters for indexed addressing later in this topic.
+
+      Because ACC is the only working register, almost every instruction reads from or writes to it. `ADD 300` does not say "add to what?" — the answer is always ACC.
+
+  - type: definition
+    term: Operand notation
+    body: |-
+      The `#`, `B` and `&` symbols in front of an operand tell you which number base it is written in:
+
+      | Written | Means | Example | Denary value |
+      | --- | --- | --- | --- |
+      | `#123` | denary | `LDM #25` | 25 |
+      | `B01001010` | binary | `LDM B1011` | 11 |
+      | `&4A` | hexadecimal | `LDM &4A` | 74 |
+
+      An operand can also be an **absolute address** (a plain number such as `200`) or a **symbolic address** (a label such as `total`). The assembler turns labels into numbers during pass 2.
+
+  - type: diagram
+    diagram: cs-assembly-language-instruction-set
+    alt: >-
+      Two boxes for the registers ACC and IX, with arrows showing instructions changing them. LDM #5
+      fills ACC with 5; MOV IX copies ACC into IX; LDR #7 loads 7 straight into IX. A legend below
+      shows that # marks denary, B marks binary and & marks hexadecimal operands.
+    caption: |-
+      Everything flows through ACC. IX is loaded either by copying ACC (`MOV IX`) or directly (`LDR #n`).
+
+  - type: explain
+    title: The whole instruction set, by what it does
+    body: |-
+      Learn these as a table, not as nineteen separate facts. The group names are syllabus wording and they come back in the next lesson.
+
+      **Data movement** — move values between memory and registers:
+
+      | Instruction | What it does |
+      | --- | --- |
+      | `LDM #n` | load the number n into ACC (immediate addressing) |
+      | `LDD <address>` | load ACC with the contents of the address (direct) |
+      | `LDI <address>` | use the contents of the address as another address, and load ACC from that (indirect) |
+      | `LDX <address>` | load ACC from address + contents of IX (indexed) |
+      | `LDR #n` | load the number n into IX |
+      | `MOV <register>` | move the contents of ACC into the given register, i.e. `MOV IX` |
+      | `STO <address>` | store the contents of ACC at the address |
+
+      **Input and output:**
+
+      | Instruction | What it does |
+      | --- | --- |
+      | `IN` | take a character from the keyboard, store its ASCII value in ACC |
+      | `OUT` | output the character whose ASCII value is in ACC |
+
+      **Arithmetic:**
+
+      | Instruction | What it does |
+      | --- | --- |
+      | `ADD <address>` | add the contents of the address to ACC |
+      | `SUB <address>` | subtract the contents of the address from ACC |
+      | `INC <register>` | add 1 to the register (`INC ACC` or `INC IX`) |
+      | `DEC <register>` | subtract 1 from the register |
+
+      **Unconditional and conditional instructions:**
+
+      | Instruction | What it does |
+      | --- | --- |
+      | `JMP <address>` | jump to the address, always |
+      | `JPE <address>` | jump only if the last compare was true (equal) |
+      | `JPN <address>` | jump only if the last compare was false (not equal) |
+      | `END` | stop the program |
+
+      **Compare:**
+
+      | Instruction | What it does |
+      | --- | --- |
+      | `CMP <address>` | compare ACC with the contents of the address |
+      | `CMP #n` | compare ACC with the number n |
+      | `CMI <address>` | compare ACC with the contents at the address stored in the address (indirect) |
+
+      Two easy slips: `LDR` puts its number in **IX**, not ACC, and `MOV` copies **out of** ACC into IX — the two directions are not interchangeable.
+
+  - type: example
+    title: Following ACC and IX through six instructions
+    problem: |-
+      Memory 200 holds 9. What is in ACC and IX after each instruction?
+
+      ```text
+      100  LDM #5
+      101  ADD 200
+      102  MOV IX
+      103  LDR #2
+      104  INC ACC
+      105  STO 201
+      ```
+    steps:
+      - |-
+        `LDM #5`: load the number 5 into ACC. ACC = 5, IX = 0.
+      - |-
+        `ADD 200`: add the contents of address 200 (which is 9) to ACC. ACC = 14.
+      - |-
+        `MOV IX`: copy ACC into IX. IX = 14, ACC still 14.
+      - |-
+        `LDR #2`: load 2 into **IX**, overwriting the 14. IX = 2, ACC unchanged at 14.
+      - |-
+        `INC ACC`: add 1 to ACC. ACC = 15.
+      - |-
+        `STO 201`: store ACC (15) at address 201. ACC and IX keep their values.
+    answer: |-
+      ACC finishes at 15 and IX at 2; address 201 holds 15.
+
+  - type: check
+    title: Registers and operands
+    questions: [isa-ldi-mcq, isa-binary-value, isa-ldr-ldm]
+
+  - type: explain
+    title: Immediate operands with arithmetic
+    body: |-
+      Cambridge's instruction table gives `ADD <address>` and `SUB <address>`: the operand is a *location*. That is the form to write by default.
+
+      Papers also use the immediate form, `ADD #5` or `SUB #1`, which means the number itself rather than what sits at an address. It follows the same `#` convention as `LDM #5`, so it is easy to recognise: a `#` operand is always the value, never a pointer to it.
+
+  - type: check
+    title: Reading a program
+    questions: [isa-hex-value, isa-mov-cloze, isa-symbolic]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          `LDR #2` loads 2 into the accumulator.
+        right: |-
+          `LDR` loads **IX**. To put 2 into ACC you need `LDM #2`.
+      - wrong: |-
+          `MOV IX` copies IX into ACC.
+        right: |-
+          `MOV <register>` moves the contents of **ACC** into the given register. So `MOV IX` copies ACC into IX.
+      - wrong: |-
+          `STO 200` puts the number 200 into ACC.
+        right: |-
+          `STO` works in the other direction: it copies ACC into address 200. `LDD 200` would load from that address.
+      - wrong: |-
+          `ADD 300` adds 300 to ACC.
+        right: |-
+          It adds the **contents** of address 300. For the number itself you need the immediate form, `ADD #300`.
+
+  - type: exam
+    body: |-
+      - Trace questions are marked on the values, so keep a column for ACC and a column for IX even when the question only asks for ACC — it stops you losing track after a `MOV` or `LDR`.
+      - Check the prefix on every operand before you calculate. `LDM #10` is ten; `LDM B10` is two; `LDM &10` is sixteen.
+      - Remember `MOV` and `LDR` move data in opposite directions. Examiners like that pair.
+      - If an instruction is not in the table for this syllabus, do not invent it. Stick to the nineteen opcodes above.
+
+  - type: takeaways
+    items:
+      - ACC is the only general purpose register; IX holds an offset and is loaded with `LDR #n` or `MOV IX`.
+      - "`#` is denary, `B` is binary, `&` is hexadecimal."
+      - "`LDM` immediate, `LDD` direct, `LDI` indirect, `LDX` indexed — the second letter tells you the addressing mode."
+      - "`MOV <register>` copies ACC into IX; `STO <address>` copies ACC into memory."
+      - "`CMP`/`CMI` set a comparison result; `JPE` and `JPN` act on it."
+
+questions:
+  - id: isa-ldi-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.3"]
+    prompt: |-
+      Which instruction uses **indirect** addressing to load the accumulator?
+    options:
+      - text: "`LDI <address>`"
+        correct: true
+        why: |-
+          The `I` stands for indirect: the operand holds an address, and that address holds the address of the value to load.
+      - text: "`LDM #n`"
+        why: |-
+          That is immediate addressing — the operand *is* the value.
+      - text: "`LDD <address>`"
+        why: |-
+          That is direct addressing: the operand is the address of the value.
+      - text: "`LDX <address>`"
+        why: |-
+          That is indexed addressing: the operand plus the contents of IX gives the address.
+    explanation: |-
+      The letter after `LD` names the mode: `M` immediate, `D` direct, `I` indirect, `X` indexed.
+
+  - id: isa-binary-value
+    format: numeric
+    difficulty: 1
+    objectives: ["4.2.3"]
+    prompt: |-
+      The instruction `LDM B1011` is executed. What denary value is now in the accumulator?
+    fields:
+      - label: "ACC ="
+        answer: 11
+    explanation: |-
+      `B1011` is binary: 8 + 2 + 1 = **11**. `LDM` loads the number itself (immediate addressing).
+
+  - id: isa-ldr-ldm
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      What is the difference between `LDM #5` and `LDR #5`?
+    options:
+      - text: "`LDM` puts 5 in ACC; `LDR` puts 5 in IX"
+        correct: true
+        why: |-
+          `LDM` loads the accumulator, `LDR` loads the index register. The `#` operand is the number 5 in both cases.
+      - text: "`LDM` loads from address 5; `LDR` loads the number 5"
+        why: |-
+          `LDM` uses immediate addressing, so 5 is the value, not an address.
+      - text: "`LDM` puts 5 in IX; `LDR` puts 5 in ACC"
+        why: |-
+          The registers are the other way round.
+      - text: They do the same thing
+        why: |-
+          They differ in which register receives the value, which matters as soon as you use indexed addressing.
+    explanation: |-
+      `LDM #n` → ACC. `LDR #n` → IX. Both use immediate addressing.
+
+  - id: isa-hex-value
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      What denary value is loaded into the accumulator by `LDM &4A`?
+    fields:
+      - label: "ACC ="
+        answer: 74
+    explanation: |-
+      `&` means hexadecimal: `4A` = 4 × 16 + 10 = 64 + 10 = **74**.
+
+  - id: isa-mov-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      In the instruction `MOV IX`, the contents of {{1}} are copied into {{2}}.
+    blanks:
+      - accept: [ACC, the accumulator, accumulator, acc]
+      - accept: [IX, the index register, index register, ix]
+    explanation: |-
+      `MOV <register>` moves the contents of the accumulator into the given register, so `MOV IX` copies ACC into IX. ACC keeps its value.
+
+  - id: isa-symbolic
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      Give one advantage of using a symbolic address such as `total` instead of an absolute address such as `200` in assembly code.
+    accept:
+      - easier to understand
+      - more readable
+      - the programmer does not need to know the address
+      - the assembler recalculates addresses if the code changes
+      - easier to edit without renumbering
+      - less chance of error
+      - code can be changed without changing addresses
+    model: |-
+      It makes the program readable, and the assembler recalculates every address if instructions are inserted or removed — so the programmer never has to renumber the program by hand.
+    explanation: |-
+      Labels are resolved to addresses in pass 2, so editing the program does not break the code.
