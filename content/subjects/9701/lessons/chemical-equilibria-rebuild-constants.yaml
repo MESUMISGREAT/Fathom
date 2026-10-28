@@ -1,0 +1,151 @@
+id: chemical-equilibria-rebuild-constants
+subject: "9701"
+topic: "7.1"
+title: Kc, mole fractions and Kp
+summary: Build equilibrium-constant expressions from equations and gas composition.
+order: 3
+minutes: 7
+kind: core
+objectives: ["7.1.4", "7.1.5", "7.1.6", "7.1.7"]
+prerequisites: [chemical-equilibria-rebuild-basics]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Fresh lesson drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus objectives 7.1.4, 7.1.5, 7.1.6 and 7.1.7. All questions and illustrative examples are original.
+    Independently reviewed by GitHub Copilot (AI reviewer; model identity unavailable); no human
+    review claimed.
+blocks:
+  - type: objective
+    body: By the end, you can write Kc and Kp expressions and use them in straightforward calculations.
+  - type: explain
+    title: Building Kc
+    body: |-
+      For $\text{aA}+\text{bB}\rightleftharpoons\text{cC}+\text{dD}$,
+      $K_c=\dfrac{[\text{C}]^c[\text{D}]^d}{[\text{A}]^a[\text{B}]^b}$.
+
+      The square brackets mean equilibrium concentration in $\text{mol dm}^{-3}$. Coefficients become powers.
+      Pure solids and pure liquids are not included in the expression.
+  - type: example
+    title: One equation, one expression
+    problem: Write $K_c$ for $\text{H}_2(g)+\text{I}_2(g)\rightleftharpoons2\text{HI}(g)$.
+    steps:
+      - Put products on top and reactants underneath.
+      - Use the coefficient 2 as the power of $[\text{HI}]$.
+      - Therefore $K_c=\dfrac{[\text{HI}]^2}{[\text{H}_2][\text{I}_2]}$.
+    answer: $K_c=\dfrac{[\text{HI}]^2}{[\text{H}_2][\text{I}_2]}$.
+  - type: check
+    questions: [kc-expression]
+  - type: explain
+    title: Mole fraction and partial pressure
+    body: |-
+      The **mole fraction** of a gas is the moles of that gas divided by the total moles:
+      $x_A=\dfrac{n_A}{n_{\text{total}}}$.
+
+      The **partial pressure** is the pressure that gas would exert alone in the same container.
+      For an ideal mixture, $p_A=x_Ap_{\text{total}}$.
+  - type: check
+    questions: [mole-fraction, partial-pressure]
+  - type: explain
+    title: Building Kp
+    body: |-
+      Use the same pattern for partial pressures:
+      $K_p=\dfrac{(p_{\text{C}})^c(p_{\text{D}})^d}{(p_{\text{A}})^a(p_{\text{B}})^b}$.
+      Use the equilibrium partial pressures and do not mix them up with concentrations.
+
+      In calculations, substitute the given equilibrium values carefully. The syllabus does not require the relationship between $K_p$ and $K_c$.
+  - type: example
+    title: A small Kc calculation
+    problem: For $\text{A}\rightleftharpoons\text{B}$, $[\text{A}]=0.20$ and $[\text{B}]=0.60$ at equilibrium. Find $K_c$.
+    steps:
+      - Write $K_c=\dfrac{[\text{B}]}{[\text{A}]}$.
+      - 'Substitute: $K_c=\dfrac{0.60}{0.20}$.'
+      - Calculate $K_c=3.0$.
+    answer: $K_c=3.0$.
+  - type: check
+    questions: [kp-expression, kc-calculation, kp-calculation]
+  - type: misconceptions
+    items:
+      - wrong: Put reactants in the numerator of Kc.
+        right: Products go in the numerator and reactants in the denominator.
+      - wrong: Use total pressure for every gas in Kp.
+        right: Kp uses each gas's equilibrium partial pressure.
+  - type: takeaways
+    items:
+      - Coefficients become powers in Kc and Kp.
+      - Mole fraction is a fraction of total moles; partial pressure is its share of total pressure.
+questions:
+  - id: kc-expression
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.4"]
+    prompt: Which is the Kc expression for $\text{A}+\text{B}\rightleftharpoons2\text{C}$?
+    options:
+      - text: $K_c=\dfrac{[\text{C}]^2}{[\text{A}][\text{B}]}$
+        correct: true
+        why: Products are on top and the coefficient 2 becomes the power.
+      - text: $K_c=\dfrac{[\text{A}][\text{B}]}{[\text{C}]^2}$
+        why: This is the reciprocal.
+      - text: $K_c=\dfrac{[\text{C}]}{[\text{A}][\text{B}]}$
+        why: The coefficient 2 must become a power.
+      - text: $K_c=[\text{A}][\text{B}][\text{C}]^2$
+        why: Reactants belong in the denominator.
+    explanation: The balanced equation supplies both the positions and powers.
+  - id: mole-fraction
+    format: numeric
+    difficulty: 1
+    objectives: ["7.1.5"]
+    prompt: A mixture contains 2.0 mol of X and 8.0 mol of Y. What is the mole fraction of X?
+    explanation: >-
+      Mole fraction is the amount of X divided by the total amount:
+      $2.0/(2.0+8.0)=0.20$.
+    fields:
+      - answer: 0.2
+        tolerance: { abs: 0.001 }
+  - id: partial-pressure
+    format: numeric
+    difficulty: 1
+    objectives: ["7.1.5"]
+    prompt: A gas has mole fraction 0.25 in a mixture at total pressure 200 kPa. Find its partial pressure in kPa.
+    explanation: >-
+      Partial pressure equals mole fraction multiplied by total pressure:
+      $p=0.25\times200=50\text{ kPa}$.
+    fields:
+      - answer: 50
+        tolerance: { abs: 0.1 }
+        unit: kPa
+  - id: kp-expression
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.6"]
+    prompt: Which is the Kp expression for $\text{N}_2+3\text{H}_2\rightleftharpoons2\text{NH}_3$?
+    options:
+      - text: $K_p=\dfrac{(p_{\text{NH}_3})^2}{p_{\text{N}_2}(p_{\text{H}_2})^3}$
+        correct: true
+        why: Partial pressures are used and coefficients become powers.
+      - text: $K_p=\dfrac{p_{\text{N}_2}(p_{\text{H}_2})^3}{(p_{\text{NH}_3})^2}$
+        why: This is the reciprocal.
+      - text: $K_p=\dfrac{p_{\text{NH}_3}}{p_{\text{N}_2}p_{\text{H}_2}}$
+        why: The coefficients are missing as powers.
+      - text: $K_p=(p_{\text{NH}_3})^2p_{\text{N}_2}(p_{\text{H}_2})^3$
+        why: Reactants should be in the denominator.
+    explanation: Write the products over reactants and use the balanced coefficients as powers.
+  - id: kc-calculation
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.7"]
+    prompt: For $\text{A}\rightleftharpoons\text{B}$, $[\text{A}]=0.20$ and $[\text{B}]=0.60$ at equilibrium. Find Kc.
+    explanation: $K_c=[\text{B}]/[\text{A}]=0.60/0.20=3.0$.
+    fields:
+      - answer: 3
+        tolerance: { abs: 0.01 }
+  - id: kp-calculation
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.7"]
+    prompt: For $\text{A}(g)\rightleftharpoons\text{B}(g)$, the equilibrium partial pressures are $p_{\text{A}}=2.0\text{ atm}$ and $p_{\text{B}}=0.50\text{ atm}$. Find Kp.
+    explanation: $K_p=p_{\text{B}}/p_{\text{A}}=0.50/2.0=0.25$.
+    fields:
+      - answer: 0.25
+        tolerance: { abs: 0.001 }

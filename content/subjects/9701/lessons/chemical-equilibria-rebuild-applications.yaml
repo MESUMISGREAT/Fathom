@@ -1,0 +1,119 @@
+id: chemical-equilibria-rebuild-applications
+subject: "9701"
+topic: "7.1"
+title: Equilibrium amounts and industrial processes
+summary: Use equilibrium data to find amounts and connect equilibrium to Haber and Contact processes.
+order: 4
+minutes: 7
+kind: core
+objectives: ["7.1.8", "7.1.10"]
+prerequisites: [chemical-equilibria-rebuild-shifts, chemical-equilibria-rebuild-constants]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Fresh lesson drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus objectives 7.1.8 and 7.1.10. All questions and illustrative examples are original;
+    numerical data are illustrative rather than copied from an examination. Independently reviewed
+    by GitHub Copilot (AI reviewer; model identity unavailable); no human review claimed.
+blocks:
+  - type: objective
+    body: By the end, you can calculate equilibrium amounts and explain the chosen conditions in the Haber and Contact processes.
+  - type: explain
+    title: An equilibrium table
+    body: |-
+      Start with the initial amounts, then represent the change caused by the reaction with an unknown such as $x$.
+      For $\text{A}\rightleftharpoons\text{B}$, if $x$ mol of A reacts, the amounts become
+      $n(\text{A})=n_0-x$ and $n(\text{B})=n_0(\text{B})+x$.
+
+      Convert amounts into concentrations if the container volume is given, then substitute equilibrium values into the appropriate expression.
+  - type: example
+    title: Finding an equilibrium amount
+    problem: In a 1.0 dm³ vessel, 1.00 mol of A and no B react by $\text{A}\rightleftharpoons\text{B}$. At equilibrium, $[\text{A}]=0.40\text{ mol dm}^{-3}$. Find the amount of B formed.
+    steps:
+      - The 1.0 dm³ volume means the equilibrium amount of A is $0.40$ mol.
+      - A has fallen from $1.00$ mol to $0.40$ mol, so $0.60$ mol of A reacted.
+      - The equation is 1:1, so $0.60$ mol of B formed.
+    answer: $0.60$ mol of B.
+  - type: check
+    questions: [equilibrium-amount]
+  - type: explain
+    title: Haber process
+    body: |-
+      The Haber process makes ammonia:
+      $\text{N}_2(g)+3\text{H}_2(g)\rightleftharpoons2\text{NH}_3(g)$.
+
+      Industry uses a compromise temperature of about $450^\circ\text{C}$ and a high pressure of about $200\text{ atm}$,
+      with an iron catalyst. Lower temperature would give a higher equilibrium yield because the forward reaction is exothermic,
+      but it would be too slow. High pressure favours the side with fewer gas moles, while the catalyst increases rate only.
+  - type: explain
+    title: Contact process
+    body: |-
+      The key equilibrium is oxidation of sulfur dioxide:
+      $2\text{SO}_2(g)+\text{O}_2(g)\rightleftharpoons2\text{SO}_3(g)$.
+
+      The forward reaction is exothermic, so industry uses about $450^\circ\text{C}$, a vanadium(V) oxide catalyst
+      and approximately atmospheric pressure. Higher pressure would favour sulfur trioxide, but the extra cost is not worthwhile
+      because the equilibrium yield is already high.
+  - type: check
+    questions: [haber-condition, contact-condition, industry-tradeoff]
+  - type: misconceptions
+    items:
+      - wrong: A catalyst increases the final equilibrium yield.
+        right: It reaches the same equilibrium composition faster.
+      - wrong: Industry always chooses the lowest possible temperature.
+        right: The temperature must balance yield against reaction rate and cost.
+  - type: takeaways
+    items:
+      - Use stoichiometric changes and equilibrium data to calculate amounts.
+      - Industrial conditions are compromises between yield, rate, safety and cost.
+questions:
+  - id: equilibrium-amount
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.8"]
+    prompt: In a 1.0 dm³ vessel, 1.00 mol of A and no B react by $\text{A}\rightleftharpoons\text{B}$. At equilibrium, $[\text{A}]=0.40\text{ mol dm}^{-3}$. How many mol of B formed?
+    explanation: The 1.0 dm³ volume means 0.40 mol of A remains, so $1.00-0.40=0.60$ mol reacted. The 1:1 equation therefore forms 0.60 mol of B.
+    fields:
+      - answer: 0.6
+        tolerance: { abs: 0.01 }
+  - id: haber-condition
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.10"]
+    prompt: Why does the Haber process use a compromise temperature rather than the lowest possible temperature?
+    options:
+      - text: A lower temperature would be slow, despite giving a higher equilibrium yield.
+        correct: true
+        why: Industry needs a useful rate as well as a good yield.
+      - text: A lower temperature always decreases the ammonia yield.
+        why: The forward reaction is exothermic, so lower temperature favours ammonia.
+      - text: The catalyst only works at absolute zero.
+        why: The iron catalyst works at the industrial temperature.
+      - text: Pressure has no effect on this equilibrium.
+        why: Fewer gas moles are on the ammonia side, so pressure matters.
+    explanation: Industrial conditions balance equilibrium yield, rate and practical cost.
+  - id: contact-condition
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.10"]
+    prompt: Which catalyst is used in the Contact process equilibrium?
+    options:
+      - text: Vanadium(V) oxide.
+        correct: true
+        why: $\text{V}_2\text{O}_5$ catalyses the oxidation of sulfur dioxide.
+      - text: Iron.
+        why: Iron is the Haber process catalyst.
+      - text: Nickel.
+        why: Nickel is used for some hydrogenation reactions.
+      - text: Platinum only.
+        why: Platinum is not the syllabus catalyst for this process.
+    explanation: The Contact process uses vanadium(V) oxide.
+  - id: industry-tradeoff
+    format: text
+    difficulty: 2
+    objectives: ["7.1.10"]
+    prompt: Give one reason why the Contact process does not use a very high pressure.
+    explanation: The equilibrium yield is already high, so using much higher pressure would add cost without enough benefit.
+    accept: ["the equilibrium yield is already high", "extra pressure is expensive", "high pressure costs more", "the extra cost is not worthwhile"]
+    model: The equilibrium yield is already high, so the extra cost of very high pressure is not worthwhile.
