@@ -1,0 +1,285 @@
+id: p3-logarithmic-exponential-logs-and-indices
+subject: "9709"
+topic: "3.2"
+title: "Logarithms are indices in disguise"
+summary: $\log_a x$ answers "what power of $a$ gives $x$?" — so every law of logarithms is a law of indices rewritten.
+order: 1
+minutes: 7
+kind: core
+objectives: ["3.2.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.2 outcome 3.2.1 (relationship between logarithms and indices, laws of
+    logarithms, excluding change of base). Numeric values checked in Python. All questions are
+    original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can switch between $a^y = x$ and $\log_a x = y$, and use the three laws of logarithms confidently in both directions.
+
+  - type: explain
+    title: The definition
+    body: |-
+      $$\log_a x = y \quad\text{means exactly}\quad a^y = x$$
+
+      So a logarithm is an **exponent**: $\log_2 8 = 3$ because $2^3 = 8$. Read it as "the power of 2
+      that gives 8".
+
+      Consequences worth memorising, all from $a^0 = 1$ and $a^1 = a$:
+
+      - $\log_a 1 = 0$ for every base $a$;
+      - $\log_a a = 1$;
+      - $\log_a x$ is only defined for $x > 0$, since $a^y$ is always positive.
+
+      Two bases have their own notation: $\lg x$ means $\log_{10} x$ (the log button), and $\ln x$
+      means $\log_e x$ (the ln button), where $e \approx 2.718$.
+
+  - type: explain
+    title: Why the laws work
+    body: |-
+      The three laws:
+
+      $$\log_a (xy) = \log_a x + \log_a y$$
+      $$\log_a\!\left(\frac{x}{y}\right) = \log_a x - \log_a y$$
+      $$\log_a (x^k) = k\log_a x$$
+
+      They are index laws in disguise. If $x = a^p$ and $y = a^q$ then $xy = a^{p+q}$, and taking
+      $\log_a$ of both sides gives $\log_a(xy) = p + q = \log_a x + \log_a y$. The division law comes
+      from $a^{p-q}$ and the power law from $(a^p)^k = a^{pk}$.
+
+      **The most useful form of the power law** is rearranging it: $k\log_a x = \log_a(x^k)$. That
+      is how a coefficient in front of a log is absorbed into its argument.
+
+  - type: example
+    title: "Example 1: evaluating and combining"
+    problem: |-
+      (a) Evaluate $\log_3 81$. (b) Write $2\log_5 3 + \log_5 4$ as a single logarithm.
+    steps:
+      - |-
+        (a) Ask: $3$ to what power gives $81$? Since $3^4 = 81$, $\log_3 81 = 4$.
+      - |-
+        (b) Absorb the coefficient first: $2\log_5 3 = \log_5(3^2) = \log_5 9$.
+      - |-
+        Then add, because a sum of logs is the log of a product:
+        $$\log_5 9 + \log_5 4 = \log_5(9 \times 4) = \log_5 36$$
+    answer: |-
+      (a) $4$; (b) $\log_5 36$.
+
+  - type: example
+    title: "Example 2: an exam-style equation"
+    problem: |-
+      Solve $\log_2 x + \log_2(x - 3) = 2$.
+    steps:
+      - |-
+        Combine the left side, since a sum of logs is the log of a product:
+        $$\log_2\big(x(x-3)\big) = 2$$
+      - |-
+        Undo the logarithm using the definition: $x(x-3) = 2^2 = 4$.
+      - |-
+        $$x^2 - 3x - 4 = 0 \quad\Rightarrow\quad (x-4)(x+1) = 0$$
+      - |-
+        So $x = 4$ or $x = -1$.
+      - |-
+        **Check the domain:** $\log_2 x$ needs $x > 0$ and $\log_2(x-3)$ needs $x > 3$. So $x = -1$ must be rejected.
+      - |-
+        Check $x = 4$: $\log_2 4 + \log_2 1 = 2 + 0 = 2$ ✓
+    answer: |-
+      $x = 4$ only.
+
+  - type: check
+    title: Quick check
+    questions: [evaluate-log, single-log, solve-log-equation]
+
+  - type: explain
+    title: The mistake that costs the most marks
+    body: |-
+      $$\log_a(x + y) \ne \log_a x + \log_a y$$
+
+      There is **no law** for the log of a sum. $\log_2(4 + 4) = \log_2 8 = 3$, while
+      $\log_2 4 + \log_2 4 = 2 + 2 = 4$. Numbers prove it.
+
+      Likewise $\dfrac{\log_a x}{\log_a y} \ne \log_a\!\left(\dfrac{x}{y}\right)$: the division law is
+      about subtraction of logs, not division of logs.
+
+      If a sum appears inside a logarithm, you cannot split it — you must either evaluate the sum
+      first or leave the log intact.
+
+  - type: check
+    title: Practice
+    questions: [sum-mistake, domain-check, log-in-p, halve-log]
+
+  - type: misconceptions
+    items:
+      - wrong: $\log_a(x+y) = \log_a x + \log_a y$
+        right: |-
+          The product law adds logs of multiplied quantities, not added ones. There is no law for a
+          sum.
+      - wrong: $\log_a x \cdot \log_a y = \log_a(xy)$
+        right: |-
+          Multiplying logs gives nothing useful; the **sum** of logs is the log of the product.
+      - wrong: $\log_2(-8) = -3$
+        right: |-
+          $2^y$ is always positive, so $\log_2(-8)$ does not exist. Only positive arguments are
+          allowed.
+      - wrong: $\log_{10} 0 = 1$
+        right: |-
+          $10^y$ never reaches 0, so $\log_{10}0$ is undefined. $\log_a 1 = 0$ is the true statement.
+      - wrong: $(\log_a x)^2 = 2\log_a x$
+        right: |-
+          Squaring the log is not the same as doubling it. The power law moves a power of the
+          **argument**, not of the log.
+      - wrong: In $\log_2 x + \log_2(x-3) = 2$, both algebraic solutions are valid.
+        right: |-
+          Logs need positive arguments, so check every solution against the domain and reject
+          impossible ones.
+
+  - type: exam
+    body: |-
+      - To combine logs, absorb coefficients first, then use the product or quotient law.
+      - When solving, undo the log with the definition $a^y = x$ — do not guess.
+      - Check domain conditions and reject invalid roots explicitly; a rejected root can earn a mark.
+      - If asked for an exact answer, leave it as a logarithm or a fraction; give a decimal only when asked.
+
+  - type: takeaways
+    items:
+      - '$\log_a x = y \iff a^y = x$: a logarithm is an exponent.'
+      - '$\log_a 1 = 0$, $\log_a a = 1$, and the argument must be positive.'
+      - '$\log_a(xy) = \log_a x + \log_a y$ and $\log_a(x/y) = \log_a x - \log_a y$.'
+      - '$\log_a(x^k) = k\log_a x$; use it backwards to absorb coefficients.'
+      - 'There is no law for $\log_a(x+y)$.'
+
+  - type: deeper
+    title: "Where the laws come from, formally"
+    body: |-
+      Let $p = \log_a x$ and $q = \log_a y$, so $x = a^p$ and $y = a^q$ by definition.
+
+      - **Product:** $xy = a^p a^q = a^{p+q}$. Taking $\log_a$ gives $\log_a(xy) = p + q$.
+      - **Quotient:** $\dfrac{x}{y} = a^{p-q}$, so $\log_a(x/y) = p - q$.
+      - **Power:** $x^k = (a^p)^k = a^{pk}$, so $\log_a(x^k) = pk = k\log_a x$.
+
+      Every law is one index law, translated. Knowing this means you never need to memorise
+      separately — and you can rebuild any of them in an exam if memory fails.
+
+questions:
+  - id: evaluate-log
+    format: numeric
+    difficulty: 1
+    objectives: ["3.2.1"]
+    prompt: |-
+      Evaluate $\log_3 81$.
+    fields:
+      - answer: 4
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $3^4 = 81$, so $\log_3 81 = 4$.
+
+  - id: single-log
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |-
+      Write $2\log_5 3 + \log_5 4$ as a single logarithm.
+    options:
+      - text: $\log_5 36$
+        correct: true
+        why: |-
+          $2\log_5 3 = \log_5 9$, then adding logs multiplies: $\log_5(9 \times 4) = \log_5 36$.
+      - text: $\log_5 24$
+        why: |-
+          That comes from $\log_5(2 \times 3 \times 4)$, treating the coefficient 2 as a factor rather
+          than a power.
+      - text: $\log_5 10$
+        why: |-
+          That treats the coefficient as an added constant.
+      - text: $2\log_5 12$
+        why: |-
+          The coefficient must be absorbed using the power law, not left outside.
+    explanation: |-
+      Absorb the coefficient with the power law, then use the product law.
+
+  - id: solve-log-equation
+    format: numeric
+    difficulty: 3
+    objectives: ["3.2.1"]
+    prompt: |-
+      Solve $\log_2 x + \log_2(x-3) = 2$. Give the valid value of $x$.
+    fields:
+      - answer: 4
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $\log_2\big(x(x-3)\big) = 2$ gives $x^2 - 3x = 4$, so $(x-4)(x+1) = 0$. Since $x > 3$ for both
+      logs to exist, $x = 4$ only.
+
+  - id: sum-mistake
+    format: mcq
+    difficulty: 1
+    objectives: ["3.2.1"]
+    prompt: |-
+      Which statement is **false**?
+    options:
+      - text: $\log_2(x + 4) = \log_2 x + \log_2 4$
+        correct: true
+        why: |-
+          There is no law for the log of a sum; only products and quotients split.
+      - text: $\log_2(xy) = \log_2 x + \log_2 y$
+        why: |-
+          This is the product law, and it is true.
+      - text: $\log_2(x^3) = 3\log_2 x$
+        why: |-
+          This is the power law, and it is true.
+      - text: $\log_2\!\left(\dfrac{x}{y}\right) = \log_2 x - \log_2 y$
+        why: |-
+          This is the quotient law, and it is true.
+    explanation: |-
+      Only products, quotients and powers have laws — sums do not.
+
+  - id: domain-check
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |-
+      For which values of $x$ is $\log_2(x - 5)$ defined?
+    options:
+      - text: $x > 5$
+        correct: true
+        why: |-
+          The argument $x - 5$ must be positive, so $x > 5$.
+      - text: $x \ge 5$
+        why: |-
+          At $x = 5$ the argument is 0, and $\log_2 0$ is undefined.
+      - text: $x > 0$
+        why: |-
+          It is the whole argument, not $x$ alone, that must be positive.
+      - text: All real $x$
+        why: |-
+          Logs of negative numbers do not exist in this course.
+    explanation: |-
+      Set the argument greater than zero and solve.
+
+  - id: log-in-p
+    format: numeric
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |-
+      Given $\log_3 5 = p$, write $\log_3 45$ in the form $p + c$, where $c$ is an integer. State $c$.
+    fields:
+      - answer: 2
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $45 = 9 \times 5$, so $\log_3 45 = \log_3 9 + \log_3 5 = 2 + p$. Hence $c = 2$.
+
+  - id: halve-log
+    format: numeric
+    difficulty: 2
+    objectives: ["3.2.1"]
+    prompt: |-
+      Evaluate $\log_5\!\left(\dfrac{1}{25}\right)$.
+    fields:
+      - answer: -2
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $\dfrac{1}{25} = 5^{-2}$, so the logarithm is $-2$.

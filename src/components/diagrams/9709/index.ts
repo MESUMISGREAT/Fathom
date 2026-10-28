@@ -80,6 +80,13 @@ import P2NumericalSolutionSignChange from './p2-numerical-solution-sign-change';
 import P2NumericalSolutionStaircase from './p2-numerical-solution-staircase';
 import P2TrigonometryRForm from './p2-trigonometry-r-form';
 import P2TrigonometryReciprocalGraphs from './p2-trigonometry-reciprocal-graphs';
+import P3AlgebraBinomialValidity from './p3-algebra-binomial-validity';
+import P3AlgebraLongDivision from './p3-algebra-long-division';
+import P3AlgebraModulusGraph from './p3-algebra-modulus-graph';
+import P3AlgebraModulusInequality from './p3-algebra-modulus-inequality';
+import P3LogarithmicExponentialIndexGraph from './p3-logarithmic-exponential-index-graph';
+import P3LogarithmicExponentialInverseGraphs from './p3-logarithmic-exponential-inverse-graphs';
+import P3LogarithmicExponentialLinearFormPlot from './p3-logarithmic-exponential-linear-form-plot';
 import QuadraticInequality from './quadratic-inequality';
 import QuadraticVertex from './quadratic-vertex';
 import SeriesApGpShared from './series-ap-gp-shared';
@@ -127,6 +134,13 @@ export const diagrams: DiagramRegistry = {
   'functions-translations': FunctionsTranslations,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
+  'math-p3-algebra-binomial-validity': P3AlgebraBinomialValidity,
+  'math-p3-algebra-long-division': P3AlgebraLongDivision,
+  'math-p3-algebra-modulus-graph': P3AlgebraModulusGraph,
+  'math-p3-algebra-modulus-inequality': P3AlgebraModulusInequality,
+  'math-p3-logarithmic-exponential-index-graph': P3LogarithmicExponentialIndexGraph,
+  'math-p3-logarithmic-exponential-inverse-graphs': P3LogarithmicExponentialInverseGraphs,
+  'math-p3-logarithmic-exponential-linear-form-plot': P3LogarithmicExponentialLinearFormPlot,
   'p1-differentiation-box-net': P1DifferentiationBoxNet,
   'p1-differentiation-chain-box': P1DifferentiationChainBox,
   'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,

@@ -1,0 +1,285 @@
+id: p3-algebra-partial-fractions-repeated-quadratic
+subject: "9709"
+topic: "3.1"
+title: "Partial fractions with repeated and quadratic factors"
+summary: A squared factor needs a term for each power, and an irreducible quadratic needs a linear numerator — then coefficients can be matched.
+order: 8
+minutes: 8
+kind: core
+objectives: ["3.1.4"]
+prerequisites: [p3-algebra-partial-fractions-linear-factors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1 outcome 3.1.4, cases (ax + b)(cx + d)^2 and (ax + b)(cx^2 + d). Both
+    decompositions and every question verified numerically in Python. All questions are original.
+    Reviewed against official syllabus wording; every numeric answer key and multiple-choice
+    option was recomputed independently in Python. Still needs a separate human or
+    teacher review.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write and solve the correct partial-fraction form when the denominator contains a squared linear factor or an irreducible quadratic.
+
+  - type: explain
+    title: The two extra forms
+    body: |-
+      $$\frac{f(x)}{(ax+b)(cx+d)^2} \equiv \frac{A}{ax+b} + \frac{B}{cx+d} + \frac{C}{(cx+d)^2}$$
+      $$\frac{f(x)}{(ax+b)(cx^2+d)} \equiv \frac{A}{ax+b} + \frac{Bx + C}{cx^2+d}$$
+
+      **Why the repeated factor needs two terms.** With only $\dfrac{C}{(cx+d)^2}$ you cannot reach
+      fractions like $\dfrac{1}{cx+d}$, and with only $\dfrac{B}{cx+d}$ you cannot reach ones with a
+      squared denominator. Together they cover both.
+
+      **Why the quadratic needs $Bx + C$.** Writing just $\dfrac{C}{cx^2+d}$ would restrict you to
+      numerators that are constant multiples of 1; a numerator like $3x - 1$ could never be produced.
+
+  - type: explain
+    title: Solving the constants
+    body: |-
+      Two tools, used together:
+
+      1. **Substitute a root** of a factor where possible — it wipes out the other terms.
+      2. **Compare coefficients** of $x^2$, $x$ and the constant. Each comparison is one equation.
+
+      With a repeated factor you can substitute its root, but that gives only one constant, so
+      coefficient comparison is essential (not optional).
+
+  - type: example
+    title: "Example 1: a repeated linear factor"
+    problem: |-
+      Express $\dfrac{7x+1}{(x-1)(x+1)^2}$ in partial fractions.
+    steps:
+      - |-
+        $$\frac{7x+1}{(x-1)(x+1)^2} \equiv \frac{A}{x-1} + \frac{B}{x+1} + \frac{C}{(x+1)^2}$$
+      - |-
+        Multiply by $(x-1)(x+1)^2$:
+        $$7x + 1 \equiv A(x+1)^2 + B(x-1)(x+1) + C(x-1)$$
+      - |-
+        $x = 1$: $8 = A(2)^2 = 4A$, so $A = 2$.
+      - |-
+        $x = -1$: $-6 = C(-2)$, so $C = 3$.
+      - |-
+        Compare $x^2$ coefficients: left $0$; right $A + B$. So $B = -A = -2$.
+      - |-
+        Check the $x$ coefficient: right $2A + C = 4 + 3 = 7$ ✓
+      - |-
+        $$\frac{7x+1}{(x-1)(x+1)^2} = \frac{2}{x-1} - \frac{2}{x+1} + \frac{3}{(x+1)^2}$$
+    answer: |-
+      $\dfrac{2}{x-1} - \dfrac{2}{x+1} + \dfrac{3}{(x+1)^2}$.
+
+  - type: example
+    title: "Example 2: an irreducible quadratic"
+    problem: |-
+      Express $\dfrac{5x^2 - 4x + 9}{(x-1)(x^2+4)}$ in partial fractions.
+    steps:
+      - |-
+        $$\frac{5x^2 - 4x + 9}{(x-1)(x^2+4)} \equiv \frac{A}{x-1} + \frac{Bx + C}{x^2+4}$$
+      - |-
+        Multiply by $(x-1)(x^2+4)$:
+        $$5x^2 - 4x + 9 \equiv A(x^2+4) + (Bx+C)(x-1)$$
+      - |-
+        $x = 1$: $5 - 4 + 9 = A(1 + 4)$, so $10 = 5A$ and $A = 2$.
+      - |-
+        Compare $x^2$: $5 = A + B$, so $B = 3$.
+      - |-
+        Compare constants: $9 = 4A - C = 8 - C$, so $C = -1$.
+      - |-
+        Check the $x$ coefficient: right $-B + C = -3 - 1 = -4$ ✓
+      - |-
+        $$\frac{5x^2 - 4x + 9}{(x-1)(x^2+4)} = \frac{2}{x-1} + \frac{3x - 1}{x^2+4}$$
+    answer: |-
+      $\dfrac{2}{x-1} + \dfrac{3x-1}{x^2+4}$.
+
+  - type: check
+    title: Quick check
+    questions: [repeated-form-choice, quadratic-numerator, repeated-solve-c]
+
+  - type: explain
+    title: How to check a quadratic really is irreducible
+    body: |-
+      Over the reals, $x^2 + 4$ never equals zero, because $x^2 \ge 0$ so $x^2 + 4 \ge 4$. A
+      quadratic with no real roots cannot be split into real linear factors, which is exactly what
+      "irreducible over the reals" means — and it is why it takes the $\dfrac{Bx+C}{\ }$ form.
+
+      Test: the discriminant $b^2 - 4ac$ of $x^2 + 4$ is $0 - 16 = -16 < 0$, so it is irreducible.
+      For $x^2 - 4$ the discriminant is $16 > 0$, so you must factorise it as $(x-2)(x+2)$ instead of
+      using a quadratic numerator.
+
+  - type: check
+    title: Practice
+    questions: [repeated-solve-b, quadratic-constants, irreducibility, squared-term-cover]
+
+  - type: misconceptions
+    items:
+      - wrong: A squared factor only needs $\dfrac{B}{(cx+d)^2}$.
+        right: |-
+          You need both $\dfrac{B}{cx+d}$ and $\dfrac{C}{(cx+d)^2}$; one term cannot represent the
+          whole repeated factor.
+      - wrong: For $x^2 + 4$ you can write $\dfrac{C}{x^2+4}$ with a constant numerator.
+        right: |-
+          An irreducible quadratic needs $Bx + C$. A constant numerator cannot produce terms with an
+          $x$ on top.
+      - wrong: Substituting the repeated root gives all the constants.
+        right: |-
+          It gives only the one on the squared term. Use coefficient comparison for the rest.
+      - wrong: You should factorise $x^2 - 4$ as a quadratic term in the form.
+        right: |-
+          $x^2 - 4 = (x-2)(x+2)$, so it takes two linear terms. Only genuinely irreducible quadratics
+          keep the $Bx+C$ form.
+      - wrong: Any value of $x$ may be substituted to find constants.
+        right: |-
+          Any value does give a true equation, but only roots of factors eliminate unknowns cleanly.
+          Use $x = 0$ or $x = 1$ only as a check.
+      - wrong: After finding $A$, $B$ and $C$ no check is needed.
+        right: |-
+          Compare one unused coefficient. It takes seconds and catches almost every slip.
+
+  - type: exam
+    body: |-
+      - Write the full form first — three terms for a repeated factor, and $Bx + C$ for a quadratic.
+      - Show the multiplied identity before substituting.
+      - Label each substitution and coefficient comparison ("compare $x^2$: $0 = A + B$").
+      - Finish with the decomposed expression and one check line.
+
+  - type: takeaways
+    items:
+      - 'Repeated linear factor: terms at every power, $\dfrac{B}{cx+d} + \dfrac{C}{(cx+d)^2}$.'
+      - 'Irreducible quadratic: numerator $Bx + C$.'
+      - 'Substituting roots gives some constants; comparing coefficients gives the rest.'
+      - 'A quadratic is irreducible when its discriminant is negative.'
+      - 'Check with an unused coefficient comparison.'
+
+  - type: deeper
+    title: A shortcut for the squared term
+    body: |-
+      The constant $C$ on $\dfrac{1}{(cx+d)^2}$ has a cover-up rule too. In
+      $\dfrac{f(x)}{(ax+b)(cx+d)^2}$,
+
+      $$C = \frac{f\!\left(-\frac{d}{c}\right)}{a\left(-\frac{d}{c}\right) + b}$$
+
+      — cover the whole $(cx+d)^2$ and evaluate at the repeated root. For Example 1 that gives
+      $C = \dfrac{7(-1)+1}{(-1)-1} = \dfrac{-6}{-2} = 3$ ✓.
+
+      You still need coefficient comparison for $B$, because $B$ has no such isolated formula.
+
+questions:
+  - id: repeated-form-choice
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.4"]
+    prompt: |-
+      Which form fits $\dfrac{3x + 2}{(x+1)(x-2)^2}$?
+    options:
+      - text: $\dfrac{A}{x+1} + \dfrac{B}{x-2} + \dfrac{C}{(x-2)^2}$
+        correct: true
+        why: |-
+          One constant for the distinct factor, and one term for each power of the repeated factor.
+      - text: $\dfrac{A}{x+1} + \dfrac{B}{(x-2)^2}$
+        why: |-
+          The first power of $(x-2)$ has no term, so the form is incomplete.
+      - text: $\dfrac{A}{x+1} + \dfrac{Bx + C}{(x-2)^2}$
+        why: |-
+          $(x-2)^2$ is a repeated linear factor, not an irreducible quadratic.
+      - text: $\dfrac{A}{(x+1)(x-2)} + \dfrac{B}{(x-2)^2}$
+        why: |-
+          The first term still has a product in its denominator; it has not been split.
+    explanation: |-
+      Repeated linear factors take a term for every power up to the repeat.
+
+  - id: quadratic-numerator
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.4"]
+    prompt: |-
+      What numerator belongs over $x^2 + 9$ in a partial-fraction decomposition?
+    options:
+      - text: $Bx + C$
+        correct: true
+        why: |-
+          $x^2 + 9$ has no real roots, so it is irreducible and needs a linear numerator.
+      - text: $B$ only
+        why: |-
+          A constant numerator cannot produce fractions with an $x$ term on top.
+      - text: $Bx$
+        why: |-
+          A pure $x$ term cannot produce a constant on top either.
+      - text: $Bx^2 + C$
+        why: |-
+          The numerator must have lower degree than the denominator, so degree 1 at most.
+    explanation: |-
+      Irreducible quadratics always take $Bx + C$.
+
+  - id: repeated-solve-c
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |-
+      For $\dfrac{7x+1}{(x-1)(x+1)^2} \equiv \dfrac{A}{x-1} + \dfrac{B}{x+1} + \dfrac{C}{(x+1)^2}$, find $C$.
+    fields:
+      - answer: 3
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Put $x = -1$: $7(-1) + 1 = C(-1 - 1)$, so $-6 = -2C$ and $C = 3$.
+
+  - id: repeated-solve-b
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |-
+      For the same decomposition $\dfrac{7x+1}{(x-1)(x+1)^2} \equiv \dfrac{A}{x-1} + \dfrac{B}{x+1} + \dfrac{C}{(x+1)^2}$, find $B$.
+    fields:
+      - answer: -2
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Comparing $x^2$ coefficients: the right side has $A + B$ and the left has $0$, with $A = 2$, so
+      $B = -2$.
+
+  - id: quadratic-constants
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |-
+      $\dfrac{5x^2 - 4x + 9}{(x-1)(x^2+4)} \equiv \dfrac{A}{x-1} + \dfrac{Bx+C}{x^2+4}$. Find $B$.
+    fields:
+      - answer: 3
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $x = 1$ gives $A = 2$. Comparing $x^2$: $5 = A + B$, so $B = 3$.
+
+  - id: irreducibility
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |-
+      Which denominator contains a quadratic that must be kept as a quadratic in the form?
+    options:
+      - text: $x^2 + 1$
+        correct: true
+        why: |-
+          $x^2 + 1$ has no real roots, so it is irreducible and takes a $Bx + C$ numerator.
+      - text: $x^2 - 1$
+        why: |-
+          $x^2 - 1 = (x-1)(x+1)$, two linear factors.
+      - text: $x^2 - x$
+        why: |-
+          $x(x - 1)$, again two linear factors.
+      - text: $x^2 - 4x + 4$
+        why: |-
+          $(x-2)^2$, a repeated linear factor.
+    explanation: |-
+      Irreducible means no real roots; check the discriminant.
+
+  - id: squared-term-cover
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |-
+      $\dfrac{5x + 7}{(x+2)(x-3)^2} \equiv \dfrac{A}{x+2} + \dfrac{B}{x-3} + \dfrac{C}{(x-3)^2}$. Find $C$.
+    fields:
+      - answer: 4.4
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Put $x = 3$: $15 + 7 = C(3 + 2)$, so $22 = 5C$ and $C = 4.4$.

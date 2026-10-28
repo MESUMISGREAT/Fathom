@@ -1,0 +1,281 @@
+id: p3-algebra-modulus-basics
+subject: "9709"
+topic: "3.1"
+title: "Modulus: the distance-from-zero machine"
+summary: '|x| throws away the minus sign, so solving |ax + b| = c means "the inside is c or −c" — and the graph is a V.'
+order: 1
+minutes: 6
+kind: core
+objectives: ["3.1.1"]
+prerequisites: [quadratics-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1 outcome "understand the meaning of |x|, sketch the graph of
+    y = |ax + b|, and use relations such as |a| = |b| <=> a^2 = b^2". Graphs of y = |f(x)| for
+    non-linear f are deliberately not included, following the syllabus exclusion. Every equation
+    and answer key was checked in Python. All questions are original. Not yet reviewed by a
+    teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve $|ax + b| = c$, sketch $y = |ax + b|$, and explain why
+      $|a| = |b| \iff a^2 = b^2$.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      The modulus of $x$, written $|x|$, is the **distance of $x$ from zero** on the number line.
+
+      So $|5| = 5$ and $|-5| = 5$. The modulus never produces a negative answer.
+
+      Cambridge asks for three things: solve equations like $|2x - 5| = 7$, sketch the graph of
+      $y = |ax + b|$, and use the identity $|a| = |b| \iff a^2 = b^2$ to handle equations with
+      modulus on both sides.
+
+  - type: explain
+    title: The method for |ax + b| = c
+    body: |-
+      1. **Check $c \ge 0$.** If $c < 0$ there is **no solution**, because a distance cannot be negative.
+      2. **Split into two cases.** The inside equals $c$, or the inside equals $-c$:
+         $$ax + b = c \quad\text{or}\quad ax + b = -c$$
+      3. **Solve each linear equation separately.** Keep both answers.
+      4. **Check each answer in the original equation** — substitute back with the modulus still in place.
+
+      **The forgotten step:** the second case. Dropping the modulus without writing the $-c$
+      equation loses exactly half the marks and half the solutions.
+
+  - type: example
+    title: "Example 1: the easiest case"
+    problem: |-
+      Solve $|2x - 5| = 7$.
+    steps:
+      - |-
+        "Distance from zero is 7" means the inside is 7 or $-7$.
+      - |-
+        $$2x - 5 = 7 \quad\Rightarrow\quad 2x = 12 \quad\Rightarrow\quad x = 6$$
+      - |-
+        $$2x - 5 = -7 \quad\Rightarrow\quad 2x = -2 \quad\Rightarrow\quad x = -1$$
+      - |-
+        Check: $|2(6) - 5| = |7| = 7$ ✓ and $|2(-1) - 5| = |-7| = 7$ ✓
+    answer: |-
+      $x = 6$ or $x = -1$.
+
+  - type: diagram
+    diagram: math-p3-algebra-modulus-graph
+    alt: >-
+      The graph of y = |2x − 5|: a V shape with its lowest point on the x-axis at x = 2.5, falling
+      to the left and rising to the right with gradient 2 on one side and −2 on the other. A
+      horizontal line y = 7 cuts the V at x = −1 and x = 6, which are the two solutions, marked
+      with dots and labelled.
+    caption: |-
+      A modulus graph is two straight lines meeting on the axis; a horizontal line cuts it twice.
+
+  - type: check
+    title: Quick check
+    questions: [simple-modulus, no-solution, reverse-modulus]
+
+  - type: explain
+    title: Sketching y = |ax + b|
+    body: |-
+      Three steps, ten seconds:
+
+      1. **Find where the inside is zero.** Set $ax + b = 0$; that gives the vertex, which sits **on** the $x$-axis.
+      2. **Draw the line $y = ax + b$** through that point with gradient $a$.
+      3. **Fold the negative part up.** Anything below the axis is reflected in the axis.
+
+      The result is a V (or an inverted V if you reflect a line with negative gradient). Both arms
+      are straight, and the vertex touches the axis.
+
+      You can also write it piecewise, which is sometimes quicker:
+      $$|ax + b| = \begin{cases} ax + b & ax + b \ge 0 \\ -(ax + b) & ax + b < 0 \end{cases}$$
+
+  - type: explain
+    title: Modulus on both sides
+    body: |-
+      For $|A| = |B|$ you can square both sides, because $|A|^2 = A^2$:
+
+      $$|A| = |B| \iff A^2 = B^2 \iff A^2 - B^2 = 0 \iff (A - B)(A + B) = 0$$
+
+      So the two equations are $A = B$ and $A = -B$ — the same split as before, but now it works
+      even when you cannot see the number on the other side.
+
+      **The forgotten step:** do not expand $A^2 = B^2$ into a messy quadratic if you can factor
+      it. $(A - B)(A + B) = 0$ gives the answers in one line.
+
+  - type: example
+    title: "Example 2: an exam-style one"
+    problem: |-
+      Solve $|3x - 2| = |2x + 7|$.
+    steps:
+      - |-
+        Square both sides (valid because $|A|^2 = A^2$):
+        $$(3x - 2)^2 = (2x + 7)^2$$
+      - |-
+        Bring everything to one side and factor as a difference of two squares:
+        $$(3x - 2)^2 - (2x + 7)^2 = 0$$
+        $$\big[(3x - 2) - (2x + 7)\big]\big[(3x - 2) + (2x + 7)\big] = 0$$
+      - |-
+        Simplify each bracket:
+        $$(x - 9)(5x + 5) = 0$$
+      - |-
+        So $x = 9$ or $5x + 5 = 0$, giving $x = -1$.
+      - |-
+        Check: $|3(9) - 2| = 25$ and $|2(9) + 7| = 25$ ✓; $|3(-1) - 2| = 5$ and $|2(-1) + 7| = 5$ ✓
+    answer: |-
+      $x = 9$ or $x = -1$.
+
+  - type: check
+    title: Check yourself
+    questions: [both-sides, modulus-square-identity, modulus-graph-vertex]
+
+  - type: misconceptions
+    items:
+      - wrong: $|x| = -3$ has the solution $x = -3$.
+        right: |-
+          A modulus is a distance, so $|x| = -3$ has **no solutions**. If a question gives you this,
+          state "no solution" rather than inventing one.
+      - wrong: $|2x - 5| = 7$ means only $2x - 5 = 7$.
+        right: |-
+          The inside could be $-7$. Both cases are needed, and both answers are usually required.
+      - wrong: $|a + b| = |a| + |b|$ always.
+        right: |-
+          It fails when $a$ and $b$ have opposite signs: $|3 + (-5)| = 2$, but $|3| + |-5| = 8$.
+          The triangle inequality gives only $|a + b| \le |a| + |b|$.
+      - wrong: The graph of $y = |ax + b|$ is a parabola.
+        right: |-
+          It is two straight arms meeting at a sharp point on the axis, not a curve.
+      - wrong: Squaring both sides of $|A| = |B|$ loses solutions.
+        right: |-
+          It introduces no extra solutions here, because $|A|^2 = A^2$ is exact. Squaring an
+          equation like $A = B$ can introduce extras only when the sign of a side is unknown.
+
+  - type: exam
+    body: |-
+      - "Solve" means find **all** values: missing the negative case is the most common lost mark.
+      - For a sketch, mark the vertex on the axis and label one more point on each arm; examiners check the vertex and the symmetry.
+      - If the question says "hence solve", use the graph you have just drawn rather than starting again algebraically.
+      - When an answer looks odd, substitute it back: with modulus questions the check is fast and catches sign slips.
+
+  - type: takeaways
+    items:
+      - '$|x|$ is the distance of $x$ from zero, so it is never negative.'
+      - '$|ax + b| = c$ gives two equations, $ax + b = c$ and $ax + b = -c$.'
+      - 'If $c < 0$, $|ax + b| = c$ has no solutions.'
+      - '$y = |ax + b|$ is a V with its vertex on the $x$-axis where $ax + b = 0$.'
+      - '$|A| = |B| \iff A^2 = B^2$, which factorises as $(A - B)(A + B) = 0$.'
+
+  - type: deeper
+    title: Why squaring is safe here
+    body: |-
+      For an equation $A = B$ you may square and gain false solutions if signs are free. But
+      $|A|$ and $|B|$ are never negative, so squaring loses no information:
+
+      $$|A| = |B| \iff |A|^2 = |B|^2 \iff A^2 = B^2$$
+
+      The last step works because $|t|^2 = t^2$ for every real $t$.
+
+      This is also why modulus equations always produce exactly two "branches" at most: the two
+      sides are distances, and two distances are equal when the points are the same distance from
+      zero — one on each side.
+
+questions:
+  - id: simple-modulus
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.1"]
+    prompt: |-
+      Solve $|x - 4| = 9$, giving the **smaller** solution.
+    fields:
+      - answer: -5
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $x - 4 = 9$ gives $x = 13$; $x - 4 = -9$ gives $x = -5$. The smaller is $-5$.
+
+  - id: no-solution
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.1"]
+    prompt: |-
+      How many solutions does $|3x + 1| = -2$ have?
+    options:
+      - text: None, because a modulus cannot be negative
+        correct: true
+        why: |-
+          $|3x + 1| \ge 0$ for every $x$, so it can never equal $-2$.
+      - text: One, $x = -1$
+        why: |-
+          Substituting gives $|3(-1) + 1| = 2$, not $-2$.
+      - text: Two, because modulus equations always give two answers
+        why: |-
+          Two answers arise only when the right-hand side is positive.
+      - text: Infinitely many
+        why: |-
+          The left side is a specific function of $x$; it cannot be constant.
+    explanation: |-
+      A distance from zero is never negative, so the equation is impossible.
+
+  - id: reverse-modulus
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.1"]
+    prompt: |-
+      Solve $|2x - 5| = 7$, giving the **larger** solution.
+    fields:
+      - answer: 6
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $2x - 5 = 7$ gives $x = 6$; $2x - 5 = -7$ gives $x = -1$. The larger is $6$.
+
+  - id: both-sides
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.1"]
+    prompt: |-
+      Solve $|3x - 2| = |2x + 7|$, giving the **smaller** solution.
+    fields:
+      - answer: -1
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Squaring and factorising gives $(x - 9)(5x + 5) = 0$, so $x = 9$ or $x = -1$. The smaller is
+      $-1$. (Check: both sides equal 5 at $x = -1$.)
+
+  - id: modulus-square-identity
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.1"]
+    prompt: |-
+      Which statement is true for all real numbers $a$ and $b$?
+    options:
+      - text: $|a| = |b|$ if and only if $a^2 = b^2$
+        correct: true
+        why: |-
+          Since $|t|^2 = t^2$, the two statements carry exactly the same information: equal
+          distances from zero means equal squares.
+      - text: $|a| = |b|$ if and only if $a = b$
+        why: |-
+          $a = -b$ also works: $|3| = |-3|$ but $3 \ne -3$.
+      - text: $|a + b| = |a| + |b|$ for all $a, b$
+        why: |-
+          This fails when $a$ and $b$ have opposite signs: $|3 - 5| = 2$ but $3 + 5 = 8$.
+      - text: $|-a| = -|a|$
+        why: |-
+          $|-a| = |a|$, which is never negative, so it cannot equal $-|a|$ unless $a = 0$.
+    explanation: |-
+      $|a| = |b| \iff a^2 = b^2$ is the identity that makes modulus equations on both sides
+      manageable.
+
+  - id: modulus-graph-vertex
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.1"]
+    prompt: |-
+      The graph of $y = |4x + 6|$ has its vertex on the $x$-axis. Give the $x$-coordinate of the vertex.
+    fields:
+      - answer: -1.5
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      The vertex is where the inside is zero: $4x + 6 = 0$, so $x = -1.5$. At that point
+      $y = 0$, and the two arms rise with gradients $4$ and $-4$.

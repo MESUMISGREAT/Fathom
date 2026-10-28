@@ -1,0 +1,259 @@
+id: p3-algebra-long-division
+subject: "9709"
+topic: "3.1"
+title: "Dividing polynomials by (x − k), the long way"
+summary: Long division of polynomials works exactly like dividing numbers, and it gives a quotient plus a remainder — which is zero only when the divisor is a factor.
+order: 3
+minutes: 6
+kind: core
+objectives: ["3.1.2"]
+prerequisites: [quadratics-solving-equations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1 outcome "divide a polynomial of degree not exceeding 4 by a linear
+    polynomial, and identify the quotient and remainder". Every division was verified by
+    multiplying back (and with numpy.polydiv) in Python. All questions are original. Not yet
+    reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can divide a cubic or quartic by a linear expression, state the quotient and remainder, and check your answer by multiplying back.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      "Divide $2x^3 - 5x^2 + 3x - 4$ by $x - 2$, stating the quotient and the remainder."
+
+      The answer always has this shape:
+
+      $$\text{dividend} = \text{divisor} \times \text{quotient} + \text{remainder}$$
+
+      For polynomials, the remainder after dividing by a **linear** expression is a constant (or
+      zero). The quotient is one degree lower than the dividend.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. **Set out the division** with the dividend inside and the divisor outside, in descending powers. Write $0x$ for any missing power.
+      2. **Divide the leading terms** and write the result on top: this is the next term of the quotient.
+      3. **Multiply the whole divisor** by that term and subtract from the dividend.
+      4. **Repeat** with what is left, until the remaining degree is less than the divisor's.
+      5. **Name the parts:** the expression on top is the quotient; what is left at the bottom is the remainder.
+
+      **The forgotten step:** including missing powers as $0x^2$ (or $0x$) — without that placeholder
+      the columns misalign and every later step is wrong.
+
+  - type: diagram
+    diagram: math-p3-algebra-long-division
+    alt: >-
+      The long division of 2x³ − 5x² + 3x − 4 by x − 2, set out in the usual grid: the quotient
+      2x² − x + 1 appears on top, with successive subtracted rows 2x³ − 4x², then −x² + 3x, then
+      −x² + 2x, leaving x − 4, then x − 2, leaving a remainder of −2. Arrows mark each subtraction.
+    caption: |-
+      Divide, multiply, subtract, bring down — repeated until only a constant is left.
+
+  - type: example
+    title: "Example 1: a cubic by a linear"
+    problem: |-
+      Divide $2x^3 - 5x^2 + 3x - 4$ by $x - 2$.
+    steps:
+      - |-
+        $2x^3 \div x = 2x^2$. Multiply: $2x^2(x - 2) = 2x^3 - 4x^2$. Subtract:
+        $$(2x^3 - 5x^2) - (2x^3 - 4x^2) = -x^2$$
+      - |-
+        Bring down $+3x$. Now $-x^2 \div x = -x$. Multiply: $-x(x - 2) = -x^2 + 2x$. Subtract:
+        $$(-x^2 + 3x) - (-x^2 + 2x) = x$$
+      - |-
+        Bring down $-4$. Now $x \div x = 1$. Multiply: $1(x - 2) = x - 2$. Subtract:
+        $$(x - 4) - (x - 2) = -2$$
+      - |-
+        The quotient is $2x^2 - x + 1$ and the remainder is $-2$.
+      - |-
+        Check by multiplying back:
+        $$(x - 2)(2x^2 - x + 1) - 2 = 2x^3 - 5x^2 + 3x - 2 - 2 = 2x^3 - 5x^2 + 3x - 4 ✓$$
+    answer: |-
+      Quotient $2x^2 - x + 1$, remainder $-2$.
+
+  - type: check
+    title: Quick check
+    questions: [quotient-remainder, missing-power, exact-division, divisor-leading-term, quotient-degree]
+
+  - type: explain
+    title: The same thing written as a statement
+    body: |-
+      The division above says
+
+      $$2x^3 - 5x^2 + 3x - 4 = (x - 2)(2x^2 - x + 1) - 2$$
+
+      This is often more useful than the grid, because you can substitute values into it. Put
+      $x = 2$ and the first term vanishes:
+
+      $$2(8) - 5(4) + 3(2) - 4 = -2$$
+
+      which is exactly the remainder. That is the remainder theorem, coming next — long division and
+      the theorem are two views of one fact.
+
+  - type: example
+    title: "Example 2: an exam-style one"
+    problem: |-
+      Divide $x^4 - 2x^3 + 5x - 1$ by $x + 1$.
+    steps:
+      - |-
+        Write the dividend with the missing terms: $x^4 - 2x^3 + 0x^2 + 5x - 1$.
+      - |-
+        $x^4 \div x = x^3$. Multiply: $x^3(x + 1) = x^4 + x^3$. Subtract: $-3x^3$.
+      - |-
+        $-3x^3 \div x = -3x^2$. Multiply: $-3x^2(x + 1) = -3x^3 - 3x^2$. Subtract: $3x^2$.
+      - |-
+        $3x^2 \div x = 3x$. Multiply: $3x(x + 1) = 3x^2 + 3x$. Subtract: $2x$.
+      - |-
+        $2x \div x = 2$. Multiply: $2(x + 1) = 2x + 2$. Subtract: $-3$.
+      - |-
+        Quotient $x^3 - 3x^2 + 3x + 2$, remainder $-3$. Check the remainder with $x = -1$: $1 + 2 + 0 - 5 - 1 = -3$ ✓
+    answer: |-
+      Quotient $x^3 - 3x^2 + 3x + 2$, remainder $-3$.
+
+  - type: misconceptions
+    items:
+      - wrong: The remainder is added to the quotient.
+        right: |-
+          The statement is dividend $=$ divisor $\times$ quotient **$+$ remainder**, so when you write
+          a fraction it is $\text{quotient} + \dfrac{\text{remainder}}{\text{divisor}}$. The remainder
+          is not part of the quotient.
+      - wrong: If the division does not come out exactly, the answer is wrong.
+        right: |-
+          A non-zero remainder is a normal answer. Only when the divisor is a factor does the
+          remainder vanish.
+      - wrong: You can skip missing powers.
+        right: |-
+          $x^4 + 5x - 1$ has a zero $x^3$ and $x^2$ coefficient. Writing $0x^3 + 0x^2$ keeps the
+          columns aligned; skipping them is the usual source of errors.
+      - wrong: Dividing by $2x + 1$ is the same as dividing by $x + 1$.
+        right: |-
+          The leading terms differ: $6x^3 \div 2x = 3x^2$, not $6x^2$. Always divide by the actual
+          leading term of the divisor.
+      - wrong: Long division is unnecessary now that calculators exist.
+        right: |-
+          Cambridge asks for the quotient and remainder exactly, and the method earns marks. It
+          also feeds the factor and remainder theorems.
+
+  - type: exam
+    body: |-
+      - Show the subtraction line each time: the method marks are for the process, not just the answer.
+      - State the quotient and remainder in words at the end, even if the question does not say "stating" — it makes the answer unambiguous.
+      - Check by substituting the divisor's root: the value of the dividend there must equal the remainder.
+      - If the divisor is $(ax + b)$, stop when the remainder is constant; the quotient may contain fractions.
+
+  - type: takeaways
+    items:
+      - 'Dividend $=$ divisor $\times$ quotient $+$ remainder.'
+      - 'The quotient is one degree lower than the dividend when dividing by a linear expression.'
+      - 'Include $0x^2$, $0x$ placeholders for missing powers.'
+      - 'Subtract each time — do not add.'
+      - 'Check: substituting the root of the divisor into the dividend gives the remainder.'
+
+  - type: deeper
+    title: Why the degree drops by one
+    body: |-
+      If $P$ has degree $n$ and you divide by $x - k$, the quotient has degree $n - 1$. Rearranging
+      the division statement,
+
+      $$P(x) = (x - k)Q(x) + r$$
+
+      the right side has degree $(1) + \deg Q$. For this to equal $\deg P = n$, you need
+      $\deg Q = n - 1$. That is why the quotient of a quartic by a linear expression is a cubic:
+      not a coincidence, but forced by the degrees.
+
+questions:
+  - id: quotient-remainder
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.2"]
+    prompt: |-
+      When $2x^3 - 5x^2 + 3x - 4$ is divided by $x - 2$, the remainder is a constant. Give it.
+    fields:
+      - answer: -2
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      The quotient is $2x^2 - x + 1$ and the remainder is $-2$. Quick check: substitute $x = 2$
+      into the cubic: $16 - 20 + 6 - 4 = -2$.
+
+  - id: missing-power
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.2"]
+    prompt: |-
+      Divide $x^4 - 2x^3 + 5x - 1$ by $x + 1$. The remainder is a constant. Give it.
+    fields:
+      - answer: -3
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      The quotient is $x^3 - 3x^2 + 3x + 2$ with remainder $-3$. Check by substituting $x = -1$:
+      $1 + 2 - 5 - 1 = -3$.
+
+  - id: exact-division
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.2"]
+    prompt: |-
+      When a polynomial is divided by $(x - 4)$ the remainder is $0$. What does that tell you?
+    options:
+      - text: $(x - 4)$ is a factor of the polynomial
+        correct: true
+        why: |-
+          A zero remainder means the division is exact, so the polynomial equals
+          $(x - 4) \times \text{quotient}$.
+      - text: The polynomial has degree 4
+        why: |-
+          The remainder tells you nothing about the degree; $x - 4$ being a factor does not make the
+          polynomial quartic.
+      - text: The quotient is zero
+        why: |-
+          The quotient is the other factor, which is generally not zero.
+      - text: $x = 4$ is the only root
+        why: |-
+          It guarantees $x = 4$ is a root; other roots may exist.
+    explanation: |-
+      Remainder zero $\iff$ divisor is a factor. This is the factor theorem stated in division
+      language.
+
+  - id: divisor-leading-term
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.2"]
+    prompt: |-
+      When $6x^3 + x^2 - 4$ is divided by $2x + 1$, the quotient is of the form $3x^2 - x + c$. Give $c$.
+    fields:
+      - answer: 0.5
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Dividing: $6x^3 \div 2x = 3x^2$; subtracting gives $-2x^2 - 4$; then $-2x^2 \div 2x = -x$;
+      subtracting gives $x - 4$; then $x \div 2x = \tfrac{1}{2}$. So $c = 0.5$ and the remainder is
+      $-4.5$.
+
+  - id: quotient-degree
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.2"]
+    prompt: |-
+      A quartic is divided by a linear expression. What is the degree of the quotient?
+    options:
+      - text: '3'
+        correct: true
+        why: |-
+          Dividing by a degree-1 expression lowers the degree by one, so $4 - 1 = 3$.
+      - text: '4'
+        why: |-
+          The quotient loses a degree; only the divisor gains one in the product form.
+      - text: '5'
+        why: |-
+          Degrees decrease under division, not increase.
+      - text: It depends on the remainder
+        why: |-
+          The remainder is a constant (or zero) and does not change the quotient's degree.
+    explanation: |-
+      $\deg(\text{quotient}) = \deg(\text{dividend}) - \deg(\text{divisor})$ for exact or
+      remainder division by a linear expression.

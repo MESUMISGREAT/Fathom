@@ -1,0 +1,289 @@
+id: p3-algebra-binomial-rational-expansion
+subject: "9709"
+topic: "3.1"
+title: "Binomial expansion for fractional and negative powers"
+summary: $(1+x)^n$ expands the same way when $n$ is a fraction or negative — but the series never stops, it is valid only for $|x| < 1$, and most brackets need rescaling first.
+order: 9
+minutes: 8
+kind: core
+objectives: ["3.1.5"]
+prerequisites: [p3-algebra-partial-fractions-linear-factors]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1 outcome 3.1.5, including adapting the standard series and determining the
+    set of values of x for which the expansion is valid. Coefficients computed with exact fractions
+    in Python. All questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can expand $(1+x)^n$ for rational $n$, reshape a bracket like $(2 - \tfrac{1}{2}x)^{-1}$ into that form, and state where the expansion is valid.
+
+  - type: explain
+    title: The series, and why the condition appears
+    body: |-
+      For any rational $n$ and $|x| < 1$:
+
+      $$(1+x)^n = 1 + nx + \frac{n(n-1)}{2!}x^2 + \frac{n(n-1)(n-2)}{3!}x^3 + \cdots$$
+
+      Two things differ from AS Level:
+
+      - **The series never stops** unless $n$ is a positive whole number. There is no last term, so we say "up to and including the term in $x^3$".
+      - **It only converges for $|x| < 1$.** For $|x| > 1$ the terms grow instead of shrinking and the infinite sum has no value.
+
+      Sanity check with $n = -1$: the terms are $1, -x, x^2, -x^3, \dots$ — the familiar geometric
+      series, valid for $|x| < 1$.
+
+  - type: diagram
+    diagram: math-p3-algebra-binomial-validity
+    alt: >-
+      A number line from minus 3 to 3 with the open interval from minus 1 to 1 shaded and
+      labelled "valid: |x| < 1", with open circles at both ends. The regions beyond minus 1 and
+      beyond 1 are labelled "terms grow, so it diverges", and a note says that at x = ±1 the
+      expansion is not valid.
+    caption: |-
+      The series only settles down between x = −1 and x = 1; outside that interval the terms grow.
+
+  - type: explain
+    title: "Adapting a bracket: the two steps"
+    body: |-
+      The series needs a **1** at the front. Take $(2 - \tfrac{1}{2}x)^{-1}$ and factor out the 2:
+
+      $$(2 - \tfrac{1}{2}x)^{-1} = \left[2\left(1 - \tfrac{1}{4}x\right)\right]^{-1} = 2^{-1}\left(1 - \tfrac{1}{4}x\right)^{-1}$$
+
+      1. **Factor out the constant** so the bracket starts with 1, and raise it to the power $n$.
+      2. **Expand the bracket**, then multiply every term by that constant.
+
+      **Validity uses the inner expression:** here $\left|-\tfrac{1}{4}x\right| < 1$, so $|x| < 4$.
+
+      **The forgotten step:** the power $n$ applies to the constant too — the factor is $2^{-1}$, not
+      $2$. For $(2 + x)^{-\frac{1}{2}}$ it is $2^{-\frac{1}{2}} = \dfrac{1}{\sqrt{2}}$.
+
+  - type: example
+    title: "Example 1: a fractional power"
+    problem: |-
+      Expand $(1+x)^{\frac{1}{2}}$ up to and including the term in $x^3$, and state the values of $x$ for which the expansion is valid.
+    steps:
+      - |-
+        Use the series with $n = \tfrac{1}{2}$:
+        $$1 + \tfrac{1}{2}x + \frac{\tfrac{1}{2}\left(-\tfrac{1}{2}\right)}{2!}x^2 + \frac{\tfrac{1}{2}\left(-\tfrac{1}{2}\right)\left(-\tfrac{3}{2}\right)}{3!}x^3 + \cdots$$
+      - |-
+        $\dfrac{\tfrac{1}{2}\left(-\tfrac{1}{2}\right)}{2} = -\dfrac{1}{8}$.
+      - |-
+        $\dfrac{\tfrac{1}{2}\left(-\tfrac{1}{2}\right)\left(-\tfrac{3}{2}\right)}{6} = \dfrac{3}{48} = \dfrac{1}{16}$.
+      - |-
+        $$(1+x)^{\frac{1}{2}} = 1 + \tfrac{1}{2}x - \tfrac{1}{8}x^2 + \tfrac{1}{16}x^3 + \cdots$$
+      - |-
+        Valid for $|x| < 1$.
+      - |-
+        Check at $x = 0.1$: the four terms give $1 + 0.05 - 0.00125 + 0.0000625 = 1.0488125$, while $\sqrt{1.1} = 1.0488088\ldots$ — the extra terms are closing the gap.
+    answer: |-
+      $1 + \tfrac{1}{2}x - \tfrac{1}{8}x^2 + \tfrac{1}{16}x^3 + \cdots$, valid for $|x| < 1$.
+
+  - type: example
+    title: "Example 2: an exam-style rescaling"
+    problem: |-
+      Find the expansion of $(2 - \tfrac{1}{2}x)^{-1}$ up to and including the term in $x^2$, and state the range of values of $x$ for which it is valid.
+    steps:
+      - |-
+        Factor out 2 so the bracket begins with 1:
+        $$(2 - \tfrac{1}{2}x)^{-1} = 2^{-1}\left(1 - \tfrac{1}{4}x\right)^{-1} = \tfrac{1}{2}\left(1 - \tfrac{1}{4}x\right)^{-1}$$
+      - |-
+        Use $n = -1$ with variable $u = -\tfrac{1}{4}x$, since $(1+u)^{-1} = 1 - u + u^2 - \cdots$:
+        $$\left(1 - \tfrac{1}{4}x\right)^{-1} = 1 + \tfrac{1}{4}x + \tfrac{1}{16}x^2 + \cdots$$
+      - |-
+        Multiply every term by $\tfrac{1}{2}$:
+        $$(2 - \tfrac{1}{2}x)^{-1} = \tfrac{1}{2} - \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$$
+      - |-
+        Validity: $\left|\tfrac{1}{4}x\right| < 1$, so $|x| < 4$.
+      - |-
+        Check at $x = 0.2$: three terms give $0.5 - 0.025 + 0.00125 = 0.47625$; the exact value is $\dfrac{1}{1.9} = 0.5263\ldots$ — still far off, because even $x = 0.2$ is a sizeable fraction of the allowed range, so more terms are needed.
+    answer: |-
+      $\tfrac{1}{2} - \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$, valid for $|x| < 4$.
+
+  - type: check
+    title: Quick check
+    questions: [sqrt-coefficient, validity-range, negative-power-coefficient]
+
+  - type: explain
+    title: Why the terms eventually shrink
+    body: |-
+      Each new term is the previous one multiplied by roughly $x$ (adjusted by the factorial), so when
+      $|x| < 1$ the terms shrink towards zero and adding more homes in on the true value. When
+      $|x| > 1$ they grow, so adding more makes the estimate worse rather than better.
+
+      That is why "valid for $|x| < 1$" is not a technicality: it is the statement that the infinite
+      sum exists at all. Cambridge normally asks for it, so always write it down.
+
+  - type: check
+    title: Practice
+    questions: [rescale-constant, quadratic-coefficient-negative-two, validity-of-negative-power, estimating]
+
+  - type: misconceptions
+    items:
+      - wrong: The series stops after $n+1$ terms even when $n = \tfrac{1}{2}$.
+        right: |-
+          Only for positive whole-number $n$. For fractions and negatives the series is infinite, so
+          quote it "up to and including the term in $x^3$".
+      - wrong: $(2 + x)^{-1} = 1 - x + x^2 - \cdots$
+        right: |-
+          Factor out the 2 first: $(2+x)^{-1} = \tfrac{1}{2}\left(1 + \tfrac{x}{2}\right)^{-1}$, giving
+          $\tfrac{1}{2} - \tfrac{x}{4} + \tfrac{x^2}{8} - \cdots$, valid for $|x| < 2$.
+      - wrong: The validity condition is always $|x| < 1$.
+        right: |-
+          It is $|x| < 1$ only for the standard bracket. After rescaling it is the **inner**
+          expression whose modulus must be less than 1: $\left|\tfrac{x}{2}\right| < 1$ gives $|x| < 2$.
+      - wrong: The constant outside the bracket is left unchanged.
+        right: |-
+          $[2(1 + \cdots)]^n = 2^n(1 + \cdots)^n$, so the factor is $2^n$. For $n = -\tfrac{1}{2}$ it is
+          $\dfrac{1}{\sqrt 2}$.
+      - wrong: You can ignore $|x| < 1$ and substitute any value afterwards.
+        right: |-
+          Outside the range the series does not converge, so the answer is meaningless however many
+          terms you take.
+      - wrong: $(1+x)^{\frac{1}{2}} = 1 + \frac{1}{2}x$ is the full expansion.
+        right: |-
+          Those are the first two terms only; how many you need is set by the accuracy statement.
+      - wrong: A negative power cannot be expanded at all.
+        right: |-
+          The same series works for negative $n$; it simply never terminates.
+
+  - type: exam
+    body: |-
+      - Write down $n$ and substitute into $\dfrac{n(n-1)}{2!}$ and $\dfrac{n(n-1)(n-2)}{3!}$ instead of recalling results.
+      - Keep exact fractions in the working; use decimals only for a numerical check.
+      - Always state the validity condition in the form "$|x| < \ldots$".
+      - When rescaling, show the factor-out line: it usually carries a mark.
+      - If asked to estimate, substitute the value and comment on whether it lies inside the valid range.
+
+  - type: takeaways
+    items:
+      - '$(1+x)^n = 1 + nx + \frac{n(n-1)}{2!}x^2 + \frac{n(n-1)(n-2)}{3!}x^3 + \cdots$ for any rational $n$.'
+      - 'The series is infinite unless $n$ is a positive integer.'
+      - 'It is valid only for $|x| < 1$ in the standard bracket.'
+      - 'Rescale first: factor out the constant so the bracket starts with 1, and raise it to the power $n$.'
+      - 'After rescaling, solve $\left|\text{inner expression}\right| < 1$ for the new range.'
+
+  - type: deeper
+    title: Estimating a root by hand
+    body: |-
+      The expansion turns awkward arithmetic into multiplications. To estimate $\sqrt{1.04}$, write it
+      as $(1 + 0.04)^{\frac{1}{2}}$ and use three terms:
+
+      $$1 + \tfrac{1}{2}(0.04) - \tfrac{1}{8}(0.04)^2 = 1 + 0.02 - 0.0002 = 1.0198$$
+
+      The true value is $1.0198039\ldots$, so the error is about $4 \times 10^{-6}$.
+
+      Numbers far from 1 are brought into range first: $\sqrt{104} = 10\sqrt{1.04}$, so multiply the
+      estimate above by 10.
+
+questions:
+  - id: sqrt-coefficient
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.5"]
+    prompt: |-
+      In the expansion of $(1+x)^{\frac{1}{2}}$, the coefficient of $x^2$ is a negative fraction. Give it as a decimal.
+    fields:
+      - answer: -0.125
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      $\dfrac{\tfrac{1}{2}\left(-\tfrac{1}{2}\right)}{2!} = -\dfrac{1}{8} = -0.125$.
+
+  - id: validity-range
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.5"]
+    prompt: |-
+      For which values of $x$ is the expansion of $(1 + 3x)^{\frac{1}{2}}$ valid?
+    options:
+      - text: $|x| < \tfrac{1}{3}$
+        correct: true
+        why: |-
+          The inner expression is $3x$, so convergence needs $|3x| < 1$, i.e. $|x| < \tfrac{1}{3}$.
+      - text: $|x| < 1$
+        why: |-
+          That applies to the standard bracket $(1+x)^n$, not to $(1+3x)^n$.
+      - text: $|x| < 3$
+        why: |-
+          That would be the condition for $\left(1 + \tfrac{x}{3}\right)^n$.
+      - text: All real $x$
+        why: |-
+          Outside $|x| < \tfrac{1}{3}$ the series diverges.
+    explanation: |-
+      Put the inner expression inside the modulus and solve.
+
+  - id: negative-power-coefficient
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.5"]
+    prompt: |-
+      Expand $(2 - \tfrac{1}{2}x)^{-1}$ up to the term in $x^2$. What is the coefficient of $x$?
+    fields:
+      - answer: -0.125
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      $\left(1 - \tfrac{x}{4}\right)^{-1} = 1 + \tfrac{x}{4} + \tfrac{x^2}{16} + \cdots$ (the $n = -1$
+      series with variable $-\tfrac{x}{4}$). Multiplying by $\tfrac{1}{2}$ gives
+      $\tfrac{1}{2} - \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$, so the coefficient of $x$ is $-\tfrac{1}{8}$.
+
+  - id: rescale-constant
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.5"]
+    prompt: |-
+      In the expansion of $(4 + x)^{-\frac{1}{2}}$, the series is written as $k\left(1 + \tfrac{x}{4}\right)^{-\frac{1}{2}}$. What is $k$?
+    fields:
+      - answer: 0.5
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      $4^{-\frac{1}{2}} = \dfrac{1}{\sqrt 4} = \dfrac{1}{2}$.
+
+  - id: quadratic-coefficient-negative-two
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.5"]
+    prompt: |-
+      In the expansion of $(1 - 2x)^{-2}$, what is the coefficient of $x^2$?
+    fields:
+      - answer: 12
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      With $n = -2$ and variable $-2x$: $\dfrac{(-2)(-3)}{2!}(-2x)^2 = 3 \cdot 4x^2 = 12x^2$.
+
+  - id: validity-of-negative-power
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.5"]
+    prompt: |-
+      For which $x$ is the expansion of $(1 - 2x)^{-2}$ valid?
+    options:
+      - text: $|x| < \tfrac{1}{2}$
+        correct: true
+        why: |-
+          Need $|-2x| < 1$, so $|x| < \tfrac{1}{2}$.
+      - text: $|x| < 1$
+        why: |-
+          The inner variable is $-2x$, not $x$.
+      - text: $|x| < 2$
+        why: |-
+          That is the condition for $\left(1 - \tfrac{x}{2}\right)^{-2}$.
+      - text: $x > 0$
+        why: |-
+          The condition is on $|x|$, not on its sign.
+    explanation: |-
+      Solve $|-2x| < 1$.
+
+  - id: estimating
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.5"]
+    prompt: |-
+      Using the first three terms of the expansion of $(1+x)^{\frac{1}{2}}$, estimate $\sqrt{1.04}$ correct to 4 decimal places.
+    fields:
+      - answer: 1.0198
+        tolerance: { abs: 0.0001 }
+    explanation: |-
+      $1 + \tfrac{1}{2}(0.04) - \tfrac{1}{8}(0.04)^2 = 1 + 0.02 - 0.0002 = 1.0198$.

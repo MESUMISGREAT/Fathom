@@ -1,0 +1,276 @@
+id: p3-algebra-partial-fractions-linear-factors
+subject: "9709"
+topic: "3.1"
+title: "Partial fractions: undoing a single fraction"
+summary: A fraction like $\dfrac{7x+1}{(x+1)(2x-1)}$ can be split back into simpler fractions — and each unknown is found by substituting the root of one factor.
+order: 7
+minutes: 7
+kind: core
+objectives: ["3.1.4"]
+prerequisites: [p3-algebra-remainder-factor-theorem]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1 outcome 3.1.4, case (ax + b)(cx + d). Every decomposition checked by
+    substituting several values in Python. All questions are original. Not yet reviewed by a
+    teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can choose the right partial-fraction form for a denominator of distinct linear factors, and find every constant.
+
+  - type: explain
+    title: What partial fractions are for
+    body: |-
+      Adding fractions creates one fat fraction:
+
+      $$\frac{2}{x+1} + \frac{3}{2x-1} = \frac{7x+1}{(x+1)(2x-1)}$$
+
+      **Partial fractions** run that backwards: given the fat fraction, recover the simple pieces.
+      It matters because simple fractions are far easier to differentiate, integrate and expand.
+
+      We are only asked to do this when the numerator has **lower degree** than the denominator.
+      (If it does not, divide first.)
+
+  - type: explain
+    title: Choosing the form
+    body: |-
+      Match the form to the denominator:
+
+      | Denominator | Form to write |
+      |---|---|
+      | $(ax+b)(cx+d)$ | $\dfrac{A}{ax+b} + \dfrac{B}{cx+d}$ |
+      | $(ax+b)(cx+d)^2$ | $\dfrac{A}{ax+b} + \dfrac{B}{cx+d} + \dfrac{C}{(cx+d)^2}$ |
+      | $(ax+b)(cx^2+d)$ | $\dfrac{A}{ax+b} + \dfrac{Bx+C}{cx^2+d}$ |
+
+      Three rules behind the table:
+
+      1. **One constant per linear factor.** Two linear factors → $A$ and $B$.
+      2. **A repeated factor gets a term for every power up to the repeat,** so $(cx+d)^2$ gives both $\dfrac{B}{cx+d}$ and $\dfrac{C}{(cx+d)^2}$.
+      3. **An irreducible quadratic needs a linear numerator** $Bx + C$ — a constant cannot cover both the $x$ and constant parts.
+
+  - type: explain
+    title: The method for distinct linear factors
+    body: |-
+      1. Write the identity with unknown constants: $\dfrac{7x+1}{(x+1)(2x-1)} \equiv \dfrac{A}{x+1} + \dfrac{B}{2x-1}$.
+      2. **Multiply through by the whole denominator:**
+         $$7x + 1 \equiv A(2x - 1) + B(x + 1)$$
+      3. **Substitute the root of each factor** (this is the quick way — it kills the other bracket):
+         - $x = -1$: $-6 = A(-3)$, so $A = 2$.
+         - $x = \tfrac{1}{2}$: $4.5 = B(1.5)$, so $B = 3$.
+      4. **State the answer** and check one value.
+
+      **The forgotten step:** step 2. If you only clear one denominator, the identity is unbalanced
+      and the constants come out wrong.
+
+  - type: example
+    title: "Example 1: the standard case"
+    problem: |-
+      Express $\dfrac{7x+1}{(x+1)(2x-1)}$ in partial fractions.
+    steps:
+      - |-
+        $$\frac{7x+1}{(x+1)(2x-1)} \equiv \frac{A}{x+1} + \frac{B}{2x-1}$$
+      - |-
+        Multiply by $(x+1)(2x-1)$:
+        $$7x + 1 \equiv A(2x - 1) + B(x + 1)$$
+      - |-
+        $x = -1$: $7(-1) + 1 = A(-2 - 1)$, i.e. $-6 = -3A$, so $A = 2$.
+      - |-
+        $x = \tfrac{1}{2}$: $7\left(\tfrac{1}{2}\right) + 1 = B\left(\tfrac{1}{2} + 1\right)$, i.e. $\tfrac{9}{2} = \tfrac{3}{2}B$, so $B = 3$.
+      - |-
+        $$\frac{7x+1}{(x+1)(2x-1)} = \frac{2}{x+1} + \frac{3}{2x-1}$$
+      - |-
+        Check with $x = 0$: left $= -1$; right $= 2 - 3 = -1$ ✓
+    answer: |-
+      $\dfrac{2}{x+1} + \dfrac{3}{2x-1}$.
+
+  - type: example
+    title: "Example 2: exam-style"
+    problem: |-
+      Given that $\dfrac{7x+1}{(x+1)(x-2)} \equiv \dfrac{A}{x+1} + \dfrac{B}{x-2}$, find $A$ and $B$.
+    steps:
+      - |-
+        Multiply through by $(x+1)(x-2)$:
+        $$7x + 1 \equiv A(x - 2) + B(x + 1)$$
+      - |-
+        $x = -1$: $7(-1) + 1 = A(-1 - 2)$, i.e. $-6 = -3A$, so $A = 2$.
+      - |-
+        $x = 2$: $14 + 1 = B(2 + 1)$, i.e. $15 = 3B$, so $B = 5$.
+      - |-
+        $$\frac{7x+1}{(x+1)(x-2)} = \frac{2}{x+1} + \frac{5}{x-2}$$
+      - |-
+        Check with $x = 0$: left $= \dfrac{1}{-2} = -\tfrac{1}{2}$; right $= 2 + \dfrac{5}{-2} = -\tfrac{1}{2}$ ✓
+    answer: |-
+      $A = 2$, $B = 5$.
+
+  - type: check
+    title: Quick check
+    questions: [which-form, cover-up-a, complete-decomposition]
+
+  - type: check
+    title: Practice
+    questions: [numerical-constants, repeated-form, check-value]
+
+  - type: misconceptions
+    items:
+      - wrong: You can write $\dfrac{A}{x+1} + \dfrac{B}{2x-1}$ as $\dfrac{A + B}{2x - 1}$ style combinations.
+        right: |-
+          Partial fractions must be added over a common denominator; the constants sit in separate
+          numerators and cannot be combined.
+      - wrong: The numerator of $\dfrac{A}{2x-1}$ could be $2A$ because of the coefficient 2.
+        right: |-
+          Write the denominator exactly as it appears in the factorisation, with a single constant on
+          top. Adjusting the numerator as well double-counts.
+      - wrong: Any value of $x$ gives the constants equally quickly.
+        right: |-
+          Substituting a factor's **root** makes one bracket zero, eliminating an unknown. Any other
+          value leaves simultaneous equations.
+      - wrong: Partial fractions work even when the numerator has the same or higher degree.
+        right: |-
+          Then divide first to get a polynomial plus a proper fraction. This syllabus restricts the
+          questions to proper fractions.
+      - wrong: The identity sign $\equiv$ is just decoration.
+        right: |-
+          It means the two sides agree for **every** $x$, which is exactly what licenses substituting
+          convenient values.
+
+  - type: exam
+    body: |-
+      - Write the form with the identity sign before doing anything else; the form earns a mark.
+      - Show the multiplied-out identity $\;7x + 1 \equiv A(2x-1) + B(x+1)$.
+      - Put the substitution and resulting equation on their own line: "$x = -1$: $-6 = -3A \Rightarrow A = 2$".
+      - Finish with the decomposed expression, not just $A$ and $B$.
+
+  - type: takeaways
+    items:
+      - 'Partial fractions reverse the addition of fractions; they need a proper fraction.'
+      - 'Distinct linear factors: one constant each, $\dfrac{A}{ax+b} + \dfrac{B}{cx+d}$.'
+      - 'Multiply through by the full denominator to get a polynomial identity.'
+      - 'Substitute each factor root to find one constant at a time.'
+      - 'Check with a convenient value such as $x = 0$.'
+
+  - type: deeper
+    title: Cover-up, and why it works
+    body: |-
+      With distinct linear factors there is a one-line shortcut. For
+      $\dfrac{f(x)}{(x - a)(x - b)}$, the constant on $\dfrac{1}{x-a}$ is
+
+      $$A = \frac{f(a)}{a - b}$$
+
+      — cover the factor $(x - a)$ in the original and put $x = a$ into what is left. That is
+      literally what the substitution does: every other bracket survives, the covered one becomes 1.
+
+      It fails for repeated factors (covering leaves the other copy of the factor in the
+      denominator, which is zero) and for quadratics, so know the long method too.
+
+questions:
+  - id: which-form
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.4"]
+    prompt: |-
+      Which is the correct form for $\dfrac{5x + 2}{(x-1)(x+4)}$?
+    options:
+      - text: $\dfrac{A}{x-1} + \dfrac{B}{x+4}$
+        correct: true
+        why: |-
+          Two distinct linear factors need one constant each.
+      - text: $\dfrac{A}{x-1} + \dfrac{Bx + C}{x+4}$
+        why: |-
+          A linear numerator is only needed over an irreducible quadratic.
+      - text: $\dfrac{A}{(x-1)(x+4)}$
+        why: |-
+          That is just the original with a relabelled numerator — no decomposition.
+      - text: $\dfrac{Ax + B}{(x-1)(x+4)}$
+        why: |-
+          Same problem: the denominator is unchanged, so nothing has been split.
+    explanation: |-
+      Distinct linear factors take a single constant each.
+
+  - id: cover-up-a
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |-
+      For $\dfrac{7x+1}{(x+1)(2x-1)} \equiv \dfrac{A}{x+1} + \dfrac{B}{2x-1}$, find $A$.
+    fields:
+      - answer: 2
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Multiply through and put $x = -1$: $7(-1) + 1 = A(-2 - 1)$, so $-6 = -3A$ and $A = 2$.
+
+  - id: complete-decomposition
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |-
+      Express $\dfrac{7x+1}{(x+1)(2x-1)}$ in partial fractions.
+    options:
+      - text: $\dfrac{2}{x+1} + \dfrac{3}{2x-1}$
+        correct: true
+        why: |-
+          $2(2x-1) + 3(x+1) = 4x - 2 + 3x + 3 = 7x + 1$ ✓
+      - text: $\dfrac{3}{x+1} + \dfrac{2}{2x-1}$
+        why: |-
+          That gives $3(2x-1) + 2(x+1) = 8x - 1$, not $7x + 1$.
+      - text: $\dfrac{2}{x+1} - \dfrac{3}{2x-1}$
+        why: |-
+          The minus sign gives $2(2x-1) - 3(x+1) = x - 5$.
+      - text: $\dfrac{-2}{x+1} + \dfrac{3}{2x-1}$
+        why: |-
+          That gives $-2(2x-1) + 3(x+1) = -x + 5$.
+    explanation: |-
+      $A = 2$ and $B = 3$ from the substitutions; expand to confirm.
+
+  - id: numerical-constants
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |-
+      For $\dfrac{11x - 4}{(x-2)(x+3)} \equiv \dfrac{A}{x-2} + \dfrac{B}{x+3}$, find $5A$ (that is, five times the constant $A$).
+    fields:
+      - answer: 18
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Put $x = 2$: $22 - 4 = A(2 + 3)$, so $5A = 18$ and $A = \tfrac{18}{5}$.
+
+  - id: repeated-form
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.4"]
+    prompt: |-
+      Which form is appropriate for $\dfrac{4x^2 + 1}{(x-3)(x+1)^2}$?
+    options:
+      - text: $\dfrac{A}{x-3} + \dfrac{B}{x+1} + \dfrac{C}{(x+1)^2}$
+        correct: true
+        why: |-
+          One constant for the distinct factor $(x-3)$, and one term for each power of the repeated
+          factor $(x+1)^2$.
+      - text: $\dfrac{A}{x-3} + \dfrac{B}{(x+1)^2}$
+        why: |-
+          The term for the first power of $(x+1)$ is missing, so the form cannot represent every
+          proper fraction with this denominator.
+      - text: $\dfrac{A}{x-3} + \dfrac{Bx + C}{(x+1)^2}$
+        why: |-
+          $(x+1)^2$ is a repeated linear factor, not an irreducible quadratic, so its numerator stays
+          constant and two separate terms are needed.
+      - text: $\dfrac{A}{x-3} + \dfrac{B}{x+1} + \dfrac{C}{x+1}$
+        why: |-
+          Two identical terms collapse into one; the second must be $(x+1)^2$.
+    explanation: |-
+      Repeated linear factors take a term for every power up to the repeat.
+
+  - id: check-value
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.4"]
+    prompt: |-
+      $\dfrac{3x + 5}{(x-1)(x+2)} \equiv \dfrac{A}{x-1} + \dfrac{B}{x+2}$. Find $A + B$.
+    fields:
+      - answer: 3
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $x = 1$: $8 = 3A$, so $A = \tfrac{8}{3}$. $x = -2$: $-1 = -3B$, so $B = \tfrac{1}{3}$. Then
+      $A + B = 3$. (Shortcut: comparing coefficients of $x$ gives $A + B = 3$ immediately.) 
