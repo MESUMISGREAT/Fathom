@@ -214,9 +214,9 @@ changes alongside lessons:
 
 ## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **311 reviewed lessons, 1779 questions** (9709: 90, 9618: 84, 9702: 65,
-  9701: 72). All are live. Latest publish: 9618 4.2+4.3 Assembly language and bit
-  manipulation, 28 Oct (f20c04e).
+- On `main`: **316 reviewed lessons, 1810 questions** (9709: 90, 9618: 84, 9702: 70,
+  9701: 72). All are live. Latest publish: 9702 5.2 Gravitational potential energy and
+  kinetic energy, 28 Oct (2df96dc).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -233,7 +233,7 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 26 published, 128 todo (`node scripts/lessons/status.mjs`). Next unit: **9702 5.2**.
+- Queue: 27 published, 127 todo (`node scripts/lessons/status.mjs`). Next unit: **9701 5.1**.
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
   - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
@@ -244,6 +244,22 @@ changes alongside lessons:
     the concept needs it. Read that section before writing or reviewing anything. The 9701
     batch below was written in the same understanding-first structure before the expansion
     landed; if you touch it, deepen it, never trim it for length.
+  - **9702 5.2 Gravitational and kinetic energy is published** (28 Oct, 2df96dc): 5 lessons
+    (`gpe-ke-*`), 31 questions, 5 diagrams (`phys-gpe-ke-work-to-gpe`, `-gpe-height-graph`,
+    `-derivation`, `-v-squared`, `-falling-exchange`). Objectives 5.2.1–5.2.4 are each taught
+    by a core lesson and tested (`content:check` clean, `tsc` clean, 166 tests pass, all 5
+    diagrams rendered and inspected in light and dark). 5.2.3 is taught in the suvat route
+    *and* the average-speed route, so the ½ is explained rather than asserted.
+    - Same caveat: the review was a second adversarial pass by the **same agent**, with every
+      numeric key recomputed in Python from the question's own data. A reviewer should still be
+      run over these before treating them as final.
+    - **Fresh-cloud-VM rendering now needs `FONTCONFIG_FILE`.** `$HOME/.fonts` is populated but
+      `fc-list` is empty, and without `FONTCONFIG_FILE=$PWD/.work-logs/libs/x/etc/fonts/fonts.conf`
+      Chromium renders **every label invisibly** (boxes and arrows only). Export
+      `LD_LIBRARY_PATH`, `FONTCONFIG_FILE` and `CHROMIUM_PATH` before `npm run diagram:render`.
+    - YAML traps in this batch: a plain list item containing `: ` becomes a mapping (quote it),
+      and **double**-quoted strings silently mangle `\frac`/`\Delta` (`\f` is a form feed) — use
+      single quotes for any line holding LaTeX.
   - **9618 4.2+4.3 Assembly language + bit manipulation is published** (28 Oct, f20c04e):
     9 lessons (`assembly-language-*` 6 files, `bit-manipulation-*` 3 files), 54 questions,
     9 diagrams (`cs-assembly-language-machine-code`, `-two-pass`, `-instruction-set`,
