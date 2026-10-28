@@ -253,6 +253,17 @@ changes alongside lessons:
       answer and key recomputed from its own data, every MCQ checked for exactly one correct
       option, objectives re-read against the syllabus wording. No separate reviewer model and
       no teacher. A reviewer should still be run over `progressive-waves-*`.
+- **DUPLICATE WARNING (28 Oct, 11:2x): both chats wrote 9702 7.1 at the same time.** This
+  chat's 6-lesson batch is on `main` (e880df1) and live. The other chat
+  (`0b8e8fe21ee9b5f6eaa0ce13`) has uncommitted drafts of the *same unit* under different
+  names: `progressive-waves-wave-motion`, `-terms`, `-wave-equation`, `-cro`, `-intensity`
+  plus `src/components/diagrams/9702/progressive-waves-{cro,energy-not-matter,intensity,terms,wave-equation}.tsx`.
+  **Do not publish those drafts** — delete them, or the site gets two sets of 7.1 lessons with
+  the same objectives and no way for a student to tell which to read. Keep `progressive-waves-*`
+  as it is on `main`. The check that failed: this chat checked the sibling worktree *before*
+  writing, found 7.1 empty, and the sibling started the same unit minutes later. Check again
+  immediately before publishing, not only before writing, and record your target unit in this
+  file when you start it.
 - **Diagram rendering works again after a runner restart — here is the setup.** `npm run
   diagram:render` fails with "executable doesn't exist at /opt/pw-browsers/chromium" because
   Chromium's shared libraries are not installed system-wide. Playwright's browser is in
