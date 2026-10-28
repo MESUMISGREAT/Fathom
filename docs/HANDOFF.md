@@ -214,9 +214,9 @@ changes alongside lessons:
 
 ## 5. Current state (27 Oct 2026, cloud chat)
 
-- On `main`: **302 reviewed lessons, 1725 questions** (9709: 90, 9618: 75, 9702: 65,
-  9701: 72). All are live. Latest publish: 9709 2.6 Numerical solution of equations,
-  27 Oct (3935a04).
+- On `main`: **311 reviewed lessons, 1779 questions** (9709: 90, 9618: 84, 9702: 65,
+  9701: 72). All are live. Latest publish: 9618 4.2+4.3 Assembly language and bit
+  manipulation, 28 Oct (f20c04e).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -233,7 +233,7 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 25 published, 129 todo (`node scripts/lessons/status.mjs`).
+- Queue: 26 published, 128 todo (`node scripts/lessons/status.mjs`). Next unit: **9702 5.2**.
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
   - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
@@ -244,6 +244,21 @@ changes alongside lessons:
     the concept needs it. Read that section before writing or reviewing anything. The 9701
     batch below was written in the same understanding-first structure before the expansion
     landed; if you touch it, deepen it, never trim it for length.
+  - **9618 4.2+4.3 Assembly language + bit manipulation is published** (28 Oct, f20c04e):
+    9 lessons (`assembly-language-*` 6 files, `bit-manipulation-*` 3 files), 54 questions,
+    9 diagrams (`cs-assembly-language-machine-code`, `-two-pass`, `-instruction-set`,
+    `-trace-table`, `-groups`, `-addressing-modes`, `cs-bit-manipulation-shifts`,
+    `-masking`, `-device-control`). Every objective 4.2.1–4.2.7 and 4.3.1–4.3.3 is taught
+    and tested (`content:check` clean, `tsc` clean, 166 tests pass, all 9 diagrams rendered
+    and inspected). Written from the current syllabuses: `MOV` copies the accumulator to the
+    given register, `CMI` is an indirect compare (a real trap), and the instruction groups
+    are data movement / input-output / arithmetic / unconditional / conditional.
+    - Same caveat: the review was a second adversarial pass by the **same agent** — a
+      reviewer should still be run over these before treating them as final. Key values
+      (every trace, bit pattern and mask) were recomputed from scratch in Python during that
+      pass rather than trusted from the drafts.
+    - YAML traps this batch hit: a list item that starts with `**` is parsed as an alias, and
+      an unquoted item containing `: ` becomes a mapping. Quote or reword them.
   - **9701 4.1+4.2 The gaseous state + Bonding and structure is published** (27 Oct,
     d1ab38f): 11 lessons (`gases-*` 4 files, `bonding-structure-*` 7 files), 41 questions,
     6 diagrams (`chem-gases-molecular-collisions`, `chem-bonding-structure-ionic-lattice`,
