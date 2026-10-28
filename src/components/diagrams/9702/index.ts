@@ -5,9 +5,12 @@ import DensityPressureDensityCubes from './density-pressure-density-cubes';
 import DensityPressureLiquidColumn from './density-pressure-liquid-column';
 import DensityPressurePressureArea from './density-pressure-pressure-area';
 import DensityPressureUpthrust from './density-pressure-upthrust';
+import DopplerEffectWavefronts from './doppler-effect-wavefronts';
 import ElasticPlasticLoadingUnloading from './elastic-plastic-loading-unloading';
 import ElasticPlasticStrainEnergy from './elastic-plastic-strain-energy';
 import ElasticPlasticWorkArea from './elastic-plastic-work-area';
+import ElectromagneticSpectrumTransverseWave from './electromagnetic-spectrum-transverse-wave';
+import ElectromagneticSpectrumWavelengthLadder from './electromagnetic-spectrum-wavelength-ladder';
 import EnergyConservationEfficiencyBlocks from './energy-conservation-efficiency-blocks';
 import EnergyConservationPowerFv from './energy-conservation-power-fv';
 import EnergyConservationPowerLift from './energy-conservation-power-lift';
@@ -79,6 +82,8 @@ import StressStrainStressStrainDefinitions from './stress-strain-stress-strain-d
 import StressStrainTensionCompression from './stress-strain-tension-compression';
 import StressStrainYoungModulus from './stress-strain-young-modulus';
 import StressStrainYoungModulusApparatus from './stress-strain-young-modulus-apparatus';
+import TransverseLongitudinalCompare from './transverse-longitudinal-compare';
+import TransverseLongitudinalGraphs from './transverse-longitudinal-graphs';
 import TurningEffectsAngledForce from './turning-effects-angled-force';
 import TurningEffectsCoupleEffects from './turning-effects-couple-effects';
 import TurningEffectsCoupleTorque from './turning-effects-couple-torque';
@@ -95,9 +100,12 @@ export const diagrams: DiagramRegistry = {
   'phys-density-pressure-liquid-column': DensityPressureLiquidColumn,
   'phys-density-pressure-pressure-area': DensityPressurePressureArea,
   'phys-density-pressure-upthrust': DensityPressureUpthrust,
+  'phys-doppler-effect-wavefronts': DopplerEffectWavefronts,
   'phys-elastic-plastic-loading-unloading': ElasticPlasticLoadingUnloading,
   'phys-elastic-plastic-strain-energy': ElasticPlasticStrainEnergy,
   'phys-elastic-plastic-work-area': ElasticPlasticWorkArea,
+  'phys-electromagnetic-spectrum-transverse-wave': ElectromagneticSpectrumTransverseWave,
+  'phys-electromagnetic-spectrum-wavelength-ladder': ElectromagneticSpectrumWavelengthLadder,
   'phys-energy-conservation-efficiency-blocks': EnergyConservationEfficiencyBlocks,
   'phys-energy-conservation-power-fv': EnergyConservationPowerFv,
   'phys-energy-conservation-power-lift': EnergyConservationPowerLift,
@@ -169,6 +177,8 @@ export const diagrams: DiagramRegistry = {
   'phys-stress-strain-tension-compression': StressStrainTensionCompression,
   'phys-stress-strain-young-modulus': StressStrainYoungModulus,
   'phys-stress-strain-young-modulus-apparatus': StressStrainYoungModulusApparatus,
+  'phys-transverse-longitudinal-compare': TransverseLongitudinalCompare,
+  'phys-transverse-longitudinal-graphs': TransverseLongitudinalGraphs,
   'phys-turning-effects-angled-force': TurningEffectsAngledForce,
   'phys-turning-effects-couple-effects': TurningEffectsCoupleEffects,
   'phys-turning-effects-couple-torque': TurningEffectsCoupleTorque,
