@@ -228,9 +228,10 @@ changes alongside lessons:
   `p3-differentiation` and `p3-integration`, so `status.mjs` reported that published unit as
   `todo` and a future writer would have duplicated 15 lessons. `status.mjs` now says
   **36 published, 118 todo**.
-- On `main`: **387 reviewed lessons, 2235 questions** (9709: 118, 9618: 100, 9702: 81,
-  9701: 88). All are live. Latest content: 9701 6.1 redox processes (8b3064d), 9702 6.2
-  elastic and plastic behaviour (77f2e9c) and 9618 6.1 data security (a93ff08), all 28 Oct.
+- On `main`: **392 reviewed lessons, 2267 questions** (9709: 118, 9618: 105, 9702: 81,
+  9701: 88). All are live. Latest content, all 28 Oct: 9618 6.2 data integrity (3c37a6a),
+  9701 6.1 redox processes (8b3064d), 9702 6.2 elastic and plastic behaviour (77f2e9c) and
+  9618 6.1 data security (a93ff08).
 - **9701 6.1 Redox processes is published** (28 Oct, 8b3064d): 5 lessons
   (`redox-processes-oxidation-numbers`, `-special-cases-roman-numerals`, `-electron-transfer`,
   `-disproportionation`, `-balancing-equations`), 33 questions, 3 diagrams
@@ -388,12 +389,27 @@ changes alongside lessons:
       `LD_LIBRARY_PATH=$PWD/.work-logs/libs/x/usr/lib/x86_64-linux-gnu` and
       `CHROMIUM_PATH=$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome` (the wrapper in
       `.work-logs/chromium-wrapper.sh` adds `--no-sandbox`).
-- Queue: 36 published, 118 todo (`node scripts/lessons/status.mjs`). The queue's next unit is
-  **9709 3.6+3.7**, but 9709 is being restyled by the other chat, so **take 9618 6.2
-  (data integrity) next after checking the sibling worktree**, then 9702 7.1, 9701 7.1 and the
-  rest in queue order. 9702 6.2 and 9701 6.1 were published from this chat on 28 Oct;
-  9618 6.1 came from the other chat.
-  (Then 9709 3.6+3.7 when 9709 is free, 9702 7.1, 9701 7.1, 9709 3.8, ...).
+- **9618 6.2 Data Integrity is published** (28 Oct, 3c37a6a, from the other chat): 5 lessons,
+  32 questions, 5 diagrams. `data-integrity-validation-vs-verification` (6.2.1),
+  `-validation-checks` and `-check-digits` (6.2.2), `-entry-verification` and
+  `-transfer-verification` (6.2.3). Diagrams: `cs-data-integrity-validation-vs-verification`,
+  `-validation-toolbox`, `-check-digit`, `-double-entry`, `-block-parity`. `content:check` 0/0,
+  `tsc` clean, 166 tests pass, all five diagrams rendered and inspected in light and dark.
+    - Conventions recorded: **range check** = two boundaries, **limit check** = one;
+      **length** counts characters while **format** tests the pattern; **existence** looks a
+      value up in stored reference data. Check digits are taught twice (modulus 11 with weights
+      10 down to 2, and modulus 10 with weights 3 and 1), both with full tables and the
+      "exclude the check digit from the calculation" trap. Block parity is presented as column
+      parity (equal to the XOR of the bytes), with the two-bit error that byte parity misses.
+    - Every check digit, parity bit, block check character and checksum in the lesson text and
+      the answer keys was recomputed in Python during the review pass.
+    - Review caveat as usual: second adversarial pass by the **same agent**, no separate
+      reviewer model here. A reviewer should still be run over `data-integrity-*`.
+- Queue: 37 published, 117 todo (`node scripts/lessons/status.mjs`). The queue's next unit is
+  **9709 3.6+3.7**, but 9709 is being restyled by the other chat, so prefer **9702 7.1** then
+  **9701 7.1** after checking the sibling worktree. 9702 6.2 and 9701 6.1 came from this chat;
+  9618 6.1 and 9618 6.2 came from the other chat.
+  (Then 9709 3.6+3.7 when 9709 is free, 9709 3.8, ...).
 - **Pushing now needs a rebase, not just a push.** Two chats published from the same
   `77cd89e` base on 28 Oct, so the first `cloud_git` push succeeded and the other was
   rejected as non-fast-forward. The working recovery, repeated twice:
