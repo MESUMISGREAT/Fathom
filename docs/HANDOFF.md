@@ -214,9 +214,8 @@ changes alongside lessons:
 
 ## 5. Current state (28 Oct 2026, cloud chat)
 
-- On `main`: **345 reviewed lessons, 1987 questions** (9709: 103, 9618: 93, 9702: 70,
-  9701: 79). All are live. Latest publish: 9618 5.1+5.2 Operating systems + language
-  translators, 28 Oct (7c5737f).
+- On `main`: **351 reviewed lessons, 2024 questions** (9709: 103, 9618: 93, 9702: 76,
+  9701: 79). All are live. Latest publish: 9702 6.1 Stress and strain, 28 Oct (a621c26).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -233,8 +232,26 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 30 published, 124 todo (`node scripts/lessons/status.mjs`). Next unit: **9702 6.1**
-  (deformation of solids: stress, strain, the Young modulus).
+- **9702 6.1 Stress and strain is published** (28 Oct, a621c26): 6 lessons
+  (`stress-strain-deformation`, `-hookes-law`, `-spring-constant`, `-stress-and-strain`,
+  `-young-modulus`, `-young-modulus-experiment`), 37 questions, 6 diagrams
+  (`phys-stress-strain-tension-compression`, `-force-extension-graph`, `-spring-stiffness`,
+  `-stress-strain-definitions`, `-young-modulus`, `-young-modulus-apparatus`). Objectives
+  6.1.1–6.1.6 are each taught by a core lesson and tested (`content:check` clean, `tsc` clean,
+  166 tests pass, all 6 diagrams rendered and inspected in light and dark).
+    - Definitions follow the mark-scheme wording: stress = force per unit cross-sectional area,
+      strain = extension per unit **original** length (no unit), $E$ = ratio of tensile stress to
+      tensile strain, valid within the limit of proportionality.
+    - The experiment lesson teaches Searle's apparatus: two wires, micrometer for $d$ in several
+      places and two directions, vernier for $x$, graph of $F$ against $x$, then $E = kL/A$. Note
+      the gradient is $k$, not $E$ — a real student trap that is called out explicitly.
+    - Review caught two real errors: a stress/strain comparison question whose reasoning said
+      strain falls by 2 when it falls by 4 (strain is proportional to stress, so to $1/A$), and a
+      garbled "stiff vs strong" sentence. Both fixed before publishing.
+    - Same caveat: the review was a second adversarial pass by the **same agent**. A reviewer
+      should still be run over these before treating them as final.
+- Queue: 31 published, 123 todo (`node scripts/lessons/status.mjs`). Next unit: **9701 5.2**
+  (Hess's law: energy cycles and calculations), then 9709 3.3+3.4+3.5, then 9618 6.1.
   (then 9702 6.1, 9701 5.2, 9709 3.3+3.4+3.5).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
