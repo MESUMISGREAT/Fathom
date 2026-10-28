@@ -214,6 +214,18 @@ changes alongside lessons:
 
 ## 5. Current state (28 Oct 2026, cloud chat)
 
+- **Before starting a unit, check that no other chat has it in flight.** Two cloud chats
+  share this VM (`/workspace/chats/0b8e8fe21ee9b5f6eaa0ce13` and this one). On 28 Oct the
+  other chat was writing **9618 6.1** (three `data-security-*` lessons on disk) and touching
+  the **9709** lessons broadly, so this chat left both alone and took **9702 6.2** instead.
+  Quick check: `ls <sibling>/content/subjects/*/lessons | grep '^<prefix>'`, plus
+  `git log --all --oneline -- 'content/subjects/<code>/lessons/<prefix>-*'` and the
+  `wip-snapshot` tree. Never edit the sibling worktree.
+- **`scripts/lessons/units.json` prefixes now match the published 9709 3.3-3.5 lessons**
+  (`p3-trig`, `p3-diff`, `p3-int`). They had been listed as `p3-trigonometry`,
+  `p3-differentiation` and `p3-integration`, so `status.mjs` reported that published unit as
+  `todo` and a future writer would have duplicated 15 lessons. `status.mjs` now says
+  **33 published, 121 todo**, with 9618 6.1 next.
 - On `main`: **370 reviewed lessons, 2133 questions** (9709: 118, 9618: 93, 9702: 76,
   9701: 83). All are live. Latest publish: 9709 3.3+3.4+3.5 trigonometry,
   differentiation and integration, 28 Oct (0cad6e0).
