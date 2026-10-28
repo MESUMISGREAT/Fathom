@@ -71,6 +71,9 @@ import NonUniformProjectileDrag from './non-uniform-projectile-drag';
 import NonUniformResistiveForces from './non-uniform-resistive-forces';
 import NonUniformSkydiverForces from './non-uniform-skydiver-forces';
 import NonUniformThrowVt from './non-uniform-throw-vt';
+import PolarisationFilterChain from './polarisation-filter-chain';
+import PolarisationMalusGraph from './polarisation-malus-graph';
+import PolarisationTransversePlanes from './polarisation-transverse-planes';
 import PrefixLadder from './prefix-ladder';
 import ProgressiveWavesCroTrace from './progressive-waves-cro-trace';
 import ProgressiveWavesKeyTerms from './progressive-waves-key-terms';
@@ -166,6 +169,9 @@ export const diagrams: DiagramRegistry = {
   'phys-non-uniform-resistive-forces': NonUniformResistiveForces,
   'phys-non-uniform-skydiver-forces': NonUniformSkydiverForces,
   'phys-non-uniform-throw-vt': NonUniformThrowVt,
+  'phys-polarisation-filter-chain': PolarisationFilterChain,
+  'phys-polarisation-malus-graph': PolarisationMalusGraph,
+  'phys-polarisation-transverse-planes': PolarisationTransversePlanes,
   'phys-prefix-ladder': PrefixLadder,
   'phys-progressive-waves-cro-trace': ProgressiveWavesCroTrace,
   'phys-progressive-waves-key-terms': ProgressiveWavesKeyTerms,

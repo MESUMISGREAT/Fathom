@@ -1,0 +1,265 @@
+id: polarisation-malus-law
+subject: "9702"
+topic: "7.5"
+title: Malus's law
+summary: Calculate the intensity transmitted through one analyser, or a series of filters, using I = I₀ cos²θ.
+order: 2
+minutes: 6
+kind: core
+objectives: ["7.5.2"]
+prerequisites: [polarisation-transverse-waves]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Physics 9702 syllabus, topic 7.5
+    Polarisation, learning outcome 7.5.2 (recall and use Malus's law, I = I0 cos^2 theta, for
+    plane-polarised light through one or more filters). The syllabus guidance excludes
+    calculations for unpolarised light through a single filter; that case is mentioned only as
+    labelled enrichment. Every numerical answer was computed with Python. Questions are original.
+    Re-checked line by line on 2026-10-29: every statement, worked example and numerical answer was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can state and use **Malus's law**, $I = I_0\cos^2\theta$, to find the intensity after one polarising filter or several in series.
+
+  - type: explain
+    title: The second filter is called the analyser
+    body: |
+      Suppose light is already **plane-polarised** by a first filter. Its electric field oscillates along one line, and its intensity is $I_0$.
+
+      Now put a second filter in the beam, with its transmission axis at an angle $\theta$ to the plane of polarisation. This second filter is called the **analyser**.
+
+      The analyser does not transmit all the light, and it does not block all of it (unless $\theta = 90^\circ$). It transmits the **component** of the electric field along its axis.
+
+      The component of a vector of length $E_0$ at angle $\theta$ is $E_0\cos\theta$. So the transmitted electric field amplitude is
+
+      $$E = E_0\cos\theta$$
+
+      Intensity is proportional to amplitude squared, so the transmitted intensity is
+
+      $$I \propto E^2 = E_0^2\cos^2\theta$$
+
+      Dividing by the incident intensity gives **Malus's law**.
+
+  - type: definition
+    term: Malus's law
+    body: |
+      For plane-polarised light of intensity $I_0$ incident on an analyser whose transmission axis makes an angle $\theta$ with the plane of polarisation,
+
+      $$I = I_0\cos^2\theta$$
+
+      where $I$ is the transmitted intensity. $\theta$ is measured **between the two filter axes**, not between a filter and the vertical.
+
+  - type: intuition
+    title: Why the square?
+    body: |
+      A filter passes the part of the oscillation that lies along its axis. That part is $E_0\cos\theta$, so the amplitude falls by a factor $\cos\theta$.
+
+      Intensity depends on amplitude squared, so it falls by $\cos^2\theta$. At $\theta = 60^\circ$, the amplitude is halved, but the intensity falls to a quarter, not a half.
+
+      This is why the graph of intensity against angle is a series of humps rather than a straight line.
+
+  - type: example
+    title: One analyser at 30°
+    problem: |
+      Plane-polarised light of intensity $80\ \text{W m}^{-2}$ falls on an analyser whose axis is at $30^\circ$ to the plane of polarisation. Calculate the transmitted intensity.
+    steps:
+      - |
+        Write Malus's law: $I = I_0\cos^2\theta$.
+      - |
+        Substitute: $I = 80 \times \cos^2 30^\circ$.
+      - |
+        $\cos 30^\circ = \dfrac{\sqrt{3}}{2} \approx 0.866$, so $\cos^2 30^\circ = \dfrac{3}{4} = 0.75$.
+      - |
+        $I = 80 \times 0.75 = 60\ \text{W m}^{-2}$.
+      - |
+        Check: the answer is less than 80, as it must be, and more than half, because $30^\circ$ is closer to parallel than to crossed.
+    answer: |
+      $I = 60\ \text{W m}^{-2}$
+
+  - type: example
+    title: Two analysers in series
+    problem: |
+      Plane-polarised light of intensity $100\ \text{W m}^{-2}$ passes through a filter at $30^\circ$ to its plane of polarisation, then through a second filter at $60^\circ$ to the **first filter's axis**. Find the final intensity.
+    steps:
+      - |
+        Treat each filter in turn. After the first: $I_1 = 100\cos^2 30^\circ = 100 \times 0.75 = 75\ \text{W m}^{-2}$.
+      - |
+        The light leaving the first filter is plane-polarised along that filter's axis. The second filter is at $60^\circ$ to **that** direction, so use $\theta = 60^\circ$ for the second step, not $60^\circ - 30^\circ$ to the original.
+      - |
+        $I_2 = 75\cos^2 60^\circ = 75 \times 0.25 = 18.75\ \text{W m}^{-2}$.
+      - |
+        To 2 significant figures, $I_2 = 19\ \text{W m}^{-2}$.
+      - |
+        In one line: $I_2 = I_0\cos^2\theta_1\cos^2\theta_2$. Each filter multiplies the intensity by its own factor.
+    answer: |
+      $I_2 = 18.75 \approx 19\ \text{W m}^{-2}$
+
+  - type: diagram
+    diagram: phys-polarisation-malus-graph
+    alt: A graph of transmitted intensity against the angle between the analyser and the plane of polarisation. The curve is cos squared, starting at a maximum when the axes are parallel, falling to zero at 90 degrees, and rising again to a maximum at 180 degrees. Marked points show half intensity at 45 degrees and zero at 90 degrees.
+    caption: |
+      Malus's law gives a $\cos^2\theta$ curve. Parallel axes transmit everything; crossed axes transmit nothing.
+
+  - type: misconceptions
+    items:
+      - wrong: The intensity falls as $\cos\theta$.
+        right: |
+          The **amplitude** falls as $\cos\theta$; the intensity falls as $\cos^2\theta$. At $60^\circ$ the amplitude halves but the intensity quarters.
+      - wrong: For two filters, you add the angles and use the total.
+        right: |
+          Each filter rotates the plane of polarisation. The second angle is measured from the **first filter's axis**, so multiply the factors: $I = I_0\cos^2\theta_1\cos^2\theta_2$.
+      - wrong: Crossed filters let half the light through.
+        right: |
+          At $90^\circ$, $\cos 90^\circ = 0$, so the transmitted intensity is zero. Half is the result for $45^\circ$.
+      - wrong: The formula works for unpolarised light straight from a lamp.
+        right: |
+          Malus's law applies to light that is already plane-polarised. The syllabus does not require a calculation for the first filter acting on unpolarised light; use the formula only after the beam is polarised.
+
+  - type: exam
+    body: |
+      - Quote the law as $I = I_0\cos^2\theta$ and define $\theta$ as the angle between the **analyser axis and the plane of polarisation** (equivalently, between the two filter axes).
+      - For a series, take the filters one at a time. A common error is measuring the second angle from the original plane instead of from the first filter's axis.
+      - Keep intensities in $\text{W m}^{-2}$ and check that each step reduces the intensity. An answer larger than the incident intensity is impossible.
+      - If asked for the angle giving a particular fraction, invert the law: $\cos^2\theta = I/I_0$, so $\cos\theta = \sqrt{I/I_0}$.
+      - Do not calculate the effect of the first filter on unpolarised light unless the question gives you the polarised intensity. The guidance excludes that calculation.
+
+  - type: deeper
+    title: What happens with unpolarised light?
+    body: |
+      If unpolarised light of intensity $I_{\text{unpolarised}}$ passes through a single ideal polarising filter, the transmitted intensity is about $\dfrac{I_{\text{unpolarised}}}{2}$. This is because, on average, half the oscillation energy lies along the filter's axis.
+
+      This result is **not required** by the syllabus for calculation. It is included so that you understand why the first filter still transmits a bright beam even though it removes half the light. Once the beam is polarised, every later filter follows Malus's law with its own angle.
+
+  - type: takeaways
+    items:
+      - Malus's law is $I = I_0\cos^2\theta$ for plane-polarised light through an analyser.
+      - $\theta$ is the angle between the analyser axis and the plane of polarisation.
+      - Amplitude falls as $\cos\theta$; intensity falls as $\cos^2\theta$.
+      - For filters in series, $I = I_0\cos^2\theta_1\cos^2\theta_2\ldots$
+      - Parallel axes give maximum transmission; crossed axes give zero.
+
+  - type: check
+    title: One filter
+    questions: [thirty-degrees, sixty-degrees, angle-for-quarter]
+
+  - type: check
+    title: Series and ideas
+    questions: [series-two-filters, half-intensity-angle, malus-explanation, crossed-intensity]
+
+questions:
+  - id: thirty-degrees
+    format: numeric
+    difficulty: 1
+    objectives: ["7.5.2"]
+    prompt: |
+      Plane-polarised light of intensity $80\ \text{W m}^{-2}$ passes through an analyser at $30^\circ$ to its plane of polarisation. Calculate the transmitted intensity.
+    fields:
+      - answer: 60
+        tolerance: { abs: 0.5 }
+        unit: W m⁻²
+    explanation: |
+      $I = I_0\cos^2\theta = 80 \times \cos^2 30^\circ = 80 \times 0.75 = 60\ \text{W m}^{-2}$.
+
+  - id: sixty-degrees
+    format: numeric
+    difficulty: 2
+    objectives: ["7.5.2"]
+    prompt: |
+      Plane-polarised light of intensity $120\ \text{W m}^{-2}$ falls on an analyser whose axis is at $60^\circ$ to the plane of polarisation. Calculate the transmitted intensity.
+    fields:
+      - answer: 30
+        tolerance: { abs: 0.5 }
+        unit: W m⁻²
+    explanation: |
+      $\cos 60^\circ = 0.5$, so $\cos^2 60^\circ = 0.25$. Then $I = 120 \times 0.25 = 30\ \text{W m}^{-2}$.
+
+  - id: angle-for-quarter
+    format: numeric
+    difficulty: 2
+    objectives: ["7.5.2"]
+    prompt: |
+      Plane-polarised light passes through an analyser. The transmitted intensity is one quarter of the incident intensity. What is the angle between the analyser axis and the plane of polarisation? Give your answer in degrees.
+    fields:
+      - answer: 60
+        tolerance: { abs: 0.5 }
+        unit: °
+    explanation: |
+      $\cos^2\theta = 0.25$, so $\cos\theta = 0.5$ and $\theta = 60^\circ$. (The other solution, $300^\circ$, describes the same orientation.)
+
+  - id: series-two-filters
+    format: numeric
+    difficulty: 3
+    objectives: ["7.5.2"]
+    prompt: |
+      Plane-polarised light of intensity $100\ \text{W m}^{-2}$ passes through a filter at $30^\circ$ to its plane of polarisation, then through a second filter at $60^\circ$ to the first filter's axis. Calculate the final intensity.
+    fields:
+      - answer: 18.75
+        tolerance: { rel: 0.01 }
+        unit: W m⁻²
+    explanation: |
+      After the first filter: $100\cos^2 30^\circ = 75\ \text{W m}^{-2}$. After the second: $75\cos^2 60^\circ = 18.75\ \text{W m}^{-2}$ (about $19\ \text{W m}^{-2}$). The second angle is measured from the first filter's axis.
+
+  - id: half-intensity-angle
+    format: mcq
+    difficulty: 2
+    objectives: ["7.5.2"]
+    prompt: |
+      At what angle between the analyser axis and the plane of polarisation is the transmitted intensity exactly half the incident intensity?
+    options:
+      - text: $45^\circ$
+        correct: true
+        why: |
+          $\cos^2 45^\circ = (1/\sqrt{2})^2 = 0.5$, so half the intensity is transmitted.
+      - text: $30^\circ$
+        why: |
+          $\cos^2 30^\circ = 0.75$, which transmits three quarters of the intensity.
+      - text: $60^\circ$
+        why: |
+          $\cos^2 60^\circ = 0.25$, which transmits one quarter.
+      - text: $90^\circ$
+        why: |
+          $\cos^2 90^\circ = 0$, so no light is transmitted.
+    explanation: |
+      Half intensity corresponds to $\cos^2\theta = 0.5$, so $\theta = 45^\circ$.
+
+  - id: malus-explanation
+    format: explain
+    difficulty: 2
+    objectives: ["7.5.2"]
+    prompt: |
+      Explain why the intensity transmitted by an analyser depends on $\cos^2\theta$ rather than on $\cos\theta$.
+    model: |
+      The analyser transmits the component of the electric field oscillation along its axis. For light polarised at an angle theta to that axis, this component is E0 cos theta, so the transmitted amplitude is reduced by a factor cos theta. Intensity is proportional to the square of the amplitude. Squaring the reduced amplitude gives a factor cos squared theta, so the transmitted intensity is I0 cos squared theta.
+    keyPoints:
+      - The analyser transmits the component of the electric field along its axis
+      - The transmitted amplitude is E0 cos theta
+      - Intensity is proportional to amplitude squared
+      - Squaring gives cos squared theta
+    explanation: |
+      The cosine comes from resolving the field; the square comes from intensity being proportional to amplitude squared.
+
+  - id: crossed-intensity
+    format: mcq
+    difficulty: 1
+    objectives: ["7.5.2"]
+    prompt: |
+      Two polarising filters are arranged with their transmission axes at $90^\circ$ to each other. Unpolarised light is incident on the first. What is the intensity after the second filter?
+    options:
+      - text: Zero
+        correct: true
+        why: |
+          The first filter polarises the light; the second is crossed with that plane, so $\cos 90^\circ = 0$ and nothing is transmitted.
+      - text: Half the intensity after the first filter
+        why: |
+          Half is transmitted at $45^\circ$, not at $90^\circ$.
+      - text: The same as after the first filter
+        why: |
+          That would be true only if the axes were parallel (0°).
+      - text: Twice the intensity after the first filter
+        why: |
+          A passive filter cannot increase intensity.
+    explanation: |
+      Crossed filters transmit no light because the second filter's axis is perpendicular to the plane of polarisation.
