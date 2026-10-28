@@ -1,0 +1,123 @@
+id: forces-equilibrium-forces-and-force-diagrams
+subject: "9709"
+topic: "4.1"
+title: Forces and force diagrams
+summary: Identify the forces on a particle and draw a clear force diagram before calculating.
+order: 1
+minutes: 6
+kind: core
+objectives: ["4.1.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus objective 4.1.1. All questions and examples are original; numerical values are
+    illustrative. Not yet independently reviewed or reviewed by a teacher. Independently re-checked line by line (Cambridge objectives, worked examples, vector calculations, every answer key, MCQ cardinality and schema) in a separate GitHub Copilot review on 2026-10-29. Reviewer: GitHub Copilot; model identity was not exposed in this session. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can identify every force acting on a particle and represent the forces with a labelled force diagram.
+  - type: explain
+    title: Start with the particle, not the story
+    body: |-
+      In mechanics, a **particle** is an object whose size and shape we ignore for the calculation. Draw it as a small dot, then draw one arrow for each force acting on it.
+
+      A force is a push or pull. The arrow shows the force's direction, and its label tells you what caused it. Do not draw the path of motion as a force: motion and force are different ideas.
+  - type: definition
+    term: Force diagram
+    body: A force diagram is a diagram showing the particle and all the external forces acting on it, with each force represented by a labelled arrow.
+  - type: intuition
+    title: The invisible tug-of-war
+    body: |-
+      Imagine pausing a scene and asking, “Who is pushing or pulling this object right now?” Gravity pulls masses down, a surface pushes at right angles to itself, and a string pulls along its own length.
+
+      A diagram is a bookkeeping tool: one arrow per interaction. If an interaction is not present, its arrow must not appear.
+  - type: example
+    title: A parcel on a rough table
+    problem: A parcel rests on a rough horizontal table while a person pulls it to the right with a horizontal string. Identify the forces on the parcel.
+    steps:
+      - |-
+        Draw the parcel as a dot. The Earth attracts it downwards, so draw its weight vertically down and label it $mg$.
+      - |-
+        The table is in contact with the parcel, so it pushes perpendicular to its surface. Draw the normal reaction vertically upwards and label it $R$.
+      - |-
+        The string pulls along its length, so draw the tension horizontally right and label it $T$.
+      - |-
+        Because the table is rough, friction opposes the possible or actual sliding. Draw friction horizontally left and label it $F$.
+    answer: The four forces are weight, normal reaction, tension and friction.
+  - type: check
+    title: Name the interactions
+    questions: [force-list, force-direction, string-direction, rough-contact-direction]
+  - type: misconceptions
+    items:
+      - wrong: Draw an arrow in the direction the object is moving and call it “motion”.
+        right: Motion is not a force. Draw only pushes and pulls caused by real interactions.
+      - wrong: Draw the normal reaction horizontally because the object touches the table.
+        right: The normal reaction is perpendicular to the contact surface, so it is vertical for a horizontal table.
+  - type: exam
+    body: Make arrows start at the particle, point in the correct direction and have unambiguous labels. Include friction only when the contact is rough; include tension only when a string or similar connector pulls.
+  - type: takeaways
+    items:
+      - Start with a dot representing the particle.
+      - Identify each real interaction with the particle.
+      - Weight acts vertically downwards.
+      - A normal reaction is perpendicular to the contact surface.
+      - Friction acts along the contact surface and opposes slipping.
+questions:
+  - id: force-list
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: A block is on a rough horizontal floor and is pulled horizontally by a string. Which list contains all the forces on the block?
+    options:
+      - text: Weight, normal reaction, tension and friction.
+        correct: true
+        why: "These are the four interactions present: Earth, floor, string and rough contact."
+      - text: Weight, velocity, tension and friction.
+        correct: false
+        why: Velocity is not a force, and the floor's normal reaction is missing.
+      - text: Weight, normal reaction and acceleration.
+        correct: false
+        why: Acceleration is not a force, and the string and rough contact have been omitted.
+      - text: Normal reaction and tension only.
+        correct: false
+        why: The block still has weight and the rough floor still provides friction.
+    explanation: A force diagram includes one arrow for each external push or pull, not motion quantities.
+  - id: force-direction
+    format: text
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: For a particle on a horizontal surface, in which direction does the normal reaction act?
+    style: short
+    accept: ["vertically upwards", "upwards", "perpendicular to the surface", "normal to the surface"]
+    model: It acts perpendicular to the surface, so it is vertically upwards for a horizontal surface.
+    explanation: “Normal” means perpendicular to the contact surface.
+  - id: string-direction
+    format: text
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: In which direction does the tension in a taut string act on the attached particle?
+    style: short
+    accept: ["along the string", "along the length of the string", "towards the string", "towards the other end of the string"]
+    model: Tension acts along the string, pulling the particle towards the other end.
+    explanation: A taut string can pull, not push, and its force acts along its own length.
+  - id: rough-contact-direction
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.1"]
+    prompt: A particle is sliding to the right across a rough horizontal surface. Which way does the frictional force on the particle act?
+    options:
+      - text: To the left
+        correct: true
+        why: Friction opposes the relative sliding between the surfaces.
+      - text: To the right
+        correct: false
+        why: That would assist the sliding rather than oppose it.
+      - text: Vertically upwards
+        correct: false
+        why: The upward contact component is the normal reaction, not friction.
+      - text: It has no direction
+        correct: false
+        why: Friction is a force, so it has a direction along the contact surface.
+    explanation: Friction acts along the surface and opposes actual or impending relative motion.
