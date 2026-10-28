@@ -1,0 +1,305 @@
+id: data-integrity-check-digits
+subject: "9618"
+topic: "6.2"
+title: "Check digits: a built-in arithmetic guard"
+summary: Calculate a check digit, use it to test a code, and see why a single mistyped digit almost always shows up.
+order: 3
+minutes: 9
+kind: core
+objectives: ["6.2.2"]
+prerequisites: [data-integrity-validation-checks]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.2 outcome 6.2.2, using the check
+    digit from its guidance. Both worked examples and every answer key were computed in Python.
+    All examples and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.2.2 confirmed taught and tested, every definition and claim checked,
+    every check digit, parity bit, block check character and checksum recomputed in Python,
+    and the unit's five diagrams rendered and inspected in light and dark. No separate
+    reviewer model was available in this environment. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can compute a check digit using a weighting rule, test whether a code is valid, and explain what kinds of error a check digit does and does not catch.
+
+  - type: explain
+    title: A total printed on the receipt
+    body: |-
+      When a shop assistant types a long number, one digit can easily go wrong. Compare the typed code with the printed one and the mistake is obvious — but nobody does that in a supermarket queue.
+
+      A **check digit** is the machine's version of that comparison. The last digit of the code is not extra information: it is calculated from all the other digits. 
+
+      The computer recalculates it and compares, so a changed or swapped digit makes the two disagree.
+
+      You meet check digits on barcodes, ISBNs on books, bank account numbers, national insurance numbers and courier tracking codes.
+
+  - type: definition
+    term: Check digit
+    body: |-
+      A **check digit** is a digit appended to a code, calculated from the other digits using a fixed rule, so that the receiver can recalculate it and detect errors such as a single mistyped digit or two swapped digits.
+
+  - type: explain
+    title: Method 1 — weights and modulus 11
+    body: |-
+      Here is one common rule, used by ISBN-10. Each digit is multiplied by a **weight**, the products are added, and the check digit is whatever makes that total a multiple of 11.
+
+      The weights run from 10 down to 2 across the first nine digits, so earlier digits matter more.
+
+      **Worked example:** code `978 030640` (nine digits), check digit missing.
+
+      1. Write the digits with their weights.
+
+      | Digit | 9 | 7 | 8 | 0 | 3 | 0 | 6 | 4 | 0 |
+      | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+      | Weight | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 |
+      | Product | 90 | 63 | 64 | 0 | 18 | 0 | 24 | 12 | 0 |
+
+      2. Add the products:
+
+      $$90 + 63 + 64 + 0 + 18 + 0 + 24 + 12 + 0 = 271$$
+
+      3. Divide by 11 and take the remainder: $271 = 24 \times 11 + 7$, so the remainder is 7.
+      4. The check digit is $11 - 7 = 4$.
+
+      The full code is therefore `9780306404`. Check it: $271 + 4 = 275 = 25 \times 11$, a multiple of 11.
+
+      If the remainder had been 0, the check digit would be 0. If the answer came out as 10, the usual convention is to write the letter `X` (Roman numeral for 10), because no single digit can represent 10.
+
+  - type: explain
+    title: Method 2 — alternating weights and modulus 10
+    body: |-
+      The other common family uses weights of 3 and 1 alternately, starting with 3, and then works modulo 10. This is the idea behind barcodes such as EAN-13.
+
+      **Worked example:** code `509876543`, check digit missing.
+
+      1. Multiply alternately by 3 and 1.
+
+      | Digit | 5 | 0 | 9 | 8 | 7 | 6 | 5 | 4 | 3 |
+      | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+      | Weight | 3 | 1 | 3 | 1 | 3 | 1 | 3 | 1 | 3 |
+      | Product | 15 | 0 | 27 | 8 | 21 | 6 | 15 | 4 | 9 |
+
+      2. Add the products:
+
+      $$15 + 0 + 27 + 8 + 21 + 6 + 15 + 4 + 9 = 105$$
+
+      3. Take the remainder modulo 10: $105 \bmod 10 = 5$.
+      4. Subtract from 10 and take the units digit: $10 - 5 = 5$.
+
+      The full code is `5098765435`. Checking: the new total is $105 + 5 = 110$, which is a multiple of 10.
+
+      If the subtraction gives 10, the check digit is 0 — you cannot store two digits. The "take the units digit" step handles that: $10 \bmod 10 = 0$.
+
+  - type: diagram
+    diagram: cs-data-integrity-check-digit
+    alt: >-
+      A flow showing the modulus 11 calculation for the digits 978030640. The nine digits are
+      multiplied by the weights 10 down to 2, giving products 90, 63, 64, 0, 18, 0, 24, 12 and 0.
+      These are added to 271, the remainder on division by 11 is 7, and the check digit is
+      11 minus 7, which is 4. A final box shows the completed code 9780306404 and the test that
+      271 plus 4 is a multiple of 11.
+    caption: |-
+      The check digit is not stored information; it is a result, recalculated every time the code is read.
+
+  - type: explain
+    title: How it catches mistakes — and what it misses
+    body: |-
+      **A single wrong digit** always changes the weighted total, so the remainder changes and the recalculated check digit no longer matches. 
+
+      In the modulus 11 example, mistyping the seventh digit `6` as `7` gives a total of 275 instead of 271; the remainder becomes 0 instead of 7, so the expected check digit is 0, not 4. The code is rejected.
+
+      **Two swapped digits** are usually caught too, because the two digits carry different weights: swapping them changes the total by the difference between the digits multiplied by the difference between the weights.
+
+      What a check digit **cannot** do:
+
+      - It cannot tell you *which* digit is wrong, only that something is.
+      - It cannot catch a transposition that happens to leave the weighted total unchanged. With weights of 3 and 1, swapping two digits that differ by 5 changes the total by 10, which is 0 modulo 10 — so that swap slips through.
+      - It cannot catch a value that was wrong at the source. If the person issuing the code made it up wrongly, the check digit agrees with the wrong digits.
+      - A single check digit catches most, but not all, random errors.
+
+  - type: check
+    title: Calculate and test
+    questions: [cd-num-mod11, cd-num-mod10, cd-mcq-purpose]
+
+  - type: example
+    title: Testing a code that fails
+    problem: |-
+      A courier's tracking code uses the modulus 11 rule (weights 10 down to 2 on the first nine digits, check digit last). The code `9780307404` is scanned. Is it valid?
+    steps:
+      - |-
+        **Step 1 — weight the first nine digits** `9 7 8 0 3 0 7 4 0`:
+
+        $$90 + 63 + 64 + 0 + 18 + 0 + 28 + 12 + 0 = 275$$
+
+      - |-
+        **Step 2 — find the required check digit.** $275 \bmod 11 = 0$, so the check digit should be $11 - 0 = 11$, which is written as 0 (a remainder of 0 needs a check digit of 0).
+      - |-
+        **Step 3 — compare.** The code carries `4`, but the calculation needs `0`. They disagree, so the code is **invalid** — one digit was mistyped during scanning or printing.
+      - |-
+        **Step 4 — can we repair it?** Not from the check digit alone. It flags that *something* is wrong; finding the right digit needs the original document.
+    answer: |-
+      Invalid. The weighted total is 275, a multiple of 11, so the required check digit is 0, not 4. The system would ask for the code to be re-entered rather than guess.
+
+  - type: check
+    title: Testing a code
+    questions: [cd-mcq-remainder, cd-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [cd-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The check digit contains extra information about the product.
+        right: |-
+          It is computed from the other digits. It carries no independent meaning; its only job is to make errors detectable.
+      - wrong: |-
+          A check digit tells you which digit is wrong.
+        right: |-
+          It only says that the code as a whole does not add up. Locating the error needs the original source.
+      - wrong: |-
+          If the check digit matches, the code must be correct.
+        right: |-
+          It matched the digits it was computed from. If those were wrong when the code was created, or the error is one the rule cannot detect, the check still passes.
+      - wrong: |-
+          Any single-digit mistake is caught, so the data is now error-free.
+        right: |-
+          Single-digit errors are almost always caught, but check digits miss some transpositions, and they say nothing about values that are wrong but internally consistent.
+      - wrong: |-
+          When the remainder is 0, there is no check digit.
+        right: |-
+          The check digit is 0. A remainder of 0 means the total is already a multiple of 11, so adding 0 keeps it so.
+
+  - type: exam
+    body: |-
+      Calculation questions give you the rule in the stem — read it carefully, because the weights and the modulus differ between systems.
+
+      - Show the weighted products in a table, then the total, then the remainder, then the check digit. Method marks are awarded for each stage, so a single wrong product does not lose everything.
+      - State the modulus you are using: "modulo 11" or "modulo 10".
+      - If a question says "the check digit is the last digit", remember to exclude it from the weighting.
+      - For an explanation question, give one strength (detects single-digit errors and most transpositions automatically) and one limit (cannot identify or correct the error, and some transpositions slip through).
+
+  - type: takeaways
+    items:
+      - A check digit is calculated from the other digits and appended to the code.
+      - "Modulus 11 with descending weights: total the products, find the remainder, check digit = 11 − remainder (0 if the remainder is 0)."
+      - "Modulus 10 with weights 3 and 1: total the products, check digit = (10 − total mod 10) mod 10."
+      - It detects single-digit errors and most transpositions, but cannot locate the error or prove the data true.
+      - Always exclude the check digit itself from the calculation.
+
+questions:
+  - id: cd-num-mod11
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A code uses the modulus 11 rule: weights 10 down to 2 on the first nine digits, and the check digit is $11 - \text{remainder}$ (0 if the remainder is 0). The first nine digits are `1 4 1 5 9 2 6 5 3`. What is the check digit?
+    fields:
+      - label: "check digit ="
+        answer: 0
+    explanation: |-
+      Multiply each digit by its weight:
+
+      $1\times10 = 10$, $4\times9 = 36$, $1\times8 = 8$, $5\times7 = 35$, $9\times6 = 54$, $2\times5 = 10$, $6\times4 = 24$, $5\times3 = 15$, $3\times2 = 6$.
+
+      Total $= 10+36+8+35+54+10+24+15+6 = 198$. Since $198 = 18\times11$, the remainder is 0, so the check digit is $11-11 = 0$ and the completed code ends in **0**.
+
+  - id: cd-num-mod10
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A barcode uses weights 3 and 1 alternately, starting with 3, and a modulus 10 check digit: check $= (10 - \text{total} \bmod 10) \bmod 10$. The first nine digits are `9 3 1 2 4 5 6 7 8`. What is the check digit?
+    fields:
+      - label: "check digit ="
+        answer: 9
+    explanation: |-
+      Products: $9\times3 = 27$, $3\times1 = 3$, $1\times3 = 3$, $2\times1 = 2$, $4\times3 = 12$, $5\times1 = 5$, $6\times3 = 18$, $7\times1 = 7$, $8\times3 = 24$.
+
+      Total $= 27+3+3+2+12+5+18+7+24 = 101$. Then $101 \bmod 10 = 1$, so the check digit is $10 - 1 =$ **9**.
+
+  - id: cd-mcq-purpose
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.2"]
+    prompt: |-
+      What is the purpose of a check digit in a product code?
+    options:
+      - text: To detect that a digit has been mistyped or two digits swapped.
+        correct: true
+        why: |-
+          Recalculating the check digit makes a changed or reordered code fail the test, so the error is caught at entry.
+      - text: To make the code longer so it looks more secure.
+        why: |-
+          Length is a side effect, not the purpose; encryption provides security, not check digits.
+      - text: To store which country the product came from.
+        why: |-
+          Meaningful parts of a code (such as a country prefix) are stored data, not check digits.
+      - text: To allow the computer to correct a wrong digit automatically.
+        why: |-
+          A check digit detects an error but cannot identify or repair it.
+    explanation: |-
+      The check digit is a computed guard. It detects entry errors but carries no information and cannot correct anything.
+
+  - id: cd-mcq-remainder
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      In a modulus 11 scheme, the weighted total of nine digits is 275. What should the check digit be?
+    options:
+      - text: "0"
+        correct: true
+        why: |-
+          $275 = 25 \times 11$, so the remainder is 0 and the check digit is 0.
+      - text: "11"
+        why: |-
+          A check digit is a single digit, so 11 cannot be stored; a remainder of 0 gives a check digit of 0.
+      - text: "10"
+        why: |-
+          10 is only used (often as `X`) when the remainder is 1, giving $11 - 1 = 10$. Here the remainder is 0.
+      - text: "25"
+        why: |-
+          25 is the quotient, not the remainder; the formula uses the remainder.
+    explanation: |-
+      $275 \div 11 = 25$ exactly, so the remainder is 0 and the check digit is 0. The completed code then has a total that is still a multiple of 11.
+
+  - id: cd-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.2.2"]
+    prompt: |-
+      A student tests the code `5098765435` (weights 3 and 1, modulus 10). Which line contains the first error?
+    lines:
+      - Multiply the first nine digits alternately by 3 and 1, starting with 3.
+      - The products are 15, 0, 27, 8, 21, 6, 15, 4 and 9, which total 105.
+      - Include the final digit in the products as well, because it is part of the code.
+      - The total including the check digit should be a multiple of 10, and 110 is.
+    errorLine: 3
+    fix: |-
+      The check digit must **not** be included in the weighted products; it is the result of the calculation. The test is that the weighted total of the first nine digits plus the check digit is a multiple of 10 ($105 + 5 = 110$), not that the check digit is weighted again.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. Line 3 misunderstands the method: weighting the check digit as well would make the test meaningless, because the check digit is not independent data.
+
+  - id: cd-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.2.2"]
+    prompt: |-
+      Explain how a check digit helps to protect the integrity of a product code, and give one limitation of the method.
+    model: |-
+      A check digit is calculated from the other digits of the code using a fixed rule, such as weights 3 and 1 with modulus 10, and stored as the last digit. When the code is typed or scanned, the system recalculates the check digit and compares it with the one received. A single mistyped digit changes the weighted total, so the recalculated value differs and the code is rejected; a swapped pair of digits usually changes the total too. This catches errors at the point of entry, before wrong data is stored. One limitation is that the method can only detect that something is wrong: it cannot say which digit is at fault, so the operator must find the original. It also misses some transpositions and cannot detect a code that was wrong when it was issued.
+    keyPoints:
+      - Check digit is computed from the other digits by a fixed rule.
+      - The system recalculates and compares it when the code is entered.
+      - A changed digit alters the weighted total, so the code is rejected.
+      - "Limitation: it detects but cannot locate or correct the error; some errors still pass."
+    explanation: |-
+      The check digit turns an arithmetic relationship into an error test. It guards entry, not truth.

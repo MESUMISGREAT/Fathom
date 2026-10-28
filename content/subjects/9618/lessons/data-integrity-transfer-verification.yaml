@@ -1,0 +1,337 @@
+id: data-integrity-transfer-verification
+subject: "9618"
+topic: "6.2"
+title: "Verification in transit: parity bits, block parity and checksums"
+summary: How a parity bit, a block check character and a checksum detect data corrupted while it travels, and what each one misses.
+order: 5
+minutes: 9
+kind: core
+objectives: ["6.2.3"]
+prerequisites: [data-integrity-entry-verification]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.2 outcome 6.2.3, guidance for data
+    transfer: parity check (byte and block) and checksum. Every bit pattern, block check
+    character and checksum in this lesson and its answer keys was recomputed in Python. All
+    examples and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.2.3 confirmed taught and tested, every definition and claim checked,
+    every check digit, parity bit, block check character and checksum recomputed in Python,
+    and the unit's five diagrams rendered and inspected in light and dark. No separate
+    reviewer model was available in this environment. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can add a parity bit to a byte, compute a block check character and a checksum, explain how each detects corruption, and say what each one can miss.
+
+  - type: explain
+    title: Data can change on the way
+    body: |-
+      Data does not travel perfectly. Electrical noise on a cable, a weak Wi-Fi signal or a scratch on a disc can flip a bit from 0 to 1 or from 1 to 0. 
+
+      The receiver then holds a value the sender never sent.
+
+      Validation cannot help: the corrupted value may be perfectly acceptable. Verification cannot compare with a source document either, because nobody is typing — one computer is talking to another.
+
+      So the sender and receiver agree on a **check value** that travels with the data. The receiver recalculates it and compares. 
+
+      If the two disagree, something changed on the way and the data must be resent.
+
+  - type: definition
+    term: Parity check (byte parity)
+    body: |-
+      A **parity bit** is one extra bit added to a byte so that the total number of 1s in the byte (including the parity bit) is either always **even** (**even parity**) or always **odd** (**odd parity**).
+
+      The sender and receiver must agree which convention is in use, otherwise every byte looks wrong.
+
+  - type: explain
+    title: Working out a parity bit
+    body: |-
+      **Example:** send the byte `10110010` using even parity.
+
+      1. Count the 1s in the data: `10110010` has **four** 1s.
+      2. Even parity needs the total to be even. Four is already even.
+      3. So the parity bit is **0**, and `010110010` is transmitted (parity bit first, by this convention).
+
+      With **odd** parity the total must be odd, so the parity bit would be **1**, making five 1s.
+
+      | Data byte | 1s in data | Even parity bit | Odd parity bit |
+      | --- | --- | --- | --- |
+      | `10110010` | 4 | 0 | 1 |
+      | `01101101` | 5 | 1 | 0 |
+      | `11110000` | 4 | 0 | 1 |
+      | `01011010` | 4 | 0 | 1 |
+
+      At the receiver, the parity of the whole byte is recalculated. If it no longer matches the agreed convention, the byte is corrupt and is rejected.
+
+  - type: explain
+    title: What byte parity misses
+    body: |-
+      Parity catches any **odd** number of flipped bits in a byte, because an odd number of flips changes the count from even to odd (or the reverse).
+
+      It misses any **even** number of flips, because two flips leave the count's parity unchanged. Flip two bits of `10110010` and it still has an even number of 1s, so even parity still passes — even though the byte is now wrong.
+
+      That is a serious gap: noise often damages a short burst of adjacent bits, which can be two of them.
+
+  - type: definition
+    term: Block parity (block check character)
+    body: |-
+      **Block parity** adds a whole extra byte, the **block check character (BCC)**, at the end of a block of bytes.
+
+      Each bit position is checked down the whole block: the BCC has a 0 or 1 in that position so that the column contains an even number of 1s (for even parity). In other words the BCC is the **exclusive OR** of all the data bytes.
+
+  - type: explain
+    title: Block parity closes the gap
+    body: |-
+      Take four bytes and compute the BCC with even parity, working down each bit column.
+
+      ```text
+      byte 1   0 1 0 1 1 0 1 0
+      byte 2   0 0 1 1 0 1 0 1
+      byte 3   1 1 1 0 0 0 1 1
+      byte 4   1 0 0 1 0 1 1 0
+      -------------------------
+      BCC      0 0 0 1 1 0 1 0
+      ```
+
+      Check one column: the leftmost column is `0, 0, 1, 1` — two 1s, already even, so the BCC bit is 0. The fourth column is `1, 1, 0, 1` — three 1s, odd, so the BCC bit is 1.
+
+      Now suppose two bits flip inside byte 1: `01011010` becomes `10011010`. Byte 1 still has four 1s, so **byte parity passes** and would have missed the error.
+
+      But two columns have changed, so recalculating the BCC gives `11011010`, which no longer matches the transmitted `00011010`. **Block parity catches the error that byte parity missed.**
+
+  - type: diagram
+    diagram: cs-data-integrity-block-parity
+    alt: >-
+      Four bytes stacked as rows of eight bits, with a fifth row underneath holding the block
+      check character 00011010. Each column is highlighted as containing an even number of 1s, so
+      the BCC bit below it is 0; columns with an odd number of 1s get a 1. A side panel shows the
+      same four bytes after two bits are flipped inside the first byte: that byte still has an
+      even number of 1s, but the recalculated BCC becomes 11011010 and the mismatch is flagged.
+    caption: |-
+      Byte parity guards each byte; block parity also guards each bit position across the block.
+
+  - type: definition
+    term: Checksum
+    body: |-
+      A **checksum** is a value calculated from all the bytes in a block — commonly their total, reduced modulo 256 — which is sent with the data. The receiver adds the bytes again and compares the two checksums.
+
+      A checksum is cheap to calculate and covers the whole block in a single number, so it is used for files, network packets and downloads.
+
+  - type: explain
+    title: Checksums in practice
+    body: |-
+      **Example:** a block contains the byte values 120, 90, 30 and 10.
+
+      1. Add them: $120 + 90 + 30 + 10 = 250$.
+      2. Reduce modulo 256 (to keep the checksum in one byte): $250 \bmod 256 = 250$.
+      3. Send the four bytes and the checksum 250.
+
+      If one byte arrives as 91 instead of 90, the receiver's total is 251, which does not match 250, so the block is rejected and requested again.
+
+      **Limits.** A checksum is a single number, so errors can cancel: one byte arriving too high and another too low can leave the total unchanged. It is generally stronger than byte parity for large blocks, but like parity it can only **detect**, never repair — the fix is to resend the data.
+
+  - type: check
+    title: Parity and checksums
+    questions: [tv-num-parity, tv-text-bcc, tv-num-checksum]
+
+  - type: explain
+    title: Choosing between them
+    body: |-
+      | Method | Extra data | Detects | Misses | Typical use |
+      | --- | --- | --- | --- | --- |
+      | Byte parity | 1 bit per byte | Any odd number of flipped bits in a byte | Any even number of flips | Simple serial links, memory |
+      | Block parity | 1 byte per block | Errors that byte parity misses, including two flips in one byte | Some multi-bit patterns, especially matched errors in several columns | Character-based transfers |
+      | Checksum | 1 or 2 bytes per block | Most corruption across a whole block | Errors that cancel out in the total | Files, packets, downloads |
+
+      All three have the same job: detect that data changed, so it can be sent again. None of them can tell you which bit was wrong, so none can repair the data on its own.
+
+  - type: example
+    title: A transfer that fails
+    problem: |-
+      A sender transmits the bytes 120, 90, 30 and 10 with an even-parity bit on each byte and a checksum of 250 (total modulo 256). During transfer, the 64 bit of the second byte flips from 1 to 0, so 90 (`01011010`) is received as 26 (`00011010`).
+
+      Which checks catch the error?
+    steps:
+      - |-
+        **Step 1 — byte parity.** 90 is `01011010`, which has four 1s, so its even parity bit was 0. 26 is `00011010`, which has three 1s, so the received parity should be 1. The parity bit says 0, so the byte **fails its parity check**.
+      - |-
+        **Step 2 — checksum.** The receiver adds $120 + 26 + 30 + 10 = 186$, but the checksum says 250. They disagree, so the block **fails the checksum**.
+      - |-
+        **Step 3 — what happens next?** The receiver discards the block and asks for it to be sent again. Detection is all these methods provide; correcting the byte in place would need a code with enough redundancy to identify the bad bit.
+      - |-
+        **Step 4 — would parity alone have been enough?** Here yes, because one bit flipped. If two bits had flipped in that byte, the parity count would be unchanged and only the checksum (or a block parity) would notice.
+    answer: |-
+      Both checks catch it: the byte's parity bit no longer matches its contents, and the checksum is 186 instead of 250. The receiver requests a retransmission.
+
+  - type: check
+    title: Limits and comparisons
+    questions: [tv-mcq-limits, tv-mcq-parity-vs-checksum, tv-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [tv-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A parity bit corrects the byte if it is corrupted.
+        right: |-
+          Parity only detects that something changed. It cannot say which bit is wrong, so the data must be resent.
+      - wrong: |-
+          Parity detects any error in a byte.
+        right: |-
+          It detects an odd number of flipped bits. Two flips leave the count's parity unchanged and pass unnoticed.
+      - wrong: |-
+          Block parity and byte parity are the same check.
+        right: |-
+          Byte parity adds a bit to each byte. Block parity adds a byte to the block, computed down each bit column, so it can catch errors that leave an individual byte's parity unchanged.
+      - wrong: |-
+          A checksum is more reliable because it uses encryption.
+        right: |-
+          A checksum is a plain sum, not encryption. It detects accidental corruption, not deliberate tampering.
+      - wrong: |-
+          If the checksum matches, the data is definitely unchanged.
+        right: |-
+          Some errors cancel out in the total, and a deliberate attacker can adjust the data to keep the checksum the same. A cryptographic hash is needed for tamper detection.
+
+  - type: exam
+    body: |-
+      Common tasks: *"State what is meant by even parity"*, *"Add the parity bit to this byte"*, *"Calculate the block check character"*, *"Explain how a checksum detects an error"*.
+
+      - For a definition, include the rule: the parity bit makes the total number of 1s even (or odd), and the sender and receiver must agree which.
+      - For a calculation, show the count of 1s and then the bit. One mark is usually for the method.
+      - For an explanation, follow the data: sender calculates, sends the value with the data, receiver recalculates and compares, mismatch means corruption and retransmission.
+      - When asked for a limitation, say that these methods detect but do not correct, and that parity misses an even number of flipped bits.
+
+  - type: takeaways
+    items:
+      - Byte parity adds one bit so the number of 1s in the byte is always even (or always odd).
+      - Byte parity misses an even number of flipped bits.
+      - Block parity adds a BCC byte computed down each bit column (the XOR of the bytes), catching errors byte parity misses.
+      - A checksum is a total of the byte values (often modulo 256) sent with the block and recalculated on arrival.
+      - All three detect corruption; none can repair it, so corrupted data is resent.
+
+questions:
+  - id: tv-num-parity
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.3"]
+    prompt: |-
+      A system uses **even** parity. The data byte is `01101101`. What value should the parity bit have?
+    fields:
+      - label: "parity bit ="
+        answer: 1
+    explanation: |-
+      `01101101` contains five 1s, which is odd. To make the total even, the parity bit must be **1**, giving six 1s.
+
+  - id: tv-text-bcc
+    format: text
+    style: short
+    difficulty: 3
+    objectives: ["6.2.3"]
+    prompt: |-
+      Four bytes are sent with even block parity: `01011010`, `00110101`, `11100011` and `10010110`. Calculate the block check character and give it as eight bits.
+    accept: ["00011010", "0 0 0 1 1 0 1 0", "00011010 (binary)", "BCC 00011010"]
+    model: |-
+      `00011010`.
+    explanation: |-
+      Count the 1s down each column: 2, 2, 2, 3, 1, 2, 3 and 2. Columns with an odd count (the fourth, fifth and seventh, which have 3, 1 and 3) need a 1 in the BCC; the rest need a 0.
+
+      That gives `0 0 0 1 1 0 1 0`, which is also the XOR of the four bytes.
+
+  - id: tv-num-checksum
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.3"]
+    prompt: |-
+      A block contains bytes with values 120, 90, 30 and 10. The checksum is the total modulo 256. What checksum should be sent?
+    fields:
+      - label: "checksum ="
+        answer: 250
+    explanation: |-
+      $120 + 90 + 30 + 10 = 250$, and $250 \bmod 256 = 250$. If one byte arrives changed, the receiver's total will differ and the block is rejected.
+
+  - id: tv-mcq-limits
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.3"]
+    prompt: |-
+      Why can even byte parity fail to detect a corrupted byte?
+    options:
+      - text: Two bits flipped, so the number of 1s is still even.
+        correct: true
+        why: |-
+          Parity only records whether the count of 1s is even or odd, so an even number of flips leaves it unchanged.
+      - text: The parity bit is lost in transmission.
+        why: |-
+          Losing the parity bit is a different failure; the question asks why a corrupted byte can still pass.
+      - text: Even parity cannot detect single-bit errors.
+        why: |-
+          It detects single-bit errors reliably; one flip always changes the parity.
+      - text: The receiver does not know the parity convention.
+        why: |-
+          If the convention were unknown, every byte would be unreadable, not just this one.
+    explanation: |-
+      Parity is a single bit, so it can only count the parity of the 1s. Two flips preserve that parity and the error passes.
+
+  - id: tv-mcq-parity-vs-checksum
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.3"]
+    prompt: |-
+      Which statement about checking transferred data is correct?
+    options:
+      - text: Both parity and checksums can detect corruption, but neither can correct it.
+        correct: true
+        why: |-
+          Both provide a check value compared on arrival; a mismatch means the data must be resent.
+      - text: A checksum can repair a corrupted byte.
+        why: |-
+          A checksum is a total; it says nothing about which byte changed.
+      - text: Parity detects and corrects two flipped bits.
+        why: |-
+          Parity cannot even detect two flipped bits.
+      - text: Block parity replaces the need for a checksum in every case.
+        why: |-
+          Block parity is stronger than byte parity but still misses some patterns; no single check covers every case.
+    explanation: |-
+      Detection is the job of both methods. Correction needs redundancy or retransmission, which is why the receiver asks for the block again.
+
+  - id: tv-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.2.3"]
+    prompt: |-
+      A student explains how a parity check works. Which line contains the first error?
+    lines:
+      - The sender counts the 1s in the byte and adds a parity bit so the total is even.
+      - The parity bit is transmitted with the byte.
+      - The receiver counts the 1s in the received byte and its parity bit.
+      - If the total is odd, the receiver flips the data bit back to its correct value and continues.
+    errorLine: 4
+    fix: |-
+      The receiver cannot know which bit is wrong, so it cannot flip anything back. On a parity failure it rejects the byte and asks for it to be **retransmitted**; detection is all the method provides.
+    explanation: |-
+      Lines 1 to 3 describe even parity correctly. Line 4 invents error correction, which parity cannot do.
+
+  - id: tv-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.2.3"]
+    prompt: |-
+      Explain how a checksum is used to verify data transferred between two computers, and give one reason why it might fail to detect an error.
+    model: |-
+      The sending computer adds up the byte values in the block, reduces the total (for example modulo 256) and sends that checksum with the data. The receiving computer performs the same addition on the bytes it received and compares its result with the checksum. If they differ, at least one byte changed in transit, so the block is discarded and requested again. One reason it might fail is that errors can cancel: if one byte arrives larger than sent by the same amount that another arrives smaller, the total is unchanged and the checksum still matches. A deliberate attacker can also adjust the data to keep the checksum the same, which is why cryptographic hashes are used where tampering is a concern.
+    keyPoints:
+      - Sender calculates a total of the byte values, often modulo 256.
+      - The checksum is sent with the block.
+      - Receiver recalculates and compares; a mismatch means corruption and retransmission.
+      - Errors can cancel in the total, or be adjusted deliberately, so a match is not proof of integrity.
+    explanation: |-
+      A checksum turns a block into one number that is cheap to recompute. It detects most accidental corruption but cannot locate it, and cancelling errors can slip through.

@@ -48,6 +48,11 @@ import CpuArchitecturePerformance from './cpu-architecture-performance';
 import CpuArchitecturePorts from './cpu-architecture-ports';
 import CpuArchitectureRegisters from './cpu-architecture-registers';
 import CpuArchitectureVonNeumann from './cpu-architecture-von-neumann';
+import DataIntegrityBlockParity from './data-integrity-block-parity';
+import DataIntegrityCheckDigit from './data-integrity-check-digit';
+import DataIntegrityDoubleEntry from './data-integrity-double-entry';
+import DataIntegrityValidationToolbox from './data-integrity-validation-toolbox';
+import DataIntegrityValidationVsVerification from './data-integrity-validation-vs-verification';
 import DataSecurityAccessRights from './data-security-access-rights';
 import DataSecurityAuthenticationFactors from './data-security-authentication-factors';
 import DataSecurityDefenceLayers from './data-security-defence-layers';
@@ -149,6 +154,11 @@ export const diagrams: DiagramRegistry = {
   'cs-cpu-architecture-ports': CpuArchitecturePorts,
   'cs-cpu-architecture-register-file': CpuArchitectureRegisters,
   'cs-cpu-architecture-von-neumann': CpuArchitectureVonNeumann,
+  'cs-data-integrity-block-parity': DataIntegrityBlockParity,
+  'cs-data-integrity-check-digit': DataIntegrityCheckDigit,
+  'cs-data-integrity-double-entry': DataIntegrityDoubleEntry,
+  'cs-data-integrity-validation-toolbox': DataIntegrityValidationToolbox,
+  'cs-data-integrity-validation-vs-verification': DataIntegrityValidationVsVerification,
   'cs-data-security-access-rights': DataSecurityAccessRights,
   'cs-data-security-authentication-factors': DataSecurityAuthenticationFactors,
   'cs-data-security-defence-layers': DataSecurityDefenceLayers,
