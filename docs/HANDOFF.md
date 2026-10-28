@@ -248,7 +248,8 @@ changes alongside lessons:
 - **The other chat’s worktree is gone from this VM.** `/workspace/chats/` contains only this
   chat, so its uncommitted 9701 7.1 drafts are not visible here. Treat 9701 7.1 as claimed
   until proven otherwise, and check `git log --all` plus `wip-snapshot` before writing it.
-- **9701 7.1 Chemical equilibria is PUBLISHED** (28 Oct, from chat `0b8e8fe21ee9b5f6eaa0ce13`):
+- **9701 7.1 Chemical equilibria is PUBLISHED** (28 Oct, `0b48020`, from chat
+  `0b8e8fe21ee9b5f6eaa0ce13`; production page returns 200 with the lesson title):
   10 lessons, 63 questions, 5 diagrams, covering all ten outcomes 7.1.1-7.1.10 one lesson per
   outcome (`chemical-equilibria-reversible-dynamic` 7.1.1, `-le-chatelier` 7.1.2+7.1.3,
   `-temperature-catalyst` 7.1.2+7.1.3, `-kc-expressions` 7.1.4, `-mole-fraction-partial-pressure`
@@ -276,6 +277,13 @@ changes alongside lessons:
     (no separate reviewer model was available), with every worked value recomputed and
     substituted back in Python, every answer key checked against the site's own checker, and all
     ten outcomes confirmed taught *and* tested. A teacher review is still outstanding.
+  - **Verification actually run:** `content:check` 0 errors / 0 warnings, `tsc --noEmit` clean,
+    `vitest run` 166 tests pass, `vitest run tests/diagrams.test.ts` pass, and every string was
+    pushed through the site's own `renderMd` (`.work-logs/check-math.ts`) to confirm KaTeX markup
+    with no leftover `$`. **No browser check was possible** (no Chromium here), so the rendered
+    layout of these equations on the live page is still unconfirmed by eye.
+  - Deleted lessons are archived by the importer, not dropped, so replacing the rebuild set does
+    not break anyone's attempt history.
 - **Before starting a unit, check that no other chat has it in flight.** Two cloud chats
   share this VM (`/workspace/chats/0b8e8fe21ee9b5f6eaa0ce13` and this one). On 28 Oct the
   other chat was writing **9618 6.1** (three `data-security-*` lessons on disk) and touching
