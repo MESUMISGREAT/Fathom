@@ -66,6 +66,12 @@ import NonUniformResistiveForces from './non-uniform-resistive-forces';
 import NonUniformSkydiverForces from './non-uniform-skydiver-forces';
 import NonUniformThrowVt from './non-uniform-throw-vt';
 import PrefixLadder from './prefix-ladder';
+import StressStrainForceExtensionGraph from './stress-strain-force-extension-graph';
+import StressStrainSpringStiffness from './stress-strain-spring-stiffness';
+import StressStrainStressStrainDefinitions from './stress-strain-stress-strain-definitions';
+import StressStrainTensionCompression from './stress-strain-tension-compression';
+import StressStrainYoungModulus from './stress-strain-young-modulus';
+import StressStrainYoungModulusApparatus from './stress-strain-young-modulus-apparatus';
 import TurningEffectsAngledForce from './turning-effects-angled-force';
 import TurningEffectsCoupleEffects from './turning-effects-couple-effects';
 import TurningEffectsCoupleTorque from './turning-effects-couple-torque';
@@ -143,6 +149,12 @@ export const diagrams: DiagramRegistry = {
   'phys-non-uniform-skydiver-forces': NonUniformSkydiverForces,
   'phys-non-uniform-throw-vt': NonUniformThrowVt,
   'phys-prefix-ladder': PrefixLadder,
+  'phys-stress-strain-force-extension-graph': StressStrainForceExtensionGraph,
+  'phys-stress-strain-spring-stiffness': StressStrainSpringStiffness,
+  'phys-stress-strain-stress-strain-definitions': StressStrainStressStrainDefinitions,
+  'phys-stress-strain-tension-compression': StressStrainTensionCompression,
+  'phys-stress-strain-young-modulus': StressStrainYoungModulus,
+  'phys-stress-strain-young-modulus-apparatus': StressStrainYoungModulusApparatus,
   'phys-turning-effects-angled-force': TurningEffectsAngledForce,
   'phys-turning-effects-couple-effects': TurningEffectsCoupleEffects,
   'phys-turning-effects-couple-torque': TurningEffectsCoupleTorque,

@@ -1,0 +1,285 @@
+id: stress-strain-hookes-law
+subject: "9702"
+topic: "6.1"
+title: "Hooke's law: twice the load, twice the extension"
+summary: Up to the limit of proportionality, extension is directly proportional to load — which turns a wobbly material into a simple straight-line equation.
+order: 2
+minutes: 6
+kind: core
+objectives: ["6.1.3", "6.1.2"]
+prerequisites: [stress-strain-deformation]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.1, learning outcomes 6.1.3 (recall and use Hooke's law) and 6.1.2 (the
+    limit of proportionality). Data in the worked examples is invented and chosen to be exactly
+    proportional. All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28. Every numeric key was recomputed independently in Python from the question's own data, every MCQ was checked for exactly one correct option with plausible distractors, and every diagram was rendered and inspected in light and dark (labels, arrows, overlaps and scale). Two real errors were found and fixed in that pass: a wrong 'strain falls by 2' reasoning in a stress/strain comparison question, and a garbled sentence in the elastic-vs-strong enrichment. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **state Hooke's law**, recognise the part of a load–extension graph where it applies, and use $F = kx$ to predict an extension or a load.
+
+  - type: explain
+    title: The pattern in the numbers
+    body: |-
+      Hang weights on a spring and measure the extension each time. A typical set of results:
+
+      | Load $F$ / N | Extension $x$ / cm | $F / x$ / (N cm⁻¹) |
+      |---|---|---|
+      | 1.0 | 2.0 | 0.50 |
+      | 2.0 | 4.0 | 0.50 |
+      | 3.0 | 6.0 | 0.50 |
+      | 4.0 | 8.0 | 0.50 |
+
+      Every row gives the same ratio. That is what **directly proportional** means: doubling the load doubles the extension, and the ratio $F/x$ is constant.
+
+      This behaviour has a name, after Robert Hooke.
+
+  - type: definition
+    term: Hooke's law
+    body: |-
+      The **extension** of an object is **directly proportional** to the **load** applied, provided the **limit of proportionality** is not exceeded.
+
+      As an equation:
+
+      $$F = kx$$
+
+      where $F$ is the load in newtons, $x$ the extension in metres, and $k$ a constant for that object called the **spring constant** (next lesson).
+
+  - type: diagram
+    diagram: phys-stress-strain-force-extension-graph
+    alt: >-
+      A graph of load on the vertical axis against extension on the horizontal axis. From the
+      origin a straight line rises through plotted points, and a label marks the last point of the
+      straight section as the limit of proportionality. Beyond that point the line continues but
+      curves, bending over towards the horizontal. A dashed line extends the straight part to show
+      where the proportional behaviour would have gone.
+    caption: |-
+      Hooke's law is the straight part of the graph. Past the limit of proportionality the line curves, and the equation no longer applies.
+
+  - type: intuition
+    title: Why "provided" is doing real work
+    body: |-
+      Hooke's law is not a law about all materials at all loads. It is a statement about the **straight part** of the graph.
+
+      Think of a rubber band. A gentle pull and it behaves itself: twice the force, twice the stretch. Pull harder and it suddenly gives a lot more for the same extra force — the graph curves, and $F = kx$ gives nonsense.
+
+      So the recipe is always the same: check the graph (or the question) says you are within the limit of proportionality **before** you use the equation.
+
+  - type: example
+    title: "Worked example: using the pattern without the equation"
+    problem: |-
+      A spring extends 12 mm when a 3.0 N load hangs on it, and the spring is within its limit of proportionality.
+
+      What load would make it extend 20 mm?
+    steps:
+      - |-
+        Proportional means the ratio is fixed. Find the extension per newton:
+
+        $$\frac{12\ \text{mm}}{3.0\ \text{N}} = 4.0\ \text{mm per N}$$
+      - |-
+        The extra extension needed is $20 - 12 = 8\ \text{mm}$.
+      - |-
+        Each newton gives 4.0 mm, so the extra load is
+
+        $$\frac{8\ \text{mm}}{4.0\ \text{mm per N}} = 2.0\ \text{N}$$
+      - |-
+        Total load $= 3.0 + 2.0 = 5.0\ \text{N}$.
+      - |-
+        Check with the ratio: $5.0\ \text{N}$ should give $5.0 \times 4.0 = 20\ \text{mm}$. ✔
+    answer: |-
+      $5.0\ \text{N}$.
+
+  - type: example
+    title: "Worked example: is the spring still obeying Hooke's law?"
+    problem: |-
+      A student's results for a spring are: 2.0 N gives 5.0 cm, 4.0 N gives 10.0 cm, 6.0 N gives 17.0 cm.
+
+      Is the spring obeying Hooke's law throughout? Explain.
+    steps:
+      - |-
+        Compare the ratio $F/x$ for each pair.
+      - |-
+        $2.0 / 5.0 = 0.40\ \text{N cm}^{-1}$ and $4.0 / 10.0 = 0.40\ \text{N cm}^{-1}$ — constant so far.
+      - |-
+        $6.0 / 17.0 = 0.35\ \text{N cm}^{-1}$ — smaller than 0.40.
+      - |-
+        A smaller ratio at the biggest load means the spring stretched **more** than proportionally, so the straight-line behaviour has ended between 4.0 N and 6.0 N.
+    answer: |-
+      No. It obeys Hooke's law up to somewhere between 4.0 N and 6.0 N, so its limit of proportionality is below 6.0 N.
+
+  - type: check
+    title: Quick check
+    questions: [hookes-statement, proportional-or-not, predict-extension]
+
+  - type: check
+    title: Practice
+    questions: [ratio-table, beyond-limit, lop-identify]
+
+  - type: misconceptions
+    items:
+      - wrong: Hooke's law says extension is proportional to load for every load.
+        right: |-
+          Only up to the limit of proportionality. Past that point the graph curves and the
+          equation fails.
+      - wrong: Hooke's law only applies to springs.
+        right: |-
+          It applies to any object — wire, rubber band, bone — while the extension stays
+          proportional to the load. Springs are just the standard example.
+      - wrong: A stiffer object has a bigger spring constant, so it extends more.
+        right: |-
+          A bigger $k$ means **less** extension for the same load: $x = F/k$.
+      - wrong: If the graph is a straight line, it must pass through the origin.
+        right: |-
+          Proportionality needs a straight line **through the origin**. A straight line that misses
+          the origin is linear but not proportional (for example, a spring that was already
+          stretched before you started).
+      - wrong: Once the limit of proportionality is passed, the object is permanently stretched.
+        right: |-
+          Proportionality can end before permanent deformation begins; that later point is the
+          elastic limit.
+
+  - type: exam
+    body: |-
+      - When asked to state Hooke's law, include **both** halves: extension proportional to load, **and** the condition about the limit of proportionality. The condition is a separate mark.
+      - Say "directly proportional", not just "proportional to" — or write "extension increases at the same rate as load".
+      - To test for proportionality from a table, divide one quantity by the other for every row and show the ratio is constant.
+
+  - type: takeaways
+    items:
+      - 'Hooke''s law: extension is directly proportional to load, up to the limit of proportionality.'
+      - 'Directly proportional means a straight line through the origin, with a constant ratio.'
+      - 'Past the limit of proportionality the graph curves and $F = kx$ no longer applies.'
+      - 'To test proportionality, check that load ÷ extension is the same for every pair of readings.'
+
+  - type: deeper
+    title: Why a straight line at all?
+    body: |-
+      Inside a solid, atoms sit at a separation where the forces between them balance. Move them a
+      little from that spacing and the restoring force is almost exactly proportional to the
+      displacement — like a spring.
+
+      Move them far and the force grows more slowly than the displacement, which is why the graph
+      curves over. Hooke's law is really the small-displacement approximation of the atomic bonds.
+
+questions:
+  - id: hookes-statement
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.3"]
+    prompt: |-
+      Which statement is Hooke's law?
+    options:
+      - text: The extension is directly proportional to the load, provided the limit of proportionality is not exceeded
+        correct: true
+        why: |-
+          Both the proportionality and its condition are part of the law.
+      - text: The extension is proportional to the load for all loads
+        why: |-
+          It stops being true past the limit of proportionality.
+      - text: The load is inversely proportional to the extension
+        why: |-
+          That would mean a bigger load gives a smaller extension, which is backwards.
+      - text: Every spring extends by the same amount for the same load
+        why: |-
+          Different springs have different spring constants, so this is false.
+    explanation: |-
+      Hooke's law is proportionality of extension to load, within the limit of proportionality.
+
+  - id: proportional-or-not
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      A wire extends 2.0 mm under a 10 N load and 6.0 mm under a 30 N load. Both readings are within the limit of proportionality. What does this show?
+    options:
+      - text: The extension is proportional to the load, because both give 5 N per mm
+        correct: true
+        why: |-
+          $10/2.0 = 5$ and $30/6.0 = 5$; a constant ratio is proportionality.
+      - text: The wire does not obey Hooke's law, because the extension changed
+        why: |-
+          The extension is expected to change — it must change in proportion.
+      - text: The wire's limit of proportionality is 30 N
+        why: |-
+          Nothing in the data shows where proportionality ends.
+      - text: The wire is plastic, because it stretched by 6 mm
+        why: |-
+          Size of extension does not tell you whether deformation is plastic.
+    explanation: |-
+      Both readings give the same load per unit extension, so the extension is proportional to load.
+
+  - id: predict-extension
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      A spring extends 24 mm under a load of 6.0 N and obeys Hooke's law.
+
+      What extension, in mm, will a load of 9.0 N produce?
+    fields:
+      - label: "x ="
+        answer: 36
+        unit: mm
+        tolerance: { abs: 0.5 }
+    explanation: |-
+      $24\ \text{mm}$ for $6.0\ \text{N}$ is $4.0\ \text{mm}$ per N, so $9.0 \times 4.0 = 36\ \text{mm}$.
+
+  - id: ratio-table
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      A spring obeys Hooke's law. It extends 15 mm under a 3.0 N load.
+
+      What load, in N, gives an extension of 40 mm?
+    fields:
+      - label: "F ="
+        answer: 8
+        unit: N
+        tolerance: { abs: 0.05 }
+    explanation: |-
+      $15\ \text{mm}$ for $3.0\ \text{N}$ is $5.0\ \text{mm}$ per N, so $40 / 5.0 = 8.0\ \text{N}$.
+
+  - id: beyond-limit
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: |-
+      A load–extension graph for a metal wire is straight through the origin up to a load of 12 N, then curves. A student uses the straight-line equation to predict the extension at 20 N. What is wrong with that?
+    options:
+      - text: Beyond 12 N the extension is no longer proportional to the load, so the equation does not apply
+        correct: true
+        why: |-
+          The straight line ends at the limit of proportionality, which is 12 N here.
+      - text: Nothing is wrong, because the graph started straight
+        why: |-
+          Starting straight only earns the equation up to the limit of proportionality.
+      - text: The equation cannot be used at all for a wire, only for springs
+        why: |-
+          Hooke's law applies to wires too, within the limit of proportionality.
+      - text: The student should use the largest load on the graph instead of 20 N
+        why: |-
+          That dodges the question rather than answering it.
+    explanation: |-
+      The straight part ends at 12 N, so predictions from $F = kx$ are only valid up to 12 N.
+
+  - id: lop-identify
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.2"]
+    prompt: |-
+      A spring obeys Hooke's law up to an extension of 30 mm. The ratio $F/x$ is 40 N m⁻¹ while it obeys the law.
+
+      What is the largest load, in N, that still obeys Hooke's law?
+    fields:
+      - label: "F ="
+        answer: 1.2
+        unit: N
+        tolerance: { abs: 0.02 }
+    explanation: |-
+      Convert first: $30\ \text{mm} = 0.030\ \text{m}$. Then $F = 40 \times 0.030 = 1.2\ \text{N}$.

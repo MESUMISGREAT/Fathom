@@ -1,0 +1,324 @@
+id: stress-strain-young-modulus-experiment
+subject: "9702"
+topic: "6.1"
+title: "Measuring the Young modulus of a metal wire"
+summary: Hang two wires side by side, load one, measure its extension with a vernier scale, and turn a graph of load against extension into the Young modulus.
+order: 6
+minutes: 8
+kind: core
+objectives: ["6.1.6"]
+prerequisites: [stress-strain-young-modulus]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.1, learning outcome 6.1.6 (describe an experiment to find the Young
+    modulus of a metal in the form of a wire). Apparatus and precautions follow the standard
+    Searle's-apparatus method. Question data is invented and chosen so the final value comes out
+    at about 2 x 10^11 Pa. All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28. Every numeric key was recomputed independently in Python from the question's own data, every MCQ was checked for exactly one correct option with plausible distractors, and every diagram was rendered and inspected in light and dark (labels, arrows, overlaps and scale). Two real errors were found and fixed in that pass: a wrong 'strain falls by 2' reasoning in a stress/strain comparison question, and a garbled sentence in the elastic-vs-strong enrichment. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **describe** how to measure the Young modulus of a metal wire, name the measuring instruments, explain each precaution, and turn the measurements into a value of $E$.
+
+  - type: explain
+    title: The idea in one sentence
+    body: |-
+      To find $E = \dfrac{F L}{A x}$ you need four quantities: the load $F$, the original length $L$, the cross-sectional area $A$, and the extension $x$.
+
+      $F$ and $L$ are easy. The two that need care are $A$ (a wire is thin — the diameter is under a millimetre) and $x$ (the extension is often less than a millimetre, too small to see against a metre rule).
+
+      So the experiment is really about measuring a **very small extension** accurately. That is why the wire is made long and thin, and why its extension is read with a **vernier scale** rather than a ruler.
+
+  - type: diagram
+    diagram: phys-stress-strain-young-modulus-apparatus
+    alt: >-
+      Two long vertical wires hang side by side from a rigid support: a reference wire on the left
+      and the test wire on the right, both carrying a small initial weight to keep them taut. The
+      test wire has a horizontal pointer assembly with a vernier scale fixed to it, reading against
+      a fixed main scale, and a set of slotted masses hangs below it. A metre rule stands beside
+      the test wire to measure its original length, and a label marks the micrometer screw gauge
+      used to measure the wire's diameter. A second label marks the spirit level or pointer that
+      shows when the wire is straight.
+    caption: |-
+      Searle's apparatus: a reference wire and a test wire side by side, so only the test wire's
+      extension is measured, using a vernier scale.
+
+  - type: explain
+    title: The apparatus, and why it is shaped like that
+    body: |-
+      - **Two wires, not one.** The test wire carries the weights; the reference wire carries the same initial load but no extra weights. Both are in the same room, so both expand equally if the temperature changes, and both creep equally. Comparing one against the other removes those effects.
+      - **A long, thin wire.** A long wire gives a bigger extension for the same strain; a thin wire gives a bigger strain for the same load. Both make the extension easier to measure. It also keeps the load needed comfortably small.
+      - **A vernier scale or travelling microscope.** Extensions are often 0.5–2 mm, so a ruler is not good enough.
+      - **A micrometer screw gauge.** The diameter is around 0.2–0.5 mm, and the area depends on its square — so an error in the diameter is doubled in the area.
+
+  - type: explain
+    title: The method, step by step
+    body: |-
+      1. Measure the **original length** $L$ of the test wire between the support and the marker, with a metre rule.
+      2. Measure the **diameter** $d$ of the wire with a micrometer screw gauge in **several places** and in **two perpendicular directions** at each place. Average the readings.
+      3. Calculate the cross-sectional area, $A = \pi d^2/4$.
+      4. Hang a small **initial load** on both wires to make them straight and taut, then record the vernier reading.
+      5. Add masses one at a time, recording the new vernier reading after each addition. Wait for the reading to settle before reading it.
+      6. Continue until you have 6–8 readings, all with small loads so the wire stays within its **limit of proportionality**.
+      7. Find each extension by subtracting the initial reading, then plot a graph of **load $F$ against extension $x$**.
+
+  - type: intuition
+    title: Why a graph, not one calculation
+    body: |-
+      You could put one pair of readings into $E = FL/(Ax)$ and be done. A graph is better for three reasons:
+
+      - **It averages out random errors.** One dodgy reading barely moves a best-fit line.
+      - **It shows whether Hooke's law held.** A straight line through the origin confirms the wire was within its limit of proportionality.
+      - **The gradient is more precise than any single pair**, because it uses the whole range.
+
+      The gradient of the $F$–$x$ graph is $k = EA/L$, so rearrange:
+
+      $$E = \frac{k\,L}{A}$$
+
+      where $k$ is the gradient in N m⁻¹, $L$ in m and $A$ in m².
+
+  - type: example
+    title: "Worked example: from measurements to E"
+    problem: |-
+      A student uses a steel wire of length 1.80 m and diameter 0.38 mm. A graph of load against extension is a straight line through the origin, and its gradient is $1.26 \times 10^{4}\ \text{N m}^{-1}$.
+
+      Calculate the Young modulus of the steel.
+    steps:
+      - |-
+        Area first, with the diameter in metres:
+
+        $$A = \pi \left(\frac{0.38 \times 10^{-3}}{2}\right)^2 = \pi \left(1.9 \times 10^{-4}\right)^2 = 1.13 \times 10^{-7}\ \text{m}^2$$
+      - |-
+        The gradient is $k = EA/L$, so
+
+        $$E = \frac{k L}{A}$$
+      - |-
+        Substitute:
+
+        $$E = \frac{1.26 \times 10^{4} \times 1.80}{1.13 \times 10^{-7}} = 2.0 \times 10^{11}\ \text{Pa}$$
+      - |-
+        Two significant figures is right here: the diameter was only given to two.
+    answer: |-
+      $E \approx 2.0 \times 10^{11}\ \text{Pa}$, which agrees with the accepted value for steel.
+
+  - type: example
+    title: "Worked example: why the diameter is measured carefully"
+    problem: |-
+      A student's diameter reading is 0.38 mm, but the true average diameter is 0.40 mm.
+
+      By what factor is the calculated Young modulus wrong, and in which direction?
+    steps:
+      - |-
+        Area depends on the square of the diameter: $A \propto d^2$.
+      - |-
+        Ratio of areas:
+
+        $$\frac{A_{\text{used}}}{A_{\text{true}}} = \left(\frac{0.38}{0.40}\right)^2 = 0.9025$$
+      - |-
+        $E = kL/A$, so a smaller area used in the calculation makes $E$ **larger** by
+        $1/0.9025 = 1.108$.
+      - |-
+        That is about an 11% error from a 0.02 mm mistake in the diameter — which is why the
+        micrometer is used in several places and in two directions.
+    answer: |-
+      $E$ comes out about 11% too large.
+
+  - type: check
+    title: Quick check
+    questions: [instrument-diameter, why-reference-wire, gradient-to-young-modulus]
+
+  - type: check
+    title: Practice
+    questions: [why-long-thin, precaution-parallax, percentage-error-diameter]
+
+  - type: misconceptions
+    items:
+      - wrong: A ruler is accurate enough for the extension.
+        right: |-
+          Extensions are often under 2 mm; a vernier scale or travelling microscope is needed to
+          read them to 0.01 mm.
+      - wrong: The reference wire is just a spare.
+        right: |-
+          It compensates for temperature changes and creep, so that only the load's effect on the
+          test wire is measured.
+      - wrong: Measure the diameter once, wherever is convenient.
+        right: |-
+          A wire is rarely perfectly uniform. Measure at several points and in two perpendicular
+          directions, then average, because $A$ depends on $d^2$.
+      - wrong: Add as many weights as possible to get a big extension.
+        right: |-
+          Too big a load takes the wire past its limit of proportionality, and the graph is no longer
+          straight, so the gradient no longer gives $E$.
+      - wrong: $E$ equals the gradient of the graph.
+        right: |-
+          The gradient is $k$. $E = kL/A$ — you still have to multiply by the length and divide by
+          the area.
+      - wrong: Reading the scale from an angle does not matter.
+        right: |-
+          Parallax makes the reading wrong. Line the eye up with the scale, or use a mirror behind
+          the pointer.
+
+  - type: exam
+    body: |-
+      - A "describe the experiment" answer earns marks for: two wires, initial load, metre rule for $L$, micrometer for $d$ (several readings), vernier/travelling microscope for $x$, plot $F$ against $x$, gradient gives $k$, then $E = kL/A$.
+      - Name the instruments; "a measuring device" scores nothing.
+      - Give the graph axes explicitly. If you plot $x$ against $F$, the gradient is $1/k$, so say which way round you plotted it.
+      - Precautions worth a mark each: measure $d$ at several points and directions; keep loads small (within the limit of proportionality); tap or wait for the wire to settle; use a reference wire; avoid parallax.
+
+  - type: takeaways
+    items:
+      - 'Measure L with a metre rule, d with a micrometer (several places, two directions), and x with a vernier scale or travelling microscope.'
+      - 'Hang a small initial load on both wires to make them straight and to zero the scale.'
+      - 'Plot load F against extension x; the gradient is k.'
+      - 'Then $E = kL/A$ — the gradient is not E by itself.'
+      - 'Use small loads so the wire stays within its limit of proportionality.'
+      - 'The reference wire cancels temperature effects and creep.'
+
+  - type: deeper
+    title: Uncertainties in this experiment
+    body: |-
+      The diameter usually dominates the uncertainty, because $A \propto d^2$ doubles its percentage
+      uncertainty. A micrometer reading to 0.01 mm on a 0.38 mm wire already gives about 3% in $d$
+      and therefore about 6% in $A$.
+
+      The length is measured to about 1 mm in 1.8 m — under 0.1%, negligible. The extension read
+      from a vernier is good to about 0.01 mm, roughly 1% of a 1 mm extension.
+
+      So a careful student might quote $E$ to two significant figures with an uncertainty of a few
+      per cent, and that is exactly what a mark scheme expects.
+
+questions:
+  - id: instrument-diameter
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.6"]
+    prompt: |-
+      Which instrument is most suitable for measuring the diameter of a metal wire in this experiment?
+    options:
+      - text: A micrometer screw gauge
+        correct: true
+        why: |-
+          It reads to 0.01 mm, which is needed for a wire under a millimetre thick.
+      - text: A metre rule
+        why: |-
+          A metre rule reads to about 1 mm — far too coarse for a 0.4 mm diameter.
+      - text: A vernier caliper used on the whole coil of wire
+        why: |-
+          Calipers can measure a diameter, but a micrometer is the standard choice for thin wire
+          because it reads to 0.01 mm.
+      - text: A measuring cylinder
+        why: |-
+          That measures volume of liquid, not the diameter of a wire.
+    explanation: |-
+      The diameter is sub-millimetre, so a micrometer screw gauge is used.
+
+  - id: why-reference-wire
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.6"]
+    prompt: |-
+      Why are two wires used, with only one of them loaded?
+    options:
+      - text: So that temperature changes and creep affect both wires equally and cancel out
+        correct: true
+        why: |-
+          The difference between the wires is then due to the added load alone.
+      - text: So that the total weight is doubled
+        why: |-
+          The reference wire carries no extra load, so its weight does not help measure anything.
+      - text: So that one wire can be used if the other breaks
+        why: |-
+          That is not the purpose, and a broken test wire ends the experiment.
+      - text: So that the vernier has something to rest on
+        why: |-
+          The vernier is fixed to the test wire and reads against a fixed scale.
+    explanation: |-
+      The reference wire compensates for effects that are not caused by the load.
+
+  - id: gradient-to-young-modulus
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.6"]
+    prompt: |-
+      A student plots load $F$ against extension $x$ and gets a straight line through the origin with gradient $2.5 \times 10^{4}\ \text{N m}^{-1}$.
+
+      The wire is 2.00 m long and has cross-sectional area $2.5 \times 10^{-7}\ \text{m}^2$.
+
+      Calculate the Young modulus in Pa.
+    fields:
+      - label: "E ="
+        answer: 200000000000
+        unit: Pa
+        tolerance: { rel: 0.02 }
+    explanation: |-
+      $E = \dfrac{k L}{A} = \dfrac{2.5 \times 10^{4} \times 2.00}{2.5 \times 10^{-7}} =
+      2.0 \times 10^{11}\ \text{Pa}$.
+
+  - id: why-long-thin
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.6"]
+    prompt: |-
+      Why is a long, thin wire used rather than a short, thick rod?
+    options:
+      - text: It gives a large enough extension to measure accurately with a small load
+        correct: true
+        why: |-
+          Strain is $F/(AE)$ and extension is strain times length, so a long thin wire stretches
+          more and still stays within its limit of proportionality.
+      - text: Because thick rods cannot be stretched at all
+        why: |-
+          They can, but the extension is too small to measure easily.
+      - text: Because thin wires have a larger Young modulus
+        why: |-
+          $E$ is a property of the material, not of the wire's shape.
+      - text: Because a long wire needs no support
+        why: |-
+          Both wires hang from a rigid support.
+    explanation: |-
+      A long thin wire gives a measurable extension for a modest load.
+
+  - id: precaution-parallax
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.6"]
+    prompt: |-
+      Why should the vernier scale be viewed straight on, with a mirror behind it if available?
+    options:
+      - text: To avoid parallax error in reading the scale
+        correct: true
+        why: |-
+          Viewing at an angle makes the pointer appear to be at a different scale position.
+      - text: To make the vernier scale easier to clean
+        why: |-
+          Cleaning is irrelevant to the measurement.
+      - text: To magnify the extension
+        why: |-
+          A mirror does not magnify; it helps you judge when your eye is level with the pointer.
+      - text: To protect the wire from the weights
+        why: |-
+          The mirror is not a safety device.
+    explanation: |-
+      Viewing along the scale avoids parallax.
+
+  - id: percentage-error-diameter
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.6"]
+    prompt: |-
+      A student measures the diameter of a wire as 0.40 mm. The uncertainty in this reading is 0.01 mm.
+
+      What is the percentage uncertainty in the calculated cross-sectional area? Give your answer to 2 significant figures.
+    fields:
+      - label: "% uncertainty ="
+        answer: 5
+        unit: "%"
+        tolerance: { abs: 0.5 }
+    explanation: |-
+      $A \propto d^2$, so the percentage uncertainty in $A$ is twice that in $d$:
+      $2 \times (0.01/0.40) \times 100 = 5\%$. (Strictly $4.9\%$ using the exact ratio, but 5% to
+      2 s.f. is the standard answer.)

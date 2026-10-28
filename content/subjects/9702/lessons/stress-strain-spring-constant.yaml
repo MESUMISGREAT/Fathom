@@ -1,0 +1,281 @@
+id: stress-strain-spring-constant
+subject: "9702"
+topic: "6.1"
+title: "The spring constant: how stiff is it?"
+summary: The constant in Hooke's law is a measure of stiffness — the gradient of the load–extension graph — and it is the same for a spring, a wire or a rubber band.
+order: 3
+minutes: 6
+kind: core
+objectives: ["6.1.4"]
+prerequisites: [stress-strain-hookes-law]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.1, learning outcome 6.1.4 (recall and use k = F / x for the spring
+    constant). Spring constants and extensions in the examples are invented and exactly
+    consistent. All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28. Every numeric key was recomputed independently in Python from the question's own data, every MCQ was checked for exactly one correct option with plausible distractors, and every diagram was rendered and inspected in light and dark (labels, arrows, overlaps and scale). Two real errors were found and fixed in that pass: a wrong 'strain falls by 2' reasoning in a stress/strain comparison question, and a garbled sentence in the elastic-vs-strong enrichment. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can define the **spring constant**, calculate it from a load and an extension, and read it as the **gradient** of a load–extension graph.
+
+  - type: explain
+    title: One number for stiffness
+    body: |-
+      Hooke's law says $F = kx$. The constant $k$ collects everything about the object that makes it hard or easy to stretch: its material, its thickness and its length.
+
+      Rearrange it and you get the definition:
+
+      $$k = \frac{F}{x}$$
+
+      So $k$ is the **load needed to produce unit extension** — how many newtons per metre.
+
+      A big $k$ means a **stiff** object: it takes a large force to stretch it. A small $k$ means a **soft** one.
+
+  - type: definition
+    term: Spring constant
+    body: |-
+      The **force per unit extension** of an object, $k = F/x$, measured in newtons per metre
+      ($\text{N m}^{-1}$).
+
+      It is the reciprocal of the gradient of an **extension–load** graph, and equal to the
+      gradient of a **load–extension** graph.
+
+  - type: diagram
+    diagram: phys-stress-strain-spring-stiffness
+    alt: >-
+      Two panels. Left: two identical-sized springs hanging side by side, both with the same 4 N
+      weight hanging from them; the stiff spring (k = 200 N/m) has a short extension of 20 mm and
+      the soft spring (k = 50 N/m) a long extension of 80 mm, each marked with a dashed original
+      length. Right: a load–extension graph with two straight lines through the origin, the steeper
+      one labelled stiff spring (k = 200 N/m) and the shallower one soft spring (k = 50 N/m), with
+      the gradient of each marked.
+    caption: |-
+      The same load gives different extensions. The steeper line means the stiffer spring, because
+      a bigger load is needed for each millimetre.
+
+  - type: intuition
+    title: Reading stiffness from a graph
+    body: |-
+      Put load on the vertical axis and extension on the horizontal axis, as in the diagram. Then
+
+      $$\text{gradient} = \frac{\text{rise}}{\text{run}} = \frac{\Delta F}{\Delta x} = k$$
+
+      A steep line means a large $\Delta F$ for a small $\Delta x$ — lots of newtons for little stretch — so a large $k$: stiff.
+
+      A shallow line means a small load already stretches it a lot, so a small $k$: soft.
+
+      **Trap:** if a graph is plotted with extension on the vertical axis, the gradient is $1/k$, not $k$. Always check which quantity is on which axis before quoting a gradient.
+
+  - type: example
+    title: "Worked example: finding k, then using it"
+    problem: |-
+      A spring extends 4.0 cm when a 6.0 N load hangs on it.
+
+      (a) Find the spring constant. (b) Find the extension with an 11 N load, assuming Hooke's law still applies.
+    steps:
+      - |-
+        Convert the extension to metres first: $4.0\ \text{cm} = 0.040\ \text{m}$.
+      - |-
+        (a) $k = \dfrac{F}{x} = \dfrac{6.0}{0.040} = 150\ \text{N m}^{-1}$.
+      - |-
+        (b) Rearrange Hooke's law for extension:
+
+        $$x = \frac{F}{k} = \frac{11}{150} = 0.0733\ \text{m}$$
+      - |-
+        In centimetres that is $7.3\ \text{cm}$ (2 s.f.).
+      - |-
+        Sanity check: 11 N is a bit less than double 6.0 N, so the extension should be a bit less
+        than double 4.0 cm. $7.3\ \text{cm}$ fits. ✔
+    answer: |-
+      $k = 150\ \text{N m}^{-1}$; the 11 N load gives an extension of $0.073\ \text{m}$ (7.3 cm).
+
+  - type: example
+    title: "Worked example: k from a graph"
+    problem: |-
+      A load–extension graph for a rubber cord is a straight line through the origin. It passes through the point (extension 0.050 m, load 7.5 N).
+
+      Find the spring constant of the cord.
+    steps:
+      - |-
+        The line goes through the origin, so any point on it gives the gradient.
+      - |-
+        $$k = \frac{\Delta F}{\Delta x} = \frac{7.5 - 0}{0.050 - 0} = 150\ \text{N m}^{-1}$$
+      - |-
+        The value is in N m⁻¹ because the extension is in metres. Using centimetres would give
+        0.15 N cm⁻¹ — the same stiffness, different unit.
+    answer: |-
+      $k = 150\ \text{N m}^{-1}$ (or $0.15\ \text{N cm}^{-1}$).
+
+  - type: check
+    title: Quick check
+    questions: [k-from-values, k-units, stiffer-which]
+
+  - type: check
+    title: Practice
+    questions: [extension-from-k, k-from-gradient, double-two-springs]
+
+  - type: misconceptions
+    items:
+      - wrong: A big spring constant means a spring stretches a lot.
+        right: |-
+          The opposite. $x = F/k$, so a large $k$ gives a **small** extension for the same load.
+      - wrong: $k$ depends only on the material.
+        right: |-
+          It depends on the material **and** the dimensions. A longer wire or a thinner one has a
+          smaller $k$ even if it is made of the same metal.
+      - wrong: The units of $k$ are newtons.
+        right: |-
+          $k = F/x$ is a force divided by a length, so the unit is N m⁻¹ (or N cm⁻¹).
+      - wrong: The gradient of any load–extension graph is $k$.
+        right: |-
+          Only the gradient of the **straight** part is $k$, when load is on the vertical axis. Past
+          the limit of proportionality the gradient changes.
+      - wrong: Two springs with different lengths but the same material have the same $k$.
+        right: |-
+          A longer spring stretches more for the same load, so it has a smaller $k$.
+
+  - type: exam
+    body: |-
+      - Quote $k$ with its unit, N m⁻¹. A bare number loses the unit mark.
+      - Convert cm or mm to m before dividing, or write the unit as N cm⁻¹ and mean it.
+      - If a graph is given, take the gradient over the **straight** section, ideally over a long run so the value is reliable.
+
+  - type: takeaways
+    items:
+      - '$k = F/x$ is the force per unit extension, in N m⁻¹.'
+      - 'A large $k$ means a stiff object; a small $k$ means a soft one.'
+      - '$k$ is the gradient of a load–extension graph while it is straight.'
+      - 'If extension is on the vertical axis, the gradient is $1/k$.'
+      - 'Convert extensions to metres before using N m⁻¹.'
+
+  - type: deeper
+    title: Why a longer spring is softer
+    body: |-
+      Stretch a spring twice as long by the same amount and every coil stretches half as much. The
+      same load therefore produces twice the total extension, so the spring constant halves.
+
+      This is why $k$ is not a property of the material alone. The material's own stiffness is
+      described by the Young modulus (later in this topic), which does not depend on length or
+      thickness.
+
+questions:
+  - id: k-from-values
+    format: numeric
+    difficulty: 1
+    objectives: ["6.1.4"]
+    prompt: |-
+      A spring extends 0.080 m when a load of 12 N is applied.
+
+      Calculate its spring constant in N m⁻¹.
+    fields:
+      - label: "k ="
+        answer: 150
+        unit: N m⁻¹
+        tolerance: { abs: 1 }
+    explanation: |-
+      $k = F/x = 12 / 0.080 = 150\ \text{N m}^{-1}$.
+
+  - id: k-units
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.4"]
+    prompt: |-
+      What are the units of the spring constant?
+    options:
+      - text: N m⁻¹
+        correct: true
+        why: |-
+          $k = F/x$ is newtons divided by metres.
+      - text: N m
+        why: |-
+          That is a unit of moment (or work), not force per unit extension.
+      - text: N
+        why: |-
+          Newtons alone would mean $k$ is a force, not a force per length.
+      - text: m N⁻¹
+        why: |-
+          That is the unit of $1/k$, the extension per unit load.
+    explanation: |-
+      Force divided by extension gives N m⁻¹.
+
+  - id: stiffer-which
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.4"]
+    prompt: |-
+      Spring A extends 2.0 cm under a 10 N load. Spring B extends 5.0 cm under the same load. Which is stiffer, and why?
+    options:
+      - text: A, because it needs a bigger force for each centimetre of extension
+        correct: true
+        why: |-
+          $k_A = 10/0.020 = 500\ \text{N m}^{-1}$ and $k_B = 10/0.050 = 200\ \text{N m}^{-1}$.
+      - text: B, because it extends more
+        why: |-
+          Extending more for the same load means it is softer.
+      - text: They are equally stiff, because the load is the same
+        why: |-
+          The extensions differ, so the spring constants differ.
+      - text: Neither can be compared without knowing the materials
+        why: |-
+          The measurements alone are enough to compare $k$.
+    explanation: |-
+      The same load gives A a smaller extension, so A has the larger spring constant.
+
+  - id: extension-from-k
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.4"]
+    prompt: |-
+      A spring has a spring constant of $250\ \text{N m}^{-1}$.
+
+      What load, in N, produces an extension of 6.0 cm?
+    fields:
+      - label: "F ="
+        answer: 15
+        unit: N
+        tolerance: { abs: 0.1 }
+    explanation: |-
+      $6.0\ \text{cm} = 0.060\ \text{m}$, so $F = kx = 250 \times 0.060 = 15\ \text{N}$.
+
+  - id: k-from-gradient
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.4"]
+    prompt: |-
+      A load–extension graph for a spring is a straight line through the origin. When the extension is 0.20 m the load is 9.0 N.
+
+      Calculate the spring constant in N m⁻¹.
+    fields:
+      - label: "k ="
+        answer: 45
+        unit: N m⁻¹
+        tolerance: { abs: 0.5 }
+    explanation: |-
+      The gradient is $9.0 / 0.20 = 45\ \text{N m}^{-1}$, and for a straight line through the
+      origin that gradient is $k$.
+
+  - id: double-two-springs
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.4"]
+    prompt: |-
+      Two springs, P and Q, obey Hooke's law.
+
+      Spring P has $k = 120\ \text{N m}^{-1}$ and spring Q has $k = 80\ \text{N m}^{-1}$.
+
+      A load is hung on each spring in turn. The extension of P is 0.030 m.
+
+      What load, in N, must hang on Q so that its extension is also 0.030 m?
+    fields:
+      - label: "F ="
+        answer: 2.4
+        unit: N
+        tolerance: { abs: 0.05 }
+    explanation: |-
+      For the same extension, the load is $F = kx$: Q gives $80 \times 0.030 = 2.4\ \text{N}$.
+      (P, for comparison, needs $120 \times 0.030 = 3.6\ \text{N}$ — being stiffer.)
