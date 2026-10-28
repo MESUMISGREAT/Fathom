@@ -41,7 +41,7 @@ export function P3LogarithmicExponentialInverseGraphs() {
       ))}
 
       <path d={graph((x) => x, [-2.6, 3.3], { sx, sy }, [-2.6, 3.3])} className="dg-muted dg-dashed" />
-      <Label x={sx(3.0)} y={sy(2.0)} anchor="end" className="dg-text-small dg-text-muted">
+      <Label x={sx(-1.75)} y={sy(-1.28)} anchor="start" className="dg-text-small dg-text-muted">
         y = x
       </Label>
 
@@ -54,12 +54,12 @@ export function P3LogarithmicExponentialInverseGraphs() {
       <Label x={sx(-0.18)} y={sy(1.62)} anchor="end" className="dg-text-small dg-text-accent">
         (0, 1)
       </Label>
-      <Label x={sx(1.15)} y={sy(-0.42)} anchor="start" className="dg-text-small dg-text-accent-2">
+      <Label x={sx(1.12)} y={sy(-0.62)} anchor="start" className="dg-text-small dg-text-accent-2">
         (1, 0)
       </Label>
 
       <MathLabel x={sx(-1.35)} y={sy(2.6)} tex="y = e^{x}" w={110} h={30} tone="accent" />
-      <MathLabel x={sx(2.15)} y={sy(1.75)} tex="y = \ln x" w={110} h={30} tone="accent-2" />
+      <MathLabel x={sx(2.45)} y={sy(1.28)} tex="y = \ln x" w={110} h={30} tone="accent-2" />
 
       <Label x={W / 2} y={H - 18} className="dg-text-small dg-text-muted">
         ln x is only defined for x &gt; 0, and e raised to any power is never zero

@@ -64,11 +64,11 @@ export function P3LogarithmicExponentialLinearFormPlot() {
       </Label>
 
       <circle cx={sx(0)} cy={sy(lnK)} r={4} className="dg-dot" />
-      <Label x={sx(-0.06)} y={sy(lnK)} anchor="end" className="dg-text-small dg-text-muted">
+      <Label x={sx(-0.16)} y={sy(lnK) + 4} anchor="end" className="dg-text-small dg-text-muted">
         ln 2
       </Label>
 
-      <MathLabel x={sx(2.35)} y={sy(4.25)} tex="\text{gradient} = \ln 3" w={170} h={30} tone="accent" />
+      <MathLabel x={sx(2.2)} y={sy(4.35)} tex="\text{gradient} = \ln 3" w={170} h={30} tone="accent" />
       <Label x={W / 2} y={H - 14} className="dg-text-small dg-text-muted">
         e to the gradient gives a = 3; e to the intercept gives k = 2
       </Label>

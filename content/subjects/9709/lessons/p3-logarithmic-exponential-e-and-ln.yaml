@@ -1,295 +1,281 @@
 id: p3-logarithmic-exponential-e-and-ln
-subject: "9709"
-topic: "3.2"
+subject: '9709'
+topic: '3.2'
 title: '$e^x$ and $\ln x$: a pair of inverses'
-summary: $e \approx 2.718$ is the natural base; $e^x$ and $\ln x$ undo each other, their graphs are mirror images in $y = x$, and $\ln$ only accepts positive inputs.
+summary: $e \approx 2.718$ is the natural base; $e^x$ and $\ln x$ undo each other, their graphs are mirror images
+  in $y = x$, and $\ln$ only accepts positive inputs.
 order: 2
 minutes: 8
 kind: core
-objectives: ["3.2.2"]
-prerequisites: [p3-logarithmic-exponential-logs-and-indices]
+objectives:
+- 3.2.2
+prerequisites:
+- p3-logarithmic-exponential-logs-and-indices
 provenance:
   origin: ai-drafted
   status: ai-checked
-  notes: >-
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
-    (2026-2027), topic 3.2 outcome 3.2.2, including the graphs of e^x and ln x and of y = e^(kx)
-    for positive and negative k. Diagrams plot the real functions. All questions are original.
-    Reviewed against the official 9709 syllabus wording; every numeric answer key and
-    multiple-choice option was recomputed independently in Python from the question's own
-    data, and all 1 diagrams were rendered and inspected in light and dark mode. Still
-    needs a separate human or teacher review.
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus (2026-2027),\
+    \ topic 3.2 outcome 3.2.2, including the graphs of e^x and ln x and of y = e^(kx) for positive and negative\
+    \ k. Diagrams plot the real functions. All questions are original. Reviewed against the official 9709 syllabus\
+    \ wording; every numeric answer key and multiple-choice option was recomputed independently in Python from the\
+    \ question's own data, and its diagram was rendered and inspected in light and dark mode. Still needs a separate\
+    \ human or teacher review.\n    Correction after a later review (28 Oct): the provenance note said \"all 1 diagrams\"\
+    ; the diagram label collisions were also fixed (see p3-logarithmic-exponential-inverse-graphs)."
 blocks:
-  - type: objective
-    body: |-
-      By the end you can sketch $y = e^x$, $y = \ln x$ and $y = e^{kx}$, explain how they are related as inverses, and solve equations mixing $e$ and $\ln$.
+- type: objective
+  body: By the end you can sketch $y = e^x$, $y = \ln x$ and $y = e^{kx}$, explain how they are related as inverses,
+    and solve equations mixing $e$ and $\ln$.
+- type: explain
+  title: The number e
+  body: '$$e = 2.718281828\ldots$$
 
-  - type: explain
-    title: The number e
-    body: |-
-      $$e = 2.718281828\ldots$$
 
-      It is not an arbitrary choice. $e$ is the base for which the curve $y = e^x$ has gradient equal
-      to its own height at every point — the rate of growth equals the amount present. That is why it
-      models populations, radioactive decay, cooling and compound interest.
+    It is not an arbitrary choice. $e$ is the base for which the curve $y = e^x$ has gradient equal
 
-      Everything true of $\log_a$ is true of $\ln = \log_e$: $\ln 1 = 0$, $\ln e = 1$, and
-      $\ln(xy) = \ln x + \ln y$.
+    to its own height at every point — the rate of growth equals the amount present. That is why it
 
-  - type: explain
-    title: They are inverses
-    body: |-
-      $$e^{\ln x} = x \quad (x > 0) \qquad \ln(e^x) = x \quad (\text{all } x)$$
+    models populations, radioactive decay, cooling and compound interest.
 
-      A function followed by its inverse returns the original input — that is what "inverse" means.
-      On a graph, inverse functions are **reflections in the line $y = x$**: the point $(0,1)$ on
-      $y = e^x$ becomes $(1,0)$ on $y = \ln x$.
 
-      | Feature | $y = e^x$ | $y = \ln x$ |
-      |---|---|---|
-      | Domain | all real $x$ | $x > 0$ |
-      | Range | $y > 0$ | all real $y$ |
-      | Passes through | $(0,1)$ | $(1,0)$ |
-      | Asymptote | $y = 0$ (the $x$-axis) | $x = 0$ (the $y$-axis) |
-      | Always | increasing | increasing |
+    Everything true of $\log_a$ is true of $\ln = \log_e$: $\ln 1 = 0$, $\ln e = 1$, and
 
-      The domain and range swap over, exactly as they must for an inverse pair. That is why
-      $\ln(\text{negative})$ does not exist.
+    $\ln(xy) = \ln x + \ln y$.'
+- type: explain
+  title: They are inverses
+  body: '$$e^{\ln x} = x \quad (x > 0) \qquad \ln(e^x) = x \quad (\text{all } x)$$
 
-  - type: diagram
-    diagram: math-p3-logarithmic-exponential-inverse-graphs
-    alt: >-
-      Axes with y = e^x rising steeply through (0, 1) and y = ln x rising slowly through (1, 0),
-      both mirrored in the dashed line y = x. The x-axis is the asymptote of the exponential
-      curve and the y-axis is the asymptote of the logarithmic curve, which has no points at or
-      left of x = 0.
-    caption: |-
-      Because e^x and ln x undo each other, one graph is the reflection of the other in y = x.
 
-  - type: explain
-    title: "The shape of $y = e^{kx}$"
-    body: |-
-      - $k > 0$: **growth**. The curve rises, passing through $(0,1)$ and heading up steeply. Bigger $k$ means faster growth.
-      - $k < 0$: **decay**. The curve falls towards the $x$-axis, which stays as an asymptote. Write $k = -c$ with $c>0$: then $e^{-cx} = \dfrac{1}{e^{cx}}$, so it is the reciprocal of a growth curve.
-      - **Both pass through $(0,1)$**, since $e^0 = 1$ whatever $k$ is.
-      - **Neither ever touches the $x$-axis**: $e^{kx} > 0$ always.
+    A function followed by its inverse returns the original input — that is what "inverse" means.
 
-  - type: example
-    title: "Example 1: solving with e and ln"
-    problem: |-
-      Solve $e^{2x} = 7$, giving your answer to 3 significant figures.
-    steps:
-      - |-
-        Take $\ln$ of both sides — the inverse operation:
-        $$\ln\left(e^{2x}\right) = \ln 7$$
-      - |-
-        The left side simplifies because $\ln$ and $e$ undo each other:
-        $$2x = \ln 7$$
-      - |-
-        $$x = \frac{\ln 7}{2} = \frac{1.9459\ldots}{2} = 0.973$$
-      - |-
-        Check: $e^{2(0.973)} = e^{1.946} = 7.00$ ✓
-    answer: |-
-      $x = 0.973$ (3 s.f.).
+    On a graph, inverse functions are **reflections in the line $y = x$**: the point $(0,1)$ on
 
-  - type: example
-    title: "Example 2: an exam-style decay problem"
-    problem: |-
-      The temperature $T\,^\circ\text{C}$ of a cup of tea $t$ minutes after being made is modelled by $T = 20 + 75e^{-0.2t}$. Find, to 3 significant figures, the time when the tea reaches $57.5\,^\circ\text{C}$.
-    steps:
-      - |-
-        Set $T = 57.5$:
-        $$57.5 = 20 + 75e^{-0.2t}$$
-      - |-
-        Isolate the exponential before taking logs — this is the crucial step:
-        $$75e^{-0.2t} = 37.5 \quad\Rightarrow\quad e^{-0.2t} = 0.5$$
-      - |-
-        Take $\ln$ of both sides:
-        $$-0.2t = \ln 0.5$$
-      - |-
-        $$t = \frac{\ln 0.5}{-0.2} = \frac{-0.6931}{-0.2} = 3.47$$
-      - |-
-        Check: $T = 20 + 75e^{-0.693} = 20 + 75(0.5) = 57.5$ ✓
-    answer: |-
-      $t = 3.47$ minutes (3 s.f.).
+    $y = e^x$ becomes $(1,0)$ on $y = \ln x$.
 
-  - type: check
-    title: Quick check
-    questions: [inverse-compose, solve-e-equation, decay-time]
 
-  - type: check
-    title: Practice
-    questions: [domain-of-ln, graph-shape, log-of-e-power, ln-of-negative]
+    | Feature | $y = e^x$ | $y = \ln x$ |
 
-  - type: misconceptions
-    items:
-      - wrong: $e^{2x} = 7$ gives $2x = 7$, so $x = 3.5$.
-        right: |-
-          Taking $\ln$ of both sides gives $2x = \ln 7$, not $2x = 7$. The log must be applied to the
-          whole side.
-      - wrong: $\ln(0) = 0$
-        right: |-
-          $\ln 0$ is undefined: $e^y$ is never zero, so no $y$ works. Note $\ln 1 = 0$.
-      - wrong: $\ln(-3)$ is a negative number.
-        right: |-
-          It does not exist for real inputs. The domain of $\ln$ is $x > 0$, so check before solving.
-      - wrong: $e^{-x}$ is negative because of the minus sign.
-        right: |-
-          $e^{-x} = \dfrac{1}{e^{x}} > 0$. The minus sign flips the curve over, it does not make values
-          negative.
-      - wrong: $y = e^{kx}$ passes through $(0,0)$.
-        right: |-
-          It passes through $(0,1)$, since $e^0 = 1$. The $x$-axis is an asymptote, never a crossing.
-      - wrong: $y = e^x$ and $y = \ln x$ are reflections in the $x$-axis.
-        right: |-
-          They are reflections in the line $y = x$, because they are inverses.
-      - wrong: $\ln(e^x) = x$ only for $x > 0$.
-        right: |-
-          That one holds for all real $x$. It is $e^{\ln x} = x$ that needs $x > 0$.
+    |---|---|---|
 
-  - type: exam
-    body: |-
-      - Isolate the exponential **before** taking logs; taking logs too early creates a mess.
-      - Write "take $\ln$ of both sides" so the method is visible.
-      - Use the exact form (e.g. $\ln 0.5 / (-0.2)$) then round at the end.
-      - In context questions, state the answer with units and check it is sensible.
+    | Domain | all real $x$ | $x > 0$ |
 
-  - type: takeaways
-    items:
-      - '$e = 2.71828\ldots$; $\ln$ means $\log_e$.'
-      - '$e^{\ln x} = x$ for $x>0$, and $\ln(e^x) = x$ for all $x$.'
-      - '$y = e^x$ and $y = \ln x$ are reflections in $y = x$; domain and range swap.'
-      - '$e^{kx}$ passes through $(0,1)$: rising for $k>0$, decaying towards the $x$-axis for $k<0$.'
-      - 'To solve $e^{\text{something}} = \text{number}$, take $\ln$ of both sides.'
+    | Range | $y > 0$ | all real $y$ |
 
-  - type: deeper
-    title: Why e is the natural base for calculus
-    body: |-
-      Differentiating $a^x$ for a general base brings out a factor:
+    | Passes through | $(0,1)$ | $(1,0)$ |
 
-      $$\frac{d}{dx}\left(a^x\right) = a^x \ln a$$
+    | Asymptote | $y = 0$ (the $x$-axis) | $x = 0$ (the $y$-axis) |
 
-      So the gradient is the height times $\ln a$. Choosing $a = e$ makes $\ln a = 1$ and the factor
-      disappears: $\dfrac{d}{dx}\left(e^x\right) = e^x$. The curve is its own derivative.
+    | Always | increasing | increasing |
 
-      That is the whole reason $e$ appears in growth and decay models: the rate of change is
-      proportional to the current amount, exactly as with cooling, decay and compound interest.
 
+    The domain and range swap over, exactly as they must for an inverse pair. That is why
+
+    $\ln(\text{negative})$ does not exist.'
+- type: diagram
+  diagram: math-p3-logarithmic-exponential-inverse-graphs
+  alt: Axes with y = e^x rising steeply through (0, 1) and y = ln x rising slowly through (1, 0), both mirrored
+    in the dashed line y = x. The x-axis is the asymptote of the exponential curve and the y-axis is the asymptote
+    of the logarithmic curve, which has no points at or left of x = 0.
+  caption: Because e^x and ln x undo each other, one graph is the reflection of the other in y = x.
+- type: explain
+  title: The shape of $y = e^{kx}$
+  body: '- $k > 0$: **growth**. The curve rises, passing through $(0,1)$ and heading up steeply. Bigger $k$ means
+    faster growth.
+
+    - $k < 0$: **decay**. The curve falls towards the $x$-axis, which stays as an asymptote. Write $k = -c$ with
+    $c>0$: then $e^{-cx} = \dfrac{1}{e^{cx}}$, so it is the reciprocal of a growth curve.
+
+    - **Both pass through $(0,1)$**, since $e^0 = 1$ whatever $k$ is.
+
+    - **Neither ever touches the $x$-axis**: $e^{kx} > 0$ always.'
+- type: example
+  title: 'Example 1: solving with e and ln'
+  problem: Solve $e^{2x} = 7$, giving your answer to 3 significant figures.
+  steps:
+  - 'Take $\ln$ of both sides — the inverse operation:
+
+    $$\ln\left(e^{2x}\right) = \ln 7$$'
+  - 'The left side simplifies because $\ln$ and $e$ undo each other:
+
+    $$2x = \ln 7$$'
+  - $$x = \frac{\ln 7}{2} = \frac{1.9459\ldots}{2} = 0.973$$
+  - 'Check: $e^{2(0.973)} = e^{1.946} = 7.00$ ✓'
+  answer: $x = 0.973$ (3 s.f.).
+- type: example
+  title: 'Example 2: an exam-style decay problem'
+  problem: The temperature $T\,^\circ\text{C}$ of a cup of tea $t$ minutes after being made is modelled by $T =
+    20 + 75e^{-0.2t}$. Find, to 3 significant figures, the time when the tea reaches $57.5\,^\circ\text{C}$.
+  steps:
+  - 'Set $T = 57.5$:
+
+    $$57.5 = 20 + 75e^{-0.2t}$$'
+  - 'Isolate the exponential before taking logs — this is the crucial step:
+
+    $$75e^{-0.2t} = 37.5 \quad\Rightarrow\quad e^{-0.2t} = 0.5$$'
+  - 'Take $\ln$ of both sides:
+
+    $$-0.2t = \ln 0.5$$'
+  - $$t = \frac{\ln 0.5}{-0.2} = \frac{-0.6931}{-0.2} = 3.47$$
+  - 'Check: $T = 20 + 75e^{-0.693} = 20 + 75(0.5) = 57.5$ ✓'
+  answer: $t = 3.47$ minutes (3 s.f.).
+- type: check
+  title: Quick check
+  questions:
+  - inverse-compose
+  - solve-e-equation
+  - decay-time
+- type: check
+  title: Practice
+  questions:
+  - domain-of-ln
+  - graph-shape
+  - log-of-e-power
+  - ln-of-negative
+- type: misconceptions
+  items:
+  - wrong: $e^{2x} = 7$ gives $2x = 7$, so $x = 3.5$.
+    right: 'Taking $\ln$ of both sides gives $2x = \ln 7$, not $2x = 7$. The log must be applied to the
+
+      whole side.'
+  - wrong: $\ln(0) = 0$
+    right: '$\ln 0$ is undefined: $e^y$ is never zero, so no $y$ works. Note $\ln 1 = 0$.'
+  - wrong: $\ln(-3)$ is a negative number.
+    right: It does not exist for real inputs. The domain of $\ln$ is $x > 0$, so check before solving.
+  - wrong: $e^{-x}$ is negative because of the minus sign.
+    right: '$e^{-x} = \dfrac{1}{e^{x}} > 0$. The minus sign flips the curve over, it does not make values
+
+      negative.'
+  - wrong: $y = e^{kx}$ passes through $(0,0)$.
+    right: It passes through $(0,1)$, since $e^0 = 1$. The $x$-axis is an asymptote, never a crossing.
+  - wrong: $y = e^x$ and $y = \ln x$ are reflections in the $x$-axis.
+    right: They are reflections in the line $y = x$, because they are inverses.
+  - wrong: $\ln(e^x) = x$ only for $x > 0$.
+    right: That one holds for all real $x$. It is $e^{\ln x} = x$ that needs $x > 0$.
+- type: exam
+  body: '- Isolate the exponential **before** taking logs; taking logs too early creates a mess.
+
+    - Write "take $\ln$ of both sides" so the method is visible.
+
+    - Use the exact form (e.g. $\ln 0.5 / (-0.2)$) then round at the end.
+
+    - In context questions, state the answer with units and check it is sensible.'
+- type: takeaways
+  items:
+  - $e = 2.71828\ldots$; $\ln$ means $\log_e$.
+  - $e^{\ln x} = x$ for $x>0$, and $\ln(e^x) = x$ for all $x$.
+  - $y = e^x$ and $y = \ln x$ are reflections in $y = x$; domain and range swap.
+  - '$e^{kx}$ passes through $(0,1)$: rising for $k>0$, decaying towards the $x$-axis for $k<0$.'
+  - To solve $e^{\text{something}} = \text{number}$, take $\ln$ of both sides.
+- type: deeper
+  title: Why e is the natural base for calculus
+  body: 'Differentiating $a^x$ for a general base brings out a factor:
+
+
+    $$\frac{d}{dx}\left(a^x\right) = a^x \ln a$$
+
+
+    So the gradient is the height times $\ln a$. Choosing $a = e$ makes $\ln a = 1$ and the factor
+
+    disappears: $\dfrac{d}{dx}\left(e^x\right) = e^x$. The curve is its own derivative.
+
+
+    That is the whole reason $e$ appears in growth and decay models: the rate of change is
+
+    proportional to the current amount, exactly as with cooling, decay and compound interest.'
 questions:
-  - id: inverse-compose
-    format: numeric
-    difficulty: 1
-    objectives: ["3.2.2"]
-    prompt: |-
-      Evaluate $e^{\ln 5}$.
-    fields:
-      - answer: 5
-        tolerance: { abs: 0.01 }
-    explanation: |-
-      $e^x$ and $\ln x$ are inverses, so $e^{\ln 5} = 5$.
+- id: inverse-compose
+  format: numeric
+  difficulty: 1
+  objectives:
+  - 3.2.2
+  prompt: Evaluate $e^{\ln 5}$.
+  fields:
+  - answer: 5
+    tolerance:
+      abs: 0.01
+  explanation: $e^x$ and $\ln x$ are inverses, so $e^{\ln 5} = 5$.
+- id: solve-e-equation
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.2.2
+  prompt: Solve $e^{2x} = 7$, giving $x$ to 3 significant figures.
+  fields:
+  - answer: 0.973
+    tolerance:
+      abs: 0.001
+  explanation: $2x = \ln 7 = 1.9459\ldots$, so $x = 0.973$.
+- id: decay-time
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.2.2
+  prompt: $T = 20 + 75e^{-0.2t}$. Find $t$, to 3 significant figures, when $T = 57.5$.
+  fields:
+  - answer: 3.47
+    tolerance:
+      abs: 0.01
+  explanation: '$75e^{-0.2t} = 37.5$, so $e^{-0.2t} = 0.5$ and $-0.2t = \ln 0.5$. Hence
 
-  - id: solve-e-equation
-    format: numeric
-    difficulty: 2
-    objectives: ["3.2.2"]
-    prompt: |-
-      Solve $e^{2x} = 7$, giving $x$ to 3 significant figures.
-    fields:
-      - answer: 0.973
-        tolerance: { abs: 0.001 }
-    explanation: |-
-      $2x = \ln 7 = 1.9459\ldots$, so $x = 0.973$.
-
-  - id: decay-time
-    format: numeric
-    difficulty: 3
-    objectives: ["3.2.2"]
-    prompt: |-
-      $T = 20 + 75e^{-0.2t}$. Find $t$, to 3 significant figures, when $T = 57.5$.
-    fields:
-      - answer: 3.47
-        tolerance: { abs: 0.01 }
-    explanation: |-
-      $75e^{-0.2t} = 37.5$, so $e^{-0.2t} = 0.5$ and $-0.2t = \ln 0.5$. Hence
-      $t = 3.47$ minutes.
-
-  - id: domain-of-ln
-    format: mcq
-    difficulty: 1
-    objectives: ["3.2.2"]
-    prompt: |-
-      What is the domain of $y = \ln(2x - 6)$?
-    options:
-      - text: $x > 3$
-        correct: true
-        why: |-
-          Need $2x - 6 > 0$, so $x > 3$.
-      - text: $x > 0$
-        why: |-
-          The argument is $2x - 6$, not $x$.
-      - text: $x \ge 3$
-        why: |-
-          At $x = 3$ the argument is 0, and $\ln 0$ does not exist.
-      - text: All real $x$
-        why: |-
-          $\ln$ is only defined for positive arguments.
-    explanation: |-
-      Solve the argument greater than zero.
-
-  - id: graph-shape
-    format: mcq
-    difficulty: 2
-    objectives: ["3.2.2"]
-    prompt: |-
-      Which describes $y = e^{-3x}$?
-    options:
-      - text: It passes through $(0,1)$ and decreases towards the $x$-axis
-        correct: true
-        why: |-
-          $e^0 = 1$ and for negative $k$ the curve decays, with $y = 0$ as an asymptote.
-      - text: It passes through $(0,-1)$ and decreases
-        why: |-
-          $e^{0} = 1$, and $e^{kx}$ is never negative.
-      - text: It passes through $(0,1)$ and increases steeply
-        why: |-
-          Increasing requires a positive $k$; here $k = -3$.
-      - text: It is a straight line with gradient $-3$
-        why: |-
-          $e^{kx}$ is exponential, not linear; its gradient is never constant.
-    explanation: |-
-      Negative $k$ gives decay from $(0,1)$ towards the $x$-axis.
-
-  - id: log-of-e-power
-    format: numeric
-    difficulty: 2
-    objectives: ["3.2.2"]
-    prompt: |-
-      Evaluate $\ln\!\left(e^{4}\right) + \ln 1$.
-    fields:
-      - answer: 4
-        tolerance: { abs: 0.01 }
-    explanation: |-
-      $\ln(e^4) = 4$ and $\ln 1 = 0$, so the total is $4$.
-
-  - id: ln-of-negative
-    format: mcq
-    difficulty: 2
-    objectives: ["3.2.2"]
-    prompt: |-
-      Solve $\ln(x - 2) = 0$.
-    options:
-      - text: $x = 3$
-        correct: true
-        why: |-
-          $\ln A = 0$ means $A = e^0 = 1$, so $x - 2 = 1$ and $x = 3$.
-      - text: $x = 2$
-        why: |-
-          That makes the argument 0, which is not allowed; $\ln 0$ is undefined.
-      - text: $x = 0$
-        why: |-
-          That makes the argument $-2$; $\ln(-2)$ does not exist.
-      - text: $x = 1$
-        why: |-
-          $\ln(-1)$ is undefined, and this does not solve the equation.
-    explanation: |-
-      $\ln A = 0$ is equivalent to $A = 1$.
+    $t = 3.47$ minutes.'
+- id: domain-of-ln
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.2.2
+  prompt: What is the domain of $y = \ln(2x - 6)$?
+  options:
+  - text: $x > 3$
+    correct: true
+    why: Need $2x - 6 > 0$, so $x > 3$.
+  - text: $x > 0$
+    why: The argument is $2x - 6$, not $x$.
+  - text: $x \ge 3$
+    why: At $x = 3$ the argument is 0, and $\ln 0$ does not exist.
+  - text: All real $x$
+    why: $\ln$ is only defined for positive arguments.
+  explanation: Solve the argument greater than zero.
+- id: graph-shape
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.2.2
+  prompt: Which describes $y = e^{-3x}$?
+  options:
+  - text: It passes through $(0,1)$ and decreases towards the $x$-axis
+    correct: true
+    why: $e^0 = 1$ and for negative $k$ the curve decays, with $y = 0$ as an asymptote.
+  - text: It passes through $(0,-1)$ and decreases
+    why: $e^{0} = 1$, and $e^{kx}$ is never negative.
+  - text: It passes through $(0,1)$ and increases steeply
+    why: Increasing requires a positive $k$; here $k = -3$.
+  - text: It is a straight line with gradient $-3$
+    why: $e^{kx}$ is exponential, not linear; its gradient is never constant.
+  explanation: Negative $k$ gives decay from $(0,1)$ towards the $x$-axis.
+- id: log-of-e-power
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.2.2
+  prompt: Evaluate $\ln\!\left(e^{4}\right) + \ln 1$.
+  fields:
+  - answer: 4
+    tolerance:
+      abs: 0.01
+  explanation: $\ln(e^4) = 4$ and $\ln 1 = 0$, so the total is $4$.
+- id: ln-of-negative
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.2.2
+  prompt: Solve $\ln(x - 2) = 0$.
+  options:
+  - text: $x = 3$
+    correct: true
+    why: $\ln A = 0$ means $A = e^0 = 1$, so $x - 2 = 1$ and $x = 3$.
+  - text: $x = 2$
+    why: That makes the argument 0, which is not allowed; $\ln 0$ is undefined.
+  - text: $x = 0$
+    why: That makes the argument $-2$; $\ln(-2)$ does not exist.
+  - text: $x = 1$
+    why: $\ln(-1)$ is undefined, and this does not solve the equation.
+  explanation: $\ln A = 0$ is equivalent to $A = 1$.
