@@ -1,0 +1,262 @@
+id: language-translators-assembler-compiler-interpreter
+subject: "9618"
+topic: "5.2"
+title: "Assembler, compiler, interpreter: why translation is needed"
+summary: Processors only understand machine code, so every program must be translated — an assembler for assembly language, a compiler or interpreter for a high-level language.
+order: 1
+minutes: 6
+kind: core
+objectives: ["5.2.1"]
+prerequisites: [operating-systems-why-needed]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.2 learning outcome 5.2.1 (assembler, compiler, interpreter).
+    All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can say why each of the three translators is needed, and what each one produces.
+
+  - type: explain
+    title: The problem
+    body: |-
+      A processor executes **machine code** — binary instructions. Nobody wants to write thousands of binary numbers, so we write in a form we can read and let software do the translation.
+
+      | Source language | Translator | Output |
+      |---|---|---|
+      | Assembly language | **Assembler** | Machine code (object code) |
+      | High-level language | **Compiler** | Machine code (object code), saved as an executable |
+      | High-level language | **Interpreter** | Nothing saved — the program is translated and executed statement by statement |
+
+      All three exist for one reason: the processor cannot run anything else.
+
+  - type: diagram
+    diagram: cs-language-translators-pipeline
+    alt: >-
+      Two rows. Top row: assembly language source arrow into an assembler box arrow to
+      machine code, which is then executed. Bottom row: high-level source arrow into a compiler
+      box arrow to object code saved to disk, then executed; a second branch shows the same
+      high-level source arrow into an interpreter, which both translates and executes each
+      statement with no saved output.
+    caption: |-
+      The assembler and compiler produce machine code you keep; the interpreter translates and runs
+      as it goes.
+
+  - type: explain
+    title: Assembler software
+    body: |-
+      An **assembler** translates an **assembly language** program into machine code.
+
+      Assembly language uses mnemonics such as `LDR`, `ADD` and `STR` instead of binary, and labels instead of addresses. Each mnemonic maps to one machine instruction, so the translation is close to one-to-one.
+
+      The assembler's jobs:
+
+      - Convert each mnemonic and operand into the corresponding binary instruction.
+      - Work out **addresses** for labels (the symbol table), which is why assembly programs are often assembled in two passes.
+      - Produce **object code** that can be loaded and executed.
+
+      Why bother with assembly at all? It gives precise control of the hardware and produces very efficient code — useful for device drivers and embedded systems.
+
+  - type: explain
+    title: Compiler and interpreter
+    body: |-
+      A **compiler** translates a whole high-level program into machine code **before** it runs. The output is an executable file you can run again and again without the compiler.
+
+      An **interpreter** translates and executes the program **one statement at a time** while it runs. Nothing permanent is produced: every run needs the interpreter again.
+
+      Both check for errors, but at different moments:
+
+      - a compiler reports all the syntax errors it finds and refuses to produce an executable;
+      - an interpreter stops at the first error it reaches when that statement is executed.
+
+  - type: check
+    title: Quick check
+    questions: [which-translator, assembler-output, interpreter-output]
+
+  - type: check
+    title: Practice
+    questions: [why-need-translator, compiler-timing, error-timing]
+
+  - type: misconceptions
+    items:
+      - wrong: A compiler runs the program as it translates it.
+        right: |-
+          A compiler only translates; the resulting executable is run afterwards, as often as you
+          like.
+      - wrong: An interpreter produces an executable file.
+        right: |-
+          It produces no saved machine-code file, which is why the interpreter is needed on every
+          run.
+      - wrong: An assembler converts assembly language into a high-level language.
+        right: |-
+          It converts assembly language into machine code.
+      - wrong: High-level languages are translated so that humans can read them.
+        right: |-
+          They are translated so that the **processor** can execute them; humans already find the
+          high-level form readable.
+      - wrong: A compiler and an interpreter both need the source code at run time.
+        right: |-
+          A compiled executable does not; an interpreted program does.
+
+  - type: exam
+    body: |-
+      - "State the need for a translator" answers must mention that the processor only understands machine code.
+      - Keep the outputs distinct: assembler → machine code; compiler → object code/executable; interpreter → no saved output.
+      - If asked what the assembler does with labels, mention calculating addresses.
+
+  - type: takeaways
+    items:
+      - 'Processors execute machine code only, so source code must be translated.'
+      - 'An assembler translates assembly language into machine code.'
+      - 'A compiler translates the whole high-level program into machine code before it runs.'
+      - 'An interpreter translates and executes one statement at a time, producing no executable.'
+      - 'Compilers report errors before running; interpreters stop at the first error reached.'
+
+  - type: deeper
+    title: "Two passes, and why"
+    body: |-
+      Assembly programs can use a label before the line it labels. A one-pass assembler would not yet know that address.
+
+      A **two-pass assembler** therefore:
+
+      1. scans the program to build a **symbol table** of every label and its address;
+      2. scans again, substituting those addresses and generating the machine code.
+
+questions:
+  - id: which-translator
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.1"]
+    prompt: |-
+      Which translator is needed for an assembly language program?
+    options:
+      - text: An assembler
+        correct: true
+        why: |-
+          Assembly language is translated by an assembler into machine code.
+      - text: A compiler
+        why: |-
+          Compilers translate high-level languages.
+      - text: An interpreter
+        why: |-
+          Interpreters execute high-level languages statement by statement.
+      - text: A linker
+        why: |-
+          A linker joins object files and libraries; it does not translate assembly language.
+    explanation: |-
+      Assembly language → assembler → machine code.
+
+  - id: assembler-output
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.1"]
+    prompt: |-
+      What does an assembler produce?
+    options:
+      - text: Machine code (object code)
+        correct: true
+        why: |-
+          Each mnemonic becomes the corresponding binary instruction.
+      - text: A high-level language program
+        why: |-
+          Translation goes down towards machine code, not up towards high-level code.
+      - text: A list of syntax errors only
+        why: |-
+          Error reports are a by-product; the purpose is machine code.
+      - text: A flowchart of the program
+        why: |-
+          Flowcharts are design tools, not translator output.
+    explanation: |-
+      The assembler's output is machine code.
+
+  - id: interpreter-output
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.1"]
+    prompt: |-
+      Why does an interpreted program need the interpreter every time it is run?
+    options:
+      - text: No machine-code file is produced, so the statements must be translated again each run
+        correct: true
+        why: |-
+          Interpretation translates and executes as it goes, and saves nothing.
+      - text: The interpreter deletes the source code after each run
+        why: |-
+          The source stays; nothing is compiled to reuse.
+      - text: Interpreted programs are stored in ROM
+        why: |-
+          Storage location is irrelevant here.
+      - text: The processor cannot execute machine code
+        why: |-
+          Machine code is exactly what the processor executes.
+    explanation: |-
+      Interpretation produces no reusable executable.
+
+  - id: why-need-translator
+    format: text
+    difficulty: 1
+    objectives: ["5.2.1"]
+    prompt: |-
+      State why a high-level language program needs to be translated before it can be run.
+    accept:
+      - the processor can only execute machine code
+      - the processor only understands machine code
+      - a computer can only run machine code
+      - the processor cannot execute high-level language directly
+    model: |-
+      The processor can only execute machine code, so the high-level source code must be translated
+      into machine code before it can run.
+    explanation: |-
+      Translation exists because the processor understands only machine code.
+
+  - id: compiler-timing
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.1"]
+    prompt: |-
+      When does a compiler translate a program?
+    options:
+      - text: Before the program runs, producing an executable
+        correct: true
+        why: |-
+          The whole program is translated in advance; the executable then runs on its own.
+      - text: One line at a time while the program runs
+        why: |-
+          That is an interpreter.
+      - text: Only when the program is first installed by the user
+        why: |-
+          Compilation is done by the developer, before distribution.
+      - text: Never — compilers only check syntax
+        why: |-
+          Compilers produce machine code as well as reporting errors.
+    explanation: |-
+      Compilation happens before execution, producing a saved executable.
+
+  - id: error-timing
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.1"]
+    prompt: |-
+      A program has a syntax error on line 40. What is the difference between compiling and interpreting it?
+    options:
+      - text: The compiler reports the error and produces no executable; the interpreter runs lines 1–39 first, then reports the error
+        correct: true
+        why: |-
+          Compilers check the whole program before running anything; interpreters reach the error
+          during execution.
+      - text: Both report the error before any line runs
+        why: |-
+          An interpreter only reaches the error when it gets there.
+      - text: Neither reports it
+        why: |-
+          Both detect syntax errors.
+      - text: The interpreter reports it first and stops before line 1
+        why: |-
+          Interpretation executes as it goes, so lines before the error run.
+    explanation: |-
+      Whole-program checking versus statement-by-statement execution.

@@ -1,0 +1,276 @@
+id: operating-systems-security-hardware-process-management
+subject: "9618"
+topic: "5.1"
+title: "Managing security, hardware and processes"
+summary: The other three management jobs — keeping users out of each other's data, feeding the printers, and deciding which process runs next.
+order: 3
+minutes: 7
+kind: core
+objectives: ["5.1.2"]
+prerequisites: [operating-systems-memory-and-file-management]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.1 learning outcome 5.1.2 (security, hardware and process
+    management). All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain security management, hardware management and process management, and say what each one actually does.
+
+  - type: explain
+    title: Security management
+    body: |-
+      The OS is the bouncer. **Security management** means checking who is allowed to do what, and stopping everything else.
+
+      The tasks:
+
+      - **Authentication:** usernames and passwords, PINs, biometrics — proving who you are before anything else happens.
+      - **Authorisation:** deciding what an authenticated user may access (this file, that printer), through access rights and permissions.
+      - **Protecting files and memory** from other users and other processes.
+      - **Logging activity**, so suspicious behaviour can be traced.
+      - **Providing the mechanisms that malware protection uses** (a virus checker is separate software that relies on them).
+
+      A useful exam sentence: *the OS authenticates users and enforces access rights, so one user cannot read or change another user's files.*
+
+  - type: explain
+    title: Hardware management
+    body: |-
+      **Hardware management** is the OS controlling the input, output and storage devices attached to the machine.
+
+      The tasks:
+
+      - **Communicating with devices** through **device drivers** — small programs that know how a particular printer or graphics card works.
+      - **Allocating devices** to processes, so two programs do not send print jobs to the same printer at once.
+      - **Buffering and spooling:** data is held (in a buffer in memory, or on disk in a spool queue) while a slow device catches up, so the processor is not kept waiting.
+      - **Handling interrupts:** when a device signals that it has finished, the OS decides what happens next.
+      - **Managing device settings** such as power, brightness and resolution.
+
+  - type: explain
+    title: Process management
+    body: |-
+      A **process** is a program that is running (or ready to run). **Process management** is the OS deciding which process uses the processor, and when.
+
+      The tasks:
+
+      - **Creating and terminating processes** when programs start and close.
+      - **Scheduling:** choosing the next process to run, using a policy such as round-robin.
+      - **Multitasking:** switching rapidly between processes so they appear to run at the same time.
+      - **Managing states:** a process is *running*, *ready* (waiting for the processor) or *blocked* (waiting for input or a device).
+      - **Handling interrupts and priorities**, so a high-priority task such as a keystroke is dealt with promptly.
+
+  - type: diagram
+    diagram: cs-operating-systems-process-states
+    alt: >-
+      Three states drawn as boxes: running, ready and blocked. Arrows show a process moving from
+      ready to running when the scheduler picks it, back to ready when its time slice ends, to
+      blocked when it waits for input, and back to ready when the input arrives.
+    caption: |-
+      The scheduler moves processes between running, ready and blocked.
+
+  - type: example
+    title: "Worked example: what happens when you print"
+    problem: |-
+      You press Ctrl+P in a word processor. Trace the OS's management tasks.
+    steps:
+      - |-
+        **Process management:** the request is handled as a process, and the OS gives it processor time to prepare the document.
+      - |-
+        **Security management:** the OS checks that this user is allowed to use that printer.
+      - |-
+        **Hardware management:** the OS checks the printer is free and sends the job through the printer's **device driver**.
+      - |-
+        **Spooling:** because the printer is slow, the job is written to a spool queue on disk and the processor is released to do other work.
+      - |-
+        **File management:** the document being printed is read from its stored blocks.
+    answer: |-
+      Five management areas appear in one simple action.
+
+  - type: check
+    title: Quick check
+    questions: [which-management-area, spooling-purpose, process-state]
+
+  - type: check
+    title: Practice
+    questions: [authentication-vs-authorisation, driver-role, multitask-single-core]
+
+  - type: misconceptions
+    items:
+      - wrong: Spooling makes the printer print faster.
+        right: |-
+          Spooling does not speed up the printer; it frees the processor by queueing jobs on disk
+          while the printer works through them.
+      - wrong: Running is the only state a process can be in.
+        right: |-
+          Processes can be running, ready or blocked (waiting for input or a device).
+      - wrong: Device drivers are part of the application.
+        right: |-
+          Drivers are software used by the OS to communicate with a specific device.
+      - wrong: Security management means installing a virus checker.
+        right: |-
+          The OS provides authentication, access rights and logging; a virus checker is separate
+          software that relies on those mechanisms.
+      - wrong: Multitasking means two processes execute at the same instant on one core.
+        right: |-
+          On a single core the OS switches between them very quickly; only multiple cores run
+          instructions truly simultaneously.
+
+  - type: exam
+    body: |-
+      - Structure the answer by area: security, hardware, process — then one clear example each.
+      - Use precise terms: authentication, access rights, device driver, buffer, spool, scheduler, time slice.
+      - For "explain how the OS manages printing", name spooling *and* say why it helps.
+
+  - type: takeaways
+    items:
+      - 'Security management: authenticate users, authorise access, protect data, log activity.'
+      - 'Hardware management: drivers, allocating devices, buffering and spooling, interrupts.'
+      - 'Process management: create/terminate, schedule, multitask, manage states and priorities.'
+      - 'Process states are running, ready and blocked.'
+      - 'Spooling queues jobs on disk so the processor is not held up by a slow device.'
+
+  - type: deeper
+    title: Round-robin scheduling
+    body: |-
+      In round-robin, each ready process gets a fixed **time slice** (say 10 ms) in turn. When the slice ends, the process goes to the back of the queue and the next one runs.
+
+      It is simple and fair, and it keeps interactive programs responsive. Its weakness is overhead: every switch costs time, so slices that are too short waste processor time on switching.
+
+questions:
+  - id: which-management-area
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.2"]
+    prompt: |-
+      Holding print jobs on disk until the printer is ready is an example of which management task?
+    options:
+      - text: Hardware management (spooling)
+        correct: true
+        why: |-
+          Spooling is the OS managing an output device so the processor is not kept waiting.
+      - text: Memory management
+        why: |-
+          Memory management concerns RAM, not a print queue.
+      - text: File management
+        why: |-
+          A spool file is stored on disk, but the purpose is managing the device.
+      - text: Security management
+        why: |-
+          Security management concerns authentication and permissions.
+    explanation: |-
+      Spooling belongs to hardware (device) management.
+
+  - id: spooling-purpose
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      Why does spooling improve the system's overall performance?
+    options:
+      - text: The processor is released to do other work while the slow printer catches up
+        correct: true
+        why: |-
+          The job waits on disk, so the processor is not idle waiting for the device.
+      - text: It compresses the document before printing
+        why: |-
+          Compression is not what spooling does.
+      - text: It increases the printer's print speed
+        why: |-
+          The hardware speed is unchanged.
+      - text: It removes the need for a device driver
+        why: |-
+          A driver is still needed to send data to the printer.
+    explanation: |-
+      Spooling decouples the fast processor from the slow device.
+
+  - id: process-state
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      A process is waiting for the user to type a key. Which state is it in?
+    options:
+      - text: Blocked (waiting)
+        correct: true
+        why: |-
+          It cannot continue until the input arrives, so it waits while the processor runs something
+          else.
+      - text: Running
+        why: |-
+          Running means it is currently using the processor.
+      - text: Ready
+        why: |-
+          Ready means it could run if given the processor; this one is waiting on input.
+      - text: Terminated
+        why: |-
+          Terminated means it has finished.
+    explanation: |-
+      Waiting for input puts a process in the blocked state.
+
+  - id: authentication-vs-authorisation
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      Which pair correctly matches the terms?
+    options:
+      - text: Authentication proves who you are; authorisation decides what you may access
+        correct: true
+        why: |-
+          Logging in is authentication; checking permissions afterwards is authorisation.
+      - text: Authentication decides what you may access; authorisation proves who you are
+        why: |-
+          The two are the wrong way round.
+      - text: Both mean the same thing
+        why: |-
+          They are separate steps in security management.
+      - text: Authentication applies only to files; authorisation only to printers
+        why: |-
+          Both apply to all resources.
+    explanation: |-
+      Identify first, then check permissions.
+
+  - id: driver-role
+    format: text
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      State the role of a device driver.
+    accept:
+      - software that allows the operating system to communicate with a specific hardware device
+      - software that lets the OS control a particular piece of hardware
+      - a program that translates operating system commands into signals the device understands
+      - software that enables communication between the operating system and a peripheral device
+    model: |-
+      A device driver is software that lets the operating system communicate with, and control, one
+      specific hardware device such as a printer or graphics card.
+    explanation: |-
+      A driver is software that lets the OS communicate with and control one specific device.
+
+  - id: multitask-single-core
+    format: mcq
+    difficulty: 3
+    objectives: ["5.1.2"]
+    prompt: |-
+      On a single-core processor, how can two programs appear to run at the same time?
+    options:
+      - text: The OS switches rapidly between them, giving each a short time slice
+        correct: true
+        why: |-
+          Only one instruction is executed at a time, but the switching is fast enough to look
+          simultaneous.
+      - text: Each program is given its own core
+        why: |-
+          A single core cannot be split into two cores.
+      - text: The programs take turns being stored on disk
+        why: |-
+          Storing them on disk does not execute them.
+      - text: The processor executes both instructions simultaneously
+        why: |-
+          One core executes one instruction at a time.
+    explanation: |-
+      Multitasking is fast switching between processes, scheduled by the OS.

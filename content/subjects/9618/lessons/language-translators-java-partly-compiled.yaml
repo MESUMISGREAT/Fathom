@@ -1,0 +1,236 @@
+id: language-translators-java-partly-compiled
+subject: "9618"
+topic: "5.2"
+title: "Java: compiled, then interpreted"
+summary: Java is compiled to bytecode, not to machine code — then the JVM interprets that bytecode, so the same compiled file runs on any machine with a JVM.
+order: 3
+minutes: 5
+kind: core
+objectives: ["5.2.3"]
+prerequisites: [language-translators-compiler-versus-interpreter]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.2 learning outcome 5.2.3 (programs partly compiled and partly
+    interpreted, as with Java in console mode). All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can show that some programs are partly compiled and partly interpreted, and explain why Java is the standard example.
+
+  - type: explain
+    title: Compile once, run anywhere
+    body: |-
+      With ordinary compiled languages, the compiler produces machine code for **one** processor and operating system.
+
+      Java does something different:
+
+      1. The Java compiler does **not** produce machine code. It produces **bytecode**, saved in `.class` files.
+      2. Bytecode is not tied to any one processor.
+      3. At run time, the **Java Virtual Machine (JVM)** on that machine interprets the bytecode (and may compile hot sections to machine code with a JIT compiler).
+
+      So Java is **partly compiled** (source to bytecode) and **partly interpreted** (bytecode executed by the JVM).
+
+  - type: diagram
+    diagram: cs-language-translators-java-bytecode
+    alt: >-
+      Java source in a .java file goes into a compiler, producing .class bytecode. The bytecode
+      sits in the middle, and three arrows leave it to three JVMs — on Windows, macOS and Linux —
+      each of which executes the same bytecode on its own machine.
+    caption: |-
+      Compile once to bytecode, then let each platform's JVM execute it.
+
+  - type: explain
+    title: Why this design
+    body: |-
+      - **Portability:** the same `.class` file runs on any machine that has a JVM. That is the "compile once, run anywhere" idea.
+      - **Speed:** bytecode is compact and closer to machine code than source, so the JVM has less work than a plain interpreter.
+      - **Optimisation:** the JVM can JIT-compile frequently used methods, so repeated work runs at close to native speed.
+      - **Security:** the JVM can check bytecode before running it, which is one reason Java is used in sandboxed environments.
+
+      The cost: the JVM must be installed on the machine, and it uses memory and adds a small start-up delay.
+
+  - type: example
+    title: "Worked example: tracing a Java program's run"
+    problem: |-
+      A student writes `Hello.java` and runs `javac Hello.java`, then `java Hello` in the console.
+
+      Describe what happens at each stage, and say which parts are compilation and which are interpretation.
+    steps:
+      - |-
+        `javac Hello.java` runs the **compiler**: it checks the source and produces `Hello.class`, which contains **bytecode**. This is the compiled part.
+      - |-
+        `java Hello` starts the **JVM** and loads `Hello.class`. This is a separate, later step.
+      - |-
+        The JVM **interprets** the bytecode, statement by statement, translating it into the machine instructions of this computer.
+      - |-
+        If a method is called repeatedly, the JVM's JIT compiler may compile it to machine code to speed it up.
+      - |-
+        If the source changes, it must be recompiled: the `.class` file is out of date, not re-translated from scratch each run.
+    answer: |-
+      Compilation produces bytecode; the JVM interprets (and may JIT-compile) that bytecode at run time.
+
+  - type: check
+    title: Quick check
+    questions: [javac-output, jvm-role, why-portable]
+
+  - type: check
+    title: Practice
+    questions: [partly-interpreted, java-cost]
+
+  - type: misconceptions
+    items:
+      - wrong: The Java compiler produces machine code.
+        right: |-
+          It produces **bytecode**. Machine code is produced only if the JVM's JIT compiler converts
+          it at run time.
+      - wrong: Bytecode is the same as machine code.
+        right: |-
+          Bytecode is an intermediate form for the JVM, not instructions for a specific processor.
+      - wrong: The JVM is part of the Java compiler.
+        right: |-
+          They are separate: `javac` compiles, the JVM (started by `java`) runs the bytecode.
+      - wrong: Java programs never need recompiling after an edit.
+        right: |-
+          The source must be recompiled to a new `.class` file; it is only the *distribution* that is
+          portable.
+      - wrong: Java is purely interpreted, in the way a language with no compile step is.
+        right: |-
+          Java is partly compiled (source to bytecode) and partly interpreted (bytecode by the
+          JVM). Even "interpreted" languages often compile to an internal form first.
+
+  - type: exam
+    body: |-
+      - Name all three pieces: compiler → **bytecode** → **JVM**.
+      - Say where each happens: compile time for bytecode, run time for interpretation.
+      - The phrase examiners like is "compile once, run anywhere", explained by the JVM being platform-specific while the bytecode is not.
+
+  - type: takeaways
+    items:
+      - 'Java source is compiled to bytecode, not to machine code.'
+      - 'The JVM interprets the bytecode at run time, and may JIT-compile it.'
+      - 'So Java is partly compiled and partly interpreted.'
+      - 'Bytecode is portable; the JVM is specific to each platform.'
+      - 'A JVM must be installed, which costs memory and start-up time.'
+
+  - type: deeper
+    title: Why bytecode plus JIT is fast
+    body: |-
+      Pure interpretation translates every statement on every run, which is slow. Bytecode is much simpler to translate than source, and a JIT compiler can spot a method that runs thousands of times and compile it once to machine code.
+
+      That is why a long-running Java program can approach the speed of C, even though it started as interpreted bytecode.
+
+questions:
+  - id: javac-output
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.3"]
+    prompt: |-
+      What does the Java compiler (`javac`) produce?
+    options:
+      - text: Bytecode in a `.class` file
+        correct: true
+        why: |-
+          Java compiles source to bytecode, which the JVM then executes.
+      - text: Machine code for the current processor
+        why: |-
+          That is what a conventional compiler produces; Java deliberately avoids it.
+      - text: An interpreted script
+        why: |-
+          The output is compiled bytecode, not a script.
+      - text: Nothing — Java is not compiled at all
+        why: |-
+          Java is compiled, but only to bytecode.
+    explanation: |-
+      `javac` produces bytecode; the JVM runs it.
+
+  - id: jvm-role
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.3"]
+    prompt: |-
+      What is the role of the Java Virtual Machine?
+    options:
+      - text: To execute bytecode on a particular machine, interpreting it and possibly JIT-compiling it
+        correct: true
+        why: |-
+          The JVM is the platform-specific part that carries out the portable bytecode.
+      - text: To compile Java source into bytecode
+        why: |-
+          That is `javac`, the compiler.
+      - text: To store Java source files
+        why: |-
+          Source files are ordinary files; the JVM executes bytecode.
+      - text: To convert bytecode back into Java source
+        why: |-
+          Decompilation is a separate, optional tool.
+    explanation: |-
+      The JVM is the run-time environment for bytecode.
+
+  - id: why-portable
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.3"]
+    prompt: |-
+      Why can the same `.class` file run on Windows, macOS and Linux?
+    options:
+      - text: Because bytecode is not machine-specific; each platform has its own JVM to execute it
+        correct: true
+        why: |-
+          The platform differences are handled by the JVM, not the bytecode.
+      - text: Because the compiler produces three executables at once
+        why: |-
+          One compiler run produces one bytecode file, not platform executables.
+      - text: Because the JVM is identical on every platform, including its machine code
+        why: |-
+          Each platform's JVM is a different program; the bytecode is what stays the same.
+      - text: Because Java source is never compiled
+        why: |-
+          It is compiled, to bytecode.
+    explanation: |-
+      Portable bytecode plus a platform-specific JVM gives "compile once, run anywhere".
+
+  - id: partly-interpreted
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.3"]
+    prompt: |-
+      In what sense is a Java program partly interpreted?
+    options:
+      - text: The JVM translates and executes the bytecode statement by statement at run time
+        correct: true
+        why: |-
+          Interpretation happens after compilation, when the program runs.
+      - text: The compiler interprets the source as it compiles it
+        why: |-
+          Compilers translate the whole source; they do not execute it.
+      - text: Half the source is skipped
+        why: |-
+          Nothing is skipped; the same program is fully executed.
+      - text: The JVM compiles everything before running any of it
+        why: |-
+          Interpretation happens while the program runs; JIT compilation is an extra optimisation.
+    explanation: |-
+      Bytecode is executed by interpretation, with optional JIT compilation.
+
+  - id: java-cost
+    format: text
+    difficulty: 2
+    objectives: ["5.2.3"]
+    prompt: |-
+      Give one disadvantage of the way Java programs are run.
+    accept:
+      - a JVM must be installed on the machine
+      - the JVM uses extra memory while the program runs
+      - the program starts more slowly because the JVM must start first
+      - bytecode must be interpreted so it can be slower than fully compiled code
+      - it needs an extra compilation step before it can be run anywhere
+    model: |-
+      The machine must have a JVM installed, and the JVM uses extra memory (and adds start-up time)
+      while the program runs.
+    explanation: |-
+      Portability is bought with a run-time environment that must be present.

@@ -1,0 +1,221 @@
+id: operating-systems-why-needed
+subject: "9618"
+topic: "5.1"
+title: "Why a computer needs an operating system"
+summary: The OS is the manager between you and the hardware — it starts programs, shares out memory and stops every application fighting over the same keyboard.
+order: 1
+minutes: 5
+kind: core
+objectives: ["5.1.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.1 learning outcome 5.1.1. All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain, in exam language, why a computer system needs an operating system.
+
+  - type: explain
+    title: The problem without an OS
+    body: |-
+      Imagine a phone with no operating system. Every app would have to know exactly which memory chips are free, how to draw on the screen, and how to talk to the speaker.
+
+      Worse, two apps would claim the same memory and crash each other.
+
+      The **operating system (OS)** is the software that sits between the user, the application programs and the hardware. Windows, macOS, Linux, Android and iOS are all operating systems.
+
+  - type: diagram
+    diagram: cs-operating-systems-layer
+    alt: >-
+      A stack of layers: the user at the top, then application programs, then the operating
+      system shaded as the middle layer, then the hardware at the bottom. Arrows show requests
+      passing down through the OS and results coming back up.
+    caption: |-
+      Every request from an application passes through the operating system on its way to the
+      hardware.
+
+  - type: explain
+    title: What the OS gives you
+    body: |-
+      Four reasons, each worth a mark:
+
+      - **It hides the hardware.** A program asks to "write a file"; the OS works out which disk and which blocks. Programs do not need to know the details.
+      - **It provides a user interface.** A GUI with windows and icons, or a command line, so a human can actually use the machine.
+      - **It manages resources.** Memory, processor time, files, printers and other peripherals are shared out fairly and safely.
+      - **It lets several programs run together.** Without a manager, two programs would overwrite each other's memory or grab the same device.
+
+  - type: definition
+    term: Operating system
+    body: |-
+      System software that controls the hardware and provides a platform on which application programs can run, managing memory, files, processes, input/output devices and security.
+
+  - type: explain
+    title: The analogy (and where it stops)
+    body: |-
+      Think of a restaurant. Customers (users) order from a menu (the interface). The kitchen (hardware) does the work. The **manager** (the OS) takes orders, decides which chef cooks what, keeps the storeroom keyed and makes sure two waiters do not deliver to the same table.
+
+      Where it stops: a restaurant manager can be replaced mid-service with chaos; an OS is designed so that programs keep running while new ones start.
+
+  - type: check
+    title: Quick check
+    questions: [what-is-os, why-hide-hardware, interface-not-hardware]
+
+  - type: check
+    title: Practice
+    questions: [two-apps-memory, os-role-list]
+
+  - type: misconceptions
+    items:
+      - wrong: The operating system is the same thing as the applications.
+        right: |-
+          The OS is **system software**; word processors and browsers are **application software**
+          that run on top of it.
+      - wrong: An OS is needed only to give a graphical interface.
+        right: |-
+          A server may have no GUI at all, yet still needs an OS for memory, files and process
+          management.
+      - wrong: Each application manages its own memory.
+        right: |-
+          The OS allocates memory to each program and stops one program reading or overwriting
+          another's memory.
+      - wrong: The OS is part of the hardware.
+        right: |-
+          It is software, though part of it (the kernel) is loaded first when the computer starts.
+      - wrong: A computer can run applications with no OS at all.
+        right: |-
+          Simple embedded devices can run one fixed program with no OS, but a general-purpose
+          computer that runs many programs needs one to share out the resources.
+
+  - type: exam
+    body: |-
+      - "Explain why a computer system needs an operating system" wants reasons, not a list of examples of operating systems.
+      - Give each reason plus its effect: "it manages memory so that programs do not overwrite each other".
+      - Mentioning hardware management, memory management, providing an interface and running multiple programs covers the usual mark scheme.
+
+  - type: takeaways
+    items:
+      - 'The OS is system software between the user/applications and the hardware.'
+      - 'It provides a user interface (GUI or command line).'
+      - 'It manages memory, files, processes, I/O devices and security.'
+      - 'It lets several programs run at once without interfering.'
+      - 'Applications use the OS instead of talking to hardware directly.'
+
+  - type: deeper
+    title: The kernel and the shell
+    body: |-
+      The OS has a small core called the **kernel**, which handles memory, processes and device drivers, and runs with special privileges. The **shell** is the part you interact with — a GUI or a command line.
+
+      This split is why a program that crashes usually kills only itself: it cannot touch the kernel's protected memory.
+
+questions:
+  - id: what-is-os
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.1"]
+    prompt: |-
+      Which statement best describes an operating system?
+    options:
+      - text: System software that manages hardware and provides a platform for applications
+        correct: true
+        why: |-
+          That is exactly its role: it controls the hardware and lets application programs run.
+      - text: Application software for writing documents
+        why: |-
+          A word processor is application software that runs *on* the OS.
+      - text: A piece of hardware inside the processor
+        why: |-
+          The OS is software; the processor is hardware.
+      - text: A programming language used to write apps
+        why: |-
+          Languages are translated by compilers and interpreters, which run on top of the OS.
+    explanation: |-
+      The OS is system software sitting between applications and hardware.
+
+  - id: why-hide-hardware
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.1"]
+    prompt: |-
+      Why is it useful that the operating system hides the details of the hardware?
+    options:
+      - text: A program can save a file without knowing which disk or memory addresses are involved
+        correct: true
+        why: |-
+          The OS translates a general request into the specific hardware actions, so software is
+          portable across machines.
+      - text: It makes the computer run without a processor
+        why: |-
+          The processor is still needed; only the *details* are hidden.
+      - text: It removes the need for device drivers
+        why: |-
+          Drivers are still needed — the OS uses them on the program's behalf.
+      - text: It means programs cannot crash
+        why: |-
+          Programs still crash; hiding hardware does not make software perfect.
+    explanation: |-
+      Hiding hardware lets the same program run on different machines and keeps programs simpler.
+
+  - id: interface-not-hardware
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.1"]
+    prompt: |-
+      Which of these is **not** a reason a general-purpose computer needs an OS?
+    options:
+      - text: To increase the clock speed of the processor
+        correct: true
+        why: |-
+          Clock speed is set by the hardware; the OS does not make the processor faster.
+      - text: To manage memory so programs do not overwrite each other
+        why: |-
+          That is a core OS task, so it *is* a reason.
+      - text: To provide a user interface
+        why: |-
+          Also a core reason.
+      - text: To allow several programs to run at the same time
+        why: |-
+          Multiprogramming is managed by the OS.
+    explanation: |-
+      The OS manages resources; it does not change the hardware's speed.
+
+  - id: two-apps-memory
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.1"]
+    prompt: |-
+      Two programs are running at once. What stops the second program writing into the first program's memory?
+    options:
+      - text: The operating system allocates separate memory to each program and blocks access
+        correct: true
+        why: |-
+          Memory management and protection are OS responsibilities.
+      - text: The processor refuses to execute the second program
+        why: |-
+          Both programs run; the processor does not police memory ownership by itself.
+      - text: Each program is stored on a different disk
+        why: |-
+          Storage location does not prevent a program writing to memory while it runs.
+      - text: The user closes one program
+        why: |-
+          That is not automatic protection; it relies on the OS.
+    explanation: |-
+      Without OS memory management, concurrent programs would corrupt each other.
+
+  - id: os-role-list
+    format: cloze
+    difficulty: 2
+    objectives: ["5.1.1"]
+    prompt: |-
+      Complete the sentence: the operating system provides a platform for {{1}} software to run and manages the computer's {{2}}.
+    blanks:
+      - accept: [application, applications, apps]
+      - accept: [resources, hardware, memory]
+    explanation: |-
+      The OS is the platform under application software and it manages the hardware resources
+      (memory, files, processes, devices).

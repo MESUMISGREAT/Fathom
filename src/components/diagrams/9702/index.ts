@@ -71,6 +71,7 @@ import TurningEffectsCoupleEffects from './turning-effects-couple-effects';
 import TurningEffectsCoupleTorque from './turning-effects-couple-torque';
 import TurningEffectsPlumbLine from './turning-effects-plumb-line';
 import TurningEffectsSpannerDoor from './turning-effects-spanner-door';
+import TurningEffectsToppling from './turning-effects-toppling';
 import VectorComponents from './vector-components';
 import VectorTriangle from './vector-triangle';
 
@@ -147,6 +148,7 @@ export const diagrams: DiagramRegistry = {
   'phys-turning-effects-couple-torque': TurningEffectsCoupleTorque,
   'phys-turning-effects-plumb-line': TurningEffectsPlumbLine,
   'phys-turning-effects-spanner-door': TurningEffectsSpannerDoor,
+  'phys-turning-effects-toppling': TurningEffectsToppling,
   'phys-vector-components': VectorComponents,
   'phys-vector-triangle': VectorTriangle,
 };

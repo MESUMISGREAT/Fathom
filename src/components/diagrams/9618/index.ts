@@ -49,6 +49,10 @@ import CpuArchitecturePorts from './cpu-architecture-ports';
 import CpuArchitectureRegisters from './cpu-architecture-registers';
 import CpuArchitectureVonNeumann from './cpu-architecture-von-neumann';
 import HexNibbles from './hex-nibbles';
+import LanguageTranslatorsCompileVsInterpret from './language-translators-compile-vs-interpret';
+import LanguageTranslatorsIdeLayout from './language-translators-ide-layout';
+import LanguageTranslatorsJavaBytecode from './language-translators-java-bytecode';
+import LanguageTranslatorsPipeline from './language-translators-pipeline';
 import LogicGatesExpressionCircuit from './logic-gates-expression-circuit';
 import LogicGatesSymbols from './logic-gates-symbols';
 import LogicGatesTruthTable from './logic-gates-truth-table';
@@ -80,6 +84,11 @@ import NetworksSubnetMask from './networks-subnet-mask';
 import NetworksThinThick from './networks-thin-thick';
 import NetworksUrlParts from './networks-url-parts';
 import NetworksWirelessLinks from './networks-wireless-links';
+import OperatingSystemsDynamicLinking from './operating-systems-dynamic-linking';
+import OperatingSystemsLayer from './operating-systems-layer';
+import OperatingSystemsMemoryMap from './operating-systems-memory-map';
+import OperatingSystemsProcessStates from './operating-systems-process-states';
+import OperatingSystemsUtilities from './operating-systems-utilities';
 import PrefixGap from './prefix-gap';
 import TwosComplementWeights from './twos-complement-weights';
 import TwosComplementWheel from './twos-complement-wheel';
@@ -135,6 +144,10 @@ export const diagrams: DiagramRegistry = {
   'cs-cpu-architecture-register-file': CpuArchitectureRegisters,
   'cs-cpu-architecture-von-neumann': CpuArchitectureVonNeumann,
   'cs-hex-nibbles': HexNibbles,
+  'cs-language-translators-compile-vs-interpret': LanguageTranslatorsCompileVsInterpret,
+  'cs-language-translators-ide-layout': LanguageTranslatorsIdeLayout,
+  'cs-language-translators-java-bytecode': LanguageTranslatorsJavaBytecode,
+  'cs-language-translators-pipeline': LanguageTranslatorsPipeline,
   'cs-logic-gates-expression-circuit': LogicGatesExpressionCircuit,
   'cs-logic-gates-symbols': LogicGatesSymbols,
   'cs-logic-gates-truth-table': LogicGatesTruthTable,
@@ -166,6 +179,11 @@ export const diagrams: DiagramRegistry = {
   'cs-networks-thin-thick': NetworksThinThick,
   'cs-networks-url-parts': NetworksUrlParts,
   'cs-networks-wireless-links': NetworksWirelessLinks,
+  'cs-operating-systems-dynamic-linking': OperatingSystemsDynamicLinking,
+  'cs-operating-systems-layer': OperatingSystemsLayer,
+  'cs-operating-systems-memory-map': OperatingSystemsMemoryMap,
+  'cs-operating-systems-process-states': OperatingSystemsProcessStates,
+  'cs-operating-systems-utilities': OperatingSystemsUtilities,
   'cs-prefix-gap': PrefixGap,
   'cs-twos-complement-weights': TwosComplementWeights,
   'cs-twos-complement-wheel': TwosComplementWheel,

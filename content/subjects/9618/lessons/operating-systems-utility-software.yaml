@@ -1,0 +1,275 @@
+id: operating-systems-utility-software
+subject: "9618"
+topic: "5.1"
+title: "Utility software: the OS's toolkit"
+summary: Six small programs that keep a system healthy — formatting, virus checking, defragmenting, analysing and repairing disks, compressing files and backing up.
+order: 4
+minutes: 7
+kind: core
+objectives: ["5.1.3"]
+prerequisites: [operating-systems-why-needed]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.1 learning outcome 5.1.3, covering all six named utilities. All
+    questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name the utilities supplied with an operating system and say why each one is needed.
+
+  - type: explain
+    title: What a utility is
+    body: |-
+      A **utility** is a small program that maintains or improves the computer system. Utilities come with the operating system, or are added to it, and they do housekeeping the OS itself does not do automatically.
+
+      They are not there to create your work — that is application software. They are there to keep the machine working.
+
+  - type: diagram
+    diagram: cs-operating-systems-utilities
+    alt: >-
+      Six labelled cards, each naming a utility and one job it does: disk formatter prepares a
+      disk, virus checker scans for malware, defragmentation software reorganises file blocks,
+      disk analysis and repair checks for errors, file compression reduces file size, and backup
+      software copies data for recovery.
+    caption: |-
+      The six utilities named in the syllabus, each with its main job.
+
+  - type: explain
+    title: The six utilities
+    body: |-
+      | Utility | What it does | Why it is needed |
+      |---|---|---|
+      | **Disk formatter** | Prepares a disk by creating the file system, so it can store files; wipes existing contents | A new disk cannot store files until it is formatted |
+      | **Virus checker** | Scans memory, files, downloads and email for known malware, quarantines or deletes it, updates its definitions | Malware can destroy data, slow the system or steal information |
+      | **Defragmentation software** | Rearranges file blocks so each file occupies contiguous blocks | Scattered (fragmented) files take longer to read, because more disk head movement is needed |
+      | **Disk contents analysis / disk repair** | Examines the disk's structure, reports used and free space, finds and fixes errors and bad sectors | Errors in the file system can lose data or prevent the disk working |
+      | **File compression** | Reduces file size, as a `.zip` does, either to save space or before sending | Saves storage space and reduces transfer time |
+      | **Back-up software** | Makes copies of files (full or incremental) to another medium, and restores them | Hardware failure, theft, malware or accidental deletion can destroy the only copy |
+
+  - type: explain
+    title: The two that get confused
+    body: |-
+      **Defragmentation does not free space.** It rearranges blocks so files are stored contiguously (next to each other), which makes reading faster. The total amount of free space is unchanged.
+
+      **Compression does free space**, because the file itself becomes smaller — but it must be decompressed before use.
+
+      On a solid-state drive, defragmentation is not needed in the same way: there is no moving read/write head, and the drive has limited write cycles. The syllabus still requires you to know the utility and its purpose.
+
+  - type: example
+    title: "Worked example: choosing the right utility"
+    problem: |-
+      For each situation, name the most appropriate utility and say why.
+
+      1. A one-year-old laptop has become slow when opening large files.
+      2. A file is 40 MB and must be emailed, but the limit is 25 MB.
+      3. A hard drive was removed from a machine during a power cut and now reports errors.
+      4. A new external hard drive is not recognised and cannot store files.
+    steps:
+      - |-
+        1. **Defragmentation software** — the files are probably fragmented, so reading them needs
+        extra head movement.
+      - |-
+        2. **File compression** — the file becomes smaller, so it fits the email limit.
+      - |-
+        3. **Disk repair (disk contents analysis / repair)** — the file system may be damaged and
+        needs checking and correcting.
+      - |-
+        4. **Disk formatter** — a new disk must be formatted with a file system before it can be used.
+    answer: |-
+      Defragmentation, compression, disk repair, and formatting.
+
+  - type: check
+    title: Quick check
+    questions: [defrag-purpose, compression-why, formatter-role]
+
+  - type: check
+    title: Practice
+    questions: [disk-repair, backup-reason, virus-update]
+
+  - type: misconceptions
+    items:
+      - wrong: Defragmentation deletes unnecessary files to free space.
+        right: |-
+          It rearranges blocks so files are contiguous. Freeing space is done by deleting files or
+          compressing them.
+      - wrong: A virus checker makes a computer immune to malware.
+        right: |-
+          It detects and removes known threats; its definitions must be updated, and new malware
+          may still get through.
+      - wrong: Back-up software is only needed for large companies.
+        right: |-
+          Any data that cannot easily be recreated should be backed up; hardware failure and
+          ransomware do not check the size of the organisation.
+      - wrong: Compression always reduces file size by the same amount.
+        right: |-
+          It depends on the data. Text and repeated patterns compress well; already-compressed
+          files such as JPEGs gain little.
+      - wrong: Disk contents analysis is the same as defragmentation.
+        right: |-
+          Analysis reports what is stored and finds errors; defragmentation reorganises the blocks.
+      - wrong: Installing a utility makes the operating system unnecessary.
+        right: |-
+          Utilities are separate programs supplied with (or added to) the OS; they do not replace
+          its management tasks.
+
+  - type: exam
+    body: |-
+      - "State the purpose of X" wants **what it does** and **why**: "defragmentation software rearranges files into contiguous blocks so they are read faster".
+      - Name the utility precisely — "disk clean-up" is not in the list of six.
+      - For a scenario question, choose one utility and justify it with the symptom described.
+
+  - type: takeaways
+    items:
+      - 'A utility maintains or improves the system rather than creating content.'
+      - 'The six utilities: disk formatter, virus checker, defragmentation, disk analysis/repair, compression, back-up.'
+      - 'Defragmentation improves speed; compression reduces size.'
+      - 'A new disk must be formatted before it can store files.'
+      - 'Back-ups protect against hardware failure, malware and accidental deletion.'
+
+  - type: deeper
+    title: Full versus incremental back-ups
+    body: |-
+      A **full back-up** copies every selected file. It is simple to restore but slow and space-hungry.
+
+      An **incremental back-up** copies only files changed since the last back-up of any kind. It is fast and small, but restoring needs the last full back-up plus every incremental since.
+
+      Most systems use both: a weekly full back-up and daily incrementals.
+
+questions:
+  - id: defrag-purpose
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.3"]
+    prompt: |-
+      What is the purpose of defragmentation software?
+    options:
+      - text: To rearrange the blocks of files so each file is stored contiguously, making it faster to read
+        correct: true
+        why: |-
+          Contiguous blocks need less movement of the read/write head, so files load faster.
+      - text: To delete temporary files to free space
+        why: |-
+          That is disk clean-up, not defragmentation.
+      - text: To compress files so they take less space
+        why: |-
+          That is file compression.
+      - text: To scan files for viruses
+        why: |-
+          That is the virus checker.
+    explanation: |-
+      Defragmentation reduces fragmentation so files are read faster.
+
+  - id: compression-why
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.3"]
+    prompt: |-
+      Why might a user compress a file before emailing it?
+    options:
+      - text: The file becomes smaller, so it is quicker to send and more likely to fit an attachment limit
+        correct: true
+        why: |-
+          Fewer bytes means less transfer time and a smaller size.
+      - text: Compression makes the file virus-free
+        why: |-
+          Compression does not remove malware; some malware even hides inside archives.
+      - text: Compression improves the file's quality
+        why: |-
+          Lossy compression reduces quality; it never improves it.
+      - text: The recipient can read it without decompressing
+        why: |-
+          The recipient must decompress it before use.
+    explanation: |-
+      Compression reduces size, which saves storage and transfer time.
+
+  - id: formatter-role
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.3"]
+    prompt: |-
+      Why must a new hard disk be formatted before it is used?
+    options:
+      - text: Formatting sets up the file system so the OS can store and find files
+        correct: true
+        why: |-
+          Without a file system the OS has no way to record where files are.
+      - text: Formatting makes the disk physically larger
+        why: |-
+          Capacity is fixed by the hardware.
+      - text: Formatting installs the operating system
+        why: |-
+          Installing the OS is a separate step; formatting only prepares the disk.
+      - text: Formatting removes the need for a back-up
+        why: |-
+          Formatting usually erases data, which makes back-ups more important.
+    explanation: |-
+      A file system must exist before files can be stored.
+
+  - id: disk-repair
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.3"]
+    prompt: |-
+      A disk reports errors after an unexpected power failure. Which utility should be used first?
+    options:
+      - text: Disk contents analysis / disk repair
+        correct: true
+        why: |-
+          It checks the file system for errors and bad sectors and can fix them.
+      - text: Defragmentation
+        why: |-
+          Defragmenting a damaged disk can make things worse; check for errors first.
+      - text: File compression
+        why: |-
+          Compression does not test or repair the disk.
+      - text: Disk formatter
+        why: |-
+          Formatting would erase the data you are trying to save.
+    explanation: |-
+      Repair checks and corrects file-system errors.
+
+  - id: backup-reason
+    format: text
+    difficulty: 2
+    objectives: ["5.1.3"]
+    prompt: |-
+      Give one reason why back-up software is provided with an operating system.
+    accept:
+      - to restore data after hardware failure
+      - to recover files lost through accidental deletion
+      - to recover data after a malware attack
+      - to protect against data loss from theft or damage
+      - so that data can be recovered if the original is lost
+    model: |-
+      Back-up software copies files to another medium so that data can be restored after hardware
+      failure, accidental deletion, theft or a malware attack.
+    explanation: |-
+      The point of a back-up is recovery: the original copy may be lost or damaged.
+
+  - id: virus-update
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.3"]
+    prompt: |-
+      Why must a virus checker's definitions be updated regularly?
+    options:
+      - text: New malware appears constantly, so old definitions will not recognise it
+        correct: true
+        why: |-
+          Detection relies on knowing the patterns of known threats.
+      - text: Updates make the hard disk bigger
+        why: |-
+          Updates do not change disk capacity.
+      - text: Without updates the computer cannot start
+        why: |-
+          The computer still starts; it is just less well protected.
+      - text: Updates delete all your files first
+        why: |-
+          That would be catastrophic and is not what updates do.
+    explanation: |-
+      Definitions describe known threats and must keep up with new ones.

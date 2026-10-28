@@ -1,0 +1,257 @@
+id: language-translators-compiler-versus-interpreter
+subject: "9618"
+topic: "5.2"
+title: "Compiler or interpreter: benefits, drawbacks and choosing"
+summary: Compiled programs run fast but must be rebuilt for each platform; interpreted programs are portable and easy to debug but slower — so the choice depends on the job.
+order: 2
+minutes: 7
+kind: core
+objectives: ["5.2.2"]
+prerequisites: [language-translators-assembler-compiler-interpreter]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.2 learning outcome 5.2.2. All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can give benefits and drawbacks of each approach and justify which one suits a given situation.
+
+  - type: explain
+    title: The comparison, in one table
+    body: |-
+      | | **Compiler** | **Interpreter** |
+      |---|---|---|
+      | Translation | Whole program, before running | One statement at a time, during running |
+      | Output | Executable machine code | None saved |
+      | Speed of the running program | Faster — already machine code | Slower — each statement is translated every run |
+      | Errors | All reported before the program runs | Stops at the first error reached |
+      | Portability | Executable is for one processor/OS; must be recompiled for another | Source runs anywhere an interpreter exists |
+      | Distribution | Can ship the executable without source code | Source code must be supplied |
+      | Development | Slower to test, because each change means recompiling | Quick to test changes interactively |
+      | Memory while running | The executable itself; no translator needed | Interpreter must be in memory too |
+
+  - type: explain
+    title: Benefits of compiling
+    body: |-
+      - **The program runs faster**, because translation has already happened; no interpretation at run time.
+      - **The executable can be distributed without the source code**, protecting the developer's work.
+      - **Errors are found before release**, since the whole program is checked.
+      - **No translator is needed on the user's machine**, so it uses less memory while running.
+
+  - type: explain
+    title: Benefits of interpreting
+    body: |-
+      - **Easier to debug:** the interpreter stops at the faulty statement, so the error is found where it happens.
+      - **No compile step**, so testing a small change is instant — good for learning and prototyping.
+      - **Portable:** the same source runs on any machine with an interpreter, so nothing needs rebuilding for a different processor.
+      - **Statements are executed as they are read**, which suits interactive programs where the next line depends on input.
+
+  - type: explain
+    title: Justifying a choice
+    body: |-
+      Exam questions usually say "justify", which means name the choice **and** connect it to the situation.
+
+      - A commercial game sold to thousands of users → **compiler**: fast execution and source code can be kept private.
+      - A student learning to program, testing small changes → **interpreter**: immediate feedback and errors located precisely.
+      - A script that must run on Windows, macOS and Linux unchanged → **interpreter** (or a language that compiles to a portable intermediate form).
+      - A program with a tight time limit, such as a simulation run millions of times → **compiler**: the speed of machine code matters.
+
+  - type: diagram
+    diagram: cs-language-translators-compile-vs-interpret
+    alt: >-
+      Two side-by-side timelines. On the left, one long translation step followed by repeated
+      fast runs of the compiled program. On the right, every run repeats a translate-then-execute
+      step for each statement, so each run is slower but no translation step is done in advance.
+    caption: |-
+      Compiling pays the translation cost once; interpreting pays it on every run.
+
+  - type: check
+    title: Quick check
+    questions: [speed-reason, source-protection, portability]
+
+  - type: check
+    title: Practice
+    questions: [debug-scenario, justify-game, mixed-approaches]
+
+  - type: misconceptions
+    items:
+      - wrong: An interpreter is always better because it finds errors.
+        right: |-
+          It finds errors only when it reaches them, and the program runs more slowly. Compiled
+          programs catch errors before release.
+      - wrong: A compiled program can run on any processor.
+        right: |-
+          Machine code is specific to a processor family and operating system, so it must be
+          recompiled for a different platform.
+      - wrong: Interpreted programs cannot be distributed without source code.
+        right: |-
+          They need the source, which is a real drawback for commercial software — one reason
+          compilers are used for products.
+      - wrong: A compiler removes all runtime errors.
+        right: |-
+          It finds syntax (and some semantic) errors; logic errors and errors that depend on data
+          still appear at run time.
+      - wrong: The two approaches cannot be mixed.
+        right: |-
+          Many systems do both — Java compiles to bytecode, which is then interpreted or
+          just-in-time compiled.
+
+  - type: exam
+    body: |-
+      - "Justify" needs the reason linked to the scenario: "use a compiler because the program must run quickly on users' machines and the source code must stay private".
+      - Offer both sides briefly, then commit to one.
+      - Use the words **translate**, **execute**, **machine code**, **portable**, **debug**.
+
+  - type: takeaways
+    items:
+      - 'Compiled: fast execution, source hidden, errors found early, no translator needed at run time.'
+      - 'Interpreted: easier debugging, instant testing, portable source, no compile step.'
+      - 'Compiled code must be rebuilt for a different processor or OS.'
+      - 'Interpreted programs are slower because translation happens on every run.'
+      - 'A justification names a choice and links it to the situation.'
+
+  - type: deeper
+    title: Just-in-time compilation
+    body: |-
+      A **JIT compiler** combines the two: the program starts as bytecode, and frequently used sections are compiled to machine code while it runs.
+
+      The result is close to compiled speed with the portability of an interpreted language. It is how modern JavaScript engines and the Java HotSpot VM work.
+
+questions:
+  - id: speed-reason
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      Why does a compiled program usually run faster than an interpreted one?
+    options:
+      - text: Translation is done once in advance, so no translation happens while it runs
+        correct: true
+        why: |-
+          The executable is already machine code; an interpreter must translate each statement on
+          every run.
+      - text: Compiled programs use a faster processor
+        why: |-
+          The hardware is the same; only the work done at run time differs.
+      - text: Compilers remove all the slow instructions
+        why: |-
+          Compilers may optimise, but the main reason is that translation is not repeated.
+      - text: Interpreted programs are written in slower languages
+        why: |-
+          The same language can be compiled or interpreted; the translator is what differs.
+    explanation: |-
+      Compiling moves the translation work to before execution.
+
+  - id: source-protection
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      A company wants to sell software without revealing how it works. Which approach helps, and why?
+    options:
+      - text: Compiling — only the executable need be distributed, not the source code
+        correct: true
+        why: |-
+          Users receive machine code, which is much harder to read than source.
+      - text: Interpreting — the interpreter hides the source
+        why: |-
+          Interpretation requires the source code on the user's machine.
+      - text: Either — both hide the source equally
+        why: |-
+          Only compilation removes the need to supply source.
+      - text: Neither — source must always be supplied
+        why: |-
+          Compiled programs are distributed without source all the time.
+    explanation: |-
+      Compilation lets a developer ship only the executable.
+
+  - id: portability
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      Why is interpreted source code more portable than a compiled executable?
+    options:
+      - text: Any machine with a suitable interpreter can run the same source, with no recompiling
+        correct: true
+        why: |-
+          The interpreter handles the machine-specific translation each time.
+      - text: Interpreted code is smaller, so it fits on more disks
+        why: |-
+          Size is not the point; the executable is tied to one platform.
+      - text: Compiled executables cannot be copied
+        why: |-
+          They can be copied, but only run on a compatible platform.
+      - text: Interpreters work without an operating system
+        why: |-
+          Interpreters are programs that themselves run on an OS.
+    explanation: |-
+      The source is platform-independent; the compiled machine code is not.
+
+  - id: debug-scenario
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      A beginner is writing a short program and wants to test changes quickly. Which is more suitable?
+    options:
+      - text: An interpreter, because it runs immediately and stops at the faulty statement
+        correct: true
+        why: |-
+          No compile step and precise error location make learning and testing faster.
+      - text: A compiler, because the program will run faster
+        why: |-
+          Speed is irrelevant for a short program, and recompiling slows the testing cycle.
+      - text: An assembler, because it gives more control
+        why: |-
+          Assembly is not used for a high-level language program.
+      - text: Neither — a flowchart is enough
+        why: |-
+          A flowchart is a design tool, not a way to run a program.
+    explanation: |-
+      Interactive testing favours interpretation.
+
+  - id: justify-game
+    format: text
+    difficulty: 3
+    objectives: ["5.2.2"]
+    prompt: |-
+      A company is releasing a 3D game to thousands of customers. Would you recommend a compiler or an interpreter? Give one reason.
+    accept:
+      - compiler because the program runs faster
+      - compiler so the source code does not have to be distributed
+      - compiler because compiled code executes more quickly
+      - compiler as it produces an executable that runs without the translator
+    model: |-
+      A compiler: the game must run as fast as possible on customers' machines, and only the
+      executable needs to be distributed, so the source code stays private.
+    explanation: |-
+      Either speed or source protection is a valid justification; both point to a compiler.
+
+  - id: mixed-approaches
+    format: mcq
+    difficulty: 3
+    objectives: ["5.2.2"]
+    prompt: |-
+      Which statement about mixing the two approaches is correct?
+    options:
+      - text: A program can be compiled to an intermediate form and then interpreted or JIT-compiled when run
+        correct: true
+        why: |-
+          That is how Java bytecode and modern JavaScript engines work.
+      - text: A program must be entirely compiled or entirely interpreted
+        why: |-
+          Mixed approaches are common.
+      - text: A compiler can interpret its own output
+        why: |-
+          Compilers do not interpret; another component does.
+      - text: Mixing them means the program cannot run
+        why: |-
+          Mixed pipelines run perfectly well.
+    explanation: |-
+      Real systems often compile to bytecode and interpret or JIT-compile it.
