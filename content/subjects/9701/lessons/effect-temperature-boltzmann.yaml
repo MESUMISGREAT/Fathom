@@ -1,0 +1,168 @@
+id: effect-temperature-boltzmann
+subject: "9701"
+topic: "8.2"
+title: "Temperature, activation energy and Boltzmann distributions"
+summary: Use activation energy and Boltzmann distributions to explain why heating a reaction makes effective collisions more frequent.
+order: 1
+minutes: 6
+objectives: ["8.2.1", "8.2.2", "8.2.3"]
+prerequisites: [rate-reaction-meaning-and-collisions]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus objectives 8.1.1–8.1.3 and 8.2.1–8.2.3. All questions are original;
+    illustrative reaction data are invented for teaching. Independently reviewed and
+    found accurate by a separate GitHub Copilot review; no teacher review claimed.
+blocks:
+  - type: objective
+    body: |
+      By the end, you can define activation energy, sketch and interpret a Boltzmann distribution, and explain the effect of temperature on reaction rate.
+
+  - type: definition
+    term: Activation energy
+    body: |
+      The **activation energy**, $E_\text{A}$, is the **minimum energy required for a collision to be effective**.
+
+      It is not the energy released by the reaction. It is the energy barrier that reacting particles must get over before bonds can rearrange.
+
+  - type: intuition
+    title: A hill on the reaction route
+    body: |
+      Think of reactant particles as cyclists approaching a hill. Only cyclists with enough energy to reach the top can cross to the products' side.
+
+      $E_\text{A}$ is the height of that hill. A collision with less energy may still be a collision, but it cannot be effective.
+
+  - type: explain
+    title: The Boltzmann distribution
+    body: |
+      A Boltzmann distribution is a graph of **number of particles** against **energy**.
+
+      To sketch it:
+
+      1. Put energy on the horizontal axis and number of particles on the vertical axis.
+      2. Start at the origin and draw a curve that rises to one broad peak.
+      3. Make the curve fall gradually towards, but never quite reach, the horizontal axis.
+      4. Mark $E_\text{A}$ as a vertical line. The area to the right represents particles with energy at least $E_\text{A}$.
+
+      The total area under the curve represents the total number of particles.
+
+  - type: check
+    title: The energy barrier
+    questions: [activation-definition, boltzmann-right-area]
+
+  - type: explain
+    title: What heating really changes
+    body: |
+      Heating shifts the distribution so that it is lower and broader, with its peak at a higher energy. The total area stays the same because the number of particles has not changed.
+
+      Most importantly, the area to the right of $E_\text{A}$ becomes larger. A greater fraction of particles now have enough energy for effective collisions.
+
+  - type: example
+    title: A complete temperature explanation
+    problem: |
+      Explain why increasing temperature increases the rate of a reaction.
+    steps:
+      - 'At higher temperature, particles have a higher average kinetic energy and the Boltzmann distribution has a larger area beyond $E_\\text{A}$.'
+      - 'A greater proportion of collisions therefore have energy at least $E_\\text{A}$.'
+      - 'Particles also move faster, so collisions happen more frequently.'
+      - 'The frequency of effective collisions per second increases, so the reaction rate increases.'
+    answer: Higher temperature increases both the chance that a collision is effective and the collision frequency.
+
+  - type: check
+    title: Temperature checkpoint
+    questions: [temperature-distribution, temperature-rate-chain, area-comparison]
+
+  - type: misconceptions
+    items:
+      - wrong: "Heating lowers the activation energy."
+        right: "For the same reaction pathway, $E_\text{A}$ stays the same. Heating gives more particles enough energy to cross it."
+      - wrong: "The peak of the hotter distribution is higher."
+        right: "The hotter curve is broader and lower; its total area is unchanged."
+      - wrong: "Only faster collisions explain the faster reaction."
+        right: "Heating increases collision frequency and the fraction of collisions with energy at least $E_\text{A}$."
+
+  - type: exam
+    body: |
+      A full explanation needs both syllabus links: the Boltzmann distribution gives a larger fraction of particles with energy $\geq E_\text{A}$, and faster particles collide more frequently.
+
+      On a sketch, label axes, show both curves from the origin, mark the same $E_\text{A}$ and make the hotter curve's right-hand area larger.
+
+  - type: deeper
+    title: Why a small temperature rise can matter a lot
+    body: |
+      The particles do not all gain the same energy. Heating changes the whole distribution, and the extra tail beyond $E_\text{A}$ can be much larger even when the temperature change looks modest.
+
+      This is why reaction rate often rises sharply with temperature rather than increasing in a simple straight-line way.
+
+  - type: takeaways
+    items:
+      - "$E_\text{A}$ is the minimum energy required for an effective collision."
+      - "The area to the right of $E_\text{A}$ represents particles energetic enough to react."
+      - "Heating increases that fraction and also increases collision frequency, so the rate rises."
+
+questions:
+  - id: activation-definition
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["8.2.1"]
+    prompt: Define activation energy, $E_\text{A}$.
+    accept: ["the minimum energy required for a collision to be effective", "minimum energy required for a collision to be effective"]
+    model: Activation energy is the minimum energy required for a collision to be effective.
+    explanation: This is the Cambridge definition; it describes the energy threshold for reaction.
+
+  - id: boltzmann-right-area
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.2"]
+    prompt: On a Boltzmann distribution, what does the area to the right of the $E_\text{A}$ line represent?
+    options:
+      - text: The total number of particles.
+        why: The total number is represented by the whole area under the curve.
+      - text: The particles with energy less than $E_\text{A}$.
+        why: Those particles lie to the left of the $E_\text{A}$ line.
+      - text: The particles with energy greater than or equal to $E_\text{A}$.
+        correct: true
+        why: The right-hand area counts particles meeting or exceeding the minimum energy.
+      - text: The activation energy of the reaction.
+        why: $E_\text{A}$ is the position of the vertical line, not an area.
+    explanation: The right-hand area counts particles energetic enough for effective collisions.
+
+  - id: temperature-distribution
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.2", "8.2.3"]
+    prompt: What happens to a Boltzmann distribution when temperature increases?
+    options:
+      - text: It becomes taller and narrower, with the same peak energy.
+        why: The hotter curve is broader and lower, with its peak at higher energy.
+      - text: It becomes broader and lower, with its peak at a higher energy.
+        correct: true
+        why: The total area stays the same, but the energy distribution spreads out.
+      - text: It moves left and has no particles beyond $E_\text{A}$.
+        why: Heating increases the high-energy tail rather than removing it.
+      - text: The $E_\text{A}$ line moves to the right.
+        why: For the same reaction pathway, $E_\text{A}$ does not change.
+    explanation: Heating changes the distribution, not the activation energy of the unchanged pathway.
+
+  - id: temperature-rate-chain
+    format: text
+    style: short
+    difficulty: 3
+    objectives: ["8.2.3"]
+    prompt: Give the two collision-based reasons why increasing temperature increases reaction rate.
+    accept: ["particles move faster so collisions are more frequent and a greater fraction have energy at least the activation energy", "collision frequency increases and a greater proportion of collisions have energy greater than or equal to Ea", "more frequent collisions and more effective collisions per second"]
+    model: Increasing temperature makes particles move faster, increasing collision frequency, and increases the fraction of particles with energy at least E_A, increasing the frequency of effective collisions.
+    explanation: A high-quality answer uses both the Boltzmann distribution and collision frequency.
+
+  - id: area-comparison
+    format: cloze
+    difficulty: 2
+    objectives: ["8.2.3"]
+    prompt: At a higher temperature, the area of a Boltzmann distribution to the right of the same $E_\text{A}$ line is {{1}}, so the fraction of effective collisions is {{2}}.
+    blanks:
+      - accept: ["larger", "greater", "increased"]
+      - accept: ["larger", "greater", "increased", "higher"]
+    explanation: More area beyond the threshold means a greater fraction of particles can make effective collisions.
