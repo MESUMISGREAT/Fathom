@@ -35,6 +35,11 @@ import EquilibriumForcesSlopeTriangle from './equilibrium-forces-slope-triangle'
 import EquilibriumForcesTensionAngle from './equilibrium-forces-tension-angle';
 import EquilibriumForcesTwoStrings from './equilibrium-forces-two-strings';
 import ErrorGraphs from './error-graphs';
+import GpeKeDerivation from './gpe-ke-derivation';
+import GpeKeFallingExchange from './gpe-ke-falling-exchange';
+import GpeKeGpeHeightGraph from './gpe-ke-gpe-height-graph';
+import GpeKeVSquared from './gpe-ke-v-squared';
+import GpeKeWorkToGpe from './gpe-ke-work-to-gpe';
 import LinearMomentumApproachSeparation from './linear-momentum-approach-separation';
 import LinearMomentumCollision_1d from './linear-momentum-collision-1d';
 import LinearMomentumExplosionTriangle from './linear-momentum-explosion-triangle';
@@ -106,6 +111,11 @@ export const diagrams: DiagramRegistry = {
   'phys-equilibrium-forces-tension-angle': EquilibriumForcesTensionAngle,
   'phys-equilibrium-forces-two-strings': EquilibriumForcesTwoStrings,
   'phys-error-graphs': ErrorGraphs,
+  'phys-gpe-ke-derivation': GpeKeDerivation,
+  'phys-gpe-ke-falling-exchange': GpeKeFallingExchange,
+  'phys-gpe-ke-gpe-height-graph': GpeKeGpeHeightGraph,
+  'phys-gpe-ke-v-squared': GpeKeVSquared,
+  'phys-gpe-ke-work-to-gpe': GpeKeWorkToGpe,
   'phys-linear-momentum-approach-separation': LinearMomentumApproachSeparation,
   'phys-linear-momentum-collision-1d': LinearMomentumCollision_1d,
   'phys-linear-momentum-explosion-triangle': LinearMomentumExplosionTriangle,

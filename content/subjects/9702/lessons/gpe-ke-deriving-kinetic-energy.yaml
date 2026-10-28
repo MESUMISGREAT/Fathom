@@ -1,0 +1,330 @@
+id: gpe-ke-deriving-kinetic-energy
+subject: "9702"
+topic: "5.2"
+title: "Where does ½mv² come from?"
+summary: Push a mass with a constant force over a distance and the work done equals the kinetic energy gained; the equations of motion turn that into E_K = ½mv².
+order: 3
+minutes: 7
+kind: core
+objectives: ["5.2.3"]
+prerequisites: [energy-conservation-what-is-work, equations-motion-deriving-suvat]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 5.2.3, use the equations of motion to derive the kinetic energy
+    formula E_K = ½mv²). The derivation is presented in both the suvat form and the
+    average-speed form so a beginner can see why the ½ appears. Every answer key was checked
+    with Python. All questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **derive** $E_K = \frac{1}{2}mv^2$ from $W = Fs$ and the equations of motion, and you can explain where the $\frac{1}{2}$ comes from.
+
+  - type: explain
+    title: The plan
+    body: |
+      We know two things from earlier topics:
+
+      - doing work on an object transfers energy to it ($W = Fs$);
+      - a resultant force makes it accelerate ($F = ma$).
+
+      Put them together and the work must show up as **kinetic energy**. The derivation is just
+      bookkeeping: write the work in terms of speed, and see what comes out.
+
+  - type: explain
+    title: Step 1 — set up the situation
+    body: |
+      A mass $m$ is pushed by a **constant** resultant force $F$ through a distance $s$.
+
+      It speeds up from an initial speed $u$ to a final speed $v$ along a straight line. The force
+      points the same way as the motion, so all of the work goes into speed.
+
+      The work done by the force is
+
+      $$W = Fs$$
+
+  - type: explain
+    title: Step 2 — use F = ma
+    body: |
+      Newton's second law says the resultant force and the acceleration are linked by $F = ma$.
+
+      Substituting into the work equation:
+
+      $$W = Fs = mas$$
+
+      Now everything is in terms of $m$, $a$ and $s$ — but we want speed. That is where the
+      equations of motion come in.
+
+  - type: explain
+    title: Step 3 — use the equation of motion that has no t
+    body: |
+      The equation of motion that links $u$, $v$, $a$ and $s$ — with no time in it — is
+
+      $$v^2 = u^2 + 2as$$
+
+      Rearrange it to make $as$ the subject, because $as$ is exactly what appears in $W = mas$:
+
+      $$as = \frac{v^2 - u^2}{2}$$
+
+  - type: explain
+    title: Step 4 — substitute and finish
+    body: |
+      Put that into $W = mas$:
+
+      $$W = m\left(\frac{v^2 - u^2}{2}\right)$$
+
+      $$W = \frac{1}{2}mv^2 - \frac{1}{2}mu^2$$
+
+      The work done equals the **increase** in the quantity $\frac{1}{2}mv^2$. So that quantity is
+      the energy of motion — the kinetic energy:
+
+      $$E_K = \frac{1}{2}mv^2$$
+
+      and the general statement is $W = \Delta E_K$.
+
+  - type: diagram
+    diagram: phys-gpe-ke-derivation
+    alt: >-
+      A flow of four numbered boxes. Box 1: a block of mass m pushed by a force F through a
+      distance s, speeding up from u to v, with W = Fs. Box 2: F = ma substituted, giving
+      W = mas. Box 3: the equation of motion v² = u² + 2as rearranged to as = (v² − u²)/2.
+      Box 4: substituted back, giving W = ½mv² − ½mu², so the kinetic energy is ½mv² and the
+      change in it equals the work done. A side note explains that the ½ comes from the
+      average speed being (u + v)/2.
+    caption: |
+      Work in, speed out: each step just substitutes one known relationship into the last.
+
+  - type: explain
+    title: Why the ½ is really there (the intuition)
+    body: |
+      Here is the same result without algebra, and it makes the $\frac{1}{2}$ obvious.
+
+      Start from rest and accelerate steadily. The speed grows from $0$ to $v$, so the **average**
+      speed is $\frac{v}{2}$, not $v$.
+
+      The distance covered is therefore $\frac{v}{2} \times t$, and the force is
+      $F = ma = \frac{mv}{t}$. Multiply:
+
+      $$W = Fs = \frac{mv}{t} \times \frac{v}{2} \times t = \frac{1}{2}mv^2$$
+
+      The $t$ cancels, and the $\frac{1}{2}$ is simply the average-speed factor. Nothing mysterious
+      — you do not travel at the top speed for the whole trip.
+
+  - type: check
+    title: Quick check
+    questions: [half-meaning, ke-numeric, which-equation]
+
+  - type: example
+    title: "Worked example: using the derived formula"
+    problem: |
+      A trolley of mass $0.80\ \text{kg}$ is pushed from rest by a constant force of $2.4\ \text{N}$ over $1.5\ \text{m}$.
+
+      Use the derivation to find its final speed, then check the answer with $E_K = \frac{1}{2}mv^2$.
+    steps:
+      - |
+        Work done by the force:
+        $$W = Fs = 2.4 \times 1.5 = 3.6\ \text{J}$$
+      - |
+        All of that becomes kinetic energy, so $E_K = 3.6\ \text{J}$ and
+        $$\frac{1}{2}mv^2 = 3.6$$
+      - |
+        Rearrange for $v^2$:
+        $$v^2 = \frac{2 \times 3.6}{0.80} = 9.0$$
+      - |
+        $$v = \sqrt{9.0} = 3.0\ \text{m s}^{-1}$$
+      - |
+        Check with kinematics instead: $a = \frac{F}{m} = 3.0\ \text{m s}^{-2}$, then
+        $v^2 = 0 + 2 \times 3.0 \times 1.5 = 9.0$ ✓ — the same $v$, so the two routes agree.
+    answer: |
+      $v = 3.0\ \text{m s}^{-1}$.
+
+  - type: misconceptions
+    items:
+      - wrong: The formula should be $mv^2$, and the ½ is just a convention.
+        right: |
+          The ½ is forced by the derivation: $as = \frac{v^2 - u^2}{2}$ carries it, because
+          $v^2 = u^2 + 2as$ has a 2 in it. Physically it is the average-speed factor.
+      - wrong: $E_K = \frac{1}{2}mv^2$ applies to any accelerating object.
+        right: |
+          It gives the kinetic energy of any object moving at speed $v$ — but the derivation
+          needs a **constant** resultant force to use $W = Fs$ with a single $F$. The result
+          still holds for varying forces, which is a deeper result, not something the simple
+          derivation proves.
+      - wrong: Since $v^2 = u^2 + 2as$, I can write $E_K = mas$.
+        right: |
+          $mas$ is the **change** in kinetic energy, not the kinetic energy itself. An object
+          already moving has $E_K = \frac{1}{2}mv^2$ regardless of $a$ or $s$.
+      - wrong: Doubling the force doubles the final speed.
+        right: |
+          Doubling the force over the same distance doubles the **work**, so it doubles $v^2$ —
+          the speed rises by a factor of $\sqrt{2} \approx 1.41$, not 2.
+      - wrong: The derivation needs the object to start from rest.
+        right: |
+          Starting from rest just sets $u = 0$ and makes it tidier. With $u \neq 0$ the same
+          algebra gives $W = \frac{1}{2}mv^2 - \frac{1}{2}mu^2$, which is the general result.
+
+  - type: exam
+    body: |
+      - A "**derive**" question wants the steps, not the answer. Marks are for writing
+        $W = Fs$, using $F = ma$, quoting $v^2 = u^2 + 2as$ and substituting.
+      - State clearly what you are assuming: constant resultant force, straight line, and (if
+        you start from rest) $u = 0$.
+      - The data and formulae list includes the equations of motion, so the marks here come from
+        choosing the right one — the one linking $v$, $u$, $a$ and $s$ — and substituting
+        carefully, not from reciting them.
+      - Do not confuse this derivation with the $\Delta E_P$ one: that used $W = Fs$ with
+        $F = mg$; this one uses $W = Fs$ with $F = ma$.
+
+  - type: check
+    title: Check yourself
+    questions: [work-to-ke, work-to-ke-general, spot-derivation-slip]
+
+  - type: takeaways
+    items:
+      - Work done by the resultant force equals the change in kinetic energy, $W = \Delta E_K$.
+      - 'Derivation route: $W = Fs$, then $F = ma$, then $v^2 = u^2 + 2as$, then substitute.'
+      - The result is $E_K = \frac{1}{2}mv^2$, and $W = \frac{1}{2}mv^2 - \frac{1}{2}mu^2$.
+      - 'The ½ comes from the average speed: you are only at the top speed at the very end.'
+
+  - type: deeper
+    title: Linking kinetic energy to momentum
+    body: |
+      Momentum $p = mv$ is another way to describe motion. Eliminating $v$ between $p = mv$ and
+      $E_K = \frac{1}{2}mv^2$ gives
+
+      $$E_K = \frac{p^2}{2m}$$
+
+      This form is handy in collisions: in an elastic collision both $p$ and $E_K$ are conserved,
+      and writing the energy in terms of $p$ makes the algebra much shorter.
+
+      It also explains a fact that surprises people: a heavy slow object and a light fast object
+      can have the same momentum but very different kinetic energies — the light one carries far
+      more energy for the same momentum.
+
+questions:
+  - id: half-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.3"]
+    prompt: |
+      In the derivation of $E_K = \frac{1}{2}mv^2$, where does the factor of $\frac{1}{2}$ come from?
+    options:
+      - text: The average speed during steady acceleration from rest is half the final speed
+        correct: true
+        why: |
+          The speed rises steadily from $0$ to $v$, so it is $v/2$ on average, and the distance
+          travelled is that average speed times the time. That is where the ½ enters.
+      - text: The energy is shared equally between the object and the force pushing it
+        why: |
+          The force transfers all of its work to the object; nothing is shared. The ½ is a
+          kinematic factor, not a sharing rule.
+      - text: Half of the work is always wasted as thermal energy
+        why: |
+          The derivation assumes no friction, so no energy is dissipated. Real situations lose
+          energy to thermal stores, but that is separate.
+      - text: It comes from the value of $g$ being about 10
+        why: |
+          $g$ does not appear in $E_K = \frac{1}{2}mv^2$ at all — this is about motion, not
+          weight.
+    explanation: |
+      The ½ falls out of $as = \frac{v^2 - u^2}{2}$, which itself comes from the average speed
+      being $\frac{u + v}{2}$.
+
+  - id: ke-numeric
+    format: numeric
+    difficulty: 1
+    objectives: ["5.2.3"]
+    prompt: |
+      A ball of mass $0.20\ \text{kg}$ moves at $12\ \text{m s}^{-1}$.
+
+      Calculate its kinetic energy.
+    fields:
+      - answer: 14.4
+        tolerance: { rel: 0.02 }
+        unit: J
+    explanation: |
+      $E_K = \frac{1}{2}mv^2 = \frac{1}{2} \times 0.20 \times 12^2 = 0.10 \times 144 =
+      14.4\ \text{J} \approx 14\ \text{J}$.
+
+  - id: which-equation
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.3"]
+    prompt: |
+      Which equation of motion is used in the derivation of $E_K = \frac{1}{2}mv^2$?
+    options:
+      - text: $v^2 = u^2 + 2as$
+        correct: true
+        why: |
+          It links $v$, $u$, $a$ and $s$ with no time, which is exactly what is needed to turn
+          $W = mas$ into an expression in speeds.
+      - text: $v = u + at$
+        why: |
+          This one introduces time. You can use it (with $s = \frac{(u+v)}{2}t$) to get the same
+          result, but the standard derivation uses the no-time equation.
+      - text: $s = ut + \frac{1}{2}at^2$
+        why: |
+          Also contains time, and it is the distance equation rather than the speed-squared one.
+      - text: $F = ma$
+        why: |
+          That is Newton's second law, and it is used as well — but it is not one of the
+          equations of motion, and on its own it leaves $s$ in the answer.
+    explanation: |
+      The derivation needs $as$ in terms of speeds, which is what rearranging
+      $v^2 = u^2 + 2as$ gives: $as = \frac{v^2 - u^2}{2}$.
+
+  - id: work-to-ke
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.3"]
+    prompt: |
+      A constant resultant force of $6.0\ \text{N}$ acts on a $0.50\ \text{kg}$ object initially at rest, moving it $4.0\ \text{m}$ along the line of the force.
+
+      Calculate the object's final speed.
+    fields:
+      - answer: 9.8
+        tolerance: { rel: 0.03 }
+        unit: m s⁻¹
+    explanation: |
+      $W = Fs = 6.0 \times 4.0 = 24\ \text{J}$, all of it becoming kinetic energy:
+      $\frac{1}{2}(0.50)v^2 = 24$, so $v^2 = 96$ and $v = 9.8\ \text{m s}^{-1}$.
+
+  - id: work-to-ke-general
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.3"]
+    prompt: |
+      A $2.0\ \text{kg}$ object already moving at $3.0\ \text{m s}^{-1}$ is pushed by a constant force along its direction of motion, gaining $72\ \text{J}$ of kinetic energy.
+
+      Calculate its final speed.
+    fields:
+      - answer: 9
+        tolerance: { rel: 0.02 }
+        unit: m s⁻¹
+    explanation: |
+      Initial kinetic energy: $\frac{1}{2} \times 2.0 \times 3.0^2 = 9.0\ \text{J}$.
+      Final kinetic energy: $9.0 + 72 = 81\ \text{J}$, so
+      $\frac{1}{2}(2.0)v^2 = 81$, giving $v^2 = 81$ and $v = 9.0\ \text{m s}^{-1}$.
+      Note that $W = \Delta E_K$, not $W = E_K$.
+
+  - id: spot-derivation-slip
+    format: spot-error
+    difficulty: 3
+    objectives: ["5.2.3"]
+    prompt: |
+      A student derives the kinetic energy formula for an object starting from rest. Which line contains the first error?
+    lines:
+      - The work done is $W = Fs$
+      - Substituting $F = ma$ gives $W = mas$
+      - The equation of motion gives $as = v^2 - u^2$
+      - With $u = 0$ this gives $W = mv^2$, so $E_K = mv^2$
+    errorLine: 3
+    fix: |
+      Rearranging $v^2 = u^2 + 2as$ gives $as = \dfrac{v^2 - u^2}{2}$, not $v^2 - u^2$. That
+      factor of 2 is the ½: $W = \frac{1}{2}mv^2$, so $E_K = \frac{1}{2}mv^2$.
+    explanation: |
+      The student forgot to divide by 2 when rearranging $v^2 = u^2 + 2as$. The ½ is not
+      decoration — dropping it doubles the energy, and every later calculation inherits the
+      error.

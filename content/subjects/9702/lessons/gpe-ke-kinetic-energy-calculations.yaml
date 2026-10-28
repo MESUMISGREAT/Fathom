@@ -1,0 +1,317 @@
+id: gpe-ke-kinetic-energy-calculations
+subject: "9702"
+topic: "5.2"
+title: "Using E_K = ½mv²: the squared bit that bites"
+summary: Kinetic energy grows with the square of speed, so doubling your speed quadruples the energy you must lose to stop — which is why stopping distances grow so fast.
+order: 4
+minutes: 6
+kind: core
+objectives: ["5.2.4"]
+prerequisites: [gpe-ke-deriving-kinetic-energy]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 5.2.4, recall and use E_K = ½mv²). Vehicle masses and speeds are
+    illustrative; every answer key was recomputed with Python. All questions are original. Not
+    yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **use** $E_K = \frac{1}{2}mv^2$ in all three rearrangements, and you can explain why doubling the speed does *not* double the kinetic energy.
+
+  - type: explain
+    title: The formula does the work, not you
+    body: |
+      There is not much to memorise here: $E_K = \frac{1}{2}mv^2$, with mass in $\text{kg}$ and
+      speed in $\text{m s}^{-1}$, giving energy in $\text{J}$.
+
+      What matters is the **shape** of the formula. $v$ is squared, so a small change in speed
+      makes a big change in energy.
+
+      Square a few speeds to feel it:
+
+      - $v = 10 \Rightarrow v^2 = 100$
+      - $v = 20 \Rightarrow v^2 = 400$ (four times bigger)
+      - $v = 30 \Rightarrow v^2 = 900$ (nine times bigger)
+
+  - type: diagram
+    diagram: phys-gpe-ke-v-squared
+    alt: >-
+      A curve of kinetic energy against speed for a 2.0 kg mass, rising steeply as a parabola.
+      Points are marked at 5 m/s (25 J), 10 m/s (100 J), 15 m/s (225 J) and 20 m/s (400 J), with
+      vertical arrows showing that doubling the speed from 10 to 20 m/s multiplies the energy by
+      four. A second, flatter curve for a 1.0 kg mass is drawn to show that the mass sets how
+      steep the curve is.
+    caption: |
+      Same speed step, much bigger energy step: kinetic energy rises with $v^2$, not $v$.
+
+  - type: explain
+    title: Rearranging for speed
+    body: |
+      Very often the question gives you the energy and wants the speed, for example "how fast is
+      it going after falling this far?" or "what speed does this engine give it?".
+
+      Make $v$ the subject in two steps:
+
+      $$\frac{1}{2}mv^2 = E_K$$
+
+      $$v^2 = \frac{2E_K}{m}$$
+
+      $$v = \sqrt{\frac{2E_K}{m}}$$
+
+      The square root is not optional. Forgetting it gives an answer that is too big — and the
+      wrong unit pattern is a clue, since $v^2$ has units $\text{m}^2\text{s}^{-2}$.
+
+  - type: example
+    title: "Worked example: a car"
+    problem: |
+      A car of mass $1200\ \text{kg}$ travels at $25\ \text{m s}^{-1}$ (about $56\ \text{mph}$).
+
+      Calculate its kinetic energy.
+    steps:
+      - |
+        Write the formula and the values: $E_K = \frac{1}{2}mv^2$ with $m = 1200\ \text{kg}$, $v = 25\ \text{m s}^{-1}$.
+      - |
+        Square the speed first — this is where slips happen:
+        $$v^2 = 25^2 = 625$$
+      - |
+        $$E_K = \frac{1}{2} \times 1200 \times 625$$
+      - |
+        $$E_K = 600 \times 625 = 3.75 \times 10^{5}\ \text{J}$$
+      - |
+        That is $375\ \text{kJ}$ — enough to lift the whole car about $32\ \text{m}$ straight up, which is why crashes are so violent.
+    answer: |
+      $3.75 \times 10^{5}\ \text{J}$ ($375\ \text{kJ}$).
+
+  - type: check
+    title: Quick check
+    questions: [ke-car-numeric, ke-speed-rearrange, double-speed]
+
+  - type: example
+    title: "Worked example: how fast?"
+    problem: |
+      A $0.60\ \text{kg}$ ball has $2.4\ \text{kJ}$ of kinetic energy.
+
+      Calculate its speed.
+    steps:
+      - |
+        Convert the energy to joules: $2.4\ \text{kJ} = 2400\ \text{J}$.
+      - |
+        Rearrange: $v = \sqrt{\dfrac{2E_K}{m}} = \sqrt{\dfrac{2 \times 2400}{0.60}}$
+      - |
+        $$v = \sqrt{8000} = 89.4\ \text{m s}^{-1}$$
+      - |
+        Sanity check: that is about $320\ \text{km h}^{-1}$. A fast ball, but not impossible for
+        a hard hit — the energy is plausible.
+    answer: |
+      $89\ \text{m s}^{-1}$ (2 s.f.).
+
+  - type: misconceptions
+    items:
+      - wrong: Doubling the speed doubles the kinetic energy.
+        right: |
+          Doubling $v$ multiplies $v^2$ by $4$, so it multiplies the energy by $4$. This is why
+          braking distances roughly quadruple when you double your speed.
+      - wrong: A heavier object always has more kinetic energy.
+        right: |
+          Only at the same speed. A $0.01\ \text{kg}$ bullet at $400\ \text{m s}^{-1}$ has
+          $800\ \text{J}$; a $1\ \text{kg}$ ball at $5\ \text{m s}^{-1}$ has $12.5\ \text{J}$. The
+          squared speed wins.
+      - wrong: I can use $v = \frac{2E_K}{m}$ after rearranging.
+        right: |
+          That gives $v^2$, not $v$. Take the square root: $v = \sqrt{2E_K/m}$.
+      - wrong: Kinetic energy is a vector, because velocity is.
+        right: |
+          Kinetic energy is a **scalar** — it has size but no direction. A car moving north and
+          a car moving south at the same speed have the same kinetic energy.
+      - wrong: If an object's speed is constant, its kinetic energy must be changing because it is moving.
+        right: |
+          Constant speed means constant kinetic energy. Energy changes only when the speed (or
+          mass) changes.
+      - wrong: Kinetic energy and momentum are the same idea with different units.
+        right: |
+          Both depend on $m$ and $v$, but momentum is $mv$ (vector) while kinetic energy is
+          $\frac{1}{2}mv^2$ (scalar). Doubling $v$ doubles $p$ but quadruples $E_K$.
+
+  - type: exam
+    body: |
+      - Square the speed **before** multiplying — write the substitution line, then compute.
+      - Watch the units: $\text{g}$ to $\text{kg}$ (divide by 1000), $\text{km h}^{-1}$ to
+        $\text{m s}^{-1}$ (divide by 3.6), $\text{kJ}$ to $\text{J}$ (multiply by 1000).
+      - For "how fast?" questions, show the rearranged formula before substituting; that is
+        usually a mark.
+      - Give 2 or 3 significant figures, and never add a direction — energy is a scalar.
+      - If a question asks for the energy **lost**, subtract the final kinetic energy from the
+        initial: $\Delta E_K = \frac{1}{2}m(v^2 - u^2)$.
+
+  - type: check
+    title: Check yourself
+    questions: [ke-ratio, ke-loss, bullet-vs-ball, ke-from-work]
+
+  - type: takeaways
+    items:
+      - '$E_K = \frac{1}{2}mv^2$, in joules when $m$ is in kg and $v$ in m s⁻¹.'
+      - Kinetic energy is a scalar — no direction, ever.
+      - '$v = \sqrt{2E_K/m}$ when you need the speed: remember the square root.'
+      - Doubling the speed multiplies kinetic energy by four.
+      - 'A change in kinetic energy equals the work done by the resultant force, $W = \Delta E_K$.'
+
+  - type: deeper
+    title: Why stopping distance grows so fast
+    body: |
+      To stop a car, the brakes must remove all of its kinetic energy. The maximum braking force
+      is roughly fixed (it is limited by friction between tyre and road), so the braking
+      distance $s$ satisfies
+
+      $$F s = \frac{1}{2}mv^2 \quad\Rightarrow\quad s = \frac{mv^2}{2F}$$
+
+      Double $v$ and $s$ quadruples. At $50\ \text{km h}^{-1}$ a car might stop in
+      $13\ \text{m}$; at $100\ \text{km h}^{-1}$ it needs about $52\ \text{m}$, not $26\ \text{m}$.
+
+      This is the physics behind speed limits near schools, and it is testable: the same
+      reasoning gives the height a ball must fall to reach a given speed.
+
+questions:
+  - id: ke-car-numeric
+    format: numeric
+    difficulty: 1
+    objectives: ["5.2.4"]
+    prompt: |
+      A car of mass $1500\ \text{kg}$ travels at $12\ \text{m s}^{-1}$.
+
+      Calculate its kinetic energy.
+    fields:
+      - answer: 108000
+        tolerance: { rel: 0.02 }
+        unit: J
+    explanation: |
+      $E_K = \frac{1}{2} \times 1500 \times 12^2 = 750 \times 144 = 1.08 \times 10^{5}\ \text{J}$
+      ($108\ \text{kJ}$).
+
+  - id: ke-speed-rearrange
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.4"]
+    prompt: |
+      A $0.16\ \text{kg}$ ball has $26\ \text{J}$ of kinetic energy.
+
+      Calculate its speed.
+    fields:
+      - answer: 18
+        tolerance: { rel: 0.03 }
+        unit: m s⁻¹
+    explanation: |
+      $v = \sqrt{\dfrac{2E_K}{m}} = \sqrt{\dfrac{2 \times 26}{0.16}} = \sqrt{325} =
+      18.0\ \text{m s}^{-1}$.
+
+  - id: double-speed
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.4"]
+    prompt: |
+      A cyclist speeds up from $5.0\ \text{m s}^{-1}$ to $10\ \text{m s}^{-1}$. Her mass does not change.
+
+      By what factor does her kinetic energy increase?
+    options:
+      - text: '4'
+        correct: true
+        why: |
+          Kinetic energy is proportional to $v^2$; doubling $v$ multiplies $v^2$ by $2^2 = 4$.
+      - text: '2'
+        why: |
+          That is the factor for momentum ($mv$), which is linear in $v$, not for kinetic energy.
+      - text: '1.4'
+        why: |
+          That is $\sqrt{2}$, which appears when you double the **energy** and want the speed
+          factor — the wrong way round here.
+      - text: It stays the same, because her mass is unchanged
+        why: |
+          Mass is unchanged, but speed is not. Kinetic energy depends on both.
+    explanation: |
+      $E_K \propto v^2$, so a factor of 2 in speed gives a factor of $2^2 = 4$ in energy.
+
+  - id: ke-ratio
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.4"]
+    prompt: |
+      Object A has mass $m$ and speed $v$. Object B has mass $3m$ and speed $\frac{v}{2}$.
+
+      Calculate the ratio $\dfrac{E_{K,\text{B}}}{E_{K,\text{A}}}$.
+    fields:
+      - answer: 0.75
+        tolerance: { rel: 0.02 }
+    explanation: |
+      $E_{K,\text{A}} = \frac{1}{2}mv^2$ and
+      $E_{K,\text{B}} = \frac{1}{2}(3m)\left(\frac{v}{2}\right)^2 = \frac{3}{8}mv^2$.
+      The ratio is $\frac{3/8}{1/2} = \frac{3}{4} = 0.75$. B is three times heavier but half as
+      fast, and the squared speed matters more.
+
+  - id: ke-loss
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.4"]
+    prompt: |
+      A $0.15\ \text{kg}$ ball hits a wall at $20\ \text{m s}^{-1}$ and rebounds at $12\ \text{m s}^{-1}$.
+
+      Calculate the kinetic energy lost in the impact.
+    fields:
+      - answer: 19
+        tolerance: { rel: 0.03 }
+        unit: J
+    explanation: |
+      Initial: $\frac{1}{2} \times 0.15 \times 20^2 = 30\ \text{J}$.
+      Final: $\frac{1}{2} \times 0.15 \times 12^2 = 10.8\ \text{J}$.
+      Loss: $30 - 10.8 = 19.2\ \text{J} \approx 19\ \text{J}$, transferred to thermal and sound
+      stores. Note that speed, not velocity, is used — energy has no direction.
+
+  - id: bullet-vs-ball
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.4"]
+    prompt: |
+      A $0.010\ \text{kg}$ bullet travels at $400\ \text{m s}^{-1}$. A $1.0\ \text{kg}$ ball travels at $5.0\ \text{m s}^{-1}$.
+
+      How do their kinetic energies compare?
+    options:
+      - text: The bullet has about 64 times more kinetic energy
+        correct: true
+        why: |
+          Bullet: $\frac{1}{2} \times 0.010 \times 400^2 = 800\ \text{J}$. Ball:
+          $\frac{1}{2} \times 1.0 \times 5.0^2 = 12.5\ \text{J}$. The ratio is
+          $800/12.5 = 64$.
+      - text: The ball has more kinetic energy because it is much heavier
+        why: |
+          Mass $1.0\ \text{kg}$ at $5\ \text{m s}^{-1}$ gives only $12.5\ \text{J}$. The tiny
+          bullet's enormous speed more than compensates.
+      - text: They have the same kinetic energy, because momentum is what matters
+        why: |
+          Their momenta are $4.0\ \text{kg m s}^{-1}$ and $5.0\ \text{kg m s}^{-1}$ — similar —
+          but their energies are very different, because energy depends on $v^2$.
+      - text: The bullet has about 3 million times more kinetic energy
+        why: |
+          That would come from comparing the speeds alone without squaring the mass ratio
+          correctly.
+    explanation: |
+      Bullet: $\frac{1}{2} \times 0.010 \times 400^2 = 800\ \text{J}$. Ball:
+      $\frac{1}{2} \times 1.0 \times 5.0^2 = 12.5\ \text{J}$. Ratio $= 64$. Similar momenta, wildly
+      different kinetic energies.
+
+  - id: ke-from-work
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.4"]
+    prompt: |
+      A $900\ \text{kg}$ car at rest is accelerated by a constant resultant force of $1.8\ \text{kN}$ over $50\ \text{m}$.
+
+      Calculate its final speed.
+    fields:
+      - answer: 14
+        tolerance: { rel: 0.03 }
+        unit: m s⁻¹
+    explanation: |
+      Work done: $W = Fs = 1800 \times 50 = 9.0 \times 10^{4}\ \text{J}$, all becoming kinetic
+      energy. Then $v = \sqrt{\dfrac{2 \times 9.0 \times 10^{4}}{900}} = \sqrt{200} =
+      14.1\ \text{m s}^{-1}$.

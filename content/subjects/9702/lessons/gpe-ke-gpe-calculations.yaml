@@ -1,0 +1,308 @@
+id: gpe-ke-gpe-calculations
+subject: "9702"
+topic: "5.2"
+title: "Using ΔE_P = mgΔh without tripping up"
+summary: Use ΔE_P = mgΔh for lifts, drops and height changes, keep track of signs, and read the energy straight off a height graph.
+order: 2
+minutes: 6
+kind: core
+objectives: ["5.2.2"]
+prerequisites: [gpe-ke-work-to-gpe]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 5.2.2, recall and use ΔE_P = mgΔh for a change in gravitational
+    potential energy in a uniform gravitational field). Heights and masses are illustrative;
+    every answer key was recomputed with Python. All questions are original. Not yet reviewed by
+    a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **use** $\Delta E_P = mg\Delta h$ confidently — for climbs, drops, and "how high did it go?" questions — and you can spot when a question is trying to trick you with $h$ versus $\Delta h$.
+
+  - type: explain
+    title: One formula, three questions it can answer
+    body: |
+      Every $\Delta E_P = mg\Delta h$ question wants one of three things:
+
+      1. the **energy** gained or lost (the usual one);
+      2. the **height** change, given the energy;
+      3. the **mass**, given the energy and the height.
+
+      Same formula, rearranged. The only real skill is deciding which quantity you already have.
+
+  - type: explain
+    title: Δh means "how much higher", not "how high"
+    body: |
+      The $h$ in the formula always carries a $\Delta$, and that matters.
+
+      A book on a $2.2\ \text{m}$ shelf moved down to a $1.5\ \text{m}$ shelf has changed height by
+      $1.5 - 2.2 = -0.7\ \text{m}$. Its height above the floor is still $1.5\ \text{m}$, but the
+      **change** is what stores or releases energy.
+
+      Choose a starting level, choose an ending level, subtract. It genuinely does not matter
+      where you put zero — only differences are physical.
+
+  - type: explain
+    title: Gains and losses
+    body: |
+      - Rising: $\Delta h$ is positive, so $\Delta E_P$ is **positive** — the store fills up.
+      - Falling: $\Delta h$ is negative, so $\Delta E_P$ is **negative** — the store empties.
+
+      A negative answer is not a mistake. It means energy left the gravitational store and went
+      somewhere else (usually into kinetic energy, or into thermal energy if friction is
+      involved).
+
+      If a question asks for "the energy released", give the **size**, without the minus sign.
+
+  - type: diagram
+    diagram: phys-gpe-ke-gpe-height-graph
+    alt: >-
+      A straight-line graph of gravitational potential energy against height for a 2.0 kg mass,
+      passing through the origin with the line labelled "gradient = mg = 19.6 N". Marked points
+      show 1.0 m giving 19.6 J, 2.0 m giving 39.2 J and 3.0 m giving 58.9 J, with a step drawn
+      to show that a rise of Δh adds mgΔh. A note below says the gradient is the weight, and
+      that only differences in height are physical.
+    caption: |
+      $E_P$ against height is a straight line through the origin — because $mg$ is constant.
+
+  - type: example
+    title: "Worked example: a lift"
+    problem: |
+      A lift car of mass $450\ \text{kg}$ rises through $24\ \text{m}$ at steady speed.
+
+      Calculate the gain in gravitational potential energy of the car.
+    steps:
+      - |
+        Write down what you have: $m = 450\ \text{kg}$, $g = 9.81\ \text{m s}^{-2}$, $\Delta h = 24\ \text{m}$.
+      - |
+        $$\Delta E_P = mg\Delta h = 450 \times 9.81 \times 24$$
+      - |
+        $$\Delta E_P = 1.06 \times 10^{5}\ \text{J}$$
+      - |
+        That is about $106\ \text{kJ}$ — roughly the energy in a small chocolate bar, spent to
+        raise one lift car a few floors.
+    answer: |
+      $1.06 \times 10^{5}\ \text{J}$ ($106\ \text{kJ}$) gained.
+
+  - type: check
+    title: Quick check
+    questions: [lift-energy, drop-energy, height-from-energy]
+
+  - type: example
+    title: "Worked example: how high did it go?"
+    problem: |
+      A ball of mass $0.25\ \text{kg}$ gains $8.0\ \text{J}$ of gravitational potential energy when thrown upward.
+
+      How high does it rise?
+    steps:
+      - |
+        Start from $\Delta E_P = mg\Delta h$ and make $\Delta h$ the subject:
+        $$\Delta h = \frac{\Delta E_P}{mg}$$
+      - |
+        Substitute, keeping the units in the working so they can cancel:
+        $$\Delta h = \frac{8.0}{0.25 \times 9.81}$$
+      - |
+        $$\Delta h = \frac{8.0}{2.4525} = 3.26\ \text{m}$$
+      - |
+        Check the units: joules divided by newtons gives metres ✓
+    answer: |
+      About $3.3\ \text{m}$.
+
+  - type: example
+    title: "Worked example: climbing stairs"
+    problem: |
+      A student of mass $65\ \text{kg}$ climbs a staircase of 12 steps, each $0.18\ \text{m}$ high.
+
+      Calculate the total gain in gravitational potential energy.
+    steps:
+      - |
+        Find the total vertical rise first — add the steps, do not multiply the wrong things:
+        $$\Delta h = 12 \times 0.18 = 2.16\ \text{m}$$
+      - |
+        $$\Delta E_P = mg\Delta h = 65 \times 9.81 \times 2.16$$
+      - |
+        $$\Delta E_P = 1377\ \text{J} \approx 1.4\ \text{kJ}$$
+      - |
+        Real staircases cost more than this, because your muscles are only about 20–25%
+        efficient: the rest of the chemical energy becomes thermal energy and you get warm.
+    answer: |
+      About $1.4\ \text{kJ}$ of gravitational potential energy gained.
+
+  - type: misconceptions
+    items:
+      - wrong: A negative ΔE_P must be wrong, since energy cannot be negative.
+        right: |
+          Energy **stores** are non-negative, but a **change** can be negative: it means the
+          store emptied. Falling $2\ \text{m}$, a $1\ \text{kg}$ ball has
+          $\Delta E_P = 1 \times 9.81 \times (-2) = -19.6\ \text{J}$ — it lost that much.
+      - wrong: I need to know the height above the ground to use the formula.
+        right: |
+          You need only the **difference** in height. A ball falling from $5\ \text{m}$ to
+          $3\ \text{m}$ loses the same energy whether the ground is at $0\ \text{m}$ or
+          $1000\ \text{m}$ below.
+      - wrong: Doubling the mass doubles the energy, so doubling the height must too.
+        right: |
+          Doubling the height **does** double the energy — the formula is linear in both $m$
+          and $\Delta h$. The squared relationship belongs to kinetic energy, $\frac{1}{2}mv^2$,
+          not to $mg\Delta h$.
+      - wrong: An object on a table has no gravitational potential energy because it is not moving.
+        right: |
+          It has energy **relative to** a chosen level. Relative to the floor it has $mgh$;
+          relative to the table top it has zero. Only differences get used, so either choice
+          gives the same physics.
+      - wrong: Use $g = 10\ \text{m s}^{-2}$ because it is easier.
+        right: |
+          Cambridge data gives $g = 9.81\ \text{m s}^{-2}$ and mark schemes expect it. Using
+          $10$ costs accuracy marks.
+
+  - type: exam
+    body: |
+      - The syllabus wording is "recall and use", which means you are expected to write
+        $\Delta E_P = mg\Delta h$ from memory — do not wait for it to appear in the question.
+      - Units: mass in **kg** (convert grams!), height in **m** (convert cm), energy in **J**.
+        A $250\ \text{g}$ mass is $0.25\ \text{kg}$.
+      - Show the substitution line with numbers. Method marks are given for
+        $mg\Delta h$ even if the arithmetic slips.
+      - If a question asks for a **rate** (energy per second), divide your energy by the time —
+        that is power, from topic 5.1.
+      - Give 2 or 3 significant figures; $1.06 \times 10^{5}\ \text{J}$ is better than
+        $106008\ \text{J}$.
+
+  - type: check
+    title: Check yourself
+    questions: [drop-sign, grams-trap, stair-power]
+
+  - type: takeaways
+    items:
+      - '$\Delta E_P = mg\Delta h$, with $\Delta h$ the **change** in height.'
+      - Rising gives a positive change; falling gives a negative one.
+      - 'Rearranged: $\Delta h = \dfrac{\Delta E_P}{mg}$ and $m = \dfrac{\Delta E_P}{g\Delta h}$.'
+      - 'The zero level is your choice: only height differences matter.'
+      - 'An $E_P$-against-$h$ graph is a straight line whose gradient is the weight $mg$.'
+
+  - type: deeper
+    title: Reading the gradient
+    body: |
+      Plot $E_P$ against $h$ for an object and you get a straight line of gradient $mg$ — the
+      weight.
+
+      That is not a coincidence. Gradient is change in $y$ over change in $x$, so
+
+      $$\text{gradient} = \frac{\Delta E_P}{\Delta h} = mg$$
+
+      A steeper line means a heavier object, not a taller one. If a graph of energy against
+      height for two objects has gradients in the ratio $2:1$, the masses are in the ratio
+      $2:1$.
+
+questions:
+  - id: lift-energy
+    format: numeric
+    difficulty: 1
+    objectives: ["5.2.2"]
+    prompt: |
+      A load of mass $80\ \text{kg}$ is raised $3.5\ \text{m}$ by a crane at steady speed.
+
+      Calculate the gain in gravitational potential energy of the load.
+    fields:
+      - answer: 2750
+        tolerance: { rel: 0.02 }
+        unit: J
+    explanation: |
+      $\Delta E_P = mg\Delta h = 80 \times 9.81 \times 3.5 = 2746.8\ \text{J} \approx
+      2.7 \times 10^{3}\ \text{J}$ (2750 J to 3 s.f.).
+
+  - id: drop-energy
+    format: numeric
+    difficulty: 1
+    objectives: ["5.2.2"]
+    prompt: |
+      A stone of mass $0.40\ \text{kg}$ falls from a cliff top to a ledge $12\ \text{m}$ below.
+
+      Calculate the **loss** in gravitational potential energy. Give the size of the loss.
+    fields:
+      - answer: 47
+        tolerance: { rel: 0.02 }
+        unit: J
+    explanation: |
+      $\Delta h = -12\ \text{m}$, so $\Delta E_P = 0.40 \times 9.81 \times (-12) = -47.1\ \text{J}$.
+      The loss is $47\ \text{J}$; the minus sign only says the store emptied.
+
+  - id: height-from-energy
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |
+      A $6.0\ \text{kg}$ box gains $480\ \text{J}$ of gravitational potential energy when lifted.
+
+      Calculate the height through which it was lifted.
+    fields:
+      - answer: 8.2
+        tolerance: { rel: 0.02 }
+        unit: m
+    explanation: |
+      Rearrange: $\Delta h = \dfrac{\Delta E_P}{mg} = \dfrac{480}{6.0 \times 9.81} =
+      8.15\ \text{m} \approx 8.2\ \text{m}$.
+
+  - id: drop-sign
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |
+      A ball falls from a height of $2.0\ \text{m}$ to the ground. Taking upward as positive, what is the change in its gravitational potential energy?
+    options:
+      - text: $-19.6\ \text{J}$ per kilogram of mass
+        correct: true
+        why: |
+          $\Delta E_P = mg\Delta h$ with $\Delta h = -2.0\ \text{m}$ gives $-19.6\ \text{J}$ for
+          each kilogram, so the store empties.
+      - text: $+19.6\ \text{J}$ per kilogram of mass
+        why: |
+          The sign is wrong: the ball moves **down**, so it loses gravitational energy rather
+          than gaining it.
+      - text: zero, because the ball ends on the ground
+        why: |
+          Energy is only zero if you choose the ground as the zero level, and even then the
+          **change** from $2.0\ \text{m}$ to $0\ \text{m}$ is not zero.
+      - text: It cannot be calculated without knowing the mass
+        why: |
+          The change **per kilogram** is fixed; the mass just scales the total.
+    explanation: |
+      Falling means $\Delta h$ is negative, so $\Delta E_P$ is negative — a loss of
+      $19.6\ \text{J}$ for every kilogram of mass.
+
+  - id: grams-trap
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |
+      A $250\ \text{g}$ apple is lifted from the ground to a branch $1.8\ \text{m}$ above it.
+
+      Calculate the gain in gravitational potential energy.
+    fields:
+      - answer: 4.4
+        tolerance: { rel: 0.03 }
+        unit: J
+    explanation: |
+      Convert the mass first: $250\ \text{g} = 0.250\ \text{kg}$. Then
+      $\Delta E_P = 0.250 \times 9.81 \times 1.8 = 4.41\ \text{J} \approx 4.4\ \text{J}$.
+      Forgetting the conversion gives $1100\ \text{J}$, a thousand times too big.
+
+  - id: stair-power
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.2"]
+    prompt: |
+      A student of mass $58\ \text{kg}$ climbs a vertical height of $4.5\ \text{m}$ in $6.0\ \text{s}$.
+
+      Calculate the average useful power she develops against gravity.
+    fields:
+      - answer: 427
+        tolerance: { rel: 0.03 }
+        unit: W
+    explanation: |
+      Energy gained: $\Delta E_P = 58 \times 9.81 \times 4.5 = 2560\ \text{J}$.
+      Power $= \dfrac{\Delta E_P}{t} = \dfrac{2560}{6.0} = 427\ \text{W}$.
+      Real muscles must supply several times this, because they are only about 25% efficient.
