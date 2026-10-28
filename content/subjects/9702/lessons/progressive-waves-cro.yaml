@@ -1,0 +1,281 @@
+id: progressive-waves-cro
+subject: "9702"
+topic: "7.1"
+title: "Reading a cathode-ray oscilloscope"
+summary: The time-base turns horizontal squares into time, and the y-gain turns vertical squares into volts. Together they give period (then frequency) and amplitude.
+order: 5
+minutes: 8
+kind: core
+objectives: ["7.1.3"]
+prerequisites: [progressive-waves-key-terms]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 7.1, learning outcome 7.1.3 (using the time-base and y-gain settings of a
+    cathode-ray oscilloscope to find frequency and amplitude). The screen readings in the examples
+    are invented and chosen to give exact answers. All questions are original.
+    Re-checked line by line in a second pass by the same agent on 2026-10-28: every worked
+    answer and answer key recomputed from its own data, every MCQ checked for exactly one correct
+    option, all objectives re-read against the syllabus wording, and all diagrams rendered and
+    inspected in light and dark. That pass fixed a real rendering bug: LaTeX such as
+    "m s^{-1}" had been used in numeric-answer unit fields, which the question card prints as
+    plain text, so the units now use Unicode superscripts. No separate reviewer model or teacher
+    has reviewed this lesson.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use a CRO's **time-base** to find the period and frequency of a signal, and its **y-gain** to find the amplitude.
+
+  - type: explain
+    title: A grid with two scales
+    body: |-
+      A cathode-ray oscilloscope (CRO) draws a graph of voltage against time on a screen ruled in squares.
+
+      The screen itself does not know what a square means. Two settings tell you:
+
+      - the **time-base** sets how much **time** each horizontal square represents, in seconds per division ($\text{s div}^{-1}$);
+      - the **y-gain** sets how much **voltage** each vertical square represents, in volts per division ($\text{V div}^{-1}$).
+
+      Read the number of squares, multiply by the setting. That is the whole method.
+
+  - type: definition
+    term: Time-base and y-gain
+    body: |-
+      **Time-base**: the time represented by one horizontal division on the CRO screen.
+
+      **Y-gain**: the voltage represented by one vertical division on the CRO screen.
+
+      For a periodic signal:
+
+      - **period** $T$ = horizontal length of one complete cycle (in divisions) × time-base;
+      - **frequency** $f = 1/T$;
+      - **amplitude** = vertical height from the **equilibrium line** to a peak (in divisions) × y-gain.
+
+  - type: diagram
+    diagram: phys-progressive-waves-cro-trace
+    alt: >-
+      An oscilloscope screen grid with a sine-wave trace. The horizontal axis is marked time and the
+      vertical axis voltage. One complete cycle spans four horizontal divisions, and the time-base
+      is labelled as 2 milliseconds per division. The height from the centre line to a peak is three
+      divisions, and the y-gain is labelled as 0.5 volts per division.
+    caption: |-
+      One cycle is 4 divisions across, so $T = 4 \times 2\ \text{ms} = 8\ \text{ms}$. The peak is 3 divisions up, so the amplitude is $3 \times 0.5\ \text{V} = 1.5\ \text{V}$.
+
+  - type: example
+    title: "Worked example: frequency and amplitude from the screen"
+    problem: |-
+      A CRO trace shows one complete cycle across $4.0$ horizontal divisions. The time-base is $2.0\ \text{ms div}^{-1}$.
+
+      The peak of the trace is $3.0$ divisions above the centre line, and the y-gain is $0.50\ \text{V div}^{-1}$.
+
+      Find the period, frequency and amplitude of the signal.
+    steps:
+      - |-
+        Period: one cycle is $4.0$ divisions, and each division is $2.0\ \text{ms}$:
+
+        $$T = 4.0 \times 2.0 = 8.0\ \text{ms} = 8.0 \times 10^{-3}\ \text{s}$$
+      - |-
+        Frequency is the reciprocal of period:
+
+        $$f = \frac{1}{T} = \frac{1}{8.0 \times 10^{-3}} = 125\ \text{Hz}$$
+      - |-
+        Amplitude: the peak is $3.0$ divisions from the centre line:
+
+        $$A = 3.0 \times 0.50 = 1.5\ \text{V}$$
+      - |-
+        Check: $125\ \text{Hz}$ means $125$ cycles per second, so each cycle lasts $1/125 = 0.008\ \text{s} = 8\ \text{ms}$. ✔
+    answer: |-
+      $T = 8.0\ \text{ms}$; $f = 125\ \text{Hz}$; amplitude $= 1.5\ \text{V}$.
+
+  - type: check
+    title: Quick check
+    questions: [cro-frequency, cro-amplitude, cro-timebase-purpose]
+
+  - type: explain
+    title: Measure several cycles if you can
+    body: |-
+      Reading one cycle from a screen is quick but not very precise: half a square of error is a big fraction of a short distance.
+
+      If the trace shows several cycles, measure the **total** width of, say, five cycles and divide by five. That spreads the reading error over a longer distance.
+
+      $$T = \frac{\text{width of } n \text{ cycles}}{n} \times \text{time-base}$$
+
+      The same idea applies to amplitude: use the full height from equilibrium to a peak, and make sure the trace is centred on the screen's middle line first.
+
+  - type: example
+    title: "Worked example: several cycles"
+    problem: |-
+      A CRO trace shows $5$ complete cycles across $10$ horizontal divisions. The time-base is $1.0\ \text{ms div}^{-1}$.
+
+      Find the period and frequency.
+    steps:
+      - |-
+        The $10$ divisions contain $5$ cycles, so one cycle is
+
+        $$\frac{10}{5} = 2.0\ \text{divisions}$$
+      - |-
+        Convert to time using the time-base:
+
+        $$T = 2.0 \times 1.0\ \text{ms} = 2.0\ \text{ms}$$
+      - |-
+        Frequency:
+
+        $$f = \frac{1}{2.0 \times 10^{-3}} = 500\ \text{Hz}$$
+      - |-
+        Check: $500$ cycles per second means $2\ \text{ms}$ per cycle. ✔
+    answer: |-
+      $T = 2.0\ \text{ms}$; $f = 500\ \text{Hz}$.
+
+  - type: check
+    title: Practice
+    questions: [cro-period, cro-spot-error, cro-cloze]
+
+  - type: misconceptions
+    items:
+      - wrong: Amplitude is the full height of the trace from bottom to top.
+        right: |-
+          That is the **peak-to-peak** value, which is twice the amplitude. Amplitude is measured
+          from the equilibrium (centre) line to a peak.
+      - wrong: The time-base setting is the period.
+        right: |-
+          The time-base is the time per division. Multiply by the number of divisions in one cycle
+          to get the period.
+      - wrong: The y-gain tells you the frequency.
+        right: |-
+          The y-gain converts vertical divisions to voltage (amplitude). The time-base is the one
+          that gives timing.
+      - wrong: A time-base of $2\ \text{ms div}^{-1}$ means the whole screen lasts $2\ \text{ms}$.
+        right: |-
+          Each division is $2\ \text{ms}$; the whole screen lasts $2\ \text{ms}$ times the number of
+          horizontal divisions.
+      - wrong: Frequency can be read directly by counting squares.
+        right: |-
+          You first get the period from squares and the time-base, then take $1/T$.
+
+  - type: exam
+    body: |-
+      - Write the scale factors next to the axes before you start: time-base in $\text{s div}^{-1}$, y-gain in $\text{V div}^{-1}$.
+      - Measure one cycle crest-to-crest (or trough-to-trough), not crest-to-trough, which is half a cycle.
+      - Convert milliseconds to seconds before taking the reciprocal for frequency.
+      - Use the centre line for amplitude, and say so in your answer if the trace is not centred.
+
+  - type: takeaways
+    items:
+      - 'The **time-base** gives the time per horizontal division; multiply by the cycle width to get $T$.'
+      - 'The **y-gain** gives the voltage per vertical division; multiply by the peak height from equilibrium to get amplitude.'
+      - '$f = 1/T$ after converting the period to seconds.'
+      - 'Crest-to-crest is one cycle; crest-to-trough is half a cycle.'
+      - 'Peak-to-peak voltage is twice the amplitude.'
+
+  - type: deeper
+    title: Why the trace is a graph of voltage against time
+    body: |-
+      Inside the CRO, an electron beam is swept steadily across the screen by the time-base voltage while the input signal moves it up and down.
+
+      The beam therefore traces out the input voltage as a function of time, exactly like a plotting pen. The fluorescent screen keeps the trace visible long enough for your eye to see it.
+
+      Modern oscilloscopes are digital, but the display is still calibrated in time per division and volts per division, so the reading method is unchanged.
+
+questions:
+  - id: cro-frequency
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.3"]
+    prompt: |-
+      A CRO trace shows one complete cycle across $4.0$ horizontal divisions. The time-base is $2.0\ \text{ms div}^{-1}$.
+
+      Calculate the frequency, in Hz.
+    fields:
+      - label: "f ="
+        answer: 125
+        unit: Hz
+        tolerance: { abs: 1 }
+    explanation: |-
+      $T = 4.0 \times 2.0\ \text{ms} = 8.0\ \text{ms} = 0.0080\ \text{s}$, so $f = 1/0.0080 = 125\ \text{Hz}$.
+
+  - id: cro-amplitude
+    format: numeric
+    difficulty: 1
+    objectives: ["7.1.3"]
+    prompt: |-
+      A CRO trace has a peak $3.0$ divisions above the centre line. The y-gain is $0.50\ \text{V div}^{-1}$.
+
+      What is the amplitude, in volts?
+    fields:
+      - label: "A ="
+        answer: 1.5
+        unit: V
+        tolerance: { abs: 0.05 }
+    explanation: |-
+      Amplitude $= 3.0 \times 0.50 = 1.5\ \text{V}$.
+
+  - id: cro-timebase-purpose
+    format: mcq
+    difficulty: 1
+    objectives: ["7.1.3"]
+    prompt: |-
+      What does the time-base setting of a CRO control?
+    options:
+      - text: The time represented by each horizontal division
+        correct: true
+        why: |-
+          It calibrates the horizontal axis, so the width of a cycle can be converted into a period.
+      - text: The voltage represented by each vertical division
+        why: |-
+          That is the y-gain.
+      - text: The brightness of the trace
+        why: |-
+          Brightness is controlled separately and does not affect measurements.
+      - text: The frequency of the input signal
+        why: |-
+          The input signal sets its own frequency; the time-base only changes how it is displayed.
+    explanation: |-
+      The time-base calibrates the horizontal (time) axis.
+
+  - id: cro-period
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.3"]
+    prompt: |-
+      A CRO trace shows $5$ complete cycles across $10$ horizontal divisions. The time-base is $1.0\ \text{ms div}^{-1}$.
+
+      Calculate the period, in ms.
+    fields:
+      - label: "T ="
+        answer: 2
+        unit: ms
+        tolerance: { abs: 0.05 }
+    explanation: |-
+      One cycle is $10/5 = 2.0$ divisions, so $T = 2.0 \times 1.0 = 2.0\ \text{ms}$.
+
+  - id: cro-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["7.1.3"]
+    prompt: |-
+      A student measures the amplitude of a CRO trace. The trace is centred, with peaks $2.0$ divisions above the centre and troughs $2.0$ divisions below. The y-gain is $0.20\ \text{V div}^{-1}$. Which line contains the first error?
+    lines:
+      - The trace is centred on the middle line of the screen.
+      - The peak is 2.0 divisions above the centre line.
+      - The amplitude is the full peak-to-peak height, 4.0 divisions.
+      - "So the amplitude is 4.0 × 0.20 = 0.80 V."
+    errorLine: 3
+    fix: |-
+      Amplitude is measured from the **equilibrium (centre) line** to a peak, which is $2.0$ divisions. So the amplitude is $2.0 \times 0.20 = 0.40\ \text{V}$; $0.80\ \text{V}$ is the peak-to-peak voltage.
+    explanation: |-
+      Lines 1 and 2 are correct. Line 3 uses the peak-to-peak height instead of the amplitude.
+
+  - id: cro-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["7.1.3"]
+    prompt: |-
+      On a CRO, the time-base gives the {{1}} represented by each horizontal division, and the y-gain gives the {{2}} represented by each vertical division.
+    blanks:
+      - accept: [time]
+      - accept: [voltage, potential difference, p.d.]
+    explanation: |-
+      The time-base calibrates the horizontal axis in time; the y-gain calibrates the vertical axis in voltage.

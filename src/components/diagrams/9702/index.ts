@@ -69,6 +69,10 @@ import NonUniformResistiveForces from './non-uniform-resistive-forces';
 import NonUniformSkydiverForces from './non-uniform-skydiver-forces';
 import NonUniformThrowVt from './non-uniform-throw-vt';
 import PrefixLadder from './prefix-ladder';
+import ProgressiveWavesCroTrace from './progressive-waves-cro-trace';
+import ProgressiveWavesKeyTerms from './progressive-waves-key-terms';
+import ProgressiveWavesPhaseDifference from './progressive-waves-phase-difference';
+import ProgressiveWavesRopePulse from './progressive-waves-rope-pulse';
 import StressStrainForceExtensionGraph from './stress-strain-force-extension-graph';
 import StressStrainSpringStiffness from './stress-strain-spring-stiffness';
 import StressStrainStressStrainDefinitions from './stress-strain-stress-strain-definitions';
@@ -155,6 +159,10 @@ export const diagrams: DiagramRegistry = {
   'phys-non-uniform-skydiver-forces': NonUniformSkydiverForces,
   'phys-non-uniform-throw-vt': NonUniformThrowVt,
   'phys-prefix-ladder': PrefixLadder,
+  'phys-progressive-waves-cro-trace': ProgressiveWavesCroTrace,
+  'phys-progressive-waves-key-terms': ProgressiveWavesKeyTerms,
+  'phys-progressive-waves-phase-difference': ProgressiveWavesPhaseDifference,
+  'phys-progressive-waves-rope-pulse': ProgressiveWavesRopePulse,
   'phys-stress-strain-force-extension-graph': StressStrainForceExtensionGraph,
   'phys-stress-strain-spring-stiffness': StressStrainSpringStiffness,
   'phys-stress-strain-stress-strain-definitions': StressStrainStressStrainDefinitions,
