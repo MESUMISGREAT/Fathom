@@ -214,6 +214,12 @@ changes alongside lessons:
 
 ## 5. Current state (28 Oct 2026, cloud chat)
 
+- **CLAIMED by chat `0b8e8fe21ee9b5f6eaa0ce13` from 28 Oct ~11:45: 9701 7.1 Chemical
+  equilibria** (10 objectives, prefix `chemical-equilibria`). That chat is writing it now; do
+  not start 9701 7.1 as well. The duplicate 9702 7.1 drafts listed in the warning below were
+  deleted on 28 Oct (never committed), so only the six live `progressive-waves-*` lessons exist.
+  Before starting anything, check this bullet and the `status.mjs` queue; before *publishing*,
+  check both again plus `git fetch`.
 - **Before starting a unit, check that no other chat has it in flight.** Two cloud chats
   share this VM (`/workspace/chats/0b8e8fe21ee9b5f6eaa0ce13` and this one). On 28 Oct the
   other chat was writing **9618 6.1** (three `data-security-*` lessons on disk) and touching
