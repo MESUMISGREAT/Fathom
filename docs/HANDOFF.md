@@ -212,11 +212,11 @@ changes alongside lessons:
   include draft diagrams) and untracked draft lessons are expected in `git status`.
   `publish.sh` handles both.
 
-## 5. Current state (27 Oct 2026, cloud chat)
+## 5. Current state (28 Oct 2026, cloud chat)
 
-- On `main`: **336 reviewed lessons, 1935 questions** (9709: 103, 9618: 84, 9702: 70,
-  9701: 79). All are live. Latest publish: 9709 3.1+3.2 Algebra + logs/exponentials,
-  28 Oct (48ddba4).
+- On `main`: **345 reviewed lessons, 1987 questions** (9709: 103, 9618: 93, 9702: 70,
+  9701: 79). All are live. Latest publish: 9618 5.1+5.2 Operating systems + language
+  translators, 28 Oct (7c5737f).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -233,7 +233,8 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 29 published, 125 todo (`node scripts/lessons/status.mjs`). Next unit: **9618 5.1+5.2**
+- Queue: 30 published, 124 todo (`node scripts/lessons/status.mjs`). Next unit: **9702 6.1**
+  (deformation of solids: stress, strain, the Young modulus).
   (then 9702 6.1, 9701 5.2, 9709 3.3+3.4+3.5).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
