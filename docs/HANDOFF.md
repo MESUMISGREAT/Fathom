@@ -214,8 +214,9 @@ changes alongside lessons:
 
 ## 5. Current state (28 Oct 2026, cloud chat)
 
-- On `main`: **355 reviewed lessons, 2048 questions** (9709: 103, 9618: 93, 9702: 76,
-  9701: 83). All are live. Latest publish: 9701 5.2 Hess's law, 28 Oct (ed32d0e).
+- On `main`: **370 reviewed lessons, 2133 questions** (9709: 118, 9618: 93, 9702: 76,
+  9701: 83). All are live. Latest publish: 9709 3.3+3.4+3.5 trigonometry,
+  differentiation and integration, 28 Oct (0cad6e0).
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -266,8 +267,42 @@ changes alongside lessons:
       correct cycle value is $-239.1$ (fixed, and recomputed independently in Python).
     - Same caveat: the review was a second adversarial pass by the **same agent** — a reviewer
       should still be run over these before treating them as final.
-- Queue: 32 published, 122 todo (`node scripts/lessons/status.mjs`). Next unit:
-  **9709 3.3+3.4+3.5** (check `status.mjs --all` first; the order is generated), then 9618 6.1.
+- **9709 3.3+3.4+3.5 is published** (28 Oct, 0cad6e0): 15 lessons, 85 questions, no new
+  diagrams. Trigonometry (`p3-trig-sec-cosec-cot`, `-pythagorean-identities`,
+  `-addition-formulae`, `-double-angle`, `-r-form`), differentiation
+  (`p3-diff-standard-derivatives`, `-products-quotients`, `-implicit`, `-parametric`) and
+  integration (`p3-int-standard-integrals`, `-trig-integrals`, `-partial-fractions`,
+  `-f-prime-over-f`, `-by-parts`, `-substitution`). Objectives 3.3.1-3.3.2, 3.4.1-3.4.3 and
+  3.5.1-3.5.6 are each taught by a core lesson and tested.
+    - `content:check` 0 errors / 0 warnings, `tsc` clean, 166 tests pass.
+    - Every antiderivative was verified by numeric differentiation in Python and every definite
+      key recomputed (`∫₀¹2x(x²+1)⁵dx = 10.5`, `½ln 5 ≈ 0.8047`, `1 − π/4 ≈ 0.2146`, etc.).
+    - **Diagrams are missing for this unit on purpose.** Six diagram blocks referenced SVG keys
+      that were never written (`math-p3-trig-r-form`, `math-p3-trig-reciprocal-graphs`,
+      `math-p3-diff-derivatives-table`, `math-p3-int-by-parts-recipe`, `math-p3-int-f-over-f`,
+      `math-p3-int-substitution-flow`); they were removed rather than shipped broken. Writing
+      those six diagrams is the obvious next quality job for this unit.
+    - Review caveat: a second adversarial pass by the **same** agent, plus the numeric checks
+      above. No separate reviewer model and no teacher has seen them.
+    - YAML gotcha worth remembering: never build these files with
+      `open(path,'w').write(open(path).read() + ...)` — the `'w'` truncates before the read and
+      silently wipes a lesson. Read first into a variable, then write.
+- **9709 3.2 logarithms was corrected after publication** (28 Oct, e55fe7c). A review of the four
+  live lessons found: an MCQ distractor `2\ln 5^{x}` that is algebraically *equal* to the correct
+  answer (replaced); the claim that `5^x + 2^x = 7` "has no elementary algebraic solution" (x = 1
+  works, so it now says "no general algebraic method"); a garbled `y`-against-`ln x` explanation in
+  `p3-logarithmic-exponential-linear-form`; and two label collisions in
+  `math-p3-logarithmic-exponential-inverse-graphs` (the `y = ln x` label sat on the `y = x` line and
+  `(1, 0)` collided with the tick `1`). All four numeric chapters' keys were re-verified; the maths
+  was right, these were explanation/label defects.
+    - Diagram previews need fontconfig fonts. On a fresh cloud runner `fc-list` is empty, so all
+      SVG text renders as invisible; copy `.work-logs/libs/x/usr/share/fonts/truetype/*` into
+      `~/.local/share/fonts`, run `fc-cache -f`, and render with
+      `LD_LIBRARY_PATH=$PWD/.work-logs/libs/x/usr/lib/x86_64-linux-gnu` and
+      `CHROMIUM_PATH=$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome` (the wrapper in
+      `.work-logs/chromium-wrapper.sh` adds `--no-sandbox`).
+- Queue: 33 published, 121 todo (`node scripts/lessons/status.mjs`). Next unit:
+  **9618 6.1** (check `status.mjs --all` first; the order is generated).
   (then 9702 6.1, 9701 5.2, 9709 3.3+3.4+3.5).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
