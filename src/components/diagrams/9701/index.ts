@@ -33,6 +33,13 @@ import ElectronegativityBondingDifferenceScale from './electronegativity-bonding
 import ElectronegativityBondingFluorineVsChlorine from './electronegativity-bonding-fluorine-vs-chlorine';
 import ElectronegativityBondingPeriodicTable from './electronegativity-bonding-periodic-table';
 import ElectronsInBoxes from './electrons-in-boxes';
+import EnthalpyChangeBondEnergySteps from './enthalpy-change-bond-energy-steps';
+import EnthalpyChangeBonds from './enthalpy-change-bonds';
+import EnthalpyChangeCalorimetry from './enthalpy-change-calorimetry';
+import EnthalpyChangeExoEndo from './enthalpy-change-exo-endo';
+import EnthalpyChangeNamedChanges from './enthalpy-change-named-changes';
+import EnthalpyChangePathway from './enthalpy-change-pathway';
+import EnthalpyChangeStandardState from './enthalpy-change-standard-state';
 import FirstIonisationEnergyTrend from './first-ionisation-energy-trend';
 import GasesMolecularCollisions from './gases-molecular-collisions';
 import IntermolecularForcesHydrogenBonds from './intermolecular-forces-hydrogen-bonds';
@@ -99,6 +106,13 @@ export const diagrams: DiagramRegistry = {
   'chem-electronegativity-bonding-fluorine-vs-chlorine': ElectronegativityBondingFluorineVsChlorine,
   'chem-electronegativity-bonding-periodic-table': ElectronegativityBondingPeriodicTable,
   'chem-electrons-in-boxes': ElectronsInBoxes,
+  'chem-enthalpy-change-bond-energy-steps': EnthalpyChangeBondEnergySteps,
+  'chem-enthalpy-change-bonds': EnthalpyChangeBonds,
+  'chem-enthalpy-change-calorimetry': EnthalpyChangeCalorimetry,
+  'chem-enthalpy-change-exo-endo': EnthalpyChangeExoEndo,
+  'chem-enthalpy-change-named-changes': EnthalpyChangeNamedChanges,
+  'chem-enthalpy-change-pathway': EnthalpyChangePathway,
+  'chem-enthalpy-change-standard-state': EnthalpyChangeStandardState,
   'chem-first-ionisation-energy-trend': FirstIonisationEnergyTrend,
   'chem-gases-molecular-collisions': GasesMolecularCollisions,
   'chem-intermolecular-forces-hydrogen-bonds': IntermolecularForcesHydrogenBonds,

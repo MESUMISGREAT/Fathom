@@ -1,0 +1,308 @@
+id: enthalpy-change-bond-energy-calculations
+subject: "9701"
+topic: "5.1"
+title: "Bond energy calculations, and why the answer is only an estimate"
+summary: Add up the bonds broken, add up the bonds formed, subtract — then remember that most bond energies are averages, so your ΔH is close but not exact.
+order: 6
+minutes: 8
+kind: core
+objectives: ["5.1.5", "5.1.6"]
+prerequisites: [enthalpy-change-bonds-broken-and-made]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027 (learning outcomes 5.1.5 and 5.1.6, use bond energies to calculate ΔHr and understand
+    that some bond energies are exact and some are averages). Bond energy values used are the usual
+    Cambridge data-book figures (H–H 436, Cl–Cl 243, H–Cl 432, C–H 413, O=O 498, C=O 805, O–H 464,
+    N≡N 945, N–H 391, C=C 612, C–C 348, H–H 436); every answer key was recomputed with Python. All
+    questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can calculate $\Delta H_\text{r}$ from bond energies and explain why your answer may differ from the value in a data book.
+
+  - type: explain
+    title: The method in one line
+    body: |
+      $$\Delta H = \Sigma(\text{bonds broken}) - \Sigma(\text{bonds formed})$$
+
+      Energy in on the left, energy out on the right. If the second total is bigger, $\Delta H$ comes
+      out negative — exothermic.
+
+      The skill is not the subtraction. It is counting the bonds correctly, especially when a bond
+      appears several times, and when a double or triple bond is involved.
+
+  - type: explain
+    title: Counting bonds from a structure
+    body: |
+      Work through the equation one species at a time and ask "which bonds are actually in this molecule?"
+
+      - $\text{CH}_4$: four C–H bonds.
+      - $\text{O}_2$: one O=O double bond. A double bond counts as **one** bond, but with the double-bond energy (498), not two singles.
+      - $\text{CO}_2$: two C=O double bonds (its structure is O=C=O).
+      - $\text{H}_2\text{O}$: two O–H bonds.
+      - $\text{N}_2$: one N≡N triple bond (945).
+
+      Multiply by the coefficient in the equation. In $\text{CH}_4 + 2\text{O}_2$, there are **two**
+      moles of O=O, so $2 \times 498$.
+
+  - type: example
+    title: "Worked example: methane combustion"
+    problem: |
+      Use bond energies to calculate $\Delta H$ for
+
+      $$\text{CH}_4\text{(g)} + 2\text{O}_2\text{(g)} \rightarrow \text{CO}_2\text{(g)} + 2\text{H}_2\text{O(g)}$$
+
+      Data: C–H $413$, O=O $498$, C=O $805$, O–H $464$ (all $\text{kJ mol}^{-1}$).
+    steps:
+      - |
+        Bonds **broken** in the reactants:
+        $$4 \times \text{C–H} = 4 \times 413 = 1652$$
+        $$2 \times \text{O=O} = 2 \times 498 = 996$$
+        $$\Sigma_\text{broken} = 1652 + 996 = 2648\ \text{kJ mol}^{-1}$$
+      - |
+        Bonds **formed** in the products:
+        $$2 \times \text{C=O} = 2 \times 805 = 1610$$
+        $$4 \times \text{O–H} = 4 \times 464 = 1856$$
+        $$\Sigma_\text{formed} = 1610 + 1856 = 3466\ \text{kJ mol}^{-1}$$
+      - |
+        Subtract:
+        $$\Delta H = 2648 - 3466 = -818\ \text{kJ mol}^{-1}$$
+      - |
+        The answer is negative, so the reaction is exothermic — which matches everyday experience of
+        a Bunsen flame.
+    answer: |
+      $\Delta H = -818\ \text{kJ mol}^{-1}$.
+
+  - type: diagram
+    diagram: chem-enthalpy-change-bond-energy-steps
+    alt: >-
+      A three-column working sheet. Column 1, "bonds broken", lists 4 C–H = 1652 and 2 O=O = 996,
+      totalling 2648 with an "energy in" arrow. Column 2, "bonds formed", lists 2 C=O = 1610 and
+      4 O–H = 1856, totalling 3466 with an "energy out" arrow. Column 3 shows
+      ΔH = 2648 − 3466 = −818 kJ mol⁻¹, labelled exothermic. A footer notes that using average C–H
+      and O–H values means the real value differs slightly.
+    caption: |
+      Two lists and a subtraction: the whole method, laid out so nothing gets double-counted.
+
+  - type: check
+    title: Quick check
+    questions: [hcl-formation, count-bonds, ammonia-synthesis]
+
+  - type: explain
+    title: Exact versus average bond energies
+    body: |
+      Some bond energies are **exact** because they come from a single, simple molecule:
+
+      - H–H in $\text{H}_2$ ($436$);
+      - Cl–Cl in $\text{Cl}_2$ ($243$);
+      - N≡N in $\text{N}_2$ ($945$).
+
+      Others are **averages**, because the same bond has slightly different strengths in different
+      molecules:
+
+      - a C–H bond in methane is not identical to a C–H bond in ethanol;
+      - O–H in water differs from O–H in methanol;
+      - C–C in ethane differs from C–C in a strained ring such as cyclopropane.
+
+      The tabulated C–H value of $413$ is an **average over many compounds**. That is why a
+      calculation using it gives a value close to, but not identical with, the experimentally
+      measured $\Delta H$.
+
+  - type: example
+    title: "Worked example: hydrogenation, where counting matters"
+    problem: |
+      Calculate $\Delta H$ for $\text{C}_2\text{H}_4\text{(g)} + \text{H}_2\text{(g)} \rightarrow \text{C}_2\text{H}_6\text{(g)}$.
+
+      Data: C=C $612$, C–C $348$, C–H $413$, H–H $436$ (all $\text{kJ mol}^{-1}$).
+    steps:
+      - |
+        Ethene already contains four C–H bonds, and ethane six — so do not count them all as broken
+        and re-formed. What actually changes is the C=C becoming C–C, plus one H–H breaking and two
+        new C–H forming.
+      - |
+        Treat it as: break C=C and H–H, form C–C and two C–H. Then the unchanged C–H bonds cancel on
+        both sides.
+      - |
+        Bonds broken:
+        $$612 + 436 = 1048\ \text{kJ mol}^{-1}$$
+      - |
+        Bonds formed:
+        $$348 + 2 \times 413 = 348 + 826 = 1174\ \text{kJ mol}^{-1}$$
+      - |
+        $$\Delta H = 1048 - 1174 = -126\ \text{kJ mol}^{-1}$$
+      - |
+        If you had counted all ten C–H bonds on both sides you would still get the same answer (they
+        cancel), but the arithmetic would be longer and easier to get wrong.
+    answer: |
+      $\Delta H = -126\ \text{kJ mol}^{-1}$, exothermic.
+
+  - type: misconceptions
+    items:
+      - wrong: A double bond counts as two bonds, so add the bond energy twice.
+        right: |
+          Count it once, using the double-bond energy (C=C $612$, not $2 \times 348$). The tabulated
+          value already accounts for both pairs of electrons.
+      - wrong: ΔH = Σ(bonds formed) − Σ(bonds broken).
+        right: |
+          That gives the sign backwards. Energy in to break bonds is positive, so it comes first:
+          $\Delta H = \Sigma_\text{broken} - \Sigma_\text{formed}$.
+      - wrong: Forgetting the coefficient in front of a molecule.
+        right: |
+          $2\text{O}_2$ means two O=O bonds, so $2 \times 498$. Missing a coefficient is the single
+          most common error in these calculations.
+      - wrong: A bond-energy answer should match the data book exactly.
+        right: |
+          Average bond energies make it an estimate. Values within tens of $\text{kJ mol}^{-1}$ of the
+          measured value are normal, and questions often ask you to explain the difference.
+      - wrong: Average bond energies are wrong and should not be used.
+        right: |
+          They are extremely useful for estimating $\Delta H$ for reactions that are hard to measure,
+          and for comparing similar reactions. They are just not exact.
+      - wrong: All bond energies are averages.
+        right: |
+          Diatomic molecules have only one bond of that kind, so their values (H–H, Cl–Cl, N≡N) are
+          exact.
+
+  - type: exam
+    body: |
+      - Write the two sums out in full before subtracting. Method marks are given for
+        $\Sigma_\text{broken}$ and $\Sigma_\text{formed}$ separately.
+      - Keep the units: $\text{kJ mol}^{-1}$. If a question wants the answer in $\text{kJ}$, scale by the moles given.
+      - Check the state given in the question. If the product is liquid water, the bond-energy calculation (which gives gaseous water) will not match a data-book $\Delta H_\text{c}^{\ominus}$ — that difference is a favourite discussion question.
+      - If asked why the calculated value differs from the data book, say: **average bond energies**, because the same bond has different strengths in different compounds (and state changes may not be included).
+      - Signs: exothermic answers must be negative. If you get a positive value for a combustion, you have almost certainly swapped the two sums.
+
+  - type: check
+    title: Check yourself
+    questions: [explain-average, water-state-difference, spot-bond-count]
+
+  - type: takeaways
+    items:
+      - '$\Delta H = \Sigma(\text{bonds broken}) - \Sigma(\text{bonds formed})$.'
+      - Count bonds per molecule, then multiply by the coefficient in the equation.
+      - A double or triple bond counts once, with its own (larger) bond energy.
+      - Diatomic bond energies (H–H, Cl–Cl, N≡N) are exact; most others are averages.
+      - Average bond energies make the answer an estimate, often tens of kJ mol⁻¹ from the measured value.
+
+  - type: deeper
+    title: Why C–H is an average, in numbers
+    body: |
+      The energy needed to remove one hydrogen atom from methane is $439\ \text{kJ mol}^{-1}$; from
+      ethane it is $423\ \text{kJ mol}^{-1}$; from propane, $410\ \text{kJ mol}^{-1}$.
+
+      Each successive C–H bond is a little easier to break, because the rest of the molecule changes
+      as hydrogen atoms are removed. There is no single "true" C–H bond energy, so the data book
+      quotes an average of $413\ \text{kJ mol}^{-1}$.
+
+      That is also why cracking and halogenation patterns differ between alkanes: the C–H bonds at
+      the ends and in the middle of a chain are not equally strong.
+
+questions:
+  - id: hcl-formation
+    format: numeric
+    difficulty: 1
+    objectives: ["5.1.5"]
+    prompt: |
+      Calculate $\Delta H$ for $\text{H}_2\text{(g)} + \text{Cl}_2\text{(g)} \rightarrow 2\text{HCl(g)}$.
+
+      Bond energies: H–H $436$, Cl–Cl $243$, H–Cl $432$, all in $\text{kJ mol}^{-1}$.
+    fields:
+      - answer: -185
+        tolerance: { abs: 2 }
+        unit: kJ mol^-1
+    explanation: |
+      Broken: $436 + 243 = 679$. Formed: $2 \times 432 = 864$.
+      $\Delta H = 679 - 864 = -185\ \text{kJ mol}^{-1}$, exothermic.
+
+  - id: count-bonds
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.5"]
+    prompt: |
+      How many C–H bonds are broken in total when one mole of propane, $\text{C}_3\text{H}_8$, reacts completely with chlorine in the reaction $\text{C}_3\text{H}_8 + \text{Cl}_2 \rightarrow \text{C}_3\text{H}_7\text{Cl} + \text{HCl}$?
+    fields:
+      - answer: 1
+        tolerance: { abs: 0.01 }
+    explanation: |
+      Only one C–H bond is broken — the one replaced by chlorine. The other seven C–H bonds stay
+      intact, so there is no need to count them on either side. This is the "count what changes"
+      idea in action.
+
+  - id: ammonia-synthesis
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.5"]
+    prompt: |
+      Calculate $\Delta H$ for $\text{N}_2\text{(g)} + 3\text{H}_2\text{(g)} \rightarrow 2\text{NH}_3\text{(g)}$.
+
+      Bond energies: N≡N $945$, H–H $436$, N–H $391$, all in $\text{kJ mol}^{-1}$.
+    fields:
+      - answer: -93
+        tolerance: { abs: 2 }
+        unit: kJ mol^-1
+    explanation: |
+      Broken: $945 + 3 \times 436 = 945 + 1308 = 2253$.
+      Formed: $6 \times 391 = 2346$ (two ammonia molecules, three N–H each).
+      $\Delta H = 2253 - 2346 = -93\ \text{kJ mol}^{-1}$.
+
+  - id: explain-average
+    format: explain
+    difficulty: 3
+    objectives: ["5.1.6"]
+    prompt: |
+      A student calculates $\Delta H$ for the combustion of methane using bond energies and gets $-818\ \text{kJ mol}^{-1}$. The data book gives $-890\ \text{kJ mol}^{-1}$. Explain why the two values differ.
+    model: |
+      The calculation uses average bond energies. The C–H bond energy of $413\ \text{kJ mol}^{-1}$ is
+      averaged over many different compounds, because a C–H bond in methane is not the same strength
+      as a C–H bond in ethanol or propane. The same is true of the O–H bonds formed. In addition,
+      the bond-energy calculation gives the enthalpy change for forming gaseous water, whereas the
+      data-book value refers to liquid water; condensing the water releases further energy.
+      Together these approximations make the calculated value less negative than the measured one.
+    keyPoints:
+      - Bond energies used are averages, not exact values for this molecule
+      - Different compounds have slightly different bond strengths
+      - Calculation refers to gaseous water; data book uses liquid water
+      - Condensation releases extra energy, so the measured value is more negative
+    explanation: |
+      Marks are for "average bond energies" and for the state of the water. Saying "the calculation is
+      wrong" misses the point: it is an estimate.
+
+  - id: water-state-difference
+    format: numeric
+    difficulty: 3
+    objectives: ["5.1.5", "5.1.6"]
+    prompt: |
+      Using bond energies, $\Delta H = -818\ \text{kJ mol}^{-1}$ for $\text{CH}_4 + 2\text{O}_2 \rightarrow \text{CO}_2 + 2\text{H}_2\text{O(g)}$.
+
+      The enthalpy change of vaporisation of water is $+41\ \text{kJ mol}^{-1}$. Calculate $\Delta H$ for the same reaction when the water formed is liquid.
+    fields:
+      - answer: -900
+        tolerance: { abs: 3 }
+        unit: kJ mol^-1
+    explanation: |
+      Condensing two moles of water releases $2 \times 41 = 82\ \text{kJ mol}^{-1}$, so the reaction
+      releases more energy overall:
+      $-818 - 82 = -900\ \text{kJ mol}^{-1}$. This is close to the data-book $-890$; the remaining
+      difference is the average bond energies.
+
+  - id: spot-bond-count
+    format: spot-error
+    difficulty: 3
+    objectives: ["5.1.5"]
+    prompt: |
+      A student calculates $\Delta H$ for $\text{H}_2 + \text{Cl}_2 \rightarrow 2\text{HCl}$. Which line contains the first error?
+    lines:
+      - 'Bonds broken: H–H $= 436$ and Cl–Cl $= 243$, total $679$'
+      - 'Bonds formed: 2 × H–Cl $= 2 \times 432 = 864$'
+      - ΔH = bonds formed − bonds broken $= 864 - 679$
+      - ΔH = +185 kJ mol⁻¹, so the reaction is endothermic
+    errorLine: 3
+    fix: |
+      The order is the wrong way round. $\Delta H = \Sigma_\text{broken} - \Sigma_\text{formed} =
+      679 - 864 = -185\ \text{kJ mol}^{-1}$, so the reaction is exothermic.
+    explanation: |
+      Lines 1 and 2 are correct, and line 4 is consistent with line 3 — but line 3 has the
+      subtraction inverted, which flips the sign and the classification.
