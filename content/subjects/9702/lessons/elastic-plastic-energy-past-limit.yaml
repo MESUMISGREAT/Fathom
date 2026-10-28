@@ -1,0 +1,263 @@
+id: elastic-plastic-energy-past-limit
+subject: "9702"
+topic: "6.2"
+title: "Energy past the elastic limit: stored or lost?"
+summary: The area under the graph is always the work done, but beyond the elastic limit only part of it comes back — the rest heats the material.
+order: 5
+minutes: 8
+kind: core
+objectives: ["6.2.2", "6.2.3", "6.2.4"]
+prerequisites: [elastic-plastic-strain-energy, elastic-plastic-elastic-limit]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.2, learning outcomes 6.2.2 (work done as the area under the graph),
+    6.2.3 (elastic potential energy within the limit of proportionality) and 6.2.4
+    (E_P = 1/2 Fx = 1/2 kx^2), applied to loading beyond the elastic limit. Every value was
+    recomputed in Python on 2026-10-28. All questions are original.
+
+    Independently re-checked line by line (definitions, every worked step, every answer key and
+    each diagram's alt text) in a second adversarial pass by the same agent on 2026-10-28:
+    every numeric answer was recomputed from the question's own data in Python, all four
+    objectives 6.2.1-6.2.4 were confirmed taught and tested, and all three diagrams were
+    rendered and inspected in light and dark. No separate reviewer model was available here.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can separate the **work done** stretching an object from the **energy recovered** when it unloads, and calculate the energy dissipated when the elastic limit is passed.
+
+  - type: explain
+    title: The area still measures work — but not all of it comes back
+    body: |-
+      Area under the force–extension graph always measures the work done by the stretching force. That does not change when the graph curves.
+
+      What changes is where the energy goes.
+
+      - Within the elastic limit, the material stores the work as elastic potential energy, and gives all of it back when unloaded.
+      - Beyond the elastic limit, some of the work permanently rearranges the material. That part is **dissipated** — it becomes internal energy, so the material warms slightly.
+
+      The energy that does come back is the area under the **unloading** curve, because that is the work the material does on whatever is releasing it.
+
+  - type: intuition
+    title: Bending a paper clip until it is warm
+    body: |-
+      Bend a metal paper clip back and forth a few times and touch the bend. It feels warm.
+
+      You did work on the metal each time. Because the bending was plastic, not all of that work was stored elastically — some became internal energy, and the clip's temperature rose.
+
+      The same idea explains why a car crumple zone absorbs energy in a crash: the metal deforms plastically and does not spring back, so the kinetic energy is not returned to the car.
+
+  - type: example
+    title: "Worked example: work in, energy out"
+    problem: |-
+      A wire is stretched in two stages:
+
+      - the force rises steadily from $0$ to $12\ \text{N}$ while the extension goes from $0$ to $0.030\ \text{m}$;
+      - the force then stays at $12\ \text{N}$ while the extension increases from $0.030\ \text{m}$ to $0.050\ \text{m}$.
+
+      The load is then removed, and the wire unloads along a line parallel to the first stage.
+
+      Find (a) the work done stretching the wire, (b) the energy recovered, and (c) the energy dissipated.
+    steps:
+      - |-
+        (a) Split the area under the loading graph into a triangle and a rectangle.
+      - |-
+        Triangle: $\dfrac{1}{2} \times 0.030 \times 12 = 0.18\ \text{J}$.
+      - |-
+        Rectangle: the extra extension is $0.050 - 0.030 = 0.020\ \text{m}$, so $12 \times 0.020 = 0.24\ \text{J}$.
+      - |-
+        Work done $= 0.18 + 0.24 = 0.42\ \text{J}$.
+      - |-
+        (b) The unloading line is parallel to the first stage, so it has the same gradient. Its triangle has base $0.030\ \text{m}$ and height $12\ \text{N}$, giving recovered energy $\dfrac{1}{2} \times 0.030 \times 12 = 0.18\ \text{J}$.
+      - |-
+        (c) Energy dissipated $= 0.42 - 0.18 = 0.24\ \text{J}$.
+      - |-
+        Notice that the permanent extension is $0.050 - 0.030 = 0.020\ \text{m}$, and the dissipated $0.24\ \text{J}$ is exactly the area of the rectangle: the part of the loading that did not spring back.
+    answer: |-
+      (a) $0.42\ \text{J}$; (b) $0.18\ \text{J}$; (c) $0.24\ \text{J}$ dissipated.
+
+  - type: check
+    title: Quick check
+    questions: [ep-work-total, ep-dissipated, ep-stored-or-lost]
+
+  - type: explain
+    title: Choosing the right calculation
+    body: |-
+      Use this checklist before you calculate:
+
+      | Situation | Method |
+      | --- | --- |
+      | Straight-line graph, within the limit of proportionality | $E_P = \dfrac{1}{2}Fx$ or $\dfrac{1}{2}kx^2$ |
+      | Straight-line graph, need the work done | area of the triangle |
+      | Two stages (rising force, then constant force) | triangle + rectangle |
+      | Curved graph | count squares or use trapezium strips |
+      | Past the elastic limit | area for work done; area under the unloading line for energy recovered |
+
+      Two conversion traps catch almost everyone:
+
+      - extensions in **mm or cm** must become metres before squaring (or before multiplying by newtons);
+      - a spring constant in $\text{N m}^{-1}$ only matches an extension in metres.
+
+  - type: example
+    title: "Worked example: a wire within the limit"
+    problem: |-
+      A wire obeys Hooke's law. A force of $60\ \text{N}$ extends it by $3.0\ \text{mm}$.
+
+      Calculate the elastic potential energy stored when the extension is $5.0\ \text{mm}$.
+    steps:
+      - |-
+        Find the spring constant from the first pair of readings. Convert first: $3.0\ \text{mm} = 0.0030\ \text{m}$.
+      - |-
+        $k = \dfrac{F}{x} = \dfrac{60}{0.0030} = 20\,000\ \text{N m}^{-1}$.
+      - |-
+        The second extension is $5.0\ \text{mm} = 0.0050\ \text{m}$.
+      - |-
+        $E_P = \dfrac{1}{2}kx^2 = \dfrac{1}{2} \times 20\,000 \times 0.0050^2$.
+      - |-
+        $0.0050^2 = 2.5 \times 10^{-5}$, so $E_P = 10\,000 \times 2.5 \times 10^{-5} = 0.25\ \text{J}$.
+      - |-
+        Check with the other form: the force at $5.0\ \text{mm}$ is $20\,000 \times 0.0050 = 100\ \text{N}$, and $\dfrac{1}{2} \times 100 \times 0.0050 = 0.25\ \text{J}$. ✔
+      - |-
+        The calculation is valid because the wire still obeys Hooke's law at $5.0\ \text{mm}$.
+    answer: |-
+      $0.25\ \text{J}$.
+
+  - type: check
+    title: Practice
+    questions: [ep-wire-energy, ep-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: Beyond the elastic limit the area under the graph no longer means anything.
+        right: |-
+          It still means the work done by the stretching force. It is just no longer equal to the
+          energy recovered, because some is dissipated.
+      - wrong: All the work done stretching a material is stored as elastic potential energy.
+        right: |-
+          Only if the deformation is elastic. Plastic deformation dissipates some of the work as
+          internal energy.
+      - wrong: Energy dissipated means energy destroyed.
+        right: |-
+          Energy is conserved. It is transferred to the material's internal energy (the material
+          warms), not destroyed.
+      - wrong: You can use $\tfrac12 kx^2$ past the elastic limit if you know $k$.
+        right: |-
+          That formula assumes a straight line through the origin. Past the limit the graph
+          curves, so use the area instead.
+      - wrong: The recovered energy equals the work done minus the permanent extension.
+        right: |-
+          You cannot subtract a length from an energy. Find the recovered energy from the unloading
+          area, then subtract energies.
+
+  - type: exam
+    body: |-
+      - Separate the two quantities in your answer: **work done** (whole loading area) and **energy recovered** (unloading area). The difference is dissipated.
+      - If the unloading line is parallel to the loading line, its gradient, and therefore the elastic part of the extension, is unchanged.
+      - Convert every extension to metres. A cm value squared is wrong by a factor of $10\,000$; a mm value squared is wrong by $10^6$.
+      - State the condition when you use $\tfrac12 Fx$ or $\tfrac12 kx^2$: within the limit of proportionality.
+
+  - type: takeaways
+    items:
+      - 'Area under the loading graph = work done by the stretching force, whatever the shape of the graph.'
+      - 'Within the elastic limit, all of that work is stored as elastic potential energy and recovered.'
+      - 'Beyond the elastic limit, the recovered energy is the area under the unloading line; the rest is dissipated as internal energy.'
+      - 'Use $E_P = \dfrac{1}{2}Fx = \dfrac{1}{2}kx^2$ only within the limit of proportionality, with extensions in metres.'
+
+questions:
+  - id: ep-work-total
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A material is stretched in two stages.
+
+      The force rises steadily from $0$ to $10\ \text{N}$ while the extension goes from $0$ to $0.040\ \text{m}$.
+
+      The force then stays at $10\ \text{N}$ while the extension increases from $0.040\ \text{m}$ to $0.070\ \text{m}$.
+
+      What is the total work done stretching the material?
+    fields:
+      - label: "W ="
+        answer: 0.5
+        unit: J
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Triangle: $\dfrac{1}{2} \times 0.040 \times 10 = 0.20\ \text{J}$. Rectangle: $10 \times (0.070 - 0.040) = 0.30\ \text{J}$. Total $= 0.50\ \text{J}$.
+
+  - id: ep-stored-or-lost
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.3"]
+    prompt: |-
+      A wire is stretched beyond its elastic limit and then unloaded. What happens to the work done stretching it?
+    options:
+      - text: Part is recovered elastically and part is dissipated as internal energy
+        correct: true
+        why: |-
+          The elastic part springs back; the plastic part remains, and its energy heats the material.
+      - text: All of it is recovered when the load is removed
+        why: |-
+          That would only be true if the deformation were entirely elastic.
+      - text: All of it is dissipated as internal energy
+        why: |-
+          Some of the deformation is still elastic, so some energy is recovered.
+      - text: None of it is transferred to the wire, because the wire does not return to its original length
+        why: |-
+          The work is still done on the wire; it is just not all stored elastically.
+    explanation: |-
+      Beyond the elastic limit the deformation has an elastic part and a plastic part, so the energy splits the same way.
+
+  - id: ep-dissipated
+    format: numeric
+    difficulty: 3
+    objectives: ["6.2.3"]
+    prompt: |-
+      A wire is loaded so that the force rises steadily from $0$ to $12\ \text{N}$ while the extension goes from $0$ to $0.030\ \text{m}$. The force then stays at $12\ \text{N}$ while the extension increases to $0.050\ \text{m}$.
+
+      The load is removed and the wire unloads along a line parallel to the first stage, recovering $0.18\ \text{J}$.
+
+      How much energy is dissipated?
+    fields:
+      - label: "dissipated ="
+        answer: 0.24
+        unit: J
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Work done $= \dfrac{1}{2} \times 0.030 \times 12 + 12 \times 0.020 = 0.18 + 0.24 = 0.42\ \text{J}$. Dissipated $= 0.42 - 0.18 = 0.24\ \text{J}$.
+
+  - id: ep-wire-energy
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.4"]
+    prompt: |-
+      A wire obeys Hooke's law. A force of $60\ \text{N}$ extends it by $3.0\ \text{mm}$.
+
+      Calculate the elastic potential energy stored when the extension is $5.0\ \text{mm}$, in J.
+    fields:
+      - label: "E_P ="
+        answer: 0.25
+        unit: J
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $k = \dfrac{60}{0.0030} = 20\,000\ \text{N m}^{-1}$. Then $E_P = \dfrac{1}{2} \times 20\,000 \times 0.0050^2 = 0.25\ \text{J}$.
+
+  - id: ep-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["6.2.4"]
+    prompt: |-
+      A student calculates the energy stored in a spring of spring constant $200\ \text{N m}^{-1}$ stretched by $15\ \text{cm}$. Which line contains the first error?
+    lines:
+      - The spring constant is 200 N m⁻¹.
+      - The extension is 15 cm.
+      - "E_P = ½ × 200 × 15² = 22 500 J."
+      - So the spring stores 22 500 J.
+    errorLine: 3
+    fix: |-
+      The extension must be converted to metres before squaring: $15\ \text{cm} = 0.15\ \text{m}$. Then $E_P = \dfrac{1}{2} \times 200 \times 0.15^2 = 2.25\ \text{J}$.
+    explanation: |-
+      Lines 1 and 2 are correct. Line 3 uses centimetres in a formula that needs metres, so the answer is too large by a factor of $100^2 = 10\,000$.

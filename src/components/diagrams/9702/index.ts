@@ -5,6 +5,9 @@ import DensityPressureDensityCubes from './density-pressure-density-cubes';
 import DensityPressureLiquidColumn from './density-pressure-liquid-column';
 import DensityPressurePressureArea from './density-pressure-pressure-area';
 import DensityPressureUpthrust from './density-pressure-upthrust';
+import ElasticPlasticLoadingUnloading from './elastic-plastic-loading-unloading';
+import ElasticPlasticStrainEnergy from './elastic-plastic-strain-energy';
+import ElasticPlasticWorkArea from './elastic-plastic-work-area';
 import EnergyConservationEfficiencyBlocks from './energy-conservation-efficiency-blocks';
 import EnergyConservationPowerFv from './energy-conservation-power-fv';
 import EnergyConservationPowerLift from './energy-conservation-power-lift';
@@ -88,6 +91,9 @@ export const diagrams: DiagramRegistry = {
   'phys-density-pressure-liquid-column': DensityPressureLiquidColumn,
   'phys-density-pressure-pressure-area': DensityPressurePressureArea,
   'phys-density-pressure-upthrust': DensityPressureUpthrust,
+  'phys-elastic-plastic-loading-unloading': ElasticPlasticLoadingUnloading,
+  'phys-elastic-plastic-strain-energy': ElasticPlasticStrainEnergy,
+  'phys-elastic-plastic-work-area': ElasticPlasticWorkArea,
   'phys-energy-conservation-efficiency-blocks': EnergyConservationEfficiencyBlocks,
   'phys-energy-conservation-power-fv': EnergyConservationPowerFv,
   'phys-energy-conservation-power-lift': EnergyConservationPowerLift,
