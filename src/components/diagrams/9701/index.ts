@@ -65,6 +65,9 @@ import ReactingMassesMoleBridge from './reacting-masses-mole-bridge';
 import ReactingMassesPrecipitateGraph from './reacting-masses-precipitate-graph';
 import ReactingMassesTitration from './reacting-masses-titration';
 import ReactingMassesYieldBars from './reacting-masses-yield-bars';
+import RedoxDisproportionation from './redox-disproportionation';
+import RedoxElectronTransfer from './redox-electron-transfer';
+import RedoxOxidationNumberRules from './redox-oxidation-number-rules';
 import RelativeMassesCarbon_12Ruler from './relative-masses-carbon-12-ruler';
 import RelativeMassesMoleculeVsLattice from './relative-masses-molecule-vs-lattice';
 import RelativeMassesWeightedMean from './relative-masses-weighted-mean';
@@ -142,6 +145,9 @@ export const diagrams: DiagramRegistry = {
   'chem-reacting-masses-precipitate-graph': ReactingMassesPrecipitateGraph,
   'chem-reacting-masses-titration': ReactingMassesTitration,
   'chem-reacting-masses-yield-bars': ReactingMassesYieldBars,
+  'chem-redox-disproportionation': RedoxDisproportionation,
+  'chem-redox-electron-transfer': RedoxElectronTransfer,
+  'chem-redox-oxidation-number-rules': RedoxOxidationNumberRules,
   'chem-relative-masses-carbon-12-ruler': RelativeMassesCarbon_12Ruler,
   'chem-relative-masses-molecule-vs-lattice': RelativeMassesMoleculeVsLattice,
   'chem-relative-masses-weighted-mean': RelativeMassesWeightedMean,

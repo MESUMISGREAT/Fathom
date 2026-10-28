@@ -1,0 +1,317 @@
+id: redox-processes-balancing-equations
+subject: "9701"
+topic: "6.1"
+title: "Balancing redox equations with oxidation numbers"
+summary: Match the total increase in oxidation number to the total decrease, then balance atoms, oxygen, hydrogen and charge. No guessing.
+order: 5
+minutes: 9
+kind: core
+objectives: ["6.1.2"]
+prerequisites: [redox-processes-electron-transfer, redox-processes-oxidation-numbers]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 6.1, learning outcome 6.1.2 (use changes in oxidation numbers to help balance
+    chemical equations). Every coefficient in the worked examples and answer keys was derived and
+    checked for atom and charge balance in Python on 2026-10-28. All questions are original.
+
+    Independently re-checked line by line (definitions, every worked step, every answer key and
+    each diagram's alt text) in a second adversarial pass by the same agent on 2026-10-28:
+    every oxidation number and every balanced equation was re-derived from its own data in
+    Python, all five outcomes 6.1.1-6.1.5 were confirmed taught and tested, and all three
+    diagrams were rendered and inspected in light and dark. No separate reviewer model was
+    available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can balance a redox equation by matching oxidation-number changes, using $\text{H}_2\text{O}$ and $\text{H}^+$ to finish the oxygen and hydrogen, and check the result by charge.
+
+  - type: explain
+    title: Balancing by electron bookkeeping
+    body: |-
+      Trial and error works for simple equations. It fails badly for things like
+
+      $$\text{MnO}_4^- + \text{Fe}^{2+} + \text{H}^+ \rightarrow \text{Mn}^{2+} + \text{Fe}^{3+} + \text{H}_2\text{O}$$
+
+      There are too many species to fiddle with. Oxidation numbers turn the problem into arithmetic.
+
+      The key idea: **electrons lost = electrons gained**. The total increase in oxidation number must equal the total decrease.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. **Assign oxidation numbers** to the elements that change, on both sides.
+      2. **Find the change per atom**: an increase is electrons lost (oxidation); a decrease is electrons gained (reduction).
+      3. **Choose coefficients** so that total increase = total decrease.
+      4. **Balance the other atoms** by inspection — metals first, then the main non-metal.
+      5. **Balance oxygen** by adding $\text{H}_2\text{O}$ to the side that needs it.
+      6. **Balance hydrogen** by adding $\text{H}^+$ (in acidic conditions).
+      7. **Check charge** on both sides. This is the step that catches mistakes.
+
+      In alkaline conditions you would add $\text{OH}^-$ instead of $\text{H}^+$ at the end, but Cambridge redox balancing is usually in acid.
+
+  - type: example
+    title: "Worked example: permanganate and iron(II)"
+    problem: |-
+      Balance
+
+      $$\text{MnO}_4^- + \text{Fe}^{2+} + \text{H}^+ \rightarrow \text{Mn}^{2+} + \text{Fe}^{3+} + \text{H}_2\text{O}$$
+    steps:
+      - |-
+        Oxidation numbers: Mn is $+7$ in $\text{MnO}_4^-$ and $+2$ in $\text{Mn}^{2+}$; Fe is $+2$ and $+3$.
+      - |-
+        Mn changes by $-5$ (gains 5 electrons, reduced). Fe changes by $+1$ (loses 1 electron, oxidised).
+      - |-
+        To match, use **1 Mn for every 5 Fe**: $5 \times (+1) = 5$ electrons lost, matching 5 gained.
+      - |-
+        Put those coefficients in:
+
+        $$\text{MnO}_4^- + 5\text{Fe}^{2+} + \text{H}^+ \rightarrow \text{Mn}^{2+} + 5\text{Fe}^{3+} + \text{H}_2\text{O}$$
+      - |-
+        Oxygen: 4 on the left, so put **4** $\text{H}_2\text{O}$ on the right.
+      - |-
+        Hydrogen: 8 on the right, so put **8** $\text{H}^+$ on the left.
+      - |-
+        Final equation:
+
+        $$\text{MnO}_4^- + 5\text{Fe}^{2+} + 8\text{H}^+ \rightarrow \text{Mn}^{2+} + 5\text{Fe}^{3+} + 4\text{H}_2\text{O}$$
+      - |-
+        Check charge: left $-1 + 5(+2) + 8(+1) = +17$; right $+2 + 5(+3) = +17$. ✔
+    answer: |-
+      $\text{MnO}_4^- + 5\text{Fe}^{2+} + 8\text{H}^+ \rightarrow \text{Mn}^{2+} + 5\text{Fe}^{3+} + 4\text{H}_2\text{O}$.
+
+  - type: check
+    title: Quick check
+    questions: [fe-coefficient, h-coefficient, first-step]
+
+  - type: example
+    title: "Worked example: copper and nitric acid"
+    problem: |-
+      Balance
+
+      $$\text{Cu} + \text{HNO}_3 \rightarrow \text{Cu(NO}_3)_2 + \text{NO}_2 + \text{H}_2\text{O}$$
+    steps:
+      - |-
+        Copper goes from $0$ in $\text{Cu}$ to $+2$ in $\text{Cu(NO}_3)_2$: an increase of 2, so Cu is oxidised.
+      - |-
+        Nitrogen goes from $+5$ in $\text{HNO}_3$ to $+4$ in $\text{NO}_2$: a decrease of 1, so nitrogen is reduced.
+      - |-
+        Match the changes: one Cu loses 2 electrons, so **two** N must gain one each. That gives 1 Cu and 2 $\text{NO}_2$.
+      - |-
+        But some nitrogen is not reduced: it stays as nitrate in $\text{Cu(NO}_3)_2$. That product needs **2 more** nitrogen atoms.
+      - |-
+        Total nitrogen on the right $= 2 + 2 = 4$, so put **4** $\text{HNO}_3$ on the left.
+      - |-
+        Hydrogen: 4 on the left, so **2** $\text{H}_2\text{O}$ on the right.
+      - |-
+        Final equation:
+
+        $$\text{Cu} + 4\text{HNO}_3 \rightarrow \text{Cu(NO}_3)_2 + 2\text{NO}_2 + 2\text{H}_2\text{O}$$
+      - |-
+        Check atoms: N 4 = 2 + 2; O 12 = 6 + 4 + 2; H 4 = 4. ✔
+    answer: |-
+      $\text{Cu} + 4\text{HNO}_3 \rightarrow \text{Cu(NO}_3)_2 + 2\text{NO}_2 + 2\text{H}_2\text{O}$.
+
+  - type: explain
+    title: Why some nitrogen is left out of the electron count
+    body: |-
+      In the copper/nitric acid example, not every nitrogen atom is reduced. The nitrate ions that end up in $\text{Cu(NO}_3)_2$ keep nitrogen at $+5$.
+
+      Oxidation numbers only count the atoms that **change**. Atoms that keep the same oxidation number are balanced later, by inspection, when you count the formula units.
+
+      This is the step students most often miss: balancing the electron transfer gives 2 $\text{NO}_2$, but the salt still needs its nitrate.
+
+  - type: check
+    title: Practice
+    questions: [hno3-coefficient, dichromate-fe, electron-cloze, balance-spot-error]
+
+  - type: example
+    title: "Worked example: dichromate and iron(II)"
+    problem: |-
+      Balance
+
+      $$\text{Cr}_2\text{O}_7^{2-} + \text{Fe}^{2+} + \text{H}^+ \rightarrow \text{Cr}^{3+} + \text{Fe}^{3+} + \text{H}_2\text{O}$$
+    steps:
+      - |-
+        Chromium is $+6$ in $\text{Cr}_2\text{O}_7^{2-}$ and $+3$ in $\text{Cr}^{3+}$: a decrease of 3 per Cr, and there are **two** Cr atoms, so 6 electrons are gained per dichromate ion.
+      - |-
+        Iron goes from $+2$ to $+3$: 1 electron lost per Fe.
+      - |-
+        Match: 6 Fe are needed for each $\text{Cr}_2\text{O}_7^{2-}$.
+      - |-
+        $$\text{Cr}_2\text{O}_7^{2-} + 6\text{Fe}^{2+} + \text{H}^+ \rightarrow 2\text{Cr}^{3+} + 6\text{Fe}^{3+} + \text{H}_2\text{O}$$
+      - |-
+        Oxygen: 7 on the left, so **7** $\text{H}_2\text{O}$ on the right.
+      - |-
+        Hydrogen: 14 on the right, so **14** $\text{H}^+$ on the left.
+      - |-
+        Check charge: left $-2 + 6(+2) + 14(+1) = +24$; right $2(+3) + 6(+3) = +24$. ✔
+    answer: |-
+      $\text{Cr}_2\text{O}_7^{2-} + 6\text{Fe}^{2+} + 14\text{H}^+ \rightarrow 2\text{Cr}^{3+} + 6\text{Fe}^{3+} + 7\text{H}_2\text{O}$.
+
+  - type: misconceptions
+    items:
+      - wrong: Balance oxygen before matching the electron changes.
+        right: |-
+          Match the oxidation-number changes first. That fixes the ratio of the redox species;
+          oxygen and hydrogen are finished afterwards.
+      - wrong: The coefficient of $\text{Fe}^{2+}$ is 1 because the oxidation-number change is 1.
+        right: |-
+          The change is 1 per Fe, but Mn gains 5, so five Fe are needed to supply five electrons.
+      - wrong: Every nitrogen atom in $\text{HNO}_3$ is reduced to $\text{NO}_2$.
+        right: |-
+          Some nitrogen stays at $+5$ in the copper nitrate. Only the nitrogen that changes is part
+          of the electron count.
+      - wrong: You can check a redox equation by atoms alone.
+        right: |-
+          Atoms can balance while charge does not. Always check charge as well.
+      - wrong: Add $\text{H}^+$ to balance oxygen.
+        right: |-
+          Add $\text{H}_2\text{O}$ to balance oxygen, then $\text{H}^+$ to balance the hydrogens you
+          have just added.
+
+  - type: exam
+    body: |-
+      - Show the oxidation numbers and the changes above the equation. Examiners award method marks for the ratio even if a coefficient later slips.
+      - Multiply by the **number of atoms** of the element: two chromium atoms in dichromate means a total change of 6, not 3.
+      - Balance O with $\text{H}_2\text{O}$, then H with $\text{H}^+$. Do not do them in the other order.
+      - Finish with a charge check. Write the total charge under each side; if they differ, a coefficient is wrong.
+
+  - type: takeaways
+    items:
+      - 'Balance redox by making total oxidation-number increase = total decrease.'
+      - 'The change is per **atom**, so multiply by the number of atoms of that element.'
+      - 'After the electron ratio, balance other atoms, then O with $\text{H}_2\text{O}$, then H with $\text{H}^+$.'
+      - 'Atoms that do not change oxidation number still need balancing by inspection.'
+      - 'Always finish by checking that charge balances on both sides.'
+
+  - type: deeper
+    title: The half-equation route gives the same answer
+    body: |-
+      You can also balance the two half-equations separately and add them.
+
+      For permanganate: $\text{MnO}_4^- + 8\text{H}^+ + 5e^- \rightarrow \text{Mn}^{2+} + 4\text{H}_2\text{O}$.
+
+      For iron(II): $\text{Fe}^{2+} \rightarrow \text{Fe}^{3+} + e^-$.
+
+      Multiplying the second by 5 and adding gives the same equation as the oxidation-number method. The two methods are bookkeeping for the same electron transfer, so use whichever you find safer under exam pressure.
+
+questions:
+  - id: fe-coefficient
+    format: numeric
+    difficulty: 1
+    objectives: ["6.1.2"]
+    prompt: |-
+      In the balanced equation
+
+      $$\text{MnO}_4^- + a\,\text{Fe}^{2+} + b\,\text{H}^+ \rightarrow \text{Mn}^{2+} + a\,\text{Fe}^{3+} + c\,\text{H}_2\text{O}$$
+
+      what is the value of $a$?
+    fields:
+      - label: "a ="
+        answer: 5
+    explanation: |-
+      Mn gains 5 electrons (from $+7$ to $+2$) and each Fe loses 1, so five Fe are needed.
+
+  - id: h-coefficient
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: |-
+      Using the same balanced equation,
+
+      $$\text{MnO}_4^- + 5\text{Fe}^{2+} + b\,\text{H}^+ \rightarrow \text{Mn}^{2+} + 5\text{Fe}^{3+} + c\,\text{H}_2\text{O}$$
+
+      what is the value of $b$?
+    fields:
+      - label: "b ="
+        answer: 8
+    explanation: |-
+      Four oxygens need four $\text{H}_2\text{O}$, which supply 8 hydrogens on the right, so 8 $\text{H}^+$ are needed on the left.
+
+  - id: first-step
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.2"]
+    prompt: |-
+      What is the first step in balancing a redox equation using oxidation numbers?
+    options:
+      - text: Assign oxidation numbers to the elements that change and find the changes
+        correct: true
+        why: |-
+          The ratio of the redox species comes from matching those changes.
+      - text: Balance the oxygen atoms with water
+        why: |-
+          Oxygen is balanced later, after the electron ratio is fixed.
+      - text: Balance the hydrogen atoms with H⁺
+        why: |-
+          Hydrogen is balanced last, after oxygen.
+      - text: Multiply every coefficient by 2
+        why: |-
+          That does not help and may make the equation harder to read.
+    explanation: |-
+      Oxidation-number changes determine the coefficients of the species being oxidised and reduced.
+
+  - id: hno3-coefficient
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: |-
+      In the balanced equation
+
+      $$\text{Cu} + d\,\text{HNO}_3 \rightarrow \text{Cu(NO}_3)_2 + 2\text{NO}_2 + e\,\text{H}_2\text{O}$$
+
+      what is the value of $d$?
+    fields:
+      - label: "d ="
+        answer: 4
+    explanation: |-
+      Copper loses 2 electrons and each reduced nitrogen gains 1, so 2 $\text{NO}_2$ are formed. The copper nitrate needs 2 more nitrogen atoms, giving 4 nitrogen in total, so $d = 4$.
+
+  - id: dichromate-fe
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.2"]
+    prompt: |-
+      Balance
+
+      $$\text{Cr}_2\text{O}_7^{2-} + f\,\text{Fe}^{2+} + 14\text{H}^+ \rightarrow 2\text{Cr}^{3+} + f\,\text{Fe}^{3+} + 7\text{H}_2\text{O}$$
+
+      What is the value of $f$?
+    fields:
+      - label: "f ="
+        answer: 6
+    explanation: |-
+      Each Cr goes from $+6$ to $+3$, and there are two Cr atoms, so the dichromate ion gains 6 electrons. Each Fe loses 1, so six Fe are needed.
+
+  - id: electron-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["6.1.2"]
+    prompt: |-
+      To balance a redox equation, make the total increase in oxidation number equal the total {{1}}. The change is calculated per {{2}} of the element.
+    blanks:
+      - accept: [decrease, decrease in oxidation number, reduction]
+      - accept: [atom, atoms]
+    explanation: |-
+      Electrons lost must equal electrons gained, and the change applies per atom, so multiply by the number of atoms.
+
+  - id: balance-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: |-
+      A student balances the permanganate/iron(II) equation. Which line contains the first error?
+    lines:
+      - Mn goes from +7 to +2, a change of 5.
+      - Fe goes from +2 to +3, a change of 1.
+      - So the ratio is 1 Mn to 1 Fe.
+      - "The equation becomes: MnO4⁻ + Fe²⁺ + 8H⁺ → Mn²⁺ + Fe³⁺ + 4H₂O."
+    errorLine: 3
+    fix: |-
+      The ratio must make the electrons match: Mn gains 5 and Fe loses 1, so the ratio is 1 Mn to **5** Fe. The equation is $\text{MnO}_4^- + 5\text{Fe}^{2+} + 8\text{H}^+ \rightarrow \text{Mn}^{2+} + 5\text{Fe}^{3+} + 4\text{H}_2\text{O}$.
+    explanation: |-
+      Lines 1 and 2 are correct. Line 3 ignores the size of the changes, and line 4 therefore has unbalanced charge ($-1+2+8=+9$ on the left, $+2+3=+5$ on the right).
