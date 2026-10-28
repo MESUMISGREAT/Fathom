@@ -227,10 +227,31 @@ changes alongside lessons:
   (`p3-trig`, `p3-diff`, `p3-int`). They had been listed as `p3-trigonometry`,
   `p3-differentiation` and `p3-integration`, so `status.mjs` reported that published unit as
   `todo` and a future writer would have duplicated 15 lessons. `status.mjs` now says
-  **33 published, 121 todo**, with 9618 6.1 next.
-- On `main`: **382 reviewed lessons, 2202 questions** (9709: 118, 9618: 100, 9702: 81,
-  9701: 83). All are live. Latest content: 9618 6.1 data security (a93ff08) and 9702 6.2
-  elastic and plastic behaviour (77f2e9c), both 28 Oct.
+  **36 published, 118 todo**.
+- On `main`: **387 reviewed lessons, 2235 questions** (9709: 118, 9618: 100, 9702: 81,
+  9701: 88). All are live. Latest content: 9701 6.1 redox processes (8b3064d), 9702 6.2
+  elastic and plastic behaviour (77f2e9c) and 9618 6.1 data security (a93ff08), all 28 Oct.
+- **9701 6.1 Redox processes is published** (28 Oct, 8b3064d): 5 lessons
+  (`redox-processes-oxidation-numbers`, `-special-cases-roman-numerals`, `-electron-transfer`,
+  `-disproportionation`, `-balancing-equations`), 33 questions, 3 diagrams
+  (`chem-redox-oxidation-number-rules`, `-electron-transfer`, `-disproportionation`).
+  Objectives 6.1.1-6.1.5 are each taught by a core lesson and tested. `content:check` 0
+  errors / 0 warnings, `tsc` clean, 166 tests pass, all three diagrams rendered and inspected
+  in light and dark. The lesson page returned 200 with its title on the production URL.
+    - Conventions recorded: the rules are taught in priority order (element, monatomic ion,
+      F, O, H, Group 1/2/Al, then the total charge), with peroxides ($-1$), $\text{OF}_2$
+      ($+2$) and metal hydrides ($-1$) as the required exceptions; $\text{Fe}_3\text{O}_4$ is
+      taught as a $+8/3$ average of one $\text{Fe}^{2+}$ and two $\text{Fe}^{3+}$; Roman
+      numerals give the oxidation number, not the atom count.
+    - Balancing uses the oxidation-number method in a fixed order: changes, ratio, other atoms,
+      O with $\text{H}_2\text{O}$, H with $\text{H}^+$, then a charge check. The copper/nitric
+      acid example calls out the nitrogen that stays at $+5$ in the nitrate.
+    - Same caveat as the other batches: the review was a second adversarial pass by the **same
+      agent** with every oxidation number and balanced equation re-derived in Python; no
+      separate reviewer model was available. A reviewer should still be run over the five files.
+    - **Diagram gotcha:** in a JSX string attribute, `tex="\\text{...}"` (two backslashes) is
+      passed through literally and KaTeX renders the word "text"; use a single backslash in
+      attribute values (two are needed only inside JS string literals such as a data array).
 - **9702 6.2 Elastic and plastic behaviour is published** (28 Oct, 77f2e9c): 5 lessons
   (`elastic-plastic-deformation`, `-elastic-limit`, `-work-done-area`, `-strain-energy`,
   `-energy-past-limit`), 25 questions, 3 diagrams
@@ -367,11 +388,12 @@ changes alongside lessons:
       `LD_LIBRARY_PATH=$PWD/.work-logs/libs/x/usr/lib/x86_64-linux-gnu` and
       `CHROMIUM_PATH=$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome` (the wrapper in
       `.work-logs/chromium-wrapper.sh` adds `--no-sandbox`).
-- Queue: 35 published, 119 todo (`node scripts/lessons/status.mjs`). **Next unit is 9701 6.1
-  (redox processes)**; check the sibling worktree again before starting in case the other chat
-  has taken it. 9709 units are being restyled by that chat, so prefer non-9709 work.
-  9702 6.2 was published by that chat on 28 Oct.
-  (Then 9709 3.6+3.7, 9618 6.2, 9702 7.1, 9701 7.1, 9709 3.8, ...).
+- Queue: 36 published, 118 todo (`node scripts/lessons/status.mjs`). The queue's next unit is
+  **9709 3.6+3.7**, but 9709 is being restyled by the other chat, so **take 9618 6.2
+  (data integrity) next after checking the sibling worktree**, then 9702 7.1, 9701 7.1 and the
+  rest in queue order. 9702 6.2 and 9701 6.1 were published from this chat on 28 Oct;
+  9618 6.1 came from the other chat.
+  (Then 9709 3.6+3.7 when 9709 is free, 9702 7.1, 9701 7.1, 9709 3.8, ...).
 - **Pushing now needs a rebase, not just a push.** Two chats published from the same
   `77cd89e` base on 28 Oct, so the first `cloud_git` push succeeded and the other was
   rejected as non-fast-forward. The working recovery, repeated twice:
