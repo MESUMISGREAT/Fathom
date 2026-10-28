@@ -227,11 +227,52 @@ changes alongside lessons:
   (`p3-trig`, `p3-diff`, `p3-int`). They had been listed as `p3-trigonometry`,
   `p3-differentiation` and `p3-integration`, so `status.mjs` reported that published unit as
   `todo` and a future writer would have duplicated 15 lessons. `status.mjs` now says
-  **36 published, 118 todo**.
-- On `main`: **392 reviewed lessons, 2267 questions** (9709: 118, 9618: 105, 9702: 81,
-  9701: 88). All are live. Latest content, all 28 Oct: 9618 6.2 data integrity (3c37a6a),
-  9701 6.1 redox processes (8b3064d), 9702 6.2 elastic and plastic behaviour (77f2e9c) and
-  9618 6.1 data security (a93ff08).
+  **38 published, 116 todo**.
+- **9702 7.1 Progressive waves is published** (28 Oct, e880df1): 6 lessons
+  (`progressive-waves-what-is-a-wave` 7.1.1+7.1.6, `-key-terms` 7.1.2, `-phase-difference`
+  7.1.2, `-wave-equation` 7.1.4+7.1.5, `-cro` 7.1.3, `-intensity` 7.1.7), 36 questions,
+  4 diagrams (`phys-progressive-waves-rope-pulse`, `-key-terms`, `-phase-difference`,
+  `-cro-trace`). All seven objectives 7.1.1-7.1.7 are taught by a core lesson and tested.
+  `content:check` 0 errors / 0 warnings, `tsc` clean, 166 tests pass, all four diagrams
+  rendered and inspected in light and dark. Nothing was checked on the production URL after
+  the push.
+    - Teaching choices worth keeping: the unit opens with "the rope moves up and down, the
+      pulse moves along" (P drawn on the rope with a vertical arrow, not travelling);
+      displacement–distance vs displacement–time graphs are contrasted by the quantity on the
+      horizontal axis; phase difference is taught as `Δφ = 360° × Δx/λ` with the same idea in
+      radians ($2\pi\,\Delta x/\lambda$); the CRO lesson reads period across (time-base ×
+      divisions per cycle) before frequency, and amplitude from the **centre line** to a peak,
+      never peak-to-peak; intensity is power/area with $I \propto A^2$ for the same wave.
+    - **Rendering trap found here — fix it in every future lesson.** Numeric-answer `unit:`
+      fields are printed as plain text (`<span className="unit">{f.unit}</span>` in
+      `src/components/questions/QuestionCard.tsx`), so a unit written as `"m s^{-1}"` shows the
+      braces and caret literally on the page. Use Unicode superscripts (`m s⁻¹`, `W m⁻²`,
+      `N m⁻¹`). One already-published 9702 6.2 lesson had the same bug and was fixed in this
+      commit. The `$...$`-in-prompt fields are unaffected; only `unit:` is plain text.
+    - Review caveat as usual: second adversarial pass by the **same agent** — every worked
+      answer and key recomputed from its own data, every MCQ checked for exactly one correct
+      option, objectives re-read against the syllabus wording. No separate reviewer model and
+      no teacher. A reviewer should still be run over `progressive-waves-*`.
+- **Diagram rendering works again after a runner restart — here is the setup.** `npm run
+  diagram:render` fails with "executable doesn't exist at /opt/pw-browsers/chromium" because
+  Chromium's shared libraries are not installed system-wide. Playwright's browser is in
+  `$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome`, and the libraries were
+  extracted earlier into `.work-logs/libs/x/usr/lib` (gitignored). Export all three and it
+  renders:
+  ```bash
+  export LD_LIBRARY_PATH=$(find $PWD/.work-logs/libs/x/usr/lib -maxdepth 2 -type d | tr '\n' ':')
+  export FONTCONFIG_PATH=$PWD/.work-logs/libs/x/etc/fonts
+  export CHROMIUM_PATH=$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome
+  npm run diagram:render -- <diagram-key> --out /tmp/dg
+  ```
+  The script falls back to `/opt/pw-browsers/chromium` and hides the real error, so a failure
+  message about that path usually means a missing `LD_LIBRARY_PATH`, not a missing browser.
+  If `.work-logs/libs` is gone, re-extract the debs in `.work-logs/libs/debs` with
+  `dpkg -x` into `.work-logs/libs/x`.
+- On `main`: **398 reviewed lessons, 2304 questions** (9709: 118, 9618: 105, 9702: 87,
+  9701: 88). All are live. Latest content, all 28 Oct: 9702 7.1 progressive waves (e880df1),
+  9618 6.2 data integrity (3c37a6a), 9701 6.1 redox processes (8b3064d), 9702 6.2 elastic and
+  plastic behaviour (77f2e9c) and 9618 6.1 data security (a93ff08).
 - **9701 6.1 Redox processes is published** (28 Oct, 8b3064d): 5 lessons
   (`redox-processes-oxidation-numbers`, `-special-cases-roman-numerals`, `-electron-transfer`,
   `-disproportionation`, `-balancing-equations`), 33 questions, 3 diagrams
@@ -405,11 +446,13 @@ changes alongside lessons:
       the answer keys was recomputed in Python during the review pass.
     - Review caveat as usual: second adversarial pass by the **same agent**, no separate
       reviewer model here. A reviewer should still be run over `data-integrity-*`.
-- Queue: 37 published, 117 todo (`node scripts/lessons/status.mjs`). The queue's next unit is
-  **9709 3.6+3.7**, but 9709 is being restyled by the other chat, so prefer **9702 7.1** then
-  **9701 7.1** after checking the sibling worktree. 9702 6.2 and 9701 6.1 came from this chat;
-  9618 6.1 and 9618 6.2 came from the other chat.
-  (Then 9709 3.6+3.7 when 9709 is free, 9709 3.8, ...).
+- Queue: 38 published, 116 todo (`node scripts/lessons/status.mjs`). The queue's head is
+  **9709 3.6+3.7**, but 9709 is being restyled by the other chat, so skip it. 9702 7.1 is
+  done; take **9701 7.1** or **9702 7.2+7.3+7.4** next, after checking the sibling worktree and
+  `git log --all` for in-flight files. A whole-unit cycle (write → independent review →
+  validate → publish → update this file) runs without asking the user; they asked for it to
+  repeat autonomously on 28 Oct. 9702 6.2, 9702 7.1 and 9701 6.1 came from this chat; 9618 6.1
+  and 9618 6.2 came from the other chat.
 - **Pushing now needs a rebase, not just a push.** Two chats published from the same
   `77cd89e` base on 28 Oct, so the first `cloud_git` push succeeded and the other was
   rejected as non-fast-forward. The working recovery, repeated twice:
