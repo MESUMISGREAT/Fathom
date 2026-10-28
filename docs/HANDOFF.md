@@ -214,6 +214,40 @@ changes alongside lessons:
 
 ## 5. Current state (28 Oct 2026, cloud chat)
 
+- **9702 7.2+7.3+7.4 is published** (28 Oct, 5498a33, from this chat): 6 lessons
+  (`transverse-longitudinal-compare` 7.2.1, `transverse-longitudinal-graphs` 7.2.2,
+  `doppler-effect-moving-source` 7.3.1, `doppler-effect-formula` 7.3.2,
+  `electromagnetic-spectrum-transverse` 7.4.1, `electromagnetic-spectrum-wavelengths`
+  7.4.2+7.4.3), 33 questions, 5 diagrams
+  (`phys-transverse-longitudinal-compare`, `-graphs`, `phys-doppler-effect-wavefronts`,
+  `phys-electromagnetic-spectrum-transverse-wave`, `-wavelength-ladder`). `content:check`
+  0 errors / 0 warnings, `tsc` clean, 166 tests pass, and the production lesson page returned
+  200 with its title.
+  - **Diagrams were NOT rendered.** Chromium downloads but cannot launch in this VM: 15 shared
+    libraries are missing (libnss3, libatk, libcairo, libpango …), there is no root to install
+    them, and `apt-get download` has no usable package lists. The five diagrams were checked by
+    reading their coordinates and label boxes instead, which caught and fixed four faults: an
+    off-canvas label, two overlapping labels, and `dg-text-muted` used on a stroke (it is a
+    **fill** class, so the line stayed unstroked). **On a machine with Chromium, still run
+    `npm run diagram:render` for the five keys and look at the light and dark PNGs.**
+  - Review caveat, same as the other batches: the review was a second adversarial pass by the
+    **same agent** (no separate reviewer model here), with every answer key recomputed in
+    Python from the question's own data. A reviewer should still be run over these six files.
+  - Teaching choices worth keeping: 7.2.2 is taught as “a transverse graph is a photograph, a
+    longitudinal graph is a plot”; compressions sit at the **steepest zero crossings**, never
+    at the crests, and a `deeper` block derives that from particle spacing. The Doppler sign
+    rule is derived from $\lambda = (v \mp v_s)/f_s$ *before* the formula is stated, and
+    $v_s$ (source) is contrasted with $v$ (sound) throughout. The EM ranges use the conventional
+    Cambridge table (radio $> 0.1$ m … gamma $< 0.01$ nm) with visible $400$–$700$ nm, and the
+    lesson says plainly that the boundaries are approximate.
+  - **Cloud-VM gotcha:** `scripts/lessons/publish.sh` now fails earlier than before. With no git
+    identity it dies at `git commit` (“Author identity unknown”); after
+    `git config user.name/user.email` (repo-local) it verifies in its temp worktree and then
+    fails at the push **without leaving a commit in the working tree**. Stage the six lessons,
+    the five diagrams and the regenerated `index.ts` by hand, commit, then `cloud_git push`.
+- **The other chat’s worktree is gone from this VM.** `/workspace/chats/` contains only this
+  chat, so its uncommitted 9701 7.1 drafts are not visible here. Treat 9701 7.1 as claimed
+  until proven otherwise, and check `git log --all` plus `wip-snapshot` before writing it.
 - **CLAIMED by chat `0b8e8fe21ee9b5f6eaa0ce13` from 28 Oct ~11:45: 9701 7.1 Chemical
   equilibria** (10 objectives, prefix `chemical-equilibria`). That chat is writing it now; do
   not start 9701 7.1 as well. The duplicate 9702 7.1 drafts listed in the warning below were
@@ -286,8 +320,9 @@ changes alongside lessons:
   message about that path usually means a missing `LD_LIBRARY_PATH`, not a missing browser.
   If `.work-logs/libs` is gone, re-extract the debs in `.work-logs/libs/debs` with
   `dpkg -x` into `.work-logs/libs/x`.
-- On `main`: **398 reviewed lessons, 2304 questions** (9709: 118, 9618: 105, 9702: 87,
-  9701: 88). All are live. Latest content, all 28 Oct: 9702 7.1 progressive waves (e880df1),
+- On `main`: **404 reviewed lessons, 2337 questions** (9709: 118, 9618: 105, 9702: 93,
+  9701: 88). All are live. Latest content, all 28 Oct: 9702 7.2–7.4 wave types, Doppler and
+  the EM spectrum (5498a33), 9702 7.1 progressive waves (e880df1),
   9618 6.2 data integrity (3c37a6a), 9701 6.1 redox processes (8b3064d), 9702 6.2 elastic and
   plastic behaviour (77f2e9c) and 9618 6.1 data security (a93ff08).
 - **9701 6.1 Redox processes is published** (28 Oct, 8b3064d): 5 lessons
@@ -463,8 +498,9 @@ changes alongside lessons:
       the answer keys was recomputed in Python during the review pass.
     - Review caveat as usual: second adversarial pass by the **same agent**, no separate
       reviewer model here. A reviewer should still be run over `data-integrity-*`.
-- Queue: 38 published, 116 todo (`node scripts/lessons/status.mjs`). The queue's head is
-  **9709 3.6+3.7**, but 9709 is being restyled by the other chat, so skip it. 9702 7.1 is
+- Queue: 39 published, 115 todo (`node scripts/lessons/status.mjs`). The queue's head is
+  **9709 3.6+3.7**. 9709 was being restyled by the other chat, so it was skipped; that
+  worktree is no longer on this VM, so check `git log --all` before taking it. 9702 7.1 is
   done; take **9701 7.1** or **9702 7.2+7.3+7.4** next, after checking the sibling worktree and
   `git log --all` for in-flight files. A whole-unit cycle (write → independent review →
   validate → publish → update this file) runs without asking the user; they asked for it to
