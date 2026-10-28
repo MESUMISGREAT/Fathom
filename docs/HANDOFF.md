@@ -214,6 +214,15 @@ changes alongside lessons:
 
 ## 5. Current state (28 Oct 2026, cloud chat)
 
+- **`content:check` is RED on `main` as of `62caa9c`, caused by the chat writing 9701 topic 8
+  (rates), not by 9701 7.1.** Five errors, all in that chat's newest files: `order 1 in topic
+  8.2 is also used by activation-energy-boltzmann` and `order 1/2 in topic 8.1 ...` (duplicate
+  `order` values within a topic), plus two KaTeX failures in `effect-temperature-boltzmann`
+  where a doubled backslash was left in the maths (a YAML double-quoted string turned
+  `\text{A}` into a literal double backslash, which KaTeX reads as a line break). The publish
+  script refuses to publish while any lesson is invalid, so fix these first if you are
+  publishing anything. Left untouched here because that chat is actively writing those files.
+
 - **9702 7.2+7.3+7.4 is published** (28 Oct, 5498a33, from this chat): 6 lessons
   (`transverse-longitudinal-compare` 7.2.1, `transverse-longitudinal-graphs` 7.2.2,
   `doppler-effect-moving-source` 7.3.1, `doppler-effect-formula` 7.3.2,
