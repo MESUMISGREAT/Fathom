@@ -1,0 +1,295 @@
+id: p3-trig-addition-formulae
+subject: '9709'
+topic: '3.3'
+title: 'sin(A ± B) and friends: exact values without a calculator'
+summary: The addition formulae let you compute trig functions of awkward angles from nice ones — and they are the
+  engine behind the double-angle and R-form results.
+order: 3
+minutes: 8
+kind: core
+objectives:
+- 3.3.2
+prerequisites:
+- p3-trig-sec-cosec-cot
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.3, learning outcome 3.3.2 (the expansions of sin(A ± B), cos(A ± B) and tan(A ± B), including the\
+    \ syllabus example cos(x − 30°) − 3 sin(x − 60°) = 0... solved in the worked examples). Answers were verified\
+    \ in Python. All questions are original.\n    Adversarially re-checked in this cloud session: every numeric\
+    \ answer key recomputed independently with Python (including finite-difference checks of each antiderivative),\
+    \ every MCQ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm\
+    \ run content:check`, `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were\
+    \ removed rather than left dangling, so these lessons currently teach with prose, tables and worked examples\
+    \ only; add the diagrams later. The review was a second pass by the same agent (no separate reviewer model is\
+    \ available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can quote the expansions of $\sin(A \pm B)$, $\cos(A \pm B)$ and
+
+    $\tan(A \pm B)$, use them for exact evaluations such as $\sin 75°$, simplify expressions such
+
+    as $\cos(x - 30°) - \sqrt{3}\sin(x - 60°)$, and expand sines of compound angles.'
+- type: explain
+  title: What they ask
+  body: "Three jobs, all from one tool:\n\n1. **Exact value** of an angle you cannot feed into an exact-triangle,\
+    \ like $75° = 45° + 30°$.\n2. **Expand** an expression like $\\sin(2x + 15°)$ into one involving only $x$ —\
+    \ common when you\n   must solve an equation or integrate.\n3. **Simplify** a mixture like $\\cos\\theta \\\
+    cos 3\\theta - \\sin\\theta \\sin 3\\theta$ back into a\n   single function — read the formula **backwards**."
+- type: definition
+  term: The addition formulae
+  body: '$$\sin(A + B) = \sin A\cos B + \cos A\sin B$$
+
+    $$\sin(A - B) = \sin A\cos B - \cos A\sin B$$
+
+    $$\cos(A + B) = \cos A\cos B - \sin A\sin B$$
+
+    $$\cos(A - B) = \cos A\cos B + \sin A\sin B$$
+
+    $$\tan(A \pm B) = \frac{\tan A \pm \tan B}{1 \mp \tan A\tan B}$$
+
+
+    Memory aid: the **cosine** rule is *"cos·cos, sin·sin with an opposite middle sign"*; the
+
+    **sine** rule keeps the sign of $(A \pm B)$.'
+- type: example
+  title: 'Example 1: exact value of sin 75°'
+  problem: Find the exact value of $\sin 75°$.
+  steps:
+  - 'Split the angle into two nice ones: $75° = 45° + 30°$.'
+  - 'Apply $\sin(A+B) = \sin A\cos B + \cos A\sin B$ with $A = 45°$, $B = 30°$:
+
+
+    $$\sin 75° = \sin 45°\cos 30° + \cos 45°\sin 30°$$'
+  - 'Substitute the exact values $\sin 45° = \tfrac{1}{\sqrt{2}}$, $\cos 30° = \tfrac{\sqrt{3}}{2}$,
+
+    $\cos 45° = \tfrac{1}{\sqrt{2}}$, $\sin 30° = \tfrac{1}{2}$:
+
+
+    $$\sin 75° = \frac{1}{\sqrt{2}}\cdot\frac{\sqrt{3}}{2} + \frac{1}{\sqrt{2}}\cdot\frac{1}{2}$$'
+  - 'Factor out $\tfrac{1}{2\sqrt{2}}$:
+
+
+    $$\sin 75° = \frac{\sqrt{3} + 1}{2\sqrt{2}}$$'
+  - 'Rationalise the denominator if you prefer:
+
+
+    $$\sin 75° = \frac{\sqrt{6} + \sqrt{2}}{4}$$'
+  answer: $\dfrac{\sqrt{6} + \sqrt{2}}{4} \approx 0.966$.
+- type: check
+  title: Quick check
+  questions:
+  - cos-sum-eval
+  - expand-compound
+  - tangent-expansion
+- type: example
+  title: 'Example 2: an exam-style equation'
+  problem: Solve $\cos(x - 30°) - 2\sin(x - 60°) = 0$ for $0° \le x \le 180°$.
+  steps:
+  - 'Expand each compound angle, one rule per line:
+
+
+    $$\cos(x - 30°) = \cos x\cos 30° + \sin x\sin 30° = \frac{\sqrt{3}}{2}\cos x + \frac{1}{2}\sin x$$'
+  - $$\sin(x - 60°) = \sin x\cos 60° - \cos x\sin 60° = \frac{1}{2}\sin x - \frac{\sqrt{3}}{2}\cos x$$
+  - 'Substitute into the equation:
+
+
+    $$\frac{\sqrt{3}}{2}\cos x + \frac{1}{2}\sin x - 2\left(\frac{1}{2}\sin x - \frac{\sqrt{3}}{2}\cos x\right)
+    = 0$$'
+  - 'Expand the bracket, flipping both signs inside:
+
+
+    $$\frac{\sqrt{3}}{2}\cos x + \frac{1}{2}\sin x - \sin x + \sqrt{3}\cos x = 0$$'
+  - 'Collect the cosine terms ($\frac{\sqrt{3}}{2} + \sqrt{3} = \frac{3\sqrt{3}}{2}$) and the
+
+    sine terms ($\frac{1}{2} - 1 = -\frac{1}{2}$):
+
+
+    $$\frac{3\sqrt{3}}{2}\cos x - \frac{1}{2}\sin x = 0$$'
+  - 'Multiply by 2 and rearrange:
+
+
+    $$3\sqrt{3}\cos x = \sin x$$'
+  - 'Divide by $\cos x$ (non-zero here, since $\cos x = 0$ would make the right side 1):
+
+
+    $$\tan x = 3\sqrt{3}$$'
+  - 'Solve on the calculator, to 1 d.p.:
+
+
+    $$x = \arctan(3\sqrt{3}) = 79.1°$$'
+  - 'Check $x = 79.1°$: $\cos 49.1° = 0.6547$ and $2\sin 19.1° = 0.6547$, so the left side is
+
+    $0$ ✓'
+  answer: $x = 79.1°$ (1 d.p.).
+- type: explain
+  title: Reading the formula backwards
+  body: "Simplifying means matching your expression against a formula:\n\n- $\\cos\\theta\\cos 3\\theta - \\sin\\\
+    theta\\sin 3\\theta$ is the **right-hand side** of\n  $\\cos(A + B)$ with $A = \\theta$, $B = 3\\theta$: it\
+    \ is $\\cos 4\\theta$.\n- $\\sin 2x\\cos x + \\cos 2x\\sin x$ is $\\sin(A + B)$ with $A = 2x$, $B = x$: it is\n\
+    \  $\\sin 3x$.\n\nIf the middle sign does not match, factor out a $-1$ first: e.g.\n$-\\cos\\theta\\cos 3\\\
+    theta - \\sin\\theta\\sin 3\\theta = -\\cos 4\\theta$."
+- type: check
+  title: Collapse check
+  questions:
+  - solve-expanded
+  - collapse-formula
+  - negative-factor
+- type: misconceptions
+  items:
+  - wrong: $\cos(A + B) = \cos A + \cos B$.
+    right: 'Sine and cosine are not linear in the angle at all. Take $A = B = 45°$:
+
+      $\cos 90° = 0$ but $\cos 45° + \cos 45° = \sqrt{2} \ne 0$.'
+  - wrong: $\sin(A - B) = \sin A - \sin B$.
+    right: 'Test with $A = 60°$, $B = 30°$: $\sin 30° = \tfrac{1}{2}$ but $\sin 60° - \sin 30° = \tfrac{\sqrt{3}-1}{2}
+      \approx 0.37$.'
+  - wrong: In $\tan(A + B)$ the denominator always has the "wrong-way" sign by accident.
+    right: 'The bottom''s sign is deliberately opposite the top''s: with a $+$ on top it is a $-$ below,
+
+      which stops the denominator ever vanishing for $B = -A$.'
+  - wrong: $\tan(A + B) = \dfrac{\tan A + \tan B}{1 + \tan A\tan B}$.
+    right: 'Watch the denominator: it is $1 - \tan A \tan B$ for $A + B$.'
+  - wrong: $\sin 2x = 2\sin x$.
+    right: 'That is the double-angle lesson''s formula: $\sin 2x = 2\sin x\cos x$. Doubling the angle is
+
+      not the same as doubling the function.'
+- type: exam
+  body: '- Give exact answers in surd form, e.g. $\tfrac{\sqrt6 + \sqrt2}{4}$, unless decimals are requested.
+
+    - When expanding, write the full substitution first, then the simplified line — one rule per line.
+
+    - Equation answers should list every solution in the requested interval, in degrees or radians matching the
+    question.
+
+    - Quote the formula before using it when the mark scheme says "M1 for correct use of the expansion of sin(A−B)".'
+- type: takeaways
+  items:
+  - $\sin(A\pm B) = \sin A\cos B \pm \cos A\sin B$.
+  - $\cos(A\pm B) = \cos A\cos B \mp \sin A\sin B$.
+  - $\tan(A\pm B) = (\tan A \pm \tan B)/(1 \mp \tan A\tan B)$.
+  - Exact values come from splitting the angle into nice ones.
+  - Read the formula backwards to collapse a mixed product of sines and cosines into one function.
+- type: deeper
+  title: Where the formulae come from
+  body: 'The cosine addition rule can be proved with the cosine rule on a triangle in the unit circle, or
+
+    by rotating a point: the point $(\cos A, \sin A)$ rotated by $B$ about the origin has
+
+    coordinates $(\cos(A+B), \sin(A+B))$, and expanding the rotation matrix gives both rules at
+
+    once. The $\tan$ rule then follows by dividing the sine rule by the cosine rule.'
+questions:
+- id: cos-sum-eval
+  format: numeric
+  difficulty: 1
+  objectives:
+  - 3.3.2
+  prompt: 'Using the expansion of $\cos(A + B)$, evaluate
+
+    $\cos 15°$ to 3 decimal places.
+
+
+    Give your answer as a decimal.'
+  fields:
+  - answer: 0.966
+    tolerance:
+      abs: 0.002
+  explanation: '$\cos 15° = \cos(45° - 30°) = \frac{1}{\sqrt2}\cdot\frac{\sqrt3}{2} + \frac{1}{\sqrt2}\cdot\frac{1}{2}
+
+    = \frac{\sqrt3 + 1}{2\sqrt2} \approx 0.966$.'
+- id: expand-compound
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: 'Expand $\sin(2x + 30°)$ as an expression in $\sin x$ and $\cos x$ only.
+
+
+    Type your answer using variables s and c for $\sin x$ and $\cos x$, e.g. `a*s + b*c`.'
+  answer: 0.8660254*s + 0.5*c
+  variables:
+  - s
+  - c
+  domain:
+    min: 0
+    max: 3
+  display: $\tfrac{\sqrt{3}}{2}\sin x + \tfrac{1}{2}\cos x$
+  explanation: '$\sin(2x + 30°) = \sin 2x\cos 30° + \cos 2x\sin 30°
+
+    = \tfrac{\sqrt{3}}{2}\sin x + \tfrac{1}{2}\cos x$.'
+- id: tangent-expansion
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Which is the correct expansion of $\tan(A - B)$?
+  options:
+  - text: $\dfrac{\tan A - \tan B}{1 + \tan A\tan B}$
+    correct: true
+    why: Top uses the $-$ of the angle, bottom uses the opposite sign.
+  - text: $\dfrac{\tan A - \tan B}{1 - \tan A\tan B}$
+    why: Both signs the same would make $\tan(A - A)$ blow up; the denominator must be $1 + 0$-safe, and $1-\tan
+      A\tan A$ is wrong here.
+  - text: $\dfrac{\tan A + \tan B}{1 - \tan A\tan B}$
+    why: That is $\tan(A + B)$.
+  - text: $\dfrac{\sin(A - B)}{\cos(A - B)}$ — this equals $\tan(A - B)$, but the two sina rules must be applied
+      first
+    why: True as a rewrite, but as an expansion in terms of $\tan A$ and $\tan B$ it must become the fraction in
+      option 1.
+  explanation: '$\tan(A \pm B) = \dfrac{\tan A \pm \tan B}{1 \mp \tan A \tan B}$, so the minus form has a plus
+
+    below.'
+- id: solve-expanded
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.3.2
+  prompt: 'Solving $\cos(x - 30°) - 2\sin(x - 60°) = 0$ for $0° \le x \le 180°$ gives one solution.
+
+
+    Give that solution in degrees, to 1 decimal place.'
+  fields:
+  - answer: 79.1
+    tolerance:
+      abs: 0.1
+  explanation: 'Expanding $\cos(x - 30°) - 2\sin(x - 60°)$ gives
+
+    $\frac{3\sqrt{3}}{2}\cos x - \frac{1}{2}\sin x = 0$, so $\tan x = 3\sqrt{3}$ and
+
+    $x = \arctan(3\sqrt{3}) = 79.1°$.'
+- id: collapse-formula
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: $\cos\theta\cos 3\theta - \sin\theta\sin 3\theta$ is equal to which single function?
+  options:
+  - text: $\cos 4\theta$
+    correct: true
+    why: It matches $\cos(A + B) = \cos A\cos B - \sin A\sin B$ with $A = \theta$, $B = 3\theta$.
+  - text: $\cos 2\theta$
+    why: The angles add, so the result is $\cos(\theta + 3\theta)$, not $\cos(3\theta - \theta)$.
+  - text: $\sin 4\theta$
+    why: The $\cos\cos$, $\sin\sin$ pattern belongs to cosine.
+  - text: $\sec 4\theta$
+    why: $\sec$ is the reciprocal of $\cos$; no reciprocal appears in the formula.
+  explanation: 'Read the formula backwards: a sum of angles inside $\cos$ on the right.'
+- id: negative-factor
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.3.2
+  prompt: $\sin\theta\cos 2\theta - \cos\theta\sin 2\theta$ equals which expression?
+  options:
+  - text: $\sin(\theta - 2\theta) = \sin(-\theta) = -\sin\theta$
+    correct: true
+    why: The middle sign is $-$, so the angle is a difference, and $\sin(-\theta) = -\sin\theta$.
+  - text: $\sin 3\theta$
+    why: A plus sign between the terms would give $\sin 3\theta$; the minus changes everything.
+  - text: $\cos\theta$
+    why: The cosine formula would need a $\cos\cos$ term.
+  - text: $\cos 3\theta$
+    why: Substituting a single angle gives $\sin(-\theta)$, not a cosine identity.
+  explanation: Spot the $\sin A\cos B - \cos A\sin B$ pattern and collapse to $\sin(A - B)$.

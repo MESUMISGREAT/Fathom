@@ -1,0 +1,265 @@
+id: p3-trig-double-angle
+subject: '9709'
+topic: '3.3'
+title: 'Double angles: sin 2A, cos 2A and tan 2A'
+summary: Put B = A in the addition formulae and you get three new identities — cos 2A in particular has three interchangeable
+  versions, and picking the right one is the whole skill.
+order: 4
+minutes: 8
+kind: core
+objectives:
+- 3.3.2
+prerequisites:
+- p3-trig-addition-formulae
+- p3-trig-pythagorean-identities
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.3, learning outcome 3.3.2 (the formulae for sin 2A, cos 2A and tan 2A). Answers were verified in Python.\
+    \ All questions are original.\n    Adversarially re-checked in this cloud session: every numeric answer key\
+    \ recomputed independently with Python (including finite-difference checks of each antiderivative), every MCQ\
+    \ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm run content:check`,\
+    \ `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were removed rather than\
+    \ left dangling, so these lessons currently teach with prose, tables and worked examples only; add the diagrams\
+    \ later. The review was a second pass by the same agent (no separate reviewer model is available here); a teacher\
+    \ has not seen these."
+blocks:
+- type: objective
+  body: By the end you can state and use $\sin 2A$, the three forms of $\cos 2A$ and $\tan 2A$, choose the form
+    that removes an unwanted square, and solve equations such as $\cos 2\theta = \sin\theta$.
+- type: explain
+  title: What they ask
+  body: 'Double-angle questions always involve **an angle and double that angle** in the same equation —
+
+    $x$ and $2x$, $\theta$ and $2\theta$.
+
+
+    The job is to make every term a function of the **same** angle. That means either expanding
+
+    $2A$ down to $A$, or converting $\sin^2$/$\cos^2$ terms into $\cos 2A$ on the way back up.
+
+
+    Three forms of $\cos 2A$ exist, and each is best for a different job:
+
+
+    | Form | Use it when |
+
+    |---|---|
+
+    | $\cos 2A = 1 - 2\sin^2 A$ | the equation has $\sin^2 A$ |
+
+    | $\cos 2A = 2\cos^2 A - 1$ | the equation has $\cos^2 A$ |
+
+    | $\cos 2A = \cos^2 A - \sin^2 A$ | both squares are present |
+
+
+    Choosing the only form that kills the leftover square is how "impossible" equations become
+
+    one-line ones.'
+- type: definition
+  term: The double-angle formulae
+  body: '$$\sin 2A = 2\sin A\cos A$$
+
+    $$\cos 2A = \cos^2 A - \sin^2 A = 2\cos^2 A - 1 = 1 - 2\sin^2 A$$
+
+    $$\tan 2A = \frac{2\tan A}{1 - \tan^2 A}$$
+
+
+    They all come from the addition formulae with $B = A$.'
+- type: explain
+  title: The method for solving a mixed $A$ / $2A$ equation
+  body: "1. **Spot the types present.** If the equation has $\\sin^2 A$ and you want it gone, use the\n   $\\cos\
+    \ 2A = 1 - 2\\sin^2 A$ form in reverse; likewise for $\\cos^2 A$.\n2. **Rewrite so every term is a function\
+    \ of $A$ only.**\n3. **Solve** as an ordinary trigonometric equation, keeping $\\pm$ signs where square roots\n\
+    \   appear.\n4. **Distrust nothing:** check each solution in the *original* equation, because expansions\n \
+    \  with $2A$ quietly change the interval that $2\\theta$ runs over.\n\n**The forgotten step:** if you solve\
+    \ for $x$ but the equation contains $2x$, remember the\nangles $2x$ must cover **twice** the given interval,\
+    \ so the number of solutions doubles."
+- type: example
+  title: 'Example 1: a seamless one'
+  problem: Solve $\cos 2\theta = \sin\theta$ for $0° \le \theta \le 360°$.
+  steps:
+  - 'Use $\cos 2\theta = 1 - 2\sin^2\theta$ (the form that turns the left side into sines only):
+
+
+    $$1 - 2\sin^2\theta = \sin\theta$$'
+  - 'Tidy into a quadratic in $s = \sin\theta$:
+
+
+    $$2s^2 + s - 1 = 0$$'
+  - 'Factorise: $(2s - 1)(s + 1) = 0$, so $s = \tfrac{1}{2}$ or $s = -1$.'
+  - $\sin\theta = \tfrac{1}{2}$ gives $\theta = 30°, 150°$.
+  - $\sin\theta = -1$ gives $\theta = 270°$.
+  - 'Check one: $\cos(2 \times 30°) = \cos 60° = \tfrac{1}{2} = \sin 30°$ ✓'
+  answer: $\theta = 30°, 150°, 270°$.
+- type: check
+  title: Quick check
+  questions:
+  - recall-cos2
+  - cos2-evaluate
+  - solve-sin2
+- type: example
+  title: 'Example 2: converting the other way'
+  problem: 'Write $4\sin^2 x$ in terms of $\cos 2x$, and hence find the exact value of
+
+    $4\sin^2 22.5°$.'
+  steps:
+  - 'Start from $\cos 2x = 1 - 2\sin^2 x$ and rearrange:
+
+
+    $$\sin^2 x = \frac{1 - \cos 2x}{2}$$'
+  - 'Multiply by 4:
+
+
+    $$4\sin^2 x = 2(1 - \cos 2x) = 2 - 2\cos 2x$$'
+  - 'Put $x = 22.5°$, so $2x = 45°$:
+
+
+    $$4\sin^2 22.5° = 2 - 2\cos 45° = 2 - 2\left(\frac{1}{\sqrt{2}}\right) = 2 - \sqrt{2}$$'
+  answer: $4\sin^2 x = 2 - 2\cos 2x$, so $4\sin^2 22.5° = 2 - \sqrt{2} \approx 0.586$.
+- type: check
+  title: Exam-style check
+  questions:
+  - sin-substitution
+  - solve-cos2-eq
+  - cot-exact
+- type: misconceptions
+  items:
+  - wrong: $\sin 2A = 2\sin A$.
+    right: 'Doubling an angle does not double the sine. $\sin 2A = 2\sin A\cos A$; at $A = 30°$ the two
+
+      sides are $\tfrac{\sqrt{3}}{2}$ and $1$.'
+  - wrong: $\cos 2A$ has only one form, $\cos^2 A - \sin^2 A$.
+    right: 'All three are equivalent identities; the Pythagorean identity converts between them. Match
+
+      the form to the equation.'
+  - wrong: $\cos 2A = 2\cos A$.
+    right: 'The same trap in cosine clothing: $\cos 90° = 0$ but $2\cos 45° = \sqrt{2}$.'
+  - wrong: In $\tan 2A$ you may divide the bottom by 2 as well.
+    right: 'Only the top is doubled: $\tan 2A = \dfrac{2\tan A}{1 - \tan^2 A}$. Halving the bottom is
+
+      meaningless algebra.'
+  - wrong: Solving $\cos 2x = \sin x$ for $0 \le x \le 360°$ needs only two solutions.
+    right: 'The $2x$ doubles the effective interval, and the quadratic may have several roots — always
+
+      solve the reduced (single-angle) equation over the original interval and check the count.'
+- type: exam
+  body: '- State which form of $\cos 2A$ you are using; "M1 for using a correct form of cos 2A" is a real mark.
+
+    - When the equation mixes sin and cos of different multiples, expand before solving.
+
+    - Give solutions to 1 d.p. or as exact values as the question asks, and list them across the full interval.
+
+    - For "express ... in terms of cos 2x", work from the identity rather than guessing from memory.'
+- type: takeaways
+  items:
+  - $\sin 2A = 2\sin A\cos A$.
+  - '$\cos 2A$: pick $1 - 2\sin^2 A$, $2\cos^2 A - 1$ or $\cos^2 A - \sin^2 A$ to remove the square that is in the
+    way.'
+  - $\tan 2A = \dfrac{2\tan A}{1 - \tan^2 A}$.
+  - Turn $2\theta$ down to $\theta$ before solving, then double-check the interval for $2\theta$.
+  - Half-angle values like $\sin^2 22.5°$ come from running the same identity backwards.
+- type: deeper
+  title: Why three forms, not one
+  body: '$\cos^2 A - \sin^2 A$ is the direct $B = A$ case of the expansion of $\cos(A + B)$. The other
+
+    two come from replacing one square using $\sin^2 + \cos^2 \equiv 1$.
+
+
+    Having three names for one thing is useful precisely because an equation contaminates itself
+
+    with one particular square. Each form excels at deleting one of the three squares, which is
+
+    why "which form?" is a genuine skill, not trivia.'
+questions:
+- id: recall-cos2
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.3.2
+  prompt: Which of these is NOT a valid form of $\cos 2\theta$?
+  options:
+  - text: $2\cos\theta$
+    correct: true
+    why: 'Doubling the angle does not double the cosine: $\cos 60° = \tfrac12$ but $2\cos 30° = 2\cdot\tfrac{\sqrt3}{2}
+      = \sqrt3$.'
+  - text: $1 - 2\sin^2\theta$
+    why: Valid; it comes from $\cos(A + B)$ with $A = B = \theta$ and $\sin^2 + \cos^2 = 1$.
+  - text: $2\cos^2\theta - 1$
+    why: Valid; same source, different rearrangement.
+  - text: $\cos^2\theta - \sin^2\theta$
+    why: Valid; the direct form of the compound-angle formula with $A = B = \theta$.
+  explanation: All three real forms exist; $2\cos\theta$ is the classic "linear thinking" error.
+- id: cos2-evaluate
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Given $\cos\theta = 0.6$ and $\theta$ acute, find $\cos 2\theta$ as a decimal.
+  fields:
+  - answer: -0.28
+    tolerance:
+      abs: 0.001
+  explanation: $\cos 2\theta = 2\cos^2\theta - 1 = 2(0.36) - 1 = -0.28$.
+- id: solve-sin2
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Solve $2\sin\theta\cos\theta = 0.8$ for $0° \le \theta \le 90°$. Enter the answer in degrees to 1 decimal
+    place.
+  fields:
+  - answer: 26.6
+    tolerance:
+      abs: 0.2
+  explanation: The left side is $\sin 2\theta$, so $\sin 2\theta = 0.8$, $2\theta = \arcsin 0.8 = 53.1°$, and $\theta
+    = 26.6°$.
+- id: sin-substitution
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Express $\sin 2\theta$ in terms of $\tan\theta$ (call it $t$).
+  options:
+  - text: $\dfrac{2t}{1 + t^2}$
+    correct: true
+    why: $\sin 2\theta = 2\sin\theta\cos\theta = \dfrac{2\tan\theta}{\sec^2\theta} = \dfrac{2t}{1 + t^2}$.
+  - text: $\dfrac{1 - t^2}{1 + t^2}$
+    why: That is $\cos 2\theta$ in terms of $t$.
+  - text: $\dfrac{2t}{1 - t^2}$
+    why: That is $\tan 2\theta$ in terms of $t$.
+  - text: $\dfrac{t}{1 + t^2}$
+    why: Missing the factor 2 from both the double angle and the numerator.
+  explanation: 'Divide $\sin 2\theta$ by $\sin^2\theta + \cos^2\theta$ written in terms of $t$: numerator $2t$,
+    denominator $1 + t^2$.'
+- id: solve-cos2-eq
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.3.2
+  prompt: Solve $1 - 2\sin^2\theta = 0.5$ for $0° \le \theta \le 180°$. The smaller solution in degrees, to 1 decimal
+    place, is?
+  fields:
+  - answer: 30
+    tolerance:
+      abs: 0.2
+  explanation: 'The equation is $\cos 2\theta = 0.5$, so $2\theta = 60°$ or $300°$; only $60°$ lies in range twice
+    as $\theta$: $\theta = 30°$ (the other gives $150°$, which is the larger solution).'
+- id: cot-exact
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.3.2
+  prompt: $\cos 2\theta = \dfrac14$ with $\theta$ acute. What is $\sin^2\theta$ exactly?
+  options:
+  - text: $\dfrac38$
+    correct: true
+    why: $\cos 2\theta = 1 - 2\sin^2\theta$ rearranges to $\sin^2\theta = \tfrac12(1 - \tfrac14) = \tfrac38$.
+  - text: $\dfrac{3}{16}$
+    why: That would halve twice; the identity uses a factor of 2, not another division.
+  - text: $\dfrac58$
+    why: $\tfrac58 = \tfrac12(1 + \tfrac14)$, the value of $\cos^2\theta$ instead.
+  - text: $\dfrac14$
+    why: The value of $\cos 2\theta$ itself, not of $\sin^2\theta$.
+  explanation: 'Rearrange $\cos 2\theta = 1 - 2\sin^2\theta$: $\sin^2\theta = \dfrac{1 - \tfrac14}{2} = \dfrac38$.'

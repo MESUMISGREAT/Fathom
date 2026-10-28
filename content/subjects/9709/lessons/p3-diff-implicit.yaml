@@ -1,0 +1,268 @@
+id: p3-diff-implicit
+subject: '9709'
+topic: '3.4'
+title: 'Implicit differentiation: when y cannot be freed'
+summary: Curves like x² + y² = xy + 7 mix x and y. Differentiate term by term and let dy/dx ride along as an unknown.
+order: 3
+minutes: 8
+kind: core
+objectives:
+- 3.4.3
+prerequisites:
+- p3-diff-products-quotients
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.4, learning outcome 3.4.3, using the syllabus example x² + y² = xy + 7. Answers were verified in Python.\
+    \ All questions are original.\n    Adversarially re-checked in this cloud session: every numeric answer key\
+    \ recomputed independently with Python (including finite-difference checks of each antiderivative), every MCQ\
+    \ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm run content:check`,\
+    \ `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were removed rather than\
+    \ left dangling, so these lessons currently teach with prose, tables and worked examples only; add the diagrams\
+    \ later. The review was a second pass by the same agent (no separate reviewer model is available here); a teacher\
+    \ has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can differentiate an implicit equation such as $x^2 + y^2 = xy + 7$, solve for
+
+    $\dfrac{dy}{dx}$, and use the result for gradients, tangents and normals.'
+- type: explain
+  title: What they ask
+  body: 'Two shapes of question, both starting the same way:
+
+
+    1. **Find $\dfrac{dy}{dx}$** at a given point on a curve whose equation has $x$ and $y$ mixed.
+
+    2. **Find the tangent or normal** at a point — gradient first, then a straight-line equation.
+
+
+    The syllabus example $x^2 + y^2 = xy + 7$ is typical: you *could* solve for $y$ (it is a
+
+    quadratic in $y$) but the square roots make differentiation horrible. Implicit differentiation
+
+    avoids that entirely.'
+- type: explain
+  title: The method
+  body: "The key fact: because $y$ is a function of $x$, differentiating $y$-terms needs the chain rule.\n\n1. **Differentiate\
+    \ both sides with respect to $x$**, term by term.\n2. **Whenever $y$ is differentiated**, attach a factor $\\\
+    dfrac{dy}{dx}$. In particular:\n\n   $$\\frac{d}{dx}\\,(y^2) = 2y\\,\\frac{dy}{dx}, \\qquad \\frac{d}{dx}\\\
+    ,(y) = \\frac{dy}{dx}, \\qquad \\frac{d}{dx}\\,(y^3) = 3y^2\\frac{dy}{dx}$$\n3. **Use the product rule for $xy$**:\n\
+    \n   $$\\frac{d}{dx}\\,(xy) = x\\frac{dy}{dx} + y$$\n4. **Collect all $\\dfrac{dy}{dx}$ terms** on one side\
+    \ and factorise.\n5. **Divide**, then substitute the point if a number is needed.\n\n**The forgotten step:**\
+    \ writing $\\dfrac{dy}{dx}$ next to *every* $y$-term as you go. Missing\none leaves an equation that produces\
+    \ a wrong gradient and propagates into the tangent."
+- type: example
+  title: 'Example 1: the syllabus curve'
+  problem: Find $\dfrac{dy}{dx}$ in terms of $x$ and $y$ for $x^2 + y^2 = xy + 7$.
+  steps:
+  - 'Differentiate the left side directly:
+
+
+    $$\frac{d}{dx}\left(x^2 + y^2\right) = 2x + 2y\frac{dy}{dx}$$'
+  - 'Differentiate $xy$ with the product rule:
+
+
+    $$\frac{d}{dx}\,(xy) = y + x\frac{dy}{dx}$$'
+  - 'Equate the differentiated sides (the 7 differentiates to 0):
+
+
+    $$2x + 2y\frac{dy}{dx} = y + x\frac{dy}{dx}$$'
+  - 'Collect the $\dfrac{dy}{dx}$ terms on the left:
+
+
+    $$(2y - x)\frac{dy}{dx} = y - 2x$$'
+  - 'Divide:
+
+
+    $$\frac{dy}{dx} = \frac{y - 2x}{2y - x}$$'
+  answer: $\dfrac{dy}{dx} = \dfrac{y - 2x}{2y - x}$.
+- type: check
+  title: Quick check
+  questions:
+  - key-idea
+  - circle-gradient
+  - product-term
+- type: example
+  title: 'Example 2: a tangent and a normal'
+  problem: Find the equation of the tangent and the normal to $x^2 + y^2 = xy + 7$ at the point $(1, 3)$.
+  steps:
+  - 'First confirm the point is on the curve: $1 + 9 = 3 + 7$ ✓'
+  - 'Substitute $x = 1$, $y = 3$ into $\dfrac{dy}{dx} = \dfrac{y - 2x}{2y - x}$:
+
+
+    $$\frac{dy}{dx} = \frac{3 - 2}{6 - 1} = \frac{1}{5}$$'
+  - 'Tangent: gradient $\tfrac{1}{5}$ through $(1, 3)$:
+
+
+    $$y - 3 = \frac{1}{5}(x - 1) \quad\Longrightarrow\quad y = \frac{1}{5}x + \frac{14}{5}$$'
+  - 'Normal: gradients multiply to $-1$, so the normal has gradient $-5$:
+
+
+    $$y - 3 = -5(x - 1) \quad\Longrightarrow\quad y = -5x + 8$$'
+  - 'Check the tangent passes through $(1,3)$: $\tfrac{1}{5} + \tfrac{14}{5} = 3$ ✓'
+  answer: Tangent $y = \tfrac{1}{5}x + \tfrac{14}{5}$; normal $y = -5x + 8$.
+- type: check
+  title: Exam-style check
+  questions:
+  - solve-for-ddx
+  - mixed-slope
+  - why-write-dydx
+- type: explain
+  title: When to solve for y instead
+  body: 'If $y$ can be isolated *and* the square roots stay tame, explicit differentiation is fine — e.g.
+
+    $x^2 + y = 5$ gives "$y = 5 - x^2$" immediately.
+
+
+    Implicit is for those awkward cases: circles, products, powers of $y$, or equations where
+
+    solving for $y$ introduces radicals you would only differentiate painfully.
+
+
+    Exam tip: Cambridge often tells you to leave $\dfrac{dy}{dx}$ in terms of $x$ and $y$ — take
+
+    that literally and do not try to eliminate $y$.'
+- type: misconceptions
+  items:
+  - wrong: $\dfrac{d}{dx}(y^2) = 2y$.
+    right: '$y$ depends on $x$, so the chain rule adds the factor:
+
+      $\dfrac{d}{dx}(y^2) = 2y\dfrac{dy}{dx}$.'
+  - wrong: $\dfrac{d}{dx}(y) = 1$.
+    right: $y$ is not the variable being differentiated; $\dfrac{d}{dx}(y) = \dfrac{dy}{dx}$.
+  - wrong: In $x^2 + y^2 = xy + 7$ you may cancel $x^2$ and $y^2$ against each other.
+    right: 'They are different terms; nothing can be cancelled, and trying loses the structure of the
+
+      equation.'
+  - wrong: Implicit differentiation only works at points where $y$ is known.
+    right: 'You can differentiate the whole relation and leave $\dfrac{dy}{dx}$ in $x$ and $y$; the
+
+      point is only needed for numeric gradients.'
+  - wrong: The normal's gradient is $-\dfrac{dy}{dx}$.
+    right: The normal is perpendicular, so its gradient is $-\dfrac{dx}{dy} = -1 \Big/ \dfrac{dy}{dx}$.
+- type: exam
+  body: '- Differentiate line by line and keep $\dfrac{dy}{dx}$ attached to every $y$-factor as it appears.
+
+    - Solving for $\dfrac{dy}{dx}$ earns its own mark; show the collect-and-divide step.
+
+    - For tangents and normals, substitute the point **before** simplifying the fraction; substituting at the end
+    hides sign errors.
+
+    - Normal: quote "$m_1m_2 = -1$" or "gradients of perpendicular lines multiply to $-1$" for the method mark.'
+- type: takeaways
+  items:
+  - Differentiate both sides with respect to $x$; attach $\dfrac{dy}{dx}$ to every $y$-term.
+  - $\dfrac{d}{dx}(y^n) = ny^{n-1}\dfrac{dy}{dx}$.
+  - $\dfrac{d}{dx}(xy) = y + x\dfrac{dy}{dx}$.
+  - Collect the $\dfrac{dy}{dx}$ terms, factorise, divide.
+  - Normal gradient $= -1/\text{(tangent gradient)}$.
+- type: deeper
+  title: Why the chain rule clause appears
+  body: 'Think of $y(x)$ as a function. Then $y^2$ is a composite: outside $u^2$, inside $u = y$.
+
+
+    $$\frac{d}{dx}(y^2) = \frac{d}{du}(u^2)\Big|_{u = y}\cdot\frac{dy}{dx} = 2y\frac{dy}{dx}$$
+
+
+    The same logic produces terms like $\cos y\,\dfrac{dy}{dx}$ or $\sec^2 y\,\dfrac{dy}{dx}$ in harder examples,
+    and it is exactly how implicit
+
+    differentiation avoids solving for $y$ first.'
+questions:
+- id: key-idea
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.4.3
+  prompt: Implicit differentiation of $y^2$ with respect to $x$ gives which expression?
+  options:
+  - text: $2y\,\dfrac{dy}{dx}$
+    correct: true
+    why: 'Chain rule: differentiate the outside ($2y$) then multiply by the inner derivative $dy/dx$.'
+  - text: $2y$
+    why: That differentiates with respect to $y$; the variable is $x$, so the chain factor is required.
+  - text: $2\,\dfrac{dy}{dx}$
+    why: The factor $y$ from the power rule is lost — $y$ is not 1.
+  - text: $y + \dfrac{dy}{dx}$
+    why: A product rule would give such a shape for $x\cdot y$, not for $y^2$, and the coefficient is wrong.
+  explanation: $\dfrac{d}{dx}(y^n) = n\,y^{n-1}\dfrac{dy}{dx}$; the $y$ stays as a factor and the chain rule appends
+    $dy/dx$.
+- id: circle-gradient
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.4.3
+  prompt: $x^2 + y^2 = 25$. Find the gradient of the curve at the point $(4, 3)$.
+  fields:
+  - answer: -1.3333
+    tolerance:
+      abs: 0.002
+  explanation: $2x + 2y\dfrac{dy}{dx} = 0$ gives $\dfrac{dy}{dx} = -\dfrac{x}{y} = -\dfrac43$, the usual negative-reciprocal
+    fact for circles/tangents.
+- id: product-term
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.4.3
+  prompt: 'Implicitly differentiate $xy = 6$ and give $\dfrac{dy}{dx}$ in the form $-y/x$;
+
+
+    type your answer as a formula in $x$ and $y$, e.g. `-x/y` — correct form will be read literally.'
+  answer: -(y)/x
+  variables:
+  - x
+  - y
+  display: $\dfrac{dy}{dx} = -\dfrac{y}{x}$
+  explanation: 'Product rule: $x\dfrac{dy}{dx} + y = 0$, so $\dfrac{dy}{dx} = -\dfrac{y}{x}$. (This is the hyperbola
+    $y = 6/x$ obeying the ordinary rule.)'
+- id: solve-for-ddx
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.4.3
+  prompt: For $x^2 + xy + y^2 = 9$, implicit differentiation gives what before rearranging?
+  options:
+  - text: $2x + x\dfrac{dy}{dx} + y + 2y\dfrac{dy}{dx} = 0$
+    correct: true
+    why: $xy$ needs the product rule, so it contributes two terms with and without $dy/dx$.
+  - text: $2x + y\dfrac{dy}{dx} + 2y\dfrac{dy}{dx} = 0$
+    why: 'The $xy$ product rule is half-done: the $x$ factor''s own contribution $x\dfrac{dy}{dx}$ is missing along
+      with the plain $y$.'
+  - text: $2x + x + y + 2y = 0$
+    why: Every mention of $y$ needs a $\dfrac{dy}{dx}$ factor — implicit differentiation never treats $y$ as constant.
+  - text: $2x + 2y\dfrac{dy}{dx} = 0$
+    why: The middle term $xy$ has been dropped entirely.
+  explanation: 'Term by term: $2x$ from $x^2$; product rule on $xy$ gives $x\dfrac{dy}{dx} + y$; and $2y\dfrac{dy}{dx}$
+    from $y^2$.'
+- id: mixed-slope
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.4.3
+  prompt: 'The curve $x^2 + xy + y^2 = 7$ passes through $(1, 2)$: check $1 + 2 + 4 = 7$. Find $\frac{dy}{dx}$ at
+    $(1, 2)$, as a decimal.'
+  fields:
+  - answer: -0.8
+    tolerance:
+      abs: 0.002
+  explanation: 'Differentiating term by term: $2x + x\frac{dy}{dx} + y + 2y\frac{dy}{dx} = 0$. At $(1, 2)$:
+
+    $2 + \frac{dy}{dx} + 2 + 4\frac{dy}{dx} = 0$, so $5\frac{dy}{dx} = -4$ and $\frac{dy}{dx} = -0.8$.'
+- id: why-write-dydx
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.4.3
+  prompt: Explain why differentiating $y^2$ with respect to $x$ must include a factor $\dfrac{dy}{dx}$, in a way
+    a beginner would follow.
+  model: 'You differentiate $y^2$ with respect to $y$ first — getting $2y$ — but the final answer must be a
+
+    rate per unit of $x$. Since $y$ itself changes as $x$ changes, the chain rule multiplies by
+
+    $\dfrac{dy}{dx}$ to convert between the two rates.'
+  keyPoints:
+  - Differentiate the outside with respect to $y$ first
+  - Chain rule requires multiplying by $dy/dx$
+  - The same idea as differentiating $(2x)^2$, where the inner function is $y$
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.

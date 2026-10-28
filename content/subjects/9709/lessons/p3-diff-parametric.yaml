@@ -1,0 +1,241 @@
+id: p3-diff-parametric
+subject: '9709'
+topic: '3.4'
+title: 'Parametric differentiation: both coordinates ride on t'
+summary: When x and y are both functions of t, divide the two derivative rates and t cancels — leaving the curve's
+  gradient at any point.
+order: 4
+minutes: 8
+kind: core
+objectives:
+- 3.4.3
+prerequisites:
+- p3-diff-standard-derivatives
+- p3-diff-implicit
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.4, learning outcome 3.4.3, using the syllabus example pair x = t − e^{2t}, y = t + e^{2t}. Answers\
+    \ were verified in Python. All questions are original.\n    Adversarially re-checked in this cloud session:\
+    \ every numeric answer key recomputed independently with Python (including finite-difference checks of each\
+    \ antiderivative), every MCQ verified to have exactly one correct option, syllabus objectives mapped lesson\
+    \ by lesson, and `npm run content:check`, `tsc` and 166 vitest tests all clean. Diagram references whose SVGs\
+    \ do not exist yet were removed rather than left dangling, so these lessons currently teach with prose, tables\
+    \ and worked examples only; add the diagrams later. The review was a second pass by the same agent (no separate\
+    \ reviewer model is available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can find $\dfrac{dy}{dx}$ for a parametric pair, evaluate it at a given
+
+    parameter, and use it for tangents and normals.'
+- type: explain
+  title: What they ask
+  body: "A parametric curve gives both coordinates as functions of a parameter:\n\n$$x = f(t), \\qquad y = g(t)$$\n\
+    \nTypical questions:\n\n1. **Find $\\dfrac{dy}{dx}$** in terms of $t$.\n2. **Find the tangent or normal** at\
+    \ a specific value of $t$ (then convert to a Cartesian\n   equation if asked).\n3. Occasionally: \"show that\
+    \ the gradient never vanishes\" or the like, using the derivative's\n   sign."
+- type: definition
+  term: Parametric gradient rule
+  body: '$$\frac{dy}{dx} = \frac{\dfrac{dy}{dt}}{\dfrac{dx}{dt}}$$
+
+
+    whenever $\dfrac{dx}{dt} \neq 0$.
+
+
+    Intuition: $\dfrac{dy}{dx} = \dfrac{\Delta y / \Delta t}{\Delta x / \Delta t}$ for small
+
+    changes, and the $t$''s cancel — the same cancellation used on a speed/speed ratio to get a
+
+    slope.'
+- type: explain
+  title: The method
+  body: "1. **Differentiate $y = g(t)$** with respect to $t$ (chain rule if needed).\n2. **Differentiate $x = f(t)$**\
+    \ with respect to $t$.\n3. **Divide** the two results.\n4. **Substitute the given $t$-value** to get a numeric\
+    \ gradient.\n5. **Write the tangent or normal** using point (from $x(t)$, $y(t)$) and gradient, converting\n\
+    \   to any asked form.\n\n**The forgotten step:** both coordinates are needed for the **point**, not just $x$.\n\
+    Students solve for $t$, substitute into $x$, and forget to find $y$."
+- type: example
+  title: 'Example 1: the syllabus pair'
+  problem: 'The curve is given by $x = t - e^{2t}$, $y = t + e^{2t}$. Find
+
+    $\dfrac{dy}{dx}$ in terms of $t$ and its value at $t = 0$.'
+  steps:
+  - 'Differentiate $y$ with respect to $t$ (the exponential needs the chain rule):
+
+
+    $$\frac{dy}{dt} = 1 + 2e^{2t}$$'
+  - 'Differentiate $x$ with respect to $t$:
+
+
+    $$\frac{dx}{dt} = 1 - 2e^{2t}$$'
+  - 'Divide:
+
+
+    $$\frac{dy}{dx} = \frac{1 + 2e^{2t}}{1 - 2e^{2t}}$$'
+  - 'At $t = 0$: $e^0 = 1$, so
+
+
+    $$\frac{dy}{dx} = \frac{1 + 2}{1 - 2} = -3$$'
+  - 'The point at $t = 0$ is $(0 - 1, 0 + 1) = (-1, 1)$, so the tangent at that point would have
+
+    gradient $-3$ through $(-1, 1)$.'
+  answer: $\dfrac{dy}{dx} = \dfrac{1 + 2e^{2t}}{1 - 2e^{2t}}$; at $t = 0$ it is $-3$.
+- type: check
+  title: Quick check
+  questions:
+  - parametric-gradient
+  - point-from-t
+- type: example
+  title: 'Example 2 a classic: the standard circle-like curve'
+  problem: 'A curve is given by $x = 4\cos t$, $y = 3\sin t$ for $0 < t < \frac{\pi}{2}$.
+
+    Find $\dfrac{dy}{dx}$ in terms of $t$ and hence the tangent at $t = \dfrac{\pi}{3}$.'
+  steps:
+  - $$\frac{dx}{dt} = -4\sin t, \qquad \frac{dy}{dt} = 3\cos t$$
+  - 'Divide:
+
+
+    $$\frac{dy}{dx} = \frac{3\cos t}{-4\sin t} = -\frac{3}{4}\cot t$$'
+  - 'At $t = \tfrac{\pi}{3}$: $\cot\tfrac{\pi}{3} = \dfrac{1}{\sqrt{3}}$, so
+
+
+    $$\frac{dy}{dx} = -\frac{3}{4\sqrt{3}} = -\frac{\sqrt{3}}{4}$$'
+  - 'The point: $x = 4\cos\tfrac{\pi}{3} = 2$, $y = 3\sin\tfrac{\pi}{3} = \tfrac{3\sqrt{3}}{2}$.'
+  - 'Tangent line through $\left(2, \tfrac{3\sqrt{3}}{2}\right)$ with gradient $-\tfrac{\sqrt{3}}{4}$:
+
+
+    $$y - \frac{3\sqrt{3}}{2} = -\frac{\sqrt{3}}{4}(x - 2)$$'
+  - 'Check the gradient at a smaller $t$, say $\tfrac{\pi}{6}$:
+
+    $-\tfrac{3}{4}\cot\tfrac{\pi}{6} = -\tfrac{3\sqrt{3}}{4} \approx -1.3$, consistent with a steep
+
+    downward slope on a narrow ellipse ✓'
+  answer: '$\dfrac{dy}{dx} = -\dfrac{3}{4}\cot t$; the tangent at $t = \tfrac{\pi}{3}$ is
+
+    $y - \tfrac{3\sqrt{3}}{2} = -\tfrac{\sqrt{3}}{4}(x - 2)$.'
+- type: explain
+  title: Converting to Cartesian when asked
+  body: "Some follow-ups want the gradient in $x$ and $y$ only. Options:\n\n- eliminate $t$ explicitly ($\\cos t\
+    \ = \\tfrac{x}{4}$, $\\sin t = \\tfrac{y}{3}$, then\n  $\\sin^2 + \\cos^2 = 1$ gives $\\tfrac{x^2}{16} + \\\
+    tfrac{y^2}{9} = 1$);\n- or keep the parametric form of $\\dfrac{dy}{dx}$ and quote it with a $t$-value.\n\n\
+    Cambridge accepts either unless it insists on a particular form. If it says \"in terms of $t$\",\nstay parametric."
+- type: check
+  title: Exam-style check
+  questions:
+  - tangent-line
+  - cartesian-elimination
+- type: misconceptions
+  items:
+  - wrong: $\dfrac{dy}{dx} = \dfrac{dx}{dt}\Big/\dfrac{dy}{dt}$.
+    right: 'The $y$ derivative goes on top: $\dfrac{dy}{dx} = \left(\dfrac{dy}{dt}\right) \Big/ \left(\dfrac{dx}{dt}\right)$.'
+  - wrong: You can set $t = x$ and treat $y$ as a function of $x$ directly.
+    right: $t$ and $x$ are different variables on this curve; the ratio is the only legitimate bridge.
+  - wrong: $\dfrac{dx}{dt} = 0$ everywhere means the curve has no gradient.
+    right: 'It means $\dfrac{dy}{dx}$ blows up *at those parameter values*: the tangent is vertical
+
+      there.'
+  - wrong: The tangent's gradient is $\dfrac{dy}{dt}$ evaluated at the parameter.
+    right: $\dfrac{dy}{dt}$ is a speed in $y$, not a slope; the slope is the ratio of the two rates.
+  - wrong: After finding $\dfrac{dy}{dx}$ in terms of $t$, the tangent equation needs the parameter as input.
+    right: 'Substituting the given $t$ gives a numeric gradient; the point comes from $x(t)$ and
+
+      $y(t)$ at the same $t$.'
+- type: exam
+  body: '- Differentiate both coordinates before dividing; write $\dfrac{dy}{dt}$ over $\dfrac{dx}{dt}$ explicitly.
+
+    - "Find the equation of the tangent" wants a point **and** a gradient — both from the same $t$.
+
+    - If a Cartesian equation is required, show the elimination step, e.g. $\cos^2 t + \sin^2 t = 1$.
+
+    - Leave gradients in exact surd form unless decimals are requested.'
+- type: takeaways
+  items:
+  - $\dfrac{dy}{dx} = \dfrac{dy/dt}{dx/dt}$.
+  - Differentiate both $x$ and $y$ with respect to $t$, then divide.
+  - The point for a tangent comes from $x(t)$ **and** $y(t)$ at the same parameter value.
+  - $\dfrac{dx}{dt} = 0$ marks a vertical tangent.
+  - Eliminate $t$ only when the question asks for a Cartesian form.
+- type: deeper
+  title: Where the ratio rule comes from
+  body: 'For tiny changes over an interval, the average slope is
+
+
+    $$\frac{\Delta y}{\Delta x} = \frac{\Delta y/\Delta t}{\Delta x/\Delta t}$$
+
+
+    Taking limits as $\Delta t \to 0$ preserves the ratio, which is the parametric rule. The same
+
+    reasoning underlies velocity vectors: the derivative of position is the velocity, and the
+
+    slope of the path is $v_y / v_x$.'
+questions:
+- id: parametric-gradient
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.4.3
+  prompt: 'For $x = t - e^{2t}$, $y = t + e^{2t}$, find $\dfrac{dy}{dx}$ in terms of $t$ and the
+
+    constant $e^{2t}$. Use variable names: `e` for $e^{2t}$, e.g. `(a+b*E)/(c+d*E)` with your
+
+    numbers.'
+  answer: (1 + 2*e)/(1 - 2*e)
+  variables:
+  - e
+  domain:
+    min: 0.1
+    max: 0.45
+  display: $\dfrac{1 + 2e^{2t}}{1 - 2e^{2t}}$
+  explanation: '$\dfrac{dy}{dt} = 1 + 2e^{2t}$ and $\dfrac{dx}{dt} = 1 - 2e^{2t}$; the quotient rule for
+
+    parametric curves divides them.'
+- id: point-from-t
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.4.3
+  prompt: 'For $x = t - e^{2t}$, $y = t + e^{2t}$, what is the $x$-coordinate of the point where
+
+    $t = 0$?'
+  fields:
+  - answer: -1
+    tolerance:
+      abs: 0.01
+  explanation: $x(0) = 0 - e^0 = -1$ (and $y(0) = 1$, giving the point $(-1, 1)$).
+- id: tangent-line
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.4.3
+  prompt: 'For $x = t - e^{2t}$, $y = t + e^{2t}$, what is the tangent at $t = 0$ (through the point
+
+    $(-1, 1)$ with gradient $-3$)?'
+  options:
+  - text: $y = -3(x + 1) + 1$
+    correct: true
+    why: 'Gradient $-3$ through $(-1, 1)$: $y = -3(x - (-1)) + 1$.'
+  - text: $y = -3(x - 1) + 1$
+    why: The point has $x = -1$, so the bracket is $(x + 1)$, not $(x - 1)$.
+  - text: $y = 3(x + 1) + 1$
+    why: The gradient at $t = 0$ is $-3$, not $3$.
+  - text: $y = -3(x + 1) - 1$
+    why: The $y$-value at $t = 0$ is $+1$, not $-1$.
+  explanation: 'Point $(-1, 1)$, gradient $-3$: $y = -3(x + 1) + 1 = -3x - 2$.'
+- id: cartesian-elimination
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.4.3
+  prompt: For $x = 4\cos t$, $y = 3\sin t$, eliminating $t$ gives which Cartesian equation?
+  options:
+  - text: $\dfrac{x^2}{16} + \dfrac{y^2}{9} = 1$
+    correct: true
+    why: $\cos^2 t + \sin^2 t = 1$ becomes $\left(\tfrac{x}{4}\right)^2 + \left(\tfrac{y}{3}\right)^2 = 1$.
+  - text: $\dfrac{x^2}{4} + \dfrac{y^2}{3} = 1$
+    why: The denominators are the squares of the coefficients.
+  - text: $\dfrac{x^2}{16} - \dfrac{y^2}{9} = 1$
+    why: A hyperbola would come from $\cos^2 - \sin^2$, not $\cos^2 + \sin^2$.
+  - text: $x^2 + y^2 = 7$
+    why: That would need equal coefficients; here it is an ellipse.
+  explanation: Substitute $\cos t = x/4$ and $\sin t = y/3$ into $\cos^2 t + \sin^2 t = 1$.

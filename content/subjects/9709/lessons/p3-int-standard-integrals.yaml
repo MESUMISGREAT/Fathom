@@ -1,0 +1,233 @@
+id: p3-int-standard-integrals
+subject: '9709'
+topic: '3.5'
+title: Standard integrals get chain-rule rules
+summary: Reverse-differentiate $e^{ax+b}$, $\sin(ax+b)$, $\cos(ax+b)$, $\sec^2(ax+b)$, $\dfrac{1}{ax+b}$ and $\dfrac{1}{x^2+a^2}$
+  — always dividing by the inner derivative.
+order: 1
+minutes: 4
+kind: core
+objectives:
+- 3.5.1
+prerequisites:
+- p3-logarithmic-exponential-e-and-ln
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted for P3 topic 3.5 objective 3.5.1. All questions are original.\n    Adversarially re-checked in\
+    \ this cloud session: every numeric answer key recomputed independently with Python (including finite-difference\
+    \ checks of each antiderivative), every MCQ verified to have exactly one correct option, syllabus objectives\
+    \ mapped lesson by lesson, and `npm run content:check`, `tsc` and 166 vitest tests all clean. Diagram references\
+    \ whose SVGs do not exist yet were removed rather than left dangling, so these lessons currently teach with\
+    \ prose, tables and worked examples only; add the diagrams later. The review was a second pass by the same agent\
+    \ (no separate reviewer model is available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can integrate the standard forms
+
+    $e^{ax+b}$, $\dfrac{1}{ax+b}$, $\sin(ax+b)$, $\cos(ax+b)$,
+
+    $\sec^2(ax+b)$ and $\dfrac{1}{x^2+a^2}$ — including what happens
+
+    when the inner function is a non-unit linear expression.
+
+    '
+- type: explain
+  title: Where the extra factor comes from
+  body: 'You already know how to antidifferentiate the "bare" versions:
+
+    reversing derivatives such as $e^x$, $\sin x$ and $\dfrac1x$.
+
+
+    But most integrals use a linear **inside** function, such as
+
+    $e^{3x}$, and the derivative of that inside sneaks a factor in
+
+    when you differentiate. $\\dfrac{d}{dx}\left(e^{3x}\right) = 3e^{3x}$ —
+
+    you asked for $e^{3x}$, and got $3$ times too much.
+
+
+    So the antiderivative must **undo** the 3 as well: divide by it.
+
+    '
+- type: definition
+  term: Chain-rule integrals of linear arguments
+  body: 'For constants $a \neq 0$ and $b$:
+
+
+    $$\int e^{ax+b}\,dx = \frac{1}{a}e^{ax+b} + C$$
+
+
+    $$\int \sin(ax+b)\,dx = -\frac{1}{a}\cos(ax+b) + C$$
+
+
+    $$\int \cos(ax+b)\,dx = \frac{1}{a}\sin(ax+b) + C$$
+
+
+    $$\int \sec^2(ax+b)\,dx = \frac{1}{a}\tan(ax+b) + C$$
+
+
+    $$\int \frac{1}{ax+b}\,dx = \frac{1}{a}\ln|ax+b| + C$$
+
+
+    $$\int \frac{1}{x^2 + a^2}\,dx = \frac{1}{a}\tan^{-1}\frac{x}{a} + C$$
+
+
+    In words: integrate normally, then **divide by the inner derivative**.
+
+    For the last two the derivative of the inside linear function is the
+
+    same constant the formula divides by.
+
+    '
+- type: example
+  title: A quick chain-rule slice
+  problem: Find $\displaystyle\int e^{-2x}\,dx$.
+  steps:
+  - The inside function is $-2x$, whose derivative is $-2$.
+  - Reversing $\\dfrac{d}{dx}\\left(e^{-2x}\\right) = -2e^{-2x}$ needs a factor $-\\tfrac12$.
+  - $\\displaystyle\\int e^{-2x}\\,dx = -\\tfrac12 e^{-2x} + C$.
+  answer: $-\dfrac{1}{2}e^{-2x} + C$
+- type: example
+  title: Reciprocal plus an arctangent
+  problem: Find $\displaystyle\int \frac{4}{x^2 + 9}\,dx$.
+  steps:
+  - Match the standard form with $a^2 = 9$, so $a = 3$.
+  - Write the integral in the standard form $\displaystyle\int \frac{1}{x^2+a^2}\,dx$ with $a = 3$.
+  - $\displaystyle\int \dfrac{1}{x^2+9}\,dx = \tfrac13\tan^{-1}\tfrac{x}{3} + C$.
+  - The extra factor 4 in front multiplies the whole result.
+  answer: $\dfrac{4}{3}\tan^{-1}\dfrac{x}{3} + C$
+- type: check
+  title: Check your reflexes
+  questions:
+  - reverse-diff
+  - integral-stack
+  - sec-squared
+  - linear-in-out
+  - arctan-form
+  - why-divide-by-k
+- type: misconceptions
+  items:
+  - wrong: $\displaystyle\int e^{3x}\,dx = e^{3x} + C$
+    right: The chain rule gives $3e^{3x}$ when differentiating, so the antiderivative is $\tfrac13 e^{3x} + C$.
+  - wrong: $\displaystyle\int \dfrac{1}{3x}\,dx = \tfrac13 \ln x + C$
+    right: $\dfrac{1}{3x} = \tfrac13\cdot\frac1x$, so $\int \tfrac13\,\frac{dx}{x} = \tfrac13 \ln|x| + C$; constants
+      factor out in front.
+  - wrong: The $+C$ can be dropped for definite integrals but kept for indefinite ones inconsistently.
+    right: $+C$ is needed whenever the answer is an antiderivative with no limits attached, never when limits are
+      being evaluated.
+- type: exam
+  body: '- In P3, answers should stay in exact form unless a decimal is requested.
+
+    - >-
+
+    -   Given $\int f(x)\,dx$ with limits, substitute the limits **after** integrating.
+
+    - "When the inside is not linear (e.g. $e^{x^2}$), the standard forms do not apply — see substitution later."
+
+    '
+- type: takeaways
+  items:
+  - $\int e^{ax+b}\,dx = \tfrac{1}{a}e^{ax+b} + C$ — the $\tfrac1a$ undoes the chain rule.
+  - Same scaling applies to $\sin$, $\cos$ and $\sec^2$ of $ax+b$.
+  - $\int \frac{1}{ax+b}\,dx = \tfrac1a\ln|ax+b| + C$ and $\int \frac{1}{x^2+a^2}\,dx = \tfrac1a\tan^{-1}\tfrac{x}{a}
+    + C$.
+  - Multiply by constants out front, never into the inner function.
+questions:
+- id: reverse-diff
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.5.1
+  prompt: Which integral matches "reverse differentiation" of $\dfrac{e^{3x}}{3}$?
+  options:
+  - text: $\int e^{3x}\,dx = \dfrac{1}{3}e^{3x} + C$
+    correct: true
+    why: The derivative of $e^{3x}/3$ is $3e^{3x}/3 = e^{3x}$.
+  - text: $\int e^{3x}\,dx = \dfrac{e^{3x}}{3} + C$
+    why: 'Differentiating that gives $e^{3x}$ back only if you also multiply by 3 — check: $(\tfrac13 e^{3x})''
+      = e^{3x}$, which is why the factor $1/3$ is needed, not omitted.'
+  - text: $\int e^{3x}\,dx = 3e^{3x} + C$
+    why: The factor is the reciprocal of the inner derivative, not the inner derivative itself.
+  - text: $\int e^{3x}\,dx = e^{3x} + C$
+    why: Missing the chain-rule factor $\tfrac13$.
+  explanation: 'Divide by the inner derivative: $\int e^{kx}\,dx = \tfrac{1}{k}e^{kx} + C$.'
+- id: integral-stack
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.5.1
+  prompt: 'Evaluate $\displaystyle\int_{1}^{2} \dfrac{1}{2x}\,dx$.
+
+    Give the answer to 3 decimal places.'
+  fields:
+  - answer: 0.3466
+    tolerance:
+      abs: 0.001
+  explanation: 'Pull the constant out and integrate $\tfrac1x$:
+
+    $\int_1^2 \tfrac{1}{2x}\,dx = \tfrac12[\ln x]_1^2 = \tfrac12\ln 2 \approx 0.3466$.'
+- id: sec-squared
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.5.1
+  prompt: 'Find a general antiderivative of $\sec^2(4x)$.
+
+
+    Type the answer using one variable $x$, e.g. `0.25*tan(4*x)`.'
+  answer: 0.25*tan(4*x)
+  variables:
+  - x
+  display: $\dfrac{1}{4}\tan(4x) + C$
+  explanation: Reverse the standard result $\frac{d}{dx}\tan(4x) = 4\sec^2(4x)$, so divide by 4.
+- id: linear-in-out
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.5.1
+  prompt: $\displaystyle\int \sin(5x - 2)\,dx$ equals which expression?
+  options:
+  - text: $-\tfrac15\cos(5x - 2) + C$
+    correct: true
+    why: Reverse of $\tfrac{d}{dx}[-\tfrac15\cos(5x-2)] = \sin(5x-2)$.
+  - text: $\tfrac15\cos(5x - 2) + C$
+    why: Missing the sign flip from differentiating cosine.
+  - text: $-\cos(5x - 2) + C$
+    why: The chain factor $\tfrac15$ is missing.
+  - text: $-\tfrac15\sin(5x - 2) + C$
+    why: That is the integral of $\cos(5x-2)$ with a stray minus; sine integrates to minus cosine.
+  explanation: For $\sin(ax+b)$ the antiderivative is $-\tfrac1a\cos(ax+b)$.
+- id: arctan-form
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.5.1
+  prompt: Which standard integral has antiderivative $\tan^{-1}\dfrac{x}{3} $ (up to a constant and scale)?
+  options:
+  - text: $\displaystyle\int \dfrac{1}{x^2 + 9}\,dx$
+    correct: true
+    why: $\frac{d}{dx}\tan^{-1}(x/3) = \frac{1/3}{1 + x^2/9} = \frac{3}{x^2+9}$, so the given integral is $\tfrac13\tan^{-1}(x/3)+C$.
+  - text: $\displaystyle\int \dfrac{1}{x^2 + 3}\,dx$
+    why: The constant should be $a^2 = 9$ for the $\tan^{-1}(x/3)$ form.
+  - text: $\displaystyle\int \dfrac{1}{(x + 3)^2}\,dx$
+    why: That integrates to $-\tfrac{1}{x+3}$, an inverse-proporational result, not an arctangent.
+  - text: $\displaystyle\int \dfrac{3}{x^2 + 9}\,dx$
+    why: That is exactly $\tan^{-1}(x/3) + C$, not $\tan^{-1}\frac{x}{3}$ up to a mere additive constant — its scale
+      differs by a factor 3.
+  explanation: $\int \dfrac{1}{x^2 + a^2}\,dx = \dfrac{1}{a}\tan^{-1}\dfrac{x}{a} + C$.
+- id: why-divide-by-k
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.5.1
+  prompt: Explain, using the chain rule, why $\int e^{2x}\,dx = \tfrac12 e^{2x} + C$ and not $e^{2x} + C$.
+  model: 'Differentiating the candidate $e^{2x}$ by the chain rule gives $2e^{2x}$ — double what we want.
+
+    To undo a multiply-by-2 chain factor, the antiderivative must be divided by 2, giving $\tfrac12 e^{2x}$.'
+  keyPoints:
+  - Differentiating $e^{2x}$ gives a factor 2 from the chain rule
+  - 'Antidifferentiation reverses that: divide by the inner derivative'
+  - The constant $C$ is unaffected
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.

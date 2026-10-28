@@ -1,0 +1,266 @@
+id: p3-trig-sec-cosec-cot
+subject: '9709'
+topic: '3.3'
+title: 'Sec, cosec and cot: the reciprocal three'
+summary: Three new names, all built from the functions you already have — and each graph is just the inverse of
+  one you know.
+order: 1
+minutes: 8
+kind: core
+objectives:
+- 3.3.1
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.3, learning outcome 3.3.1 (secant, cosecant and cotangent; graphs of all six trigonometric functions).\
+    \ All questions are original.\n    Adversarially re-checked in this cloud session: every numeric answer key\
+    \ recomputed independently with Python (including finite-difference checks of each antiderivative), every MCQ\
+    \ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm run content:check`,\
+    \ `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were removed rather than\
+    \ left dangling, so these lessons currently teach with prose, tables and worked examples only; add the diagrams\
+    \ later. The review was a second pass by the same agent (no separate reviewer model is available here); a teacher\
+    \ has not seen these."
+blocks:
+- type: objective
+  body: By the end you can define $\sec\theta$, $\operatorname{cosec}\theta$ and $\cot\theta$, state where each
+    is undefined, sketch their graphs, and use them (including small-angle approximations) to evaluate expressions.
+- type: explain
+  title: What they ask
+  body: 'They give you three new names for three old ideas:
+
+
+    - $\sec\theta = \dfrac{1}{\cos\theta}$ — **se**cant goes with **co**sine. (Not a typo: sec pairs with cos, cosec
+    pairs with sin.)
+
+    - $\operatorname{cosec}\theta = \dfrac{1}{\sin\theta}$ — **co**secant goes with **s**ine.
+
+    - $\cot\theta = \dfrac{1}{\tan\theta} = \dfrac{\cos\theta}{\sin\theta}$ — **co**tangent goes with **tan**gent.
+
+
+    The crossing prefix is the trap. Learn it as one sentence: *"co goes with plain"*. Secant ↔ cosine; cosecant
+    ↔ sine; cotangent ↔ tangent.'
+- type: definition
+  term: The reciprocal trigonometric functions
+  body: '$$\sec\theta = \frac{1}{\cos\theta}, \qquad \operatorname{cosec}\theta = \frac{1}{\sin\theta}, \qquad \cot\theta
+    = \frac{1}{\tan\theta}$$
+
+
+    Whenever $\cos\theta = 0$, $\sec\theta$ is undefined; likewise
+
+    $\operatorname{cosec}\theta$ is undefined where $\sin\theta = 0$, and $\cot\theta$ is
+
+    undefined where $\tan\theta$ is undefined, that is where $\sin\theta = 0$. Undefined means
+
+    "the fraction blows up and the graph runs off to infinity" — those vertical lines in the
+
+    diagram are the asymptotes.'
+- type: explain
+  title: 'Graphs: only three facts to memorise'
+  body: '1. **The graphs never cross the axis of their denominator.** $\sec\theta = 1/\cos\theta$ is never between
+    $-1$ and $1$: because a fraction with numerator 1 is small only when the denominator is big, so $|\sec\theta|
+    \ge 1$ except where it is undefined. Same for $\operatorname{cosec}$.
+
+    2. **Undefined points become vertical asymptotes** at $\theta = 90°, 270°$ (for sec), $0°, 180°, 360°$ (for
+    cosec and cot).
+
+    3. **Zeros of the original become infinities of the reciprocal, and vice versa.** $\cot\theta = 0$ exactly where
+    $\tan\theta$ is undefined (at $90°, 270°$), because there $\cos\theta = 0$.'
+- type: example
+  title: 'Example 1: exact values'
+  problem: Find the exact values of $\sec 60°$, $\operatorname{cosec} 30°$ and $\cot 45°$.
+  steps:
+  - $\sec 60° = \dfrac{1}{\cos 60°} = \dfrac{1}{1/2} = 2$.
+  - '$\operatorname{cosec} 30° = \dfrac{1}{\sin 30°} = \dfrac{1}{1/2} = 2$. (The "co" pairing swaps
+
+    the angles: sec 30° and cosec 60° both equal $\tfrac{2}{\sqrt{3}}$.)'
+  - $\cot 45° = \dfrac{1}{\tan 45°} = \dfrac{1}{1} = 1$.
+  answer: $2$, $2$ and $1$.
+- type: check
+  title: Quick check
+  questions:
+  - pairing
+  - evaluated-co-sec
+  - undefined-where
+- type: example
+  title: 'Example 2: an exam-style simplification'
+  problem: Show that $\dfrac{1 - \cos^2\theta}{\sin\theta} = \sin\theta$ for all $\theta$ where the expression is
+    defined, and state those values.
+  steps:
+  - From $\sin^2\theta + \cos^2\theta \equiv 1$ you get $1 - \cos^2\theta \equiv \sin^2\theta$.
+  - 'So the left side becomes $\dfrac{\sin^2\theta}{\sin\theta} = \sin\theta$, provided
+
+    $\sin\theta \neq 0$ (otherwise the fraction itself is $0/0$).'
+  - $\sin\theta = 0$ at $\theta = 0°, 180°, 360°$, so the identity holds for all other angles.
+  answer: 'It equals $\sin\theta$ for all $\theta$ except $\theta = 0°, 180°, 360°$ (and their coterminal
+
+    copies).'
+- type: explain
+  title: Small angles, in radians
+  body: 'You already know $\sin\theta \approx \theta$, $\cos\theta \approx 1 - \tfrac{1}{2}\theta^2$ and
+
+    $\tan\theta \approx \theta$ for small $\theta$ in **radians**.
+
+
+    Invert them carefully — reciprocating an approximation is fine:
+
+
+    - $\operatorname{cosec}\theta \approx \dfrac{1}{\theta}$
+
+    - $\sec\theta \approx \dfrac{1}{1 - \frac{1}{2}\theta^2} \approx 1 + \tfrac{1}{2}\theta^2$
+
+    - $\cot\theta \approx \dfrac{1}{\theta}$'
+- type: check
+  title: Exam-style check
+  questions:
+  - small-angle
+  - identity-check
+  - branch-zero
+- type: misconceptions
+  items:
+  - wrong: $\sec\theta$ pairs with $\sin\theta$, because "sec" has no "co" and $\sin$ has no "co".
+    right: 'It is the reverse: sec goes with **cos**. Say "co pairs with plain": secant–cosine,
+
+      cosecant–sine, cotangent–tangent.'
+  - wrong: $\sec\theta$ can take values between $-1$ and $1$.
+    right: '$|\sec\theta| \ge 1$ wherever it is defined; a reciprocal of something whose size is at
+
+      most 1 (with numerator 1) has size at least 1.'
+  - wrong: $\cot\theta$ is undefined at $90°$.
+    right: '$\cot 90° = \dfrac{\cos 90°}{\sin 90°} = \dfrac{0}{1} = 0$. It is **defined** and equal to
+
+      zero there; it is undefined at $0°, 180°, 360°$ where $\sin\theta = 0$.'
+  - wrong: $\operatorname{cosec}\theta \approx \theta$ for small angles.
+    right: 'Inverting the approximation flips it: $\operatorname{cosec}\theta \approx 1/\theta$, which
+
+      is *large*, exactly matching the near-vertical branches at $0°$.'
+  - wrong: $\sin^{-1}\theta$ means $\operatorname{cosec}\theta$.
+    right: '$\sin^{-1}$ is the **inverse function** (arcsin). The reciprocal function is written
+
+      $\operatorname{cosec}$ or $(\sin\theta)^{-1}$.'
+- type: exam
+  body: '- Write answers as exact values in fraction or surd form, with radicals (never decimals unless asked).
+
+    - When a question says "solve ... for $0° \le \theta \le 360°$" using a reciprocal function, first convert to
+    its plain partner, then remember the domains: the "squashed" range $-1 \le y \le 1$ becomes $|y| \ge 1$.
+
+    - Or "hence" questions expect you to reuse a previous result — do not restate it as new work.'
+- type: takeaways
+  items:
+  - $\sec\theta = 1/\cos\theta$, $\operatorname{cosec}\theta = 1/\sin\theta$, $\cot\theta = 1/\tan\theta = \cos\theta/\sin\theta$.
+  - '"co pairs with plain": sec ↔ cos, cosec ↔ sin, cot ↔ tan.'
+  - $|\sec\theta| \ge 1$ and $|\operatorname{cosec}\theta| \ge 1$ wherever defined.
+  - Undefined points sit where the partner function is zero; they become asymptotes.
+  - 'Small-angle: $\operatorname{cosec}\theta \approx 1/\theta$, $\sec\theta \approx 1 + \tfrac{1}{2}\theta^2$,
+    $\cot\theta \approx 1/\theta$.'
+- type: deeper
+  title: Why the graphs look like that
+  body: 'Take $y = \sec\theta = 1/\cos\theta$. Near $\theta = 90°$, $\cos\theta$ is a tiny positive or
+
+    tiny negative number, so $1/\cos\theta$ is a huge positive or negative number — hence the
+
+    vertical asymptote and the U-shaped pairs above and below.
+
+
+    The two arm directions explain the sign pattern: where $\cos\theta > 0$ (quadrants I and IV)
+
+    the branches are above the axis; where $\cos\theta < 0$ they are below.'
+questions:
+- id: pairing
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.3.1
+  prompt: Which expression equals $\sec\theta$?
+  options:
+  - text: $\dfrac{1}{\cos\theta}$
+    correct: true
+    why: '"co pairs with plain": secant goes with cosine.'
+  - text: $\dfrac{1}{\sin\theta}$
+    why: That is $\operatorname{cosec}\theta$ — the pairing is the reverse of what feels natural.
+  - text: $\dfrac{1}{\tan\theta}$
+    why: That is $\cot\theta$.
+  - text: $\cos^{-1}\theta$
+    why: That is the inverse function (arccos), not a reciprocal.
+  explanation: $\sec\theta = \dfrac{1}{\cos\theta}$; the crossing prefix "co" is the recurring trap.
+- id: evaluated-co-sec
+  format: numeric
+  difficulty: 1
+  objectives:
+  - 3.3.1
+  prompt: Find the exact value of $\operatorname{cosec} 60°$ in surd form.
+  fields:
+  - answer: 1.1547
+    tolerance:
+      abs: 0.002
+  explanation: $\operatorname{cosec} 60° = \dfrac{1}{\sin 60°} = \dfrac{1}{\sqrt{3}/2} = \dfrac{2}{\sqrt{3}} = \dfrac{2\sqrt{3}}{3}
+    \approx 1.155$.
+- id: undefined-where
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.3.1
+  prompt: At which angles is $\cot\theta$ undefined (for $0° \le \theta < 360°$)?
+  options:
+  - text: $0°$ and $180°$
+    correct: true
+    why: $\cot\theta = \cos\theta/\sin\theta$, and $\sin 0° = \sin 180° = 0$.
+  - text: $90°$ and $270°$
+    why: 'There $\cot\theta = 0/\pm 1 = 0$: defined, and equal to zero.'
+  - text: $45°$ and $225°$
+    why: $\cot 45° = 1$; nothing undefined happens there.
+  - text: Nowhere in $0° \le \theta < 360°$
+    why: $\cot$ blows up twice per turn, wherever $\sin\theta = 0$.
+  explanation: 'Undefined points are where the denominator function is zero: for cot, $\sin\theta = 0$.'
+- id: small-angle
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.3.1
+  prompt: For small $\theta$ in radians, which is the correct approximation for $\operatorname{cosec}\theta$?
+  options:
+  - text: $\dfrac{1}{\theta}$
+    correct: true
+    why: Inverting $\sin\theta \approx \theta$ flips the approximation to the reciprocal.
+  - text: $\theta$
+    why: That is $\sin\theta$ itself; the reciprocal is large, not small.
+  - text: $1 + \dfrac12\theta^2$
+    why: That is the small-angle form of $\sec\theta$.
+  - text: $-\ln\theta$
+    why: No such approximation exists here.
+  explanation: $\operatorname{cosec}\theta \approx \dfrac{1}{\theta}$, which is why the branches shoot up at $0$.
+- id: identity-check
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.3.1
+  prompt: Given $\sec\theta = 3$ and $\theta$ in the first quadrant, find $\operatorname{cosec}\theta$ to 3 decimal
+    places.
+  fields:
+  - answer: 1.0607
+    tolerance:
+      abs: 0.002
+  explanation: '$\sec\theta = 3$ gives $\cos\theta = \tfrac13$, so
+
+    $\sin\theta = \sqrt{1 - \tfrac19} = \sqrt{\tfrac89} = \dfrac{2\sqrt2}{3}$ and
+
+    $\operatorname{cosec}\theta = \dfrac{1}{\sin\theta} = \dfrac{3}{2\sqrt2} \approx 1.061$.'
+- id: branch-zero
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.3.1
+  prompt: $y = \sec\theta$ equals zero at which angles?
+  options:
+  - text: Never — the graph has no zeros
+    correct: true
+    why: '$\dfrac{1}{\cos\theta}$ cannot be 0: a numerator of 1 makes the fraction''s size at least 1 wherever it
+      exists.'
+  - text: $90°$ and $270°$
+    why: There $\cos\theta = 0$ and $\sec$ is undefined, not zero.
+  - text: $0°$ and $360°$
+    why: $\sec 0° = 1$; defined and positive.
+  - text: $180°$
+    why: $\sec 180° = -1$; defined.
+  explanation: Reciprocals of quantities bounded by 1 in size cannot vanish; zeros and infinities swap places instead.

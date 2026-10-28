@@ -1,0 +1,266 @@
+id: p3-int-f-prime-over-f
+subject: '9709'
+topic: '3.5'
+title: 'k f′(x) / f(x): the missing numerator trick'
+summary: When the top is (nearly) the derivative of the bottom, the integral is a log — and tan x and x/(x²+1) are
+  both this trick in disguise.
+order: 4
+minutes: 8
+kind: core
+objectives:
+- 3.5.4
+prerequisites:
+- p3-int-standard-integrals
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.5, learning outcome 3.5.4, including the syllabus examples x/(x² + 1) and tan x. Answers were verified\
+    \ in Python. All questions are original.\n    Adversarially re-checked in this cloud session: every numeric\
+    \ answer key recomputed independently with Python (including finite-difference checks of each antiderivative),\
+    \ every MCQ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm\
+    \ run content:check`, `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were\
+    \ removed rather than left dangling, so these lessons currently teach with prose, tables and worked examples\
+    \ only; add the diagrams later. The review was a second pass by the same agent (no separate reviewer model is\
+    \ available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can recognise integrands of the form $k\,\dfrac{f''(x)}{f(x)}$ (exactly, or after
+
+    scaling), and integrate them as $k\ln|f(x)| + c$.'
+- type: explain
+  title: What they ask
+  body: 'Look at the fraction and ask one question: **is the top the derivative of the bottom?**
+
+
+    $$\int \frac{x}{x^2 + 1}\,dx: \quad (x^2+1)'' = 2x, \text{ and the top is } x = \tfrac12\,(2x) \quad\Longrightarrow\quad
+    \tfrac12\ln(x^2+1) + c$$
+
+
+    If it is — exactly or up to a constant — the answer is a log. No substitution machinery is
+
+    needed; the general-substitution work in the background says exactly the same thing.'
+- type: definition
+  term: The f-over-f rule
+  body: '$$\int k\,\frac{f''(x)}{f(x)}\,dx = k\ln|f(x)| + c$$
+
+
+    because $\dfrac{d}{dx}\ln|f(x)| = \dfrac{f''(x)}{f(x)}$ by the chain rule.
+
+
+    Constant multiple inside: only the constant multiplier $k$ can be loose; if the top differs by
+
+    more than a constant multiple, this rule does not apply directly.'
+- type: explain
+  title: The method
+  body: "1. **Differentiate the bottom** in your head. Write its derivative above it.\n2. **Compare**: the top must\
+    \ equal (constant) × (that derivative).\n3. **State the constant $k$** out loud in the working.\n4. **Write\
+    \ the log** of the bottom (absolute value if it can be negative).\n5. **For trig**: write $\\tan x = \\dfrac{\\\
+    sin x}{\\cos x}$. The bottom is $\\cos x$, whose\n   derivative is $-\\sin x$; the top $\\sin x$ is $-1$ times\
+    \ that, so $k = -1$:\n\n   $$\\int \\tan x\\,dx = -\\ln|\\cos x| + c = \\ln|\\sec x| + c$$\n\n**The forgotten\
+    \ step:** writing the constant $k$ next to the top *before* integrating. Doing\nit in the head is exactly how\
+    \ the $\\tfrac12$ disappears."
+- type: example
+  title: 'Example 1: the syllabus one'
+  problem: Find $\displaystyle\int \frac{x}{x^2 + 1}\,dx$.
+  steps:
+  - 'Bottom: $f(x) = x^2 + 1$, so $f''(x) = 2x$.'
+  - The top is $x = \tfrac12 \cdot 2x$, so $k = \tfrac12$.
+  - 'Apply the rule:
+
+
+    $$\int \frac{x}{x^2+1}\,dx = \frac12 \ln(x^2 + 1) + c$$'
+  - Absolute value is unneeded ( $x^2 + 1 > 0$ always).
+  - 'Check by differentiating: $\tfrac12 \cdot \dfrac{2x}{x^2+1} = \dfrac{x}{x^2+1}$ ✓'
+  answer: $\tfrac12\ln(x^2 + 1) + c$.
+- type: check
+  title: Quick check
+  questions:
+  - recognise-pattern
+  - integrate-f-prime-f
+  - constant-out-front
+- type: example
+  title: 'Example 2: a cosec-shaped one in logs'
+  problem: Find $\displaystyle\int \frac{2x + 3}{x^2 + 3x}\,dx$ and evaluate it between $x = 1$ and $x = 2$.
+  steps:
+  - 'Bottom: $f(x) = x^2 + 3x$; $f''(x) = 2x + 3$ — exactly the top, so $k = 1$.'
+  - $$\int \frac{2x+3}{x^2+3x}\,dx = \ln|x^2 + 3x| + c$$
+  - 'Evaluate:
+
+
+    $$\left[\ln|x^2+3x|\right]_1^2 = \ln 10 - \ln 4 = \ln\frac{10}{4} = \ln\frac52$$'
+  - ($x^2 + 3x > 0$ on $[1,2]$, so the absolute value does real no work here.)
+  answer: $\ln\left|x^2 + 3x\right| + c$; the definite value is $\ln\tfrac52 \approx 0.916$.
+- type: check
+  title: Exam-style check
+  questions:
+  - tan-halves
+  - spot-error-log
+  - why-log-not-ln-of
+- type: explain
+  title: When the top is *not* the derivative — a near miss
+  body: '$\displaystyle\int \frac{x+1}{x^2 + 1}\,dx$ has top $x+1$, but the bottom''s derivative is $2x$.
+
+    The $+1$ spoils it.
+
+
+    Split instead:
+
+
+    $$\frac{x+1}{x^2+1} = \frac{x}{x^2+1} + \frac{1}{x^2+1} = \tfrac12\ln(x^2+1) + \tan^{-1}x + c$$
+
+
+    Recognise the f-over-f part, park the rest by hand. Many integrals are cut exactly this way —
+
+    a log piece plus a standard piece.'
+- type: misconceptions
+  items:
+  - wrong: $\\int \\dfrac{x}{x^2+1}\\,dx = \\ln(x^2+1) + c$.
+    right: 'The top $x$ is half of $f''(x) = 2x$, so the constant $\\tfrac12$ rides along in front of
+
+      the log.'
+  - wrong: $\\int \\tan x\\,dx = \\ln|\\tan x| + c$.
+    right: 'The bottom is $\\cos x$, not $\\tan x$: the answer is $-\\ln|\\cos x| = \\ln|\\sec x| + c$.'
+  - wrong: Absolute values are optional decoration for $\\ln$ answers.
+    right: 'For $f(x)$ that can be negative (e.g. $\\cos x$, $2-x$), $\\ln|f|$ keeps the integral real;
+
+      dropping the bars can make a definite integral meaningless.'
+  - wrong: If the top differs by a non-constant amount, scale up to fix it.
+    right: 'Only constants can be pulled outside. An extra term must be split off and integrated by
+
+      another method.'
+  - wrong: $\\int \\dfrac{3}{3x+2}\\,dx = \\dfrac{3}{3}\\ln|3x+2| = \\ln|3x+2| + c$ — so this rule and the earlier
+      one disagree.
+    right: 'They agree exactly here: $\\frac{3}{3} = 1$, and this answer matches
+
+      $\\frac{1}{a}\\ln|ax+b|$ with $a = 3$: $\\frac13\\ln|3x+2|$. The error is forgetting that
+
+      the top constant was already the multiplier $k = 1$.'
+- type: exam
+  body: '- Write "since $f''(x) = 2x$, the numerator is half of it" style working; the constant$-$rule mark lives
+    there.
+
+    - Absolute value: include whenever $f$ could be negative on the interval.
+
+    - Definite integrals with logs combine with log laws before subtracting, to keep the numbers tidy.
+
+    - For "hence integrate tan", go through $\sin/\cos$ explicitly — the examiner needs the rewrite.'
+- type: takeaways
+  items:
+  - $\\int k f'(x)/f(x)\\,dx = k\\ln|f(x)| + c$.
+  - Compare the numerator with the bottom's derivative; the constant difference becomes $k$.
+  - $\\int \\tan x\\,dx = -\\ln|\\cos x| + c = \\ln|\\sec x| + c$.
+  - Near misses split into a log piece plus a standard piece.
+  - Check by differentiating — the fastest guard for lost halves.
+- type: deeper
+  title: Why it is really a substitution
+  body: 'Let $u = f(x)$; then $du = f''(x)\,dx$, and
+
+
+    $$\\int \\frac{f''(x)}{f(x)}\\,dx = \\int \\frac{du}{u} = \\ln|u| + c$$
+
+
+    The fraction pattern makes the substitution almost invisible, which is why the rule is worth
+
+    memorising — but it also tells you exactly when the rule applies: the numerator must be the
+
+    derivative of the denominator, nothing more.'
+questions:
+- id: recognise-pattern
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.5.4
+  prompt: Which of these integrands has the shape $k\,\dfrac{f'(x)}{f(x)}$?
+  options:
+  - text: $\dfrac{2x}{x^2 + 1}$
+    correct: true
+    why: Numerator is exactly the derivative $2x$ of the denominator $x^2 + 1$.
+  - text: $\dfrac{x}{x^2 + 1}$
+    why: The numerator is *half* the derivative of the denominator — still integrable, but with factor $\tfrac12$
+      out front rather than the clean $k\,f'/f$ shape with $k = 1$.
+  - text: $\dfrac{x + 1}{x^2 + 1}$
+    why: The numerator mixes a non-derivative term with the derivative term; it splits into an arctangent plus a
+      logarithm part.
+  - text: $\dfrac{\cos x}{\sin^2 x}$
+    why: The denominator is $\sin^2 x$, not $\sin x$, so it is not the logarithmic pattern — it belongs to the reciprocal-power
+      pattern $-\,\dfrac{1}{\sin x}$.
+  explanation: $\dfrac{k f'}{f}$ integrates to $k\ln|f| + C$; look for a numerator that is (a multiple of) the derivative
+    of the denominator.
+- id: integrate-f-prime-f
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.5.4
+  prompt: 'Find $\displaystyle\int \dfrac{e^x}{e^x + 1}\,dx$.
+
+
+    Use `ln` and one variable $x$ in your answer.'
+  answer: ln(exp(x) + 1)
+  variables:
+  - x
+  display: $\ln(e^x + 1) + C$
+  explanation: The numerator $e^x$ is the derivative of the denominator $e^x + 1$, so the integral is $\ln(e^x +
+    1) + C$.
+- id: constant-out-front
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.5.4
+  prompt: Evaluate $\displaystyle\int_{0}^{1} \dfrac{2x}{x^2 + 1}\,dx$, to 3 decimal places.
+  fields:
+  - answer: 0.6931
+    tolerance:
+      abs: 0.002
+  explanation: $\int \dfrac{2x}{x^2+1}\,dx = \ln(x^2 + 1) + C$, so the value is $\ln 2 - \ln 1 = \ln 2 \approx 0.693$.
+- id: tan-halves
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.5.4
+  prompt: $\displaystyle\int \tan x\,dx$ uses this idea how?
+  options:
+  - text: Write $\tan x = \dfrac{\sin x}{\cos x}$, and $\sin x$ is the derivative of $\cos x$
+    correct: true
+    why: Then the integrand is $-\dfrac{(-\sin x)}{\cos x} = -\,\dfrac{(\cos x)'}{\cos x}$, giving $-\ln|\cos x|
+      + C$.
+  - text: Rewrite $\tan x$ as $\sec^2 x - 1$ and integrate both terms
+    why: $\tan$ is not $\sec^2 - 1$; that identity belongs to $\tan^2 x$.
+  - text: Use the double-angle formula for tangent twice
+    why: No double-angle expansion of $\tan x$ leads to an antiderivative in one step.
+  - text: Substitute $u = \tan x$ itself
+    why: That makes $du = \sec^2 x\,dx$, leaving an integral of $\sec^2 x / \ldots$ — it goes in a circle.
+  explanation: '$\int \tan x\,dx = \int \dfrac{\sin x}{\cos x}\,dx = -\ln|\cos x| + C$: the $-\ln|\cos x|$ form
+    is the examinable answer.'
+- id: spot-error-log
+  format: spot-error
+  difficulty: 3
+  objectives:
+  - 3.5.4
+  prompt: One line of this working contains an error. Find it.
+  lines:
+  - Differentiate $y = \ln\,(x^2 + 1)$.
+  - $y' = \dfrac{(x^2 + 1)'}{x^2 + 1} = \dfrac{2x}{x^2 + 1}$
+  - So $\displaystyle\int \dfrac{2x}{x^2 + 1}\,dx = \ln\,(x^2 + 1) + C$
+  - In particular $\displaystyle\int \dfrac{2x}{x^2 + 1}\,dx = x^2 + 1$ when $C = 0$
+  errorLine: 4
+  fix: 'Exponentiating the logarithm is not allowed: $\ln(x^2+1)$ grows like a logarithm, whereas $x^2 + 1$ grows
+    quadratically; they differ by more than a constant.'
+  explanation: The antiderivative is $\ln(x^2+1) + C$; dropping the log and keeping the inside is a confusion between
+    $\ln f$ and $f$.
+- id: why-log-not-ln-of
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.5.4
+  prompt: Someone integrates $\dfrac{f'}{f}$ and writes the answer as $e^f + C$. Explain in two sentences why $k\ln|f|
+    + C$ is right and $e^f$ is wrong.
+  model: 'Differentiating $\ln|f(x)|$ by the chain rule gives $\dfrac{f''}{f}$ — exactly the integrand, as a quick
+    check confirms.
+
+    Differentiating $e^f$ instead gives $f''e^f$, which has the extra factor $e^f$ and so fails the build-back test.'
+  keyPoints:
+  - 'Check by differentiating: $\frac{d}{dx}\ln|f| = f''/f$'
+  - $\frac{d}{dx}e^f = f'e^f$, which does not rebuild the integrand
+  - Derivative checks are how integration answers are verified
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.

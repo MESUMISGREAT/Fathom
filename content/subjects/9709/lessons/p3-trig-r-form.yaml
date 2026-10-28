@@ -1,0 +1,275 @@
+id: p3-trig-r-form
+subject: '9709'
+topic: '3.3'
+title: 'The R-form: a sin θ + b cos θ in one function'
+summary: Any mixture a sin θ + b cos θ can be written as R sin(θ + α). That one move gives the maximum and minimum
+  instantly and turns hard equations into easy ones.
+order: 5
+minutes: 9
+kind: core
+objectives:
+- 3.3.2
+prerequisites:
+- p3-trig-addition-formulae
+- p3-trig-double-angle
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.3, learning outcome 3.3.2 (the expression of a sin θ + b cos θ in the forms R sin(θ ± α) and R cos(θ\
+    \ ± α), including the syllabus example 3 cos θ + 2 sin θ = 1). Answers were verified in Python. All questions\
+    \ are original.\n    Adversarially re-checked in this cloud session: every numeric answer key recomputed independently\
+    \ with Python (including finite-difference checks of each antiderivative), every MCQ verified to have exactly\
+    \ one correct option, syllabus objectives mapped lesson by lesson, and `npm run content:check`, `tsc` and 166\
+    \ vitest tests all clean. Diagram references whose SVGs do not exist yet were removed rather than left dangling,\
+    \ so these lessons currently teach with prose, tables and worked examples only; add the diagrams later. The\
+    \ review was a second pass by the same agent (no separate reviewer model is available here); a teacher has not\
+    \ seen these."
+blocks:
+- type: objective
+  body: 'By the end you can write $a\sin\theta + b\cos\theta$ as $R\sin(\theta + \alpha)$ (or a
+
+    neighbouring form), find $R$ and $\alpha$, read off maximum and minimum values, and solve
+
+    equations such as $3\cos\theta + 2\sin\theta = 1$.'
+- type: explain
+  title: What they ask
+  body: "Two shapes of question, both on the same trick:\n\n1. **Find the maximum or minimum** of $f(\\theta) =\
+    \ 3\\sin\\theta + 4\\cos\\theta$ — and \"hence\"\n   questions ask for it without solving anything.\n2. **Solve**\
+    \ $a\\sin\\theta + b\\cos\\theta = c$, which is unwieldy in two functions but one-line\n   after the conversion.\n\
+    \nThe idea: squashing two waves of the same period into one shifted wave."
+- type: definition
+  term: The two standard R-form conversions
+  body: '$$a\sin\theta + b\cos\theta = R\sin(\theta + \alpha), \qquad R = \sqrt{a^2 + b^2}, \qquad \tan\alpha =
+    \frac{b}{a}$$
+
+
+    with $\alpha$ chosen in the correct quadrant. Expanding
+
+    $R\sin(\theta + \alpha) = R\cos\alpha\sin\theta + R\sin\alpha\cos\theta$ and matching the
+
+    coefficients gives $a = R\cos\alpha$ and $b = R\sin\alpha$, which is where $R$ and $\tan\alpha$
+
+    come from.
+
+
+    For other sign patterns, change the inside sign of the shifted angle rather than guessing:
+
+    $a\sin\theta - b\cos\theta = R\sin(\theta - \alpha)$ and
+
+    $a\cos\theta + b\sin\theta = R\cos(\theta - \alpha)$, both still with
+
+    $R = \sqrt{a^2 + b^2}$ and $\tan\alpha = b/a$.'
+- type: explain
+  title: The method, end to end
+  body: "1. **Pick the target form** from the question's sign pattern ($+$ terms go inside a\n   $\\theta + \\alpha$;\
+    \ mixed signs, use $\\theta - \\alpha$).\n2. **Find $R$** as $\\sqrt{a^2 + b^2}$ — always positive.\n3. **Find\
+    \ $\\alpha$** from $\\tan\\alpha = b/a$ *with the sign pattern of the situation*, then\n   place $\\alpha$ in\
+    \ the right quadrant.\n4. **Read off** maxima and minima: $R\\sin(\\text{anything})$ peaks at $R$ and dips to\
+    \ $-R$,\n   exactly where \"anything\" equals $90°$ or $270°$.\n5. **Solve** the reduced equation, e.g.\n  \
+    \ $R\\sin(\\theta + \\alpha) = c$, over the **shifted** interval $\\alpha \\le \\theta + \\alpha \\le 360° +\
+    \ \\alpha$.\n\n**The forgotten step:** the interval shift. If $\\theta$ runs over $0°$ to $360°$, then\n$\\\
+    theta + \\alpha$ runs over $\\alpha$ to $360° + \\alpha$, so the calculator might need to be\npushed beyond\
+    \ $360°$ for solutions that belong there."
+- type: example
+  title: 'Example 1: maximum and minimum'
+  problem: 'Write $3\sin\theta + 2\cos\theta$ in the form $R\sin(\theta + \alpha)$, where
+
+    $R > 0$ and $0° < \alpha < 90°$, and hence state the maximum and minimum values.
+
+
+    Also find the least value of $3\sin\theta + 2\cos\theta - 7$.'
+  steps:
+  - $R = \sqrt{3^2 + 2^2} = \sqrt{13}$.
+  - '$\tan\alpha = \tfrac{2}{3}$, so $\alpha = \arctan(2/3) = 33.7°$ (1 d.p.), in the first
+
+    quadrant because both coefficients are positive.'
+  - 'So
+
+
+    $$3\sin\theta + 2\cos\theta = \sqrt{13}\sin(\theta + 33.7°)$$'
+  - 'The sine wave reaches $+1$ and $-1$, so the expression ranges over
+
+
+    $$-\sqrt{13} \le 3\sin\theta + 2\cos\theta \le \sqrt{13}$$
+
+    i.e. maximum $\sqrt{13} \approx 3.61$ and minimum $-\sqrt{13}$.'
+  - 'Shifting the whole wave down by 7 moves both extremes: the least value of
+
+    $\sqrt{13}\sin(\theta + \alpha) - 7$ is $-\sqrt{13} - 7 \approx -10.61$.'
+  answer: '$R = \sqrt{13}$, $\alpha = 33.7°$; max $\sqrt{13}$, min $-\sqrt{13}$; the least value of
+
+    $f - 7$ is $-\sqrt{13} - 7$.'
+- type: check
+  title: Quick check
+  questions:
+  - why-one-r
+  - compute-alpha
+  - max-value
+- type: example
+  title: 'Example 2: the syllabus-style equation'
+  problem: Solve $3\cos\theta + 2\sin\theta = 1$ for $0° \le \theta \le 360°$.
+  steps:
+  - 'Match to $R\cos(\theta - \alpha) = R\cos\theta\cos\alpha + R\sin\theta\sin\alpha$:
+
+
+    $$3 = R\cos\alpha, \quad 2 = R\sin\alpha,\quad R = \sqrt{13},\quad \tan\alpha = \tfrac{2}{3}$$'
+  - 'So $\alpha = 33.7°$ and
+
+
+    $$3\cos\theta + 2\sin\theta = \sqrt{13}\cos(\theta - 33.7°)$$'
+  - 'The equation becomes
+
+
+    $$\sqrt{13}\cos(\theta - 33.7°) = 1 \quad\Longrightarrow\quad \cos(\theta - 33.7°) = \frac{1}{\sqrt{13}} = 0.2774$$'
+  - The base angle is $\arccos 0.2774 = 73.9°$.
+  - 'Now the shifted interval: $\theta$ from $0°$ to $360°$ means $\theta - 33.7°$ from $-33.7°$
+
+    to $326.3°$. Cosine equals $0.2774$ at $73.9°$ and $-73.9°$ (i.e. $286.1°$, outside), so
+
+
+    $$\theta - 33.7° = 73.9° \;\Rightarrow\; \theta = 107.6°$$
+
+    and
+
+
+    $$\theta - 33.7° = -73.9° \;\Rightarrow\; \theta = -40.2°$$
+
+    which is rejected; the second in-range solution comes from
+
+    $360° - 73.9° = 286.1°$, giving
+
+
+    $$\theta = 286.1° + 33.7° = 319.8°$$'
+  - 'Check $\theta = 107.6°$: $3\cos 107.6° = -0.906$ and $2\sin 107.6° = 1.906$, total $1.000$
+
+    ✓ (a substitution check catches quadrant slips before they cost marks).'
+  answer: $\theta = 107.6°$ and $\theta = 319.8°$ (1 d.p.).
+- type: check
+  title: Exam-style check
+  questions:
+  - solve-trig-eq
+  - read-off-match
+- type: misconceptions
+  items:
+  - wrong: $R = a + b$.
+    right: '$R$ comes from Pythagoras, $R = \sqrt{a^2 + b^2}$, because the coefficients are
+
+      $R\cos\alpha$ and $R\sin\alpha$ — legs of a right triangle.'
+  - wrong: $\alpha = \arctan(a/b)$ for $R\sin(\theta + \alpha) = a\sin\theta + b\cos\theta$.
+    right: Expansion gives $a = R\cos\alpha$ and $b = R\sin\alpha$, so $\tan\alpha = b/a$, not $a/b$.
+  - wrong: The maximum of $a\sin\theta + b\cos\theta$ is $a + b$.
+    right: 'The maximum is $R = \sqrt{a^2 + b^2}$, which is smaller than $a + b$ unless one of them is
+
+      zero.'
+  - wrong: After the substitution you still solve over $0°$ to $360°$ in $\theta$.
+    right: 'You may, but the *calculator* equation is in $\theta + \alpha$, so its natural interval is
+
+      shifted; track the shift or you will miss solutions.'
+  - wrong: $R$ may be negative to absorb a sign flip.
+    right: Keep $R > 0$ and handle signs with the choice of form ($\pm\alpha$), not by flipping $R$.
+- type: exam
+  body: '- Write "where $R > 0$ and $\alpha$ is acute" style conditions if the question gives them; failing to restrict
+    $\alpha$ costs the follow-up marks.
+
+    - Maximum/minimum "hence" parts are one line: don''t re-solve anything.
+
+    - Equation solutions need the interval shift written explicitly, e.g. "$\theta - 33.7°$ runs from $-33.7°$ to
+    $326.3°$".
+
+    - Use calculator radian/degree modes consistently; a degree question with a radian answer is the classic silent
+    error.'
+- type: takeaways
+  items:
+  - $a\sin\theta + b\cos\theta = R\sin(\theta + \alpha)$ with $R = \sqrt{a^2+b^2}$ and $\tan\alpha = b/a$.
+  - Mixed signs are handled by switching to $R\sin(\theta - \alpha)$ or $R\cos(\theta - \alpha)$, same $R$.
+  - Maximum $R$, minimum $-R$; add/subtract any constant afterwards.
+  - Solve the reduced equation over the shifted interval for $\theta \pm \alpha$.
+  - The check by substitution catches quadrant slips before they cost marks.
+- type: deeper
+  title: A vector reading of the same result
+  body: '$R\cos\alpha = a$ and $R\sin\alpha = b$ say that the vector $(a, b)$ has length $R$ and angle
+
+    $\alpha$. Writing $a\sin\theta + b\cos\theta$ as $R\sin(\theta + \alpha)$ is literally
+
+    "rotate $(a, b)$ by $\theta$ and take its vertical component".
+
+
+    That is why $R$ never depends on $\theta$ and why shifting by $\theta$ cannot change the
+
+    amplitude: rotation preserves lengths.'
+questions:
+- id: why-one-r
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: In $3\sin\theta + 4\cos\theta = R\sin(\theta + \alpha)$, what forces $R = 5$ exactly?
+  options:
+  - text: Matching coefficients gives $R\cos\alpha = 3$ and $R\sin\alpha = 4$, so $R^2 = 3^2 + 4^2$
+    correct: true
+    why: 'Squaring and adding is the only way to eliminate $\alpha$: $R = 5$.'
+  - text: Because $\alpha = \arctan\tfrac43$ makes the numbers nice
+    why: $\alpha$ is found after $R$; the amplitude does not depend on $\alpha$ looking tidy.
+  - text: Since the graph of $3\sin\theta + 4\cos\theta$ reaches 3 when $\cos = 0$
+    why: 'That''s backwards: at $\cos\theta = 0$ (i.e. $\theta = 0$ or $180°$) the value is $\pm 4$, not 3.'
+  - text: Because 3, 4, 5 is a Pythagorean triple and trigonometry always uses them
+    why: The triple appears because of $R^2 \sin^2\alpha + R^2\cos^2\alpha = R^2$; it would be $\sqrt{a^2 + b^2}$
+      whatever the numbers.
+  explanation: 'Expanding and matching gives $R\cos\alpha = 3$, $R\sin\alpha = 4$; add the squares: $R^2 = 9 + 16
+    = 25$.'
+- id: compute-alpha
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Write $2\sin\theta + 5\cos\theta$ as $R\sin(\theta + \alpha)$ with $R > 0$ and $0° < \alpha < 90°$. Enter
+    $\alpha$ in degrees to 1 decimal place.
+  fields:
+  - answer: 68.2
+    tolerance:
+      abs: 0.1
+  explanation: $R = \sqrt{4 + 25} = \sqrt{29} \approx 5.385$, and $\alpha = \arctan(5/2) \approx 68.2°$.
+- id: max-value
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Find the maximum value of $12\cos\theta - 5\sin\theta$.
+  fields:
+  - answer: 13
+    tolerance:
+      abs: 0.001
+  explanation: 'The expression is $13\cos(\theta + \alpha)$ form: the maximum of $R\cos(\theta + \alpha)$ is $R
+    = \sqrt{12^2 + 5^2} = 13$.'
+- id: solve-trig-eq
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.3.2
+  prompt: Given $\sin\theta + \cos\theta = \sqrt2\sin(\theta + 45°)$, solve $\sin\theta + \cos\theta = 1$ for $0°
+    \le \theta \le 360°$ and enter the smallest solution in degrees to 1 decimal place.
+  fields:
+  - answer: 0
+    tolerance:
+      abs: 1
+  explanation: $\sqrt2\sin(\theta + 45°) = 1$, so $\theta + 45° = 45°$ or $135°$, giving $\theta = 0°$ or $90°$;
+    the smallest is $0°$.
+- id: read-off-match
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.3.2
+  prompt: Which single function equals $\cos\theta - \sqrt3\sin\theta$?
+  options:
+  - text: $2\cos(\theta + 60°)$
+    correct: true
+    why: $2\cos(\theta + 60°) = 2\cos\theta\cos 60° - 2\sin\theta\sin 60° = \cos\theta - \sqrt3\sin\theta$.
+  - text: $2\cos(\theta - 60°)$
+    why: The minus in the compound angle flips the sign of the $\sin$ term.
+  - text: $2\sin(\theta + 60°)$
+    why: Expanding gives $\sin\theta + \sqrt3\cos\theta$ — both functions swapped, not the target.
+  - text: $\cos(\theta - 60°)$
+    why: 'Amplitude 1 is too small: the expression reaches 2.'
+  explanation: 'With $R\cos(\theta + \alpha)$: $R\cos\alpha = 1$, $R\sin\alpha = \sqrt3$, so $R = 2$ and $\alpha
+    = 60°$.'

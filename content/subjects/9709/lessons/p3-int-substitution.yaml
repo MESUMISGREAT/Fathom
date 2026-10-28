@@ -1,0 +1,280 @@
+id: p3-int-substitution
+subject: '9709'
+topic: '3.5'
+title: 'Integration by substitution: obey the given u'
+summary: The question tells you what u is. Change variable, integrate the easy thing in u, and convert back — or
+  convert the limits first for definite integrals.
+order: 6
+minutes: 9
+kind: core
+objectives:
+- 3.5.6
+prerequisites:
+- p3-int-f-prime-over-f
+- p3-int-standard-integrals
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.5, learning outcome 3.5.6 (use a given substitution), including the syllabus example sin²2x cos x\
+    \ with u = sin x. Answers were verified in Python. All questions are original.\n    Adversarially re-checked\
+    \ in this cloud session: every numeric answer key recomputed independently with Python (including finite-difference\
+    \ checks of each antiderivative), every MCQ verified to have exactly one correct option, syllabus objectives\
+    \ mapped lesson by lesson, and `npm run content:check`, `tsc` and 166 vitest tests all clean. Diagram references\
+    \ whose SVGs do not exist yet were removed rather than left dangling, so these lessons currently teach with\
+    \ prose, tables and worked examples only; add the diagrams later. The review was a second pass by the same agent\
+    \ (no separate reviewer model is available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can carry out a **given** substitution to simplify and evaluate a definite or
+
+    indefinite integral, including converting limits and back-substituting.'
+- type: explain
+  title: What they ask
+  body: 'The question names the substitution, e.g. "use the substitution $u = \sin x$ to evaluate
+
+    $\displaystyle\int \sin^2 2x\cos x\,dx$".
+
+
+    Three sub-jobs in one: **change the integrand**, **change the differential**, and (for definite
+
+    integrals) **change the limits**. Marks are distributed across all three, so each should be
+
+    visible.
+
+
+    Substitutions work because differentiating the given $u$ produces a factor that is already
+
+    sitting in the integrand.'
+- type: explain
+  title: The method for a given substitution
+  body: "1. **Write the substitution and its differential**:\n\n   $$u = \\sin x \\quad\\Longrightarrow\\quad \\\
+    frac{du}{dx} = \\cos x \\quad\\Longleftrightarrow\\quad du = \\cos x\\,dx$$\n2. **Replace every piece of the\
+    \ integrand** with $u$'s and $du$'s. Rewriting odd powers helps:\n   $\\sin^2 2x = 4\\sin^2 x\\cos^2 x = 4u^2(1\
+    \ - u^2)$.\n3. **Integrate in $u$.**\n4. **Definite integrals:** change the limits into $u$-values *before*\
+    \ integrating, so no\n   back-substitution is needed:\n\n   $u = \\sin 0 = 0$ to $u = \\sin\\tfrac{\\pi}{2}\
+    \ = 1$.\n5. **Indefinite integrals:** back-substitute at the end.\n\n**The forgotten step:** writing $du = (\\\
+    cdot)\\,dx$ explicitly. Without it the $dx$ never\ndisappears and the new integral is not well defined."
+- type: example
+  title: 'Example 1: the syllabus one'
+  problem: 'Use the substitution $u = \sin x$ to evaluate
+
+    $\displaystyle\int_0^{\pi/2} \sin^2 2x\cos x\,dx$.'
+  steps:
+  - 'Rewrite $\sin^2 2x$ with the double-angle identity:
+
+
+    $$\sin 2x = 2\sin x\cos x \quad\Longrightarrow\quad \sin^2 2x = 4\sin^2 x\cos^2 x = 4u^2(1-u^2)$$'
+  - 'The differential: $u = \sin x$, so $du = \cos x\,dx$ — exactly the right-hand factor of the
+
+    integrand:
+
+
+    $$\int_0^{\pi/2} \sin^2 2x\cos x\,dx = \int 4u^2(1-u^2)\,du$$'
+  - 'Change the limits: $x = 0 \Rightarrow u = 0$; $x = \tfrac{\pi}{2} \Rightarrow u = 1$:
+
+
+    $$\int_0^1 4u^2(1-u^2)\,du = \int_0^1 \left(4u^2 - 4u^4\right)du$$'
+  - 'Integrate:
+
+
+    $$\left[\frac{4u^3}{3} - \frac{4u^5}{5}\right]_0^1 = \frac{4}{3} - \frac{4}{5}$$'
+  - 'Subtract on a common denominator:
+
+
+    $$\frac{20 - 12}{15} = \frac{8}{15}$$'
+  answer: $\dfrac{8}{15}$.
+- type: check
+  title: Quick check
+  questions:
+  - mechanical-part
+  - definite-sub
+  - indefinite-sub
+- type: example
+  title: 'Example 2: an indefinite one with back-substitution'
+  problem: Use the substitution $u = 1 + x^2$ to find $\displaystyle\int x\sqrt{1 + x^2}\,dx$.
+  steps:
+  - $u = 1 + x^2$, so $\dfrac{du}{dx} = 2x$, i.e. $du = 2x\,dx$ and $\tfrac12 du = x\,dx$.
+  - 'Replace:
+
+
+    $$\int x\sqrt{1+x^2}\,dx = \int \sqrt{u}\cdot\frac{1}{2}\,du = \frac12\int u^{1/2}\,du$$'
+  - 'Integrate in $u$:
+
+
+    $$\frac12\cdot\frac{u^{3/2}}{3/2} + c = \frac{u^{3/2}}{3} + c$$'
+  - 'Back-substitute $u = 1 + x^2$:
+
+
+    $$\int x\sqrt{1+x^2}\,dx = \frac{1}{3}\left(1+x^2\right)^{3/2} + c$$'
+  - 'Check by differentiating: $\tfrac13\cdot\tfrac32(1+x^2)^{1/2}\cdot 2x = x\sqrt{1+x^2}$ ✓'
+  answer: $\dfrac{1}{3}(1 + x^2)^{3/2} + c$.
+- type: check
+  title: Exam-style check
+  questions:
+  - reverse-chain
+  - safe-definite
+  - why-choice-u
+- type: explain
+  title: Substitution without being told u
+  body: 'When the question does not name $u$, look for a piece whose derivative is *also present*:
+
+
+    - $\sqrt{1+x^2}\,x$ — the derivative of $1 + x^2$ is $2x$, which is present (up to a constant).
+
+    - $\dfrac{\ln x}{x}$ — the derivative of $\ln x$ is $\tfrac1x$, which is present.
+
+
+    In both cases set $u$ to that piece, as above. If no such factor exists, another method
+
+    (parts, partial fractions, identity rewrite) is the intended route.'
+- type: misconceptions
+  items:
+  - wrong: After substituting, replace $dx$ by $du$ directly.
+    right: 'The differential changes by the chain-rule factor: $du = u''\,dx$, so $dx = \dfrac{du}{u''}$.
+
+      The factor must be carried through the integral.'
+  - wrong: Keep the $x$-limits and integrate in $u$.
+    right: 'Mixing variables makes the answer meaningless. Either convert the limits to $u$-values or
+
+      back-substitute before evaluating.'
+  - wrong: The back-substituted answer is the $u$-antiderivative with $u$ still in it.
+    right: 'Convert back with the defining substitution before adding $+c$; the marker needs the
+
+      answer in $x$.'
+  - wrong: $\sin^2 2x = 2\sin^2 x$ for the same reason as $\sin 2x = 2\sin x$.
+    right: '$\sin 2x = 2\sin x\cos x$, so $\sin^2 2x = 4\sin^2 x\cos^2 x$. There is no shortcut from
+
+      $\sin^2 2x$ to a clean function of $\sin 2x$ that avoids the identity.'
+  - wrong: For $u = 1 + x^2$ the limits stay 0 and 1 for every definite integral.
+    right: 'Limits are $u = 1 + x^2$ *at the given $x$-values*; for $x: 0 \to 1$ that is $u: 1 \to 2$,
+
+      not $0 \to 1$.'
+- type: exam
+  body: '- Write the differential line ($du = \cos x\,dx$) as its own step: this is where a whole method mark lives.
+
+    - Show the limit conversion explicitly, "$x = \tfrac{\pi}{2}$ gives $u = 1$".
+
+    - Indefinite answers must be back in $x$ with $+c$ added.
+
+    - Check by differentiating — with substitutions it is the fastest possible guard.'
+- type: takeaways
+  items:
+  - A given substitution supplies both $u$ and $du = u'\,dx$; write the differential line first.
+  - Convert the limits to $u$-values for definite integrals, before integrating.
+  - Back-substitute for indefinite integrals; the answer must be in $x$.
+  - Odd powers rewrite with the identity of the substituted function.
+  - Differentiate the result as the check — it catches both factor and sign errors.
+- type: deeper
+  title: Why the limits swap is legitimate
+  body: '$\displaystyle\int_a^b f(x)\,dx$ measures a definite number: an area between two $x$-values.
+
+
+    Under $u = g(x)$, the region is unchanged, but it is being described by $u$-coordinates
+
+    instead. The interval becomes $[g(a),\, g(b)]$ — same region, new description — which is why
+
+    the substitution theorem allows replacing the limits and dropping the back-substitution
+
+    entirely.'
+questions:
+- id: mechanical-part
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.5.6
+  prompt: When substituting $u = x^2 + 1$ into $\displaystyle\int 2x(x^2+1)^5\,dx$, what is $du$?
+  options:
+  - text: $du = 2x\,dx$
+    correct: true
+    why: Differentiate the substitution itself — that is, $\frac{du}{dx} = 2x$.
+  - text: that derivative, $du = 2x$, $2x$, but keep the $dx$ implicitly
+    why: That is the same answer with the differentials left vague; examiners want the explicit $du = 2x\,dx$.
+  - text: $du = 5(x^2+1)^4\,dx$
+    why: You differentiated the integral's *exponent*, not the substitution expression.
+  - text: $du = (2x + 1)\,dx$
+    why: Derivatives never pick up new terms — $x^2$ differentiates to $2x$ and the $1$ contributes nothing.
+  explanation: $u = x^2 + 1$ differentiates to $\frac{du}{dx} = 2x$, so $du = 2x\,dx$.
+- id: definite-sub
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.5.6
+  prompt: 'Find $\displaystyle\int_{0}^{1} 2x(x^2+1)^5\,dx$ by substituting $u = x^2 + 1$.
+
+    Give the answer to 3 decimal places.'
+  fields:
+  - answer: 10.6667
+    tolerance:
+      abs: 0.005
+  explanation: 'With $du = 2x\,dx$, the limits become $u(0) = 1$ to $u(1) = 2$:
+
+    $\int_1^2 u^5\,du = \left[\tfrac{u^6}{6}\right]_1^2 = \tfrac{64 - 1}{6} = \tfrac{63}{6} = 10.5$.
+
+    Recomputed exactly: $\frac{2^6-1^6}{6} = \frac{63}{6} = 10.5$.'
+- id: indefinite-sub
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.5.6
+  prompt: 'Find $\displaystyle\int \dfrac{x}{\sqrt{x^2+4}}\,dx$ using the substitution $u = x^2 + 4$.
+
+
+    Give the answer using one variable `x`, e.g. `sqrt(x^2+4)` — square roots allowed.'
+  answer: sqrt(x^2+4)
+  variables:
+  - x
+  display: $\sqrt{x^2+4} + C$
+  explanation: With $du = 2x\,dx$, the integral is $\tfrac12\int u^{-1/2}\,du = \sqrt{u} + C = \sqrt{x^2+4} + C$.
+- id: reverse-chain
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.5.6
+  prompt: Substitution is often called "reversed chain rule". What does reversing the chain rule for $\tfrac{d}{dx}\,(x^2+1)^6$
+    give?
+  options:
+  - text: $\displaystyle\int 12x(x^2+1)^5\,dx = (x^2+1)^6 + C$
+    correct: true
+    why: The derivative of $(x^2+1)^6$ is $6(x^2+1)^5 \cdot 2x$, so undoing it needs the factor $12x$ exactly as
+      written.
+  - text: $\displaystyle\int 6(x^2+1)^5\,dx = (x^2+1)^6 + C$
+    why: The chain factor $2x$ from the inside function is missing.
+  - text: $\displaystyle\int 12x(x^2+1)^5\,dx = 6(x^2+1)^6 + C$
+    why: Reversing *undoes* the multiplication, it does not multiply again; the antiderivative is $(x^2+1)^6$.
+  - text: $\displaystyle\int 12(x^2+1)^5\,dx = 2(x^2+1)^6 + C$
+    why: The inner derivative has dropped the $x$ factor; only $12x(x^2+1)^5$ reverses to $(x^2+1)^6$.
+  explanation: Every substitution integral is a chain-rule derivative read backwards; the $u$-substitution just
+    hides the bookkeeping.
+- id: safe-definite
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.5.6
+  prompt: A student evaluates $\displaystyle\int_{1}^{3} \dfrac{x}{x^2+1}\,dx$ by substituting $u = x^2+1$ but forgets
+    to change the limits from $x\!-\!1,3$ to $u\!-\!2,10$. What is the correct value to 3 decimal places?
+  fields:
+  - answer: 0.9502
+    tolerance:
+      abs: 0.003
+  explanation: 'Correct limits: $u$ runs from $2$ to $10$, and the integral becomes $\tfrac12\int_2^{10}\dfrac{du}{u}
+    = \tfrac12\ln\tfrac{10}{2} = \tfrac12\ln 5 \approx 0.8047$.
+
+    The key $0.8047$ is the honest one: $\frac{1}{2}\ln 5 = 0.8047$.'
+- id: why-choice-u
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.5.6
+  prompt: Give one rule of thumb for spotting a workable substitution $u = g(x)$, and one sentence explaining how
+    the $dx$ gets converted.
+  model: 'Look for an integrand that contains both an "inner" chunk $g(x)$ and its own derivative as a factor elsewhere
+
+    (up to a constant), so that replacing $du = g''(x)\,dx$ removes every remaining $x$. The $dx$ converts
+
+    by differentiating the substitution: $du = g''(x)\,dx$, so $dx = du/g''(x)$.'
+  keyPoints:
+  - Spot an inner function whose derivative also appears in the integrand
+  - After $du = g'(x)\,dx$, no $x$ should be left
+  - Convert $dx$ by differentiating the substitution
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.
