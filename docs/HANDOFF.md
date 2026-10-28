@@ -220,15 +220,39 @@ changes alongside lessons:
   the **9709** lessons broadly, so this chat left both alone and took **9702 6.2** instead.
   Quick check: `ls <sibling>/content/subjects/*/lessons | grep '^<prefix>'`, plus
   `git log --all --oneline -- 'content/subjects/<code>/lessons/<prefix>-*'` and the
-  `wip-snapshot` tree. Never edit the sibling worktree.
+  `wip-snapshot` tree. Never edit the sibling worktree. That chat published **9618 6.1**
+  (7 lessons, a93ff08) during this session; it also restyles 9709 lessons, so leave 9709
+  alone while it is active.
 - **`scripts/lessons/units.json` prefixes now match the published 9709 3.3-3.5 lessons**
   (`p3-trig`, `p3-diff`, `p3-int`). They had been listed as `p3-trigonometry`,
   `p3-differentiation` and `p3-integration`, so `status.mjs` reported that published unit as
   `todo` and a future writer would have duplicated 15 lessons. `status.mjs` now says
   **33 published, 121 todo**, with 9618 6.1 next.
-- On `main`: **370 reviewed lessons, 2133 questions** (9709: 118, 9618: 93, 9702: 76,
-  9701: 83). All are live. Latest publish: 9709 3.3+3.4+3.5 trigonometry,
-  differentiation and integration, 28 Oct (0cad6e0).
+- On `main`: **382 reviewed lessons, 2202 questions** (9709: 118, 9618: 100, 9702: 81,
+  9701: 83). All are live. Latest content: 9618 6.1 data security (a93ff08, published by
+  the other chat) and 9702 6.2 elastic and plastic behaviour (77f2e9c), both 28 Oct.
+- **9702 6.2 Elastic and plastic behaviour is published** (28 Oct, 77f2e9c): 5 lessons
+  (`elastic-plastic-deformation`, `-elastic-limit`, `-work-done-area`, `-strain-energy`,
+  `-energy-past-limit`), 25 questions, 3 diagrams
+  (`phys-elastic-plastic-loading-unloading`, `-work-area`, `-strain-energy`). Objectives
+  6.2.1-6.2.4 are each taught by a core lesson and tested. `content:check` 0 errors /
+  0 warnings, `tsc` clean, 166 tests pass, all three diagrams rendered and inspected in
+  light and dark. The lesson page returned 200 with its title on the production URL.
+    - Conventions recorded: the **limit of proportionality** (graph stops being straight) and
+      the **elastic limit** (object stops returning to its original length) are taught as
+      distinct points, with the LOP usually reached first for a metal wire; the unloading line
+      is parallel to the initial straight part, so the permanent extension is where it meets the
+      x-axis; area under the loading graph = work done, area under the unloading line = energy
+      recovered, and the difference is dissipated past the elastic limit.
+    - Same caveat as the other batches: the review was a second adversarial pass by the **same
+      agent** with every numeric key recomputed in Python; no separate reviewer model was
+      available. A reviewer should still be run over the five files before treating them as final.
+    - **Diagram gotcha:** `dg-fill-accent`/`dg-fill-accent-2` are already semi-transparent
+      (`rgba(..., 0.14-0.2)`). Adding `opacity={0.2}` on top makes the shading invisible; use
+      `opacity={1}` (or omit it).
+    - Another cloud chat was writing 9618 6.1 (and restyling 9709) at the same time. This chat
+      checked for in-flight files before starting and took 9702 6.2 instead. Check again before
+      the next unit: the two chats share this VM and both push to `main`; rebase, never force.
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -313,9 +337,10 @@ changes alongside lessons:
       `LD_LIBRARY_PATH=$PWD/.work-logs/libs/x/usr/lib/x86_64-linux-gnu` and
       `CHROMIUM_PATH=$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome` (the wrapper in
       `.work-logs/chromium-wrapper.sh` adds `--no-sandbox`).
-- Queue: 33 published, 121 todo (`node scripts/lessons/status.mjs`). Next unit:
-  **9618 6.1** (check `status.mjs --all` first; the order is generated).
-  (then 9702 6.1, 9701 5.2, 9709 3.3+3.4+3.5).
+- Queue: 35 published, 119 todo (`node scripts/lessons/status.mjs`). **Next unit is 9701 6.1
+  (redox processes)**; check the sibling worktree again before starting in case the other chat
+  has taken it. 9709 units are being restyled by that chat, so prefer non-9709 work.
+  (Then 9709 3.6+3.7, 9618 6.2, 9702 7.1, 9701 7.1, 9709 3.8, ...).
 - **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
   are only on `wip-snapshot`.
   - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
