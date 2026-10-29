@@ -15,7 +15,7 @@ production.**
 lesson-writing pipeline (`scripts/lessons/`), the current state and the next steps.
 
 **Working token-efficiently:** follow `.claude/skills/token-efficient-workflow/SKILL.md`.
-- Use at most 3 agents, with one review pass.
+- Use dynamic concurrency for genuinely independent tasks; follow `docs/AGENT_COORDINATION.md` when multiple local agents share a checkout. Resource limits and contention, not a fixed count, determine the safe number.
 - Read docs by section with its `md_section.py`.
 - Never skip correctness checks.
 - **Teaching quality before brevity:** follow the full "Teaching philosophy: understanding before brevity" section in `docs/CONTENT_GUIDE.md`. Readability rules control formatting, never teaching depth; longer lessons are fine when needed.
