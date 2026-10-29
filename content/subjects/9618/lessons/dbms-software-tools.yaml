@@ -1,0 +1,300 @@
+id: dbms-software-tools
+subject: "9618"
+topic: "8.2"
+title: "The tools inside a DBMS"
+summary: A DBMS is not just storage. It ships with tools for designing tables, writing queries, building data-entry screens and reports, setting permissions and taking backups.
+order: 2
+minutes: 8
+kind: core
+objectives: ["8.2.2"]
+prerequisites: [dbms-file-based-approach-problems]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus for
+    2027-2029 (Version 2, December 2025), topic 8.2, learning outcome 8.2.2 (how the software tools
+    within a DBMS are used in practice). Questions are original.
+
+    Second-pass review (same agent, no separate reviewer model): the problem-to-feature mapping was
+    checked against the 2027-2029 syllabus wording, the DBMS tool list was checked against the
+    outcomes (8.2.2), every MCQ confirmed to have exactly one correct option, and every cloze
+    accept list checked. No diagrams in this sub-topic.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name the main tools found inside a DBMS, say what each one is for, and
+      explain how a real organisation would use them when building and running a system.
+
+  - type: explain
+    title: One product, many tools
+    body: |-
+      A DBMS such as MySQL, SQL Server, Oracle or Microsoft Access is a package. The **database
+      engine** stores the data and enforces the rules; around it sit **tools** for the people who
+      design, build, use and maintain the system.
+
+      Different people use different tools:
+
+      | Person | Main tools |
+      |---|---|
+      | database designer / developer | developer interface, data modelling tools, data dictionary, query builder |
+      | office staff entering data | forms |
+      | managers reading results | reports, charts |
+      | database administrator (DBA) | security, backup and recovery, import/export, monitoring |
+
+  - type: explain
+    title: The tools, one at a time
+    body: |-
+      **Developer interface.** The screen or command line where the developer creates tables, writes
+      SQL, tests queries and sees errors. Everything else in this lesson is reached through it.
+
+      **Data dictionary.** The DBMS's own record of the database: every table, every field, its data
+      type and size, which fields are keys, which are `NOT NULL`, the validation rules, and who may
+      access what. It is metadata — data about the data. Because the DBMS keeps it, the schema and
+      the programs cannot drift apart.
+
+      **Data modelling tools.** Diagram tools for designing the structure before it is built, usually
+      **entity–relationship (E–R) diagrams**: entities such as Customer and Order, their attributes,
+      and the relationships between them. Designing on paper (or on screen) first avoids rebuilding
+      tables later.
+
+      **Query builder / query designer.** A graphical way of writing a query: pick the tables, drag
+      the fields, set criteria, and the tool generates the SQL. Useful for occasional users; the SQL
+      it produces can be inspected and edited.
+
+      **Forms.** Screens for entering and viewing one record at a time, with labels, drop-down lists
+      and validation. Forms reduce typing errors and hide fields the user should not see — a clerk
+      entering an order does not need the customer's medical notes.
+
+      **Report generator.** Produces formatted output — grouped, sorted, totalled, with headings and
+      dates — for printing or export. A monthly sales report is a saved report, not a new program.
+
+      **Security management.** Creates user accounts and roles and grants rights per table, per
+      field or per action (read, insert, update, delete). This is where the DBMS's central control of
+      access actually happens.
+
+      **Backup and recovery tools.** Schedule full and incremental backups, and restore the database
+      after a failure using the backup plus the **transaction log**, which records every committed
+      change.
+
+      **Import and export utilities.** Move data in and out in standard formats (CSV, SQL scripts,
+      spreadsheets) — for example loading a supplier's price list, or sending results to a
+      spreadsheet for a presentation.
+
+      **Macros and automation.** Stored sequences of actions (open a form, run a query, print a
+      report) that run at the click of a button, so routine tasks do not need a programmer.
+
+  - type: intuition
+    title: Why the data dictionary matters most
+    body: |-
+      Think of a library. The books are the data; the catalogue is the data dictionary. Without the
+      catalogue you can still read a book you are holding, but you cannot find anything, check what
+      exists, or know who may borrow it.
+
+      Because the DBMS keeps the catalogue itself, every tool can rely on it: a form is built from
+      the dictionary's field list, a query checks the field names against it, and security is applied
+      to the objects it describes.
+
+  - type: example
+    title: "Worked example: a gym's membership system"
+    problem: |-
+      A gym wants a database for members, classes and bookings. Describe how it would use the tools
+      of a DBMS from design to daily operation.
+    steps:
+      - |-
+        **Design.** The developer draws an E–R diagram: Member, Class and Booking entities, with a
+        member booking many classes. This settles the tables before anything is built.
+      - |-
+        **Build.** In the developer interface they write `CREATE TABLE` statements. The data
+        dictionary then records the fields, types, keys and validation rules automatically.
+      - |-
+        **Data entry.** Reception staff use a **form** to add a member: name, date of birth, contact
+        number, membership type chosen from a drop-down, with a check that the date is in the past.
+      - |-
+        **Questions.** The manager uses the **query builder** to list members whose membership
+        expires this month, and saves the generated SQL for reuse.
+      - |-
+        **Output.** A **report** prints attendance by class each week, grouped by instructor, with
+        totals.
+      - |-
+        **Running it.** The DBA gives reception rights to add and read members but not to delete
+        them, schedules a nightly **backup**, and uses **import** to load the old spreadsheet of
+        members once.
+    answer: |-
+      Design with E–R modelling, build through the developer interface (recorded in the data
+      dictionary), enter data with forms, answer questions with the query builder, publish reports,
+      and protect everything with security and backup tools.
+
+  - type: check
+    title: Quick check
+    questions: [data-dictionary, forms-purpose, report-generator]
+  - type: check
+    title: Practice
+    questions: [query-builder, backup-log, tools-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: The data dictionary stores the data itself.
+        right: |-
+          It stores **metadata**: the structure, types, keys, validation rules and permissions. The
+          data lives in the tables.
+      - wrong: A form and a report do the same job.
+        right: |-
+          A form is for entering or viewing one record at a time; a report presents many records,
+          grouped and formatted for reading or printing.
+      - wrong: The query builder is only for programmers.
+        right: |-
+          It is designed for people who do not want to write SQL by hand; it generates the SQL for
+          them.
+      - wrong: A backup alone is enough to recover a database.
+        right: |-
+          Recovery needs the backup **plus the transaction log**, so changes committed after the
+          backup can be reapplied without also reapplying unfinished ones.
+      - wrong: Security is set in each application program.
+        right: |-
+          In a DBMS, access rights are central: they apply to the database objects, whatever program
+          is used to reach them.
+
+  - type: exam
+    body: |-
+      - Name the tool and then say what a named user does with it: "reception staff use a form to
+        enter a new member, so fields can be validated at the point of entry".
+      - Learn the data dictionary as **metadata** (structure, types, keys, validation, permissions).
+      - For backup questions, mention the transaction log as well as the backup.
+      - Do not describe a DBMS tool as if it were an application feature (a form is a DBMS tool, not
+        "the program's screen").
+      - If a scenario names a role — manager, receptionist, DBA — match the tool to that role.
+
+  - type: takeaways
+    items:
+      - A DBMS provides a developer interface, data dictionary, modelling tools, query builder, forms, reports, security, backup and import/export.
+      - "The data dictionary holds metadata: structure, data types, keys, validation rules and permissions."
+      - Forms are for data entry; reports are for presenting grouped, formatted results.
+      - Security and backup are central DBMS tools, not per-application features.
+      - "Tools map to roles: designers build, staff enter data, managers read reports, the DBA protects the system."
+
+questions:
+  - id: data-dictionary
+    format: mcq
+    difficulty: 1
+    objectives: ["8.2.2"]
+    prompt: |-
+      What does the data dictionary of a DBMS contain?
+    options:
+      - text: Metadata describing the tables, fields, data types, keys, validation rules and permissions
+        correct: true
+        why: |-
+          It is the DBMS's own catalogue of the database structure and rules.
+      - text: Every record stored in the database
+        why: |-
+          The records are the data; the dictionary describes their structure.
+      - text: A copy of the most recent backup
+        why: |-
+          Backups are separate files produced by the backup tool.
+      - text: The SQL statements that created the application's menus
+        why: |-
+          Menus belong to the application, not the dictionary.
+    explanation: |-
+      The data dictionary is metadata about the database, not the data itself.
+
+  - id: forms-purpose
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.2"]
+    prompt: |-
+      Why would a hospital use a **form** rather than typing directly into a table?
+    options:
+      - text: A form shows only the needed fields and can validate input as it is entered
+        correct: true
+        why: |-
+          Forms guide the user, hide irrelevant fields and check values at the point of entry.
+      - text: A form stores data more compactly than a table
+        why: |-
+          Storage is unaffected; forms are an interface.
+      - text: A form replaces the need for a data dictionary
+        why: |-
+          Forms are built from the structure the dictionary records.
+      - text: A form allows several users to edit the same record simultaneously without conflict
+        why: |-
+          That is concurrency control, not the form.
+    explanation: |-
+      Forms reduce errors by limiting and validating what is entered.
+
+  - id: report-generator
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.2"]
+    prompt: |-
+      A manager needs a weekly list of overdue library loans, grouped by department with totals.
+      Which DBMS tool is intended for this?
+    options:
+      - text: The report generator
+        correct: true
+        why: |-
+          It formats, groups, sorts and totals records for reading or printing.
+      - text: The data dictionary
+        why: |-
+          That describes the structure, not the output.
+      - text: The import utility
+        why: |-
+          Import brings data in; it does not present results.
+      - text: A form
+        why: |-
+          Forms handle one record at a time for entry or viewing.
+    explanation: |-
+      Grouped, formatted, totalled output is the job of the report generator.
+
+  - id: query-builder
+    format: cloze
+    difficulty: 2
+    objectives: ["8.2.2"]
+    prompt: |-
+      A graphical tool that lets a user choose tables and fields and then generates the
+      {{1}} automatically is called a query {{2}}.
+    blanks:
+      - accept: ["sql", "structured query language", "query"]
+      - accept: ["builder", "designer", "by example"]
+    explanation: |-
+      The query builder (or designer) generates SQL from a graphical design.
+
+  - id: backup-log
+    format: mcq
+    difficulty: 3
+    objectives: ["8.2.2"]
+    prompt: |-
+      Why does recovering a database need the transaction log as well as the last backup?
+    options:
+      - text: The log re-applies changes committed after the backup, without repeating uncommitted ones
+        correct: true
+        why: |-
+          The backup restores an earlier state; the log brings it forward consistently.
+      - text: The log stores a second copy of the whole database
+        why: |-
+          That would be a backup, not a log.
+      - text: The log lists user passwords so accounts can be restored
+        why: |-
+          Passwords are held as part of security data, not for this purpose.
+      - text: The backup cannot be restored without the log
+        why: |-
+          A backup restores on its own, but recent changes would be lost.
+    explanation: |-
+      Backup plus transaction log restores the latest consistent state.
+
+  - id: tools-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.2.2"]
+    prompt: |-
+      A student describes DBMS tools. Which line contains the first error?
+    lines:
+      - The data dictionary records the tables, fields, data types and keys.
+      - Forms are used to enter and view one record at a time with validation.
+      - The report generator is used to create new tables and to set primary keys.
+      - Backup and recovery tools use the transaction log to restore a consistent state.
+    errorLine: 3
+    fix: |-
+      Creating tables and setting keys is done with **DDL** through the developer interface. The
+      report generator only presents data.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. Line 3 confuses the report generator with a DDL tool.

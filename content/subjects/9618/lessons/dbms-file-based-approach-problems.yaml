@@ -1,0 +1,302 @@
+id: dbms-file-based-approach-problems
+subject: "9618"
+topic: "8.2"
+title: "Why file-based data storage breaks down"
+summary: Storing data in separate files works until the same student, customer or product appears in several of them. Then the copies drift apart, and a DBMS is the fix.
+order: 1
+minutes: 8
+kind: core
+objectives: ["8.2.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus for
+    2027-2029 (Version 2, December 2025), topic 8.2, learning outcome 8.2.1 (DBMS features that
+    address the issues of a file-based approach). Questions are original.
+
+    Second-pass review (same agent, no separate reviewer model): the problem-to-feature mapping was
+    checked against the 2027-2029 syllabus wording, the DBMS tool list was checked against the
+    outcomes (8.2.2), every MCQ confirmed to have exactly one correct option, and every cloze
+    accept list checked. No diagrams in this sub-topic.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name the problems of storing data in separate files, and say which feature
+      of a **database management system (DBMS)** solves each one.
+
+  - type: explain
+    title: The file-based approach
+    body: |-
+      Before databases, each application kept its own files. A school might have:
+
+      - a **student file** used by the office, holding names, addresses and tutor groups;
+      - a **exam file** used by the exams officer, holding names and subject entries;
+      - a **library file** holding names and books borrowed.
+
+      Each file is designed for one program. That is fine until the same fact has to live in more
+      than one place — and in a school, it always does.
+
+  - type: explain
+    title: The problems, one by one
+    body: |-
+      | Problem | What it looks like in practice |
+      |---|---|
+      | data redundancy | the same data is stored many times: a student's address appears in three files |
+      | data inconsistency | the copies disagree: the office updates an address, the library file still has the old one |
+      | program–data dependence | each program knows the file's exact layout, so changing a field means rewriting every program that uses it |
+      | data isolation | data is spread across files in different formats, so it is hard to combine "which students take physics **and** have an overdue book?" |
+      | poor security | rights are set per file, so there is no central control over who sees which fields |
+      | limited concurrent access | two users editing the same file can overwrite each other's changes |
+      | weak integrity checking | nothing stops a date of birth being stored as "31/02/2010" |
+      | no central backup or recovery | each file is backed up (or not) separately, and a crash can leave copies out of step |
+      | no ad hoc queries | a new question means writing a new program, not just asking the data |
+
+  - type: definition
+    term: Database management system (DBMS)
+    body: |-
+      Software that sits between the users and the stored data, and manages that data centrally:
+      storing it, controlling access, enforcing rules, keeping copies consistent, allowing queries,
+      and providing backup and recovery.
+
+      The application programs no longer read the files directly; they ask the DBMS.
+
+  - type: explain
+    title: Which DBMS feature answers which problem
+    body: |-
+      This mapping is what exam questions ask for, so learn it as pairs:
+
+      | Problem of files | DBMS feature that fixes it |
+      |---|---|
+      | redundancy | a single central database, with each fact stored once; **normalisation** removes repeated groups |
+      | inconsistency | one copy only, so an update happens in one place; the DBMS enforces **referential integrity** |
+      | program–data dependence | **data independence**: programs use the database structure through the DBMS, so fields can change without rewriting every program |
+      | data isolation | one query language (SQL) over all the data, so records from different tables can be combined |
+      | poor security | central **access rights**: users, passwords and permissions set per table or per field |
+      | concurrent access | **concurrency control** (locking and transactions) so two users cannot corrupt each other's changes |
+      | weak integrity | **validation and integrity constraints**: data types, `NOT NULL`, `UNIQUE`, primary and foreign keys, range checks |
+      | no backup | central **backup and recovery**, including transaction logs to restore a consistent state |
+      | no ad hoc queries | **query tools** and SQL, so new questions can be answered without new programs |
+
+  - type: intuition
+    title: One register instead of three notebooks
+    body: |-
+      Imagine three teachers each keeping a private notebook of the same class list. When a student
+      changes address, someone has to remember to tell all three — and someone always forgets.
+
+      A database is the single class register on the staffroom wall. There is one entry to correct,
+      everyone reads the same entry, and the head can decide which teachers may write in it.
+
+      Where the analogy stops: a DBMS also protects against two people writing at the same moment,
+      and can undo a half-finished change after a crash. Paper cannot.
+
+  - type: example
+    title: "Worked example: the duplicated customer file"
+    problem: |-
+      An online shop keeps `customers.txt` for its website and `orders.txt` for its accounts
+      software. A customer changes her address. The website is updated; the accounts file is not.
+
+      Explain the problems this causes and how a DBMS would prevent them.
+    steps:
+      - |-
+        **Redundancy.** The address is stored twice, once in each file. Only one copy was updated.
+      - |-
+        **Inconsistency.** The two systems now disagree. Orders go to the new address while invoices
+        go to the old one — the business is acting on conflicting facts.
+      - |-
+        **A DBMS fix.** Both programs would use one `Customer` table, so the address exists once.
+        An update changes that one row, and every program immediately sees the new value.
+      - |-
+        **Extra protection.** Integrity constraints would reject an empty address, and access rights
+        would let the accounts team read the address without being able to change the customer's
+        password.
+      - |-
+        **Concurrency.** If two staff edit the same customer at once, transaction control makes one
+        wait, so the later save cannot silently overwrite the earlier one.
+    answer: |-
+      Duplication caused the two copies to disagree. A single table in a DBMS removes the duplicate,
+      and constraints plus concurrency control keep the one copy correct.
+
+  - type: check
+    title: Quick check
+    questions: [what-is-dbms, redundancy-vs-inconsistency, data-dependence]
+  - type: check
+    title: Practice
+    questions: [which-feature, concurrency, file-approach-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: Redundancy and inconsistency mean the same thing.
+        right: |-
+          Redundancy is storing the same fact more than once; inconsistency is those copies
+          disagreeing. Redundancy is what makes inconsistency possible.
+      - wrong: A DBMS is just a bigger file.
+        right: |-
+          A DBMS is software that controls the data: access rights, integrity rules, concurrency,
+          queries, backup and recovery. The files are an implementation detail.
+      - wrong: Data independence means the data never changes.
+        right: |-
+          It means the programs do not depend on the physical layout, so the structure can change
+          without rewriting every program.
+      - wrong: A DBMS removes the need for validation.
+        right: |-
+          Validation moves into the DBMS as constraints (data types, keys, `NOT NULL`, ranges), which
+          every application then inherits.
+      - wrong: Two users can always edit the same record safely because the data is central.
+        right: |-
+          Central storage needs concurrency control to stop one update overwriting another.
+
+  - type: exam
+    body: |-
+      - Answer in pairs: name the file-based problem, then the DBMS feature that solves it.
+      - Use the syllabus terms — data redundancy, data inconsistency, program–data independence,
+        data isolation, integrity, security, concurrency, backup.
+      - "Explain" needs a consequence: "the address is stored twice, so updating one copy leaves the
+        other out of date, and the two systems then disagree".
+      - Do not just list features of a DBMS; link each one to a problem it removes.
+
+  - type: takeaways
+    items:
+      - The file-based approach duplicates data and lets copies drift apart.
+      - Programs become tied to file layouts, so changes are expensive.
+      - A DBMS stores data centrally and controls access, integrity, concurrency, queries and backup.
+      - Redundancy is repeated storage; inconsistency is repeated storage that disagrees.
+      - Data independence lets the structure change without rewriting every program.
+
+questions:
+  - id: what-is-dbms
+    format: mcq
+    difficulty: 1
+    objectives: ["8.2.1"]
+    prompt: |-
+      What is a database management system (DBMS)?
+    options:
+      - text: Software that stores data centrally and controls access, integrity, queries and backup
+        correct: true
+        why: |-
+          The DBMS is the layer between applications and the stored data, and it manages all of those.
+      - text: A single file that holds all of a company's data
+        why: |-
+          The data may be stored in many files; the DBMS is the software that manages them.
+      - text: A programming language used to write database applications
+        why: |-
+          SQL is the query language used with a DBMS, but the DBMS itself is the management software.
+      - text: A spreadsheet used to store records
+        why: |-
+          A spreadsheet is an application; it does not provide central control of integrity and concurrency.
+    explanation: |-
+      A DBMS is software that manages centrally stored data and the rules around it.
+
+  - id: redundancy-vs-inconsistency
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.1"]
+    prompt: |-
+      A customer's address appears in two files, and the copies now differ. Which pair of terms
+      describes this?
+    options:
+      - text: Data redundancy and data inconsistency
+        correct: true
+        why: |-
+          Storing it twice is redundancy; the copies disagreeing is inconsistency.
+      - text: Data independence and data isolation
+        why: |-
+          Those concern how programs access data, not duplicated values.
+      - text: Referential integrity and validation
+        why: |-
+          Those are constraints, not the description of duplicated, conflicting copies.
+      - text: Concurrency and backup
+        why: |-
+          Those concern simultaneous access and recovery.
+    explanation: |-
+      Duplicate storage is redundancy; conflicting duplicates are inconsistency.
+
+  - id: data-dependence
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.1"]
+    prompt: |-
+      Why does the file-based approach make programs hard to change?
+    options:
+      - text: Each program depends on the exact layout of its file, so adding a field means editing every program that reads it
+        correct: true
+        why: |-
+          That is program–data dependence; a DBMS provides data independence instead.
+      - text: Files cannot store more than 1,000 records
+        why: |-
+          File size limits depend on the system, not on the approach.
+      - text: File-based systems cannot be backed up
+        why: |-
+          They can be backed up, but there is no central control over it.
+      - text: Programs cannot read files written by other programs
+        why: |-
+          They can, but only if they know the exact format — which is the problem.
+    explanation: |-
+      Program–data dependence ties every program to the physical layout of its file.
+
+  - id: which-feature
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.1"]
+    prompt: |-
+      Which DBMS feature stops a date of birth being saved as 31/02/2010?
+    options:
+      - text: Validation and integrity constraints such as data types and range checks
+        correct: true
+        why: |-
+          Constraints are enforced by the DBMS for every application, so invalid data is rejected.
+      - text: Concurrency control
+        why: |-
+          That prevents two users overwriting each other, not invalid values.
+      - text: Backup and recovery
+        why: |-
+          That restores data after a failure; it does not check whether values are sensible.
+      - text: Data independence
+        why: |-
+          That separates programs from the physical layout.
+    explanation: |-
+      Integrity constraints enforce valid values centrally, for every application.
+
+  - id: concurrency
+    format: mcq
+    difficulty: 2
+    objectives: ["8.2.1"]
+    prompt: |-
+      Two staff members edit the same customer record at the same moment. Which DBMS feature stops
+      one change silently overwriting the other?
+    options:
+      - text: Concurrency control, using locking or transactions
+        correct: true
+        why: |-
+          The DBMS serialises conflicting changes so both are handled predictably.
+      - text: Data redundancy
+        why: |-
+          Duplicated data makes the problem worse, not better.
+      - text: A report generator
+        why: |-
+          Reports read data; they do not control simultaneous writes.
+      - text: An import utility
+        why: |-
+          Importing data is unrelated to simultaneous editing.
+    explanation: |-
+      Concurrency control (locking and transactions) prevents lost updates.
+
+  - id: file-approach-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.2.1"]
+    prompt: |-
+      A student compares a file-based approach with a DBMS. Which line contains the first error?
+    lines:
+      - In a file-based approach the same data is often stored in several separate files.
+      - This redundancy can lead to inconsistency when only one copy is updated.
+      - A DBMS removes the need for validation because the data is stored centrally.
+      - A DBMS also provides central access rights, backup and concurrency control.
+    errorLine: 3
+    fix: |-
+      Central storage does not remove the need for validation: the DBMS enforces it as constraints
+      (data types, keys, `NOT NULL`, range checks) for every application.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. Line 3 wrongly says central storage removes the need for validation.
