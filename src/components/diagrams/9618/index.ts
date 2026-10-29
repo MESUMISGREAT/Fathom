@@ -110,7 +110,6 @@ import OperatingSystemsMemoryMap from './operating-systems-memory-map';
 import OperatingSystemsProcessStates from './operating-systems-process-states';
 import OperatingSystemsUtilities from './operating-systems-utilities';
 import PrefixGap from './prefix-gap';
-import ProgrammingStructureDiagram from './programming-structure-diagram';
 import SqlCreateTableAnatomy from './sql-create-table-anatomy';
 import SqlDdlVsDml from './sql-ddl-vs-dml';
 import SqlForeignKeyLink from './sql-foreign-key-link';
@@ -231,7 +230,6 @@ export const diagrams: DiagramRegistry = {
   'cs-operating-systems-process-states': OperatingSystemsProcessStates,
   'cs-operating-systems-utilities': OperatingSystemsUtilities,
   'cs-prefix-gap': PrefixGap,
-  'cs-programming-structure': ProgrammingStructureDiagram,
   'cs-sql-create-table-anatomy': SqlCreateTableAnatomy,
   'cs-sql-ddl-vs-dml': SqlDdlVsDml,
   'cs-sql-foreign-key-link': SqlForeignKeyLink,

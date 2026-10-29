@@ -1,0 +1,168 @@
+id: potential-difference-energy
+subject: "9702"
+topic: "9.2"
+title: Potential difference and energy transfer
+summary: How potential difference relates to energy transfer in circuits. Deriving W = VQ = VIt, and applying to components and batteries.
+order: 2
+minutes: 5
+objectives: ["9.2.2"]
+prerequisites: ["potential-difference-definition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Drafted against the official Cambridge International AS & A Level Physics 9702
+    syllabus 2025-2027 (topic 9.2, learning outcome 9.2.2).
+    Questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use W = VQ = VIt to calculate energy transferred in electrical circuits, and explain the energy transformations in components and sources.
+
+  - type: explain
+    title: From definition to energy calculations
+    body: |
+      We know **V = W/Q**. Rearranging:
+
+      $$W = V Q$$
+
+      And since **current I = Q/t** (so **Q = I t**), we can substitute:
+
+      $$W = V (I t) = V I t$$
+
+      | Symbol | Meaning | Unit |
+      |---|---|---|
+      | **W** | Energy transferred (work done) | joule (J) |
+      | **V** | Potential difference | volt (V) |
+      | **I** | Current | ampere (A) |
+      | **t** | Time | second (s) |
+
+      **Key point:** Use W = VQ when you know total charge. Use W = VIt when you know current and time.
+
+  - type: intuition
+    title: Where does the energy go?
+    body: |
+      In a circuit, **energy is conserved**. The battery (source) supplies energy; components receive it.
+
+      - **Resistor / bulb:** Electrical energy → **thermal energy** (heating). Charge carriers collide with lattice ions, transferring kinetic energy.
+      - **Motor:** Electrical energy → **mechanical energy** (kinetic) + some thermal.
+      - **Battery charging:** Electrical energy → **chemical energy** (stored).
+      - **LED:** Electrical energy → **light** + some thermal.
+
+      **The voltage across a component tells you how much energy each coulomb gives up there.**
+
+  - type: check
+    title: Quick check — energy formulas
+    questions: [pd-energy-1, pd-energy-2, pd-energy-3]
+
+  - type: example
+    title: Energy from a battery
+    problem: |
+      A 9.0 V battery supplies a current of 0.50 A for 2.0 minutes. How much energy does the battery transfer?
+    steps:
+      - |
+        Identify: V = 9.0 V, I = 0.50 A, t = 2.0 min = 120 s.
+      - |
+        Use W = VIt (we have I and t, not total Q).
+      - |
+        W = 9.0 × 0.50 × 120 = 540 J.
+    answer: |
+      540 J
+
+  - type: example
+    title: Energy in a lamp filament
+    problem: |
+      The potential difference across a lamp filament is 12 V. A charge of 8.0 C passes through it. How much energy is transferred to thermal energy in the filament?
+    steps:
+      - |
+        Identify: V = 12 V, Q = 8.0 C.
+      - |
+        Use W = VQ (we have total charge Q).
+      - |
+        W = 12 × 8.0 = 96 J.
+    answer: |
+      96 J
+
+  - type: explain
+    title: Energy per coulomb — the meaning of voltage
+    body: |
+      | Potential difference | Energy per coulomb |
+      |---|---|
+      | 1.5 V (AA cell) | 1.5 J/C |
+      | 12 V (car battery) | 12 J/C |
+      | 230 V (mains) | 230 J/C |
+      | 400 kV (power lines) | 400 000 J/C |
+
+      **High voltage** means each coulomb carries **a lot of energy**. That's why power lines use high voltage — you can transfer the same power with less current (less heating loss in the cables).
+
+  - type: misconceptions
+    items:
+      - wrong: "W = VIt only works for resistors."
+        right: "It works for *any* component — it's the energy transferred across that potential difference. For a battery, it's energy supplied; for a bulb, energy received."
+      - wrong: "Energy is transferred only in the resistor, so the connecting wires transfer none."
+        right: "Wires have resistance too, so energy is transferred in them as well — which is why cables warm up. The p.d. across each part of a circuit tells you the energy transferred per coulomb there."
+      - wrong: "Voltage is 'used up' in a circuit."
+        right: "Energy is transferred. The potential difference across each component accounts for the energy transferred there. Around a loop, sum of p.d.s = emf (energy conservation)."
+
+  - type: takeaways
+    items:
+      - "W = VQ = VIt — energy transferred = p.d. × charge = p.d. × current × time."
+      - "Use W = VQ when given total charge Q. Use W = VIt when given current I and time t."
+      - "In a resistor/bulb: electrical energy → thermal (heating)."
+      - "In a battery (discharging): chemical energy → electrical energy."
+      - "Energy is conserved around a circuit: emf = sum of p.d.s."
+
+questions:
+  - id: pd-energy-1
+    format: mcq
+    difficulty: 1
+    objectives: ["9.2.2"]
+    prompt: |
+      Which formula gives the energy transferred when a current of 2.0 A flows through a potential difference of 6.0 V for 10 s?
+    options:
+      - text: "W = V/I × t"
+        why: "Dimensionally incorrect."
+      - text: "W = V I t"
+        correct: true
+        why: "W = VQ and Q = It, so W = VIt."
+      - text: "W = V² t / I"
+        why: "The units work out as V² s A⁻¹, which is not a joule."
+      - text: "W = I t / V"
+        why: "Inverse of correct relation."
+    explanation: |
+      W = VQ and Q = It, so W = VIt = 6.0 × 2.0 × 10 = 120 J.
+
+  - id: pd-energy-2
+    format: numeric
+    difficulty: 2
+    objectives: ["9.2.2"]
+    prompt: |
+      A potential difference of 240 V is applied across a heating element. A charge of 500 C passes through it. Calculate the energy transferred in kJ.
+    fields:
+      - label: "Energy"
+        answer: 120
+        tolerance:
+          abs: 0.1
+        unit: "kJ"
+    explanation: |
+      W = VQ = 240 × 500 = 120 000 J = 120 kJ.
+
+  - id: pd-energy-3
+    format: mcq
+    difficulty: 2
+    objectives: ["9.2.2"]
+    prompt: |
+      A 12 V, 24 W car headlamp is on for 30 minutes. How much energy does it transfer?
+    options:
+      - text: "21.6 kJ"
+        why: "That is 24 W for 900 s (15 minutes), not for 30 minutes."
+      - text: "25.9 kJ"
+        why: "That is 12 V × 2 A for 1080 s (18 minutes), so the time is wrong."
+      - text: "43.2 kJ"
+        correct: true
+        why: "P = 24 W = VI, so energy = Pt = 24 × (30 × 60) = 43 200 J = 43.2 kJ."
+      - text: "86.4 kJ"
+        why: "Double the correct answer (used 60 min instead of 30)."
+    explanation: |
+      Power P = 24 W (given). Time t = 30 min = 1800 s. Energy = Pt = 24 × 1800 = 43 200 J = 43.2 kJ. Alternatively: P = VI → I = P/V = 2 A, then W = VIt = 12 × 2 × 1800 = 43 200 J.

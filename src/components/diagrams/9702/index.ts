@@ -83,8 +83,6 @@ import PolarisationFilterChain from './polarisation-filter-chain';
 import PolarisationMalusGraph from './polarisation-malus-graph';
 import PolarisationTransversePlanes from './polarisation-transverse-planes';
 import PotentialDifferenceDefinition from './potential-difference-definition';
-import PotentialDifferenceEnergy from './potential-difference-energy';
-import PotentialDifferencePower from './potential-difference-power';
 import PrefixLadder from './prefix-ladder';
 import ProgressiveWavesCroTrace from './progressive-waves-cro-trace';
 import ProgressiveWavesKeyTerms from './progressive-waves-key-terms';
@@ -196,8 +194,6 @@ export const diagrams: DiagramRegistry = {
   'phys-polarisation-malus-graph': PolarisationMalusGraph,
   'phys-polarisation-transverse-planes': PolarisationTransversePlanes,
   'phys-potential-difference-definition': PotentialDifferenceDefinition,
-  'phys-potential-difference-energy': PotentialDifferenceEnergy,
-  'phys-potential-difference-power': PotentialDifferencePower,
   'phys-prefix-ladder': PrefixLadder,
   'phys-progressive-waves-cro-trace': ProgressiveWavesCroTrace,
   'phys-progressive-waves-key-terms': ProgressiveWavesKeyTerms,

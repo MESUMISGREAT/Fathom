@@ -1,0 +1,186 @@
+id: potential-difference-power
+subject: "9702"
+topic: "9.2"
+title: Power in electrical circuits
+summary: Deriving P = VI = I²R = V²/R from energy transfer. Calculating power in components and circuits.
+order: 3
+minutes: 5
+objectives: ["9.2.3"]
+prerequisites: ["potential-difference-energy"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Drafted against the official Cambridge International AS & A Level Physics 9702
+    syllabus 2025-2027 (topic 9.2, learning outcome 9.2.3).
+    Questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define electrical power as rate of energy transfer, derive and use P = VI = I²R = V²/R, and calculate power in circuit components.
+
+  - type: explain
+    title: Power — rate of energy transfer
+    body: |
+      **Power (P)** is the rate at which energy is transferred:
+
+      $$P = \frac{W}{t}$$
+
+      Unit: **watt (W)** = **joule per second (J s⁻¹)**.
+
+      From the energy lesson: W = VIt. Substitute:
+
+      $$P = \frac{V I t}{t} = V I$$
+
+      **P = VI** — power = potential difference × current.
+
+  - type: explain
+    title: Alternative power formulas (using Ohm's law)
+    body: |
+      For **ohmic conductors** (where V = IR), we can substitute to get two more forms:
+
+      | Formula | Derivation | When to use |
+      |---|---|---|
+      | **P = V I** | Definition: P = W/t, W = VIt | Always — any component |
+      | **P = I²R** | P = VI, substitute V = IR | When you know I and R |
+      | **P = V²/R** | P = VI, substitute I = V/R | When you know V and R |
+
+      **Important:** $P = VI$ applies to **any** component — bulbs, motors, LEDs, batteries. The other two come from substituting $V = IR$, so they need the resistance **at that operating point**. That is straightforward for an ohmic resistor; a filament lamp's resistance changes as it heats up, so for a lamp use $P = VI$ with the measured $V$ and $I$.
+
+  - type: intuition
+    title: What does electrical power mean physically?
+    body: |
+      - **P = VI:** Each coulomb gives up V joules. I coulombs pass per second. So VI joules per second = watts.
+      - **P = I²R:** Current I means charge flow rate. Each coulomb collides with lattice, losing energy proportional to R. More current → much more heating (I²).
+      - **P = V²/R:** Higher voltage pushes more current through R (I = V/R). Power goes as V².
+
+      **Why P = I²R matters for power lines:**
+      To deliver power P, you can use high V and low I (P = VI). Low I means low I²R losses in the cables. That's why the grid uses 400 kV.
+
+  - type: check
+    title: Quick check — power formulas
+    questions: [pd-power-1, pd-power-2, pd-power-3]
+
+  - type: example
+    title: Power of a lamp
+    problem: |
+      A lamp has a potential difference of 12 V across it and a current of 0.50 A through it. Calculate its power.
+    steps:
+      - |
+        Use P = VI (always works).
+      - |
+        P = 12 × 0.50 = 6.0 W.
+    answer: |
+      6.0 W
+
+  - type: example
+    title: Power in a resistor
+    problem: |
+      A 15 Ω resistor carries a current of 2.0 A. Calculate the power dissipated.
+    steps:
+      - |
+        We know I and R → use P = I²R.
+      - |
+        P = (2.0)² × 15 = 4.0 × 15 = 60 W.
+    answer: |
+      60 W
+
+  - type: example
+    title: Power from voltage and resistance
+    problem: |
+      A 230 V mains supply is connected across a 12 Ω heating element. Calculate the power.
+    steps:
+      - |
+        We know V and R → use P = V²/R.
+      - |
+        P = 230² / 12 = 52 900 / 12 ≈ 4408 W ≈ 4.4 kW.
+    answer: |
+      4.4 kW (4400 W)
+
+  - type: explain
+    title: Power and energy efficiency
+    body: |
+      In any device:
+
+      $$\text{Useful power out} \le \text{Electrical power in}$$
+
+      Efficiency = (useful power out / electrical power in) × 100%
+
+      - **Filament bulb:** ~5% efficient (most → heat).
+      - **LED:** ~20–30% efficient.
+      - **Electric motor:** ~70–90% efficient.
+      - **Resistor (heater):** 100% efficient at *heating* (that's its job).
+
+      **P = I²R** is the **heating power** in any resistance — wanted (heater) or unwanted (cable losses).
+
+  - type: misconceptions
+    items:
+      - wrong: "You can always use $P = V^2/R$ with a lamp's rated resistance."
+        right: "$P = V^2/R$ needs the resistance **at the voltage you are using**. A lamp's resistance rises as it heats, so the rated value only applies at the rated voltage; otherwise measure $V$ and $I$ and use $P = VI$."
+      - wrong: "Power is the same as energy."
+        right: "Power is *rate* of energy transfer (J/s). Energy = power × time."
+      - wrong: "A 60 W bulb always uses 60 W."
+        right: "Only at its rated voltage. At lower V, it draws less power (P = V²/R, but R also changes with temperature)."
+
+  - type: takeaways
+    items:
+      - "Power P = W/t = VI (always true for any component)."
+      - "$P = I^2R$ and $P = V^2/R$ need the resistance at the operating point; $P = VI$ is always safe."
+      - "Unit: watt (W) = J s⁻¹."
+      - "P = I²R explains why power lines use high voltage (low I → low I²R losses)."
+      - "Efficiency = useful power out / electrical power in."
+
+questions:
+  - id: pd-power-1
+    format: mcq
+    difficulty: 1
+    objectives: ["9.2.3"]
+    prompt: |
+      Which formula for electrical power is valid for **any** component (ohmic or non-ohmic)?
+    options:
+      - text: "P = I²R"
+        why: "Requires V = IR (ohmic)."
+      - text: "P = V²/R"
+        why: "Requires V = IR (ohmic)."
+      - text: "P = V I"
+        correct: true
+        why: "From definition P = W/t and W = VIt. No Ohm's law needed."
+      - text: "P = V/R"
+        why: "Dimensionally wrong (V/R = I, not power)."
+    explanation: |
+      P = VI comes from P = W/t and W = VIt. It's the fundamental definition. The other two require V = IR.
+
+  - id: pd-power-2
+    format: numeric
+    difficulty: 2
+    objectives: ["9.2.3"]
+    prompt: |
+      A resistor of resistance 8.0 Ω dissipates 32 W. What is the current through it?
+    fields:
+      - label: "Current"
+        answer: 2.0
+        tolerance:
+          abs: 0.05
+        unit: "A"
+    explanation: |
+      P = I²R → I² = P/R = 32/8 = 4 → I = 2.0 A.
+
+  - id: pd-power-3
+    format: mcq
+    difficulty: 2
+    objectives: ["9.2.3"]
+    prompt: |
+      A 12 V, 24 W lamp is connected to a 6.0 V supply. Assuming its resistance stays constant (it doesn't, but assume it does), what is its approximate power?
+    options:
+      - text: "3.0 W"
+        why: "P ∝ V (wrong — P ∝ V² for constant R)."
+      - text: "6.0 W"
+        correct: true
+        why: "At 12 V: R = V²/P = 144/24 = 6.0 Ω. At 6.0 V: P = V²/R = 36/6 = 6.0 W."
+      - text: "12 W"
+        why: "Half voltage → quarter power for constant R, not half."
+      - text: "24 W"
+        why: "Power depends on voltage; it's not constant."
+    explanation: |
+      First find R at rated conditions: R = V²/P = 12²/24 = 6.0 Ω. Then at 6.0 V: P = V²/R = 6.0²/6.0 = 6.0 W. (Real bulb: R drops when cooler, so actual P would be slightly higher.)

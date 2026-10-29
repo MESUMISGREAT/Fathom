@@ -1,0 +1,212 @@
+id: electric-current-microscopic
+subject: "9702"
+topic: "9.1"
+title: Microscopic view of current — I = nAvq
+summary: Derive and use I = nAvq. Link macroscopic current to number density n, cross-sectional area A, drift velocity v, and charge q. Compare drift speeds in different materials.
+order: 3
+minutes: 5
+objectives: ["9.1.4"]
+prerequisites: ["electric-current-flow-of-charge", "electric-current-charge-and-time"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against Cambridge 9702 syllabus outcome 9.1.4. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can derive I = nAvq, calculate drift velocity, and explain why drift speed is tiny while current starts instantly.
+
+  - type: explain
+    title: From macro to micro
+    body: |
+      We know $I = Q/t$. Now zoom in on a wire of cross-sectional area $A$. Charge carriers (electrons in a metal) have number density $n$ (carriers per m³) and each carries charge $q$. In time $t$, carriers drift a distance $v t$ where $v$ is the **drift velocity**.
+
+      Volume that passes a point in time $t$: $A \times v t$.
+      Number of carriers in that volume: $n A v t$.
+      Total charge: $Q = n A v t \times q$.
+      Current: $I = Q/t = n A v q$.
+
+      **This is the microscopic current equation.**
+
+  - type: diagram
+    diagram: phys-electric-current-microscopic
+    alt: |
+      A wire cross-section showing a cylindrical volume A × vt. Fixed positive ion lattice with drifting electrons. Arrow showing drift velocity v. Formula I = nAvq with each term labelled: n = number density (m⁻³), A = cross-sectional area (m²), v = drift velocity (m/s), q = charge per carrier (C).
+    caption: "Microscopic picture: in time t, all carriers in a cylinder of length vt pass the cross-section."
+
+  - type: definition
+    term: Drift velocity (v)
+    body: |
+      The average velocity of charge carriers in the direction of current. In metals, typically ~10⁻⁴ m/s (fractions of a mm/s).
+
+  - type: definition
+    term: Number density (n)
+    body: |
+      Number of charge carriers per unit volume (m⁻³). For copper, n ≈ 8.5 × 10²⁸ m⁻³.
+
+  - type: example
+    title: Drift velocity in a copper wire
+    problem: |
+      A copper wire (cross-section 1.0 mm²) carries a current of 2.0 A. Number density of conduction electrons in copper is 8.5 × 10²⁸ m⁻³. Find the drift velocity.
+    steps:
+      - |
+        $I = 2.0\ \text{A}$, $A = 1.0 \times 10^{-6}\ \text{m}^2$, $n = 8.5 \times 10^{28}\ \text{m}^{-3}$, $q = e = 1.60 \times 10^{-19}\ \text{C}$.
+      - |
+        $v = I / (n A q) = 2.0 / (8.5 \times 10^{28} \times 1.0 \times 10^{-6} \times 1.60 \times 10^{-19})$.
+      - |
+        $v = 1.47 \times 10^{-4}\ \text{m/s} \approx 0.15\ \text{mm/s}$.
+    answer: |
+      $1.5 \times 10^{-4}\ \text{m/s}$ (0.15 mm/s)
+
+  - type: check
+    questions: [drift-velocity-calc, drift-velocity-compare]
+
+  - type: intuition
+    title: Why is the light instant if electrons crawl?
+    body: |
+      The **electric field** that pushes electrons propagates at ~$\frac{2}{3}c$ in a wire (close to light speed). When you close a switch, the field reaches all electrons around the circuit almost instantly — they **all start drifting together**. It's like a pipe full of marbles: push one in, one falls out the other end immediately, even though each marble only moved a tiny bit.
+
+      **Key point**: Current is a collective effect. The signal speed $\neq$ drift speed.
+
+  - type: example
+    title: Comparing drift speeds
+    problem: |
+      Wire X (copper, n = 8.5 × 10²⁸ m⁻³) and wire Y (aluminium, n = 6.0 × 10²⁸ m⁻³) have the same cross-section and carry the same current. Which has the higher drift velocity?
+    steps:
+      - |
+        $I = n A v q$ → $v = I/(n A q)$.
+      - |
+        Same $I$, $A$, $q$. So $v \propto 1/n$.
+      - |
+        Aluminium has lower $n$ → higher $v$.
+    answer: |
+      Wire Y (aluminium) has higher drift velocity because it has fewer charge carriers per unit volume.
+
+  - type: check
+    questions: [navq-rearrange, semiconductor-drift]
+
+  - type: check
+    title: Extension — error-spotting and derivation
+    questions: [spot-navq-error, derive-navq]
+
+  - type: misconceptions
+    items:
+      - wrong: "Drift velocity is the speed of electrons in the wire."
+        right: It's the **average net velocity** in the direction of current. Electrons actually move randomly at ~10⁶ m/s (thermal motion) plus a tiny drift bias.
+      - wrong: "Higher current means much faster electrons."
+        right: Doubling current only doubles drift velocity — still fractions of mm/s. The huge number of carriers ($n \sim 10^{28}$) means a tiny drift gives a large current.
+      - wrong: "I = nAvq only works for metals."
+        right: Works for **any** charge carriers — electrons, holes, ions. Just use the correct $n$ and $q$.
+
+  - type: exam
+    body: |
+      - Derive $I = nAvq$: volume = $Avt$, carriers = $nAvt$, charge = $nAvtq$, current = $nAvq$.
+      - Calculate $v$ given $I, n, A, q$ — watch units! $A$ in m² (mm² → ×10⁻⁶).
+      - Compare drift speeds: $v \propto I/nA$. Thinner wire → higher $v$. Lower $n$ → higher $v$.
+      - Semiconductors: $n$ is much smaller ($10^{20}$–$10^{25}$) so drift velocities can be much larger for the same current.
+
+  - type: takeaways
+    items:
+      - $I = n A v q$ where $n$ = number density (m⁻³), $A$ = area (m²), $v$ = drift velocity (m/s), $q$ = charge per carrier (C).
+      - Drift velocity in metals is tiny (~10⁻⁴ m/s).
+      - Signal travels near light speed; drift is slow.
+      - $v \propto 1/n$ — fewer carriers means faster drift for same current.
+
+questions:
+  - id: drift-velocity-calc
+    format: numeric
+    difficulty: 2
+    objectives: ["9.1.4"]
+    prompt: |
+      A gold wire of cross-sectional area 0.50 mm² carries a current of 1.5 A. The number density of conduction electrons in gold is 5.9 × 10²⁸ m⁻³. Calculate the drift velocity in m/s.
+    fields:
+      - answer: 3.16e-4
+        tolerance: { rel: 0.05 }
+        unit: m/s
+    explanation: |
+      $A = 0.50 \times 10^{-6}\ \text{m}^2$. $v = I/(nAq) = 1.5 / (5.9 \times 10^{28} \times 0.50 \times 10^{-6} \times 1.60 \times 10^{-19}) = 3.16 \times 10^{-4}\ \text{m/s}$.
+
+  - id: drift-velocity-compare
+    format: mcq
+    difficulty: 2
+    objectives: ["9.1.4"]
+    prompt: |
+      Two wires of the same material and cross-section carry currents I and 2I. How do their drift velocities compare?
+    options:
+      - text: v₂ = 2 v₁
+        correct: true
+        why: $v = I/(nAq)$ so $v \propto I$ when $n, A, q$ are constant.
+      - text: v₂ = v₁
+        why: Drift velocity depends on current.
+      - text: v₂ = 4 v₁
+        why: Not squared relationship.
+      - text: v₂ = ½ v₁
+        why: Higher current means higher drift velocity, not lower.
+    explanation: |
+      Since $v = I/(nAq)$ and $n, A, q$ are the same, $v$ is directly proportional to $I$.
+
+  - id: navq-rearrange
+    format: mcq
+    difficulty: 2
+    objectives: ["9.1.4"]
+    prompt: |
+      A wire carries current I. If the cross-sectional area is doubled while keeping the current and material the same, what happens to the drift velocity?
+    options:
+      - text: It halves
+        correct: true
+        why: $v = I/(nAq)$, so $v \propto 1/A$. Double A → half v.
+      - text: It doubles
+        why: Inverse relationship with area.
+      - text: It stays the same
+        why: Area affects drift velocity for a given current.
+      - text: It quadruples
+        why: Not a square relationship.
+    explanation: |
+      For a fixed current, $v \propto 1/A$. A thicker wire means carriers can drift slower to deliver the same charge per second.
+
+  - id: semiconductor-drift
+    format: numeric
+    difficulty: 3
+    objectives: ["9.1.4"]
+    prompt: |
+      A silicon rod (cross-section 2.0 × 10⁻⁶ m²) carries 5.0 mA. Number density of charge carriers is 1.5 × 10²² m⁻³ (assume each carries charge e). Calculate the drift velocity in m/s.
+    fields:
+      - answer: 1.04
+        tolerance: { rel: 0.05 }
+        unit: m/s
+    explanation: |
+      $I = 5.0 \times 10^{-3}\ \text{A}$.      $v = I/(nAq) = 5.0 \times 10^{-3} / (1.5 \times 10^{22} \times 2.0 \times 10^{-6} \times 1.60 \times 10^{-19}) = 1.04\ \text{m/s}$. Much faster than in metals because $n$ is about $10^7$ times smaller (roughly $10^{22}$ m⁻³ against $8.5 \times 10^{28}$ m⁻³ in copper).
+
+  - id: spot-navq-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["9.1.4"]
+    prompt: |
+      A student writes: "I = nAvq. For copper n = 8.5 × 10²⁸ m⁻³, A = 2 mm², v = 0.1 mm/s, q = 1.6 × 10⁻¹⁹ C. So I = 8.5e28 × 2 × 0.1 × 1.6e-19 = 2.7 A." Identify the error.
+    lines:
+      - "I = nAvq. For copper n = 8.5 × 10²⁸ m⁻³, A = 2 mm², v = 0.1 mm/s, q = 1.6 × 10⁻¹⁹ C."
+      - "So I = 8.5e28 × 2 × 0.1 × 1.6e-19 = 2.7 A."
+      - "Answer: 2.7 A."
+    errorLine: 2
+    fix: |
+      Convert to SI: A = 2 × 10⁻⁶ m², v = 0.1 × 10⁻³ = 1 × 10⁻⁴ m/s. Then I = 8.5×10²⁸ × 2×10⁻⁶ × 1×10⁻⁴ × 1.6×10⁻¹⁹ = 2.7 A.
+    explanation: |
+      The student used mm² and mm/s directly without converting to m² and m/s, which also makes the stated result nonsense ($8.5 \times 10^{28} \times 2 \times 0.1 \times 1.6 \times 10^{-19}$ is about $2.7 \times 10^9$, not 2.7). Always use SI base units in the formula.
+
+  - id: derive-navq
+    format: explain
+    difficulty: 2
+    objectives: ["9.1.4"]
+    prompt: |
+      Derive the equation I = nAvq from first principles.
+    model: |
+      Consider a wire of cross-section A. In time t, charge carriers drift distance vt. The volume that passes a cross-section is A × vt. Number of carriers in this volume = n × A × vt. Total charge Q = (nAvt) × q. Current I = Q/t = nAvq.
+    keyPoints:
+      - Volume swept = A × vt
+      - Carriers in volume = nAvt
+      - Charge = nAvtq
+      - I = Q/t = nAvq
+    explanation: |
+      The derivation follows from considering the cylinder of length vt that passes a cross-section in time t. All carriers in this cylinder cross the plane.
