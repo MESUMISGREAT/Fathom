@@ -1019,3 +1019,17 @@ The coordination helper now broadcasts a mailbox message whenever an agent expli
 - The leader may publish reviewed units through the existing scoped publication workflow after final review, validation, and checking exact staged paths. Never publish unreviewed drafts, stage all changes, sweep up other agents' deletions, bypass tests, or falsely mark teacher review. Verify the deployed lesson page before claiming it is live.
 - Keep `docs/HANDOFF.md` as the durable summary; workers send handoff updates to the leader rather than editing it concurrently. The leader updates this file after meaningful batches and before any stop.
 - Solo fallback remains mandatory if the leader is unavailable. Workers send a leader check-in, wait briefly, then work only on a safely unclaimed task if no leader responds; document that coordination degraded.
+
+
+### Initial coordination caution from the local working tree (29 Oct 2026)
+
+The user reported a dirty local checkout with ongoing edits across:
+- 9618 ethics/ownership lessons;
+- 9701 Brønsted–Lowry lessons, rate-reaction measuring, and a deleted `chemical-equilibria-topic.yaml`;
+- 9709 complex numbers, differential equations, numerical solution, vectors, and `src/components/diagrams/9709/index.ts`;
+- new complex-number and forces/equilibrium diagram components;
+- `.agent-coordination/` runtime files.
+
+Treat those files and their associated units as potentially active or conflicted. Do not overwrite, reset, stage broadly, or assign the same units until the leader inspects the live shared claims and local `git status --short`. The queue snapshot recorded above (50 published, 1 partial, 102 todo, 1 reviewed) is historical, not a current count.
+
+Last recorded candidate sequence after checking active claims: reviewed 9702 8.3+8.4 first; then 9709 3.9; 9709 4.4+4.5; 9701 8.3; 9618 9.1+9.2; 9702 9.1+9.2. The leader must refresh the live queue and verify all these candidates are still eligible before assigning any of them.
