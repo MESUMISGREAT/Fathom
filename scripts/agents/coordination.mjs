@@ -47,6 +47,8 @@ async function run() {
       "  init\n  join --id ID --role ROLE --capabilities \"writer,reviewer\" [--task TASK]\n" +
       "  status\n  message --from ID --to all|ID --type proposal --task TASK --files \"a,b\" --text \"message\"\n" +
       "  watch --id ID [--interval 3000] [--since ISO_TIMESTAMP]\n" +
+      "  set-leader --id ID\n" +
+      "  assign --from LEADER_ID --to AGENT_ID --task TASK --files \"a,b\" [--role ROLE] --text \"instructions\"\n" +
       "  claim --id ID --task TASK --files \"a,b\" [--role ROLE]\n" +
       "  heartbeat --id ID [--role ROLE] [--task TASK] [--status active|idle|blocked|done] [--files \"a,b\"]\n" +
       "  release --id ID --task TASK\n" +
@@ -78,6 +80,38 @@ async function run() {
       else { try { const s = await stat(path.join(dirs.claims, n)); claims.push({ task: n, warning: "Claim directory exists without owner.json; inspect before cleanup", createdAt: s.birthtime.toISOString() }); } catch {} }
     }
     output({ directory: root, agents, claims, recentMessages: await listMessages(Number(flags.limit || 15)) }); return;
+  }
+  if (command === "set-leader") {
+    const id = agentId();
+    if (!id) throw new Error("Provide --id.");
+    const file = path.join(dirs.state, "leader.json"), current = await readJson(file);
+    if (current && current.id !== id) throw new Error("Leader already set to " + current.id + "; only that leader or the human operator should change it.");
+    const leader = { id, setAt: current?.setAt || now(), updatedAt: now(), temporary: true };
+    await atomicJson(file, leader);
+    await sendMessage(id, "all", "leader", "Temporary lesson coordinator is " + id + ". Route assignments, queue decisions, and publication coordination through this agent.", "");
+    output(leader); return;
+  }
+  if (command === "assign") {
+    const from = String(flags.from || agentId()), to = String(flags.to || "").trim(), task = taskKey(flags.task);
+    if (!from || !to || !task || !flags.text) throw new Error("Provide --from, --to, --task, and --text.");
+    const leader = await readJson(path.join(dirs.state, "leader.json"));
+    if (!leader || leader.id !== from) throw new Error("Only the registered temporary leader can assign work. Current leader: " + (leader?.id || "not set") + ".");
+    const claimDir = path.join(dirs.claims, task);
+    try { await mkdir(claimDir); } catch (e) {
+      if (e.code === "EEXIST") { output({ assigned: false, task, owner: await readJson(path.join(claimDir, "owner.json")), message: "Task already claimed or assigned. Inspect owner and negotiate a handoff; do not overwrite." }); process.exitCode = 2; return; }
+      throw e;
+    }
+    const filesList = parseList(flags.files);
+    const claim = { task, agentId: to, role: flags.role || "writer", files: filesList, status: "assigned", assignedBy: from, instructions: String(flags.text), startedAt: now(), heartbeatAt: now(), host: null, pid: null };
+    try {
+      await atomicJson(path.join(claimDir, "owner.json"), claim);
+      const agentFile = path.join(dirs.agents, taskKey(to) + ".json"), target = await readJson(agentFile) || { id: to, startedAt: now(), capabilities: [] };
+      await atomicJson(agentFile, { ...target, id: to, heartbeatAt: now(), role: claim.role, task, files: filesList, status: "assigned", assignedBy: from });
+      await sendMessage(from, to, "assignment", "TASK ASSIGNED by " + from + ": " + task + ". Role: " + claim.role + ". Files: " + (filesList.join(", ") || "confirm exact scope before editing") + ". Instructions: " + claim.instructions, task, filesList);
+      await sendMessage(from, "all", "assignment", "Assigned " + task + " to " + to + " as " + claim.role + ".", task, filesList);
+      output({ assigned: true, claim });
+    } catch (e) { output({ error: "Claim directory exists but assignment setup failed. Inspect it manually; do not assume task is free.", task, detail: String(e) }); process.exitCode = 1; }
+    return;
   }
   if (command === "claim") {
     const id = agentId(), task = taskKey(flags.task);
