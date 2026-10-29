@@ -1,0 +1,284 @@
+id: mech-momentum-conservation
+subject: "9709"
+topic: "4.3"
+title: "Conservation of momentum"
+summary: "In a direct impact with no external resultant force, total momentum before equals total momentum after."
+order: 2
+minutes: 7
+kind: core
+objectives: ["4.3.2"]
+prerequisites: ["mech-momentum-definition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Mathematics 9709 syllabus, topic 4.3
+    Momentum, learning outcome 4.3.2 (use conservation of linear momentum for the direct impact of
+    two bodies, including coalescing; impulse and restitution not required). All questions and
+    examples are original. Re-checked line by line on 2026-10-29 in a separate adversarial pass by
+    the same AI model. No separate reviewer model and no teacher have reviewed it.
+blocks:
+  - type: objective
+    body: |
+      By the end you can apply **conservation of linear momentum** to two bodies colliding in a
+      straight line, including the case where they **stick together**, and use signs correctly when
+      they approach from opposite directions.
+
+  - type: explain
+    title: Two trolleys and a click
+    body: |
+      Line up two trolleys on a track. Give one a push so it hits the other, and watch what happens
+      afterwards.
+
+      During the collision each trolley pushes the other. Those forces are equal and opposite, so the
+      momentum one loses is exactly the momentum the other gains. The **total** does not change.
+
+      That is conservation of momentum, and it turns a messy collision into a single equation.
+
+  - type: definition
+    term: Conservation of linear momentum
+    body: |
+      If no **external resultant force** acts on a system, the **total momentum** of the system stays
+      constant. For two bodies colliding along a line:
+      $$m_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2,$$
+      where $u$ denotes velocity before the impact and $v$ after.
+
+  - type: diagram
+    diagram: mech-momentum-collision
+    alt: >-
+      Before a collision, a 2 kg trolley moves right at 3 m/s towards a stationary 4 kg trolley, with
+      total momentum 2 times 3 plus 4 times 0 equals 6 kg m s to the minus one. After they coalesce,
+      the combined 6 kg trolley moves right at 1 m/s, since 6 v equals 6.
+    caption: >-
+      The total momentum is 6 kg m s⁻¹ before and after; the mass has changed, so the velocity must
+      change too.
+
+  - type: explain
+    title: The coalescing case
+    body: |
+      If the two bodies stick together, they move off as one object of mass $m_1 + m_2$ with a single
+      velocity $v$. The equation becomes
+
+      $$m_1 u_1 + m_2 u_2 = (m_1 + m_2)v,$$
+
+      so
+
+      $$v = \frac{m_1 u_1 + m_2 u_2}{m_1 + m_2}.$$
+
+      This is the "particles coalesce on impact" case in the syllabus.
+
+      Notice what the formula does: it is a **weighted average** of the two velocities. A heavy, slow
+      body pulls the result towards its own velocity; a light, fast one has less influence.
+
+  - type: example
+    title: Two trolleys that stick together
+    problem: |
+      A trolley of mass $3.0\ \text{kg}$ moves at $4.0\ \text{m s}^{-1}$ towards a stationary
+      trolley of mass $1.0\ \text{kg}$. They stick together on impact.
+
+      Find their common velocity afterwards.
+    steps:
+      - |
+        Take the direction of the moving trolley as positive.
+      - |
+        Total momentum before: $m_1u_1 + m_2u_2 = 3.0(4.0) + 1.0(0) =
+        12\ \text{kg m s}^{-1}$.
+      - |
+        After the impact the combined mass is $4.0\ \text{kg}$, moving at $v$:
+        $$4.0v = 12 \Rightarrow v = 3.0\ \text{m s}^{-1}.$$
+      - |
+        The answer is positive, so they move in the original direction.
+    answer: |
+      $3.0\ \text{m s}^{-1}$ in the original direction.
+
+  - type: example
+    title: Approach from opposite directions
+    problem: |
+      A $3.0\ \text{kg}$ trolley moves at $4.0\ \text{m s}^{-1}$ to the right. A $1.0\ \text{kg}$
+      trolley moves at $2.0\ \text{m s}^{-1}$ to the left. They stick together.
+
+      Find their common velocity after the impact.
+    steps:
+      - |
+        Take right as positive, so $u_1 = +4.0$ and $u_2 = -2.0$.
+      - |
+        Momentum before: $3.0(4.0) + 1.0(-2.0) = 12 - 2 = 10\ \text{kg m s}^{-1}$.
+      - |
+        After: $4.0v = 10$, so $v = 2.5\ \text{m s}^{-1}$.
+      - |
+        Positive, so the combined trolley moves to the **right** — the heavier trolley "wins" the
+        tug of momentum.
+    answer: |
+      $2.5\ \text{m s}^{-1}$ to the right.
+
+  - type: explain
+    title: A routine that never fails
+    body: |
+      1. Draw a before-and-after sketch, with an arrow for every velocity.
+      2. Choose a positive direction and write it down.
+      3. Convert every velocity to a signed number.
+      4. Write "momentum before = momentum after".
+      5. If the bodies coalesce, use one combined mass on the right.
+      6. Solve, then interpret the sign of the answer as a direction.
+
+      Check your answer for plausibility: the final velocity of a coalescing pair must lie **between**
+      the two initial velocities, because it is a weighted average.
+
+  - type: misconceptions
+    items:
+      - wrong: "Momentum is conserved only if the bodies stick together."
+        right: >-
+          It is conserved in every impact where no external resultant force acts, whether they stick,
+          bounce or separate.
+      - wrong: "You can add the speeds even when the bodies move in opposite directions."
+        right: >-
+          Velocities are signed. A body moving the other way has negative momentum, which can reduce
+          or even cancel the total.
+      - wrong: "Kinetic energy is always conserved in a collision."
+        right: >-
+          Momentum is conserved, but kinetic energy is usually lost to sound, heat and deformation.
+          That is why a coalescing pair moves slower than the incoming body.
+      - wrong: "The heavier body always continues in its original direction."
+        right: >-
+          It depends on the total momentum. A fast, light body can reverse a slow, heavy one if its
+          momentum is larger.
+
+  - type: exam
+    body: |
+      Write the conservation equation explicitly with the velocities substituted, signs included. The
+      method mark is for the equation, not just the final number.
+
+      If the question says "they coalesce" or "stick together", use a single combined mass on the
+      right-hand side.
+
+      Give the direction of the final velocity, either in words or by the sign with your convention
+      stated.
+
+  - type: check
+    title: Check yourself
+    questions: [stick-together, head-on]
+
+  - type: check
+    title: Light and heavy bodies
+    questions: [light-into-heavy, bullet-block]
+
+  - type: check
+    title: Conditions and signs
+    questions: [conservation-condition, sign-error-collision]
+
+  - type: takeaways
+    items:
+      - "With no external resultant force, total momentum before = total momentum after."
+      - "For two bodies: $m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$."
+      - "If they coalesce: $m_1u_1 + m_2u_2 = (m_1+m_2)v$."
+      - "Velocities are signed, and the final velocity of a coalescing pair lies between the two initial velocities."
+
+questions:
+  - id: stick-together
+    format: numeric
+    difficulty: 1
+    objectives: ["4.3.2"]
+    prompt: |
+      A $3.0\ \text{kg}$ trolley moving at $4.0\ \text{m s}^{-1}$ hits a stationary
+      $2.0\ \text{kg}$ trolley and they stick together.
+
+      Find their common velocity afterwards.
+    fields:
+      - answer: 2.4
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+    explanation: |
+      $3.0(4.0) + 2.0(0) = 5.0v$, so $v = \dfrac{12}{5} = 2.4\ \text{m s}^{-1}$ in the original
+      direction.
+
+  - id: head-on
+    format: numeric
+    difficulty: 3
+    objectives: ["4.3.2"]
+    prompt: |
+      A $2.0\ \text{kg}$ trolley moves at $6.0\ \text{m s}^{-1}$ to the right and a
+      $4.0\ \text{kg}$ trolley moves at $3.0\ \text{m s}^{-1}$ to the left. They stick together.
+
+      Find their common velocity afterwards, taking right as positive.
+    fields:
+      - answer: 0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻¹
+    explanation: |
+      $2.0(6.0) + 4.0(-3.0) = 12 - 12 = 0$, so the combined $6.0\ \text{kg}$ mass is at rest:
+      $v = 0$.
+
+  - id: light-into-heavy
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |
+      A $0.50\ \text{kg}$ ball moving at $8.0\ \text{m s}^{-1}$ hits a stationary
+      $1.5\ \text{kg}$ block and they move off together.
+
+      Find their common velocity.
+    fields:
+      - answer: 2
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+    explanation: |
+      $0.50(8.0) = 2.0v$, so $v = \dfrac{4.0}{2.0} = 2.0\ \text{m s}^{-1}$.
+
+  - id: bullet-block
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |
+      A bullet of mass $0.020\ \text{kg}$ travelling at $400\ \text{m s}^{-1}$ embeds itself in a
+      stationary block of mass $1.98\ \text{kg}$.
+
+      Find the speed of the block and bullet immediately after the impact.
+    fields:
+      - answer: 4
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+    explanation: |
+      $0.020(400) = (0.020 + 1.98)v$, so $8.0 = 2.0v$ and $v = 4.0\ \text{m s}^{-1}$.
+
+  - id: conservation-condition
+    format: mcq
+    difficulty: 2
+    objectives: ["4.3.2"]
+    prompt: |
+      Under what condition is the total momentum of a system conserved during an impact?
+    options:
+      - text: "When no external resultant force acts on the system."
+        correct: true
+        why: "Correct: internal forces cancel in pairs, so only external forces can change the total momentum."
+      - text: "When the bodies stick together."
+        why: "Coalescing is one possible outcome; momentum is conserved in any impact without external forces."
+      - text: "When no kinetic energy is lost."
+        why: "Energy is usually lost, but momentum is still conserved."
+      - text: "When the two masses are equal."
+        why: "The masses can be anything; conservation does not depend on them being equal."
+    explanation: |
+      Internal forces between the bodies are equal and opposite, so they cannot change the total
+      momentum. Only an external resultant force can.
+
+  - id: sign-error-collision
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.3.2"]
+    prompt: |
+      A student applies conservation of momentum. One line is wrong.
+    lines:
+      - |
+        A $3.0\ \text{kg}$ trolley moves right at $4.0\ \text{m s}^{-1}$; a
+        $1.0\ \text{kg}$ trolley moves left at $2.0\ \text{m s}^{-1}$. They stick together.
+      - |
+        Total momentum before $= 3.0(4.0) + 1.0(2.0) = 14\ \text{kg m s}^{-1}$.
+      - |
+        Then $4.0v = 14$, so $v = 3.5\ \text{m s}^{-1}$ to the right.
+    errorLine: 2
+    fix: |
+      With right as positive, the second velocity is negative:
+      $3.0(4.0) + 1.0(-2.0) = 10\ \text{kg m s}^{-1}$, so $4.0v = 10$ and
+      $v = 2.5\ \text{m s}^{-1}$ to the right.
+    explanation: |
+      The trolleys approach from opposite directions, so one velocity must be negative. Adding the
+      speeds as if both moved right gives too much momentum and too large a final velocity.

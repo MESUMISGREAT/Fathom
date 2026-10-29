@@ -1,0 +1,302 @@
+id: kinematics-suvat
+subject: "9709"
+topic: "4.2"
+title: "Constant acceleration: the four formulae"
+summary: "The suvat equations solve motion with constant acceleration. Choose the one that skips the quantity you neither know nor need."
+order: 5
+minutes: 8
+kind: core
+objectives: ["4.2.4"]
+prerequisites: ["kinematics-velocity-time-graphs"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Mathematics 9709 syllabus, topic 4.2
+    Kinematics of motion in a straight line, learning outcome 4.2.4 (use the formulae for motion
+    with constant acceleration in a straight line; questions may need more than one equation). All
+    questions and examples are original; $g = 10\ \text{m s}^{-2}$ is used throughout. Re-checked
+    line by line on 2026-10-29 in a separate adversarial pass by the same AI model. No separate
+    reviewer model and no teacher have reviewed it.
+blocks:
+  - type: objective
+    body: |
+      By the end you can choose and use the four **constant-acceleration** formulae, set up a sign
+      convention, and handle a problem that needs **two stages**.
+
+  - type: explain
+    title: Five quantities, four equations
+    body: |
+      If acceleration is constant, the whole motion is fixed by five quantities:
+
+      - $u$ — initial velocity
+      - $v$ — final velocity
+      - $a$ — acceleration
+      - $s$ — displacement
+      - $t$ — time
+
+      Each formula links four of them and leaves one out. That omission is the point: you pick the
+      formula that avoids the quantity you do not know and do not need.
+
+      $$v = u + at$$
+
+      $$s = ut + \dfrac{1}{2}at^2$$
+
+      $$v^2 = u^2 + 2as$$
+
+      $$s = \dfrac{1}{2}(u + v)t$$
+
+      The last one is the area of the velocity–time trapezium, which is where these formulae come
+      from.
+
+  - type: definition
+    term: Constant-acceleration formulae
+    body: |
+      For a particle moving in a straight line with **constant** acceleration:
+      $$v = u + at, \qquad s = ut + \tfrac{1}{2}at^2, \qquad v^2 = u^2 + 2as, \qquad s = \tfrac{1}{2}(u+v)t.$$
+      They may only be used while the acceleration stays constant.
+
+  - type: explain
+    title: Set the sign convention first
+    body: |
+      Before substituting anything, decide which direction is positive and write it down. Then:
+
+      - "starts from rest" means $u = 0$;
+      - "comes to rest" means $v = 0$;
+      - "moving upwards" with $g = 10\ \text{m s}^{-2}$ means $a = -10$, because gravity acts
+        downwards;
+      - a displacement in the negative direction is negative.
+
+      Signs are where most marks are lost. A negative answer can be perfectly correct: it means the
+      displacement or velocity is in the negative direction.
+
+      For vertical motion in 9709, use $g = 10\ \text{m s}^{-2}$, and say whether up or down is
+      positive.
+
+  - type: example
+    title: Braking to a stop
+    problem: |
+      A car travelling at $20\ \text{m s}^{-1}$ brakes with a constant deceleration of
+      $4\ \text{m s}^{-2}$ and stops.
+
+      Find (a) the distance it takes to stop and (b) the time taken.
+    steps:
+      - |
+        Take the direction of motion as positive: $u = 20$, $v = 0$, $a = -4$.
+      - |
+        Time is not given, so use $v^2 = u^2 + 2as$:
+        $$0 = 400 + 2(-4)s \Rightarrow 8s = 400 \Rightarrow s = 50\ \text{m}.$$
+      - |
+        Now find the time with $v = u + at$:
+        $$0 = 20 - 4t \Rightarrow t = 5\ \text{s}.$$
+      - |
+        Check with the area formula: $s = \tfrac{1}{2}(20 + 0)(5) = 50\ \text{m}$. It agrees.
+    answer: |
+      (a) $50\ \text{m}$ (b) $5\ \text{s}$
+
+  - type: example
+    title: Two stages in one journey
+    problem: |
+      A cyclist starts from rest and accelerates at $3\ \text{m s}^{-2}$ for $4\ \text{s}$. She then
+      travels at the velocity she has reached for a further $5\ \text{s}$.
+
+      Find the total distance travelled.
+    steps:
+      - |
+        Stage 1: $u = 0$, $a = 3$, $t = 4$.
+        $$v = 0 + 3(4) = 12\ \text{m s}^{-1}, \qquad s_1 = \tfrac{1}{2}(3)(4^2) = 24\ \text{m}.$$
+      - |
+        Stage 2: constant velocity $12\ \text{m s}^{-1}$ for $5\ \text{s}$, so $a = 0$ and
+        $$s_2 = 12 \times 5 = 60\ \text{m}.$$
+      - |
+        Total distance $= 24 + 60 = 84\ \text{m}$.
+      - |
+        The stages have different accelerations, so one suvat equation cannot cover the whole
+        journey: split it where the acceleration changes.
+    answer: |
+      $84\ \text{m}$
+
+  - type: explain
+    title: Which formula should I use?
+    body: |
+      Ask which quantity the question does **not** mention:
+
+      | Missing quantity | Use |
+      | --- | --- |
+      | $v$ | $s = ut + \tfrac{1}{2}at^2$ |
+      | $s$ | $v = u + at$ |
+      | $t$ | $v^2 = u^2 + 2as$ |
+      | $a$ | $s = \tfrac{1}{2}(u+v)t$ |
+
+      Then substitute and solve. If a question asks for two unknowns, find one first and use it in a
+      second equation — that is the "more than one equation" case the syllabus mentions.
+
+      For a particle thrown upwards, the highest point has $v = 0$; the time to return to the
+      starting level is twice the time to the highest point, because the motion is symmetric.
+
+  - type: misconceptions
+    items:
+      - wrong: "The formulae work for any motion."
+        right: >-
+          They require **constant** acceleration. If the acceleration changes, split the motion into
+          stages or use calculus.
+      - wrong: "Deceleration means using $a = -4$ always."
+        right: >-
+          The sign depends on your convention. If the car moves in the negative direction, a
+          deceleration is a **positive** acceleration.
+      - wrong: "A negative displacement must be a mistake."
+        right: >-
+          It means the particle finished on the negative side of the start, or below it.
+      - wrong: 'For vertical motion you can use $g = 9.8$ or $10\ \text{m s}^{-2}$ freely.'
+        right: >-
+          In 9709 use $g = 10\ \text{m s}^{-2}$ unless told otherwise, and state your positive
+          direction.
+
+  - type: exam
+    body: |
+      Write down the five quantities with their signs before choosing a formula. Examiners award
+      method marks for a correct substitution even if the arithmetic slips.
+
+      If the motion has two stages, label them and solve each separately. Carry the final velocity of
+      one stage into the next as its initial velocity.
+
+      Finish with units, and check that the size of the answer is plausible: a car stopping from
+      $20\ \text{m s}^{-1}$ in $50\ \text{m}$ is reasonable; $5000\ \text{m}$ is not.
+
+  - type: check
+    title: Check yourself
+    questions: [from-rest, stopping-distance]
+
+  - type: check
+    title: Vertical motion and two stages
+    questions: [ball-up, two-stage-distance]
+
+  - type: check
+    title: Choosing and checking
+    questions: [formula-choice, wrong-suvat]
+
+  - type: takeaways
+    items:
+      - 'Four formulae: $v=u+at$, $s=ut+\tfrac{1}{2}at^2$, $v^2=u^2+2as$, $s=\tfrac{1}{2}(u+v)t$.'
+      - "They apply only while the acceleration is constant."
+      - "Set a positive direction and keep the signs consistent."
+      - "Split a two-stage journey where the acceleration changes, and carry the velocity across."
+
+questions:
+  - id: from-rest
+    format: numeric
+    difficulty: 1
+    objectives: ["4.2.4"]
+    prompt: |
+      A particle starts from rest and accelerates at $3\ \text{m s}^{-2}$ for $4\ \text{s}$.
+
+      Find its final velocity and the distance travelled.
+    fields:
+      - label: "v (m s⁻¹)"
+        answer: 12
+        tolerance: { abs: 0.1 }
+      - label: "s (m)"
+        answer: 24
+        tolerance: { abs: 0.1 }
+    explanation: |
+      $v = u + at = 0 + 3(4) = 12\ \text{m s}^{-1}$ and
+      $s = ut + \tfrac{1}{2}at^2 = 0 + \tfrac{1}{2}(3)(16) = 24\ \text{m}$.
+
+  - id: stopping-distance
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.4"]
+    prompt: |
+      A car travelling at $20\ \text{m s}^{-1}$ brakes with a constant deceleration of
+      $4\ \text{m s}^{-2}$ until it stops.
+
+      Find the distance it travels while braking.
+    fields:
+      - answer: 50
+        tolerance: { abs: 0.2 }
+        unit: m
+    explanation: |
+      With $u = 20$, $v = 0$, $a = -4$:
+      $0 = 20^2 + 2(-4)s$, so $s = \dfrac{400}{8} = 50\ \text{m}$.
+
+  - id: ball-up
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.4"]
+    prompt: |
+      A ball is thrown vertically upwards at $20\ \text{m s}^{-1}$. Take
+      $g = 10\ \text{m s}^{-2}$ and ignore air resistance.
+
+      Find the greatest height reached and the time taken to reach it.
+    fields:
+      - label: "height (m)"
+        answer: 20
+        tolerance: { abs: 0.2 }
+      - label: "time (s)"
+        answer: 2
+        tolerance: { abs: 0.05 }
+    explanation: |
+      At the highest point $v = 0$. With up positive, $a = -10$:
+      $0 = 400 - 20s$ gives $s = 20\ \text{m}$, and $0 = 20 - 10t$ gives $t = 2\ \text{s}$.
+
+  - id: two-stage-distance
+    format: numeric
+    difficulty: 3
+    objectives: ["4.2.4"]
+    prompt: |
+      A cyclist starts from rest and accelerates at $3\ \text{m s}^{-2}$ for $4\ \text{s}$. She then
+      travels at the velocity she has reached for a further $5\ \text{s}$.
+
+      Find the total distance travelled.
+    fields:
+      - answer: 84
+        tolerance: { abs: 0.5 }
+        unit: m
+    explanation: |
+      After stage 1, $v = 3(4) = 12\ \text{m s}^{-1}$ and $s_1 = \tfrac{1}{2}(3)(16) = 24\ \text{m}$.
+      Stage 2 is constant velocity: $s_2 = 12(5) = 60\ \text{m}$. Total $= 84\ \text{m}$.
+
+  - id: formula-choice
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.4"]
+    prompt: |
+      A particle has constant acceleration. You know its initial velocity, its acceleration and the
+      distance travelled, but not the time. Which formula finds the final velocity directly?
+    options:
+      - text: "$v^2 = u^2 + 2as$"
+        correct: true
+        why: "Correct: it links u, v, a and s without involving t."
+      - text: "$v = u + at$"
+        why: "This needs the time, which is not known."
+      - text: '$s = ut + \tfrac{1}{2}at^2$'
+        why: "This contains t, the quantity you do not have."
+      - text: '$s = \tfrac{1}{2}(u+v)t$'
+        why: "This also contains t, and it is the time you want to avoid."
+    explanation: |
+      Choose the equation that omits the unknown you do not need: $v^2 = u^2 + 2as$ contains
+      $u$, $v$, $a$ and $s$ only.
+
+  - id: wrong-suvat
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.2.4"]
+    prompt: |
+      A student solves a two-stage motion problem. One line is wrong.
+    lines:
+      - |
+        A cyclist accelerates from rest at $3\ \text{m s}^{-2}$ for $4\ \text{s}$, then travels at
+        constant velocity for $5\ \text{s}$.
+      - |
+        After the first stage, $v = 3(4) = 12\ \text{m s}^{-1}$ and $s = \tfrac{1}{2}(3)(16) = 24$
+        m.
+      - |
+        The whole journey has constant acceleration, so the total distance is
+        $s = 0(9) + \tfrac{1}{2}(3)(9^2) = 121.5\ \text{m}$.
+    errorLine: 3
+    fix: |
+      The acceleration changes after $4\ \text{s}$, so split the journey: $24\ \text{m}$ in stage 1
+      plus $12(5) = 60\ \text{m}$ at constant velocity, giving $84\ \text{m}$ in total.
+    explanation: |
+      A suvat formula applies only while the acceleration is constant. Using $a = 3$ for the whole
+      $9\ \text{s}$ contradicts the statement that the cyclist then travels at constant velocity.

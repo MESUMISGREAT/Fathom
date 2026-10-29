@@ -33,8 +33,13 @@ import FunctionsReciprocalRange from './functions-reciprocal-range';
 import FunctionsReflections from './functions-reflections';
 import FunctionsStretches from './functions-stretches';
 import FunctionsTranslations from './functions-translations';
+import KinematicsCalculus from './kinematics-calculus';
+import KinematicsDistanceDisplacement from './kinematics-distance-displacement';
+import KinematicsGraphs from './kinematics-graphs';
+import KinematicsVtArea from './kinematics-vt-area';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
+import MechMomentumCollision from './mech-momentum-collision';
 import P1DifferentiationBoxNet from './p1-differentiation-box-net';
 import P1DifferentiationChainBox from './p1-differentiation-chain-box';
 import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
@@ -132,6 +137,10 @@ export const diagrams: DiagramRegistry = {
   'functions-reflections': FunctionsReflections,
   'functions-stretches': FunctionsStretches,
   'functions-translations': FunctionsTranslations,
+  'kinematics-calculus': KinematicsCalculus,
+  'kinematics-distance-displacement': KinematicsDistanceDisplacement,
+  'kinematics-graphs': KinematicsGraphs,
+  'kinematics-vt-area': KinematicsVtArea,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
   'math-p3-algebra-binomial-validity': P3AlgebraBinomialValidity,
@@ -141,6 +150,7 @@ export const diagrams: DiagramRegistry = {
   'math-p3-logarithmic-exponential-index-graph': P3LogarithmicExponentialIndexGraph,
   'math-p3-logarithmic-exponential-inverse-graphs': P3LogarithmicExponentialInverseGraphs,
   'math-p3-logarithmic-exponential-linear-form-plot': P3LogarithmicExponentialLinearFormPlot,
+  'mech-momentum-collision': MechMomentumCollision,
   'p1-differentiation-box-net': P1DifferentiationBoxNet,
   'p1-differentiation-chain-box': P1DifferentiationChainBox,
   'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
