@@ -1,0 +1,205 @@
+id: algorithms-fundamentals
+subject: "9618"
+topic: "9.2"
+title: Algorithms — fundamentals, identifier tables, and basic pseudocode
+summary: Understand what an algorithm is, use identifier tables to represent data, and write pseudocode with input, process, and output sections.
+order: 1
+minutes: 5
+kind: core
+objectives: ["9.2.1", "9.2.2", "9.2.3"]
+prerequisites: ["algorithmic-thinking-abstraction-decomposition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 9.2 Algorithms. Covers objectives 9.2.1-9.2.3.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define an algorithm, create an identifier table for a problem, and write pseudocode that clearly separates input, process, and output.
+
+  - type: explain
+    title: What is an algorithm?
+    body: |
+      An **algorithm** is a finite sequence of well-defined, unambiguous steps that solves a specific problem or performs a computation. Key properties:
+      - **Finiteness** — terminates after a finite number of steps
+      - **Definiteness** — each step is precisely defined
+      - **Input** — zero or more inputs
+      - **Output** — one or more outputs
+      - **Effectiveness** — each step is basic enough to be carried out
+
+      Algorithms can be expressed in:
+      - Natural language (structured English)
+      - Pseudocode (structured, language-independent)
+      - Flowcharts (graphical)
+      - Programming code (executable)
+
+  - type: diagram
+    diagram: cs-algorithms-flowchart-symbols
+    alt: Flowchart symbols reference showing oval start/end, rectangle process, diamond decision, parallelogram input/output, predefined process rectangle with double lines, document with curved corner, and connector circle
+    caption: Standard flowchart symbols used in Cambridge 9618
+
+  - type: example
+    title: Algorithm for finding the maximum of three numbers
+    problem: "Find the largest of three input numbers."
+    steps:
+      - "Input three numbers: a, b, c"
+      - "Set max = a"
+      - "If b > max then max = b"
+      - "If c > max then max = c"
+      - "Output max"
+    answer: |
+      The algorithm compares each number against the current maximum and updates it.
+
+  - type: explain
+    title: Identifier tables
+    body: |
+      An **identifier table** documents every variable, constant, and data structure used in an algorithm. It ensures clarity and helps with translation to code.
+
+      Columns typically include:
+      | Identifier | Data Type | Purpose | Scope |
+      |------------|-----------|---------|-------|
+      | max        | INTEGER   | Stores current maximum | Local |
+      | a, b, c    | INTEGER   | Input numbers | Local |
+      | MAX_SIZE   | INTEGER   | Constant array size | Global |
+
+      Good practice:
+      - Use descriptive names (`studentCount` not `x`)
+      - Include units where relevant (`temperatureCelsius`)
+      - Distinguish constants (UPPER_SNAKE_CASE) from variables (camelCase)
+
+  - type: example
+    title: Identifier table for "calculate average of 5 marks"
+    problem: "A program reads 5 test marks and outputs their average."
+    steps:
+      - "Identify inputs: mark1, mark2, mark3, mark4, mark5 (INTEGER)"
+      - "Identify process variables: sum (INTEGER), average (REAL)"
+      - "Identify output: average (REAL)"
+      - "No constants needed"
+    answer: |
+      | Identifier | Data Type | Purpose |
+      |------------|-----------|---------|
+      | mark1..5   | INTEGER   | Input marks |
+      | sum        | INTEGER   | Running total |
+      | average    | REAL      | Calculated average |
+
+  - type: explain
+    title: Pseudocode structure — input, process, output
+    body: |
+      The syllabus expects pseudocode with three clear sections:
+
+      ```
+      // INPUT
+      READ mark1, mark2, mark3, mark4, mark5
+
+      // PROCESS
+      sum = mark1 + mark2 + mark3 + mark4 + mark5
+      average = sum / 5.0
+
+      // OUTPUT
+      PRINT "Average: ", average
+      ```
+
+      Conventions (Cambridge pseudocode guide):
+      - Keywords in UPPERCASE: `READ`, `PRINT`, `IF`, `THEN`, `ELSE`, `ENDIF`, `FOR`, `TO`, `STEP`, `WHILE`, `ENDWHILE`, `REPEAT`, `UNTIL`
+      - Assignment uses `←` or `=` (both accepted)
+      - Comments use `//`
+      - Array indexing starts at 0 or 1 (state which)
+      - `DIV` for integer division, `MOD` for remainder
+
+  - type: example
+    title: Complete pseudocode with identifier table
+    problem: "Convert a temperature from Celsius to Fahrenheit. Formula: F = C × 9/5 + 32"
+    steps:
+      - "Identifier table: celsius (REAL, input), fahrenheit (REAL, output), FACTOR = 9/5 (REAL, constant), OFFSET = 32 (REAL, constant)"
+      - "INPUT: READ celsius"
+      - "PROCESS: fahrenheit = celsius * FACTOR + OFFSET"
+      - "OUTPUT: PRINT fahrenheit"
+    answer: |
+      Clear separation of concerns. Constants named meaningfully.
+
+  - type: check
+    title: Quick check — algorithm basics
+    questions: [algorithm-definition, identifier-table-purpose, pseudocode-structure]
+
+  - type: misconceptions
+    items:
+      - wrong: An algorithm must be written in a programming language.
+        right: |
+          An algorithm is the *logic*; it can be expressed in pseudocode, flowcharts, or structured English. Code is an implementation.
+      - wrong: Identifier tables are only for variables.
+        right: |
+          Identifier tables include constants, arrays, records, files — any named data item.
+      - wrong: Pseudocode must follow exact syntax like Python.
+        right: |
+          Pseudocode is language-independent. It uses structured English with standard keywords; minor syntax variations are acceptable if the logic is clear.
+
+  - type: exam
+    body: |
+      - **Algorithm definition**: State the 5 properties (finiteness, definiteness, input, output, effectiveness).
+      - **Identifier tables**: You may be asked to complete or create one for a given scenario. Include identifier, data type, and purpose.
+      - **Pseudocode**: Must show clear INPUT/PROCESS/OUTPUT sections. Use standard keywords. Marks lost for vague steps like "calculate average" instead of "sum = a+b+c; average = sum/3".
+
+  - type: takeaways
+    items:
+      - "Algorithm = finite, definite steps that transform input to output."
+      - "Identifier tables document every named data item: identifier, type, purpose."
+      - "Pseudocode structure: INPUT section → PROCESS section → OUTPUT section."
+      - "Use Cambridge pseudocode keywords: READ, PRINT, IF/THEN/ELSE, FOR, WHILE, REPEAT."
+
+questions:
+  - id: algorithm-definition
+    format: explain
+    difficulty: 1
+    objectives: ["9.2.1"]
+    prompt: |
+      Define an algorithm and state **two** of its essential properties.
+    model: |
+      An algorithm is a finite sequence of well-defined, unambiguous steps that solves a problem or performs a computation. Essential properties include: finiteness (terminates), definiteness (each step precise), input (zero or more), output (one or more), effectiveness (steps are basic and executable).
+    keyPoints:
+      - "Finite sequence of steps"
+      - "Well-defined/unambiguous"
+      - "Solves a problem"
+      - "Any two of: finiteness, definiteness, input, output, effectiveness"
+    explanation: |
+      A definition without "finite" or "well-defined" is incomplete. "A set of instructions" is too vague.
+
+  - id: identifier-table-purpose
+    format: mcq
+    difficulty: 1
+    objectives: ["9.2.2"]
+    prompt: |
+      What is the **main purpose** of an identifier table in algorithm design?
+    options:
+      - text: To store the actual data values during program execution.
+        why: |
+          Identifier tables are design documentation, not runtime storage.
+      - text: To document every variable, constant, and data structure with its type and purpose.
+        correct: true
+        why: |
+          Exactly. It records identifier name, data type, and purpose for clarity and translation.
+      - text: To define the syntax rules for the programming language.
+        why: |
+          Syntax rules are defined by the language specification.
+      - text: To replace the need for comments in code.
+        why: |
+          Identifier tables complement comments; they don't replace them.
+    explanation: |
+      An identifier table is a design-time document listing all named data items.
+
+  - id: pseudocode-structure
+    format: cloze
+    difficulty: 2
+    objectives: ["9.2.3"]
+    prompt: |
+      In Cambridge pseudocode, the three main sections of a program are **{{1}}**, **{{2}}**, and **{{3}}**. The keyword for reading input is **{{4}}** and for writing output is **{{5}}**.
+    blanks:
+      - accept: ["INPUT", "Input", "input"]
+      - accept: ["PROCESS", "Process", "process"]
+      - accept: ["OUTPUT", "Output", "output"]
+      - accept: ["READ", "read"]
+      - accept: ["PRINT", "print"]
+    explanation: |
+      Standard pseudocode structure separates concerns. Keywords are typically uppercase.

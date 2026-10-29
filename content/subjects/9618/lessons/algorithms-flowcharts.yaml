@@ -1,0 +1,203 @@
+id: algorithms-flowcharts
+subject: "9618"
+topic: "9.2"
+title: Algorithms — flowcharts and converting between representations
+summary: Draw flowcharts from pseudocode, convert flowcharts to pseudocode, and trace flowchart execution with trace tables.
+order: 3
+minutes: 6
+kind: core
+objectives: ["9.2.6", "9.2.7"]
+prerequisites: ["algorithms-control-structures"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 9.2 Algorithms. Covers objectives 9.2.6-9.2.7.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can draw a flowchart for a given algorithm, convert a flowchart to pseudocode, and trace execution using a trace table.
+
+  - type: diagram
+    diagram: cs-algorithms-representation-conversion
+    alt: Three-column comparison showing structured English (left), pseudocode (middle), and flowchart (right) for finding the maximum of three numbers, with mapping arrows between columns
+    caption: Side-by-side comparison of structured English, pseudocode, and flowchart for the same algorithm
+
+  - type: explain
+    title: Flowchart to pseudocode — systematic conversion
+    body: |
+      Follow the flow lines from Start to End, translating each symbol:
+
+      | Flowchart symbol | Pseudocode equivalent |
+      |------------------|----------------------|
+      | Oval (Start/End) | (implied by program bounds) |
+      | Parallelogram (Input) | `READ variable` |
+      | Parallelogram (Output) | `PRINT expression` |
+      | Rectangle (Process) | `variable ← expression` |
+      | Diamond (Decision) | `IF condition THEN ... ELSE ... ENDIF` |
+      | Predefined process | `CALL procedure()` |
+      | Connector | (labels/GOTO in code — avoid; use structured loops) |
+
+      **Key rules:**
+      - One entry, one exit per structured block
+      - Decision diamond: label "Yes" and "No" branches
+      - Loop: decision diamond points back to loop start
+
+  - type: example
+    title: Flowchart → Pseudocode
+    problem: "Convert the 'find max of 3' flowchart to pseudocode"
+    steps:
+      - "Start → READ a, b, c"
+      - "Process: max ← a"
+      - "Decision: IF b > max THEN max ← b ENDIF"
+      - "Decision: IF c > max THEN max ← c ENDIF"
+      - "Output: PRINT max"
+      - "End"
+    answer: |
+      Direct translation. Each symbol maps to one pseudocode line.
+
+  - type: explain
+    title: Pseudocode to flowchart — structured drawing
+    body: |
+      1. **Identify the three sections** (Input, Process, Output)
+      2. **Draw Start oval**
+      3. **For each INPUT line**: add parallelogram with `READ`
+      4. **For each PROCESS line**: add rectangle with assignment
+      5. **For IF/ELSE**: add diamond, draw Yes/No branches, join after ENDIF
+      6. **For FOR loop**: 
+         - Initialize counter (rectangle)
+         - Decision diamond: `counter ≤ limit?`
+         - Yes → body → increment counter → back to diamond
+         - No → exit
+      7. **For WHILE**: decision diamond at top, body on Yes, back to diamond
+      8. **For REPEAT**: body first, then decision diamond on No (continue), Yes (exit)
+      9. **For OUTPUT**: parallelogram with `PRINT`
+      10. **End oval**
+
+  - type: example
+    title: Pseudocode → Flowchart
+    problem: "Draw flowchart for: READ n; sum ← 0; FOR i ← 1 TO n DO sum ← sum + i ENDFOR; PRINT sum"
+    steps:
+      - "Start oval"
+      - "Parallelogram: READ n"
+      - "Rectangle: sum ← 0"
+      - "Rectangle: i ← 1"
+      - "Diamond: i ≤ n? (Yes → right, No → down)"
+      - "Rectangle (Yes): sum ← sum + i"
+      - "Rectangle: i ← i + 1"
+      - "Arrow back to diamond"
+      - "Parallelogram (No path): PRINT sum"
+      - "End oval"
+    answer: |
+      FOR loop becomes initialize → test → body → increment → loop back.
+
+  - type: explain
+    title: Trace tables — tracking execution
+    body: |
+      A **trace table** shows variable values at each step. Columns = variables + output; rows = execution steps.
+
+      Example: `READ n; sum ← 0; FOR i ← 1 TO n DO sum ← sum + i ENDFOR; PRINT sum` with n=3
+
+      | Step | n | sum | i | Output |
+      |------|---|-----|---|--------|
+      | 1 | 3 | — | — | |
+      | 2 | 3 | 0 | — | |
+      | 3 | 3 | 0 | 1 | |
+      | 4 | 3 | 1 | 1 | |
+      | 5 | 3 | 1 | 2 | |
+      | 6 | 3 | 3 | 2 | |
+      | 7 | 3 | 3 | 3 | |
+      | 8 | 3 | 6 | 3 | |
+      | 9 | 3 | 6 | 4 | |
+      | 10 | 3 | 6 | 4 | 6 |
+
+      Stop when loop condition fails (i=4, 4≤3 is false). Final output is 6.
+
+  - type: check
+    title: Quick check — flowcharts and tracing
+    questions: [flowchart-decision, for-loop-flowchart, trace-table-purpose]
+
+  - type: misconceptions
+    items:
+      - wrong: Flowcharts can have multiple arrows exiting a process box.
+        right: |
+          Structured flowcharts: one entry, one exit per block. Decision diamonds have exactly two exits (Yes/No).
+      - wrong: In a trace table, show only the final values.
+        right: |
+          Trace tables must show *every* change. Examiners check intermediate steps.
+      - wrong: "REPEAT...UNTIL in flowchart has condition at top."
+        right: |
+          REPEAT is post-test: body first, then condition check. WHILE has condition at top.
+
+  - type: exam
+    body: |
+      - **Drawing flowcharts**: Use a ruler. Symbols must be recognisable. Label Yes/No on decision diamonds. Connectors (circles with letters) for off-page or complex jumps — but prefer structured loops.
+      - **Converting**: Exam may give pseudocode and ask for flowchart, or vice versa. Work systematically.
+      - **Trace tables**: Include a column for *every* variable and for output. Show the header row. Use a row for each assignment/condition evaluation.
+
+  - type: takeaways
+    items:
+      - "Flowchart symbols map 1:1 to pseudocode constructs."
+      - "Decision diamond = IF/ELSE; two labeled exits (Yes/No)."
+      - "FOR loop in flowchart: init → test → body → increment → loop back."
+      - "Trace tables: every variable, every step, include output column."
+
+questions:
+  - id: flowchart-decision
+    format: mcq
+    difficulty: 1
+    objectives: ["9.2.6"]
+    prompt: |
+      In a flowchart, a **decision diamond** has how many exit paths, and how should they be labelled?
+    options:
+      - text: One exit, labelled "True"
+        why: |
+          Decisions branch two ways.
+      - text: Two exits, labelled "Yes" and "No"
+        correct: true
+        why: |
+          Standard: exactly two exits, labelled Yes and No (or True/False).
+      - text: "Three exits: Yes, No, Maybe"
+        why: |
+          Binary decisions only.
+      - text: As many as needed for the conditions
+        why: |
+          Use CASE for multi-way; diamond is binary.
+    explanation: |
+      Decision diamonds represent binary conditions.
+
+  - id: for-loop-flowchart
+    format: explain
+    difficulty: 2
+    objectives: ["9.2.6"]
+    prompt: |
+      Describe the flowchart structure for a FOR loop `FOR i ← 1 TO 10 DO ... ENDFOR`.
+    model: |
+      1. Rectangle: i ← 1 (initialization)
+      2. Diamond: i ≤ 10? (condition test)
+      3. Yes branch → loop body (rectangles)
+      4. Rectangle: i ← i + 1 (increment)
+      5. Arrow from increment back to diamond
+      6. No branch → next statement after loop
+    keyPoints:
+      - "Initialize counter"
+      - "Decision diamond tests condition"
+      - "Yes: body then increment then back to test"
+      - "No: exit loop"
+    explanation: |
+      FOR loops become pre-test loops in flowcharts.
+
+  - id: trace-table-purpose
+    format: cloze
+    difficulty: 1
+    objectives: ["9.2.7"]
+    prompt: |
+      A trace table has a column for each **{{1}}** and for **{{2}}**. Each row represents one **{{3}}** of execution.
+    blanks:
+      - accept: ["variable", "variables", "identifier"]
+      - accept: ["output", "outputs", "print"]
+      - accept: ["step", "statement", "line"]
+    explanation: |
+      Complete trace tables show all variable values at each step plus any output.

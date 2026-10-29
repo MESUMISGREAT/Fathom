@@ -1,0 +1,227 @@
+id: algorithms-control-structures
+subject: "9618"
+topic: "9.2"
+title: Algorithms — control structures and documenting algorithms
+summary: Master the three basic constructs (sequence, selection, iteration), write pseudocode with correct keywords, and use structured English to document algorithms.
+order: 2
+minutes: 6
+kind: core
+objectives: ["9.2.4", "9.2.5"]
+prerequisites: ["algorithms-fundamentals"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 9.2 Algorithms. Covers objectives 9.2.4-9.2.5.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can write pseudocode using sequence, selection (IF/CASE), and iteration (FOR/WHILE/REPEAT), and document algorithms in structured English.
+
+  - type: explain
+    title: The three basic constructs
+    body: |
+      Structured programming theorem: any computable function can be expressed using only three constructs:
+
+      1. **Sequence** — steps executed in order, top to bottom
+      2. **Selection** — choose between paths based on a condition (IF/ELSE, CASE)
+      3. **Iteration** — repeat steps while a condition holds (FOR, WHILE, REPEAT)
+
+      These correspond directly to flowchart structures — no GOTO needed.
+
+  - type: explain
+    title: Selection — IF / THEN / ELSE / ENDIF
+    body: |
+      ```
+      IF condition THEN
+          // statements
+      ELSE
+          // statements
+      ENDIF
+      ```
+
+      - `ELSE` is optional
+      - Nested IFs: indent clearly, match `ENDIF` to each `IF`
+      - **CASE** (multi-way selection) for multiple discrete values:
+
+      ```
+      CASE expression OF
+          value1: statements
+          value2: statements
+          ...
+          DEFAULT: statements
+      ENDCASE
+      ```
+
+  - type: example
+    title: Selection examples
+    problem: "Grade a mark: A≥70, B≥60, C≥50, else U"
+    steps:
+      - "IF mark >= 70 THEN PRINT 'A'"
+      - "ELSE IF mark >= 60 THEN PRINT 'B'"
+      - "ELSE IF mark >= 50 THEN PRINT 'C'"
+      - "ELSE PRINT 'U'"
+      - "ENDIF"
+    answer: |
+      Chain of ELSE IF works. Could also use CASE if mark were integer ranges.
+
+  - type: diagram
+    diagram: cs-algorithms-structure-chart
+    alt: Structure chart showing top-down decomposition from processGrades at Level 0 through inputStudentData, calculateResults, outputReport at Level 1, down to computeAverage, determineGrade, checkPassFail at Level 2, and lookupBoundaries, compareToBoundaries at Level 3
+    caption: Structure chart showing stepwise refinement of a grade processing system
+
+  - type: explain
+    title: Iteration — three loop types
+    body: |
+      **FOR loop** (count-controlled, known iterations):
+      ```
+      FOR i ← 1 TO n STEP 1
+          // body
+      ENDFOR
+      ```
+      - `STEP` defaults to 1 if omitted
+      - Loop variable `i` should not be modified inside
+
+      **WHILE loop** (condition-controlled, pre-test):
+      ```
+      WHILE condition DO
+          // body
+      ENDWHILE
+      ```
+      - Condition checked *before* each iteration
+      - Zero iterations possible
+
+      **REPEAT...UNTIL loop** (condition-controlled, post-test):
+      ```
+      REPEAT
+          // body
+      UNTIL condition
+      ```
+      - Body executes *at least once*
+      - Condition checked *after* body
+      - Terminates when condition becomes TRUE
+
+  - type: example
+    title: Iteration examples
+    problem: "Sum integers 1 to 100"
+    steps:
+      - "FOR loop: FOR i ← 1 TO 100 DO sum ← sum + i ENDFOR"
+      - "WHILE loop: i ← 1; WHILE i ≤ 100 DO sum ← sum + i; i ← i + 1 ENDWHILE"
+      - "REPEAT loop: i ← 1; REPEAT sum ← sum + i; i ← i + 1 UNTIL i > 100"
+    answer: |
+      All three produce the same result. FOR is clearest for known counts.
+
+  - type: explain
+    title: Documenting algorithms — structured English
+    body: |
+      **Structured English** (or "pseudocode in English") describes algorithm logic using plain sentences with strict structure:
+      - Use standard keywords: `IF`, `THEN`, `ELSE`, `WHILE`, `FOR`, `REPEAT`, `UNTIL`
+      - One logical step per line
+      - Indent to show nesting
+      - No programming syntax (no `=`, `{}`, `;`)
+
+      Example:
+      ```
+      READ the three numbers
+      SET max to the first number
+      IF second number > max THEN
+          SET max to second number
+      ENDIF
+      IF third number > max THEN
+          SET max to third number
+      ENDIF
+      PRINT max
+      ```
+
+      This is a bridge between problem statement and formal pseudocode.
+
+  - type: check
+    title: Quick check — control structures
+    questions: [selection-syntax, while-vs-repeat, structured-english-purpose]
+
+  - type: misconceptions
+    items:
+      - wrong: FOR loops and WHILE loops are interchangeable in all cases.
+        right: |
+          FOR is for known iteration counts; WHILE/REPEAT for unknown counts. FOR loop variable must not be modified inside.
+      - wrong: REPEAT...UNTIL continues while condition is TRUE.
+        right: |
+          REPEAT...UNTIL continues *until* condition becomes TRUE (i.e., while FALSE). WHILE continues while TRUE.
+      - wrong: Structured English is the same as pseudocode.
+        right: |
+          Structured English uses plain sentences with keywords; pseudocode uses formal syntax (assignment arrows, explicit types).
+
+  - type: exam
+    body: |
+      - **Trace tables**: You will be given pseudocode and asked to complete a trace table. Show every variable change.
+      - **Loop bounds**: Watch for off-by-one errors (e.g., `TO n` vs `TO n-1`, `STEP -1`).
+      - **Nested loops**: Indent clearly. Inner loop completes all iterations per outer iteration.
+      - **CASE vs IF**: Use CASE when testing one variable against multiple discrete values.
+
+  - type: takeaways
+    items:
+      - "Three constructs: sequence, selection, iteration — sufficient for any algorithm."
+      - "IF/THEN/ELSE/ENDIF for binary choice; CASE for multi-way."
+      - "FOR = known count; WHILE = pre-test (maybe zero); REPEAT = post-test (at least once)."
+      - "Structured English: plain sentences + keywords + indentation, no code syntax."
+
+questions:
+  - id: selection-syntax
+    format: cloze
+    difficulty: 1
+    objectives: ["9.2.4"]
+    prompt: |
+      Complete the CASE structure syntax:
+      ```
+      CASE {{1}} OF
+          {{2}}: statements
+          {{3}}: statements
+      ENDCASE
+      ```
+    blanks:
+      - accept: ["expression", "variable", "value"]
+      - accept: ["value1", "case 1", "1"]
+      - accept: ["value2", "case 2", "2"]
+    explanation: |
+      CASE tests a single expression against multiple discrete values.
+
+  - id: while-vs-repeat
+    format: mcq
+    difficulty: 2
+    objectives: ["9.2.4"]
+    prompt: |
+      What is the **key difference** between a WHILE loop and a REPEAT...UNTIL loop?
+    options:
+      - text: WHILE uses a counter; REPEAT uses a condition.
+        why: |
+          Both use conditions. FOR uses a counter.
+      - text: WHILE checks the condition before the first iteration; REPEAT checks after.
+        correct: true
+        why: |
+          WHILE is pre-test (zero iterations possible). REPEAT is post-test (at least one iteration).
+      - text: REPEAT...UNTIL continues while the condition is true.
+        why: |
+          REPEAT continues *until* true (i.e., while false).
+      - text: There is no difference; they are synonyms.
+        why: |
+          They differ in when the condition is evaluated.
+    explanation: |
+      Pre-test vs post-test is the fundamental distinction.
+
+  - id: structured-english-purpose
+    format: explain
+    difficulty: 1
+    objectives: ["9.2.5"]
+    prompt: |
+      What is **structured English** and how does it differ from pseudocode?
+    model: |
+      Structured English describes an algorithm using plain English sentences combined with standard control-structure keywords (IF, THEN, ELSE, WHILE, FOR, REPEAT, UNTIL). It uses indentation for nesting but no programming syntax (no assignment arrows, brackets, or semicolons). Pseudocode is more formal, using syntax like ← for assignment and explicit keywords.
+    keyPoints:
+      - "Plain English sentences"
+      - "Uses standard keywords (IF, WHILE, etc.)"
+      - "Indentation for structure"
+      - "No programming syntax"
+    explanation: |
+      It's a design notation, not executable. Helps bridge problem statement to pseudocode.

@@ -1,0 +1,275 @@
+id: files-text-file-handling
+subject: "9618"
+topic: "10.3"
+title: Files — text file handling in pseudocode
+summary: Understand why files are needed for persistent storage; write pseudocode to open, read, write, and close text files.
+order: 1
+minutes: 9
+kind: core
+objectives: ["10.3.1", "10.3.2"]
+prerequisites: ["data-types-records", "programming-constructs"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 10.3 Files. Covers objectives 10.3.1-10.3.2.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why files are needed (persistence, sharing, large data), and write pseudocode to handle text files including OPEN, READ, WRITE, and CLOSE operations.
+
+  - type: explain
+    title: Why files?
+    body: |
+      **Files provide persistent storage** — data survives program termination.
+
+      | Reason | Explanation |
+      |--------|-------------|
+      | **Persistence** | Variables/RAM are lost when program ends; files remain on disk |
+      | **Large datasets** | Can store more data than fits in memory |
+      | **Sharing** | Multiple programs can read/write the same file |
+      | **Backup/transfer** | Files can be copied, emailed, archived |
+      | **Interoperability** | Standard formats (CSV, JSON, plain text) work across systems |
+
+      **Text files** store human-readable characters, organised as lines. Each line ends with a newline character.
+
+  - type: explain
+    title: File operations in pseudocode
+    body: |
+      Cambridge pseudocode provides these file operations:
+
+      | Operation | Syntax | Purpose |
+      |-----------|--------|---------|
+      | **OPENFILE** | `OPENFILE filename FOR mode` | Prepare file for reading/writing |
+      | **READFILE** | `READFILE filename, variable` | Read next line into variable |
+      | **WRITEFILE** | `WRITEFILE filename, expression` | Write value (with newline) to file |
+      | **CLOSEFILE** | `CLOSEFILE filename` | Close file, flush buffers |
+      | **EOF** | `EOF(filename)` | Boolean function: true if end of file reached |
+
+      **Mode values:**
+      - `READ` — open existing file for reading (error if not exist)
+      - `WRITE` — create new file or overwrite existing for writing
+      - `APPEND` — open existing file, add to end (create if not exist)
+
+  - type: explain
+    title: Reading a text file — line by line
+    body: |
+      **Pattern: read all lines until EOF**
+      ```
+      OPENFILE "students.txt" FOR READ
+      DECLARE line : STRING
+      DECLARE count : INTEGER
+      count ← 0
+
+      WHILE NOT EOF("students.txt")
+        READFILE "students.txt", line
+        PRINT line
+        count ← count + 1
+      ENDWHILE
+
+      CLOSEFILE "students.txt"
+      PRINT "Total lines: ", count
+      ```
+
+      **Key points:**
+      - Always `OPENFILE` before reading/writing
+      - Check `EOF` *before* each `READFILE`
+      - Always `CLOSEFILE` when done
+      - `READFILE` reads one **entire line** into a STRING variable
+
+  - type: explain
+    title: Writing to a text file
+    body: |
+      **Pattern: write multiple lines**
+      ```
+      OPENFILE "output.txt" FOR WRITE
+      WRITEFILE "output.txt", "Name,Age,Grade"
+      WRITEFILE "output.txt", "Alice,16,A"
+      WRITEFILE "output.txt", "Bob,17,B"
+      WRITEFILE "output.txt", "Carol,15,A"
+      CLOSEFILE "output.txt"
+      ```
+
+      **With variables and loops:**
+      ```
+      OPENFILE "scores.txt" FOR WRITE
+      FOR i ← 1 TO 10
+        WRITEFILE "scores.txt", "Student " & i & ": " & scores[i]
+      ENDFOR
+      CLOSEFILE "scores.txt"
+      ```
+
+      **Append mode** (add to existing file):
+      ```
+      OPENFILE "log.txt" FOR APPEND
+      WRITEFILE "log.txt", "Program started at " & GETDATE()
+      CLOSEFILE "log.txt"
+      ```
+
+  - type: explain
+    title: Processing structured text data (CSV-style)
+    body: |
+      Text files often store **records** with fields separated by commas (CSV).
+
+      **Example file `students.txt`:**
+      ```
+      S001,Alice,16,95.5
+      S002,Bob,17,87.0
+      S003,Carol,15,92.5
+      ```
+
+      **Pseudocode to parse each line:**
+      ```
+      OPENFILE "students.txt" FOR READ
+      DECLARE line : STRING
+      DECLARE id, name : STRING
+      DECLARE age : INTEGER
+      DECLARE score : REAL
+
+      WHILE NOT EOF("students.txt")
+        READFILE "students.txt", line
+        // Parse CSV line (simplified - assumes no commas in fields)
+        id ← LEFT(line, 4)
+        name ← MID(line, 6, FIND(line, ",") - 6)   // simplified
+        // ... full parsing uses string functions
+        PRINT "ID: ", id, " Name: ", name
+      ENDWHILE
+      CLOSEFILE "students.txt"
+      ```
+
+      **Note:** String manipulation functions (LEFT, RIGHT, MID, LENGTH, FIND) are provided in exam questions if needed.
+
+  - type: example
+    title: Copy file with line numbers
+    problem: "Read `input.txt` and write to `output.txt` with each line prefixed by its line number."
+    steps:
+      - "Open input for READ, output for WRITE"
+      - "Loop reading lines until EOF"
+      - "Write line number + content to output"
+      - "Close both files"
+    answer: |
+      OPENFILE "input.txt" FOR READ
+      OPENFILE "output.txt" FOR WRITE
+      DECLARE line : STRING
+      DECLARE lineNum : INTEGER
+      lineNum ← 1
+
+      WHILE NOT EOF("input.txt")
+        READFILE "input.txt", line
+        WRITEFILE "output.txt", lineNum & ": " & line
+        lineNum ← lineNum + 1
+      ENDWHILE
+
+      CLOSEFILE "input.txt"
+      CLOSEFILE "output.txt"
+
+  - type: check
+    title: Quick check — files
+    questions: [why-files, file-modes, read-loop, write-vs-append]
+
+  - type: misconceptions
+    items:
+      - wrong: Variables keep their values after the program ends.
+        right: |
+          Variables are in RAM (volatile). Files are on disk (non-volatile) — they persist.
+      - wrong: READFILE reads one character at a time.
+        right: |
+          READFILE reads a **whole line** (up to newline) into a STRING variable.
+      - wrong: You can READFILE and WRITEFILE the same file simultaneously.
+        right: |
+          Open a file for **either** READ **or** WRITE/APPEND, not both at once. Close first, then reopen in different mode.
+      - wrong: EOF becomes true after reading the last line.
+        right: |
+          EOF becomes true *after* attempting to read *past* the last line. Check EOF *before* reading.
+
+  - type: exam
+    body: |
+      - **File operations**: Write pseudocode to open, read/write, close a file.
+      - **Loop pattern**: `WHILE NOT EOF(filename)` — know this standard pattern.
+      - **Modes**: Distinguish READ, WRITE, APPEND — when to use each.
+      - **Parsing**: May be asked to split a CSV line (string functions provided).
+      - **Error**: Forgetting CLOSEFILE loses data (buffer not flushed).
+
+  - type: takeaways
+    items:
+      - "Files = persistent storage (survive program end)"
+      - "Operations: OPENFILE, READFILE, WRITEFILE, CLOSEFILE, EOF"
+      - "Modes: READ (existing), WRITE (new/overwrite), APPEND (add to end)"
+      - "Read pattern: WHILE NOT EOF → READFILE → process"
+      - "Always CLOSEFILE to save data"
+      - "READFILE reads one whole line into STRING"
+
+questions:
+  - id: why-files
+    format: explain
+    difficulty: 1
+    objectives: ["10.3.1"]
+    prompt: |
+      Give two reasons why a program would use files instead of only variables to store data.
+    model: |
+      1. **Persistence** — file data survives program termination; variables are lost when the program ends.
+      2. **Capacity** — files can store more data than fits in available memory (RAM).
+      (Also acceptable: sharing between programs, backup/transfer, interoperability)
+    keyPoints:
+      - "Persistence / data survives program end"
+      - "Capacity / larger than memory"
+    explanation: |
+      Variables are volatile (RAM); files are non-volatile (disk). Files also enable data sharing and handle larger datasets.
+
+  - id: file-modes
+    format: mcq
+    difficulty: 2
+    objectives: ["10.3.2"]
+    prompt: |
+      A program needs to add a new log entry to an existing log file without deleting previous entries. Which mode should be used?
+    options:
+      - text: READ
+        why: READ only allows reading, not writing.
+      - text: WRITE
+        why: WRITE overwrites the entire file, losing previous content.
+      - text: APPEND
+        correct: true
+        why: APPEND opens the file and positions at the end, preserving existing content.
+      - text: MODIFY
+        why: Not a valid mode in Cambridge pseudocode.
+    explanation: |
+      APPEND mode preserves existing file content and adds new data at the end. WRITE mode truncates (empties) the file first.
+
+  - id: read-loop
+    format: cloze
+    difficulty: 2
+    objectives: ["10.3.2"]
+    prompt: |
+      Complete the pseudocode to read all lines from `data.txt`:
+
+      OPENFILE "data.txt" FOR READ
+      DECLARE line : STRING
+      **{{1}}** NOT EOF("data.txt")
+        READFILE "data.txt", line
+        PRINT line
+      **{{2}}**
+      CLOSEFILE "data.txt"
+    blanks:
+      - accept: ["WHILE", "while"]
+      - accept: ["ENDWHILE", "endwhile"]
+    explanation: |
+      Standard file reading pattern: WHILE NOT EOF → READFILE → process → ENDWHILE.
+
+  - id: write-vs-append
+    format: explain
+    difficulty: 2
+    objectives: ["10.3.2"]
+    prompt: |
+      Explain the difference between opening a file FOR WRITE and FOR APPEND. What happens to existing content in each case?
+    model: |
+      **FOR WRITE**: Creates a new file or **overwrites** (truncates) an existing file. All previous content is **lost**. The file starts empty.
+
+      **FOR APPEND**: Opens an existing file and positions the write pointer at the **end**. Previous content is **preserved**; new data is added after it. Creates the file if it doesn't exist.
+    keyPoints:
+      - "WRITE = overwrite/truncate, loses existing data"
+      - "APPEND = preserve, add at end"
+      - "Both create file if not exist"
+    explanation: |
+      This is a critical distinction. Using WRITE when you meant APPEND is a common data-loss bug.

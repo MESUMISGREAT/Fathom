@@ -1,0 +1,216 @@
+id: software-dev-life-cycles
+subject: "9618"
+topic: "12.1"
+title: Program Development Life Cycle — purpose, types, stages, analysis to maintenance
+summary: Understand why development life cycles exist, compare waterfall, iterative, and RAD models, and describe the analysis, design, coding, testing, and maintenance stages.
+order: 1
+minutes: 8
+kind: core
+objectives: ["12.1.1", "12.1.2", "12.1.3", "12.1.4"]
+prerequisites: ["programming-structured"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 12.1 Program Development Life Cycle. Covers objectives 12.1.1-12.1.4.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the purpose of a development life cycle, compare waterfall, iterative, and RAD models with their benefits and drawbacks, and describe the five key stages (analysis, design, coding, testing, maintenance) in the program development life cycle.
+
+  - type: explain
+    title: Why a development life cycle?
+    body: |
+      A **development life cycle** provides a structured framework for building software. It ensures:
+      - Clear **project management** with defined phases and milestones
+      - **Quality control** through systematic testing and review at each stage
+      - **Risk reduction** by identifying problems early
+      - **Communication** — shared vocabulary for developers, managers, and stakeholders
+      - **Maintainability** — documentation and structure support future changes
+
+      Without a life cycle, projects risk scope creep, missed requirements, poor quality, and unmaintainable code.
+
+  - type: explain
+    title: Types of development life cycles
+    body: |
+      The syllabus covers three main models. Each suits different project contexts.
+
+      **Waterfall** — linear, sequential phases
+      ```
+      Analysis → Design → Coding → Testing → Maintenance
+      ```
+      - Complete each phase fully before moving to the next
+      - Documentation-heavy, rigid structure
+      - **Benefits**: Simple to understand and manage; clear milestones; good for well-understood, stable requirements
+      - **Drawbacks**: Inflexible — hard to go back; late testing finds expensive bugs; poor for changing requirements; working software only appears late
+
+      **Iterative** — repeated cycles (iterations) that refine the product
+      ```
+      Iteration 1: Analysis → Design → Code → Test → Review
+      Iteration 2: Analysis → Design → Code → Test → Review
+      ...
+      ```
+      - Each iteration delivers a working increment
+      - Feedback from each cycle informs the next
+      - **Benefits**: Early working software; adapts to changing requirements; risks identified early; continuous integration of feedback
+      - **Drawbacks**: Requires more management overhead; can lead to scope creep without discipline; architecture may need refactoring
+
+      **Rapid Application Development (RAD)** — fast prototyping with heavy user involvement
+      ```
+      Requirements → Prototype → User Feedback → Refine → Deliver
+      ```
+      - Emphasises prototypes over detailed upfront specs
+      - Time-boxed iterations (often 60-90 days total)
+      - **Benefits**: Very fast delivery; high user involvement; adapts quickly to feedback; good for UI-heavy systems
+      - **Drawbacks**: Requires skilled, committed team; not suitable for safety-critical or large-scale systems; can sacrifice quality for speed; difficult to scale
+
+  - type: explain
+    title: The five stages in the program development life cycle
+    body: |
+      These stages appear in all models (though order and overlap vary).
+
+      **1. Analysis** — *What must the system do?*
+      - Gather requirements from stakeholders (interviews, observation, documents)
+      - Produce **requirements specification** — functional & non-functional needs
+      - Feasibility study (technical, economic, legal, operational, schedule)
+      - Define system boundaries and constraints
+
+      **2. Design** — *How will the system work?*
+      - **Architectural design**: overall structure, modules, interfaces, data flow
+      - **Detailed design**: algorithms, data structures, database schema, UI mockups
+      - Structure charts, flowcharts, pseudocode, ER diagrams, state-transition diagrams
+      - Design specification document
+
+      **3. Coding (Implementation)** — *Writing the program*
+      - Translate design into source code (following coding standards)
+      - Use appropriate language features, libraries, and tools
+      - Code reviews, version control, continuous integration
+      - Produce executable modules
+
+      **4. Testing** — *Does it work correctly?*
+      - **Unit testing**: individual modules/functions
+      - **Integration testing**: modules working together
+      - **System testing**: whole system against requirements
+      - **Acceptance testing**: user validates it meets needs
+      - Test plans, test cases, test data (normal, abnormal, boundary)
+      - Debug and fix defects
+
+      **5. Maintenance** — *Keep it working after delivery*
+      - **Corrective**: fix bugs found in use
+      - **Adaptive**: modify for new environment (OS, hardware, regulations)
+      - **Perfective**: enhance performance, add features, improve usability
+      - Ongoing: monitoring, patches, updates, documentation updates
+
+  - type: example
+    title: Choosing a life cycle — scenario analysis
+    problem: |
+      A team is building:
+      (a) A medical device controller (safety-critical, fixed requirements)
+      (b) A startup's mobile app MVP (needs user feedback fast, changing scope)
+      (c) A bank's core transaction system (large, complex, well-understood domain)
+    steps:
+      - "(a) Waterfall — safety-critical needs rigorous upfront analysis, traceability, late changes are costly"
+      - "(b) RAD or Iterative — fast feedback, prototypes, evolving requirements"
+      - "(c) Iterative — manage complexity in increments, early integration, stakeholder reviews"
+    answer: |
+      (a) Waterfall — fixed, well-understood requirements; safety demands traceability and rigorous V&V
+      (b) RAD — speed and user feedback paramount; scope expected to change
+      (c) Iterative — large system; incremental delivery reduces risk; architecture evolves
+
+  - type: check
+    title: Quick check — development life cycles
+    questions: [purpose-of-life-cycle, waterfall-drawbacks, rad-benefits, five-stages]
+
+  - type: misconceptions
+    items:
+      - wrong: Waterfall is always "bad" and iterative is always "good".
+        right: |
+          Waterfall works well for stable, well-understood requirements (e.g., embedded systems, regulated domains). Iterative adds overhead. Choose based on context.
+      - wrong: RAD means "no documentation".
+        right: |
+          RAD reduces *upfront* documentation but still produces design docs, test plans, and user guides. It's "just enough, just in time" documentation.
+      - wrong: Maintenance only means fixing bugs.
+        right: |
+          Maintenance includes adaptive (environment changes), perfective (enhancements), and corrective (bug fixes). Perfective is often the largest share.
+      - wrong: Testing is one phase at the end.
+        right: |
+          In iterative and RAD, testing happens continuously. Even in waterfall, unit testing occurs during coding. "Testing phase" means system/acceptance testing.
+
+  - type: exam
+    body: |
+      - **Compare models**: Be ready to justify waterfall vs iterative vs RAD for a given scenario. Know specific benefits/drawbacks.
+      - **Stage purposes**: Analysis=what, Design=how, Coding=build, Testing=verify, Maintenance=sustain.
+      - **Key terms**: requirements specification, feasibility study, structure chart, test plan, corrective/adaptive/perfective maintenance.
+      - **Exam questions often give a scenario** — pick the best life cycle and explain why.
+
+  - type: takeaways
+    items:
+      - "Development life cycle = structured framework for building software (manage quality, risk, communication)"
+      - "Waterfall: sequential, rigid, good for stable requirements; Iterative: incremental, flexible, early delivery; RAD: fast prototypes, high user involvement"
+      - "Five stages: Analysis (requirements), Design (architecture + detail), Coding (implementation), Testing (verify), Maintenance (sustain)"
+      - "Maintenance types: corrective (bugs), adaptive (environment), perfective (enhancements)"
+
+questions:
+  - id: purpose-of-life-cycle
+    format: explain
+    difficulty: 1
+    objectives: ["12.1.1"]
+    prompt: |
+      Explain two reasons why a software development project should follow a defined development life cycle.
+    model: |
+      1. Provides structure and clear milestones for project management, making progress measurable.
+      2. Ensures systematic quality control through defined testing and review stages, reducing risk of late-discovered defects.
+      (Also acceptable: risk reduction, communication, maintainability)
+    keyPoints:
+      - "Project management / milestones"
+      - "Quality control / testing / risk reduction"
+    explanation: |
+      A life cycle brings order to complexity. Without it, projects lack visibility, quality gates, and shared process understanding.
+
+  - id: waterfall-drawbacks
+    format: explain
+    difficulty: 2
+    objectives: ["12.1.3"]
+    prompt: |
+      Describe two drawbacks of the waterfall life cycle model.
+    model: |
+      1. Inflexible — difficult and expensive to go back to a previous phase once completed; changes late in the cycle are costly.
+      2. Working software only appears late (after coding), so integration issues and requirement misunderstandings are discovered late.
+    keyPoints:
+      - "Inflexible / hard to go back / costly changes"
+      - "Late working software / late testing finds expensive bugs"
+    explanation: |
+      Waterfall's linearity is its weakness when requirements aren't perfectly known upfront.
+
+  - id: rad-benefits
+    format: mcq
+    difficulty: 2
+    objectives: ["12.1.3"]
+    prompt: |
+      Which is a **benefit** of Rapid Application Development (RAD)?
+    options:
+      - text: Comprehensive upfront documentation
+        why: RAD reduces upfront documentation in favour of prototypes.
+      - text: Suitable for safety-critical systems
+        why: RAD's speed and prototype focus make it unsuitable for safety-critical systems requiring rigorous V&V.
+      - text: Fast delivery with high user involvement
+        correct: true
+        why: RAD uses time-boxed iterations and prototypes to deliver quickly with continuous user feedback.
+      - text: Low management overhead
+        why: RAD requires significant coordination and committed user involvement — high overhead.
+    explanation: |
+      RAD trades upfront specification for speed and user feedback via prototypes.
+
+  - id: five-stages
+    format: cloze
+    difficulty: 1
+    objectives: ["12.1.4"]
+    prompt: |
+      The five stages of the program development life cycle are: Analysis, **{{1}}**, Coding, **{{2}}**, and Maintenance.
+    blanks:
+      - accept: ["Design", "design"]
+      - accept: ["Testing", "testing"]
+    explanation: |
+      Analysis → Design → Coding → Testing → Maintenance. These appear in all life cycle models (order/overlap varies).

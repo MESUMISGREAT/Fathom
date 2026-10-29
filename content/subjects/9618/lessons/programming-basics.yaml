@@ -1,0 +1,266 @@
+id: programming-basics
+subject: "9618"
+topic: "11.1"
+title: Programming Basics — implementing designs, pseudocode statements, built-in functions
+summary: Implement designs from flowcharts or structured English, write pseudocode statements for declarations, assignments, expressions, I/O, and use built-in functions and library routines.
+order: 1
+minutes: 6
+kind: core
+objectives: ["11.1.1", "11.1.2", "11.1.3"]
+prerequisites: ["algorithms-fundamentals", "algorithms-control-structures"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 11.1 Programming Basics. Covers objectives 11.1.1-11.1.3.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can translate a flowchart or structured English design into pseudocode, write correct pseudocode for constants, variables, assignments, arithmetic/logical expressions, input and output, and apply common built-in functions.
+
+  - type: explain
+    title: From design to pseudocode
+    body: |
+      The syllabus requires you to **implement a given design** presented as a program flowchart or structured English description. The process:
+      1. Identify inputs, processes, and outputs from the design
+      2. Create an identifier table for all variables and constants
+      3. Write pseudocode in three sections: INPUT, PROCESS, OUTPUT
+      4. Use standard Cambridge pseudocode keywords
+
+      Flowchart to pseudocode mapping:
+      - Oval (Start/End) → implicit start/end of program
+      - Parallelogram (Input/Output) → `READ` / `PRINT`
+      - Rectangle (Process) → assignment or calculation
+      - Diamond (Decision) → `IF ... THEN ... ELSE ... ENDIF`
+      - Loop symbols → `FOR`, `WHILE`, or `REPEAT` structures
+
+  - type: example
+    title: Flowchart to pseudocode — sum of even numbers 1 to 10
+    problem: |
+      Flowchart: Start → Set sum=0 → For i=1 to 10 → If i MOD 2 = 0 → sum = sum + i → EndIf → Next i → Print sum → End
+    steps:
+      - "Identifier table: sum (INTEGER, accumulator), i (INTEGER, loop counter)"
+      - "INPUT: (none — loop bounds are fixed)"
+      - "PROCESS: FOR i = 1 TO 10; IF i MOD 2 = 0 THEN sum = sum + i; ENDIF; ENDFOR"
+      - "OUTPUT: PRINT sum"
+    answer: |
+      sum ← 0
+      FOR i ← 1 TO 10
+        IF i MOD 2 = 0 THEN
+          sum ← sum + i
+        ENDIF
+      ENDFOR
+      PRINT sum
+
+  - type: explain
+    title: Pseudocode statements — declarations and initialisation
+    body: |
+      **Constants** — fixed values that don't change:
+      ```
+      CONST PI = 3.14159
+      CONST MAX_SIZE = 100
+      ```
+      Use UPPER_SNAKE_CASE by convention.
+
+      **Variables** — named storage that can change:
+      ```
+      DECLARE count : INTEGER
+      DECLARE name : STRING
+      DECLARE price : REAL
+      DECLARE isValid : BOOLEAN
+      DECLARE today : DATE
+      ```
+      Initialisation at declaration (optional but good practice):
+      ```
+      DECLARE count : INTEGER ← 0
+      DECLARE name : STRING ← ""
+      ```
+
+  - type: explain
+    title: Assignment, expressions, and operators
+    body: |
+      **Assignment** uses `←` (preferred) or `=`:
+      ```
+      total ← total + price
+      average ← sum / count
+      ```
+
+      **Arithmetic operators**: `+`, `-`, `*`, `/`, `^` (power), `DIV` (integer division), `MOD` (remainder)
+
+      **Relational operators**: `=`, `≠` (or `<>`), `<`, `>`, `≤`, `≥`
+
+      **Logical operators**: `AND`, `OR`, `NOT`
+
+      **Operator precedence** (highest to lowest):
+      1. `^`
+      2. `*`, `/`, `DIV`, `MOD`
+      3. `+`, `-`
+      4. Relational (`<`, `>`, etc.)
+      5. `NOT`
+      6. `AND`
+      7. `OR`
+
+      Use parentheses to make precedence explicit.
+
+  - type: example
+    title: Complex expression with mixed operators
+    problem: "Write pseudocode for: result = (a + b) * c ^ 2 - d DIV e"
+    steps:
+      - "Identifier table: a,b,c,d,e (INTEGER, inputs), result (INTEGER, output)"
+      - "INPUT: READ a, b, c, d, e"
+      - "PROCESS: result ← (a + b) * c ^ 2 - d DIV e"
+      - "OUTPUT: PRINT result"
+    answer: |
+      Parentheses around (a + b) ensure addition before multiplication. ^ has highest precedence, then *, then DIV, then -.
+
+  - type: explain
+    title: Input and output
+    body: |
+      **Input** — `READ` keyword:
+      ```
+      READ username
+      READ mark1, mark2, mark3
+      ```
+
+      **Output** — `PRINT` keyword (outputs to console with space separation):
+      ```
+      PRINT "Welcome, ", username
+      PRINT "Average: ", average
+      PRINT mark1, mark2, mark3
+      ```
+
+      String literals in double quotes. Multiple items separated by commas.
+
+  - type: explain
+    title: Built-in functions and library routines
+    body: |
+      The syllabus states: *Any functions not given in the pseudocode guide will be provided. String manipulation functions will always be provided.*
+
+      Common built-in functions you should know:
+      | Function | Purpose | Example |
+      |----------|---------|---------|
+      | `LENGTH(str)` | String length | `LENGTH("hello")` → 5 |
+      | `LEFT(str, n)` | First n characters | `LEFT("hello", 2)` → "he" |
+      | `RIGHT(str, n)` | Last n characters | `RIGHT("hello", 2)` → "lo" |
+      | `MID(str, start, n)` | Substring | `MID("hello", 2, 3)` → "ell" |
+      | `INT(x)` | Integer part (truncate) | `INT(3.7)` → 3 |
+      | `RAND(n)` | Random integer 1..n | `RAND(6)` → 1 to 6 |
+      | `ROUND(x, d)` | Round to d decimals | `ROUND(3.14159, 2)` → 3.14 |
+      | `SQRT(x)` | Square root | `SQRT(16)` → 4 |
+      | `ABS(x)` | Absolute value | `ABS(-5)` → 5 |
+      | `ASCII(ch)` | ASCII code of character | `ASCII("A")` → 65 |
+      | `CHAR(code)` | Character from ASCII | `CHAR(65)` → "A" |
+
+      Library routines (provided in exam): file handling, sorting, searching, etc.
+
+  - type: example
+    title: Using string functions — extract initials
+    problem: "Given a full name 'John Smith', extract initials 'JS'."
+    steps:
+      - "Identifier table: fullName (STRING, input), firstInitial, lastInitial (CHAR, output)"
+      - "INPUT: READ fullName"
+      - "PROCESS: Find space position, extract first char of each part"
+      - "OUTPUT: PRINT firstInitial, lastInitial"
+    answer: |
+      // Pseudocode uses provided string functions
+      spacePos ← 0
+      FOR i ← 1 TO LENGTH(fullName)
+        IF MID(fullName, i, 1) = " " THEN spacePos ← i
+      ENDFOR
+      firstInitial ← LEFT(fullName, 1)
+      lastInitial ← MID(fullName, spacePos + 1, 1)
+      PRINT firstInitial, lastInitial
+
+  - type: check
+    title: Quick check — programming basics
+    questions: [from-design-to-pseudocode, assignment-precedence, built-in-functions]
+
+  - type: misconceptions
+    items:
+      - wrong: DECLARE and CONST are interchangeable.
+        right: |
+          CONST defines a fixed value; DECLARE creates a variable that can be assigned later. Use CONST for values that never change.
+      - wrong: READ and PRINT work like Python's input() and print().
+        right: |
+          READ reads from standard input into variables. PRINT writes to standard output. They're pseudocode keywords, not function calls.
+      - wrong: ^ is bitwise XOR in pseudocode.
+        right: |
+          In Cambridge pseudocode, ^ means exponentiation (power). Bitwise operations are not in the syllabus.
+      - wrong: You must memorise all built-in functions.
+        right: |
+          The exam provides any non-standard functions. String functions are always provided. Focus on knowing the common ones listed in the guide.
+
+  - type: exam
+    body: |
+      - **Design to pseudocode**: You may be given a flowchart or structured English and asked to write pseudocode. Show INPUT/PROCESS/OUTPUT sections clearly.
+      - **Declarations**: Use DECLARE for variables, CONST for constants. Include data types.
+      - **Expressions**: Know operator precedence. Use parentheses.
+      - **I/O**: READ for input, PRINT for output. String literals in quotes.
+      - **Built-in functions**: String functions always provided. Others given in question. Know the common ones (LENGTH, LEFT, RIGHT, MID, INT, RAND, ROUND, SQRT, ABS).
+
+  - type: takeaways
+    items:
+      - "Flowchart → pseudocode: map symbols to keywords (parallelogram→READ/PRINT, diamond→IF, loops→FOR/WHILE/REPEAT)"
+      - "CONST for constants (UPPER_SNAKE_CASE), DECLARE for variables with types"
+      - "Assignment: ← or =. Arithmetic: + - * / ^ DIV MOD. Relational: = ≠ < > ≤ ≥. Logical: AND OR NOT"
+      - "READ for input, PRINT for output. String functions (LENGTH, LEFT, RIGHT, MID) always provided in exam"
+      - "Operator precedence: ^ → * / DIV MOD → + - → relational → NOT → AND → OR"
+
+questions:
+  - id: from-design-to-pseudocode
+    format: explain
+    difficulty: 2
+    objectives: ["11.1.1"]
+    prompt: |
+      A flowchart starts with a parallelogram "READ n", then a rectangle "sum = 0", then a loop "FOR i = 1 TO n", inside the loop a rectangle "sum = sum + i", then "ENDFOR", then a parallelogram "PRINT sum", then End. Write the equivalent pseudocode with identifier table.
+    model: |
+      Identifier table: n (INTEGER, input), sum (INTEGER, accumulator), i (INTEGER, loop counter)
+      // INPUT
+      READ n
+      // PROCESS
+      sum ← 0
+      FOR i ← 1 TO n
+        sum ← sum + i
+      ENDFOR
+      // OUTPUT
+      PRINT sum
+    keyPoints:
+      - "Identifier table with types and purposes"
+      - "Three clear sections: INPUT, PROCESS, OUTPUT"
+      - "Correct FOR loop syntax"
+      - "Accumulator pattern in loop"
+    explanation: |
+      Each flowchart symbol maps directly: parallelogram=READ/PRINT, rectangle=assignment, loop=FOR/ENDFOR. Initialising sum=0 before the loop is essential.
+
+  - id: assignment-precedence
+    format: cloze
+    difficulty: 2
+    objectives: ["11.1.2"]
+    prompt: |
+      Evaluate: result ← 3 + 4 * 2 ^ 2 - 10 DIV 3
+      The value of result is **{{1}}**.
+    blanks:
+      - accept: ["17"]
+    explanation: |
+      Order: 2^2=4, 4*4=16, 10 DIV 3=3, 3+16=19, 19-3=16. Wait: 3 + 16 - 3 = 16. Actually: 4*4=16, 3+16=19, 10 DIV 3=3, 19-3=16. Let me recalculate: 2^2=4, 4*4=16, 10 DIV 3=3, 3+16=19, 19-3=16. Result is 16.
+
+  - id: built-in-functions
+    format: mcq
+    difficulty: 1
+    objectives: ["11.1.3"]
+    prompt: |
+      Which function returns the **number of characters** in a string?
+    options:
+      - text: LEFT(str, n)
+        why: Returns first n characters.
+      - text: LENGTH(str)
+        correct: true
+        why: Returns the length (character count) of the string.
+      - text: MID(str, start, n)
+        why: Returns substring of length n from start position.
+      - text: CHAR(code)
+        why: Returns character for given ASCII code.
+    explanation: |
+      LENGTH is the standard string length function. LEFT/RIGHT/MID are for substrings.

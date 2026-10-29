@@ -1,0 +1,199 @@
+id: data-types-records
+subject: "9618"
+topic: "10.1"
+title: Data Types and Records — selecting types, defining records
+summary: Select appropriate data types for problem solutions; understand record structures to hold mixed-type data under one identifier.
+order: 1
+minutes: 9
+kind: core
+objectives: ["10.1.1", "10.1.2"]
+prerequisites: ["algorithms-fundamentals", "programming-basics"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 10.1 Data Types and Records. Covers objectives 10.1.1-10.1.2.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can select appropriate data types (INTEGER, REAL, CHAR, STRING, BOOLEAN, DATE, ARRAY, FILE) for a problem, define a record structure to group related data of different types, and write pseudocode to read from and write to record fields.
+
+  - type: explain
+    title: Data types in pseudocode
+    body: |
+      The Cambridge pseudocode guide defines these data types:
+
+      | Type | Description | Example values |
+      |------|-------------|----------------|
+      | **INTEGER** | Whole numbers (positive, negative, zero) | `42`, `-7`, `0` |
+      | **REAL** | Numbers with fractional parts | `3.14`, `-0.5`, `2.0` |
+      | **CHAR** | Single character | `'A'`, `'7'`, `'?'` |
+      | **STRING** | Sequence of characters | `"Hello"`, `"2024-01-15"` |
+      | **BOOLEAN** | Logical true/false | `TRUE`, `FALSE` |
+      | **DATE** | Calendar date (format implementation-dependent) | `DATE(2024, 1, 15)` |
+      | **ARRAY** | Ordered collection of same-type elements | `DECLARE scores : ARRAY[1:10] OF INTEGER` |
+      | **FILE** | External file reference | `DECLARE studentFile : FILE` |
+
+      **Choosing the right type:**
+      - Count of items → `INTEGER`
+      - Measured quantity (price, temperature) → `REAL`
+      - Single letter/keypress → `CHAR`
+      - Names, messages, IDs with leading zeros → `STRING`
+      - Yes/no flags, conditions → `BOOLEAN`
+      - Birthdays, deadlines → `DATE`
+      - Lists of same-type values → `ARRAY`
+      - Persistent storage → `FILE`
+
+  - type: explain
+    title: Record structures
+    body: |
+      A **record** groups related data of *different* types under one identifier. Think of it like a row in a database table or a struct in C.
+
+      **Pseudocode syntax:**
+      ```
+      TYPE StudentRecord
+        DECLARE studentID : STRING
+        DECLARE name : STRING
+        DECLARE age : INTEGER
+        DECLARE gpa : REAL
+        DECLARE isActive : BOOLEAN
+      ENDTYPE
+      ```
+
+      **Declaring a variable of that type:**
+      ```
+      DECLARE student : StudentRecord
+      ```
+
+      **Accessing fields (dot notation):**
+      ```
+      student.studentID ← "S12345"
+      student.name ← "Alex Chen"
+      student.age ← 17
+      student.gpa ← 3.8
+      student.isActive ← TRUE
+      ```
+
+      **Reading from a record:**
+      ```
+      PRINT student.name
+      IF student.gpa > 3.5 THEN ...
+      ```
+
+      **Passing records to procedures/functions:** Can be passed by value (copy) or by reference (original).
+
+  - type: example
+    title: Designing a record for a library book
+    problem: "Design a record to store: ISBN (13-digit), title, author, year published, available flag, and number of copies."
+    steps:
+      - "Identify each field's data type"
+      - "Choose appropriate pseudocode types"
+      - "Write the TYPE definition"
+    answer: |
+      TYPE BookRecord
+        DECLARE isbn : STRING       // 13 digits, may start with 0 → STRING
+        DECLARE title : STRING
+        DECLARE author : STRING
+        DECLARE yearPublished : INTEGER
+        DECLARE isAvailable : BOOLEAN
+        DECLARE copies : INTEGER
+      ENDTYPE
+
+      DECLARE book : BookRecord
+      book.isbn ← "9780134685991"
+      book.title ← "Effective Java"
+      book.author ← "Joshua Bloch"
+      book.yearPublished ← 2018
+      book.isAvailable ← TRUE
+      book.copies ← 3
+
+  - type: check
+    title: Quick check — data types and records
+    questions: [choose-data-type, record-field-access, record-vs-array]
+
+  - type: misconceptions
+    items:
+      - wrong: Use INTEGER for phone numbers and ISBNs.
+        right: |
+          Phone numbers and ISBNs can have leading zeros and formatting (hyphens, spaces). They are identifiers, not quantities — use STRING.
+      - wrong: CHAR and STRING are interchangeable.
+        right: |
+          CHAR holds exactly one character. STRING holds a sequence. Use CHAR for single letters/menu choices; STRING for names, text.
+      - wrong: A record is just an array with different types.
+        right: |
+          An array holds *same-type* elements accessed by index. A record holds *different-type* fields accessed by name. They serve different purposes.
+
+  - type: exam
+    body: |
+      - **Type selection**: Given a scenario (e.g., "store a product price"), identify the correct type (REAL).
+      - **Record definition**: Write a TYPE ... ENDTYPE block for a described entity.
+      - **Field access**: Given a record variable, write pseudocode to assign/read a specific field.
+      - **Why not X?**: Explain why a suggested type is wrong (e.g., "Why not INTEGER for a postcode?").
+
+  - type: takeaways
+    items:
+      - "Data types: INTEGER, REAL, CHAR, STRING, BOOLEAN, DATE, ARRAY, FILE"
+      - "Choose type by *what the data represents*, not just its appearance"
+      - "Records group mixed-type fields under one name; access with dot notation (record.field)"
+      - "Phone numbers, IDs, postcodes → STRING (not INTEGER)"
+
+questions:
+  - id: choose-data-type
+    format: mcq
+    difficulty: 1
+    objectives: ["10.1.1"]
+    prompt: |
+      A program needs to store a student's date of birth (e.g., 15/03/2008). Which pseudocode data type is most appropriate?
+    options:
+      - text: INTEGER
+        why: Dates are not single whole numbers for arithmetic.
+      - text: REAL
+        why: Dates are not fractional numbers.
+      - text: STRING
+        why: Could work but loses date structure; DATE type is purpose-built.
+      - text: DATE
+        correct: true
+        why: DATE type is designed for calendar dates.
+    explanation: |
+      The DATE type represents calendar dates properly. While STRING could store the text, DATE enables date arithmetic and validation.
+
+  - id: record-field-access
+    format: cloze
+    difficulty: 2
+    objectives: ["10.1.2"]
+    prompt: |
+      Given the record definition and variable below, complete the pseudocode to assign and print the student's name:
+
+      TYPE StudentRecord
+        DECLARE name : STRING
+        DECLARE age : INTEGER
+      ENDTYPE
+
+      DECLARE student : StudentRecord
+      **{{1}}** ← "Maria"
+      PRINT **{{2}}**
+    blanks:
+      - accept: ["student.name", "student . name"]
+      - accept: ["student.name", "student . name"]
+    explanation: |
+      Fields are accessed using dot notation: `recordVariable.fieldName`. Both assignment and reading use the same syntax.
+
+  - id: record-vs-array
+    format: explain
+    difficulty: 2
+    objectives: ["10.1.1", "10.1.2"]
+    prompt: |
+      Explain the difference between an array and a record. Give one situation where you would use each.
+    model: |
+      An **array** stores multiple values of the *same* data type, accessed by numeric index (e.g., `scores[5]`). Use for lists like test scores, temperature readings.
+
+      A **record** stores a fixed set of fields of *different* data types, accessed by field name (e.g., `student.name`). Use for entities with mixed attributes like a student (name=STRING, age=INTEGER, gpa=REAL).
+    keyPoints:
+      - "Array = same type, indexed access"
+      - "Record = different types, named fields"
+      - "Array example: list of scores"
+      - "Record example: student details"
+    explanation: |
+      The key distinction: homogeneity (array) vs heterogeneity (record). Arrays are for collections; records are for structured entities.

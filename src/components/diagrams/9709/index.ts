@@ -25,7 +25,11 @@ import CoordinateGeometryPerpendicularGradients from './coordinate-geometry-perp
 import CoordinateGeometrySlidingLine from './coordinate-geometry-sliding-line';
 import CoordinateGeometryTangentAtPoint from './coordinate-geometry-tangent-at-point';
 import DiscriminantCases from './discriminant-cases';
+import ForcesEquilibriumComponentsResultants from './forces-equilibrium-components-resultants';
+import ForcesEquilibriumContactSmooth from './forces-equilibrium-contact-smooth';
 import ForcesEquilibriumForceDiagram from './forces-equilibrium-force-diagram';
+import ForcesEquilibriumFrictionThirdLaw from './forces-equilibrium-friction-third-law';
+import ForcesEquilibriumResolvingEquilibrium from './forces-equilibrium-resolving-equilibrium';
 import FunctionsCombinedInside from './functions-combined-inside';
 import FunctionsCombinedSequence from './functions-combined-sequence';
 import FunctionsCompositeMachines from './functions-composite-machines';
@@ -42,6 +46,7 @@ import FunctionsTranslations from './functions-translations';
 import KinematicsCalculus from './kinematics-calculus';
 import KinematicsDistanceDisplacement from './kinematics-distance-displacement';
 import KinematicsGraphs from './kinematics-graphs';
+import KinematicsSuvat from './kinematics-suvat';
 import KinematicsVtArea from './kinematics-vt-area';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
@@ -145,7 +150,11 @@ export const diagrams: DiagramRegistry = {
   'coordinate-geometry-sliding-line': CoordinateGeometrySlidingLine,
   'coordinate-geometry-tangent-at-point': CoordinateGeometryTangentAtPoint,
   'discriminant-cases': DiscriminantCases,
+  'forces-equilibrium-components-resultants': ForcesEquilibriumComponentsResultants,
+  'forces-equilibrium-contact-smooth': ForcesEquilibriumContactSmooth,
   'forces-equilibrium-force-diagram': ForcesEquilibriumForceDiagram,
+  'forces-equilibrium-friction-third-law': ForcesEquilibriumFrictionThirdLaw,
+  'forces-equilibrium-resolving-equilibrium': ForcesEquilibriumResolvingEquilibrium,
   'functions-combined-inside': FunctionsCombinedInside,
   'functions-combined-sequence': FunctionsCombinedSequence,
   'functions-composite-machines': FunctionsCompositeMachines,
@@ -162,6 +171,7 @@ export const diagrams: DiagramRegistry = {
   'kinematics-calculus': KinematicsCalculus,
   'kinematics-distance-displacement': KinematicsDistanceDisplacement,
   'kinematics-graphs': KinematicsGraphs,
+  'kinematics-suvat': KinematicsSuvat,
   'kinematics-vt-area': KinematicsVtArea,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
