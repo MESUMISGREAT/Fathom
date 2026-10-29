@@ -160,3 +160,9 @@ The usual 2–5 minute lesson target is a guideline, not a hard limit. Understan
   - axe WCAG 2.1 AA in light and dark, which the e2e tests check.
 - **Docs:** architecture, data model and the designs for unbuilt phases (AI marking, question
   generation, grade prediction) are in `docs/PLAN.md` and `docs/design/`.
+
+## Multiple local AI agents
+
+When multiple agents work in the same checkout, follow `docs/AGENT_COORDINATION.md` before selecting work. Use the shared runtime mailbox, announce roles, atomically claim distinct lesson units, heartbeat ownership, and avoid simultaneous edits to shared files. Coordination state is local runtime data and must never be committed. If the mailbox is not genuinely shared, say so and work safely solo or use messaging actually provided by the runtime; do not pretend files are real-time push messaging.
+
+Agent count is dynamic rather than a fixed requirement: use parallel agents only for independent tasks, within available machine/provider capacity. Solo mode must always work. Keep one owner for shared handoff/publication state and one publisher at a time. The coordination protocol never overrides syllabus quality, independent review, validation, provenance, or production safety gates.
