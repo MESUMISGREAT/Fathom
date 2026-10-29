@@ -1,0 +1,303 @@
+id: stats-data-drawing-displays
+subject: "9709"
+topic: "5.1"
+title: Drawing and interpreting statistical diagrams
+summary: Learn to draw and interpret stem-and-leaf diagrams, box-and-whisker plots, histograms, and cumulative frequency graphs.
+order: 2
+minutes: 10
+kind: core
+objectives: ["5.1.2"]
+prerequisites: ["stats-data-choosing-presentation"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.1 outcome "Draw and interpret stem-and-leaf diagrams,
+    box-and-whisker plots, histograms and cumulative frequency graphs." Includes back-to-back
+    stem-and-leaf diagrams. All examples, questions and diagrams are original. Validated for accuracy and syllabus alignment. Independent review rebuilt the stem-and-leaf in Example 1 (all 15 values accounted for), re-derived Q₁ = 8, Q₃ = 18 and the fences from Example 2's data, checked the five frequency densities and the cumulative frequencies 8, 20, 35, 45, 50, and made the on-the-fence distractor in sc-draw-box state the strict-inequality rule instead of calling it "typically" not an outlier.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can draw each of the four main statistical displays from raw data,
+      read key values from them, and interpret what they show about the distribution.
+
+  - type: explain
+    title: Stem-and-leaf diagrams
+    body: |-
+      A **stem-and-leaf diagram** splits each data value into a **stem** (the leading digit(s))
+      and a **leaf** (the final digit). It keeps every original value visible while giving a
+      quick picture of the shape.
+
+      **Rules:**
+      - Write stems in a column (usually tens, hundreds, etc., depending on the data).
+      - Write each leaf next to its stem, in ascending order.
+      - Include a **key** (e.g. `2 | 3 = 23`) so the scale is clear.
+      - Do not skip empty stems — they show gaps in the data.
+
+      A **back-to-back stem-and-leaf** puts two data sets on the same stems: leaves for one
+      set go to the left (in descending order away from the stem), leaves for the other go to
+      the right (in ascending order). This allows direct visual comparison.
+
+  - type: example
+    title: "Example 1: drawing a stem-and-leaf diagram"
+    problem: |-
+      The marks of 15 students on a test (out of 50) are:
+      32, 18, 27, 45, 38, 21, 29, 41, 33, 19, 24, 36, 42, 28, 37
+      Draw an ordered stem-and-leaf diagram. Include a key.
+    steps:
+      - |-
+        Identify the stems. Marks range from 18 to 45, so stems are 1, 2, 3, 4 (tens).
+      - |-
+        Split each value: 18 → stem 1, leaf 8; 27 → stem 2, leaf 7; and so on.
+      - |-
+        Write leaves in ascending order for each stem.
+      - |-
+        Add the key.
+    answer: |-
+      Key: 1 | 8 = 18
+      1 | 8 9
+      2 | 1 4 7 8 9
+      3 | 2 3 6 7 8
+      4 | 1 2 5
+
+  - type: check
+    questions: [sc-draw-stem]
+
+  - type: explain
+    title: Box-and-whisker plots (box plots)
+    body: |-
+      A **box-and-whisker plot** shows the **five-number summary** of a data set:
+      - **Minimum** (smallest value, excluding outliers)
+      - **Lower quartile Q₁** (25th percentile)
+      - **Median Q₂** (50th percentile)
+      - **Upper quartile Q₃** (75th percentile)
+      - **Maximum** (largest value, excluding outliers)
+
+      The box runs from Q₁ to Q₃ with a line at the median. The **whiskers** extend to the
+      minimum and maximum (or to 1.5×IQR beyond the box if outliers are plotted separately).
+      **Outliers** are points beyond Q₁ − 1.5×IQR or Q₃ + 1.5×IQR and are shown as individual
+      crosses or dots.
+
+      **To draw from raw data:**
+      1. Order the data.
+      2. Find the median (middle value, or average of two middle values).
+      3. Find Q₁ (median of the lower half) and Q₃ (median of the upper half).
+      4. Identify min, max, and any outliers.
+      5. Draw a scale, then the box, whiskers, and outliers.
+
+  - type: example
+    title: "Example 2: drawing a box plot from raw data"
+    problem: |-
+      Data: 4, 7, 8, 10, 12, 13, 14, 15, 18, 22, 25
+      Draw a box-and-whisker plot. Identify any outliers.
+    steps:
+      - |-
+        Data already ordered. n = 11. Median = 6th value = 13.
+      - |-
+        Lower half (5 values): 4, 7, 8, 10, 12 → Q₁ = 8 (3rd value).
+      - |-
+        Upper half (5 values): 14, 15, 18, 22, 25 → Q₃ = 18 (3rd value).
+      - |-
+        IQR = Q₃ − Q₁ = 18 − 8 = 10.
+      - |-
+        Lower fence = Q₁ − 1.5×IQR = 8 − 15 = −7. No values below −7.
+      - |-
+        Upper fence = Q₃ + 1.5×IQR = 18 + 15 = 33. No values above 33.
+      - |-
+        Min = 4, Max = 25. No outliers.
+    answer: |-
+      Box from 8 to 18, median line at 13. Whiskers from 4 to 25. No outliers.
+
+  - type: check
+    questions: [sc-draw-box]
+
+  - type: explain
+    title: Histograms
+    body: |-
+      A **histogram** displays a **continuous** data set grouped into class intervals.
+      - The **horizontal axis** is the continuous variable (with a linear scale).
+      - The **vertical axis** is **frequency density** = frequency ÷ class width.
+      - **Area of each bar = frequency** (not height, unless all class widths are equal).
+      - There are **no gaps** between bars (because the data is continuous).
+
+      **Class boundaries** are the exact dividing lines between classes (e.g. 10–20, 20–30
+      have boundary 20). The midpoint of a class is used for estimation only.
+
+      To draw a histogram from a grouped frequency table:
+      1. Check class widths. If they vary, calculate frequency density for each class.
+      2. Plot bars with base = class width, height = frequency density.
+      3. Label axes clearly: variable (units) on x-axis, frequency density on y-axis.
+
+  - type: example
+    title: "Example 3: drawing a histogram with unequal class widths"
+    problem: |-
+      Time (minutes) students spent on homework:
+      | Time (t) | Frequency |
+      |----------|-----------|
+      | 0 ≤ t < 10   | 8         |
+      | 10 ≤ t < 20  | 12        |
+      | 20 ≤ t < 30  | 15        |
+      | 30 ≤ t < 50  | 10        |
+      | 50 ≤ t < 70  | 5         |
+      Draw the histogram.
+    steps:
+      - |-
+        Class widths: 10, 10, 10, 20, 20. They are not all equal, so use frequency density.
+      - |-
+        Frequency densities: 8/10=0.8, 12/10=1.2, 15/10=1.5, 10/20=0.5, 5/20=0.25.
+      - |-
+        Draw bars: base 0–10 height 0.8, base 10–20 height 1.2, base 20–30 height 1.5,
+        base 30–50 height 0.5, base 50–70 height 0.25. No gaps between bars.
+    answer: |-
+      Histogram with bars of heights 0.8, 1.2, 1.5, 0.5, 0.25 on the respective intervals.
+      x-axis: Time (minutes). y-axis: Frequency density.
+
+  - type: check
+    questions: [sc-draw-hist]
+
+  - type: explain
+    title: Cumulative frequency graphs
+    body: |-
+      A **cumulative frequency graph** (or **ogive**) plots the running total of frequencies
+      against the **upper class boundary** of each interval.
+      - x-axis: the variable (upper class boundaries).
+      - y-axis: cumulative frequency.
+      - Points are joined with a **smooth curve** (for continuous data) or straight lines.
+      - The curve starts at the lower boundary of the first class with cumulative frequency 0.
+
+      **Reading from the graph:**
+      - **Median** = value at cumulative frequency = n/2.
+      - **Lower quartile Q₁** = value at n/4.
+      - **Upper quartile Q₃** = value at 3n/4.
+      - **Percentile Pₖ** = value at k·n/100.
+      - **Proportion above X** = (n − cumulative frequency at X) / n.
+      - **Proportion between A and B** = (CF at B − CF at A) / n.
+
+  - type: example
+    title: "Example 4: drawing a cumulative frequency graph"
+    problem: |-
+      Use the same homework data from Example 3. Draw the cumulative frequency graph.
+    steps:
+      - |-
+        Upper class boundaries: 10, 20, 30, 50, 70.
+      - |-
+        Cumulative frequencies: 8, 20, 35, 45, 50.
+      - |-
+        Plot points: (10, 8), (20, 20), (30, 35), (50, 45), (70, 50).
+      - |-
+        Start curve at (0, 0). Join points with a smooth curve.
+    answer: |-
+      Smooth curve through (0,0), (10,8), (20,20), (30,35), (50,45), (70,50).
+      x-axis: Time (minutes). y-axis: Cumulative frequency.
+
+  - type: check
+    questions: [sc-draw-cfg]
+
+  - type: explain
+    title: Interpreting the displays
+    body: |-
+      Once drawn, you can **read and compare** key features:
+      - **Stem-and-leaf**: read individual values, find median/mode by counting, spot gaps.
+      - **Box plot**: compare medians, IQRs, ranges, and outliers across groups.
+      - **Histogram**: describe shape (symmetric, skewed left/right, bimodal, uniform),
+        estimate modal class, see spread.
+      - **Cumulative frequency graph**: read median, quartiles, percentiles, and proportions
+        above/below given values.
+
+      Exam questions often ask you to **estimate** values from a graph (e.g. "use your graph
+      to estimate the median"). Always show your working: draw horizontal/vertical lines on
+      the graph and read the scale accurately.
+
+  - type: takeaways
+    items:
+      - "Stem-and-leaf: keep all data visible; use key; back-to-back for comparison."
+      - "Box plot: five-number summary; whiskers to min/max (or 1.5×IQR); outliers shown separately."
+      - "Histogram: continuous data; area = frequency; use frequency density when class widths vary; no gaps."
+      - "Cumulative frequency graph: plot against upper class boundaries; smooth curve; read median, quartiles, percentiles, proportions."
+      - "Interpretation: shape, centre, spread, outliers, and comparison across groups."
+
+questions:
+  - id: sc-draw-stem
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.2"]
+    prompt: A stem-and-leaf diagram uses stems 2, 3, 4, 5 and the key says 3 | 4 = 34. Which value does leaf 7 on stem 4 represent?
+    options:
+      - text: "47"
+        why: Stem 4, leaf 7 gives 47.
+        correct: true
+      - text: "74"
+        why: Reversed order; stem is tens, leaf is units.
+        correct: false
+      - text: "37"
+        why: That would be stem 3, leaf 7.
+        correct: false
+      - text: "4.7"
+        why: The key shows integer values; no decimal point implied.
+        correct: false
+    explanation: |
+      The stem represents the tens digit and the leaf represents the units digit. With stem 4 and leaf 7, the value is 47.
+
+  - id: sc-draw-box
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: For a data set with Q₁ = 12, Q₃ = 28, and IQR = 16, which value would be classified as an outlier using the 1.5×IQR rule?
+    options:
+      - text: "4"
+        why: Lower fence = 12 − 1.5×16 = −12. 4 is above −12, not an outlier.
+        correct: false
+      - text: "52"
+        why: Upper fence = 28 + 1.5×16 = 52. 52 sits exactly on the fence, and the 1.5×IQR rule flags only values strictly beyond it, so 52 is not an outlier.
+        correct: false
+      - text: "55"
+        why: 55 > 52, so it lies above the upper fence and is an outlier.
+        correct: true
+      - text: "30"
+        why: 30 is within the fences; not an outlier.
+        correct: false
+    explanation: |
+      Upper fence = Q₃ + 1.5×IQR = 28 + 24 = 52. Values strictly greater than 52 are outliers. 55 is the only option > 52.
+
+  - id: sc-draw-hist
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.2"]
+    prompt: A histogram has a class 20–30 with frequency 15 and class width 10. What is the height of the bar (frequency density)?
+    options:
+      - text: "1.5"
+        why: Frequency density = frequency ÷ class width = 15 ÷ 10 = 1.5.
+        correct: true
+      - text: "15"
+        why: That is the frequency, not the density.
+        correct: false
+      - text: "150"
+        why: Frequency × class width, not divided.
+        correct: false
+      - text: "0.15"
+        why: Incorrect division.
+        correct: false
+    explanation: |
+      Frequency density = frequency / class width = 15 / 10 = 1.5. The area of the bar (width × height) equals the frequency.
+
+  - id: sc-draw-cfg
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.2"]
+    prompt: A cumulative frequency graph is plotted against which values on the horizontal axis?
+    options:
+      - text: "Class midpoints"
+        why: Midpoints are used for histograms (sometimes), not cumulative frequency graphs.
+        correct: false
+      - text: "Lower class boundaries"
+        why: The curve starts at the lower boundary of the first class, but points are plotted at upper boundaries.
+        correct: false
+      - text: "Upper class boundaries"
+        why: Cumulative frequency is the total up to the end of each class, so it is plotted at the upper boundary.
+        correct: true
+      - text: "Frequency densities"
+        why: Frequency density is for histograms.
+        correct: false
+    explanation: |
+      Cumulative frequency is the running total up to the end of each class, so points are plotted at the upper class boundary. The curve starts at the lower boundary of the first class with CF = 0.

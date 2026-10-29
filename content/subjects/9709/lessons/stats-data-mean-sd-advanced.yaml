@@ -1,0 +1,288 @@
+id: stats-data-mean-sd-advanced
+subject: "9709"
+topic: "5.1"
+title: Mean and standard deviation — grouped data and summary totals
+summary: Calculate mean and standard deviation from grouped data, from summary totals Σx and Σx², and from coded totals Σ(x−a) and Σ(x−a)². Solve problems involving up to two data sets.
+order: 5
+minutes: 10
+kind: core
+objectives: ["5.1.5"]
+prerequisites: ["stats-data-central-tendency"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.1 outcome "Calculate and use the mean and standard
+    deviation of a set of data (including grouped data), either from the data itself or
+    from given totals Σx and Σx², or coded totals Σ(x−a) and Σ(x−a)², and use such
+    totals in solving problems that may involve up to two data sets." All examples,
+    questions and diagrams are original. Validated for accuracy and syllabus alignment.
+    Independent review recomputed all five worked examples (grouped: Σfx = 1230, Σfx² = 36450,
+    σ = 11.13; totals: σ = √21; coded: σₓ = √14.21; combined: Σx² = 151368, σ = 9.46) and all
+    five answer keys, and confirmed the Σx² = n(σ² + μ²) identity, the coded-data shifts and the
+    population-SD convention are each stated consistently; no changes were needed.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can compute the mean and standard deviation from grouped frequency
+      tables, from given Σx and Σx² totals, from coded totals Σ(x−a) and Σ(x−a)², and
+      combine results from two data sets.
+
+  - type: explain
+    title: Mean and SD from grouped data
+    body: |-
+      For grouped data with class midpoints xᵢ and frequencies fᵢ:
+
+      **Mean: μ = Σfᵢxᵢ / Σfᵢ**
+
+      **Standard deviation (population):**
+      σ = √[ Σfᵢ(xᵢ − μ)² / Σfᵢ ]
+       = √[ Σfᵢxᵢ² / Σfᵢ − μ² ]
+
+      **Steps:**
+      1. Find midpoint xᵢ for each class.
+      2. Calculate fᵢxᵢ and fᵢxᵢ² for each class.
+      3. Sum the columns: Σfᵢ, Σfᵢxᵢ, Σfᵢxᵢ².
+      4. μ = Σfᵢxᵢ / Σfᵢ
+      5. σ = √[ Σfᵢxᵢ²/Σfᵢ − μ² ]
+
+  - type: example
+    title: "Example 1: mean and SD from grouped data"
+    problem: |-
+      Time (minutes) | Frequency
+      0–10           | 5
+      10–20          | 12
+      20–30          | 18
+      30–40          | 10
+      40–50          | 5
+      Estimate the mean and standard deviation.
+    steps:
+      - |-
+        Midpoints: 5, 15, 25, 35, 45.
+      - |-
+        fᵢxᵢ: 25, 180, 450, 350, 225. Σfᵢxᵢ = 1230.
+      - |-
+        fᵢxᵢ²: 125, 2700, 11250, 12250, 10125. Σfᵢxᵢ² = 36450.
+      - |-
+        Σfᵢ = 50. μ = 1230 / 50 = 24.6.
+      - |-
+        Σfᵢxᵢ²/Σfᵢ = 36450 / 50 = 729.
+      - |-
+        σ = √(729 − 24.6²) = √(729 − 605.16) = √123.84 ≈ 11.13.
+    answer: "Mean = 24.6, SD = 11.1 (1 d.p.)"
+
+  - type: check
+    questions: [sc-mean-sd-grouped]
+
+  - type: explain
+    title: Using summary totals Σx and Σx²
+    body: |-
+      Often the raw data is not given, only the **summary totals**:
+      - n = number of values
+      - Σx = sum of values
+      - Σx² = sum of squared values
+
+      **Mean: μ = Σx / n**
+
+      **Standard deviation (population):**
+      σ = √[ Σx²/n − (Σx/n)² ]
+       = √[ (Σx² − (Σx)²/n) / n ]
+
+      This is algebraically identical to √[ Σ(x−μ)² / n ] but avoids calculating each
+      deviation. It is faster and less prone to rounding error.
+
+  - type: example
+    title: "Example 2: mean and SD from Σx and Σx²"
+    problem: |-
+      For a data set of 20 values, Σx = 340 and Σx² = 6200.
+      Find the mean and standard deviation.
+    steps:
+      - |-
+        n = 20, Σx = 340, Σx² = 6200.
+      - |-
+        μ = 340 / 20 = 17.
+      - |-
+        Σx²/n = 6200 / 20 = 310.
+      - |-
+        μ² = 289.
+      - |-
+        σ = √(310 − 289) = √21 ≈ 4.583.
+    answer: "Mean = 17, SD = √21 ≈ 4.58"
+
+  - type: check
+    questions: [sc-mean-sd-sums]
+
+  - type: explain
+    title: "Coded data: Σ(x−a) and Σ(x−a)²"
+    body: |-
+      Sometimes data is **coded** as u = (x − a) / b, where a and b are constants (b ≠ 0).
+      You may be given totals for the coded values:
+      - Σu or Σ(x − a)
+      - Σu² or Σ(x − a)²
+
+      **If given Σ(x − a) and Σ(x − a)²:**
+      Let d = x − a. Then Σd and Σd² are given.
+      - Mean of x: μₓ = a + Σd / n
+      - SD of x: σₓ = √[ Σd²/n − (Σd/n)² ]  (since adding constant a doesn't change spread)
+
+      **If given Σu and Σu² (where u = (x−a)/b):**
+      - Mean of u: μᵤ = Σu / n
+      - SD of u: σᵤ = √[ Σu²/n − (Σu/n)² ]
+      - Mean of x: μₓ = a + b·μᵤ
+      - SD of x: σₓ = |b|·σᵤ
+
+      **Key principle:** Adding a constant shifts the mean but not the SD.
+      Multiplying by a constant scales both mean and SD (SD by absolute value).
+
+  - type: example
+    title: "Example 3: coded data with Σ(x−a) and Σ(x−a)²"
+    problem: |-
+      For 10 values, Σ(x − 50) = 23 and Σ(x − 50)² = 195.
+      Find the mean and standard deviation of x.
+    steps:
+      - |-
+        n = 10, a = 50. Let d = x − 50.
+      - |-
+        Σd = 23, Σd² = 195.
+      - |-
+        μₓ = 50 + 23/10 = 50 + 2.3 = 52.3.
+      - |-
+        σₓ = √[ 195/10 − (23/10)² ] = √[ 19.5 − 5.29 ] = √14.21 ≈ 3.77.
+    answer: "Mean = 52.3, SD = 3.77 (2 d.p.)"
+
+  - type: check
+    questions: [sc-mean-sd-coded]
+
+  - type: explain
+    title: Combining two data sets
+    body: |-
+      When a problem involves **two data sets** (e.g. boys and girls, before and after),
+      you often need the combined mean and/or SD.
+
+      **Combined mean:**
+      If set 1 has n₁, mean μ₁ and set 2 has n₂, mean μ₂:
+      **Combined mean = (n₁μ₁ + n₂μ₂) / (n₁ + n₂)**
+
+      **Combined standard deviation:**
+      You need the combined Σx and Σx²:
+      - Σx_combined = n₁μ₁ + n₂μ₂
+      - Σx²_combined = n₁(σ₁² + μ₁²) + n₂(σ₂² + μ₂²)  [since σ² = Σx²/n − μ² → Σx² = n(σ² + μ²)]
+      - n_combined = n₁ + n₂
+      Then use the formula σ = √[ Σx²/n − μ² ].
+
+  - type: example
+    title: "Example 4: combining two data sets"
+    problem: |-
+      Class A: 12 students, mean 68, SD 8.
+      Class B: 18 students, mean 72, SD 10.
+      Find the combined mean and standard deviation for all 30 students.
+    steps:
+      - |-
+        n₁ = 12, μ₁ = 68, σ₁ = 8. n₂ = 18, μ₂ = 72, σ₂ = 10.
+      - |-
+        Combined mean = (12×68 + 18×72) / 30 = (816 + 1296) / 30 = 2112 / 30 = 70.4.
+      - |-
+        Σx²₁ = 12×(8² + 68²) = 12×(64 + 4624) = 12×4688 = 56256.
+      - |-
+        Σx²₂ = 18×(10² + 72²) = 18×(100 + 5184) = 18×5284 = 95112.
+      - |-
+        Σx²_combined = 56256 + 95112 = 151368.
+      - |-
+        Combined σ = √[ 151368/30 − 70.4² ] = √[ 5045.6 − 4956.16 ] = √89.44 ≈ 9.46.
+    answer: "Combined mean = 70.4, combined SD = 9.46"
+
+  - type: check
+    questions: [sc-mean-sd-combined]
+
+  - type: explain
+    title: Solving problems with unknown values
+    body: |-
+      You may be given the mean and SD of a combined set and asked to find a missing
+      value or the parameters of one set. Set up equations using the formulas above and
+      solve algebraically.
+
+      **Common patterns:**
+      - Given combined mean, find n₂ or μ₂.
+      - Given combined SD, find σ₂ or n₂.
+      - Use Σx² = n(σ² + μ²) to convert between SD and Σx².
+
+  - type: example
+    title: "Example 5: finding a missing frequency"
+    problem: |-
+      Two data sets: Set 1 has 15 values, mean 20, SD 4. Combined set has 25 values,
+      mean 22. Find the mean of Set 2.
+    steps:
+      - |-
+        n₁ = 15, μ₁ = 20. n_total = 25, μ_total = 22. n₂ = 10.
+      - |-
+        Combined mean = (n₁μ₁ + n₂μ₂) / (n₁ + n₂)
+      - |-
+        22 = (15×20 + 10×μ₂) / 25
+      - |-
+        550 = 300 + 10μ₂ → 10μ₂ = 250 → μ₂ = 25.
+    answer: "Mean of Set 2 = 25."
+
+  - type: check
+    questions: [sc-mean-sd-missing]
+
+  - type: takeaways
+    items:
+      - "Grouped data: use midpoints; μ = Σfx/Σf; σ = √[Σfx²/Σf − μ²]."
+      - "From totals: μ = Σx/n; σ = √[Σx²/n − (Σx/n)²]."
+      - "Coded data (d = x−a): μₓ = a + Σd/n; σₓ = √[Σd²/n − (Σd/n)²]."
+      - "Coded data (u = (x−a)/b): μₓ = a + b·μᵤ; σₓ = |b|·σᵤ."
+      - "Combined mean = (n₁μ₁ + n₂μ₂)/(n₁+n₂)."
+      - "Combined Σx² = n₁(σ₁²+μ₁²) + n₂(σ₂²+μ₂²); then σ = √[Σx²/n − μ²]."
+      - "Use Σx² = n(σ² + μ²) to convert between SD and sum of squares."
+
+questions:
+  - id: sc-mean-sd-grouped
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.5"]
+    prompt: "Grouped data: class 0-10 freq 4, 10-20 freq 6, 20-30 freq 10. Find the estimated mean."
+    fields:
+      - answer: 18
+    explanation: |
+      Midpoints: 5, 15, 25. Σfx = 4×5 + 6×15 + 10×25 = 20 + 90 + 250 = 360. Σf = 20. Mean = 360/20 = 18.
+
+  - id: sc-mean-sd-sums
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.5"]
+    prompt: n=8, Σx=72, Σx²=720. Find the population standard deviation.
+    fields:
+      - answer: 3
+    explanation: |
+      Mean = 72/8 = 9. Σx²/n = 720/8 = 90. Variance = 90 - 9² = 90 - 81 = 9. SD = √9 = 3.
+
+  - id: sc-mean-sd-coded
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.5"]
+    prompt: n=12, Σ(x−30)=36, Σ(x−30)²=540. Find the mean of x.
+    fields:
+      - answer: 33
+    explanation: |
+      Let d = x - 30. Σd = 36, n = 12. Mean of d = 36/12 = 3. Mean of x = 30 + 3 = 33.
+
+  - id: sc-mean-sd-combined
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.5"]
+    prompt: "Set A: n=10, mean=50, SD=5. Set B: n=15, mean=60, SD=8. Find the combined mean."
+    fields:
+      - answer: 56
+    explanation: |
+      Combined mean = (n₁μ₁ + n₂μ₂)/(n₁+n₂) = (10×50 + 15×60)/25 = (500 + 900)/25 = 1400/25 = 56.
+
+  - id: sc-mean-sd-missing
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.5"]
+    prompt: "Set 1: n=8, mean=15. Combined: n=20, mean=18. Find mean of Set 2."
+    fields:
+      - answer: 20
+    explanation: |
+      n₂ = 20 - 8 = 12. Combined mean = (n₁μ₁ + n₂μ₂)/(n₁+n₂). 18 = (8×15 + 12×μ₂)/20. 360 = 120 + 12μ₂. 12μ₂ = 240. μ₂ = 20.

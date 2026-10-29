@@ -1,0 +1,246 @@
+id: stats-permutations-combinations-arrangements
+subject: "9709"
+topic: "5.2"
+title: Arrangements with repetition and restrictions
+summary: Solve problems about arranging objects in a line where some objects are identical (repetition) or where there are restrictions (e.g. certain objects must be together or separated).
+order: 2
+minutes: 10
+kind: core
+objectives: ["5.2.2"]
+prerequisites: ["stats-permutations-combinations"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.2 outcome "Solve problems about arrangements of objects
+    in a line, including those involving repetition and those involving restriction."
+    All examples, questions and diagrams are original. Independently reviewed: every
+    factorial count re-derived (BANANA 60, COMPUTER 4320, 5 boys/3 girls 14400, TRIANGLE
+    2880, SUCCESS 120, MISSISSIPPI 34650, SQUARE 36, BANANA with NN 20). Fixed a wrong
+    answer key on the 4 boys/3 girls gap question (24 × 10 × 6 = 1440, not 14400) and
+    replaced a check question that repeated Example 2 word for word.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can calculate the number of linear arrangements when some objects
+      are identical (repetition) and when there are restrictions such as objects that must
+      be together, must be separated, or must occupy specific positions.
+
+  - type: explain
+    title: Arrangements with identical objects (repetition)
+    body: |-
+      If there are **n objects** in total, with **n₁ identical of type 1**, **n₂ identical
+      of type 2**, …, **nₖ identical of type k** (where n₁ + n₂ + … + nₖ = n), the
+      number of distinct linear arrangements is:
+      **n! / (n₁! × n₂! × … × nₖ!)**
+
+      This is because swapping identical objects does not create a new arrangement.
+      We divide by the factorial of each group's size to remove the overcounting.
+
+  - type: example
+    title: "Example 1: arrangements of letters with repetition"
+    problem: |-
+      How many distinct arrangements of the letters in the word "BANANA" are there?
+    steps:
+      - |-
+        Letters: B (1), A (3), N (2). Total n = 6.
+      - |-
+        Arrangements = 6! / (1! × 3! × 2!) = 720 / (1 × 6 × 2) = 720 / 12 = 60.
+    answer: "60"
+
+  - type: check
+    questions: [sc-arr-repetition]
+
+  - type: explain
+    title: "Restriction: objects must be together"
+    body: |-
+      **Method: "Glue" the objects together into a single block.**
+      1. Treat the group that must stay together as **one block**.
+      2. Count the total items = (other individual objects) + 1 block.
+      3. Arrange these items: (total items)! ways.
+      4. Arrange objects **within the block** internally: (size of block)! ways.
+      5. Multiply: (total items)! × (internal arrangements).
+
+      If there are identical objects within the block or among the other items, divide
+      by the appropriate factorials as in the repetition rule.
+
+  - type: example
+    title: "Example 2: objects must be together"
+    problem: |-
+      In how many ways can the letters of "COMPUTER" be arranged if the vowels (O, U, E)
+      must all be together?
+    steps:
+      - |-
+        Vowels O, U, E → treat as 1 block. Consonants: C, M, P, T, R (5 letters).
+      - |-
+        Items to arrange: 5 consonants + 1 block = 6 items. All distinct.
+      - |-
+        Arrange 6 items: 6! = 720.
+      - |-
+        Arrange 3 vowels inside block: 3! = 6.
+      - |-
+        Total = 720 × 6 = 4320.
+    answer: "4320"
+
+  - type: check
+    questions: [sc-arr-together]
+
+  - type: explain
+    title: "Restriction: objects must be separated (no two together)"
+    body: |-
+      **Method: "Gap" or "slot" method.**
+      1. Arrange the **unrestricted objects** first. This creates **gaps** (slots)
+         where the restricted objects can be placed.
+      2. If there are m unrestricted objects, they create **m+1 gaps** (including ends).
+      3. Choose which **gaps** to use: from m gaps and r restricted objects that is ᵐCᵣ
+         ways — you are only picking slots, so this step is always a combination.
+      4. Arrange the restricted objects inside the chosen gaps: multiply by r! if they are
+         all distinct, or by r!/(r₁! r₂! …) if some are identical.
+      5. Multiply all the counts together.
+
+      **Alternative:** Total arrangements without restriction − arrangements where they
+      are together. But the gap method is usually cleaner.
+
+  - type: example
+    title: "Example 3: objects must be separated"
+    problem: |-
+      In how many ways can 5 boys and 3 girls be seated in a row so that no two girls
+      sit next to each other?
+    steps:
+      - |-
+        Arrange 5 boys first: 5! = 120 ways.
+      - |-
+        5 boys create 6 gaps: _ B _ B _ B _ B _ B _
+      - |-
+        Choose 3 of these 6 gaps for the girls: ⁶C₃ = 20 ways.
+      - |-
+        Arrange 3 girls in the chosen gaps: 3! = 6 ways.
+      - |-
+        Total = 120 × 20 × 6 = 14,400.
+    answer: "14400"
+
+  - type: check
+    questions: [sc-arr-separated]
+
+  - type: explain
+    title: "Restriction: specific positions"
+    body: |-
+      If certain objects must occupy specific positions (e.g. "the girls must sit at the
+      ends", "the vowels must be in even-numbered positions"):
+      1. Place the restricted objects in their required positions first.
+      2. Fill the remaining positions with the remaining objects.
+      3. Multiply the number of ways for each step.
+
+  - type: example
+    title: "Example 4: specific positions"
+    problem: |-
+      In how many ways can the letters of "TRIANGLE" be arranged if the vowels (I, A, E)
+      must occupy the even-numbered positions (2, 4, 6, 8)?
+    steps:
+      - |-
+        8 letters, 4 even positions (2,4,6,8). Vowels: I, A, E (3 vowels).
+      - |-
+        Choose 3 of the 4 even positions for the vowels: ⁴C₃ = 4 ways.
+      - |-
+        Arrange 3 vowels in the chosen positions: 3! = 6 ways.
+      - |-
+        Remaining 5 positions (the 3 unused even + 4 odd) filled with 5 consonants:
+        T, R, N, G, L → 5! = 120 ways.
+      - |-
+        Total = 4 × 6 × 120 = 2880.
+    answer: "2880"
+
+  - type: check
+    questions: [sc-arr-positions]
+
+  - type: explain
+    title: Combined restrictions
+    body: |-
+      Many problems combine multiple restrictions. Apply the methods in sequence:
+      - If some objects must be together AND others must be separated:
+        First glue the "together" group, then use the gap method on the result.
+      - If there are identical objects AND restrictions:
+        Apply the restriction method, then divide by factorials for identical objects
+        at the appropriate step.
+
+      Always identify: Which objects are distinct? Which are identical? What are the
+      restrictions? Apply the most restrictive condition first.
+
+  - type: example
+    title: "Example 5: combined restrictions with repetition"
+    problem: |-
+      How many arrangements of the letters in "SUCCESS" have the two C's together?
+    steps:
+      - |-
+        Letters: S (3), U (1), C (2), E (1). Total 7.
+      - |-
+        Glue the two C's together → treat as 1 block "CC".
+      - |-
+        Items: CC (1 block), S (3), U (1), E (1) = 6 items with S repeated 3 times.
+      - |-
+        Arrangements = 6! / 3! = 720 / 6 = 120.
+    answer: "120"
+
+  - type: check
+    questions: [sc-arr-combined]
+
+  - type: takeaways
+    items:
+      - "Repetition: n! / (n₁! n₂! … nₖ!) for identical objects."
+      - "Together: glue into a block → arrange (m+1) items × internal arrangements."
+      - "Separated: arrange unrestricted first → choose gaps → arrange restricted in gaps."
+      - "Specific positions: place restricted objects first, then fill remaining positions."
+      - "Combined restrictions: apply in logical order; handle identical objects at each step."
+      - "Identical objects within a block: divide by factorial for internal arrangements too."
+
+questions:
+  - id: sc-arr-repetition
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: How many distinct arrangements of the letters in "MISSISSIPPI"?
+    fields:
+      - answer: 34650
+    explanation: |
+      MISSISSIPPI has 11 letters: M(1), I(4), S(4), P(2). Arrangements = 11! / (1! × 4! × 4! × 2!) = 39916800 / (1 × 24 × 24 × 2) = 39916800 / 1152 = 34650.
+
+  - id: sc-arr-together
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: In how many ways can the letters of "SINGLE" be arranged if the two vowels (I, E) must be together?
+    fields:
+      - answer: 240
+    explanation: |
+      SINGLE has 6 distinct letters. Glue I and E into one block, leaving the items S, N, G, L and the block: 5! = 120. The two vowels inside the block keep two orders (IE, EI): 2! = 2. Total = 120 × 2 = 240.
+
+  - id: sc-arr-separated
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: In how many ways can 4 boys and 3 girls sit in a row if no two girls sit together?
+    fields:
+      - answer: 1440
+    explanation: |
+      Arrange the 4 boys first: 4! = 24. They create 5 gaps. Choose 3 of the 5 gaps for the girls: ⁵C₃ = 10. Arrange the 3 girls in those gaps: 3! = 6. Total = 24 × 10 × 6 = 1440.
+
+  - id: sc-arr-positions
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: The letters of "SQUARE" are arranged in a line. How many arrangements have the 3 vowels in the even positions (2, 4, 6)?
+    fields:
+      - answer: 36
+    explanation: |
+      SQUARE has 6 letters, 3 vowels (U, A, E). Even positions: 2, 4, 6 (3 positions). Place vowels in even positions: 3! = 6 ways. Place 3 consonants in remaining 3 positions: 3! = 6 ways. Total = 6 × 6 = 36.
+
+  - id: sc-arr-combined
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: How many arrangements of "BANANA" have the two N's together?
+    fields:
+      - answer: 20
+    explanation: |
+      BANANA: B(1), A(3), N(2). Glue N's → block "NN". Items: NN(1), B(1), A(3) = 5 items with A repeated 3 times. Arrangements = 5! / 3! = 120 / 6 = 20.

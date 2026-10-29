@@ -1,0 +1,280 @@
+id: stats-data-cfg-usage
+subject: "9709"
+topic: "5.1"
+title: Using cumulative frequency graphs
+summary: Use cumulative frequency graphs to estimate medians, quartiles, percentiles, and proportions of a distribution.
+order: 4
+minutes: 8
+kind: core
+objectives: ["5.1.4"]
+prerequisites: ["stats-data-drawing-displays"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.1 outcome "Use a cumulative frequency graph. For example,
+    to estimate medians, quartiles and percentiles, the proportion of a distribution above
+    (or below) a given value, or the proportion between two values." All examples, questions
+    and diagrams are original. Validated for accuracy and syllabus alignment. Fixed interpolation question (CF before=17 gives median 25.71). Independent review recomputed all five worked examples (including the interpolation case: 20 + (8/14)×10 = 172.86 cm for Example 5's table, and 25.71 for the question) and all four answer keys, and replaced a self-contradictory instruction that told students not to divide by "the maximum CF shown (which is n)".
+blocks:
+  - type: objective
+    body: |-
+      By the end you can read a cumulative frequency graph to estimate the median,
+      quartiles, percentiles, and the proportion of data above, below, or between
+      given values.
+
+  - type: explain
+    title: What a cumulative frequency graph shows
+    body: |-
+      A cumulative frequency graph (ogive) plots **cumulative frequency** (running total)
+      against the **upper class boundary** of each interval. The curve rises from 0 at the
+      lower boundary of the first class to n (total frequency) at the upper boundary of
+      the last class.
+
+      Key points on the graph:
+      - **Median (Q₂)** = value at cumulative frequency n/2
+      - **Lower quartile (Q₁)** = value at n/4
+      - **Upper quartile (Q₃)** = value at 3n/4
+      - **k-th percentile (Pₖ)** = value at k·n/100
+
+      Always show your working: draw horizontal lines from the CF axis and vertical lines
+      down to the variable axis.
+
+  - type: example
+    title: "Example 1: estimating median and quartiles"
+    problem: |-
+      A cumulative frequency graph shows the weights of 80 parcels.
+      The total frequency n = 80.
+      Estimate the median, lower quartile, and upper quartile.
+    steps:
+      - |-
+        Median position = n/2 = 40. Draw horizontal line from CF = 40 to curve, then
+        vertical down to weight axis.
+      - |-
+        Q₁ position = n/4 = 20. Draw horizontal line from CF = 20 to curve, then
+        vertical down.
+      - |-
+        Q₃ position = 3n/4 = 60. Draw horizontal line from CF = 60 to curve, then
+        vertical down.
+    answer: |-
+      Median ≈ value at CF 40; Q₁ ≈ value at CF 20; Q₃ ≈ value at CF 60.
+      (Exact values depend on the graph.)
+
+  - type: check
+    questions: [sc-cfg-median-quartiles]
+
+  - type: explain
+    title: Estimating percentiles
+    body: |-
+      The **k-th percentile** Pₖ is the value below which k% of the data lies.
+      Position on CF axis = k·n/100.
+
+      Common percentiles:
+      - P₁₀ (10th percentile) at CF = 0.1n
+      - P₂₅ = Q₁ at CF = 0.25n
+      - P₅₀ = median at CF = 0.5n
+      - P₇₅ = Q₃ at CF = 0.75n
+      - P₉₀ at CF = 0.9n
+
+      To estimate: find the CF value, read across to curve, read down to variable axis.
+
+  - type: example
+    title: "Example 2: estimating the 90th percentile"
+    problem: |-
+      A CF graph represents 200 students' test scores. Estimate the 90th percentile.
+    steps:
+      - |-
+        n = 200. P₉₀ position = 0.90 × 200 = 180.
+      - |-
+        Find CF = 180 on vertical axis, read across to curve, down to score axis.
+    answer: Score at CF = 180.
+
+  - type: check
+    questions: [sc-cfg-percentile]
+
+  - type: explain
+    title: Proportion above or below a given value
+    body: |-
+      To find the **proportion (or percentage) of data above a value X**:
+      1. Find X on the horizontal axis.
+      2. Read up to the curve, then across to the CF axis → CF at X.
+      3. Proportion above X = (n − CF at X) / n
+      4. Percentage above X = 100 × (n − CF at X) / n
+
+      To find the **proportion below X**:
+      - Proportion below X = CF at X / n
+      - Percentage below X = 100 × CF at X / n
+
+      **Always divide by the total frequency n** — the final value on the CF axis — not by the
+      number of classes, and not by a value read off the variable axis.
+
+  - type: example
+    title: "Example 3: proportion above a value"
+    problem: |-
+      The CF graph shows 120 students' heights. At height 170 cm, the CF reads 72.
+      What percentage of students are taller than 170 cm?
+    steps:
+      - |-
+        n = 120. CF at 170 cm = 72.
+      - |-
+        Number above 170 cm = 120 − 72 = 48.
+      - |-
+        Percentage = (48 / 120) × 100 = 40%.
+    answer: 40%
+
+  - type: check
+    questions: [sc-cfg-proportion-above]
+
+  - type: explain
+    title: Proportion between two values
+    body: |-
+      To find the **proportion between values A and B** (A < B):
+      1. Find CF at A (CF_A) and CF at B (CF_B) by reading up from A and B to the curve.
+      2. Number between A and B = CF_B − CF_A.
+      3. Proportion = (CF_B − CF_A) / n.
+      4. Percentage = 100 × (CF_B − CF_A) / n.
+
+      This works because CF_B is the total up to B, and CF_A is the total up to A.
+      The difference is the number in the interval (A, B].
+
+  - type: example
+    title: "Example 4: proportion between two values"
+    problem: |-
+      A CF graph for 150 observations. CF at 20 = 45. CF at 50 = 120.
+      What proportion of the data lies between 20 and 50?
+    steps:
+      - |-
+        n = 150. CF_A = 45, CF_B = 120.
+      - |-
+        Number between = 120 − 45 = 75.
+      - |-
+        Proportion = 75 / 150 = 0.5.
+    answer: 0.5 (or 50%)
+
+  - type: check
+    questions: [sc-cfg-proportion-between]
+
+  - type: explain
+    title: Estimating the median from a grouped table (interpolation formula)
+    body: |-
+      If you don't have the graph but have the grouped frequency table, you can estimate
+      the median (and quartiles) by **linear interpolation**:
+      **Median = L + ((n/2 − CF) / f) × w**
+      where:
+      - L = lower class boundary of the median class
+      - CF = cumulative frequency before the median class
+      - f = frequency of the median class
+      - w = class width of the median class
+      - n/2 = median position
+
+      This formula assumes data is evenly spread within the class. It gives the same
+      result as reading from an accurately drawn CF graph.
+
+  - type: example
+    title: "Example 5: median by interpolation"
+    problem: |-
+      Height (cm) | Frequency
+      150–160     | 12
+      160–170     | 20
+      170–180     | 28
+      180–190     | 15
+      190–200     | 5
+      Estimate the median height.
+    steps:
+      - |-
+        n = 12+20+28+15+5 = 80. Median position = 40.
+      - |-
+        CF: 12, 32, 60, 75, 80. Median class = 170–180 (CF reaches 60 at this class).
+      - |-
+        L = 170, CF before = 32, f = 28, w = 10.
+      - |-
+        Median = 170 + ((40 − 32) / 28) × 10 = 170 + (8/28)×10 = 170 + 2.86 = 172.86 cm.
+    answer: 172.9 cm (to 1 d.p.)
+
+  - type: check
+    questions: [sc-cfg-interpolation]
+
+  - type: takeaways
+    items:
+      - "Median at CF = n/2, Q₁ at n/4, Q₃ at 3n/4, Pₖ at k·n/100."
+      - "Proportion above X = (n − CF at X) / n."
+      - "Proportion below X = CF at X / n."
+      - "Proportion between A and B = (CF at B − CF at A) / n."
+      - "Always divide by total frequency n."
+      - "Show working: horizontal line to curve, vertical line to axis."
+      - "Interpolation formula: Median = L + ((n/2 − CF)/f) × w."
+
+questions:
+  - id: sc-cfg-median-quartiles
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.4"]
+    prompt: A cumulative frequency graph represents 60 observations. At what cumulative frequency do you read the upper quartile Q₃?
+    options:
+      - text: "15"
+        why: That is n/4 = Q₁ position.
+        correct: false
+      - text: "30"
+        why: That is n/2 = median position.
+        correct: false
+      - text: "45"
+        why: Q₃ position = 3n/4 = 3×60/4 = 45.
+        correct: true
+      - text: "60"
+        why: That is the maximum CF (total frequency).
+        correct: false
+    explanation: |
+      Q₃ position = 3n/4 = 3×60/4 = 45. The upper quartile is read at cumulative frequency 45.
+
+  - id: sc-cfg-percentile
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.4"]
+    prompt: For a data set of 250 values, the 80th percentile P₈₀ is read at which cumulative frequency?
+    options:
+      - text: "20"
+        why: 20 is for P₈, not P₈₀.
+        correct: false
+      - text: "200"
+        why: P₈₀ position = 0.80 × 250 = 200.
+        correct: true
+      - text: "250"
+        why: That is the total frequency n.
+        correct: false
+      - text: "80"
+        why: That is the percentile number, not the CF position.
+        correct: false
+    explanation: |
+      P₈₀ position = 0.80 × 250 = 200. The 80th percentile is read at cumulative frequency 200.
+
+  - id: sc-cfg-proportion-above
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: A CF graph for 160 observations has CF = 112 at X = 50. What percentage of data is greater than 50?
+    fields:
+      - answer: 30
+    explanation: |
+      n = 160, CF at X = 112. Number above = 160 - 112 = 48. Percentage = (48/160) × 100 = 30%.
+
+  - id: sc-cfg-proportion-between
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: For 200 observations, CF at 30 = 60 and CF at 70 = 150. What proportion lies between 30 and 70?
+    fields:
+      - answer: 0.45
+    explanation: |
+      Number between = CF at 70 - CF at 30 = 150 - 60 = 90. Proportion = 90 / 200 = 0.45.
+
+  - id: sc-cfg-interpolation
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: "Grouped data: n=50, median class 20-30, L=20, CF before=17, f=14, w=10. Estimate the median using interpolation."
+    fields:
+      - answer: 25.71
+        tolerance: { abs: 0.02 }
+    explanation: |
+      Median = L + ((n/2 - CF) / f) × w = 20 + ((25 - 17) / 14) × 10 = 20 + (8/14)×10 = 20 + 5.71 = 25.71.

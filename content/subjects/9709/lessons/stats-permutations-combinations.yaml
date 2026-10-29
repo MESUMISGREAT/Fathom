@@ -1,0 +1,241 @@
+id: stats-permutations-combinations
+subject: "9709"
+topic: "5.2"
+title: Permutations and combinations
+summary: Understand the difference between permutations (order matters) and combinations (order does not matter). Solve selection problems using nPr and nCr.
+order: 1
+minutes: 8
+kind: core
+objectives: ["5.2.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.2 outcome "Understand the terms permutation and
+    combination, and solve simple problems involving selections." All examples, questions
+    and diagrams are original. Independently reviewed: every nPr/nCr re-derived (8P3 336,
+    10C4 210, 7C5 21, 14C5 2002, 8C3 × 6C2 = 840, 420 for the "at least 2 girls" case, 210
+    and 1316 in the questions); replaced a distractor justified only as "incorrect
+    calculation" with one that names the slip it comes from.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can distinguish between permutations and combinations, calculate
+      nPr and nCr (with and without a calculator), and solve selection problems by
+      choosing the correct method.
+
+  - type: definition
+    term: Permutation
+    body: |-
+      An **arrangement** of objects in a specific order. The order of selection matters.
+      The number of permutations of r objects chosen from n distinct objects is:
+      **ⁿPᵣ = n! / (n−r)!** = n × (n−1) × … × (n−r+1)
+
+  - type: definition
+    term: Combination
+    body: |-
+      A **selection** of objects where the order does not matter. The number of combinations
+      of r objects chosen from n distinct objects is:
+      **ⁿCᵣ = n! / [r!(n−r)!]** = ⁿPᵣ / r!
+      Also written as C(n, r) or binomial coefficient (n choose r).
+
+  - type: explain
+    title: The key question — does order matter?
+    body: |-
+      **Permutation (order matters):**
+      - Arranging books on a shelf
+      - Choosing a president, vice-president, secretary (different roles)
+      - Forming a 3-digit PIN code
+      - Lining up people in a queue
+
+      **Combination (order does not matter):**
+      - Choosing a committee of 3 from 10 people
+      - Selecting 5 cards from a deck (hand of cards)
+      - Picking lottery numbers
+      - Choosing toppings for a pizza
+
+      **Test:** If swapping two chosen items gives a **different outcome**, it's a permutation.
+      If swapping gives the **same outcome**, it's a combination.
+
+  - type: example
+    title: "Example 1: permutation vs combination"
+    problem: |-
+      Decide whether each situation is a permutation or combination:
+      (a) Selecting 4 students from a class of 20 to form a team.
+      (b) Awarding 1st, 2nd, and 3rd prizes in a competition with 8 entrants.
+      (c) Choosing 3 pizza toppings from a menu of 10.
+    steps:
+      - |-
+        (a) Team — order doesn't matter. **Combination**.
+      - |-
+        (b) Prizes — 1st, 2nd, 3rd are distinct. Order matters. **Permutation**.
+      - |-
+        (c) Toppings — a pizza with {pepperoni, mushroom, olive} is the same regardless of order. **Combination**.
+    answer: |-
+      (a) Combination. (b) Permutation. (c) Combination.
+
+  - type: check
+    questions: [sc-pc-identify]
+
+  - type: explain
+    title: Factorials and notation
+    body: |-
+      **n! (n factorial)** = n × (n−1) × (n−2) × … × 2 × 1, with 0! = 1.
+      - 5! = 120, 6! = 720, 7! = 5040.
+
+      **ⁿPᵣ = n! / (n−r)!**
+      - ⁵P₃ = 5! / 2! = 120 / 2 = 60 = 5 × 4 × 3
+
+      **ⁿCᵣ = n! / [r!(n−r)!]**
+      - ⁵C₃ = 5! / (3!2!) = 120 / (6×2) = 10
+
+      **Symmetry:** ⁿCᵣ = ⁿCₙ₋ᵣ (choosing r is same as rejecting n−r).
+      **Pascal's rule:** ⁿCᵣ = ⁿ⁻¹Cᵣ₋₁ + ⁿ⁻¹Cᵣ
+
+      On a calculator: use nPr and nCr buttons (or nCr, nPr functions).
+
+  - type: example
+    title: "Example 2: calculating permutations and combinations"
+    problem: |-
+      Calculate: (a) ⁸P₃  (b) ¹⁰C₄  (c) ⁷C₅
+    steps:
+      - |-
+        (a) ⁸P₃ = 8! / 5! = 8 × 7 × 6 = 336.
+      - |-
+        (b) ¹⁰C₄ = 10! / (4!6!) = (10×9×8×7) / (4×3×2×1) = 5040 / 24 = 210.
+      - |-
+        (c) ⁷C₅ = ⁷C₂ (by symmetry) = 7×6 / 2 = 21.
+    answer: |-
+      (a) 336  (b) 210  (c) 21
+
+  - type: check
+    questions: [sc-pc-calculate]
+
+  - type: explain
+    title: Simple selection problems
+    body: |-
+      **Method:**
+      1. **Identify** if order matters (permutation) or not (combination).
+      2. **Identify n** (total items available) and **r** (items to choose).
+      3. **Calculate** ⁿPᵣ or ⁿCᵣ.
+
+      If there are **multiple independent choices**, multiply the counts.
+      If there are **mutually exclusive cases**, add the counts.
+
+  - type: example
+    title: "Example 3: committee selection"
+    problem: |-
+      A committee of 5 people is to be chosen from 8 men and 6 women.
+      (a) How many different committees are possible?
+      (b) How many if the committee must have exactly 3 men and 2 women?
+    steps:
+      - |-
+        (a) Total people = 14. Choose 5, order doesn't matter. ¹⁴C₅ = 2002.
+      - |-
+        (b) Choose 3 men from 8: ⁸C₃ = 56. Choose 2 women from 6: ⁶C₂ = 15.
+      - |-
+        Multiply (independent choices): 56 × 15 = 840.
+    answer: |-
+      (a) 2002  (b) 840
+
+  - type: check
+    questions: [sc-pc-committee]
+
+  - type: explain
+    title: Problems with "at least" or "at most"
+    body: |-
+      When a condition says "at least k" or "at most k", split into **mutually exclusive cases**
+      and **add** the results.
+
+      Example: Committee of 5 from 8 men, 6 women. At least 3 women.
+      Cases: exactly 3 women, exactly 4 women, exactly 5 women.
+      Add: ⁶C₃×⁸C₂ + ⁶C₄×⁸C₁ + ⁶C₅×⁸C₀
+
+  - type: example
+    title: "Example 4: at least / at most"
+    problem: |-
+      A team of 4 is chosen from 5 boys and 7 girls. The team must contain at least 2 girls.
+      How many different teams are possible?
+    steps:
+      - |-
+        Cases: 2 girls + 2 boys, 3 girls + 1 boy, 4 girls + 0 boys.
+      - |-
+        2G,2B: ⁷C₂ × ⁵C₂ = 21 × 10 = 210.
+      - |-
+        3G,1B: ⁷C₃ × ⁵C₁ = 35 × 5 = 175.
+      - |-
+        4G,0B: ⁷C₄ × ⁵C₀ = 35 × 1 = 35.
+      - |-
+        Total = 210 + 175 + 35 = 420.
+    answer: "420"
+
+  - type: check
+    questions: [sc-pc-at-least]
+
+  - type: takeaways
+    items:
+      - "Permutation = order matters. ⁿPᵣ = n!/(n−r)!."
+      - "Combination = order doesn't matter. ⁿCᵣ = n!/[r!(n−r)!]."
+      - "Test: does swapping two chosen items change the outcome?"
+      - "Multiple independent choices → multiply. Mutually exclusive cases → add."
+      - "Use symmetry ⁿCᵣ = ⁿCₙ₋ᵣ to simplify calculations."
+      - "'At least' / 'at most' → split into cases and add."
+
+questions:
+  - id: sc-pc-identify
+    format: mcq
+    prompt: A 4-digit PIN code is created from the digits 0–9 with no repetition. Is this a permutation or combination problem?
+    options:
+      - text: Permutation
+        why: The order of digits matters (1234 ≠ 4321).
+        correct: true
+      - text: Combination
+        why: Order does not matter for a PIN.
+        correct: false
+    difficulty: 1
+    objectives: ["5.2.1"]
+    explanation: |
+      A PIN code has a specific order (1234 is different from 4321), so this is a permutation problem.
+
+  - id: sc-pc-calculate
+    format: mcq
+    prompt: What is the value of ⁹C₄?
+    options:
+      - text: "126"
+        why: ⁹C₄ = 9×8×7×6 / (4×3×2×1) = 3024 / 24 = 126.
+        correct: true
+      - text: "84"
+        why: That is ⁹C₃.
+        correct: false
+      - text: "3024"
+        why: That is ⁹P₄ (permutation).
+        correct: false
+      - text: "252"
+        why: That is 3024 ÷ 12 — the 4! in the denominator was halved instead of used in full.
+        correct: false
+    difficulty: 1
+    objectives: ["5.2.1"]
+    explanation: |
+      ⁹C₄ = 9! / (4!5!) = (9×8×7×6) / (4×3×2×1) = 3024 / 24 = 126.
+
+  - id: sc-pc-committee
+    format: numeric
+    prompt: A committee of 4 is chosen from 7 men and 5 women. How many committees have exactly 2 men and 2 women?
+    fields:
+      - answer: 210
+    difficulty: 2
+    objectives: ["5.2.1"]
+    explanation: |
+      Choose 2 men from 7: ⁷C₂ = 21. Choose 2 women from 5: ⁵C₂ = 10. Multiply: 21 × 10 = 210.
+
+  - id: sc-pc-at-least
+    format: numeric
+    prompt: From 6 boys and 8 girls, a team of 5 is chosen with at least 3 girls. How many possible teams?
+    fields:
+      - answer: 1316
+    difficulty: 2
+    objectives: ["5.2.1"]
+    explanation: |
+      Cases: 3 girls + 2 boys: ⁸C₃ × ⁶C₂ = 56 × 15 = 840. 4 girls + 1 boy: ⁸C₄ × ⁶C₁ = 70 × 6 = 420. 5 girls + 0 boys: ⁸C₅ × ⁶C₀ = 56 × 1 = 56. Total = 840 + 420 + 56 = 1316.
