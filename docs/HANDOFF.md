@@ -1004,3 +1004,12 @@ The coordination helper now broadcasts a mailbox message whenever an agent expli
 - Never take over a claim just because it looks stale. Check the process/session if possible, ask the owner, and record an explicit handoff before taking over. If the owner cannot be verified as inactive, work on another unclaimed task.
 - An agent that is stalled must message its current status, blocker, what it tried, and the help/decision it needs. Do not silently wait.
 - Heartbeats are notifications, not proof of completed work. Validate files and tests before reporting completion.
+
+## Deployment repair and queue progress (2026-10-29, codebuff-deploy-fix)
+
+- **Four production deploys failed today** and were traced by reproducing `vercel build --prod` locally (the Hobby plan exposes no build logs): four 9709 3.8 lessons used `provenance.reviewer`/`reviewDate` (the schema only accepts `reviewedBy`/`reviewedAt`); two agents each wrote the 9618 10.4 ADT lesson so `order: 1` collided; a lesson id no longer matched its file name; and a timed-out import left an `idle in transaction` backend holding the content advisory lock so every later import hung.
+- `CLAUDE.md` now requires a whole-tree `npm run content:check` before any content commit. Duplicate `order`, id/file-name mismatch, unregistered objectives and unplaced questions are all caught there, so the pre-commit gate (not the deploy) is where these must fail.
+- **9701 9.1+9.2 published** in `931766b` (5 lessons: `period-3-physical-melting-point-conductivity`, `period-3-chemical-oxygen-chlorine-water`, `period-3-chemical-oxidation-numbers`, `period-3-chemical-oxides-water`, `period-3-chemical-chlorides-and-bonding`), independently reviewed and `ai-checked`.
+- **9702 9.1+9.2 published** in `8eb8782` (6 lessons: `electric-current-flow-of-charge`, `electric-current-charge-and-time`, `electric-current-microscopic`, `potential-difference-definition`, `potential-difference-energy`, `potential-difference-power`). Six duplicate drafts were quarantined to `.agent-coordination/quarantine/` rather than deleted; the 9702 diagram components also needed a `tsc` fix before publication would pass.
+- Queue is now **65 published, 88 todo, 1 partial**. Production DB: 543 live lessons, zero duplicate positions.
+- Next: `9701 9.3` (assigned to `nem-1793291053`), then `9702 9.3`. `9709 5.1+5.2` is partial (missing 5.2.1, 5.2.2) and its claim holder `buffy-9709-5.1-5.2` has not heartbeated for over an hour; it should be released before another agent takes it.
