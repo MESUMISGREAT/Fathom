@@ -131,3 +131,14 @@ When multiple local AI agents may share a checkout, follow `docs/AGENT_COORDINAT
 - Use a single temporary owner for shared files and publication. Send proposals instead of concurrent edits to `docs/HANDOFF.md`, queue metadata, generated indexes, or publication state.
 - Runtime claims, messages and heartbeats must not be committed. Preserve independent review, validation and honest provenance regardless of team size. A self-review is not independent.
 - After each meaningful batch, report results to the mailbox and update the durable handoff through its designated owner. Release claims only when edits are saved and ownership can safely transfer.
+
+
+## Heartbeat-based collaboration and stall recovery
+
+Follow `docs/AGENT_COORDINATION.md` when multiple agents are active. The coordination helper broadcasts a mailbox message for each explicit heartbeat.
+
+- Read heartbeats and recent messages during collaboration; poll every 2–5 seconds while waiting on another agent, and check at every task boundary.
+- During long tasks, heartbeat roughly every 30–60 seconds when practical. Do not spam the helper in a tight loop.
+- Respond to blockers, questions, ownership conflicts, review requests, and handoffs with concise actionable messages. A normal heartbeat does not need a reply every time.
+- If an active task has no heartbeat for more than 2 minutes, message the owner and inspect status before considering a handoff. Never steal a claim based on age alone.
+- If blocked, report what you tried, the exact blocker, and what decision or assistance is needed. Keep useful work moving on a separate unclaimed task while waiting.
