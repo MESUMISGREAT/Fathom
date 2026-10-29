@@ -106,7 +106,7 @@ For workflows that require many content units or files, do not stop after the fi
 
 - Default to a single agent for small tasks, writing, simple edits, and localized bug fixes.
 - Use multiple agents only when subtasks are genuinely independent and parallel execution adds value.
-- For routine work, use no more than 3 concurrent agents.
+- For routine work, use the smallest team that adds value. When multiple local agents share a checkout, follow `docs/AGENT_COORDINATION.md`; scale concurrency to independent tasks and available resources, and reduce it when contention or coordination overhead rises.
 - Never spawn agents merely to review work already completed by the main agent.
 - Before delegating, identify the exact files and requirements each agent needs. Avoid redundant repository exploration.
 - Never give every agent the entire requirements document when a relevant section is sufficient.
@@ -117,3 +117,17 @@ For workflows that require many content units or files, do not stop after the fi
 
 ## Limits
 This skill guides Claude's behavior; it cannot guarantee a fixed token reduction. Token savings depend on file sizes, task type, tools, and how much context is genuinely required. Large files may still need broad reading for cross-cutting changes.
+
+
+## Shared local multi-agent coordination
+
+When multiple local AI agents may share a checkout, follow `docs/AGENT_COORDINATION.md` before selecting work.
+
+- Verify all agents can see the same coordination directory. Use `FATHOM_AGENT_COORD_DIR` for a shared absolute path across worktrees; the default `.agent-coordination/` works only when the checkout is genuinely shared.
+- Register a unique run ID, post a hello/role proposal, read recent messages and active claims, and claim a distinct unit before editing. Do not edit another agent's claimed files.
+- Negotiate roles briefly, then proceed. If no coordinator responds, atomically claim the highest-priority available unit from the authoritative status queue. Do not wait indefinitely.
+- Keep concurrency dynamic based on independent work, provider limits, and machine capacity. Work solo when alone or when coordination is unavailable. Never assume another agent exists or will respond.
+- Treat the mailbox as polling-based near-real-time communication, not push messaging. If cross-agent visibility cannot be verified, disclose that and use a safe fallback.
+- Use a single temporary owner for shared files and publication. Send proposals instead of concurrent edits to `docs/HANDOFF.md`, queue metadata, generated indexes, or publication state.
+- Runtime claims, messages and heartbeats must not be committed. Preserve independent review, validation and honest provenance regardless of team size. A self-review is not independent.
+- After each meaningful batch, report results to the mailbox and update the durable handoff through its designated owner. Release claims only when edits are saved and ownership can safely transfer.

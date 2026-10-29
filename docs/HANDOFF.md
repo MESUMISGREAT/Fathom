@@ -90,10 +90,10 @@ Rules the user stressed:
 Follow the project skill `.claude/skills/token-efficient-workflow/SKILL.md`, including its
 "Agent budget and token control" section. In short:
 
-- **Agents:** at most **3 agents at once**.
-  - Use exactly one independent reviewer per batch of lessons.
-  - Never spawn agents to review your own work.
+- **Agents:** use dynamic concurrency for genuinely independent tasks, coordinated through `docs/AGENT_COORDINATION.md` when local agents share a filesystem. Let available CPU/RAM, provider limits, file contention and coordination overhead determine the number. Solo operation must always work.
+  - Use an independent reviewer for each lesson batch where required; never spawn an agent to review its own work.
   - Hand each agent only the files and sections it needs.
+  - Use atomic task claims and one owner for shared files; never let agents write or review the same unit concurrently.
 - **Reading:** search before reading.
   - Print only the Markdown section you need with
     `python3 .claude/skills/token-efficient-workflow/scripts/md_section.py FILE "Heading"`
@@ -154,8 +154,7 @@ or one chat session as completion. Preserve the AS-first-then-A2 queue order, re
 agent limits and user session-budget rule. If blocked by limits or an external dependency, report
 the exact remaining states and resume from the status queue; never claim completion early.
 
-Never run more than 3 agents at once. A writer and the reviewer for that same unit never
-run at the same time. For each agent:
+Use the shared coordination protocol to choose a safe number of concurrent agents. A writer and the reviewer for that same unit never run at the same time. For each agent:
 
 ```bash
 node scripts/lessons/prompts.mjs write "9701 3.1+3.2"     # or: review "9709 1.6+1.7"
@@ -975,3 +974,20 @@ changes alongside lessons:
   test with any change to marking.
 - **Content sync** drops invalid lesson files instead of failing the whole import
   (`withoutInvalidLessons`, `tests/content-sync.test.ts`).
+
+
+## 8. Shared coordination for multiple local agents
+
+Before any agent selects a lesson, read `docs/AGENT_COORDINATION.md` and join the shared runtime mailbox. The user may start many local agents with the same prompt, so **every agent must follow the same protocol**:
+
+- Resolve and verify the shared coordination path (`FATHOM_AGENT_COORD_DIR` or `.agent-coordination/`). Agents in separate worktrees must point to the same absolute shared directory. If they cannot see each other's test messages, coordination is not active.
+- Register a unique agent ID, post a hello/proposal, inspect recent messages and active claims, then claim one distinct unit before editing. Do not work on a claimed unit or shared file owned by another agent.
+- Negotiate roles briefly: coordinator/queue manager, writer, independent reviewer, validator, diagram specialist, publisher/deployment verifier. If nobody coordinates, self-assign the highest-priority unclaimed task from `node scripts/lessons/status.mjs` and announce it.
+- Keep the number of agents dynamic. Parallelize independent units when resources allow; reduce concurrency when contention or resource limits make it counterproductive. If alone, continue solo rather than waiting for other agents.
+- Use one owner for `docs/HANDOFF.md`, shared queue metadata, generated indexes, and publication operations at a time. Send proposed changes to the owner instead of editing the same shared file concurrently.
+- Write one immutable message file per message, refresh agent heartbeat and task claims, and announce handoffs and completion. Never automatically steal a stale-looking claim without checking that its owner is inactive.
+- Runtime messages, claims, and heartbeats are local coordination state. Do not commit them. Use the handoff for durable progress summaries, not rapid chat.
+- Only one publisher at a time. Preserve independent review and all validation/provenance gates; a self-review is not independent. Do not push drafts or falsely mark teacher review.
+- If the shared mailbox is unavailable, state that fact and safely continue on an unclaimed task solo or use an actually available messaging mechanism. Do not claim to have negotiated or communicated unless you verified it.
+
+The mailbox is file-based and near-real-time only through polling; it is not a magic push channel. See `docs/AGENT_COORDINATION.md` for the message format, atomic claim convention, and solo/two-agent/team workflows.

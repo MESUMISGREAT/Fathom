@@ -15,7 +15,7 @@ production.**
 lesson-writing pipeline (`scripts/lessons/`), the current state and the next steps.
 
 **Working token-efficiently:** follow `.claude/skills/token-efficient-workflow/SKILL.md`.
-- Use at most 3 agents, with one review pass.
+- Use dynamic concurrency for genuinely independent tasks; follow `docs/AGENT_COORDINATION.md` when multiple local agents share a checkout. Resource limits and contention, not a fixed count, determine the safe number.
 - Read docs by section with its `md_section.py`.
 - Never skip correctness checks.
 - **Teaching quality before brevity:** follow the full "Teaching philosophy: understanding before brevity" section in `docs/CONTENT_GUIDE.md`. Readability rules control formatting, never teaching depth; longer lessons are fine when needed.
@@ -160,3 +160,9 @@ The usual 2–5 minute lesson target is a guideline, not a hard limit. Understan
   - axe WCAG 2.1 AA in light and dark, which the e2e tests check.
 - **Docs:** architecture, data model and the designs for unbuilt phases (AI marking, question
   generation, grade prediction) are in `docs/PLAN.md` and `docs/design/`.
+
+## Multiple local AI agents
+
+When multiple agents work in the same checkout, follow `docs/AGENT_COORDINATION.md` before selecting work. Use the shared runtime mailbox, announce roles, atomically claim distinct lesson units, heartbeat ownership, and avoid simultaneous edits to shared files. Coordination state is local runtime data and must never be committed. If the mailbox is not genuinely shared, say so and work safely solo or use messaging actually provided by the runtime; do not pretend files are real-time push messaging.
+
+Agent count is dynamic rather than a fixed requirement: use parallel agents only for independent tasks, within available machine/provider capacity. Solo mode must always work. Keep one owner for shared handoff/publication state and one publisher at a time. The coordination protocol never overrides syllabus quality, independent review, validation, provenance, or production safety gates.
