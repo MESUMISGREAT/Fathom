@@ -106,7 +106,7 @@ For workflows that require many content units or files, do not stop after the fi
 
 - Default to a single agent for small tasks, writing, simple edits, and localized bug fixes.
 - Use multiple agents only when subtasks are genuinely independent and parallel execution adds value.
-- For routine work, use no more than 3 concurrent agents.
+- For routine work, use the smallest team that adds value. When multiple local agents share a checkout, follow `docs/AGENT_COORDINATION.md`; scale concurrency to independent tasks and available resources, and reduce it when contention or coordination overhead rises.
 - Never spawn agents merely to review work already completed by the main agent.
 - Before delegating, identify the exact files and requirements each agent needs. Avoid redundant repository exploration.
 - Never give every agent the entire requirements document when a relevant section is sufficient.
