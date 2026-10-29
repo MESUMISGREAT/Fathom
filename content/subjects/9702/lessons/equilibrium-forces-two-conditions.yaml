@@ -9,13 +9,14 @@ objectives: ["4.2.2"]
 prerequisites: [equilibrium-forces-principle-of-moments, turning-effects-couples]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcome 4.2.2, a system with no resultant force and no resultant torque
     is in equilibrium). The plank diagram is drawn to scale (4.0 m plank of weight 200 N, 600 N
     person 1.0 m from one support). Weights and lengths are illustrative values; all worked
     values and answer keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -82,10 +83,14 @@ blocks:
   - type: example
     title: A person on a plank
     problem: |
-      A uniform plank $4.0\ \text{m}$ long, of weight $200\ \text{N}$, rests on supports at its ends A and B. A $600\ \text{N}$ person stands $1.0\ \text{m}$ from A. Find the support forces $R_A$ and $R_B$.
+      A uniform plank $4.0\ \text{m}$ long, of weight $200\ \text{N}$, rests on supports at its ends A and B. A $600\ \text{N}$ person stands $1.0\ \text{m}$ from A.
+
+      Find the support forces $R_A$ and $R_B$.
     steps:
       - |
-        Moments about A, so $R_A$ drops out. Clockwise: $600 \times 1.0 + 200 \times 2.0 = 1000\ \text{N m}$. Anticlockwise: $R_B \times 4.0$.
+        Moments about A, so $R_A$ drops out.
+
+        Clockwise: $600 \times 1.0 + 200 \times 2.0 = 1000\ \text{N m}$. Anticlockwise: $R_B \times 4.0$.
       - |
         $4.0R_B = 1000$, so $R_B = 250\ \text{N}$.
       - |
@@ -138,7 +143,7 @@ questions:
     prompt: |
       An object is in equilibrium when the resultant force on it is {{1}} and the resultant {{2}} on it is also zero.
     blanks:
-      - accept: [zero, "0", "0 N", nothing, none, nil]
+      - accept: [zero, "0"]
       - accept: [torque, moment, turning effect, moment of force, torques, moments]
     explanation: |
       Equilibrium needs **zero** resultant force (no linear acceleration) and zero resultant **torque** (no change in rotation).
@@ -167,7 +172,9 @@ questions:
     difficulty: 2
     objectives: ["4.2.2"]
     prompt: |
-      A uniform bench $2.4\ \text{m}$ long, of weight $150\ \text{N}$, stands on two legs, one at each end. A $500\ \text{N}$ person sits $0.60\ \text{m}$ from the left leg. Find the upward force from each leg.
+      A uniform bench $2.4\ \text{m}$ long, of weight $150\ \text{N}$, stands on two legs, one at each end. A $500\ \text{N}$ person sits $0.60\ \text{m}$ from the left leg.
+
+      Find the upward force from each leg.
     fields:
       - label: "left leg ="
         answer: 450
@@ -185,7 +192,9 @@ questions:
     difficulty: 2
     objectives: ["4.2.2"]
     prompt: |
-      A uniform plank $5.0\ \text{m}$ long, of weight $300\ \text{N}$, rests on supports at its ends P and Q. A $500\ \text{N}$ load sits $2.0\ \text{m}$ from P. A student finds the support forces. Which line contains the first error?
+      A uniform plank $5.0\ \text{m}$ long, of weight $300\ \text{N}$, rests on supports at its ends P and Q. A $500\ \text{N}$ load sits $2.0\ \text{m}$ from P.
+
+      A student finds the support forces. Which line contains the first error?
     lines:
       - |
         Take moments about P, so the force at P has no moment.
@@ -206,7 +215,9 @@ questions:
     difficulty: 3
     objectives: ["4.2.2"]
     prompt: |
-      A uniform diving board is $4.0\ \text{m}$ long and weighs $300\ \text{N}$. It is held down by a bolt at end A and rests on a support $1.0\ \text{m}$ from A. A $600\ \text{N}$ diver stands at the other end. Find the downward force from the bolt and the upward force from the support.
+      A uniform diving board is $4.0\ \text{m}$ long and weighs $300\ \text{N}$. It is held down by a bolt at end A and rests on a support $1.0\ \text{m}$ from A.
+
+      A $600\ \text{N}$ diver stands at the other end. Find the downward force from the bolt and the upward force from the support.
     fields:
       - label: "bolt (downwards) ="
         answer: 2100
@@ -217,4 +228,8 @@ questions:
         tolerance: { abs: 1 }
         unit: N
     explanation: |
-      Moments about the support (so its force drops out). Clockwise: the diver, $600 \times 3.0 = 1800\ \text{N m}$, plus the board's weight at its midpoint, $300 \times 1.0 = 300\ \text{N m}$. Anticlockwise: the bolt, $F \times 1.0$. So $F = 2100\ \text{N}$ downwards. Forces: support $= 600 + 300 + 2100 = 3000\ \text{N}$ upwards. Short lever arms mean huge forces.
+      Take moments about the support, so its force drops out. Clockwise moments are $600 \times 3.0 = 1800\ \text{N m}$ from the diver and $300 \times 1.0 = 300\ \text{N m}$ from the board's weight.
+
+      Anticlockwise moment from the bolt is $F \times 1.0$, so $F = 2100\ \text{N}$ downwards. Balancing vertical forces gives a support force of $600 + 300 + 2100 = 3000\ \text{N}$ upwards.
+
+      Short lever arms mean huge forces.

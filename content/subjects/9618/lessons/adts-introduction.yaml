@@ -1,0 +1,369 @@
+id: adts-introduction
+subject: "9618"
+topic: "10.4"
+title: "Introduction to Abstract Data Types (ADT) — stack, queue, linked list"
+summary: "Understand what an ADT is; recognise stack, queue, and linked list as ADTs; use them to store data; describe array implementations."
+order: 1
+minutes: 10
+kind: core
+objectives: ["10.4.1", "10.4.2", "10.4.3", "10.4.4"]
+prerequisites: ["data-structures-arrays", "files-text-file-handling"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 10.4 Introduction to Abstract Data Types (ADT).
+    Covers objectives 10.4.1-10.4.4. Questions are original. AI-reviewed for syllabus
+    alignment and content accuracy.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what an Abstract Data Type is, describe the key features
+      of stacks, queues, and linked lists, justify their use for given situations,
+      add/edit/delete data in them, and describe how each can be implemented using arrays.
+
+  - type: explain
+    title: What is an Abstract Data Type (ADT)?
+    body: |
+      An **Abstract Data Type (ADT)** is a mathematical model that defines:
+      - A **collection of data** (the structure)
+      - A **set of operations** that can be performed on that data
+
+      The key word is **abstract** — the ADT specifies *what* operations exist and *what* they do,
+      but **not how they are implemented**. The implementation details (arrays, pointers, etc.)
+      are hidden from the user.
+
+      **Why ADTs matter:**
+      - Separation of concerns: users don't need to know internal details
+      - Reusability: same ADT can have different implementations
+      - Maintainability: change implementation without affecting code that uses the ADT
+
+      **Cambridge ADTs in topic 10.4:** Stack, Queue, Linked List.
+
+  - type: explain
+    title: Stack — LIFO (Last In, First Out)
+    body: |
+      A **stack** stores items so that the **last item added is the first removed** (like a
+      stack of plates).
+
+      **Key operations:**
+      - `push(item)` — add item to top
+      - `pop()` — remove and return top item
+      - `peek()` / `top()` — view top item without removing
+      - `isEmpty()` — check if stack has no items
+      - `isFull()` — check if stack has reached capacity (for bounded stacks)
+
+      **Pseudocode example:**
+      ```
+      // Stack using array with fixed size
+      DECLARE stack : ARRAY[1:100] OF INTEGER
+      DECLARE top : INTEGER
+      top <- 0
+
+      PROCEDURE push(value : INTEGER)
+        IF top = 100 THEN OUTPUT "Stack overflow" ELSE
+          top <- top + 1
+          stack[top] <- value
+        ENDIF
+      ENDPROCEDURE
+
+      PROCEDURE pop() RETURNS INTEGER
+        IF top = 0 THEN OUTPUT "Stack underflow" ELSE
+          RETURN stack[top]
+          top <- top - 1
+        ENDIF
+      ENDPROCEDURE
+      ```
+
+      **Common uses:** Function call stack, undo operations, expression evaluation,
+      backtracking algorithms, browser history.
+
+  - type: explain
+    title: Queue — FIFO (First In, First Out)
+    body: |
+      A **queue** stores items so that the **first item added is the first removed** (like
+      a queue of people).
+
+      **Key operations:**
+      - `enqueue(item)` — add item to rear
+      - `dequeue()` — remove and return front item
+      - `front()` / `peek()` — view front item without removing
+      - `isEmpty()` — check if queue has no items
+      - `isFull()` — check if queue has reached capacity
+
+      **Pseudocode example (circular array):**
+      ```
+      DECLARE queue : ARRAY[1:100] OF INTEGER
+      DECLARE front, rear : INTEGER
+      DECLARE count : INTEGER
+      front <- 1
+      rear <- 0
+      count <- 0
+
+      PROCEDURE enqueue(value : INTEGER)
+        IF count = 100 THEN OUTPUT "Queue full" ELSE
+          rear <- (rear MOD 100) + 1
+          queue[rear] <- value
+          count <- count + 1
+        ENDIF
+      ENDPROCEDURE
+
+      PROCEDURE dequeue() RETURNS INTEGER
+        IF count = 0 THEN OUTPUT "Queue empty" ELSE
+          value <- queue[front]
+          front <- (front MOD 100) + 1
+          count <- count - 1
+          RETURN value
+        ENDIF
+      ENDPROCEDURE
+      ```
+
+      **Common uses:** Print spoolers, task scheduling, breadth-first search,
+      buffering data streams.
+
+  - type: explain
+    title: Linked List — dynamic chain of nodes
+    body: |
+      A **linked list** is a sequence of **nodes**, where each node contains:
+      - **Data** (the value)
+      - **Pointer/Reference** to the next node
+
+      The list is accessed via a pointer to the **head** (first node). The last node's
+      pointer is `NULL`.
+
+      **Key operations:**
+      - Insert at front, end, or middle
+      - Delete from front, end, or middle
+      - Search for a value
+      - Traverse (visit each node in order)
+
+      **Pseudocode structure:**
+      ```
+      TYPE NodePtr = POINTER TO Node
+      TYPE Node = RECORD
+        data : INTEGER
+        next : NodePtr
+      ENDRECORD
+
+      DECLARE head : NodePtr
+      head <- NULL
+
+      // Insert at front
+      PROCEDURE insertFront(value : INTEGER)
+        DECLARE newNode : NodePtr
+        NEW(newNode)
+        newNode^.data <- value
+        newNode^.next <- head
+        head <- newNode
+      ENDPROCEDURE
+
+      // Traverse and print
+      PROCEDURE printList()
+        DECLARE current : NodePtr
+        current <- head
+        WHILE current != NULL
+          OUTPUT current^.data
+          current <- current^.next
+        ENDWHILE
+      ENDPROCEDURE
+      ```
+
+      **Variants:** Singly linked (shown), doubly linked (prev + next), circular.
+
+  - type: explain
+    title: Implementing ADTs using arrays
+    body: |
+      **Stack with array:**
+      - Use an array and an integer `top` (index of top element)
+      - `push` increments `top`, stores value
+      - `pop` returns value at `top`, decrements `top`
+      - Fixed maximum size (unless dynamic array)
+
+      **Queue with array (circular buffer):**
+      - Use an array, `front` index, `rear` index, and `count`
+      - `enqueue` adds at `rear`, wraps around with MOD
+      - `dequeue` removes from `front`, wraps around
+      - Avoids shifting elements on every dequeue
+
+      **Linked list with arrays (parallel arrays):**
+      - Two arrays: `data[]` for values, `next[]` for "pointers" (indices)
+      - `head` stores index of first node (0 = NULL)
+      - `free` list tracks available slots
+      - Example:
+        ```
+        DECLARE data : ARRAY[1:100] OF INTEGER
+        DECLARE next : ARRAY[1:100] OF INTEGER
+        DECLARE head, free : INTEGER
+        head <- 0
+        free <- 1
+        FOR i <- 1 TO 99: next[i] <- i+1 ENDFOR
+        next[100] <- 0
+
+        // Allocate node: take from free list
+        // Free node: return to free list
+        ```
+
+      **Trade-offs:**
+      - Array implementations: fixed size, fast access, simple memory
+      - Pointer implementations: dynamic size, extra memory for pointers
+
+  - type: example
+    title: Choosing the right ADT
+    problem: |
+      For each scenario, choose the most appropriate ADT (stack, queue, or linked list)
+      and justify your choice:
+      1. A browser's "Back" button
+      2. A print server managing jobs from multiple users
+      3. A text editor's "Undo" feature
+      4. A music playlist where songs can be inserted/deleted anywhere
+      5. Evaluating a postfix expression (e.g., 3 4 + 2 *)
+    steps:
+      - "1. Stack — LIFO matches last page visited = first to go back to"
+      - "2. Queue — FIFO ensures fairness: first submitted = first printed"
+      - "3. Stack — LIFO: last action = first to undo"
+      - "4. Linked list — dynamic insertion/deletion anywhere in sequence"
+      - "5. Stack — postfix evaluation uses stack for operands"
+    answer: |
+      1. Stack (LIFO — back button reverses navigation order)
+      2. Queue (FIFO — fair first-come-first-served)
+      3. Stack (LIFO — undo reverses most recent action)
+      4. Linked list (efficient insertion/deletion at any position)
+      5. Stack (postfix algorithm: push operands, pop for operators)
+
+  - type: check
+    title: Check yourself
+    questions: [adt-definition, stack-operations, queue-order, linked-list-structure, array-stack-push]
+
+  - type: misconceptions
+    items:
+      - wrong: "Stack and queue are the same thing, just different names."
+        right: |
+          Stack = LIFO (last in, first out). Queue = FIFO (first in, first out).
+          They behave differently and suit different problems.
+      - wrong: "Linked lists are always better than arrays because they're dynamic."
+        right: |
+          Linked lists have overhead (pointers, non-contiguous memory, slower traversal).
+          Arrays are better when size is known and random access is needed.
+      - wrong: "You must write pseudocode for stack/queue/linked list operations in exams."
+        right: |
+          The syllabus says: "Candidates will not be required to write pseudocode for these
+          structures, but should be able to add, edit and delete data in them."
+      - wrong: "A circular queue wastes one array slot to distinguish full from empty."
+        right: |
+          That's one technique (sacrifice one slot), but you can also use a separate `count`
+          variable to track elements, using all slots.
+
+  - type: exam
+    body: |
+      - Define ADT: data + operations, implementation hidden.
+      - Stack: LIFO, push/pop/peek, uses (undo, call stack, expression evaluation).
+      - Queue: FIFO, enqueue/dequeue/front, uses (scheduling, buffering, BFS).
+      - Linked list: nodes with data + next pointer, dynamic, insert/delete anywhere.
+      - Array implementations: stack (top index), queue (circular with front/rear/count),
+        linked list (parallel arrays for data and next indices).
+      - Justify choice of ADT for a given scenario.
+
+  - type: takeaways
+    items:
+      - "ADT = data + operations, implementation hidden"
+      - "Stack: LIFO, push/pop/peek, array with top index"
+      - "Queue: FIFO, enqueue/dequeue/front, circular array with front/rear/count"
+      - "Linked list: nodes with data + next pointer, dynamic size"
+      - "Array-based linked list: parallel arrays (data[], next[]), free list"
+      - "No pseudocode writing required for exams — understand behaviour and trace"
+
+questions:
+  - id: adt-definition
+    format: explain
+    difficulty: 1
+    objectives: ["10.4.1"]
+    prompt: |
+      What two things define an Abstract Data Type (ADT)?
+    model: |
+      An ADT is defined by:
+      1. A **collection of data** (the structure)
+      2. A **set of operations** that can be performed on that data
+      The implementation details are hidden (abstract).
+    keyPoints:
+      - "Collection of data"
+      - "Set of operations"
+      - "Implementation hidden"
+    explanation: |
+      The abstraction barrier separates what the ADT does from how it does it.
+      Users interact only with the operations.
+
+  - id: stack-operations
+    format: mcq
+    difficulty: 2
+    objectives: ["10.4.2"]
+    prompt: |
+      Which sequence of stack operations leaves the stack with 5 at the top (assuming empty start)?
+    options:
+      - text: "push(3), push(7), push(5)"
+        correct: true
+        why: "Last pushed (5) is at top — LIFO."
+      - text: "push(5), push(7), push(3)"
+        why: "3 would be at top."
+      - text: "push(3), pop(), push(5), push(7)"
+        why: "7 would be at top."
+      - text: "push(5), pop(), push(3)"
+        why: "Stack would be empty then 3 pushed; 3 at top."
+    explanation: |
+      Stack is LIFO. The most recently pushed item is at the top. push(3), push(7), push(5)
+      leaves 5 at top, then 7, then 3 at bottom.
+
+  - id: queue-order
+    format: mcq
+    difficulty: 2
+    objectives: ["10.4.2"]
+    prompt: |
+      A queue has operations: enqueue(10), enqueue(20), dequeue(), enqueue(30).
+      What does the next dequeue() return?
+    options:
+      - text: "10"
+        why: "10 was already removed by the first dequeue."
+      - text: "20"
+        correct: true
+        why: "FIFO: 10 removed first, 20 is now at front."
+      - text: "30"
+        why: "30 is at the rear, not the front."
+      - text: "Error"
+        why: "Queue is not empty; 20 and 30 remain."
+    explanation: |
+      Queue is FIFO. After enqueue(10), enqueue(20): [10, 20]. dequeue() removes 10.
+      Then enqueue(30): [20, 30]. Next dequeue() returns 20.
+
+  - id: linked-list-structure
+    format: mcq
+    difficulty: 2
+    objectives: ["10.4.2"]
+    prompt: |
+      In a singly linked list node, what two components are typically present?
+    options:
+      - text: "data and previous pointer"
+        why: "Previous pointer is in doubly linked lists."
+      - text: "data and next pointer"
+        correct: true
+        why: "Singly linked list node = data + pointer to next node."
+      - text: "index and value"
+        why: "That describes an array element."
+      - text: "key and hash"
+        why: "That describes a hash table entry."
+    explanation: |
+      A singly linked list node contains the data value and a pointer/reference to the
+      next node. The last node's next pointer is NULL.
+
+  - id: array-stack-push
+    format: numeric
+    difficulty: 2
+    objectives: ["10.4.4"]
+    prompt: |
+      A stack is implemented with `ARRAY[1:50] OF INTEGER` and `top = 12`.
+      After `push(99)`, what is the new value of `top`?
+    fields:
+      - answer: 13
+        tolerance: { abs: 0.5 }
+        unit: "index"
+    explanation: |
+      push increments top then stores. Initial top=12 → after push, top=13, stack[13]=99.

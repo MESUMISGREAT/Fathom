@@ -1,0 +1,245 @@
+id: p3-diff-standard-derivatives
+subject: '9709'
+topic: '3.4'
+title: The P3 derivative set
+summary: Six new standard derivatives — e^x, ln x, sin x, cos x, tan x and arctan x — plus the chain rule to handle
+  any bracket around them.
+order: 1
+minutes: 8
+kind: core
+objectives:
+- 3.4.1
+prerequisites:
+- p3-trig-sec-cosec-cot
+- p3-logarithmic-exponential-e-and-ln
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.4, learning outcome 3.4.1 (derivatives of e^x, ln x, sin x, cos x, tan x and tan^{-1}x, with constant\
+    \ multiples, sums, differences and composites; the derivatives of sin^{-1}x and cos^{-1}x are not required).\
+    \ All questions are original.\n    Adversarially re-checked in this cloud session: every numeric answer key\
+    \ recomputed independently with Python (including finite-difference checks of each antiderivative), every MCQ\
+    \ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm run content:check`,\
+    \ `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were removed rather than\
+    \ left dangling, so these lessons currently teach with prose, tables and worked examples only; add the diagrams\
+    \ later. The review was a second pass by the same agent (no separate reviewer model is available here); a teacher\
+    \ has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can differentiate $e^{kx}$, $\ln x$, $\sin kx$, $\cos kx$, $\tan kx$ and
+
+    $\tan^{-1}x$, and combine them with sums, constants and the chain rule.'
+- type: explain
+  title: What they ask
+  body: "Every question is one of:\n\n1. **Straight differentiation** of an expression built from the standard set.\n\
+    2. **Finding where the gradient is a given number** (\"find the coordinate where the gradient\n   is 2\").\n\
+    3. **Simplifying first**, so that a messy power or product becomes a sum of standard terms —\n   for example\
+    \ expanding $(e^x + 1)^2$ instead of chain-ruling it."
+- type: definition
+  term: The P3 standard derivatives
+  body: '$$\frac{d}{dx}\,e^x = e^x \qquad \frac{d}{dx}\,\ln x = \frac{1}{x} \qquad \frac{d}{dx}\,\sin x = \cos x$$
+
+    $$\frac{d}{dx}\,\cos x = -\sin x \qquad \frac{d}{dx}\,\tan x = \sec^2 x \qquad \frac{d}{dx}\,\tan^{-1}x = \frac{1}{1
+    + x^2}$$
+
+
+    With the chain rule, brackets around any of these bring out a factor of the inside''s
+
+    derivative:
+
+
+    $$\frac{d}{dx}\,f(g(x)) = f''(g(x)) \cdot g''(x)$$'
+- type: explain
+  title: The method
+  body: "1. **Name the outside and inside functions** of each term. In $e^{3x^2}$ the outside is $e^u$\n   and the\
+    \ inside is $u = 3x^2$.\n2. **Differentiate the outside with respect to the inside** (from the table, with $x$\n\
+    \   replaced by the inside).\n3. **Multiply by the inside's derivative.**\n4. **Add or subtract term by term**,\
+    \ and pull constants out front.\n5. **Simplify before differentiating when it is easier**: expand powers, split\
+    \ fractions, turn\n   $\\dfrac{\\sin x}{\\cos x}$ into $\\tan x$.\n\n**The forgotten step:** $\\ln$ of a product\
+    \ is *expensive* to differentiate; first use log laws\nto split $\\ln(3x^2)$ into $\\ln 3 + 2\\ln x$, then differentiate\
+    \ term by term."
+- type: example
+  title: 'Example 1: chain rule on two of the new ones'
+  problem: Differentiate $y = e^{-x^2} + \ln(5x)$.
+  steps:
+  - 'First term: outside $e^u$ with $u = -x^2$.
+
+
+    $$\frac{d}{dx}\,e^{-x^2} = e^{-x^2} \cdot (-2x) = -2x\,e^{-x^2}$$'
+  - 'Second term: use laws first, $\ln(5x) = \ln 5 + \ln x$:
+
+
+    $$\frac{d}{dx}\,\ln(5x) = 0 + \frac{1}{x} = \frac{1}{x}$$'
+  - '(The chain-rule way gives the same: $\frac{1}{5x}\cdot 5 = \frac{1}{x}$ ✓)'
+  answer: $\dfrac{dy}{dx} = -2x\,e^{-x^2} + \dfrac{1}{x}$.
+- type: check
+  title: Quick check
+  questions:
+  - ln-recall
+  - chain-gradients
+  - spot-error-tan
+- type: example
+  title: 'Example 2: an exam-style hunt for a gradient'
+  problem: The curve $y = 2e^x - 6x$ has gradient $0$ at one $x$-value. Find it, and the point there.
+  steps:
+  - 'Differentiate:
+
+
+    $$\frac{dy}{dx} = 2e^x - 6$$'
+  - 'Set the gradient to 0:
+
+
+    $$2e^x - 6 = 0 \quad\Longrightarrow\quad e^x = 3$$'
+  - 'Take logs:
+
+
+    $$x = \ln 3 \approx 1.0986$$'
+  - 'The $y$-coordinate:
+
+
+    $$y = 2e^{\ln 3} - 6\ln 3 = 6 - 6\ln 3 \approx -0.59$$'
+  - 'Check the gradient at $x = 0$: $2 - 6 = -4$, negative; at $x = 2$: $2e^2 - 6 \approx 8.8$,
+
+    positive — so a zero of the gradient between them is expected ✓'
+  answer: $x = \ln 3$, giving the point $(1.099, -0.591)$ (3 s.f.).
+- type: check
+  title: Exam-style check
+  questions:
+  - inverse-tan-kx
+  - linear-vs-chain
+  - explain-why-ln3x-fine
+- type: misconceptions
+  items:
+  - wrong: $\dfrac{d}{dx}e^{kx} = ke^{x}$.
+    right: 'The exponent is untouched by the chain rule apart from its own derivative:
+
+      $\dfrac{d}{dx}e^{kx} = ke^{kx}$ — the $k$ also stays in the exponent.'
+  - wrong: $\dfrac{d}{dx}\ln(kx) = \dfrac{1}{kx}$.
+    right: The chain rule gives $\dfrac{1}{kx}\cdot k = \dfrac{1}{x}$; the constant $k$ cancels.
+  - wrong: $\dfrac{d}{dx}\sin 3x = \cos 3x$.
+    right: 'The inside''s derivative $3$ must appear: $\dfrac{d}{dx}\sin 3x = 3\cos 3x$.'
+  - wrong: $\dfrac{d}{dx}\tan^{-1}x = -\dfrac{1}{1 + x^2}$.
+    right: 'No minus sign here: $\dfrac{d}{dx}\tan^{-1}x = \dfrac{1}{1+x^2}$. (The minus belongs to
+
+      $\cos^{-1}$, which is outside the syllabus.)'
+  - wrong: $\dfrac{d}{dx}\tan x = \cot^2 x$.
+    right: '$\dfrac{d}{dx}\tan x = \sec^2 x = 1 + \tan^2 x$. Cosec and cot belong to the *integral* of
+
+      $\tan$, not the derivative.'
+  - wrong: Sums must be differentiated all at once.
+    right: 'Differentiation is linear: differentiate each term separately and add the results.'
+- type: exam
+  body: '- Leave answers in exact form with $e$, $\ln$ and surds unless a decimal is requested.
+
+    - "Find the gradient at $x = a$" questions expect the derivative **first**, then the substitution.
+
+    - If a question says "hence show that ...", reuse your derivative line rather than recalculating.
+
+    - The examiner''s M1 is usually the chain rule factor; write it explicitly as $\times(-2x)$ style so it is visible.'
+- type: takeaways
+  items:
+  - $(e^x)' = e^x$, $(\ln x)' = 1/x$, $(\sin x)' = \cos x$, $(\cos x)' = -\sin x$, $(\tan x)' = \sec^2 x$, $(\tan^{-1}x)'
+    = 1/(1+x^2)$.
+  - 'Brackets contribute a factor: $(e^{kx})'' = ke^{kx}$, $(\sin kx)'' = k\cos kx$.'
+  - $(\ln kx)' = 1/x$ for any positive constant $k$.
+  - Simplify with log laws or algebra before differentiating when it saves work.
+  - 'Gradient questions: differentiate first, then set the derivative equal to the given value.'
+- type: deeper
+  title: Where $\sec^2 x$ and $1/(1+x^2)$ come from
+  body: 'Write $\tan x = \dfrac{\sin x}{\cos x}$ and use the quotient rule:
+
+
+    $$\frac{\cos x\cdot\cos x - \sin x\cdot(-\sin x)}{\cos^2 x} = \frac{\cos^2 x + \sin^2 x}{\cos^2 x} = \frac{1}{\cos^2
+    x} = \sec^2 x$$
+
+
+    For $\tan^{-1}x$, start from $x = \tan y$, so $\dfrac{dx}{dy} = 1 + \tan^2 y = 1 + x^2$, and
+
+    flipping gives $\dfrac{dy}{dx} = \dfrac{1}{1 + x^2}$.'
+questions:
+- id: ln-recall
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.4.1
+  prompt: What is the derivative of $\ln(4x)$?
+  options:
+  - text: $\dfrac{1}{x}$
+    correct: true
+    why: $\ln(4x) = \ln 4 + \ln x$, and the constant $\ln 4$ differentiates to 0.
+  - text: $\dfrac{1}{4x}$
+    why: That is $\dfrac{1}{4}\cdot\dfrac{1}{x}$ — the factor 4 does not survive differentiation of a logarithm.
+  - text: $\ln 4$
+    why: $\ln 4$ is a constant, so it vanishes; the variable part $\ln x$ remains to give $1/x$.
+  - text: $4$
+    why: Constants differentiate to 0, never to themselves.
+  explanation: Because $\ln(kx) = \ln k + \ln x$ for $k > 0$, its derivative is always $\dfrac{1}{x}$.
+- id: chain-gradients
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.4.1
+  prompt: Find the gradient of $y = e^{-3x}$ at the point where $x = 0$.
+  fields:
+  - answer: -3
+    tolerance:
+      abs: 0.001
+  explanation: $y' = -3e^{-3x}$ by the chain rule; at $x = 0$ this is $-3e^0 = -3$.
+- id: spot-error-tan
+  format: spot-error
+  difficulty: 2
+  objectives:
+  - 3.4.1
+  prompt: One line of this working contains an error. Find it.
+  lines:
+  - "$y = \tan(5x)$"
+  - $y' = \sec^2(5x) \times 5 = 5\sec^2(5x)$
+  - 'At $x = 0$:  $y'' = 5\sec^2(0) = 5(1) = 0$'
+  - So the gradient at the origin is $0$.
+  errorLine: 3
+  fix: '$\sec 0 = 1$, so $5\sec^2(0) = 5$: the gradient at the origin is $5$, not $0$.'
+  explanation: 'Chain rule first, then evaluate: $\sec^2(0) = 1$, so $y'' = 5$.'
+- id: inverse-tan-kx
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.4.1
+  prompt: Find the gradient of $y = \tan^{-1}(2x)$ at $x = 1$, to 3 decimal places.
+  fields:
+  - answer: 0.4
+    tolerance:
+      abs: 0.002
+  explanation: $y' = \dfrac{2}{1 + (2x)^2}$, so at $x = 1$, $y' = \dfrac{2}{5} = 0.4$ exactly.
+- id: linear-vs-chain
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.4.1
+  prompt: Which derivative is correct?
+  options:
+  - text: $(\cos 3x)' = -3\sin 3x$
+    correct: true
+    why: The chain rule contributes the inner derivative 3 and the sign from cos.
+  - text: $(\cos 3x)' = \sin 3x$
+    why: 'Two slips: the sign is lost and the chain factor 3 is missing.'
+  - text: $(e^{5x})' = 5e^x$
+    why: 'The exponent must stay: the answer is $5e^{5x}$.'
+  - text: $(\ln 2x)' = \dfrac{2}{2x}\cdot 2 = 2$
+    why: $\ln(2x) = \ln 2 + \ln x$, so the derivative is $\dfrac{1}{x}$, not 2.
+  explanation: 'Each guess here corresponds to a real student error: dropping the sign, dropping $kx$, and over-simplifying
+    $\ln kx$.'
+- id: explain-why-ln3x-fine
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.4.1
+  prompt: Explain in a sentence or two why $\ln(3x)$ and $\ln x$ have exactly the same derivative.
+  model: '$\ln(3x) = \ln 3 + \ln x$ by log laws. The first term is a constant, so its derivative is 0,
+
+    leaving the derivative of $\ln x$, which is $1/x$.'
+  keyPoints:
+  - Use $\ln(3x) = \ln 3 + \ln x$
+  - Constants differentiate to zero
+  - So $(\ln 3x)' = 1/x = (\ln x)'$
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.

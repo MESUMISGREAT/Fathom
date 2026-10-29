@@ -1,8 +1,8 @@
 /**
  * Connected rates as one chain, written the same way every time. Circle: dA/dt = dA/dr × dr/dt,
  * where the wanted rate dA/dt is on the left, so you multiply. Balloon: dV/dt = dV/dr × dr/dt,
- * where the wanted rate dr/dt is on the right, so you divide. Bottom line: the dr's cancel like
- * fractions, which checks the chain is the right way round.
+ * where the wanted rate dr/dt is on the right, so you divide. The chain rule links the rates in
+ * the correct order; the symbols show connected rates, not fractions to cancel.
  */
 import { Label, MathLabel, Svg } from '../primitives';
 
@@ -90,7 +90,7 @@ export default function P1DifferentiationRatesChain() {
         w={W - 30}
         h={52}
         tone="muted"
-        tex="\text{Right way round? The } dr\text{'s cancel: } \dfrac{dA}{\cancel{dr}} \times \dfrac{\cancel{dr}}{dt} = \dfrac{dA}{dt}"
+        tex="\text{Each part is a rate; the chain links them.}"
       />
     </Svg>
   );

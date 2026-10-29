@@ -1,0 +1,139 @@
+﻿id: logic-gates-truth-table-from-circuit
+subject: "9618"
+topic: "3.2"
+title: Read a circuit into a truth table
+summary: Calculate a circuit's output for every input row to construct its truth table.
+order: 4
+minutes: 5
+kind: core
+objectives: ["3.2.5"]
+prerequisites: [logic-gates-symbols-and-jobs, logic-gates-truth-tables]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, learning outcome 3.2.5. Circuit inputs are illustrative binary values; all questions
+    are original. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can construct a truth table from a problem rule, a circuit or a logic expression.
+  - type: explain
+    title: Same four rows, one gate at a time
+    body: |
+      With two inputs A and B, start with all four rows: `00`, `01`, `10`, `11`. Work from the circuit's input side towards its output.
+
+      Let Y name the circuit's final output.
+
+      For row `01`, NOT A is 1 and B is 1, so `(NOT A) AND B` gives 1.
+
+      If one gate feeds another, make a working column for the first gate. This stops the middle result getting lost.
+  - type: diagram
+    diagram: cs-logic-gates-expression-circuit
+    alt: >-
+      Input A enters a NOT gate, whose output feeds one input of an AND gate. Input B feeds the
+      other AND input. The final output is Y, for Y equals NOT A AND B.
+    caption: The circuit computes `Y = (NOT A) AND B`.
+  - type: example
+    title: Calculate each output row
+    problem: Construct the truth table for `Y = (NOT A) AND B`.
+    steps:
+      - List A,B as 00, 01, 10, 11.
+      - >-
+        Add a working column NOT A: when A is 0 it is 1; when A is 1 it is 0. The values are 1, 1, 0, 0.
+      - >-
+        AND that result with B, row by row: 1 AND 0 = 0; 1 AND 1 = 1; 0 AND 0 = 0; 0 AND 1 = 0.
+      - The final Y column is 0, 1, 0, 0.
+    answer: |
+      | A | B | NOT A | Y |
+      |---|---|-------|---|
+      | 0 | 0 | 1 | 0 |
+      | 0 | 1 | 1 | 1 |
+      | 1 | 0 | 0 | 0 |
+      | 1 | 1 | 0 | 0 |
+  - type: check
+    title: Output row by row
+    questions: [not-and-table, middle-signal]
+  - type: explain
+    title: Start from a sentence if no circuit is drawn
+    body: |
+      “The chime rings when the door is open OR the test button is pressed.” Let D mean door open and T mean test button pressed.
+
+      That is `Y = D OR T`. Its output is 0 for `00` and 1 for `01`, `10` and `11` — the OR truth table.
+  - type: check
+    title: A rule is a truth table too
+    questions: [or-table-from-words, expression-table]
+  - type: exam
+    body: |
+      - Give every input combination once, in a consistent order.
+      - Follow the wires: calculate an intermediate gate before the gate it feeds.
+      - For a sentence, note what each input means, then mark rows that satisfy the rule.
+      - Recheck rows where a condition is false; NOT and NAND often catch rushed answers.
+  - type: takeaways
+    items:
+      - Use rows 00, 01, 10, 11 for two inputs.
+      - Work through a circuit from left to right; record intermediate outputs if useful.
+      - A problem statement can be rewritten as a rule, then evaluated for each input row.
+questions:
+  - id: not-and-table
+    format: cloze
+    difficulty: 3
+    objectives: ["3.2.5"]
+    prompt: For `Y = (NOT A) AND B`, the Y outputs for rows 00, 01, 10, 11 are `{{1}}, {{2}}, {{3}}, {{4}}`.
+    blanks:
+      - accept: ["0"]
+      - accept: ["1"]
+      - accept: ["0"]
+      - accept: ["0"]
+    explanation: NOT A is 1,1,0,0. AND each value with B (0,1,0,1) to get Y=0,1,0,0.
+  - id: middle-signal
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.5"]
+    prompt: What is the NOT gate's output when A=0, before it reaches the AND gate?
+    options:
+      - text: "1"
+        correct: true
+        why: NOT flips 0 to 1.
+      - text: "0"
+        why: That would copy the input instead of inverting it.
+      - text: It depends on B
+        why: The NOT gate only receives A; B joins later at AND.
+      - text: There is no intermediate output
+        why: The NOT gate produces the value that feeds the AND gate.
+    explanation: >-
+      Calculate the first gate from its own input: A=0 becomes 1 regardless of B.
+  - id: or-table-from-words
+    format: cloze
+    difficulty: 2
+    objectives: ["3.2.5"]
+    prompt: >-
+      For “Y is 1 when D OR T is 1”, fill Y in row order 00, 01, 10, 11: `{{1}}, {{2}}, {{3}}, {{4}}`.
+    blanks:
+      - accept: ["0"]
+      - accept: ["1"]
+      - accept: ["1"]
+      - accept: ["1"]
+    explanation: At least one input is 1 in rows 01, 10 and 11; neither is 1 in row 00.
+  - id: expression-table
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.5"]
+    prompt: For `Y = A AND B`, what is Y for input row A=1, B=0?
+    options:
+      - text: "0"
+        correct: true
+        why: AND needs both inputs to be 1, but B is 0.
+      - text: "1"
+        why: This would incorrectly treat AND as OR.
+      - text: It depends on the previous row
+        why: Each truth-table row is evaluated from its own input values.
+      - text: The row is not included
+        why: Row 10 is one of the four possible two-input combinations.
+    explanation: In row 10, one AND input is 0, so the output is 0.
+
+
+
+
+

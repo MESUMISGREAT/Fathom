@@ -1,0 +1,237 @@
+id: p3-vectors-line-equation
+subject: "9709"
+topic: "3.7"
+title: The vector equation of a line — r = a + tb
+summary: Understand every symbol in the line equation r = a + tb. Learn to write the equation given a point and direction, or two points, and find points on the line.
+order: 4
+minutes: 8
+kind: core
+objectives: ["3.7.4"]
+prerequisites: [p3-vectors-magnitude-unit]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.7 outcome "Understand the significance of all the symbols
+    used when the equation of a straight line is written in the form r = a + tb, and find
+    the equation of a line given sufficient information. For example, finding the equation
+    of a line given the position vector of a point on it and a direction vector, or given
+    the position vectors of two points on it." All examples, questions and diagrams are original.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write the vector equation of a line in the form r = a + tb, identify what a, b, and t represent, and find the equation from a point and direction or from two points.
+
+  - type: explain
+    title: The equation r = a + tb unpacked
+    body: |-
+      The vector equation of a straight line in 2D or 3D is:
+
+      **r = a + tb**
+
+      Here:
+      - **r** = the position vector of *any point* on the line. It's the "running variable" — as t changes, r traces out the whole line.
+      - **a** = the position vector of a **specific known point** on the line (often called the "base point" or "anchor point"). This fixes where the line is in space.
+      - **b** = a **direction vector** for the line. Any non-zero vector parallel to the line works. This fixes the line's orientation.
+      - **t** = a **scalar parameter** (real number). As t varies from -∞ to +∞, the point r moves along the entire line.
+
+      **Think of it as:** Start at point A (position vector a). Walk in the direction of b. The distance you walk is controlled by t. When t = 0, you're at A. When t = 1, you're at A + b. When t = -1, you're at A - b (backwards along the line).
+
+  - type: diagram
+    diagram: p3-vectors-line-equation
+    alt: >-
+      A line in 3D space. Point A with position vector a is marked. A direction vector b is shown
+      along the line. The running point r = a + tb is shown for t = 0, t = 1, t = 2, t = -1.
+    caption: |-
+      The line r = a + tb. The parameter t slides the point r along the line. a is the anchor; b gives the direction.
+
+  - type: example
+    title: "Example 1: from point and direction"
+    problem: |-
+      Find the vector equation of the line through the point A(2, -1, 3) with direction vector b = 4i - 2j + k.
+    steps:
+      - |-
+        The position vector of A is a = (2, -1, 3) or 2i - j + 3k.
+      - |-
+        The direction vector is b = (4, -2, 1) or 4i - 2j + k.
+      - |-
+        Equation: r = (2i - j + 3k) + t(4i - 2j + k).
+    answer: |-
+      r = (2i - j + 3k) + t(4i - 2j + k)  or  r = ((2, -1, 3) + t(4, -2, 1))
+
+  - type: check
+    questions: [vec-line-from-point-dir]
+
+  - type: explain
+    title: From two points on the line
+    body: |-
+      If you know two points A and B on the line, their position vectors are a and b. Then:
+
+      **Direction vector** = b - a (or a - b, either works — it just reverses the direction).
+
+      **Base point** = a (or b, either works).
+
+      So the equation can be:
+      - r = a + t(b - a)  (using A as base, AB as direction)
+      - r = b + t(a - b)  (using B as base, BA as direction)
+
+      Both describe the same line. The parameter t will have different values for the same point, but the set of points is identical.
+
+  - type: example
+    title: "Example 2: from two points"
+    problem: |-
+      Find the vector equation of the line through A(1, 2, -1) and B(4, 0, 3).
+    steps:
+      - |-
+        a = (1, 2, -1), b = (4, 0, 3).
+      - |-
+        Direction = b - a = (3, -2, 4).
+      - |-
+        Using A as base: r = (1, 2, -1) + t(3, -2, 4).
+    answer: |-
+      r = (1, 2, -1) + t(3, -2, 4)  or equivalently  r = (4, 0, 3) + t(-3, 2, -4)
+
+  - type: check
+    questions: [vec-line-from-two-points]
+
+  - type: explain
+    title: Finding points on the line
+    body: |-
+      Once you have r = a + tb, finding points is just substitution:
+      - For a given t, compute r = a + tb → that's the position vector of the point.
+      - For a given point P, check if there exists a t such that p = a + tb (solve for t in each component; all must give the same t).
+
+      **Special values of t:**
+      - t = 0 → r = a (the base point)
+      - t = 1 → r = a + b (one "step" in the direction of b)
+      - The midpoint of AB (if b = B - A) is at t = 1/2.
+
+  - type: example
+    title: "Example 3: checking if a point lies on a line"
+    problem: |-
+      The line L has equation r = (i + 2j - k) + t(2i - j + 3k). Does the point P(5, 0, 5) lie on L?
+    steps:
+      - |-
+        We need p = a + tb for some t. p = (5, 0, 5), a = (1, 2, -1), b = (2, -1, 3).
+      - |-
+        Solve for t in each component:
+        5 = 1 + 2t  →  2t = 4  →  t = 2
+        0 = 2 - t  →  t = 2
+        5 = -1 + 3t  →  3t = 6  →  t = 2
+      - |-
+        All three give t = 2. Consistent! So P lies on L (at parameter t = 2).
+    answer: |-
+      Yes, P lies on L with t = 2.
+
+  - type: check
+    questions: [vec-point-on-line]
+
+  - type: intuition
+    title: Why this form is so useful
+    body: |-
+      The parametric form r = a + tb is perfect for:
+      - **Intersections:** Set two line equations equal and solve for parameters.
+      - **Distances:** The perpendicular distance from a point to a line uses the direction vector b.
+      - **Angles:** The angle between two lines is the angle between their direction vectors.
+      - **3D geometry:** It extends naturally to planes (r = a + λb + μc).
+
+      In Cartesian form (y = mx + c or ax + by + c = 0), vertical lines are a problem. In vector form, **every line works the same way** — including lines parallel to the z-axis, or lines in 3D.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          a is the direction vector and b is the point.
+        right: |-
+          a is the position vector of a point on the line (the anchor). b is the direction vector. The letters are conventional; what matters is their role.
+      - wrong: |-
+          t must be between 0 and 1.
+        right: |-
+          t is any real number: -∞ < t < ∞. t = 0 gives the base point; t = 1 gives one step in direction b; negative t goes backwards.
+      - wrong: |-
+          The direction vector must be a unit vector.
+        right: |-
+          Any non-zero vector parallel to the line works. Using a unit vector makes t equal the distance from the base point, but it's not required.
+      - wrong: |-
+          r = a + tb and r = b + ta are different lines.
+        right: |-
+          If you swap the roles, you get the same line but with a different parameterisation. The set of points is identical.
+      - wrong: |-
+          The vector b is the position vector of a point on the line.
+        right: |-
+          b is a direction vector. It has no fixed position — it just says "go this way". Its tail is conceptually at the origin, but it represents a direction, not a location.
+
+  - type: exam
+    body: |-
+      - "Find the vector equation of the line through... and parallel to..." → a = point, b = given direction.
+      - "Find the vector equation of the line through A and B" → a = A, b = B - A (or vice versa).
+      - "Show that the point P lies on the line r = a + tb" → solve p = a + tb for t; check consistency.
+      - "Find the coordinates of the point on the line where t = 3" → substitute t = 3 into r = a + tb.
+      - Always write your final answer clearly as r = a + tb with a and b in component or i/j/k form.
+
+  - type: takeaways
+    items:
+      - |-
+        r = a + tb: r = running point, a = anchor point, b = direction, t = parameter.
+      - |-
+        From point A and direction d: r = a + td.
+      - |-
+        From two points A, B: r = a + t(b - a) or r = b + t(a - b).
+      - |-
+        t ∈ ℝ. t = 0 gives the anchor point a.
+      - |-
+        This form works for all lines in 2D and 3D, including vertical/horizontal/skew lines.
+
+questions:
+  - id: vec-line-from-point-dir
+    format: text
+    difficulty: 1
+    objectives: ["3.7.4"]
+    prompt: |-
+      Write the vector equation of the line through the point with position vector 3i - 2j + k and parallel to the vector 2i + j - 4k.
+    accept:
+      - r = (3i - 2j + k) + t(2i + j - 4k)
+      - r = 3i - 2j + k + t(2i + j - 4k)
+      - r = (3, -2, 1) + t(2, 1, -4)
+    model: |-
+      r = (3i - 2j + k) + t(2i + j - 4k)
+    explanation: |-
+      The anchor point is a = 3i - 2j + k. The direction vector is b = 2i + j - 4k. Plug into r = a + tb.
+
+  - id: vec-line-from-two-points
+    format: text
+    difficulty: 2
+    objectives: ["3.7.4"]
+    prompt: |-
+      Find the vector equation of the line through A(2, -1, 4) and B(-1, 3, 2).
+    accept:
+      - r = (2, -1, 4) + t(-3, 4, -2)
+      - r = (2i - j + 4k) + t(-3i + 4j - 2k)
+      - r = (-1, 3, 2) + t(3, -4, 2)
+    model: |-
+      r = (2i - j + 4k) + t(-3i + 4j - 2k)
+    explanation: |-
+      Direction = B - A = (-3, 4, -2). Using A as anchor: r = (2, -1, 4) + t(-3, 4, -2).
+
+  - id: vec-point-on-line
+    format: mcq
+    difficulty: 2
+    objectives: ["3.7.4"]
+    prompt: |-
+      The line L has equation r = (2i + j - k) + t(i - 2j + 3k). Which of these points does NOT lie on L?
+    options:
+      - text: (3, -1, 2)
+        why: |-
+          For t = 1: r = (3, -1, 2). This point IS on the line.
+      - text: (1, 3, -4)
+        why: |-
+          For t = -1: r = (1, 3, -4). This point IS on the line.
+      - text: (4, -3, 5)
+        why: |-
+          For t = 2: r = (4, -3, 5). This point IS on the line.
+      - text: (0, 0, 0)
+        correct: true
+        why: |-
+          Would need 2+t=0 → t=-2, then y = 1-2(-2)=5≠0. Not on the line.
+    explanation: |
+      For $(0, 0, 0)$ the $x$-coordinate requires $t = -2$, which gives $y = 1 - 2(-2) = 5$, not $0$. The other three points each come from a single $t$: $1$, $-1$ and $2$.

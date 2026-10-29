@@ -1,0 +1,235 @@
+id: database-concepts-relationships-er-diagrams
+subject: "9618"
+topic: "8.1"
+title: Relationships and E-R diagrams
+summary: Read and draw entity-relationship diagrams, and resolve one-to-one, one-to-many and many-to-many links into tables.
+order: 4
+minutes: 6
+kind: core
+objectives: ["8.1.3", "8.1.4"]
+prerequisites: [database-concepts-tables-keys-terminology]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus,
+    topic 8.1 Database Concepts, learning outcomes 8.1.3 (relationships) and 8.1.4 (using an
+    entity-relationship diagram to document a database design). Both diamond-and-line and
+    crow's-foot cardinality notation are explained, because exam papers use either. All
+    questions are original; the library and hotel examples are illustrative data.
+    Re-checked line by line on 2026-10-29: every fact, worked example and answer key was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can identify **one-to-one**, **one-to-many** and **many-to-many** relationships, draw them on an **entity-relationship (E-R) diagram**, and turn each one into tables with the right keys.
+
+  - type: explain
+    title: Why relationships need names
+    body: |
+      A database is not a pile of unrelated tables. The links between them carry meaning: this loan belongs to that student; this order was placed by that customer.
+
+      The type of a relationship is described by **cardinality** — how many records on one side can be linked to how many on the other.
+
+      | Type | Meaning | Example |
+      | --- | --- | --- |
+      | **One-to-one** (1:1) | One record in A links to at most one in B, and vice versa | A student has one student card; a card belongs to one student |
+      | **One-to-many** (1:M) | One record in A links to many in B; each B links to one A | One customer places many orders; each order belongs to one customer |
+      | **Many-to-many** (M:N) | Many records in A link to many in B | Many students take many courses; each course has many students |
+
+      Say the relationship out loud in both directions before choosing a type. "One customer, many orders" and "one order, one customer" together mean one-to-many.
+
+  - type: diagram
+    diagram: cs-database-concepts-er-relationships
+    alt: Three entity-relationship diagrams. One-to-one links Student to StudentCard. One-to-many links Customer to Order with a one at the customer end and a crow's foot at the order end. Many-to-many links Student and Course through an Enrolment junction entity, with one-to-many links into it from both sides.
+    caption: |
+      A many-to-many relationship cannot be stored directly in two tables. It becomes two one-to-many relationships through a junction table.
+
+  - type: explain
+    title: Reading an E-R diagram
+    body: |
+      E-R diagrams are a **design document**. They show what the database should contain before anyone writes SQL.
+
+      - An **entity** is drawn as a rectangle, labelled with its name: `Student`, `Book`.
+      - A **relationship** is drawn as a line or a diamond joining two entities, labelled with a verb: `borrows`, `places`.
+      - **Cardinality** is written at each end: `1` and `1`, `1` and `M` (or a crow's foot for "many"), or `M` and `N`.
+      - **Attributes** may be listed in ovals attached to the entity, with the **primary key underlined**.
+      - A **composite entity** (also called a junction or link entity) sits between two entities to break up a many-to-many relationship.
+
+      Different textbooks draw the symbols slightly differently. What matters in an exam is that entities, relationships and cardinality are all clear and consistent.
+
+  - type: example
+    title: Turning many-to-many into tables
+    problem: |
+      A library lets students borrow books. A student can borrow many books over time, and a book can be borrowed by many students. Design tables for this relationship.
+    steps:
+      - |
+        Start with the two entities: `Student(StudentID, Forename, Surname)` and `Book(BookID, Title, Author)`.
+      - |
+        You cannot put `BookID` in `Student`, because one student has many books. You cannot put `StudentID` in `Book`, because one book is borrowed by many students over time.
+      - |
+        Create a junction entity, `Loan`, whose job is to record one borrowing event: `Loan(LoanID, StudentID, BookID, DateBorrowed, DueDate)`.
+      - |
+        `StudentID` in `Loan` is a foreign key to `Student`. `BookID` in `Loan` is a foreign key to `Book`.
+      - |
+        The many-to-many relationship has become two one-to-many relationships. One student has many loans; one book has many loans.
+      - |
+        Extra facts about the borrowing, such as the due date, belong in `Loan`, because they describe that event, not the student or the book alone.
+    answer: |
+      `Student` and `Book` are joined by the junction table `Loan`, which holds a foreign key to each and any data about the borrowing itself.
+
+  - type: misconceptions
+    items:
+      - wrong: You can store a many-to-many relationship by putting a foreign key in one of the two tables.
+        right: |
+          A single foreign key field can hold only one value per record. A student with five books needs five references, which one field cannot hold. Use a junction table with one row per link.
+      - wrong: One-to-many means one table has more rows than the other.
+        right: |
+          It describes how records are linked, not how many rows exist. A table of countries and a table of cities is one-to-many even if both happen to have a similar number of rows.
+      - wrong: The relationship name is just decoration on the diagram.
+        right: |
+          The verb fixes the meaning and often reveals the cardinality. "A student borrows a book" does not tell you whether a book can be borrowed again; "a book is borrowed many times" does.
+      - wrong: A junction table needs no primary key of its own.
+        right: |
+          It needs a way to identify each link uniquely. That may be its own ID, or a composite key such as `(StudentID, BookID, DateBorrowed)`.
+
+  - type: exam
+    body: |
+      - When asked to **draw** an E-R diagram, label every entity, every relationship and every cardinality. An unlabelled line earns little.
+      - When asked to **describe** a relationship, give both directions: "one customer can place many orders, but each order is placed by exactly one customer."
+      - For a many-to-many relationship, the mark scheme usually wants the **junction table** and the two foreign keys. Say what the junction table represents.
+      - If the question asks for a **design**, include primary and foreign keys. A list of table names without keys is not a design.
+      - Do not add attributes that belong to a different entity. A `DueDate` describes a loan, not a book.
+
+  - type: takeaways
+    items:
+      - 'Cardinality describes how many records can be linked: 1:1, 1:M or M:N.'
+      - E-R diagrams show entities, relationships, cardinality and sometimes attributes and keys.
+      - A one-to-many relationship is stored by putting the foreign key on the "many" side.
+      - A many-to-many relationship needs a junction table with a foreign key to each side.
+      - The junction table holds facts about the link itself, such as a date or a quantity.
+
+  - type: check
+    title: Identify the relationship
+    questions: [customer-order-type, one-to-one-example, er-symbols]
+
+  - type: check
+    title: Design it
+    questions: [resolve-many-to-many, junction-purpose, spot-the-design-error]
+
+questions:
+  - id: customer-order-type
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.3", "8.1.4"]
+    prompt: |
+      A shop database has `Customer` and `Order`. One customer can place many orders, and each order is placed by exactly one customer. What type of relationship is this?
+    options:
+      - text: One-to-many
+        correct: true
+        why: |
+          One customer links to many orders, but each order links back to one customer. The foreign key goes in `Order`.
+      - text: One-to-one
+        why: |
+          That would mean each customer places at most one order, which is not what the description says.
+      - text: Many-to-many
+        why: |
+          That would mean an order could belong to several customers, and a customer to many orders.
+      - text: No relationship
+        why: |
+          The order records which customer placed it, so there is a clear link.
+    explanation: |
+      "One customer, many orders" with "one order, one customer" is the definition of one-to-many.
+
+  - id: one-to-one-example
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.3"]
+    prompt: |
+      Which pair of entities most naturally has a **one-to-one** relationship?
+    options:
+      - text: A student and their student card
+        correct: true
+        why: |
+          Each student has one card, and each card belongs to one student.
+      - text: A teacher and their classes
+        why: |
+          A teacher usually teaches several classes, which is one-to-many.
+      - text: A book and its borrowers
+        why: |
+          A book can be borrowed by many people over time, which is one-to-many or many-to-many depending on the design.
+      - text: A customer and their orders
+        why: |
+          One customer can place many orders, so this is one-to-many.
+    explanation: |
+      One-to-one means a single record on each side is linked: one student, one card.
+
+  - id: er-symbols
+    format: cloze
+    difficulty: 1
+    objectives: ["8.1.4"]
+    prompt: |
+      On a typical entity-relationship diagram, an entity is drawn as a {{1}}, and a relationship between two entities is drawn as a line or a {{2}}.
+    blanks:
+      - accept: [rectangle, box]
+      - accept: [diamond, rhombus]
+    explanation: |
+      Entities are rectangles, relationships are lines or diamonds, and cardinality labels such as 1 and M go at the ends.
+
+  - id: resolve-many-to-many
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.3", "8.1.4"]
+    prompt: |
+      Students take many courses, and each course has many students. What is the correct way to store this?
+    options:
+      - text: Add an `Enrolment` table with foreign keys to both `Student` and `Course`
+        correct: true
+        why: |
+          The junction table records one row per student-course pair, turning the many-to-many link into two one-to-many links.
+      - text: Put `CourseID` in the `Student` table
+        why: |
+          One field holds one value, so a student could take only one course.
+      - text: Put `StudentID` in the `Course` table
+        why: |
+          That would allow only one student per course.
+      - text: Merge the two tables into one wide table
+        why: |
+          That would repeat every student for every course and every course for every student, creating severe redundancy.
+    explanation: |
+      Many-to-many relationships are resolved with a junction table holding a foreign key to each entity.
+
+  - id: junction-purpose
+    format: text
+    difficulty: 2
+    objectives: ["8.1.3", "8.1.4"]
+    style: definition
+    prompt: |
+      What is the purpose of a junction (link) table in a relational database?
+    accept:
+      - to resolve a many-to-many relationship into two one-to-many relationships
+      - to link two tables in a many-to-many relationship
+      - to break a many-to-many relationship into two one-to-many relationships
+      - to store the links between two entities in a many-to-many relationship
+    model: |
+      A junction table resolves a many-to-many relationship. It holds one row for each link between the two entities, with a foreign key to each, so the many-to-many link becomes two one-to-many relationships.
+    explanation: |
+      The junction table is what makes the many-to-many relationship storable without repeating data.
+
+  - id: spot-the-design-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["8.1.4"]
+    prompt: |
+      A student designs tables for a gym. Members can attend many classes, and each class has many members. Which line contains the first design error?
+    lines:
+      - "Create Member(MemberID, Name, Email)."
+      - "Create Class(ClassID, ClassName, Day, Time)."
+      - "Add ClassID to Member so each member records the class they attend."
+      - "Add an Attendance table with MemberID and ClassID as foreign keys."
+      - "Use (MemberID, ClassID) as the primary key of Attendance."
+    errorLine: 3
+    fix: |
+      One `ClassID` field in `Member` can hold only one class, so a member could attend only one class. The many-to-many relationship needs the `Attendance` junction table, which the next lines already provide.
+    explanation: |
+      A repeating group cannot be stored in a single field, and duplicating the member row for each class would create redundancy. The junction table is the correct design.

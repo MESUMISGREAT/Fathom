@@ -1,0 +1,264 @@
+id: differential-equations-separable
+subject: "9709"
+topic: "3.8"
+title: Solving separable differential equations
+summary: "Master the separation of variables technique: bring all $y$ terms to one side, all $x$ terms to the other, then integrate both sides. This is the main method for solving first-order DEs in Paper 3."
+order: 2
+minutes: 10
+kind: core
+objectives: ["3.8.2"]
+prerequisites: ["differential-equations-formulating"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.8 outcome "Find by integration a general form of solution
+    for a first order differential equation in which the variables are separable." All
+    examples, questions and diagrams are original.
+  reviewedAt: 2026-10-29
+  reviewedBy: ai-review
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve first-order separable differential equations by separating variables and integrating, using any integration technique from topic 3.5.
+
+  - type: explain
+    title: What does "separable" mean?
+    body: |-
+      A first-order differential equation is **separable** if you can write it in the form
+      $$ \frac{dy}{dx} = f(x)g(y) $$
+      or equivalently
+      $$ \frac{1}{g(y)}\,\frac{dy}{dx} = f(x) $$
+      
+      The method: **separate the variables** — all $y$ (and $dy$) on one side, all $x$ (and $dx$) on the other — then integrate both sides with respect to $x$:
+      $$ \int \frac{1}{g(y)}\,dy = \int f(x)\,dx $$
+      
+      This works because $\frac{dy}{dx}\,dx = dy$ (chain rule / "cancelling $dx$" — a useful mnemonic even if not fully rigorous).
+
+  - type: example
+    title: "Example 1: Basic separation"
+    problem: |-
+      Solve $\frac{dy}{dx} = 2xy$.
+    steps:
+      - |-
+        Separate: $\frac{1}{y}\,dy = 2x\,dx$.
+      - |-
+        Integrate: $\int \frac{1}{y}\,dy = \int 2x\,dx$.
+      - |-
+        $\ln|y| = x^2 + C$.
+      - |-
+        Solve for $y$: $|y| = e^{x^2+C} = e^C e^{x^2}$.
+      - |-
+        Let $A = \pm e^C$ (any non-zero constant). Then $y = Ae^{x^2}$.
+      - |-
+        Check $y=0$: it satisfies the original DE ($\frac{dy}{dx}=0$, $2xy=0$), so $A$ can be any real constant.
+    answer: |-
+      $y = Ae^{x^2}$ (where $A \in \mathbb{R}$)
+
+  - type: check
+    questions: [de-separable-1, de-separable-2]
+
+  - type: explain
+    title: The constant of integration — where does it go?
+    body: |-
+      **One constant is enough.** When you integrate both sides, you get two constants:
+      $$ \ln|y| + C_1 = x^2 + C_2 $$
+      Combine them: $\ln|y| = x^2 + (C_2 - C_1)$. Let $C = C_2 - C_1$. One constant.
+      
+      **Put the constant on the "simpler" side.** Usually the $x$-side. If you have $\ln|y| = x^2 + C$, it's easier to exponentiate than if you have $\ln|y| + C = x^2$.
+      
+      **Don't forget the absolute value when integrating $1/y$.** $\int \frac{1}{y}\,dy = \ln|y| + C$, not $\ln y$. The absolute value matters when you later remove the log.
+
+  - type: example
+    title: "Example 2: Using partial fractions (topic 3.5)"
+    problem: |-
+      Solve $\frac{dy}{dx} = \frac{y(1-y)}{x}$.
+    steps:
+      - |-
+        Separate: $\frac{1}{y(1-y)}\,dy = \frac{1}{x}\,dx$.
+      - |-
+        Partial fractions: $\frac{1}{y(1-y)} = \frac{1}{y} + \frac{1}{1-y}$.
+      - |-
+        Integrate: $\int \left(\frac{1}{y} + \frac{1}{1-y}\right)dy = \int \frac{1}{x}\,dx$.
+      - |-
+        $\ln|y| - \ln|1-y| = \ln|x| + C$.
+      - |-
+        Combine logs: $\ln\left|\frac{y}{1-y}\right| = \ln|x| + C$.
+      - |-
+        Exponentiate: $\left|\frac{y}{1-y}\right| = e^C|x| = A|x|$ where $A = e^C > 0$.
+      - |-
+        Remove absolute values carefully: $\frac{y}{1-y} = \pm A x$. Let $k = \pm A$ (any non-zero constant).
+      - |-
+        Solve for $y$: $y = kx(1-y) = kx - kxy$ → $y + kxy = kx$ → $y(1+kx) = kx$ → $y = \frac{kx}{1+kx}$.
+      - |-
+        Check $y=0$ and $y=1$: $y=0$ gives $k=0$; $y=1$ makes the denominator zero in separation step but satisfies original DE. So $k \in \mathbb{R}$.
+    answer: |-
+      $y = \frac{kx}{1+kx}$ (where $k \in \mathbb{R}$)
+
+  - type: check
+    questions: [de-separable-3, de-separable-4]
+
+  - type: explain
+    title: Trigonometric integrals and substitutions
+    body: |-
+      Topic 3.5 techniques you may need:
+      - $\int \tan x\,dx = \ln|\sec x| + C$
+      - $\int \cot x\,dx = \ln|\sin x| + C$
+      - $\int \sec x\,dx = \ln|\sec x + \tan x| + C$
+      - $\int \csc x\,dx = \ln|\csc x - \cot x| + C$
+      - $\int \frac{1}{x^2+a^2}\,dx = \frac{1}{a}\tan^{-1}\frac{x}{a} + C$
+      - $\int \frac{1}{\sqrt{a^2-x^2}}\,dx = \sin^{-1}\frac{x}{a} + C$
+      - Integration by parts: $\int u\,dv = uv - \int v\,du$
+      - Substitution (given in the question)
+      
+      **Cambridge expects you to recognise and use these.**
+
+  - type: example
+    title: "Example 3: Trigonometric separation"
+    problem: |-
+      Solve $\frac{dy}{dx} = \frac{y^2}{\cos x}$, given that $y = 1$ when $x = 0$. (This is a preview of the next lesson — here we find the general solution.)
+    steps:
+      - |-
+        Separate: $\frac{1}{y^2}\,dy = \sec x\,dx$.
+      - |-
+        Integrate: $\int y^{-2}\,dy = \int \sec x\,dx$.
+      - |-
+        $-\frac{1}{y} = \ln|\sec x + \tan x| + C$.
+      - |-
+        Solve for $y$: $y = -\frac{1}{\ln|\sec x + \tan x| + C}$.
+    answer: |-
+      $y = -\frac{1}{\ln|\sec x + \tan x| + C}$
+
+  - type: check
+    questions: [de-separable-5]
+
+  - type: explain
+    title: Implicit solutions are fine
+    body: |-
+      Sometimes you can't easily solve for $y$ explicitly. An **implicit solution** like
+      $$ \ln|y| + y = x^2 + C $$
+      is perfectly acceptable as a "general form of solution" unless the question asks for "$y$ in terms of $x$" or "express $y$ explicitly".
+      
+      **Cambridge mark schemes** accept implicit solutions. Don't waste time doing messy algebra to isolate $y$ if it's not required.
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          You can always cancel $dx$ and $dy$ like fractions.
+        right: |
+          It's a mnemonic that works for separable first-order DEs, but it's not a proof. The rigorous justification uses the chain rule: $\int \frac{1}{g(y)}\frac{dy}{dx}\,dx = \int \frac{1}{g(y)}\,dy$.
+      - wrong: |
+          $\int \frac{1}{y}\,dy = \ln y + C$.
+        right: |
+          $\int \frac{1}{y}\,dy = \ln|y| + C$. The absolute value is essential.
+      - wrong: |
+          You need two constants of integration, one on each side.
+        right: |
+          One constant. Combine $C_1$ and $C_2$ into a single $C$.
+      - wrong: |
+          If you get $|y| = e^{x^2+C}$, then $y = e^{x^2+C}$.
+        right: |
+          $|y| = e^{x^2+C}$ means $y = \pm e^{x^2+C}$. The $\pm$ gets absorbed into the constant: $y = Ae^{x^2}$ where $A \in \mathbb{R}$ (and $A=0$ gives the trivial solution $y=0$).
+      - wrong: |
+          Separation of variables works for all first-order DEs.
+        right: |
+          Only for separable ones. $\frac{dy}{dx} = x + y$ is **not** separable (can't write as $f(x)g(y)$).
+
+  - type: exam
+    body: |-
+      - Always show the separation step clearly: $\frac{1}{g(y)}\,dy = f(x)\,dx$.
+      - Integrate both sides — show the integral signs.
+      - Use absolute values in logs: $\ln|y|$, not $\ln y$.
+      - One constant of integration, usually on the $x$-side.
+      - If the question says "express $y$ in terms of $x$", you must solve for $y$. Otherwise implicit is fine.
+      - Check if $y=0$ (or other values that make $g(y)=0$) are solutions — they can be lost when dividing by $g(y)$.
+      - Use integration techniques from topic 3.5: partial fractions, trig integrals, substitution, by parts.
+
+  - type: takeaways
+    items:
+      - |-
+        Separable means $\frac{dy}{dx} = f(x)g(y)$. Separate: $\frac{1}{g(y)}\,dy = f(x)\,dx$.
+      - Integrate both sides. One constant of integration.
+      - $\int \frac{1}{y}\,dy = \ln|y| + C$ (absolute value!).
+      - $|y| = e^{\text{something}}$ → $y = Ae^{\text{something}}$ with $A \in \mathbb{R}$.
+      - Check for solutions lost by dividing by $g(y)$ (e.g. $y=0$).
+      - Any integration technique from topic 3.5 is fair game.
+
+questions:
+  - id: de-separable-1
+    format: text
+    difficulty: 1
+    objectives: ["3.8.2"]
+    prompt: |-
+      Solve the differential equation $\frac{dy}{dx} = 3x^2 y$. Give the general solution.
+    accept:
+      - y = Ae^{x^3}
+      - y = A*e^{x^3}
+      - y = A e^{x^3}
+      - y = A*exp(x^3)
+    model: |-
+      $y = Ae^{x^3}$
+    explanation: |-
+      Separate: $\frac{1}{y}dy = 3x^2 dx$. Integrate: $\ln|y| = x^3 + C$. Exponentiate: $|y| = e^C e^{x^3} = Ae^{x^3}$, so $y = Ae^{x^3}$ ($A \in \mathbb{R}$).
+
+  - id: de-separable-2
+    format: text
+    difficulty: 2
+    objectives: ["3.8.2"]
+    prompt: |-
+      Solve $\frac{dy}{dx} = \frac{2x}{y}$. Give the general solution in implicit form.
+    accept:
+      - y^2 = 2x^2 + C
+      - y^2 = 2x^2 + c
+      - y^2/2 = x^2 + C
+    model: |-
+      $y^2 = 2x^2 + C$ (or equivalently $\frac{1}{2}y^2 = x^2 + C$)
+    explanation: |-
+      Separate: $y\,dy = 2x\,dx$. Integrate: $\frac{1}{2}y^2 = x^2 + C$. Multiply by 2: $y^2 = 2x^2 + C$.
+
+  - id: de-separable-3
+    format: text
+    difficulty: 2
+    objectives: ["3.8.2"]
+    prompt: |-
+      Solve $\frac{dy}{dx} = \frac{y}{x(1+x)}$ using partial fractions. Give the general solution.
+    accept:
+      - y = kx/(1+x)
+      - y = k*x/(1+x)
+      - y = A*x/(1+x)
+    model: |-
+      $y = \frac{kx}{1+x}$ (where $k \in \mathbb{R}$)
+    explanation: |-
+      Separate: $\frac{1}{y}dy = \frac{1}{x(1+x)}dx$. Partial fractions: $\frac{1}{x(1+x)} = \frac{1}{x} - \frac{1}{1+x}$. Integrate: $\ln|y| = \ln|x| - \ln|1+x| + C = \ln\left|\frac{x}{1+x}\right| + C$. Exponentiate: $y = A\frac{x}{1+x}$.
+
+  - id: de-separable-4
+    format: text
+    difficulty: 3
+    objectives: ["3.8.2"]
+    prompt: |-
+      Solve $\frac{dy}{dx} = y \tan x$. Give the general solution.
+    accept:
+      - y = A sec x
+      - y = A*sec x
+      - y = A/cos x
+      - y = A sec(x)
+    model: |-
+      $y = A \sec x$ (where $A \in \mathbb{R}$)
+    explanation: |-
+      Separate: $\frac{1}{y}dy = \tan x\,dx$. Integrate: $\ln|y| = \ln|\sec x| + C$. Exponentiate: $|y| = e^C |\sec x|$ → $y = A\sec x$.
+
+  - id: de-separable-5
+    format: text
+    difficulty: 3
+    objectives: ["3.8.2"]
+    prompt: |-
+      Find the general solution of $\frac{dy}{dx} = \frac{e^x}{y^2}$.
+    accept:
+      - y^3 = 3e^x + C
+      - y^3/3 = e^x + C
+      - y = (3e^x + C)^{1/3}
+    model: |-
+      $y^3 = 3e^x + C$ (or $\frac{1}{3}y^3 = e^x + C$)
+    explanation: |-
+      Separate: $y^2\,dy = e^x\,dx$. Integrate: $\frac{1}{3}y^3 = e^x + C$. Multiply by 3: $y^3 = 3e^x + C$.

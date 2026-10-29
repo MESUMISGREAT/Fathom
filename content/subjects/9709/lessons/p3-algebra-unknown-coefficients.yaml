@@ -1,0 +1,210 @@
+id: p3-algebra-unknown-coefficients
+subject: "9709"
+topic: "3.1"
+title: "Finding unknown coefficients with the theorems"
+summary: If you are told a remainder or a factor, substitute and set up an equation — two facts give two equations, so two unknowns are no problem.
+order: 6
+minutes: 6
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [p3-algebra-remainder-factor-theorem]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1, for the syllabus note "solve polynomial equations or evaluate unknown
+    coefficients". All simultaneous equations solved and checked in Python. All questions are
+    original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use a given factor or remainder to find unknown constants in a polynomial, including when there are two unknowns.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      Typical wording: *"$f(x) = x^3 + ax^2 - 3x + b$. Given that $(x - 2)$ is a factor and that
+      $f(1) = -4$, find $a$ and $b$."*
+
+      Each fact is an equation:
+
+      - "factor" → the value at the root is $0$;
+      - "remainder $c$" → the value at the root is $c$.
+
+      Two facts, two unknowns: solve simultaneously.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. **Turn each fact into $f(\text{something}) = \text{number}$.** Factor gives $0$; remainder gives the stated value.
+      2. **Substitute** and simplify to two linear equations in the unknowns.
+      3. **Solve simultaneously** (eliminate one unknown).
+      4. **Check** by substituting both values back into the original facts.
+
+      **The forgotten step:** translating "the remainder when divided by $(x + 3)$ is 5" into
+      $f(-3) = 5$. The sign inside the bracket flips, and the remainder is not zero.
+
+  - type: example
+    title: "Example 1: one unknown"
+    problem: |-
+      $f(x) = x^3 + ax^2 - 3x + 2$ has remainder $8$ when divided by $x - 2$. Find $a$.
+    steps:
+      - |-
+        Remainder $8$ on division by $x - 2$ means $f(2) = 8$.
+      - |-
+        $$f(2) = 8 + 4a - 6 + 2 = 4a + 4$$
+      - |-
+        Set equal to $8$: $4a + 4 = 8$, so $a = 1$.
+      - |-
+        Check: $f(2) = 8 + 4 - 6 + 2 = 8$ ✓
+    answer: |-
+      $a = 1$.
+
+  - type: example
+    title: "Example 2: an exam-style one"
+    problem: |-
+      $f(x) = x^3 + ax^2 + bx - 6$. Given that $(x - 1)$ is a factor and that $(x + 2)$ is a factor, find $a$ and $b$.
+    steps:
+      - |-
+        $(x - 1)$ factor gives $f(1) = 0$:
+        $$1 + a + b - 6 = 0 \quad\Rightarrow\quad a + b = 5$$
+      - |-
+        $(x + 2)$ factor gives $f(-2) = 0$:
+        $$-8 + 4a - 2b - 6 = 0 \quad\Rightarrow\quad 4a - 2b = 14 \quad\Rightarrow\quad 2a - b = 7$$
+      - |-
+        Solve: adding $a + b = 5$ and $2a - b = 7$ gives $3a = 12$, so $a = 4$ and $b = 1$.
+      - |-
+        Check with $f(1)$: $1 + 4 + 1 - 6 = 0$ ✓ and $f(-2)$: $-8 + 16 - 2 - 6 = 0$ ✓
+    answer: |-
+      $a = 4$, $b = 1$, so $f(x) = x^3 + 4x^2 + x - 6$.
+
+  - type: check
+    title: Quick check
+    questions: [one-unknown, two-unknowns, remainder-not-zero]
+
+  - type: check
+    title: Practice
+    questions: [root-of-divisor, quotient-after-factor]
+
+  - type: misconceptions
+    items:
+      - wrong: A factor gives $f(k) = k$.
+        right: |-
+          A factor gives $f(k) = 0$; only a **remainder** gives a non-zero value.
+      - wrong: |-
+          A remainder of 5 on division by $(x + 3)$ means $f(3) = 5$.
+        right: |-
+          It means $f(-3) = 5$, because $x = -3$ makes the divisor zero.
+      - wrong: Two unknowns need a quadratic to solve.
+        right: |-
+          Each fact is linear in the unknowns, so you get simultaneous linear equations — add or
+          subtract to eliminate.
+      - wrong: Once you have $a$ and $b$, no check is needed.
+        right: |-
+          Substitute back into both original facts. It takes seconds and catches sign errors, which
+          are very common here.
+      - wrong: If one equation gives $a = 4$, you can stop.
+        right: |-
+          You must state both constants; the second comes from the second fact.
+
+  - type: exam
+    body: |-
+      - Write each fact as an explicit equation before substituting: "factor $(x - 1)$ $\Rightarrow f(1) = 0$".
+      - Keep the working tidy: one equation per line, labelled with the fact it came from.
+      - Show the subtraction/addition used to solve simultaneously.
+      - Finish with the polynomial written out, so the examiner sees both constants in place.
+
+  - type: takeaways
+    items:
+      - 'Factor $\Rightarrow f(k) = 0$; remainder $c$ $\Rightarrow f(k) = c$.'
+      - 'For $(ax + b)$, the root is $x = -\frac{b}{a}$.'
+      - 'Two facts give two simultaneous equations for two unknowns.'
+      - 'Check by substituting both constants back into the original facts.'
+      - 'State the final polynomial, not just the constants.'
+
+  - type: deeper
+    title: Three unknowns, three facts
+    body: |-
+      A quartic with three unknown coefficients needs three facts — usually two factors and one
+      remainder. The method does not change: each fact becomes a linear equation, and you solve a
+      $3 \times 3$ system.
+
+      Cambridge occasionally gives a repeated factor instead, such as "$(x - 1)^2$ is a factor".
+      That is **two** facts from one statement: $f(1) = 0$ and $f'(1) = 0$ (or, without calculus,
+      divide by $(x - 1)$ and require the quotient to vanish at $x = 1$).
+
+questions:
+  - id: one-unknown
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |-
+      $f(x) = x^3 + ax^2 - 3x + 2$ has remainder $8$ when divided by $x - 2$. Find $a$.
+    fields:
+      - answer: 1
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $f(2) = 8 + 4a - 6 + 2 = 4a + 4 = 8$, so $a = 1$.
+
+  - id: two-unknowns
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |-
+      $f(x) = x^3 + ax^2 + bx - 6$ has factors $(x - 1)$ and $(x + 2)$. Find $a$.
+    fields:
+      - answer: 4
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $f(1) = 0$ gives $a + b = 5$. $f(-2) = 0$ gives $4a - 2b = 14$, i.e. $2a - b = 7$. Adding
+      gives $3a = 12$, so $a = 4$ (and $b = 1$).
+
+  - id: remainder-not-zero
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |-
+      $f(x) = 2x^3 + ax - 5$ has remainder $7$ when divided by $x + 2$. Find $a$.
+    fields:
+      - answer: -14
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $f(-2) = 2(-8) - 2a - 5 = -21 - 2a$. Setting this equal to the remainder $7$:
+      $-21 - 2a = 7$, so $-2a = 28$ and $a = -14$.
+
+  - id: root-of-divisor
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |-
+      To use the factor theorem with the divisor $(3x - 2)$, which value do you substitute?
+    options:
+      - text: $x = \tfrac{2}{3}$
+        correct: true
+        why: |-
+          The divisor is zero when $3x - 2 = 0$, i.e. $x = \tfrac{2}{3}$.
+      - text: $x = 2$
+        why: |-
+          That makes $3x - 2 = 4$, not zero.
+      - text: $x = -\tfrac{2}{3}$
+        why: |-
+          That is the root of $3x + 2$, not $3x - 2$.
+      - text: $x = 3$
+        why: |-
+          Substituting gives $7$, not zero.
+    explanation: |-
+      Always substitute the value that makes the divisor zero, here $x = \tfrac{2}{3}$.
+
+  - id: quotient-after-factor
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |-
+      $f(x) = x^3 + 4x^2 + x - 6 = (x - 1)(x^2 + px + 6)$. Find $p$.
+    fields:
+      - answer: 5
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Expanding $(x - 1)(x^2 + px + 6)$ gives $x^3 + (p - 1)x^2 + (6 - p)x - 6$. Comparing
+      $x^2$: $p - 1 = 4$, so $p = 5$ (and then the $x$ coefficient is $6 - 5 = 1$ ✓).

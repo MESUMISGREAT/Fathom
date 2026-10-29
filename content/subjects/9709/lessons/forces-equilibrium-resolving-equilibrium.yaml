@@ -1,0 +1,121 @@
+id: forces-equilibrium-resolving-equilibrium
+subject: "9709"
+topic: "4.1"
+title: Equilibrium by resolving forces
+summary: Use zero resultant and zero component sums to solve balanced-force problems.
+order: 3
+minutes: 7
+kind: core
+objectives: ["4.1.3"]
+prerequisites: ["forces-equilibrium-components-and-resultants"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus objective 4.1.3. All questions and examples are original; numerical values are
+    illustrative. Use $g=10\text{ m s}^{-2}$ for 9709 mechanics. Not yet independently
+    reviewed or reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can recognise equilibrium and use the equations that the sum of the horizontal and vertical components is zero.
+  - type: definition
+    term: Equilibrium
+    body: A particle is in equilibrium when the vector sum of all the forces acting on it is zero, so its acceleration is zero.
+  - type: explain
+    title: Balanced in every direction
+    body: |-
+      “Balanced” does not mean that no forces act. It means that the forces cancel as vectors. A particle can have a large upward force and a large downward force, provided their totals match.
+
+      Choose positive directions and write one equation per perpendicular direction:
+      $$\sum F_x=0,\qquad \sum F_y=0.$$
+      The signs matter because they record direction.
+  - type: example
+    title: A hanging junction
+    problem: Two strings pull a small ring with tensions $T_1$ and $T_2$. Their components are $T_1$ left and $T_2\cos40^\circ$ right horizontally; vertically they are $T_2\sin40^\circ$ upwards and a $30\text{ N}$ load downwards. Find $T_1$ and $T_2$.
+    steps:
+      - |-
+        Horizontal equilibrium gives $T_2\cos40^\circ-T_1=0$, so $T_1=T_2\cos40^\circ$.
+      - |-
+        Vertical equilibrium gives $T_2\sin40^\circ-30=0$, so $T_2=30/\sin40^\circ$.
+      - |-
+        Calculate $T_2\approx46.7\text{ N}$.
+      - |-
+        Substitute into the horizontal equation: $T_1\approx46.7\cos40^\circ\approx35.8\text{ N}$.
+    answer: $T_2\approx46.7\text{ N}$ and $T_1\approx35.8\text{ N}$.
+  - type: diagram
+    diagram: forces-equilibrium-resolving-equilibrium
+    alt: A small ring pulled by two strings at angles showing horizontal and vertical force components for equilibrium
+  - type: check
+    questions: [equilibrium-condition, equilibrium-equation, equilibrium-load, balancing-resultant]
+  - type: explain
+    title: A reliable routine
+    body: |-
+      1. Draw and label every force.
+      2. Choose axes that make the components simple.
+      3. Resolve each slanted force.
+      4. Set the signed component sum to zero in each direction.
+      5. Solve and check that the answers have sensible signs and sizes.
+
+      If a result is negative, it usually means the force acts opposite to the direction you assumed. Do not silently change a sign halfway through.
+  - type: misconceptions
+    items:
+      - wrong: Equilibrium means every individual force is zero.
+        right: Equilibrium means the vector sum is zero; individual forces can be non-zero.
+      - wrong: Set the magnitudes of all forces equal in one equation.
+        right: Resolve into directions first, then set the signed component totals to zero.
+  - type: exam
+    body: Write both component equations clearly. A correct answer with no equations can lose method marks because the balance of forces is the key idea.
+  - type: takeaways
+    items:
+      - Equilibrium means zero resultant force.
+      - The sum of horizontal components is zero.
+      - The sum of vertical components is zero.
+      - Choose signs once and keep them consistently.
+questions:
+  - id: equilibrium-condition
+    format: text
+    difficulty: 1
+    objectives: ["4.1.3"]
+    prompt: "Complete the statement: for a particle in equilibrium, the vector sum of the forces is _____."
+    style: one-line
+    accept: ["zero", "0", "the zero vector"]
+    model: The vector sum of the forces is zero.
+    explanation: Equilibrium means there is no resultant force and therefore no acceleration.
+  - id: equilibrium-equation
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.3"]
+    prompt: A particle in equilibrium has horizontal forces $P$ to the right and $7\text{ N}$ to the left. What is $P$?
+    options:
+      - text: $7\text{ N}$
+        correct: true
+        why: The horizontal forces must cancel, so $P-7=0$.
+      - text: $0\text{ N}$
+        correct: false
+        why: A zero force would not cancel the $7\text{ N}$ force.
+      - text: $14\text{ N}$
+        correct: false
+        why: Forces in opposite directions are subtracted, not added.
+      - text: $49\text{ N}$
+        correct: false
+        why: There is no squaring rule for balancing forces.
+    explanation: Horizontal equilibrium gives $P-7=0$, hence $P=7\text{ N}$.
+  - id: equilibrium-load
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.3"]
+    prompt: A vertical upward force of $42\text{ N}$ balances a downward force $W$. Find $W$ in newtons.
+    fields:
+      - answer: 42
+        unit: N
+    explanation: Vertical equilibrium requires $42-W=0$, so $W=42\text{ N}$.
+  - id: balancing-resultant
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.3"]
+    prompt: Two forces have resultant components $6\text{ N}$ to the right and $8\text{ N}$ upwards. A third force keeps the particle in equilibrium. Find the magnitude of the third force in newtons.
+    fields:
+      - answer: 10
+        unit: N
+    explanation: The first two forces have resultant magnitude $\sqrt{6^2+8^2}=10\text{ N}$. The third force must be equal and opposite, so its magnitude is $10\text{ N}$.

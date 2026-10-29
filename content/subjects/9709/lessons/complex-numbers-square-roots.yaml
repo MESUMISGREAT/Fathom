@@ -1,0 +1,166 @@
+id: complex-numbers-square-roots
+subject: "9709"
+topic: "3.9"
+title: Square roots of complex numbers — finding z such that z² = w
+summary: "Finding the two square roots of a complex number in exact Cartesian form using algebra and polar methods."
+order: 6
+minutes: 5
+kind: core
+objectives: ["3.9.6"]
+prerequisites: ["complex-numbers-cartesian-operations", "complex-numbers-polar-form"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 3.9 learning outcome 6 (finding square roots
+    of a complex number in exact Cartesian form). Examples and questions are original; all
+    arithmetic checked in Python. Not yet teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate
+    AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can find both square roots of a given complex number, showing full working,
+      and express them in exact Cartesian form $x + iy$.
+
+  - type: explain
+    title: Two methods — algebraic and polar
+    body: |
+      **Method 1: Algebraic (Cartesian)**
+      Let $z = x + iy$ with $x, y \in \mathbb{R}$. Then $z^2 = (x^2 - y^2) + 2ixy$.
+      Given $z^2 = a + ib$, we get:
+      $$x^2 - y^2 = a \quad\text{and}\quad 2xy = b$$
+      Also $|z|^2 = x^2 + y^2 = |z^2| = \sqrt{a^2 + b^2}$.
+      Solve for $x^2$ and $y^2$, then find $x, y$ with the correct signs from $2xy = b$.
+
+      **Method 2: Polar**
+      Write $w = re^{i\theta}$. Then $\sqrt{w} = \sqrt{r} e^{i(\theta/2 + k\pi)}$ for $k = 0, 1$.
+      The two square roots have moduli $\sqrt{r}$ and arguments differing by $\pi$ (opposite directions).
+
+  - type: example
+    title: Algebraic method — square roots of $5 + 12i$
+    problem: "Find the two square roots of $5 + 12i$ in exact Cartesian form."
+    steps:
+      - "Let $z = x + iy$. Then $z^2 = (x^2 - y^2) + 2ixy = 5 + 12i$."
+      - 'Equate: $x^2 - y^2 = 5$ and $2xy = 12 \Rightarrow xy = 6$.'
+      - 'Also $|z|^2 = x^2 + y^2 = |5 + 12i| = \sqrt{5^2 + 12^2} = 13$.'
+      - 'Add: $(x^2 - y^2) + (x^2 + y^2) = 5 + 13 \Rightarrow 2x^2 = 18 \Rightarrow x^2 = 9 \Rightarrow x = \pm 3$.'
+      - 'Subtract: $(x^2 + y^2) - (x^2 - y^2) = 13 - 5 \Rightarrow 2y^2 = 8 \Rightarrow y^2 = 4 \Rightarrow y = \pm 2$.'
+      - 'Since $xy = 6 > 0$, $x$ and $y$ have the **same sign**: both positive or both negative.'
+      - 'Roots: $3 + 2i$ and $-3 - 2i$.'
+    answer: |
+      $\sqrt{5 + 12i} = \pm(3 + 2i)$
+
+  - type: example
+    title: Polar method — square roots of $-7 + 24i$
+    problem: "Find the square roots of $-7 + 24i$ using polar form."
+    steps:
+      - '$r = |-7 + 24i| = \sqrt{49 + 576} = 25$'
+      - '$\theta = \arg(-7 + 24i)$. Point $(-7, 24)$ is in 2nd quadrant. $\tan \theta = -\frac{24}{7}$.'
+      - '$\theta = \pi - \arctan(\frac{24}{7})$. Not a standard angle — algebraic method is easier here.'
+      - 'Let''s use algebraic: $x^2 - y^2 = -7$, $2xy = 24 \Rightarrow xy = 12$, $|z|^2 = 25$.'
+      - '$x^2 + y^2 = 25$. Add: $2x^2 = 18 \Rightarrow x^2 = 9 \Rightarrow x = \pm 3$.'
+      - 'Subtract: $2y^2 = 32 \Rightarrow y^2 = 16 \Rightarrow y = \pm 4$.'
+      - '$xy = 12 > 0 \Rightarrow$ same signs. Roots: $3 + 4i$ and $-3 - 4i$.'
+    answer: |
+      $\pm(3 + 4i)$
+
+  - type: check
+    title: Practice square roots
+    questions: [cn-sqrt-1, cn-sqrt-2, cn-sqrt-negative-real]
+
+  - type: intuition
+    title: Every non-zero complex number has exactly two square roots
+    body: |
+      $z^2 = w$ is a quadratic in $z$, so it has exactly two solutions (unless $w = 0$, then one).
+      The two roots are always **negatives of each other**: if $z_0$ is a root, $-z_0$ is the other.
+      In polar form, they're opposite vectors: same length $\sqrt{r}$, arguments $\theta/2$ and $\theta/2 + \pi$.
+
+  - type: deeper
+    title: Square root of a negative real number
+    body: |
+      For $w = -a$ with $a > 0$: polar form $w = a e^{i\pi}$.
+      Square roots: $\sqrt{a} e^{i\pi/2} = i\sqrt{a}$ and $\sqrt{a} e^{i3\pi/2} = -i\sqrt{a}$.
+      So $\sqrt{-a} = \pm i\sqrt{a}$ — exactly what we already know!
+
+  - type: misconceptions
+    items:
+      - wrong: '$\sqrt{5 + 12i} = 3 + 2i$ (only one answer).'
+        right: 'There are **two** square roots: $3 + 2i$ and $-3 - 2i$. Always give both (or write $\pm(3 + 2i)$).'
+      - wrong: 'From $x^2 = 9$ and $y^2 = 4$, the roots are $(\pm 3) + i(\pm 2)$ — four combinations.'
+        right: "The signs are linked by $2xy = b$. If $b > 0$, $x$ and $y$ have same sign (2 roots). If $b < 0$, opposite signs (2 roots)."
+      - wrong: 'The square root of $i$ is $\frac{1}{\sqrt{2}} + \frac{i}{\sqrt{2}}$ only.'
+        right: 'Two roots: $\pm\left(\frac{1}{\sqrt{2}} + \frac{i}{\sqrt{2}}\right)$. The principal square root is the one with positive real part (or positive imaginary part if real part is zero).'
+
+  - type: exam
+    body: |
+      - Typical wording: *Find the square roots of $5 + 12i$ in exact Cartesian form.*
+      - **Show full working** — the syllabus says "Full details of the working should be shown."
+      - Use the algebraic method (equating real and imaginary parts) unless polar is simpler.
+      - Always state both roots, or use $\pm$ notation.
+      - Check your answer by squaring: $(3 + 2i)^2 = 9 + 12i + 4i^2 = 5 + 12i$ ✓.
+
+  - type: takeaways
+    items:
+      - "Set $z = x + iy$, equate $z^2 = a + ib$ to get $x^2 - y^2 = a$, $2xy = b$."
+      - 'Use $|z|^2 = x^2 + y^2 = \sqrt{a^2 + b^2}$ to solve for $x^2$ and $y^2$.'
+      - "Signs of $x$ and $y$ come from $2xy = b$: same sign if $b > 0$, opposite if $b < 0$."
+      - 'Two roots are always negatives of each other: $\pm(x + iy)$.'
+      - 'Polar method: $\sqrt{re^{i\theta}} = \sqrt{r} e^{i(\theta/2 + k\pi)}$, $k = 0, 1$.'
+
+questions:
+  - id: cn-sqrt-1
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["3.9.6"]
+    prompt: |
+      Find the two square roots of $3 + 4i$ in exact Cartesian form. Write as $\pm(a + bi)$.
+    accept:
+      - "±(2 + i)"
+      - "±(2+i)"
+      - "2 + i"
+    model: '$\pm(2 + i)$'
+    explanation: |
+      $x^2 - y^2 = 3$, $2xy = 4 \Rightarrow xy = 2$, $x^2 + y^2 = |3 + 4i| = 5$.
+      Add: $2x^2 = 8 \Rightarrow x^2 = 4 \Rightarrow x = \pm 2$.
+      Subtract: $2y^2 = 2 \Rightarrow y^2 = 1 \Rightarrow y = \pm 1$.
+      $xy = 2 > 0 \Rightarrow$ same signs. Roots: $\pm(2 + i)$.
+
+  - id: cn-sqrt-2
+    format: text
+    style: short
+    difficulty: 3
+    objectives: ["3.9.6"]
+    prompt: |
+      Find the two square roots of $-8 - 6i$ in exact Cartesian form. Write as $\pm(a + bi)$.
+    accept:
+      - "±(1 - 3i)"
+      - "±(1-3i)"
+      - "1 - 3i"
+    model: '$\pm(1 - 3i)$'
+    explanation: |
+      $x^2 - y^2 = -8$, $2xy = -6 \Rightarrow xy = -3$, $x^2 + y^2 = |-8 - 6i| = 10$.
+      Add: $2x^2 = 2 \Rightarrow x^2 = 1 \Rightarrow x = \pm 1$.
+      Subtract: $2y^2 = 18 \Rightarrow y^2 = 9 \Rightarrow y = \pm 3$.
+      $xy = -3 < 0 \Rightarrow$ opposite signs. Roots: $1 - 3i$ and $-1 + 3i = \pm(1 - 3i)$.
+
+  - id: cn-sqrt-negative-real
+    format: mcq
+    difficulty: 1
+    objectives: ["3.9.6"]
+    prompt: |
+      The two square roots of $-9$ are:
+    options:
+      - text: '$\pm 3i$'
+        correct: true
+        why: '$\sqrt{-9} = \sqrt{9} \cdot \sqrt{-1} = \pm 3i$. In polar: $9e^{i\pi}$, roots $3e^{i\pi/2} = 3i$ and $3e^{i3\pi/2} = -3i$.'
+      - text: '$\pm 3$'
+        why: "$3^2 = 9$, not $-9$."
+      - text: '$\pm 9i$'
+        why: "$(9i)^2 = -81$."
+      - text: "$3i$ only"
+        why: "Every non-zero complex number has two square roots."
+    explanation: |
+      $-9 = 9e^{i\pi}$. Square roots: $\sqrt{9}e^{i\pi/2} = 3i$ and $3e^{i3\pi/2} = -3i$. So $\pm 3i$.

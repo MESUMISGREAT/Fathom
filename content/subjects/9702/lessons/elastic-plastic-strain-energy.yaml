@@ -1,0 +1,264 @@
+id: elastic-plastic-strain-energy
+subject: "9702"
+topic: "6.2"
+title: "Elastic potential energy: the ½ in ½Fx and ½kx²"
+summary: Within the limit of proportionality the graph is a triangle, so the energy stored is half the final force times the extension — and that half is not optional.
+order: 4
+minutes: 8
+kind: core
+objectives: ["6.2.3", "6.2.4"]
+prerequisites: [elastic-plastic-work-done-area, stress-strain-hookes-law]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.2, learning outcomes 6.2.3 (elastic potential energy from the area under a
+    force-extension graph within the limit of proportionality) and 6.2.4 (recall and use
+    E_P = 1/2 Fx = 1/2 kx^2). Every energy, force and spring constant was recomputed in Python on
+    2026-10-28. All questions are original.
+
+    Independently re-checked line by line (definitions, every worked step, every answer key and
+    each diagram's alt text) in a second adversarial pass by the same agent on 2026-10-28:
+    every numeric answer was recomputed from the question's own data in Python, all four
+    objectives 6.2.1-6.2.4 were confirmed taught and tested, and all three diagrams were
+    rendered and inspected in light and dark. No separate reviewer model was available here.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can derive $E_P = \dfrac{1}{2}Fx = \dfrac{1}{2}kx^2$ from the area under a straight-line force–extension graph, and use it to find an energy, a force, an extension or a spring constant.
+
+  - type: explain
+    title: Where the stored energy comes from
+    body: |-
+      You have just seen that the work done stretching an object is the area under its force–extension graph.
+
+      If the deformation is **elastic**, the object gives that work back when it returns to its original shape. Until then, the energy is stored in the stretched bonds between its atoms.
+
+      That stored energy is called **elastic potential energy**, $E_P$. It is also called strain energy.
+
+      So the rule is: area under the graph = work done = elastic potential energy stored (provided the deformation is elastic).
+
+  - type: definition
+    term: Elastic potential energy
+    body: |-
+      **Elastic potential energy** is the energy stored in an object when it is deformed elastically, which is released when the object returns to its original shape.
+
+      For deformation within the limit of proportionality, it is equal to the area under the force–extension graph.
+
+  - type: diagram
+    diagram: phys-elastic-plastic-strain-energy
+    alt: >-
+      A force against extension graph showing a straight line from the origin. The triangular area
+      under the line is shaded. The base of the triangle is labelled x, the vertical height is
+      labelled F, and the area is labelled one half F x, with the equivalent form one half k x
+      squared also shown.
+    caption: |-
+      A straight line makes a triangle. Its area is half the base times the height, which is where the ½ comes from.
+
+  - type: intuition
+    title: Deriving ½Fx — no memorising needed
+    body: |-
+      Within the limit of proportionality, the graph is a straight line through the origin. The area underneath is a **triangle**.
+
+      The area of any triangle is
+
+      $$\text{area} = \dfrac{1}{2} \times \text{base} \times \text{height}$$
+
+      On this graph the base is the extension $x$ and the height is the final force $F$. So
+
+      $$E_P = \dfrac{1}{2}Fx$$
+
+      Now use Hooke's law, $F = kx$, to replace $F$:
+
+      $$E_P = \dfrac{1}{2}(kx)x = \dfrac{1}{2}kx^2$$
+
+      Both forms are on the syllabus. The first is easiest when you know the final force; the second when you know the spring constant.
+
+  - type: explain
+    title: Why it is not just Fx
+    body: |-
+      The force is not $F$ for the whole stretch. It starts at zero and rises steadily to $F$.
+
+      The **average** force is therefore $\dfrac{0 + F}{2} = \dfrac{F}{2}$, and the work done is average force × extension:
+
+      $$W = \dfrac{F}{2} \times x = \dfrac{1}{2}Fx$$
+
+      Multiplying the final force by the extension would pretend you pulled with the full force from the very first millimetre. That is why the ½ appears.
+
+  - type: example
+    title: "Worked example: energy from a spring constant"
+    problem: |-
+      A spring has a spring constant of $250\ \text{N m}^{-1}$. It is stretched by $0.12\ \text{m}$ within its limit of proportionality.
+
+      Calculate the elastic potential energy stored.
+    steps:
+      - |-
+        The extension is already in metres, so no conversion is needed: $x = 0.12\ \text{m}$.
+      - |-
+        Use $E_P = \dfrac{1}{2}kx^2$, because $k$ and $x$ are known.
+      - |-
+        Square the extension: $0.12^2 = 0.0144\ \text{m}^2$.
+      - |-
+        $E_P = \dfrac{1}{2} \times 250 \times 0.0144$.
+      - |-
+        $E_P = 125 \times 0.0144 = 1.8\ \text{J}$.
+      - |-
+        Check with the other form: $F = kx = 250 \times 0.12 = 30\ \text{N}$, so $\dfrac{1}{2}Fx = \dfrac{1}{2} \times 30 \times 0.12 = 1.8\ \text{J}$. ✔
+    answer: |-
+      $1.8\ \text{J}$.
+
+  - type: check
+    title: Quick check
+    questions: [se-formula, se-spring-energy, se-cloze]
+
+  - type: example
+    title: "Worked example: finding k from the energy"
+    problem: |-
+      A spring stores $0.54\ \text{J}$ when it is compressed by $0.060\ \text{m}$ within its limit of proportionality.
+
+      Find its spring constant.
+    steps:
+      - |-
+        Start from $E_P = \dfrac{1}{2}kx^2$ and rearrange for $k$.
+      - |-
+        Multiply both sides by 2: $2E_P = kx^2$.
+      - |-
+        Divide by $x^2$: $k = \dfrac{2E_P}{x^2}$.
+      - |-
+        Substitute: $k = \dfrac{2 \times 0.54}{0.060^2}$.
+      - |-
+        $0.060^2 = 0.0036$, so $k = \dfrac{1.08}{0.0036} = 300\ \text{N m}^{-1}$.
+      - |-
+        Check: with $k = 300$, the force at $0.060\ \text{m}$ is $18\ \text{N}$, and $\dfrac{1}{2} \times 18 \times 0.060 = 0.54\ \text{J}$. ✔
+    answer: |-
+      $k = 300\ \text{N m}^{-1}$.
+
+  - type: check
+    title: Practice
+    questions: [se-find-k, se-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: $E_P = Fx$.
+        right: |-
+          That uses the full force for the whole stretch. Because the force rises from zero, the
+          stored energy is half of that: $E_P = \tfrac12 Fx$.
+      - wrong: $E_P = \tfrac12 kx$.
+        right: |-
+          The extension is squared: $E_P = \tfrac12 kx^2$. Check the units: $k$ is
+          $\text{N m}^{-1}$ and $x^2$ is $\text{m}^2$, which gives $\text{N m} = \text{J}$.
+      - wrong: The formulae work for any extension.
+        right: |-
+          They assume the graph is a straight line through the origin, so they only apply within
+          the limit of proportionality.
+      - wrong: Doubling the extension doubles the stored energy.
+        right: |-
+          $E_P \propto x^2$, so doubling $x$ multiplies the energy by four (the force also
+          doubles).
+      - wrong: A spring compressed by 5 cm stores a different amount from one extended by 5 cm.
+        right: |-
+          For the same spring constant and the same size of deformation, the stored energy is the
+          same: the formula uses $x^2$, so the sign of the deformation does not matter.
+
+  - type: exam
+    body: |-
+      - Write the formula, substitute, then state the unit. $E_P = \dfrac{1}{2}Fx = \dfrac{1}{2}kx^2$ earns the recall mark, but the substitution must use metres.
+      - Convert millimetres and centimetres before squaring. Squaring a value in cm gives an answer that is wrong by a factor of $10\,000$.
+      - If a question gives the force and the extension, use $\dfrac{1}{2}Fx$; if it gives $k$ and $x$, use $\dfrac{1}{2}kx^2$. Both are acceptable and should agree.
+      - If the extension is beyond the limit of proportionality, do not use these formulae. Find the area from the graph instead.
+
+  - type: takeaways
+    items:
+      - 'Elastic potential energy is the energy stored by elastic deformation; it is released when the object returns to shape.'
+      - 'For a straight-line graph, the area is a triangle: $E_P = \dfrac{1}{2}Fx$.'
+      - 'Using Hooke''s law, $E_P = \dfrac{1}{2}kx^2$.'
+      - 'Both forms only apply within the limit of proportionality.'
+      - 'Doubling the extension multiplies the stored energy by four.'
+
+questions:
+  - id: se-formula
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.4"]
+    prompt: |-
+      A spring obeys Hooke's law. Which expression gives the elastic potential energy stored when it is extended by $x$ by a force $F$?
+    options:
+      - text: $\dfrac{1}{2}Fx$
+        correct: true
+        why: |-
+          The area under the straight-line graph is a triangle, so the energy is half the final force times the extension.
+      - text: $Fx$
+        why: |-
+          That assumes the full force acts throughout the stretch, which overestimates the energy.
+      - text: $\dfrac{F}{x}$
+        why: |-
+          That is the spring constant for a straight-line graph, not an energy.
+      - text: $2Fx$
+        why: |-
+          That is double the rectangle's area, not the triangle's.
+    explanation: |-
+      For a straight line through the origin, the area is $\tfrac12 \times$ base $\times$ height $= \tfrac12 Fx$.
+
+  - id: se-spring-energy
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.4"]
+    prompt: |-
+      A spring with spring constant $400\ \text{N m}^{-1}$ is stretched by $0.050\ \text{m}$ within its limit of proportionality.
+
+      Calculate the elastic potential energy stored, in J.
+    fields:
+      - label: "E_P ="
+        answer: 0.5
+        unit: J
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $E_P = \dfrac{1}{2}kx^2 = \dfrac{1}{2} \times 400 \times 0.050^2 = 200 \times 0.0025 = 0.50\ \text{J}$.
+
+  - id: se-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["6.2.4"]
+    prompt: |-
+      For deformation within the limit of proportionality, the elastic potential energy is given by $E_P = \dfrac{1}{2}Fx$, which can also be written as $E_P = \dfrac{1}{2}${{1}}$x^2$, where {{2}} is the spring constant.
+    blanks:
+      - accept: [k]
+      - accept: [k, the spring constant]
+    explanation: |-
+      Substituting $F = kx$ into $\tfrac12 Fx$ gives $\tfrac12 kx^2$.
+
+  - id: se-find-k
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.4"]
+    prompt: |-
+      A spring stores $0.72\ \text{J}$ of elastic potential energy when it is extended by $0.060\ \text{m}$ within its limit of proportionality.
+
+      What is its spring constant, in $\text{N m}^{-1}$?
+    fields:
+      - label: "k ="
+        answer: 400
+        unit: "N m⁻¹"
+        tolerance: { abs: 5 }
+    explanation: |-
+      Rearranging $E_P = \dfrac{1}{2}kx^2$ gives $k = \dfrac{2E_P}{x^2} = \dfrac{2 \times 0.72}{0.060^2} = \dfrac{1.44}{0.0036} = 400\ \text{N m}^{-1}$.
+
+  - id: se-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["6.2.4"]
+    prompt: |-
+      A student calculates the energy stored in a spring. The spring constant is $250\ \text{N m}^{-1}$ and the extension is $0.12\ \text{m}$. Which line contains the first error?
+    lines:
+      - The extension is 0.12 m, which is already in metres.
+      - The spring constant is 250 N m⁻¹.
+      - "E_P = kx² = 250 × 0.12² = 3.6 J."
+      - So the spring stores 3.6 J.
+    errorLine: 3
+    fix: |-
+      The formula is $E_P = \dfrac{1}{2}kx^2$, not $kx^2$. The correct value is $\dfrac{1}{2} \times 250 \times 0.0144 = 1.8\ \text{J}$.
+    explanation: |-
+      Lines 1 and 2 are correct. Line 3 leaves out the factor of $\tfrac12$ that comes from the triangular area, doubling the answer.

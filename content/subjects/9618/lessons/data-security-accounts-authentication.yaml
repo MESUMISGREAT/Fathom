@@ -1,0 +1,292 @@
+id: data-security-accounts-authentication
+subject: "9618"
+topic: "6.1"
+title: "User accounts, passwords and proving who you are"
+summary: How accounts create accountability, what makes a password strong, and how digital signatures and biometrics prove identity.
+order: 3
+minutes: 9
+kind: core
+objectives: ["6.1.3"]
+prerequisites: [data-security-system-and-data]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.1 outcome 6.1.3 ("describe
+    security measures designed to protect computer systems...") and its guidance: user accounts,
+    passwords, authentication techniques such as digital signatures and biometrics. Firewall,
+    anti-virus, anti-spyware and encryption are taught in the next lesson. All examples and
+    questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.1.3 confirmed taught and tested, every definition and claim checked, every
+    answer key and accept list re-read, and the unit's six diagrams rendered and inspected in
+    light and dark. No separate reviewer model was available in this environment.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain why systems need individual user accounts, describe what makes a password strong, and explain how digital signatures and biometrics prove identity.
+
+  - type: explain
+    title: Why every person needs their own account
+    body: |-
+      A **user account** is a record on a system that represents one person: a username, a password (stored as a hash, never as plain text), and a set of **access rights** saying what that account may do.
+
+      Why not one shared login for the whole office? Three reasons, and each one is worth a mark:
+
+      - **Accountability.** Every action can be logged against a named account, so an audit trail shows who read or changed a record. With a shared login, nobody is answerable.
+      - **Least privilege.** Each account gets only the access its job needs — a receptionist does not need clinical notes, a temp does not need the payroll.
+      - **Removal.** When someone leaves or changes role, their account is disabled, and their access ends immediately. A shared password that ten people know can never be withdrawn.
+
+      Larger systems group accounts into **groups** (for example `students`, `teachers`, `admins`) and give rights to the group, so a new starter inherits the right access in one step.
+
+  - type: definition
+    term: Authentication
+    body: |-
+      **Authentication** is the process of proving that a user, device or program is who or what it claims to be. It happens **before authorisation**, which decides what that proven identity is then allowed to do.
+
+      The three classic kinds of evidence are: something you **know** (a password or PIN), something you have (a phone, smart card or security token) and something you **are** (a fingerprint, iris or face).
+
+  - type: diagram
+    diagram: cs-data-security-authentication-factors
+    alt: >-
+      Three labelled columns for the factors of authentication. "Something you know" lists a
+      password, a PIN and a security question. "Something you have" lists a phone receiving a
+      one-time code, a smart card and a hardware token. "Something you are" lists a fingerprint,
+      an iris scan and facial recognition. Short arrows lead from all three columns into a bar
+      labelled "multi-factor authentication", which notes that any two factors from different
+      columns count, such as a password plus a phone code.
+    caption: |-
+      Two factors only count as multi-factor authentication if they come from different columns.
+
+  - type: explain
+    title: What makes a password strong
+    body: |-
+      A password is only useful if an attacker cannot guess it or crack it quickly.
+
+      | Weakness | What attackers do | What helps |
+      | --- | --- | --- |
+      | Short password | Try every combination; an 8-character password falls far faster than a 12-character one | Require a minimum length, and allow long passphrases |
+      | A dictionary word or a name | Try a list of common passwords and words first | Reject common passwords and personal details |
+      | Reused across sites | Reuse a password leaked from another site | Require a different password per system, or a password manager |
+      | Typed into a fake page | Phishing captures it | Combine with a second factor that a fake page cannot obtain |
+
+      Systems should also:
+
+      - store only a **hash** of the password (plus a random **salt**), so a stolen database does not reveal the passwords;
+      - **lock the account** or add a delay after a few failed attempts, to slow down guessing;
+      - never send the password itself in an email, and never display it on screen.
+
+  - type: explain
+    title: "Digital signatures: proving who sent a message"
+    body: |-
+      A **digital signature** is a block of data attached to a message that proves which key signed it and that the message has not been altered. It uses **asymmetric encryption**: a pair of keys, where one key locks and the other unlocks.
+
+      Each user keeps a **private key** secret and publishes the matching **public key**. Here is the whole process, step by step.
+
+      1. The sender computes a **hash** of the message — a fixed-length fingerprint of its contents.
+      2. The sender encrypts that hash with their **private key**. The result is the digital signature, sent with the message.
+      3. The receiver decrypts the signature with the sender's **public key**, recovering the hash the sender calculated.
+      4. The receiver hashes the message they received and compares the two hashes.
+      5. If the hashes match, the message is unchanged (integrity) and it must have been signed by the holder of the private key (authentication and non-repudiation — the sender cannot later deny signing it).
+
+      Two traps to remember:
+
+      - The **public** key verifies; the **private** key signs.
+      - Signing does **not** hide the message: anyone can read it. For confidentiality the message must also be encrypted, which is a separate step.
+
+  - type: check
+    title: Accounts and signatures
+    questions: [au-mcq-shared, au-cloze-signature, au-spot-error]
+
+  - type: explain
+    title: Biometrics
+    body: |-
+      **Biometrics** authenticate someone using a physical characteristic: a fingerprint, an iris pattern, a face, a voice or the shape of a hand.
+
+      The first time, the system stores a **template** — a mathematical summary, not a photograph. At each login it measures the characteristic again and compares the result with the template.
+
+      Because a finger is never pressed in exactly the same way twice, the system allows a small margin rather than demanding an exact match.
+
+      **Advantages**
+
+      - Hard to forge or borrow, and impossible to guess.
+      - Nothing to remember, so there is no weak password to choose.
+      - Cannot be left on a sticky note or shared in a message.
+
+      **Drawbacks**
+
+      - You cannot change your fingerprint if a copy is ever compromised.
+      - A reading can fail (a cut finger, a bad camera) and lock out a legitimate user, or a spoof can be accepted.
+      - Needs a reader, which costs money, and the template is personal data, so privacy and storage rules apply.
+
+  - type: explain
+    title: Combining factors
+    body: |-
+      **Multi-factor authentication** (MFA) requires two or more factors of *different* kinds. A password plus a one-time code sent to your phone is MFA: something you know plus something you have.
+
+      A password plus a PIN is **not** MFA in the useful sense — both are things you know, and a phishing page or a keylogger can capture both together. That is why banks ask for a code from a separate device rather than a second password.
+
+      The reason MFA works so well is that it removes the single point of failure. A stolen password alone no longer gets an attacker in.
+
+  - type: check
+    title: Biometrics and storage
+    questions: [au-mcq-mfa, au-text-biometric, au-mcq-password]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A strong password is one with lots of symbols, even if it is short.
+        right: |-
+          Length matters more than a sprinkling of symbols. A long passphrase of several unrelated words is harder to crack than eight characters with one `!` on the end.
+      - wrong: |-
+          A digital signature encrypts the message so nobody else can read it.
+        right: |-
+          A signature proves who sent it and that it was not changed. The message stays readable unless it is separately encrypted.
+      - wrong: |-
+          The sender signs with their public key.
+        right: |-
+          The sender signs with their **private** key; receivers verify with the sender's **public** key. Reversing them would let anyone forge a signature.
+      - wrong: |-
+          Two passwords count as two-factor authentication.
+        right: |-
+          Both are "something you know", so one phishing page can capture both. MFA needs factors of different types, such as a password plus a code on your phone.
+      - wrong: |-
+          A biometric system stores a picture of your fingerprint.
+        right: |-
+          It stores a template — a mathematical summary used for comparison — which is why it tolerates small differences between scans.
+
+  - type: exam
+    body: |-
+      Questions on this objective usually ask you to **describe** a measure and **explain** how it protects the system.
+
+      - For user accounts, mention individual accounts, access levels, audit logs and disabling leavers' accounts.
+      - For passwords, mention length, avoiding dictionary words, hashing, account lockout and not sharing.
+      - For digital signatures, describe the hash, the private key, the public key and what a match proves. Say plainly that it provides authentication and integrity, not confidentiality.
+      - For biometrics, give one advantage **and** one drawback, then link it to the situation in the question (a laptop fingerprint reader is convenient; a bank vault needs more).
+
+      A common 4-mark task: "Describe how a digital signature is used to confirm the sender of a message." Marks come from the sequence, so write it in order.
+
+  - type: takeaways
+    items:
+      - Individual user accounts give accountability, least privilege and the ability to remove access.
+      - Authentication proves identity; authorisation decides what that identity may do.
+      - Strong passwords are long and unique, stored as salted hashes, with lockout after failed attempts.
+      - A digital signature = hash encrypted with the sender's private key, verified with their public key; it proves authenticity and integrity, not secrecy.
+      - Biometrics are hard to forge but cannot be changed if compromised; MFA combines different *kinds* of factor.
+
+questions:
+  - id: au-mcq-shared
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.3"]
+    prompt: |-
+      Why is a shared login for all staff in an office a poor security measure?
+    options:
+      - text: Actions cannot be traced to one person, and access cannot be withdrawn from one person.
+        correct: true
+        why: |-
+          A shared account destroys accountability and means removing one person's access means changing the password for everyone.
+      - text: A shared login is slower to type than a personal one.
+        why: |-
+          Typing speed is irrelevant to security. The real problems are accountability and removing access.
+      - text: Shared logins cannot use encryption.
+        why: |-
+          Encryption works regardless of how many people know the password.
+      - text: It stops the firewall from working.
+        why: |-
+          A firewall filters network traffic and is unaffected by how accounts are shared.
+    explanation: |-
+      Individual accounts create an audit trail and allow access rights to match each job. A shared account loses both, and cannot be disabled for one leaver.
+
+  - id: au-cloze-signature
+    format: cloze
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      To create a digital signature, the sender first computes a {{1}} of the message, then encrypts it with their {{2}} key. The receiver decrypts it with the sender's {{3}} key and compares the result.
+    blanks:
+      - accept: [hash, hash value, digest, message digest]
+      - accept: [private]
+      - accept: [public]
+    explanation: |-
+      The hash is a fingerprint of the message. Signing with the private key means only that sender could have produced the signature, and anyone can verify it with the public key.
+
+  - id: au-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.3"]
+    prompt: |-
+      A student describes how a digital signature is checked. Which line contains the first error?
+    lines:
+      - The sender calculates a hash of the message and encrypts it with their private key.
+      - The signature travels with the message to the receiver.
+      - The receiver encrypts the signature with the sender's public key to recover the hash.
+      - The receiver hashes the message and compares the two hash values.
+    errorLine: 3
+    fix: |-
+      The receiver **decrypts** the signature with the sender's public key; encrypting it would produce nonsense. Decryption with the public key works because the signature was encrypted with the matching private key.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. The error is the verb: verification decrypts the signature, then compares hashes.
+
+  - id: au-mcq-mfa
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      Which pair is genuine multi-factor authentication?
+    options:
+      - text: A password plus a one-time code sent to the user's phone.
+        correct: true
+        why: |-
+          This combines something you know (password) with something you have (the phone), so stealing one factor is not enough.
+      - text: A password plus a PIN.
+        why: |-
+          Both are things you know, so a keylogger or phishing page can capture both at once.
+      - text: A username plus a password.
+        why: |-
+          A username identifies the account; it is not a factor that proves identity.
+      - text: A fingerprint plus a second fingerprint scan.
+        why: |-
+          Both are the same factor (something you are), so this is one factor used twice.
+    explanation: |-
+      Multi-factor authentication needs factors of different types. A password and a code on a separate device are two different types.
+
+  - id: au-text-biometric
+    format: text
+    style: short
+    difficulty: 1
+    objectives: ["6.1.3"]
+    prompt: |-
+      Name one drawback of using biometrics for authentication. (One short phrase.)
+    accept: [cannot be changed if compromised, cannot be changed, it cannot be changed, false rejection, false accept, cost, needs a reader, privacy, template is personal data, injury can cause a failed scan]
+    model: |-
+      Any one of: a biometric cannot be changed if it is copied; a legitimate user can be wrongly rejected (a cut finger); a spoof can be wrongly accepted; readers cost money; the template is personal data, which raises privacy issues.
+    explanation: |-
+      Biometrics are convenient and hard to guess, but unlike a password they cannot be reset once compromised, and scanning is not always reliable.
+
+  - id: au-mcq-password
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      A system stores only a salted hash of each password instead of the password itself. What is the main benefit?
+    options:
+      - text: If the password file is stolen, the attackers cannot read the passwords directly.
+        correct: true
+        why: |-
+          A hash is one-way, and the salt stops pre-computed tables being reused, so the stolen file is far less useful.
+      - text: It makes logging in faster.
+        why: |-
+          Hashing adds a small amount of work; speed is not the reason.
+      - text: It lets the administrator read a forgotten password to help the user.
+        why: |-
+          A hash cannot be reversed, so even the administrator cannot read the password — that is the point.
+      - text: It removes the need for account lockout.
+        why: |-
+          Lockout still matters, because an attacker can keep guessing against the login screen.
+    explanation: |-
+      Storing hashes rather than plain text limits the damage of a stolen database. Salting means identical passwords produce different hashes, defeating pre-built lookup tables.

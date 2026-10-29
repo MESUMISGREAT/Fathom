@@ -25,7 +25,16 @@ function unitState(u) {
   const dir = path.join(root, 'content/subjects', u.subject, 'lessons');
   const files = existsSync(dir) ? readdirSync(dir).filter((f) => u.topics.some((t) => f.startsWith(`${t.prefix}-`))) : [];
   if (!files.length) return { state: 'todo', lessons: 0 };
-  const lessons = files.map((f) => ({ f, data: parse(readFileSync(path.join(dir, f), 'utf8')) }));
+  // A writer may be halfway through a file: one broken YAML must not hide the whole queue.
+  const lessons = files.map((f) => {
+    try {
+      return { f, data: parse(readFileSync(path.join(dir, f), 'utf8')) };
+    } catch (e) {
+      return { f, data: null, error: e.message.split('\n')[0] };
+    }
+  });
+  const broken = lessons.filter((l) => !l.data);
+  if (broken.length) return { state: 'partial', lessons: files.length, missing: broken.map((l) => `broken YAML in ${l.f}`) };
   const taught = new Set(lessons.flatMap((l) => l.data.objectives ?? []));
   const codes = new Set(u.topics.map((t) => t.code));
   const needed = syllabi[u.subject].sections.flatMap((s) => s.topics).filter((t) => codes.has(t.code)).flatMap((t) => t.objectives.map((o) => o.code));

@@ -1,0 +1,282 @@
+id: p3-diff-products-quotients
+subject: '9709'
+topic: '3.4'
+title: 'Products and quotients: a different product for two factors'
+summary: When two functions are multiplied, the derivative is not the product of the derivatives — the product rule
+  and quotient rule handle the mixing.
+order: 2
+minutes: 8
+kind: core
+objectives:
+- 3.4.2
+prerequisites:
+- p3-diff-standard-derivatives
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.4, learning outcome 3.4.2, using the syllabus examples (2x − 4)/(3x + 2), x² ln x and x e^(1 − x²).\
+    \ Answers were verified in Python. All questions are original.\n    Adversarially re-checked in this cloud session:\
+    \ every numeric answer key recomputed independently with Python (including finite-difference checks of each\
+    \ antiderivative), every MCQ verified to have exactly one correct option, syllabus objectives mapped lesson\
+    \ by lesson, and `npm run content:check`, `tsc` and 166 vitest tests all clean. Diagram references whose SVGs\
+    \ do not exist yet were removed rather than left dangling, so these lessons currently teach with prose, tables\
+    \ and worked examples only; add the diagrams later. The review was a second pass by the same agent (no separate\
+    \ reviewer model is available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can differentiate products like $x^2\ln x$ and $xe^{1-x^2}$, and quotients like
+
+    $\dfrac{2x-4}{3x+2}$, using the product and quotient rules — and know which one to reach for.'
+- type: explain
+  title: What they ask
+  body: 'Look at how the two pieces of your expression are joined:
+
+
+    - **nothing** between them (they are multiplied) → **product rule**;
+
+    - **$\div$** or a fraction bar → **quotient rule** (or product rule with a negative power);
+
+    - **$\pm$** or a constant outside → plain sums and the chain rule.
+
+
+    Two standard-looking constructions appear constantly in P3:
+
+    "polynomial × log" and "polynomial × exponential" — both products.'
+- type: definition
+  term: Product rule and quotient rule
+  body: 'For $y = uv$ (a product of two functions):
+
+
+    $$\frac{dy}{dx} = u\frac{dv}{dx} + v\frac{du}{dx}$$
+
+
+    For $y = \dfrac{u}{v}$:
+
+
+    $$\frac{dy}{dx} = \frac{v\frac{du}{dx} - u\frac{dv}{dx}}{v^2}$$
+
+
+    Both are symmetric in their roles of $u$ and $v$, which is why you can pick either factor as
+
+    $u$.'
+- type: explain
+  title: The method, line by line
+  body: "1. **Write down $u$ and $v$** next to each other, small and legible.\n2. **Differentiate each separately**\
+    \ (use the chain rule if a factor has a bracket).\n3. **Assemble** with the product or quotient template.\n\
+    4. **Factorise and simplify** if the question will use it (\"hence find the coordinates...\").\n5. **Sanity\
+    \ check signs**: quotient-rule numerators begin with $v\\dfrac{du}{dx}$ — that order\n   prevents sign slips.\n\
+    \n**The forgotten step:** in the quotient rule, the **$v^2$ on the bottom comes from both\nfactors**, not just\
+    \ the one you differentiate."
+- type: example
+  title: 'Example 1: the syllabus product x^2 ln x'
+  problem: Differentiate $y = x^2\ln x$, and find where the gradient is zero.
+  steps:
+  - $u = x^2$, so $\dfrac{du}{dx} = 2x$; $\quad v = \ln x$, so $\dfrac{dv}{dx} = \dfrac{1}{x}$.
+  - 'Product rule:
+
+
+    $$\frac{dy}{dx} = x^2\cdot\frac{1}{x} + \ln x\cdot 2x$$'
+  - 'Simplify each piece:
+
+
+    $$\frac{dy}{dx} = x + 2x\ln x = x(1 + 2\ln x)$$'
+  - 'Gradient zero: $x(1 + 2\ln x) = 0$, so $x = 0$ (where $\ln x$ is undefined — reject it) or
+
+
+    $$1 + 2\ln x = 0 \quad\Longrightarrow\quad \ln x = -\tfrac{1}{2} \quad\Longrightarrow\quad x = e^{-1/2} = \frac{1}{\sqrt{e}}$$'
+  - 'Check: at $x = 1/\sqrt e \approx 0.607$, $2\ln x = -1$, so $1 + 2\ln x = 0$ ✓'
+  answer: $\dfrac{dy}{dx} = x(1 + 2\ln x)$; the gradient is $0$ at $x = \dfrac{1}{\sqrt e} \approx 0.607$.
+- type: check
+  title: Quick check
+  questions:
+  - product-recall
+  - differentiate-product
+  - quotient-gradient
+- type: example
+  title: 'Example 2: the syllabus quotient'
+  problem: Differentiate $y = \dfrac{2x - 4}{3x + 2}$.
+  steps:
+  - $u = 2x - 4$, so $\dfrac{du}{dx} = 2$; $\quad v = 3x + 2$, so $\dfrac{dv}{dx} = 3$.
+  - 'Quotient rule:
+
+
+    $$\frac{dy}{dx} = \frac{(3x + 2)(2) - (2x - 4)(3)}{(3x + 2)^2}$$'
+  - 'Expand the numerator:
+
+
+    $$6x + 4 - 6x + 12 = 16$$'
+  - 'The $x$ terms cancel, leaving a constant — as expected for a quotient of two straight lines:
+
+
+    $$\frac{dy}{dx} = \frac{16}{(3x + 2)^2}$$'
+  answer: $\dfrac{dy}{dx} = \dfrac{16}{(3x + 2)^2}$.
+- type: example
+  title: 'Example 3: exponential with a bracket inside'
+  problem: Differentiate $y = xe^{1 - x^2}$.
+  steps:
+  - $u = x$, so $\dfrac{du}{dx} = 1$.
+  - '$v = e^{1 - x^2}$; by the chain rule (outside $e^{(\cdot)}$, inside $1 - x^2$):
+
+
+    $$\frac{dv}{dx} = e^{1 - x^2}(-2x) = -2x\,e^{1 - x^2}$$'
+  - 'Product rule:
+
+
+    $$\frac{dy}{dx} = x\left(-2x\,e^{1-x^2}\right) + e^{1-x^2}(1)$$'
+  - 'Factor out $e^{1-x^2}$:
+
+
+    $$\frac{dy}{dx} = e^{1 - x^2}\left(1 - 2x^2\right)$$'
+  answer: $\dfrac{dy}{dx} = (1 - 2x^2)\,e^{1 - x^2}$.
+- type: check
+  title: Exam-style check
+  questions:
+  - quotient-recall
+  - spot-error-product
+  - why-both-terms
+- type: misconceptions
+  items:
+  - wrong: $\dfrac{d}{dx}(uv) = \dfrac{du}{dx}\cdot\dfrac{dv}{dx}$.
+    right: 'That is the classic error. Test with $u = v = x$: the rule gives $2x$, but
+
+      $1 \times 1 = 1$.'
+  - wrong: The quotient rule is $\dfrac{u\dfrac{dv}{dx} - v\dfrac{du}{dx}}{v^2}$.
+    right: 'The order is $v\,\dfrac{du}{dx} - u\,\dfrac{dv}{dx}$, that is, "denominator times
+
+      derivative of the top first".'
+  - wrong: You must always use the quotient rule for fractions.
+    right: 'You can instead rewrite as $u\,v^{-1}$ and use the product rule with the chain rule
+
+      inside; the answer is the same, but the quotient rule is usually quicker.'
+  - wrong: In $x^2\ln x$ you may set $u = \ln x$ and $v = x^2$ and get a different answer.
+    right: 'The product rule is symmetric, so either labelling gives the same final expression —
+
+      provided you add the two terms and do not swap only one.'
+  - wrong: The quotient rule keeps the denominator squared even after the numerator simplifies.
+    right: 'It does: $(3x+2)^2$ stays on the bottom; simplifying only happens in the numerator.'
+- type: exam
+  body: '- State $u$, $v$ and their derivatives explicitly before assembling: the structure marks are for that,
+    not for the final line.
+
+    - If the question then asks for stationary points, factorise your derivative before solving.
+
+    - Quotient questions often cancel: expand the numerator before deciding it is irreducible.
+
+    - Leave exponentials in $e$-form; do not convert to decimals mid-solution.'
+- type: takeaways
+  items:
+  - 'Product: $d(uv) = u\,dv + v\,du$.'
+  - 'Quotient: $d(u/v) = (v\,du - u\,dv)/v^2$.'
+  - '"polynomial × log" and "polynomial × exponential" are the two recurring P3 products.'
+  - Factorise the derivative before hunting stationary points.
+  - The quotient-of-two-lines example gives a constant numerator — a useful self-check.
+- type: deeper
+  title: Why the product rule needs two terms
+  body: 'Nudge $x$ by a small $h$. Both factors move, so the product moves for **two** reasons:
+
+
+    $$u(x+h)v(x+h) - u(x)v(x) \approx u\,\Delta v + v\,\Delta u$$
+
+
+    The "cross" term $\Delta u\,\Delta v$ is much smaller and vanishes in the limit. One term
+
+    represents each factor wiggling while the other holds still — which is exactly what the two
+
+    summands of the product rule are.'
+questions:
+- id: product-recall
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.4.2
+  prompt: What is the product rule for $y = uv$?
+  options:
+  - text: $y' = u'v + uv'
+    correct: true
+    why: Each term differentiates one factor and leaves the other intact.
+  - text: $y' = u'v'
+    why: 'Multiplying the two derivatives fails already for $u = v = \sin x$: it gives $0$ while $y = \sin^2 x$
+      has a genuinely non-zero derivative.'
+  - text: $y' = uv' + v'u'
+    why: 'Same mis-shape as $u''v''$: no intact second factor in either term.'
+  - text: $y' = u'v - uv'
+    why: A minus sign belongs to the quotient rule, not the product rule.
+  explanation: 'Product rule: differentiate one factor, keep the other, then swap and add: $u''v + uv''$.'
+- id: differentiate-product
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.4.2
+  prompt: 'Differentiate $y = x^2 \sin x$ and give $y''$ as an expression in $x$.
+
+
+    Type your answer using `sin` and `cos`, e.g. `2*x*sin(x) + x^2*cos(x)`.'
+  answer: 2*x*sin(x) + x^2*cos(x)
+  variables:
+  - x
+  display: $x^2\cos x + 2x\sin x$
+  explanation: $u = x^2$, $v = \sin x$, so $y' = 2x\sin x + x^2\cos x$.
+- id: quotient-gradient
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.4.2
+  prompt: Find the gradient of $y = \dfrac{\ln x}{x}$ at $x = e$.
+  fields:
+  - answer: 0
+    tolerance:
+      abs: 0.0001
+  explanation: '$y'' = \dfrac{1 - \ln x}{x^2}$, and at $x = e$, $\ln e = 1$, so $y'' = 0$: the curve peaks there.'
+- id: quotient-recall
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.4.2
+  prompt: Which is the correct derivative of $y = \dfrac{\sin x}{x}$?
+  options:
+  - text: $\dfrac{x\cos x - \sin x}{x^2}$
+    correct: true
+    why: 'Quotient rule: $v^2 = x^2$ downstairs, numerator $(\cos x)x - (\sin x)(1)$.'
+  - text: $\dfrac{\sin x - x\cos x}{x^2}$
+    why: 'Numerator order flipped the sign: $v^2$ over $uv''$ is not the rule; the first term is $u''v$, not $v
+      u''$ down-prioritised.'
+  - text: $\dfrac{x\cos x + \sin x}{x^2}$
+    why: A plus sign sneaks in; the quotient rule subtracts.
+  - text: $\dfrac{\cos x}{1}$
+    why: That differentiates only the top and divides by nothing — the quotient rule exists precisely because both
+      parts vary.
+  explanation: 'With $u = \sin x$, $v = x$: numerator $u''v - uv'' = x\cos x - \sin x$, over $v^2 = x^2$.'
+- id: spot-error-product
+  format: spot-error
+  difficulty: 3
+  objectives:
+  - 3.4.2
+  prompt: One line of this working contains an error. Find it.
+  lines:
+  - Differentiate $y = e^x\cos x$.
+  - $u = e^x$ so $u' = e^x$
+  - 'For $v = \cos x$:  $v'' = \sin x$'
+  - $y' = u'v + uv' = e^x\cos x + e^x\sin x$
+  errorLine: 3
+  fix: $(\cos x)' = -\sin x$, so the $v' = \sin x$ line is wrong; the true derivative is $y' = e^x(\cos x - \sin
+    x)$.
+  explanation: The minus inside $v' = -\sin x$ is easy to drop — but dropping it flips every second term and $\cos
+    x$ does not behave that way.
+- id: why-both-terms
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.4.2
+  prompt: A student writes $(x^2 \sin x)' = 2x \times \cos x$. Explain in words why that answer is wrong and where
+    the correct plus-sign structure comes from.
+  model: 'The error is differentiating both factors and multiplying. The product rule makes each term
+
+    differentiate one factor only: first the $x^2$ (giving $2x\sin x$) and separately the $\sin x$
+
+    (giving $x^2\cos x$); you add those two contributions, not multiply them.'
+  keyPoints:
+  - Differentiate one factor at a time, leaving the other alone
+  - 'Add the two results: $u''v + uv''$'
+  - Multiplying derivative-by-derivative double counts and drops the structure
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.

@@ -1,0 +1,277 @@
+id: ethics-ownership-copyright-licensing
+subject: "9618"
+topic: "7.1"
+title: "Copyright and software licensing"
+summary: "Why copyright exists for software, the main licence types (FSF, OSI, shareware, commercial), and how to choose the right licence for a project."
+order: 6
+minutes: 6
+kind: core
+objectives: ["7.1.3", "7.1.4"]
+prerequisites: ["ethics-ownership-acting-ethically"]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 7.1.3 (copyright legislation) and 7.1.4 (software licensing
+    including FSF, OSI, shareware, commercial). All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why copyright legislation applies to software, distinguish
+      between the main licence categories (FSF/GPL, OSI/MIT/Apache, shareware, commercial),
+      and justify a licence choice for a given scenario.
+
+  - type: explain
+    title: Why does software need copyright?
+    body: |
+      Code is **intellectual property** — it's a creative work fixed in a tangible medium (source
+      files, binaries). Without copyright:
+      - Anyone could copy, modify, and sell your code without permission.
+      - No legal basis for licences (licences *grant* permissions that copyright *withholds*).
+      - No incentive to invest in software development.
+
+      **Copyright automatically applies** the moment you write code (in most jurisdictions,
+      including UK). You don't need to register it — though registration helps enforcement.
+
+      **What copyright protects:** the expression (your actual code, structure, comments).
+      **What it doesn't:** ideas, algorithms, functionality, interfaces (these may be patentable
+      instead — a different regime).
+
+  - type: definition
+    term: Copyright (in software)
+    body: |
+      The exclusive legal right of the creator (or their employer) to copy, distribute, modify,
+      and publicly perform/display a software work. Others need a licence to do any of these.
+
+  - type: explain
+    title: Licences — permission slips for copyrighted code
+    body: |
+      A **software licence** is a legal document that says: "I (the copyright holder) give you
+      permission to do X, Y, Z with my code, under conditions A, B, C."
+
+      Without a licence, **all rights are reserved** — no one else can legally use, copy, or
+      modify your code.
+
+      Cambridge focuses on four licence families:
+
+      1. **Free Software Foundation (FSF) / GNU** — "free as in freedom"
+      2. **Open Source Initiative (OSI) approved** — includes permissive and copyleft
+      3. **Shareware** — try before you pay
+      4. **Commercial / Proprietary** — all rights reserved except what the EULA grants
+
+  - type: definition
+    term: Copyleft
+    body: |
+      A licence condition requiring that modified or extended versions of the software be
+      distributed under the same licence terms. "Share and share alike." GPL is the classic
+      example.
+
+  - type: explain
+    title: The four licence families in detail
+    body: |
+      **1. FSF / GNU (Free Software Foundation)**
+      - Philosophy: software freedom is a moral right.
+      - Key licences: **GPL (General Public License)** — strong copyleft. **LGPL** — library
+        exception. **AGPL** — closes the "network use" loophole.
+      - If you use GPL code in your project, **your whole project must be GPL** (viral effect).
+      - Use when: you want to guarantee freedom for all downstream users.
+
+      **2. OSI-approved (Open Source Initiative)**
+      - Broader tent: includes both copyleft and permissive licences.
+      - **Permissive:** MIT, BSD, Apache 2.0 — do almost anything, just keep the licence notice.
+        No viral effect. Business-friendly.
+      - **Copyleft:** GPL, LGPL, MPL (Mozilla Public License) — file-level copyleft.
+      - Use when: you want wide adoption (permissive) or community protection (copyleft).
+
+      **3. Shareware**
+      - "Try before you buy" — free evaluation period, then payment required.
+      - Source code usually **not** provided.
+      - No standard licence terms — each vendor writes their own.
+      - Use when: you want users to evaluate a commercial product.
+
+      **4. Commercial / Proprietary**
+      - Standard EULA (End User Licence Agreement): you get a limited right to *use* the
+        software, not to copy, modify, reverse-engineer, or redistribute.
+      - Source code almost never provided.
+      - Support, updates, indemnity often included.
+      - Use when: you're selling a product and need to protect IP and revenue.
+
+  - type: example
+    title: "Example: Choosing a licence for a new project"
+    problem: |
+      You're releasing a Python library for data visualisation. You want:
+      - Companies to be able to use it in proprietary products.
+      - Contributions back to the community (if they modify *your* library).
+      - No obligation for them to open-source their *whole app*.
+    steps:
+      - |
+        FSF GPL: too strong — forces their whole app to be GPL. ❌
+      - |
+        MIT/BSD: too permissive — they can modify your library and keep changes private. ❌
+      - |
+        **MPL (Mozilla Public License) / LGPL:** file-level copyleft. Changes to *your* files
+        must be shared; their app code stays proprietary. ✅
+      - |
+        Apache 2.0: also works — patent grant, permissive, but no requirement to share
+        modifications to your library.
+    answer: |
+      MPL or LGPL. They require modifications to the library itself to be shared (copyleft at
+      file/library level) but don't infect the entire application. Apache 2.0 is a close
+      alternative if patent protection matters more than copyleft.
+
+  - type: check
+    title: Quick check
+    questions: [copyright-auto, copyleft-def, licence-families, licence-choice]
+
+  - type: explain
+    title: Justifying a licence choice — exam technique
+    body: |
+      Questions ask: "Justify the use of licence X for situation Y."
+
+      **Structure your answer:**
+      1. Name the licence family and specific licence.
+      2. State the key terms (copyleft? permissive? commercial?).
+      3. Map terms to the scenario's requirements.
+      4. Explain why alternatives don't fit.
+
+      **Example:** "A startup wants to build a SaaS product using an open-source database.
+      They must not be forced to open-source their application code."
+      → **Apache 2.0 / MIT / BSD** (permissive). GPL would require their SaaS code to be open
+      (AGPL closes the SaaS loophole). Commercial licence costs money and gives no community.
+
+  - type: misconceptions
+    items:
+      - wrong: |
+          "Open source" and "free software" mean the same thing.
+        right: |
+          They overlap heavily but differ in philosophy. FSF emphasises *freedom* as a moral
+          imperative; OSI emphasises *practical benefits* of open development. Most licences
+          satisfy both.
+      - wrong: |
+          If code is on GitHub with no licence, it's free to use.
+        right: |
+          No licence = **all rights reserved**. You cannot legally use, copy, or modify it.
+          Always check for a LICENSE file.
+      - wrong: |
+          GPL means you can't sell the software.
+        right: |
+          You *can* sell GPL software — but you must provide source code and the buyer gets
+          GPL rights too (so they can redistribute it). The business model is services/support,
+          not licence fees.
+      - wrong: |
+          Shareware is a type of open source.
+        right: |
+          Shareware is proprietary — usually binary-only, time-limited evaluation, payment
+          required for continued use. Source code is not shared.
+
+  - type: exam
+    body: |
+      - "State the purpose of copyright legislation for software." → Protects the creator's
+        exclusive rights to copy, distribute, modify; provides legal basis for licences.
+      - "Distinguish between a permissive licence (e.g., MIT) and a copyleft licence (e.g.,
+        GPL)." → Permissive: minimal restrictions, no viral effect. Copyleft: derivative works
+        must use same licence.
+      - "A company wants to use an open-source library in a proprietary product without
+        releasing their source code. Recommend a licence type and justify." → Permissive (MIT,
+        Apache 2.0) or weak copyleft (LGPL, MPL) — explain why GPL/AGPL fails.
+
+  - type: takeaways
+    items:
+      - |
+        Copyright automatically protects code; licences grant permissions.
+      - |
+        FSF/GPL = strong copyleft (viral). OSI = both permissive (MIT, Apache) and copyleft.
+      - |
+        Shareware = try-before-you-buy, proprietary. Commercial = all rights reserved by default.
+      - |
+        Choose licence by mapping terms to project goals: adoption vs community protection vs revenue.
+
+questions:
+  - id: copyright-auto
+    format: mcq
+    difficulty: 1
+    objectives: ["7.1.3"]
+    prompt: |
+      When does copyright protection apply to a piece of software you write?
+    options:
+      - text: Only after you register it with the copyright office
+        why: |-
+          Registration helps enforcement but is not required for protection.
+      - text: Automatically, the moment it is created and fixed in a tangible form
+        correct: true
+        why: |-
+          Copyright arises automatically on creation in most jurisdictions (including UK).
+      - text: Only after you publish it on GitHub
+        why: |-
+          Publication is not required; private code is also protected.
+      - text: Only if you include a copyright notice in the source
+        why: |-
+          Notice is recommended but not required for protection.
+    explanation: |
+      Copyright is automatic once the work is fixed in a tangible form. Registration and copyright notices help you prove ownership and license the work, but they do not create the right.
+
+  - id: copyleft-def
+    format: text
+    difficulty: 1
+    objectives: ["7.1.4"]
+    prompt: |
+      Define "copyleft" in the context of software licensing.
+    accept:
+      - A licence condition requiring derivative works to be distributed under the same licence terms
+      - "Share and share alike: modified versions must carry the same freedoms"
+      - A clause that ensures software freedom propagates to downstream users
+    model: |
+      A licence condition requiring that modified or extended versions of the software be
+      distributed under the same licence terms, preserving the freedoms for all downstream users.
+    explanation: |
+      Copyleft uses copyright law to enforce sharing — the opposite of traditional "all rights
+      reserved". GPL is the best-known copyleft licence.
+
+  - id: licence-families
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.4"]
+    prompt: |
+      Which licence family is characterised by "try before you buy", typically provides only
+      binaries (not source), and requires payment after an evaluation period?
+    options:
+      - text: Free Software Foundation (GPL)
+        why: |-
+          GPL is free/open source, not trialware.
+      - text: Open Source Initiative (MIT, Apache)
+        why: |-
+          OSI licences are open source, not time-limited trials.
+      - text: Shareware
+        correct: true
+        why: |-
+          Shareware = evaluation period, then pay; usually binary-only, proprietary.
+      - text: Commercial / Proprietary
+        why: |-
+          Commercial software may offer trials, but "shareware" specifically denotes the
+          try-before-you-buy model.
+    explanation: |
+      Shareware is distributed for a trial period and paid for afterwards, usually as binaries without source. GPL and MIT are free/open-source licences, and commercial software is paid for up front.
+
+  - id: licence-choice
+    format: explain
+    difficulty: 3
+    objectives: ["7.1.4"]
+    prompt: |
+      A university research group is releasing a scientific computing library. They want:
+      - Anyone to use it freely (including in commercial products).
+      - Improvements to the library itself to be contributed back.
+      - No requirement for users to open-source their own applications.
+      Recommend a specific licence and justify your choice.
+    keyPoints:
+      - "File-level copyleft: changes to the library's own files must be shared under the same licence."
+      - "Applications that link to the library may stay proprietary, unlike the GPL."
+      - "MPL 2.0 or LGPL fits; GPL would force the whole application to be GPL, and MIT would allow private forks of the library."
+    model: |
+      MPL 2.0 (or LGPL). It has file-level copyleft: modifications to the library files must be
+      shared under MPL, but the library can be linked into proprietary applications without
+      forcing them to open-source. GPL would force the whole application to be GPL; MIT would
+      allow private forks of the library.
+    explanation: |
+      MPL/LGPL are "weak copyleft" — they protect the library itself while allowing proprietary
+      use. This matches the research group's goals exactly.

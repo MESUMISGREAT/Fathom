@@ -1,0 +1,265 @@
+id: p3-algebra-remainder-factor-theorem
+subject: "9709"
+topic: "3.1"
+title: "Remainder and factor theorems: substitute, don't divide"
+summary: Dividing by (x − k) gives remainder f(k), and f(k) = 0 means (x − k) is a factor — even when the divisor is (ax + b).
+order: 5
+minutes: 6
+kind: core
+objectives: ["3.1.3"]
+prerequisites: [p3-algebra-long-division]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1 outcome "use the factor theorem and the remainder theorem", including
+    factors of the form (ax + b). Remainders and factorisations verified in Python. All questions
+    are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find a remainder without dividing, decide whether a linear expression is a factor, and factorise a cubic completely.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      Two questions, one idea:
+
+      - **"Find the remainder when $f(x)$ is divided by $(x - k)$"** → work out $f(k)$.
+      - **"Show that $(x - k)$ is a factor"** → show $f(k) = 0$.
+
+      The theorems:
+
+      $$\text{Remainder} = f(k) \quad\text{when dividing by } (x - k)$$
+      $$(x - k) \text{ is a factor} \iff f(k) = 0$$
+
+  - type: explain
+    title: The method (including (ax + b))
+    body: |-
+      1. **Identify what makes the divisor zero.** For $x - k$ that is $x = k$; for $ax + b$ it is $x = -\frac{b}{a}$.
+      2. **Substitute that value into $f(x)$.** No division needed.
+      3. **Read the result.** It is the remainder; zero means it is a factor.
+      4. **For a full factorisation:** divide out the factor, then factorise the quotient (usually a quadratic).
+
+      **The forgotten step:** with $ax + b$, substituting $x = -b/a$ gives a remainder, but the
+      *factor* is $ax + b$, not $x + b/a$ — so the quotient differs by a factor of $a$. Write the
+      factor as it was given.
+
+  - type: example
+    title: "Example 1: a remainder"
+    problem: |-
+      Find the remainder when $f(x) = x^3 - 4x^2 + 2x - 7$ is divided by $x + 1$.
+    steps:
+      - |-
+        $x + 1 = 0$ when $x = -1$.
+      - |-
+        $$f(-1) = (-1)^3 - 4(-1)^2 + 2(-1) - 7 = -1 - 4 - 2 - 7 = -14$$
+      - |-
+        So the remainder is $-14$.
+      - |-
+        Check by division: $x^3 - 4x^2 + 2x - 7 = (x + 1)(x^2 - 5x + 7) - 14$ ✓
+    answer: |-
+      Remainder $-14$.
+
+  - type: example
+    title: "Example 2: an exam-style one"
+    problem: |-
+      Show that $(2x - 1)$ is a factor of $f(x) = 2x^3 + x^2 - 13x + 6$, and factorise $f(x)$ completely.
+    steps:
+      - |-
+        $2x - 1 = 0$ when $x = \tfrac{1}{2}$.
+      - |-
+        $$f\!\left(\tfrac{1}{2}\right) = 2\left(\tfrac{1}{8}\right) + \tfrac{1}{4} - \tfrac{13}{2} + 6 = \tfrac{1}{4} + \tfrac{1}{4} - 6.5 + 6 = 0$$
+      - |-
+        The remainder is zero, so $(2x - 1)$ is a factor.
+      - |-
+        Divide: $2x^3 + x^2 - 13x + 6 = (2x - 1)(x^2 + x - 6)$.
+      - |-
+        Factorise the quadratic: $x^2 + x - 6 = (x + 3)(x - 2)$.
+      - |-
+        $$f(x) = (2x - 1)(x + 3)(x - 2)$$
+    answer: |-
+      $f(x) = (2x - 1)(x + 3)(x - 2)$.
+
+  - type: check
+    title: Quick check
+    questions: [remainder-value, factor-test, half-factor]
+
+  - type: explain
+    title: Why the theorem is true
+    body: |-
+      Dividing $f(x)$ by $(x - k)$ gives a quotient and a constant remainder:
+
+      $$f(x) = (x - k)Q(x) + r$$
+
+      Put $x = k$. The bracket becomes zero, so every term with $(x - k)$ vanishes:
+
+      $$f(k) = 0 \cdot Q(k) + r = r$$
+
+      That is the whole proof, and it works for any $k$. If $r = 0$ then
+      $f(x) = (x - k)Q(x)$, which is exactly the statement that $(x - k)$ is a factor.
+
+  - type: check
+    title: Practice
+    questions: [complete-factorisation, remainder-theorem-proof, sign-trap]
+
+  - type: misconceptions
+    items:
+      - wrong: To find a remainder you must do long division.
+        right: |-
+          Substitution is faster and is what the theorem is for. Use division only when you also
+          need the quotient.
+      - wrong: Dividing by $x + 1$ means substituting $x = 1$.
+        right: |-
+          $x + 1 = 0$ gives $x = -1$. The sign is the usual trap: substitute the value that makes
+          the divisor zero.
+      - wrong: If $f\!\left(\tfrac{1}{2}\right) = 0$ then $(x - \tfrac{1}{2})$ is the factor to state.
+        right: |-
+          If the question's divisor is $2x - 1$, state $(2x - 1)$. Leaving it as $x - \tfrac{1}{2}$
+          loses the mark and changes the quotient by a factor of 2.
+      - wrong: A zero remainder proves the quadratic factor has no further roots.
+        right: |-
+          It proves only that the linear expression divides exactly. The quotient may still
+          factorise, and you must factorise it to answer "completely".
+      - wrong: $f(k) = 0$ for one value of $k$ means $f$ has only one root.
+        right: |-
+          A cubic has three roots (some possibly repeated). Knowing one factor lets you find the
+          others.
+
+  - type: exam
+    body: |-
+      - Show the substitution line, not just the answer: $f(2) = 8 + 12 - 22 - 6 = 0$ earns the method mark.
+      - Say what the result means: "the remainder is zero, therefore $(x - 2)$ is a factor".
+      - After finding one factor of a cubic, divide to get a quadratic and factorise it — "completely" means all linear factors.
+      - With $(ax + b)$, substitute $x = -\frac{b}{a}$ and keep the original factor in your answer.
+
+  - type: takeaways
+    items:
+      - 'Remainder theorem: dividing by $(x - k)$ leaves remainder $f(k)$.'
+      - 'Factor theorem: $(x - k)$ is a factor $\iff f(k) = 0$.'
+      - 'For $ax + b$, substitute $x = -\frac{b}{a}$.'
+      - 'Proof: write $f(x) = (x - k)Q(x) + r$ and put $x = k$.'
+      - 'To factorise a cubic fully: find one factor, divide, then factorise the quadratic.'
+
+  - type: deeper
+    title: Repeated factors and what they look like
+    body: |-
+      If $(x - k)$ is a factor **twice**, then $f(k) = 0$ as well, so the theorem alone cannot tell
+      you a factor is repeated. But dividing once and substituting again reveals it:
+
+      $$f(x) = (x - k)^2 Q(x)$$
+
+      For example $x^3 - 3x^2 + 3x - 1 = (x - 1)^3$: here $f(1) = 0$, and after dividing by
+      $(x - 1)$ the quotient is $(x - 1)^2$, which is still zero at $x = 1$.
+
+      On a graph, a repeated factor shows as the curve **touching** the axis rather than crossing
+      it.
+
+questions:
+  - id: remainder-value
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |-
+      Find the remainder when $x^3 - 4x^2 + 2x - 7$ is divided by $x + 1$.
+    fields:
+      - answer: -14
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Substitute $x = -1$: $(-1) - 4(1) - 2 - 7 = -14$. The remainder is $-14$.
+
+  - id: factor-test
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.3"]
+    prompt: |-
+      Which expression is a factor of $f(x) = x^3 - 4x^2 + x + 6$?
+    options:
+      - text: $x - 2$
+        correct: true
+        why: |-
+          $f(2) = 8 - 16 + 2 + 6 = 0$, so by the factor theorem $x - 2$ is a factor.
+      - text: $x + 2$
+        why: |-
+          $f(-2) = -8 - 16 - 2 + 6 = -20 \ne 0$, so it is not a factor.
+      - text: $x - 1$
+        why: |-
+          $f(1) = 1 - 4 + 1 + 6 = 4 \ne 0$.
+      - text: $x + 3$
+        why: |-
+          $f(-3) = -27 - 36 - 3 + 6 = -60 \ne 0$.
+    explanation: |-
+      Test each candidate by substituting the value that makes it zero; only $x = 2$ gives zero.
+
+  - id: half-factor
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |-
+      Given $f(x) = 2x^3 + x^2 - 13x + 6$, evaluate $f\!\left(\tfrac{1}{2}\right)$.
+    fields:
+      - answer: 0
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $2\left(\tfrac{1}{8}\right) + \tfrac{1}{4} - \tfrac{13}{2} + 6 = 0.25 + 0.25 - 6.5 + 6 = 0$,
+      so $(2x - 1)$ is a factor.
+
+  - id: complete-factorisation
+    format: mcq
+    difficulty: 3
+    objectives: ["3.1.3"]
+    prompt: |-
+      $f(x) = 2x^3 + x^2 - 13x + 6 = (2x - 1)(x^2 + x - 6)$. What is the complete factorisation?
+    options:
+      - text: $(2x - 1)(x + 3)(x - 2)$
+        correct: true
+        why: |-
+          $x^2 + x - 6$ factorises as $(x + 3)(x - 2)$: the numbers multiply to $-6$ and add to $1$.
+      - text: $(2x - 1)(x - 3)(x + 2)$
+        why: |-
+          That expands to $x^2 - x - 6$, which has the wrong sign on $x$.
+      - text: $(2x - 1)(x + 6)(x - 1)$
+        why: |-
+          That gives $x^2 + 5x - 6$, not $x^2 + x - 6$.
+      - text: $(2x - 1)(x^2 + x - 6)$ is already complete
+        why: |-
+          The quadratic factorises further, so this is not "completely" factorised.
+    explanation: |-
+      Factorise the quadratic quotient; a fully factorised cubic is three linear factors.
+
+  - id: remainder-theorem-proof
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |-
+      Why does substituting $x = k$ into $f(x) = (x - k)Q(x) + r$ give the remainder?
+    options:
+      - text: Because the term $(x - k)Q(x)$ becomes zero, leaving $f(k) = r$
+        correct: true
+        why: |-
+          With $x = k$ the factor $(x - k)$ is zero, so the whole product vanishes and only the
+          constant remainder survives.
+      - text: Because $Q(k)$ is always zero
+        why: |-
+          Nothing is known about $Q(k)$; it is the factor $(x - k)$ that vanishes.
+      - text: Because $r$ is the coefficient of $x$
+        why: |-
+          $r$ is the constant remainder, unrelated to any coefficient of the original polynomial.
+      - text: Because substituting is the same as dividing
+        why: |-
+          It is a shortcut that avoids dividing — the justification is the identity above.
+    explanation: |-
+      The identity plus $x = k$ is the entire proof of the remainder theorem.
+
+  - id: sign-trap
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.3"]
+    prompt: |-
+      Find the remainder when $x^3 + 2x^2 - 5x + 1$ is divided by $x + 3$.
+    fields:
+      - answer: 7
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Substitute $x = -3$: $(-27) + 2(9) - 5(-3) + 1 = -27 + 18 + 15 + 1 = 7$. The remainder is $7$.

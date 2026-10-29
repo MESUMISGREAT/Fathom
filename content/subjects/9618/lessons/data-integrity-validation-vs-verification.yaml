@@ -1,0 +1,271 @@
+id: data-integrity-validation-vs-verification
+subject: "9618"
+topic: "6.2"
+title: "Validation and verification: two different guards"
+summary: Validation stops data that is not acceptable; verification checks the data really is what was intended.
+order: 1
+minutes: 8
+kind: core
+objectives: ["6.2.1"]
+prerequisites: [data-security-privacy-integrity]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.2 outcome 6.2.1 ("describe how
+    data validation and data verification help to protect the integrity of data"). All examples
+    and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.2.1 confirmed taught and tested, every definition and claim checked,
+    every check digit, parity bit, block check character and checksum recomputed in Python,
+    and the unit's five diagrams rendered and inspected in light and dark. No separate
+    reviewer model was available in this environment. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain what validation and verification each check, why a system needs both, and why neither one guarantees that stored data is true.
+
+  - type: explain
+    title: Rubbish in, rubbish out
+    body: |-
+      A database only looks authoritative because it is printed neatly. 
+
+      If a clerk types `19/07/200` instead of `19/07/2001`, the record is wrong forever — and every report built on it is wrong too. Computer people summarise this as **garbage in, garbage out**.
+
+      Integrity (the accuracy, completeness and consistency of data) is protected by two guards, and they answer different questions:
+
+      - **Validation:** is this value *acceptable* for this field? Should the system let it in at all?
+      - **Verification:** is this value *what the source actually said*? Has it been copied or transmitted accurately?
+
+      The order matters. Validation runs first, as the data is entered. 
+
+      Verification runs alongside or afterwards, to confirm nothing was mistyped or corrupted.
+
+  - type: definition
+    term: Data validation
+    body: |-
+      **Data validation** is an automated check, performed by the system, that data entered is **sensible and acceptable** for the field before it is stored. Data that fails validation is rejected and the user is asked to correct it.
+
+      It does **not** check whether the data is true. A date of birth of `01/01/1900` may pass every validation rule and still be wrong.
+
+  - type: definition
+    term: Data verification
+    body: |-
+      **Data verification** is checking that data has been **copied or transferred accurately** — that the value now in the system is the same value that was in the source.
+
+      Verification is about faithfulness to the source, not about whether the source was right in the first place.
+
+  - type: diagram
+    diagram: cs-data-integrity-validation-vs-verification
+    alt: >-
+      A flow with two gates. Data enters through a validation gate labelled "is it acceptable for
+      this field?" with examples: a date 31/02/2000 is rejected, a quantity of 5000 fails a range
+      check. Accepted data then passes a verification gate labelled "is it what the source said?"
+      with examples: a visual check against the form, or a second operator typing the same value.
+      Only then is the data stored, with a note that a value can pass both gates and still be
+      untrue if the source was wrong.
+    caption: |-
+      Validation asks "may I accept this?" Verification asks "is this what was written down?"
+
+  - type: explain
+    title: The same record, two different rescues
+    body: |-
+      **Case 1.** A patient's date of birth is typed as `31/02/2000`. February never has 31 days, so a **validation** rule rejects it immediately. 
+
+      The data never reaches the database.
+
+      **Case 2.** A customer's date of birth is `03/04/1999` (3 April). The operator types `04/03/1999` (4 March). 
+
+      Both dates are real, so **validation accepts it** — there is nothing unacceptable about 4 March. Only verification can catch this: a second operator types it again, or someone compares the screen with the paper form.
+
+      
+
+      That is why both exist. Validation catches impossible data automatically and cheaply. Verification catches plausible-but-wrong data, which needs human or duplicated effort.
+
+  - type: explain
+    title: What neither guard can do
+    body: |-
+      Both guards protect the *copying* of data. Neither checks the real world.
+
+      - A customer who writes a false phone number produces data that passes every check.
+      - Two operators can both misread the same handwriting in the same way, so double entry can agree on the wrong value.
+      - A validation rule is only as good as the person who wrote it: a range check of 1 to 100 on an age field still accepts 5 for a bank customer.
+
+      This is worth a sentence in an exam answer: validation and verification **reduce** errors, they do not eliminate them.
+
+  - type: check
+    title: Which guard?
+    questions: [dv-mcq-which, dv-cloze-definitions, dv-mcq-plausible]
+
+  - type: example
+    title: Classifying four incidents
+    problem: |-
+      For each incident, decide whether it is a failure that validation or verification should have caught.
+
+      **A.** An order quantity of `-3` is stored.
+      **B.** A student's surname is typed as `Patel` on the form and `Patle` into the system.
+      **C.** A postcode field accepts `ZZ99 9ZZ`.
+      **D.** A phone number is transferred between two systems and two digits are swapped on the way.
+    steps:
+      - |-
+        **A.** A negative quantity is *unacceptable* for a quantity field, so a **range check** (validation) should reject it before storage.
+      - |-
+        **B.** `Patle` is a legal string, so no validation rule can know it is wrong. Comparing the screen with the form, or double entry, is **verification** — this is mistyping, not nonsense.
+      - |-
+        **C.** The value has the right shape, so a format check passes; but it is not a real postcode. Catching that needs an **existence check** against a list of real postcodes, which is still validation — the value is checked against stored reference data.
+      - |-
+        **D.** The value left one system correct and arrived corrupted. Nothing the user typed was at fault, so this is verification of **data transfer**: a checksum or parity check on the file would detect the change.
+    answer: |-
+      A and C are validation failures (range check, existence check). B is an entry-verification failure (visual check or double entry). D is a transfer-verification failure (checksum or parity). The distinction is not "human versus computer" — it is *unacceptable value* versus *value no longer matching the source*.
+
+  - type: check
+    title: Context and limits
+    questions: [dv-text-limit, dv-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [dv-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Validation and verification are two names for the same checking.
+        right: |-
+          Validation tests acceptability against rules; verification tests faithfulness to the source. A value can pass validation and fail verification (a real but mistyped date), or fail validation and be exactly what the user intended (a real customer whose age genuinely is 120, blocked by an age range).
+      - wrong: |-
+          If data passed validation, it must be correct.
+        right: |-
+          Validation only checks the form of the data — its range, length, format and so on. A wrong-but-plausible value passes every rule.
+      - wrong: |-
+          Verification means checking that the data is valid.
+        right: |-
+          Verification compares the stored value with the source: visually, by typing it twice, or by checking a checksum after transfer. It says nothing about whether the value is acceptable.
+      - wrong: |-
+          Double entry removes all errors.
+        right: |-
+          Two people can misread the same handwriting identically, and a systematic error (a badly designed form) affects both copies. It reduces random mistyping, not every error.
+
+  - type: exam
+    body: |-
+      A typical question: *"Explain how validation and verification help to protect the integrity of data"* (4 marks). Aim for two marks each:
+
+      - Validation: the system automatically checks data against rules (range, length, format, presence, existence, limit, check digit) before accepting it, so impossible or unacceptable values are rejected.
+      - Verification: the data is checked against the source — visually, by double entry, or by parity/checksum after transfer — so mistyped or corrupted values are detected.
+
+      Finish with a sentence that shows you understand the limit: neither can detect data that is plausible and faithfully copied but simply untrue.
+
+  - type: takeaways
+    items:
+      - "**Validation** = automatic checks that data is acceptable for the field; unacceptable data is rejected."
+      - "**Verification** = checks that the stored data matches the source."
+      - A mistyped but real date passes validation and fails verification.
+      - "Transferring data needs verification too: parity and checksums detect corruption in transit."
+      - Both guards reduce error; neither guarantees truth.
+
+questions:
+  - id: dv-mcq-which
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.1"]
+    prompt: |-
+      A system refuses to accept a date of `31/02/2001` because February has at most 29 days. Which term describes this check?
+    options:
+      - text: Validation, because the value is not acceptable for a date field.
+        correct: true
+        why: |-
+          The system applied an automatic rule about acceptable dates and rejected the value before storing it.
+      - text: Verification, because the date was checked against the source form.
+        why: |-
+          Nothing was compared with a source; the value itself is impossible.
+      - text: Verification, because a second operator typed the date.
+        why: |-
+          Double entry is verification, but no second operator is mentioned here.
+      - text: Neither — rejecting a date is a database error.
+        why: |-
+          It is a deliberate rule, not a database failure.
+    explanation: |-
+      Validation tests whether a value is acceptable. 31 February is unacceptable as a date, so a validation rule rejects it.
+
+  - id: dv-cloze-definitions
+    format: cloze
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      Checking that entered data is acceptable for a field, using rules such as range and length checks, is {{1}}. Checking that the data matches the original source, for example by double entry or a checksum, is {{2}}.
+    blanks:
+      - accept: [validation, data validation]
+      - accept: [verification, data verification]
+    explanation: |-
+      Validation tests acceptability against rules; verification tests that the stored copy matches the source.
+
+  - id: dv-mcq-plausible
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      A customer's house number is 21, but the operator types 12. Both are valid house numbers. Why does validation fail to catch this, and what would catch it?
+    options:
+      - text: Validation only checks acceptability, so a second check against the source (verification) is needed.
+        correct: true
+        why: |-
+          12 passes every rule, so no rule can flag it. Comparing with the original form or a second entry catches the mismatch.
+      - text: Validation should catch it with a range check on house numbers.
+        why: |-
+          A range wide enough to allow 12 and 21 allows the mistake; narrowing it would reject real addresses.
+      - text: A check digit on every typed field would catch every mistake.
+        why: |-
+          Check digits suit codes with a fixed structure such as barcodes, not free-form text like house numbers.
+      - text: Nothing can catch this kind of error.
+        why: |-
+          Verification exists precisely for plausible typing errors: visual checking or double entry would catch it.
+    explanation: |-
+      Validation cannot distinguish a plausible wrong value from the right one. Verification compares the stored value with the source.
+
+  - id: dv-text-limit
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      Which check confirms that transferred data arrived exactly as it was sent: validation or verification? (One word.)
+    accept: [verification, data verification]
+    model: |-
+      **Verification** — for example a parity check or checksum that detects corruption during transfer.
+    explanation: |-
+      Transferred data has not been mistyped by a user, but it can be corrupted by noise. Verification confirms that what arrived matches what was sent.
+
+  - id: dv-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.2.1"]
+    prompt: |-
+      A student explains how a system protects data integrity. Which line contains the first error?
+    lines:
+      - A presence check rejects a blank surname field, which is validation.
+      - A length check rejects a 12-digit phone number in a field limited to 11, which is also validation.
+      - Double entry means two operators type the data, and the system compares the two versions.
+      - Verification guarantees that the data stored is factually correct.
+    errorLine: 4
+    fix: |-
+      Verification only shows that the stored data matches what was typed from the source. If the source is wrong, or both operators misread it the same way, the stored value is still wrong. Verification reduces error; it does not guarantee truth.
+    explanation: |-
+      Lines 1 to 3 are correct. Line 4 confuses "faithful to the source" with "factually correct", which is the misconception this objective tests.
+
+  - id: dv-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.2.1"]
+    prompt: |-
+      Explain the difference between data validation and data verification, using one example of an error that only verification can catch.
+    model: |-
+      Validation is an automatic check that data is acceptable for a field, using rules such as a range check, a length check or a check digit. Unacceptable data is rejected before it is stored. Verification checks that the stored data matches the source it came from, for example by a visual check against the form, by double entry, or by a checksum after transfer. An error that only verification can catch is a plausible mistyping: if a customer's date of birth is 03/04/1999 and the operator types 04/03/1999, both are real dates so validation accepts the value. Only comparing it with the original form, or having a second operator type it, reveals the difference.
+    keyPoints:
+      - Validation checks acceptability against rules and rejects bad data.
+      - Verification checks that stored data matches the source.
+      - Example of a plausible wrong value that passes validation.
+      - Verification method that would catch it (visual check, double entry or checksum).
+    explanation: |-
+      Validation guards the form of the data; verification guards its faithfulness to the source. A real-but-wrong value needs verification.

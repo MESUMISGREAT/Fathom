@@ -94,7 +94,7 @@ export function CovalentBondingMultipleBonds() {
       {/* C2H4 */}
       <Shell cx={cA[0]} cy={cA[1]} r={RC} symbol="C" />
       <Shell cx={cB[0]} cy={cB[1]} r={RC} symbol="C" />
-      <Shared a={cA} ra={RC} b={cB} rb={RC} marks={pairs('cross', 'cross', 2)} />
+      <Shared a={cA} ra={RC} b={cB} rb={RC} marks={pairs('cross', 'dot', 2)} />
       {hs.map(({ c: cc, a }) => {
         const h = polar(cc[0], cc[1], 38, a);
         return (

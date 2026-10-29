@@ -1,0 +1,130 @@
+id: forces-equilibrium-components-and-resultants
+subject: "9709"
+topic: "4.1"
+title: Components and resultants of forces
+summary: Treat force as a vector, resolve it into components and combine forces to find a resultant.
+order: 2
+minutes: 7
+kind: core
+objectives: ["4.1.2"]
+prerequisites: ["forces-equilibrium-forces-and-force-diagrams"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus objective 4.1.2. All questions and examples are original; numerical values are
+    illustrative. Not yet independently reviewed or reviewed by a teacher. Independently re-checked line by line (Cambridge objectives, worked examples, vector calculations, every answer key, MCQ cardinality and schema) in a separate GitHub Copilot review on 2026-10-29. Reviewer: GitHub Copilot; model identity was not exposed in this session. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can resolve a force into perpendicular components and find the resultant of several forces using exact calculations.
+  - type: explain
+    title: A force has size and direction
+    body: |-
+      A force is a **vector**: its magnitude tells you how strong it is and its direction tells you where it acts. Two forces with equal sizes can have different effects if they point in different directions.
+
+      Choose perpendicular axes, usually horizontal and vertical. If a force $P$ acts at angle $\theta$ above the positive horizontal, its components are $P\cos\theta$ horizontally and $P\sin\theta$ vertically.
+  - type: definition
+    term: Resultant
+    body: The resultant of a set of forces is the single force that has the same effect as all the forces acting together; it is their vector sum.
+  - type: example
+    title: Resolving a slanted pull
+    problem: A force of $20\text{ N}$ acts at $30^\circ$ above the horizontal. Find its horizontal and vertical components.
+    steps:
+      - |-
+        The angle is measured from the horizontal, so the horizontal component is adjacent to the angle: $20\cos30^\circ$.
+      - |-
+        Calculate $20\cos30^\circ=10\sqrt3\text{ N}\approx17.3\text{ N}$.
+      - |-
+        The vertical component is opposite the angle: $20\sin30^\circ$.
+      - |-
+        Calculate $20\sin30^\circ=10\text{ N}$.
+    answer: Horizontal component $10\sqrt3\text{ N}$ and vertical component $10\text{ N}$.
+  - type: diagram
+    diagram: forces-equilibrium-components-resultants
+    alt: A force vector at 30 degrees above horizontal showing horizontal and vertical components of 20 cos 30 and 20 sin 30
+  - type: check
+    questions: [component-choice, component-calculation]
+  - type: explain
+    title: Adding forces component by component
+    body: |-
+      Add horizontal components separately and vertical components separately. If the total components are $X$ and $Y$, the resultant has magnitude $\sqrt{X^2+Y^2}$ and direction $\tan^{-1}(Y/X)$, with the quadrant checked from the signs.
+
+      This is exact vector addition, not an approximate scale drawing. A negative component means the resultant points opposite to your chosen positive direction.
+  - type: example
+    title: Two forces make one resultant
+    problem: A particle is acted on by a $12\text{ N}$ force to the right and a $5\text{ N}$ force upwards. Find the magnitude and direction of the resultant.
+    steps:
+      - |-
+        The total horizontal component is $X=12\text{ N}$ and the total vertical component is $Y=5\text{ N}$.
+      - |-
+        Use Pythagoras: $|\mathbf R|=\sqrt{12^2+5^2}=\sqrt{169}=13\text{ N}$.
+      - |-
+        Measure the angle above the horizontal: $\theta=\tan^{-1}(5/12)\approx22.6^\circ$.
+    answer: The resultant is $13\text{ N}$ at $22.6^\circ$ above the horizontal.
+  - type: check
+    title: Combine the components
+    questions: [resultant-size, resultant-direction]
+  - type: misconceptions
+    items:
+      - wrong: Use $P\sin\theta$ for the horizontal component whenever an angle appears.
+        right: The component next to the stated angle uses cosine; the opposite component uses sine.
+      - wrong: Add the magnitudes of forces without considering direction.
+        right: Add signed components, because opposite directions partially or completely cancel.
+  - type: exam
+    body: State the direction of a resultant relative to an axis, not just its magnitude. Keep exact forms such as $10\sqrt3$ until the final rounding when useful.
+  - type: takeaways
+    items:
+      - Forces are vectors, so direction matters.
+      - Resolve using the angle's adjacent and opposite sides.
+      - Add components separately.
+      - Use Pythagoras and inverse tangent for the resultant's size and direction.
+questions:
+  - id: component-choice
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: A force $P$ acts at angle $\theta$ above the horizontal. Which pair gives its horizontal and vertical components?
+    options:
+      - text: $P\cos\theta$ and $P\sin\theta$
+        correct: true
+        why: The horizontal side is adjacent to the angle and the vertical side is opposite.
+      - text: $P\sin\theta$ and $P\cos\theta$
+        correct: false
+        why: This swaps the adjacent and opposite sides.
+      - text: $P\tan\theta$ and $P/\tan\theta$
+        correct: false
+        why: Tangent relates two components; it does not give the components from the resultant.
+      - text: $P$ and $P$
+        correct: false
+        why: The components are projections and are generally smaller than the original force.
+    explanation: Relative to the angle measured from the horizontal, cosine gives the adjacent horizontal component and sine gives the opposite vertical component.
+  - id: component-calculation
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: A force of $10\text{ N}$ acts at $60^\circ$ above the horizontal. Find its vertical component in newtons.
+    fields:
+      - answer: 8.660254037844386
+        tolerance: {abs: 0.01}
+        unit: N
+    explanation: The vertical component is $10\sin60^\circ=5\sqrt3\text{ N}\approx8.66\text{ N}$.
+  - id: resultant-size
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: A particle has a resultant horizontal component of $-6\text{ N}$ and vertical component of $8\text{ N}$. Find the magnitude of the resultant in newtons.
+    fields:
+      - answer: 10
+        unit: N
+    explanation: The magnitude is $\sqrt{(-6)^2+8^2}=\sqrt{100}=10\text{ N}$.
+  - id: resultant-direction
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: A resultant has horizontal component $12\text{ N}$ to the right and vertical component $5\text{ N}$ upwards. Find its angle above the positive horizontal, in degrees to 1 decimal place.
+    fields:
+      - answer: 22.619864948040426
+        tolerance: {abs: 0.05}
+        unit: "°"
+    explanation: The angle is $\tan^{-1}(5/12)=22.619\ldots^\circ$, so it is $22.6^\circ$ above the positive horizontal.

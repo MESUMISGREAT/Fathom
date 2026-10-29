@@ -1,0 +1,229 @@
+id: polarisation-filters-and-uses
+subject: "9702"
+topic: "7.5"
+title: Polarising filters in series and in use
+summary: How filters select a plane, why a third filter can let light through crossed filters, and where polarisation matters in real devices.
+order: 3
+minutes: 6
+kind: core
+objectives: ["7.5.1", "7.5.2"]
+prerequisites: [polarisation-malus-law]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Physics 9702 syllabus, topic 7.5
+    Polarisation, learning outcomes 7.5.1 and 7.5.2. Applications are included as context for
+    the same physics, with no extra examinable claims. Every numerical answer was computed with
+    Python; questions are original.
+    Re-checked line by line on 2026-10-29: every statement, worked example and numerical answer was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain how a polarising filter works, calculate the intensity through several filters in series, and describe applications of polarisation.
+
+  - type: explain
+    title: What is inside the filter?
+    body: |
+      A Polaroid filter contains long polymer molecules that have been stretched into parallel chains. The electrons in those chains can move easily **along** the chains, so the material absorbs light whose electric field oscillates along them.
+
+      The direction **perpendicular** to the chains is the **transmission axis**. Light oscillating along that axis passes through.
+
+      So the filter is not a set of physical slits. It is a material that absorbs one component of the electric field and transmits the other. The result is the same: the emerging light is plane-polarised along the transmission axis.
+
+  - type: diagram
+    diagram: phys-polarisation-filter-chain
+    alt: A beam of unpolarised light passes through a first polarising filter and becomes plane-polarised with intensity I0. A second filter, the analyser, is set at angle theta to the first, and the transmitted intensity is I0 cos squared theta.
+    caption: |
+      The first filter sets the plane of polarisation. Each later filter multiplies the intensity by $\cos^2\theta$ for its own angle.
+
+  - type: explain
+    title: Crossed filters and the middle filter trick
+    body: |
+      Two filters with axes at $90^\circ$ are **crossed**. Light polarised by the first has no component along the second's axis, so nothing gets through.
+
+      Now slide a third filter between them, with its axis at $45^\circ$ to both. Something surprising happens: light comes out.
+
+      Here is why. The middle filter **rotates** the plane of polarisation. Light leaves it polarised at $45^\circ$, not at $0^\circ$. That $45^\circ$ beam has a component along the final filter's axis, so some light passes.
+
+      The middle filter does not add energy. It removes some light, but it also changes the direction of oscillation so that the final filter has something to transmit.
+
+  - type: example
+    title: Three filters at 0°, 45° and 90°
+    problem: |
+      Plane-polarised light of intensity $100\ \text{W m}^{-2}$ passes through a filter at $45^\circ$ to its plane of polarisation, then through a second filter whose axis is $90^\circ$ to the **original** plane. Calculate the final intensity.
+    steps:
+      - |
+        First filter: $\theta_1 = 45^\circ$, so $I_1 = 100\cos^2 45^\circ = 100 \times 0.5 = 50\ \text{W m}^{-2}$.
+      - |
+        The light leaving this filter is polarised at $45^\circ$ to the original plane. The final filter is at $90^\circ$ to the original, so the angle between it and the new plane of polarisation is $90^\circ - 45^\circ = 45^\circ$.
+      - |
+        Second filter: $I_2 = 50\cos^2 45^\circ = 50 \times 0.5 = 25\ \text{W m}^{-2}$.
+      - |
+        Without the middle filter, the final filter would be crossed with the original plane and transmit **zero**. The middle filter has made transmission possible.
+    answer: |
+      $I_2 = 25\ \text{W m}^{-2}$, compared with zero without the middle filter.
+
+  - type: explain
+    title: Where polarisation shows up
+    body: |
+      **Polarising sunglasses.** Light reflected from a horizontal surface such as water or a road is partly polarised horizontally. Sunglasses with a vertical transmission axis absorb that component, cutting glare while letting through more of the useful vertical light.
+
+      **Photography.** A polarising filter on a camera can remove reflections from glass or water, so the camera sees through the surface instead of seeing the reflection.
+
+      **LCD screens.** A liquid-crystal display sits between two polarising filters. The liquid crystal rotates the plane of polarisation, and an applied voltage changes that rotation. Each pixel acts as a controllable shutter, so the screen can switch light on and off.
+
+      **Stress analysis.** Transparent plastic placed between crossed filters shows coloured patterns where it is stressed, because stress changes how it rotates polarisation. Engineers use this to find weak points in models.
+
+      **Microwaves.** A grid of parallel metal wires polarises microwaves: the component along the wires is absorbed or reflected, and the perpendicular component passes. Rotating the receiver shows the polarisation direction.
+
+  - type: misconceptions
+    items:
+      - wrong: A polarising filter blocks half the light by physically covering half the beam.
+        right: |
+          It transmits the component of the electric field along its axis and absorbs the perpendicular component. The beam is not cut in half geometrically; its oscillations are selected.
+      - wrong: Crossed filters block all light, no matter what is between them.
+        right: |
+          A third filter at an intermediate angle rotates the plane of polarisation, so some light can pass through the final filter. Add the middle filter and the beam brightens from zero.
+      - wrong: The middle filter increases the energy of the light.
+        right: |
+          Each filter can only reduce intensity. The middle filter changes the **direction** of polarisation, which allows the final filter to transmit some of what remains.
+      - wrong: Polarising sunglasses work because they are darker than ordinary sunglasses.
+        right: |
+          Tint reduces all light. The polarising layer selectively removes the horizontally polarised glare, which ordinary tinted glass does not.
+
+  - type: exam
+    body: |
+      - For a series, process the filters one at a time and recalculate the angle relative to the **previous** filter's axis.
+      - Quote the intermediate intensities. "After the first filter, $I = 50\ \text{W m}^{-2}$" shows the method even if the final arithmetic slips.
+      - When explaining the three-filter result, say that the middle filter **changes the plane of polarisation**. That is the mark-winning idea.
+      - Applications questions want the physics, not just the product: glare is partly polarised, the filter axis is chosen to absorb it.
+      - Never claim a filter increases intensity. Each stage must reduce or keep it the same.
+
+  - type: takeaways
+    items:
+      - A polarising filter transmits the component along its transmission axis and absorbs the perpendicular component.
+      - Crossed filters transmit zero, but a filter at an intermediate angle between them allows some light through.
+      - Each filter in series multiplies the intensity by $\cos^2\theta$ for its angle to the previous plane.
+      - Sunglasses, cameras, LCDs, stress analysis and microwave grids all use polarisation.
+      - Filters never increase intensity; they select and absorb.
+
+  - type: check
+    title: Filters in series
+    questions: [three-filters, crossed-plus-middle, sunglasses-axis]
+
+  - type: check
+    title: Explain and apply
+    questions: [middle-filter-explanation, spot-the-claim, lcd-polarisers]
+
+questions:
+  - id: three-filters
+    format: numeric
+    difficulty: 2
+    objectives: ["7.5.2"]
+    prompt: |
+      Plane-polarised light of intensity $100\ \text{W m}^{-2}$ passes through a filter at $45^\circ$ to its plane of polarisation, then through a filter at $90^\circ$ to the original plane. Calculate the final intensity.
+    fields:
+      - answer: 25
+        tolerance: { abs: 0.5 }
+        unit: W m⁻²
+    explanation: |
+      After the first filter: $100\cos^2 45^\circ = 50\ \text{W m}^{-2}$. The second filter is $45^\circ$ from the new plane, so $I = 50\cos^2 45^\circ = 25\ \text{W m}^{-2}$.
+
+  - id: crossed-plus-middle
+    format: mcq
+    difficulty: 2
+    objectives: ["7.5.1", "7.5.2"]
+    prompt: |
+      Two polarising filters are crossed, so no light passes. A third filter is placed between them with its axis at $45^\circ$ to both. What happens?
+    options:
+      - text: Some light now passes, because the middle filter changes the plane of polarisation
+        correct: true
+        why: |
+          The middle filter rotates the plane to $45^\circ$, which has a component along the final filter's axis, so light is transmitted.
+      - text: Still no light passes, because the outer filters are crossed
+        why: |
+          The middle filter changes the polarisation between them, so the outer filters are no longer effectively crossed for the light that reaches the last one.
+      - text: All the light passes, because the middle filter removes the block
+        why: |
+          The middle filter absorbs some light and the final filter transmits only a component, so the emerging intensity is reduced, not full.
+      - text: The light becomes unpolarised again
+        why: |
+          Passing through a filter leaves the light plane-polarised, now along the middle filter's axis.
+    explanation: |
+      A filter at an intermediate angle rotates the plane of polarisation, allowing some light through the final filter.
+
+  - id: sunglasses-axis
+    format: mcq
+    difficulty: 1
+    objectives: ["7.5.1"]
+    prompt: |
+      Glare reflected from a horizontal wet road is partly horizontally polarised. Which transmission axis should polarising sunglasses have to reduce this glare most effectively?
+    options:
+      - text: Vertical
+        correct: true
+        why: |
+          A vertical axis absorbs the horizontally polarised component of the glare while transmitting the vertical component.
+      - text: Horizontal
+        why: |
+          A horizontal axis would transmit the glare, making it worse.
+      - text: At 45° to the vertical
+        why: |
+          This would transmit half the glare. Vertical absorbs the most.
+      - text: The axis makes no difference
+        why: |
+          The whole point of polarising sunglasses is that the axis does make a difference.
+    explanation: |
+      The filter absorbs the component of oscillation along its absorbing direction. To remove horizontal glare, use a vertical transmission axis.
+
+  - id: middle-filter-explanation
+    format: explain
+    difficulty: 2
+    objectives: ["7.5.1", "7.5.2"]
+    prompt: |
+      Explain how a filter placed between two crossed polarising filters can allow light to pass through the pair.
+    model: |
+      The first filter plane-polarises the light. The final filter is crossed with the first, so without anything between them the light has no component along the final filter's axis and none passes. The middle filter has its axis at an angle to the first, so it transmits the component of the light along its own axis. The light leaving the middle filter is therefore polarised along the middle filter's axis, which is no longer perpendicular to the final filter. It now has a component along the final axis, so some light passes. The middle filter reduces the intensity, but it changes the plane of polarisation so that transmission becomes possible.
+    keyPoints:
+      - The first filter polarises the light
+      - Crossed outer filters would transmit nothing
+      - The middle filter transmits a component and re-polarises the light along its own axis
+      - The new plane is not perpendicular to the final filter, so some light passes
+    explanation: |
+      The key is re-polarisation: the middle filter changes the direction of oscillation, not just the amount of light.
+
+  - id: spot-the-claim
+    format: spot-error
+    difficulty: 2
+    objectives: ["7.5.1", "7.5.2"]
+    prompt: |
+      A student writes about polarising filters. Which line contains the first error?
+    lines:
+      - "A polarising filter transmits the component of the electric field along its transmission axis."
+      - "Two crossed filters transmit no light."
+      - "Adding a filter between crossed filters can increase the intensity above the original beam."
+      - "Each additional filter can only reduce the intensity or leave it unchanged."
+      - "The middle filter changes the plane of polarisation."
+    errorLine: 3
+    fix: |
+      A passive filter cannot increase intensity above the original beam. The middle filter can make the transmitted intensity **non-zero** where it was zero, but the result is still less than the intensity before the first filter.
+    explanation: |
+      Filters absorb light; they never add energy. The surprise is that adding a filter can turn zero into a small non-zero value, not that it amplifies the beam.
+
+  - id: lcd-polarisers
+    format: text
+    difficulty: 2
+    objectives: ["7.5.1"]
+    style: short
+    prompt: |
+      An LCD screen uses two polarising filters. What does the liquid crystal between them do to the light?
+    accept:
+      - rotates the plane of polarisation
+      - rotates the polarisation
+      - changes the plane of polarisation
+      - rotates the plane of polarisation of the light
+    model: |
+      The liquid crystal rotates the plane of polarisation of the light, and an applied voltage controls the amount of rotation, so each pixel can act as a shutter.
+    explanation: |
+      The two polarisers set and analyse the plane; the liquid crystal controls the rotation between them, which is how the pixel switches.

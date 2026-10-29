@@ -1,0 +1,264 @@
+id: data-security-system-and-data
+subject: "9618"
+topic: "6.1"
+title: "Two locks: securing the system and securing the data"
+summary: Why protecting the computer and protecting the data are different jobs, and why you need both.
+order: 2
+minutes: 8
+kind: core
+objectives: ["6.1.2"]
+prerequisites: [data-security-privacy-integrity]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.1 outcome 6.1.2 ("appreciate the
+    need for both the security of data and the security of the computer system"). All examples
+    and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.1.2 confirmed taught and tested, every definition and claim checked, every
+    answer key and accept list re-read, and the unit's six diagrams rendered and inspected in
+    light and dark. No separate reviewer model was available in this environment.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain what "security of the computer system" and "security of the data" each protect, and give a case where one of them fails while the other still works.
+
+  - type: explain
+    title: The locked room and the locked safe
+    body: |-
+      Picture an office with two locks.
+
+      The **door** keeps people out of the room. The **safe** keeps people out of the documents once they are inside.
+
+      - If a stranger picks the door lock, they still have to deal with the safe.
+      - If someone walks out with the safe under their arm, the door lock was pointless — the protection did not travel with the valuables.
+
+      Computer security works the same way:
+
+      - **System security** is the door: the machine, its operating system, its software and its network.
+      - **Data security** is the safe: the actual files and records, wherever they go.
+
+      Where the analogy breaks: data is not a heavy safe. It can be copied in seconds and leave the building in an email attachment, a USB stick or a cloud sync, without anyone carrying anything.
+
+  - type: definition
+    term: Security of the computer system
+    body: |-
+      The protection of the **hardware, software and network** of a computer system from unauthorised access, use, modification or damage, and from being made unavailable.
+
+      Typical measures: user accounts and passwords, a firewall, anti-virus and anti-spyware software, operating-system updates (patches), and physical locks on the machine.
+
+  - type: definition
+    term: Security of the data
+    body: |-
+      The protection of the **data itself** — on the hard disk, in a database, on a backup, on removable media, or travelling across a network — from unauthorised access, change, disclosure or destruction.
+
+      Typical measures: **encryption** of stored files, backups and network traffic, and **access rights** that limit what a logged-in user may read or change.
+
+  - type: diagram
+    diagram: cs-data-security-system-vs-data
+    alt: >-
+      Two panels. The left panel shows a computer system as a large box labelled "system security:
+      accounts, firewall, anti-malware, patches" containing a smaller box labelled "data". The
+      right panel shows the data box leaving the system box — copied to a USB stick, a backup tape
+      and a cloud sync — with a separate lock labelled "data security: encryption and access
+      rights" that travels with it. Arrows show that the system lock does not follow the data.
+    caption: |-
+      The system lock stops at the edge of the machine. Encryption and access rights can travel with the data.
+
+  - type: explain
+    title: Why system security alone is not enough
+    body: |-
+      System security can be perfect and the data can still leak, because the strongest lock is useless if someone with the key carries the contents out.
+
+      - **Authorised users can misuse access.** A support agent with a valid login who downloads every customer record has bypassed nothing. Only limited **access rights** and audit logs reduce the damage.
+      - **Copies leave the system.** A backup tape in a van, a USB stick in a pocket, a file emailed to a personal account, a laptop left on a train — none of these are behind the firewall any more. Only protection attached to the data (encryption) still helps.
+      - **Data is shared with other organisations.** Once data is sent to a partner or a cloud service, your system's login controls no longer apply to it.
+      - **Accidental disclosure** — printing a report and leaving it on a desk, emailing the wrong recipient, a misconfigured cloud folder — breaks data security with no attacker at all.
+
+  - type: explain
+    title: Why data security alone is not enough
+    body: |-
+      It works the other way too. Encryption is a lock on the contents, not on the machine.
+
+      - **Malware can steal the key.** Spyware that records keystrokes or reads memory can capture a password or an encryption key. Encryption in that case protects nothing.
+      - **A compromised system can delete or corrupt data.** Encryption does not stop an attacker destroying the file, and a ransomware program can encrypt it with a key the owner does not have.
+      - **An attacker can use your machine as a weapon** — for example joining it to a botnet to attack other systems — even if they never read your files.
+      - **A compromised operating system can read data after it has been decrypted.** Once malicious code runs with administrator rights, it sees what the user sees.
+      - **Unpatched software is an open window.** If a known flaw is not fixed, an attacker can enter through it and disable every other measure from the inside.
+
+  - type: check
+    title: Which lock failed?
+    questions: [sd-mcq-which, sd-text-travel, sd-cloze]
+
+  - type: example
+    title: The stolen laptop
+    problem: |-
+      A salesperson's laptop is stolen from a car. It has a password on start-up and the hard disk is encrypted. The company also has an unencrypted copy of the same customer database on a network drive in the office, protected by a firewall.
+
+      Work out which protection applies to which copy of the data.
+    steps:
+      - |-
+        **The laptop's start-up password** is system security. It may slow the thief down, but an attacker who removes the disk and reads it in another machine never sees the login screen.
+      - |-
+        **The disk encryption** is data security. The files on the disk are ciphertext, so removing the disk gains the thief nothing without the key. This protection travelled with the data onto the stolen machine.
+      - |-
+        **The office copy** is protected by the firewall, which is system security. The firewall keeps intruders out of the office network; it does nothing for the laptop in the car park.
+      - |-
+        **Conclusion:** the stolen copy is safe *because of* the data-level measure, not because of the login. If the disk had been unencrypted, the password would have bought the company seconds, not safety.
+    answer: |-
+      The starter password protects the system; disk encryption protects the data itself and is the measure that still works after the theft; the firewall protects the office copy only. Both kinds of protection are needed because the data exists in more than one place.
+
+  - type: check
+    title: Where the lock stops
+    questions: [sd-mcq-malware-key, sd-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [sd-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          If the system is secure, the data inside it is secure.
+        right: |-
+          The system only controls access *through* the system. Authorised users, copied backups, removable media and cloud sync all move data outside those controls, so the data needs protection of its own.
+      - wrong: |-
+          Encrypting the data means the computer system does not need to be protected.
+        right: |-
+          Malware can steal keys or passwords, delete the files, or use the machine to attack others. Encryption is not a substitute for accounts, firewalls, anti-malware software and updates.
+      - wrong: |-
+          Data only leaves a system if someone steals a disk.
+        right: |-
+          Data leaves by email, cloud sync, screenshots, printed reports, backup tapes and USB sticks. Each of these is a normal business activity, which is exactly why data-level protection matters.
+      - wrong: |-
+          The two kinds of security are competing options — pick one that fits your budget.
+        right: |-
+          They protect against different failures. System security stops intruders getting in; data security limits the damage when data leaves, is copied or is misused by someone already inside.
+
+  - type: exam
+    body: |-
+      Questions here usually begin *"Explain why both the security of the data and the security of the computer system are needed"* (typically 3–4 marks). A safe answer gives:
+
+      1. a definition of each (system = hardware, software and network; data = the files and records themselves);
+      2. a case where system security does not protect the data — an authorised user, a stolen backup, a USB copy, a cloud service;
+      3. a case where data security does not protect the system — malware stealing a key, data being deleted, an unpatched machine being used as a bot.
+
+      Use one concrete example per point. "Because both are important" earns nothing; "a backup tape is outside the firewall, so encryption is the only thing still protecting it" earns the mark.
+
+  - type: takeaways
+    items:
+      - "**System security** protects the hardware, software and network from unauthorised access, use, modification or damage."
+      - "**Data security** protects the files and records themselves, wherever they are stored or sent."
+      - Data leaves a system legitimately all the time — backups, email, USB, cloud — so it needs its own protection.
+      - A compromised system can steal keys or delete data, so data protection cannot replace system protection.
+      - "Both are always required: they fail in different ways."
+
+questions:
+  - id: sd-mcq-which
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.2"]
+    prompt: |-
+      A company encrypts the files on a laptop's hard disk. Which kind of security is this mainly providing?
+    options:
+      - text: Security of the data, because the files stay unreadable even if the laptop is stolen.
+        correct: true
+        why: |-
+          Encryption stays with the files wherever they go, so it protects the data itself rather than the machine it sits in.
+      - text: Security of the system, because the laptop is protected from being used.
+        why: |-
+          The laptop can still be switched on and its hardware used; what is protected is the information on the disk.
+      - text: Neither — encryption only stops accidental damage.
+        why: |-
+          Encryption hides the contents of files from anyone without the key.
+      - text: Privacy only, since encryption has nothing to do with security.
+        why: |-
+          Privacy is about personal data being seen and used appropriately; encryption is a security measure, though it can support privacy.
+    explanation: |-
+      Encryption is a data-level measure: it travels with the files and protects them after the device is out of the company's control.
+
+  - id: sd-text-travel
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: |-
+      Name **one** measure that protects data after it has left the computer system, for example on a backup tape. (One or two words.)
+    accept: [encryption, encryption of the backup, encrypting the data, data encryption, access rights, file permissions]
+    model: |-
+      **Encryption** of the backup (or of the individual files), optionally combined with **access rights** that decide who may open it.
+    explanation: |-
+      Once data is outside the system, controls such as a firewall or login no longer apply. Encryption keeps the copy unreadable, and access rights limit who may use it.
+
+  - id: sd-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: |-
+      Protecting the hardware, software and network from unauthorised access is security of the {{1}}. Protecting the files and records themselves, even on a backup or a USB stick, is security of the {{2}}.
+    blanks:
+      - accept: [system, computer system]
+      - accept: [data]
+    explanation: |-
+      System security covers the machine, its software and its network. Data security covers the information itself, wherever it is stored or sent.
+
+  - id: sd-mcq-malware-key
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: |-
+      A company encrypts all its customer files. A virus then installs a keylogger that records the manager's password, and the attacker uses it to open the encrypted files. What does this show?
+    options:
+      - text: Data security alone is not enough, because a compromised system can capture the key.
+        correct: true
+        why: |-
+          Encryption only helps while the key stays secret. Malware on the system stole the key, so both kinds of protection were needed.
+      - text: Encryption was pointless, so companies should not bother with it.
+        why: |-
+          Encryption still protects data on stolen devices and backups. The failure was the unprotected system, not the idea of encryption.
+      - text: The firewall must have been switched off, so only system security matters.
+        why: |-
+          We are not told how the virus arrived. The lesson is that system protection is needed *as well as* data protection.
+      - text: The data had no integrity.
+        why: |-
+          Integrity concerns whether the values are accurate and complete, not who could read them.
+    explanation: |-
+      A compromised system can steal passwords and keys, delete files or act on the attacker's behalf. Data-level protection and system-level protection cover different failures.
+
+  - id: sd-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.2"]
+    prompt: |-
+      An employee's USB stick holding unencrypted customer records is lost. A student writes an analysis. Which line contains the first error?
+    lines:
+      - The data has left the company's network, so the office firewall no longer protects it.
+      - Because the stick was not encrypted, anyone who finds it can read the records.
+      - This is only a failure of system security, since the data itself was not attacked.
+      - Access rights on the files could have limited the damage even on a removable device.
+    errorLine: 3
+    fix: |-
+      Line 3 is wrong: the failure is of **data** security. The system's firewall works as designed and no system was attacked; the data was simply unprotected once it left the system. System security cannot protect a device that is no longer inside the network.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. The error is calling a data-protection failure a system-security failure, which is exactly the distinction this objective tests.
+
+  - id: sd-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.1.2"]
+    prompt: |-
+      A small business says: "Our network has a firewall and every PC has a password, so our customer data is secure." Explain why this is not enough, using one example.
+    model: |-
+      A firewall and passwords are system security: they control access to the network and to the machines. They do not protect data once it leaves the system, or when someone who is allowed in misuses their access. For example, an employee could copy the customer database onto an unencrypted USB stick and lose it; the firewall and logins never see that copy. Encrypting the files and limiting access rights to what each job needs would protect the data in that case. Conversely, malware on a PC could capture a password or delete files, which shows that the system must be protected too — both are needed.
+    keyPoints:
+      - Firewalls and passwords protect the system, not copies of the data that leave it.
+      - Example of data leaving legitimately (USB, backup, email, cloud) and then being exposed.
+      - Data-level measures such as encryption and access rights would limit that damage.
+      - A compromised system can also steal keys or delete data, so both kinds of protection are required.
+    explanation: |-
+      The two kinds of security answer different questions: who can get at the machine, and how the information is protected wherever it goes.

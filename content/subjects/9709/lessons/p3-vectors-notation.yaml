@@ -1,0 +1,207 @@
+id: p3-vectors-notation
+subject: "9709"
+topic: "3.7"
+title: Vector notation — the language of vectors
+summary: "Master the standard notations for vectors: column vectors, i/j/k, AB with an arrow, and bold letters. Learn to switch between them fluently."
+order: 1
+minutes: 7
+kind: core
+objectives: ["3.7.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.7 outcome "Use standard notations for vectors: column
+    vectors with components x, y or x, y, z; xi + yj; xi + yj + zk; AB with an arrow over
+    it; and a bold letter such as a." All examples, questions and diagrams are original.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can read and write vectors in all standard Cambridge notations and translate between them without hesitation.
+
+  - type: explain
+    title: Why so many notations?
+    body: |-
+      Vectors appear in different contexts: coordinate geometry, mechanics, 3D problems. Each field developed its own shorthand. Cambridge expects you to be fluent in all of them.
+
+      The four main notations you will meet:
+
+      1. **Column vector** — $\begin{pmatrix} x \\ y \end{pmatrix}$ or $\begin{pmatrix} x \\ y \\ z \end{pmatrix}$. Components listed vertically. Used in algebra and matrix work.
+      2. **i, j, k notation** — $x\mathbf{i} + y\mathbf{j}$ (2D) or $x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$ (3D). $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are unit vectors along the $x$-, $y$-, $z$-axes. Used in mechanics and physics.
+      3. **Directed segment** — $\overrightarrow{AB}$ (arrow over two points). The vector *from* A *to* B. Used in geometry.
+      4. **Bold letter** — $\mathbf{a}$, $\mathbf{b}$, $\mathbf{v}$. A single letter for a vector. Used everywhere as a shorthand.
+
+      **Key fact:** all four represent the *same* mathematical object — a quantity with magnitude and direction. The components $(x, y, z)$ are the coordinates of the tip when the tail is at the origin.
+
+  - type: diagram
+    diagram: p3-vectors-notation
+    alt: >-
+      A 3D coordinate system with a vector from the origin to point (3, 2, 4). The vector is
+      labelled as column vector (3, 2, 4)^T, as 3i + 2j + 4k, as vector a (bold), and as
+      OA with an arrow.
+    caption: |-
+      One vector, four names. The components (3, 2, 4) are the coordinates of the tip.
+
+  - type: example
+    title: "Example 1: translating between notations"
+    problem: |-
+      The vector $\mathbf{v} = \begin{pmatrix} -2 \\ 5 \end{pmatrix}$. Write it in i/j notation and as a bold letter.
+    steps:
+      - |-
+        Column to i/j: the top component is the coefficient of $\mathbf{i}$, the bottom is the coefficient of $\mathbf{j}$.
+      - |-
+        $\mathbf{v} = -2\mathbf{i} + 5\mathbf{j}$.
+      - |-
+        As a bold letter: just give it a name, e.g. $\mathbf{a} = -2\mathbf{i} + 5\mathbf{j}$.
+    answer: |-
+      $\mathbf{v} = -2\mathbf{i} + 5\mathbf{j}$. In bold: $\mathbf{a} = -2\mathbf{i} + 5\mathbf{j}$ (any letter works).
+
+  - type: check
+    questions: [vec-col-to-ij, vec-ij-to-col]
+
+  - type: explain
+    title: 'Directed segment notation $\overrightarrow{AB}$'
+    body: |-
+      $\overrightarrow{AB}$ means "the vector from point A to point B". Its components are:
+
+      $$ \overrightarrow{AB} = \begin{pmatrix} x_B - x_A \\ y_B - y_A \\ z_B - z_A \end{pmatrix} $$
+
+      **Order matters:** $\overrightarrow{AB} = -\overrightarrow{BA}$. The vector from A to B is the negative of the vector from B to A.
+
+      **Position vector:** $\overrightarrow{OA}$ (from the origin O to point A) is often just called "the position vector of A" and written as $\mathbf{a}$ or $\mathbf{r}_A$.
+
+  - type: example
+    title: 'Example 2: finding $\overrightarrow{AB}$ from coordinates'
+    problem: |-
+      A = (3, −1, 2) and B = (−1, 4, 5). Find $\overrightarrow{AB}$ in column form and in i/j/k notation.
+    steps:
+      - |-
+        $\overrightarrow{AB} = \begin{pmatrix} -1 - 3 \\ 4 - (-1) \\ 5 - 2 \end{pmatrix} = \begin{pmatrix} -4 \\ 5 \\ 3 \end{pmatrix}$.
+      - |-
+        In i/j/k: $-4\mathbf{i} + 5\mathbf{j} + 3\mathbf{k}$.
+    answer: |-
+      $\overrightarrow{AB} = \begin{pmatrix} -4 \\ 5 \\ 3 \end{pmatrix} = -4\mathbf{i} + 5\mathbf{j} + 3\mathbf{k}$.
+
+  - type: check
+    questions: [vec-ab-from-coords, vec-ba-sign]
+
+  - type: intuition
+    title: The tail-at-origin convention
+    body: |-
+      When we write a column vector $\begin{pmatrix} x \\ y \\ z \end{pmatrix}$ or $x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$, we **implicitly** mean the vector from the origin $(0,0,0)$ to the point $(x,y,z)$.
+
+      So:
+      - The column vector $\begin{pmatrix} 3 \\ -2 \end{pmatrix}$ *is* the position vector of the point $(3, -2)$.
+      - The notation $\mathbf{a} = \begin{pmatrix} 3 \\ -2 \end{pmatrix}$ says "the vector $\mathbf{a}$ has components 3 and −2", which is the same as saying "the point A with position vector $\mathbf{a}$ has coordinates $(3, -2)$".
+
+      This equivalence between **vectors** and **points** (via position vectors) is the bridge between algebra and geometry.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\begin{pmatrix} 3 \\ 4 \end{pmatrix}$ and $3\mathbf{i} + 4\mathbf{j}$ are different things.
+        right: |-
+          They are the *same vector* written in two notations. The components are identical: $x = 3$, $y = 4$.
+      - wrong: |-
+          $\overrightarrow{AB}$ means the vector from B to A.
+        right: |-
+          The arrow points from A to B. $\overrightarrow{AB}$ = B − A. The first letter is the tail, the second is the tip.
+      - wrong: |-
+          $\mathbf{i}$, $\mathbf{j}$, $\mathbf{k}$ are just letters. You can write $2i + 3j$ without bold.
+        right: |-
+          $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are **vectors** (unit vectors along the axes). They must be written in bold (or underlined in handwriting). Writing $2i + 3j$ looks like $2 \times i + 3 \times j$ where $i$ and $j$ are scalars — that is wrong.
+      - wrong: |-
+          A 2D vector has three components if you write it in i/j/k.
+        right: |-
+          In 2D, the $\mathbf{k}$ component is zero and is omitted. $x\mathbf{i} + y\mathbf{j}$ means $x\mathbf{i} + y\mathbf{j} + 0\mathbf{k}$.
+
+  - type: exam
+    body: |-
+      - "Write $\begin{pmatrix} 4 \\ -3 \end{pmatrix}$ in the form $x\mathbf{i} + y\mathbf{j}$." — Just read off components: $4\mathbf{i} - 3\mathbf{j}$.
+      - "Given $\mathbf{a} = 2\mathbf{i} - \mathbf{j} + 3\mathbf{k}$, write $\mathbf{a}$ as a column vector." — $\begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$.
+      - "A = (1, 2, 3), B = (4, 0, -1). Find $\overrightarrow{AB}$." — Subtract: B − A = $\begin{pmatrix} 3 \\ -2 \\ -4 \end{pmatrix}$.
+      - "State the position vector of the point (5, −2)." — $\begin{pmatrix} 5 \\ -2 \end{pmatrix}$ or $5\mathbf{i} - 2\mathbf{j}$.
+      - Notation discipline: bold for vectors ($\mathbf{a}$, $\mathbf{i}$, $\mathbf{j}$, $\mathbf{k}$), arrow for directed segments ($\overrightarrow{AB}$), column for components. In handwriting, underline vectors ($\underline{a}$) and draw a squiggle or arrow over AB.
+
+  - type: takeaways
+    items:
+      - |-
+        Column: $\begin{pmatrix} x \\ y \\ z \end{pmatrix}$; i/j/k: $x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$; bold: $\mathbf{a}$; arrow: $\overrightarrow{AB}$.
+      - |-
+        $\overrightarrow{AB} = \text{B} - \text{A}$ (tail to tip). Position vector of A is $\overrightarrow{OA}$.
+      - |-
+        $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are unit vectors (length 1) along the axes. Always bold/underlined.
+      - |-
+        Vectors and points are interchangeable via position vectors: point P(x,y,z) has position vector $\begin{pmatrix} x \\ y \\ z \end{pmatrix}$.
+
+questions:
+  - id: vec-col-to-ij
+    format: text
+    difficulty: 1
+    objectives: ["3.7.1"]
+    prompt: |-
+      Write the column vector $\begin{pmatrix} -3 \\ 7 \end{pmatrix}$ in $\mathbf{i}, \mathbf{j}$ notation.
+    accept:
+      - -3i + 7j
+      - -3\mathbf{i} + 7\mathbf{j}
+      - -3i + 7j
+      - -3\mathbf{i} + 7\mathbf{j}
+    model: |-
+      $-3\mathbf{i} + 7\mathbf{j}$
+    explanation: |-
+      The top component is the coefficient of $\mathbf{i}$, the bottom is the coefficient of $\mathbf{j}$.
+
+  - id: vec-ij-to-col
+    format: text
+    difficulty: 1
+    objectives: ["3.7.1"]
+    prompt: |-
+      Write $5\mathbf{i} - 2\mathbf{j} + 4\mathbf{k}$ as a column vector.
+    accept:
+      - (5, -2, 4)^T
+      - \begin{pmatrix} 5 \\ -2 \\ 4 \end{pmatrix}
+      - column vector 5, -2, 4
+    model: |-
+      $\begin{pmatrix} 5 \\ -2 \\ 4 \end{pmatrix}$
+    explanation: |-
+      The coefficients of $\mathbf{i}, \mathbf{j}, \mathbf{k}$ go into the column in order.
+
+  - id: vec-ab-from-coords
+    format: text
+    difficulty: 2
+    objectives: ["3.7.1"]
+    prompt: |-
+      A = (2, -1, 4) and B = (-3, 5, 1). Find $\overrightarrow{AB}$ as a column vector.
+    accept:
+      - (-5, 6, -3)^T
+      - \begin{pmatrix} -5 \\ 6 \\ -3 \end{pmatrix}
+      - column vector -5, 6, -3
+    model: |-
+      $\begin{pmatrix} -5 \\ 6 \\ -3 \end{pmatrix}$
+    explanation: |-
+      $\overrightarrow{AB} = B - A = (-3-2, 5-(-1), 1-4) = (-5, 6, -3)$.
+
+  - id: vec-ba-sign
+    format: mcq
+    difficulty: 1
+    objectives: ["3.7.1"]
+    prompt: |-
+      If $\overrightarrow{AB} = \begin{pmatrix} 2 \\ -3 \end{pmatrix}$, what is $\overrightarrow{BA}$?
+    options:
+      - text: $\begin{pmatrix} -2 \\ 3 \end{pmatrix}$
+        correct: true
+        why: |-
+          $\overrightarrow{BA} = -\overrightarrow{AB}$. Reverse the signs.
+      - text: $\begin{pmatrix} 2 \\ -3 \end{pmatrix}$
+        why: |-
+          That is $\overrightarrow{AB}$ itself. The direction is reversed.
+      - text: $\begin{pmatrix} 3 \\ -2 \end{pmatrix}$
+        why: |-
+          That swaps the components, which is not the negative.
+      - text: $\begin{pmatrix} -3 \\ 2 \end{pmatrix}$
+        why: |-
+          That is the negative with components swapped.
+    explanation: |
+      Reversing the arrow reverses the displacement, so every component changes sign: $\overrightarrow{BA} = -\overrightarrow{AB} = \begin{pmatrix} -2 \\ 3 \end{pmatrix}$.

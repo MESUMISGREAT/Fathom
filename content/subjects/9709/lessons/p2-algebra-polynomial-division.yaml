@@ -1,0 +1,217 @@
+id: p2-algebra-polynomial-division
+subject: "9709"
+topic: "2.1"
+title: Polynomial division and remainders
+summary: Divide a polynomial by a linear or quadratic expression and identify the quotient and remainder accurately.
+order: 2
+minutes: 5
+kind: core
+objectives: ["2.1.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): learning outcome 2.1.2, "Divide a polynomial of
+    degree not exceeding 4 by a linear or quadratic polynomial, and identify the quotient and
+    remainder (which may be zero)." Examples and all questions are original; calculations have
+    been checked in Python. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can divide a polynomial by a linear or quadratic expression and clearly state the **quotient** and the **remainder**.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *Divide* $x^3 + 3x^2 - 13x - 15$ by $x + 3$.
+
+      - The dividend is the polynomial you start with.
+      - The divisor is what you divide by.
+      - The answer is the quotient, plus a remainder term if needed.
+
+  - type: definition
+    term: Division identity
+    body: |-
+      $$P(x) = (x-a)Q(x) + R$$
+
+      when a polynomial $P(x)$ is divided by $(x-a)$, the quotient is $Q(x)$ and the remainder is $R$.
+
+      If $R = 0$, then $(x-a)$ is a factor of $P(x)$.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Write the dividend in descending powers of $x$, filling missing powers with $0$.
+      2. **Forgotten step: divide the leading term** of the current dividend by the leading term of the divisor.
+      3. Multiply the divisor by this term and subtract.
+      4. Repeat until the degree is less than the divisor.
+
+      The key move is subtracting neatly: if you forget the alignment, a small sign slip turns into a big mess.
+
+  - type: diagram
+    diagram: p2-algebra-division-table
+    alt: >-
+      A schematic summary of dividing x³ + 3x² − 13x − 15 by x + 3. It lists the quotient terms
+      x² and −13, the remainder 24, and the dividend and divisor.
+    caption: |-
+      Alignment matters. Put the powers of $x$ in columns so the subtraction is clean.
+
+  - type: example
+    title: Easy example with a check
+    problem: |-
+      Divide $x^3 + 3x^2 - 13x - 15$ by $x + 3$.
+    steps:
+      - |-
+        Start with $x^3 \div x = x^2$.
+      - |-
+        Multiply $(x+3)(x^2) = x^3 + 3x^2$ and subtract from the dividend.
+      - |-
+        This leaves $-13x - 15$.
+      - |-
+        Next, $-13x \div x = -13$.
+      - |-
+        Multiply $(x+3)(-13) = -13x - 39$ and subtract again.
+    answer: |-
+      $x^2 - 13$ with remainder $24$.
+
+      The final answer is $x^2 - 13 + \dfrac{24}{x+3}$.
+
+      Check: $(x+3)(x^2-13)+24=x^3+3x^2-13x-15$.
+
+  - type: check
+    questions: [poly-divide-quotient, poly-divide-remainder]
+
+  - type: example
+    title: Exam-style quadratic divisor
+    problem: |-
+      Divide $x^4+x^3-3x^2+2x+6$ by $x^2+x-2$.
+    steps:
+      - |-
+        $x^4\div x^2=x^2$.
+      - |-
+        Multiply $(x^2+x-2)x^2=x^4+x^3-2x^2$ and subtract.
+      - |-
+        This leaves $-x^2+2x+6$.
+      - |-
+        Divide the new leading terms: $-x^2\div x^2=-1$.
+      - |-
+        Multiply $(x^2+x-2)(-1)=-x^2-x+2$ and subtract. The remainder is $3x+4$.
+    answer: |-
+      Quotient $x^2-1$, remainder $3x+4$.
+
+      So the answer is $x^2-1+\dfrac{3x+4}{x^2+x-2}$.
+
+      Check: $(x^2+x-2)(x^2-1)+(3x+4)=x^4+x^3-3x^2+2x+6$.
+
+  - type: check
+    questions: [poly-divide-quadratic, poly-zero-remainder, poly-quadratic-remainder-degree]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          When dividing by $x+3$, you can ignore the sign and just use $x-3$.
+        right: |-
+          The divisor is $x+3$, so the critical value is $x=-3$, not $3$.
+      - wrong: |-
+          If the remainder is $0$, the quotient is always linear.
+        right: |-
+          A zero remainder means the divisor is a factor, but the quotient can still be quadratic or cubic depending on the degree of the dividend.
+      - wrong: |-
+          The remainder is always a single number.
+        right: |-
+          With a quadratic divisor, the remainder can be linear or constant, depending on the degree of the dividend.
+
+  - type: exam
+    body: |-
+      - If a divisor is linear, the remainder is a constant.
+      - If a divisor is quadratic, the remainder can have degree at most 1.
+      - Write the final answer as “quotient + remainder/divisor”; examiners expect that structure.
+
+  - type: takeaways
+    items:
+      - |-
+        Always align powers of $x$ before dividing.
+      - |-
+        The leading term of the quotient is found by dividing the leading term of the dividend by the leading term of the divisor.
+      - |-
+        The remainder has lower degree than the divisor.
+      - |-
+        Check a division by multiplying the quotient by the divisor, then adding the remainder.
+      - |-
+        If the remainder is $0$, the divisor is a factor.
+
+questions:
+  - id: poly-divide-quotient
+    format: expression
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |-
+      Divide $x^3 + 3x^2 - 13x - 15$ by $x + 3$ and give the quotient only.
+    answer: x^2 - 13
+    variables: [x]
+    display: |-
+      $x^2 - 13$
+    explanation: |-
+      $(x + 3)(x^2 - 13) = x^3 + 3x^2 - 13x - 39$.
+
+      The quotient is $x^2 - 13$, and the remainder is $24$.
+
+  - id: poly-divide-remainder
+    format: numeric
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |-
+      Find the remainder when $x^3 + 2x^2 - 5x + 3$ is divided by $x - 1$.
+    fields:
+      - label: "remainder ="
+        answer: 1
+    explanation: |-
+      Divide term by term:
+
+      - $x^3\div x=x^2$, leaving $3x^2-5x+3$.
+      - $3x^2\div x=3x$, leaving $-2x+3$.
+      - $-2x\div x=-2$, leaving remainder $1$.
+
+  - id: poly-divide-quadratic
+    format: expression
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |-
+      Divide $x^4+x^3-3x^2+2x+6$ by $x^2+x-2$ and give the quotient only.
+    answer: x^2 - 1
+    variables: [x]
+    display: |-
+      $x^2-1$
+    explanation: |-
+      $(x^2+x-2)(x^2-1)=x^4+x^3-3x^2-x+2$.
+
+      The remaining terms are $3x+4$, so the quotient is $x^2-1$.
+
+  - id: poly-zero-remainder
+    format: numeric
+    difficulty: 2
+    objectives: ["2.1.2"]
+    prompt: |-
+      Find the remainder when $2x^3+2x^2-6x-6$ is divided by $2x+2$.
+    fields:
+      - label: "remainder ="
+        answer: 0
+    explanation: |-
+      $2x^3+2x^2-6x-6=(2x+2)(x^2-3)$.
+
+      The dividend is exactly the divisor times $x^2-3$, so the remainder is $0$.
+
+  - id: poly-quadratic-remainder-degree
+    format: numeric
+    difficulty: 1
+    objectives: ["2.1.2"]
+    prompt: |-
+      What is the highest possible degree of a non-zero remainder when dividing by a quadratic polynomial?
+    fields:
+      - answer: 1
+    explanation: |-
+      The remainder must have lower degree than the divisor.
+
+      A quadratic divisor has degree $2$, so the remainder can have degree at most $1$.

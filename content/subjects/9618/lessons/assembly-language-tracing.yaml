@@ -1,0 +1,265 @@
+id: assembly-language-tracing
+subject: "9618"
+topic: "4.2"
+title: "Tracing a program: one row per instruction actually run"
+summary: Build a trace table for a loop that counts down, showing only what changed and following every jump the processor takes.
+order: 4
+minutes: 9
+kind: core
+objectives: ["4.2.3"]
+prerequisites: [assembly-language-instruction-set]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.2 outcome 4.2.3 ("trace a given
+    simple assembly language program"). Uses only instructions from the syllabus example set and
+    the #/B/& operand notation from its guidance. The program was simulated in Python; the
+    18-row trace, the final register and memory values and the loop count all come from that
+    simulation, not from mental arithmetic. All questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can produce a trace table for a short assembly program — one row per instruction **executed**, recording only the values that change — and read the final contents of ACC and memory from it.
+
+  - type: explain
+    title: A program is not a list, it is a path
+    body: |-
+      In a high-level language you read code top to bottom. An assembly program does not work like that: `JMP`, `JPE` and `JPN` send the processor backwards and forwards, so the same instruction runs several times and others are skipped.
+
+      A **trace table** records the path the processor actually took. That is the whole point: one row per instruction **executed**, in the order it runs.
+
+      If a loop runs three times, the loop's instructions appear in the table three times. If a jump is not taken, the next row is simply the following instruction.
+
+  - type: explain
+    title: Three rules that earn the marks
+    body: |-
+      1. **Write the address first.** The left-hand column is the address of the instruction, so the examiner can see the jump immediately. Do not renumber rows.
+      2. **Record only what changed.** A blank cell means "unchanged". Copying an unchanged value into every row looks busy and is usually marked wrong.
+      3. **Stop where you are told.** If the question says "until the program ends" or "for three iterations", stop there. Add the `END` row only if the program reaches it.
+
+      Two instructions change nothing in a trace table except the compare result:
+
+      - "`CMP` / `CMI` set the comparison result to True or False;"
+      - "`JMP` always jumps, `JPE` jumps on True, `JPN` jumps on False."
+
+      So a row for a jump often has an empty change cell — and that is the correct answer.
+
+  - type: check
+    title: Table rules and jumps
+    questions: [trace-blank, trace-jump-result, trace-next-address]
+
+  - type: example
+    title: Trace the countdown
+    problem: |-
+      Trace this program to completion. Memory 200 starts at 0 and memory 201 holds 1.
+
+      ```text
+      100  LDM #3
+      101  STO 200
+      102  LDD 200
+      103  SUB 201
+      104  STO 200
+      105  CMP #0
+      106  JPN 102
+      107  END
+      ```
+    steps:
+      - |-
+        `100 LDM #3` puts 3 in ACC. That is the only change, so only the ACC cell is filled.
+      - |-
+        `101 STO 200` stores 3 at address 200. Changed: memory 200.
+      - |-
+        `102 LDD 200` loads the contents of address 200 into ACC. ACC already holds that value, so the ACC cell stays **blank**: the instruction ran, but no value changed.
+      - |-
+        `103 SUB 201` subtracts the contents of 201 (which is 1): ACC becomes 2. `104 STO 200` writes 2 to memory.
+      - |-
+        `105 CMP #0` compares ACC (2) with 0: result **False**. `106 JPN 102` jumps only if False, so it jumps back to 102.
+      - |-
+        The loop repeats with ACC = 1, then with ACC = 0. When ACC reaches 0 the compare is **True**, so `JPN` is **not** taken and the processor falls through to `107 END`.
+      - |-
+        The complete table is below. Notice how few cells are filled, and how the same addresses repeat in the left column.
+
+        | Address | Instruction | ACC | Memory 200 | Compare result |
+        | --- | --- | --- | --- | --- |
+        | — | start | | 0 | |
+        | 100 | `LDM #3` | 3 | | |
+        | 101 | `STO 200` | | 3 | |
+        | 102 | `LDD 200` | | | |
+        | 103 | `SUB 201` | 2 | | |
+        | 104 | `STO 200` | | 2 | |
+        | 105 | `CMP #0` | | | False |
+        | 106 | `JPN 102` | | | |
+        | 102 | `LDD 200` | | | |
+        | 103 | `SUB 201` | 1 | | |
+        | 104 | `STO 200` | | 1 | |
+        | 105 | `CMP #0` | | | False |
+        | 106 | `JPN 102` | | | |
+        | 102 | `LDD 200` | | | |
+        | 103 | `SUB 201` | 0 | | |
+        | 104 | `STO 200` | | 0 | |
+        | 105 | `CMP #0` | | | True |
+        | 106 | `JPN 102` | | | |
+        | 107 | `END` | | | |
+    answer: |-
+      ACC ends at 0, memory 200 ends at 0, and the table has 18 instruction rows after the starting row. `SUB 201` executed three times; `JPN 102` jumped back on the first two passes (compare False) and was not taken on the third (compare True), which is how the loop ends.
+
+  - type: diagram
+    diagram: cs-assembly-language-trace-table
+    alt: >-
+      The program listing on the left, addresses 100 to 107, and a trace-table grid on the right with
+      columns Address, ACC, Mem 200 and Compare. A dashed arrow curves from the 106 row of the grid
+      back up to the 102 row, labelled jump, showing that addresses repeat. Seven rows are filled in,
+      with blanks wherever no value changed.
+    caption: |-
+      Rows follow the arrows, not the listing. The jump back to 102 is what makes addresses repeat.
+
+  - type: intuition
+    title: How to check your own trace in ten seconds
+    body: |-
+      - **Count the writes.** If memory 201 holds 1 and the program subtracts it each time round, the number of loop passes is fixed. Three passes here, because ACC starts at 3.
+      - **Watch the compare.** The loop ends on the first iteration where the compare goes True, and that iteration still gets its own rows.
+      - **Look for rows that do nothing.** A row with only a compare result, or a jump with nothing at all, is normal — resist the urge to invent values for it.
+
+  - type: check
+    title: Read the table
+    questions: [trace-final-acc, trace-sub-count, trace-rows]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The trace table has one row per line of the program.
+        right: |-
+          One row per instruction **executed**. A loop's lines appear once per pass, and skipped lines never appear at all.
+      - wrong: |-
+          Repeat the value in every cell so nothing is missing.
+        right: |-
+          Only changes are recorded. A blank means unchanged, and repeating values can lose marks for accuracy.
+      - wrong: |-
+          `CMP #0` loads 0 into ACC.
+        right: |-
+          It compares ACC with 0 and records the result. ACC is untouched, so the ACC cell stays empty.
+      - wrong: |-
+          `JPN` jumps when the comparison is true.
+        right: |-
+          `JPN` jumps on **false** (not equal); `JPE` jumps on **true** (equal).
+
+  - type: exam
+    body: |-
+      - Copy the address column from the program first, then work through the logic. It splits the job into two easier halves.
+      - Read the question's stopping point twice. "Until the program ends" includes the `END` row; "during the first three iterations" does not.
+      - When the question gives starting memory values in an unnumbered top row, treat them as the state before the first instruction runs.
+      - If your table has a value that never changes and never gets written, delete it. Examiners penalise clutter less than wrong values, but both cost time.
+
+  - type: takeaways
+    items:
+      - A trace table has **one row per instruction executed**, in execution order.
+      - Only changed values are recorded; a blank cell means "unchanged".
+      - "`CMP`/`CMI` set the compare result; `JPE` jumps on True, `JPN` on False, `JMP` always."
+      - A loop repeats its rows, so addresses appear in the left column more than once.
+      - Write the address column before tracing the values.
+
+questions:
+  - id: trace-final-acc
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      Use the program from this lesson. Memory 200 starts at 0 and memory 201 holds 1.
+
+      ```text
+      100  LDM #3
+      101  STO 200
+      102  LDD 200
+      103  SUB 201
+      104  STO 200
+      105  CMP #0
+      106  JPN 102
+      107  END
+      ```
+
+      What value is in the accumulator when `107 END` is reached?
+    fields:
+      - label: "ACC ="
+        answer: 0
+    explanation: |-
+      ACC counts down 3 → 2 → 1 → 0. At 0 the compare `CMP #0` is True, so `JPN` is not taken and the program falls through to `END` with ACC still 0.
+
+  - id: trace-sub-count
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      In the same program, how many times is the instruction `103 SUB 201` executed?
+    fields:
+      - label: "times"
+        answer: 3
+    explanation: |-
+      The loop body runs while ACC is 3, then 2, then 1 — three subtractions. After the third, ACC is 0, the compare is True, and the loop ends without another subtraction.
+
+  - id: trace-rows
+    format: numeric
+    difficulty: 3
+    objectives: ["4.2.3"]
+    prompt: |-
+      Trace the same program to completion, including the `END` instruction. How many rows does the trace table contain (not counting the starting-memory row)?
+    fields:
+      - label: "rows ="
+        answer: 18
+    explanation: |-
+      Instructions 100–101 (2 rows), then the loop 102–106 (5 rows) three times = 15, then 107 END = 1. Total 2 + 15 + 1 = **18**.
+
+  - id: trace-blank
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.3"]
+    prompt: |-
+      In a trace table, what does an empty cell mean?
+    options:
+      - text: The value at that point is unchanged from the row above
+        correct: true
+        why: |-
+          Only changes are written down, so a blank row cell means "nothing changed here".
+      - text: The value is zero
+        why: |-
+          Zero is written as 0. A blank is not a value at all.
+      - text: The value is unknown
+        why: |-
+          Every value is known; the blank just avoids repeating it.
+      - text: The instruction was not executed
+        why: |-
+          If the row exists, the instruction was executed — a jump row often has no changes at all.
+    explanation: |-
+      Trace tables record only the cells that changed. A jump or compare row is frequently blank in every value column.
+
+  - id: trace-jump-result
+    format: cloze
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      `JPE` jumps to its address when the previous comparison was {{1}}, while `JPN` jumps when it was {{2}}. `JMP` jumps {{3}}.
+    blanks:
+      - accept: ["true", "True", "true (equal)", equal, "true/equal"]
+      - accept: ["false", "False", "false (not equal)", "not equal", unequal, "false/not equal"]
+      - accept: [always, unconditionally, every time]
+    explanation: |-
+      `JPE` = jump if positive/equal result of the compare (True); `JPN` = jump if the result was False; `JMP` is an unconditional jump.
+
+  - id: trace-next-address
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |-
+      In the countdown program, which instruction address is executed immediately after `106 JPN 102` on the **first** pass through the loop?
+    fields:
+      - label: "address"
+        answer: 102
+    explanation: |-
+      On the first pass ACC is 2, so `CMP #0` is False and `JPN` jumps to 102. The next row is therefore `102 LDD 200`.

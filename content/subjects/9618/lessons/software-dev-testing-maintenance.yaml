@@ -1,0 +1,266 @@
+id: software-dev-testing-maintenance
+subject: "9618"
+topic: "12.3"
+title: Program Testing and Maintenance — errors, testing methods, test strategies, maintenance types
+summary: Identify syntax, logic, and run-time errors; understand testing methods; create test strategies/plans with appropriate data; understand maintenance types.
+order: 3
+minutes: 10
+kind: core
+objectives: ["12.3.1", "12.3.2", "12.3.3", "12.3.4", "12.3.5", "12.3.6", "12.3.7", "12.3.8"]
+prerequisites: ["software-dev-program-design"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 12.3 Program Testing and Maintenance. Covers objectives 12.3.1-12.3.8.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can identify and correct syntax, logic, and run-time errors; describe and select appropriate testing methods (dry run, walkthrough, white-box, black-box, integration, alpha, beta, acceptance, stub); create test strategies and plans with normal, abnormal, and boundary test data; explain corrective, adaptive, and perfective maintenance; and analyse programs to make amendments.
+
+  - type: explain
+    title: Types of errors
+    body: |
+      **Syntax errors** — violate language rules
+      - Detected by compiler/interpreter before execution
+      - Examples: missing semicolon, misspelled keyword, unmatched bracket, wrong parameter count
+      - Prevent program from running at all
+
+      **Logic errors** — program runs but produces wrong results
+      - Algorithm flaw, wrong formula, off-by-one loop, incorrect condition
+      - No error message — must be found by testing
+      - Often subtle (e.g., `<=` instead of `<`)
+
+      **Run-time errors** — crash during execution
+      - Division by zero, array index out of bounds, null pointer, file not found, stack overflow
+      - Valid syntax, but invalid operation at that moment
+      - Produce error message/exception at crash point
+
+  - type: explain
+    title: Testing methods
+    body: |
+      **Static testing** (code not executed):
+      - **Dry run** — manually trace through code with test data, recording variable values in a trace table. Finds logic errors.
+      - **Walkthrough** — author explains code to peers; team reviews logic, style, standards. Collaborative, informal.
+      - **Inspection** — formal, checklist-driven review by trained moderators (beyond syllabus scope).
+
+      **Dynamic testing** (code executed):
+      - **White-box (glass-box)** — test internal structure: paths, branches, conditions, loops. Requires code knowledge. Aim: statement/branch coverage.
+      - **Black-box** — test against specification only; inputs → expected outputs. No code knowledge needed. Techniques: equivalence partitioning, boundary value analysis.
+      - **Integration testing** — test modules combined. Strategies: big bang (all at once), top-down (stubs), bottom-up (drivers), sandwich.
+      - **Stubs** — dummy modules that simulate called modules (return fixed values) for top-down integration testing.
+      - **Drivers** — test harnesses that call modules for bottom-up testing.
+
+      **User-facing testing:**
+      - **Alpha testing** — internal users (developers, QA) test in controlled environment
+      - **Beta testing** — external users test in real environment; feedback on usability, compatibility
+      - **Acceptance testing** — customer validates against requirements; formal sign-off
+
+  - type: explain
+    title: Test strategy and test plan
+    body: |
+      **Test strategy** — high-level approach
+      - Scope: what to test (features, modules, interfaces)
+      - Methods: which techniques (white-box, black-box, etc.)
+      - Levels: unit → integration → system → acceptance
+      - Resources: tools, environments, personnel
+      - Schedule: when each level occurs
+      - Risk: what could go wrong, mitigation
+
+      **Test plan** — detailed execution document
+      - Test cases: ID, description, preconditions, steps, expected result, actual result, pass/fail
+      - Test data: specific values for each case
+      - Schedule: who, when, where
+      - Entry/exit criteria: when to start/stop testing
+
+      **Test data categories (must know):**
+      - **Normal** — valid, expected inputs within range (e.g., age=25 for 0-120)
+      - **Abnormal (invalid)** — inputs that should be rejected (e.g., age=-5, age="abc", age=200)
+      - **Extreme/boundary** — values at edges of valid range (e.g., age=0, age=120; also 1 and 119 for off-by-one)
+
+  - type: example
+    title: Test data for a login system (age 13-19)
+    problem: "Identify normal, abnormal, and boundary test data for a registration age field accepting 13-19 inclusive."
+    steps:
+      - "Normal: values within 13-19 that should be accepted"
+      - "Abnormal: values outside range or wrong type that should be rejected"
+      - "Boundary: exact edges and just outside"
+    answer: |
+      Normal: 13, 15, 19
+      Abnormal: 12, 20, -1, "fifteen", 0, 100
+      Boundary: 13 (min), 19 (max), 12 (just below), 20 (just above)
+
+  - type: explain
+    title: Correcting errors and debugging
+    body: |
+      **Process:**
+      1. **Reproduce** — consistent steps to trigger the error
+      2. **Locate** — trace, logs, debugger, print statements, binary search (comment out halves)
+      3. **Understand** — why does it happen? (root cause, not symptom)
+      4. **Fix** — minimal change addressing root cause
+      5. **Verify** — re-run failing case; run regression tests (related functionality)
+      6. **Document** — what, why, fix; update test cases
+
+      **Common debugging techniques:**
+      - Trace tables (dry run)
+      - Print/console logging at key points
+      - Debugger: breakpoints, step through, watch variables
+      - Rubber ducking — explain aloud to find logic gaps
+      - Binary search — disable half the code, narrow down
+
+  - type: explain
+    title: Types of maintenance
+    body: |
+      **Corrective maintenance** — fix defects found in use
+      - Bug fixes, patches, hotfixes
+      - Reactive: triggered by failure reports
+
+      **Adaptive maintenance** — modify for changed environment
+      - New OS version, hardware, browser, API, regulation, data format
+      - Proactive (planned) or reactive (forced)
+
+      **Perfective maintenance** — enhance without fixing a defect
+      - Performance optimisation, new features, UI improvements, refactoring, usability
+      - Often largest category over system lifetime
+
+      **Preventive maintenance** (beyond syllabus) — refactor to prevent future issues
+
+      **Key point:** Maintenance starts at delivery and continues until retirement. Design for maintainability (modularity, documentation, tests) reduces long-term cost.
+
+  - type: example
+    title: Analysing and amending a program
+    problem: |
+      A program reads 10 numbers and prints the maximum. Current code initialises max=0. Fix it to handle negative numbers.
+    steps:
+      - "Identify the bug: max=0 fails if all inputs are negative"
+      - "Fix: initialise max to first input, or to a very small number"
+    answer: |
+      // Original buggy
+      max ← 0
+      FOR i ← 1 TO 10
+        READ num
+        IF num > max THEN max ← num
+      ENDFOR
+      PRINT max
+
+      // Fixed: read first number, then loop remaining 9
+      READ max
+      FOR i ← 2 TO 10
+        READ num
+        IF num > max THEN max ← num
+      ENDFOR
+      PRINT max
+
+  - type: check
+    title: Quick check — testing and maintenance
+    questions: [error-types, testing-methods, test-data-categories, maintenance-types]
+
+  - type: misconceptions
+    items:
+      - wrong: Testing proves the program is correct.
+        right: |
+          Testing shows presence of defects, not absence. Exhaustive testing is impossible for non-trivial programs. "Testing can show bugs exist, not that they don't." — Dijkstra
+      - wrong: Alpha and beta testing are the same.
+        right: |
+          Alpha = internal, controlled. Beta = external, real environment. Different users, different goals.
+      - wrong: Boundary testing only checks the exact limits.
+        right: |
+          Check the limit AND just inside/outside (e.g., for 1-100: test 0, 1, 2, 99, 100, 101). Off-by-one errors live at boundaries.
+      - wrong: Maintenance is only corrective (bug fixes).
+        right: |
+          Perfective (enhancements) often exceeds corrective. Adaptive is essential for longevity.
+      - wrong: Stubs and drivers are the same.
+        right: |
+          Stubs simulate CALLED modules (top-down). Drivers CALL the module under test (bottom-up).
+
+  - type: exam
+    body: |
+      - **Error classification**: Given code/output, identify syntax/logic/run-time error.
+      - **Testing methods**: Match scenario to method (e.g., "testing without executing" → dry run/walkthrough; "test internal paths" → white-box).
+      - **Test data**: Produce normal/abnormal/boundary values for a given spec.
+      - **Test plan**: Know components (test cases, data, schedule, criteria).
+      - **Maintenance**: Classify a scenario as corrective/adaptive/perfective.
+      - **Amendment**: Given code with a bug, identify and fix it.
+
+  - type: takeaways
+    items:
+      - "Error types: syntax (compile-time), logic (wrong output), run-time (crash)"
+      - "Static testing: dry run (trace table), walkthrough (peer review)"
+      - "Dynamic: white-box (internal paths), black-box (spec only), integration (modules together), stubs/drivers"
+      - "User testing: alpha (internal), beta (external), acceptance (customer sign-off)"
+      - "Test data: normal (valid), abnormal (invalid), boundary (edges ±1)"
+      - "Maintenance: corrective (bugs), adaptive (environment), perfective (enhancements)"
+
+questions:
+  - id: error-types
+    format: mcq
+    difficulty: 1
+    objectives: ["12.3.2"]
+    prompt: |
+      A program compiles successfully but crashes when the user enters 0 for a divisor. What type of error is this?
+    options:
+      - text: Syntax error
+        why: Syntax errors prevent compilation.
+      - text: Logic error
+        why: Logic errors produce wrong results, not crashes.
+      - text: Run-time error
+        correct: true
+        why: Division by zero is a run-time error — valid syntax, crash during execution.
+      - text: Compilation error
+        why: Same as syntax error; program compiled successfully.
+    explanation: |
+      Run-time errors occur during execution. Division by zero, array out of bounds, null dereference are classic examples.
+
+  - id: testing-methods
+    format: explain
+    difficulty: 2
+    objectives: ["12.3.4"]
+    prompt: |
+      Distinguish between white-box testing and black-box testing. Give one advantage of each.
+    model: |
+      White-box testing examines internal code structure (paths, branches, conditions). Advantage: ensures all code paths are exercised; finds hidden logic errors.
+      Black-box testing tests against specification only (inputs → expected outputs) without seeing code. Advantage: tests from user perspective; finds missing requirements; independent of implementation.
+    keyPoints:
+      - "White-box = code knowledge, internal paths"
+      - "Black-box = spec only, inputs/outputs"
+      - "Advantage white: path coverage"
+      - "Advantage black: user perspective, requirement gaps"
+    explanation: |
+      They complement each other. White-box catches implementation bugs; black-box catches specification gaps.
+
+  - id: test-data-categories
+    format: cloze
+    difficulty: 2
+    objectives: ["12.3.6"]
+    prompt: |
+      For a field accepting integers 1 to 100 inclusive, identify test values:
+      Normal: **{{1}}**
+      Abnormal: **{{2}}**
+      Boundary: **{{3}}**
+    blanks:
+      - accept: ["50", "25", "75", "1", "100"]
+      - accept: ["0", "101", "-5", "abc", "1.5"]
+      - accept: ["1", "100", "0", "101"]
+    explanation: |
+      Normal: any valid value (e.g., 50). Abnormal: invalid (0, 101, -5, non-integer). Boundary: edges and just outside (1, 100, 0, 101).
+
+  - id: maintenance-types
+    format: mcq
+    difficulty: 2
+    objectives: ["12.3.7"]
+    prompt: |
+      A company updates its payroll software to comply with new tax legislation. This is an example of:
+    options:
+      - text: Corrective maintenance
+        why: Fixes a defect in the software itself.
+      - text: Adaptive maintenance
+        correct: true
+        why: Adapts to changed external environment (legislation).
+      - text: Perfective maintenance
+        why: Enhances functionality/performance without fixing a defect.
+      - text: Preventive maintenance
+        why: Refactors to prevent future issues (not in syllabus).
+    explanation: |
+      Adaptive maintenance responds to external changes: laws, OS, hardware, APIs, regulations.

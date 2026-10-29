@@ -1,0 +1,169 @@
+id: complex-numbers-argand-diagram
+subject: "9709"
+topic: "3.9"
+title: Argand diagrams — complex numbers as geometry
+summary: "Representing complex numbers geometrically on the Argand diagram, and interpreting addition, subtraction, and conjugation as transformations."
+order: 4
+minutes: 5
+kind: core
+objectives: ["3.9.4"]
+prerequisites: ["complex-numbers-introduction"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 3.9 learning outcome 4 (geometrical representation
+    on Argand diagram). Examples and questions are original; all arithmetic checked in Python.
+    Not yet teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate
+    AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can plot complex numbers on an Argand diagram, interpret addition and
+      subtraction as vector operations, and see conjugation as reflection in the real axis.
+
+  - type: explain
+    title: The Argand diagram
+    body: |
+      A complex number $z = x + iy$ is the point $(x, y)$.
+      - Horizontal axis = **real axis** ($\operatorname{Re} z$)
+      - Vertical axis = **imaginary axis** ($\operatorname{Im} z$)
+      - $|z|$ = distance from origin
+      - $\arg z$ = angle from positive real axis ($-\pi < \arg z \le \pi$)
+
+  - type: explain
+    title: Addition = vector addition
+    body: |
+      $z_1 + z_2$ corresponds to adding the vectors.
+      If $z_1 = a + ib$ and $z_2 = c + id$, then $z_1 + z_2 = (a+c) + i(b+d)$.
+      Geometrically: draw $z_1$ as a vector from origin, then $z_2$ from the tip of $z_1$ —
+      the sum is the vector from origin to the new tip. It's the **parallelogram rule**.
+
+  - type: example
+    title: Addition on the Argand diagram
+    problem: "Plot $z_1 = 2 + i$, $z_2 = 1 + 3i$, and their sum $z_1 + z_2$."
+    steps:
+      - "$z_1$ goes to $(2, 1)$."
+      - "$z_2$ goes to $(1, 3)$."
+      - "$z_1 + z_2 = 3 + 4i$ goes to $(3, 4)$."
+      - "From the tip of $z_1$ at $(2,1)$, add $z_2$ by moving right $1$ and up $3$ to $(3,4)$."
+    answer: |
+      Points: $z_1(2,1)$, $z_2(1,3)$, sum $(3,4)$. Forms a parallelogram with the origin.
+
+  - type: explain
+    title: Subtraction = vector from $z_2$ to $z_1$
+    body: |
+      $z_1 - z_2 = (a-c) + i(b-d)$ is the vector from the point $z_2$ to the point $z_1$.
+      Distance $|z_1 - z_2|$ is the distance between the two points.
+
+  - type: example
+    title: Distance between $3 + 4i$ and $1 + i$
+    problem: "Find the distance between $z_1 = 3 + 4i$ and $z_2 = 1 + i$ on the Argand diagram."
+    steps:
+      - '$z_1 - z_2 = (3-1) + i(4-1) = 2 + 3i$'
+      - 'Distance $= |z_1 - z_2| = |2 + 3i| = \sqrt{2^2 + 3^2} = \sqrt{13}$'
+    answer: |
+      Distance $= \sqrt{13}$.
+
+  - type: check
+    title: Argand diagram skills
+    questions: [cn-argand-plot, cn-argand-distance, cn-argand-sum]
+
+  - type: intuition
+    title: Conjugation = reflection in the real axis
+    body: |
+      $z = x + iy$ and $z^* = x - iy$ are mirror images across the real axis.
+      - $|z| = |z^*|$ (same distance from origin)
+      - $\arg(z^*) = -\arg(z)$ (angle flips sign)
+      - $z + z^* = 2x = 2\operatorname{Re} z$ (purely real)
+      - $z - z^* = 2iy = 2i\operatorname{Im} z$ (purely imaginary)
+
+  - type: diagram
+    diagram: complex-numbers-argand-operations
+    alt: |
+      Argand diagram showing z1 = 2+i (blue vector), z2 = 1+3i (green vector), and their sum
+      z1+z2 = 3+4i (purple vector). A parallelogram is formed with vertices at origin, z1,
+      z1+z2, and z2. Also shown is the conjugate of z1 reflected across the real axis.
+    caption: |
+      $z_1 + z_2$ as the diagonal of the parallelogram. Conjugation reflects across the real axis.
+
+  - type: deeper
+    title: The parallelogram law
+    body: |
+      For any $z_1, z_2$:
+      $$|z_1 + z_2|^2 + |z_1 - z_2|^2 = 2(|z_1|^2 + |z_2|^2)$$
+      This is the **parallelogram law** — the sum of squares of the diagonals equals the sum of
+      squares of all four sides. It comes straight from the vector interpretation.
+
+  - type: misconceptions
+    items:
+      - wrong: 'The imaginary axis is the $y$-axis but labelled $i, 2i, 3i\dots$'
+        right: 'The axis is the imaginary axis. The coordinates are real numbers: the point is $x + iy$, so the $y$-coordinate is the real number $y$, not $iy$.'
+      - wrong: '$\arg(z_1 + z_2) = \arg z_1 + \arg z_2$.'
+        right: "That's true for **multiplication** in polar form. Addition adds vectors, not angles."
+      - wrong: 'The point $3 + 4i$ is 5 units from the origin, so $\arg z = 5$.'
+        right: 'Modulus is 5. Argument is the angle ($\approx 0.927$ rad here). Different quantities entirely.'
+
+  - type: takeaways
+    items:
+      - "Plot $x + iy$ at $(x, y)$ on the Argand diagram."
+      - "Addition = vector addition (parallelogram rule)."
+      - "Subtraction $z_1 - z_2$ = vector from $z_2$ to $z_1$; length is distance between points."
+      - "Conjugation = reflection in the real axis."
+      - "$|z_1 - z_2|$ = distance between the points representing $z_1$ and $z_2$."
+
+questions:
+  - id: cn-argand-plot
+    format: mcq
+    difficulty: 1
+    objectives: ["3.9.4"]
+    prompt: |
+      The point representing $z = -3 + 2i$ on the Argand diagram lies in which quadrant?
+    options:
+      - text: "First quadrant"
+        why: "First quadrant is positive real, positive imaginary."
+      - text: "Second quadrant"
+        correct: true
+        why: 'Real part $-3 < 0$, imaginary part $2 > 0$ $\Rightarrow$ second quadrant.'
+      - text: "Third quadrant"
+        why: "Third quadrant has both negative."
+      - text: "Fourth quadrant"
+        why: "Fourth quadrant has positive real, negative imaginary."
+    explanation: |
+      $x = -3$ (negative), $y = 2$ (positive) $\Rightarrow$ second quadrant.
+
+  - id: cn-argand-distance
+    format: numeric
+    difficulty: 2
+    objectives: ["3.9.4"]
+    prompt: |
+      Find the distance between $z_1 = 4 - 3i$ and $z_2 = -2 + i$ on the Argand diagram.
+    fields:
+      - label: "Distance ="
+        answer: 7.211
+        tolerance:
+          abs: 0.001
+    explanation: |
+      $z_1 - z_2 = (4 - (-2)) + i(-3 - 1) = 6 - 4i$.
+      $|z_1 - z_2| = \sqrt{6^2 + (-4)^2} = \sqrt{36 + 16} = \sqrt{52} = 2\sqrt{13} \approx 7.211$.
+
+  - id: cn-argand-sum
+    format: mcq
+    difficulty: 2
+    objectives: ["3.9.4"]
+    prompt: |
+      On an Argand diagram, $z_1 = 2 + i$ and $z_2 = -1 + 3i$. The point representing $z_1 + z_2$ is:
+    options:
+      - text: "$(1, 4)$"
+        correct: true
+        why: '$z_1 + z_2 = (2-1) + i(1+3) = 1 + 4i \Rightarrow (1, 4)$.'
+      - text: "$(3, -2)$"
+        why: "That would be $z_1 - z_2$."
+      - text: "$(1, -2)$"
+        why: "Wrong signs."
+      - text: "$(-1, 4)$"
+        why: "Real part is wrong."
+    explanation: |
+      $z_1 + z_2 = (2 + (-1)) + i(1 + 3) = 1 + 4i$. Point $(1, 4)$.

@@ -1,0 +1,195 @@
+id: gases-ideal-gas-model
+subject: "9701"
+topic: "4.1"
+title: "The ideal gas: two brave assumptions"
+summary: What an ideal gas is — zero particle volume and no intermolecular forces — why the model exists, and when real gases stop playing along.
+order: 2
+minutes: 4
+objectives: ["4.1.2"]
+prerequisites: [gases-pressure-collisions]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701
+    syllabus (topic 4.1, learning outcome 2: understand that ideal gases have zero
+    particle volume and no intermolecular forces of attraction). All questions are
+    original.
+    Reviewed line by line on 27 Oct 2026 in a second, adversarial AI pass (same
+    agent as the writer, not a human teacher): facts cross-checked against
+    authoritative web sources, every worked example and answer key recalculated,
+    syllabus coverage re-confirmed against the 9701 syllabus, and all six diagrams
+    rendered and inspected in light and dark.
+blocks:
+  - type: objective
+    body: |
+      By the end you can state the two assumptions of the ideal gas model, and explain why real gases only sometimes behave like ideal ones.
+
+  - type: explain
+    title: A model, not a substance
+    body: |
+      "Ideal gas" is not a special kind of gas in a bottle. It is a **model** — a deliberately simplified picture that makes calculations easy.
+
+      The model makes exactly two brave assumptions about the gas particles:
+
+      - **Zero particle volume.** The particles themselves take up no space at all. They are moving points.
+      - **No intermolecular forces.** The particles neither attract nor repel each other (or the walls) at all.
+
+      Everything else follows the collision picture from the last lesson: particles in random motion, bouncing elastically off the walls.
+
+  - type: definition
+    term: Ideal gas
+    body: |
+      An **ideal gas** is a gas whose particles have **zero volume** and **no intermolecular forces of attraction** between them.
+
+  - type: intuition
+    title: Points that ignore each other
+    body: |
+      Picture a crowd where every person is a sizeless dot and nobody notices anyone else.
+
+      No queuing (no volume), no friendships or shoving (no forces) — they just move and bounce.
+
+      That is an ideal gas. Real people take up room and bump into each other; real molecules do too. The model is useful precisely because it is simple, and because for many gases in ordinary conditions it is **nearly right**.
+
+  - type: check
+    title: The two assumptions
+    questions: [ideal-assumptions, which-is-ideal]
+
+  - type: explain
+    title: When is a real gas nearly ideal?
+    body: |
+      A real gas behaves most like an ideal gas when the two assumptions are closest to true:
+
+      | condition | why the model works better |
+      | --- | --- |
+      | **high temperature** | particles move fast and zoom past each other; attractions have no time to act |
+      | **low pressure** | particles are far apart, so their own volume is a tiny fraction of the container |
+
+      And the model fails worst at the opposite extremes:
+
+      | condition | why the model breaks |
+      | --- | --- |
+      | **low temperature** | slow particles feel attractions → the gas can condense to a liquid |
+      | **high pressure** | particles are packed together → their own volume matters |
+
+      So "ideal" is a sliding scale. At room temperature and ordinary pressures, gases like oxygen, nitrogen and hydrogen are close enough to ideal for $pV = nRT$ to work well.
+
+  - type: misconceptions
+    items:
+      - wrong: "An ideal gas is a pure gas, while a real gas contains impurities."
+        right: "Ideality is about the **model**, not purity. A perfectly pure gas can still deviate from ideal behaviour at high pressure or low temperature."
+      - wrong: "Zero particle volume means the gas occupies no space."
+        right: "The **gas** fills its container. It is each individual particle's own volume that the model sets to zero — the empty space between particles is what the volume really is."
+      - wrong: "Ideal gases have no forces at all, so they can never collide."
+        right: "Ideal particles still **collide** with the walls — that is what pressure is. They just have no lasting attraction or repulsion between each other."
+
+  - type: check
+    title: Real vs ideal
+    questions: [real-gas-conditions, low-temp-liquid]
+
+  - type: exam
+    body: |
+      - A two-mark "state the assumptions" question wants: **zero volume of the particles** and **no intermolecular forces** (attraction). Write both — one phrase each.
+      - "Under what conditions does a real gas behave most ideally?" → **high temperature and low pressure**, and you should say why in one clause each.
+      - Watch the phrasing: "no intermolecular forces of attraction" is the mark scheme wording. Don't write "no forces at all" if you can avoid it.
+
+  - type: deeper
+    title: Why these two assumptions?
+    body: |
+      The two assumptions are chosen because they are what makes the maths simple.
+
+      If particles have no volume, then the whole container volume is "free space" available to them. If they have no attractions, then nothing slows them down or holds them back.
+
+      Together these give the exact relationship $pV = nRT$ — which is the topic of the next lesson. Real gases need extra correction terms (you may meet the van der Waals equation at university) precisely because those two assumptions are not exactly true.
+
+  - type: takeaways
+    items:
+      - "An ideal gas is a model: particles have **zero volume** and there are **no intermolecular forces** between them."
+      - "Real gases behave nearly ideally at **high temperature** and **low pressure**."
+      - "At low temperature or high pressure, real gases deviate — attractions and particle volume become significant, and gases can liquefy."
+
+questions:
+  - id: ideal-assumptions
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: |
+      State the **two assumptions** made about the particles of an ideal gas.
+    accept:
+      - "the particles have zero volume and there are no intermolecular forces of attraction between them"
+      - "particles have zero volume and no intermolecular forces of attraction"
+      - "zero particle volume and no intermolecular forces of attraction"
+      - "the particles have no volume and there are no forces of attraction between them"
+      - "the gas particles occupy zero volume and there are no intermolecular forces"
+      - "zero volume of the particles and no intermolecular forces of attraction"
+    model: |
+      The particles have zero volume, and there are no intermolecular forces of attraction between them.
+    explanation: |
+      Two assumptions, one about size (zero particle volume) and one about forces (no intermolecular attractions).
+
+  - id: which-is-ideal
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: |
+      Which statement describes an ideal gas correctly?
+    options:
+      - text: |
+          Its particles take up no volume and do not attract each other.
+        correct: true
+        why: |
+          These are the two assumptions of the ideal gas model: zero particle volume, no intermolecular forces of attraction.
+      - text: |
+          Its particles take up no volume but attract each other strongly.
+        why: |
+          The model assumes **no** intermolecular attractions. A gas with strong attractions would easily liquefy.
+      - text: |
+          Its particles have their normal volume but do not attract each other.
+        why: |
+          Zero **particle** volume is one of the two assumptions — you have dropped it.
+      - text: |
+          It is a pure gas with no impurities mixed in.
+        why: |
+          Purity has nothing to do with it. Ideality is about how the particles behave, not what else is in the container.
+    explanation: |
+      Ideal = zero particle volume + no intermolecular forces of attraction.
+
+  - id: real-gas-conditions
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      Under which conditions does a real gas behave **most** like an ideal gas?
+    options:
+      - text: |
+          High temperature and low pressure.
+        correct: true
+        why: |
+          Fast-moving, well-separated particles barely feel each other, so both assumptions are nearly true.
+      - text: |
+          Low temperature and high pressure.
+        why: |
+          These are exactly the conditions where the model fails: slow, crowded particles attract each other and take up significant space.
+      - text: |
+          High temperature and high pressure.
+        why: |
+          High temperature helps, but high pressure packs particles together so their own volume matters.
+      - text: |
+          Low temperature and low pressure.
+        why: |
+          Low pressure helps, but low temperature lets intermolecular attractions take effect — the gas can even condense.
+    explanation: |
+      High temperature and low pressure: particles are fast and far apart, so zero volume and no forces are good approximations.
+
+  - id: low-temp-liquid
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      At low temperature, real gas molecules move slowly enough to feel the {{1}} between them, so the gas can condense into a liquid. An ideal gas could never liquefy, because its particles have no {{2}} at all.
+    blanks:
+      - accept: ["intermolecular forces", "intermolecular forces of attraction", "forces of attraction", "attractions", "attraction", "intermolecular attractions"]
+      - accept: ["intermolecular forces", "intermolecular forces of attraction", "forces of attraction", "attractions", "attraction", "intermolecular attractions"]
+    explanation: |
+      Liquefaction happens because attractions pull slow molecules together. The ideal gas model has no attractions, so it has no way to form a liquid.

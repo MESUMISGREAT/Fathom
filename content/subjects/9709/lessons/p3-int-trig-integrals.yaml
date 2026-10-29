@@ -1,0 +1,201 @@
+id: p3-int-trig-integrals
+subject: '9709'
+topic: '3.5'
+title: 'Trig integrals: rewrite with an identity first'
+summary: Squared sines and cosines, and products like $\sin 3x\cos 3x$, are not standard integrals — the double-angle
+  identities turn them into ones that are.
+order: 2
+minutes: 5
+kind: core
+objectives:
+- 3.5.2
+prerequisites:
+- p3-int-standard-integrals
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted for P3 topic 3.5 objective 3.5.2 (use trigonometric relationships in integration). Every key recomputed\
+    \ independently with Python; all questions original.\n    Adversarially re-checked in this cloud session: every\
+    \ numeric answer key recomputed independently with Python (including finite-difference checks of each antiderivative),\
+    \ every MCQ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm\
+    \ run content:check`, `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were\
+    \ removed rather than left dangling, so these lessons currently teach with prose, tables and worked examples\
+    \ only; add the diagrams later. The review was a second pass by the same agent (no separate reviewer model is\
+    \ available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can integrate $\sin^2 x$, $\cos^2 x$ and products such as $\sin 3x\cos 3x$ by
+
+    applying a trigonometric identity first, then using the standard integrals.'
+- type: explain
+  title: What they ask
+  body: 'You are given an integral containing a **square** of sine or cosine, or a product of two
+
+    trigonometric functions, for example
+
+    $\displaystyle\int \sin^2 x\,dx$, $\displaystyle\int \cos^2 2x\,dx$ or
+
+    $\displaystyle\int \sin 3x\cos 3x\,dx$.
+
+    None of these is on the standard list, and no amount of algebra on the outside will help.'
+- type: explain
+  title: The method
+  body: "1. **Pick the identity that removes the square or the product.** For a squared term use the\n   double-angle\
+    \ formulas; for a product use the double-angle sine formula.\n2. **Rewrite the integrand** so it contains only\
+    \ constants and single cosines or sines of\n   $2x$ (or $kx$).\n3. **Integrate term by term** with the standard\
+    \ results, remembering the $\\tfrac1k$ factor.\n4. **Simplify** and add $C$, or substitute the limits if the\
+    \ integral is definite.\n\nThe identities you need, both from P2/P3:\n\n$$\\cos 2x = 1 - 2\\sin^2 x \\quad\\\
+    text{so}\\quad \\sin^2 x = \\tfrac12(1 - \\cos 2x)$$\n\n$$\\cos 2x = 2\\cos^2 x - 1 \\quad\\text{so}\\quad \\\
+    cos^2 x = \\tfrac12(1 + \\cos 2x)$$\n\n$$\\sin 2x = 2\\sin x\\cos x \\quad\\text{so}\\quad \\sin x\\cos x =\
+    \ \\tfrac12\\sin 2x$$\n\n**The forgotten step:** the squaring identities always produce a **constant term**.\
+    \ That\nconstant integrates to $\\tfrac{x}{2}$ (or similar), and students who keep only the cosine\npart lose\
+    \ half the answer."
+- type: example
+  title: 'Example 1: a squared sine'
+  problem: Find $\displaystyle\int \sin^2 x\,dx$.
+  steps:
+  - 'Rewrite with the double-angle identity: $\sin^2 x = \tfrac12 - \tfrac12\cos 2x$.'
+  - 'Integrate each term, dividing the cosine by 2 because its inside is $2x$:
+
+    $$\int \tfrac12\,dx - \int \tfrac12\cos 2x\,dx = \tfrac{x}{2} - \tfrac14\sin 2x + C$$'
+  - 'Differentiate back to check: $\tfrac12 - \tfrac14(2\cos 2x) = \tfrac12(1 - \cos 2x) = \sin^2 x$ ✓'
+  answer: $\dfrac{x}{2} - \dfrac{\sin 2x}{4} + C$
+- type: check
+  title: 'Check: the identity and the square'
+  questions:
+  - identify-technique
+  - sin-sq-integral
+  - sin-cos-product
+  - tan-powers
+  - why-half-angle
+- type: example
+  title: 'Example 2: a product'
+  problem: Find $\displaystyle\int \sin 3x\cos 3x\,dx$.
+  steps:
+  - 'Use $\sin A\cos A = \tfrac12\sin 2A$ with $A = 3x$:
+
+    $$\sin 3x\cos 3x = \tfrac12\sin 6x$$'
+  - 'Integrate the single sine, dividing by 6 from its inside function:
+
+    $$\int \tfrac12\sin 6x\,dx = \tfrac12\left(-\tfrac16\cos 6x\right) + C$$'
+  - 'Check by differentiating: $-\tfrac1{12}(-6\sin 6x) = \tfrac12\sin 6x$ ✓'
+  answer: $-\dfrac{\cos 6x}{12} + C$
+- type: misconceptions
+  items:
+  - wrong: $\displaystyle\int \sin^2 x\,dx = \dfrac{\sin^3 x}{3} + C$, treating sine like a power of $x$.
+    right: 'The power rule does not apply to a function of $x$. Rewrite with the double angle and
+
+      integrate the resulting cosine instead.'
+  - wrong: $\displaystyle\int \cos^2 x\,dx$ equals $\displaystyle\int \tfrac12\,dx$ only.
+    right: 'The identity is $\cos^2 x = \tfrac12(1 + \cos 2x)$; forgetting the $+\tfrac12\cos 2x$ term is
+
+      the usual slip.'
+  - wrong: $\displaystyle\int \sin 2x\,dx = \cos 2x + C$.
+    right: 'The cosine differentiates to $-\sin$, so the antiderivative of $\sin 2x$ is
+
+      $-\tfrac12\cos 2x + C$.'
+- type: exam
+  body: "- Show the identity you are using; it is often a method mark.\n- Keep exact values ($\\tfrac12$, $\\tfrac14$)\
+    \ and only convert to decimals if a question asks.\n- For a definite integral, integrate first, then substitute\
+    \ the limits — never substitute into\n  the original squared integrand.\n- If the question gives limits in radians,\
+    \ keep working in radians throughout."
+- type: takeaways
+  items:
+  - $\sin^2 x = \tfrac12(1 - \cos 2x)$ and $\cos^2 x = \tfrac12(1 + \cos 2x)$ are the keys to even powers.
+  - Products use $\sin A\cos A = \tfrac12\sin 2A$.
+  - The constant term from the identity contributes $\tfrac{x}{2}$ — do not drop it.
+  - Divide by the inside constant when integrating $\sin 2x$ or $\cos 6x$.
+- type: deeper
+  title: 'Why the identity works: the average value'
+  body: 'Squaring a wave doubles its frequency and raises its midpoint. $\sin^2 x$ oscillates between
+
+    0 and 1, so its average is $\tfrac12$: the constant $\tfrac12$ in the identity is exactly that
+
+    average, and the $\cos 2x$ term is the oscillation on top. Integrating over a whole number of
+
+    periods, the cosine part averages to zero and only the constant survives — which is why
+
+    $\int_0^{2\pi}\sin^2 x\,dx = \pi$ rather than 0.'
+questions:
+- id: identify-technique
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.5.2
+  prompt: Which identity most directly helps integrate $\sin^2 x$?
+  options:
+  - text: $\cos 2x = 1 - 2\sin^2 x$
+    correct: true
+    why: Rearranged, $\sin^2 x = \tfrac12(1 - \cos 2x)$, which integrates term by term.
+  - text: $\sin^2 x + \cos^2 x = 1$
+    why: True, but on its own it replaces one squared term with another; nothing gets easier.
+  - text: $\sin 2x = 2\sin x\cos x$
+    why: Useful for $\sin x \cos x$, not for $\sin^2 x$.
+  - text: $\tan x = \dfrac{\sin x}{\cos x}$
+    why: Changes the whole integral into a different, harder problem.
+  explanation: The double-angle identity turns $\sin^2 x$ into $\tfrac12 - \tfrac12\cos 2x$, which is directly integrable.
+- id: sin-sq-integral
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.5.2
+  prompt: 'Find $\displaystyle\int \sin^2 x\,dx$.
+
+
+    Type the answer using `sin`, `cos`, e.g. `0.5*x - 0.25*sin(2*x)`.'
+  answer: 0.5*x - 0.25*sin(2*x)
+  variables:
+  - x
+  display: $\dfrac{x}{2} - \dfrac{\sin 2x}{4} + C$
+  explanation: $\sin^2 x = \tfrac12(1 - \cos 2x)$, so the integral is $\tfrac12 x - \tfrac14\sin 2x + C$.
+- id: sin-cos-product
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.5.2
+  prompt: $\int \sin 3x\cos 3x\,dx$ equals which expression?
+  options:
+  - text: $\tfrac{1}{12}\sin 6x + C$
+    why: That is the mirror mistake — differentiating it gives $\tfrac12\cos 6x$, not the original product.
+  - text: $-\tfrac{1}{12}\cos 6x + C$
+    correct: true
+    why: $\sin 3x\cos 3x = \tfrac12\sin 6x$, and $\int \tfrac12\sin 6x\,dx = -\tfrac{1}{12}\cos 6x$.
+  - text: $\tfrac12\sin^2 3x + C$
+    why: 'Differentiate it: you get $3\sin 3x\cos 3x$ — a factor 3 too big; $\tfrac12$ should be $\tfrac16$.'
+  - text: $-\tfrac15\cos 6x + C$
+    why: 'Wrong scale: the $\tfrac12$ from the identity and the $\tfrac16$ from integrating $\sin 6x$ multiply to
+      $\tfrac1{12}$, not $\tfrac15$.'
+  explanation: 'Use $\sin A\cos A = \tfrac12\sin 2A$, then integrate: $\tfrac12 \times \left(-\tfrac16\cos 6x\right)
+    = -\tfrac1{12}\cos 6x + C$.'
+- id: tan-powers
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.5.2
+  prompt: 'Use $\sec^2 x = 1 + \tan^2 x$ to find $\displaystyle\int_0^{\pi/4} \tan^2 x\,dx$.
+
+    Give the answer to 3 decimal places.'
+  fields:
+  - answer: 0.2146
+    tolerance:
+      abs: 0.002
+  explanation: $\tan^2 x = \sec^2 x - 1$, so the integral is $[\tan x - x]_0^{\pi/4} = 1 - \tfrac{\pi}{4} \approx
+    0.215$.
+- id: why-half-angle
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.5.2
+  prompt: Explain why the double-angle formulas are the key to integrating any even power of sine or cosine.
+  model: 'Squared terms cannot be integrated directly, but the double-angle identities rewrite
+
+    $\sin^2 x$ or $\cos^2 x$ as $(1 \pm \cos 2x)/2$ — a constant plus a single cosine,
+
+    both of which are standard integrals. Higher even powers shrink one factor at a time
+
+    by repeating the trick.'
+  keyPoints:
+  - Even powers are squared terms, which have no direct standard integral
+  - Double-angle formulas convert a square into a single $\cos 2x$ term
+  - $\cos 2x$ and constants integrate easily
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.

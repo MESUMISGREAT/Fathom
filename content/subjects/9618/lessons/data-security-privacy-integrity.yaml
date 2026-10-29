@@ -1,0 +1,276 @@
+id: data-security-privacy-integrity
+subject: "9618"
+topic: "6.1"
+title: "Security, privacy and integrity: three promises, three failures"
+summary: Tell security, privacy and integrity apart, and say exactly which one a given data disaster has broken.
+order: 1
+minutes: 8
+kind: core
+objectives: ["6.1.1"]
+prerequisites: [networks-why-network]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.1 outcome 6.1.1 ("explain the
+    difference between the terms security, privacy and integrity of data"). All examples and
+    questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.1.1 confirmed taught and tested, every definition and claim checked, every
+    answer key and accept list re-read, and the unit's six diagrams rendered and inspected in
+    light and dark. No separate reviewer model was available in this environment.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can define security, privacy and integrity separately, and look at a data disaster and say which of the three it has broken — and which it has not.
+
+  - type: explain
+    title: Three ways a school's records can go wrong
+    body: |-
+      A school holds files about you: your marks, your address, your medical notes. Imagine three different disasters.
+
+      1. A stranger breaks into the network and downloads the whole lot.
+      2. Someone quietly edits your coursework mark from 60 to 90.
+      3. The files are untouched, but a teacher emails the whole spreadsheet to an advertising company, which starts posting your details online.
+
+      All three feel like "the data got messed up". Exams, though, want you to name the exact failure:
+
+      - disaster 1 is mainly a failure of **security**;
+      - disaster 2 is a failure of **integrity** (and the break-in is a security failure);
+      - disaster 3 is a failure of **privacy**.
+
+      The three words overlap in real life, but they are not synonyms. Learn the difference and these questions become free marks.
+
+  - type: definition
+    term: Security (of data)
+    body: |-
+      **Security** is the protection of data from unauthorised access, use, disclosure, modification or destruction.
+
+      The key word is **unauthorised**. Security asks: *is anyone reaching this data who should not be able to?* It is delivered by measures such as user accounts, passwords, firewalls, anti-malware software and encryption.
+
+  - type: definition
+    term: Privacy
+    body: |-
+      **Privacy** is the right of a person to control who can see and use their **personal** data, and what it is used for.
+
+      Privacy only applies to data that identifies a person — a name, address, medical record, exam result. It asks: *is this person's information being kept to the people and purposes they agreed to?* Notice that privacy can be broken even with no break-in at all: an employee with perfectly valid access can invade privacy by looking at a record they have no reason to see.
+
+  - type: definition
+    term: Integrity (of data)
+    body: |-
+      **Integrity** is the accuracy, consistency and completeness of data. Data with integrity is exactly what it claims to be: it has not been changed, corrupted, duplicated or lost, whether by accident or on purpose.
+
+      Integrity asks: *can I trust that this value is the value that was stored?* Checksums, validation rules, version history and read-only access all help to protect it.
+
+  - type: diagram
+    diagram: cs-data-security-privacy-integrity
+    alt: >-
+      Three cards side by side. Security, with a padlock icon: protects data from unauthorised
+      access, use, disclosure, modification or destruction; breached when someone gets in who
+      should not. Privacy, with a person icon: personal data kept to those entitled to see it and
+      used only for the purpose it was collected for; breached even when the login was valid.
+      Integrity, with a checked document icon: data accurate, consistent and complete, not altered,
+      corrupted or lost; breached by typos, crashes and tampering.
+    caption: |-
+      The same record, three different promises. Each one can fail on its own.
+
+  - type: explain
+    title: One incident, up to three verdicts
+    body: |-
+      Test yourself on these cases. For each, decide which of the three has actually failed.
+
+      | Incident | Security | Privacy | Integrity |
+      | --- | --- | --- | --- |
+      | A hacker guesses a password and deletes a file of personal data | Broken | Broken — personal data was reached | Broken — data destroyed |
+      | A doctor with valid access reads a celebrity's notes out of curiosity | Not broken — the login worked as designed | **Broken** | Not broken |
+      | A power cut corrupts a file | Not broken — nobody attacked it | Not broken | **Broken** |
+      | A clerk types a customer's age as 199 instead of 19 | Not broken | Not broken | **Broken** |
+      | A backup tape is stolen from a van | **Broken** — data left the protected system | Broken | Not broken — the copy is intact |
+
+      Two lessons from that table:
+
+      - The three words answer **different questions**, so one incident can break all three, two of them, or only one.
+      - A failure of integrity is not always an attack. Honest typos and hardware faults break integrity too.
+
+  - type: check
+    title: Spot the failure
+    questions: [pi-mcq-privacy, pi-text-integrity, pi-cloze-three]
+
+  - type: example
+    title: Classifying two messy cases
+    problem: |-
+      An online shop stores customer orders.
+
+      **Case A:** a support agent, logged in with their own valid account, downloads every customer's card details to sell to a friend.
+
+      **Case B:** a bug in the checkout program writes the price of a £20 item as £2000 on the invoice.
+
+      For each case, say which of security, privacy and integrity are broken, and why.
+    steps:
+      - |-
+        **Case A, step 1 — was anything unauthorised?** No: the agent used their own valid login. So the *system's* security measures did what they were told. The failure is that those measures let one person reach far more data than the job needed.
+      - |-
+        **Case A, step 2 — is personal data involved?** Yes: names and card details identify real people, and they were passed on without consent. So **privacy is broken**.
+      - |-
+        **Case A, step 3 — is the stored data still correct?** Yes. The records themselves were not altered. **Integrity is intact** — but note the data has still leaked, which is why privacy and integrity are separate ideas.
+      - |-
+        **Case B, step 1 — who wrote the wrong value?** The shop's own program, with no attacker involved. No break-in, so no security failure.
+      - |-
+        **Case B, step 2 — is the value correct?** No: £2000 is not the real price. The invoice no longer matches reality, so **integrity is broken**.
+    answer: |-
+      Case A breaks privacy (personal data used for an unagreed purpose); security controls were not bypassed, and integrity is intact. Case B breaks integrity (an incorrect value was stored); no unauthorised access and no personal data disclosed. Case A also shows why **access rights** matter, which comes later in this topic.
+
+  - type: check
+    title: Mixed cases
+    questions: [pi-mcq-insider, pi-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [pi-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Security and privacy mean the same thing, so a secure system is a private one.
+        right: |-
+          Security is about keeping unauthorised users out. Privacy is about personal data being seen and used only by the right people for the right reasons. A secure system can still invade privacy if a legitimate user looks at records they do not need.
+      - wrong: |-
+          If data is encrypted, its integrity is guaranteed.
+        right: |-
+          Encryption hides the contents; it does not check whether the contents are correct. A corrupted file or a wrong value typed in by an authorised user is still wrong after decryption. Checksums and validation protect integrity.
+      - wrong: |-
+          Integrity means the data is secret.
+        right: |-
+          Integrity means the data is accurate, complete and unchanged. A public web page can have perfect integrity; a private file can have terrible integrity.
+      - wrong: |-
+          Privacy only matters for hospitals and banks.
+        right: |-
+          Any data that identifies a person raises privacy: school records, loyalty cards, gym apps, exam entries. The test is whether the data can be linked to a real individual.
+
+  - type: exam
+    body: |-
+      A typical question is *"Explain the difference between the terms security, privacy and integrity of data"* (3 marks) — one mark per term, each with its own distinct idea.
+
+      - For **security**, use "protection from unauthorised access, use, disclosure, modification or destruction".
+      - For **privacy**, use "personal data kept confidential to those entitled to see it / used only for the purpose it was collected".
+      - For **integrity**, use "data is accurate, consistent and complete / has not been corrupted or altered".
+
+      Watch the trap: if you define two of them with the same sentence, you only score once. Another common task gives an incident and asks which term it breaks, so decide *who* did it (unauthorised user → security; authorised user misusing access → privacy; wrong value or corruption → integrity).
+
+  - type: takeaways
+    items:
+      - "**Security** protects data from unauthorised access, use, disclosure, modification or destruction."
+      - "**Privacy** is a person's control over who sees and uses their personal data."
+      - "**Integrity** means the data is accurate, complete and unchanged."
+      - One incident can break one, two or all three — they are separate questions about the same data.
+      - Typos, crashes and bugs break integrity without anyone attacking the system.
+
+questions:
+  - id: pi-mcq-privacy
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: |-
+      Which statement is about **privacy** rather than security or integrity?
+    options:
+      - text: A patient's records may only be seen by staff treating that patient.
+        correct: true
+        why: |-
+          This is about controlling who may see a person's personal data, which is exactly what privacy means.
+      - text: Only users with an administrator account may change system settings.
+        why: |-
+          Unauthorised users being kept out is a security measure (user accounts with access levels).
+      - text: A file transfer is checked with a checksum so corruption is detected.
+        why: |-
+          Detecting corruption is about integrity, not about who is allowed to see the data.
+      - text: Data sent over the internet is scrambled so it cannot be read if intercepted.
+        why: |-
+          Scrambling to stop unauthorised reading is encryption, a security measure, even though it also helps privacy.
+    explanation: |-
+      Privacy is specifically about a person's personal data being seen and used only by those entitled to it. The other options describe security controls (access levels, checksums, encryption).
+
+  - id: pi-text-integrity
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: |-
+      Which term means that data is accurate, complete and has not been corrupted or changed? (One word.)
+    accept: [integrity, data integrity]
+    model: |-
+      **Integrity** — the accuracy, consistency and completeness of data.
+    explanation: |-
+      Integrity is about the data being trustworthy: correct values, nothing missing, nothing silently altered. It says nothing about who is allowed to see the data (that is security and privacy).
+
+  - id: pi-cloze-three
+    format: cloze
+    difficulty: 2
+    objectives: ["6.1.1"]
+    prompt: |-
+      Protecting data from unauthorised access is called {{1}}. Keeping a person's personal data confidential and used only for the purpose it was collected is called {{2}}. Data that is accurate and free from corruption has {{3}}.
+    blanks:
+      - accept: [security, data security]
+      - accept: [privacy]
+      - accept: [integrity, data integrity]
+    explanation: |-
+      Security is protection from unauthorised access; privacy is control over personal data; integrity is accuracy and freedom from corruption.
+
+  - id: pi-mcq-insider
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.1"]
+    prompt: |-
+      A receptionist at a dental surgery logs in with their own valid account and reads the treatment notes of a famous footballer, then tells a friend. Which is the **best** description?
+    options:
+      - text: Privacy is broken, but no security control was bypassed.
+        correct: true
+        why: |-
+          The receptionist was authorised to log in, so nothing was hacked. Personal data was seen by someone with no need to see it and passed on, which is a privacy failure.
+      - text: Security is broken because the records were accessed.
+        why: |-
+          Access was through a valid account, so no unauthorised access occurred. The problem is what the account was allowed to reach, and what the person did with it.
+      - text: Integrity is broken because the notes were read.
+        why: |-
+          Reading data does not change it, so the stored values are still accurate.
+      - text: Nothing is broken, because employees can see any record they like.
+        why: |-
+          Having an account is not the same as needing the data. Access should be limited to what the job requires.
+    explanation: |-
+      Security measures (login) worked; privacy failed. This is why real systems add **access rights** so a receptionist cannot open clinical notes, and keep **audit logs** so the access is traceable.
+
+  - id: pi-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.1"]
+    prompt: |-
+      A student analyses an incident: a virus deletes a company's customer database. Which line contains the first error?
+    lines:
+      - The virus reached the database without authorisation, so security has failed.
+      - The records no longer exist, so the data is no longer complete, which is an integrity failure.
+      - Because the database held customer names, this is also a privacy failure.
+      - The incident is a privacy failure only, since privacy is the same as security.
+    errorLine: 4
+    fix: |-
+      Line 4 is wrong twice over: this incident breaks security and integrity, not "privacy only", and privacy is **not** the same as security. Whether privacy is also broken depends on whether personal data was disclosed to someone — deletion destroys data rather than revealing it, although customers' personal data has been lost, which is a privacy concern in data-protection law.
+    explanation: |-
+      Lines 1 to 3 are defensible: unauthorised access (security), data destroyed (integrity), and personal data affected (privacy). Line 4's claim that privacy equals security is the clear error.
+
+  - id: pi-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.1.1"]
+    prompt: |-
+      Explain the difference between the **security** of data and the **integrity** of data. Give one example of a failure that breaks integrity without breaking security.
+    model: |-
+      Security is the protection of data from unauthorised access, use, disclosure, modification or destruction, so it is about keeping the wrong people out. Integrity is about the data being accurate, consistent and complete, so it is about whether the stored values can be trusted. A failure of integrity without a security failure is, for example, a power cut that corrupts a file, or a clerk who mistypes a date of birth: no unauthorised user was involved, but the stored data is now wrong.
+    keyPoints:
+      - Security is protection from unauthorised access, use, disclosure, modification or destruction.
+      - Integrity is the accuracy, consistency and completeness of the data.
+      - Security is about who may reach the data; integrity is about whether the values are correct.
+      - Example with no attacker, such as accidental corruption, a power failure or a typing error.
+    explanation: |-
+      Both terms describe the same data but answer different questions: who can reach it, and whether it is right. An accident can break integrity with no attacker at all.

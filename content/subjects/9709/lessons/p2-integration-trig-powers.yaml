@@ -1,0 +1,184 @@
+id: p2-integration-trig-powers
+subject: "9709"
+topic: "2.5"
+title: Integrate squared sine and cosine
+summary: Use double-angle identities to turn squared trig functions into easy-to-integrate terms.
+order: 2
+minutes: 4
+kind: core
+objectives: ["2.5.2"]
+prerequisites: [p2-trigonometry-double-angle-identities]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027, topic 2.5 learning outcome 2.5.2: use trigonometrical relationships in
+    integration, including double-angle formulae for sin^2x and cos^2(2x). All questions are
+    original; no illustrative data are used. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end, you can use a double-angle identity to integrate a squared sine or cosine.
+  - type: explain
+    title: Turn the square into a constant and a wave
+    body: |-
+      The angle x is measured in radians.
+
+      There is no simple power rule for sin^2x. Use the double-angle identity cos 2x = 1 - 2 sin^2x, then rearrange:
+
+      sin^2x = (1 - cos 2x)/2.
+
+      For cosine, cos^2x = (1 + cos 2x)/2. The square becomes a constant plus or minus a cosine, both of which are easy to integrate.
+  - type: check
+    questions: [sin-square-identity, cos-square-identity]
+  - type: example
+    title: Integrate sin squared x
+    problem: |-
+      Find the integral of sin^2x with respect to x.
+    steps:
+      - |-
+        Replace sin^2x by (1 - cos 2x)/2.
+      - |-
+        Split the integral: integral (1/2) dx - integral (cos 2x)/2 dx.
+      - |-
+        The first part is x/2. Since cos 2x integrates to sin 2x/2, the second part is sin 2x/4.
+      - |-
+        Subtract it and add the constant: x/2 - sin 2x/4 + c.
+    answer: |-
+      The integral of sin^2x with respect to x is x/2 - sin 2x/4 + c.
+  - type: check
+    questions: [sin-square-integral, sin-square-definite]
+  - type: example
+    title: The inside angle is 2x
+    problem: |-
+      Find the integral of cos^2(2x) with respect to x.
+    steps:
+      - |-
+        Use cos^2A = (1 + cos 2A)/2 with A = 2x: cos^2(2x) = (1 + cos 4x)/2.
+      - |-
+        Integrate the constant part to x/2.
+      - |-
+        Integrate cos 4x to sin 4x/4, then remember the extra factor 1/2: sin 4x/8.
+      - |-
+        Add the parts and the constant: x/2 + sin 4x/8 + c.
+    answer: |-
+      The integral of cos^2(2x) with respect to x is x/2 + sin 4x/8 + c.
+  - type: check
+    questions: [cos-double-square, cos-square-integral]
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The integral of sin^2x is incorrectly given as -cos^2x/3.
+        right: |-
+          The power rule is for powers of x, not powers of sin x. Use sin^2x = (1 - cos 2x)/2 first.
+      - wrong: |-
+          The integral of cos 4x is sin 4x.
+        right: |-
+          Divide by the inside coefficient 4: the integral of cos 4x is sin 4x/4.
+  - type: exam
+    body: |-
+      - Write the double-angle identity before integrating; it shows where the 2x or 4x came from.
+      - Apply the coefficient rule to the new angle as well.
+      - For definite integrals, substitute the bounds only after finding an antiderivative.
+  - type: takeaways
+    items:
+      - |-
+        sin^2x = (1 - cos 2x)/2.
+      - |-
+        cos^2x = (1 + cos 2x)/2.
+      - |-
+        Integrate the constant and the cosine separately, dividing by the cosine's inside coefficient.
+      - |-
+        Always check an antiderivative by differentiating it.
+questions:
+  - id: sin-square-identity
+    format: mcq
+    difficulty: 1
+    objectives: ["2.5.2"]
+    prompt: |-
+      Which identity replaces sin^2x with a cosine term?
+    options:
+      - text: |-
+          (1 - cos 2x)/2
+        correct: true
+        why: |-
+          Rearrange cos 2x = 1 - 2 sin^2x.
+      - text: |-
+          (1 + cos 2x)/2
+        why: |-
+          That is the identity for cos^2x.
+      - text: |-
+          1 - cos x
+        why: |-
+          The double angle is 2x and the expression is divided by 2.
+    explanation: |-
+      sin^2x = (1 - cos 2x)/2.
+  - id: cos-square-identity
+    format: cloze
+    difficulty: 1
+    objectives: ["2.5.2"]
+    prompt: |-
+      cos^2x = (1 {{1}} cos 2x)/2.
+    blanks:
+      - accept: ["+", "plus"]
+    explanation: |-
+      Cosine squared uses the plus version: (1 + cos 2x)/2.
+  - id: sin-square-integral
+    format: expression
+    difficulty: 2
+    objectives: ["2.5.2"]
+    prompt: |-
+      Find the integral of sin^2x with respect to x.
+    answer: "x/2-sin(2*x)/4"
+    variables: [x]
+    display: |-
+      x/2 - sin 2x/4 + c
+    explanation: |-
+      Replace sin^2x by (1 - cos 2x)/2, then integrate each term.
+  - id: sin-square-definite
+    format: expression
+    difficulty: 2
+    objectives: ["2.5.2"]
+    prompt: |-
+      Evaluate integral from 0 to pi of sin^2x dx.
+    answer: "pi/2"
+    variables: [x]
+    display: |-
+      pi/2
+    explanation: |-
+      Use x/2 - sin 2x/4 at the limits. The sine terms are zero, leaving pi/2.
+  - id: cos-double-square
+    format: mcq
+    difficulty: 2
+    objectives: ["2.5.2"]
+    prompt: |-
+      Which is equal to cos^2(2x)?
+    options:
+      - text: |-
+          (1 + cos 4x)/2
+        correct: true
+        why: |-
+          Put A = 2x in cos^2A = (1 + cos 2A)/2.
+      - text: |-
+          (1 - cos 4x)/2
+        why: |-
+          That is the identity for sin^2(2x), not cos^2(2x).
+      - text: |-
+          1 + cos 2x
+        why: |-
+          The double angle is 4x, and the whole sum is divided by 2.
+    explanation: |-
+      cos^2(2x) = (1 + cos 4x)/2.
+  - id: cos-square-integral
+    format: expression
+    difficulty: 3
+    objectives: ["2.5.2"]
+    prompt: |-
+      Find the integral of cos^2(2x) with respect to x.
+    answer: "x/2+sin(4*x)/8"
+    variables: [x]
+    display: |-
+      x/2 + sin 4x/8 + c
+    explanation: |-
+      Rewrite as (1 + cos 4x)/2, then integrate both terms.

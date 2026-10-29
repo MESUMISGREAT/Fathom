@@ -1,0 +1,254 @@
+id: cpu-architecture-von-neumann
+subject: "9618"
+topic: "4.1"
+title: The Von Neumann model and the stored program
+summary: Where the program lives while it runs, and the four parts of the machine that the syllabus expects you to name.
+order: 1
+minutes: 4
+kind: core
+objectives: ["4.1.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, first learning outcome (the basic Von Neumann model for a computer
+    system and the stored program concept). All questions are original; no past-paper
+    material is reproduced.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain the **Von Neumann model**, say what the **stored program
+      concept** means, and name the main parts of the machine and how they connect.
+
+  - type: explain
+    title: The program is in memory while it runs
+    body: |
+      When you open an app, nothing is teleported into the processor. A **copy** of the
+      program's instructions is loaded into **main memory**, in binary, alongside any data
+      the program uses.
+
+      The processor then works through those instructions one at a time.
+
+      This is the **stored program concept**: instructions and data are stored together in
+      main memory, in the same binary form, and the processor fetches and executes them in
+      turn.
+
+  - type: definition
+    term: The Von Neumann model
+    body: |
+      A design for a computer in which **both the program (its instructions) and the data
+      it works on are held in the same main memory**, and the computer repeatedly **fetches**
+      an instruction, then **executes** it.
+
+  - type: explain
+    title: The four parts of the machine
+    body: |
+      Every Von Neumann machine can be split into four big pieces:
+
+      | Part | Job |
+      | --- | --- |
+      | **Central Processing Unit (CPU)** | Fetches and executes instructions; does the arithmetic and the deciding |
+      | **Main memory** | Holds the program's instructions and the data, while they are in use |
+      | **Input devices** | Get data and commands *into* the computer (keyboard, sensor) |
+      | **Output devices** | Get results *out* (screen, speaker) |
+
+      Inside the CPU sit two sub-units you will meet next: the **Control Unit (CU)** and the
+      **Arithmetic Logic Unit (ALU)**. The CPU talks to memory and the devices over
+      **buses** — bundles of wires that carry addresses, data and control signals.
+
+  - type: diagram
+    diagram: cs-cpu-architecture-von-neumann
+    alt: >-
+      Block diagram of the Von Neumann model: a CPU containing the Control Unit and the
+      Arithmetic Logic Unit, connected by a two-way bus to main memory, with input devices
+      feeding data in and output devices taking results out. Arrows are labelled address,
+      data and control.
+    caption: Instructions and data both live in main memory; the CPU fetches them over the buses.
+
+  - type: intuition
+    title: The kitchen analogy
+    body: |
+      Think of the CPU as a chef, main memory as the worktop right in front of them, and a
+      recipe book open on that worktop. The chef does not memorise the whole book — they
+      read one step, do it, read the next.
+
+      Where the analogy stops working: a chef chooses what to read. A CPU has no opinions;
+      the **Program Counter** (a register you will meet shortly) decides which instruction
+      comes next, every single time.
+
+  - type: example
+    title: A three-instruction program in memory
+    problem: |
+      Memory holds this tiny program, one instruction per cell, followed by the data:
+
+      | Address | Contents | Meaning |
+      | --- | --- | --- |
+      | 100 | `LOAD 5` | Put the value 5 into the accumulator |
+      | 101 | `ADD 200` | Add the value at address 200 |
+      | 102 | `STORE 300` | Write the result to address 300 |
+      | 200 | `12` | The data |
+
+      Walk through what the machine does.
+    steps:
+      - |
+        The CPU **fetches** the instruction at address 100 (`LOAD 5`) and executes it. The
+        accumulator now holds 5.
+      - |
+        It fetches the next instruction, at 101 (`ADD 200`), and executes it. The
+        accumulator now holds $5 + 12 = 17$.
+      - |
+        It fetches the instruction at 102 (`STORE 300`) and executes it. Address 300 now
+        holds 17.
+      - |
+        Note that the *instructions* (addresses 100–102) and the *data* (address 200) sit in
+        the same memory, in the same format. That is the stored program concept in action.
+    answer: |
+      The accumulator ends holding 17, stored at address 300.
+
+  - type: check
+    title: Quick check
+    questions: [stored-program, parts-of-machine, von-neumann-shape]
+
+  - type: misconceptions
+    items:
+      - wrong: The program runs straight from the hard drive or SSD.
+        right: |
+          A copy is loaded into **main memory** first. The CPU fetches instructions from
+          memory, not from the storage drive.
+      - wrong: Instructions and data are stored in two different kinds of memory.
+        right: |
+          In the Von Neumann model they share the **same main memory**, in the same binary
+          form. (Computers *do* also have small special-purpose storage such as registers
+          and cache — that is topic 4.1's registers, not a different model.)
+      - wrong: The term Von Neumann is the name of a famous computer you buy in a shop.
+        right: |
+          It is a **design**, a blueprint. Almost every computer you meet is built on it.
+
+  - type: exam
+    body: |
+      - "**Describe**" questions want the idea, not a shopping list: mention *both* halves —
+        instructions and data held in memory, and the fetch–execute loop.
+      - Two marks usually means two distinct points. "Stored in memory" alone earns one.
+      - Marks slip when you write that the program is stored "in the CPU". The CPU *fetches*
+        from main memory; it does not hold the whole program.
+
+  - type: check
+    title: Check yourself
+    questions: [where-does-program-live, explain-stored-program]
+
+  - type: takeaways
+    items:
+      - >-
+        The **stored program concept**: instructions and data sit together in main memory, in binary.
+      - The CPU repeatedly **fetches** an instruction, then **executes** it.
+      - >-
+        Four parts: **CPU**, **main memory**, **input devices**, **output devices**.
+      - The CPU contains the **Control Unit** and the **Arithmetic Logic Unit**, and connects to everything else over **buses**.
+
+questions:
+  - id: stored-program
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: |
+      Which statement describes the **stored program concept**?
+    options:
+      - text: Instructions and data are both held in main memory, in binary, while the program runs
+        correct: true
+        why: |
+          That is the concept: one memory holds the program's instructions and the data,
+          and the CPU fetches and executes them in turn.
+      - text: The program is copied onto the CPU chip so it can never be changed
+        why: |
+          Only parts of the current working set are held in fast storage inside the CPU
+          (registers, cache). The program itself lives in main memory while it runs.
+      - text: Programs are written in binary before they can be used at all
+        why: |
+          Programs can be written in a high-level language and compiled. The stored program
+          concept is about *where* instructions are kept while running, not how they are typed.
+      - text: Two separate memories hold instructions and data
+        why: |
+          The defining point of the Von Neumann model is that they share **one** memory.
+    explanation: |
+      Stored program = instructions and data together in main memory, fetched and executed
+      one at a time.
+
+  - id: parts-of-machine
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: |
+      A student is asked to name the four main parts of a Von Neumann computer system.
+      Which list is correct?
+    options:
+      - text: CPU, main memory, input devices, output devices
+        correct: true
+        why: |
+          These are the four parts of the basic model the syllabus expects.
+      - text: ALU, CU, RAM, ROM
+        why: |
+          The ALU and CU are parts *inside* the CPU, and RAM/ROM are types of memory, not
+          the four top-level parts of the system.
+      - text: Keyboard, mouse, screen, printer
+        why: |
+          These are just peripherals: two input and two output devices. The CPU and memory
+          are missing.
+      - text: Hardware, software, data, users
+        why: |
+          These are ways of describing a *system* in general, not the Von Neumann model's
+          four parts.
+    explanation: |
+      CPU + main memory + input devices + output devices, with the CPU and memory linked by buses.
+
+  - id: von-neumann-shape
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.1"]
+    prompt: |
+      Fill in the blanks. In the Von Neumann model the {{1}} and the {{2}} it operates on
+      are stored together in {{3}}.
+    blanks:
+      - accept: ["instructions", "program instructions", "program", "commands"]
+      - accept: ["data", "operands"]
+      - accept: ["main memory", "memory", "primary memory", "ram"]
+    explanation: |
+      One memory holds both the instructions and the data — that is what makes the model a
+      *stored program* model.
+
+  - id: where-does-program-live
+    format: text
+    difficulty: 1
+    objectives: ["4.1.1"]
+    prompt: |
+      While a program is running, from which store does the CPU fetch its instructions?
+    style: one-line
+    accept: ["main memory", "memory", "primary memory", "ram", "main store"]
+    model: |
+      Main memory (RAM).
+    explanation: |
+      The CPU fetches instructions from **main memory**. Storage drives hold the program
+      permanently, but only a copy in memory is executed.
+
+  - id: explain-stored-program
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.1"]
+    prompt: |
+      Explain what is meant by the **stored program concept**, and describe one consequence
+      of it for how a computer runs a program.
+    model: |
+      The stored program concept means that a program's instructions and the data it works
+      on are both held in the same main memory, in binary, while the program runs. The CPU
+      repeatedly fetches the next instruction from memory and executes it. A consequence is
+      that a computer does not need rewiring to change task: loading a different program into
+      memory is enough, because instructions are treated as data in the same store.
+    keyPoints:
+      - Instructions and data are held together in main memory
+      - Both are in binary, in the same store
+      - The CPU fetches then executes, one instruction at a time
+      - Changing task means loading a different program, not rebuilding the machine
+    explanation: |
+      A full answer names where things are stored *and* the fetch–execute consequence that
+      follows from it.

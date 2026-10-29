@@ -1,0 +1,301 @@
+id: p3-int-by-parts
+subject: '9709'
+topic: '3.5'
+title: 'Integration by parts: undo the product rule'
+summary: Keep one factor, swap the other — the formula trades a hard integral for an easier one, and picking u correctly
+  decides whether things improve.
+order: 5
+minutes: 9
+kind: core
+objectives:
+- 3.5.5
+prerequisites:
+- p3-int-standard-integrals
+- p3-diff-products-quotients
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.5, learning outcome 3.5.5, using the syllabus examples x sin 2x, x²e^{−x}, ln x and x tan^{−1}x. Answers\
+    \ were verified in Python. All questions are original.\n    Adversarially re-checked in this cloud session:\
+    \ every numeric answer key recomputed independently with Python (including finite-difference checks of each\
+    \ antiderivative), every MCQ verified to have exactly one correct option, syllabus objectives mapped lesson\
+    \ by lesson, and `npm run content:check`, `tsc` and 166 vitest tests all clean. Diagram references whose SVGs\
+    \ do not exist yet were removed rather than left dangling, so these lessons currently teach with prose, tables\
+    \ and worked examples only; add the diagrams later. The review was a second pass by the same agent (no separate\
+    \ reviewer model is available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can integrate products such as $x\sin 2x$, $x^2e^{-x}$, $\ln x$ and
+
+    $x\tan^{-1}x$ using integration by parts, including definite cases.'
+- type: explain
+  title: What they ask
+  body: 'Integrand is a **product** where neither factor is a constant — that is the trigger:
+
+
+    - $x\sin 2x$ — a polynomial times a trig function;
+
+    - $x^2e^{-x}$ — polynomial times exponential;
+
+    - $\ln x$ — actually a product in disguise: $1 \cdot \ln x$;
+
+    - $x\tan^{-1}x$ — polynomial times an inverse trig function.
+
+
+    The plan is always: **one factor is differentiated**, the other is **integrated**, and the
+
+    leftover integral is easier than the original.'
+- type: definition
+  term: Integration by parts
+  body: '$$\int u\,\frac{dv}{dx}\,dx = uv - \int v\,\frac{du}{dx}\,dx$$
+
+
+    It is the product rule run backwards: $(uv)'' = u''v + uv''$, so
+
+    $uv'' = (uv)'' - u''v$ and integrating gives the formula.'
+- type: explain
+  title: The method
+  body: "1. **Choose $u$ and $\\dfrac{dv}{dx}$** so the new integral\n   $\\displaystyle\\int v\\,\\dfrac{du}{dx}\\\
+    ,dx$ is *easier* than the original. The rule of thumb:\n   **$u$ = the polynomial part; $u = \\ln x$ for bare\
+    \ logs; $u = \\tan^{-1}x$ for inverse trig.**\n2. **Differentiate $u$**, integrate $\\dfrac{dv}{dx}$, writing\
+    \ both results next to them.\n3. **Assemble** $uv - \\int v\\,\\dfrac{du}{dx}\\,dx$.\n4. **Check the new integral**\
+    \ is in the standard set (or repeat by parts once for $x^2e^{-x}$).\n5. **For definite integrals**, evaluate\
+    \ the $uv$ term between the limits together with the\n   remaining integral.\n\n**The forgotten step:** assigning\
+    \ $u$ first. Swapping $u$ and $dv$ mid-question — or making the\n*harder* integral appear — produces an antiderivative\
+    \ that cannot be finished; the choice is a\ndecision, not a mechanical step."
+- type: example
+  title: 'Example 1: the syllabus one, x sin 2x'
+  problem: Find $\displaystyle\int x\sin 2x\,dx$.
+  steps:
+  - '$u = x$, so $\dfrac{du}{dx} = 1$; $\quad \dfrac{dv}{dx} = \sin 2x$, so
+
+    $v = -\tfrac12\cos 2x$.'
+  - 'Assemble:
+
+
+    $$\int x\sin 2x\,dx = x\left(-\frac12\cos 2x\right) - \int \left(-\frac12\cos 2x\right)(1)\,dx$$'
+  - 'Simplify the new integral:
+
+
+    $$= -\frac12 x\cos 2x + \frac12\int \cos 2x\,dx$$'
+  - 'The remaining integral is standard:
+
+
+    $$\int \cos 2x\,dx = \frac12\sin 2x + c_1$$'
+  - 'Combine:
+
+
+    $$\int x\sin 2x\,dx = -\frac12 x\cos 2x + \frac14\sin 2x + c$$'
+  - 'Check by differentiating:
+
+    $\dfrac{d}{dx}\left(-\tfrac12 x\cos 2x + \tfrac14\sin 2x\right)
+
+    = -\tfrac12\cos 2x + x\sin 2x + \tfrac12\cos 2x = x\sin 2x$ ✓'
+  answer: $-\dfrac12 x\cos 2x + \dfrac14\sin 2x + c$.
+- type: check
+  title: Quick check
+  questions:
+  - choose-u
+  - integrate-parts
+  - definite-parts
+- type: example
+  title: 'Example 2: repeat performance, x²e^(−x)'
+  problem: Find $\displaystyle\int x^2 e^{-x}\,dx$.
+  steps:
+  - 'First round: $u = x^2$, $\dfrac{du}{dx} = 2x$; $v = -e^{-x}$.
+
+
+    $$\int x^2 e^{-x}\,dx = -x^2 e^{-x} + \int 2x e^{-x}\,dx$$'
+  - 'The new integral still has a polynomial $\times$ exponential, so **by parts again**:
+
+    $u = 2x$, $\dfrac{du}{dx} = 2$; $v = -e^{-x}$:
+
+
+    $$\int 2x e^{-x}\,dx = -2x e^{-x} - 2\int e^{-x}\,dx = -2x e^{-x} - 2e^{-x} + c_1$$'
+  - 'Substitute back:
+
+
+    $$\int x^2 e^{-x}\,dx = -x^2 e^{-x} - 2x e^{-x} - 2e^{-x} + c$$'
+  - 'Factorise for neatness:
+
+
+    $$= -(x^2 + 2x + 2)e^{-x} + c$$'
+  answer: $-(x^2 + 2x + 2)e^{-x} + c$.
+- type: check
+  title: Exam-style check
+  questions:
+  - second-pass
+  - spot-error-parts
+  - why-parts-exists
+- type: explain
+  title: The two special logs
+  body: '$\ln x$ and $x\tan^{-1}x$ are the famous "no obvious second factor" cases. Take the second
+
+    factor to be $1$:
+
+
+    $$\int \ln x\,dx = \int 1\cdot\ln x\,dx = x\ln x - \int x\cdot\frac{1}{x}\,dx = x\ln x - x + c$$
+
+
+    $$\int x\tan^{-1}x\,dx = \frac{x^2}{2}\tan^{-1}x - \int \frac{x^2}{2}\cdot\frac{1}{1+x^2}\,dx$$
+
+
+    The leftover splits by algebra:
+
+
+    $$\frac{x^2}{2(1+x^2)} = \frac12\left(1 - \frac{1}{1+x^2}\right)$$
+
+
+    so
+
+
+    $$\int x\tan^{-1}x\,dx = \frac{x^2}{2}\tan^{-1}x - \frac{x}{2} + \frac12\tan^{-1}x + c$$
+
+
+    Both answers are checkable by differentiating.'
+- type: misconceptions
+  items:
+  - wrong: $\displaystyle\int u\,dv = uv + \int v\,du$.
+    right: 'The sign is $-$, because integration by parts runs the product rule backwards and the
+
+      product rule has two terms on the right that must be separated by a subtraction.'
+  - wrong: $u$ should be whichever factor is easier to integrate.
+    right: '$u$ should be the factor that is easiest to differentiate and whose differentiation shrinks
+
+      the problem: polynomial, then log, then inverse trig.'
+  - wrong: $\displaystyle\int \ln x\,dx = x\ln x + c$, with no extra terms.
+    right: 'The $-\int v\,du$ piece is $-\int 1\,dx = -x$, giving $x\ln x - x + c$; the missing $-x$ is
+
+      the classic slip.'
+  - wrong: For $x^2 e^{-x}$ one round of parts is enough.
+    right: 'The leftover $2xe^{-x}$ still has a polynomial; repeat parts — each round lowers the degree
+
+      by one.'
+  - wrong: $\displaystyle\int x\sin 2x\,dx$ with $u = \sin 2x$ works just as well.
+    right: 'Try it: $\int \frac{x^2}{2}\cdot 2\cos 2x\,dx$ is *harder* than the original. Always test
+
+      that your leftover integral improves things.'
+- type: exam
+  body: '- State $u$, $\dfrac{dv}{dx}$ and $v$ explicitly; the method marks are for the setup, not the arithmetic.
+
+    - For $x^2 e^{-x}$, say "integrating by parts again" so the examiner sees the intention.
+
+    - Definite: subtract the $uv$ term between limits exactly as it stands; no need to merge symbols.
+
+    - "$\ln x$" integrals need the $-\ x$; forgetting it is the single most common lost mark here.'
+- type: takeaways
+  items:
+  - $\int u\,\frac{dv}{dx}\,dx = uv - \int v\,\frac{du}{dx}\,dx$.
+  - 'Trigger: a product with no constant factor, or a bare $\ln x$ / $x\tan^{-1}x$.'
+  - Pick $u$ = polynomial, or $\ln x$, or $\tan^{-1}x$; everything else is $\dfrac{dv}{dx}$.
+  - Degree-$2$ polynomials need two rounds of parts.
+  - Differentiate your answer as a check — the fastest guard against sign slips.
+- type: deeper
+  title: Recursion and the polynomial degree
+  body: 'For $\int p_n(x)e^{-x}\,dx$ with $p_n$ of degree $n$, each round of parts lowers the degree by
+
+    one and ends with a pure exponential integral. That is why the answer is $e^{-x}$ times a
+
+    polynomial of the same degree: exactly $n+1$ rounds leave a "1" to integrate.
+
+
+    The same recursion terminates for $\int p_n(x)\sin 2x\,dx$, alternating between sines and
+
+    cosines; the alternating signs are the reason such answers often look "wrong" until you
+
+    differentiate to check.'
+questions:
+- id: choose-u
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.5.5
+  prompt: When integrating $\displaystyle\int x e^{2x}\,dx$ by parts, which choice of $u$ and $v'$ is correct?
+  options:
+  - text: $u = x$,  $v' = e^{2x}$
+    correct: true
+    why: Differentiating $x$ shrinks it to the constant 1 while $e^{2x}$ integrates cleanly.
+  - text: $u = e^{2x}$,  $v' = x$
+    why: Integrating $x$ gives $\tfrac{x^2}{2}$ and differentiating $e^{2x}$ keeps it exponential — the integral
+      gets harder, not easier.
+  - text: $u = xe^{2x}$,  $v' = 1$
+    why: That treats the whole product as $u$, which leads back to the same integral.
+  - text: $u = 2e^{2x}$,  $v' = \tfrac{x}{2}$
+    why: The same reversed choice dressed up; it still worsens the product.
+  explanation: In the LIATE spirit, take $u$ from whatever differentiates to something simpler.
+- id: integrate-parts
+  format: expression
+  difficulty: 2
+  objectives:
+  - 3.5.5
+  prompt: 'Find $\displaystyle\int x\ln x\,dx$.
+
+
+    Give the answer using `ln` and one variable `x`, e.g. `0.5*x^2*ln(x)`.'
+  answer: 0.5*x^2*ln(x) - 0.25*x^2
+  variables:
+  - x
+  display: $\dfrac{x^2}{2}\ln x - \dfrac{x^2}{4} + C$
+  explanation: 'With $u = \ln x$, $v'' = x$: $v = \tfrac{x^2}{2}$, $u'' = \tfrac1x$, so the integral is $\tfrac{x^2}{2}\ln
+    x - \int \tfrac{x}{2}\,dx = \tfrac{x^2}{2}\ln x - \tfrac{x^2}{4} + C$.'
+- id: definite-parts
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.5.5
+  prompt: Evaluate $\displaystyle\int_{0}^{1} x e^{x}\,dx$, to 3 decimal places.
+  fields:
+  - answer: 1
+    tolerance:
+      abs: 0.001
+  explanation: 'By parts: $[xe^x - e^x]_0^1 = (e - e) - (0 - 1) = 1$.'
+- id: second-pass
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.5.5
+  prompt: Which integral requires integration by parts **twice** to finish?
+  options:
+  - text: $\displaystyle\int x^2 e^{3x}\,dx$
+    correct: true
+    why: Each pass reduces the power of $x$ by one; twice brings the leftover to a plain $\int e^{3x}\,dx$.
+  - text: $\displaystyle\int x e^{3x}\,dx$
+    why: 'One pass leaves $\int e^{3x}\,dx$: no need for a second.'
+  - text: $\displaystyle\int e^{3x}\,dx$
+    why: A standard integral — zero parts needed.
+  - text: $\displaystyle\int \ln x\,dx$
+    why: One parts round with $u = \ln x$, $v' = 1$ finishes it.
+  explanation: The power of $x$ drops by exactly one per parts pass, so $x^n e^{kx}$ needs $n$ passes.
+- id: spot-error-parts
+  format: spot-error
+  difficulty: 3
+  objectives:
+  - 3.5.5
+  prompt: One line of this working contains an error. Find it.
+  lines:
+  - Find $\displaystyle\int x\cos x\,dx$ by parts.
+  - Take $u = x$, so $u' = 1$; take $v' = \cos x$, so $v = \sin x$.
+  - Then $\int x\cos x\,dx = x\sin x - \int \sin x\,dx$
+  - $= x\sin x - \cos x + C$
+  errorLine: 4
+  fix: '$\int -\sin x\,dx$ should have been kept together: $\int \sin x \, dx = -\cos x$, so the last line should
+    read $x\sin x + \cos x + C$.'
+  explanation: Subtracting the integral of $\sin x$ contributes $-(-\cos x) = +\cos x$, so the extra sign in the
+    fix is the telltale mistake.
+- id: why-parts-exists
+  format: explain
+  difficulty: 3
+  objectives:
+  - 3.5.5
+  prompt: Derive the integration-by-parts formula from the product rule for differentiation in two or three sentences.
+  model: 'The product rule says $(uv)'' = u''v + uv''$. Integrating both sides gives $uv = \int u''v\,dx + \int
+    uv''\,dx$.
+
+    Rearranging, $\int uv''\,dx = uv - \int u''v\,dx$, which is the parts formula with the roles of $u$ and $v$
+    relabelled.'
+  keyPoints:
+  - Start from $(uv)' = u'v + uv'$
+  - Integrate both sides
+  - Rearrange to isolate $\int uv'\,dx$
+  explanation: Compare your answer with the key points above; they are what a full-mark response must contain.

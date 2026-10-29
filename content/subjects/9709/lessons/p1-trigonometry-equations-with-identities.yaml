@@ -19,7 +19,10 @@ provenance:
     the syllabus's example type 3 sin²θ − 5 cos θ − 1 = 0. The worked examples and questions use
     different, original equations; every solution set found by a brute-force search in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a
-    separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    separate AI review on 2026-10-23. Not yet reviewed by a teacher. Clarity rewrite requested
+    by the user; independently reviewed below.
+    Independently re-checked this revision line by line, including identity steps and every answer
+    key, in a separate AI review on 2026-10-25. Clarified safe division and the quadratic variable.
 
 blocks:
   - type: objective
@@ -31,8 +34,8 @@ blocks:
     body: |-
       | You see… | Move | You get |
       | --- | --- | --- |
-      | $a\sin x = b\cos x$ | divide by $\cos x$ | $\tan x = \tfrac{b}{a}$ |
-      | $\sin^2$ mixed with $\cos$ (or $\cos^2$ with $\sin$) | swap with $\sin^2 x = 1 - \cos^2 x$ (or vice versa) | a quadratic in one ratio |
+      | $a\sin x = b\cos x$ with $a\ne0$ | Check $\cos x=0$ is not a solution, then divide by $a\cos x$ | $\tan x = \tfrac{b}{a}$ |
+      | $\sin^2$ mixed with $\cos$ (or $\cos^2$ with $\sin$) | swap with $\sin^2 x = 1 - \cos^2 x$ (or vice versa) | a quadratic in $\sin x$ or $\cos x$ |
       | a common factor like $\sin x$ on both sides | bring everything to one side and **factorise** | two simpler equations |
 
       Then it's the solving recipe from before, once per equation.
@@ -43,7 +46,7 @@ blocks:
       Solve $3\sin x = 2\cos x$ for $0^\circ \leqslant x \leqslant 360^\circ$.
     steps:
       - |-
-        Divide both sides by $3\cos x$: $\tan x = \tfrac23$. (Safe: if $\cos x = 0$ then $\sin x = \pm 1$, and $\pm 3 \neq 0$, so no solutions are lost.)
+        First check the case $\cos x=0$ in the original equation. Then $\sin x=\pm1$, so $3\sin x=2\cos x$ would require $3(\pm1)=0$, which is impossible. So $\cos x$ cannot be zero here; divide both sides by $3\cos x$ to get $\tan x=\tfrac23$.
       - |-
         $\alpha = \tan^{-1}\tfrac23 = 33.69^\circ$. Tan repeats every $180^\circ$: $213.69^\circ$.
     answer: |-
@@ -154,7 +157,7 @@ questions:
         tolerance: { abs: 0.05 }
         unit: "°"
     explanation: |-
-      Divide by $5\cos x$: $\tan x = \tfrac25 = 0.4$. So $x = \tan^{-1}0.4 = 21.8^\circ$, and adding $180^\circ$ gives $201.8^\circ$.
+      If $\cos x=0$, the original equation would require $\sin x=0$, which is impossible. So divide by $5\cos x$: $\tan x = \tfrac25 = 0.4$. Then $x = \tan^{-1}0.4 = 21.8^\circ$, and adding $180^\circ$ gives $201.8^\circ$.
 
   - id: quadratic-form
     format: numeric

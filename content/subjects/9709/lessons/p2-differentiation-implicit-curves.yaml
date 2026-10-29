@@ -1,0 +1,138 @@
+id: p2-differentiation-implicit-curves
+subject: "9709"
+topic: "2.4"
+title: Differentiate equations with x and y mixed together
+summary: Differentiate an equation containing both x and y, collect dy/dx terms and use the result for tangents.
+order: 4
+minutes: 5
+kind: core
+objectives: ["2.4.3"]
+prerequisites: [p2-differentiation-standard-derivatives, p1-differentiation-tangents-and-normals]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027, topic 2.4 learning outcome 2.4.3: find and use first derivatives of implicitly
+    defined functions, including tangents and normals. All questions are original; no illustrative
+    data are used. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end, you can differentiate a relation that mixes x and y, then use the gradient at a point to find a tangent or normal.
+  - type: explain
+    title: Treat y as a function that moves with x
+    body: |-
+      In an equation such as x^2 + y^2 = xy + 7, y depends on x even though it is not written as y = ... . When differentiating a y-term, multiply by dy/dx.
+
+      For example, the derivative of y^2 is 2y(dy/dx), just as the derivative of a bracket needs its inside derivative.
+  - type: example
+    title: Differentiate the whole relation
+    problem: |-
+      Find dy/dx from x^2 + y^2 = xy + 7.
+    steps:
+      - |-
+        Differentiate x^2 to get 2x. Differentiate y^2 to get 2y(dy/dx).
+      - |-
+        Differentiate xy with the product rule: y + x(dy/dx). The constant 7 becomes 0.
+      - |-
+        So 2x + 2y(dy/dx) = y + x(dy/dx).
+      - |-
+        Collect derivative terms: (2y - x)(dy/dx) = y - 2x.
+      - |-
+        Divide: dy/dx = (y - 2x)/(2y - x), provided 2y - x is not zero.
+    answer: |-
+      dy/dx = (y - 2x)/(2y - x).
+  - type: check
+    questions: [implicit-y-square, implicit-derivative]
+  - type: example
+    title: Tangent and normal at a point
+    problem: |-
+      For x^2 + y^2 = xy + 7, find the tangent and normal at (1, 3).
+    steps:
+      - |-
+        Substitute x = 1 and y = 3 in the derivative: dy/dx = (3 - 2)/(6 - 1) = 1/5.
+      - |-
+        The tangent gradient is 1/5. Through (1, 3): y - 3 = (1/5)(x - 1).
+      - |-
+        The normal gradient is -5, the negative reciprocal. Through the same point: y - 3 = -5(x - 1).
+    answer: |-
+      Tangent: y - 3 = (1/5)(x - 1). Normal: y - 3 = -5(x - 1).
+  - type: check
+    questions: [implicit-point-gradient, implicit-normal]
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The derivative of y^2 is 2y.
+        right: |-
+          Since y changes with x, it is 2y(dy/dx).
+      - wrong: |-
+          The derivative of xy is x(dy/dx) only.
+        right: |-
+          Use the product rule: derivative of x times y, plus x times derivative of y: y + x(dy/dx).
+  - type: exam
+    body: |-
+      - Show the dy/dx factor whenever differentiating a y-expression.
+      - Collect all dy/dx terms on one side before dividing.
+      - Substitute the coordinates only after finding the general derivative.
+  - type: takeaways
+    items:
+      - |-
+        y is changing with x, so a derivative of y needs a dy/dx factor.
+      - |-
+        Differentiate products such as xy with the product rule.
+      - |-
+        Find the tangent gradient at the point, then use its negative reciprocal for the normal.
+questions:
+  - id: implicit-y-square
+    format: mcq
+    difficulty: 1
+    objectives: ["2.4.3"]
+    prompt: |-
+      When differentiating y^2 with respect to x, what must be included?
+    options:
+      - text: |-
+          2y(dy/dx)
+        correct: true
+        why: |-
+          y depends on x, so the chain rule adds dy/dx.
+      - text: |-
+          2y
+        why: |-
+          This forgets that y changes as x changes.
+      - text: |-
+          (dy/dx)^2
+        why: |-
+          Differentiate the outer square first, then multiply by dy/dx.
+    explanation: |-
+      The chain rule gives d(y^2)/dx = 2y(dy/dx).
+  - id: implicit-derivative
+    format: expression
+    difficulty: 2
+    objectives: ["2.4.3"]
+    prompt: |-
+      Find dy/dx from x^2 + y^2 = xy + 7.
+    answer: "(y-2*x)/(2*y-x)"
+    variables: [x, y]
+    display: |-
+      (y - 2x)/(2y - x)
+    explanation: |-
+      Differentiate, collect the dy/dx terms, then divide by 2y - x.
+  - id: implicit-point-gradient
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.3"]
+    prompt: |-
+      On x^2 + y^2 = xy + 7, find dy/dx at (1, 3).
+    fields: [{answer: 0.2}]
+    explanation: |-
+      Substitute in (y - 2x)/(2y - x): (3 - 2)/(6 - 1) = 1/5.
+  - id: implicit-normal
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.3"]
+    prompt: |-
+      At (1, 3) on x^2 + y^2 = xy + 7, what is the normal gradient?
+    fields: [{answer: -5}]
+    explanation: |-
+      The tangent gradient is 1/5, so the normal gradient is its negative reciprocal, -5.

@@ -1,0 +1,143 @@
+﻿id: logic-gates-truth-tables
+subject: "9618"
+topic: "3.2"
+title: Truth tables for the six gates
+summary: Build the complete input-output truth table for each of the six basic logic gates.
+order: 2
+minutes: 5
+kind: core
+objectives: ["3.2.3"]
+prerequisites: [logic-gates-symbols-and-jobs]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, learning outcome 3.2.3. Truth-table inputs are illustrative binary values;
+    all questions are original. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can construct truth tables for NOT, AND, OR, NAND, NOR and XOR.
+  - type: explain
+    title: List every possible input first
+    body: |
+      A truth table lists every input combination once. For two inputs, count in binary: `00`, `01`, `10`, `11`.
+
+      For example, row `10` means A=1 and B=0, so an AND gate outputs 0.
+
+      Keep this row order consistent, then apply one gate rule to each row. No guessing and no missing combinations.
+  - type: example
+    title: Build AND one row at a time
+    problem: Complete the output column for an AND gate with inputs A and B.
+    steps:
+      - For A=0, B=0, both are not 1, so output 0.
+      - For A=0, B=1, both are still not 1, so output 0.
+      - For A=1, B=0, both are not 1, so output 0.
+      - Only A=1, B=1 has both inputs at 1, so output 1.
+    answer: AND outputs in row order are 0, 0, 0, 1.
+  - type: check
+    title: Finish AND
+    questions: [and-table-last-two]
+  - type: explain
+    title: Flip the output, not the inputs
+    body: |
+      NAND is the opposite of AND in every row. NOR is the opposite of OR in every row.
+
+      NOT has just input A: A=0 gives 1; A=1 gives 0. XOR is 1 for `01` and `10`, because those are the rows where the inputs differ.
+  - type: diagram
+    diagram: cs-logic-gates-truth-table
+    alt: >-
+      A truth table with rows 00, 01, 10 and 11. Columns give NOT A, AND, OR, NAND, NOR
+      and XOR outputs. XOR is 0,1,1,0; NAND and NOR are the inverses of AND and OR.
+  - type: check
+    title: Check the tricky rows
+    questions: [xor-table, nand-complement]
+  - type: misconceptions
+    items:
+      - wrong: A two-input table only needs rows 00, 01 and 11.
+        right: >-
+          It needs all four pairs. Row 10 is different from 01 because A and B have different roles.
+      - wrong: NAND has the same output as AND except when both inputs are 1.
+        right: >-
+          NAND is the inverse for every row: outputs 1, 1, 1, 0.
+  - type: exam
+    body: |
+      - For two inputs, write all four combinations before calculating outputs.
+      - Read each row left to right; do not swap A and B halfway through.
+      - For NAND and NOR, calculate the normal gate first, then invert its output.
+      - XOR means different, not “at least one” — that is OR.
+  - type: check
+    title: One final row
+    questions: [not-table, or-table]
+  - type: takeaways
+    items:
+      - "Two inputs produce four rows: 00, 01, 10, 11."
+      - AND is 1 only for 11; OR is 1 except for 00.
+      - NAND and NOR invert AND and OR.
+      - XOR is 1 for 01 and 10; NOT reverses one input.
+questions:
+  - id: and-table-last-two
+    format: cloze
+    difficulty: 1
+    objectives: ["3.2.3"]
+    prompt: An AND gate's outputs for rows 00, 01, 10, 11 are `0, 0, {{1}}, {{2}}`.
+    blanks:
+      - accept: ["0"]
+      - accept: ["1"]
+    explanation: Row 10 is not both 1; only row 11 makes AND output 1.
+  - id: xor-table
+    format: cloze
+    difficulty: 2
+    objectives: ["3.2.3"]
+    prompt: >-
+      Fill the XOR outputs for rows 00, 01, 10, 11: `{{1}}, {{2}}, {{3}}, {{4}}`.
+    blanks:
+      - accept: ["0"]
+      - accept: ["1"]
+      - accept: ["1"]
+      - accept: ["0"]
+    explanation: Inputs differ only in rows 01 and 10, so those rows output 1.
+  - id: nand-complement
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.3"]
+    prompt: Which output column is NAND for rows 00, 01, 10, 11?
+    options:
+      - text: 1, 1, 1, 0
+        correct: true
+        why: NAND flips AND outputs 0, 0, 0, 1.
+      - text: 0, 0, 0, 1
+        why: Those are the AND outputs before inversion.
+      - text: 0, 1, 1, 1
+        why: Those are the OR outputs, not their inverse.
+      - text: 1, 0, 0, 1
+        why: Those are XNOR outputs, the inverse of XOR.
+    explanation: AND gives 0,0,0,1; inverting each value gives NAND 1,1,1,0.
+  - id: not-table
+    format: cloze
+    difficulty: 1
+    objectives: ["3.2.3"]
+    prompt: For NOT, input A=0 gives output {{1}} and A=1 gives output {{2}}.
+    blanks:
+      - accept: ["1"]
+      - accept: ["0"]
+    explanation: NOT always reverses its single input.
+  - id: or-table
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.3"]
+    prompt: For A,B rows 00, 01, 10, 11, which is the OR output column?
+    options:
+      - text: 0, 1, 1, 1
+        correct: true
+        why: OR outputs 1 whenever at least one input is 1.
+      - text: 0, 0, 0, 1
+        why: This is AND; it needs both inputs to be 1.
+      - text: 1, 1, 1, 0
+        why: This is NAND, the inverse of AND.
+      - text: 0, 1, 1, 0
+        why: This is XOR; it outputs 0 when both inputs match.
+    explanation: OR is true for 01, 10 and 11; only 00 gives 0.
+
+

@@ -1,0 +1,265 @@
+id: data-security-restricting-risk
+subject: "9618"
+topic: "6.1"
+title: "Restricting the risk: matching the countermeasure to the threat"
+summary: Practical measures that reduce the danger from malware, hackers, phishing and pharming, and how to choose the right one for a given threat.
+order: 6
+minutes: 9
+kind: core
+objectives: ["6.1.5"]
+prerequisites: [data-security-network-threats]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.1 outcome 6.1.5 ("describe methods
+    that can be used to restrict the risks posed by threats"). Measures already described as
+    security measures in 6.1.3 are applied here to specific threats rather than redefined. All
+    examples and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.1.5 confirmed taught and tested, every definition and claim checked, every
+    answer key and accept list re-read, and the unit's six diagrams rendered and inspected in
+    light and dark. No separate reviewer model was available in this environment.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name the main measures that restrict risk, explain which threat each one reduces, and justify a sensible set of measures for a real organisation.
+
+  - type: explain
+    title: Risk is not the same as threat
+    body: |-
+      A **threat** is something that could do harm — a virus, a hacker, a phishing email.
+
+      **Risk** is how likely that harm is to happen and how bad it would be. A virus that has never been seen on your systems is a small risk; a virus that is already spreading through your office is a large one.
+
+      You cannot remove threats. You can only **restrict** the risk:
+
+      - reduce the chance of the threat succeeding (firewall, strong authentication, updates, training);
+      - reduce the damage if it does succeed (backups, encryption, limited access rights, an incident plan).
+
+      Good security uses **several independent measures**, so that one failure does not expose everything. This idea is called **layered defence** or **defence in depth**.
+
+  - type: explain
+    title: The threat-to-measure map
+    body: |-
+      Match the measure to the threat. This table is the heart of the objective.
+
+      | Threat | Measures that restrict the risk | Why it works |
+      | --- | --- | --- |
+      | Virus | Updated anti-virus software; patches; block or scan removable media; disable macros in office documents | Removes or prevents the malware before it runs |
+      | Spyware | Anti-spyware; anti-virus; restrict what users may install; check unexpected outbound traffic | Finds the monitoring program and cuts off its report home |
+      | Hacker | Firewall rules; strong authentication with MFA; close unused ports and services; patches; penetration testing; audit logs | Removes the easy ways in and makes intrusion visible |
+      | Phishing | User training; email spam filtering; MFA; check links before clicking; report button | The user is the target, so awareness is a real control; MFA limits the damage of a stolen password |
+      | Pharming | Patched operating system and browser; check the site's certificate; use a trusted DNS service; fixed bookmarks | Reduces the chance of a tampered hosts file or poisoned lookup, and makes a fake site detectable |
+      | Data theft or loss | Encryption; access rights; backups kept offline or off-site; physical locks | Limits what a thief can read and restores what was lost |
+
+      Notice that **no single row is enough**. A firewall does not stop phishing; training does not stop a stolen laptop; encryption does not stop a deleted file.
+
+      Layers cover each other's gaps.
+
+  - type: explain
+    title: The measures worth naming individually
+    body: |-
+      **Patching and updates.** Software flaws are discovered and published; a patch closes the hole. Delaying updates leaves a known door open, which is how many real attacks succeed.
+
+      Apply updates automatically where possible, and test them first on a small group in a large organisation.
+
+      **Least privilege and access rights.** Each account gets only what its job needs. If an account is compromised, the attacker inherits only that account's small permissions rather than the whole system.
+
+      **User education.** Teach staff to check sender addresses, hover over links, expect urgency as a warning sign, and report suspicious messages. Phishing targets people, so people are part of the defence.
+
+      **Backups.** Keep copies on a different device, ideally off-site, and **test that they restore**. A backup that has never been restored is a hope, not a control.
+
+      Ransomware is beaten by a good backup far more reliably than by paying.
+
+      **Monitoring and audit logs.** Records of logins and file access let you notice unusual behaviour and investigate afterwards. They are also what makes accountability real.
+
+      **Physical security.** Locks, cable locks, locked server rooms and a clear-screen policy stop the simplest attacks of all.
+
+      **Penetration testing.** Authorised specialists attack the system on purpose and report what they find, so the holes can be fixed before a criminal finds them.
+
+  - type: check
+    title: Match the measure
+    questions: [rr-mcq-phishing, rr-cloze-backup, rr-text-patch]
+
+  - type: example
+    title: A twenty-person estate agency
+    problem: |-
+      A small estate agency has twenty staff, one server holding client records, and staff who work from home on laptops. Last month an employee clicked a link in a fake "invoice" email and typed in their password; the attacker then logged in and copied client files.
+
+      Recommend four measures that would restrict this risk, and explain what each one would have prevented.
+    steps:
+      - |-
+        **Step 1 — identify the weakest link.** The password was entered into a fake page. That is a phishing attack that succeeded because of a click and because one password was enough.
+      - |-
+        **Step 2 — reduce the chance of the click.** Train staff to check sender addresses and hover over links, and add spam filtering. Neither is perfect, so it cannot be the only measure.
+      - |-
+        **Step 3 — reduce the value of a stolen password.** Turn on multi-factor authentication: a code sent to the user's phone would have stopped the attacker logging in with the stolen password alone.
+      - |-
+        **Step 4 — reduce what one account can reach.** Apply least privilege and access rights, so that one employee account cannot copy the whole client database; keep audit logs so the mass download is noticed.
+      - |-
+        **Step 5 — reduce the damage to the data itself.** Encrypt the client records and the laptops, so a copied file is useless without the key, and keep tested off-site backups in case files are deleted.
+    answer: |-
+      Training plus spam filtering (fewer successful phishes), MFA (a stolen password is no longer enough), least privilege with audit logs (one account cannot export everything, and misuse is visible), and encryption with tested backups (the copied data is unreadable and lost data can be restored). Each measure blocks a different step of the same attack.
+
+  - type: check
+    title: Choosing and justifying
+    questions: [rr-mcq-least-privilege, rr-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [rr-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Installing anti-virus software is enough to protect an organisation.
+        right: |-
+          Anti-virus cannot stop phishing, a stolen laptop, an insider copying files or an unpatched server being exploited. Layers are needed because each measure covers a different route.
+      - wrong: |-
+          A backup stored on the same computer protects against ransomware.
+        right: |-
+          Ransomware encrypts the files it can reach, including a backup on the same disk or a mapped drive. Keep at least one copy offline or off-site.
+      - wrong: |-
+          If a backup exists, it will work when needed.
+        right: |-
+          Backups fail — wrong files, corrupted media, missing encryption keys. A restore must be tested, otherwise its reliability is unknown.
+      - wrong: |-
+          Giving everyone administrator rights saves time and does no harm.
+        right: |-
+          It means any compromised account can change the system itself. Least privilege limits the damage an attacker or a careless user can do.
+      - wrong: |-
+          Firewalls make user training unnecessary.
+        right: |-
+          Phishing and pharming target the person, and a firewall cannot stop a user typing a password into a fake site. Training and technical controls work together.
+
+  - type: exam
+    body: |-
+      The command word is usually **describe** or **explain**, sometimes **justify**. The examiner wants a measure *and* the threat it reduces.
+
+      Strong answer: "Keep anti-virus signature files up to date (1) so that newly written viruses are recognised and quarantined before they can run (1)."
+
+      Weak answer: "Use anti-virus (1)" — a measure with no link to a threat earns at most the naming mark.
+
+      For a **justify** question, compare: "Encryption is more useful than a firewall here because the laptop leaves the building, where the firewall no longer applies."
+
+      Remember the two halves of risk: measures that stop the attack succeeding, and measures that limit the damage after it has. A question worth 4 marks often wants one of each.
+
+  - type: takeaways
+    items:
+      - Threats cannot be removed; risk can be restricted by reducing the chance of success and the damage done.
+      - Layered defence uses independent measures so one failure does not expose everything.
+      - Patch software, use least privilege, train users, keep tested off-site backups, monitor logs and lock the hardware.
+      - "Match the measure to the threat: anti-malware for malware, MFA and firewalls for hackers, training and filtering for phishing, patched software and certificate checks for pharming."
+      - No single measure is sufficient — say which threat each one reduces.
+
+questions:
+  - id: rr-mcq-phishing
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.5"]
+    prompt: |-
+      Which pair of measures best restricts the risk from phishing emails?
+    options:
+      - text: Staff training to check links, plus multi-factor authentication.
+        correct: true
+        why: |-
+          Training reduces the chance of a click, and MFA means a password typed into a fake page is not enough on its own.
+      - text: A firewall, plus full-disk encryption.
+        why: |-
+          A firewall sees legitimate traffic to a fake site as allowed, and encryption does not stop a user revealing a password.
+      - text: Anti-virus software, plus stronger passwords.
+        why: |-
+          Anti-virus may catch an attachment but not a credential-harvesting page; stronger passwords are still phishable.
+      - text: Regular backups, plus an audit log.
+        why: |-
+          These help after an incident, but neither reduces the chance that a user hands over a password.
+    explanation: |-
+      Phishing targets the person, so awareness matters, and MFA limits what a stolen password is worth. Backups and logs are damage-limitation measures, not prevention.
+
+  - id: rr-cloze-backup
+    format: cloze
+    difficulty: 2
+    objectives: ["6.1.5"]
+    prompt: |-
+      To protect against ransomware, backups should be kept {{1}} or off-site, and the ability to {{2}} them must be tested regularly. Giving each account only the access its job needs is called least {{3}}.
+    blanks:
+      - accept: [offline, off-line, on removable media, disconnected, air-gapped]
+      - accept: [restore, recover, restore from]
+      - accept: [privilege]
+    explanation: |-
+      Ransomware encrypts everything it can reach, so a connected backup is at risk. Testing restores proves the backup works, and least privilege limits how much a compromised account can destroy.
+
+  - id: rr-text-patch
+    format: text
+    style: short
+    difficulty: 1
+    objectives: ["6.1.5"]
+    prompt: |-
+      What is the general name for a software update that closes a known security flaw? (One word.)
+    accept: [patch, patches, security patch, update, hotfix]
+    model: |-
+      A **patch** (a security update).
+    explanation: |-
+      A patch fixes a known vulnerability. Applying patches promptly closes holes that attackers already know about, which is why unpatched software is such a common way in.
+
+  - id: rr-mcq-least-privilege
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.5"]
+    prompt: |-
+      Why does least privilege restrict the risk from a hacked account?
+    options:
+      - text: The attacker inherits only the limited permissions of that account, not control of the whole system.
+        correct: true
+        why: |-
+          Damage is limited to what the compromised account could already do, so one stolen login is much less dangerous.
+      - text: It makes passwords longer, so they are harder to crack.
+        why: |-
+          Password length is set by password policy, not by privilege level.
+      - text: It encrypts the files the account can open.
+        why: |-
+          Access rights decide what may be done, not whether data is encrypted.
+      - text: It stops the user from receiving phishing emails.
+        why: |-
+          Email filtering is the relevant measure; privilege level does not affect which messages arrive.
+    explanation: |-
+      Least privilege limits the blast radius: a compromised low-privilege account cannot reset the system, read every file or create new administrator accounts.
+
+  - id: rr-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.5"]
+    prompt: |-
+      A manager lists the company's security measures. Which line contains the first error?
+    lines:
+      - All staff take a short phishing-awareness course and can report suspicious emails with one click.
+      - The server is patched automatically each month, and anti-virus signatures update daily.
+      - Backups are written every night to a drive that stays connected to the server, which is enough because the drive is a different device.
+      - Only the finance team can open the payroll folder, and every access is written to an audit log.
+    errorLine: 3
+    fix: |-
+      Line 3 is the error: a backup drive that stays connected can be encrypted or destroyed by the same ransomware that hits the server. At least one backup copy should be offline or off-site, and restores should be tested.
+    explanation: |-
+      The other lines are sound: training counters phishing, patching and updates close known holes, and access rights with logging limit and record misuse. A permanently connected backup is a false sense of safety.
+
+  - id: rr-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.1.5"]
+    prompt: |-
+      A hospital says: "We have a firewall and anti-virus software, so our patient data is protected." Explain why more measures are needed, giving two examples.
+    model: |-
+      A firewall and anti-virus software only cover some routes. A firewall filters network traffic, so it does not stop a member of staff emailing a record to a personal account, or a laptop being stolen from a desk. Anti-virus software only recognises malware it has signatures for, and it does not stop a user typing a password into a phishing page. Two measures that would help are multi-factor authentication, which means a phished password is not enough to log in, and encryption with access rights, which means a stolen laptop or a copied file cannot be read by the wrong person. Backups, staff training and patching would restrict other risks.
+    keyPoints:
+      - A firewall only controls network traffic, not authorised misuse or stolen devices.
+      - Anti-virus only catches known malware and does not stop phishing.
+      - "Example measure: multi-factor authentication limits the value of a stolen password."
+      - "Example measure: encryption and access rights protect data on a stolen device or copied file."
+      - Layered independent measures are needed because each covers a different route.
+    explanation: |-
+      Security is layered because threats arrive by different routes. Naming a specific route that a firewall or anti-virus software does not cover, then a measure that does, is what earns the marks.

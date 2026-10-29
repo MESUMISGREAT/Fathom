@@ -1,0 +1,294 @@
+id: database-concepts-normalisation-3nf
+subject: "9618"
+topic: "8.1"
+title: Third Normal Form and judging a design
+summary: Remove transitive dependencies, test whether tables are in 3NF, and normalise a whole scenario from scratch.
+order: 6
+minutes: 7
+kind: core
+objectives: ["8.1.5", "8.1.6", "8.1.7"]
+prerequisites: [database-concepts-normalisation-1nf-2nf]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus,
+    topic 8.1 Database Concepts, learning outcomes 8.1.5 (Third Normal Form), 8.1.6 (explaining
+    why tables are or are not in 3NF) and 8.1.7 (producing a normalised design). The worked sale
+    database is original illustrative data. All questions are original.
+    Re-checked line by line on 2026-10-29: every fact, worked example and answer key was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can spot a **transitive dependency**, explain whether a given set of tables is in **Third Normal Form (3NF)**, and normalise a scenario all the way from an unnormalised list to a 3NF design.
+
+  - type: explain
+    title: The last common dependency
+    body: |
+      1NF removed lists. 2NF removed fields that depended on only part of a composite key. 3NF removes the last common problem: a non-key field that depends on **another non-key field**.
+
+      Suppose a `Student` table stores `StudentID`, `StudentName`, `TutorID` and `TutorName`.
+
+      `StudentID` determines `TutorID`: each student has one tutor. And `TutorID` determines `TutorName`: each tutor has one name.
+
+      So `StudentID` determines `TutorName` **through** `TutorID`. That chain is a **transitive dependency**. The tutor's name does not really describe the student; it describes the tutor.
+
+      The consequence is familiar: if a tutor changes their name, every student row for that tutor must be updated, and a missed row makes the data inconsistent.
+
+  - type: definition
+    term: Third Normal Form (3NF)
+    body: |
+      A table is in 3NF when it is in 2NF and **no non-key field depends on another non-key field**. In other words, every non-key field depends directly on the primary key, and on nothing else.
+
+  - type: diagram
+    diagram: cs-database-concepts-transitive-dependency
+    alt: A dependency chain from StudentID to TutorID to TutorName, showing that TutorName depends transitively on the key. An arrow marks the split into Student, with TutorID as a foreign key, and Tutor, keyed by TutorID and holding TutorName.
+    caption: |
+      A field that depends on a non-key field is one step removed from the key. Moving it to its own table removes the transitive dependency.
+
+  - type: example
+    title: Splitting out the tutor
+    problem: |
+      Normalise `Student(StudentID, StudentName, TutorID, TutorName)` into 3NF.
+    steps:
+      - |
+        Check 1NF: every field holds one value, so it passes.
+      - |
+        Check 2NF: the primary key `StudentID` is a single field, so no partial dependency is possible. It passes.
+      - |
+        Check 3NF: `TutorName` depends on `TutorID`, which is not the key. That is a transitive dependency, so it fails.
+      - |
+        Move the tutor facts into their own table, keyed by the field they depend on: `Tutor(TutorID, TutorName)`.
+      - |
+        Keep `TutorID` in `Student` as a foreign key: `Student(StudentID, StudentName, TutorID)`.
+      - |
+        Now every non-key field in `Student` depends on `StudentID` alone, and `TutorName` depends on `TutorID` alone in its own table. Both tables are in 3NF.
+    answer: |
+      `Student(StudentID, StudentName, TutorID)` and `Tutor(TutorID, TutorName)`, linked by the foreign key `TutorID`.
+
+  - type: explain
+    title: Judging a set of tables
+    body: |
+      Some exam questions give you tables and ask whether they are in 3NF, and why. Work through the forms in order and say what you find.
+
+      1. **1NF?** Look for lists or repeating groups in a field. If a field holds several values, stop: it fails 1NF.
+      2. **2NF?** If the primary key is composite, check each non-key field. Does any depend on only one part of the key? If so, it fails 2NF.
+      3. **3NF?** Check each non-key field. Does any depend on another non-key field rather than on the key? If so, it fails 3NF.
+
+      A good answer names the dependency and the field that causes it: "It is not in 3NF because `TutorName` depends on `TutorID`, which is not a key." Then say the fix: "Move `TutorName` into a `Tutor` table keyed by `TutorID`."
+
+      Beware of one subtlety. A field that *looks* transitive may be fine if the field it depends on is itself a candidate key. The rule is about depending on a non-key field, so if the determinant uniquely identifies the row, the dependency is not transitive in the harmful sense.
+
+  - type: example
+    title: A full normalisation from scratch
+    problem: |
+      A shop records each sale in one table:
+
+      `Sale(SaleID, SaleDate, CustomerID, CustomerName, CustomerCity, ProductID, ProductName, Quantity)`
+
+      The primary key is `(SaleID, ProductID)`. Normalise it to 3NF.
+    steps:
+      - |
+        **1NF.** Every field holds a single value, so the table is in 1NF.
+      - |
+        **2NF.** The key is composite. `ProductName` depends on `ProductID` alone. `SaleDate`, `CustomerID`, `CustomerName` and `CustomerCity` depend on `SaleID` alone. Each of these is a partial dependency, because it needs only part of the key. Only `Quantity` depends on both parts, so the table is not in 2NF.
+      - |
+        Split along the parts of the key. Move the sale facts to `Sale(SaleID, SaleDate, CustomerID, CustomerName, CustomerCity)` and the product fact to `Product(ProductID, ProductName)`. What remains is `SaleLine(SaleID, ProductID, Quantity)`. Every non-key field now depends on the whole key of its own table, so the tables are in 2NF.
+      - |
+        **3NF.** Look again at `Sale`. `CustomerName` and `CustomerCity` depend on `CustomerID`, which is a non-key field of this table, so that dependency is transitive. The table is still not in 3NF.
+      - |
+        Move the customer facts to `Customer(CustomerID, CustomerName, CustomerCity)`, and keep `CustomerID` as a foreign key in the sale.
+
+        Final design:
+
+        `Customer(CustomerID, CustomerName, CustomerCity)`
+
+        `Sale(SaleID, SaleDate, CustomerID)`
+
+        `SaleLine(SaleID, ProductID, Quantity)`
+
+        `Product(ProductID, ProductName)`
+
+      - |
+        Check each non-key field depends on its own table's key and nothing else. Each fact now has one home.
+    answer: |
+      Four tables: `Customer`, `Sale`, `SaleLine` and `Product`. The sale line is the junction between a sale and a product, and holds the quantity that belongs to that pair.
+
+  - type: misconceptions
+    items:
+      - wrong: 3NF means every field depends on the key.
+        right: |
+          That is closer to 2NF. 3NF adds a restriction: no non-key field may depend on another non-key field. A field can depend on the key and still fail 3NF if it also depends on something else.
+      - wrong: Normalising to 3NF always improves performance.
+        right: |
+          It removes redundancy and anomalies, but it creates more tables, so queries may need more joins. Performance is a separate design trade-off; correctness comes first.
+      - wrong: You can skip 2NF if you fix 3NF.
+        right: |
+          The forms are cumulative. A table that is not in 2NF is not in 3NF either, and the exam expects you to identify the earlier problem.
+      - wrong: A foreign key is a transitive dependency.
+        right: |
+          A foreign key is a field that refers to another table's primary key, which is normal and desirable. The problem is storing a **non-key fact** that depends on another non-key fact in the same table.
+
+  - type: exam
+    body: |
+      - For "is this in 3NF?" questions, work through 1NF, 2NF and 3NF aloud in your answer, naming the first failure. Do not just say "no".
+      - Quote the dependency precisely: "`TutorName` depends on `TutorID`, not on `StudentID`". Vague answers such as "the data is repeated" rarely earn the dependency mark.
+      - When producing a design, write each table with its fields and **underline or label the primary key**, then list the foreign keys. A design without keys cannot be marked as complete.
+      - Check that every fact from the scenario appears exactly once. Missing a field costs marks just as duplication does.
+      - If a scenario has a many-to-many relationship, expect a junction table in the final design. That is not a normal-form issue, but it is part of a complete design.
+
+  - type: takeaways
+    items:
+      - 3NF = 2NF plus no non-key field depending on another non-key field.
+      - A dependency that runs through a non-key field is transitive.
+      - Fix a transitive dependency by moving the dependent fact into a table keyed by its determinant.
+      - To judge a design, check 1NF, then 2NF, then 3NF, and name the first failure.
+      - A complete design lists tables, fields, primary keys and foreign keys.
+
+  - type: check
+    title: Spot the dependency
+    questions: [transitive-definition, which-not-3nf, transitive-cloze]
+
+  - type: check
+    title: Judge and design
+    questions: [judge-tables, fix-transitive, design-from-scenario, spot-normalisation-error]
+
+questions:
+  - id: transitive-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.5"]
+    prompt: |
+      What is a **transitive dependency**?
+    options:
+      - text: A non-key field that depends on another non-key field
+        correct: true
+        why: |
+          The dependency passes through a non-key field, so the fact is one step removed from the primary key.
+      - text: A field that depends on part of a composite primary key
+        why: |
+          That is a partial dependency, which breaks 2NF.
+      - text: A field that contains a list of values
+        why: |
+          That is a repeating group, which breaks 1NF.
+      - text: A foreign key that refers to another table
+        why: |
+          A foreign key is a deliberate link between tables, not a transitive dependency.
+    explanation: |
+      3NF removes transitive dependencies: non-key fields must depend on the key, not on each other.
+
+  - id: which-not-3nf
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.5", "8.1.6"]
+    prompt: |
+      Which table is **not** in 3NF?
+    options:
+      - text: "`Student(StudentID, StudentName, TutorID, TutorName)`"
+        correct: true
+        why: |
+          `TutorName` depends on `TutorID`, which is not a key, so the dependency is transitive.
+      - text: "`Tutor(TutorID, TutorName)`"
+        why: |
+          The only non-key field, `TutorName`, depends directly on the key `TutorID`.
+      - text: "`Course(CourseCode, CourseTitle)`"
+        why: |
+          `CourseTitle` depends directly on `CourseCode`, with no other non-key field involved.
+      - text: "`Loan(LoanID, StudentID, BookID, DueDate)`"
+        why: |
+          All three non-key fields describe the loan identified by `LoanID`; none depends on another non-key field.
+    explanation: |
+      A table fails 3NF when a non-key field depends on another non-key field. In the first option, the tutor's name depends on the tutor ID.
+
+  - id: transitive-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["8.1.5"]
+    prompt: |
+      In `Student(StudentID, StudentName, TutorID, TutorName)`, the field `TutorName` depends on `TutorID` rather than on the primary key. This is called a {{1}} dependency, and it breaks {{2}}.
+    blanks:
+      - accept: [transitive]
+      - accept: [3NF, third normal form, 3rd normal form]
+    explanation: |
+      A dependency through a non-key field is transitive, and removing it is the job of Third Normal Form.
+
+  - id: judge-tables
+    format: explain
+    difficulty: 2
+    objectives: ["8.1.5", "8.1.6"]
+    prompt: |
+      A database has `Module(ModuleCode, ModuleTitle, LecturerID, LecturerName)` with primary key `ModuleCode`. Explain whether it is in 3NF, and how you would fix it if it is not.
+    model: |
+      The table is in 1NF because every field holds a single value. The primary key is a single field, so there can be no partial dependency and it is in 2NF. It is not in 3NF, because `LecturerName` depends on `LecturerID`, which is not a key: the lecturer's name describes the lecturer, not the module. This is a transitive dependency, so the same lecturer's name would be repeated for every module they teach. To fix it, create `Lecturer(LecturerID, LecturerName)` and keep `LecturerID` as a foreign key in `Module(ModuleCode, ModuleTitle, LecturerID)`.
+    keyPoints:
+      - It is in 1NF and 2NF because the key is a single field and fields are atomic
+      - LecturerName depends on LecturerID, a non-key field
+      - That is a transitive dependency, so it is not in 3NF
+      - Split into Module and Lecturer, with LecturerID as a foreign key
+    explanation: |
+      The answer must identify the dependency and its determinant, then show the split.
+
+  - id: fix-transitive
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.6", "8.1.7"]
+    prompt: |
+      Which change puts `Student(StudentID, StudentName, TutorID, TutorName)` into 3NF?
+    options:
+      - text: "Create `Tutor(TutorID, TutorName)` and keep `StudentID`, `StudentName`, `TutorID` in `Student`"
+        correct: true
+        why: |
+          The tutor's name moves to a table keyed by its determinant, and `TutorID` stays as a foreign key.
+      - text: Remove `TutorID` from the table
+        why: |
+          That removes the link to the tutor entirely, losing information the database needs.
+      - text: Make `TutorName` part of the primary key
+        why: |
+          That does not remove the transitive dependency, and it makes the key unnecessarily large and unstable.
+      - text: Store `TutorName` in a separate column for each subject
+        why: |
+          That increases duplication and does not address the dependency.
+    explanation: |
+      Move the dependent fact to a table whose key is the field it depends on.
+
+  - id: design-from-scenario
+    format: mcq
+    difficulty: 3
+    objectives: ["8.1.7"]
+    prompt: |
+      A gym records `Attendance(MemberID, MemberName, ClassID, ClassName, Date)`. A member can attend many classes, and a class has many members. Which design is in 3NF?
+    options:
+      - text: "`Member(MemberID, MemberName)`, `Class(ClassID, ClassName)`, `Attendance(MemberID, ClassID, Date)`"
+        correct: true
+        why: |
+          Each fact is stored once, the many-to-many link is a junction table, and no non-key field depends on another non-key field.
+      - text: "`Member(MemberID, MemberName, ClassID, ClassName)`, `Attendance(MemberID, Date)`"
+        why: |
+          This repeats class details for every member, leaves a many-to-many relationship crammed into one table and creates partial and transitive dependencies.
+      - text: "`Attendance(MemberID, MemberName, ClassID, ClassName, Date)`"
+        why: |
+          This is the original unnormalised table, with member and class facts repeated for every attendance.
+      - text: "`Member(MemberID, MemberName)`, `Class(ClassID, ClassName, MemberID)`"
+        why: |
+          One `MemberID` field in `Class` allows only one member per class, and the date of attendance has nowhere to go.
+    explanation: |
+      A 3NF design stores member facts with the member, class facts with the class, and keeps only the link and its date in the junction table.
+
+  - id: spot-normalisation-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["8.1.6"]
+    prompt: |
+      A student normalises a table step by step. Which line contains the first error?
+    lines:
+      - "1NF: split the list of phone numbers into separate rows so each field holds one value."
+      - "2NF: with primary key (StudentID, ClubID), move ClubName to a Club table because it depends only on ClubID."
+      - "3NF: move StudentName to a new table because it depends on StudentID."
+      - "The final Student table keeps StudentID and any facts that depend only on StudentID."
+      - "The final design has no non-key field depending on another non-key field."
+    errorLine: 3
+    fix: |
+      `StudentName` depends on `StudentID`, which is the primary key of its table, so it belongs there. Moving it to another table keyed by `StudentID` creates a pointless one-to-one split and does not fix a transitive dependency.
+    explanation: |
+      3NF moves facts that depend on a **non-key** field, not facts that depend directly on the key.

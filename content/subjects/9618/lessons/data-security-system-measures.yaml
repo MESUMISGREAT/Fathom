@@ -1,0 +1,307 @@
+id: data-security-system-measures
+subject: "9618"
+topic: "6.1"
+title: "Firewalls, anti-malware and encryption: guarding the system"
+summary: What a firewall actually filters, how anti-virus and anti-spyware software work, and what encryption does and does not protect.
+order: 4
+minutes: 9
+kind: core
+objectives: ["6.1.3"]
+prerequisites: [data-security-accounts-authentication]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.1 outcome 6.1.3 ("describe
+    security measures designed to protect computer systems, ranging from the stand-alone PC to a
+    network of computers") and its guidance: firewall, anti-virus software, anti-spyware and
+    encryption. User accounts, passwords and authentication are taught in the previous lesson;
+    encryption as a data-protection method is developed in the 6.1.6 lesson. All examples and
+    questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.1.3 confirmed taught and tested, every definition and claim checked, every
+    answer key and accept list re-read, and the unit's six diagrams rendered and inspected in
+    light and dark. No separate reviewer model was available in this environment.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can describe how a firewall, anti-virus software, anti-spyware and encryption each protect a computer system, state what each one cannot do, and choose sensible measures for a stand-alone PC and for a network.
+
+  - type: explain
+    title: The same building blocks, two different buildings
+    body: |-
+      A **stand-alone PC** is one machine with no network connection. Its protection comes from the machine itself: a login account, a screen lock, anti-virus software, a disk encrypted with a password, and a physical lock on the case.
+
+      A **network of computers** has all of those, plus more ways in:
+
+      - traffic arrives from outside, so a **firewall** is needed at the boundary;
+      - many users share files and servers, so **user accounts and access rights** matter far more;
+      - a virus on one machine can travel to the others, so **anti-malware** must be on every machine and kept updated;
+      - data crosses cables and Wi-Fi, so **encryption** of network traffic (for example HTTPS or a VPN) is needed.
+
+      The measures are the same kinds of thing. What changes is how many places they have to cover.
+
+  - type: definition
+    term: Firewall
+    body: |-
+      A **firewall** is hardware or software that monitors and filters incoming and outgoing network traffic against a set of rules. Traffic that matches an "allow" rule passes; everything else is blocked.
+
+      Rules commonly look at the source and destination **IP address**, the **port** number (which identifies the service, such as 443 for HTTPS), and the **protocol** (such as TCP or UDP).
+
+  - type: explain
+    title: How firewall rules decide
+    body: |-
+      A rule list is read from the top down, and the first match wins. A very small example:
+
+      | Rule | Traffic | Action |
+      | --- | --- | --- |
+      | 1 | Inbound, TCP, port 443 (HTTPS) | Allow |
+      | 2 | Inbound, TCP, port 22 (remote login) from the office IP only | Allow |
+      | 3 | Inbound, any other port | Block |
+      | 4 | Outbound to a known malware server list | Block |
+
+      Notice two things.
+
+      - The firewall does not judge whether the traffic is *good* — only whether the rule allows it.
+      - It filters both directions: blocking a suspicious outbound connection can stop an infected machine "phoning home".
+
+      What a firewall **cannot** do:
+
+      - It cannot stop an authorised user misusing their access.
+      - It cannot stop malware arriving on a USB stick or in a file the user chooses to download.
+      - It cannot tell that a legitimate-looking web request is really spyware sending data out, unless a rule blocks that destination.
+      - By itself it does not scan file contents for viruses.
+
+  - type: definition
+    term: Anti-virus software
+    body: |-
+      **Anti-virus software** scans files, memory and incoming downloads for known malware, looking for the **signatures** (patterns of code) of known viruses and for suspicious behaviour (**heuristics**). When it finds something, it **quarantines** the file (moves it somewhere it cannot run), repairs it, or deletes it.
+
+      Because new viruses appear constantly, the signature list must be **updated regularly** — anti-virus software with year-old signatures is close to useless.
+
+  - type: definition
+    term: Anti-spyware software
+    body: |-
+      **Anti-spyware software** detects and removes **spyware**: software that secretly collects information about the user (keystrokes, browsing habits, passwords, screenshots) and sends it to someone else.
+
+      It works in the same way as anti-virus software — signatures plus behaviour checks plus regular updates — but targets a different family of programs. Many security suites include both.
+
+  - type: diagram
+    diagram: cs-data-security-defence-layers
+    alt: >-
+      A vertical stack of layers that an attacker or a piece of malware meets from the outside in:
+      physical security (locked room, cable lock), the firewall filtering traffic by IP, port and
+      protocol, accounts and authentication (passwords, MFA), patches and updates closing known
+      flaws, and anti-virus with anti-spyware detecting and quarantining. At the bottom sits the
+      data itself, protected by encryption and access rights. A caption notes that each layer covers
+      a different route in, so one gap does not expose everything.
+    caption: |-
+      Layered defence: each measure covers a different way in, so one failure does not expose everything.
+
+  - type: explain
+    title: What encryption adds here
+    body: |-
+      **Encryption** converts readable data (**plaintext**) into scrambled data (**ciphertext**) using a key. Without the key, the ciphertext is meaningless.
+
+      On a single machine it is used in three common places:
+
+      - **Full-disk encryption** — the whole drive is unreadable until the correct password unlocks it, so removing the disk from a stolen laptop gains nothing.
+      - **Encrypted backups** — a backup tape or cloud backup is only as safe as its encryption, because it leaves the building.
+      - **Encrypted network traffic** — HTTPS on websites, and a VPN between an office and a remote worker, so data cannot be read if it is intercepted on the way.
+
+      What encryption does **not** do: it does not stop malware running on the machine, it does not stop an authorised user copying files they can already open, and it does not detect a corrupted file. The next lessons cover these gaps.
+
+  - type: check
+    title: Firewall, anti-malware, encryption
+    questions: [sm-mcq-firewall, sm-cloze-malware, sm-text-standalone]
+
+  - type: example
+    title: Choosing measures for a school network
+    problem: |-
+      A school network has three problems.
+
+      **A.** A virus keeps arriving on students' USB sticks and spreading between machines.
+
+      **B.** Someone outside keeps trying to connect to the office printer server from the internet.
+
+      **C.** A teacher's laptop is stolen from a classroom.
+
+      Choose a suitable measure for each and explain how it helps.
+    steps:
+      - |-
+        **A, step 1 — what is the route in?** Removable media, not the network. A firewall at the boundary would never see it.
+      - |-
+        **A, step 2 — what covers that route?** Anti-virus software on every machine, kept updated, plus a policy that USB ports are disabled or that sticks are scanned before use. Anti-virus detects and quarantines the infected file when it is opened.
+      - |-
+        **B, step 1 — what is being attacked?** An inbound connection on a particular port from outside the network.
+      - |-
+        **B, step 2 — what covers that?** A firewall rule that blocks inbound traffic to the printer server's ports from outside, allowing it only from the school's own address range.
+      - |-
+        **C, step 1 — what has left the building?** The hardware and the data on its disk.
+      - |-
+        **C, step 2 — what still helps once it is gone?** Full-disk encryption, so the files cannot be read without the key, plus a login password and a cable lock to make the theft harder in the first place.
+    answer: |-
+      A: updated anti-virus software on every machine (plus USB policy). B: firewall rules blocking inbound connections to the printer server. C: full-disk encryption, with a login password and physical lock as extra layers. Each problem needs the measure that covers *its* route in.
+
+  - type: check
+    title: Limits and choices
+    questions: [sm-mcq-encryption-limit, sm-spot-error, sm-mcq-network-extra]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A firewall stops viruses getting onto the network.
+        right: |-
+          A firewall filters connections by rules. It does not scan files for viruses, and it never sees malware that arrives on a USB stick or inside a legitimate download.
+      - wrong: |-
+          Anti-virus software protects a machine forever once it is installed.
+        right: |-
+          It only recognises what it has signatures for, so it must update its lists regularly; behaviour checks help with new threats but are not a guarantee.
+      - wrong: |-
+          Encryption stops an employee copying confidential files.
+        right: |-
+          Encryption stops someone *reading* data without the key. An authorised employee who can open the file can still copy it — access rights and audit logs are the measures for that.
+      - wrong: |-
+          A stand-alone PC does not need security because it is not on a network.
+        right: |-
+          It still faces infected USB sticks, stolen hardware and unauthorised use, so it needs login accounts, anti-virus, encryption and physical security.
+      - wrong: |-
+          Anti-spyware and anti-virus are the same product with two names.
+        right: |-
+          They target different programs: viruses that replicate and damage files, versus spyware that secretly collects information. Suites often include both.
+
+  - type: exam
+    body: |-
+      Typical questions ask you to **describe** a measure and **explain** how it protects the system (2–3 marks each).
+
+      - Firewall: say it monitors/filters traffic and give at least one rule basis (IP address, port or protocol).
+      - Anti-virus: mention scanning, signatures, quarantine/removal, and updating the signatures.
+      - Anti-spyware: mention detecting programs that secretly gather information, and removing them.
+      - Encryption: mention converting plaintext to ciphertext with a key, and say what it protects (stored data, backups, traffic in transit).
+
+      Always add the limit. "Encryption protects the data if the laptop is stolen, but it does not stop a user copying a file they are allowed to open" is the sentence that turns a definition into an explanation.
+
+  - type: takeaways
+    items:
+      - A firewall filters incoming and outgoing traffic by rules based on IP address, port and protocol; it does not scan files.
+      - Anti-virus software finds known malware by signature (plus behaviour checks), quarantines it, and needs regular updates.
+      - Anti-spyware targets programs that secretly collect and send information.
+      - Encryption makes stored data, backups and network traffic unreadable without the key.
+      - A stand-alone PC relies on login accounts, anti-malware, encryption and physical security; a network adds a firewall and encrypted traffic.
+
+questions:
+  - id: sm-mcq-firewall
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.3"]
+    prompt: |-
+      Which task is a firewall designed to perform?
+    options:
+      - text: Block incoming connections to a port that the network does not use.
+        correct: true
+        why: |-
+          A firewall applies rules based on address, port and protocol, so blocking an unused port is exactly its job.
+      - text: Scan an email attachment for a known virus.
+        why: |-
+          Scanning file contents for virus signatures is anti-virus software, not a firewall.
+      - text: Remove spyware that records keystrokes.
+        why: |-
+          Removing spyware is the job of anti-spyware software.
+      - text: Scramble files so a stolen laptop cannot be read.
+        why: |-
+          That is encryption. A firewall controls traffic, not the contents of a disk.
+    explanation: |-
+      A firewall monitors and filters network traffic against rules. Malware detection belongs to anti-virus and anti-spyware software, and scrambling files is encryption.
+
+  - id: sm-cloze-malware
+    format: cloze
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      Anti-virus software recognises known malware by matching patterns called {{1}}, and it must be {{2}} regularly because new malware appears all the time. Files it suspects are usually moved to a safe place, which is called being {{3}}.
+    blanks:
+      - accept: [signatures, signature, virus signatures, virus definitions, definitions]
+      - accept: [updated, update, upgraded]
+      - accept: [quarantined, quarantining, put in quarantine]
+    explanation: |-
+      Signatures are patterns of known malicious code. Updates bring new signatures, and quarantine isolates a suspect file so it cannot run or spread.
+
+  - id: sm-text-standalone
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      A stand-alone PC at home holds family photos and bank statements. Name **one** security measure that protects the data if the machine is stolen. (One or two words.)
+    accept: [encryption, disk encryption, full disk encryption, full-disk encryption, encrypt the hard disk, encrypting the hard disk, encrypting the data]
+    model: |-
+      **Encryption** of the disk (or of the individual files), so the data cannot be read without the key. A login password is a useful extra layer but weaker on its own.
+    explanation: |-
+      A stand-alone PC has no network firewall to help it. Once the machine is gone, only protection attached to the data — encryption — still works, though a login password also slows an attacker down.
+
+  - id: sm-mcq-encryption-limit
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      A hospital encrypts all patient files on its servers. Which risk does this measure **not** reduce?
+    options:
+      - text: A doctor with permission to open a record emails it to a journalist.
+        correct: true
+        why: |-
+          The doctor can decrypt the file because they are authorised, so encryption offers no protection against misuse by someone with access.
+      - text: A backup tape is stolen from a courier van.
+        why: |-
+          If the backup is encrypted, the tape is unreadable without the key — this risk is reduced.
+      - text: A server's hard disk is removed by a burglar.
+        why: |-
+          Encrypted data on the disk stays unreadable, so this risk is reduced.
+      - text: Data is intercepted while being sent between two hospital sites.
+        why: |-
+          Encrypted traffic cannot be read in transit, so this risk is reduced.
+    explanation: |-
+      Encryption protects data from people who do **not** have the key. It cannot stop an authorised user from misusing data they are allowed to see; access rights, audit logs and policy are the controls for that.
+
+  - id: sm-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.3"]
+    prompt: |-
+      A student explains how a company protects its network. Which line contains the first error?
+    lines:
+      - A firewall is placed between the network and the internet and filters incoming and outgoing traffic.
+      - The firewall scans every email attachment for virus signatures before it reaches a user.
+      - Anti-virus software on each workstation checks files and memory for known malware and quarantines anything it finds.
+      - Signature lists are updated automatically each day, because new malware appears constantly.
+    errorLine: 2
+    fix: |-
+      Line 2 is wrong: scanning attachments for virus signatures is done by **anti-virus** software (or a mail gateway scanner), not by the firewall. A firewall filters connections using addresses, ports and protocols; it does not examine file contents for signatures.
+    explanation: |-
+      The other lines are correct. Mixing up "filters traffic" with "scans for viruses" is the most common error in this objective.
+
+  - id: sm-mcq-network-extra
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      Which measure becomes necessary on a networked office system but is usually unnecessary on a single stand-alone PC?
+    options:
+      - text: A firewall that filters traffic arriving from the internet.
+        correct: true
+        why: |-
+          A stand-alone PC has no network connection, so there is no outside traffic to filter. Once machines are networked, the boundary needs a firewall.
+      - text: Anti-virus software.
+        why: |-
+          A stand-alone PC can still catch a virus from a USB stick or download, so anti-virus is needed there too.
+      - text: A login password.
+        why: |-
+          A stand-alone PC still needs a login to stop casual unauthorised use.
+      - text: Encryption of stored files.
+        why: |-
+          A stand-alone PC can still be stolen, so encryption of its disk is useful there as well.
+    explanation: |-
+      Networking adds routes in from outside, and with them the need for a firewall. The other measures protect against risks that exist with or without a network.

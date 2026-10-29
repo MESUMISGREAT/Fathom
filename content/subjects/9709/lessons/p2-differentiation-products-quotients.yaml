@@ -1,0 +1,203 @@
+id: p2-differentiation-products-quotients
+subject: "9709"
+topic: "2.4"
+title: Differentiate products and quotients
+summary: Use the product rule or quotient rule when functions are multiplied or divided.
+order: 2
+minutes: 5
+kind: core
+objectives: ["2.4.2"]
+prerequisites: [p2-differentiation-standard-derivatives]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027, topic 2.4 learning outcome 2.4.2: differentiate products and quotients. The
+    teaching includes the syllabus example types x^2 ln x, x e^(1 - x^2), and (2x - 4)/(3x + 2). All
+    questions are original; no illustrative data are used. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end, you can differentiate two functions multiplied together or one function divided by another.
+  - type: explain
+    title: "Product rule: first stays, second changes"
+    body: |-
+      In y = u * v, u and v are just names for the first and second factors. Differentiate one factor at a time:
+
+      (uv)' = u'v + uv'
+
+      Keep the other factor unchanged in each term, then add the terms. Both pieces matter; it is not "differentiate each and multiply".
+  - type: example
+    title: A power times a logarithm
+    problem: |-
+      Differentiate y = x^2 ln x.
+    steps:
+      - |-
+        First part x^2 has derivative 2x; second part ln x has derivative 1/x.
+      - |-
+        Apply the product rule: dy/dx = 2x ln x + x^2(1/x).
+      - |-
+        Simplify the second term: dy/dx = 2x ln x + x.
+    answer: |-
+      dy/dx = 2x ln x + x, for x > 0.
+  - type: check
+    questions: [product-rule, missing-term]
+  - type: explain
+    title: "Quotient rule: bottom times top-derivative, minus top times bottom-derivative"
+    body: |-
+      Call the top u and the bottom v; the bottom must not be zero. The rule is:
+
+      (u/v)' = (v u' - u v')/v^2
+
+      Say the order aloud: **bottom * top derivative, minus top * bottom derivative, all over bottom squared**. Keep the minus sign and the whole numerator together.
+  - type: example
+    title: A quotient that cleans up nicely
+    problem: |-
+      Differentiate y = (2x - 4)/(3x + 2).
+    steps:
+      - |-
+        Top u = 2x - 4, so u' = 2. Bottom v = 3x + 2, so v' = 3.
+      - |-
+        Substitute: dy/dx = [(3x + 2)(2) - (2x - 4)(3)]/(3x + 2)^2.
+      - |-
+        Expand the top: 6x + 4 - 6x + 12 = 16.
+      - |-
+        So dy/dx = 16/(3x + 2)^2.
+    answer: |-
+      dy/dx = 16/(3x + 2)^2.
+  - type: check
+    questions: [quotient-rule, quotient-sign]
+  - type: example
+    title: A product with a chain rule inside
+    problem: |-
+      Differentiate y = x e^(1 - x^2).
+    steps:
+      - |-
+        The first part x has derivative 1. The second part has derivative -2x e^(1 - x^2), by the chain rule.
+      - |-
+        Apply the product rule: dy/dx = e^(1 - x^2) + x[-2x e^(1 - x^2)].
+      - |-
+        Factor out the exponential: dy/dx = e^(1 - x^2)(1 - 2x^2).
+    answer: |-
+      dy/dx = e^(1 - x^2)(1 - 2x^2).
+  - type: check
+    questions: [exp-product, quotient-definition]
+  - type: misconceptions
+    items:
+      - wrong: |-
+          (uv)' = u'v'.
+        right: |-
+          The product rule has two terms: u'v + uv'.
+      - wrong: |-
+          (u/v)' = (u'v + uv')/v^2.
+        right: |-
+          The quotient rule has a minus: (v u' - u v')/v^2.
+      - wrong: |-
+          In the quotient rule, square only the derivative of the bottom.
+        right: |-
+          Square the whole bottom function: the denominator is v^2.
+  - type: exam
+    body: |-
+      - Label the top and bottom (or first and second factors) before substituting.
+      - Leave brackets around the full quotient-rule numerator until after substitution.
+      - Simplify only after the rule is correctly applied.
+  - type: takeaways
+    items:
+      - |-
+        Product: first derivative * second + first * second derivative.
+      - |-
+        Quotient: (bottom * top derivative - top * bottom derivative)/bottom^2.
+      - |-
+        Apply the chain rule inside a factor when that factor is composite.
+      - |-
+        Check that denominators and logarithm inputs are in their allowed domains.
+questions:
+  - id: product-rule
+    format: expression
+    difficulty: 2
+    objectives: ["2.4.2"]
+    prompt: |-
+      Differentiate y = x^3 sin x.
+    answer: "3*x^2*sin(x)+x^3*cos(x)"
+    variables: [x]
+    display: |-
+      3x^2 sin x + x^3 cos x
+    explanation: |-
+      Differentiate the first factor and keep the second, then keep the first and differentiate the second.
+  - id: missing-term
+    format: spot-error
+    difficulty: 2
+    objectives: ["2.4.2"]
+    prompt: |-
+      A student differentiates y = x^2 ln x. Which line first contains an error?
+    lines:
+      - |-
+        First derivative is 2x; second derivative is 1/x.
+      - |-
+        Product rule gives dy/dx = 2x ln x + x^2(1/x).
+      - |-
+        Therefore dy/dx = 2x ln x.
+    errorLine: 3
+    fix: |-
+      Simplify x^2(1/x) = x, so dy/dx = 2x ln x + x.
+    explanation: |-
+      The second term does not disappear: x^2 divided by x is x.
+  - id: quotient-rule
+    format: expression
+    difficulty: 2
+    objectives: ["2.4.2"]
+    prompt: |-
+      Differentiate y = (x + 1)/(x - 2).
+    answer: "-3/(x-2)^2"
+    variables: [x]
+    domain: {min: 3, max: 6}
+    display: |-
+      -3/(x - 2)^2
+    explanation: |-
+      The numerator is [(x - 2) - (x + 1)] = -3, over (x - 2)^2.
+  - id: quotient-sign
+    format: mcq
+    difficulty: 1
+    objectives: ["2.4.2"]
+    prompt: |-
+      What is the middle operation in the quotient rule for u/v?
+    options:
+      - text: |-
+          Subtract u times the derivative of v
+        correct: true
+        why: |-
+          The numerator is v u' - u v'.
+      - text: |-
+          Add u times the derivative of v
+        why: |-
+          That would give the wrong sign.
+      - text: |-
+          Divide by the derivative of v
+        why: |-
+          The denominator is v^2, not v'.
+    explanation: |-
+      The quotient rule is (v u' - u v')/v^2.
+  - id: exp-product
+    format: expression
+    difficulty: 3
+    objectives: ["2.4.2"]
+    prompt: |-
+      Differentiate y = x e^(1 - x^2).
+    answer: "exp(1-x^2)*(1-2*x^2)"
+    variables: [x]
+    display: |-
+      e^(1 - x^2)(1 - 2x^2)
+    explanation: |-
+      The product rule gives e^(1 - x^2) - 2x^2e^(1 - x^2), which factors as shown.
+  - id: quotient-definition
+    format: cloze
+    difficulty: 1
+    objectives: ["2.4.2"]
+    prompt: |-
+      For y = u/v, the quotient rule has denominator {{1}} and numerator v u' {{2}} u v'.
+    blanks:
+      - accept: ["v^2", "v^2"]
+      - accept: ["-", "minus"]
+    explanation: |-
+      The full rule is (v u' - u v')/v^2.

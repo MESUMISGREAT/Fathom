@@ -15,9 +15,11 @@ production.**
 lesson-writing pipeline (`scripts/lessons/`), the current state and the next steps.
 
 **Working token-efficiently:** follow `.claude/skills/token-efficient-workflow/SKILL.md`.
-- Use at most 3 agents, with one review pass.
+- Use dynamic concurrency for genuinely independent tasks; follow `docs/AGENT_COORDINATION.md` when multiple local agents share a checkout. Resource limits and contention, not a fixed count, determine the safe number.
 - Read docs by section with its `md_section.py`.
 - Never skip correctness checks.
+- **Teaching quality before brevity:** follow the full "Teaching philosophy: understanding before brevity" section in `docs/CONTENT_GUIDE.md`. Readability rules control formatting, never teaching depth; longer lessons are fine when needed.
+- **Finish the whole lesson queue:** follow `docs/HANDOFF.md` and keep cycling through writing, independent review, fixes/revalidation, publishing and deployment verification until every in-scope unit is `published`. Recheck `node scripts/lessons/status.mjs` after each batch; never stop or claim completion after one batch. If blocked, report the remaining states.
 
 ## Commands
 
@@ -123,6 +125,24 @@ Points work the same way:
 - Sessions store only SHA-256 hashes of their tokens, and passwords are hashed with scrypt.
 - `INSECURE_COOKIES=1` lets e2e tests run over plain http.
 
+## Lesson-writing style: fun and easy to read
+
+Lessons must be genuinely fun, engaging, conversational and easy to read. Use accessible explanations, short paragraphs, clear structure, useful examples, relatable analogies and appropriate humour. Avoid dry textbook-style exposition and dense walls of text. Keep the writing accessible without removing necessary reasoning, examples or syllabus content. Fun should support learning, not distract from it. Follow `docs/CONTENT_GUIDE.md` and `scripts/lessons/templates.mjs` for the full writing requirements.
+
+## Lesson-writing philosophy: understanding before brevity
+
+**Teach for understanding, not for the shortest lesson or lowest token count.** Fathom is for students who may be encountering a concept for the first time. A longer lesson that enables a beginner to solve questions independently is better than a short lesson that leaves them confused. Never remove necessary teaching to hit a word count, duration, or token target.
+
+- **Start from the student's level.** Define unfamiliar terms, symbols, variables, notation and prerequisites before relying on them. Do not assume students know what an expert considers obvious.
+- **Show the reasoning.** Explain both what to do and why. Include necessary intermediate steps, explain why a formula or method applies, and state important conditions, limits and exceptions. Never skip a step merely to make the lesson look concise.
+- **Build understanding progressively.** Where useful, move from a concrete example to plain-language intuition, an analogy (including where it stops being accurate), a visual or diagram, a fully explained worked example, and then the general rule. Add another example when it addresses a genuinely different difficulty.
+- **Format for readability, not omission.** Use short paragraphs, headings, bullets, numbered steps, tables, diagrams and well-separated blocks. Short paragraphs must not mean missing explanations. Longer lessons are acceptable when the topic needs them; split a large topic into a clear sequence only when that preserves all required learning.
+- **Keep academic precision.** Use Cambridge syllabus terminology and definitions accurately. Distinguish formal definitions from intuitive explanations; include units, conditions and required notation. Keep content aligned to the applicable syllabus version and objectives. Label enrichment that is beyond the syllabus. Write original material; never copy past-paper questions or source text.
+- **Optimise effort, not teaching.** Save tokens by avoiding repeated instructions, redundant examples, unnecessary research, duplicate explanations and needless rewrites. Do not save tokens by omitting intermediate reasoning, making language more advanced, assuming prior knowledge, reducing syllabus coverage or weakening accuracy/review checks.
+- **Before accepting a lesson, check:** Could a beginner follow every step? Are all new terms and symbols explained before use? Does each worked solution explain why its steps work? Is any reasoning skipped as “obvious”? Can the student apply the idea independently? Remove repetition, but restore any explanation needed for understanding.
+
+The usual 2–5 minute lesson target is a guideline, not a hard limit. Understanding and syllabus coverage take priority. Follow `docs/CONTENT_GUIDE.md` and the lesson templates for the detailed content contract; run the required validation and independent review. Never mark content `human-reviewed` unless a teacher actually reviewed it.
+
 ## Rules for this repo
 
 - **Lessons:** only lessons with `provenance.status: ai-checked` (independently AI-reviewed)
@@ -140,3 +160,14 @@ Points work the same way:
   - axe WCAG 2.1 AA in light and dark, which the e2e tests check.
 - **Docs:** architecture, data model and the designs for unbuilt phases (AI marking, question
   generation, grade prediction) are in `docs/PLAN.md` and `docs/design/`.
+
+## Multiple local AI agents
+
+When multiple agents work in the same checkout, follow `docs/AGENT_COORDINATION.md` before selecting work. Use the shared runtime mailbox, announce roles, atomically claim distinct lesson units, heartbeat ownership, and avoid simultaneous edits to shared files. Coordination state is local runtime data and must never be committed. If the mailbox is not genuinely shared, say so and work safely solo or use messaging actually provided by the runtime; do not pretend files are real-time push messaging.
+
+Agent count is dynamic rather than a fixed requirement: use parallel agents only for independent tasks, within available machine/provider capacity. Solo mode must always work. Keep one owner for shared handoff/publication state and one publisher at a time. The coordination protocol never overrides syllabus quality, independent review, validation, provenance, or production safety gates.
+
+
+## Heartbeat-driven collaboration
+
+Follow the heartbeat and stall-response rules in `docs/AGENT_COORDINATION.md`. The coordination helper emits a shared mailbox message for every explicit heartbeat. Read other agents' heartbeats during collaboration, acknowledge assignments and blocker/handoff messages, and respond with concrete help when a task is blocked or may be stalled. During active coordination, check messages at task boundaries and poll every 2–5 seconds while waiting; heartbeat about every 30–60 seconds during long tasks when practical. A heartbeat older than 2 minutes is a prompt to check in, not permission to steal a claim. Avoid replying to every routine heartbeat, which creates useless message storms.

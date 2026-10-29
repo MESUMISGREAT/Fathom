@@ -1,0 +1,320 @@
+id: enthalpy-change-calorimetry
+subject: "9701"
+topic: "5.1"
+title: "Measuring ΔH: q = mcΔT and the per-mole step"
+summary: A thermometer measures the energy that went into the water, not the reaction — so you calculate q = mcΔT, then divide by the moles that reacted and put the sign the right way round.
+order: 7
+minutes: 8
+kind: core
+objectives: ["5.1.7"]
+prerequisites: [enthalpy-change-exothermic-endothermic, enthalpy-change-named-changes]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027 (learning outcome 5.1.7, calculate enthalpy changes from experimental results
+    including q = mcΔT and ΔH = −mcΔT/n). Experimental figures are illustrative and internally
+    consistent; every answer key was recomputed with Python. All questions are original. Not yet
+    reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can calculate an enthalpy change from a temperature change, using $q = mc\Delta T$ and then $\Delta H = -\dfrac{mc\Delta T}{n}$, and you can say what makes such an experiment inaccurate.
+
+  - type: explain
+    title: The thermometer is a spy in the water
+    body: |
+      You cannot put a thermometer inside a reaction to see its enthalpy. What you *can* do is surround the reaction with a known mass of water and watch the **water's** temperature.
+
+      The energy the water gains is the energy the reaction lost (minus whatever leaked away). So:
+
+      1. Calculate the energy that went into the water: $q = mc\Delta T$.
+      2. Work out how many moles reacted.
+      3. Divide to get the energy per mole, and fix the sign.
+
+  - type: definition
+    term: The calorimetry equation
+    body: |
+      $$q = mc\Delta T$$
+
+      - $q$ = energy transferred, in joules;
+      - $m$ = mass of the substance being heated (usually water or a solution), in **grams**;
+      - $c$ = specific heat capacity, $4.18\ \text{J g}^{-1}\text{K}^{-1}$ for water;
+      - $\Delta T$ = temperature change, in kelvin (the same size as a Celsius degree).
+
+      Then:
+
+      $$\Delta H = -\frac{mc\Delta T}{n}$$
+
+      where $n$ is the number of moles of the limiting reagent (or of water formed, for
+      neutralisation).
+
+  - type: explain
+    title: Why the minus sign is there
+    body: |
+      If the water gets **hotter**, $\Delta T$ is positive, so $q$ is positive — but the reaction
+      itself **released** that energy, so its $\Delta H$ must be negative.
+
+      The minus sign makes that flip automatically: a temperature rise gives a negative $\Delta H$.
+
+      For an endothermic process, the water cools, $q$ is negative, and the minus sign makes
+      $\Delta H$ positive. One sign rule, both directions.
+
+  - type: diagram
+    diagram: chem-enthalpy-change-calorimetry
+    alt: >-
+      A calorimetry apparatus: a copper can of water on a tripod with a spirit burner underneath, a
+      thermometer and stirrer in the water, and a draught shield around the burner. Labels show the
+      mass of water m, the temperature change ΔT, and c = 4.18 J g⁻¹ K⁻¹. Beside the apparatus the
+      calculation is written out: q = mcΔT, then ΔH = −mcΔT / n, with notes "measure mass of water",
+      "measure temperature rise" and "find moles of fuel burned by weighing before and after".
+    caption: |
+      Everything you need to measure is on the apparatus: mass of water, temperature change, and the
+      moles of fuel used.
+
+  - type: example
+    title: "Worked example: neutralisation"
+    problem: |
+      $25.0\ \text{cm}^3$ of $1.00\ \text{mol dm}^{-3}$ hydrochloric acid is mixed with $25.0\ \text{cm}^3$ of $1.00\ \text{mol dm}^{-3}$ sodium hydroxide. The temperature rises by $6.8\ \text{K}$.
+
+      Calculate $\Delta H_\text{neut}$, taking the density of the solution as $1.00\ \text{g cm}^{-3}$ and $c = 4.18\ \text{J g}^{-1}\text{K}^{-1}$.
+    steps:
+      - |
+        Total mass of solution:
+        $$m = 25.0 + 25.0 = 50.0\ \text{g}$$
+      - |
+        Energy gained by the solution:
+        $$q = mc\Delta T = 50.0 \times 4.18 \times 6.8$$
+        $$q = 1421\ \text{J} = 1.421\ \text{kJ}$$
+      - |
+        Moles of water formed. Both solutions are $1.00\ \text{mol dm}^{-3}$ and $0.0250\ \text{dm}^3$ is used, so each supplies $0.0250\ \text{mol}$; they react in a 1:1 ratio:
+        $$n(\text{H}_2\text{O}) = 0.0250\ \text{mol}$$
+      - |
+        Energy per mole, with the sign flipped because the reaction released it:
+        $$\Delta H = -\frac{1.421}{0.0250} = -56.8\ \text{kJ mol}^{-1}$$
+      - |
+        That is close to the expected $-57\ \text{kJ mol}^{-1}$ for a strong acid and strong alkali —
+        a good experiment.
+    answer: |
+      $\Delta H_\text{neut} \approx -57\ \text{kJ mol}^{-1}$.
+
+  - type: check
+    title: Quick check
+    questions: [q-simple, moles-then-divide, sign-check]
+
+  - type: example
+    title: "Worked example: burning a fuel"
+    problem: |
+      A spirit burner containing ethanol is weighed before and after heating $150\ \text{g}$ of water. The burner loses $0.500\ \text{g}$ and the water warms by $18.5\ \text{K}$.
+
+      Calculate $\Delta H_\text{c}$ for ethanol. ($M_r = 46.0$; $c = 4.18\ \text{J g}^{-1}\text{K}^{-1}$)
+    steps:
+      - |
+        Energy gained by the water:
+        $$q = mc\Delta T = 150 \times 4.18 \times 18.5 = 11\,600\ \text{J} = 11.6\ \text{kJ}$$
+      - |
+        Moles of ethanol burned:
+        $$n = \frac{0.500}{46.0} = 0.0109\ \text{mol}$$
+      - |
+        $$\Delta H_\text{c} = -\frac{11.6}{0.0109} = -1.06 \times 10^{3}\ \text{kJ mol}^{-1}$$
+      - |
+        The data-book value is $-1367\ \text{kJ mol}^{-1}$, so this experiment has released about 22%
+        less energy than it should. That is normal for a school burner: heat escapes to the air and
+        the apparatus, and some ethanol may evaporate without burning.
+    answer: |
+      About $-1.1 \times 10^{3}\ \text{kJ mol}^{-1}$ — noticeably less than the true value.
+
+  - type: explain
+    title: Making the number trustworthy
+    body: |
+      These experiments are always **lower** in magnitude than the data-book value, because energy
+      leaks. Improve them by reducing the leaks:
+
+      - **insulate** the cup (a plastic cup with a lid) for solution reactions;
+      - use a **draught shield** around a burner, and close the gap between flame and can;
+      - **stir** so the temperature is even, and read the thermometer at eye level;
+      - take the maximum temperature reached, not a reading taken too early;
+      - keep the flame the same size and let it play on the base of the can.
+
+      Assumptions to state when a question asks:
+
+      - the solution has the same density and specific heat capacity as water ($1.00\ \text{g cm}^{-3}$, $4.18\ \text{J g}^{-1}\text{K}^{-1}$);
+      - no energy is lost to, or gained from, the surroundings;
+      - the reaction goes to completion and, for combustion, the fuel burns completely.
+
+  - type: misconceptions
+    items:
+      - wrong: Use the moles of water in the calorimeter, not the moles that reacted.
+        right: |
+          $n$ is the moles of the **limiting reagent** that reacted, or (for neutralisation) of water
+          formed. The mass of water is only used to find $q$.
+      - wrong: ΔT in °C cannot be used, only kelvin.
+        right: |
+          A temperature **difference** is the same number in both scales, because one kelvin equals
+          one Celsius degree. $6.8\ ^\circ\text{C} = 6.8\ \text{K}$.
+      - wrong: A temperature rise means ΔH is positive.
+        right: |
+          A rise means the reaction released energy, so $\Delta H$ is negative. That is exactly why
+          the formula has a minus sign.
+      - wrong: The experimental value should match the data book exactly.
+        right: |
+          Heat loss, incomplete combustion and evaporation always make the measured value smaller in
+          magnitude. Questions often ask for the percentage difference and the reasons.
+      - wrong: Forgetting to convert cm³ of solution to grams.
+        right: |
+          With a density of $1.00\ \text{g cm}^{-3}$, $25.0\ \text{cm}^3$ is $25.0\ \text{g}$. If the
+          density is not 1, multiply.
+      - wrong: Use $c = 4.18\ \text{J g}^{-1}\text{K}^{-1}$ with a mass in kilograms.
+        right: |
+          The value $4.18$ matches **grams**. In $\text{kg}$, water's specific heat capacity is
+          $4180\ \text{J kg}^{-1}\text{K}^{-1}$. Mixing the two is a factor-of-1000 error.
+
+  - type: exam
+    body: |
+      - Show the three lines separately: $q = mc\Delta T$, then $n = \ldots$, then $\Delta H = -q/n$. Each can carry a mark.
+      - Units matter: $q$ in joules, then convert to kJ before dividing if you want $\text{kJ mol}^{-1}$.
+      - For neutralisation, $n$ is the moles of water formed — equal to the moles of the limiting acid or alkali.
+      - Percentage difference: $\dfrac{\text{data-book} - \text{experimental}}{\text{data-book}} \times 100$ (use magnitudes).
+      - If a question asks why the value is lower, give a mechanism: heat lost to surroundings, incomplete combustion, evaporation of fuel, heat absorbed by the apparatus.
+
+  - type: check
+    title: Check yourself
+    questions: [dissolving-endothermic, percentage-difference, spot-calorimetry]
+
+  - type: takeaways
+    items:
+      - $q = mc\Delta T$, with $m$ in grams and $c = 4.18\ \text{J g}^{-1}\text{K}^{-1}$ for water.
+      - $\Delta H = -\dfrac{mc\Delta T}{n}$, with $n$ the moles of limiting reagent (or water formed).
+      - A temperature rise gives a negative $\Delta H$ because of the minus sign.
+      - Experimental values are smaller in magnitude than data-book values because energy leaks.
+      - 'State the assumptions: density and specific heat capacity of water, no heat loss, complete reaction.'
+
+  - type: deeper
+    title: Where the missing 20% goes
+    body: |
+      In a typical school fuel experiment, only about 40–60% of the released energy ends up in the
+      water. The rest is lost by:
+
+      - heating the air and the apparatus (can, tripod, thermometer, clamp);
+      - convection of hot gases past the can rather than into it;
+      - incomplete combustion, giving soot and carbon monoxide;
+      - evaporation of the fuel from the wick before it burns.
+
+      Industrial calorimetry avoids this with a **bomb calorimeter**: the sample burns in pure oxygen
+      inside a sealed steel vessel surrounded by a known mass of water, with everything insulated.
+      That is how the data-book values are measured — and why they are higher than yours.
+
+questions:
+  - id: q-simple
+    format: numeric
+    difficulty: 1
+    objectives: ["5.1.7"]
+    prompt: |
+      $100\ \text{g}$ of water is heated and its temperature rises by $4.5\ \text{K}$.
+
+      Calculate the energy gained by the water, in joules. ($c = 4.18\ \text{J g}^{-1}\text{K}^{-1}$)
+    fields:
+      - answer: 1881
+        tolerance: { rel: 0.02 }
+        unit: J
+    explanation: |
+      $q = mc\Delta T = 100 \times 4.18 \times 4.5 = 1881\ \text{J} \approx 1.9\ \text{kJ}$.
+
+  - id: moles-then-divide
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.7"]
+    prompt: |
+      $0.0200\ \text{mol}$ of a metal reacts with excess acid and releases enough energy to raise the temperature of $200\ \text{g}$ of water by $4.2\ \text{K}$.
+
+      Calculate $\Delta H$ for the reaction, in $\text{kJ mol}^{-1}$. ($c = 4.18\ \text{J g}^{-1}\text{K}^{-1}$)
+    fields:
+      - answer: -176
+        tolerance: { abs: 3 }
+        unit: kJ mol^-1
+    explanation: |
+      $q = mc\Delta T = 200 \times 4.18 \times 4.2 = 3511\ \text{J} = 3.511\ \text{kJ}$.
+      Then $\Delta H = -\dfrac{3.511}{0.0200} = -176\ \text{kJ mol}^{-1}$. The minus sign because the
+      water warmed, so the reaction released the energy.
+
+  - id: sign-check
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.7"]
+    prompt: |
+      In a calorimetry experiment the temperature of the water **falls** by $2.0\ \text{K}$. What follows?
+    options:
+      - text: The reaction is endothermic, so ΔH is positive
+        correct: true
+        why: |
+          The reaction took energy from the water, so the water cooled. That is endothermic, and the
+          minus sign in $\Delta H = -mc\Delta T/n$ makes the result positive.
+      - text: The reaction is exothermic, so ΔH is negative
+        why: |
+          Exothermic reactions warm the surroundings, not cool them.
+      - text: ΔH is zero because the temperature returned to normal
+        why: |
+          A change of $2.0\ \text{K}$ is not zero; a real transfer of energy has occurred.
+      - text: The experiment has failed and gives no information
+        why: |
+          A temperature fall is perfectly good data — it identifies an endothermic process.
+    explanation: |
+      Cooling surroundings mean energy flowed from the water into the reaction: endothermic,
+      $\Delta H > 0$.
+
+  - id: dissolving-endothermic
+    format: numeric
+    difficulty: 3
+    objectives: ["5.1.7"]
+    prompt: |
+      $5.00\ \text{g}$ of ammonium nitrate ($M_r = 80.0$) dissolves in $50.0\ \text{g}$ of water and the temperature falls by $3.2\ \text{K}$.
+
+      Calculate $\Delta H$ of solution, in $\text{kJ mol}^{-1}$. ($c = 4.18\ \text{J g}^{-1}\text{K}^{-1}$)
+    fields:
+      - answer: 10.7
+        tolerance: { rel: 0.05 }
+        unit: kJ mol^-1
+    explanation: |
+      $q = 50.0 \times 4.18 \times (-3.2) = -669\ \text{J} = -0.669\ \text{kJ}$ (negative because the
+      water lost energy).
+      Moles: $5.00 / 80.0 = 0.0625\ \text{mol}$.
+      $\Delta H = -\dfrac{-0.669}{0.0625} = +10.7\ \text{kJ mol}^{-1}$ — positive, endothermic.
+      The water's mass is used for $q$; the solute's moles give $n$.
+
+  - id: percentage-difference
+    format: numeric
+    difficulty: 3
+    objectives: ["5.1.7"]
+    prompt: |
+      An experiment gives $\Delta H_\text{c} = -1060\ \text{kJ mol}^{-1}$ for ethanol; the data-book value is $-1367\ \text{kJ mol}^{-1}$.
+
+      Calculate the percentage difference, using magnitudes.
+    fields:
+      - answer: 22
+        tolerance: { rel: 0.05 }
+        unit: "%"
+    explanation: |
+      Difference in magnitude: $1367 - 1060 = 307$.
+      Percentage: $\dfrac{307}{1367} \times 100 = 22.5\% \approx 22\%$.
+      The experimental value is lower because energy is lost to the surroundings and the fuel may not
+      burn completely.
+
+  - id: spot-calorimetry
+    format: spot-error
+    difficulty: 3
+    objectives: ["5.1.7"]
+    prompt: |
+      A student calculates an enthalpy change from an experiment in which the water warmed by $8.0\ \text{K}$. Which line contains the first error?
+    lines:
+      - q = mcΔT = 80.0 × 4.18 × 8.0 = 2675 J
+      - n = 0.0200 mol of the limiting reagent reacted
+      - ΔH = −2675 / 0.0200 = −134 kJ mol⁻¹
+      - The water warmed, so the reaction is endothermic
+    errorLine: 4
+    fix: |
+      The water **warming** means the reaction released energy, so it is **exothermic** and $\Delta H$
+      is negative. Line 3 already has the correct negative sign.
+    explanation: |
+      Lines 1–3 are consistent and correct. Line 4 contradicts them: cooling would indicate an
+      endothermic process.

@@ -1,0 +1,315 @@
+id: p3-logarithmic-exponential-linear-form
+subject: '9709'
+topic: '3.2'
+title: Turning curves into straight lines
+summary: Taking logs converts $y = kx^n$ and $y = ka^x$ into straight-line relationships, so the gradient and intercept
+  reveal the unknown constants.
+order: 4
+minutes: 8
+kind: core
+objectives:
+- 3.2.4
+prerequisites:
+- p3-logarithmic-exponential-solving-index-equations
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus (2026-2027),\
+    \ topic 3.2 outcome 3.2.4, using the syllabus examples y = kx^n and y = k(a^x). Gradients and constants recovered\
+    \ from data in Python. All questions are original. Not yet reviewed by a teacher.\n    Correction after a later\
+    \ review (28 Oct): the why-text for the \"y against ln x\" distractor was garbled and now states that a power\
+    \ law only linearises with logs on both axes."
+blocks:
+- type: objective
+  body: By the end you can turn a power law or an exponential relationship into linear form, say which graph to
+    plot, and recover the unknown constants from its gradient and intercept.
+- type: explain
+  title: Why bother
+  body: 'A curve is hard to read precisely: "does this line up with $y = kx^2$ or $y = kx^{2.1}$?" is
+
+    almost impossible to answer by eye. A straight line is easy — measure its gradient and
+
+    intercept with a ruler.
+
+
+    So the strategy is: **take logs, plot the log quantities, and read the constants off the
+
+    straight line.**'
+- type: explain
+  title: The two standard forms
+  body: '**Power law $y = kx^n$.** Take $\ln$ of both sides and use the log laws:
+
+
+    $$\ln y = \ln k + n\ln x$$
+
+
+    This is linear in $\ln x$ and $\ln y$: compare with $Y = mX + c$, where $Y = \ln y$,
+
+    $X = \ln x$.
+
+
+    - Plot $\ln y$ (vertical) against $\ln x$ (horizontal).
+
+    - **Gradient** $= n$.
+
+    - **Intercept** $= \ln k$, so $k = e^{\text{intercept}}$.
+
+
+    **Exponential $y = ka^x$.** Take $\ln$:
+
+
+    $$\ln y = \ln k + x\ln a$$
+
+
+    This is linear in $x$ and $\ln y$ (plain $x$, not $\ln x$).
+
+
+    - Plot $\ln y$ against $x$.
+
+    - **Gradient** $= \ln a$, so $a = e^{\text{gradient}}$.
+
+    - **Intercept** $= \ln k$, so $k = e^{\text{intercept}}$.
+
+
+    The same idea handles $y = Ae^{bx}$: $\ln y = \ln A + bx$, gradient $b$, intercept $\ln A$.'
+- type: diagram
+  diagram: math-p3-logarithmic-exponential-linear-form-plot
+  alt: A straight line through three plotted points on axes of x against ln y, with a right-angled triangle marking
+    a run of 2 and the matching rise. The gradient is labelled ln 3 and the intercept on the ln y axis is labelled
+    ln 2, so a = 3 and k = 2.
+  caption: 'Taking logs of y = 2 × 3^x gives a straight line whose gradient is ln 3 and whose intercept
+
+    is ln 2.'
+- type: explain
+  title: The step students skip
+  body: '**Turning the intercept back into a constant.** Nobody wants $\ln k$; they want $k$. So the
+
+    final line of the answer must be $k = e^{\text{intercept}}$.
+
+
+    **Choosing the axes.** Look at where the unknown sits:
+
+
+    - unknown in a **power** → plot $\ln y$ against $\ln x$;
+
+    - unknown in an **exponent** → plot $\ln y$ against $x$.
+
+
+    Getting this backwards makes the gradient meaningless.'
+- type: example
+  title: 'Example 1: from a graph'
+  problem: A graph of $\ln y$ against $\ln x$ is a straight line with gradient $2.5$ and intercept $0.69$. It is
+    believed that $y = kx^n$. Find $k$ and $n$.
+  steps:
+  - For $y = kx^n$, taking $\ln$ gives $\ln y = \ln k + n\ln x$.
+  - 'Comparing with the line: gradient $= n$, so $n = 2.5$.'
+  - Intercept $= \ln k$, so $\ln k = 0.69$ and $k = e^{0.69} = 1.99 \approx 2.0$.
+  - So $y \approx 2.0x^{2.5}$.
+  - 'Check with a point: at $x = 4$, $y = 2(4)^{2.5} = 2 \times 32 = 64$. The log relation gives $\ln y = 0.69 +
+    2.5\ln 4 = 0.69 + 3.466 = 4.156$, so $y = e^{4.156} = 64$ ✓'
+  answer: $n = 2.5$, $k = 2.0$ (to 2 s.f.).
+- type: example
+  title: 'Example 2: an exam-style data question'
+  problem: Data believed to satisfy $y = ka^x$ include $(1, 6)$ and $(3, 54)$. By plotting $\ln y$ against $x$,
+    find $k$ and $a$.
+  steps:
+  - For $y = ka^x$, $\ln y = \ln k + x\ln a$, so the graph of $\ln y$ against $x$ has gradient $\ln a$ and intercept
+    $\ln k$.
+  - 'Two points: $(1, \ln 6) = (1, 1.7918)$ and $(3, \ln 54) = (3, 3.9890)$.'
+  - 'Gradient:
+
+    $$\frac{3.9890 - 1.7918}{3 - 1} = \frac{2.1972}{2} = 1.0986 = \ln 3$$'
+  - So $a = e^{\ln 3} = 3$.
+  - 'Intercept: $\ln k = 1.7918 - 1.0986(1) = 0.6931 = \ln 2$, so $k = 2$.'
+  - 'Hence $y = 2 \times 3^x$. Check at $x = 3$: $2 \times 27 = 54$ ✓'
+  answer: $k = 2$, $a = 3$.
+- type: check
+  title: Quick check
+  questions:
+  - which-axes
+  - gradient-meaning
+  - find-k-and-n
+- type: explain
+  title: Reading the log laws off the question
+  body: 'Every one of these questions is "apply the product and power laws, then match to $Y = mX + c$".
+
+    Write the target line underneath your equation, so the comparison is explicit:
+
+
+    $$\underbrace{\ln y}_{Y} = \underbrace{n}_{m}\underbrace{\ln x}_{X} + \underbrace{\ln k}_{c}$$
+
+
+    Once you have done that, "gradient is $n$, intercept is $\ln k$" is immediate, and you will not
+
+    muddle which constant belongs to which feature.'
+- type: check
+  title: Practice
+  questions:
+  - two-points-power
+  - two-points-exponential
+  - intercept-to-constant
+  - model-choice
+- type: misconceptions
+  items:
+  - wrong: For $y = ka^x$ you plot $\ln y$ against $\ln x$.
+    right: 'The exponent involves $x$ itself, so plot $\ln y$ against $x$. Only a power law needs
+
+      $\ln x$ on the horizontal axis.'
+  - wrong: The intercept of the $\ln y$ against $\ln x$ graph is $k$.
+    right: It is $\ln k$. Raise $e$ to that power to get $k$.
+  - wrong: For $y = kx^n$ the gradient is $k$.
+    right: The gradient is $n$, the power. The constant $k$ is hidden in the intercept.
+  - wrong: You must use $\ln$; plotting $\lg y$ against $\lg x$ gives a different gradient.
+    right: 'Any base works and the gradient is unchanged. But you must undo the intercept with the same
+
+      base you used: with $\lg$, $k = 10^{\text{intercept}}$.'
+  - wrong: With two data points you can also fix three unknowns.
+    right: 'Each of these forms has exactly two unknowns, and two points determine a line. Three
+
+      unknowns would need a different model or more information.'
+  - wrong: A straight line on the graph proves the model is exact.
+    right: 'Real data scatter; the line is a best fit. The model is a good description if the points
+
+      lie close to a straight line.'
+- type: exam
+  body: '- State which quantities go on each axis, and why: "for $y = kx^n$, plot $\ln y$ against $\ln x$".
+
+    - Make the comparison with $Y = mX + c$ explicit so the gradient and intercept are justified.
+
+    - Always convert the intercept back: $k = e^{\text{intercept}}$.
+
+    - Quote answers to a sensible number of significant figures and give the final model.'
+- type: takeaways
+  items:
+  - '$y = kx^n$ gives $\ln y = \ln k + n\ln x$: gradient $n$, intercept $\ln k$.'
+  - '$y = ka^x$ gives $\ln y = \ln k + x\ln a$: gradient $\ln a$, intercept $\ln k$.'
+  - '$y = Ae^{bx}$ gives $\ln y = \ln A + bx$: gradient $b$, intercept $\ln A$.'
+  - Unknown in a power → $\ln y$ against $\ln x$; unknown in an exponent → $\ln y$ against $x$.
+  - 'Undo the intercept: $k = e^{\text{intercept}}$, $a = e^{\text{gradient}}$ when a power is the gradient.'
+- type: deeper
+  title: What if the model is $y = kx^n$ but you plot $\lg y$ and $\lg x$?
+  body: 'It still works, with the same gradients, because every log is a constant multiple of $\ln$:
+
+
+    $$\lg y = \lg k + n\lg x$$
+
+
+    The gradient is still $n$. The intercept is now $\lg k$, so $k = 10^{\text{intercept}}$.
+
+
+    In general, if you plot $\log_b y$ against $\log_b x$ for a power law, the gradient is the power
+
+    and the constant is $b^{\text{intercept}}$. The base only changes how you undo the intercept,
+
+    never the gradient.'
+questions:
+- id: which-axes
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.2.4
+  prompt: To test the relationship $y = kx^n$, which graph should you plot?
+  options:
+  - text: $\ln y$ against $\ln x$
+    correct: true
+    why: $\ln y = \ln k + n\ln x$ is linear in $\ln x$, with gradient $n$.
+  - text: $\ln y$ against $x$
+    why: That is the test for $y = ka^x$, where the unknown is in the exponent.
+  - text: $y$ against $x$
+    why: That is a curve, which is what you are trying to avoid.
+  - text: $y$ against $\ln x$
+    why: 'A power law only becomes linear when the logarithm is taken on *both* sides; with plain $y$
+
+      the relationship is still a curve $y = kx^n$.'
+  explanation: A power law linearises with logs on both axes.
+- id: gradient-meaning
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.2.4
+  prompt: For $y = ka^x$, a graph of $\ln y$ against $x$ has gradient $m$. What is $a$?
+  options:
+  - text: $e^{m}$
+    correct: true
+    why: The gradient equals $\ln a$, so $a = e^{m}$.
+  - text: $m$
+    why: The gradient is $\ln a$, not $a$ itself.
+  - text: $\ln m$
+    why: That inverts the relationship.
+  - text: $e^{-m}$
+    why: The sign would be wrong; the gradient equals $+\ln a$.
+  explanation: Gradient $= \ln a$, so undo the log with $e$.
+- id: find-k-and-n
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.2.4
+  prompt: A graph of $\ln y$ against $\ln x$ is a straight line with gradient $2.5$ and intercept $0.69$. Given
+    $y = kx^n$, find $k$ to 2 significant figures.
+  fields:
+  - answer: 2.0
+    tolerance:
+      abs: 0.05
+  explanation: Intercept $= \ln k = 0.69$, so $k = e^{0.69} = 1.99 \approx 2.0$.
+- id: two-points-power
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.2.4
+  prompt: Data satisfy $y = kx^n$ with $y = 12$ when $x = 2$ and $y = 96$ when $x = 4$. Find $n$.
+  fields:
+  - answer: 3
+    tolerance:
+      abs: 0.02
+  explanation: '$\ln y = \ln k + n\ln x$ gives $\ln 96 - \ln 12 = n(\ln 4 - \ln 2)$, so
+
+    $n = \dfrac{\ln 8}{\ln 2} = 3$.'
+- id: two-points-exponential
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.2.4
+  prompt: Data satisfy $y = ka^x$ with $y = 6$ when $x = 1$ and $y = 54$ when $x = 3$. Find $a$.
+  fields:
+  - answer: 3
+    tolerance:
+      abs: 0.02
+  explanation: $\ln 54 - \ln 6 = \ln a\,(3 - 1)$, so $2\ln a = \ln 9$ and $a = 3$.
+- id: intercept-to-constant
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.2.4
+  prompt: A graph of $\lg y$ against $x$ is a straight line with intercept $0.8$. The model is $y = ka^x$. What
+    is $k$?
+  options:
+  - text: $10^{0.8} \approx 6.3$
+    correct: true
+    why: With $\lg$, the intercept is $\lg k$, so $k = 10^{0.8}$.
+  - text: $e^{0.8} \approx 2.2$
+    why: That would be right if you had plotted $\ln y$, not $\lg y$.
+  - text: $0.8$
+    why: The intercept is $\lg k$, not $k$.
+  - text: $a^{0.8}$
+    why: $a$ comes from the gradient, not the intercept.
+  explanation: 'Undo the log with the base you used: base 10 for $\lg$.'
+- id: model-choice
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.2.4
+  prompt: Data plotted as $\ln y$ against $x$ lie on a straight line, but plotted as $\ln y$ against $\ln x$ they
+    curve. Which model fits?
+  options:
+  - text: $y = ka^x$
+    correct: true
+    why: A straight $\ln y$ against $x$ graph means the exponent involves $x$ itself.
+  - text: $y = kx^n$
+    why: That model would give a straight line when plotted against $\ln x$.
+  - text: $y = kx + c$
+    why: A straight line in the original variables would not appear straight on a log plot like this.
+  - text: $y = k$
+    why: 'A constant is a horizontal line on $\ln y$ against $x$, but would also be horizontal against
+
+      $\ln x$, contradicting the curve observed.'
+  explanation: Which log plot straightens the data identifies where the unknown sits.

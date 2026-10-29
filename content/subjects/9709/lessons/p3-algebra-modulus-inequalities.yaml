@@ -1,0 +1,283 @@
+id: p3-algebra-modulus-inequalities
+subject: "9709"
+topic: "3.1"
+title: "Modulus inequalities: between, or outside"
+summary: '|x − a| < b means "within b of a", which turns into a double inequality; the other direction gives two separate pieces.'
+order: 2
+minutes: 7
+kind: core
+objectives: ["3.1.1"]
+prerequisites: [p3-algebra-modulus-basics]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    (2026-2027), topic 3.1, including the syllabus example 2x + 5 < |x + 1|. Answers were checked
+    by substituting boundary and interior values in Python. All questions are original. Not yet
+    reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve inequalities such as $|x - a| < b$, and harder ones like
+      $2x + 5 < |x + 1|$, using both the graph and algebra.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      Two shapes of question, and they behave differently:
+
+      - **$|x - a| < b$** — "the distance from $x$ to $a$ is less than $b$". The answer is a single interval.
+      - **something $< |x + 1|$** — the modulus is on one side and ordinary algebra on the other. You must split into cases.
+
+      Cambridge also mixes them, so learn the geometry first: inequalities are about **regions**,
+      not points.
+
+  - type: explain
+    title: The method for |x − a| < b
+    body: |-
+      1. **Rewrite as a double inequality.** $|x - a| < b$ means
+         $$a - b < x < a + b$$
+      2. **Do the same with $\le$** if the question has $\le$; the endpoints are then included.
+      3. **Reverse the shape for $>$.** $|x - a| > b$ gives two separate pieces:
+         $$x < a - b \quad\text{or}\quad x > a + b$$
+      4. **Write the answer as an inequality**, not as a list of numbers.
+
+      **The forgotten step:** $b$ must be **positive**. If the question has $|x - a| < -2$, the
+      answer is "no solutions", not an empty-looking interval.
+
+  - type: diagram
+    diagram: math-p3-algebra-modulus-inequality
+    alt: >-
+      Two number lines. Top: the interval a − b < x < a + b drawn as a solid bar between open
+      circles, labelled "|x − a| < b: inside". Bottom: the rest of the line drawn as two rays,
+      labelled "|x − a| > b: outside". Beside them a sketch of y = |x − a| with a horizontal line
+      at y = b, showing that the graph is below the line exactly between the two crossings.
+    caption: |-
+      "Less than b" is the middle piece; "more than b" is the two outer pieces.
+
+  - type: example
+    title: "Example 1: the easy shape"
+    problem: |-
+      Solve $|x - 3| < 5$.
+    steps:
+      - |-
+        This says: the distance from $x$ to $3$ is less than $5$.
+      - |-
+        Using $a = 3$, $b = 5$:
+        $$3 - 5 < x < 3 + 5$$
+      - |-
+        $$-2 < x < 8$$
+      - |-
+        Check a point inside, $x = 0$: $|0 - 3| = 3 < 5$ ✓. Check a point outside, $x = 9$: $|9 - 3| = 6$, not less than 5 ✓
+    answer: |-
+      $-2 < x < 8$.
+
+  - type: check
+    title: Quick check
+    questions: [basic-interval, outside-case, inclusive-endpoints, integer-values]
+
+  - type: explain
+    title: The method for 2x + 5 < |x + 1|
+    body: |-
+      Here the modulus is not alone, so you cannot use $a - b < x < a + b$. Split on where the
+      inside changes sign.
+
+      1. **Find the critical point:** $x + 1 = 0$ gives $x = -1$.
+      2. **Case A: $x \ge -1$.** Then $|x + 1| = x + 1$, so solve $2x + 5 < x + 1$.
+      3. **Case B: $x < -1$.** Then $|x + 1| = -(x + 1)$, so solve $2x + 5 < -(x + 1)$.
+      4. **Keep only values that belong to their own case**, then combine the two answers.
+
+      **The forgotten step:** checking each solution against the case it came from. A solution of
+      Case A that is not actually $\ge -1$ must be thrown away.
+
+  - type: example
+    title: "Example 2: an exam-style one"
+    problem: |-
+      Solve $2x + 5 < |x + 1|$.
+    steps:
+      - |-
+        The critical point is $x = -1$.
+      - |-
+        **Case A, $x \ge -1$:** $|x + 1| = x + 1$, so
+        $$2x + 5 < x + 1 \quad\Rightarrow\quad x < -4$$
+        But $x \ge -1$ and $x < -4$ cannot both hold, so Case A gives **no solutions**.
+      - |-
+        **Case B, $x < -1$:** $|x + 1| = -(x + 1)$, so
+        $$2x + 5 < -x - 1 \quad\Rightarrow\quad 3x < -6 \quad\Rightarrow\quad x < -2$$
+        This is consistent with $x < -1$ (anything below $-2$ is certainly below $-1$), so Case B contributes $x < -2$.
+      - |-
+        Check $x = -3$: left side $2(-3) + 5 = -1$; right side $|{-2}| = 2$; and $-1 < 2$ ✓
+      - |-
+        Check $x = 0$: left side $5$; right side $1$; $5 < 1$ is false ✓ (so $x = 0$ correctly excluded)
+    answer: |-
+      $x < -2$.
+
+  - type: explain
+    title: The graph shortcut
+    body: |-
+      Sketch both sides and shade where the inequality holds.
+
+      For $2x + 5 < |x + 1|$: the left side is a straight line of gradient 2, the right side is a V
+      with vertex at $(-1, 0)$. The line meets the left arm of the V where $2x + 5 = -(x + 1)$, i.e.
+      at $x = -2$.
+
+      Because the line is steeper than the left arm (gradient 2 against $-1$), the line is **below**
+      the V only to the left of that crossing. So the solution is $x < -2$ — the same answer,
+      found in a sketch.
+
+      **Exam tip:** sketch first, then confirm one boundary value. That catches case errors before
+      you write the final answer.
+
+  - type: misconceptions
+    items:
+      - wrong: $|x - 3| < 5$ means $x - 3 < 5$, so $x < 8$.
+        right: |-
+          The modulus also allows the inside to be negative, giving the lower bound $-2$. The answer
+          is a **double** inequality, $-2 < x < 8$.
+      - wrong: $|x - 3| > 5$ means $x > 8$.
+        right: |-
+          "More than 5 away from 3" also includes everything below $-2$: the answer is
+          $x < -2$ **or** $x > 8$.
+      - wrong: You can multiply or divide an inequality by a negative number without changing the sign.
+        right: |-
+          Multiplying or dividing by a negative **reverses** the inequality sign. This is the main
+          source of errors in case B of these problems.
+      - wrong: For $2x + 5 < |x + 1|$ you can just square both sides.
+        right: |-
+          Squaring is valid only when both sides are non-negative. Here $2x + 5$ can be negative,
+          so squaring could create false solutions; split into cases instead.
+      - wrong: If Case A gives no solutions, the whole inequality has none.
+        right: |-
+          Each case covers a different part of the number line. Case A failing says nothing about
+          Case B.
+
+  - type: exam
+    body: |-
+      - Write the final answer as an inequality (or a pair of inequalities joined by "or"), never as a bare list of numbers.
+      - Use open circles/round brackets for $<$ and solid ones for $\le$; examiners look at the endpoints.
+      - When the modulus is on the right, always state the critical point and both cases explicitly — that is where the method marks are.
+      - If a question asks for integer values satisfying the inequality, list them after solving; do not round the inequality itself.
+
+  - type: check
+    title: Exam-style check
+    questions: [split-case, distance-reading]
+
+  - type: takeaways
+    items:
+      - '$|x - a| < b \iff a - b < x < a + b$ (one interval, "inside").'
+      - '$|x - a| > b \iff x < a - b$ or $x > a + b$ (two rays, "outside").'
+      - 'If the modulus is not alone, split at the point where its inside is zero and solve each case.'
+      - 'Never divide an inequality by a negative without flipping the sign.'
+      - 'Do not square an inequality unless both sides are known to be non-negative.'
+
+  - type: deeper
+    title: Reading inequalities as distances
+    body: |-
+      Every modulus inequality is a statement about distance, and that reading solves most of them
+      instantly:
+
+      - $|x - 4| \le 1$: "within 1 of 4" → $3 \le x \le 5$;
+      - $|x + 2| > 3$: "more than 3 from $-2$" → $x < -5$ or $x > 1$.
+
+      The same idea underlies the definition of a limit: $|x - a| < \delta$ is the formal way of
+      saying "$x$ is close to $a$", with $\delta$ controlling how close. A Level work with
+      convergence uses exactly this notation.
+
+questions:
+  - id: basic-interval
+    format: numeric
+    difficulty: 1
+    objectives: ["3.1.1"]
+    prompt: |-
+      Solve $|x - 3| < 5$. Give the **lower** end of the interval.
+    fields:
+      - answer: -2
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $|x - 3| < 5$ means $3 - 5 < x < 3 + 5$, so $-2 < x < 8$. The lower end is $-2$.
+
+  - id: outside-case
+    format: mcq
+    difficulty: 2
+    objectives: ["3.1.1"]
+    prompt: |-
+      Which is the solution of $|x - 2| > 4$?
+    options:
+      - text: $x < -2$ or $x > 6$
+        correct: true
+        why: |-
+          More than 4 away from 2 means either below $2 - 4 = -2$ or above $2 + 4 = 6$.
+      - text: $-2 < x < 6$
+        why: |-
+          That is the solution of the reverse inequality, $|x - 2| < 4$.
+      - text: $x > 6$
+        why: |-
+          Only half the answer: values far below 2 are also more than 4 away from it.
+      - text: $x < 6$
+        why: |-
+          That includes $x = 2$, where $|2 - 2| = 0$, which is not greater than 4.
+    explanation: |-
+      "Greater than" splits into two rays; "less than" gives the single middle interval.
+
+  - id: inclusive-endpoints
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.1"]
+    prompt: |-
+      The inequality $|2x - 7| \le 3$ describes an interval. Give its **upper** endpoint.
+    fields:
+      - answer: 5
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $|2x - 7| \le 3$ means $-3 \le 2x - 7 \le 3$. Add 7: $4 \le 2x \le 10$, so $2 \le x \le 5$.
+      The upper endpoint is $5$.
+
+  - id: split-case
+    format: numeric
+    difficulty: 3
+    objectives: ["3.1.1"]
+    prompt: |-
+      Solve $2x + 5 < |x + 1|$. The solution is $x < k$. Give $k$.
+    fields:
+      - answer: -2
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      With $x \ge -1$: $2x + 5 < x + 1$ gives $x < -4$, impossible, so nothing there. With
+      $x < -1$: $2x + 5 < -x - 1$ gives $3x < -6$, so $x < -2$. Hence $k = -2$.
+
+  - id: integer-values
+    format: numeric
+    difficulty: 2
+    objectives: ["3.1.1"]
+    prompt: |-
+      How many integer values of $x$ satisfy $|x + 1| < 4$?
+    fields:
+      - answer: 7
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $-4 < x + 1 < 4$, so $-5 < x < 3$. The integers are $-4, -3, -2, -1, 0, 1, 2$: seven of them.
+
+  - id: distance-reading
+    format: mcq
+    difficulty: 1
+    objectives: ["3.1.1"]
+    prompt: |-
+      The inequality $|x - 7| \le 2$ can be read as which statement?
+    options:
+      - text: $x$ is within 2 of 7
+        correct: true
+        why: |-
+          $|x - 7|$ is the distance from $x$ to 7, so "at most 2" means within 2 of 7, giving
+          $5 \le x \le 9$.
+      - text: $x$ is at least 2 away from 7
+        why: |-
+          That would be $|x - 7| \ge 2$.
+      - text: $x$ is within 7 of 2
+        why: |-
+          The distance is measured **to** 7, not from 2.
+      - text: $x$ is greater than 7
+        why: |-
+          The inequality is symmetric about 7; it includes values on both sides.
+    explanation: |-
+      Read $|x - a|$ as the distance between $x$ and $a$; that converts the algebra into a sentence.

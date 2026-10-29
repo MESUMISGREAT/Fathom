@@ -1,0 +1,254 @@
+id: cpu-architecture-fetch-execute
+subject: "9618"
+topic: "4.1"
+title: The fetch–execute cycle in register transfer notation
+summary: "The repeating two-stage cycle, written the way examiners want it: PC → MAR, MEM[MAR] → MDR, MDR → CIR, PC + 1 → PC, then decode and execute."
+order: 9
+minutes: 5
+kind: core
+objectives: ["4.1.7"]
+prerequisites: [cpu-architecture-fetch-registers, cpu-architecture-alu-cu, cpu-architecture-buses]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, seventh learning outcome (the stages of the fetch–execute cycle,
+    described using register transfer notation). All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **describe the stages of the fetch–execute cycle** and write them
+      in **register transfer notation** — the notation the syllabus requires you to use.
+
+  - type: explain
+    title: How to read register transfer notation
+    body: |
+      Register transfer notation writes an arrow between two locations. It reads **left to
+      right: "the contents of the left-hand one are copied into the right-hand one."**
+
+      | Notation | Meaning |
+      | --- | --- |
+      | `PC → MAR` | Copy what is in the PC into the MAR |
+      | `MEM[MAR] → MDR` | Copy the contents of the memory cell **whose address** is in the MAR into the MDR |
+      | `PC + 1 → PC` | Add 1 to the PC and store the answer back in the PC |
+      | `MDR → CIR` | Copy what is in the MDR into the CIR |
+
+      Two things to notice: nothing is *moved* — a copy is made, so the source keeps its
+      value — and `MEM[...]` means "fetch from memory", not "a register called MEM".
+
+  - type: explain
+    title: The two stages
+    body: |
+      The CPU repeats the same loop forever (until you switch it off):
+
+      1. **Fetch** — get the next instruction out of memory.
+      2. **Execute** — carry it out, then go back to fetch again.
+
+      That is the whole machine. Everything else — branching, interrupts, waiting — is a
+      detail inside these two stages.
+
+  - type: diagram
+    diagram: cs-cpu-architecture-fetch-execute
+    alt: >-
+      A circular two-stage loop. The fetch half lists four register transfers: PC to MAR,
+      MEM of MAR to MDR, MDR to CIR, PC plus 1 to PC. The execute half lists the Control
+      Unit decoding the CIR, the ALU performing the operation, and the result going into the
+      accumulator, before the arrow returns to fetch.
+    caption: Fetch, execute, repeat — four transfers to fetch, then decode and execute.
+
+  - type: example
+    title: Running `ADD 7` from address 101
+    problem: |
+      The PC holds 101, and address 101 holds `ADD 7`. Write the full cycle for this one
+      instruction.
+    steps:
+      - |
+        **Fetch stage**
+      - |
+        `PC → MAR` — the address 101 goes into the MAR, so memory is pointed at the right
+        cell.
+      - |
+        `MEM[MAR] → MDR` — memory returns the contents of cell 101, `ADD 7`, into the MDR.
+      - |
+        `MDR → CIR` — the instruction moves into the CIR, ready to be decoded.
+      - |
+        `PC + 1 → PC` — the PC now points at 102, the next instruction, so the next fetch
+        continues in sequence.
+      - |
+        **Execute stage**
+      - |
+        `CIR → CU` — the Control Unit decodes `ADD 7` and issues the control signals: fetch
+        the operand at address 7 into a register.
+      - |
+        The **ALU** adds the accumulator's value to the operand, and the result is stored
+        `→ ACC`. The status register's flags are updated.
+    answer: |
+      Fetch: `PC → MAR`, `MEM[MAR] → MDR`, `MDR → CIR`, `PC + 1 → PC`.
+      Execute: decode in the CU, ALU performs the operation, result `→ ACC`.
+
+  - type: check
+    title: Quick check
+    questions: [fetch-order, notation-meaning, spot-transfer]
+
+  - type: misconceptions
+    items:
+      - wrong: The instruction is fetched directly from the hard drive into the CIR.
+        right: |
+          Every fetch passes through the **MAR** and **MDR**, because memory is addressed
+          first and the value travels via the data bus.
+      - wrong: "`PC → MAR` means the PC is destroyed and now holds nothing."
+        right: |
+          A **copy** is made. The PC keeps 101 until `PC + 1 → PC` changes it.
+      - wrong: Execute means "run the whole program".
+        right: |
+          Execute is **one** instruction. The program runs because the cycle repeats
+          thousands of millions of times per second.
+
+  - type: exam
+    body: |
+      - Learn the four fetch transfers **in order**; they are a fixed 2- or 3-mark answer.
+      - Always use **arrows**. Prose such as "the instruction goes to the CIR" gets partial
+        credit at best in a notation question.
+      - Questions often change the address or instruction — the transfers stay identical,
+        only the values differ. Show the values to make your answer unmistakable.
+
+  - type: check
+    title: Check yourself
+    questions: [execute-stage, explain-cycle]
+
+  - type: deeper
+    title: Does PC + 1 come before or after the fetch?
+    body: |
+      The increment may be drawn at any point **within** the fetch stage: some books put
+      `PC + 1 → PC` immediately after `PC → MAR`, others after `MDR → CIR`. All that matters
+      is that the PC points at the *next* instruction by the end of fetching, so that a
+      jump can overwrite it cleanly during execution. Follow the order your course material
+      prints, and keep it consistent.
+
+  - type: takeaways
+    items:
+      - >-
+        Register transfer notation reads left to right: **contents of left → copied into right**.
+      - >-
+        Fetch: `PC → MAR`, `MEM[MAR] → MDR`, `MDR → CIR`, `PC + 1 → PC`.
+      - >-
+        Execute: the **CU decodes** the CIR, the **ALU** performs the operation, the result
+        goes to a register.
+      - The cycle repeats for every instruction, billions of times a second.
+
+questions:
+  - id: fetch-order
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.7"]
+    prompt: |
+      Which is the correct **fetch** sequence in register transfer notation?
+    options:
+      - text: PC → MAR, MEM[MAR] → MDR, MDR → CIR, PC + 1 → PC
+        correct: true
+        why: |
+          Address first, memory returns the value, the value becomes the current
+          instruction, and the PC advances to the next address.
+      - text: MDR → CIR, PC → MAR, MEM[MAR] → MDR, PC + 1 → PC
+        why: |
+          The instruction cannot reach the CIR before memory has been read; the address
+          must be sent first.
+      - text: MAR → PC, MEM[MAR] → MDR, MDR → CIR, PC + 1 → PC
+        why: |
+          That overwrites the PC with memory's contents. The PC supplies the address; it
+          does not receive data.
+      - text: PC → MAR, MEM[MAR] → MDR, MDR → PC, PC + 1 → PC
+        why: |
+          The instruction goes to the **CIR**, not the PC. Putting it in the PC would make
+          the CPU treat data as an address.
+    explanation: |
+      Four transfers, always in that order: address, read, instruction, increment.
+
+  - id: notation-meaning
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.7"]
+    prompt: |
+      What does `MEM[MAR] → MDR` mean?
+    options:
+      - text: The contents of the memory cell whose address is in the MAR are copied into the MDR
+        correct: true
+        why: |
+          The MAR holds an address; `MEM[...]` reads that cell; the arrow copies the value
+          into the MDR.
+      - text: The MAR is copied into the MDR
+        why: |
+          That would copy an **address** into a data register. The notation `MEM[...]` means
+          reading memory at that address.
+      - text: The MDR is copied into main memory
+        why: |
+          The arrow points *into* the MDR, so this is a read, not a write.
+      - text: The memory address register is renamed to the memory data register
+        why: |
+          Registers keep their names; `→` always means "contents copied into".
+    explanation: |
+      `MEM[address]` = the value stored at that address. The arrow then copies it right.
+
+  - id: spot-transfer
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.1.7"]
+    prompt: |
+      A student writes these steps for the fetch stage. Which line contains the first error?
+    lines:
+      - "Step 1: PC → MAR"
+      - "Step 2: MEM[MAR] → MDR"
+      - "Step 3: MDR → PC"
+      - "Step 4: PC + 1 → PC"
+      - "Fetch complete"
+    errorLine: 3
+    fix: |
+      Step 3 should be `MDR → CIR`: the instruction is copied into the **current instruction
+      register**, ready for the Control Unit to decode it.
+    explanation: |
+      The fetched instruction goes to the CIR. Copying it into the PC would replace the
+      address of the next instruction with an instruction, and the program counter would no
+      longer track where execution is.
+
+  - id: execute-stage
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.7"]
+    prompt: |
+      During the {{1}} stage, the Control Unit {{2}} the instruction held in the CIR and
+      sends control signals; the {{3}} unit then performs the arithmetic or logic it calls
+      for, and the result is stored in a register such as the accumulator.
+    blanks:
+      - accept: ["execute", "executing", "execution"]
+      - accept: ["decodes", "decoding", "interprets", "interpreting", "reads"]
+      - accept: ["alu", "arithmetic logic unit", "arithmetic and logic unit", "alithmetic logic unit"]
+    explanation: |
+      Decode in the CU, compute in the ALU, store in a register. That is the execute stage.
+
+  - id: explain-cycle
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.7"]
+    prompt: |
+      Describe the fetch stage of the fetch–execute cycle using register transfer notation,
+      and explain what each transfer achieves.
+    model: |
+      The fetch stage has four transfers. `PC → MAR` places the address of the next
+      instruction into the memory address register, so the correct memory cell is selected.
+      `MEM[MAR] → MDR` reads the contents of that cell — the instruction — into the memory
+      data register. `MDR → CIR` copies the instruction into the current instruction register
+      where the Control Unit can decode it. `PC + 1 → PC` increments the program counter so
+      it points to the next instruction in sequence, ready for the next fetch (or so a jump
+      can overwrite it during execution).
+    keyPoints:
+      - >-
+        PC → MAR: the address of the next instruction is sent to memory
+      - >-
+        MEM[MAR] → MDR: the instruction is read from memory into the MDR
+      - >-
+        MDR → CIR: the instruction is passed on for decoding
+      - >-
+        PC + 1 → PC: the program counter advances to the next instruction
+    explanation: |
+      Full marks need the **notation** *and* a short reason for each transfer.

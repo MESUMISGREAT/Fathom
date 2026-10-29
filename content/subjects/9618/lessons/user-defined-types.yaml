@@ -1,0 +1,344 @@
+id: user-defined-types
+subject: "9618"
+topic: "13.1"
+title: "User-defined types — enumerated, pointer, set, record, and class types"
+summary: "Understand why user-defined types are needed; define enumerated, pointer, set, record, and class types; choose the right type for a problem."
+order: 1
+minutes: 10
+kind: core
+objectives: ["13.1.1", "13.1.2", "13.1.3", "13.1.4"]
+prerequisites: ["data-types-records"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 13.1 User-defined data types. Covers objectives 13.1.1-13.1.4.
+    Questions are original. AI-reviewed for syllabus alignment and content accuracy.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why built-in types are sometimes insufficient, define and use
+      enumerated types, pointer types, set types, record types, and class/object types, and
+      select the most appropriate user-defined type for a given problem.
+
+  - type: explain
+    title: Why user-defined types?
+    body: |
+      Built-in types (INTEGER, REAL, CHAR, STRING, BOOLEAN, DATE, ARRAY, FILE) cover many
+      situations but cannot naturally represent:
+      - A fixed set of named values (e.g., days of the week, card suits)
+      - Memory addresses or references to other data
+      - Collections of unique values where order doesn't matter
+      - Objects with both data and behaviour
+      User-defined types let us model the problem domain more precisely, improving readability,
+      type safety, and maintainability.
+
+  - type: explain
+    title: Non-composite types — enumerated types
+    body: |
+      An **enumerated type** defines a variable that can take only one of a listed set of named
+      values. The values are constants; internally they are often represented as integers.
+
+      **Pseudocode example:**
+      ```
+      TYPE DayOfWeek = (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
+      TYPE Suit = (Clubs, Diamonds, Hearts, Spades)
+      TYPE TrafficLight = (Red, Amber, Green)
+
+      DECLARE today : DayOfWeek
+      today <- Monday
+      IF today = Saturday OR today = Sunday THEN
+        OUTPUT "Weekend"
+      ENDIF
+      ```
+
+      Benefits:
+      - Self-documenting code (no magic numbers)
+      - Compile-time checking (cannot assign invalid values)
+      - Easy to maintain (add/remove values in one place)
+
+  - type: explain
+    title: Non-composite types — pointer types
+    body: |
+      A **pointer type** holds the memory address of another variable or data structure.
+      Pointers enable dynamic data structures (linked lists, trees, graphs) and passing
+      large structures by reference.
+
+      **Pseudocode example:**
+      ```
+      TYPE NodePtr = POINTER TO Node
+      TYPE Node = RECORD
+        data : INTEGER
+        next : NodePtr
+      ENDRECORD
+
+      DECLARE head : NodePtr
+      head <- NULL
+      ```
+
+      Key concepts:
+      - `NULL` (or `NIL`) represents a pointer that points to nothing
+      - Dereferencing: accessing the value at the address (e.g., `head^.data`)
+      - Dynamic allocation: `NEW(ptr)` allocates memory, `DISPOSE(ptr)` frees it
+
+  - type: explain
+    title: Composite types — set types
+    body: |
+      A **set type** represents an unordered collection of distinct values from a base type
+      (usually an ordinal type like an enumerated type or a subrange of integers).
+
+      **Pseudocode example:**
+      ```
+      TYPE Skills = SET OF (Python, Java, SQL, HTML, CSS, JavaScript)
+      DECLARE mySkills : Skills
+      mySkills <- {Python, SQL, JavaScript}
+      DECLARE required : Skills
+      required <- {Python, Java}
+
+      IF Python IN mySkills THEN OUTPUT "Has Python" ENDIF
+      IF required <= mySkills THEN OUTPUT "Meets requirements" ENDIF  // subset check
+      ```
+
+      Set operations:
+      - Membership: `x IN set`
+      - Union: `set1 + set2` (or `set1 UNION set2`)
+      - Intersection: `set1 * set2` (or `set1 INTERSECT set2`)
+      - Difference: `set1 - set2`
+      - Subset: `set1 <= set2`
+      - Equality: `set1 = set2`
+
+  - type: explain
+    title: Composite types — record types
+    body: |
+      A **record** (already introduced in topic 10.1) groups related fields of different types
+      under one identifier. At A Level, records can be nested and can contain pointers.
+
+      **Pseudocode example:**
+      ```
+      TYPE Address = RECORD
+        street : STRING
+        city : STRING
+        postcode : STRING
+      ENDRECORD
+
+      TYPE Student = RECORD
+        name : STRING
+        age : INTEGER
+        homeAddress : Address
+        subjects : SET OF (Maths, Physics, Chemistry, Biology)
+      ENDRECORD
+      ```
+
+  - type: explain
+    title: Composite types — class / object types
+    body: |
+      A **class** defines a template for objects that encapsulate both data (attributes) and
+      behaviour (methods). This is the foundation of object-oriented programming.
+
+      **Pseudocode example:**
+      ```
+      CLASS BankAccount
+        PRIVATE balance : REAL
+        PUBLIC accountNumber : STRING
+
+        CONSTRUCTOR(accNum : STRING)
+          accountNumber <- accNum
+          balance <- 0.0
+        ENDCONSTRUCTOR
+
+        METHOD deposit(amount : REAL)
+          IF amount > 0 THEN balance <- balance + amount ENDIF
+        ENDMETHOD
+
+        METHOD withdraw(amount : REAL) RETURNS BOOLEAN
+          IF amount > 0 AND amount <= balance THEN
+            balance <- balance - amount
+            RETURN TRUE
+          ELSE
+            RETURN FALSE
+          ENDIF
+        ENDMETHOD
+
+        METHOD getBalance() RETURNS REAL
+          RETURN balance
+        ENDMETHOD
+      ENDCLASS
+
+      DECLARE myAccount : BankAccount
+      myAccount <- NEW BankAccount("ACC12345")
+      myAccount.deposit(100.0)
+      ```
+
+      Key OOP concepts:
+      - **Encapsulation**: PRIVATE/PUBLIC access control
+      - **Constructor**: Initialises a new object
+      - **Methods**: Functions that operate on the object's data
+      - **Instantiation**: `NEW ClassName(...)` creates an object instance
+
+  - type: example
+    title: Choosing the right user-defined type
+    problem: |
+      For each scenario, choose the most appropriate user-defined type:
+      1. A variable representing the current state of a traffic light
+      2. A collection of unique tags assigned to a blog post
+      3. A linked list node for a dynamic queue
+      4. A customer record with name, address, and a list of orders
+      5. A playing card with suit and rank, with methods to compare cards
+    steps:
+      - "1. Enumerated type (fixed set of named states)"
+      - "2. Set type (unordered unique values)"
+      - "3. Pointer type (dynamic structure with references)"
+      - "4. Record type (grouped heterogeneous data)"
+      - "5. Class/object type (data + behaviour)"
+    answer: |
+      1. TYPE TrafficLight = (Red, Amber, Green)
+      2. TYPE Tags = SET OF STRING
+      3. TYPE NodePtr = POINTER TO Node; TYPE Node = RECORD data:INTEGER; next:NodePtr ENDRECORD
+      4. TYPE Customer = RECORD name:STRING; address:Address; orders:ARRAY[1:100] OF Order ENDRECORD
+      5. CLASS Card ... ENDCLASS with compareTo method
+
+  - type: check
+    title: Check yourself
+    questions: [user-defined-why, enum-example, pointer-null, set-operations, class-encapsulation]
+
+  - type: misconceptions
+    items:
+      - wrong: "Enumerated types are just integers with names."
+        right: |
+          While often implemented as integers, enumerated types provide type safety — you cannot
+          accidentally assign an integer or a value from a different enum.
+      - wrong: "Pointers and references are the same thing."
+        right: |
+          Pointers explicitly store memory addresses and support arithmetic; references are aliases
+          to existing variables. Pseudocode uses pointer notation (^).
+      - wrong: "Sets maintain insertion order."
+        right: |
+          Sets are unordered collections of distinct values. Order is not guaranteed or meaningful.
+      - wrong: "Records and classes are interchangeable."
+        right: |
+          Records are passive data containers; classes encapsulate data AND behaviour with access control.
+
+  - type: exam
+    body: |
+      - Define an enumerated type for a given set of values (e.g., months, priority levels).
+      - Write pseudocode using a pointer to traverse a linked list.
+      - Perform set operations (union, intersection, membership) in pseudocode.
+      - Define a class with private attributes, a constructor, and public methods.
+      - Given a scenario, justify the choice of enumerated, pointer, set, record, or class type.
+
+  - type: takeaways
+    items:
+      - "User-defined types model the problem domain more precisely than built-in types"
+      - "Enumerated types: fixed set of named constants, type-safe"
+      - "Pointer types: store addresses, enable dynamic structures (linked lists, trees)"
+      - "Set types: unordered distinct values, support union, intersection, membership"
+      - "Record types: group heterogeneous fields, can be nested"
+      - "Class types: encapsulate data (attributes) and behaviour (methods) with access control"
+
+questions:
+  - id: user-defined-why
+    format: mcq
+    difficulty: 1
+    objectives: ["13.1.1"]
+    prompt: |
+      Why might a programmer define a user-defined type instead of using only built-in types?
+    options:
+      - text: "To make the program run faster"
+        why: "User-defined types do not inherently improve performance."
+      - text: "To model the problem domain more precisely and improve type safety"
+        correct: true
+        why: "User-defined types let you represent domain concepts (e.g., DayOfWeek) directly, catching errors at compile time."
+      - text: "To reduce memory usage"
+        why: "User-defined types typically have the same or slightly larger memory footprint."
+      - text: "To avoid using arrays"
+        why: "Arrays are still needed for collections; user-defined types serve a different purpose."
+    explanation: |
+      User-defined types improve readability, maintainability, and type safety by letting you
+      create types that match the problem domain (e.g., TrafficLight instead of INTEGER 0/1/2).
+
+  - id: enum-example
+    format: mcq
+    difficulty: 2
+    objectives: ["13.1.2"]
+    prompt: |
+      Which pseudocode correctly declares an enumerated type for card suits and a variable of that type?
+    options:
+      - text: "TYPE Suit = [Clubs, Diamonds, Hearts, Spades]; DECLARE mySuit : Suit"
+        why: "Square brackets denote arrays, not enumerated types."
+      - text: "TYPE Suit = (Clubs, Diamonds, Hearts, Spades); DECLARE mySuit : Suit"
+        correct: true
+        why: "Enumerated types use parentheses with comma-separated identifiers."
+      - text: "TYPE Suit = {Clubs, Diamonds, Hearts, Spades}; DECLARE mySuit : Suit"
+        why: "Curly braces denote set literals, not type definitions."
+      - text: "DECLARE mySuit : (Clubs, Diamonds, Hearts, Spades)"
+        why: "Anonymous types are not allowed; the type must be named with TYPE."
+    explanation: |
+      Enumerated type syntax: TYPE TypeName = (Value1, Value2, ...). Then declare variables with DECLARE var : TypeName.
+
+  - id: pointer-null
+    format: mcq
+    difficulty: 2
+    objectives: ["13.1.2"]
+    prompt: |
+      In pseudocode, what value represents a pointer that does not point to any valid memory location?
+    options:
+      - text: "0"
+        why: "0 is an integer, not a pointer value."
+      - text: "NULL (or NIL)"
+        correct: true
+        why: "NULL/NIL is the standard pseudocode value for an empty/uninitialised pointer."
+      - text: "empty"
+        why: "empty is not a standard pseudocode keyword for pointers."
+      - text: "undefined"
+        why: "undefined is not a standard pseudocode keyword for pointers."
+    explanation: |
+      NULL (or NIL) indicates a pointer that points to nothing. It is used to initialise pointers
+      and to mark the end of linked structures.
+
+  - id: set-operations
+    format: mcq
+    difficulty: 2
+    objectives: ["13.1.3"]
+    prompt: |
+      Given `SET A = {1, 2, 3}` and `SET B = {3, 4, 5}`, what is `A * B` (intersection)?
+    options:
+      - text: "{1, 2, 3, 4, 5}"
+        why: "That is the union (A + B)."
+      - text: "{3}"
+        correct: true
+        why: "Intersection contains only elements present in both sets."
+      - text: "{1, 2}"
+        why: "That is the difference (A - B)."
+      - text: "{}"
+        why: "That would be the intersection of disjoint sets."
+    explanation: |
+      The intersection operator * (or INTERSECT) returns elements common to both sets.
+      Here only 3 is in both A and B.
+
+  - id: class-encapsulation
+    format: mcq
+    difficulty: 2
+    objectives: ["13.1.4"]
+    prompt: |
+      In the class definition below, which member can be accessed directly from outside the class?
+      ```
+      CLASS Example
+        PRIVATE x : INTEGER
+        PUBLIC y : INTEGER
+        PROTECTED z : INTEGER
+      ENDCLASS
+      ```
+    options:
+      - text: "x"
+        why: "PRIVATE members are only accessible within the class."
+      - text: "y"
+        correct: true
+        why: "PUBLIC members are accessible from anywhere."
+      - text: "z"
+        why: "PROTECTED members are accessible within the class and subclasses, not from outside."
+      - text: "Both x and y"
+        why: "PRIVATE members are not accessible from outside."
+    explanation: |
+      Encapsulation uses access modifiers: PUBLIC = accessible anywhere, PRIVATE = only within the class,
+      PROTECTED = within class and subclasses. Only y is PUBLIC.

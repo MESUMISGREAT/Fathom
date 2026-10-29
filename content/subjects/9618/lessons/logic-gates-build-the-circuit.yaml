@@ -1,0 +1,132 @@
+﻿id: logic-gates-build-the-circuit
+subject: "9618"
+topic: "3.2"
+title: Build a circuit from its rule
+summary: Construct a gate circuit from a sentence, logic expression or truth table.
+order: 6
+minutes: 5
+kind: core
+objectives: ["3.2.4"]
+prerequisites: [logic-gates-expression-from-words, logic-gates-expression-from-table, logic-gates-truth-table-from-circuit]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, learning outcome 3.2.4. Switches and table values are illustrative; all questions
+    are original. Independently re-checked line by line (facts, worked examples,
+    every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can construct a logic circuit from a problem statement, an expression or a truth table.
+  - type: explain
+    title: Treat the expression like a wiring recipe
+    body: |
+      For example, let A and B name inputs and Y name the output. If Y is 1 only when A is off and B is on, put A through NOT, then feed NOT A and B into AND.
+
+      Build the smallest operation first, then connect its output to the next gate. Each input letter gets its own wire.
+
+      For `Y = (NOT A) AND B`, first invert A. Then feed NOT A and B into a two-input AND gate.
+  - type: example
+    title: From sentence to gates
+    problem: Output Y is 1 when A is off and B is on.
+    steps:
+      - “A is off” means invert A, so add a NOT gate to the A wire.
+      - “And B is on” means combine NOT A with B in an AND gate.
+      - Label the final output Y. The expression is `Y = (NOT A) AND B`.
+    answer: One NOT gate on A, feeding one input of an AND gate; B feeds the other AND input.
+  - type: check
+    title: Pick the gate plan
+    questions: [circuit-from-sentence, circuit-from-expression]
+  - type: diagram
+    diagram: cs-logic-gates-expression-circuit
+    alt: >-
+      Input A passes through a NOT gate, then its output and input B connect to the two inputs
+      of an AND gate. The AND output is Y, representing Y equals NOT A AND B.
+  - type: explain
+    title: From the truth table
+    body: |
+      The same circuit can be built from the table. For `Y = (NOT A) AND B`, only row 01 has output 1.
+
+      Row 01 means A is 0, so use NOT A; B is 1, so use B. That gives `(NOT A) AND B`, the wiring recipe above.
+  - type: check
+    title: Wire the table's 1-row
+    questions: [circuit-from-table]
+  - type: exam
+    body: |
+      - Draw a distinct gate for every operation; NOT has one input and the other gates have two.
+      - Put gates in signal order, with wires flowing from inputs towards the output.
+      - Connect intermediate outputs to later gates and label the final output.
+      - For a truth table, make an expression for its 1-rows, then translate it gate by gate.
+  - type: misconceptions
+    items:
+      - wrong: Feed A directly into AND for `Y = (NOT A) AND B`.
+        right: A must pass through NOT first. AND needs the inverted value of A.
+      - wrong: Use OR because either input wire can carry a 1.
+        right: The expression says NOT A and B must both be 1 after inversion.
+  - type: check
+    title: Spot a wiring mistake
+    questions: [wrong-gate-plan]
+  - type: takeaways
+    items:
+      - Translate the sentence or table into an expression if the circuit is not obvious.
+      - Draw one gate per operation and wire earlier outputs into later gates.
+      - Keep NOT on the input it negates; connect the final gate to the named output.
+questions:
+  - id: circuit-from-sentence
+    format: mcq
+    difficulty: 2
+    objectives: ["3.2.4"]
+    prompt: Y should be 1 when A is off and B is on. Which circuit plan matches?
+    options:
+      - text: Put A through NOT; connect NOT A and B to AND; label its output Y
+        correct: true
+        why: This implements `(NOT A) AND B` exactly.
+      - text: Put A and B into OR, then invert its output
+        why: That implements NOT (A OR B), true only when both inputs are 0.
+      - text: Put A and B directly into AND
+        why: That implements A AND B; A must be off, not on.
+      - text: Put A through NOT, then connect NOT A and B to OR
+        why: OR outputs 1 if either condition is met, even if the other is false.
+    explanation: Invert A first, then require both NOT A and B with AND.
+  - id: circuit-from-expression
+    format: mcq
+    difficulty: 3
+    objectives: ["3.2.4"]
+    prompt: Which gate sequence builds `Y = A OR (NOT B)`?
+    options:
+      - text: Send B through NOT, then connect A and NOT B to OR
+        correct: true
+        why: NOT applies to B first; OR combines its result with A.
+      - text: Send A through NOT, then connect NOT A and B to OR
+        why: This builds `(NOT A) OR B`, which negates the wrong input.
+      - text: Put A and B into AND, then invert the output
+        why: This builds NAND, not A OR NOT B.
+      - text: Connect A and B directly to XOR
+        why: XOR is not equivalent to OR with B inverted.
+    explanation: >-
+      Follow the brackets: invert B, then OR that signal with A.
+  - id: circuit-from-table
+    format: cloze
+    difficulty: 2
+    objectives: ["3.2.4"]
+    prompt: A truth table has Y=1 only for row A=0, B=1. Its row-term is `({{1}}) AND {{2}}`; use one {{3}} gate and one {{4}} gate.
+    blanks:
+      - accept: ["NOT A"]
+      - accept: ["B"]
+      - accept: ["NOT"]
+      - accept: ["AND"]
+    explanation: Row 01 becomes `(NOT A) AND B`, so draw NOT on A and feed its output plus B into AND.
+  - id: wrong-gate-plan
+    format: spot-error
+    difficulty: 2
+    objectives: ["3.2.4"]
+    prompt: A student draws the circuit for `Y = (NOT A) AND B`. Which line contains the first error?
+    lines:
+      - Draw one NOT gate on input A.
+      - Connect the output of NOT to one input of an OR gate.
+      - Connect input B to the other OR input.
+      - Label the OR output Y.
+    errorLine: 2
+    fix: Replace the OR gate with an AND gate.
+    explanation: Both NOT A and B must be true, so the final operation is AND, not OR.

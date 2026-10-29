@@ -1,0 +1,294 @@
+id: cpu-architecture-interrupts
+subject: "9618"
+topic: "4.1"
+title: "Interrupts: how the CPU notices something happened"
+summary: What causes an interrupt, when the CPU checks for one, and the full handling sequence from saving state to running the ISR and resuming.
+order: 10
+minutes: 5
+kind: core
+objectives: ["4.1.8"]
+prerequisites: [cpu-architecture-fetch-execute]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, eighth learning outcome (the purpose of interrupts: possible
+    causes, applications, the Interrupt Service Routine, when interrupts are detected during
+    the fetch–execute cycle, and how interrupts are handled). All questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain **why interrupts exist**, list typical **causes** and
+      **applications**, say **when** an interrupt is detected, and describe **how** one is
+      handled using an **Interrupt Service Routine (ISR)**.
+
+  - type: explain
+    title: Nobody wants to wait
+    body: |
+      A printer finishes a job. A key is pressed. The clock ticks.
+
+      Without interrupts, the CPU would have to **keep asking** every device "are you
+      ready?" in a loop, wasting cycles — or worse, ignore them until the program chose to
+      look.
+
+      An **interrupt** is a signal, sent to the CPU along the **control bus**, saying
+      *"something needs your attention now."* The CPU pauses what it is doing, deals with
+      the event, then picks up exactly where it left off.
+
+  - type: definition
+    term: Interrupt
+    body: |
+      A signal raised by a device or by the processor itself that causes the CPU to stop
+      executing the current program temporarily, deal with the event, and then resume.
+
+  - type: explain
+    title: What causes one, and why they matter
+    body: |
+      **Common causes:**
+
+      - a key press or mouse click;
+      - a timer reaching zero (the basis of multitasking);
+      - a device finishing its work (printer done, download complete);
+      - new data arriving (network packet, sensor reading);
+      - an error, such as a division by zero or an invalid instruction.
+
+      **Applications the syllabus wants you to recognise:**
+
+      - **instant response to the user**, even while a long calculation runs;
+      - **sharing the processor** between programs, using timer interrupts;
+      - **real-time control**, where a sensor event must be handled within a fixed time.
+
+  - type: diagram
+    diagram: cs-cpu-architecture-interrupts
+    alt: >-
+      A flow diagram of interrupt handling: a normal program runs, a device raises an
+      interrupt on the control bus, the CPU finishes the current instruction, saves the
+      current registers, jumps to the Interrupt Service Routine, deals with the device,
+      restores the saved registers, and resumes the original program at the point it
+      stopped.
+    caption: Pause, save, serve, restore, resume.
+
+  - type: example
+    title: A key press mid-calculation
+    problem: |
+      The CPU is halfway through a long loop when a key is pressed. Follow the sequence.
+    steps:
+      - |
+        The keyboard controller raises an interrupt: a signal goes down the **control bus**.
+      - |
+        The CPU **finishes the instruction it is executing**. Interrupts are detected and
+        checked **at the end of each fetch–execute cycle**, never halfway through one —
+        that is what makes resuming safe.
+      - |
+        The CPU **saves the current state**: the PC (so it knows where to return) and the
+        registers holding the loop's values are pushed to memory.
+      - |
+        The CPU loads the address of the **Interrupt Service Routine (ISR)** into the PC and
+        runs it. The ISR reads the key from the device's buffer.
+      - |
+        The ISR finishes, the saved state is **restored**, and the loop resumes exactly
+        where it stopped — as far as the program can tell, nothing happened.
+    answer: |
+      Interrupt raised → finish current instruction → save state → run ISR → restore state
+      → resume.
+
+  - type: check
+    title: Quick check
+    questions: [what-is-interrupt, when-detected, isr-job]
+
+  - type: misconceptions
+    items:
+      - wrong: An interrupt stops the program dead, and it starts again from the beginning.
+        right: |
+          The **state is saved**, including the PC, so the program resumes at the exact
+          instruction where it paused.
+      - wrong: Interrupts can be handled in the middle of an instruction.
+        right: |
+          They are detected **at the end of a fetch–execute cycle**, so no instruction is
+          ever half-finished.
+      - wrong: The ISR is part of every application you run.
+        right: |
+          The ISR is a short routine that deals with one event quickly. It may live in the
+          operating system or firmware, not in your program.
+      - wrong: The CPU should drop everything immediately when an interrupt arrives.
+        right: |
+          It finishes the current instruction first. Interrupt handling has to be quick too:
+          long work is best done afterwards or in smaller pieces.
+
+  - type: exam
+    body: |
+      - "Describe how an interrupt is handled" is a **sequence** mark question: finish
+        instruction → save state → jump to ISR → deal with the event → restore state →
+        resume. Six beats, usually 3–4 marks.
+      - Always say **when** interrupts are checked: at the end of the fetch–execute cycle.
+        That single line is a mark on its own.
+      - "State **two** causes" wants two genuinely different events — a device finishing and
+        a timer expiring, not "key press and mouse press" if the mark scheme wants variety.
+
+  - type: check
+    title: Check yourself
+    questions: [handle-sequence, explain-purpose, priority-order]
+
+  - type: enrichment
+    title: "Polling: the alternative the syllabus does not test"
+    body: |
+      **Not examinable.** Instead of interrupting, a program can *poll* — repeatedly asking
+      each device "are you ready?" in a loop. That wastes CPU cycles when nothing happens
+      and delays response when something does. Interrupts invert the conversation: the
+      device speaks up only when it matters.
+
+  - type: takeaways
+    items:
+      - An **interrupt** is a signal on the control bus that makes the CPU deal with an
+        event and then resume.
+      - >-
+        Causes: user input, timers, devices finishing, data arriving, errors.
+      - Interrupts are checked **at the end of every fetch–execute cycle**.
+      - >-
+        Handling: finish the instruction → save state → run the **ISR** → restore state →
+        resume.
+
+questions:
+  - id: what-is-interrupt
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.8"]
+    prompt: |
+      Which statement best describes the **purpose of an interrupt**?
+    options:
+      - text: >-
+          It signals that an event needs the CPU's attention, so the CPU pauses its
+          current program, deals with it, then resumes
+        correct: true
+        why: |
+          That is the whole idea: a device gets served promptly without the CPU polling it,
+          and the program resumes afterwards.
+      - text: It speeds up the processor by increasing the clock speed
+        why: |
+          Interrupts change *what* the CPU does, not how fast it runs.
+      - text: It stores the program in main memory before it runs
+        why: |
+          That is the stored program concept, unrelated to interrupt signals.
+      - text: It shuts the computer down safely when power fails
+        why: |
+          A power-failure warning may *raise* an interrupt, but interrupts generally pause
+          and resume, they do not shut the machine down.
+    explanation: |
+      Interrupt = "deal with this now, then carry on where you were".
+
+  - id: when-detected
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.8"]
+    prompt: |
+      **When** does the CPU check for interrupts?
+    options:
+      - text: At the end of each fetch–execute cycle
+        correct: true
+        why: |
+          Checking at the end of the cycle means no instruction is ever left half-done, so
+          the interrupted program can always resume safely.
+      - text: Immediately, in the middle of whichever instruction is running
+        why: |
+          That would interrupt a half-finished instruction and corrupt the result.
+      - text: Only when the program explicitly asks for interrupts
+        why: |
+          Devices raise interrupts whether or not the program asks; that is the point of
+          them.
+      - text: Once every minute, at a fixed time
+        why: |
+          Timer interrupts are one *cause*, but the CPU checks for interrupts after every
+          cycle, not once a minute.
+    explanation: |
+      End of the fetch–execute cycle. Learn that phrase — it is a mark by itself.
+
+  - id: isr-job
+    format: text
+    difficulty: 1
+    objectives: ["4.1.8"]
+    prompt: |
+      What does an Interrupt Service Routine (ISR) do?
+    style: definition
+    accept:
+      - "it deals with the interrupt"
+      - "it handles the interrupt"
+      - "it services the device that raised the interrupt"
+      - "it deals with the event that caused the interrupt"
+      - "it handles the event that caused the interrupt"
+      - "it reads data from the device and deals with the interrupt"
+      - "it deals with the interrupt and tells the device it is done"
+      - "short routine that deals with the interrupt"
+    model: |
+      The ISR is a short routine that runs when an interrupt occurs. It identifies what
+      caused the interrupt and deals with it quickly — for example reading a key from the
+      device's buffer — then returns control so the interrupted program can resume.
+    explanation: |
+      Key ideas: a **routine** that **services** (deals with) the interrupt, quickly.
+
+  - id: handle-sequence
+    format: cloze
+    difficulty: 3
+    objectives: ["4.1.8"]
+    prompt: |
+      Put the handling steps in order. First the CPU finishes the current instruction, then
+      it {{1}} the current state, then it runs the {{2}}, and afterwards it {{3}} the state
+      so the program can continue.
+    blanks:
+      - accept: ["saves", "stores", "pushes", "copies to memory"]
+      - accept: ["isr", "interrupt service routine", "the isr", "interrupt service handling routine"]
+      - accept: ["restores", "reloads", "recovers"]
+    explanation: |
+      Save → service → restore. Because the state comes back exactly, the program never
+      knows it was paused.
+
+  - id: priority-order
+    format: mcq
+    difficulty: 3
+    objectives: ["4.1.8"]
+    prompt: |
+      While the CPU is serving one interrupt, two more arrive: a timer has expired and a
+      sensor has reported a dangerous reading. What should happen?
+    options:
+      - text: The more urgent interrupt is given a higher priority and is served first
+        correct: true
+        why: |
+          Interrupts have priorities; the CPU handles the highest-priority one first, so
+          critical events are never kept waiting behind trivial ones.
+      - text: Both are ignored until the current ISR finishes and the program resumes
+        why: |
+          A critical sensor event could then be missed entirely — that is exactly what
+          priorities prevent.
+      - text: The CPU restarts so all three interrupts are handled from scratch
+        why: |
+          Restarting would lose the saved state and the running work; interrupts do not
+          require a reboot.
+      - text: The timer interrupt always runs first because timers are hardware
+        why: |
+          Order is set by **priority**, not by which device happens to be hardware — and
+          both devices listed are hardware.
+    explanation: |
+      Priorities decide the order when interrupts collide; the most urgent wins.
+
+  - id: explain-purpose
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.8"]
+    prompt: |
+      Explain why a computer uses interrupts rather than having the processor repeatedly
+      check each device, and describe when an interrupt is detected.
+    model: |
+      If the processor repeatedly checked each device, it would waste many cycles asking
+      questions when nothing had happened, and a device might wait a long time before its
+      turn came. With interrupts, a device signals only when it needs service, so the CPU
+      keeps working on the current program until an event actually occurs, and responds
+      promptly. Interrupts are detected at the end of each fetch–execute cycle, when the
+      current instruction has completed, so no instruction is left half-executed before the
+      CPU saves the state and runs the Interrupt Service Routine.
+    keyPoints:
+      - Checking every device repeatedly wastes CPU cycles
+      - A device signals only when it needs attention
+      - The CPU keeps running the current program until then
+      - Interrupts are detected at the end of a fetch–execute cycle
+    explanation: |
+      Two halves: **why interrupts beat checking**, and **when they are detected**.

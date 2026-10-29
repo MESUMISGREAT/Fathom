@@ -1,0 +1,324 @@
+id: hess-law-combustion-cycles
+subject: "9701"
+topic: "5.2"
+title: "Combustion cycles: burning your way to an answer"
+summary: Combustion enthalpies are easy to measure, so a cycle that burns everything to CO₂ and H₂O can find formation enthalpies that no direct experiment can reach.
+order: 3
+minutes: 7
+kind: core
+objectives: ["5.2.1", "5.2.2"]
+prerequisites: [hess-law-formation-cycles, enthalpy-change-calorimetry]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 5.2, learning outcomes 5.2.1 and 5.2.2(a). Worked values use standard
+    textbook data and were checked with Python; the ethane example is labelled as using the
+    given data rather than the accepted value. Questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every cycle re-derived from its own data and every numeric key recomputed in Python, every MCQ checked for exactly one correct option, and all four diagrams rendered and inspected in light and dark. One real error was caught and fixed in that pass (a methanol cycle key written as -238.1 instead of -239.1). No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can build a cycle in which everything burns to the same products, and use combustion enthalpies to find $\Delta H_f^{\ominus}$ or $\Delta H_r^{\ominus}$.
+
+  - type: explain
+    title: Why burn things?
+    body: |-
+      Enthalpy changes of combustion are the easiest to measure: put the substance in a burner, supply excess oxygen, and measure the heat released. If combustion is complete, carbon ends up as CO₂ and hydrogen as H₂O — always the same products.
+
+      That shared finishing point makes a perfect meeting place for a cycle. Reactants can be burned; the products can be burned. Both routes end at the same oxides.
+
+  - type: definition
+    term: Standard enthalpy change of combustion
+    body: |-
+      The enthalpy change when **one mole** of a substance is burned completely in **excess oxygen**
+      under standard conditions, with all reactants and products in their standard states.
+
+      Symbol: $\Delta H_c^{\ominus}$, in $\text{kJ mol}^{-1}$. It is almost always negative.
+
+  - type: diagram
+    diagram: chem-hess-law-combustion-cycle
+    alt: >-
+      A cycle with the substance at the top and its complete combustion products, carbon dioxide
+      and water, at the bottom. A direct downward arrow is labelled delta H combustion. A second
+      route goes across the top to the elements in their standard states and then down to the same
+      combustion products, labelled with formation and combustion arrows so that the two routes end
+      at identical oxides.
+    caption: |-
+      Burning the compound directly and burning the elements separately both end at the same
+      oxides, so the two routes must have the same total enthalpy change.
+
+  - type: explain
+    title: The pattern for the calculation
+    body: |-
+      For a substance containing only carbon and hydrogen (a hydrocarbon), complete combustion gives
+      CO₂ and H₂O. The elements carbon and hydrogen burn to the same two oxides.
+
+      So, per mole of the compound:
+
+      $$\Delta H_c^{\ominus}(\text{compound}) = \Delta H_f^{\ominus}(\text{compound}) - \sum \Delta H_c^{\ominus}(\text{elements in it})$$
+
+      which rearranges to the version you will actually use:
+
+      $$\Delta H_f^{\ominus}(\text{compound}) = \Delta H_c^{\ominus}(\text{compound}) - \sum \Delta H_c^{\ominus}(\text{elements})$$
+
+      Careful with what "the elements in it" means: one mole of the compound contains some number
+      of moles of C and some of H₂, and each of those burns separately.
+
+  - type: example
+    title: "Worked example: formation of ethane from combustion data"
+    problem: |-
+      Find $\Delta H_f^{\ominus}$ of ethane using:
+
+      - $\Delta H_c^{\ominus}[\text{C}_2\text{H}_6\text{(g)}] = -1560\ \text{kJ mol}^{-1}$
+      - $\Delta H_c^{\ominus}[\text{C(s)}] = -393.5\ \text{kJ mol}^{-1}$
+      - $\Delta H_c^{\ominus}[\text{H}_2\text{(g)}] = -285.8\ \text{kJ mol}^{-1}$
+
+      The formation reaction is $2\text{C(s)} + 3\text{H}_2\text{(g)} \rightarrow \text{C}_2\text{H}_6\text{(g)}$.
+    steps:
+      - |-
+        Work out what one mole of ethane contains: 2 mol C and 3 mol H₂, because
+        $\text{C}_2\text{H}_6$ needs 3 H₂ molecules to supply its 6 H atoms.
+      - |-
+        Burn the **elements**: 2 mol C and 3 mol H₂ give
+
+        $$2(-393.5) + 3(-285.8) = -787.0 - 857.4 = -1644.4\ \text{kJ mol}^{-1}$$
+      - |-
+        Burn the **compound**: it gives the same oxides and releases $-1560\ \text{kJ mol}^{-1}$.
+      - |-
+        The elements route and the compound route must agree. Going elements → ethane (which is
+        $\Delta H_f^{\ominus}$) and then burning gives the elements route:
+
+        $$\Delta H_f^{\ominus} + (-1560) = -1644.4$$
+      - |-
+        Solve:
+
+        $$\Delta H_f^{\ominus} = -1644.4 + 1560 = -84.4\ \text{kJ mol}^{-1}$$
+    answer: |-
+      $\Delta H_f^{\ominus}[\text{C}_2\text{H}_6\text{(g)}] \approx -84\ \text{kJ mol}^{-1}$ using this
+      data (the accepted value is about $-85\ \text{kJ mol}^{-1}$).
+
+  - type: example
+    title: "Worked example: a reaction enthalpy from combustion data"
+    problem: |-
+      Find $\Delta H_r^{\ominus}$ for
+
+      $$\text{C}_2\text{H}_4\text{(g)} + \text{H}_2\text{(g)} \rightarrow \text{C}_2\text{H}_6\text{(g)}$$
+
+      given $\Delta H_c^{\ominus}$: C₂H₄ $= -1411$, H₂ $= -286$, C₂H₆ $= -1560\ \text{kJ mol}^{-1}$.
+    steps:
+      - |-
+        Burn the **reactants**: $(-1411) + (-286) = -1697\ \text{kJ mol}^{-1}$.
+      - |-
+        Burn the **product**: $-1560\ \text{kJ mol}^{-1}$.
+      - |-
+        Both routes finish at the same oxides, so
+
+        $$\Delta H_r^{\ominus} + (-1560) = -1697$$
+      - |-
+        $$\Delta H_r^{\ominus} = -1697 + 1560 = -137\ \text{kJ mol}^{-1}$$
+    answer: |-
+      $\Delta H_r^{\ominus} = -137\ \text{kJ mol}^{-1}$ (exothermic — the sort of value you would
+      expect for adding hydrogen across a double bond).
+
+  - type: check
+    title: Quick check
+    questions: [combustion-definition, which-products, burn-both-sides]
+
+  - type: check
+    title: Practice
+    questions: [formation-from-combustion, reaction-from-combustion, sign-check]
+
+  - type: misconceptions
+    items:
+      - wrong: Combustion cycles only work for hydrocarbons.
+        right: |-
+          They work for any substance whose complete combustion products are known. For compounds
+          containing oxygen, the oxygen already present simply reduces the O₂ needed.
+      - wrong: You burn the compound and the elements and add all three values.
+        right: |-
+          The two routes must be **equated**, not added blindly. Draw the cycle and follow the
+          arrows — one route goes via the compound, the other via the elements.
+      - wrong: For ethane, use 6 mol of H₂ because there are 6 hydrogen atoms.
+        right: |-
+          Hydrogen gas is H₂, so 6 H atoms need **3** mol of H₂.
+      - wrong: The formation enthalpy is the sum of the combustion enthalpies.
+        right: |-
+          It is the difference, with the compound's own combustion subtracted — see the worked
+          example.
+      - wrong: Incomplete combustion gives the same value.
+        right: |-
+          Combustion enthalpies are defined for **complete** combustion in excess oxygen. Burning
+          to CO instead of CO₂ releases a different amount.
+      - wrong: A positive $\Delta H_c^{\ominus}$ is normal.
+        right: |-
+          Combustion releases energy, so $\Delta H_c^{\ominus}$ is negative for combustible
+          substances.
+
+  - type: exam
+    body: |-
+      - Draw the cycle with the **oxides at the bottom** — CO₂ and H₂O for organic compounds.
+      - Convert "6 H atoms" into "3 mol H₂" before multiplying. That single step causes a large
+        share of lost marks.
+      - State the balanced formation equation before you start, so the coefficients are visible.
+      - Round at the end, to 3 s.f. or the precision of the data, and give the unit.
+
+  - type: takeaways
+    items:
+      - '$\Delta H_c^{\ominus}$: one mole burned completely in excess oxygen, standard conditions.'
+      - 'A combustion cycle puts the shared oxides at the bottom of the diagram.'
+      - 'For a hydrocarbon, $\Delta H_f^{\ominus}(\text{compound}) = \Delta H_c^{\ominus}(\text{compound}) - \sum \Delta H_c^{\ominus}(\text{elements})$.'
+      - 'Convert hydrogen atoms to moles of H₂ before scaling.'
+      - 'Both routes must be equated, not simply added.'
+
+  - type: deeper
+    title: When combustion data disagree with formation data
+    body: |-
+      Enthalpies of combustion measured in a school calorimeter are often 5–10% off the accepted
+      values, because heat is lost to the surroundings and combustion may be incomplete.
+
+      A Hess cycle does not remove that error — it carries it through. If your calculated
+      $\Delta H_f^{\ominus}$ is a few per cent away from the data book, that is usually the
+      calorimeter, not the algebra. Examiners expect you to use the numbers **given in the
+      question**, not the ones you remember.
+
+questions:
+  - id: combustion-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.2"]
+    prompt: |-
+      Which is the standard enthalpy change of combustion of a substance?
+    options:
+      - text: The enthalpy change when one mole is burned completely in excess oxygen under standard conditions
+        correct: true
+        why: |-
+          "One mole", "completely" and "excess oxygen" are the examinable parts.
+      - text: The enthalpy change when one mole forms from its elements
+        why: |-
+          That is formation.
+      - text: The enthalpy change when one mole is burned in a limited supply of oxygen
+        why: |-
+          Incomplete combustion is a different, undefined change.
+      - text: The enthalpy change when any amount burns
+        why: |-
+          Combustion enthalpy is quoted per mole.
+    explanation: |-
+      Complete combustion of one mole in excess oxygen.
+
+  - id: which-products
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.2"]
+    prompt: |-
+      A compound contains only carbon, hydrogen and oxygen. What are the products of its complete combustion?
+    options:
+      - text: Carbon dioxide and water only
+        correct: true
+        why: |-
+          All the carbon becomes CO₂, all the hydrogen becomes H₂O, and the oxygen in the compound
+          joins them.
+      - text: Carbon monoxide and hydrogen
+        why: |-
+          Those are products of incomplete combustion, not complete combustion.
+      - text: Carbon dioxide and hydrogen gas
+        why: |-
+          Hydrogen is oxidised to water, not released as H₂.
+      - text: Carbon and water
+        why: |-
+          Carbon is oxidised all the way to CO₂ in excess oxygen.
+    explanation: |-
+      Complete combustion of a C/H/O compound gives CO₂ and H₂O.
+
+  - id: burn-both-sides
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.1"]
+    prompt: |-
+      In a combustion cycle, why can the reactants' and the products' combustion enthalpies be compared directly?
+    options:
+      - text: Because both routes end at the same combustion products, so the total enthalpy change must match
+        correct: true
+        why: |-
+          Hess's law needs identical start and end points; the shared oxides provide that.
+      - text: Because combustion always releases the same amount of energy
+        why: |-
+          Different substances release very different amounts.
+      - text: Because combustion is always complete in a cycle
+        why: |-
+          Completeness is an assumption of the measurement, not the reason for the comparison.
+      - text: Because the elements have zero enthalpy
+        why: |-
+          Only their formation enthalpies are zero by definition.
+    explanation: |-
+      The shared final oxides make the two routes comparable.
+
+  - id: formation-from-combustion
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.2"]
+    prompt: |-
+      Use the data to find $\Delta H_f^{\ominus}$ of methanol, for
+
+      $$\text{C(s)} + 2\text{H}_2\text{(g)} + \tfrac{1}{2}\text{O}_2\text{(g)} \rightarrow \text{CH}_3\text{OH(l)}$$
+
+      $\Delta H_c^{\ominus}[\text{CH}_3\text{OH(l)}] = -726\ \text{kJ mol}^{-1}$,
+      $\Delta H_c^{\ominus}[\text{C(s)}] = -393.5\ \text{kJ mol}^{-1}$,
+      $\Delta H_c^{\ominus}[\text{H}_2\text{(g)}] = -285.8\ \text{kJ mol}^{-1}$.
+
+      Give your answer in kJ mol⁻¹.
+    fields:
+      - label: "ΔH ="
+        answer: -239.1
+        unit: kJ mol⁻¹
+        tolerance: { abs: 1 }
+    explanation: |-
+      The elements burn to the same oxides: $-393.5 + 2(-285.8) = -965.1\ \text{kJ mol}^{-1}$. The
+      cycle gives $\Delta H_f^{\ominus} + (-726) = -965.1$, so
+      $\Delta H_f^{\ominus} = -239.1\ \text{kJ mol}^{-1}$.
+
+  - id: reaction-from-combustion
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.2"]
+    prompt: |-
+      Find $\Delta H_r^{\ominus}$ for $\text{C}_2\text{H}_2\text{(g)} + 2\text{H}_2\text{(g)} \rightarrow \text{C}_2\text{H}_6\text{(g)}$
+
+      given $\Delta H_c^{\ominus}$: C₂H₂ $= -1300$, H₂ $= -286$, C₂H₆ $= -1560\ \text{kJ mol}^{-1}$.
+
+      Give your answer in kJ mol⁻¹.
+    fields:
+      - label: "ΔH ="
+        answer: -312
+        unit: kJ mol⁻¹
+        tolerance: { abs: 1 }
+    explanation: |-
+      Reactants burn: $-1300 + 2(-286) = -1872\ \text{kJ mol}^{-1}$. Then
+      $\Delta H_r + (-1560) = -1872$, so $\Delta H_r = -312\ \text{kJ mol}^{-1}$.
+
+  - id: sign-check
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      A student's calculated $\Delta H_f^{\ominus}$ for a stable hydrocarbon comes out at
+      $+420\ \text{kJ mol}^{-1}$. What is the most likely explanation?
+    options:
+      - text: A sign or direction error in the cycle, because most hydrocarbons have negative formation enthalpies
+        correct: true
+        why: |-
+          A large positive formation enthalpy would mean the compound is very unstable relative to
+          its elements, which is not true of ordinary hydrocarbons.
+      - text: The compound must be extremely stable
+        why: |-
+          Positive formation enthalpy means **less** stable than the elements.
+      - text: Combustion enthalpies are always positive
+        why: |-
+          They are negative; that is what makes the value suspicious.
+      - text: Hess's law does not apply to hydrocarbons
+        why: |-
+          It applies to all reactions.
+    explanation: |-
+      The sign is a warning: check the cycle's arrow directions before trusting the number.

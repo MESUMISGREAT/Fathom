@@ -1,0 +1,321 @@
+id: stress-strain-young-modulus
+subject: "9702"
+topic: "6.1"
+title: "The Young modulus: a fingerprint for a material"
+summary: Divide stress by strain and the size of the sample cancels, leaving one number that identifies the material — and the gradient of a stress–strain graph.
+order: 5
+minutes: 7
+kind: core
+objectives: ["6.1.5"]
+prerequisites: [stress-strain-stress-and-strain]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.1, learning outcome 6.1.5 (the Young modulus: define it and use it).
+    Typical values quoted (steel about 2 x 10^11 Pa, copper about 1.2 x 10^11 Pa) are standard
+    textbook figures, rounded; question data is invented and chosen for exact arithmetic. All
+    questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28. Every numeric key was recomputed independently in Python from the question's own data, every MCQ was checked for exactly one correct option with plausible distractors, and every diagram was rendered and inspected in light and dark (labels, arrows, overlaps and scale). Two real errors were found and fixed in that pass: a wrong 'strain falls by 2' reasoning in a stress/strain comparison question, and a garbled sentence in the elastic-vs-strong enrichment. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **define the Young modulus**, calculate it from measurements on a wire, and read it as the **gradient** of the straight part of a stress–strain graph.
+
+  - type: explain
+    title: From comparison to identity
+    body: |-
+      Stress and strain already remove the size of the sample. Divide one by the other and you get a
+      number that depends **only on the material**:
+
+      $$\text{Young modulus } E = \frac{\text{tensile stress}}{\text{tensile strain}} = \frac{\sigma}{\varepsilon}$$
+
+      Steel comes out at about $2 \times 10^{11}\ \text{Pa}$, copper at about
+      $1.2 \times 10^{11}\ \text{Pa}$, rubber at around $10^{7}\ \text{Pa}$. Those numbers are
+      fingerprints: they do not change when you use a longer or thicker wire.
+
+      A **large** $E$ means the material resists being stretched — it is **stiff**. Steel has a
+      large $E$; rubber has a tiny one.
+
+  - type: definition
+    term: Young modulus
+    body: |-
+      The **ratio of tensile stress to tensile strain** for a material, provided the limit of
+      proportionality is not exceeded:
+
+      $$E = \frac{\sigma}{\varepsilon}$$
+
+      Its unit is the pascal, Pa (equivalently $\text{N m}^{-2}$), because strain has no unit.
+
+  - type: intuition
+    title: Why the size cancels out
+    body: |-
+      Write the definition out in terms of what you can measure:
+
+      $$E = \frac{\sigma}{\varepsilon} = \frac{F/A}{x/L} = \frac{F\,L}{A\,x}$$
+
+      Now look at what happens if you double the length $L$ of the wire. The extension $x$ also
+      doubles, so $L/x$ is unchanged. Double the cross-sectional area and the extension halves, so
+      $A\,x$ is unchanged too.
+
+      The dimensions cancel. What survives is a property of the metal, which is exactly what
+      engineers need when they choose a material for a bridge rather than for a lab sample.
+
+  - type: diagram
+    diagram: phys-stress-strain-young-modulus
+    alt: >-
+      A stress-strain graph for a metal. Stress rises along a straight line from the origin through
+      plotted points, and the gradient of that straight section is marked with a rise-over-run
+      triangle labelled gradient = Young modulus. At a marked point the line begins to curve; the
+      label there says limit of proportionality, and a shaded band beyond it is labelled "E not
+      defined here".
+    caption: |-
+      While the graph is straight, its gradient is the Young modulus. Past the limit of
+      proportionality the gradient changes, so $E$ is no longer defined this way.
+
+  - type: example
+    title: "Worked example: the full calculation"
+    problem: |-
+      A steel wire is 2.00 m long and 0.50 mm in diameter. It extends by 2.5 mm when a load of 50 N is applied.
+
+      Calculate the Young modulus of the steel.
+    steps:
+      - |-
+        Write everything in metres:
+
+        $$L = 2.00\ \text{m}, \quad d = 5.0 \times 10^{-4}\ \text{m}, \quad x = 2.5 \times 10^{-3}\ \text{m}$$
+      - |-
+        Cross-sectional area:
+
+        $$A = \pi \left(\frac{d}{2}\right)^2 = \pi \left(2.5 \times 10^{-4}\right)^2 = 1.96 \times 10^{-7}\ \text{m}^2$$
+      - |-
+        Stress:
+
+        $$\sigma = \frac{F}{A} = \frac{50}{1.96 \times 10^{-7}} = 2.55 \times 10^{8}\ \text{Pa}$$
+      - |-
+        Strain:
+
+        $$\varepsilon = \frac{x}{L} = \frac{2.5 \times 10^{-3}}{2.00} = 1.25 \times 10^{-3}$$
+      - |-
+        Divide:
+
+        $$E = \frac{2.55 \times 10^{8}}{1.25 \times 10^{-3}} = 2.0 \times 10^{11}\ \text{Pa}$$
+      - |-
+        Or in one line, without stopping at stress and strain:
+
+        $$E = \frac{F\,L}{A\,x} = \frac{50 \times 2.00}{1.96 \times 10^{-7} \times 2.5 \times 10^{-3}} = 2.0 \times 10^{11}\ \text{Pa}$$
+    answer: |-
+      $E \approx 2.0 \times 10^{11}\ \text{Pa}$ — the standard value for steel, which is a good sign
+      the measurements were sensible.
+
+  - type: example
+    title: "Worked example: using E to predict an extension"
+    problem: |-
+      A copper wire of length 3.0 m and diameter 0.60 mm has $E = 1.2 \times 10^{11}\ \text{Pa}$.
+
+      What extension does a 30 N load produce, assuming the wire stays within its limit of proportionality?
+    steps:
+      - |-
+        Rearrange $E = \dfrac{F L}{A x}$ for the extension:
+
+        $$x = \frac{F\,L}{A\,E}$$
+      - |-
+        Area:
+
+        $$A = \pi \left(0.30 \times 10^{-3}\right)^2 = 2.83 \times 10^{-7}\ \text{m}^2$$
+      - |-
+        Substitute:
+
+        $$x = \frac{30 \times 3.0}{2.83 \times 10^{-7} \times 1.2 \times 10^{11}} = 2.7 \times 10^{-3}\ \text{m}$$
+      - |-
+        That is 2.7 mm — a plausible extension for a copper wire of that length.
+    answer: |-
+      $x \approx 2.7 \times 10^{-3}\ \text{m}$ (2.7 mm).
+
+  - type: check
+    title: Quick check
+    questions: [young-definition, young-units, graph-gradient]
+
+  - type: check
+    title: Practice
+    questions: [young-from-data, extension-from-young-modulus, stiffer-material]
+
+  - type: misconceptions
+    items:
+      - wrong: The Young modulus is a force.
+        right: |-
+          It is a stress divided by a strain, so it is a pressure, measured in pascals.
+      - wrong: A material with a large Young modulus stretches a lot.
+        right: |-
+          A large $E$ means it resists stretching: for the same stress, the strain is smaller.
+      - wrong: The Young modulus depends on the length and thickness of the wire.
+        right: |-
+          It is a property of the material. Changing the wire changes $F$, $x$, $A$ and $L$ together
+          in a way that leaves $E$ the same.
+      - wrong: The gradient of the whole stress–strain graph is $E$.
+        right: |-
+          Only the straight part. Once it curves, the ratio stress/strain is no longer constant, and
+          the Young modulus is defined only within the limit of proportionality.
+      - wrong: $E$ can be found from the area under the stress–strain graph.
+        right: |-
+          The area under a stress–strain graph is energy per unit volume, not the Young modulus. $E$
+          is the gradient.
+
+  - type: exam
+    body: |-
+      - Learn both the words ("ratio of tensile stress to tensile strain") and the equation $E = \sigma/\varepsilon$.
+      - Quote $E$ in Pa, to 2 or 3 significant figures, and say "within the limit of proportionality" if you are explaining when it applies.
+      - In calculations, convert mm to m first and keep powers of ten explicit; most lost marks here are arithmetic, not physics.
+      - A graph question usually wants the gradient of the straight section, taken over a long run.
+
+  - type: takeaways
+    items:
+      - '$E = \sigma/\varepsilon$, the ratio of tensile stress to tensile strain.'
+      - '$E$ is in pascals and depends only on the material.'
+      - '$E = FL/(Ax)$ is the working form for a wire.'
+      - 'The gradient of the straight part of a stress–strain graph is $E$.'
+      - 'Steel is about $2 \times 10^{11}$ Pa, copper about $1.2 \times 10^{11}$ Pa, rubber around $10^{7}$ Pa.'
+
+  - type: deeper
+    title: Stiff is not the same as strong
+    body: |-
+      **Stiffness** (a large $E$) is about resisting deformation. **Strength** is about resisting
+      breaking — the stress at which the material fractures.
+
+      Glass is stiff ($E \approx 7 \times 10^{10}\ \text{Pa}$) but brittle: it barely stretches
+      before it shatters. Rubber is the opposite — a tiny $E$, so it stretches enormously — yet a
+      rubber band can be surprisingly hard to break, because it is strong even though it is not
+      stiff.
+
+      Engineers choose materials by asking both questions: how much will it deform, and will it
+      survive?
+
+questions:
+  - id: young-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.5"]
+    prompt: |-
+      Which is the definition of the Young modulus?
+    options:
+      - text: The ratio of tensile stress to tensile strain
+        correct: true
+        why: |-
+          That ratio is the definition, valid within the limit of proportionality.
+      - text: The ratio of tensile strain to tensile stress
+        why: |-
+          That is $1/E$, the reciprocal.
+      - text: The product of stress and strain
+        why: |-
+          Multiplying does not remove the dimensions, so the result would not identify the material.
+      - text: The force per unit extension
+        why: |-
+          That is the spring constant $k$, which does depend on the size of the object.
+    explanation: |-
+      $E = \sigma/\varepsilon$.
+
+  - id: young-units
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.5"]
+    prompt: |-
+      Why does the Young modulus have the same unit as stress?
+    options:
+      - text: Because strain has no unit, so the unit of stress divided by strain is the unit of stress
+        correct: true
+        why: |-
+          Strain is a ratio of two lengths, so dividing by it leaves the stress unit unchanged.
+      - text: Because the Young modulus is a force
+        why: |-
+          It is a pressure, not a force.
+      - text: Because strain is measured in pascals
+        why: |-
+          Strain has no unit at all.
+      - text: Because the unit is chosen by convention, with no reason
+        why: |-
+          The unit follows directly from the definition.
+    explanation: |-
+      $E = \sigma/\varepsilon$ and $\varepsilon$ is dimensionless, so $E$ is in pascals.
+
+  - id: graph-gradient
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.5"]
+    prompt: |-
+      A stress–strain graph for a metal is a straight line through the origin for small strains, then curves. How is the Young modulus found from this graph?
+    options:
+      - text: From the gradient of the straight section
+        correct: true
+        why: |-
+          The gradient is $\Delta\sigma/\Delta\varepsilon$, which is $E$ while the line is straight.
+      - text: From the gradient at the very end of the curve
+        why: |-
+          Past the limit of proportionality the gradient is no longer $E$.
+      - text: From the area under the straight section
+        why: |-
+          Area gives energy per unit volume, not $E$.
+      - text: From the stress value where the curve begins
+        why: |-
+          That value is the stress at the limit of proportionality, not the modulus.
+    explanation: |-
+      $E$ is the gradient of the linear part of a stress–strain graph.
+
+  - id: young-from-data
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.5"]
+    prompt: |-
+      A wire of original length 1.50 m and cross-sectional area $4.0 \times 10^{-7}\ \text{m}^2$ extends by 0.60 mm under a load of 32 N.
+
+      Calculate the Young modulus of the wire in Pa.
+    fields:
+      - label: "E ="
+        answer: 200000000000
+        unit: Pa
+        tolerance: { rel: 0.02 }
+    explanation: |-
+      $E = \dfrac{F L}{A x} = \dfrac{32 \times 1.50}{4.0 \times 10^{-7} \times 6.0 \times 10^{-4}} =
+      2.0 \times 10^{11}\ \text{Pa}$.
+
+  - id: extension-from-young-modulus
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.5"]
+    prompt: |-
+      A steel wire of length 2.0 m and diameter 0.80 mm has a Young modulus of $2.0 \times 10^{11}\ \text{Pa}$.
+
+      What load, in N, produces an extension of 1.0 mm? Assume the wire stays within its limit of proportionality.
+    fields:
+      - label: "F ="
+        answer: 50
+        unit: N
+        tolerance: { rel: 0.03 }
+    explanation: |-
+      $A = \pi(0.40 \times 10^{-3})^2 = 5.03 \times 10^{-7}\ \text{m}^2$, and
+      $F = \dfrac{E A x}{L} = \dfrac{2.0 \times 10^{11} \times 5.03 \times 10^{-7} \times 1.0 \times 10^{-3}}{2.0}
+      \approx 50\ \text{N}$.
+
+  - id: stiffer-material
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.5"]
+    prompt: |-
+      Material X has $E = 2.0 \times 10^{11}\ \text{Pa}$ and material Y has $E = 7.0 \times 10^{10}\ \text{Pa}$. Identical wires of each are put under the same tensile stress. What can you say?
+    options:
+      - text: Wire X stretches less, because a larger $E$ means a smaller strain for the same stress
+        correct: true
+        why: |-
+          $\varepsilon = \sigma/E$, so the larger modulus gives the smaller strain.
+      - text: Wire X stretches more, because a larger $E$ means a larger strain
+        why: |-
+          The relationship is inverse: $E = \sigma/\varepsilon$.
+      - text: They stretch equally, because the stress is the same
+        why: |-
+          Equal stress gives equal strain only if the materials have the same $E$.
+      - text: Wire Y stretches less, because it has a smaller $E$
+        why: |-
+          Smaller $E$ means larger strain, so Y stretches more.
+    explanation: |-
+      Strain is stress divided by $E$, so the stiffer material (larger $E$) strains less.

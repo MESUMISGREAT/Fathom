@@ -9,13 +9,14 @@ objectives: ["4.1.2"]
 prerequisites: [turning-effects-centre-of-gravity, units-resolving-vectors]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcome 4.1.2, define the moment of a force and apply the definition, here
     for forces not perpendicular to the lever). The diagram is drawn to scale (force at 40° to
     the lever). Forces, lengths and angles are illustrative values; all worked values and answer
     keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -157,10 +158,13 @@ questions:
     difficulty: 2
     objectives: ["4.1.2"]
     prompt: |
-      A rope pulls on the end of a $0.80\ \text{m}$ lever with a tension of $25\ \text{N}$. The rope makes an angle of $40°$ with the lever. Find the moment of the tension about the pivot at the other end of the lever, to 3 significant figures.
+      A rope pulls on the end of a $0.80\ \text{m}$ lever with a tension of $25\ \text{N}$. The rope makes an angle of $40°$ with the lever.
+
+      Find the moment of the tension about the pivot at the other end of the lever, to 3 significant figures.
     fields:
-      - answer: 12.856
+      - answer: 12.9
         sigFigs: 3
+        tolerance: { abs: 0.05 }
         unit: N m
     explanation: |
       Moment $= F \times L\sin\theta = 25 \times 0.80 \times \sin 40° = 12.9\ \text{N m}$. If you got $15.3\ \text{N m}$ you used $\cos 40°$.
@@ -172,11 +176,14 @@ questions:
     prompt: |
       A uniform flagpole $3.0\ \text{m}$ long, of weight $150\ \text{N}$, is pivoted at its base and held at $55°$ above the horizontal. Find the moment of its weight about the base, to 3 significant figures.
     fields:
-      - answer: 129.05
+      - answer: 129
         sigFigs: 3
+        tolerance: { abs: 0.5 }
         unit: N m
     explanation: |
-      G is $1.5\ \text{m}$ along the pole. Weight is vertical, so the perpendicular distance is the horizontal distance $1.5\cos 55° = 0.860\ \text{m}$. Moment $= 150 \times 0.860 = 129\ \text{N m}$.
+      G is $1.5\ \text{m}$ along the pole. Weight is vertical, so the perpendicular distance is the horizontal distance $1.5\cos 55° = 0.860\ \text{m}$.
+
+      Moment $= 150 \times 0.860 = 129\ \text{N m}$.
 
   - id: angle-for-half
     format: mcq
@@ -202,7 +209,9 @@ questions:
     difficulty: 3
     objectives: ["4.1.2"]
     prompt: |
-      A uniform rod $2.0\ \text{m}$ long, of weight $40\ \text{N}$, is pivoted at one end and held at $20°$ above the horizontal. A student calculates the moment of its weight about the pivot. Which line contains the first error?
+      A uniform rod $2.0\ \text{m}$ long, of weight $40\ \text{N}$, is pivoted at one end and held at $20°$ above the horizontal. A student calculates the moment of its weight about the pivot.
+
+      Which line contains the first error?
     lines:
       - |
         The weight acts at the centre of the rod, $1.0\ \text{m}$ from the pivot.

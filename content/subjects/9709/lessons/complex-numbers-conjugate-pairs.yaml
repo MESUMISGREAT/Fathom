@@ -1,0 +1,162 @@
+id: complex-numbers-conjugate-pairs
+subject: "9709"
+topic: "3.9"
+title: Conjugate pairs — non-real roots come in twos
+summary: "Why complex roots of real polynomials appear in conjugate pairs, and using this to solve cubic and quartic equations."
+order: 3
+minutes: 4
+kind: core
+objectives: ["3.9.3"]
+prerequisites: ["complex-numbers-cartesian-operations"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 3.9 learning outcome 3 (conjugate pairs for
+    polynomials with real coefficients). Examples and questions are original; all arithmetic
+    checked in Python. Not yet teacher-reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate
+    AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why non-real roots of a polynomial with real coefficients occur
+      in conjugate pairs, and use a given complex root to find the remaining roots of a cubic or
+      quartic equation.
+
+  - type: explain
+    title: The conjugate pair theorem
+    body: |
+      If a polynomial $P(x)$ has **real coefficients** and $z$ is a root, then $z^*$ is also a root.
+      
+      **Why?** Take the conjugate of the equation $P(z) = 0$:
+      $$P(z) = a_n z^n + \dots + a_1 z + a_0 = 0$$
+      Since all $a_k$ are real, $a_k^* = a_k$. And $(z^k)^* = (z^*)^k$.
+      So $0 = 0^* = (P(z))^* = P(z^*)$.
+      
+      Therefore $z^*$ is also a root. They come in **conjugate pairs**.
+
+  - type: example
+    title: A cubic with one complex root
+    problem: |
+      One root of $x^3 - 3x^2 + 4x - 12 = 0$ is $2i$. Find the other two roots.
+    steps:
+      - "Since coefficients are real and $2i$ is a root, its conjugate $-2i$ is also a root."
+      - "The three roots are $2i$, $-2i$, and some real root $r$."
+      - 'Sum of roots $= -\frac{\text{coefficient of }x^2}{\text{coefficient of }x^3} = -(-3) = 3$.'
+      - "$2i + (-2i) + r = 3 \\Rightarrow r = 3$."
+      - "Check: $P(3) = 27 - 27 + 12 - 12 = 0$. ✓"
+    answer: |
+      The three roots are $2i$, $-2i$, and $3$.
+
+  - type: example
+    title: A quartic with one complex root
+    problem: |
+      One root of $x^4 - 4x^3 + 9x^2 - 10x + 10 = 0$ is $1 + 2i$. Find all roots.
+    steps:
+      - "Given $1 + 2i$, its conjugate $1 - 2i$ is also a root."
+      - 'The quadratic with these roots is $(x - (1+2i))(x - (1-2i)) = (x-1)^2 - (2i)^2 = x^2 - 2x + 1 + 4 = x^2 - 2x + 5$.'
+      - 'Divide the quartic by $x^2 - 2x + 5$: $(x^4 - 4x^3 + 9x^2 - 10x + 10) / (x^2 - 2x + 5) = x^2 - 2x + 2$.'
+      - 'Solve $x^2 - 2x + 2 = 0$: $x = 1 \pm i$.'
+    answer: |
+      The four roots are $1 + 2i$, $1 - 2i$, $1 + i$, $1 - i$.
+
+  - type: check
+    title: Conjugate pairs in action
+    questions: [cn-cubic-root, cn-quartic-roots, cn-construct-poly]
+
+  - type: intuition
+    title: Why it must be conjugate pairs
+    body: |
+      A polynomial with real coefficients has a graph symmetric about the real axis (if we extend to complex inputs).
+      If $z$ is a root, the polynomial evaluates to $0$ there. The conjugate $z^*$ is the mirror image across
+      the real axis. Since the polynomial's formula uses only real numbers, its value at $z^*$ must be the
+      conjugate of its value at $z$ — and the conjugate of $0$ is $0$. So $z^*$ is also a root.
+
+  - type: misconceptions
+    items:
+      - wrong: "All roots of a real polynomial come in conjugate pairs."
+        right: "Only **non-real** roots come in conjugate pairs. Real roots are their own conjugates and can appear alone."
+      - wrong: "If $2 + 3i$ is a root, the other root is $-2 - 3i$."
+        right: "The conjugate is $2 - 3i$ (change the sign of the imaginary part only)."
+      - wrong: "This works for polynomials with complex coefficients too."
+        right: "The theorem **requires real coefficients**. $x - i = 0$ has root $i$ but not $-i$."
+
+  - type: exam
+    body: |
+      - Typical wording: *One root of the equation $x^3 + \dots = 0$ is $1 + 2i$. Find the other roots.*
+      - You **must** state: "Since the coefficients are real, the conjugate $1 - 2i$ is also a root."
+      - Then use sum/product of roots or polynomial division to find the rest.
+      - For a cubic: given one complex root, you immediately know two roots. The third is real — use sum of roots.
+      - For a quartic: given one complex root, you know two roots. Form their quadratic factor, divide, solve the remaining quadratic.
+
+  - type: takeaways
+    items:
+      - 'Real coefficients $\Rightarrow$ non-real roots occur in conjugate pairs: $z$ and $z^*$.'
+      - "Real roots are their own conjugates and can appear singly."
+      - "Given one complex root of a cubic: the conjugate is the second root; use sum of roots for the third."
+      - "Given one complex root of a quartic: form the quadratic $(x - z)(x - z^*)$, divide, solve the remaining quadratic."
+      - "Always state 'since coefficients are real' — it's a required justification."
+
+questions:
+  - id: cn-cubic-root
+    format: mcq
+    difficulty: 2
+    objectives: ["3.9.3"]
+    prompt: |
+      One root of $x^3 - 6x^2 + 13x - 10 = 0$ is $2 + i$. What is the real root?
+    options:
+      - text: "$2$"
+        correct: true
+        why: 'Roots: $2+i$, $2-i$, and $r$. Sum of roots $= 6$, so $(2+i)+(2-i)+r = 6 \Rightarrow 4 + r = 6 \Rightarrow r = 2$.'
+      - text: "$3$"
+        why: "Sum would be 7, not 6."
+      - text: "$1$"
+        why: "Sum would be 5, not 6."
+      - text: "$-2$"
+        why: "Sum would be 2, not 6."
+    explanation: |
+      Real coefficients $\Rightarrow$ $2 - i$ is also a root. Sum of roots $= 6$ (from $-\frac{-6}{1}$).
+      $(2+i) + (2-i) + r = 4 + r = 6 \Rightarrow r = 2$.
+
+  - id: cn-quartic-roots
+    format: mcq
+    difficulty: 2
+    objectives: ["3.9.3"]
+    prompt: |
+      One root of $x^4 - 2x^3 + 3x^2 - 2x + 2 = 0$ is $i$. The other three roots are:
+    options:
+      - text: "$-i, 1+i, 1-i$"
+        correct: true
+        why: 'Conjugate gives $-i$. Quadratic factor for $i, -i$ is $x^2 + 1$. Division gives $x^2 - 2x + 2$ with roots $1 \pm i$.'
+      - text: "$-i, -1+i, -1-i$"
+        why: "Wrong quadratic factor."
+      - text: "$-i, 2+i, 2-i$"
+        why: "Sum of roots would be 4, not 2."
+      - text: "$-i, i, 1$"
+        why: "Only three roots, and $i$ is listed twice."
+    explanation: |
+      Conjugate gives $-i$. Quadratic $(x-i)(x+i) = x^2+1$. Divide quartic by $x^2+1$: quotient $x^2 - 2x + 2 = 0 \Rightarrow x = 1 \pm i$.
+      Roots: $i, -i, 1+i, 1-i$.
+
+  - id: cn-construct-poly
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["3.9.3"]
+    prompt: |
+      Find the cubic equation with real coefficients whose roots are $3$, $1+2i$, and $1-2i$.
+      Give your answer in the form $x^3 + ax^2 + bx + c = 0$.
+    accept:
+      - "x^3 - 5x^2 + 11x - 15 = 0"
+      - "x³ - 5x² + 11x - 15 = 0"
+      - "x^3-5x^2+11x-15=0"
+      - "x^3 − 5x^2 + 11x − 15 = 0"
+    model: "$x^3 - 5x^2 + 11x - 15 = 0$"
+    explanation: |
+      Roots: $3$, $1+2i$, $1-2i$.
+      Sum of roots $= 3 + (1+2i) + (1-2i) = 5 \Rightarrow -a = 5 \Rightarrow a = -5$.
+      Sum of products of pairs $= 3(1+2i) + 3(1-2i) + (1+2i)(1-2i) = 3+6i + 3-6i + (1+4) = 11 \Rightarrow b = 11$.
+      Product of roots $= 3 \times 5 = 15 \Rightarrow -c = 15 \Rightarrow c = -15$.
+      Equation: $x^3 - 5x^2 + 11x - 15 = 0$.

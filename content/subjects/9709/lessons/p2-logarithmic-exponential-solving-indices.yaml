@@ -1,0 +1,206 @@
+id: p2-logarithmic-exponential-solving-indices
+subject: "9709"
+topic: "2.2"
+title: Solving equations and inequalities with indices
+summary: Use logarithms to solve equations and inequalities where the unknown appears in the exponent.
+order: 3
+minutes: 5
+kind: core
+objectives: ["2.2.3"]
+prerequisites: [p2-logarithmic-exponential-laws-of-logarithms, p2-logarithmic-exponential-e-and-ln]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): learning outcome 2.2.3, "Use logarithms to solve
+    equations and inequalities in which the unknown appears in indices." Examples and questions are
+    original; all arithmetic has been checked in Python. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher. Clarity rewrite requested by the user; independently reviewed below.
+    Independently re-checked this revision line by line, including inequality direction and every
+    answer key, in a separate AI review on 2026-10-25. Corrected the wording about when inequalities
+    reverse.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can solve equations and inequalities where the unknown is in the power, using logs when the bases are not the same or the exponent is not obvious.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *Solve* $2^x = 7$ or *find the values of $x$* for which $3^{x+1} < 15$.
+
+      - If the unknown is in the index, apply the same logarithm to both sides, then use the power law to bring it down.
+      - An inequality reverses when you multiply or divide by a negative number. In the examples here, the logarithms used as divisors are positive.
+
+  - type: definition
+    term: Logarithm method
+    body: |-
+      A logarithm is an **exponent finder**: $\log_2 8=3$ because $2^3=8$.
+
+      So $\log_2 7$ means “the exponent on 2 that makes 7”. This is the exact answer to $2^x=7$.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. Get the exponential on one side by itself.
+      2. **Forgotten step: apply the same logarithm to both sides.** For $2^x=7$, this gives $\log(2^x)=\log 7$.
+      3. The power law brings the exponent down as a multiplier: $\log(2^x)=x\log 2$.
+      4. Solve the resulting linear equation or inequality. When dividing an inequality, check the sign of the logarithm first.
+
+      A logarithm asks for the exponent. The power law makes that exponent visible so you can solve for $x$.
+
+  - type: example
+    title: Easy example with a check
+    problem: |-
+      Solve $2^x = 7$.
+    steps:
+      - |-
+        Apply $\log$ to both sides: $\log(2^x)=\log 7$.
+      - |-
+        The power law brings $x$ down: $x\log 2=\log 7$. Divide by $\log 2$ to get $x=\dfrac{\log 7}{\log 2}$.
+      - |-
+        You may also write $x = \log_2 7$.
+    answer: |-
+      $x = \log_2 7$ or $x = \dfrac{\ln 7}{\ln 2}$.
+
+      Check: $2^{\log_2 7}=7$, so the answer satisfies the equation.
+
+  - type: check
+    questions: [index-log-form, index-even-power]
+
+  - type: example
+    title: Exam-style equation with different bases
+    problem: |-
+      Solve $2^{x+2}=5^{2x-1}$.
+    steps:
+      - |-
+        Apply $\ln$ to both sides: $\ln(2^{x+2})=\ln(5^{2x-1})$.
+      - |-
+        The power law brings each exponent down: $(x+2)\ln2=(2x-1)\ln5$.
+      - |-
+        Collect the terms containing $x$: $x(2\ln 5-\ln 2)=2\ln 2+\ln 5$.
+      - |-
+        So $x=\dfrac{\ln 20}{\ln\left(\dfrac{25}{2}\right)}$.
+    answer: |-
+      $x=\dfrac{\ln 20}{\ln\left(\dfrac{25}{2}\right)}\approx1.186$.
+
+      Check: substituting this value gives $2^{x+2}\approx9.10$ and $5^{2x-1}\approx9.10$.
+
+  - type: check
+    questions: [index-equation-substitution]
+
+  - type: example
+    title: Exam-style inequality
+    problem: |-
+      Solve $5\times3^{2x+1}<7$.
+    steps:
+      - |-
+        Divide by $5$: $3^{2x+1}<\dfrac{7}{5}$.
+      - |-
+        Since $\ln$ is increasing, taking it on both sides keeps the inequality direction: $\ln(3^{2x+1})<\ln\left(\dfrac{7}{5}\right)$. The power law gives $(2x+1)\ln3<\ln\left(\dfrac{7}{5}\right)$.
+      - |-
+        Since $3>1$, $\ln3>0$. Divide by this positive number without reversing the inequality: $x<\dfrac{\dfrac{\ln\left(\dfrac{7}{5}\right)}{\ln3}-1}{2}$.
+    answer: |-
+      $x<\dfrac{\dfrac{\ln\left(\dfrac{7}{5}\right)}{\ln3}-1}{2}\approx-0.347$.
+
+      Check: $x=-1$ satisfies the inequality, while $x=0$ does not.
+
+  - type: check
+    questions: [index-inequality]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Solve $2^x = 7$ by writing $x = \dfrac{7}{2}$.
+        right: |-
+          The exponent is not a multiplier; the unknown is in the power. You must take logs.
+      - wrong: |-
+          $\log(2^x) = 2\log x$
+        right: |-
+          The power law gives $\log(2^x) = x\log 2$.
+      - wrong: |-
+          In an inequality, dividing by a positive number flips the sign.
+        right: |-
+          Multiplying or dividing by a negative number reverses the inequality. Here $\log 3 > 0$, so the direction stays the same.
+
+  - type: exam
+    body: |-
+      - A common exam method is to take logs of both sides once the exponential is isolated.
+      - Keep the logarithm in the same base as the exponential if you want a neat answer such as $\log_2 7$.
+      - When the exponent is a bracket, treat it as a single quantity and keep the algebra tidy.
+
+  - type: takeaways
+    items:
+      - |-
+        If $a^x = b$, then $x = \log_a b$.
+      - |-
+        Take logs to bring the exponent down.
+      - |-
+        For inequalities, divide by a positive log without flipping the sign.
+      - |-
+        A log answer can be written in either base-$10$, base-$e$, or the original base.
+
+questions:
+  - id: index-log-form
+    format: text
+    style: one-line
+    difficulty: 1
+    objectives: ["2.2.3"]
+    prompt: |-
+      Solve $2^x = 7$.
+    accept:
+      - x = log_2 7
+      - x = log base 2 of 7
+      - x = ln 7 / ln 2
+      - x = log 7 / log 2
+    model: |-
+      $x = \log_2 7$
+    explanation: |-
+      Apply $\log$ to both sides: $\log(2^x)=\log7$. The power law gives $x\log2=\log7$, so $x=\dfrac{\log7}{\log2}=\log_2 7$.
+
+  - id: index-even-power
+    format: numeric
+    difficulty: 1
+    objectives: ["2.2.3"]
+    prompt: |-
+      Solve $2^x = 16$.
+    fields:
+      - label: "x ="
+        answer: 4
+    explanation: |-
+      $16 = 2^4$, so $x = 4$.
+
+  - id: index-inequality
+    format: numeric
+    difficulty: 2
+    objectives: ["2.2.3"]
+    prompt: |-
+      For $5\times3^{2x+1}<7$, give the boundary value $c$ in $x<c$ to 3 significant figures.
+    fields:
+      - label: "c ="
+        answer: -0.3468648857782525
+        tolerance:
+          rel: 0.005
+        sigFigs: 3
+    explanation: |-
+      First divide by $5$: $3^{2x+1}<\dfrac75$. Apply $\ln$ to both sides, then use the power law: $(2x+1)\ln3<\ln\left(\dfrac75\right)$. Solving gives $x<\dfrac{\dfrac{\ln\left(\dfrac75\right)}{\ln3}-1}{2}$, whose boundary is approximately $-0.346865$.
+
+      To 3 significant figures, this is $-0.347$.
+
+  - id: index-equation-substitution
+    format: text
+    style: one-line
+    difficulty: 2
+    objectives: ["2.2.3"]
+    prompt: |-
+      Solve $2^{x+2}=5^{2x-1}$. Give an exact logarithmic answer.
+    accept:
+      - x = ln 20 divided by ln 12.5
+      - x = log base 12.5 of 20
+      - log base 12.5 of 20
+    model: |-
+      $x=\dfrac{\ln 20}{\ln\left(\dfrac{25}{2}\right)}$
+    explanation: |-
+      Apply $\ln$ to both sides: $\ln(2^{x+2})=\ln(5^{2x-1})$. The power law brings the exponents down, giving $(x+2)\ln2=(2x-1)\ln5$.
+
+      Rearranging gives $x=\dfrac{2\ln2+\ln5}{2\ln5-\ln2}=\dfrac{\ln20}{\ln\left(\dfrac{25}{2}\right)}$.

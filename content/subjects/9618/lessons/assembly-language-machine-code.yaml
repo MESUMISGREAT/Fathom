@@ -1,0 +1,279 @@
+id: assembly-language-machine-code
+subject: "9618"
+topic: "4.2"
+title: "Assembly language and machine code: names for the bits"
+summary: See what machine code really is, why assembly language replaces it with mnemonics, and why one assembly instruction becomes exactly one machine code instruction.
+order: 1
+minutes: 7
+kind: core
+objectives: ["4.2.1"]
+prerequisites: [cpu-architecture-fetch-execute]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.2 outcome 4.2.1 ("understand
+    the relationship between assembly language and machine code"). The opcode/operand split,
+    the one-to-one rule and the role of the assembler follow the syllabus and the instruction
+    set it gives for 4.2.3. The opcode bit pattern used in the deeper block is an invented
+    illustration for this lesson's processor, labelled as not examinable; Cambridge never asks
+    students to decode real opcodes. All questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain the relationship between assembly language and machine code: what an instruction is made of, what a mnemonic is, and why one line of assembly becomes exactly one machine code instruction.
+
+  - type: explain
+    title: Your processor is a very literal machine
+    body: |-
+      A processor cannot run `total = total + price`. It has no idea what a "total" is.
+
+      What it *can* do is obey small, fixed commands stored as binary: load this number, add that number, store the answer, jump back a few steps. Each of those commands is one **machine code** instruction.
+
+      Assembly language is that same list of commands, written with short readable names instead of binary. It is not a friendlier way of writing something else — it is the processor's own language with the bits swapped for words.
+
+  - type: definition
+    term: Machine code
+    body: |-
+      The binary instructions a particular processor can execute directly. Each instruction has two parts:
+
+      - the **opcode** — *what to do* (load, add, store, jump),
+      - the **operand** — *what to do it to* (a value, a memory address, or a register).
+
+      Opcode is the verb; operand is the object.
+
+  - type: diagram
+    diagram: cs-assembly-language-machine-code
+    alt: >-
+      Top: the assembly instruction LDD 100 beside a 16-bit machine code word, split into a 4-bit
+      opcode field labelled "what to do" and a 12-bit address field labelled "what to do it to".
+      Bottom left: the high-level statement total = total + price branching into three assembly
+      instructions, LDD 200, ADD 201 and STO 200, labelled one-to-many. Bottom right: the single
+      assembly instruction STO 200 dropping to one machine code word, 0011 0000 1100 1000, labelled
+      one-to-one.
+    caption: |-
+      One assembly instruction maps to one machine code word. A high-level statement does not — it fans out into several.
+
+  - type: explain
+    title: "Mnemonics: the readable half"
+    body: |-
+      The readable name for an opcode is called a **mnemonic** (said "nem-on-ick" — it means "memory aid"). `LDD` for load direct, `STO` for store, `ADD` for add. Short, easy to remember, and impossible to confuse with a number.
+
+      A program written in mnemonics is **assembly language**, or **assembly code**. It still needs translating before the processor can run it, because the processor only accepts binary.
+
+  - type: definition
+    term: Assembler
+    body: |-
+      The program that translates assembly language into machine code. Its input is the assembly **source code**; its output is **object code**, ready to be loaded and run. Every processor family needs its own assembler, because every processor family has its own instruction set.
+
+  - type: check
+    title: Names and jobs
+    questions: [asm-assembler-name, asm-opcode-operand, asm-mnemonic-mcq]
+
+  - type: explain
+    title: The one-to-one rule (the whole point of 4.2.1)
+    body: |-
+      Here is the sentence examiners want, in full:
+
+      > One assembly language instruction is translated into one machine code instruction.
+
+      Why exactly one? Because assembly is *the same instruction set*, just renamed. There is nothing to break down: `STO 200` is not a small piece of a bigger idea, it is one complete command that the processor already has.
+
+      A high-level statement is different. `total = total + price` describes something the processor has no single instruction for, so a compiler turns it into several instructions.
+
+      | Written in | Becomes | Relationship |
+      | --- | --- | --- |
+      | High-level language (`total = total + price`) | several machine code instructions | one-to-many |
+      | Assembly language (`LDD 200`) | one machine code instruction | one-to-one |
+
+      Say "one-to-one" in an exam and you have the idea. Write the whole sentence and you have the mark.
+
+  - type: intuition
+    title: Why anyone still writes assembly
+    body: |-
+      If assembly is just binary with nicknames, why not skip it?
+
+      - **You can read it.** A page of `1011000001001000` tells you nothing; `STO 200` tells you exactly what is happening.
+      - **You can edit it safely.** Programmers use *symbolic* addresses (names like `loop` or `total`) instead of raw numbers like `200`. Add one line at the top and the assembler recalculates every address, instead of you renumbering the whole program by hand.
+      - **You control everything.** Each instruction does exactly one small thing, which matters when you are writing a device driver or squeezing speed out of a tiny embedded chip.
+
+      The trade-off: assembly is long, fiddly, and only works on one family of processors.
+
+  - type: check
+    title: One to one
+    questions: [asm-one-to-one, asm-portability, asm-high-level-spot]
+
+  - type: explain
+    title: "The catch: no portability"
+    body: |-
+      Assembly language is not portable. A program written for one processor's instruction set will not run on a different one.
+
+      The mnemonics may even look familiar while the machine code behind them is different, which is worse than a program that obviously refuses to run. This is why the same assembly source usually has to be rewritten, not just recompiled, when you change processor family.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Assembly language is a high-level language, just an old one.
+        right: |-
+          It is a **low-level** language: one instruction in, one instruction out. High-level languages let one statement become many machine code instructions.
+      - wrong: |-
+          The assembler decides which instructions to use to get the job done.
+        right: |-
+          The assembler only translates. It does not plan or optimise the program; every instruction in the object code corresponds to one written by the programmer.
+      - wrong: |-
+          Machine code and assembly language are two different kinds of instruction.
+        right: |-
+          They are the same instructions. Machine code is the binary form the processor runs; assembly is the mnemonic form a human writes. One assembly instruction = one machine code instruction.
+      - wrong: |-
+          A label like `total` is stored in memory as the word "total".
+        right: |-
+          A label is only a name used while assembling. The assembler swaps it for the address it stands for, and the machine code holds the address, not the letters.
+
+  - type: exam
+    body: |-
+      - "State the relationship between assembly language and machine code" wants the one-to-one sentence. Do not just write "they are similar".
+      - If a question asks what the assembler produces, the answer is **object code** (machine code), not "a compiled program".
+      - Be ready to say *why* assembly is used: readable, uses symbolic addresses, gives direct control of the hardware — and to say it is processor-specific.
+      - Never call a mnemonic a "command word" or an "opcode". The mnemonic is the readable name; the opcode is the binary part of the machine code instruction.
+
+  - type: deeper
+    title: Inside the bits (not examinable)
+    body: |-
+      Cambridge never asks you to decode real opcodes, but it helps to see one. Suppose this made-up processor uses 16-bit instructions: 4 bits of opcode, then a 12-bit address.
+
+      ```text
+      LDD 100  →  0011 000001100100
+                  opcode   address 100
+      ```
+
+      Change the first four bits and you change the operation. Change the last twelve and you change which memory location is used. That field layout is why opcode and operand are described as separate parts of one instruction.
+
+      Real instruction sets go further — some instructions are 32 bits, some operands fit in a register rather than the instruction — but the idea of "operation in one field, target in another" is exactly what you are being taught.
+
+  - type: takeaways
+    items:
+      - A machine code instruction is binary, made of an **opcode** (what to do) and an **operand** (what to do it to).
+      - A **mnemonic** is the readable name for an opcode, such as `LDD` or `ADD`.
+      - "**One assembly instruction becomes exactly one machine code instruction** — that is the one-to-one rule."
+      - An **assembler** translates assembly source code into machine code (object code).
+      - Assembly is processor-specific and not portable, but it is readable, editable with labels, and gives direct control.
+
+questions:
+  - id: asm-assembler-name
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["4.2.1"]
+    prompt: |-
+      What is the name of the program that translates assembly language into machine code?
+    accept:
+      - assembler
+      - an assembler
+      - the assembler
+    model: |-
+      An **assembler**.
+    explanation: |-
+      An assembler translates assembly source code into machine code (object code). A compiler is the equivalent for a high-level language, and it usually produces many machine code instructions per statement.
+
+  - id: asm-opcode-operand
+    format: cloze
+    difficulty: 1
+    objectives: ["4.2.1"]
+    prompt: |-
+      A machine code instruction is made of two parts. The {{1}} says what operation to carry out; the {{2}} says what the operation works on.
+    blanks:
+      - accept: [opcode, operation code, op-code, op code]
+      - accept: [operand, the operand, address, data]
+    explanation: |-
+      The **opcode** (operation code) is the "what to do"; the **operand** is the "what to do it to" — a number, a register or a memory address.
+
+  - id: asm-mnemonic-mcq
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.1"]
+    prompt: |-
+      Which of these is a **mnemonic**?
+    options:
+      - text: "`LDD`"
+        correct: true
+        why: |-
+          `LDD` is the readable name for the "load direct" opcode — exactly what a mnemonic is.
+      - text: "`0011`"
+        why: |-
+          That is a binary opcode, not a name for one.
+      - text: "`200`"
+        why: |-
+          That is an operand — a memory address.
+      - text: "`1011000001001000`"
+        why: |-
+          That is a whole machine code instruction, opcode and operand together.
+    explanation: |-
+      A mnemonic is the short readable name for an opcode, such as `LDM`, `LDD`, `ADD` or `JMP`.
+
+  - id: asm-one-to-one
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.1"]
+    prompt: |-
+      How many machine code instructions does **one** assembly language instruction translate into?
+    options:
+      - text: Exactly one
+        correct: true
+        why: |-
+          Assembly is the processor's instruction set with mnemonics, so each line is already one complete instruction.
+      - text: One or more, depending on the instruction
+        why: |-
+          That is how a **high-level** statement behaves. In assembly the match is always one-to-one.
+      - text: It depends on the assembler
+        why: |-
+          Different assemblers produce different binary, but the count does not change: one line in, one instruction out.
+      - text: None — assembly is executed directly
+        why: |-
+          The processor only executes machine code, so assembly must be translated first.
+    explanation: |-
+      One assembly language instruction → one machine code instruction. A compiler for a high-level language works one-to-many instead.
+
+  - id: asm-portability
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |-
+      Explain why an assembly language program written for one processor may not run on a different processor.
+    accept:
+      - different instruction sets
+      - each processor has its own instruction set
+      - the instruction set is different
+      - machine code is specific to the processor
+      - different opcodes and mnemonics
+      - processor-specific instruction set
+      - not portable
+      - different opcodes
+    model: |-
+      Because assembly language is tied to one processor's instruction set: the mnemonics and the machine code they assemble to only exist for that processor family. Another processor has a different instruction set, so the code has to be rewritten (or at least reassembled for a different assembler).
+    explanation: |-
+      Assembly maps one-to-one onto machine code, so it inherits the processor's instruction set. That is why assembly is described as non-portable.
+
+  - id: asm-high-level-spot
+    format: spot-error
+    difficulty: 2
+    objectives: ["4.2.1"]
+    prompt: |-
+      A student writes four statements about assembly language. Which line contains the first error?
+    lines:
+      - Assembly language uses mnemonics instead of binary opcodes.
+      - One high-level language statement becomes exactly one machine code instruction.
+      - One assembly language instruction becomes exactly one machine code instruction.
+      - An assembler translates assembly language into machine code.
+    errorLine: 2
+    fix: |-
+      One **high-level** statement normally becomes **several** machine code instructions. It is assembly that has the one-to-one relationship.
+    explanation: |-
+      Line 1 is true (mnemonics replace binary). Line 2 confuses the two languages: high-level statements are one-to-many, assembly instructions are one-to-one. Lines 3 and 4 are both correct.

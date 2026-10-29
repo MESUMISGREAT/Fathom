@@ -1,0 +1,284 @@
+id: assembly-language-addressing-modes
+subject: "9618"
+topic: "4.2"
+title: "Five ways to find a number: modes of addressing"
+summary: Immediate, direct, indirect, indexed and relative addressing, shown on one memory map so you can see exactly how each operand is used.
+order: 6
+minutes: 9
+kind: core
+objectives: ["4.2.5"]
+prerequisites: [assembly-language-instruction-set]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.2 outcome 4.2.5 ("understand, and
+    be able to use, different modes of addressing") and its guidance, which lists immediate,
+    direct, indirect, indexed and relative addressing. The memory map, the index-register value
+    and every resulting accumulator value were produced with Python and checked by following the
+    addresses by hand. Relative addressing is taught as a concept because no instruction in the
+    9618 example set uses it, which the lesson says explicitly. All questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name the five modes of addressing, explain how each one uses its operand, and work out what ends up in the accumulator for a given memory map.
+
+  - type: explain
+    title: Same operand, five different meanings
+    body: |-
+      Here is the trap: `100` is just a number. What the processor does with it depends entirely on the **mode of addressing** chosen by the instruction.
+
+      The mode answers one question: *where do I go to get the data?*
+
+      - **Immediate** — there is nowhere to go. The operand *is* the data.
+      - **Direct** — the operand is the address of the data.
+      - **Indirect** — the operand is the address of an address. Two steps.
+      - **Indexed** — the operand plus the contents of IX gives the address.
+      - **Relative** — the operand is an offset from the current instruction's address.
+
+      Same-looking operand, five different journeys.
+
+  - type: example
+    title: One memory map, four loads
+    problem: |-
+      Memory holds these values, and the index register contains 2:
+
+      | Address | 40 | 41 | 42 | 43 | 44 | 45 |
+      | --- | --- | --- | --- | --- | --- | --- |
+      | Contents | 44 | 8 | 99 | 60 | 17 | 3 |
+
+      What ends up in ACC for each of these instructions?
+
+      ```text
+      a) LDM #40
+      b) LDD 40
+      c) LDI 40
+      d) LDX 40
+      ```
+    steps:
+      - |-
+        **(a) `LDM #40`** — immediate. The operand is the data and there is no memory read. ACC = 40.
+      - |-
+        **(b) `LDD 40`** — direct. Go to address 40 and take its contents. ACC = 44. One memory read.
+      - |-
+        **(c) `LDI 40`** — indirect. Address 40 holds 44, so 44 is the *next* address. Read address 44. ACC = 17. Two memory reads.
+      - |-
+        **(d) `LDX 40`** — indexed. Add the operand to the contents of IX (40 + 2 = 42), then read address 42. ACC = 99. One read, after the addition.
+      - |-
+        **Check:** `LDX 41` would give 41 + 2 = 43, so ACC = 60. The operand changed by 1, the address changed by 1, and you read a different cell.
+    answer: |-
+      (a) 40 · (b) 44 · (c) 17 · (d) 99 — four completely different answers from the same operand `40`.
+
+  - type: diagram
+    diagram: cs-assembly-language-addressing-modes
+    alt: >-
+      Four panels over the same memory map, which runs from address 40 to 45 holding 44, 8, 99, 60,
+      17 and 3. Immediate: LDM #40 points straight at the value 40 with no memory read. Direct: LDD 40
+      makes one hop from address 40 to its contents 44. Indirect: LDI 40 makes two hops, address 40 to
+      44 and then to the contents 17. Indexed: LDX 40 adds IX = 2 to 40 giving 42, then reads 99.
+    caption: |-
+      Count the arrows: immediate 0 reads, direct 1, indirect 2, indexed 1 after adding IX to the operand.
+
+  - type: check
+    title: Follow the arrows
+    questions: [am-ldd, am-ldx, am-indirect]
+
+  - type: explain
+    title: How to spot the mode from the mnemonic
+    body: |-
+      In the 9618 instruction set, the load instructions name their own mode, which is a gift:
+
+      | Instruction | Mode | How the operand is used |
+      | --- | --- | --- |
+      | `LDM #n` | immediate | the operand is the value |
+      | `LDD <address>` | direct | the operand is the address of the value |
+      | `LDI <address>` | indirect | the operand is the address holding the address of the value |
+      | `LDX <address>` | indexed | the operand plus IX is the address of the value |
+      | `LDR #n` | immediate | the operand is the value, loaded into IX |
+
+      Others follow the same pattern: `STO <address>` is direct (it stores *at* the address), `CMP <address>` is direct, `CMP #n` immediate, and `CMI <address>` is indirect compare.
+
+      Relative addressing does not appear in a mnemonic here, because none of the nineteen opcodes uses it. You still need to describe it.
+
+  - type: explain
+    title: "Relative addressing: a hop from where you are"
+    body: |-
+      A **relative** address is an offset from the address of the instruction currently being executed — not a fixed location.
+
+      Suppose the processor is executing the instruction at address 200 and the operand says +3. The target is 200 + 3 = 203. If the programmer inserts an instruction earlier and everything moves down by one, the same operand +3 still points three instructions ahead. The code keeps working without renumbering.
+
+      That is why relative addressing is common in real jump instructions: the code is **position-independent**. The catch is that an offset only has a short range, because the operand has to fit in the instruction.
+
+      On this syllabus, relative addressing is examinable as a description — "the address used is calculated by adding the operand to the address of the current instruction" — even though no opcode in the set uses it.
+
+  - type: check
+    title: Modes in words
+    questions: [am-modes-cloze, am-relative]
+
+  - type: check
+    title: Check the method
+    questions: [am-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          `LDI 40` loads the contents of address 40 and stops.
+        right: |-
+          That is `LDD`. `LDI` stops at address 44, treats it as another address, and reads *that* cell. Two reads, not one.
+      - wrong: |-
+          `LDX 40` adds the address of IX, which is 40 + something.
+        right: |-
+          Add the **contents** of IX, not its address. LDX adds the number stored in IX.
+      - wrong: |-
+          In indexed addressing, the operand changes every time the instruction runs.
+        right: |-
+          The operand stays the same; IX changes, and that is what moves you along an array.
+      - wrong: |-
+          Immediate addressing means the operand is an address that is immediately available.
+        right: |-
+          Immediate means there is no address at all: the operand is the data. That is why `#` is used — it marks a value.
+
+  - type: exam
+    body: |-
+      - For a "state the mode of addressing" question, give the name **and** a description. A name alone usually scores half the marks.
+      - When a memory map and an IX value are given, write the intermediate address down. `40 + 2 = 42, contents 99` is a full-mark line; just "99" can lose the method mark.
+      - Check whether the operand has a `#`. No `#` means you are dealing with an address, not a value.
+      - Indirect plus a loop is the classic hard trace: re-read the cell at the *first* address each time round, because the pointer may have been changed.
+
+  - type: deeper
+    title: Why so many modes?
+    body: |-
+      Each mode exists for a job that the others do badly:
+
+      - **Immediate** — constants (`LDM #0` to clear ACC) without wasting a memory cell.
+      - **Direct** — a single named variable at a known address.
+      - **Indirect** — pointers: the address you need is only known at run time, so a cell holds it.
+      - **Indexed** — arrays: keep the base address in the instruction and the element number in IX, then walk through the array with `INC IX`.
+      - **Relative** — jumps inside relocatable code, where the absolute address is not fixed until the program is loaded.
+
+      Indexed addressing with a loop is worth seeing once:
+
+      ```text
+      100  LDR #0
+      101  loop  LDX 300
+      102        OUT
+      103        INC IX
+      104        CMP #5
+      105        JPN loop
+      106        END
+      ```
+
+      Here `LDX 300` reads addresses 300, 301, 302 … as IX counts up — one instruction reading five cells, which is what "indexed" buys you.
+
+  - type: takeaways
+    items:
+      - "Immediate: the operand is the data (`#`). Direct: the operand is the address of the data."
+      - "Indirect: the operand holds the address of the address of the data — two reads."
+      - "Indexed: the operand plus the contents of IX gives the address."
+      - "Relative: the operand is an offset from the current instruction's address; no 9618 opcode uses it, but you must describe it."
+      - "In the 9618 set the letter in the load mnemonic tells you the mode: M immediate, D direct, I indirect, X indexed."
+
+questions:
+  - id: am-ldd
+    format: numeric
+    difficulty: 1
+    objectives: ["4.2.5"]
+    prompt: |-
+      Memory: address 40 holds 44, address 41 holds 8, address 42 holds 99, address 43 holds 60, address 44 holds 17, address 45 holds 3. IX contains 2.
+
+      The instruction `LDD 41` is executed. What is now in ACC?
+    fields:
+      - label: "ACC ="
+        answer: 8
+    explanation: |-
+      `LDD` is direct addressing: the operand is the address of the data. Read address 41 and take its contents, which is **8**. No IX involved.
+
+  - id: am-ldx
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.5"]
+    prompt: |-
+      Using the same memory map (40 → 44, 41 → 8, 42 → 99, 43 → 60, 44 → 17, 45 → 3) and IX = 2, what does `LDX 43` put in ACC?
+    fields:
+      - label: "ACC ="
+        answer: 3
+    explanation: |-
+      Indexed addressing adds the **contents** of IX to the operand: 43 + 2 = 45, and address 45 holds **3**.
+
+  - id: am-indirect
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.5"]
+    prompt: |-
+      Same memory map and IX = 2. What does `LDI 40` put in ACC?
+    options:
+      - text: "17"
+        correct: true
+        why: |-
+          Address 40 holds 44, so 44 becomes the address to read; address 44 holds 17. Two reads.
+      - text: "44"
+        why: |-
+          That is what a *direct* load (`LDD 40`) would give — indirect goes one step further.
+      - text: "99"
+        why: |-
+          That is address 42, which is what `LDX 40` reads (40 + IX = 42). Indirect ignores IX.
+      - text: "40"
+        why: |-
+          That is the value for `LDM #40`, immediate addressing.
+    explanation: |-
+      Indirect: read address 40 → 44, then read address 44 → 17. The operand points at a pointer.
+
+  - id: am-modes-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["4.2.5"]
+    prompt: |-
+      In {{1}} addressing the operand is the data itself. In {{2}} addressing the operand is an offset from the address of the current instruction.
+    blanks:
+      - accept: [immediate, instant]
+      - accept: [relative, relative addressing]
+    explanation: |-
+      Immediate uses the operand as the value (written with `#`). Relative calculates the target by adding the operand to the current instruction's address.
+
+  - id: am-relative
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["4.2.5"]
+    prompt: |-
+      Describe how the address of the data is found in **relative** addressing.
+    accept:
+      - add the operand to the address of the current instruction
+      - the operand is added to the current instruction address
+      - offset from the current instruction
+      - offset from the address of the current instruction
+      - it is the current address plus an offset
+      - relative to the current instruction address
+    model: |-
+      The operand is an offset: the processor adds it to the address of the instruction being executed, and reads (or jumps to) that result.
+    explanation: |-
+      Relative addressing gives a displacement from the current instruction, which makes the code position-independent. The 9618 instruction set does not use it, but it is examinable as a description.
+
+  - id: am-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.2.5"]
+    prompt: |-
+      A student traces `LDX 40` with IX = 2 on the memory map in this lesson. Which line contains the first error?
+    lines:
+      - The instruction uses indexed addressing.
+      - "Add the operand to the contents of IX: 40 + 2 = 42."
+      - The value at address 42 is 99.
+      - So ACC becomes 99 and IX becomes 42.
+    errorLine: 4
+    fix: |-
+      IX is **not** changed by a load. IX stays at 2; only ACC receives 99.
+    explanation: |-
+      Lines 1–3 are the correct method: index + operand gives 42, whose contents are 99. Line 4 wrongly stores the calculated address back into IX — nothing in the instruction does that.

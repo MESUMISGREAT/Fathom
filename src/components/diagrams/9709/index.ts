@@ -5,6 +5,11 @@ import CircularMeasureRadianDefinition from './circular-measure-radian-definitio
 import CircularMeasureSectorParts from './circular-measure-sector-parts';
 import CircularMeasureSegment from './circular-measure-segment';
 import CircularMeasureTangentRegion from './circular-measure-tangent-region';
+import ComplexNumbersArgandIntro from './complex-numbers-argand-intro';
+import ComplexNumbersArgandOperations from './complex-numbers-argand-operations';
+import ComplexNumbersGeometricTransformations from './complex-numbers-geometric-transformations';
+import ComplexNumbersLociSummary from './complex-numbers-loci-summary';
+import ComplexNumbersPolarMultiply from './complex-numbers-polar-multiply';
 import CoordinateGeometryChordMidpoint from './coordinate-geometry-chord-midpoint';
 import CoordinateGeometryCircleExpanded from './coordinate-geometry-circle-expanded';
 import CoordinateGeometryCircleProperties from './coordinate-geometry-circle-properties';
@@ -20,6 +25,11 @@ import CoordinateGeometryPerpendicularGradients from './coordinate-geometry-perp
 import CoordinateGeometrySlidingLine from './coordinate-geometry-sliding-line';
 import CoordinateGeometryTangentAtPoint from './coordinate-geometry-tangent-at-point';
 import DiscriminantCases from './discriminant-cases';
+import ForcesEquilibriumComponentsResultants from './forces-equilibrium-components-resultants';
+import ForcesEquilibriumContactSmooth from './forces-equilibrium-contact-smooth';
+import ForcesEquilibriumForceDiagram from './forces-equilibrium-force-diagram';
+import ForcesEquilibriumFrictionThirdLaw from './forces-equilibrium-friction-third-law';
+import ForcesEquilibriumResolvingEquilibrium from './forces-equilibrium-resolving-equilibrium';
 import FunctionsCombinedInside from './functions-combined-inside';
 import FunctionsCombinedSequence from './functions-combined-sequence';
 import FunctionsCompositeMachines from './functions-composite-machines';
@@ -33,8 +43,14 @@ import FunctionsReciprocalRange from './functions-reciprocal-range';
 import FunctionsReflections from './functions-reflections';
 import FunctionsStretches from './functions-stretches';
 import FunctionsTranslations from './functions-translations';
+import KinematicsCalculus from './kinematics-calculus';
+import KinematicsDistanceDisplacement from './kinematics-distance-displacement';
+import KinematicsGraphs from './kinematics-graphs';
+import KinematicsSuvat from './kinematics-suvat';
+import KinematicsVtArea from './kinematics-vt-area';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
+import MechMomentumCollision from './mech-momentum-collision';
 import P1DifferentiationBoxNet from './p1-differentiation-box-net';
 import P1DifferentiationChainBox from './p1-differentiation-chain-box';
 import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
@@ -69,6 +85,34 @@ import P1TrigonometrySolveGraphs from './p1-trigonometry-solve-graphs';
 import P1TrigonometryTanShift from './p1-trigonometry-tan-shift';
 import P1TrigonometryTransformedCos from './p1-trigonometry-transformed-cos';
 import P1TrigonometryUnitCircle from './p1-trigonometry-unit-circle';
+import P2AlgebraDivisionTable from './p2-algebra-division-table';
+import P2AlgebraModulusGraph from './p2-algebra-modulus-graph';
+import P2IntegrationTrapeziumRule from './p2-integration-trapezium-rule';
+import P2LogarithmicExponentialGraphs from './p2-logarithmic-exponential-graphs';
+import P2LogarithmicExponentialLinearising from './p2-logarithmic-exponential-linearising';
+import P2LogarithmicExponentialLogLaws from './p2-logarithmic-exponential-log-laws';
+import P2NumericalSolutionDivergence from './p2-numerical-solution-divergence';
+import P2NumericalSolutionSignChange from './p2-numerical-solution-sign-change';
+import P2NumericalSolutionStaircase from './p2-numerical-solution-staircase';
+import P2TrigonometryRForm from './p2-trigonometry-r-form';
+import P2TrigonometryReciprocalGraphs from './p2-trigonometry-reciprocal-graphs';
+import P3AlgebraBinomialValidity from './p3-algebra-binomial-validity';
+import P3AlgebraLongDivision from './p3-algebra-long-division';
+import P3AlgebraModulusGraph from './p3-algebra-modulus-graph';
+import P3AlgebraModulusInequality from './p3-algebra-modulus-inequality';
+import P3LogarithmicExponentialIndexGraph from './p3-logarithmic-exponential-index-graph';
+import P3LogarithmicExponentialInverseGraphs from './p3-logarithmic-exponential-inverse-graphs';
+import P3LogarithmicExponentialLinearFormPlot from './p3-logarithmic-exponential-linear-form-plot';
+import P3NumericalSolutionApproximations from './p3-numerical-solution-approximations';
+import P3NumericalSolutionIterationSteps from './p3-numerical-solution-iteration-steps';
+import P3NumericalSolutionRearrangingCobweb from './p3-numerical-solution-rearranging-cobweb';
+import P3NumericalSolutionSignChange from './p3-numerical-solution-sign-change';
+import P3VectorsAdditionScalar from './p3-vectors-addition-scalar';
+import P3VectorsLineEquation from './p3-vectors-line-equation';
+import P3VectorsLineRelationships from './p3-vectors-line-relationships';
+import P3VectorsMagnitudeUnit from './p3-vectors-magnitude-unit';
+import P3VectorsNotation from './p3-vectors-notation';
+import P3VectorsScalarProduct from './p3-vectors-scalar-product';
 import QuadraticInequality from './quadratic-inequality';
 import QuadraticVertex from './quadratic-vertex';
 import SeriesApGpShared from './series-ap-gp-shared';
@@ -86,6 +130,11 @@ export const diagrams: DiagramRegistry = {
   'circular-measure-sector-parts': CircularMeasureSectorParts,
   'circular-measure-segment': CircularMeasureSegment,
   'circular-measure-tangent-region': CircularMeasureTangentRegion,
+  'complex-numbers-argand-intro': ComplexNumbersArgandIntro,
+  'complex-numbers-argand-operations': ComplexNumbersArgandOperations,
+  'complex-numbers-geometric-transformations': ComplexNumbersGeometricTransformations,
+  'complex-numbers-loci-summary': ComplexNumbersLociSummary,
+  'complex-numbers-polar-multiply': ComplexNumbersPolarMultiply,
   'coordinate-geometry-chord-midpoint': CoordinateGeometryChordMidpoint,
   'coordinate-geometry-circle-expanded': CoordinateGeometryCircleExpanded,
   'coordinate-geometry-circle-properties': CoordinateGeometryCircleProperties,
@@ -101,6 +150,11 @@ export const diagrams: DiagramRegistry = {
   'coordinate-geometry-sliding-line': CoordinateGeometrySlidingLine,
   'coordinate-geometry-tangent-at-point': CoordinateGeometryTangentAtPoint,
   'discriminant-cases': DiscriminantCases,
+  'forces-equilibrium-components-resultants': ForcesEquilibriumComponentsResultants,
+  'forces-equilibrium-contact-smooth': ForcesEquilibriumContactSmooth,
+  'forces-equilibrium-force-diagram': ForcesEquilibriumForceDiagram,
+  'forces-equilibrium-friction-third-law': ForcesEquilibriumFrictionThirdLaw,
+  'forces-equilibrium-resolving-equilibrium': ForcesEquilibriumResolvingEquilibrium,
   'functions-combined-inside': FunctionsCombinedInside,
   'functions-combined-sequence': FunctionsCombinedSequence,
   'functions-composite-machines': FunctionsCompositeMachines,
@@ -114,8 +168,21 @@ export const diagrams: DiagramRegistry = {
   'functions-reflections': FunctionsReflections,
   'functions-stretches': FunctionsStretches,
   'functions-translations': FunctionsTranslations,
+  'kinematics-calculus': KinematicsCalculus,
+  'kinematics-distance-displacement': KinematicsDistanceDisplacement,
+  'kinematics-graphs': KinematicsGraphs,
+  'kinematics-suvat': KinematicsSuvat,
+  'kinematics-vt-area': KinematicsVtArea,
   'line-circle-intersection': LineCircleIntersection,
   'line-curve-pivot': LineCurvePivot,
+  'math-p3-algebra-binomial-validity': P3AlgebraBinomialValidity,
+  'math-p3-algebra-long-division': P3AlgebraLongDivision,
+  'math-p3-algebra-modulus-graph': P3AlgebraModulusGraph,
+  'math-p3-algebra-modulus-inequality': P3AlgebraModulusInequality,
+  'math-p3-logarithmic-exponential-index-graph': P3LogarithmicExponentialIndexGraph,
+  'math-p3-logarithmic-exponential-inverse-graphs': P3LogarithmicExponentialInverseGraphs,
+  'math-p3-logarithmic-exponential-linear-form-plot': P3LogarithmicExponentialLinearFormPlot,
+  'mech-momentum-collision': MechMomentumCollision,
   'p1-differentiation-box-net': P1DifferentiationBoxNet,
   'p1-differentiation-chain-box': P1DifferentiationChainBox,
   'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
@@ -150,6 +217,27 @@ export const diagrams: DiagramRegistry = {
   'p1-trigonometry-tan-shift': P1TrigonometryTanShift,
   'p1-trigonometry-transformed-cos': P1TrigonometryTransformedCos,
   'p1-trigonometry-unit-circle': P1TrigonometryUnitCircle,
+  'p2-algebra-division-table': P2AlgebraDivisionTable,
+  'p2-algebra-modulus-graph': P2AlgebraModulusGraph,
+  'p2-integration-trapezium-rule': P2IntegrationTrapeziumRule,
+  'p2-logarithmic-exponential-graphs': P2LogarithmicExponentialGraphs,
+  'p2-logarithmic-exponential-linearising': P2LogarithmicExponentialLinearising,
+  'p2-logarithmic-exponential-log-laws': P2LogarithmicExponentialLogLaws,
+  'p2-numerical-solution-divergence': P2NumericalSolutionDivergence,
+  'p2-numerical-solution-sign-change': P2NumericalSolutionSignChange,
+  'p2-numerical-solution-staircase': P2NumericalSolutionStaircase,
+  'p2-trigonometry-r-form': P2TrigonometryRForm,
+  'p2-trigonometry-reciprocal-graphs': P2TrigonometryReciprocalGraphs,
+  'p3-numerical-solution-approximations': P3NumericalSolutionApproximations,
+  'p3-numerical-solution-iteration-steps': P3NumericalSolutionIterationSteps,
+  'p3-numerical-solution-rearranging-cobweb': P3NumericalSolutionRearrangingCobweb,
+  'p3-numerical-solution-sign-change': P3NumericalSolutionSignChange,
+  'p3-vectors-addition-scalar': P3VectorsAdditionScalar,
+  'p3-vectors-line-equation': P3VectorsLineEquation,
+  'p3-vectors-line-relationships': P3VectorsLineRelationships,
+  'p3-vectors-magnitude-unit': P3VectorsMagnitudeUnit,
+  'p3-vectors-notation': P3VectorsNotation,
+  'p3-vectors-scalar-product': P3VectorsScalarProduct,
   'quadratic-inequality': QuadraticInequality,
   'quadratic-vertex': QuadraticVertex,
   'series-ap-gp-shared': SeriesApGpShared,

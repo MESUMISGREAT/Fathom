@@ -1,0 +1,257 @@
+id: elastic-plastic-elastic-limit
+subject: "9702"
+topic: "6.2"
+title: "The elastic limit: the point of no return"
+summary: The elastic limit is the largest deformation that still springs back completely. It is not the same as the limit of proportionality.
+order: 2
+minutes: 7
+kind: core
+objectives: ["6.2.1"]
+prerequisites: [elastic-plastic-deformation, stress-strain-hookes-law]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.2, learning outcome 6.2.1 (elastic limit, and its relation to elastic and
+    plastic deformation). The load/extension data in the worked example is invented. All
+    questions are original.
+
+    Independently re-checked line by line (definitions, every worked step, every answer key and
+    each diagram's alt text) in a second adversarial pass by the same agent on 2026-10-28:
+    every numeric answer was recomputed from the question's own data in Python, all four
+    objectives 6.2.1-6.2.4 were confirmed taught and tested, and all three diagrams were
+    rendered and inspected in light and dark. No separate reviewer model was available here.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can define the **elastic limit**, explain what happens beyond it, and distinguish it from the **limit of proportionality** on a force–extension graph.
+
+  - type: explain
+    title: Every spring has a limit
+    body: |-
+      Pull a spring gently and it springs back. Pull it too far, once, and it never quite returns to its original length again.
+
+      There is a largest deformation for which the object still recovers completely. Cross that line and some of the change stays for good.
+
+      That boundary has a name.
+
+  - type: definition
+    term: Elastic limit
+    body: |-
+      The **elastic limit** is the maximum deformation for which an object still returns to its original shape and size when the deforming force is removed.
+
+      Below the elastic limit, deformation is elastic. Beyond it, the object is left with a permanent (plastic) extension, even after the load is removed.
+
+  - type: diagram
+    diagram: phys-elastic-plastic-loading-unloading
+    alt: >-
+      A force against extension graph for a metal wire. The loading curve is straight from the
+      origin, then bends over. Removing a small load retraces the line back to the origin, so that
+      deformation was elastic. Removing a large load gives an unloading line parallel to the
+      straight part that meets the extension axis to the right of the origin, leaving a permanent
+      extension: that load went beyond the elastic limit.
+    caption: |-
+      The elastic limit is the furthest point from which the unloading line still returns to the origin.
+
+  - type: intuition
+    title: Two limits that are easy to mix up
+    body: |-
+      You have already met the **limit of proportionality**. It is where the graph stops being a straight line: beyond it, force is no longer proportional to extension, so $F = kx$ fails.
+
+      The **elastic limit** is where the material stops springing back: beyond it, the deformation becomes partly permanent.
+
+      For many metal wires the two points are close together, with the limit of proportionality reached first. That is why they are often mentioned in the same breath — but they answer different questions.
+
+      | Question | Limit that answers it |
+      | --- | --- |
+      | Is the graph still straight? | Limit of proportionality |
+      | Will it still return to its original length? | Elastic limit |
+
+      Between the two limits the graph curves, yet the wire still returns to its original length when unloaded. So an object can break proportionality and still be perfectly elastic.
+
+  - type: example
+    title: "Worked example: finding the elastic limit from a test"
+    problem: |-
+      A wire is loaded in steps. After each load is removed, its length is measured again.
+
+      | Load / N | Length under load / mm | Length after unloading / mm |
+      |---|---|---|
+      | 0 | 500 | 500 |
+      | 2 | 502 | 500 |
+      | 4 | 504 | 500 |
+      | 6 | 507 | 502 |
+      | 8 | 512 | 506 |
+
+      Between which two loads does the elastic limit lie?
+    steps:
+      - |-
+        Find the permanent extension after each load by subtracting the original length, $500\ \text{mm}$.
+      - |-
+        At 2 N and 4 N the length returns to $500\ \text{mm}$: permanent extension $0\ \text{mm}$. Both loads are below the elastic limit.
+      - |-
+        At 6 N the wire stays at $502\ \text{mm}$: a permanent extension of $2\ \text{mm}$. This load is beyond the elastic limit.
+      - |-
+        So the elastic limit is somewhere between $4\ \text{N}$ and $6\ \text{N}$.
+      - |-
+        At 4 N the extension was $4\ \text{mm}$ and it all sprang back, so the elastic limit is at an extension of at least $4\ \text{mm}$.
+    answer: |-
+      Between $4\ \text{N}$ and $6\ \text{N}$ (and above an extension of $4\ \text{mm}$).
+
+  - type: check
+    title: Quick check
+    questions: [el-definition, el-permanent-vs-elastic, el-lop-vs-el]
+
+  - type: misconceptions
+    items:
+      - wrong: The elastic limit is the same thing as the limit of proportionality.
+        right: |-
+          They are different points. The limit of proportionality is where the graph stops being
+          straight; the elastic limit is where the object stops returning to its original length.
+          For many metals the limit of proportionality comes first.
+      - wrong: Once the elastic limit is passed, the object cannot deform elastically at all.
+        right: |-
+          It can. Part of the deformation springs back and part stays. Below the new, higher
+          elastic limit, further small stretches are still elastic.
+      - wrong: An object that returns to its original length must still be obeying Hooke's law.
+        right: |-
+          It may have passed the limit of proportionality: the graph can curve while the
+          deformation is still fully elastic.
+      - wrong: The elastic limit is a force.
+        right: |-
+          It is a point on the force–extension graph, so it can be quoted as a force, an extension
+          or a stress — but the definition is about the deformation at which recovery stops being
+          complete.
+      - wrong: A material that has been stretched beyond its elastic limit is weaker forever.
+        right: |-
+          It is permanently longer, and its behaviour may change, but "weaker" is not the right
+          description. Avoid claims the question does not support.
+
+  - type: exam
+    body: |-
+      - State the elastic limit as the point beyond which the object **does not return to its original shape and size** when the force is removed. "It breaks" is not the definition.
+      - If a table gives lengths after unloading, subtract the original length to find the permanent extension. Zero permanent extension means the load was below the elastic limit.
+      - Do not write that the graph "curves, so the elastic limit has been passed". Curving shows the limit of proportionality has been passed. Only a permanent length change shows the elastic limit has been passed.
+
+  - type: takeaways
+    items:
+      - 'The **elastic limit** is the maximum deformation from which the object still recovers completely.'
+      - 'Beyond the elastic limit, unloading leaves a permanent (plastic) extension.'
+      - 'The **limit of proportionality** is where the graph stops being straight; the **elastic limit** is where the object stops springing back.'
+      - 'A curved graph can still be elastic: proportionality can fail before recovery does.'
+
+  - type: check
+    title: Practice
+    questions: [el-recovered-extension, el-cloze, el-spot-error]
+
+questions:
+  - id: el-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.1"]
+    prompt: |-
+      Which statement defines the **elastic limit**?
+    options:
+      - text: The maximum deformation for which the object still returns to its original shape and size when the force is removed
+        correct: true
+        why: |-
+          That is exactly the definition: beyond this point, some deformation remains permanent.
+      - text: The maximum force the object can withstand before it breaks
+        why: |-
+          Breaking is a different point (the breaking point), well beyond the elastic limit.
+      - text: The point at which the force–extension graph stops being a straight line
+        why: |-
+          That is the limit of proportionality, which is a different landmark.
+      - text: The force at which the object first begins to stretch
+        why: |-
+          Any force stretches the object; there is no threshold at zero.
+    explanation: |-
+      The elastic limit is about recovery, not about the graph's shape or the breaking point.
+
+  - id: el-permanent-vs-elastic
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      A wire is $1.800\ \text{m}$ long with no load. Under a load it becomes $1.860\ \text{m}$ long. After the load is removed it is $1.808\ \text{m}$ long.
+
+      How much of the maximum extension, in mm, was recovered elastically?
+    fields:
+      - label: "recovered extension ="
+        answer: 52
+        unit: mm
+        tolerance: { abs: 0.5 }
+    explanation: |-
+      Maximum extension $= 60\ \text{mm}$. Permanent extension $= 1.808 - 1.800 = 0.008\ \text{m} = 8\ \text{mm}$. Recovered (elastic) part $= 60 - 8 = 52\ \text{mm}$.
+
+  - id: el-lop-vs-el
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      A wire's force–extension graph is straight up to 5.0 N and then curves. When the load is removed from 7.0 N, the wire returns to exactly its original length.
+
+      What can you conclude?
+    options:
+      - text: It has passed the limit of proportionality but not the elastic limit
+        correct: true
+        why: |-
+          The curve shows proportionality has ended; returning exactly to the original length shows the deformation was still elastic.
+      - text: It has passed the elastic limit but not the limit of proportionality
+        why: |-
+          That is the wrong way round. Curving means proportionality has gone; returning to the original length means the elastic limit has not been reached.
+      - text: It has passed both limits
+        why: |-
+          Passing the elastic limit would leave a permanent extension, which did not happen.
+      - text: It has passed neither limit
+        why: |-
+          The graph is no longer straight, so proportionality has definitely ended.
+    explanation: |-
+      Curvature is about proportionality; a permanent length change is about the elastic limit. Here only the first has happened.
+
+  - id: el-recovered-extension
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      A spring is $80.0\ \text{mm}$ long. A load stretches it to $104.0\ \text{mm}$. When the load is removed, the spring is $86.0\ \text{mm}$ long.
+
+      What is the permanent extension, in mm?
+    fields:
+      - label: "permanent extension ="
+        answer: 6
+        unit: mm
+        tolerance: { abs: 0.5 }
+    explanation: |-
+      Final length minus original length: $86.0 - 80.0 = 6.0\ \text{mm}$. The spring recovered $18.0\ \text{mm}$ of the $24.0\ \text{mm}$ maximum extension.
+
+  - id: el-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["6.2.1"]
+    prompt: |-
+      Below the elastic limit, deformation is {{1}} and the object returns to its original length. Beyond it, some deformation is {{2}} and remains after the force is removed.
+    blanks:
+      - accept: [elastic, reversible]
+      - accept: [plastic, permanent]
+    explanation: |-
+      Elastic deformation reverses; plastic deformation is permanent.
+
+  - id: el-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      A student comments on a force–extension graph that is straight up to 6.0 N and then curves. Which line contains the first error?
+    lines:
+      - The straight section ends at 6.0 N.
+      - Beyond 6.0 N the extension is no longer proportional to the force.
+      - So at 6.0 N the wire has passed its elastic limit.
+      - The limit of proportionality is therefore 6.0 N.
+    errorLine: 3
+    fix: |-
+      Curving shows that the **limit of proportionality** has been passed, not that the elastic limit has been passed. The elastic limit is only passed if the wire fails to return to its original length when unloaded, which this information does not show.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. Line 3 confuses the two limits.

@@ -1,0 +1,258 @@
+id: energy-conservation-power-force-velocity
+subject: "9702"
+topic: "5.1"
+title: "P = Fv: power from force and speed"
+summary: Substituting W = Fs and s = vt into P = W/t gives P = Fv, the power needed to keep moving against a steady resistive force.
+order: 8
+minutes: 5
+kind: core
+objectives: ["5.1.7"]
+prerequisites: [energy-conservation-power-definition, energy-conservation-work-at-an-angle]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 5.1.7, recall and use P = Fv). All values and answer keys
+    were computed with Python. All questions are original.
+    Adversarially re-checked line by line (syllabus coverage, facts, worked examples, every
+    answer key, MCQ distractors, tolerances and spot-error lines) on 2026-10-27 in the same
+    cloud chat, which has no separate reviewer model; every numeric key was recomputed
+    independently with Python, and all eight diagrams were rendered and inspected in light
+    and dark. Not yet reviewed by a separate reviewer or by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can **derive and use** $P = Fv$: the power developed by a
+      force equals the force multiplied by the speed, when the force acts along
+      the motion.
+
+  - type: explain
+    title: A second way to write the same physics
+    body: |
+      Lifting a load is easy to think about: force × distance, then divide by
+      time. A car cruising along a motorway is harder — you are not told the
+      distance, only how fast it goes.
+
+      For something moving at a **constant speed**, distance and time are linked
+      by $s = vt$. Put that into the power equation and the time disappears.
+
+  - type: definition
+    term: Power in terms of force and velocity
+    body: |
+      For a force $F$ acting **along** the direction of motion of an object
+      moving at constant speed $v$:
+
+      $$P = Fv$$
+
+      - $F$ in newtons (N), $v$ in metres per second ($\text{m s}^{-1}$),
+        $P$ in watts (W).
+      - Check the units: $\text{N} \times \text{m s}^{-1}
+        = \text{N m s}^{-1} = \text{J s}^{-1} = \text{W}$ ✓
+
+  - type: explain
+    title: Where it comes from (three lines)
+    body: |
+      Start from the definition and substitute:
+
+      $$P = \dfrac{W}{t} \qquad W = Fs \qquad s = vt$$
+
+      So, for a constant force acting along the motion,
+
+      $$P = \dfrac{Fs}{t} = F \times \dfrac{s}{t} = Fv$$
+
+      Nothing new is being invented: $P = Fv$ is just $P = \dfrac{W}{t}$ with the
+      work done per second written in terms of speed.
+
+  - type: diagram
+    diagram: phys-energy-conservation-power-fv
+    alt: >-
+      Two panels. Left, "Deriving P = Fv": three stacked boxes reading
+      P = W/t, then W = Fs so P = Fs/t, then "at steady speed s/t = v", with
+      arrows leading down to the boxed result P = Fv. Right, "A car at constant
+      speed": a car on a road with a forward driving-force arrow of 400 N and a
+      backward drag arrow of 400 N, labelled "constant speed 30 m s⁻¹"; below,
+      P = Fv = 400 N × 30 m s⁻¹ = 12 kW.
+    caption: Constant speed means the driving force balances the drag, so F is the size of either one.
+
+  - type: example
+    title: "Worked example: a car cruising"
+    problem: |
+      A car travels at a constant speed of $30\ \text{m s}^{-1}$. The resistive
+      forces (drag and friction) total $400\ \text{N}$.
+
+      What power must the engine develop?
+    steps:
+      - |
+        Constant speed means the driving force equals the resistive force, so
+        $F = 400\ \text{N}$ forwards.
+      - |
+        $$P = Fv = 400\ \text{N} \times 30\ \text{m s}^{-1} = 12\,000\ \text{W}$$
+      - |
+        In kilowatts: $12\,000\ \text{W} = 12\ \text{kW}$.
+      - |
+        Alternative route, same answer: in one second the car travels
+        $30\ \text{m}$, so the engine does $400 \times 30 = 12\,000\ \text{J}$ of
+        work in that second — a rate of $12\,000\ \text{W}$.
+    answer: |
+      $12\ \text{kW}$. Doubling the speed with the same resistive force would
+      double the power needed; doubling the resistive force at the same speed
+      would also double it.
+
+  - type: check
+    title: Quick check
+    questions: [fv-cloze, car-power]
+  - type: example
+    title: "Backwards: find the force"
+    problem: |
+      A boat's engine develops $8.0\ \text{kW}$ while the boat moves at a steady
+      $20\ \text{m s}^{-1}$.
+
+      What is the resistive force on the boat?
+    steps:
+      - |
+        Convert: $P = 8.0\ \text{kW} = 8000\ \text{W}$.
+      - |
+        Rearrange $P = Fv$ to get the force:
+        $F = \dfrac{P}{v}$.
+      - |
+        $$F = \dfrac{8000}{20} = 400\ \text{N}$$
+      - |
+        At constant speed this equals the resistive force, so the boat is pushed
+        back with $400\ \text{N}$.
+    answer: |
+      $400\ \text{N}$. This rearrangement is useful whenever a question gives a
+      power rating and a top speed.
+  - type: check
+    title: Check yourself
+    questions: [boat-force, cyclist-power, explain-fv]
+  - type: misconceptions
+    items:
+      - wrong: P = Fv means a bigger force always gives more power.
+        right: |
+          Only at the same speed. A large force at a very low speed can develop
+          less power than a small force at a high speed.
+      - wrong: P = Fv can be used for a force at any angle.
+        right: |
+          This form uses the component of the force **along** the motion. If the
+          force is at an angle, use $P = Fv\cos\theta$.
+      - wrong: A car at constant speed needs no power at all.
+        right: |
+          It needs no **resultant** force, but the engine must still do work
+          against drag and friction: $P = Fv$ with $F$ equal to the resistive
+          force. Without fuel, the car slows down.
+      - wrong: Since P = Fv, a higher speed always means more power is needed from the engine.
+        right: |
+          For the *same* resistive force that is true. In reality drag also
+          grows as speed increases, so the power needed rises faster than the
+          speed — but that is beyond what this equation alone tells you.
+
+  - type: exam
+    body: |
+      - If asked to **show that** $P = Fv$, write the substitution out:
+        $P = \dfrac{W}{t}$, $W = Fs$, $s = vt$, so
+        $P = \dfrac{Fvt}{t} = Fv$. Substituting earns the marks.
+      - State that the speed is **constant** (or use the component of force
+        along the motion) — otherwise the equation does not apply as written.
+      - Watch the units: $\text{kW}$ to W ($\times 1000$) and
+        $\text{km h}^{-1}$ to $\text{m s}^{-1}$ ($\div 3.6$) before substituting.
+
+  - type: takeaways
+    items:
+      - >-
+        For a force along the motion at constant speed: $P = Fv$.
+      - >-
+        It follows from $P = \dfrac{W}{t}$ with $W = Fs$ and $s = vt$.
+      - A steady speed means driving force = resistive force, so either one can be used as F.
+      - $1\ \text{W} = 1\ \text{N m s}^{-1}$, as the unit check shows.
+
+questions:
+  - id: fv-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["5.1.7"]
+    prompt: |
+      Substituting $W = Fs$ and $s = vt$ into $P = W/t$ shows that, for a force
+      acting along the motion, $P = F$ {{1}}.
+    blanks:
+      - accept: [v, v (speed), the speed, speed, v (velocity), times v, × v, x v]
+    explanation: |
+      $P = \dfrac{Fs}{t} = F \times \dfrac{s}{t} = Fv$, so the power is the force
+      multiplied by the speed.
+
+  - id: car-power
+    format: numeric
+    difficulty: 1
+    objectives: ["5.1.7"]
+    prompt: |
+      A car moves at a constant speed of $25\ \text{m s}^{-1}$. The total
+      resistive force on it is $500\ \text{N}$.
+
+      What power must the engine develop? Give your answer in kW.
+    fields:
+      - answer: 12.5
+        tolerance: { abs: 0.15 }
+        unit: kW
+    explanation: |
+      $P = Fv = 500 \times 25 = 12\,500\ \text{W} = 12.5\ \text{kW}$.
+
+  - id: boat-force
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.7"]
+    prompt: |
+      A boat's engine develops $60\ \text{kW}$ while the boat travels at a steady
+      speed of $12\ \text{m s}^{-1}$.
+
+      What is the resistive force on the boat?
+    fields:
+      - answer: 5000
+        tolerance: { abs: 30 }
+        unit: N
+    explanation: |
+      $F = \dfrac{P}{v} = \dfrac{60\,000}{12} = 5000\ \text{N}$, since at constant
+      speed the driving force equals the resistive force.
+
+  - id: cyclist-power
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.7"]
+    prompt: |
+      A cyclist pedals at a steady $5.5\ \text{m s}^{-1}$ against a total
+      resistive force of $30\ \text{N}$.
+
+      Calculate the useful power the cyclist develops.
+    fields:
+      - answer: 165
+        tolerance: { abs: 1.5 }
+        unit: W
+    explanation: |
+      $P = Fv = 30 \times 5.5 = 165\ \text{W}$. Over a long ride, that is a
+      substantial effort to keep up.
+
+  - id: explain-fv
+    format: explain
+    difficulty: 3
+    objectives: ["5.1.7"]
+    prompt: |
+      A car travelling at $20\ \text{m s}^{-1}$ against a constant resistive force
+      of $600\ \text{N}$ uses its engine's output power P. Explain why the engine
+      must develop twice that power to keep the same resistive force at
+      $40\ \text{m s}^{-1}$.
+    model: |
+      The engine does work against the resistive force at the rate P = Fv, where
+      F is the force along the motion and v is the constant speed. The resistive
+      force is the same in both cases, 600 N, so the power needed is directly
+      proportional to the speed. Doubling the speed from 20 m s⁻¹ to 40 m s⁻¹
+      therefore doubles the power needed: from 600 × 20 = 12 000 W to
+      600 × 40 = 24 000 W. Physically, the car travels twice as far against the
+      same force each second, so it must do twice the work each second.
+    keyPoints:
+      - Power developed against a resistive force is P = Fv
+      - F is the same (600 N) in both cases, so P is proportional to v
+      - Doubling the speed doubles the power needed
+      - In one second the car travels twice as far against the same force, so twice the work is done per second
+    explanation: |
+      The examiner's chain: use P = Fv, note F is constant, so P ∝ v, and double
+      the speed to double the power. Say the physical reason too — twice the
+      distance per second against the same force.

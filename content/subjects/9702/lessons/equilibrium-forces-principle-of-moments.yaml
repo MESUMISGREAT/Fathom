@@ -9,13 +9,14 @@ objectives: ["4.2.1"]
 prerequisites: [turning-effects-moment-of-a-force, turning-effects-centre-of-gravity]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcome 4.2.1, state the principle of moments and apply it). The see-saw
     diagram is drawn to scale (400 N at 1.5 m balancing 600 N at 1.0 m). Weights and distances are
     illustrative values; all worked values and answer keys were computed with Python. All
     questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -76,7 +77,9 @@ blocks:
   - type: example
     title: Three weights on a metre rule
     problem: |
-      A uniform metre rule is balanced on a pivot at its 50 cm mark, so its own weight acts through the pivot. A $2.0\ \text{N}$ weight hangs at the 20 cm mark and a $1.0\ \text{N}$ weight at the 90 cm mark. What weight must hang at the 70 cm mark to keep it balanced?
+      A uniform metre rule is balanced on a pivot at its 50 cm mark, so its own weight acts through the pivot. A $2.0\ \text{N}$ weight hangs at the 20 cm mark and a $1.0\ \text{N}$ weight at the 90 cm mark.
+
+      What weight must hang at the 70 cm mark to keep it balanced?
     steps:
       - |
         Distances from the pivot: 20 cm mark, $0.30\ \text{m}$ left; 90 cm mark, $0.40\ \text{m}$ right; 70 cm mark, $0.20\ \text{m}$ right.
@@ -156,13 +159,17 @@ questions:
     difficulty: 2
     objectives: ["4.2.1"]
     prompt: |
-      A uniform beam is balanced on a pivot at its centre. On the left, a $30\ \text{N}$ load hangs $1.2\ \text{m}$ from the pivot and a $20\ \text{N}$ load hangs $0.60\ \text{m}$ from the pivot. What load must hang $0.80\ \text{m}$ to the right of the pivot to keep the beam balanced?
+      A uniform beam is balanced on a pivot at its centre. On the left, a $30\ \text{N}$ load hangs $1.2\ \text{m}$ from the pivot and a $20\ \text{N}$ load hangs $0.60\ \text{m}$ from the pivot.
+
+      What load must hang $0.80\ \text{m}$ to the right of the pivot to keep the beam balanced?
     fields:
       - answer: 60
         tolerance: { abs: 0.1 }
         unit: N
     explanation: |
-      Anticlockwise: $30 \times 1.2 + 20 \times 0.60 = 36 + 12 = 48\ \text{N m}$. Clockwise: $W \times 0.80$. So $W = \dfrac{48}{0.80} = 60\ \text{N}$. The beam's own weight acts at the pivot, so it has no moment.
+      Anticlockwise: $30 \times 1.2 + 20 \times 0.60 = 36 + 12 = 48\ \text{N m}$. Clockwise: $W \times 0.80$.
+
+      So $W = \dfrac{48}{0.80} = 60\ \text{N}$. The beam's own weight acts at the pivot, so it has no moment.
 
   - id: pivot-force-ignored
     format: mcq
@@ -190,18 +197,23 @@ questions:
     prompt: |
       A uniform metre rule balances on a pivot at its 32 cm mark when a $0.40\ \text{N}$ weight hangs at its 10 cm mark. Find the weight of the metre rule, to 2 significant figures.
     fields:
-      - answer: 0.4889
+      - answer: 0.49
         sigFigs: 2
+        tolerance: { abs: 0.005 }
         unit: N
     explanation: |
-      The known weight is $32 - 10 = 22\ \text{cm}$ left of the pivot. The rule's weight acts at the 50 cm mark, $18\ \text{cm}$ right of the pivot. So $0.40 \times 0.22 = W \times 0.18$, giving $W = 0.49\ \text{N}$.
+      The known weight is $32 - 10 = 22\ \text{cm}$ left of the pivot. The rule's weight acts at the 50 cm mark, $18\ \text{cm}$ right of the pivot.
+
+      So $0.40 \times 0.22 = W \times 0.18$, giving $W = 0.49\ \text{N}$.
 
   - id: moments-spot-error
     format: spot-error
     difficulty: 2
     objectives: ["4.2.1"]
     prompt: |
-      A uniform plank $3.0\ \text{m}$ long is pivoted at its centre. A $200\ \text{N}$ weight sits at its left end. A student works out where a $300\ \text{N}$ weight must sit, to the right of the pivot, to balance it. Which line contains the first error?
+      A uniform plank $3.0\ \text{m}$ long is pivoted at its centre. A $200\ \text{N}$ weight sits at its left end.
+
+      A student works out where a $300\ \text{N}$ weight must sit, to the right of the pivot, to balance it. Which line contains the first error?
     lines:
       - |
         The pivot is at the centre, so the plank's own weight has no moment about it.

@@ -1,0 +1,323 @@
+id: gpe-ke-exchange-between-stores
+subject: "9702"
+topic: "5.2"
+title: "Falling, swinging and rolling: height becomes speed"
+summary: Set mgh equal to ½mv² to find the speed gained when something falls — the mass cancels, so heavy and light objects land at the same speed.
+order: 5
+minutes: 7
+kind: core
+objectives: ["5.2.2", "5.2.4"]
+prerequisites: [gpe-ke-gpe-calculations, gpe-ke-kinetic-energy-calculations]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcomes 5.2.2 and 5.2.4, used together in the standard exchange of
+    gravitational potential energy for kinetic energy). Roller-coaster and pendulum figures are
+    illustrative; every answer key was recomputed with Python. All questions are original. Not
+    yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can link the two energy stores with $mg\Delta h = \frac{1}{2}mv^2$ to find a speed from a height (or the other way round), and explain why **mass cancels** — so a dropped feather and a dropped hammer would tie in a vacuum.
+
+  - type: explain
+    title: A trade, not a loss
+    body: |
+      Lift a ball, then let go. Nothing is pushing it — gravity is doing the work now.
+
+      On the way down, the gravitational store empties and the kinetic store fills at the same
+      rate. At every moment, ignoring air resistance,
+
+      $$\text{loss in } E_P = \text{gain in } E_K$$
+
+      At the bottom, the height's worth of energy has all become speed. That is the whole idea of
+      this lesson: one equation, two stores.
+
+  - type: diagram
+    diagram: phys-gpe-ke-falling-exchange
+    alt: >-
+      A ball shown falling past four heights (4.0 m, 3.0 m, 2.0 m and 0 m above the ground) from
+      rest. Beside each position a horizontal bar is split between gravitational (light) and
+      kinetic (dark) energy, totalling 39 J for a 1.0 kg ball: 39 J/0 J at the top, 29 J/10 J,
+      20 J/20 J and 0 J/39 J at the ground, with the speed labels 0, 4.4, 6.3 and 8.9 m/s. The
+      total bar length never changes.
+    caption: |
+      Thirty-nine joules, shared differently every metre: what height gives up, speed takes on.
+
+  - type: explain
+    title: Do the algebra once, then reuse it
+    body: |
+      Start with the exchange of energy for an object falling from rest through a height $h$:
+
+      $$mgh = \frac{1}{2}mv^2$$
+
+      The mass $m$ appears on **both sides**, so divide both sides by $m$:
+
+      $$gh = \frac{1}{2}v^2$$
+
+      Rearrange for $v$:
+
+      $$v = \sqrt{2gh}$$
+
+      $m$ is gone. That is a strong statement: the final speed depends only on the height fallen
+      and on $g$ — not on the mass, not on the shape.
+
+      The reason is that a heavier object has more gravitational energy available *and* needs
+      more energy to reach a given speed, and the two effects cancel exactly.
+
+  - type: example
+    title: "Worked example: dropping from a window"
+    problem: |
+      A ball is dropped from rest from a window $5.0\ \text{m}$ above the ground. Ignore air resistance.
+
+      Calculate its speed just before it lands.
+    steps:
+      - |
+        Energy route: loss in $E_P$ equals gain in $E_K$, so $mgh = \frac{1}{2}mv^2$ and therefore $v = \sqrt{2gh}$.
+      - |
+        Substitute:
+        $$v = \sqrt{2 \times 9.81 \times 5.0}$$
+      - |
+        $$v = \sqrt{98.1} = 9.9\ \text{m s}^{-1}$$
+      - |
+        Check with kinematics: $v^2 = u^2 + 2as = 0 + 2 \times 9.81 \times 5.0$, the same number.
+        Energy and kinematics must always agree — if they don't, you have made an arithmetic slip.
+      - |
+        Note the mass never appeared, so a $2\ \text{g}$ marble would land at exactly the same speed.
+    answer: |
+      $9.9\ \text{m s}^{-1}$ downward, whatever the mass.
+
+  - type: check
+    title: Quick check
+    questions: [drop-speed, mass-cancels, height-for-speed]
+
+  - type: explain
+    title: The shortcut and its limits
+    body: |
+      $v = \sqrt{2gh}$ is fast to use, but it is a **special case**: it assumes the object starts
+      from rest, and that no energy is lost to air resistance or friction.
+
+      When energy **is** lost, put it back in the books:
+
+      $$mg h = \frac{1}{2}mv^2 + E_\text{lost}$$
+
+      So the object ends up slower than $\sqrt{2gh}$. Real life always loses something.
+
+      Two common variants of the same equation:
+
+      - falling from a height with an initial speed $u$: $gh = \frac{1}{2}(v^2 - u^2)$;
+      - rising to a maximum height: at the top $v = 0$, so $h = \dfrac{u^2}{2g}$.
+
+  - type: example
+    title: "Worked example: a roller coaster"
+    problem: |
+      A roller-coaster car at rest at the top of a $30\ \text{m}$ drop reaches the bottom of the dip, $12\ \text{m}$ above the ground.
+
+      Ignoring friction, calculate its speed at the bottom of the dip.
+    steps:
+      - |
+        The height actually lost is not $30\ \text{m}$ — it is the **difference** between the two levels:
+        $$\Delta h = 30 - 12 = 18\ \text{m}$$
+      - |
+        Set the fall in gravitational energy equal to the gain in kinetic energy:
+        $$mg\Delta h = \frac{1}{2}mv^2$$
+      - |
+        Cancel $m$ and rearrange:
+        $$v = \sqrt{2g\Delta h} = \sqrt{2 \times 9.81 \times 18}$$
+      - |
+        $$v = \sqrt{353.16} = 18.8\ \text{m s}^{-1}$$
+      - |
+        In reality the car would be slower: friction on the track and air resistance transfer part
+        of the energy to thermal stores, so $18.8\ \text{m s}^{-1}$ is an upper limit.
+    answer: |
+      About $19\ \text{m s}^{-1}$ (ignoring friction).
+
+  - type: check
+    title: Quick check
+    questions: [coaster-with-loss, rise-height, explain-energy-exchange]
+
+  - type: misconceptions
+    items:
+      - wrong: A heavier object falls faster, so it must reach the ground at a higher speed.
+        right: |
+          Ignoring air resistance, $v = \sqrt{2gh}$: mass cancels. A $1\ \text{kg}$ and a
+          $10\ \text{kg}$ ball dropped together land together. (With air resistance the lighter
+          one suffers more, which is why a feather loses to a hammer in a room but not in a
+          vacuum.)
+      - wrong: Using $mg\Delta h = \frac{1}{2}mv^2$ means the mass must be known.
+        right: |
+          You can write the mass and watch it cancel — showing that is often worth a mark. Only
+          if you need the energy itself do you need $m$.
+      - wrong: The energy lost to friction disappears from the universe.
+        right: |
+          It becomes thermal energy in the air, track and car. Putting $E_\text{lost}$ into the
+          equation is exactly how you keep the books balanced.
+      - wrong: At the top of a bounce the kinetic energy is still there, just hidden.
+        right: |
+          At the very top of the motion the object is instantaneously at rest, so $E_K = 0$; all
+          of the mechanical energy is gravitational at that instant.
+      - wrong: Swinging on a swing, energy is created each time you pump.
+        right: |
+          You add energy by doing work — shifting your body at the right moment. Without pumping,
+          the swing's energy only decreases, transferred to thermal stores and the air.
+
+  - type: exam
+    body: |
+      - Write "loss in $E_P$ = gain in $E_K$" (or the reverse) before substituting. It earns a
+        method mark and keeps you honest.
+      - Heights in these questions are **differences**. For a coaster, subtract the two levels;
+        using the total height is the commonest error.
+      - Where a question mentions friction or air resistance, either the speed is lower than
+        $\sqrt{2gh}$ or you must add a lost-energy term.
+      - Speeds are requested in $\text{m s}^{-1}$ — if a question gives $\text{km h}^{-1}$, divide
+        by 3.6 first.
+      - Do not round in the middle: keep $\sqrt{353}$ until the end, then give 2 s.f.
+
+  - type: takeaways
+    items:
+      - 'Falling: $mg\Delta h = \frac{1}{2}mv^2$, so $v = \sqrt{2g\Delta h}$ from rest.'
+      - Mass cancels, so all objects dropped from the same height land at the same speed (in a vacuum).
+      - 'With friction: $mg\Delta h = \frac{1}{2}mv^2 + E_\text{lost}$, so the real speed is lower.'
+      - 'Rising to a maximum height $h$ from speed $u$: $h = \dfrac{u^2}{2g}$.'
+      - Energy calculations and kinematics must agree — use one to check the other.
+
+  - type: deeper
+    title: Pendulums and the energy picture
+    body: |
+      A pendulum is the same story on a curve. At the highest point of each swing it stops
+      momentarily (all gravitational), and at the lowest point it moves fastest (all kinetic).
+
+      If a pendulum bob rises $0.25\ \text{m}$ above its lowest point, its speed there is
+
+      $$v = \sqrt{2 \times 9.81 \times 0.25} = 2.2\ \text{m s}^{-1}$$
+
+      depending only on the vertical rise, not on the bob's mass and not on the length of the
+      string (for a given rise). Only the **height** matters, so a heavy or a light bob swings
+      through the lowest point at the same speed.
+
+questions:
+  - id: drop-speed
+    format: numeric
+    difficulty: 1
+    objectives: ["5.2.2", "5.2.4"]
+    prompt: |
+      A stone is dropped from rest from a cliff $45\ \text{m}$ above the sea. Ignore air resistance.
+
+      Calculate its speed just before it hits the water.
+    fields:
+      - answer: 30
+        tolerance: { rel: 0.03 }
+        unit: m s⁻¹
+    explanation: |
+      $v = \sqrt{2gh} = \sqrt{2 \times 9.81 \times 45} = \sqrt{882.9} = 29.7\ \text{m s}^{-1}
+      \approx 30\ \text{m s}^{-1}$. The mass of the stone does not matter.
+
+  - id: mass-cancels
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.2", "5.2.4"]
+    prompt: |
+      A $1.0\ \text{kg}$ ball and a $5.0\ \text{kg}$ ball are dropped from rest from the same height, with air resistance ignored.
+
+      How do their speeds on landing compare?
+    options:
+      - text: They are equal, because the mass cancels in $mgh = \frac{1}{2}mv^2$
+        correct: true
+        why: |
+          Both sides scale with mass, so dividing by $m$ leaves $gh = \frac{1}{2}v^2$ — the mass
+          has disappeared and the landing speed is $\sqrt{2gh}$ for both.
+      - text: The $5.0\ \text{kg}$ ball lands $\sqrt{5} \approx 2.2$ times faster
+        why: |
+          It has five times the gravitational energy, but it also needs five times the energy to
+          reach the same speed. The factors cancel exactly.
+      - text: The $5.0\ \text{kg}$ ball lands 5 times faster
+        why: |
+          That would apply if energy were proportional to speed rather than to speed squared —
+          and even then the extra mass would not make it faster.
+      - text: The $1.0\ \text{kg}$ ball lands faster because it has less inertia
+        why: |
+          Less inertia means a smaller force is needed to accelerate it, but gravity also pulls
+          it with a smaller force ($mg$). The accelerations are both $g$.
+    explanation: |
+      $mgh = \frac{1}{2}mv^2$ cancels to $v = \sqrt{2gh}$. Mass has no effect on the landing
+      speed in the absence of air resistance.
+
+  - id: height-for-speed
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2", "5.2.4"]
+    prompt: |
+      A ball is thrown vertically upward at $20\ \text{m s}^{-1}$. Ignore air resistance.
+
+      Calculate the maximum height it reaches.
+    fields:
+      - answer: 20
+        tolerance: { rel: 0.03 }
+        unit: m
+    explanation: |
+      At the highest point $v = 0$, so all the kinetic energy has become gravitational:
+      $\frac{1}{2}mu^2 = mgh$, giving
+      $h = \dfrac{u^2}{2g} = \dfrac{400}{19.62} = 20.4\ \text{m} \approx 20\ \text{m}$.
+
+  - id: coaster-with-loss
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2", "5.2.4"]
+    prompt: |
+      A $400\ \text{kg}$ roller-coaster car descends $20\ \text{m}$. Friction and air resistance transfer $1.2 \times 10^{4}\ \text{J}$ to thermal stores on the way down.
+
+      Starting from rest, calculate the car's speed at the bottom.
+    fields:
+      - answer: 18
+        tolerance: { rel: 0.03 }
+        unit: m s⁻¹
+    explanation: |
+      Gravitational energy released: $mg\Delta h = 400 \times 9.81 \times 20 =
+      7.848 \times 10^{4}\ \text{J}$.
+      Available for kinetic energy: $7.848 \times 10^{4} - 1.2 \times 10^{4} =
+      6.648 \times 10^{4}\ \text{J}$.
+      Then $v = \sqrt{\dfrac{2 \times 6.648 \times 10^{4}}{400}} = \sqrt{332.4} =
+      18.2\ \text{m s}^{-1} \approx 18\ \text{m s}^{-1}$.
+
+  - id: rise-height
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2", "5.2.4"]
+    prompt: |
+      A $0.060\ \text{kg}$ ball leaves the ground at $4.5\ \text{m s}^{-1}$, straight up. Ignore air resistance.
+
+      Calculate the height it rises.
+    fields:
+      - answer: 1.0
+        tolerance: { rel: 0.05 }
+        unit: m
+    explanation: |
+      Kinetic energy at launch: $\frac{1}{2} \times 0.060 \times 4.5^2 = 0.6075\ \text{J}$.
+      At the top this is all gravitational, so
+      $0.060 \times 9.81 \times h = 0.6075$, giving $h = 1.03\ \text{m} \approx 1.0\ \text{m}$.
+
+  - id: explain-energy-exchange
+    format: explain
+    difficulty: 3
+    objectives: ["5.2.2", "5.2.4"]
+    prompt: |
+      A ball is dropped from $2.0\ \text{m}$ and bounces back to $1.2\ \text{m}$. Explain, in terms of energy, why it does not return to $2.0\ \text{m}$, and state what happens to the "missing" energy.
+    model: |
+      At the release height the ball has a fixed amount of gravitational potential energy. As it
+      falls, that energy is transferred to the kinetic store, so its speed increases. During the
+      impact with the floor, some of the kinetic energy is transferred to the thermal store of the
+      ball and the floor (and a little to sound), so the ball rebounds with less kinetic energy
+      than it arrived with. It can therefore only climb to a smaller height: at $1.2\ \text{m}$ it
+      has less gravitational energy than it started with. The missing energy has not been
+      destroyed — the ball and floor are slightly warmer, so the total energy is unchanged.
+    keyPoints:
+      - Fixed gravitational potential energy at release
+      - Falling transfers it to the kinetic store
+      - Impact transfers some energy to thermal stores (and sound)
+      - Less energy remains, so the rebound height is smaller
+      - Total energy is still conserved
+    explanation: |
+      Full marks need three things: energy transferred to thermal/sound stores during the impact,
+      less mechanical energy afterwards (hence a lower bounce), and the total still conserved.

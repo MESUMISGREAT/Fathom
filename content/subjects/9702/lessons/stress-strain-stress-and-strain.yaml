@@ -1,0 +1,335 @@
+id: stress-strain-stress-and-strain
+subject: "9702"
+topic: "6.1"
+title: "Stress and strain: making the comparison fair"
+summary: A thick wire stretches less than a thin one and a long wire stretches more than a short one — so engineers divide out the size and compare the material itself.
+order: 4
+minutes: 7
+kind: core
+objectives: ["6.1.5"]
+prerequisites: [stress-strain-spring-constant]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.1, learning outcome 6.1.5 (define and use stress and strain, and the
+    Young modulus). Definitions follow the wording mark schemes reward. All data is invented and
+    chosen for exact arithmetic. All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28. Every numeric key was recomputed independently in Python from the question's own data, every MCQ was checked for exactly one correct option with plausible distractors, and every diagram was rendered and inspected in light and dark (labels, arrows, overlaps and scale). Two real errors were found and fixed in that pass: a wrong 'strain falls by 2' reasoning in a stress/strain comparison question, and a garbled sentence in the elastic-vs-strong enrichment. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can **define stress** and **strain**, calculate both, and explain why a material's response is described with these ratios rather than with force and extension.
+
+  - type: explain
+    title: The problem with force and extension
+    body: |-
+      Take two steel wires and hang the same 50 N weight on each. The thick wire stretches a little; the thin wire stretches a lot. Lengthen one of them and it stretches more again.
+
+      So "it stretched 2 mm under 50 N" tells you about **this wire**, not about **steel**.
+
+      To compare materials fairly, we need to remove the effects of **thickness** and **length**. That is exactly what stress and strain do.
+
+      - **Stress** divides the force by the cross-sectional area — removing the thickness.
+      - **Strain** divides the extension by the original length — removing the length.
+
+  - type: definition
+    term: Tensile stress
+    body: |-
+      The **force per unit cross-sectional area**, acting perpendicular to that area:
+
+      $$\sigma = \frac{F}{A}$$
+
+      where $F$ is the force in newtons and $A$ the cross-sectional area in $\text{m}^2$. The unit
+      is the pascal, $\text{Pa} = \text{N m}^{-2}$.
+
+      The symbol is the Greek letter sigma, $\sigma$ ("tensile stress" or "compressive stress"
+      depending on direction).
+
+  - type: definition
+    term: Tensile strain
+    body: |-
+      The **extension per unit original length**:
+
+      $$\varepsilon = \frac{x}{L}$$
+
+      where $x$ is the extension and $L$ the **original** length, both in metres.
+
+      Strain has **no unit**: it is a length divided by a length. It is often written as a
+      percentage, so a strain of $1.0 \times 10^{-3}$ is 0.10%.
+
+  - type: diagram
+    diagram: phys-stress-strain-stress-strain-definitions
+    alt: >-
+      A vertical wire of original length L and circular cross-section of diameter d, held at the
+      top with a downward force F at the bottom. A small inset shows the circular cross-section
+      with diameter d labelled and the area written as pi d squared over four. Beside the wire,
+      brackets mark the original length L and the extension x at the bottom. Labels show stress is
+      F over A and strain is x over L.
+    caption: |-
+      Stress uses the force and the cross-sectional area; strain uses the extension and the original
+      length.
+
+  - type: intuition
+    title: Why dividing makes the comparison fair
+    body: |-
+      **Stress:** the same force spread over twice the area is half as demanding on each square millimetre. Dividing by area turns "50 N" into "how hard is each bit of the material being pulled?", which is what the material actually feels.
+
+      **Strain:** stretch a 1 m wire by 1 mm and a 2 m wire of the same thickness by 1 mm, and the short wire is strained twice as much — its atoms are pulled apart proportionally more. Dividing by the original length captures that as a fraction.
+
+      Both quantities are **ratios**, so they describe the material at that point, not the piece of metal you happen to be holding.
+
+  - type: example
+    title: "Worked example: stress in a wire"
+    problem: |-
+      A steel wire of diameter 0.40 mm carries a tensile force of 20 N.
+
+      Calculate the tensile stress in the wire.
+    steps:
+      - |-
+        Find the cross-sectional area. A wire is a cylinder, so its cross-section is a circle:
+
+        $$A = \pi r^2 = \pi \left(\frac{d}{2}\right)^2$$
+      - |-
+        The diameter is $0.40\ \text{mm} = 0.40 \times 10^{-3}\ \text{m}$, so the radius is
+        $0.20 \times 10^{-3}\ \text{m}$.
+      - |-
+        $$A = \pi \left(0.20 \times 10^{-3}\right)^2 = 1.26 \times 10^{-7}\ \text{m}^2$$
+      - |-
+        Divide the force by the area:
+
+        $$\sigma = \frac{20}{1.26 \times 10^{-7}} = 1.6 \times 10^{8}\ \text{Pa}$$
+      - |-
+        The answer is 160 MPa (2 s.f.) — a typical working stress for steel.
+    answer: |-
+      $\sigma \approx 1.6 \times 10^{8}\ \text{Pa}$ (160 MPa).
+
+  - type: example
+    title: "Worked example: strain in the same wire"
+    problem: |-
+      The wire above has an original length of 2.50 m and stretches by 1.2 mm when the 20 N force is applied.
+
+      Calculate the tensile strain.
+    steps:
+      - |-
+        Convert the extension to metres: $1.2\ \text{mm} = 1.2 \times 10^{-3}\ \text{m}$.
+      - |-
+        $$\varepsilon = \frac{x}{L} = \frac{1.2 \times 10^{-3}}{2.50}$$
+      - |-
+        $$\varepsilon = 4.8 \times 10^{-4}$$
+      - |-
+        As a percentage: $4.8 \times 10^{-4} \times 100 = 0.048\%$.
+    answer: |-
+      $\varepsilon = 4.8 \times 10^{-4}$ (0.048%), with no unit.
+
+  - type: check
+    title: Quick check
+    questions: [stress-definition, strain-units, stress-calc]
+
+  - type: check
+    title: Practice
+    questions: [strain-calc, area-from-diameter, which-changes, strain-vs-length]
+
+  - type: misconceptions
+    items:
+      - wrong: Stress is a force.
+        right: |-
+          Stress is force **per unit area**, measured in pascals. A force is measured in newtons.
+      - wrong: Strain is measured in metres.
+        right: |-
+          Strain is a length divided by a length, so it has no unit (or is given as a percentage).
+      - wrong: Use the stretched length in the strain calculation because that is the length now.
+        right: |-
+          Use the **original** length. That is the definition, and the difference matters for large
+          strains.
+      - wrong: A thicker wire of the same material has a bigger stress for the same load.
+        right: |-
+          A thicker wire has a bigger area, so the same force gives a **smaller** stress.
+      - wrong: Stress and pressure are unrelated.
+        right: |-
+          Both are force per unit area and both are measured in pascals; stress is the word used for
+          forces inside a deformed solid.
+      - wrong: Doubling the force doubles the strain at any force.
+        right: |-
+          Only within the limit of proportionality. Beyond it the material stretches more than
+          proportionally.
+
+  - type: exam
+    body: |-
+      - Learn the definitions word for word: "force per unit cross-sectional area" and "extension per unit original length".
+      - Convert mm to m and mm² to m² before substituting. The commonest lost mark in this topic is a factor of $10^6$ from a mis-converted area.
+      - For a wire, the area comes from the diameter: $A = \pi d^2/4$. Do not forget to halve the diameter to get the radius.
+      - Give strain as a plain number or a percentage, never with a unit.
+
+  - type: takeaways
+    items:
+      - 'Stress = force ÷ cross-sectional area, in Pa (N m⁻²).'
+      - 'Strain = extension ÷ original length; it has no unit.'
+      - 'Dividing by area and by length removes the size of the sample, so stress and strain describe the material.'
+      - 'For a wire, $A = \pi d^2 / 4$, with the diameter in metres.'
+      - 'Strain can be quoted as a fraction or as a percentage.'
+
+  - type: deeper
+    title: Compressive stress and strain
+    body: |-
+      The definitions work in the other direction too. A pillar squashed by a load has a
+      **compressive stress** $F/A$ and a **compressive strain** $\Delta L / L$, where
+      $\Delta L$ is the shortening.
+
+      By convention these are often quoted as positive magnitudes with the word "compressive",
+      rather than as negative numbers. The material does not care about the sign — it just gets
+      squashed instead of stretched.
+
+questions:
+  - id: stress-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.5"]
+    prompt: |-
+      Which is the definition of tensile stress?
+    options:
+      - text: The force per unit cross-sectional area
+        correct: true
+        why: |-
+          Stress is force divided by area, in N m⁻² or Pa.
+      - text: The extension per unit original length
+        why: |-
+          That is strain.
+      - text: The force multiplied by the extension
+        why: |-
+          That product is the work done (energy stored), not stress.
+      - text: The total force applied to the object
+        why: |-
+          The total force is just the load; stress also depends on how thick the object is.
+    explanation: |-
+      Stress is force per unit cross-sectional area.
+
+  - id: strain-units
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.5"]
+    prompt: |-
+      A wire of original length 2.0 m stretches by 4.0 mm. What is its strain, and what is its unit?
+    options:
+      - text: $2.0 \times 10^{-3}$, with no unit
+        correct: true
+        why: |-
+          $4.0\ \text{mm} = 4.0 \times 10^{-3}\ \text{m}$, so strain is
+          $4.0 \times 10^{-3} / 2.0 = 2.0 \times 10^{-3}$, a pure ratio.
+      - text: $8.0 \times 10^{-3}$ m
+        why: |-
+          Multiplying instead of dividing, and strain has no unit anyway.
+      - text: $2.0 \times 10^{-3}$ m
+        why: |-
+          The value is right, but strain has no unit.
+      - text: $4.0 \times 10^{-3}$
+        why: |-
+          That is the extension in metres, not the extension per unit length.
+    explanation: |-
+      Strain is the ratio of two lengths, so it is dimensionless.
+
+  - id: stress-calc
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.5"]
+    prompt: |-
+      A wire of cross-sectional area $2.0 \times 10^{-7}\ \text{m}^2$ carries a tensile force of 60 N.
+
+      Calculate the tensile stress in Pa.
+    fields:
+      - label: "σ ="
+        answer: 300000000
+        unit: Pa
+        tolerance: { rel: 0.02 }
+    explanation: |-
+      $\sigma = F/A = 60 / (2.0 \times 10^{-7}) = 3.0 \times 10^{8}\ \text{Pa}$.
+
+  - id: strain-calc
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.5"]
+    prompt: |-
+      A rod of original length 1.50 m is compressed by 0.30 mm.
+
+      Calculate the compressive strain.
+    fields:
+      - label: "ε ="
+        answer: 0.0002
+        tolerance: { rel: 0.02 }
+    explanation: |-
+      $0.30\ \text{mm} = 3.0 \times 10^{-4}\ \text{m}$, so
+      $\varepsilon = 3.0 \times 10^{-4} / 1.50 = 2.0 \times 10^{-4}$.
+
+  - id: area-from-diameter
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.5"]
+    prompt: |-
+      A wire of diameter 0.60 mm carries a load of 45 N.
+
+      Calculate the tensile stress in Pa, to 2 significant figures.
+    fields:
+      - label: "σ ="
+        answer: 160000000
+        unit: Pa
+        tolerance: { rel: 0.02 }
+    explanation: |-
+      $A = \pi (0.30 \times 10^{-3})^2 = 2.83 \times 10^{-7}\ \text{m}^2$, so
+      $\sigma = 45 / 2.83 \times 10^{-7} = 1.6 \times 10^{8}\ \text{Pa}$.
+
+  - id: which-changes
+    format: mcq
+    difficulty: 3
+    objectives: ["6.1.5"]
+    prompt: |-
+      Two wires are made of the same steel and carry the same load. Wire X has twice the diameter of wire Y.
+
+      How does the stress in X compare with the stress in Y?
+    options:
+      - text: It is four times smaller
+        correct: true
+        why: |-
+          Doubling the diameter quadruples the cross-sectional area, and $\sigma = F/A$, so the
+          stress falls to one quarter.
+      - text: It is twice as small
+        why: |-
+          That would be the result if only the radius doubled, giving twice the area — but area goes
+          as the **square** of the diameter.
+      - text: It is twice as large
+        why: |-
+          A thicker wire carries the same load with **less** stress, not more.
+      - text: It is unchanged, because the material and the load are the same
+        why: |-
+          The load is the same, but the area is four times bigger, so the stress must change.
+    explanation: |-
+      $A \propto d^2$, so a doubled diameter gives four times the area and one quarter of the
+      stress.
+
+  - id: strain-vs-length
+    format: mcq
+    difficulty: 3
+    objectives: ["6.1.5"]
+    prompt: |-
+      Two wires of the same material and diameter carry the same load. Wire P is 1.0 m long and wire Q is 3.0 m long.
+
+      How do their strains and their extensions compare?
+    options:
+      - text: The strains are equal, and Q extends three times as much
+        correct: true
+        why: |-
+          Same material and same stress means the same strain. The extension is strain times
+          original length, so three times the length gives three times the extension.
+      - text: Q has three times the strain and the same extension
+        why: |-
+          Strain does not depend on length; extension does.
+      - text: Both the strain and the extension are three times bigger
+        why: |-
+          Only the extension is three times bigger.
+      - text: The extensions are equal, because the load is the same
+        why: |-
+          Equal load on a longer wire gives a bigger extension, as $x = \varepsilon L$.
+    explanation: |-
+      Strain depends on the material and the stress, not on the length; extension is strain times
+      length.

@@ -1,0 +1,300 @@
+id: data-security-encryption-access-rights
+subject: "9618"
+topic: "6.1"
+title: "Encryption and access rights: protecting the data itself"
+summary: How encryption makes data unreadable without a key, and how access rights decide who may read, change, run or delete each file.
+order: 7
+minutes: 9
+kind: core
+objectives: ["6.1.6"]
+prerequisites: [data-security-system-and-data]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.1 outcome 6.1.6 ("describe security
+    methods designed to protect the security of data") and its guidance: encryption and access
+    rights. All examples and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.1.6 confirmed taught and tested, every definition and claim checked, every
+    answer key and accept list re-read, and the unit's six diagrams rendered and inspected in
+    light and dark. No separate reviewer model was available in this environment.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can describe how encryption protects data, explain what each access right allows, and combine the two to protect a set of records in a realistic organisation.
+
+  - type: explain
+    title: Protecting the safe, not the room
+    body: |-
+      Lesson 2 drew a line between protecting the **system** (the machine, software and network) and protecting the **data** (the files themselves). This lesson is about the data side, and there are two main tools: **encryption** and **access rights**.
+
+      They cover different failures:
+
+      - **Encryption** protects data from anyone who gets hold of the file without the key — a thief with a stolen laptop, an intercepted transfer, a lost backup tape.
+      - **Access rights** protect data from people who are already inside the system but should not be able to read or change this particular record.
+
+      Used together, a copied file is unreadable *and* a logged-in user cannot open what their job does not require.
+
+  - type: definition
+    term: Encryption
+    body: |-
+      **Encryption** is the process of converting readable data (**plaintext**) into an unreadable form (**ciphertext**) using an algorithm and a **key**. Converting it back is **decryption**, and it requires the correct key.
+
+      Encrypted data can be stored, copied or transmitted safely in the sense that an eavesdropper who lacks the key learns nothing from it.
+
+  - type: explain
+    title: Two kinds of key
+    body: |-
+      | | Symmetric encryption | Asymmetric encryption |
+      | --- | --- | --- |
+      | Keys used | One shared key encrypts and decrypts | A pair: a public key encrypts, the matching private key decrypts |
+      | Strength | Fast, good for large files | Slower, used for small amounts of data and for key exchange |
+      | Main problem | Both sides must share the key safely | Needs a trusted way to publish public keys (certificates) |
+
+      In practice the two are combined: a website uses asymmetric encryption to agree a temporary shared key, then uses fast symmetric encryption for the actual traffic (this is what HTTPS does).
+
+      Careful: digital signatures (lesson 3) use the same key pair the other way round. There the sender encrypts the hash with their **private** key and the receiver decrypts it with the sender's **public** key, because the aim is proving who sent it, not hiding it.
+
+      Where encryption is used to protect data:
+
+      - **at rest** — full-disk encryption on a laptop, encrypted files on a server, encrypted database columns holding card numbers;
+      - **in transit** — HTTPS for web traffic, a VPN between an office and a home worker, encrypted email;
+      - **in backups** — an encrypted backup tape or cloud backup, which matters because backups leave the building.
+
+  - type: definition
+    term: Access rights
+    body: |-
+      **Access rights** (also called permissions) are rules that state what a named user or group may do with a particular file, folder or record:
+
+      - **read** — open and copy it;
+      - **write** — change its contents (or create new files in the folder);
+      - **execute** — run it as a program;
+      - **delete** — remove it.
+
+      Rights are usually granted to **groups** rather than individuals, so that adding a new employee means adding them to a group instead of editing dozens of files.
+
+  - type: diagram
+    diagram: cs-data-security-access-rights
+    alt: >-
+      A grid of five roles against four files, showing the rights R (read), W (write), D (delete)
+      and a dash for no access. The receptionist may read and write appointments but has no access
+      to patient notes, prescriptions or payroll. The nurse may read appointments and read and write
+      patient notes. The doctor may also read and write prescriptions. Finance may read and write
+      only payroll. The IT administrator holds read, write and delete rights on the three clinical
+      files but no access to payroll. A legend explains the letters and a note reads "grant only
+      what the job needs".
+    caption: |-
+      Access rights are per user (or group) and per file. Everyone can do something; nobody can do everything.
+
+  - type: explain
+    title: How access rights play out in practice
+    body: |-
+      **On a file system**, each file has an owner, and the owner or an administrator sets read, write, execute and delete rights for the owner, a group and everyone else. A folder's rights can be **inherited** by the files inside it, which is why a whole shared drive can be locked down in one step.
+
+      **In a database**, rights are set on tables or views: a receptionist's account may read a view showing only appointment times, while the underlying table with clinical notes is unavailable. Some systems go further and restrict rows, so a patient can read only their own record.
+
+      **In an application**, the program itself enforces the rule: a student's page shows only their own marks even though the database holds everyone's.
+
+      Two rules of thumb:
+
+      - **Least privilege** — give the smallest set of rights that lets the person do their job. It is easier to grant more later than to undo a leak.
+      - **Separation of duties** — the person who can change a record should not always be the only person who can approve or delete it.
+
+      Access rights should be **reviewed** when someone changes role and **removed** when they leave. Rights that were granted "temporarily" years ago are one of the commonest real-world weaknesses.
+
+  - type: check
+    title: Rights and keys
+    questions: [ea-mcq-delete, ea-text-encryption, ea-spot-error]
+
+  - type: example
+    title: Setting up a small clinic
+    problem: |-
+      A clinic has three staff: a receptionist, a nurse and a doctor. The files are the appointment list, patient notes and payroll. Decide sensible access rights, and justify each refusal.
+    steps:
+      - |-
+        **Step 1 — what does each job actually need?** The receptionist books appointments but has no clinical role. The nurse and doctor both treat patients, so both need notes. Payroll is handled elsewhere.
+      - |-
+        **Step 2 — appointments.** Read and write for the receptionist (they book and move appointments), read for the nurse and doctor (they need to know who is coming in). Delete only for an administrator, so appointments cannot vanish silently.
+      - |-
+        **Step 3 — patient notes.** Read and write for the nurse and doctor; **no access** for the receptionist. This refusal is a privacy control: the receptionist has no clinical need, and access rights are how that principle is enforced technically.
+      - |-
+        **Step 4 — payroll.** No access for any clinical role. Only the practice manager's account and the payroll system should reach it, again on least-privilege grounds.
+      - |-
+        **Step 5 — add the data-level protection.** Encrypt the notes at rest on the server and on any laptop, so that if a device or backup is stolen the records are unreadable. Access rights control who can open a record inside the system; encryption controls who can read the file at all.
+    answer: |-
+      receptionist: read/write appointments, no notes, no payroll. nurse and doctor: read appointments, read/write notes, doctor also writes prescriptions. Payroll: practice manager and payroll system only. Delete rights restricted to an administrator account. Notes encrypted at rest. Each refusal exists because the job does not need that data.
+
+  - type: explain
+    title: "Beyond the two: reducing what there is to leak"
+    body: |-
+      Two supporting measures are worth naming alongside encryption and access rights.
+
+      **Anonymisation** removes anything that identifies a person, so the data can be used for analysis with little privacy risk. **Pseudonymisation** replaces names with codes and keeps the key separately, so the data is still linkable for legitimate purposes but not readable by everyone who holds it.
+
+      **Audit logs** record who read or changed a record and when. They do not prevent access, but they make misuse detectable and give the organisation evidence.
+
+      Combined with the two main measures, they turn "we hope nobody looks" into "we would know".
+
+  - type: check
+    title: Rights in practice
+    questions: [ea-mcq-least-privilege, ea-cloze-rights, ea-mcq-transit]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Encrypting a file stops an employee copying it.
+        right: |-
+          Encryption protects the contents from anyone without the key. An employee who is allowed to open the file can still copy or print it — access rights, audit logs and policy are the controls for that.
+      - wrong: |-
+          Access rights are the same as encryption.
+        right: |-
+          Access rights decide what a logged-in user may do inside the system. Encryption makes the file useless if it leaves the system. They cover different failures.
+      - wrong: |-
+          If you can read a file, you can always delete it.
+        right: |-
+          Read, write, execute and delete are separate rights. Many systems deliberately let staff read records but not delete them.
+      - wrong: |-
+          Giving everyone full access is safe because staff are trustworthy.
+        right: |-
+          Mistakes and compromised accounts happen. Least privilege limits what a single error or stolen login can expose.
+      - wrong: |-
+          Encrypted data is also accurate and complete.
+        right: |-
+          Encryption says nothing about integrity. A corrupted or wrongly typed value is still wrong after decryption; checksums and validation are needed for that.
+
+  - type: exam
+    body: |-
+      Typical wording: *"Describe two methods used to protect the security of data"* (4 marks) or *"Explain how access rights protect data"* (2–3 marks).
+
+      - For encryption, give the mechanism (plaintext → ciphertext with a key, decryption needs the key) and one situation where it helps: a stolen laptop, an intercepted transfer, a lost backup.
+      - For access rights, name the rights (read, write, execute, delete), say that they are set per user or group, and say that least privilege limits what a compromised or careless account can do.
+
+      A strong answer links the method to a **failure it prevents**. "Encryption protects data on a stolen device" is a mark; "encryption makes data safe" is not.
+
+      If a question asks for a limitation, the two reliable ones are: encryption does not stop an authorised user copying what they can open, and access rights do not protect data once it has been copied outside the system.
+
+  - type: takeaways
+    items:
+      - Encryption converts plaintext to ciphertext with a key; decryption needs that key.
+      - Use it for data at rest, in transit and in backups — the places where system controls no longer reach.
+      - Access rights grant read, write, execute or delete permission per user or group; give only what the job needs.
+      - Review rights when roles change and remove them when people leave.
+      - Encryption controls who can read a file; access rights control what a logged-in user may do; audit logs reveal misuse.
+
+questions:
+  - id: ea-mcq-delete
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.6"]
+    prompt: |-
+      A nurse can read and update patient notes but must not be able to remove them permanently. Which access right should be withheld?
+    options:
+      - text: Delete
+        correct: true
+        why: |-
+          Delete is a separate right. Withholding it lets the nurse correct and add to notes while making permanent removal impossible.
+      - text: Read
+        why: |-
+          Without read access the nurse could not see the notes at all, which the job requires.
+      - text: Write
+        why: |-
+          Write lets the nurse record treatment; withholding it would stop the job being done.
+      - text: Execute
+        why: |-
+          Notes are data files, not programs, so execute is irrelevant here.
+    explanation: |-
+      Read, write, execute and delete are separate permissions. Least privilege means granting the ones the job needs and withholding the rest — here, delete.
+
+  - id: ea-text-encryption
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["6.1.6"]
+    prompt: |-
+      What is the process of converting plaintext into ciphertext using a key called? (One word.)
+    accept: [encryption, encrypting]
+    model: |-
+      **Encryption** — converting readable plaintext into ciphertext so that it cannot be understood without the key.
+    explanation: |-
+      Encryption hides the meaning of the data; the reverse process, which needs the correct key, is decryption.
+
+  - id: ea-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.6"]
+    prompt: |-
+      A student explains how a company protects its customer records. Which line contains the first error?
+    lines:
+      - The records are encrypted on the server, so a stolen backup copy cannot be read without the key.
+      - Access rights are set per group, so an account in the sales group can read the records it needs but not the payroll table.
+      - Because the files are encrypted, an employee who is allowed to open a record cannot copy it to a USB stick.
+      - An audit log records who opened each record and when, so unusual access can be investigated.
+    errorLine: 3
+    fix: |-
+      Line 3 is wrong: encryption does not stop an authorised user copying data they can already open. Once the employee decrypts the file, nothing prevents a copy — only access rights, audit logs, policies and device controls (such as disabling USB ports) reduce that risk.
+    explanation: |-
+      The other lines describe encryption, access rights and audit logging correctly. Confusing "cannot read without the key" with "cannot copy" is the standard error.
+
+  - id: ea-mcq-least-privilege
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.6"]
+    prompt: |-
+      A temp is hired for two weeks to enter addresses into one spreadsheet. Which set of access rights is most appropriate?
+    options:
+      - text: Write access to that spreadsheet only.
+        correct: true
+        why: |-
+          The job needs to enter data in one file. Give exactly that, so a mistake or a compromised account cannot reach anything else.
+      - text: Full administrator rights, so they can fix any problem themselves.
+        why: |-
+          This grants far more than the job needs and would let a single account change the whole system.
+      - text: Read-only access to the whole shared drive.
+        why: |-
+          That would not let them do the job (they need to write) and exposes files they have no need to see.
+      - text: Read, write and delete on every spreadsheet in the company.
+        why: |-
+          Delete rights on everything go far beyond the task and create a serious risk of loss.
+    explanation: |-
+      Least privilege: the smallest set of rights that allows the task. It limits both accidents and the damage from a compromised account.
+
+  - id: ea-cloze-rights
+    format: cloze
+    difficulty: 2
+    objectives: ["6.1.6"]
+    prompt: |-
+      Access rights normally include read, write, {{1}} and delete. Giving each user only the rights their job needs is called least {{2}}. Recording who opened a record, and when, is done by an audit {{3}}.
+    blanks:
+      - accept: [execute, execution, run]
+      - accept: [privilege]
+      - accept: [log, trail, log file]
+    explanation: |-
+      Read, write, execute and delete are the standard rights. Least privilege limits what an account can do, and audit logs record what was actually done.
+
+  - id: ea-mcq-transit
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.6"]
+    prompt: |-
+      A hospital sends patient records between two sites over the internet. Which measure protects the data **while it is in transit**?
+    options:
+      - text: Encrypting the connection, for example with a VPN or HTTPS.
+        correct: true
+        why: |-
+          Encrypting the traffic means an interceptor on the network sees only ciphertext.
+      - text: Setting read-only access rights on the records.
+        why: |-
+          Access rights control what a logged-in user may do; they do not hide the data on the wire.
+      - text: Installing a firewall at each site.
+        why: |-
+          A firewall filters connections but does not make the contents unreadable if traffic is captured.
+      - text: Keeping daily backups of the records.
+        why: |-
+          Backups help you recover after loss, but they do not protect data travelling across a network.
+    explanation: |-
+      Data in transit needs encryption of the connection. Access rights and backups protect data in other ways but leave the transmitted contents readable.

@@ -1,0 +1,302 @@
+id: kinetics-catalysis-boltzmann
+subject: "9701"
+topic: "8.3"
+title: "The catalytic effect on a Boltzmann distribution"
+summary: "A catalyst leaves the distribution alone and lowers the threshold, so a much larger fraction of molecules has enough energy to react."
+order: 2
+minutes: 6
+kind: core
+objectives: ["8.3.1"]
+prerequisites: ["kinetics-catalysis-mechanism"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against 9701 syllabus topic 8.3, learning outcome 8.3.1 (b): explain the catalytic
+    effect in terms of the Boltzmann distribution. All examples and questions are original.
+    Re-checked line by line on 2026-10-29 in a separate adversarial pass by the same AI model.
+    No separate reviewer model and no teacher have reviewed it.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use a **Boltzmann distribution** to explain why a catalyst increases the
+      rate, and say precisely what does and does not change when one is added.
+
+  - type: explain
+    title: Two ways to get more climbers over the wall
+    body: |
+      Picture the molecules in a gas as a crowd of climbers facing a wall of height $E_a$. Only
+      those with enough energy get over.
+
+      You can get more climbers over in two completely different ways.
+
+      1. **Give everyone more energy** — heat the gas. The whole distribution shifts to the right
+         and its peak moves to higher energy.
+      2. **Lower the wall** — add a catalyst. The distribution does not move at all; the line
+         marking $E_a$ moves left, so a slice of the crowd that was previously stuck is now above
+         the line.
+
+      The syllabus asks you to explain catalysis the second way. Heating and catalysing both speed
+      a reaction up, but they do it by changing opposite things.
+
+  - type: definition
+    term: Boltzmann distribution
+    body: |
+      A graph of the **number of molecules** with a given **energy** against that energy, at a fixed
+      temperature. The area under the curve to the right of $E_a$ is the fraction of molecules with
+      energy greater than or equal to $E_a$ — the only ones that can react on collision.
+
+  - type: diagram
+    diagram: chem-catalysis-boltzmann-shift
+    alt: >-
+      A Maxwell-Boltzmann curve of number of molecules against molecular energy. Two dashed
+      vertical lines mark Ea without a catalyst and the lower Ea prime with a catalyst; the shaded
+      strip between them is the extra fraction of molecules that can now react.
+    caption: >-
+      The curve is identical in both cases. Only the threshold moves, so the fraction to its right
+      grows.
+
+  - type: intuition
+    title: Why the curve stays put
+    body: |
+      The shape of the distribution is set by the **temperature** — how the available thermal energy
+      is shared out among the molecules. A catalyst does not heat anything and does not change the
+      total energy, so the distribution of molecular energies is unchanged.
+
+      What the catalyst changes is the **requirement**: the reaction now proceeds through a
+      mechanism whose highest point is lower.
+
+      This is why the explanation sounds almost backwards compared with heating. Heating makes
+      molecules faster; a catalyst makes the reaction easier.
+
+  - type: example
+    title: Counting the molecules that qualify
+    problem: |
+      At a certain temperature, only about 1 molecule in $10^{10}$ has enough energy to clear the
+      uncatalysed barrier. With a catalyst, the barrier is low enough that about 1 molecule in
+      $10^{4}$ qualifies (illustrative numbers).
+
+      Explain what this does to the rate, using the Boltzmann distribution.
+    steps:
+      - |
+        The fraction able to react is the area under the curve to the right of $E_a$.
+      - |
+        Without a catalyst that area is tiny: $10^{-10}$ of the molecules.
+      - |
+        With the catalyst the threshold moves left to $E_a'$, so the area becomes about $10^{-4}$ —
+        a million times larger.
+      - |
+        Collisions between molecules that both have enough energy are far more frequent, so the rate
+        rises by a very large factor even though the temperature is unchanged.
+    answer: |
+      A much larger area lies to the right of the lower threshold, so a far larger fraction of
+      molecules can react and the rate increases.
+
+  - type: deeper
+    title: Does a catalyst change the shape of the curve at all?
+    body: |
+      No. The Maxwell–Boltzmann distribution depends on temperature and on the mass of the
+      molecules, not on the reaction pathway. At the same temperature the curve is identical with
+      and without a catalyst.
+
+      On an exam sketch, draw **one** curve, then two vertical lines at $E_a$ and $E_a'$, with
+      $E_a' < E_a$. Do not draw a second curve shifted to the right — that is the answer for
+      *increasing the temperature*, and it will lose the mark.
+
+  - type: misconceptions
+    items:
+      - wrong: "A catalyst shifts the Boltzmann curve to the right."
+        right: >-
+          Shifting the curve to the right means the molecules have more energy, which is what
+          heating does. A catalyst leaves the curve where it is and lowers the threshold.
+      - wrong: "A catalyst increases the number of collisions."
+        right: >-
+          It increases the fraction of collisions that are successful, by lowering the energy
+          needed. The collision frequency itself is essentially unchanged.
+      - wrong: "A catalyst increases the activation energy so the reaction can proceed."
+        right: >-
+          The opposite: the activation energy is lowered, which is why more molecules clear it.
+      - wrong: "Because the catalyst lowers Ea, ΔH must be smaller too."
+        right: >-
+          $\Delta H$ is the gap between reactants and products. Lowering the top of the hill does
+          not change the heights of the two ends.
+
+  - type: exam
+    body: |
+      A typical 2-mark answer: "The catalyst provides an alternative route with lower activation
+      energy, so a greater proportion of molecules have energy greater than or equal to the
+      activation energy (shown by the larger area under the curve to the right of $E_a$), so more
+      successful collisions per second."
+
+      If the question says "use the Boltzmann distribution", you must mention the **area** or the
+      **proportion of molecules** with $E \geq E_a$. Just saying "lower activation energy" repeats
+      the definition and may not earn the distribution mark.
+
+  - type: check
+    title: Check yourself
+    questions: [boltzmann-what-changes, boltzmann-area]
+
+  - type: check
+    title: Spot the error and explain
+    questions: [boltzmann-shift-error, boltzmann-explain]
+
+  - type: check
+    title: Comparing with heating
+    questions: [catalyst-vs-heating, boltzmann-same-curve]
+
+  - type: takeaways
+    items:
+      - "The area under the Boltzmann curve to the right of Ea is the fraction of molecules that can react."
+      - "A catalyst lowers Ea; it does not change the curve or the temperature."
+      - "The smaller Ea is, the larger that area, so more successful collisions occur each second."
+      - "Heating shifts the curve; catalysing moves the threshold. Do not mix the two."
+
+questions:
+  - id: boltzmann-what-changes
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.1"]
+    prompt: |
+      A Boltzmann distribution is drawn for a reaction at a fixed temperature. A catalyst is then
+      added. What changes on the graph?
+    options:
+      - text: |
+          The position of the line marking the activation energy moves to the left.
+        correct: true
+        why: |
+          The catalysed route has a lower activation energy, so its threshold sits at a lower energy.
+      - text: |
+          The whole curve shifts to the right and its peak moves to a higher energy.
+        why: |
+          That is what happens when the temperature is increased, not when a catalyst is added.
+      - text: |
+          The curve becomes taller and narrower, because the reaction is faster.
+        why: |
+          The shape is fixed by the temperature; the rate does not change the distribution.
+      - text: |
+          Nothing at all changes, because a catalyst does not affect the molecules.
+        why: |
+          The distribution is unchanged, but the activation-energy threshold on the graph does move.
+    explanation: |
+      At constant temperature the curve is identical. Only the threshold moves, from $E_a$ down to
+      $E_a'$, so the area to its right increases.
+
+  - id: boltzmann-area
+    format: cloze
+    difficulty: 1
+    objectives: ["8.3.1"]
+    prompt: |
+      Complete the sentence about the Boltzmann distribution.
+
+      The area under the curve to the right of the activation energy represents the {{1}} of
+      molecules with energy {{2}} than or equal to the activation energy.
+    blanks:
+      - accept: ["fraction", "proportion", "percentage", "number"]
+      - accept: ["greater", "more", "higher"]
+    explanation: |
+      Those molecules are the only ones that can react when they collide, which is why a bigger
+      area means a faster reaction.
+
+  - id: boltzmann-shift-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.3.1"]
+    prompt: |
+      A student explains the effect of a catalyst using a Boltzmann distribution. One line is wrong.
+    lines:
+      - |
+        At a fixed temperature, most molecules have energies below the activation energy.
+      - |
+        Adding a catalyst shifts the distribution curve to the right, so the molecules have more
+        energy.
+      - |
+        A larger area then lies beyond the activation energy, so the rate increases.
+    errorLine: 2
+    fix: |
+      Adding a catalyst does not shift the curve. It lowers the activation energy, so the threshold
+      moves left and a larger area lies to its right.
+    explanation: |
+      Shifting the curve to the right is the effect of heating. A catalyst leaves the distribution
+      alone and changes the energy required instead.
+
+  - id: boltzmann-explain
+    format: explain
+    difficulty: 3
+    objectives: ["8.3.1"]
+    prompt: |
+      Use the Boltzmann distribution to explain why a catalyst increases the rate of a reaction
+      even though the temperature does not change.
+    model: |
+      At a given temperature the molecules have a spread of energies, and only those with energy at
+      least equal to the activation energy can react when they collide. The catalyst provides an
+      alternative mechanism with a lower activation energy. The distribution is unchanged, but the
+      threshold is lower, so a much larger proportion of molecules (a larger area under the curve to
+      the right of $E_a$) now has enough energy. More successful collisions occur each second, so
+      the rate increases.
+    keyPoints:
+      - "Molecules have a spread of energies; only those with E ≥ Ea can react."
+      - "The catalyst provides an alternative route with a lower Ea."
+      - "The distribution itself is unchanged at constant temperature."
+      - "A larger proportion of molecules now exceeds the lower threshold, so more successful collisions occur per second."
+    explanation: |
+      The catalyst does not change the distribution of molecular energies. It lowers the threshold,
+      so a larger area of the same curve lies beyond it and more collisions succeed each second.
+
+  - id: catalyst-vs-heating
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.1"]
+    prompt: |
+      Both heating and adding a catalyst increase the rate. Which statement correctly contrasts
+      them?
+    options:
+      - text: |
+          Heating shifts the distribution to higher energies; a catalyst lowers the activation
+          energy.
+        correct: true
+        why: |
+          Heating changes the molecules' energies; a catalyst changes the barrier they must clear.
+      - text: |
+          Heating lowers the activation energy; a catalyst shifts the distribution.
+        why: |
+          This is the wrong way round.
+      - text: |
+          Both work by increasing the activation energy.
+        why: |
+          Both increase the rate, so neither can raise the barrier.
+      - text: |
+          Heating changes ΔH; a catalyst does not.
+        why: |
+          Neither changes $\Delta H$; both affect the rate only.
+    explanation: |
+      Heating moves the whole curve to higher energy. A catalyst leaves the curve alone and moves
+      the threshold. Both increase the fraction of molecules that can react.
+
+  - id: boltzmann-same-curve
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.1"]
+    prompt: |
+      Two Boltzmann distributions are plotted for the same reaction, one with a catalyst and one
+      without, both at 350 K. Which feature is identical on the two graphs?
+    options:
+      - text: |
+          The curve itself: same peak height and same most-probable energy.
+        correct: true
+        why: |
+          The distribution depends on temperature, and the temperature is the same.
+      - text: |
+          The activation energy marked on the graph.
+        why: |
+          That is precisely what the catalyst changes.
+      - text: |
+          The shaded area to the right of the activation energy.
+        why: |
+          This area is larger with the catalyst, which is why the rate is higher.
+      - text: |
+          The rate of the reaction.
+        why: |
+          The catalysed reaction is faster, so the rates differ.
+    explanation: |
+      Same temperature means the same distribution. The catalyst only lowers the threshold drawn on
+      it, which enlarges the area to the right.

@@ -1,0 +1,342 @@
+id: programming-structured
+subject: "9618"
+topic: "11.3"
+title: Structured Programming — procedures, functions, parameters, and efficiency
+summary: Define and use procedures and functions with parameters (by value and by reference). Understand when to use each, use correct terminology, and write efficient pseudocode.
+order: 3
+minutes: 7
+kind: core
+objectives: ["11.3.1", "11.3.2", "11.3.3", "11.3.4", "11.3.5", "11.3.6", "11.3.7"]
+prerequisites: ["programming-constructs"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 11.3 Structured Programming. Covers objectives 11.3.1-11.3.7.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define and call procedures and functions, use parameters passed by value and by reference, explain when to use each, apply correct terminology (header, interface, parameter, argument, return value), and write efficient pseudocode.
+
+  - type: explain
+    title: Procedures vs Functions
+    body: |
+      **Procedure** — a named block of code that performs an action. Does not return a value.
+      ```
+      PROCEDURE ProcedureName(parameters)
+        statement(s)
+      ENDPROCEDURE
+      ```
+      Called as a statement: `CALL ProcedureName(arguments)`
+
+      **Function** — a named block that computes and returns a value. Used in expressions.
+      ```
+      FUNCTION FunctionName(parameters) RETURNS dataType
+        statement(s)
+        RETURN value
+      ENDFUNCTION
+      ```
+      Called in an expression: `result ← FunctionName(arguments)`
+
+      | Feature | Procedure | Function |
+      |---------|-----------|----------|
+      | Returns value | No | Yes (one value) |
+      | Called as | Statement (`CALL ...`) | Expression (`x ← f()`) |
+      | Use for | Actions, side effects (I/O, modifications) | Calculations, transformations |
+      | RETURN | Optional, no value | Required, with value |
+
+  - type: example
+    title: Procedure — display menu
+    problem: "Create a procedure to display a menu. No return value needed."
+    steps:
+      - "No parameters needed"
+      - "Just PRINT statements"
+      - "Called with CALL"
+    answer: |
+      PROCEDURE DisplayMenu()
+        PRINT "=== MENU ==="
+        PRINT "1. Add record"
+        PRINT "2. Delete record"
+        PRINT "3. Search"
+        PRINT "4. Exit"
+        PRINT "============"
+      ENDPROCEDURE
+
+      // Call it
+      CALL DisplayMenu()
+
+  - type: example
+    title: Function — calculate area of circle
+    problem: "Create a function that takes radius and returns area."
+    steps:
+      - "Parameter: radius (REAL)"
+      - "Returns: REAL"
+      - "Uses RETURN statement"
+    answer: |
+      FUNCTION CircleArea(radius : REAL) RETURNS REAL
+        CONST PI = 3.14159
+        RETURN PI * radius * radius
+      ENDFUNCTION
+
+      // Call in expression
+      area ← CircleArea(5.0)
+      PRINT "Area: ", area
+
+  - type: explain
+    title: Parameters — by value vs by reference
+    body: |
+      **By Value (default)** — a copy of the argument is passed. Changes inside the subprogram do not affect the original.
+      ```
+      PROCEDURE IncrementByValue(x : INTEGER)
+        x ← x + 1
+      ENDPROCEDURE
+      ```
+      Call: `CALL IncrementByValue(num)` — num unchanged
+
+      **By Reference** — the parameter refers to the same memory as the argument. Changes affect the original. Indicated with `BYREF`:
+      ```
+      PROCEDURE IncrementByRef(BYREF x : INTEGER)
+        x ← x + 1
+      ENDPROCEDURE
+      ```
+      Call: `CALL IncrementByRef(num)` — num is incremented
+
+      **When to use each**:
+      - By value: when subprogram should not modify the argument (safer, default)
+      - By reference: when subprogram needs to modify the argument (e.g., swapping, accumulating, output parameters)
+
+  - type: example
+    title: Swap procedure — requires by reference
+    problem: "Write a procedure to swap two integers."
+    steps:
+      - "Must use BYREF for both parameters"
+      - "Uses temporary variable"
+    answer: |
+      PROCEDURE Swap(BYREF a : INTEGER, BYREF b : INTEGER)
+        temp ← a
+        a ← b
+        b ← temp
+      ENDPROCEDURE
+
+      // Test
+      x ← 5
+      y ← 10
+      CALL Swap(x, y)
+      PRINT x, y  // Outputs: 10, 5
+
+  - type: explain
+    title: Parameter terminology
+    body: |
+      | Term | Meaning |
+      |------|---------|
+      | **Parameter** (formal parameter) | Variable in the procedure/function definition |
+      | **Argument** (actual parameter) | Value/expression passed in the call |
+      | **Header** | First line: name, parameters, return type (for functions) |
+      | **Interface** | Header + parameter list + return type — the "contract" |
+      | **Return value** | Value sent back by function via RETURN |
+
+      Example:
+      ```
+      FUNCTION Add(a : INTEGER, b : INTEGER) RETURNS INTEGER
+        // Header: FUNCTION Add(a : INTEGER, b : INTEGER) RETURNS INTEGER
+        // Parameters: a, b (both INTEGER, by value)
+        // Interface: takes two INTEGERs, returns INTEGER
+        RETURN a + b
+        // Return value: a + b
+      ENDFUNCTION
+
+      CALL Add(3, 4)  // Arguments: 3, 4
+      ```
+
+  - type: explain
+    title: When to use procedures vs functions
+    body: |
+      **Use a PROCEDURE when**:
+      - Performing an action (output, file write, drawing, sorting in-place)
+      - Multiple "outputs" needed (use BYREF parameters)
+      - No meaningful single return value
+      - Side effects are the primary purpose
+
+      **Use a FUNCTION when**:
+      - Computing a single value (mathematical, conversion, validation)
+      - The result is used in an expression
+      - Pure calculation with no side effects (preferred)
+      - Return value replaces the call: `x ← Sqrt(y)` not `CALL Sqrt(y, x)`
+
+      **Guideline**: Prefer functions for calculations. Procedures for actions.
+
+  - type: example
+    title: Function with multiple parameters — quadratic roots
+    problem: "Function to calculate discriminant of quadratic ax² + bx + c."
+    steps:
+      - "Three parameters by value"
+      - "Returns discriminant (REAL)"
+    answer: |
+      FUNCTION Discriminant(a : REAL, b : REAL, c : REAL) RETURNS REAL
+        RETURN b * b - 4 * a * c
+      ENDFUNCTION
+
+      // Usage
+      d ← Discriminant(1.0, -5.0, 6.0)  // d = 1
+      IF d >= 0 THEN
+        root1 ← (-b + SQRT(d)) / (2 * a)
+        root2 ← (-b - SQRT(d)) / (2 * a)
+      ENDIF
+
+  - type: explain
+    title: Writing efficient pseudocode
+    body: |
+      **Efficiency principles** for pseudocode:
+      1. **Avoid redundant calculations** — store repeated expressions in variables
+      2. **Minimise loop overhead** — move invariant calculations outside loops
+      3. **Use appropriate data structures** — arrays for indexed access, records for related data
+      4. **Early exit** — return/break when result found (in WHILE/REPEAT)
+      5. **Avoid deep nesting** — use guard clauses, separate subprograms
+      6. **Meaningful names** — self-documenting code reduces comments
+
+      **Example — inefficient vs efficient**:
+      ```
+      // Inefficient: recalculates LENGTH(arr) every iteration
+      FOR i ← 0 TO LENGTH(arr) - 1
+        IF arr[i] = target THEN ...
+      ENDFOR
+
+      // Efficient: calculate once
+      n ← LENGTH(arr)
+      FOR i ← 0 TO n - 1
+        IF arr[i] = target THEN ...
+      ENDFOR
+      ```
+
+      **Another example — avoid repeated function calls**:
+      ```
+      // Inefficient
+      IF CircleArea(r) > 100 THEN PRINT CircleArea(r)
+
+      // Efficient
+      area ← CircleArea(r)
+      IF area > 100 THEN PRINT area
+      ```
+
+  - type: example
+    title: Efficient procedure — linear search with early exit
+    problem: "Search array for target. Return index or -1 if not found."
+    steps:
+      - "Use WHILE for early exit"
+      - "Return immediately when found"
+    answer: |
+      FUNCTION LinearSearch(arr : ARRAY OF INTEGER, target : INTEGER) RETURNS INTEGER
+        i ← 0
+        n ← LENGTH(arr)
+        WHILE i < n
+          IF arr[i] = target THEN
+            RETURN i
+          ENDIF
+          i ← i + 1
+        ENDWHILE
+        RETURN -1
+      ENDFUNCTION
+
+      // Call
+      pos ← LinearSearch(numbers, 42)
+      IF pos ≠ -1 THEN
+        PRINT "Found at index ", pos
+      ELSE
+        PRINT "Not found"
+      ENDIF
+
+  - type: check
+    title: Quick check — structured programming
+    questions: [procedure-vs-function, by-value-vs-byref, efficient-pseudocode]
+
+  - type: misconceptions
+    items:
+      - wrong: Procedures and functions are the same thing.
+        right: |
+          Procedures perform actions (no return value, called as statement). Functions compute values (return value, used in expressions).
+      - wrong: All parameters are passed by reference.
+        right: |
+          Default is by value. BYREF must be explicitly specified. By value is safer (no side effects).
+      - wrong: Functions can return multiple values.
+        right: |
+          Functions return exactly one value. For multiple outputs, use a procedure with BYREF parameters.
+      - wrong: RETURN in a procedure returns a value.
+        right: |
+          RETURN in a procedure just exits early (no value). Only functions return values.
+      - wrong: Efficient pseudocode means shorter code.
+        right: |
+          Efficient means avoiding redundant work (repeated calculations, unnecessary iterations). Clarity matters more than brevity.
+
+  - type: exam
+    body: |
+      - **Procedure definition**: `PROCEDURE Name(params) ... ENDPROCEDURE`. Called with `CALL Name(args)`.
+      - **Function definition**: `FUNCTION Name(params) RETURNS Type ... RETURN value ... ENDFUNCTION`. Called in expression.
+      - **Parameters**: Default by value. Use `BYREF` for reference. Know the difference.
+      - **Terminology**: Parameter (definition), Argument (call), Header (first line), Interface (contract), Return value (function output).
+      - **When to use**: Procedures for actions/side effects. Functions for calculations.
+      - **Efficiency**: Avoid redundant calculations in loops. Move invariants out. Early exit on success. Use meaningful names.
+
+  - type: takeaways
+    items:
+      - "Procedure = action, no return, CALL statement. Function = calculation, returns value, used in expression."
+      - "Parameters: by value (default, copy) vs BYREF (reference, modifies original)."
+      - "Terminology: parameter vs argument, header, interface, return value."
+      - "Use procedures for I/O, multiple outputs, side effects. Use functions for pure calculations."
+      - "Efficient pseudocode: cache repeated calculations, move loop invariants out, early exit, clear names."
+
+questions:
+  - id: procedure-vs-function
+    format: mcq
+    difficulty: 2
+    objectives: ["11.3.1", "11.3.4", "11.3.5"]
+    prompt: |
+      You need a subprogram to **validate a password** (check length, uppercase, digit) and return TRUE/FALSE. Should this be a procedure or function?
+    options:
+      - text: Procedure — because validation is an action
+        why: "Validation computes a boolean result, used in expressions."
+      - text: Function — because it computes and returns a single value
+        correct: true
+        why: "Returns TRUE/FALSE. Used in IF conditions: IF IsValid(password) THEN..."
+      - text: Procedure with BYREF boolean parameter
+        why: "Works but less natural than a function returning boolean."
+      - text: Either works equally well
+        why: "Functions are designed for this; procedures are for actions."
+    explanation: |
+      Validation returns a boolean used in expressions. Functions return values; procedures perform actions.
+
+  - id: by-value-vs-byref
+    format: explain
+    difficulty: 2
+    objectives: ["11.3.3"]
+    prompt: |
+      Explain the difference between passing a parameter by value and by reference. Give a scenario where each is appropriate.
+    model: |
+      By value: a copy is passed; changes inside don't affect the original. Appropriate for input-only parameters (e.g., calculating area from radius). By reference (BYREF): the parameter aliases the original variable; changes affect the original. Appropriate when the subprogram must modify the argument (e.g., Swap procedure, reading input into a variable, accumulating a total).
+    keyPoints:
+      - "By value: copy, original unchanged"
+      - "By reference: alias, original modified"
+      - "By value scenario: input-only calculation"
+      - "By reference scenario: swap, input, accumulator"
+    explanation: |
+      Default is by value. BYREF must be explicit. By reference enables procedures to have "output parameters".
+
+  - id: efficient-pseudocode
+    format: mcq
+    difficulty: 2
+    objectives: ["11.3.7"]
+    prompt: |
+      Which is **more efficient** pseudocode for finding the maximum in an array?
+    options:
+      - text: FOR i ← 0 TO LENGTH(arr) - 1; IF arr[i] > max THEN max ← arr[i]; ENDIF; ENDFOR
+        correct: true
+        why: "Single pass, no redundant calls. LENGTH(arr) evaluated once if cached."
+      - text: FOR i ← 0 TO LENGTH(arr) - 1; max ← MAX(max, arr[i]); ENDFOR (using MAX function)
+        why: "MAX function call overhead each iteration."
+      - text: Sort array descending, then max ← arr[0]
+        why: "Sorting is O(n log n) vs O(n) for linear scan."
+      - text: REPEAT...UNTIL with nested loop
+        why: "Unnecessarily complex; same O(n) but more operations."
+    explanation: |
+      Single linear scan is O(n) optimal. Avoid function call overhead in tight loops. Sorting is overkill. Cache array length if used repeatedly.

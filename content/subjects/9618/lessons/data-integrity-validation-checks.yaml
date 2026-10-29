@@ -1,0 +1,300 @@
+id: data-integrity-validation-checks
+subject: "9618"
+topic: "6.2"
+title: "Seven validation checks, and when to use each"
+summary: Range, length, format, presence, existence, limit and check digit — what each one tests, and how to choose the right one for a field.
+order: 2
+minutes: 9
+kind: core
+objectives: ["6.2.2"]
+prerequisites: [data-integrity-validation-vs-verification]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.2 outcome 6.2.2 ("describe and use
+    methods of data validation") and its guidance: range check, format check, length check,
+    presence check, existence check, limit check and check digit. Check digit calculations are
+    developed with worked examples in the next lesson. All examples and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.2.2 confirmed taught and tested, every definition and claim checked,
+    every check digit, parity bit, block check character and checksum recomputed in Python,
+    and the unit's five diagrams rendered and inspected in light and dark. No separate
+    reviewer model was available in this environment. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name all seven validation checks, say exactly what each one tests, and pick sensible checks for a given field.
+
+  - type: explain
+    title: Each check tests one property
+    body: |-
+      A **validation check** is a rule about what values a field may hold. Each rule tests one property of the value — is it there, is it the right length, is it in the right pattern, is it in the allowed set, and so on.
+
+      The trick to choosing a check is to finish this sentence: *"this field can only hold a value that is …"*. The end of the sentence tells you which check to use.
+
+      | Check | The question it asks | Example field | Value that fails |
+      | --- | --- | --- | --- |
+      | Presence | Is it there at all? | Surname | blank |
+      | Length | Is it the right number of characters? | Phone number | 8 digits when 11 expected |
+      | Range | Is it between two limits? | Exam mark | 105 |
+      | Limit | Is it on the allowed side of one limit? | Hours worked | −2, or 45 when the rule is "no more than 40" |
+      | Format | Does it match the required pattern? | Date | `31/13/2026` |
+      | Existence | Is it in the list of real values? | Customer ID | `C9999` when no such customer exists |
+      | Check digit | Do the digits agree with the calculated check? | Barcode | one digit changed |
+
+  - type: definition
+    term: The seven validation checks
+    body: |-
+      - **Presence check** — the field must contain something; a blank is rejected.
+      - **Length check** — the value must have a stated number of characters (or at least, or at most, that number).
+      - **Range check** — the value must lie between a lower and an upper limit, inclusive.
+      - **Limit check** — the value must satisfy a single boundary, such as "no more than 40" or "zero or more".
+      - **Format check** — the value must match a pattern, such as two digits, a slash, two digits, a slash, four digits for a date.
+      - **Existence check** — the value must appear in a stored list of valid values (a reference table).
+      - **Check digit** — a digit calculated from the others is recalculated and compared, so a mistyped digit is detected.
+
+  - type: explain
+    title: The two that get confused
+    body: |-
+      **Range and limit** look similar but are not the same.
+
+      - A **range check** has *two* boundaries: a mark must be 0 to 100 inclusive.
+      - A **limit check** has *one*: an order quantity must be greater than 0, with no upper boundary at all.
+
+      So "the temperature must be between −10 and 40 °C" is a range check. "The overdraft must not exceed £500" is a limit check, because only the top is bounded.
+
+      **Length and format** are also easy to mix up.
+
+      - Length counts characters: a UK mobile number must be 11 digits.
+      - Format tests the pattern: a date must be two digits, slash, two digits, slash, four digits.
+
+      A value can satisfy one and fail the other: `12345ABCDE6` is 11 characters (length passes) but is not all digits, so the format check fails.
+
+  - type: diagram
+    diagram: cs-data-integrity-validation-toolbox
+    alt: >-
+      A seven-row table used as a diagram. Each row names a validation check, the question it asks
+      and one pass and one fail example: presence (blank surname fails), length (10 digits where 11
+      expected fails), range (a mark of 105 fails 0-100), limit (an order of -3 fails "greater than
+      zero"), format (31/13/2026 fails a date pattern), existence (customer ID C9999 fails the
+      reference list) and check digit (a changed final digit fails the recalculation).
+    caption: |-
+      Pick the check from the property the field must have, not from habit.
+
+  - type: explain
+    title: Combining checks on one field
+    body: |-
+      Real fields usually need more than one rule, applied in a sensible order.
+
+      Take a date of birth on a registration form:
+
+      1. **Presence** — something must be entered.
+      2. **Format** — it must be `DD/MM/YYYY`.
+      3. **Range** — the year must be between 1900 and the current year.
+      4. **A second range check** — the month must be 1 to 12, the day 1 to 31.
+
+      The order matters for the user experience: checking presence first avoids a confusing "invalid format" message for an empty box.
+
+      What no combination of these rules can do is confirm that the date belongs to the person filling in the form. Validation checks structure; only verification compares with a source.
+
+  - type: check
+    title: Name that check
+    questions: [vc-mcq-presence, vc-cloze-range-limit, vc-mcq-format]
+
+  - type: example
+    title: Designing checks for a library form
+    problem: |-
+      A library sign-up form has four fields: membership number (format `LIB-` followed by five digits), full name, email address, and number of books borrowed today (0 to 4).
+
+      Choose a validation check for each field and say what it rejects.
+    steps:
+      - |-
+        **Membership number.** Two properties matter: the pattern and the specific number. A **format check** enforces `LIB-#####`. An **existence check** against the members table rejects a correctly shaped number that was never issued.
+      - |-
+        **Full name.** A **presence check** stops blank names. A **length check** (say 2 to 60 characters) stops a single stray character or a paste of an entire document.
+      - |-
+        **Email address.** A **format check** requires an `@` with text either side and a dot in the domain. It cannot prove the address exists — that would need confirmation by email, which is verification against the real world rather than a rule about text.
+      - |-
+        **Books borrowed today.** The range 0 to 4 has **two** boundaries, so a **range check** is right. A limit check would allow 900 books as long as it was not negative.
+    answer: |-
+      Membership number: format check plus existence check. Name: presence plus length. Email: format check (and confirmation later). Books: range check 0-4. Each check is chosen from the property the field must have, not from a fixed list.
+
+  - type: check
+    title: Choosing a check
+    questions: [vc-mcq-length, vc-text-existence, vc-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [vc-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A range check and a limit check are the same thing.
+        right: |-
+          A range check has two boundaries (0 to 100). A limit check has one (no more than 40, or greater than zero). Use "limit" only when a single boundary is being tested.
+      - wrong: |-
+          A presence check makes sure the data is correct.
+        right: |-
+          It only makes sure the field is not empty. `X` in a name field passes a presence check.
+      - wrong: |-
+          A format check can confirm an email address really exists.
+        right: |-
+          It confirms the text has the right shape. Whether the mailbox exists can only be confirmed by sending something to it.
+      - wrong: |-
+          An existence check just means the field is not blank.
+        right: |-
+          That is a presence check. An existence check looks the value up in a stored list of valid values, such as real customer IDs or valid postcodes.
+      - wrong: |-
+          Validation rules make a database accurate.
+        right: |-
+          They stop unacceptable values from entering. Plausible but wrong values pass every rule, and only verification against the source catches those.
+
+  - type: exam
+    body: |-
+      Questions usually say *"Describe two validation checks that could be used for this field"* (2–4 marks). Each mark needs the **name** and **what it does here**:
+
+      - "A range check on the exam mark, so only values from 0 to 100 are accepted (1)."
+      - "A format check on the student ID, so it must be two letters followed by four digits (1)."
+
+      Naming a check with no link to the field earns nothing extra. A common loss: writing "range check" for a field that only has one boundary, when the mark scheme expects a limit check. If the question names the field's rule ("no more than 12"), mirror it: that is a limit.
+
+  - type: takeaways
+    items:
+      - "Seven checks: presence, length, range, limit, format, existence, check digit."
+      - Range has two boundaries; limit has one.
+      - Length counts characters; format tests the pattern.
+      - Existence compares with a stored list of real values.
+      - Real fields combine checks, in an order that gives sensible messages.
+
+questions:
+  - id: vc-mcq-presence
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.2"]
+    prompt: |-
+      Which validation check stops a user submitting a form with the surname box left empty?
+    options:
+      - text: Presence check
+        correct: true
+        why: |-
+          A presence check tests only whether the field contains something.
+      - text: Length check
+        why: |-
+          A length check with a minimum would also reject an empty value as too short, but requiring a value to be present at all is the presence check's job.
+      - text: Existence check
+        why: |-
+          That looks the value up in a list of valid values, which is different from requiring a value.
+      - text: Check digit
+        why: |-
+          A check digit is calculated from digits already present, so it cannot apply to an empty field.
+    explanation: |-
+      Presence checks for "not empty". Length, existence and check digit all assume something has been entered.
+
+  - id: vc-cloze-range-limit
+    format: cloze
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A mark must be from 0 to 100, so the system uses a {{1}} check. A discount code may give at most 25% off, with no minimum, so the system uses a {{2}} check.
+    blanks:
+      - accept: [range]
+      - accept: [limit]
+    explanation: |-
+      Two boundaries (0 and 100) make a range check. A single upper boundary with no lower one makes a limit check.
+
+  - id: vc-mcq-format
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A registration field must hold a date in the form `DD/MM/YYYY`. Which check is the right one to enforce that pattern?
+    options:
+      - text: Format check
+        correct: true
+        why: |-
+          A format check tests the arrangement of characters, which is exactly what a date pattern is.
+      - text: Range check
+        why: |-
+          A range check could bound the year, but it would not stop `31-13-2026` being accepted if the boundaries were satisfied.
+      - text: Presence check
+        why: |-
+          Presence only tests that something was entered.
+      - text: Existence check
+        why: |-
+          Existence compares with a list of valid values; a date is not looked up in a list.
+    explanation: |-
+      The pattern (two digits, slash, two digits, slash, four digits) is a format rule. Range checks on each part are usually added as well.
+
+  - id: vc-mcq-length
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A field must hold a UK mobile number: exactly 11 digits. Which check rejects `07700 90012X`?
+    options:
+      - text: A format check, because one character is not a digit.
+        correct: true
+        why: |-
+          The value is 11 characters (ignoring the space) but the pattern requires digits only, so the format check rejects it.
+      - text: A length check, because the value is too long.
+        why: |-
+          Count carefully: the digit string is 11 characters, so a length check alone would pass it.
+      - text: A presence check.
+        why: |-
+          The field is not empty.
+      - text: An existence check.
+        why: |-
+          Phone numbers are not usually checked against a list of all valid numbers.
+    explanation: |-
+      This is why length and format are separate: the value has the right length but the wrong characters, so only the format rule catches it.
+
+  - id: vc-text-existence
+    format: text
+    style: definition
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      Which check confirms that a typed customer ID already exists in the customer table? (Two words.)
+    accept: [existence check, existence, referential integrity check]
+    model: |-
+      An **existence check** — the value is looked up in a stored list or table of valid values.
+    explanation: |-
+      Existence checks compare the value with reference data, so a correctly shaped but unissued ID is rejected.
+
+  - id: vc-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.2.2"]
+    prompt: |-
+      A student lists validation rules for a booking form. Which line contains the first error?
+    lines:
+      - The number of guests field has a range check of 1 to 8, so 0 and 9 are rejected.
+      - The date field has a format check of DD/MM/YYYY and a range check on the year.
+      - The email field has a format check, which proves the address exists and can receive mail.
+      - The booking reference has a check digit, so a single mistyped digit is detected.
+    errorLine: 3
+    fix: |-
+      A format check only confirms that the text has the shape of an email address. It cannot prove the mailbox exists; that needs a confirmation email or a lookup, which is verification against the real world, not a rule about the text.
+    explanation: |-
+      The other lines are sound. Line 3 overstates what validation can do, which is the usual trap in this topic.
+
+  - id: vc-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.2.2"]
+    prompt: |-
+      A school stores exam entries. A student ID is `S` followed by four digits, and a mark is an integer from 0 to 100. Describe validation checks for both fields and explain why each is appropriate.
+    model: |-
+      For the student ID, use a format check requiring an `S` followed by four digits, so `S1234` is accepted and `1234S` or `S12` is rejected; add a length check of five characters. An existence check against the list of enrolled students would also be sensible, so a well-formed but unissued ID is refused. For the mark, use a range check from 0 to 100 inclusive, because a mark has both a lower and an upper boundary; 105 and -1 are rejected. Both are appropriate because they test a property the field must have: the ID must match a fixed pattern and belong to a real student, and the mark must lie within the marking scale.
+    keyPoints:
+      - Format check on the ID with the `S` plus four digits pattern.
+      - Length check (five characters) or existence check against enrolled students.
+      - Range check 0-100 on the mark, because it has two boundaries.
+      - Why each check matches the property the field must have.
+    explanation: |-
+      Choose the check from the property: pattern, length or membership of a list for the ID; two boundaries for the mark.

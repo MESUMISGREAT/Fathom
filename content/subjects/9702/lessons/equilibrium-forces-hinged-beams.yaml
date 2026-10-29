@@ -9,7 +9,7 @@ objectives: ["4.2.1", "4.2.2"]
 prerequisites: [equilibrium-forces-two-conditions, turning-effects-forces-at-angles]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcomes 4.2.1, apply the principle of moments, and 4.2.2, no resultant
@@ -17,6 +17,7 @@ provenance:
     cable at 30°, hinge force drawn at the calculated 8.2° above the horizontal). Weights,
     lengths and angles are illustrative values; all worked values and answer keys were computed
     with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -52,7 +53,9 @@ blocks:
   - type: example
     title: "Step 1: the tension"
     problem: |
-      A uniform beam $2.0\ \text{m}$ long, of weight $80\ \text{N}$, is hinged to a wall and held horizontal by a cable attached to its far end at $30°$ to the beam. A $120\ \text{N}$ load hangs from the far end. Find the tension $T$.
+      A uniform beam $2.0\ \text{m}$ long, of weight $80\ \text{N}$, is hinged to a wall and held horizontal by a cable attached to its far end at $30°$ to the beam. A $120\ \text{N}$ load hangs from the far end.
+
+      Find the tension $T$.
     steps:
       - |
         Perpendicular distance from the hinge to the cable's line of action: $2.0\sin 30° = 1.0\ \text{m}$.
@@ -102,7 +105,9 @@ blocks:
     body: |
       If just three non-parallel forces act on an object in equilibrium, their lines of action pass through **one point**. Take moments about the point where two of them cross: the third must have zero moment there too, so it passes through that point as well.
 
-      Check it here. The two weights act like a single $200\ \text{N}$ force $1.6\ \text{m}$ from the hinge. The cable crosses that vertical line $0.23\ \text{m}$ above the beam, and $\tan^{-1}\left(\dfrac{0.23}{1.6}\right) = 8.2°$: exactly the hinge force's direction. ✓
+      The two weights act like a single $200\ \text{N}$ force $1.6\ \text{m}$ from the hinge. The cable crosses that vertical line $0.23\ \text{m}$ above the beam.
+
+      So $\tan^{-1}\left(\dfrac{0.23}{1.6}\right) = 8.2°$, which matches the hinge force's direction. ✓
 
   - type: exam
     body: |
@@ -142,7 +147,9 @@ questions:
     difficulty: 2
     objectives: ["4.2.1"]
     prompt: |
-      A cable is attached to the end of a horizontal beam of length $L$ and makes an angle $\theta$ with the beam. The other end of the beam is hinged to a wall. What is the perpendicular distance from the hinge to the cable's line of action?
+      A cable is attached to the end of a horizontal beam of length $L$ and makes an angle $\theta$ with the beam. The other end of the beam is hinged to a wall.
+
+      What is the perpendicular distance from the hinge to the cable's line of action?
     options:
       - text: $L\sin\theta$
         correct: true
@@ -161,10 +168,13 @@ questions:
     difficulty: 2
     objectives: ["4.2.1"]
     prompt: |
-      A uniform horizontal rod $1.5\ \text{m}$ long, of weight $30\ \text{N}$, is hinged to a wall. A $90\ \text{N}$ sign hangs from its far end, and a cable from the far end to the wall makes $40°$ with the rod. Find the tension in the cable, to 3 significant figures.
+      A uniform horizontal rod $1.5\ \text{m}$ long, of weight $30\ \text{N}$, is hinged to a wall. A $90\ \text{N}$ sign hangs from its far end, and a cable from the far end to the wall makes $40°$ with the rod.
+
+      Find the tension in the cable, to 3 significant figures.
     fields:
-      - answer: 163.35
+      - answer: 163
         sigFigs: 3
+        tolerance: { abs: 0.5 }
         unit: N
     explanation: |
       Moments about the hinge: $T \times 1.5\sin 40° = 30 \times 0.75 + 90 \times 1.5 = 157.5\ \text{N m}$. The perpendicular distance is $1.5\sin 40° = 0.964\ \text{m}$, so $T = \dfrac{157.5}{0.964} = 163\ \text{N}$.
@@ -174,7 +184,9 @@ questions:
     difficulty: 3
     objectives: ["4.2.2"]
     prompt: |
-      A uniform horizontal rod $1.5\ \text{m}$ long, of weight $30\ \text{N}$, is hinged to a wall. A $90\ \text{N}$ sign hangs from its far end. A cable from the far end to the wall makes $40°$ with the rod and has a tension of $163\ \text{N}$. Find the horizontal and vertical components of the force from the hinge on the rod.
+      A uniform horizontal rod $1.5\ \text{m}$ long, of weight $30\ \text{N}$, is hinged to a wall. A $90\ \text{N}$ sign hangs from its far end.
+
+      A cable from the far end to the wall makes $40°$ with the rod and has a tension of $163\ \text{N}$. Find the horizontal and vertical components of the force from the hinge on the rod.
     fields:
       - label: "horizontal ="
         answer: 125
@@ -185,14 +197,18 @@ questions:
         tolerance: { abs: 0.6 }
         unit: N
     explanation: |
-      Horizontally: $H_x = 163\cos 40° = 125\ \text{N}$, away from the wall. Vertically: $H_y = (30 + 90) - 163\sin 40° = 120 - 105 = 15\ \text{N}$ upwards. Most of the weight is held by the cable; the hinge mainly pushes outwards.
+      Horizontally: $H_x = 163\cos 40° = 125\ \text{N}$, away from the wall. Vertically: $H_y = (30 + 90) - 163\sin 40° = 120 - 105 = 15\ \text{N}$ upwards.
+
+      Most of the weight is held by the cable; the hinge mainly pushes outwards.
 
   - id: steeper-cable
     format: mcq
     difficulty: 2
     objectives: ["4.2.1"]
     prompt: |
-      The cable holding up a hinged horizontal beam is moved higher up the wall, so it makes a larger angle with the beam. It is still fixed to the same end of the beam, and the loads don't change. What happens to the tension?
+      The cable holding up a hinged horizontal beam is moved higher up the wall, so it makes a larger angle with the beam. It is still fixed to the same end of the beam, and the loads don't change.
+
+      What happens to the tension?
     options:
       - text: It decreases, because the perpendicular distance from the hinge to the cable increases
         correct: true

@@ -1,0 +1,299 @@
+id: redox-processes-oxidation-numbers
+subject: "9701"
+topic: "6.1"
+title: "Oxidation numbers: the bookkeeping number of redox"
+summary: An oxidation number is the charge an atom would have if the bonding electrons went to the more electronegative atom. A few rules let you work it out for any formula.
+order: 1
+minutes: 8
+kind: core
+objectives: ["6.1.1"]
+prerequisites: [electronegativity-bonding-what-it-is, ionic-bonding-electrostatic-attraction]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 6.1, learning outcome 6.1.1 (calculate oxidation numbers of elements in
+    compounds and ions), using the syllabus's own rule set. Every oxidation number in the worked
+    examples and answer keys was checked in Python on 2026-10-28. All questions are original.
+
+    Independently re-checked line by line (definitions, every worked step, every answer key and
+    each diagram's alt text) in a second adversarial pass by the same agent on 2026-10-28:
+    every oxidation number and every balanced equation was re-derived from its own data in
+    Python, all five outcomes 6.1.1-6.1.5 were confirmed taught and tested, and all three
+    diagrams were rendered and inspected in light and dark. No separate reviewer model was
+    available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can assign an **oxidation number** to any element in a compound or ion using the standard rules, and check your answer by making the numbers add up to the overall charge.
+
+  - type: explain
+    title: A charge that is not quite a charge
+    body: |-
+      In an ionic compound, the ions really do carry charges: $\text{Na}^+$ and $\text{Cl}^-$ in sodium chloride.
+
+      In a covalent compound, nobody has fully lost or gained an electron. Yet chemists still need to track where the electrons have moved.
+
+      So we pretend. We take every shared pair of electrons and give it to the **more electronegative** atom, the one that pulls harder. The charge the atom would then have is its **oxidation number**.
+
+      It is a bookkeeping device, but a very useful one: it turns "electrons have shifted" into simple arithmetic.
+
+  - type: definition
+    term: Oxidation number
+    body: |-
+      The **oxidation number** (also called the **oxidation state**) of an element is the charge that its atom would have if the electrons in each bond were assigned to the more electronegative atom.
+
+      - In a neutral compound, the oxidation numbers add up to **0**.
+      - In a polyatomic ion, they add up to the **charge of the ion**.
+
+      Oxidation numbers are written with the sign first: the iron in iron(III) chloride has oxidation number $+3$, written $+3$, not $3+$.
+
+  - type: explain
+    title: The rules, in priority order
+    body: |-
+      Learn these in order. When two rules disagree, the earlier one wins.
+
+      | Situation | Oxidation number |
+      | --- | --- |
+      | An uncombined element, e.g. $\text{O}_2$, $\text{Fe}$, $\text{Cl}_2$ | $0$ |
+      | A monatomic ion, e.g. $\text{Mg}^{2+}$, $\text{Cl}^-$ | equal to the ion's charge |
+      | Fluorine in a compound | always $-1$ |
+      | Oxygen in a compound | $-2$ (exceptions: peroxides $-1$, $\text{OF}_2$ $+2$) |
+      | Hydrogen in a compound | $+1$ (exception: metal hydrides $-1$) |
+      | Group 1 metal in a compound | $+1$ |
+      | Group 2 metal in a compound | $+2$ |
+      | Aluminium in a compound | $+3$ |
+
+      Everything else is found by subtraction: make the sum equal the overall charge.
+
+      Rules for oxygen and hydrogen come after fluorine because fluorine is the most electronegative element, so it always wins the electron tug-of-war.
+
+  - type: diagram
+    diagram: chem-redox-oxidation-number-rules
+    alt: >-
+      A rule table for oxidation numbers. The first rows give fixed values: an uncombined element is
+      zero, a monatomic ion has its charge, fluorine is always minus one, oxygen is minus two except
+      in peroxides and OF2, hydrogen is plus one except in metal hydrides, Group 1 is plus one,
+      Group 2 is plus two and aluminium is plus three. A final row says that the numbers in a
+      compound add to zero and in an ion add to the ion's charge.
+    caption: |-
+      Fixed rules first, then subtraction to make the total charge correct.
+
+  - type: example
+    title: "Worked example: sulfur in sulfuric acid"
+    problem: |-
+      Find the oxidation number of sulfur in $\text{H}_2\text{SO}_4$.
+    steps:
+      - |-
+        Hydrogen is $+1$ and oxygen is $-2$ by the rules. Let sulfur be $x$.
+      - |-
+        The compound is neutral, so the oxidation numbers add to zero:
+
+        $$2(+1) + x + 4(-2) = 0$$
+      - |-
+        Work out the numbers you know: $2(+1) = +2$ and $4(-2) = -8$.
+      - |-
+        $$+2 + x - 8 = 0$$
+      - |-
+        $$x - 6 = 0$$
+      - |-
+        $$x = +6$$
+      - |-
+        Check: $+2 + 6 - 8 = 0$. ✔
+    answer: |-
+      Sulfur is $+6$ in $\text{H}_2\text{SO}_4$.
+
+  - type: example
+    title: "Worked example: manganese in a permanganate ion"
+    problem: |-
+      Find the oxidation number of manganese in the permanganate ion, $\text{MnO}_4^-$.
+    steps:
+      - |-
+        Oxygen is $-2$. Let manganese be $x$.
+      - |-
+        This is an ion with a $1-$ charge, so the numbers add to $-1$, not zero:
+
+        $$x + 4(-2) = -1$$
+      - |-
+        $$x - 8 = -1$$
+      - |-
+        $$x = +7$$
+      - |-
+        Check: $+7 + 4(-2) = +7 - 8 = -1$, the ion's charge. ✔
+    answer: |-
+      Manganese is $+7$ in $\text{MnO}_4^-$.
+
+  - type: check
+    title: Quick check
+    questions: [ox-state-sulfur, ox-state-manganese, ox-state-element]
+
+  - type: intuition
+    title: Why oxygen is normally minus two
+    body: |-
+      Oxygen is much more electronegative than most elements. In water, the shared pairs in both O–H bonds are pulled towards oxygen, so oxygen ends up with two extra electrons: $-2$. Each hydrogen is left short of one: $+1$.
+
+      That is why the rule works. The atom that pulls electrons towards itself becomes more negative; the atom that loses them becomes more positive.
+
+      The exceptions appear when oxygen is bonded to something even more electronegative (fluorine) or when two oxygens are forced to share with each other in a peroxide.
+
+  - type: example
+    title: "Worked example: nitrogen in ammonium"
+    problem: |-
+      Find the oxidation number of nitrogen in the ammonium ion, $\text{NH}_4^+$.
+    steps:
+      - |-
+        Hydrogen is $+1$. Let nitrogen be $x$.
+      - |-
+        The ion has a $1+$ charge:
+
+        $$x + 4(+1) = +1$$
+      - |-
+        $$x + 4 = +1$$
+      - |-
+        $$x = -3$$
+      - |-
+        Check: $-3 + 4(+1) = +1$. ✔
+    answer: |-
+      Nitrogen is $-3$ in $\text{NH}_4^+$.
+
+  - type: explain
+    title: The same element can have different values
+    body: |-
+      Oxidation numbers are not fixed properties of an element. They depend on what it is bonded to.
+
+      Nitrogen is $-3$ in ammonia, $\text{NH}_3$, but $+5$ in nitric acid, $\text{HNO}_3$. Manganese is $+2$ in $\text{Mn}^{2+}$, $+4$ in $\text{MnO}_2$ and $+7$ in $\text{MnO}_4^-$.
+
+      That variety is exactly what makes redox chemistry interesting: the change in oxidation number is the signal that electrons have moved.
+
+  - type: misconceptions
+    items:
+      - wrong: The oxidation number is always the same as the group number.
+        right: |-
+          The group number helps for Group 1, 2 and aluminium, but not in general. Nitrogen is in
+          Group 15 yet is $-3$ in ammonia and $+5$ in nitric acid.
+      - wrong: In a neutral compound the oxidation numbers add to +1.
+        right: |-
+          They add to **0**. Only in a polyatomic ion do they add to the ion's charge.
+      - wrong: Oxygen is always $-2$.
+        right: |-
+          It is $-2$ in most compounds, but $-1$ in peroxides such as $\text{H}_2\text{O}_2$ and
+          $+2$ in $\text{OF}_2$.
+      - wrong: Hydrogen is always $+1$.
+        right: |-
+          It is $+1$ with non-metals, but $-1$ in metal hydrides such as $\text{NaH}$.
+      - wrong: The oxidation number of $\text{Cl}^-$ is $+1$.
+        right: |-
+          A monatomic ion's oxidation number equals its charge, so chloride is $-1$.
+
+  - type: exam
+    body: |-
+      - Write the sum as an equation every time: known values plus the unknown equals the overall charge. That working earns method marks even if the arithmetic slips.
+      - Show the sign: $+6$ and $-2$, not just 6 and 2. Oxidation numbers are not charges written as $6+$.
+      - For an ion, use the charge on the right-hand side. Forgetting the minus sign on $\text{MnO}_4^-$ is the single most common error.
+      - Check by substituting back. It takes three seconds and catches most mistakes.
+
+  - type: takeaways
+    items:
+      - 'An **oxidation number** is the charge an atom would have if bonding electrons went to the more electronegative atom.'
+      - 'In a compound the oxidation numbers sum to 0; in an ion they sum to the ion charge.'
+      - 'Uncombined elements are 0; monatomic ions equal their charge; fluorine is always $-1$.'
+      - 'Oxygen is usually $-2$ and hydrogen usually $+1$, with named exceptions.'
+      - 'Find the unknown by subtraction, then check that the total matches the charge.'
+
+  - type: check
+    title: Practice
+    questions: [ox-state-ammonium, ox-state-cloze, ox-state-spot-error]
+
+questions:
+  - id: ox-state-sulfur
+    format: numeric
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: |-
+      What is the oxidation number of sulfur in $\text{H}_2\text{SO}_4$?
+    fields:
+      - label: "S ="
+        answer: 6
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $2(+1) + x + 4(-2) = 0$, so $x - 6 = 0$ and $x = +6$.
+
+  - id: ox-state-manganese
+    format: numeric
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: |-
+      What is the oxidation number of manganese in the permanganate ion, $\text{MnO}_4^-$?
+    fields:
+      - label: "Mn ="
+        answer: 7
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $x + 4(-2) = -1$, so $x - 8 = -1$ and $x = +7$.
+
+  - id: ox-state-element
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: |-
+      What is the oxidation number of oxygen in $\text{O}_2$?
+    options:
+      - text: "0"
+        correct: true
+        why: |-
+          An uncombined element has oxidation number 0, because its atoms share electrons equally.
+      - text: "-2"
+        why: |-
+          That is oxygen's usual value in compounds, not in the element.
+      - text: "-1"
+        why: |-
+          That is oxygen's value in peroxides, not in $\text{O}_2$.
+      - text: "+2"
+        why: |-
+          That is oxygen's value in $\text{OF}_2$, not in the element.
+    explanation: |-
+      The oxidation number of an uncombined element is always 0.
+
+  - id: ox-state-ammonium
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.1"]
+    prompt: |-
+      What is the oxidation number of nitrogen in the ammonium ion, $\text{NH}_4^+$?
+    fields:
+      - label: "N ="
+        answer: -3
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      $x + 4(+1) = +1$, so $x = -3$.
+
+  - id: ox-state-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: |-
+      In a neutral compound, the oxidation numbers add up to {{1}}. In a polyatomic ion, they add up to the {{2}} of the ion.
+    blanks:
+      - accept: ["0", zero]
+      - accept: [charge, overall charge]
+    explanation: |-
+      Neutral compounds have total oxidation number 0; ions have total equal to their charge.
+
+  - id: ox-state-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["6.1.1"]
+    prompt: |-
+      A student calculates the oxidation number of sulfur in $\text{H}_2\text{SO}_4$. Which line contains the first error?
+    lines:
+      - Hydrogen is +1 and oxygen is -2.
+      - "2(+1) + x + 4(-2) = 0"
+      - "So x - 6 = 0, which gives x = -6."
+      - Sulfur therefore has oxidation number -6.
+    errorLine: 3
+    fix: |-
+      Solving $x - 6 = 0$ gives $x = +6$, not $-6$. Sulfur is $+6$ in $\text{H}_2\text{SO}_4$.
+    explanation: |-
+      Lines 1 and 2 are correct. Line 3 adds instead of moving $-6$ to the other side with a plus sign.

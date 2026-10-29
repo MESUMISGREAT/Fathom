@@ -1,0 +1,171 @@
+id: density-pressure-hydrostatic-derivation
+subject: "9702"
+topic: "4.3"
+title: Where the liquid-pressure equation comes from
+summary: Start with density and pressure definitions to derive the pressure increase through a liquid depth.
+order: 3
+minutes: 5
+objectives: ["4.3.3"]
+prerequisites: [density-pressure-density-basics, density-pressure-pressure-basics]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcome 4.3.3 (derive the hydrostatic pressure equation from the
+    definitions of pressure and density). All questions are original. Numerical values and the
+    liquid-column diagram are illustrative, not measured data. Independently re-checked line by
+    line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not
+    yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end, you can derive $\Delta p=\rho g\Delta h$ from the definitions of density and pressure, without memorising a magic formula.
+
+  - type: explain
+    title: Imagine a still column of liquid
+    body: |
+      Take an imaginary upright column inside a stationary liquid. Its cross-sectional area is $A$ and its vertical height is $\Delta h$. Here $m$ means the column's mass and $g$ is the acceleration of free fall.
+
+      The liquid's pressure is greater at the bottom than at the top. The difference between those pressures supports the column's weight.
+
+  - type: diagram
+    diagram: phys-density-pressure-liquid-column
+    alt: >-
+      An upright liquid column has cross-sectional area A and vertical height delta h. Pressure
+      from the liquid above pushes down on its top with force p-top times A; pressure below pushes
+      up on its base with force p-bottom times A. The column's weight mg acts downwards, and the
+      bottom pressure is greater.
+    caption: The upward force at the base must exceed the downward force at the top by the column's weight.
+
+  - type: explain
+    title: Build it from definitions
+    body: |
+      $p_{\text{top}}$ and $p_{\text{bottom}}$ are the pressures at the column's top and bottom. At rest, upward force balances downward forces:
+
+      $$p_{\text{bottom}}A - p_{\text{top}}A = mg$$
+
+      Divide by the same cross-sectional area $A$. The left side becomes the pressure difference $\Delta p=p_{\text{bottom}}-p_{\text{top}}$:
+
+      $$\Delta p = \dfrac{mg}{A}$$
+
+  - type: check
+    questions: [hydrostatic-balance, hydrostatic-pressure-difference]
+
+  - type: example
+    title: Replace the column's mass
+    problem: |
+      Show how the column's density and height turn $\Delta p=mg/A$ into the hydrostatic pressure equation.
+    steps:
+      - |
+        Density means mass per volume: $\rho=m/V$, so the column's mass is $m=\rho V$.
+      - |
+        A column with base area $A$ and height $\Delta h$ has volume $V=A\Delta h$. Therefore $m=\rho A\Delta h$.
+      - |
+        Put that mass into $\Delta p=mg/A$: $\Delta p=(\rho A\Delta h)g/A$.
+      - |
+        The area $A$ is both multiplied and divided, so it cancels. What remains is $\Delta p=\rho g\Delta h$.
+    answer: |
+      $$\Delta p = \rho g\Delta h$$
+
+  - type: explain
+    title: What each symbol means
+    body: |
+      - $\Delta p$ is the pressure difference between the two levels, in pascals ($\text{Pa}$).
+      - $\rho$ is the liquid's density, in $\text{kg m}^{-3}$.
+      - $g$ is the acceleration of free fall, in $\text{m s}^{-2}$.
+      - $\Delta h$ is the **vertical** separation, in metres.
+
+      Units check: $\text{kg m}^{-3}\times\text{m s}^{-2}\times\text{m}=\text{kg m}^{-1}\text{s}^{-2}=\text{Pa}$.
+
+  - type: check
+    questions: [hydrostatic-cancel-area, hydrostatic-formula-cloze, hydrostatic-height]
+
+  - type: misconceptions
+    items:
+      - wrong: The column's full bottom pressure is caused only by its weight.
+        right: Its weight accounts for the **difference** between bottom and top pressure; any pressure already at the top acts at both levels.
+      - wrong: Use the slanted distance along the container wall for $\Delta h$.
+        right: $\Delta h$ is the vertical height difference between the two points.
+
+  - type: takeaways
+    items:
+      - The column's pressure difference supports its weight.
+      - Use $m=\rho V$ and $V=A\Delta h$ in $\Delta p=mg/A$.
+      - The area cancels, leaving $\Delta p=\rho g\Delta h$.
+
+questions:
+  - id: hydrostatic-balance
+    format: mcq
+    difficulty: 2
+    objectives: ["4.3.3"]
+    prompt: |
+      For an imaginary stationary liquid column, which statement describes the vertical force balance?
+    options:
+      - text: The upward force at the bottom exceeds the downward force at the top by the column's weight.
+        correct: true
+        why: The pressure difference supports the column's weight.
+      - text: The upward and downward pressure forces are always equal.
+        why: Then no upward resultant would balance the column's weight.
+      - text: The column's weight acts upwards.
+        why: Weight acts downwards, towards Earth.
+      - text: The pressure at the top alone equals the column's weight.
+        why: Pressure is force per area, and the balance involves both top and bottom forces.
+    explanation: |
+      The difference between upward bottom pressure force and downward top pressure force balances $mg$.
+
+  - id: hydrostatic-pressure-difference
+    format: numeric
+    difficulty: 1
+    objectives: ["4.3.3"]
+    prompt: |
+      Pressure at the bottom of a stationary liquid column is $15\ \text{kPa}$ and at its top is $4\ \text{kPa}$. What is $\Delta p=p_{\text{bottom}}-p_{\text{top}}$?
+    fields:
+      - answer: 11
+        unit: kPa
+    explanation: |
+      Subtract the top pressure from the bottom pressure: $15-4=11\ \text{kPa}$.
+
+  - id: hydrostatic-cancel-area
+    format: mcq
+    difficulty: 2
+    objectives: ["4.3.3"]
+    prompt: |
+      In the derivation, why does the column's cross-sectional area disappear from $\Delta p=\rho g\Delta h$?
+    options:
+      - text: It appears once in the column's volume and is divided out when force is changed to pressure.
+        correct: true
+        why: $V=A\Delta h$ puts $A$ in the mass, while pressure divides the weight by $A$.
+      - text: The column has no cross-sectional area.
+        why: It has area $A$; the area cancels algebraically.
+      - text: Area is equal to the liquid's density.
+        why: These are different quantities with different units.
+      - text: Area is replaced by the depth in the definition of density.
+        why: Density is mass divided by volume; the cancellation comes from $V=A\Delta h$ and pressure's division by area.
+    explanation: |
+      Substitute $V=A\Delta h$ into $m=\rho V$, then divide the column's weight by the same area to get pressure. The two factors of $A$ cancel.
+
+  - id: hydrostatic-formula-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.3.3"]
+    prompt: |
+      Starting from density and pressure definitions, the pressure difference through a stationary liquid is $\Delta p={{1}}$.
+    blanks:
+      - accept: ["ρgΔh", "rho g delta h", "ρ g Δh"]
+    explanation: |
+      The derived equation is $\Delta p=\rho g\Delta h$.
+
+  - id: hydrostatic-height
+    format: numeric
+    difficulty: 3
+    objectives: ["4.3.3"]
+    prompt: |
+      An imaginary column of water has area $0.020\ \text{m}^2$ and height $0.30\ \text{m}$. Find the pressure difference from its weight to 2 significant figures. Use $\rho=1000\ \text{kg m}^{-3}$ and $g=9.81\ \text{m s}^{-2}$.
+    fields:
+      - answer: 2943
+        tolerance: { rel: 0.02 }
+        sigFigs: 2
+        unit: Pa
+    explanation: |
+      The column volume is $A\Delta h=0.020\times0.30=0.0060\ \text{m}^3$, so its mass is $1000\times0.0060=6.0\ \text{kg}$. Its weight is $58.86\ \text{N}$. Divide by base area: $\Delta p=58.86/0.020=2943\ \text{Pa}$, which matches $\rho g\Delta h$. To 2 significant figures, this is $2.9\times10^3\ \text{Pa}$.

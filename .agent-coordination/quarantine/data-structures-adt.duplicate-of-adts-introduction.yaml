@@ -1,0 +1,341 @@
+id: data-structures-adt
+subject: "9618"
+topic: "10.4"
+title: "Abstract Data Types — stacks, queues, and linked lists"
+summary: "Understand ADTs as data + operations; describe stack, queue, and linked list features; use them to store data; describe array implementations."
+order: 1
+minutes: 10
+kind: core
+objectives: ["10.4.1", "10.4.2", "10.4.3", "10.4.4"]
+prerequisites: ["data-structures-arrays", "programming-structured"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 10.4 Introduction to Abstract Data Types. Covers objectives 10.4.1-10.4.4.
+    Questions are original. AI-reviewed for syllabus alignment and content accuracy.
+blocks:
+  - type: objective
+    body: |
+      By the end you can define an ADT, describe the key features of stacks, queues, and linked lists,
+      use them to store and manipulate data, and explain how they can be implemented using arrays.
+
+  - type: explain
+    title: What is an Abstract Data Type (ADT)?
+    body: |
+      An **Abstract Data Type (ADT)** is a mathematical model that defines:
+      1. A **collection of data** (the structure)
+      2. A **set of operations** on that data (the interface)
+
+      The ADT specifies *what* operations do, not *how* they are implemented. This separation of
+      interface from implementation allows the same ADT to be implemented in different ways
+      (e.g., a stack using an array or a linked list) without changing the code that uses it.
+
+      **Why ADTs matter:**
+      - Encapsulation: hide implementation details
+      - Reusability: same interface, different implementations
+      - Maintainability: change implementation without affecting users
+
+  - type: explain
+    title: Stack ADT
+    body: |
+      A **stack** is a LIFO (Last In, First Out) structure — the last item added is the first removed.
+
+      **Key operations:**
+      - `push(item)` — add item to top
+      - `pop()` — remove and return top item
+      - `peek()` / `top()` — return top item without removing
+      - `isEmpty()` — check if stack is empty
+      - `isFull()` — check if stack is full (for bounded implementations)
+
+      **Pseudocode example:**
+      ```
+      DECLARE stack : ARRAY[1:10] OF INTEGER
+      DECLARE top : INTEGER
+      top <- 0
+
+      PROCEDURE push(value : INTEGER)
+        IF top < 10 THEN
+          top <- top + 1
+          stack[top] <- value
+        ELSE
+          OUTPUT "Stack overflow"
+        ENDIF
+      ENDPROCEDURE
+
+      PROCEDURE pop() RETURNS INTEGER
+        IF top > 0 THEN
+          value <- stack[top]
+          top <- top - 1
+          RETURN value
+        ELSE
+          OUTPUT "Stack underflow"
+          RETURN -1
+        ENDIF
+      ENDPROCEDURE
+      ```
+
+      **Use cases:** function call stack, expression evaluation, undo mechanisms, backtracking algorithms.
+
+  - type: explain
+    title: Queue ADT
+    body: |
+      A **queue** is a FIFO (First In, First Out) structure — the first item added is the first removed.
+
+      **Key operations:**
+      - `enqueue(item)` — add item to rear
+      - `dequeue()` — remove and return front item
+      - `front()` / `peek()` — return front item without removing
+      - `isEmpty()` — check if queue is empty
+      - `isFull()` — check if queue is full (for bounded implementations)
+
+      **Pseudocode example (circular array):**
+      ```
+      DECLARE queue : ARRAY[1:10] OF INTEGER
+      DECLARE front, rear, count : INTEGER
+      front <- 1
+      rear <- 0
+      count <- 0
+
+      PROCEDURE enqueue(value : INTEGER)
+        IF count < 10 THEN
+          rear <- (rear MOD 10) + 1
+          queue[rear] <- value
+          count <- count + 1
+        ELSE
+          OUTPUT "Queue overflow"
+        ENDIF
+      ENDPROCEDURE
+
+      PROCEDURE dequeue() RETURNS INTEGER
+        IF count > 0 THEN
+          value <- queue[front]
+          front <- (front MOD 10) + 1
+          count <- count - 1
+          RETURN value
+        ELSE
+          OUTPUT "Queue underflow"
+          RETURN -1
+        ENDIF
+      ENDPROCEDURE
+      ```
+
+      **Use cases:** print spoolers, task scheduling, BFS traversal, buffering.
+
+  - type: explain
+    title: Linked List ADT
+    body: |
+      A **linked list** is a dynamic sequence of nodes, each containing data and a pointer to the next node.
+
+      **Key operations:**
+      - `insertAtStart(data)` / `insertAtEnd(data)` / `insertAt(position, data)`
+      - `deleteAtStart()` / `deleteAtEnd()` / `deleteAt(position)`
+      - `search(value)` — return position or pointer
+      - `traverse()` — visit each node
+      - `isEmpty()` — check if list is empty
+
+      **Pseudocode structure:**
+      ```
+      TYPE NodePtr = POINTER TO Node
+      TYPE Node = RECORD
+        data : INTEGER
+        next : NodePtr
+      ENDRECORD
+
+      DECLARE head : NodePtr
+      head <- NULL
+      ```
+
+      **Variations:**
+      - **Singly linked**: each node points to next only
+      - **Doubly linked**: each node has `prev` and `next` pointers
+      - **Circular**: last node points back to first
+
+      **Use cases:** dynamic memory allocation, implementing stacks/queues, sparse matrices.
+
+  - type: explain
+    title: Implementing ADTs using arrays
+    body: |
+      **Stack using array:**
+      - Fixed-size array + `top` index
+      - Push: increment top, store at top
+      - Pop: read from top, decrement top
+      - Simple but fixed capacity
+
+      **Queue using array (circular buffer):**
+      - Fixed-size array + `front`, `rear`, `count` indices
+      - Enqueue: add at rear, wrap around using MOD
+      - Dequeue: remove from front, wrap around
+      - Efficient O(1) for both operations, fixed capacity
+
+      **Linked list using arrays (parallel arrays):**
+      - `data[]` array stores values
+      - `next[]` array stores indices of next node (0 = null)
+      - `freeList` tracks available slots
+      - Allows dynamic allocation within fixed arrays
+
+      **Example (linked list with arrays):**
+      ```
+      DECLARE data : ARRAY[1:100] OF INTEGER
+      DECLARE next : ARRAY[1:100] OF INTEGER
+      DECLARE head, free : INTEGER
+      head <- 0
+      free <- 1
+      FOR i <- 1 TO 99
+        next[i] <- i + 1
+      ENDFOR
+      next[100] <- 0
+      ```
+
+  - type: example
+    title: Choosing the right ADT
+    problem: |
+      For each scenario, select the most appropriate ADT and justify:
+      1. A web browser's back button history
+      2. A print spooler managing print jobs
+      3. A text editor's undo/redo feature
+      4. A music playlist that plays in order and loops
+    steps:
+      - "1. Stack (LIFO) — back button goes to most recent page"
+      - "2. Queue (FIFO) — print jobs processed in order received"
+      - "3. Two stacks — one for undo, one for redo"
+      - "4. Circular queue or circular linked list — loops continuously"
+    answer: |
+      1. Stack — LIFO matches back navigation
+      2. Queue — FIFO ensures fair print order
+      3. Two stacks — undo stack and redo stack
+      4. Circular queue/linked list — natural for looping playlists
+
+  - type: check
+    title: Check yourself
+    questions: [adt-definition, stack-lifo, queue-fifo, linked-list-insert, array-stack-impl]
+
+  - type: misconceptions
+    items:
+      - wrong: "ADTs specify how data is stored in memory."
+        right: |
+          ADTs specify *what* operations exist and their behaviour. The *implementation* (array, linked list)
+          is a separate choice.
+      - wrong: "Stacks and queues are the same thing, just different names."
+        right: |
+          Stacks are LIFO (last in, first out); queues are FIFO (first in, first out). They solve different problems.
+      - wrong: "Linked lists always use pointers/references."
+        right: |
+          Linked lists can be implemented using arrays with integer indices (parallel arrays), not just pointers.
+      - wrong: "A circular queue wastes one slot to distinguish full from empty."
+        right: |
+          That's one implementation technique (sacrificing one slot). Alternatives: use a count variable or a boolean flag.
+
+  - type: exam
+    body: |
+      - Define ADT and give examples (stack, queue, linked list).
+      - Trace push/pop operations on a stack, showing the top index and array contents.
+      - Trace enqueue/dequeue on a circular queue, showing front, rear, count.
+      - Write pseudocode to insert a node at the start/end of a linked list.
+      - Describe how to implement a stack/queue/linked list using arrays.
+      - Justify choice of ADT for a given scenario.
+
+  - type: takeaways
+    items:
+      - "ADT = data collection + set of operations (interface), implementation hidden"
+      - "Stack: LIFO — push, pop, peek; uses: call stack, undo, expression evaluation"
+      - "Queue: FIFO — enqueue, dequeue, front; uses: scheduling, buffering, BFS"
+      - "Linked list: dynamic nodes with pointers — insert, delete, search, traverse"
+      - "All three can be implemented using arrays (fixed size) or pointers (dynamic)"
+
+questions:
+  - id: adt-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["10.4.1"]
+    prompt: |
+      What two components make up an Abstract Data Type (ADT)?
+    options:
+      - text: "Data structure and programming language"
+        why: "ADTs are language-independent; they don't specify a language."
+      - text: "A collection of data and a set of operations on that data"
+        correct: true
+        why: "An ADT is defined by its data and the operations that manipulate it, independent of implementation."
+      - text: "Interface and implementation"
+        why: "ADT is the interface; implementation is separate."
+      - text: "Variables and constants"
+        why: "Too low-level; ADTs are about abstract structure and behaviour."
+    explanation: |
+      An ADT is a mathematical model consisting of (1) a collection of data and (2) a set of operations on that data. The implementation is deliberately not specified.
+
+  - id: stack-lifo
+    format: mcq
+    difficulty: 2
+    objectives: ["10.4.2"]
+    prompt: |
+      Items A, B, C are pushed onto an empty stack in that order. Then two pop operations are performed. What item is returned by the second pop?
+    options:
+      - text: "A"
+        why: "A was pushed first, so it's at the bottom. First pop returns C, second returns B."
+      - text: "B"
+        correct: true
+        why: "Push A, B, C → stack top is C. Pop 1 returns C. Pop 2 returns B."
+      - text: "C"
+        why: "C is returned by the FIRST pop."
+      - text: "Stack underflow"
+        why: "There are 3 items; two pops leave one item, no underflow."
+    explanation: |
+      Stack is LIFO. Push A, B, C → top = C. Pop() → returns C, top = B. Pop() → returns B.
+
+  - id: queue-fifo
+    format: mcq
+    difficulty: 2
+    objectives: ["10.4.2"]
+    prompt: |
+      Items X, Y, Z are enqueued into an empty queue in that order. Then one dequeue operation is performed. What item is returned?
+    options:
+      - text: "X"
+        correct: true
+        why: "Queue is FIFO. X was enqueued first, so it is at the front and dequeued first."
+      - text: "Y"
+        why: "Y is second in the queue."
+      - text: "Z"
+        why: "Z is at the rear, dequeued last."
+      - text: "Queue underflow"
+        why: "Queue has 3 items; one dequeue succeeds."
+    explanation: |
+      Queue is FIFO. Enqueue X, Y, Z → front = X. Dequeue() → returns X.
+
+  - id: linked-list-insert
+    format: mcq
+    difficulty: 2
+    objectives: ["10.4.3"]
+    prompt: |
+      In a singly linked list with head pointer, which pseudocode correctly inserts a new node with value 5 at the START of the list?
+    options:
+      - text: "newNode.next <- head; head <- newNode"
+        correct: true
+        why: "New node's next points to old head, then head updated to new node."
+      - text: "head.next <- newNode; newNode.next <- NULL"
+        why: "This inserts after head, not at start."
+      - text: "newNode.next <- NULL; head <- newNode"
+        why: "Loses the rest of the list (newNode.next should point to old head)."
+      - text: "head <- newNode; newNode.next <- head"
+        why: "Order is wrong — head is overwritten before newNode.next is set."
+    explanation: |
+      To insert at start: (1) newNode.next = head (point to old first node), (2) head = newNode (new node becomes first).
+
+  - id: array-stack-impl
+    format: mcq
+    difficulty: 2
+    objectives: ["10.4.4"]
+    prompt: |
+      A stack is implemented using an array `stack[1:10]` and a variable `top` (initially 0). After `push(5)`, `push(10)`, `push(15)`, what is the value of `top` and `stack[top]`?
+    options:
+      - text: "top = 3, stack[top] = 15"
+        correct: true
+        why: "Each push increments top. After 3 pushes: top = 3, stack[3] = 15 (last pushed)."
+      - text: "top = 2, stack[top] = 10"
+        why: "That would be after only 2 pushes."
+      - text: "top = 3, stack[top] = 5"
+        why: "stack[3] holds the last pushed value (15), not the first (5)."
+      - text: "top = 0, stack[top] = 15"
+        why: "top starts at 0 and increments on each push."
+    explanation: |
+      Push increments top then stores. Push(5): top=1, stack[1]=5. Push(10): top=2, stack[2]=10. Push(15): top=3, stack[3]=15.

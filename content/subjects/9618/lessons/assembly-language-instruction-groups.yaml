@@ -1,0 +1,248 @@
+id: assembly-language-instruction-groups
+subject: "9618"
+topic: "4.2"
+title: "The five instruction groups (and the two that trip everyone up)"
+summary: Sort all nineteen opcodes into Cambridge's five groups, and learn why compare is separate from jumping.
+order: 5
+minutes: 6
+kind: core
+objectives: ["4.2.4"]
+prerequisites: [assembly-language-instruction-set]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 4.2 outcome 4.2.4 ("understand that
+    the instructions in a set of instructions are organised into groups") and its guidance, which
+    names the five groups: data movement; input and output of data; arithmetic operations;
+    unconditional and conditional instructions; compare instructions. Every opcode is placed in
+    the group the syllabus guidance and Cambridge question-paper instruction tables give it. All
+    questions are original.
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-27:
+    every numeric key recomputed in Python, every MCQ key and cloze accept list checked, all
+    seven objectives confirmed taught and tested, and all nine diagrams rendered and inspected
+    in light and dark. No separate reviewer model was available here. Not yet reviewed by a
+    teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name Cambridge's five instruction groups, put any opcode from the 9618 set into the right group, and explain why comparing is a group of its own.
+
+  - type: explain
+    title: Nineteen opcodes is a lot to hold in your head
+    body: |-
+      The instruction set for this syllabus has nineteen opcodes. Remembering nineteen separate facts is hard; remembering five groups and then placing a name is much easier.
+
+      The groups are not invented for the exam — they are how the instruction set is designed. Each group exists because a processor has to do that kind of job:
+
+      | Group (Cambridge wording) | Does what | Opcodes |
+      | --- | --- | --- |
+      | Data movement | copies values between memory and registers | `LDM` `LDD` `LDI` `LDX` `LDR` `MOV` `STO` |
+      | Input and output of data | the only doorway to the person using the computer | `IN` `OUT` |
+      | Arithmetic operations | the actual calculating | `ADD` `SUB` `INC` `DEC` |
+      | Unconditional and conditional instructions | decides which instruction runs next, or stops the program | `JMP` `JPE` `JPN` `END` |
+      | Compare instructions | records whether two values were equal | `CMP` `CMI` |
+
+      All nineteen are there, and none appears twice.
+
+  - type: diagram
+    diagram: cs-assembly-language-groups
+    alt: >-
+      Five labelled boxes side by side: data movement, input and output of data, arithmetic
+      operations, unconditional and conditional instructions, and compare instructions. Each box
+      holds its opcodes as small chips — seven in data movement, two in input/output, four in
+      arithmetic, four in jumps and END, two in compare. Two chips are highlighted: CMI sits in
+      the compare box and JPE sits in the jumps box.
+    caption: |-
+      Five groups, nineteen opcodes. The two highlighted chips are the placements students get wrong.
+
+  - type: explain
+    title: Why data movement is so big
+    body: |-
+      The arithmetic unit can only work on values that are already in a register. Before you can add two numbers, something has to fetch them; after adding, something has to put the result back.
+
+      That is what the seven data movement instructions are for: `LDM`, `LDD`, `LDI`, `LDX` and `LDR` bring values in, `STO` puts a value back out, and `MOV` copies between registers.
+
+      Notice that the *addressing mode* is part of the load instruction's name (`LDM` immediate, `LDD` direct, `LDI` indirect, `LDX` indexed). That is convenient: the group stays "data movement" however the value is found.
+
+  - type: check
+    title: Place the opcode
+    questions: [groups-cmi, groups-in-out, groups-end]
+
+  - type: explain
+    title: Compare is separate from jumping
+    body: |-
+      `CMP` and `CMI` do not jump, and `JPE` and `JPN` do not compare. They are two steps:
+
+      1. **Compare** — `CMP 200` asks "is ACC equal to the contents of 200?" and records True or False.
+      2. **Jump if** — `JPE label` looks at that recorded result and decides whether to jump.
+
+      Why separate groups? Because a conditional jump needs something to be conditional on, and a comparison is useful on its own (you can output a message, set a flag, or choose between two stores). Cambridge separates "finding out" from "acting on it".
+
+      This is why `JPE` and `JPN` belong to **unconditional and conditional instructions**: a jump is a jump, whether it happens always or only sometimes.
+
+  - type: check
+    title: Groups and traps
+    questions: [groups-cloze, groups-spot-error]
+
+  - type: example
+    title: Sorting a small program
+    problem: |-
+      Put each instruction of this program into its group.
+
+      ```text
+      100  LDM #0
+      101  STO 250
+      102  IN
+      103  STO 251
+      104  LDD 250
+      105  ADD 251
+      106  STO 250
+      107  SUB 253
+      108  CMP #0
+      109  JPN 102
+      110  OUT
+      111  END
+      ```
+    steps:
+      - |-
+        `LDM`, `STO`, `LDD` — **data movement** (five uses: 100, 101, 103, 104 and 106).
+      - |-
+        `IN` and `OUT` — **input and output of data**.
+      - |-
+        `ADD` and `SUB` — **arithmetic operations**. (`SUB 253` takes 1 away from the running total; address 253 holds 1.)
+      - |-
+        `CMP #0` — **compare instructions**.
+      - |-
+        `JPN 102` and `END` — **unconditional and conditional instructions**.
+    answer: |-
+      Every instruction lands in one group; none is left over and none is in two groups.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          `CMI` is a data movement instruction because it starts with C like "copy".
+        right: |-
+          `CMI` **compares** ACC with a value found by indirect addressing. The addressing mode does not decide the group — what the instruction does decides it.
+      - wrong: |-
+          `JPE` is in the compare group because it acts on a comparison.
+        right: |-
+          It is a jump: it belongs to **unconditional and conditional instructions**. `CMP`/`CMI` do the comparing.
+      - wrong: |-
+          `MOV` belongs with the jumps because it "moves" the program on.
+        right: |-
+          `MOV` moves a value (ACC into IX). It is data movement. Only `JMP`, `JPE`, `JPN` and `END` change the order of execution.
+      - wrong: |-
+          `END` has no group of its own, so it is not grouped.
+        right: |-
+          Cambridge places `END` in **unconditional and conditional instructions**: it unconditionally changes what runs next (nothing).
+
+  - type: exam
+    body: |-
+      - Learn the five group names **exactly** as Cambridge words them; the names are the mark. "Moving things" scores nothing, "data movement" scores.
+      - A common question gives an opcode and asks for its group, or gives a group and asks for two opcodes from it.
+      - If you are unsure, ask "what does it *do*?" — not "what letter does it start with?".
+      - "`CMP` and `CMI` both compare; the `I` in `CMI` is about indirect addressing, not about input."
+
+  - type: takeaways
+    items:
+      - "Five groups: data movement (`LDM LDD LDI LDX LDR MOV STO`), input and output (`IN OUT`), arithmetic (`ADD SUB INC DEC`), unconditional and conditional (`JMP JPE JPN END`), compare (`CMP CMI`)."
+      - The group depends on what the instruction does, not on its addressing mode or its first letter.
+      - Comparing and jumping are separate steps, so they are separate groups.
+      - "`END` is grouped with the jumps because it changes what runs next."
+
+questions:
+  - id: groups-cmi
+    format: mcq
+    difficulty: 1
+    objectives: ["4.2.4"]
+    prompt: |-
+      To which group does the instruction `CMI` belong?
+    options:
+      - text: Compare instructions
+        correct: true
+        why: |-
+          `CMI` compares ACC with a value found by indirect addressing. It compares, so it is in the compare group.
+      - text: Data movement
+        why: |-
+          It uses indirect addressing to *find* a value, but it does not move anything into a register.
+      - text: Unconditional and conditional instructions
+        why: |-
+          It records a comparison result; it does not jump.
+      - text: Input and output of data
+        why: |-
+          The `I` in `CMI` is indirect addressing, not input. `IN` is the input instruction.
+    explanation: |-
+      What an instruction does decides its group. `CMP` and `CMI` both compare, so both are compare instructions.
+
+  - id: groups-in-out
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["4.2.4"]
+    prompt: |-
+      Name the Cambridge group that contains the instructions `IN` and `OUT`.
+    accept:
+      - input and output of data
+      - input and output
+      - input/output
+      - input and output data
+      - i/o
+    model: |-
+      **Input and output of data**.
+    explanation: |-
+      `IN` takes a character from the keyboard into ACC and `OUT` sends the character in ACC to the screen. Cambridge's group name is "input and output of data".
+
+  - id: groups-end
+    format: mcq
+    difficulty: 2
+    objectives: ["4.2.4"]
+    prompt: |-
+      Which group contains `END`?
+    options:
+      - text: Unconditional and conditional instructions
+        correct: true
+        why: |-
+          `END` changes what runs next (nothing at all), always. Cambridge groups it with the jumps.
+      - text: Input and output of data
+        why: |-
+          It produces no output; `OUT` does that.
+      - text: Arithmetic operations
+        why: |-
+          No value is changed by `END`.
+      - text: It has no group
+        why: |-
+          Every opcode in the set belongs to one of the five groups.
+    explanation: |-
+      The jumps and `END` are grouped together because they all decide which instruction runs next.
+
+  - id: groups-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.2.4"]
+    prompt: |-
+      `ADD` and `SUB` belong to the {{1}} group, while `CMP` and `CMI` belong to the {{2}} group.
+    blanks:
+      - accept: [arithmetic, arithmetic operations, arithmetic operation]
+      - accept: [compare, compare instructions, comparison, comparisons]
+    explanation: |-
+      Arithmetic: `ADD`, `SUB`, `INC`, `DEC`. Compare: `CMP`, `CMI`. The compare instructions record a result; the arithmetic instructions change ACC.
+
+  - id: groups-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["4.2.4"]
+    prompt: |-
+      A student sorts three opcodes into groups. Which line contains the first error?
+    lines:
+      - "`LDD` is a data movement instruction."
+      - "`JPE` is a compare instruction."
+      - "`CMP` is a compare instruction."
+      - "`IN` is an input and output instruction."
+    errorLine: 2
+    fix: |-
+      `JPE` is a **conditional jump**, so it belongs to "unconditional and conditional instructions". The compare group holds `CMP` and `CMI`.
+    explanation: |-
+      Line 1 is correct: `LDD` loads a value, which is data movement. Line 2 confuses the jump with the comparison it acts on. Line 4 is correct: `IN` is input/output.

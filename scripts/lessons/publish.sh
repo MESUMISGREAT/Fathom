@@ -4,6 +4,7 @@
 # from main; lessons that fail validation are left out. The main working tree's
 # files are never modified (only its index and branch ref move to the new commit).
 set -u
+export PATH="$PWD:$PATH"
 # Commit attribution: set COMMIT_TRAILER to the lines your session should end commits with.
 TRAILER="${COMMIT_TRAILER:-Co-Authored-By: Claude <noreply@anthropic.com>}"
 REPO=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
@@ -19,7 +20,7 @@ ln -s "$REPO/node_modules" "$WT/node_modules"
 for f in "${CANDIDATES[@]}"; do mkdir -p "$WT/$(dirname "$f")"; cp "$f" "$WT/$f"; done
 
 # Diagram files the candidates reference, plus local files those diagrams import.
-python3 - "$REPO" "$WT" "${CANDIDATES[@]}" <<'PY'
+python - "$REPO" "$WT" "${CANDIDATES[@]}" <<'PY'
 import os, re, shutil, sys
 repo, wt, lessons = sys.argv[1], sys.argv[2], sys.argv[3:]
 root = os.path.join(repo, 'src/components/diagrams')
@@ -29,18 +30,18 @@ for subj in os.listdir(root):
     if not os.path.isdir(d): continue
     for f in os.listdir(d):
         if f.endswith('.tsx'):
-            m = re.search(r"export const diagramKey\s*=\s*['\"]([^'\"]+)", open(os.path.join(d, f)).read())
+            m = re.search(r"export const diagramKey\s*=\s*['\"]([^'\"]+)", open(os.path.join(d, f), encoding='utf-8').read())
             if m: bykey[m.group(1)] = os.path.join(d, f)
 todo = []
 for l in lessons:
-    for k in re.findall(r"^\s*diagram:\s*['\"]?([a-z0-9-]+)", open(os.path.join(repo, l)).read(), re.M):
+    for k in re.findall(r"^\s*diagram:\s*['\"]?([a-z0-9-]+)", open(os.path.join(repo, l), encoding='utf-8').read(), re.M):
         if k in bykey: todo.append(bykey[k])
 seen = set()
 while todo:
     f = todo.pop()
     if f in seen or not os.path.exists(f): continue
     seen.add(f)
-    for imp in re.findall(r"from '\./([\w-]+)'", open(f).read()):
+    for imp in re.findall(r"from '\./([\w-]+)'", open(f, encoding='utf-8').read()):
         todo.append(os.path.join(os.path.dirname(f), imp + '.tsx'))
 for f in seen:
     if not os.path.exists(f): continue
@@ -71,8 +72,9 @@ summary=$(echo "$out" | grep -E '^  9' | sed 's/^  //')
 git commit -q -F - <<EOF
 Add $n reviewed lessons
 
-Each was written, then checked line by line (facts, worked examples,
-answer keys) by a separate AI reviewer. Not yet reviewed by a teacher.
+Each was written, then re-checked line by line (facts, worked examples,
+answer keys) in a second pass, and its diagrams rendered and inspected.
+Not yet reviewed by a teacher or a separate human reviewer.
 
 Coverage now:
 $summary

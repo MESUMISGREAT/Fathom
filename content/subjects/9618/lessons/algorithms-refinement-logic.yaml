@@ -1,0 +1,205 @@
+id: algorithms-refinement-logic
+subject: "9618"
+topic: "9.2"
+title: Algorithms — stepwise refinement and logic statements
+summary: Apply stepwise refinement to break problems into modules, and write logic statements (AND, OR, NOT) for conditions in algorithms.
+order: 4
+minutes: 6
+kind: core
+objectives: ["9.2.8", "9.2.9"]
+prerequisites: ["algorithms-flowcharts"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 9.2 Algorithms. Covers objectives 9.2.8-9.2.9.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can apply stepwise refinement (top-down design) to decompose a problem into a hierarchy of modules, and write correct logic statements using AND, OR, NOT for algorithm conditions.
+
+  - type: diagram
+    diagram: cs-algorithms-structure-chart
+    alt: Structure chart showing top-down decomposition from processGrades at Level 0 through inputStudentData, calculateResults, outputReport at Level 1, down to computeAverage, determineGrade, checkPassFail at Level 2, and lookupBoundaries, compareToBoundaries at Level 3
+    caption: Structure chart showing stepwise refinement — Level 0 to Level 3 decomposition
+
+  - type: diagram
+    diagram: cs-algorithms-flowchart-symbols
+    alt: Flowchart symbols reference showing oval start/end, rectangle process, diamond decision, parallelogram input/output, predefined process rectangle with double lines, document with curved corner, and connector circle
+    caption: Flowchart symbols reference for logic conditions (decision diamonds)
+
+  - type: explain
+    title: Stepwise refinement (top-down design)
+    body: |
+      **Stepwise refinement** is the process of starting with a high-level description and repeatedly breaking each step into more detailed sub-steps until each is simple enough to code directly.
+
+      Process:
+      1. **State the problem** at the highest level (one sentence)
+      2. **Decompose** into 3–7 major sub-problems (Level 1)
+      3. **Refine each sub-problem** into smaller steps (Level 2)
+      4. **Continue** until each step is a single action (assignment, input, output, or simple condition)
+      5. **Document** with a structure chart (hierarchy chart)
+
+      Benefits:
+      - Manages complexity
+      - Enables team work (separate modules)
+      - Easier testing (unit test each module)
+      - Reusable modules
+
+  - type: example
+    title: Stepwise refinement - Calculate and print class average
+    problem: "Read marks for 30 students, compute average, print result."
+    steps:
+      - "Level 0: calculateClassAverage()"
+      - "Level 1: inputMarks() → computeAverage() → outputAverage()"
+      - "Level 2 (inputMarks): FOR each student READ mark; validateMark() → storeMark()"
+      - "Level 2 (computeAverage): sum ← 0; FOR each mark sum ← sum + mark; average ← sum / 30"
+      - "Level 2 (outputAverage): PRINT average"
+    answer: |
+      Each level adds detail. Structure chart shows the hierarchy.
+
+  - type: explain
+    title: Logic statements in algorithms
+    body: |
+      Conditions in IF, WHILE, REPEAT use **logic statements** with:
+      - **AND** — both conditions must be true
+      - **OR** — at least one condition true
+      - **NOT** — negates a condition
+
+      Truth tables:
+      | A | B | A AND B | A OR B | NOT A |
+      |---|---|---------|--------|-------|
+      | F | F | F | F | T |
+      | F | T | F | T | T |
+      | T | F | F | T | F |
+      | T | T | T | T | F |
+
+      **Precedence**: NOT > AND > OR (like arithmetic: NOT = unary -, AND = *, OR = +)
+      Use parentheses to override: `(A OR B) AND C`
+
+      In Cambridge pseudocode:
+      - `AND`, `OR`, `NOT` as keywords
+      - Example: `IF (mark >= 40) AND (mark <= 100) THEN ...`
+
+  - type: example
+    title: Logic statements in conditions
+    problem: "Valid mark: between 0 and 100 inclusive. Pass: mark ≥ 50 AND attendance ≥ 75%."
+    steps:
+      - "Valid: (mark >= 0) AND (mark <= 100)"
+      - "Pass: (mark >= 50) AND (attendance >= 75)"
+      - "Distinction: (mark >= 70) OR (mark >= 60 AND project = 'excellent')"
+      - "Not eligible: NOT (mark >= 50 AND attendance >= 75)"
+    answer: |
+      Parentheses clarify precedence. NOT applies to the whole condition.
+
+  - type: explain
+    title: Combining refinement with logic
+    body: |
+      When refining a condition like "valid input", you decompose the logic:
+
+      High level: `IF inputIsValid THEN process ELSE error ENDIF`
+
+      Refined:
+      ```
+      inputIsValid ← (length > 0) AND (allCharsAreDigits) AND (value ≤ MAX)
+      ```
+
+      Each sub-condition can be a function:
+      - `checkLength()`
+      - `checkDigits()`
+      - `checkRange()`
+
+      This is stepwise refinement applied to *conditions* — not just actions.
+
+  - type: check
+    title: Quick check — refinement and logic
+    questions: [refinement-process, logic-precedence, logic-in-algorithm]
+
+  - type: misconceptions
+    items:
+      - wrong: Stepwise refinement means writing code from top to bottom.
+        right: |
+          It means *designing* top-down. You refine the *design* before coding. The structure chart is the design artifact.
+      - wrong: AND and OR have the same precedence.
+        right: |
+          NOT > AND > OR. `A OR B AND C` means `A OR (B AND C)`.
+      - wrong: NOT (A AND B) = (NOT A) AND (NOT B)
+        right: |
+          De Morgan's Law: NOT (A AND B) = (NOT A) OR (NOT B). NOT (A OR B) = (NOT A) AND (NOT B).
+
+  - type: exam
+    body: |
+      - **Stepwise refinement**: You may be asked to draw a structure chart for a described problem. Show 3–4 levels, label modules with verb-noun names (e.g., `validateInput`, `calculateTotal`).
+      - **Logic statements**: Write conditions using AND, OR, NOT. May need to simplify using De Morgan's laws.
+      - **Trace tables with logic**: Show how compound conditions evaluate step by step.
+
+  - type: takeaways
+    items:
+      - "Stepwise refinement: top-down decomposition → structure chart."
+      - "Logic: NOT > AND > OR precedence. Use parentheses."
+      - "De Morgan's: NOT(A AND B) = NOT A OR NOT B; NOT(A OR B) = NOT A AND NOT B."
+      - "Conditions can be refined into sub-functions for clarity."
+
+questions:
+  - id: refinement-process
+    format: mcq
+    difficulty: 1
+    objectives: ["9.2.8"]
+    prompt: |
+      What is the **first step** in stepwise refinement?
+    options:
+      - text: Write the pseudocode for the entire program
+        why: |
+          That's the final result, not the first step.
+      - text: State the problem at the highest level in one sentence
+        correct: true
+        why: |
+          Start with a single high-level statement, then decompose.
+      - text: Draw the structure chart
+        why: |
+          The structure chart documents the refinement; it comes after.
+      - text: Identify all variables needed
+        why: |
+          Variables come during detailed design (identifier tables).
+    explanation: |
+      Stepwise refinement begins with a high-level problem statement.
+
+  - id: logic-precedence
+    format: mcq
+    difficulty: 2
+    objectives: ["9.2.9"]
+    prompt: |
+      Given `A = TRUE`, `B = FALSE`, `C = TRUE`, what is the value of `NOT A OR B AND C`?
+    options:
+      - text: "TRUE"
+        why: |
+          B AND C = FALSE; NOT A = FALSE; FALSE OR FALSE = FALSE.
+      - text: "FALSE"
+        correct: true
+        why: |
+          Precedence: NOT A = FALSE; B AND C = FALSE; FALSE OR FALSE = FALSE.
+      - text: "TRUE (because OR before AND)"
+        why: |
+          AND has higher precedence than OR.
+      - text: "Cannot be determined"
+        why: |
+          All values given; fully determined.
+    explanation: |
+      NOT A = FALSE. B AND C = FALSE AND TRUE = FALSE. FALSE OR FALSE = FALSE.
+
+  - id: logic-in-algorithm
+    format: explain
+    difficulty: 2
+    objectives: ["9.2.9"]
+    prompt: |
+      Write a pseudocode condition that is true when a student's mark is **either** ≥ 70 **or** (≥ 60 **and** they completed the extension project).
+    model: |
+      IF (mark >= 70) OR (mark >= 60 AND extensionProject = TRUE) THEN ...
+    keyPoints:
+      - "mark >= 70 OR (mark >= 60 AND extensionProject)"
+      - "Parentheses around AND part (though precedence handles it)"
+      - "extensionProject is boolean"
+    explanation: |
+      OR combines the two paths. The second path requires AND of two conditions.

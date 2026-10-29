@@ -1,0 +1,306 @@
+id: data-security-network-threats
+subject: "9618"
+topic: "6.1"
+title: "Malware, hackers, phishing and pharming: threats from the network"
+summary: How viruses and spyware differ, what hackers actually do, and the difference between being tricked by a message and being redirected by a poisoned server.
+order: 5
+minutes: 9
+kind: core
+objectives: ["6.1.4"]
+prerequisites: [data-security-system-measures]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.1 outcome 6.1.4 ("understand the
+    threats to computer and data security posed by networks and the internet") and its guidance:
+    malware (virus, spyware), hackers, phishing and pharming. All examples and questions are
+    original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.1.4 confirmed taught and tested, every definition and claim checked, every
+    answer key and accept list re-read, and the unit's six diagrams rendered and inspected in
+    light and dark. No separate reviewer model was available in this environment.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can define malware, virus, spyware, hacker, phishing and pharming, and explain why networking a computer increases the threats it faces.
+
+  - type: explain
+    title: Why a network doubles the number of doors
+    body: |-
+      A stand-alone PC can only be attacked by someone who can physically touch it. Connect it to a network and the number of possible attackers jumps.
+
+      - **More entry points.** Every open port, service and shared folder is a door. A network of forty machines has forty doors plus the servers.
+      - **Remote access.** An attacker can be in another country and still reach the machine.
+      - **Sharing spreads problems.** One infected machine can reach file shares, email contacts and other machines automatically.
+      - **More people.** Every user is a possible mistake — a clicked link, a reused password, an unencrypted USB stick.
+      - **Public networks are hostile.** On the internet, traffic passes through equipment nobody in the organisation controls.
+
+      Most of the threats below therefore arrive *through* the network — but note that a stand-alone PC is not immune: a virus can arrive on a USB stick, and a phone call can trick a user into revealing a password.
+
+  - type: definition
+    term: Malware
+    body: |-
+      **Malware** (malicious software) is software written to cause harm, to gain unauthorised access, or to gather information without the user's consent.
+
+      The 9618 syllabus names **viruses** and **spyware** specifically; worms, trojans and ransomware are related kinds you may meet in questions.
+
+  - type: explain
+    title: Viruses and spyware are different animals
+    body: |-
+      A **virus** is malware that attaches itself to a host file or program and runs when that host is run. It then usually copies itself into other files or programs, so it spreads — by email attachment, download, shared drive or USB stick.
+
+      Its visible effects might be corrupted files, a slow machine or a program that will not start.
+
+      **Spyware** hides and watches. It collects information — keystrokes, browsing history, screenshots, passwords — and sends it to someone else.
+
+      It may slow the machine down, but its purpose is **gathering data**, not damaging files.
+
+      | | Virus | Spyware |
+      | --- | --- | --- |
+      | Needs a host file to run | Yes — it infects a program or document | No — it usually installs as its own program |
+      | Main purpose | Damage or disruption; spreading itself | Secretly collecting information |
+      | Typical sign | Files corrupted, programs failing, strange messages | Machine slow, browser settings changed, unexpected network traffic |
+      | How it spreads | Copies itself into other files and to other machines | Usually downloaded with something else, or installed by a trojan |
+
+      Related malware in one line each: a **worm** spreads across a network by itself without needing a host file; a **trojan** pretends to be useful software so the user installs it voluntarily; **ransomware** encrypts the victim's files and demands payment for the key.
+
+  - type: definition
+    term: Hacker
+    body: |-
+      A **hacker** is a person who gains **unauthorised** access to a computer system or network.
+
+      The word "unauthorised" is the whole definition. A security consultant who is paid to test a system, with written permission, is not committing this offence — that is **penetration testing**.
+
+      A hacker's motives vary: data to sell, money by extortion, protest, or simply curiosity and challenge.
+
+      Once inside, a hacker might steal data, alter records, install malware, create new accounts for later use, or use the machine to attack others.
+
+  - type: definition
+    term: Phishing
+    body: |-
+      **Phishing** is a fraudulent message — usually an email, text or social-media message — that pretends to come from a trusted organisation in order to trick the recipient into revealing confidential data (passwords, card numbers) or into opening an attachment or link that installs malware.
+
+      Typical bait: urgency ("your account will be closed in 24 hours"), a familiar logo, a link whose visible text differs from the real address, and a form asking for details the real company would never request by email.
+
+  - type: definition
+    term: Pharming
+    body: |-
+      **Pharming** redirects a user to a fake website **without needing them to click anything**. The user types the correct address, but the request is sent to the attacker's server instead.
+
+      There are two usual ways to do it:
+
+      - **Malware on the user's computer** changes the local hosts file, so a familiar domain name points at the attacker's IP address.
+      - **DNS poisoning** alters a DNS server's records, so many users are redirected at once. (DNS is the system that turns a name such as `example.com` into an IP address.)
+
+      Because the address bar still shows the correct name, the victim has no obvious warning. Checking the site's security certificate and keeping software patched helps, which is why the next lesson pairs threats with countermeasures.
+
+  - type: diagram
+    diagram: cs-data-security-phishing-vs-pharming
+    alt: >-
+      Two side-by-side flows. In the phishing flow, a fake email from a spoofed sender reaches
+      the user, who clicks a link in a lookalike URL, submitting their password to the attacker;
+      the DNS lookup plays no part. In the pharming flow, the user types the correct URL, the
+      request goes to a poisoned DNS server, which returns the attacker's IP address, so the
+      browser loads the fake site without any click on a link. A note under each flow says who has
+      to be fooled: the user versus the name-resolution system.
+    caption: |-
+      Phishing fools the person. Pharming fools the lookup and leaves the person doing everything right.
+
+  - type: explain
+    title: Telling them apart in an exam
+    body: |-
+      | Question | Phishing | Pharming |
+      | --- | --- | --- |
+      | How does the victim reach the fake site? | They click a link or open an attachment in a message | They type the correct address; the lookup is redirected |
+      | Does the victim have to make a mistake? | Yes — trusting the message | Not necessarily; the address bar looks right |
+      | What is attacked? | The person | The computer's hosts file or a DNS server |
+      | Typical clue | Sender address, spelling, urgent tone, mismatched link | Correct-looking URL with a wrong certificate or unexpected login page |
+
+      Both end with the victim typing their credentials into a page the attacker controls. The difference is the **route**: a message that tricks a person, versus a name lookup that has been tampered with.
+
+      Related, but distinct: a **phishing** message may carry a trojan attachment; a **pharming** attack often needs malware to have reached the machine or server first. Real attacks borrow each other's methods, and an exam answer that says so accurately is fine.
+
+  - type: check
+    title: Name that threat
+    questions: [nt-mcq-virus-spyware, nt-mcq-pharming, nt-cloze-phishing]
+
+  - type: example
+    title: Reading a real-looking incident
+    problem: |-
+      A student receives an email saying: "Your university account will be suspended today. Confirm your password here." The link text reads `portal.university.ac.uk`, but hovering shows `portal-university-secure.net`. Later, a friend types the university address directly into the browser, gets the normal-looking login page, and types their password — but they are on a lookalike site.
+
+      Identify the threat in each part and say what evidence supports your answer.
+    steps:
+      - |-
+        **Part 1, evidence:** the message creates urgency, asks for a password (which the real university would not do by email), and the link's visible text does not match the real destination.
+      - |-
+        **Part 1, conclusion:** this is **phishing** — the victim is being tricked into clicking and revealing credentials.
+      - |-
+        **Part 2, evidence:** the friend did not click anything and typed the correct address. The browser still reached a fake page, so the redirect happened after the address was entered.
+      - |-
+        **Part 2, conclusion:** this is **pharming** — most likely a tampered hosts file on the machine or a poisoned DNS record. The giveaway is that the normal security certificate is missing or wrong.
+    answer: |-
+      The email is phishing: a fraudulent message using urgency and a disguised link to obtain the password. The typed-address redirection is pharming: the name lookup sent the user to the attacker's server without any click, which is why the page must be checked differently — by looking at the certificate.
+
+  - type: check
+    title: Definition check
+    questions: [nt-text-hacker, nt-spot-error, nt-mcq-network-risk]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A virus and spyware are the same thing.
+        right: |-
+          A virus needs a host file, copies itself into other files and usually causes damage or disruption. Spyware hides and gathers information. Their purposes and behaviour differ.
+      - wrong: |-
+          Any skilled computer user who finds a security flaw is a hacker.
+        right: |-
+          The definition turns on **unauthorised** access. A penetration tester acting with permission is doing authorised security work, not hacking in the syllabus sense.
+      - wrong: |-
+          Pharming requires the user to click a link.
+        right: |-
+          The whole point of pharming is that no click is needed: the correct address resolves to the attacker's server. Phishing is the one that relies on a click.
+      - wrong: |-
+          A network firewall makes a computer immune to malware.
+        right: |-
+          Malware also arrives on USB sticks, in downloads the user chooses, and through a legitimate-looking site. A firewall is one layer, not a guarantee.
+      - wrong: |-
+          Only careless people are affected, so training is unnecessary.
+        right: |-
+          Phishing messages are designed to look genuine and pharming needs no mistake at all. Training, technical controls and careful checking are all needed.
+
+  - type: exam
+    body: |-
+      Two question styles appear often.
+
+      **"Describe one threat to data security posed by connecting a computer to the internet."** Name it, say how it reaches the machine, and say what it does. For example: "A virus can arrive as an email attachment; when the user opens it, it copies itself into other files and can spread to other machines on the network."
+
+      **"Explain the difference between phishing and pharming."** Give the route in each: phishing = a fake message tricks the user into clicking; pharming = the user types the correct address but DNS or the hosts file redirects them. Add that pharming needs no user error.
+
+      Marks are for the **mechanism**, not the label alone. Writing "phishing is when you get tricked online" scores nothing; "a fraudulent email containing a link to a fake login page" scores.
+
+  - type: takeaways
+    items:
+      - Networks and the internet add entry points, remote access, shared resources and fallible users, so they multiply the threats.
+      - "**Malware**: software written to harm, access or gather data without consent."
+      - A **virus** attaches to a host file and replicates; **spyware** secretly collects information.
+      - A **hacker** gains unauthorised access; permission turns the same activity into penetration testing.
+      - "**Phishing** tricks the user into clicking or revealing data; **pharming** redirects the correct address through a tampered hosts file or DNS record."
+
+questions:
+  - id: nt-mcq-virus-spyware
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.4"]
+    prompt: |-
+      Which description matches **spyware** rather than a virus?
+    options:
+      - text: Software that hides on a machine, records keystrokes and sends them to an attacker.
+        correct: true
+        why: |-
+          Secretly gathering information and sending it out is the defining behaviour of spyware.
+      - text: Software that attaches to a program file and copies itself into other files.
+        why: |-
+          Attaching to a host and replicating into other files describes a virus.
+      - text: Software that encrypts a user's files and demands payment.
+        why: |-
+          That describes ransomware, whose aim is extortion rather than secret data collection.
+      - text: Software that spreads across a network by itself without a host file.
+        why: |-
+          That describes a worm. Spyware does not need to spread to do its job.
+    explanation: |-
+      Spyware's purpose is surveillance: collect information quietly and send it to someone else. A virus's purpose is usually replication and damage, and it needs a host file.
+
+  - id: nt-mcq-pharming
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.4"]
+    prompt: |-
+      A user types their bank's correct web address into the browser and is taken to a convincing fake site. They clicked no links in any message. Which threat is this?
+    options:
+      - text: Pharming, because the name lookup was redirected to the attacker's server.
+        correct: true
+        why: |-
+          The correct address resolved to the wrong IP address, either through a poisoned DNS record or a modified hosts file, with no click needed.
+      - text: Phishing, because the user was tricked into revealing their password.
+        why: |-
+          Phishing relies on a fraudulent message and a click. Here there was no message and no click.
+      - text: A virus, because a virus must have changed the address.
+        why: |-
+          Malware may be involved, but the threat described — redirecting the correct address — is pharming.
+      - text: Spyware, because the site records the password.
+        why: |-
+          The fake site may collect the password, but spyware is software running on the machine that secretly gathers data.
+    explanation: |-
+      The defining feature of pharming is that the user does everything right and is still redirected, because the name-to-address lookup has been tampered with.
+
+  - id: nt-cloze-phishing
+    format: cloze
+    difficulty: 2
+    objectives: ["6.1.4"]
+    prompt: |-
+      An email pretending to be from a bank asks the recipient to "confirm your password within 24 hours". This is {{1}}. A redirect that happens after the user types the correct web address, caused by a poisoned {{2}} server, is {{3}}.
+    blanks:
+      - accept: [phishing]
+      - accept: [DNS, domain name system, domain name service]
+      - accept: [pharming]
+    explanation: |-
+      Phishing is a fraudulent message designed to trick the user into revealing data or clicking a malicious link. Pharming redirects a genuine lookup, often through DNS poisoning, so no click is needed.
+
+  - id: nt-text-hacker
+    format: text
+    style: definition
+    difficulty: 1
+    objectives: ["6.1.4"]
+    prompt: |-
+      A person who gains unauthorised access to a computer system is called a ... (one word).
+    accept: [hacker, hackers, cracker]
+    model: |-
+      A **hacker** — someone who gains unauthorised access to a computer system or network. With the owner's permission, the same activity is penetration testing, not hacking.
+    explanation: |-
+      The syllabus term is hacker. The important word in any definition is *unauthorised*.
+
+  - id: nt-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.4"]
+    prompt: |-
+      A student compares two threats. Which line contains the first error?
+    lines:
+      - Phishing uses a fraudulent email or message that persuades the user to click a link or open an attachment.
+      - Pharming redirects the user to a fake site by changing a hosts file or poisoning DNS records.
+      - Because pharming changes where the correct address points, the user must still click a link in a message for the attack to work.
+      - Keeping the operating system patched and checking the site's certificate reduce the risk of pharming.
+    errorLine: 3
+    fix: |-
+      Line 3 is wrong: pharming needs **no** click. The user types the correct address and the tampered lookup sends them to the attacker's server, which is exactly why pharming is harder to notice than phishing.
+    explanation: |-
+      The other lines are correct. Claiming pharming needs a click is the standard trap; it is phishing that depends on the user's action.
+
+  - id: nt-mcq-network-risk
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.4"]
+    prompt: |-
+      Which statement best explains why connecting a computer to the internet increases the threats it faces?
+    options:
+      - text: It can now be reached remotely by anyone able to find an open service, so attacks no longer require physical access.
+        correct: true
+        why: |-
+          Networking adds remote entry points: an attacker anywhere can attempt connections, and shared resources can spread malware.
+      - text: The internet makes the computer's processor run faster, which attracts malware.
+        why: |-
+          Processing speed has nothing to do with the number of threats.
+      - text: Files become larger when they are sent over the internet.
+        why: |-
+          File size is irrelevant, and transferring files does not change their size.
+      - text: An internet connection automatically disables anti-virus software.
+        why: |-
+          Anti-virus software keeps working; it in fact becomes more important because new malware arrives constantly.
+    explanation: |-
+      The internet turns a machine that could only be attacked by someone in the room into one reachable from anywhere, and it connects it to shared services and other users.

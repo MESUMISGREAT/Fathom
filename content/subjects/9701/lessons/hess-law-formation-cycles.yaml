@@ -1,0 +1,305 @@
+id: hess-law-formation-cycles
+subject: "9701"
+topic: "5.2"
+title: "Formation cycles: going round by the elements"
+summary: Route any reaction through the elements instead, and the sum of formation enthalpies gives an enthalpy change no calorimeter could measure.
+order: 2
+minutes: 8
+kind: core
+objectives: ["5.2.1", "5.2.2"]
+prerequisites: [hess-law-route-independence, enthalpy-change-named-changes]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 5.2, learning outcome 5.2.1 and 5.2.2(a) (construct energy cycles and
+    determine enthalpy changes that cannot be found by direct experiment). Data values are
+    standard textbook figures; every worked answer is checked with Python. Questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every cycle re-derived from its own data and every numeric key recomputed in Python, every MCQ checked for exactly one correct option, and all four diagrams rendered and inspected in light and dark. One real error was caught and fixed in that pass (a methanol cycle key written as -238.1 instead of -239.1). No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can draw a cycle that goes from reactants to products **via the elements**, and use standard enthalpy changes of formation to calculate $\Delta H_r$ for any reaction.
+
+  - type: explain
+    title: The one reaction we can always quote
+    body: |-
+      Every compound has an enthalpy change of formation: the enthalpy change when **one mole** of it forms from its **elements** in their standard states.
+
+      That gives a universal "meeting point" for a cycle. Whatever the reaction, the reactants can, in principle, be broken back down to their elements — and those elements can then be built up into the products.
+
+      Chemists never actually do that. Hess's law lets us pretend, and add the numbers.
+
+  - type: definition
+    term: Standard enthalpy change of formation
+    body: |-
+      The enthalpy change when **one mole** of a compound is formed from its **elements** in their
+      standard states, under standard conditions (298 K, 100 kPa).
+
+      Symbol: $\Delta H_f^{\ominus}$, in $\text{kJ mol}^{-1}$.
+
+      By definition, the $\Delta H_f^{\ominus}$ of an element in its standard state is **zero**.
+
+  - type: diagram
+    diagram: chem-hess-law-formation-cycle
+    alt: >-
+      A cycle with the elements in their standard states at the bottom, the reactants on the left
+      and the products on the right. From the reactants an arrow labelled delta H reaction points
+      to the products. From the reactants a downward arrow labelled minus the sum of formation
+      enthalpies of the reactants leads to the elements. From the elements an upward arrow labelled
+      the sum of formation enthalpies of the products leads to the products. A note says the
+      reaction enthalpy equals the products' formation sum minus the reactants' formation sum.
+    caption: |-
+      Going down to the elements from the reactants and back up to the products gives a route whose
+      total equals the direct reaction.
+
+  - type: intuition
+    title: Why the signs come out that way
+    body: |-
+      Start at the reactants and travel **down** to the elements. Forming a compound from its
+      elements is the reaction we have data for, so going the other way — compound to elements — is
+      the **reverse**, and its sign flips.
+
+      Then travel **up** from the elements to the products: that is exactly formation, so the signs
+      stay as they are.
+
+      So the total round trip is:
+
+      $$\Delta H_r = \sum \Delta H_f^{\ominus}(\text{products}) - \sum \Delta H_f^{\ominus}(\text{reactants})$$
+
+      "Products minus reactants" is worth memorising, but if you can draw the arrows you can always
+      rebuild it — and you will not mix up a sign when the question is unusual.
+
+  - type: example
+    title: "Worked example: combustion of methane"
+    problem: |-
+      Calculate $\Delta H_r^{\ominus}$ for
+
+      $$\text{CH}_4\text{(g)} + 2\text{O}_2\text{(g)} \rightarrow \text{CO}_2\text{(g)} + 2\text{H}_2\text{O(l)}$$
+
+      given $\Delta H_f^{\ominus}$: CH₄(g) $= -74.8$, CO₂(g) $= -393.5$, H₂O(l) $= -285.8\ \text{kJ mol}^{-1}$.
+    steps:
+      - |-
+        Products first, scaling by the number of moles in the equation:
+
+        $$\sum \Delta H_f^{\ominus}(\text{products}) = (-393.5) + 2(-285.8) = -965.1\ \text{kJ mol}^{-1}$$
+      - |-
+        Reactants. Oxygen is an element in its standard state, so its $\Delta H_f^{\ominus}$ is zero:
+
+        $$\sum \Delta H_f^{\ominus}(\text{reactants}) = (-74.8) + 2(0) = -74.8\ \text{kJ mol}^{-1}$$
+      - |-
+        Subtract:
+
+        $$\Delta H_r^{\ominus} = -965.1 - (-74.8) = -890.3\ \text{kJ mol}^{-1}$$
+      - |-
+        The answer is negative, which matches everyday experience: burning methane gives out heat.
+    answer: |-
+      $\Delta H_r^{\ominus} = -890.3\ \text{kJ mol}^{-1}$.
+
+  - type: example
+    title: "Worked example: an endothermic decomposition"
+    problem: |-
+      Calculate $\Delta H_r^{\ominus}$ for the thermal decomposition of calcium carbonate:
+
+      $$\text{CaCO}_3\text{(s)} \rightarrow \text{CaO(s)} + \text{CO}_2\text{(g)}$$
+
+      given $\Delta H_f^{\ominus}$: CaCO₃(s) $= -1207$, CaO(s) $= -635$, CO₂(g) $= -393.5\ \text{kJ mol}^{-1}$.
+    steps:
+      - |-
+        Products:
+
+        $$(-635) + (-393.5) = -1028.5\ \text{kJ mol}^{-1}$$
+      - |-
+        Reactant:
+
+        $$-1207\ \text{kJ mol}^{-1}$$
+      - |-
+        Subtract, carefully keeping the double negative:
+
+        $$\Delta H_r^{\ominus} = -1028.5 - (-1207) = +178.5\ \text{kJ mol}^{-1}$$
+      - |-
+        Positive: the decomposition needs heating, which is why a lime kiln is fired.
+    answer: |-
+      $\Delta H_r^{\ominus} = +178.5\ \text{kJ mol}^{-1}$ (endothermic).
+
+  - type: check
+    title: Quick check
+    questions: [formation-definition, element-formation, products-minus-reactants]
+
+  - type: check
+    title: Practice
+    questions: [calculate-from-formation, endothermic-sign, reverse-cycle]
+
+  - type: misconceptions
+    items:
+      - wrong: $\Delta H_f^{\ominus}$ of O₂(g) is -393.5 kJ mol⁻¹.
+        right: |-
+          That is CO₂. An **element in its standard state** has
+          $\Delta H_f^{\ominus} = 0$ by definition, so O₂(g) is 0.
+      - wrong: The formula is reactants minus products.
+        right: |-
+          It is products minus reactants. If you remember "final minus initial", you cannot go wrong.
+      - wrong: $\Delta H_f^{\ominus}$ can be measured for any compound directly.
+        right: |-
+          Many cannot be measured directly — that is exactly why Hess cycles exist. Formation of CO
+          is the classic example.
+      - wrong: Multiply the sum of products by the coefficient of the whole equation.
+        right: |-
+          Multiply each substance's $\Delta H_f^{\ominus}$ by **its own** coefficient in the balanced
+          equation.
+      - wrong: The states do not matter as long as the formula is the same.
+        right: |-
+          H₂O(l) and H₂O(g) have different $\Delta H_f^{\ominus}$ values, so using the wrong state
+          gives a wrong answer.
+      - wrong: A positive answer means the calculation is wrong.
+        right: |-
+          Endothermic reactions have positive $\Delta H_r^{\ominus}$ — decomposition is a common case.
+
+  - type: exam
+    body: |-
+      - Draw the cycle, even when the question says "calculate": the arrows earn method marks and stop sign errors.
+      - Quote $\Delta H_f^{\ominus}$ values with their signs. Sliding a minus sign costs the whole answer.
+      - Count moles from the **balanced** equation; the coefficient in front of each formula is the multiplier.
+      - Give units, kJ mol⁻¹, and state whether the reaction is exothermic or endothermic when asked.
+
+  - type: takeaways
+    items:
+      - '$\Delta H_f^{\ominus}$: one mole of compound from its elements in their standard states.'
+      - 'Elements in their standard states have $\Delta H_f^{\ominus} = 0$.'
+      - '$\Delta H_r^{\ominus} = \sum \Delta H_f^{\ominus}(\text{products}) - \sum \Delta H_f^{\ominus}(\text{reactants})$.'
+      - 'Scale each value by its coefficient in the balanced equation.'
+      - 'The cycle goes reactants → elements (signs flip) → products (signs kept).'
+
+  - type: deeper
+    title: Why formation enthalpies are negative so often
+    body: |-
+      Most compounds are more stable than their separate elements, because forming bonds releases
+      energy. That is why $\Delta H_f^{\ominus}$ is negative for most compounds.
+
+      The exceptions are revealing: compounds that are unstable relative to their elements — such as
+      some nitrogen oxides or acetylene — have **positive** $\Delta H_f^{\ominus}$. They tend to
+      decompose or react vigorously, which is exactly what "unstable" means in energy terms.
+
+questions:
+  - id: formation-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.1"]
+    prompt: |-
+      Which is the standard enthalpy change of formation of a compound?
+    options:
+      - text: The enthalpy change when one mole of the compound forms from its elements in their standard states
+        correct: true
+        why: |-
+          "One mole", "from its elements" and "standard states" are all part of the definition.
+      - text: The enthalpy change when one mole of the compound burns completely in oxygen
+        why: |-
+          That is the enthalpy change of combustion.
+      - text: The enthalpy change when one mole of the compound is broken into its elements
+        why: |-
+          That is the reverse — the negative of formation.
+      - text: The enthalpy change when any amount of the compound forms
+        why: |-
+          Formation is defined per mole of compound.
+    explanation: |-
+      Formation is per mole of compound, from elements in their standard states.
+
+  - id: element-formation
+    format: numeric
+    difficulty: 1
+    objectives: ["5.2.1"]
+    prompt: |-
+      What is $\Delta H_f^{\ominus}$ of $\text{Br}_2\text{(l)}$, in kJ mol⁻¹?
+    fields:
+      - label: "ΔH ="
+        answer: 0
+        unit: kJ mol⁻¹
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Bromine's standard state is liquid Br₂, and an element in its standard state has
+      $\Delta H_f^{\ominus} = 0$ by definition.
+
+  - id: products-minus-reactants
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      Which expression gives $\Delta H_r^{\ominus}$ for $\text{A} + 2\text{B} \rightarrow 3\text{C}$ using formation enthalpies?
+    options:
+      - text: $3\Delta H_f^{\ominus}(\text{C}) - \left[\Delta H_f^{\ominus}(\text{A}) + 2\Delta H_f^{\ominus}(\text{B})\right]$
+        correct: true
+        why: |-
+          Products minus reactants, each scaled by its coefficient.
+      - text: $\left[\Delta H_f^{\ominus}(\text{A}) + 2\Delta H_f^{\ominus}(\text{B})\right] - 3\Delta H_f^{\ominus}(\text{C})$
+        why: |-
+          That is reactants minus products — the sign would be wrong.
+      - text: $3\Delta H_f^{\ominus}(\text{C}) - \Delta H_f^{\ominus}(\text{A}) - \Delta H_f^{\ominus}(\text{B})$
+        why: |-
+          B's value must be doubled, because the equation uses 2 mol of B.
+      - text: $\Delta H_f^{\ominus}(\text{C}) - \Delta H_f^{\ominus}(\text{A}) - \Delta H_f^{\ominus}(\text{B})$
+        why: |-
+          This ignores the coefficients altogether.
+    explanation: |-
+      Products minus reactants, with every value multiplied by its coefficient.
+
+  - id: calculate-from-formation
+    format: numeric
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      Calculate $\Delta H_r^{\ominus}$ for
+
+      $$\text{N}_2\text{(g)} + 3\text{H}_2\text{(g)} \rightarrow 2\text{NH}_3\text{(g)}$$
+
+      given $\Delta H_f^{\ominus}[\text{NH}_3\text{(g)}] = -46\ \text{kJ mol}^{-1}$.
+
+      Give your answer in kJ mol⁻¹.
+    fields:
+      - label: "ΔH ="
+        answer: -92
+        unit: kJ mol⁻¹
+        tolerance: { abs: 0.5 }
+    explanation: |-
+      $2(-46) - 0 = -92\ \text{kJ mol}^{-1}$; N₂ and H₂ are elements, so their formation enthalpy is
+      zero.
+
+  - id: endothermic-sign
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.2"]
+    prompt: |-
+      A student calculates $\Delta H_r^{\ominus} = +178\ \text{kJ mol}^{-1}$ for a decomposition. What does the sign tell them?
+    options:
+      - text: The reaction absorbs energy, so it is endothermic
+        correct: true
+        why: |-
+          A positive $\Delta H$ means the products have more enthalpy than the reactants.
+      - text: The calculation must contain an error, because decompositions always release energy
+        why: |-
+          Many decompositions are endothermic; heating is usually needed.
+      - text: The reaction is exothermic but slow
+        why: |-
+          The sign does not describe rate at all.
+      - text: The reaction cannot happen
+        why: |-
+          Endothermic reactions happen all the time when energy is supplied.
+    explanation: |-
+      Positive $\Delta H$ means energy is taken in.
+
+  - id: reverse-cycle
+    format: numeric
+    difficulty: 3
+    objectives: ["5.2.1"]
+    prompt: |-
+      For the reaction $\text{CaO(s)} + \text{CO}_2\text{(g)} \rightarrow \text{CaCO}_3\text{(s)}$, $\Delta H = -178.5\ \text{kJ mol}^{-1}$.
+
+      What is $\Delta H$, in kJ mol⁻¹, for $\text{CaCO}_3\text{(s)} \rightarrow \text{CaO(s)} + \text{CO}_2\text{(g)}$?
+    fields:
+      - label: "ΔH ="
+        answer: 178.5
+        unit: kJ mol⁻¹
+        tolerance: { abs: 0.2 }
+    explanation: |-
+      Reversing the equation reverses the sign: $+178.5\ \text{kJ mol}^{-1}$.

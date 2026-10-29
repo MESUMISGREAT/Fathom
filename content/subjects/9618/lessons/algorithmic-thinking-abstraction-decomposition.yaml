@@ -1,0 +1,221 @@
+id: algorithmic-thinking-abstraction-decomposition
+subject: "9618"
+topic: "9.1"
+title: Computational Thinking Skills — abstraction and decomposition
+summary: Understand abstraction as removing non-essential detail to model a system, and decomposition as breaking problems into manageable sub-problems that map to procedures or functions.
+order: 1
+minutes: 5
+kind: core
+objectives: ["9.1.1", "9.1.2"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 9.1 Computational Thinking Skills.
+    Covers both learning outcomes: 9.1.1 (abstraction) and 9.1.2 (decomposition).
+    Questions are original. Independently re-checked for factual accuracy and answer keys
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain what **abstraction** is and why it is useful, produce a simple abstract model of a real-world system, and describe how **decomposition** breaks a problem into sub-problems that become procedures or functions.
+
+  - type: explain
+    title: What is abstraction?
+    body: |
+      **Abstraction** is the process of filtering out — ignoring — the details that don't matter for the problem at hand, so you can focus on what does. You build an **abstract model** that captures only the essential features.
+
+      Everyday example: a **tube map**. It shows stations and connections but ignores exact geography, distances, and street layouts. For the purpose of planning a journey, those details are noise; the abstract model (the map) is far more useful than a satellite photo.
+
+      In computing, abstraction appears everywhere:
+      - **Variables** hide memory addresses.
+      - **Procedures/functions** hide a sequence of steps behind a name.
+      - **Classes/objects** hide internal data and expose only behaviour.
+      - **APIs** hide implementation behind a stable interface.
+
+      The syllabus expects you to be able to:
+      1. State the *purpose* and *benefits* of abstraction.
+      2. *Produce* an abstract model by including only essential details.
+
+  - type: example
+    title: Modelling a library system
+    problem: |
+      A library wants software to track books, borrowers, and loans. Produce an abstract model.
+    steps:
+      - |
+        Identify the **entities** that matter: Book, Borrower, Loan. Ignore physical details like shelf colour, borrower's hair colour, or the smell of the books.
+      - |
+        Identify the **essential attributes** for each entity:
+        - Book: ISBN, title, author, availability status.
+        - Borrower: ID, name, contact, loan limit.
+        - Loan: book ISBN, borrower ID, date borrowed, due date.
+      - |
+        Identify the **essential relationships**: a Borrower *has* Loans; a Loan *links* one Book to one Borrower.
+      - |
+        Leave out non-essential operations: how the building is heated, the librarian's tea breaks, the font on the due-date stamp.
+    answer: |
+      Abstract model = entities (Book, Borrower, Loan) + their key attributes + key relationships. All physical/incidental details removed.
+
+  - type: check
+    title: Quick check — abstraction
+    questions: [abstraction-purpose, library-model]
+
+  - type: diagram
+    diagram: cs-computational-thinking-abstraction-decomposition
+    alt: Two-panel diagram showing abstraction layers on the left (concrete reality → essential model → data structures → functions) and a decomposition tree on the right (problem → sub-problems → further breakdown → functions/modules).
+    caption: Abstraction filters from reality to code; decomposition splits a problem into independent sub-problems that become modules.
+
+  - type: explain
+    title: What is decomposition?
+    body: |
+      **Decomposition** is breaking a complex problem into smaller, self-contained **sub-problems**. Each sub-problem can be solved independently, and the solutions are combined to solve the original problem.
+
+      In programming, decomposition leads directly to **procedures** and **functions** (modules). Each sub-problem becomes a module with a well-defined interface.
+
+      Why decompose?
+      - Makes large problems manageable.
+      - Allows team members to work in parallel.
+      - Enables reuse (a sort function used in many places).
+      - Simplifies testing and debugging (test each module in isolation).
+      - Improves readability and maintenance.
+
+  - type: example
+    title: Decomposing "calculate a student's final grade"
+    problem: |
+      A teacher wants a program that takes a student's marks and outputs their final letter grade.
+    steps:
+      - |
+        **Sub-problem 1: Input validation** — check that every mark is in the valid range (e.g., 0–100).
+      - |
+        **Sub-problem 2: Weighted average** — compute the weighted mean using the coursework/exam weights.
+      - |
+        **Sub-problem 3: Grade boundary lookup** — map the numeric average to a letter grade (A*, A, B, C, D, E, U).
+      - |
+        **Sub-problem 4: Output formatting** — produce a report string with name, average, and grade.
+      - |
+        Each sub-problem maps to a function: `validateMarks()`, `weightedAverage()`, `lookupGrade()`, `formatReport()`. The main program sequences these calls.
+    answer: |
+      Four functions, each handling one sub-problem. The main program becomes a readable pipeline.
+
+  - type: check
+    title: Quick check — decomposition
+    questions: [decomposition-benefits, grade-subproblems]
+
+  - type: check
+    title: Quick check — abstraction vs decomposition
+    questions: [abstraction-vs-decomposition]
+
+  - type: misconceptions
+    items:
+      - wrong: Abstraction means making things vague or incomplete.
+        right: |
+          Abstraction is *precise* about what it keeps. It deliberately discards only what is irrelevant to the current purpose. A tube map is not vague — it is precisely a graph of stations and lines.
+      - wrong: Decomposition just means writing more functions.
+        right: |
+          Decomposition is the *design decision* to split a problem along logical boundaries. Writing functions is the implementation; you can write many functions without having decomposed the problem well (e.g., arbitrary 10-line chunks).
+
+  - type: exam
+    body: |
+      - **Abstraction questions** often give a scenario (e.g., a traffic light system, a vending machine) and ask you to *identify* what to include in an abstract model and what to leave out. Answer with specific entities, attributes, and relationships — not vague statements.
+      - **Decomposition questions** may ask you to break a described problem into sub-problems and name the modules/procedures that would result. Use clear names like `calculateTotal()`, `validateInput()`, not `doStep1()`.
+      - Marks are lost for: confusing abstraction with generalisation, listing "simplification" as a benefit without saying *what* is simplified, or giving sub-problems that are not independent (e.g., "calculate average" and "calculate total" where one needs the other's result).
+
+  - type: takeaways
+    items:
+      - "Abstraction = keep only what is essential for the purpose; discard the rest."
+      - "Benefits: reduces complexity, enables reuse, separates concerns, supports teamwork."
+      - "Decomposition = break a problem into independent sub-problems that become modules (procedures/functions)."
+      - "Good decomposition yields modules with single responsibilities and clear interfaces."
+
+questions:
+  - id: abstraction-purpose
+    format: explain
+    difficulty: 1
+    objectives: ["9.1.1"]
+    prompt: |
+      Explain the purpose of abstraction in computational modelling, and give one benefit.
+    model: |
+      The purpose of abstraction is to reduce complexity by creating a model that includes only the details essential to solving the problem, omitting everything else. One benefit is that it makes the problem easier to understand, solve, and communicate because irrelevant details are removed.
+    keyPoints:
+      - Abstraction filters out non-essential details
+      - It produces a model with only essential features
+      - A benefit is reducing complexity, aiding understanding, enabling reuse, or supporting teamwork
+    explanation: |
+      A strong answer names the purpose (filtering to essentials) and gives a concrete benefit. "It makes things simpler" is too vague — say *what* becomes simpler (reasoning, coding, testing, communication).
+
+  - id: library-model
+    format: cloze
+    difficulty: 2
+    objectives: ["9.1.1"]
+    prompt: |
+      When modelling a **vending machine** system, the essential entities are {{1}}, {{2}}, and {{3}}. Non-essential details to omit include the machine's {{4}} and the {{5}} of the snacks.
+    blanks:
+      - accept: ["Product, Coin, Dispenser", "Product, Coin, Dispenser mechanism", "Snack, Coin, Dispenser"]
+      - accept: ["Product, Coin, Dispenser", "Product, Coin, Dispenser mechanism", "Snack, Coin, Dispenser"]
+      - accept: ["Product, Coin, Dispenser", "Product, Coin, Dispenser mechanism", "Snack, Coin, Dispenser"]
+      - accept: ["exact dimensions", "physical size", "colour", "appearance"]
+      - accept: ["brand names", "flavours", "exact ingredients", "calorie counts"]
+    explanation: |
+      Essential entities are the things the software must track: products (snacks), coins (payment), and the dispenser mechanism. Physical dimensions, colours, and specific snack flavours/brands are irrelevant to the logical behaviour.
+
+  - id: decomposition-benefits
+    format: mcq
+    difficulty: 1
+    objectives: ["9.1.2"]
+    prompt: |
+      Which of the following is **NOT** a benefit of decomposition?
+    explanation: |
+      Decomposition's benefits are manageability, parallelism, testability, and reuse. It does not guarantee faster execution — function call overhead may even add slight cost.
+    options:
+      - text: It allows different programmers to work on separate modules simultaneously.
+        why: |
+          This is a key benefit — parallel development.
+      - text: It guarantees the final program will run faster.
+        correct: true
+        why: |
+          Decomposition does not guarantee performance. It may even add slight overhead from function calls. The benefits are manageability, testability, reuse, and parallelism — not speed.
+      - text: It makes testing easier because each module can be tested in isolation.
+        why: |
+          Isolation testing is a major benefit of decomposition.
+      - text: It promotes reuse of modules in other parts of the program or other programs.
+        why: |
+          Reuse is a core benefit of well-decomposed designs.
+
+  - id: grade-subproblems
+    format: cloze
+    difficulty: 2
+    objectives: ["9.1.2"]
+    prompt: |
+      A program calculates a student's final grade from three exam marks (weighted 30%, 30%, 40%). Decompose this into **four** sub-problems: (1) {{1}}, (2) {{2}}, (3) {{3}}, (4) {{4}}.
+    blanks:
+      - accept: ["validate marks", "check input range", "input validation"]
+      - accept: ["calculate weighted average", "compute average", "weighted mean"]
+      - accept: ["look up grade", "map to letter grade", "grade boundary lookup"]
+      - accept: ["output result", "format report", "display grade"]
+    explanation: |
+      The natural decomposition: validate inputs → compute weighted average → map to grade letter → produce output. Each maps to a clean function with a single responsibility.
+
+  - id: abstraction-vs-decomposition
+    format: mcq
+    difficulty: 2
+    objectives: ["9.1.1", "9.1.2"]
+    prompt: |
+      A student is designing a program to simulate a **traffic light junction**. They decide to model only the light states (red/amber/green) and timing, ignoring the physical poles, wiring, and weather. Separately, they split the program into modules: `updateLights()`, `checkSensors()`, `handleEmergency()`. The first decision illustrates **abstraction**; the second illustrates **decomposition**. Which statement is correct?
+    explanation: |
+      Abstraction selects which details belong in the problem model (what to keep). Decomposition splits the solution into modules (how to structure the code). They operate at different stages.
+    options:
+      - text: Abstraction decides *what* to model; decomposition decides *how* to structure the solution.
+        correct: true
+        why: |
+          Exactly. Abstraction selects essential details (what to include in the model). Decomposition splits the problem into modules (how to structure the code).
+      - text: Both are the same thing — just different names for simplifying a problem.
+        why: |
+          They address different stages: abstraction is about the *problem model*, decomposition is about the *solution structure*.
+      - text: Decomposition is only for large teams; abstraction is for solo programmers.
+        why: |
+          Both are valuable regardless of team size. Decomposition helps even a solo programmer manage complexity.
+      - text: Abstraction produces procedures; decomposition produces abstract models.
+        why: |
+          Backwards. Decomposition leads to procedures/functions. Abstraction produces abstract models.

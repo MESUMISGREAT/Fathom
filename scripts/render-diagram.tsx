@@ -14,7 +14,8 @@ import { scanDiagrams } from './diagram-scan';
 const args = process.argv.slice(2);
 const outIdx = args.indexOf('--out');
 const out = outIdx >= 0 ? args[outIdx + 1]! : path.join(process.cwd(), 'data', 'diagram-previews');
-const keys = args.filter((a, i) => a !== '--out' && i !== outIdx + 1);
+const skip = outIdx >= 0 ? outIdx + 1 : -1; // index of --out's value, if given
+const keys = args.filter((a, i) => a !== '--out' && i !== skip);
 // Imports only the requested files, so a compile error elsewhere doesn't block previews.
 const byKey = new Map(scanDiagrams().files.map((f) => [f.key, f.file]));
 if (keys.length === 0) {

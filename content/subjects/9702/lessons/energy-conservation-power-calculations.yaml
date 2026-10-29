@@ -1,0 +1,248 @@
+id: energy-conservation-power-calculations
+subject: "9702"
+topic: "5.1"
+title: "Power in practice: motors, cranes and machines"
+summary: Using P = W/t with the work done by a machine's force to find the power, the energy transferred or the time taken.
+order: 7
+minutes: 5
+kind: core
+objectives: ["5.1.6"]
+prerequisites: [energy-conservation-power-definition]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 5.1.6, solve problems using P = W/t). Weight = mg is taken
+    from topic 3.5. All values and answer keys were computed with Python (g = 9.81 m s⁻²
+    where a mass is given). All questions are original.
+    Adversarially re-checked line by line (syllabus coverage, facts, worked examples, every
+    answer key, MCQ distractors, tolerances and spot-error lines) on 2026-10-27 in the same
+    cloud chat, which has no separate reviewer model; every numeric key was recomputed
+    independently with Python, and all eight diagrams were rendered and inspected in light
+    and dark. Not yet reviewed by a separate reviewer or by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve problems that use $P = \dfrac{W}{t}$, doing the
+      two jobs in the right order: **find the work first**, then divide by the
+      time.
+
+  - type: explain
+    title: Two steps, every time
+    body: |
+      Machine questions usually tell you what the machine moves, not the work it
+      does. So the method is always the same:
+
+      1. **Find the work done**: $W = Fs$, where $F$ is the force the machine
+         applies along the motion.
+      2. **Divide by the time**: $P = \dfrac{W}{t}$.
+
+      For a load lifted at a **steady speed**, the lifting force equals the
+      **weight** of the load (forces balance when the velocity is constant), and
+      the distance moved is the height lifted.
+
+  - type: definition
+    term: Power, work and time
+    body: |
+      $$P = \dfrac{W}{t}$$
+
+      Rearranged:
+
+      $$W = Pt \qquad t = \dfrac{W}{P}$$
+
+      Unit check: $\dfrac{\text{J}}{\text{s}} = \text{W}$, so a power in watts is
+      a number of joules transferred each second.
+
+  - type: diagram
+    diagram: phys-energy-conservation-power-lift
+    alt: >-
+      A crane lifting a load at a steady speed. A cable runs down to a rectangular
+      load labelled 1500 N, with an upward arrow labelled "F = 1500 N (the
+      lifting force equals the weight)". A dashed line at the load's starting
+      height and another at its final height are joined by a double-headed
+      vertical arrow labelled 6.0 m. Below: W = Fs = 1500 N × 6.0 m = 9000 J
+      and P = W/t = 9000 J ÷ 10 s = 900 W.
+    caption: Work first (force × distance), power second (work ÷ time).
+
+  - type: example
+    title: "Worked example: a crane lifting a girder"
+    problem: |
+      A crane lifts a girder of weight $1500\ \text{N}$ through a height of
+      $6.0\ \text{m}$ in $10\ \text{s}$, at a steady speed.
+
+      Calculate the useful power output of the crane.
+    steps:
+      - |
+        Steady speed means the lifting force equals the weight, so
+        $F = 1500\ \text{N}$ upwards, and it acts through $s = 6.0\ \text{m}$:
+        $$W = Fs = 1500 \times 6.0 = 9000\ \text{J}$$
+      - |
+        $$P = \dfrac{W}{t} = \dfrac{9000}{10} = 900\ \text{W}$$
+      - |
+        Interpretation: the crane transfers $900\ \text{J}$ of energy to the
+        girder every second.
+    answer: |
+      $900\ \text{W}$. Lifting the same girder in $5.0\ \text{s}$ instead would
+      need twice the power ($1800\ \text{W}$) — same work, half the time.
+
+  - type: check
+    title: Quick check
+    questions: [lift-power, machine-power-cloze]
+  - type: example
+    title: "How long will it take?"
+    problem: |
+      A small electric motor has an output power of $300\ \text{W}$. It must do
+      $2.4\ \text{kJ}$ of work lifting a load.
+
+      How long does it take?
+    steps:
+      - |
+        Convert first: $W = 2.4\ \text{kJ} = 2400\ \text{J}$.
+      - |
+        Rearrange $P = \dfrac{W}{t}$ to make $t$ the subject:
+        $t = \dfrac{W}{P}$.
+      - |
+        $$t = \dfrac{2400}{300} = 8.0\ \text{s}$$
+      - |
+        Check: $300\ \text{W} \times 8.0\ \text{s} = 2400\ \text{J}$ ✓
+    answer: |
+      $8.0\ \text{s}$. Notice how the rearranged equation makes this a one-step
+      calculation once the units match.
+
+  - type: check
+    title: Check yourself
+    questions: [time-from-power, work-from-power]
+  - type: misconceptions
+    items:
+      - wrong: The lifting force is larger than the weight, otherwise the load would not move.
+        right: |
+          At a **steady speed** the forces balance, so the lifting force equals
+          the weight. Extra force would make the load accelerate, and the speed
+          would keep increasing.
+      - wrong: Power is work multiplied by time.
+        right: |
+          Dividing by the time gives the rate. For the same work, a longer time
+          means **less** power, so time is on the bottom of the fraction.
+      - wrong: The mass of a load can be used directly as the force.
+        right: |
+          Force in newtons is weight: $F = mg$. A $20\ \text{kg}$ load has weight
+          $20 \times 9.81 = 196\ \text{N}$, not $20\ \text{N}$.
+      - wrong: Time can be left in minutes in P = W/t.
+        right: |
+          The watt is a joule per **second**, so convert minutes to seconds
+          ($1.5\ \text{min} = 90\ \text{s}$) before dividing.
+
+  - type: exam
+    body: |
+      - Two-mark calculations usually award one mark for $W = Fs$ and one for
+        $P = \dfrac{W}{t}$. Write both steps, even if you can see the answer.
+      - Check the order: work out the **work** before the power. Dividing force
+        by time is the classic error.
+      - If the question gives a mass, convert it to a weight with $F = mg$ before
+        calculating the work — and use the value of $g$ the syllabus states.
+
+  - type: check
+    title: Check yourself again
+    questions: [explain-lift-power]
+  - type: takeaways
+    items:
+      - >-
+        Method: work first ($W = Fs$), power second ($P = \dfrac{W}{t}$).
+      - >-
+        Rearrangements: $W = Pt$ and $t = \dfrac{W}{P}$.
+      - A load lifted at a steady speed has a lifting force equal to its weight, F = mg.
+      - >-
+        $1\ \text{W} = 1\ \text{J s}^{-1}$: the number of joules transferred each second.
+
+questions:
+  - id: lift-power
+    format: numeric
+    difficulty: 1
+    objectives: ["5.1.6"]
+    prompt: |
+      A motor lifts a load of weight $240\ \text{N}$ through $5.0\ \text{m}$ in
+      $4.0\ \text{s}$ at a steady speed.
+
+      Calculate the useful power output of the motor.
+    fields:
+      - answer: 300
+        tolerance: { abs: 1.5 }
+        unit: W
+    explanation: |
+      $W = Fs = 240 \times 5.0 = 1200\ \text{J}$, then
+      $P = \dfrac{1200}{4.0} = 300\ \text{W}$.
+
+  - id: machine-power-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["5.1.6"]
+    prompt: |
+      For a machine, power = work done ÷ {{1}}, and the work done by a force
+      acting along the motion is the force × the {{2}} moved.
+    blanks:
+      - accept: [time, the time, time taken]
+      - accept: [distance, distance moved, displacement]
+    explanation: |
+      $P = \dfrac{W}{t}$ and $W = Fs$: find the work first, then divide by the
+      time.
+
+  - id: time-from-power
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.6"]
+    prompt: |
+      A pump has an output power of $250\ \text{W}$ and must transfer
+      $4.0\ \text{kJ}$ of energy to the water it raises.
+
+      How long does this take?
+    fields:
+      - answer: 16
+        tolerance: { abs: 0.2 }
+        unit: s
+    explanation: |
+      $t = \dfrac{W}{P} = \dfrac{4000}{250} = 16\ \text{s}$.
+      Remember $4.0\ \text{kJ} = 4000\ \text{J}$.
+
+  - id: work-from-power
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.6"]
+    prompt: |
+      A heater transfers energy at a rate of $2.0\ \text{kW}$ for
+      $1.5$ minutes.
+
+      How much energy does it transfer? Give your answer in kJ.
+    fields:
+      - answer: 180
+        tolerance: { abs: 1 }
+        unit: kJ
+    explanation: |
+      $W = Pt$. In SI units: $W = 2000 \times 90 = 180\,000\ \text{J}$
+      $= 180\ \text{kJ}$. Leaving the time as 1.5 minutes would give a value
+      60 times too small.
+
+  - id: explain-lift-power
+    format: explain
+    difficulty: 3
+    objectives: ["5.1.6"]
+    prompt: |
+      A motor lifts a load of mass $20\ \text{kg}$ through a height of
+      $6.0\ \text{m}$ in $8.0\ \text{s}$ at a steady speed. Explain how to find
+      the useful power output, and calculate it.
+    model: |
+      First find the lifting force. At a steady speed the forces on the load
+      balance, so the lifting force equals the weight of the load:
+      F = mg = 20 × 9.81 = 196 N. The work done is force × distance moved in the
+      direction of the force: W = Fs = 196 × 6.0 = 1177 J. Power is the work done
+      per unit time, so P = W/t = 1177 / 8.0 = 147 W, about 150 W to 2 s.f.
+    keyPoints:
+      - The lifting force equals the weight because the speed is steady
+      - Weight = mg = 20 × 9.81 = 196 N
+      - Work done W = Fs = 196 × 6.0 ≈ 1180 J
+      - Power P = W/t ≈ 1180 ÷ 8.0 ≈ 150 W
+      - Energy transferred each second is about 150 J
+    explanation: |
+      The examiner wants the chain: weight from mass, work = force × distance,
+      then power = work ÷ time — with the steady-speed reasoning stated, not
+      assumed.

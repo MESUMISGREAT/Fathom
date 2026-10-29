@@ -9,7 +9,7 @@ objectives: ["4.2.3"]
 prerequisites: [equilibrium-forces-vector-triangle]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcome 4.2.3, represent coplanar forces in equilibrium using a vector
@@ -17,6 +17,7 @@ provenance:
     graph plots T/W = 1/(2 cos θ) exactly; the two-string triangle is drawn to scale (60 N
     weight, strings at 35° and 50° to the vertical). Weights and angles are illustrative values;
     all worked values and answer keys were computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -94,7 +95,9 @@ blocks:
   - type: example
     title: A weight on two uneven strings
     problem: |
-      A $60\ \text{N}$ weight hangs from two strings. String 1 makes $35°$ with the vertical and string 2 makes $50°$ with the vertical. Find both tensions.
+      A $60\ \text{N}$ weight hangs from two strings. String 1 makes $35°$ with the vertical and string 2 makes $50°$ with the vertical.
+
+      Find both tensions.
     steps:
       - |
         Angles inside the triangle: opposite $T_1$ is $50°$, opposite $T_2$ is $35°$, opposite $W$ is $180° - 85° = 95°$.
@@ -151,7 +154,7 @@ questions:
     prompt: |
       A $50\ \text{N}$ bag hangs from a hook by two straps, each at $40°$ to the vertical. Find the tension in each strap, to 3 significant figures.
     fields:
-      - answer: 32.635
+      - answer: 32.6
         sigFigs: 3
         unit: N
     explanation: |
@@ -193,27 +196,33 @@ questions:
     difficulty: 3
     objectives: ["4.2.3"]
     prompt: |
-      An $80\ \text{N}$ lamp hangs from two cables. Cable A makes $30°$ with the vertical and cable B makes $45°$ with the vertical. Find the tension in each cable, to 3 significant figures.
+      An $80\ \text{N}$ lamp hangs from two cables. Cable A makes $30°$ with the vertical and cable B makes $45°$ with the vertical.
+
+      Find the tension in each cable, to 3 significant figures.
     fields:
       - label: "tension in A ="
-        answer: 58.564
+        answer: 58.6
         sigFigs: 3
         tolerance: { abs: 0.15 }
         unit: N
       - label: "tension in B ="
-        answer: 41.411
+        answer: 41.4
         sigFigs: 3
         tolerance: { abs: 0.15 }
         unit: N
     explanation: |
-      The angle opposite $W$ is $180° - 75° = 105°$, and $\sin 105° = \sin 75°$. Sine rule: $T_A = \dfrac{80\sin 45°}{\sin 105°} = 58.6\ \text{N}$ and $T_B = \dfrac{80\sin 30°}{\sin 105°} = 41.4\ \text{N}$. Check: $58.6\sin 30° = 29.3$ and $41.4\sin 45° = 29.3$, so the horizontal components balance.
+      The angle opposite $W$ is $180° - 75° = 105°$, and $\sin 105° = \sin 75°$. The sine rule gives $T_A = \dfrac{80\sin 45°}{\sin 105°} = 58.6\ \text{N}$ and $T_B = \dfrac{80\sin 30°}{\sin 105°} = 41.4\ \text{N}$.
+
+      Check: $58.6\sin 30° = 29.3$ and $41.4\sin 45° = 29.3$, so the horizontal components balance.
 
   - id: sine-rule-spot-error
     format: spot-error
     difficulty: 3
     objectives: ["4.2.3"]
     prompt: |
-      A $40\ \text{N}$ weight hangs from two strings: string P at $20°$ to the vertical and string Q at $60°$ to the vertical. A student finds the tension in P. Which line contains the first error?
+      A $40\ \text{N}$ weight hangs from two strings: string P at $20°$ to the vertical and string Q at $60°$ to the vertical. A student finds the tension in P.
+
+      Which line contains the first error?
     lines:
       - |
         In the closed triangle, the angle opposite $W$ is $180° - (20° + 60°) = 100°$.
@@ -234,7 +243,9 @@ questions:
     difficulty: 2
     objectives: ["4.2.3"]
     prompt: |
-      A weight $W$ hangs from two strings, each at angle $\theta$ to the vertical. Write an expression for the tension $T$ in each string. Type `w` for $W$ and `t` for $\theta$ (for example `w*sin(t)`).
+      A weight $W$ hangs from two strings, each at angle $\theta$ to the vertical.
+
+      Write an expression for the tension $T$ in each string. Type `w` for $W$ and `t` for $\theta$ (for example `w*sin(t)`).
     answer: "w/(2*cos(t))"
     variables: [w, t]
     domain: { min: 0.1, max: 1.3 }

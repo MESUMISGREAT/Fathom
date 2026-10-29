@@ -1,0 +1,270 @@
+id: data-integrity-entry-verification
+subject: "9618"
+topic: "6.2"
+title: "Verification at entry: visual checks and double entry"
+summary: Two ways to confirm that typed data matches the source, what each costs, and when each is worth it.
+order: 4
+minutes: 8
+kind: core
+objectives: ["6.2.3"]
+prerequisites: [data-integrity-validation-vs-verification]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029 (Version 2, December 2025), topic 6.2 outcome 6.2.3 ("describe and use
+    methods of data verification during data entry and data transfer") and its guidance for data
+    entry: visual check and double entry. Parity and checksum for data transfer are the next
+    lesson. All examples and questions are original.
+
+    Re-checked line by line in a second adversarial pass by the same agent on 2026-10-28:
+    objective 6.2.3 confirmed taught and tested, every definition and claim checked,
+    every check digit, parity bit, block check character and checksum recomputed in Python,
+    and the unit's five diagrams rendered and inspected in light and dark. No separate
+    reviewer model was available in this environment. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can describe a visual check and double entry, explain what each catches, and justify which to use for a given set of data.
+
+  - type: explain
+    title: Validation lets plausible mistakes through
+    body: |-
+      Lesson 1 showed the gap: a real date typed in the wrong order passes every validation rule. The value is *possible*, just not what the form said.
+
+      **Verification at entry** closes that gap by comparing what is in the system with the source document. There are two standard methods: a human **visual check**, or a **second independent entry** that the computer compares.
+
+  - type: definition
+    term: Visual check
+    body: |-
+      A **visual check** means a person reads the data on screen (or on a printout) and compares it, field by field, with the original document, correcting anything that does not match.
+
+      It is cheap and needs no extra software, but it relies on concentration: the same person who typed the data is the least reliable checker, because the brain sees what it expects to see.
+
+  - type: explain
+    title: Why a fresh pair of eyes matters
+    body: |-
+      When you type `Patle` instead of `Patel`, reading your own work is unreliable. You already know what it is supposed to say, so your eye skips the letters. 
+
+      This is why proofreading your own writing is hard.
+
+      Practical visual checking therefore works best when:
+
+      - someone **other than the typist** does the check;
+      - the check is done on a **printout** or a second screen, so the two versions are side by side;
+      - the data set is **small or high-value**, where the time can be justified;
+      - the checker works in **short sessions**, because error detection falls sharply with fatigue.
+
+      It is not practical to visually check a million order lines. That is the gap double entry fills.
+
+  - type: definition
+    term: Double entry
+    body: |-
+      **Double entry** means the same data is typed **twice, independently**, usually by two different operators. The system compares the two versions automatically. If they match, the data is accepted; if they differ, an error is flagged and the entry is repeated or checked against the source.
+
+      "Independently" is the important word: the second operator must not be able to see the first entry, or they will copy its mistakes.
+
+  - type: diagram
+    diagram: cs-data-integrity-double-entry
+    alt: >-
+      Two operators type the same form into two separate entry screens. The two versions go to a
+      comparison step. If they match, the record is stored. If they differ, the record is flagged
+      as a mismatch and the data is re-entered or checked against the source document, then
+      compared again. A note says the second operator must not see the first entry.
+    caption: |-
+      Double entry turns "do these agree?" into an automatic comparison, at the cost of typing everything twice.
+
+  - type: explain
+    title: Choosing between them
+    body: |-
+      | | Visual check | Double entry |
+      | --- | --- | --- |
+      | Who does the work | One person comparing two displays | Two people typing, machine compares |
+      | Cost and time | Low; one pass through the data | Roughly double the typing |
+      | Reliability | Moderate; depends on attention and fatigue | High for typing slips, because two independent errors rarely match |
+      | Best for | Short records, quick corrections, low-risk data | Bank details, medical records, exam entries, payroll |
+
+      Neither method catches an error in the **source document**. If the form says the wrong account number, both operators type the same wrong number and the system happily accepts it.
+
+      Both methods also assume the two copies are independent. If the second operator reads the first screen, or one person types both copies from memory, the protection collapses to a visual check with extra typing.
+
+  - type: check
+    title: Entry verification
+    questions: [ev-mcq-definition, ev-cloze-methods, ev-mcq-choosing]
+
+  - type: example
+    title: Two clinics, two choices
+    problem: |-
+      **Clinic A** registers 40 new patients a day. Each record has a name, address and date of birth.
+
+      **Clinic B** processes 8,000 insurance claims a month, each containing a bank account number for payment.
+
+      Recommend a verification method for each and justify your choice.
+    steps:
+      - |-
+        **Step 1 — what is the cost of an error?** At Clinic A, a mistyped phone number is annoying but correctable. At Clinic B, a wrong account number sends money to the wrong person, which is expensive and hard to reverse.
+      - |-
+        **Step 2 — what is the volume?** Forty records a day is small enough for careful checking by a second person. Eight thousand claims a month is far too many for visual checking to be reliable.
+      - |-
+        **Step 3 — match the method to those two facts.** Clinic A: a **visual check** by someone other than the typist, comparing the screen with the registration form. Clinic B: **double entry** of the bank details (or at least those fields), because the machine comparison is reliable at volume and the cost of an error is high.
+      - |-
+        **Step 4 — state the limit.** Neither method fixes a wrong account number that the customer wrote down incorrectly. Clinic B should also confirm the account, for example by a test payment or a confirmation letter.
+    answer: |-
+      Clinic A: visual check by a second person, since volume is low and errors are cheap to fix. Clinic B: double entry of the payment fields, because high volume makes visual checking unreliable and a wrong account number is costly. Both need a further check with the customer, because verification only compares with the source.
+
+  - type: check
+    title: Choosing a method
+    questions: [ev-text-source, ev-spot-error]
+
+  - type: check
+    title: Explain it yourself
+    questions: [ev-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Double entry means typing the data into two different systems.
+        right: |-
+          It means typing the same data twice, independently, so the two versions can be compared. Whether one system or two are involved is irrelevant.
+      - wrong: |-
+          A visual check is as reliable as double entry.
+        right: |-
+          A visual check depends on attention: people see what they expect to see, especially when checking their own typing. Double entry replaces that judgement with a machine comparison.
+      - wrong: |-
+          Verification at entry proves the data is correct.
+        right: |-
+          It proves the system matches the source document. If the source is wrong, or both operators misread it, the stored value is still wrong.
+      - wrong: |-
+          Double entry catches errors made by the customer on the form.
+        right: |-
+          Both copies come from the same form, so a wrong value on the form is typed identically twice and accepted.
+      - wrong: |-
+          Validation and verification at entry do the same job, so only one is needed.
+        right: |-
+          Validation rejects unacceptable values, verification catches plausible mistyping. A system needs both.
+
+  - type: exam
+    body: |-
+      A typical question: *"Describe two methods of verification that could be used when entering these records"* (4 marks), or *"Explain which method you would recommend for this data and why"* (3–4 marks).
+
+      For each method, give the **procedure** and the **effect**:
+
+      - Visual check: an operator compares the data on screen with the source document (1) and corrects any differences before saving (1).
+      - Double entry: two operators type the data independently (1) and the system compares the two versions, flagging any mismatch for correction (1).
+
+      For a recommendation, compare **volume**, **cost of an error** and **speed**. "Double entry, because a wrong bank account number causes an irreversible payment and the volume is too high for reliable visual checking" is a full-mark justification; "double entry is more accurate" on its own is not.
+
+  - type: takeaways
+    items:
+      - Verification at entry compares stored data with the source document.
+      - "Visual check: a person compares screen or printout with the source; cheap, but dependent on attention."
+      - "Double entry: two independent typists, machine comparison; reliable at volume, but doubles the work."
+      - Choose by volume and by the cost of an error — bank details and medical records justify double entry.
+      - Neither method can detect an error already present in the source document.
+
+questions:
+  - id: ev-mcq-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.3"]
+    prompt: |-
+      Which statement describes double entry?
+    options:
+      - text: The same data is typed twice independently and the system compares the two versions.
+        correct: true
+        why: |-
+          Independence plus automatic comparison is what makes double entry reliable.
+      - text: The data is typed once and checked against a range of allowed values.
+        why: |-
+          That is validation, not verification against a source.
+      - text: The data is typed once and a second person reads the screen.
+        why: |-
+          That is a visual check: only one version exists, so there is nothing to compare automatically.
+      - text: The data is sent twice over the network.
+        why: |-
+          Sending twice does not verify that either copy matches the source.
+    explanation: |-
+      Double entry creates two independent copies and lets the computer compare them, so a typing slip almost always produces a mismatch.
+
+  - id: ev-cloze-methods
+    format: cloze
+    difficulty: 2
+    objectives: ["6.2.3"]
+    prompt: |-
+      Comparing a printout of the stored data with the original paper form is a {{1}} check. Typing the data twice, independently, and letting the system compare the copies is called {{2}}.
+    blanks:
+      - accept: [visual]
+      - accept: [double entry, double-entry, double entry verification]
+    explanation: |-
+      A visual check is a human comparison with the source. Double entry uses two independent entries and a machine comparison.
+
+  - id: ev-mcq-choosing
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.3"]
+    prompt: |-
+      A payroll bureau types 5,000 employees' bank account numbers each month. Which verification method is most appropriate, and why?
+    options:
+      - text: Double entry, because a wrong account number is costly and the volume is too high for reliable visual checking.
+        correct: true
+        why: |-
+          Double entry gives a reliable machine comparison at volume, which matters when an error sends money to the wrong account.
+      - text: Visual check, because it is cheaper and the data is simple.
+        why: |-
+          At 5,000 records a month, a human comparison becomes unreliable, and the cost of an error is high.
+      - text: A presence check, because every account number must be filled in.
+        why: |-
+          A presence check is validation; it does not confirm the number matches the employee's form.
+      - text: No verification, because validation already checks the digits.
+        why: |-
+          Validation can check length or format but cannot know that the digits were copied from the form correctly.
+    explanation: |-
+      Match the method to the risk and the volume: high value plus high volume points to double entry.
+
+  - id: ev-text-source
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["6.2.3"]
+    prompt: |-
+      Double entry cannot detect an error that is already present in which document? (One word.)
+    accept: [source, the source, source document, original, original document, form]
+    model: |-
+      The **source** document (for example the paper form). Both entries copy the same wrong value, so they agree.
+    explanation: |-
+      Verification checks the copy against the source; it cannot tell whether the source itself is right.
+
+  - id: ev-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.2.3"]
+    prompt: |-
+      A student explains verification at data entry. Which line contains the first error?
+    lines:
+      - A visual check compares the data on screen with the original document and corrects any difference.
+      - Double entry requires two operators to type the data without seeing each other's version.
+      - The system compares the two entries and flags any record where they differ.
+      - If the two entries match, the data must be correct in the real world.
+    errorLine: 4
+    fix: |-
+      A match only proves that both operators copied the **source** in the same way. If the source is wrong, or both misread it identically, the stored data is wrong even though the entries agree.
+    explanation: |-
+      Lines 1 to 3 correctly describe the two methods. Line 4 overstates what agreement proves, which is the misconception examiners test here.
+
+  - id: ev-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.2.3"]
+    prompt: |-
+      A hospital is computerising 200 patient records from paper forms. Recommend a verification method and justify it, including one limitation.
+    model: |-
+      Double entry is the better choice for patient records. Two clerks would type each record independently, without seeing each other's work, and the system would compare the two versions and flag any record where they disagree. Patient records are high-value, because a wrong date of birth or drug dose can harm someone, and 200 records is a volume where a machine comparison is more reliable than a tired person reading a screen. A visual check would be cheaper, but it depends on concentration and the typist tends to see what they expect. The limitation is that neither method checks the paper form itself: if the ward wrote the wrong dose on the form, both clerks type the same wrong value and the system accepts it. A clinical check against the patient's notes would still be needed.
+    keyPoints:
+      - Recommend double entry (or a visual check with a clear justification).
+      - Two independent entries, machine comparison, mismatches flagged.
+      - Justify by the high cost of an error in patient records.
+      - "Limitation: an error already in the source document is copied identically."
+    explanation: |-
+      Verification protects the copy, not the source. High-value data justifies double entry; the source still needs checking by whoever owns it.

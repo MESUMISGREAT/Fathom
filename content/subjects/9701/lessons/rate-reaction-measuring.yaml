@@ -1,0 +1,234 @@
+id: rate-reaction-measuring
+subject: "9701"
+topic: "8.1"
+title: Measuring and calculating rate
+summary: Follow a reaction by gas volume, mass loss or colour, then find the rate from data or from the gradient of a curve.
+order: 5
+minutes: 6
+kind: core
+objectives: ["8.1.3"]
+prerequisites: [rate-reaction-collision-theory]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Chemistry 9701 syllabus, topic 8.1
+    Rate of reaction, learning outcome 8.1.3 (use experimental data to calculate the rate of a
+    reaction). Every numerical answer was computed with Python. All questions and data are
+    original.
+    Re-checked line by line on 2026-10-29: every statement, worked example and numerical answer was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how a reaction's rate can be followed experimentally, and calculate a rate from tabulated data or from the **gradient of a concentration–time curve**.
+
+  - type: explain
+    title: Something must change as the reaction goes
+    body: |
+      To measure a rate you need to measure a quantity that changes as the reaction proceeds, at known times.
+
+      | What you measure | Typical method | Good for |
+      | --- | --- | --- |
+      | Volume of gas | Gas syringe, or inverted burette over water | Reactions producing a gas, such as metal + acid |
+      | Loss in mass | Balance | Reactions giving off a gas, when the gas can escape |
+      | Colour intensity | Colorimeter (absorbance), or timing until a cross disappears | Reactions with a coloured reactant or product |
+      | Amount of acid or alkali | Titrate samples taken at intervals (quench each sample first) | Slow reactions in solution |
+      | Electrical conductivity | Conductivity meter | Reactions where the number of ions changes |
+
+      Whichever method you choose, keep the temperature constant unless temperature is the variable you are testing. Changing temperature changes the rate for a different reason.
+
+  - type: explain
+    title: Mean rate versus the rate at an instant
+    body: |
+      The **mean rate** over an interval is the change in concentration divided by the time taken:
+
+      $$\text{mean rate} = \frac{\Delta[\text{reactant}]}{\Delta t}$$
+
+      That is an average. It hides the fact that reactions usually start fast and slow down as reactants are used up.
+
+      The **rate at a particular instant** is the gradient of the concentration–time curve at that point. To find it by hand, draw a **tangent** to the curve and calculate the gradient of the tangent.
+
+      The **initial rate** is the rate at $t = 0$: the gradient of the tangent drawn at the start of the curve. Initial rate is popular in experiments because the concentrations of the reactants are known exactly at that moment.
+
+  - type: example
+    title: Mean rate from concentration data
+    problem: |
+      The concentration of a reactant falls from $0.80\ \text{mol dm}^{-3}$ at $t = 0\ \text{s}$ to $0.40\ \text{mol dm}^{-3}$ at $t = 40\ \text{s}$. Calculate the mean rate of the reaction over this interval.
+    steps:
+      - |
+        Find the change in concentration: $0.80 - 0.40 = 0.40\ \text{mol dm}^{-3}$.
+      - |
+        Find the time interval: $40 - 0 = 40\ \text{s}$.
+      - |
+        Divide: $\text{mean rate} = \dfrac{0.40}{40}$.
+      - |
+        Include the unit: $0.010\ \text{mol dm}^{-3}\,\text{s}^{-1}$.
+      - |
+        Check the size: 0.01 mol dm⁻³ per second means the concentration falls by a hundredth of a mole per litre each second, which fits a reaction measured over tens of seconds.
+    answer: |
+      $\text{mean rate} = 0.010\ \text{mol dm}^{-3}\,\text{s}^{-1}$
+
+  - type: diagram
+    diagram: chem-rate-reaction-tangent
+    alt: A concentration-time curve for a reactant, falling steeply at first and flattening later. A tangent drawn at t equals zero gives the initial rate from its gradient. A second tangent drawn later is less steep, showing that the rate decreases as the reaction proceeds.
+    caption: |
+      The gradient of the curve is the rate. A tangent at $t = 0$ gives the initial rate; a tangent later in the reaction gives a smaller rate.
+
+  - type: example
+    title: Rate from a tangent
+    problem: |
+      On the concentration–time curve for a reactant, the tangent drawn at $t = 0$ passes through the points $(0, 1.00)$ and $(50, 0.25)$, with concentration in $\text{mol dm}^{-3}$ and time in seconds. Calculate the initial rate.
+    steps:
+      - |
+        Gradient $= \dfrac{\text{change in } y}{\text{change in } x} = \dfrac{0.25 - 1.00}{50 - 0}$.
+      - |
+        Gradient $= \dfrac{-0.75}{50} = -0.015\ \text{mol dm}^{-3}\,\text{s}^{-1}$.
+      - |
+        The rate of reaction is a positive quantity, so report the magnitude: $0.015\ \text{mol dm}^{-3}\,\text{s}^{-1}$.
+      - |
+        The negative gradient simply shows the reactant is being **used up**.
+    answer: |
+      Initial rate $= 0.015\ \text{mol dm}^{-3}\,\text{s}^{-1}$
+
+  - type: misconceptions
+    items:
+      - wrong: The mean rate over the whole reaction is the same as the initial rate.
+        right: |
+          Reactions slow down as reactants are used up, so the mean rate is smaller than the initial rate. Only the initial rate is measured at a known, unchanging set of concentrations.
+      - wrong: A steeper curve means more product is formed.
+        right: |
+          The gradient gives the **speed**. How much product you get depends on the amounts of reactants, not on how steep the curve is.
+      - wrong: The gradient of a concentration–time graph is negative, so the rate is negative.
+        right: |
+          The negative gradient shows the reactant's concentration is decreasing. Rate is reported as a positive value; use the magnitude.
+      - wrong: You can measure the rate of a gas-producing reaction in an open flask by mass loss, whatever the gas.
+        right: |
+          Mass loss works only if the gas escapes. If the gas is very soluble, or the apparatus traps it, the balance will not show the loss. Choose a method that matches the reaction.
+
+  - type: exam
+    body: |
+      - For tabulated data, show the subtraction and the division, and always give units. A bare number usually loses a mark.
+      - For a curve, draw the tangent at the required time, read two points **on the tangent** (not on the curve) and divide the changes.
+      - Read the points on the tangent as far apart as possible to reduce the effect of reading errors.
+      - Use a ruler and a sharp pencil for tangents; a freehand tangent through the curve is a common source of error.
+      - If a question asks for the rate over the first $x$ seconds, that is a mean rate. If it asks for the rate at a given time, that is a tangent.
+      - Check the units of the data. If concentration is in mol dm⁻³ and time in minutes, convert to seconds before giving a rate in mol dm⁻³ s⁻¹.
+
+  - type: takeaways
+    items:
+      - Measure a quantity that changes during the reaction — gas volume, mass, colour, acidity or conductivity.
+      - Mean rate is change in concentration divided by time.
+      - The rate at an instant is the gradient of the concentration–time curve.
+      - The initial rate is the gradient of the tangent at t = 0.
+      - Report rate as a positive value with units of concentration per unit time.
+
+  - type: check
+    title: Data
+    questions: [mass-loss-rate, concentration-rate, tangent-rate]
+
+  - type: check
+    title: Method and meaning
+    questions: [method-choice, tangent-meaning, mean-versus-instant]
+
+questions:
+  - id: mass-loss-rate
+    format: numeric
+    difficulty: 1
+    objectives: ["8.1.3"]
+    prompt: |
+      A reaction in an open flask loses $6.0\ \text{g}$ of mass in $120\ \text{s}$ as a gas escapes. Calculate the mean rate of mass loss.
+    fields:
+      - answer: 0.05
+        tolerance: { abs: 0.002 }
+        unit: g s⁻¹
+    explanation: |
+      Mean rate $= \dfrac{6.0}{120} = 0.050\ \text{g s}^{-1}$.
+
+  - id: concentration-rate
+    format: numeric
+    difficulty: 2
+    objectives: ["8.1.3"]
+    prompt: |
+      The concentration of a reactant falls from $0.50\ \text{mol dm}^{-3}$ to $0.30\ \text{mol dm}^{-3}$ in $25\ \text{s}$. Calculate the mean rate over this interval, in $\text{mol dm}^{-3}\,\text{s}^{-1}$.
+    fields:
+      - answer: 0.008
+        tolerance: { abs: 0.0005 }
+        unit: mol dm⁻³ s⁻¹
+    explanation: |
+      Change in concentration $= 0.20\ \text{mol dm}^{-3}$ over $25\ \text{s}$, so rate $= \dfrac{0.20}{25} = 0.0080\ \text{mol dm}^{-3}\,\text{s}^{-1}$.
+
+  - id: tangent-rate
+    format: numeric
+    difficulty: 2
+    objectives: ["8.1.3"]
+    prompt: |
+      A tangent drawn at $t = 0$ on a concentration–time curve passes through $(0, 1.00)$ and $(50, 0.25)$, with concentration in $\text{mol dm}^{-3}$ and time in seconds. Calculate the initial rate of the reaction.
+    fields:
+      - answer: 0.015
+        tolerance: { abs: 0.001 }
+        unit: mol dm⁻³ s⁻¹
+    explanation: |
+      Gradient $= \dfrac{0.25 - 1.00}{50} = -0.015\ \text{mol dm}^{-3}\,\text{s}^{-1}$. The rate is the magnitude, $0.015\ \text{mol dm}^{-3}\,\text{s}^{-1}$.
+
+  - id: method-choice
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.3"]
+    prompt: |
+      Magnesium ribbon reacts with dilute hydrochloric acid to produce hydrogen. Which method follows this reaction most simply?
+    options:
+      - text: Collect the gas in a gas syringe and record the volume at regular times
+        correct: true
+        why: |
+          The volume of hydrogen produced gives a direct measure of how far the reaction has gone and provides a rate.
+      - text: Measure the pH of the solution at regular times
+        why: |
+          The pH changes only slightly as the acid is used up in this reaction, so it is a poor monitor compared with gas volume.
+      - text: Weigh the magnesium ribbon during the reaction
+        why: |
+          The ribbon is inside the acid and cannot be removed and weighed repeatedly without disturbing the reaction.
+      - text: Titrate the whole mixture every 10 seconds
+        why: |
+          Titrating the whole mixture would destroy the experiment. You would titrate small samples, and only for reactions that are slow enough.
+    explanation: |
+      A gas-producing reaction is best followed by measuring the volume of gas collected at known times.
+
+  - id: tangent-meaning
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.3"]
+    prompt: |
+      A concentration–time curve for a reactant flattens as the reaction proceeds. What does this flattening show?
+    options:
+      - text: The rate is decreasing because the reactant concentration is falling
+        correct: true
+        why: |
+          A smaller gradient means a smaller rate. As the reactant is used up, fewer collisions occur per second.
+      - text: The reaction has stopped after the first few seconds
+        why: |
+          The curve would be horizontal if the reaction had stopped. A decreasing gradient means it continues more slowly.
+      - text: The product is being converted back into reactant
+        why: |
+          A flattening curve shows the forward reaction slowing, not reversing.
+      - text: The activation energy is increasing
+        why: |
+          Activation energy does not change during a reaction at constant temperature. The collision frequency is falling instead.
+    explanation: |
+      The gradient is the rate, so a flattening curve means the rate is falling as reactants are consumed.
+
+  - id: mean-versus-instant
+    format: text
+    difficulty: 2
+    objectives: ["8.1.3"]
+    style: short
+    prompt: |
+      What is the name for the rate measured from the gradient of the tangent drawn at the very start of a concentration–time curve?
+    accept:
+      - initial rate
+      - the initial rate
+      - initial rate of reaction
+    model: |
+      The initial rate: the rate at t = 0, when the reactant concentrations are known exactly.
+    explanation: |
+      The initial rate is the gradient at t = 0. It is used because the concentrations at that moment are known.

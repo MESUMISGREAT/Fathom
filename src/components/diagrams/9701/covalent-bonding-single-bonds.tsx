@@ -117,7 +117,7 @@ export function CovalentBondingSingleBonds() {
       {/* C2H6 */}
       <Shell cx={c1[0]} cy={c1[1]} r={RC} symbol="C" />
       <Shell cx={c2[0]} cy={c2[1]} r={RC} symbol="C" />
-      <Shared a={c1} ra={RC} b={c2} rb={RC} marks={['cross', 'cross']} />
+      <Shared a={c1} ra={RC} b={c2} rb={RC} marks={['dot', 'cross']} />
       {[
         { c: c1, angles: [90, 180, 270] },
         { c: c2, angles: [270, 0, 90] },

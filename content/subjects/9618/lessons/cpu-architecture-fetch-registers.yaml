@@ -1,0 +1,232 @@
+id: cpu-architecture-fetch-registers
+subject: "9618"
+topic: "4.1"
+title: "The four registers behind every instruction: PC, MAR, MDR, CIR"
+summary: What the program counter, memory address register, memory data register and current instruction register each hold, and why the CPU needs all four.
+order: 3
+minutes: 5
+kind: core
+objectives: ["4.1.2"]
+prerequisites: [cpu-architecture-registers]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Written against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus, topic 4.1, second learning outcome (special purpose registers: Program
+    Counter, Memory Data Register, Memory Address Register and Current Instruction Register;
+    ACC, IX and the status register are covered in cpu-architecture-registers). All
+    questions are original.
+blocks:
+  - type: objective
+    body: |
+      By the end you can state what the **Program Counter (PC)**, **Memory Address Register
+      (MAR)**, **Memory Data Register (MDR)** and **Current Instruction Register (CIR)**
+      hold, and explain why the CPU needs all four.
+
+  - type: explain
+    title: The problem these four solve
+    body: |
+      To run one instruction the CPU must answer four questions:
+
+      1. **Where** is the next instruction? → the PC knows.
+      2. **Which** memory cell do I talk to? → the MAR holds that address.
+      3. **What** came back from memory? → the MDR holds the value.
+      4. **What** am I actually executing? → the CIR holds the instruction.
+
+      Each register answers exactly one question, so the CPU never has to pause and work
+      out what is what.
+
+  - type: diagram
+    diagram: cs-cpu-architecture-key-registers
+    alt: >-
+      Four labelled register boxes with their jobs: PC holding the address of the next
+      instruction, MAR holding the address of the memory location being accessed, MDR
+      holding the data moving between CPU and memory, and CIR holding the instruction
+      currently being decoded and executed. Arrows show PC feeding MAR, memory feeding MDR,
+      and MDR feeding CIR.
+    caption: One question per register — address, address, data, instruction.
+
+  - type: explain
+    title: The four, one at a time
+    body: |
+      - **Program Counter (PC).** Holds the **address of the next instruction** to be
+        fetched. After each fetch it is incremented (add 1) so it points at the following
+        instruction. A branch or jump *changes* the PC instead.
+      - **Memory Address Register (MAR).** Holds the **address of the memory location**
+        about to be accessed — the cell being read from, or written to.
+      - **Memory Data Register (MDR).** Holds the **data** moving between the CPU and
+        memory: the instruction (or value) just read in, or the value about to be written
+        out. It is also called the memory buffer register.
+      - **Current Instruction Register (CIR).** Holds the **instruction currently being
+        decoded and executed**, taken from the MDR.
+
+  - type: definition
+    term: Word
+    body: |
+      The natural chunk of data a processor handles at once — the width of its registers
+      and data bus, typically 32 or 64 bits. Addresses and instructions fit in a word too.
+
+  - type: example
+    title: Where is 101 in all of this?
+    problem: |
+      Using the program from the Von Neumann lesson (instructions at addresses 100, 101,
+      102), say what each of the four registers holds at the moment just before the CPU
+      fetches the instruction at address 101.
+    steps:
+      - |
+        **PC** = 101. The fetch at 100 finished, so the PC was incremented and now points at
+        the next instruction.
+      - |
+        The fetch begins: 101 is copied from the PC into the **MAR**, so **MAR** = 101.
+      - |
+        Memory is asked for the contents of address 101. The value `ADD 7` comes back into
+        the **MDR**.
+      - |
+        The MDR's contents are copied into the **CIR**, so **CIR** = `ADD 7`, ready for
+        decoding.
+    answer: |
+      PC = 101, MAR = 101, MDR = `ADD 7`, CIR = `ADD 7` (once the fetch completes).
+
+  - type: check
+    title: Quick check
+    questions: [pc-holds, mar-vs-mdr, cir-job]
+
+  - type: misconceptions
+    items:
+      - wrong: The PC holds the instruction itself.
+        right: |
+          The PC holds the **address** of the next instruction. The instruction itself ends
+          up in the MDR, then the CIR.
+      - wrong: MAR and MDR are two names for the same register.
+        right: |
+          **MAR = address**, **MDR = contents**. A simple way to remember: the *A* in MAR
+          is for **address**.
+      - wrong: The PC always just counts upwards.
+        right: |
+          Jumps, branches and method calls **overwrite** the PC with a new address, which is
+          how programs loop and branch. It is incremented only on a straight-line fetch.
+
+  - type: exam
+    body: |
+      - The classic question gives a state and asks what a register holds *after* a
+        described step. Draw a small table: PC, MAR, MDR, CIR — one row per step.
+      - Use full names the first time you write an abbreviation in an answer.
+      - Marks slip when you swap MAR and MDR. Ask yourself: **address or contents?**
+
+  - type: check
+    title: Check yourself
+    questions: [registers-cloze, explain-pc-jump]
+
+  - type: takeaways
+    items:
+      - >-
+        **PC** = address of the *next* instruction; incremented after each fetch.
+      - >-
+        **MAR** = address being accessed; **MDR** = the data crossing between CPU and memory.
+      - >-
+        **CIR** = the instruction being decoded and executed right now.
+      - Addresses and contents are different things — never swap MAR and MDR.
+
+questions:
+  - id: pc-holds
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: |
+      What does the **program counter (PC)** hold?
+    options:
+      - text: The address of the next instruction to be fetched
+        correct: true
+        why: |
+          The PC points at what comes next; after the fetch it is incremented (or set by a
+          jump).
+      - text: The instruction that is currently being executed
+        why: |
+          That is the **CIR** — the current instruction register.
+      - text: The result of the last arithmetic operation
+        why: |
+          Results accumulate in the **accumulator (ACC)**.
+      - text: The data being transferred to or from memory
+        why: |
+          That is the **MDR**; the PC carries an address, not data.
+    explanation: |
+      PC = address of the next instruction. Address, not contents.
+
+  - id: mar-vs-mdr
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      The CPU reads the value stored at memory address 600. Which pair of registers is
+      involved, and in what roles?
+    options:
+      - text: MAR holds 600, MDR receives the value read
+        correct: true
+        why: |
+          The address goes into the MAR; the contents that come back arrive in the MDR.
+      - text: MDR holds 600, MAR receives the value read
+        why: |
+          Reversed: 600 is an **address**, so it belongs in the MAR; the value read is
+          data, which belongs in the MDR.
+      - text: PC holds the value read, CIR holds 600
+        why: |
+          The PC tracks the next instruction's address, and the CIR holds an instruction
+          during execution — neither carries this memory value.
+      - text: MAR holds 600, ACC receives the value read
+        why: |
+          The read passes through the **MDR** on its way in. The ACC is where *calculated
+          results* land, not where memory reads arrive.
+    explanation: |
+      Address in (MAR), contents out (MDR).
+
+  - id: cir-job
+    format: text
+    difficulty: 1
+    objectives: ["4.1.2"]
+    prompt: |
+      Which register holds the instruction that is being decoded and executed at this moment?
+    style: one-line
+    accept: ["cir", "current instruction register", "the cir", "current instruction"]
+    model: |
+      The current instruction register (CIR).
+    explanation: |
+      Data arrives in the MDR, is copied to the CIR, and the Control Unit works from there.
+
+  - id: registers-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["4.1.2"]
+    prompt: |
+      Complete the register transfer sentence. The address of the next instruction is held
+      in the {{1}}; when a fetch begins it is copied into the {{2}}, and the value memory
+      returns arrives in the {{3}}.
+    blanks:
+      - accept: ["pc", "program counter", "the pc", "the program counter"]
+      - accept: ["mar", "memory address register", "the mar", "the memory address register"]
+      - accept: ["mdr", "memory data register", "the mdr", "the memory data register"]
+    explanation: |
+      PC → MAR, then memory → MDR. You will write exactly this chain in the fetch stage of
+      the fetch–execute cycle.
+
+  - id: explain-pc-jump
+    format: explain
+    difficulty: 3
+    objectives: ["4.1.2"]
+    prompt: |
+      Explain what happens to the program counter when a program **jumps** to instruction
+      at address 400, and why the change is necessary.
+    model: |
+      Normally the program counter is incremented by 1 after each fetch, so execution moves
+      on to the next instruction in sequence. A jump is taken when the program needs to
+      continue somewhere else — inside a loop, or down a different branch. The jump
+      instruction places the target address, 400, into the program counter instead of
+      adding 1, so the next fetch takes the instruction from address 400. Without this, the
+      CPU could only ever run instructions in the order they were stored.
+    keyPoints:
+      - The PC is normally incremented after each fetch
+      - A jump overwrites the PC with the target address
+      - The next fetch therefore comes from address 400
+      - This is what makes loops and conditional branching possible
+    explanation: |
+      Loops and branches exist *because* the PC can be written with a new address.

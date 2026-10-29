@@ -1,0 +1,246 @@
+id: software-dev-program-design
+subject: "9618"
+topic: "12.2"
+title: Program Design — structure charts, state-transition diagrams
+summary: Use structure charts to decompose problems into modules with parameter passing, and understand state-transition diagrams for documenting algorithm behaviour.
+order: 2
+minutes: 7
+kind: core
+objectives: ["12.2.1", "12.2.2"]
+prerequisites: ["software-dev-life-cycles"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 12.2 Program Design. Covers objectives 12.2.1-12.2.2.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can construct and interpret structure charts showing module decomposition and parameter passing, and explain the purpose and use of state-transition diagrams for documenting algorithm behaviour.
+
+  - type: explain
+    title: Structure charts — top-down decomposition
+    body: |
+      A **structure chart** (also called a hierarchy chart) shows the **static structure** of a program — how it breaks down into modules (procedures/functions) and how they call each other.
+
+      **Elements:**
+      - **Rectangle** = module (procedure or function)
+      - **Lines/arrows** = calling relationship (top calls bottom)
+      - **Arrowheads** on lines show **data flow** (parameters passed)
+        - Down arrow (↓) = parameter passed **by value** (input to called module)
+        - Up arrow (↑) = parameter passed **by reference** (output from called module)
+        - Double arrow (↕) = both directions (by reference, read and write)
+
+      **Purpose:**
+      - Visualise **modular decomposition** — break a problem into manageable sub-tasks
+      - Show **module interfaces** — what data each module needs and returns
+      - Support **top-down design** — start with main module, refine downwards
+      - Aid **team development** — modules can be assigned to different programmers
+
+  - type: explain
+    title: Constructing a structure chart
+    body: |
+      **Step-by-step:**
+      1. Identify the **main task** (top-level module)
+      2. Decompose into **major sub-tasks** (first-level modules)
+      3. Continue decomposing until each module is **small and focused** (single responsibility)
+      4. For each call, identify **what data is passed** and **direction**
+      5. Draw the chart with consistent layout (top-down, left-to-right)
+
+      **Example: Calculate average of student marks**
+      ```
+                    ┌─────────────┐
+                    │   MAIN      │
+                    └──────┬──────┘
+                           │
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+         ┌──────────┐ ┌──────────┐ ┌──────────┐
+         │GetMarks  │ │ CalcAvg  │ │Display   │
+         └────┬─────┘ └────┬─────┘ └────┬─────┘
+              │            │            │
+         marks[]↑      marks[]↓        avg↑
+                    avg↑
+      ```
+      - `GetMarks` returns `marks[]` (output, by reference ↑)
+      - `CalcAvg` receives `marks[]` (input, by value ↓), returns `avg` (output ↑)
+      - `Display` receives `avg` (input ↓)
+
+      **Deriving pseudocode from a structure chart:**
+      - Each module → a procedure or function
+      - Parameters match the arrows (direction and name)
+      - Call sequence follows the chart top-down
+
+  - type: example
+    title: Structure chart to pseudocode — grade calculator
+    problem: |
+      Structure chart:
+      MAIN calls GetScore (returns score), Validate (score → returns validFlag), CalculateGrade (score → returns grade), DisplayResult (grade)
+    steps:
+      - "Identify modules and parameter directions from chart"
+      - "Write procedure/function headers with parameters"
+      - "Write MAIN calling sequence"
+    answer: |
+      PROCEDURE GetScore(OUT score : INTEGER)
+        READ score
+      ENDPROCEDURE
+
+      PROCEDURE Validate(IN score : INTEGER, OUT validFlag : BOOLEAN)
+        validFlag ← score >= 0 AND score <= 100
+      ENDPROCEDURE
+
+      FUNCTION CalculateGrade(IN score : INTEGER) RETURNS CHAR
+        IF score >= 70 THEN RETURN 'A'
+        ELSE IF score >= 60 THEN RETURN 'B'
+        ELSE IF score >= 50 THEN RETURN 'C'
+        ELSE RETURN 'F'
+        ENDIF
+      ENDFUNCTION
+
+      PROCEDURE DisplayResult(IN grade : CHAR)
+        PRINT "Grade: ", grade
+      ENDPROCEDURE
+
+      // MAIN
+      DECLARE score : INTEGER
+      DECLARE valid : BOOLEAN
+      DECLARE grade : CHAR
+      CALL GetScore(score)
+      CALL Validate(score, valid)
+      IF valid THEN
+        grade ← CalculateGrade(score)
+        CALL DisplayResult(grade)
+      ELSE
+        PRINT "Invalid score"
+      ENDIF
+
+  - type: explain
+    title: State-transition diagrams — documenting algorithm behaviour
+    body: |
+      A **state-transition diagram** (state machine diagram) shows the **dynamic behaviour** of an algorithm or system — how it moves between **states** in response to **events/inputs**.
+
+      **Elements:**
+      - **Circle/rounded rectangle** = **state** (a condition or situation)
+      - **Arrow** = **transition** (change from one state to another)
+      - **Label on arrow** = **event/guard/action** — `event [guard] / action`
+        - Event: what triggers the transition (input, condition)
+        - Guard: condition that must be true (optional)
+        - Action: what happens during transition (output, assignment)
+      - **Filled circle** = **initial state** (start)
+      - **Double circle** = **final/accepting state** (end)
+
+      **Purpose (per syllabus):**
+      - Document the **logic flow** of an algorithm, especially those with complex decision paths
+      - Show **all possible states** and **valid transitions** — catches missing cases
+      - Useful for **validation logic**, **protocol handlers**, **game loops**, **menu systems**
+      - Complementary to flowcharts (which show sequence) and structure charts (which show static decomposition)
+
+  - type: example
+    title: State-transition diagram — PIN entry system
+    problem: |
+      A system allows up to 3 PIN attempts. Correct PIN → success. Wrong PIN → retry. 3 wrong → locked.
+    steps:
+      - "Identify states: Start, EnterPIN, CheckPIN, Success, Locked"
+      - "Identify transitions with events/guards/actions"
+    answer: |
+      States: [Start] → EnterPIN → CheckPIN → Success (final)
+                          ↓ (wrong, attempts<3)
+                        EnterPIN
+                          ↓ (wrong, attempts=3)
+                        Locked (final)
+
+      Transitions:
+      - Start → EnterPIN : / attempts ← 0
+      - EnterPIN → CheckPIN : PIN_entered / READ pin
+      - CheckPIN → Success : pin = correct / grant_access
+      - CheckPIN → EnterPIN : pin ≠ correct AND attempts < 2 / attempts ← attempts + 1
+      - CheckPIN → Locked : pin ≠ correct AND attempts = 2 / lock_account
+
+  - type: check
+    title: Quick check — program design
+    questions: [structure-chart-elements, parameter-directions, state-diagram-purpose]
+
+  - type: misconceptions
+    items:
+      - wrong: Structure charts show execution sequence (like flowcharts).
+        right: |
+          Structure charts show **static calling hierarchy** (who calls whom), not runtime sequence. Flowcharts show step-by-step execution flow.
+      - wrong: All parameters in structure charts are inputs (down arrows).
+        right: |
+          Parameters can be inputs (↓ by value), outputs (↑ by reference), or both (↕). The arrow direction matters.
+      - wrong: State-transition diagrams are only for hardware/finite state machines.
+        right: |
+          They're equally valuable for software algorithms — e.g., input validation loops, menu navigation, protocol states, game logic.
+      - wrong: You can derive exact pseudocode from a state-transition diagram alone.
+        right: |
+          State diagrams show *behaviour* (states/transitions), not *structure* (modules/data). You need both for complete design.
+
+  - type: exam
+    body: |
+      - **Structure chart**: Draw from a description. Label parameter directions (↓ ↑ ↕). Derive procedure/function headers.
+      - **State-transition diagram**: Identify states, transitions, events, guards, actions. Draw for a given scenario (e.g., login, vending machine, validation loop).
+      - **Exam may ask**: "Convert this structure chart to pseudocode" or "Complete this state-transition diagram".
+
+  - type: takeaways
+    items:
+      - "Structure chart = static module hierarchy. Rectangles=modules, lines=calls, arrows=parameters (↓ in, ↑ out, ↕ both)"
+      - "Top-down decomposition: main → sub-tasks → focused modules"
+      - "State-transition diagram = dynamic behaviour. Circles=states, arrows=transitions labelled event[guard]/action"
+      - "Initial state = filled circle, final state = double circle"
+      - "Structure chart + state-transition diagram = complementary views (static + dynamic)"
+
+questions:
+  - id: structure-chart-elements
+    format: mcq
+    difficulty: 1
+    objectives: ["12.2.1"]
+    prompt: |
+      In a structure chart, what does an **upward arrow (↑)** on a connecting line represent?
+    options:
+      - text: A parameter passed by value (input to the called module)
+        why: Downward arrow (↓) represents input by value.
+      - text: A parameter passed by reference (output from the called module)
+        correct: true
+        why: Upward arrow means the called module returns a value via a reference parameter.
+      - text: A function call returning a value
+        why: Structure charts show procedures/functions and parameter passing, not return values specifically.
+      - text: A global variable being accessed
+        why: Structure charts show parameter passing between modules, not global access.
+    explanation: |
+      ↑ = output parameter (by reference). ↓ = input parameter (by value). ↕ = both directions.
+
+  - id: parameter-directions
+    format: explain
+    difficulty: 2
+    objectives: ["12.2.1"]
+    prompt: |
+      A structure chart shows module A calling module B. The connecting line has a double arrow (↕) labelled "count". Explain what this means for the parameter "count".
+    model: |
+      The parameter "count" is passed **by reference** in both directions. Module A passes the current value of count to B; B can read and modify it; the modified value is visible back in A after the call returns.
+    keyPoints:
+      - "Passed by reference (not by value)"
+      - "Both directions: A→B (input) and B→A (output)"
+      - "B can read and modify; change visible to A"
+    explanation: |
+      Double arrow = by reference, read-write. Single direction = by value (↓) or by reference output only (↑).
+
+  - id: state-diagram-purpose
+    format: mcq
+    difficulty: 2
+    objectives: ["12.2.2"]
+    prompt: |
+      What is the **primary purpose** of a state-transition diagram in program design?
+    options:
+      - text: Show the static module hierarchy of a program
+        why: That's a structure chart.
+      - text: Document the dynamic behaviour — states and transitions in response to events
+        correct: true
+        why: State-transition diagrams model how an algorithm/system moves between states based on inputs/events.
+      - text: Show the sequence of statements executed
+        why: That's a flowchart.
+      - text: Define the database schema
+        why: That's an ER diagram.
+    explanation: |
+      State-transition diagrams capture dynamic behaviour (states, events, transitions), complementary to structure charts (static decomposition) and flowcharts (sequential flow).

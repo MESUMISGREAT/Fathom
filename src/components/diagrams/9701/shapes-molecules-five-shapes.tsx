@@ -80,7 +80,6 @@ export function ShapesMoleculesFiveShapes() {
       <Label x={pf5[0] - 30} y={pf5[1] - 30} className="dg-text-accent">
         90°
       </Label>
-      <AngleArc c={pf5} a1={335} a2={25} r={26} label="120°" labelR={48} />
       <Caption x={190} y={y2 + 100} name="PF₅" shape="trigonal bipyramidal" detail="5 bonding pairs, 120° and 90°" />
 
       {/* SF6 */}

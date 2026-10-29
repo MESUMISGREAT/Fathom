@@ -1,0 +1,293 @@
+id: elastic-plastic-work-done-area
+subject: "9702"
+topic: "6.2"
+title: "Work done is the area under the force–extension graph"
+summary: The stretching force changes as the object extends, so work is found by adding up thin strips of force × extra extension — the area under the graph.
+order: 3
+minutes: 8
+kind: core
+objectives: ["6.2.2"]
+prerequisites: [elastic-plastic-deformation, stress-strain-hookes-law]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 6.2, learning outcome 6.2.2 (work done represented by the area under a
+    force-extension graph). Every area and energy in the worked examples and answer keys was
+    computed in Python on 2026-10-28. All questions are original.
+
+    Independently re-checked line by line (definitions, every worked step, every answer key and
+    each diagram's alt text) in a second adversarial pass by the same agent on 2026-10-28:
+    every numeric answer was recomputed from the question's own data in Python, all four
+    objectives 6.2.1-6.2.4 were confirmed taught and tested, and all three diagrams were
+    rendered and inspected in light and dark. No separate reviewer model was available here.
+    Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain why the **area under a force–extension graph** equals the work done, and calculate that area for straight-line and multi-stage loading.
+
+  - type: explain
+    title: Why you cannot just multiply force by extension
+    body: |-
+      For a constant force, work done is easy:
+
+      $$W = Fd$$
+
+      where $F$ is the force and $d$ the distance moved in the direction of the force.
+
+      But when you stretch a spring, the force is **not** constant. At the start the spring is slack and you pull with almost no force. As it extends, the force you must apply grows.
+
+      Multiplying the final force by the total extension would use the biggest force for the whole journey, so it would overestimate the work.
+
+      We need a way to add up many small amounts of work, each done over a tiny extra extension where the force is roughly constant.
+
+  - type: explain
+    title: Chop the graph into strips
+    body: |-
+      Imagine extending the object in tiny steps, each of width $\Delta x$. During one small step the force is almost constant at $F$, so the work done in that step is
+
+      $$F\,\Delta x$$
+
+      On a force–extension graph, $F\,\Delta x$ is the area of a thin vertical strip: height $F$, width $\Delta x$.
+
+      Add up all the strips from the starting extension to the finishing extension and you have the total work done. The strips fill the area under the graph.
+
+  - type: diagram
+    diagram: phys-elastic-plastic-work-area
+    alt: >-
+      A force against extension graph with a straight line from the origin. The region between the
+      line and the extension axis is divided into ten thin vertical strips. One strip is shaded
+      more strongly and labelled "one strip = F times delta x", with a leader line to its top. A
+      second label reads "W = total area", showing that all the strips together fill the area
+      under the line.
+    caption: |-
+      Each strip is one small step of the stretch: force × extra extension. The whole area is the total work done.
+
+  - type: definition
+    term: Work done by a stretching force
+    body: |-
+      The **work done** by the force stretching an object equals the **area under the force–extension graph** between the starting and finishing extensions.
+
+      The area has units of newtons × metres, so work is measured in **joules (J)**.
+
+  - type: example
+    title: "Worked example: a straight-line graph"
+    problem: |-
+      A spring is stretched from its natural length to an extension of $0.080\ \text{m}$. The force rises steadily from $0$ to $24\ \text{N}$, so the graph is a straight line through the origin.
+
+      How much work is done stretching the spring?
+    steps:
+      - |-
+        The area under a straight line through the origin is a triangle.
+      - |-
+        The triangle has base $0.080\ \text{m}$ (the extension) and height $24\ \text{N}$ (the final force).
+      - |-
+        Area $= \dfrac{1}{2} \times \text{base} \times \text{height}$
+      - |-
+        Area $= \dfrac{1}{2} \times 0.080 \times 24 = 0.96$
+      - |-
+        The units are $\text{N}\,\text{m}$, so the work done is $0.96\ \text{J}$.
+      - |-
+        Sanity check: the average force is $12\ \text{N}$, and $12 \times 0.080 = 0.96\ \text{J}$. ✔
+    answer: |-
+      $0.96\ \text{J}$.
+
+  - type: check
+    title: Quick check
+    questions: [wk-area-meaning, wk-triangle, wk-cloze]
+
+  - type: example
+    title: "Worked example: two stages of loading"
+    problem: |-
+      A material is loaded in two stages:
+
+      - the force rises steadily from $0$ to $15\ \text{N}$ while the extension goes from $0$ to $0.040\ \text{m}$;
+      - the force then stays at $15\ \text{N}$ while the extension increases from $0.040\ \text{m}$ to $0.070\ \text{m}$.
+
+      Find the total work done.
+    steps:
+      - |-
+        Split the area into the two shapes the graph makes: a triangle, then a rectangle.
+      - |-
+        Triangle (first stage): $\dfrac{1}{2} \times 0.040 \times 15 = 0.30\ \text{J}$.
+      - |-
+        Rectangle (second stage): the extra extension is $0.070 - 0.040 = 0.030\ \text{m}$, so the area is $15 \times 0.030 = 0.45\ \text{J}$.
+      - |-
+        Add the two areas: $0.30 + 0.45 = 0.75\ \text{J}$.
+      - |-
+        Check: the average force over the whole $0.070\ \text{m}$ is not $15\ \text{N}$, because the first stage started from zero. The two-part calculation is the reliable one.
+    answer: |-
+      $0.75\ \text{J}$.
+
+  - type: check
+    title: Practice
+    questions: [wk-two-stage, wk-spot-error]
+
+  - type: explain
+    title: When the graph is curved
+    body: |-
+      For a curve you cannot use a single triangle. Split the area into trapezium-shaped strips using pairs of readings, or count squares on a grid.
+
+      **Counting squares:** find the work represented by one small square (its width in metres × its height in newtons), count the squares under the curve, then multiply. Count partial squares sensibly and say what you did.
+
+      **Trapezium strips:** for each pair of neighbouring readings, use
+
+      $$\text{area} = \dfrac{F_1 + F_2}{2}\,\Delta x$$
+
+      Adding these strip areas approximates the total area. Narrower strips give a better approximation.
+
+  - type: example
+    title: "Worked example: a curved graph by trapezium strips"
+    problem: |-
+      A material is stretched and the force is measured at intervals.
+
+      | Extension $x$ / mm | 0 | 10 | 20 | 30 | 40 |
+      |---|---|---|---|---|---|
+      | Force $F$ / N | 0 | 12 | 18 | 21 | 22 |
+
+      Estimate the work done stretching it from $0$ to $40\ \text{mm}$.
+    steps:
+      - |-
+        Convert the extensions to metres: $0$, $0.010$, $0.020$, $0.030$, $0.040\ \text{m}$.
+      - |-
+        Treat each gap as a trapezium with parallel sides $F_1$ and $F_2$ and width $\Delta x = 0.010\ \text{m}$.
+      - |-
+        $0$–$10\ \text{mm}$: $\dfrac{0 + 12}{2} \times 0.010 = 0.060\ \text{J}$.
+      - |-
+        $10$–$20\ \text{mm}$: $\dfrac{12 + 18}{2} \times 0.010 = 0.150\ \text{J}$.
+      - |-
+        $20$–$30\ \text{mm}$: $\dfrac{18 + 21}{2} \times 0.010 = 0.195\ \text{J}$.
+      - |-
+        $30$–$40\ \text{mm}$: $\dfrac{21 + 22}{2} \times 0.010 = 0.215\ \text{J}$.
+      - |-
+        Total $= 0.060 + 0.150 + 0.195 + 0.215 = 0.620\ \text{J}$.
+    answer: |-
+      About $0.62\ \text{J}$.
+
+  - type: misconceptions
+    items:
+      - wrong: Work done = final force × final extension.
+        right: |-
+          That only works if the force is constant at its final value from the start. The force
+          grows, so use the area under the graph.
+      - wrong: The area under the graph is the force.
+        right: |-
+          The area has units $\text{N}\,\text{m} = \text{J}$, so it is work (energy), not force.
+      - wrong: The area only works for straight lines.
+        right: |-
+          It works for any shape. Straight lines give triangles or trapezia; curves are handled by
+          counting squares or by narrow strips.
+      - wrong: The area under the graph is always energy stored in the material.
+        right: |-
+          The area is the work done by the stretching force. Within the elastic limit all of it is
+          stored and recovered; beyond it, some is dissipated as heat.
+      - wrong: Doubling the extension doubles the work done.
+        right: |-
+          For a straight-line graph the area is $\tfrac12 Fx$ and $F$ also doubles, so doubling the
+          extension multiplies the work by four.
+
+  - type: exam
+    body: |-
+      - Always state that work done is the **area under the force–extension graph**, then show the shapes you are using.
+      - Convert every extension to metres before calculating: $\text{mm} \to \text{m}$ is $\div 1000$.
+      - For a two-stage graph, split it at the change of slope and add the parts. Do not use one formula over the whole graph.
+      - For a curve, show the strip calculation or the square count. An unexplained single number rarely earns full marks.
+
+  - type: takeaways
+    items:
+      - 'Work done by the stretching force = **area under the force–extension graph**.'
+      - 'The area is measured in joules, because $\text{N} \times \text{m} = \text{J}$.'
+      - 'For a straight line through the origin, area $= \dfrac{1}{2}Fx$ (a triangle).'
+      - 'For a curve, use trapezium strips or count squares.'
+
+questions:
+  - id: wk-area-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["6.2.2"]
+    prompt: |-
+      What does the area under a force–extension graph represent?
+    options:
+      - text: The work done by the stretching force
+        correct: true
+        why: |-
+          Each strip is force × small extension, so the total area is the total work done.
+      - text: The spring constant of the material
+        why: |-
+          The spring constant is the gradient of the straight part, not the area.
+      - text: The maximum force the material can withstand
+        why: |-
+          That is a single value read from the force axis, not an area.
+      - text: The extension per unit force
+        why: |-
+          That is the reciprocal of the gradient, not the area.
+    explanation: |-
+      Area = force × extension, and force × distance is work done.
+
+  - id: wk-triangle
+    format: numeric
+    difficulty: 1
+    objectives: ["6.2.2"]
+    prompt: |-
+      A spring obeys Hooke's law. The force needed to stretch it to an extension of $0.060\ \text{m}$ is $18\ \text{N}$.
+
+      How much work is done stretching the spring to this extension?
+    fields:
+      - label: "W ="
+        answer: 0.54
+        unit: J
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      The graph is a straight line through the origin, so the area is a triangle: $\dfrac{1}{2} \times 0.060 \times 18 = 0.54\ \text{J}$.
+
+  - id: wk-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["6.2.2"]
+    prompt: |-
+      The work done stretching an object is found from the {{1}} under its force–extension graph, and is measured in {{2}}.
+    blanks:
+      - accept: [area]
+      - accept: [joules, joule, J]
+    explanation: |-
+      Force × extension gives an area with units of N m, which is the joule.
+
+  - id: wk-two-stage
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A material is stretched in two stages.
+
+      First the force rises steadily from $0$ to $12\ \text{N}$ as the extension goes from $0$ to $0.050\ \text{m}$.
+
+      The force then stays at $12\ \text{N}$ while the extension increases from $0.050\ \text{m}$ to $0.090\ \text{m}$.
+
+      What is the total work done?
+    fields:
+      - label: "W ="
+        answer: 0.78
+        unit: J
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Triangle: $\dfrac{1}{2} \times 0.050 \times 12 = 0.30\ \text{J}$. Rectangle: the extra extension is $0.040\ \text{m}$, so $12 \times 0.040 = 0.48\ \text{J}$. Total $= 0.78\ \text{J}$.
+
+  - id: wk-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["6.2.2"]
+    prompt: |-
+      A student calculates the work done stretching a spring. The force rises steadily from 0 to $20\ \text{N}$ while the extension goes from 0 to $0.050\ \text{m}$. Which line contains the first error?
+    lines:
+      - The graph is a straight line through the origin, so the area is a triangle.
+      - The base of the triangle is 0.050 m and its height is 20 N.
+      - "Work done = base × height = 0.050 × 20 = 1.0 J."
+      - So 1.0 J of work is done stretching the spring.
+    errorLine: 3
+    fix: |-
+      The area of a triangle is $\dfrac{1}{2} \times \text{base} \times \text{height}$, so the work done is $\dfrac{1}{2} \times 0.050 \times 20 = 0.50\ \text{J}$, not $1.0\ \text{J}$.
+    explanation: |-
+      Lines 1 and 2 are correct. Line 3 forgets the factor of $\tfrac12$ that comes from the triangle's area, so it doubles the answer.

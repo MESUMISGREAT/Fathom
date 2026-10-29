@@ -9,24 +9,25 @@ objectives: ["4.1.1"]
 prerequisites: [turning-effects-moment-of-a-force, momentum-newton-weight]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
     2025-2027 (learning outcome 4.1.1, an object's weight may be treated as acting at one point,
     its centre of gravity). The plumb-line diagram computes the lamina's centre of gravity as its
-    area centroid and hangs the shape so that G is exactly below each hole; the toppling diagram
-    is to scale (a uniform block with width : height = 1 : 2, which topples beyond 26.6°).
+    area centroid and hangs the shape so that G is exactly below each hole. The separate toppling
+    diagram is to scale (a uniform block with width : height = 1 : 2, which topples beyond 26.6°).
     Dimensions and weights are illustrative values; all worked values and answer keys were
     computed with Python. All questions are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |
-      By the end you can explain what the **centre of gravity** is, find it for uniform objects (and by experiment for a flat card), and use it to work out moments of weights and whether something topples.
+      By the end you can explain what the **centre of gravity** is, find it for uniform objects and by experiment for a flat card, and use it to work out moments due to weight.
 
   - type: explain
     title: The one-finger ruler trick
     body: |
-      Balance a ruler on one finger. It only balances in one place: the 50 cm mark.
+      Balance a uniform ruler on one finger. It only balances in one place: the 50 cm mark.
 
       Every tiny bit of the ruler has its own weight pulling down. Yet the ruler behaves as if **all** of its weight acted at one point, right above your finger.
 
@@ -98,31 +99,18 @@ blocks:
       cross at the centre of gravity G.
     caption: Each hanging gives one line through G. Two lines pin it down.
 
-  - type: explain
-    title: Will it topple?
+  - type: enrichment
+    title: Toppling and stability
     body: |
-      Tilt a box onto one bottom edge and let go. It either falls back or crashes over, and the centre of gravity decides which:
+      Tilt a box onto one bottom edge and let go. Its weight creates a moment about that edge.
 
-      - if the vertical line through G passes **inside** the edge it's resting on, the weight's moment about that edge turns it **back**;
-      - if that line passes **outside** the edge, the moment turns it further **over**: it topples.
+      - If the vertical line through G passes **inside** the edge, the weight's moment turns the box **back**.
+      - If the line passes **outside** the edge, the moment turns the box further **over**: it topples.
 
-      A **low** centre of gravity and a **wide** base make an object harder to topple. That's why racing cars are low and wide.
-
-  - type: diagram
-    diagram: phys-turning-effects-toppling
-    alt: >-
-      Two panels, each showing the same tall uniform block, twice as tall as it is wide, tilted
-      onto its bottom right edge on level ground. Its centre of gravity G is at the centre of the
-      block, with the weight W drawn vertically down from G and a dashed vertical line continuing
-      to the ground. Left, tilted 15°: the dashed line meets the ground just inside the pivot
-      edge, and a curved arrow shows the block rotating back anticlockwise; caption, W passes
-      inside the edge: it falls back. Right, tilted 35°: the dashed line meets the ground just
-      outside the pivot edge, and a curved arrow shows the block rotating on over clockwise;
-      caption, W passes outside the edge: it topples.
-    caption: This block tips over once it's tilted beyond 26.6°, when G passes over the edge.
+      A **low** centre of gravity and a **wide** base make an object harder to topple. This is an application beyond the examinable objectives in this unit.
 
   - type: check
-    questions: [suspended-card, topple-angle]
+    questions: [suspended-card]
 
   - type: misconceptions
     items:
@@ -150,7 +138,6 @@ blocks:
       - The centre of gravity is the point where the whole weight of an object may be considered to act.
       - For a uniform, symmetrical object it's the geometric centre, even if that's in thin air.
       - A freely hanging object comes to rest with its centre of gravity directly below the pivot.
-      - An object topples once the vertical line through its centre of gravity passes outside the edge it's tipping about.
 
 questions:
   - id: cg-cloze
@@ -188,7 +175,9 @@ questions:
     difficulty: 2
     objectives: ["4.1.1"]
     prompt: |
-      A uniform plank is $4.0\ \text{m}$ long and weighs $300\ \text{N}$. It rests on a pivot $1.5\ \text{m}$ from its left end. What is the moment of the plank's weight about the pivot?
+      A uniform plank is $4.0\ \text{m}$ long and weighs $300\ \text{N}$. It rests on a pivot $1.5\ \text{m}$ from its left end.
+
+      What is the moment of the plank's weight about the pivot?
     fields:
       - answer: 150
         tolerance: { abs: 0.5 }
@@ -214,16 +203,3 @@ questions:
         why: Only by coincidence. Where G is depends on the card's shape, not on where you hang it.
     explanation: |
       A hanging object swings until its weight has no moment about the pivot. That happens when the centre of gravity is directly below the pivot, which is why the plumb-line method works.
-
-  - id: topple-angle
-    format: numeric
-    difficulty: 3
-    objectives: ["4.1.1"]
-    prompt: |
-      A uniform block $0.40\ \text{m}$ wide and $1.2\ \text{m}$ tall stands on level ground. It is tilted about one bottom edge. What is the largest angle it can be tilted through and still fall back when released?
-    fields:
-      - answer: 18.43
-        tolerance: { abs: 0.1 }
-        unit: °
-    explanation: |
-      G is at the centre: $0.60\ \text{m}$ up and $0.20\ \text{m}$ in from the edge. The block topples once G is directly above the edge, when $\tan\theta = \dfrac{0.20}{0.60}$, so $\theta = 18.4°$. Any less and the vertical line through G still passes inside the edge.

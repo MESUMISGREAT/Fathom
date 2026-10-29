@@ -1,0 +1,262 @@
+id: language-translators-ide-features
+subject: "9618"
+topic: "5.2"
+title: "Inside an IDE"
+summary: An Integrated Development Environment bundles an editor, translator and debugger — and its features for coding, catching errors, presenting code and debugging are examinable one by one.
+order: 4
+minutes: 7
+kind: core
+objectives: ["5.2.4"]
+prerequisites: [language-translators-assembler-compiler-interpreter]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.2 learning outcome 5.2.4, covering coding, error-detection,
+    presentation and debugging features. All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can name the four groups of IDE features, describe each feature and say what it is for.
+
+  - type: explain
+    title: What an IDE is
+    body: |-
+      An **Integrated Development Environment (IDE)** puts the tools a programmer needs into one program: an editor, a translator (compiler or interpreter), a debugger and often a file/project manager.
+
+      "Integrated" is the point: you write, translate and debug without switching applications.
+
+  - type: explain
+    title: 1. Features for coding
+    body: |-
+      - **Context-sensitive prompts:** as you type, the IDE suggests the names, methods and parameters that make sense *where you are* — for example, offering the methods of the object you just typed a dot after.
+      - **Syntax highlighting:** keywords, strings and comments are coloured so the structure is easier to scan.
+      - **Auto-indent and auto-complete:** the editor lines up code blocks and finishes words for you.
+
+      Context-sensitive means the suggestion depends on context. A prompt offering every variable in the program would not be context-sensitive.
+
+  - type: explain
+    title: "2. Features for initial error detection"
+    body: |-
+      - **Dynamic syntax checks:** the editor checks the code while you type and underlines mistakes immediately, before you even translate.
+      - **Error markers and messages:** a marker in the margin and a message explaining the problem.
+
+      This catches errors early, which is cheaper than finding them at run time — but it cannot catch **logic** errors, because the code is still syntactically valid.
+
+  - type: explain
+    title: "3. Features for presentation"
+    body: |-
+      - **Prettyprint:** automatically formats the code (indentation, spacing, line breaks) so it is readable.
+      - **Expanding and collapsing code blocks:** fold a long procedure to a single line so you can see the structure of a big program.
+      - **Line numbers and bookmarks:** help you navigate.
+
+      None of these change what the program does — they change how easy it is to read.
+
+  - type: explain
+    title: "4. Features for debugging"
+    body: |-
+      - **Breakpoints:** mark a line where execution should pause, so you can inspect the state at that point.
+      - **Single stepping:** run one line at a time (step into a procedure, or step over it).
+      - **Watching variables and expressions:** display their current values and update them as you step.
+      - **Report window:** shows output, errors, and the values being watched while the program runs.
+
+      A breakpoint plus a watched variable is the standard way to answer "why is this value wrong here?".
+
+  - type: diagram
+    diagram: cs-language-translators-ide-layout
+    alt: >-
+      An IDE window split into panels: a code editor with line numbers, a red error marker and a
+      highlighted breakpoint dot on one line; a panel of context-sensitive suggestions; a
+      variables/watch panel showing names and current values; and a report/output window at the
+      bottom.
+    caption: |-
+      The four feature groups live in one window: editor, prompts, watch panel and report window.
+
+  - type: check
+    title: Quick check
+    questions: [context-sensitive, dynamic-syntax, breakpoint-purpose]
+
+  - type: check
+    title: Practice
+    questions: [stepping-types, prettyprint, four-groups]
+
+  - type: misconceptions
+    items:
+      - wrong: Dynamic syntax checks find logic errors.
+        right: |-
+          They only find syntax errors, because the code still parses. Logic errors need testing and
+          debugging.
+      - wrong: A breakpoint stops the program permanently.
+        right: |-
+          It pauses execution so you can inspect values; you can then continue, step or stop.
+      - wrong: Single stepping runs the whole procedure at once.
+        right: |-
+          Stepping executes one line at a time; stepping *over* a procedure runs it without entering
+          it.
+      - wrong: Prettyprint improves the program's speed.
+        right: |-
+          It only changes the formatting of the code, not how it executes.
+      - wrong: Context-sensitive prompts show every keyword in the language.
+        right: |-
+          They show what is valid at that position, based on the surrounding code.
+      - wrong: Collapsing a code block deletes it.
+        right: |-
+          It hides the block from view; the code is unchanged.
+
+  - type: exam
+    body: |-
+      - Group your answer: coding, error detection, presentation, debugging. Then one feature plus its purpose in each.
+      - Link a feature to a benefit: "breakpoints let the programmer pause at a chosen line and inspect variable values".
+      - Do not confuse the editor's dynamic syntax check with the translator's error report — one happens while typing, the other when translating.
+
+  - type: takeaways
+    items:
+      - 'An IDE integrates editor, translator, debugger and project tools.'
+      - 'Coding: context-sensitive prompts, syntax highlighting, auto-complete.'
+      - 'Error detection: dynamic syntax checks while typing.'
+      - 'Presentation: prettyprint, expand/collapse blocks.'
+      - 'Debugging: breakpoints, single stepping, watching variables/expressions, report window.'
+
+  - type: deeper
+    title: Why the four groups matter
+    body: |-
+      Each group targets a different stage of writing a program:
+
+      - **coding** features reduce typing and mistakes while writing;
+      - **error detection** catches syntax problems before translation;
+      - **presentation** features make reading and reviewing code easier;
+      - **debugging** features help find the errors that survive all three — the logic errors.
+
+      An exam answer that names a feature from each group, with the reason it helps, is hard to
+      fault.
+
+questions:
+  - id: context-sensitive
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.4"]
+    prompt: |-
+      What does a context-sensitive prompt do?
+    options:
+      - text: Suggests the names, methods or parameters that are valid at that point in the code
+        correct: true
+        why: |-
+          The suggestions depend on the surrounding code, which is what "context-sensitive" means.
+      - text: Suggests every keyword in the language regardless of position
+        why: |-
+          That would not be context-sensitive.
+      - text: Checks the program's output for errors
+        why: |-
+          Prompts help you type; they do not test output.
+      - text: Formats the code automatically
+        why: |-
+          Formatting is a presentation feature (prettyprint).
+    explanation: |-
+      Context-sensitive prompts depend on where the cursor is and what has been typed.
+
+  - id: dynamic-syntax
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.4"]
+    prompt: |-
+      A line is underlined in red while the programmer is still typing. Which feature is this?
+    options:
+      - text: Dynamic syntax checking
+        correct: true
+        why: |-
+          The editor checks syntax continuously as the code is entered.
+      - text: A breakpoint
+        why: |-
+          Breakpoints are set by the programmer to pause execution.
+      - text: Prettyprint
+        why: |-
+          Prettyprint reformats code; it does not flag errors.
+      - text: Single stepping
+        why: |-
+          Stepping happens while the program runs, not while typing.
+    explanation: |-
+      Dynamic syntax checks flag errors immediately, before translation.
+
+  - id: breakpoint-purpose
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.4"]
+    prompt: |-
+      Why does a programmer set a breakpoint?
+    options:
+      - text: To pause execution at a chosen line so variable values can be inspected
+        correct: true
+        why: |-
+          Pausing at the right moment is how you see what the program's state actually is.
+      - text: To delete the line from the program
+        why: |-
+          A breakpoint does not change the code.
+      - text: To speed up the program
+        why: |-
+          It pauses execution, so it cannot speed it up.
+      - text: To compile the program faster
+        why: |-
+          Breakpoints affect running, not compiling.
+    explanation: |-
+      Breakpoints pause the program at a chosen point for inspection.
+
+  - id: stepping-types
+    format: mcq
+    difficulty: 2
+    objectives: ["5.2.4"]
+    prompt: |-
+      What is the difference between stepping into and stepping over a procedure call?
+    options:
+      - text: Stepping into executes the procedure line by line; stepping over runs it and stops at the next line
+        correct: true
+        why: |-
+          Both are single stepping; only "into" enters the procedure's body.
+      - text: Stepping into runs the whole program; stepping over runs one line
+        why: |-
+          Both are line-by-line operations.
+      - text: Stepping over skips the rest of the program
+        why: |-
+          It only skips the detail of one procedure call.
+      - text: There is no difference
+        why: |-
+          They behave differently at a procedure call.
+    explanation: |-
+      "Into" enters a procedure; "over" executes it as a single step.
+
+  - id: prettyprint
+    format: mcq
+    difficulty: 1
+    objectives: ["5.2.4"]
+    prompt: |-
+      Which feature would you use to make badly indented code readable without changing its behaviour?
+    options:
+      - text: Prettyprint
+        correct: true
+        why: |-
+          It reformats spacing and indentation; the logic is untouched.
+      - text: Breakpoint
+        why: |-
+          Breakpoints pause execution.
+      - text: Dynamic syntax check
+        why: |-
+          It reports errors, it does not reformat.
+      - text: Watch expression
+        why: |-
+          Watching shows a value; it does not format code.
+    explanation: |-
+      Prettyprint is a presentation feature.
+
+  - id: four-groups
+    format: cloze
+    difficulty: 2
+    objectives: ["5.2.4"]
+    prompt: |-
+      IDE features are grouped as: features for {{1}}, features for initial error detection, features for presentation, and features for {{2}}.
+    blanks:
+      - accept: [coding, writing code, editing, editing code]
+      - accept: [debugging, debugging code, finding bugs]
+    explanation: |-
+      The four groups are coding, initial error detection, presentation and debugging.

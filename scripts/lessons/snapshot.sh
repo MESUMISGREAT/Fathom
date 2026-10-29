@@ -2,7 +2,7 @@
 # Saves the working tree to refs/heads/wip-snapshot and pushes it, without touching HEAD or the real index.
 cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)" || exit 1
 idx=$(mktemp)
-cp .git/index "$idx"
+cp "$(git rev-parse --git-path index)" "$idx"   # worktrees: .git is a file, not the gitdir
 export GIT_INDEX_FILE="$idx"
 git add -A
 tree=$(git write-tree)

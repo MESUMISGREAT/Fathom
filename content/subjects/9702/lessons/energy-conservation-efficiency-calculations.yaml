@@ -1,0 +1,263 @@
+id: energy-conservation-efficiency-calculations
+subject: "9702"
+topic: "5.1"
+title: "Efficiency calculations: output, input and percentages"
+summary: Rearranging efficiency = useful output ÷ total input to find the useful output, the total input or the wasted energy, in fractions or percentages.
+order: 5
+minutes: 5
+kind: core
+objectives: ["5.1.4"]
+prerequisites: [energy-conservation-efficiency-definition]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027 (learning outcome 5.1.4, solve problems using efficiency = useful energy
+    output / total energy input). All values and answer keys were computed with Python. All
+    questions are original.
+    Adversarially re-checked line by line (syllabus coverage, facts, worked examples, every
+    answer key, MCQ distractors, tolerances and spot-error lines) on 2026-10-27 in the same
+    cloud chat, which has no separate reviewer model; every numeric key was recomputed
+    independently with Python, and all eight diagrams were rendered and inspected in light
+    and dark. Not yet reviewed by a separate reviewer or by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use
+      $\text{efficiency} = \dfrac{\text{useful output}}{\text{total input}}$
+      in any direction: to find the efficiency, the useful output, the total
+      input, or the energy dissipated — in fractions or percentages.
+
+  - type: explain
+    title: One equation, three questions
+    body: |
+      Efficiency questions come in three shapes, and all of them use the same
+      equation:
+
+      $$\text{efficiency} = \dfrac{\text{useful energy output}}{\text{total energy input}}$$
+
+      - efficiency given (or asked): divide;
+      - useful output asked: multiply the input by the efficiency;
+      - total input asked: divide the useful output by the efficiency.
+
+      Here is the same equation rearranged for each job.
+
+  - type: definition
+    term: The efficiency equation rearranged
+    body: |
+      Writing $\eta$ (the Greek letter eta) for efficiency:
+
+      $$\eta = \dfrac{E_\text{useful}}{E_\text{in}}$$
+
+      Rearranged for each energy:
+
+      $$E_\text{useful} = \eta\, E_\text{in} \qquad E_\text{in} = \dfrac{E_\text{useful}}{\eta}$$
+
+      The dissipated energy is always what is left:
+
+      $$E_\text{dissipated} = E_\text{in} - E_\text{useful}$$
+
+      Remember to divide a percentage by $100$ before using it in these
+      equations: $45\% = 0.45$.
+
+  - type: diagram
+    diagram: phys-energy-conservation-sankey
+    alt: >-
+      A Sankey-style diagram for an electric motor. A wide input arrow on the
+      left is labelled "energy input 2000 J". It splits into a straight-through
+      arrow labelled "useful output (kinetic energy) 1400 J" and an arrow
+      branching downwards labelled "dissipated (thermal energy and sound)
+      600 J". Below: efficiency = 1400 ÷ 2000 = 0.70 = 70%, and 1400 + 600 =
+      2000 J.
+    caption: >-
+      A Sankey diagram shows the split at a glance: the total width is conserved
+      and the useful branch is 70% of it.
+
+  - type: example
+    title: "Find the efficiency"
+    problem: |
+      An electric motor is supplied with $2.0\ \text{kJ}$ of energy. It
+      transfers $1.4\ \text{kJ}$ of kinetic energy to the machine it drives.
+
+      What is its efficiency, as a percentage, and how much energy is
+      dissipated?
+    steps:
+      - |
+        Use the same units for both energies — here, both in kJ:
+        $E_\text{in} = 2.0\ \text{kJ}$, $E_\text{useful} = 1.4\ \text{kJ}$.
+      - |
+        $$\eta = \dfrac{1.4}{2.0} = 0.70 = 70\%$$
+      - |
+        $$E_\text{dissipated} = 2.0 - 1.4 = 0.60\ \text{kJ} = 600\ \text{J}$$
+    answer: |
+      $70\%$, with $600\ \text{J}$ dissipated to the thermal store of the motor
+      and the surroundings.
+
+  - type: check
+    title: Quick check
+    questions: [pump-efficiency, lamp-output]
+  - type: example
+    title: "Work backwards: find the input"
+    problem: |
+      A crane lifts a load by transferring $900\ \text{J}$ of useful energy to
+      it. The crane's efficiency is $45\%$.
+
+      How much energy must be supplied to the crane?
+    steps:
+      - |
+        Write the percentage as a fraction: $\eta = 0.45$.
+      - |
+        Rearrange: $E_\text{in} = \dfrac{E_\text{useful}}{\eta}$.
+      - |
+        $$E_\text{in} = \dfrac{900}{0.45} = 2000\ \text{J}$$
+      - |
+        Check: $45\%$ of $2000\ \text{J}$ is
+        $0.45 \times 2000 = 900\ \text{J}$ ✓
+    answer: |
+      $2000\ \text{J}$ ($2.0\ \text{kJ}$). The other $1100\ \text{J}$ is
+      dissipated. Notice the input is **larger** than the useful output — always
+      a good check that you have not divided the wrong way round.
+
+  - type: check
+    title: Check yourself
+    questions: [input-from-efficiency, percent-conversion, impossible-efficiency]
+  - type: misconceptions
+    items:
+      - wrong: For a 45% efficient machine, multiply the useful output by 0.45 to get the input.
+        right: |
+          Multiplying makes the input **smaller** than the useful output, which
+          violates conservation of energy. Divide instead:
+          $E_\text{in} = E_\text{useful} \div 0.45$.
+      - wrong: An efficiency of 0.75 is the same as 0.75%.
+        right: |
+          Multiply a fraction by $100$ for a percentage: $0.75 = 75\%$. Writing
+          $0.75\%$ makes the machine about a hundred times worse than it is.
+      - wrong: The energies must be converted to joules before dividing.
+        right: |
+          The units cancel in a ratio. kJ ÷ kJ gives the same efficiency as
+          J ÷ J — just keep **both** energies in the same unit.
+      - wrong: You can only work out efficiency when the wasted energy is given.
+        right: |
+          You need the useful output and the total input. The wasted energy is
+          optional: it is what is left over, $E_\text{in} - E_\text{useful}$.
+
+  - type: exam
+    body: |
+      - Show the ratio before multiplying by $100$:
+        $\dfrac{1.8}{2.4} = 0.75$, then $75\%$. Both parts usually earn marks.
+      - If a question asks for the energy **dissipated**, subtract the useful
+        output from the input — do not treat it as an extra output to add on.
+      - Watch for mixed units (J and kJ, or seconds and minutes) and convert
+        before substituting.
+
+  - type: takeaways
+    items:
+      - >-
+        $\eta = \dfrac{E_\text{useful}}{E_\text{in}}$; and rearranged,
+        $E_\text{useful} = \eta E_\text{in}$ and
+        $E_\text{in} = \dfrac{E_\text{useful}}{\eta}$.
+      - Divide a percentage by 100 before using it in the equation.
+      - $E_\text{dissipated} = E_\text{in} - E_\text{useful}$.
+      - The input is always larger than the useful output — use that as a check.
+
+questions:
+  - id: pump-efficiency
+    format: numeric
+    difficulty: 1
+    objectives: ["5.1.4"]
+    prompt: |
+      An electric pump is supplied with $3.6\ \text{kJ}$ of energy and transfers
+      $2.7\ \text{kJ}$ of useful energy to the water it lifts.
+
+      Calculate the pump's efficiency as a percentage.
+    fields:
+      - answer: 75
+        tolerance: { abs: 0.6 }
+        unit: "%"
+    explanation: |
+      $\eta = \dfrac{2.7}{3.6} = 0.75 = 75\%$. Both energies are in kJ, so the
+      units cancel.
+
+  - id: lamp-output
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: |
+      A lamp is supplied with $60\ \text{J}$ of electrical energy and has an
+      efficiency of $12\%$.
+
+      How much energy does it transfer as useful output?
+    fields:
+      - answer: 7.2
+        tolerance: { abs: 0.1 }
+        unit: J
+    explanation: |
+      $E_\text{useful} = \eta E_\text{in} = 0.12 \times 60 = 7.2\ \text{J}$. The
+      remaining $52.8\ \text{J}$ is dissipated as thermal energy.
+
+  - id: input-from-efficiency
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: |
+      A motor transfers $850\ \text{J}$ of useful energy while operating at an
+      efficiency of $34\%$.
+
+      How much energy is supplied to the motor?
+    fields:
+      - answer: 2500
+        tolerance: { abs: 15 }
+        unit: J
+    explanation: |
+      $E_\text{in} = \dfrac{E_\text{useful}}{\eta}
+      = \dfrac{850}{0.34} = 2500\ \text{J}$.
+
+      Check: $0.34 \times 2500 = 850\ \text{J}$ ✓
+
+  - id: percent-conversion
+    format: spot-error
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: |
+      A student calculates the efficiency of a device that is supplied with
+      $2.4\ \text{kJ}$ and gives a useful output of $1.8\ \text{kJ}$. Which line
+      contains the first error?
+    lines:
+      - "Step 1: efficiency = useful energy output ÷ total energy input"
+      - "Step 2: efficiency = 1.8 kJ ÷ 2.4 kJ"
+      - "Step 3: efficiency = 0.75"
+      - "Step 4: efficiency = 0.75%"
+    errorLine: 4
+    fix: |
+      Multiply the fraction by $100$ to get a percentage:
+      $0.75 \times 100\% = 75\%$.
+    explanation: |
+      Step 3 is correct as a fraction. Conversions must be explicit — writing
+      $0.75\%$ makes the device about a hundred times less efficient than it is.
+
+  - id: impossible-efficiency
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.4"]
+    prompt: |
+      Which efficiency claim is **impossible**?
+    options:
+      - text: A machine gives out 110 J of useful energy for every 100 J supplied
+        correct: true
+        why: |
+          Correct — this is an efficiency above 100%, which would mean energy had
+          been created. It contradicts the conservation of energy.
+      - text: A machine gives out 95 J of useful energy for every 100 J supplied
+        why: |
+          Perfectly possible: $95\%$ efficient, with $5\ \text{J}$ dissipated.
+      - text: A machine gives out 50 J of useful energy for every 100 J supplied
+        why: |
+          Possible, if inefficient: $50\%$, with half the input dissipated.
+      - text: A machine gives out 100 J of useful energy for every 100 J supplied
+        why: |
+          Ideal, and never quite achieved in practice, but not impossible in the
+          sense of breaking conservation of energy.
+    explanation: |
+      Efficiency cannot exceed $1$, because the useful output cannot be larger
+      than the total input.

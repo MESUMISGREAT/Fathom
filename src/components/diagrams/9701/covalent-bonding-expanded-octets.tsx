@@ -2,8 +2,8 @@
  * Expanded octets in Period 3: SO₂ (two S=O double bonds and one lone pair on S, so 10
  * electrons around S), PCl₅ (five P–Cl bonds, 10 electrons around P) and SF₆ (six S–F
  * bonds, 12 electrons around S). Only the electrons around the central atom are drawn; a
- * dashed ring encloses them so they can be counted. Below: why Period 2 atoms stop at 8
- * (outer shell n = 2 has only s and p orbitals) but Period 3 atoms can go beyond 8.
+ * dashed ring encloses them so they can be counted. Below: the traditional shell-capacity
+ * model used to introduce why Period 2 atoms stop at 8 and Period 3 examples can go beyond 8.
  */
 import { Label, Svg } from '../primitives';
 import { Electron, LonePair, type Mark, PairGroup, polar } from './covalent-bonding-kit';
@@ -121,10 +121,10 @@ export function CovalentBondingExpandedOctets() {
         Period 3 (P, S, Cl): outer shell n = 3
       </Label>
       <Label x={344} y={360} anchor="start" className="dg-text-small">
-        3s, 3p and empty 3d orbitals available
+        traditional shell model includes empty 3d orbitals
       </Label>
       <Label x={344} y={380} anchor="start" className="dg-text-small">
-        can hold more than 8: PCl₃ and PCl₅ both exist
+        used to explain expanded-octet examples
       </Label>
     </Svg>
   );

@@ -1,0 +1,361 @@
+id: ethics-ownership-artificial-intelligence
+subject: "9618"
+topic: "7.1"
+title: "Artificial intelligence: programs that learn"
+summary: AI is software that does tasks we normally associate with human intelligence. Instead of following rules written by a programmer, a machine-learning system works out its own rules from examples.
+order: 7
+minutes: 9
+kind: core
+objectives: ["7.1.5"]
+prerequisites: [ethics-ownership-ethics-in-computing]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus for
+    2027-2029 (Version 2, December 2025), topic 7.1, learning outcome 7.1.5 (understand Artificial
+    Intelligence). The unit keeps the treatment conceptual, as the syllabus requires, and links the
+    ethical issues back to 7.1.1 and 7.1.2. Questions are original.
+
+    Second-pass review (same agent, no separate reviewer model): outcomes re-read against the
+    2027-2029 syllabus wording, UK copyright and licence details re-checked, every MCQ
+    confirmed to have exactly one correct option, every cloze accept list checked, and the
+    AI pipeline diagram rendered and inspected after fixing overflowing box captions.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain what **artificial intelligence** is, describe how a
+      machine-learning system is trained and used, name the main types of AI system, and discuss
+      its benefits, limitations and ethical risks.
+
+  - type: explain
+    title: What makes a program "intelligent"
+    body: |-
+      A calculator is not AI. It follows rules that a programmer wrote, and it cannot do anything
+      those rules do not cover.
+
+      **Artificial intelligence (AI)** is the branch of computing that builds systems able to
+      perform tasks that normally require human intelligence — recognising a face, understanding
+      speech, translating a sentence, choosing a move in a game, or spotting a tumour in a scan.
+
+      The key difference from ordinary software is where the rules come from:
+
+      | Ordinary program | Machine-learning system |
+      |---|---|
+      | a programmer writes the rules | the system derives rules from examples |
+      | behaviour is predictable and traceable | behaviour depends on the training data |
+      | fails on cases nobody anticipated | may generalise to new cases, or fail unpredictably |
+      | easy to explain a decision | often hard to explain a decision |
+
+  - type: definition
+    term: Artificial intelligence
+    body: |-
+      Computer systems that perform tasks normally requiring human intelligence, such as learning,
+      reasoning, perception, language understanding and decision-making.
+
+      **Machine learning (ML)** is the main approach used today: instead of being programmed with
+      rules, the system is **trained** on data and builds a **model** that maps inputs to outputs.
+
+  - type: diagram
+    diagram: cs-ai-system-pipeline
+    alt: >-
+      Four boxes in a row linked by arrows: Collect data (training examples), Train (find
+      patterns), Model (learned rules), and Predict (on new data). A dashed arrow loops from the
+      Predict box back to Collect data, labelled "new data from use is fed back to improve the next
+      model". A caption reads that the program is not written by hand; the model's rules come from
+      the training data.
+    caption: |-
+      Training turns examples into a model. Using the model produces new data, which can be fed back
+      to improve the next version.
+
+  - type: explain
+    title: How training works, in plain terms
+    body: |-
+      Suppose you want a system that recognises photographs of cats.
+
+      1. **Collect data.** Thousands of photographs, each labelled "cat" or "not cat" by a human.
+         These labels are the **ground truth** the system learns from.
+      2. **Train.** A training algorithm adjusts the model's internal numbers (its **parameters**)
+         again and again so that its answers match the labels more and more closely.
+      3. **Test.** The model is tried on photographs it has never seen. This matters: a model that
+         has memorised the training set can score perfectly there and still fail in real use.
+      4. **Use.** The trained model classifies new photographs. Its output is a **prediction**, with
+         a probability, not a certainty.
+
+      Nothing in this process understands what a cat is. The model has simply found patterns in
+      pixel data that correlate with the label.
+
+  - type: explain
+    title: The main kinds of AI system
+    body: |-
+      | Type | How it works | Example |
+      |---|---|---|
+      | expert system | a knowledge base of facts plus a set of **if–then rules**, applied by an inference engine | diagnosing a fault from symptoms; medical triage |
+      | supervised learning | trained on labelled examples to predict a label or value | spam filtering; predicting house prices |
+      | unsupervised learning | finds groupings in unlabelled data | grouping customers by buying habits |
+      | reinforcement learning | learns by trial and error, rewarded for good outcomes | game-playing programs; robot walking |
+      | neural network / deep learning | many layers of connected units that learn features from raw data | image recognition; speech-to-text |
+      | natural language processing (NLP) | understands and generates human language | chatbots; translation; summarising |
+      | computer vision | extracts meaning from images and video | number-plate recognition; quality inspection |
+
+      Expert systems and machine learning are different in an important way: an expert system's
+      rules are written by people and can be read, while a neural network's rules are numbers
+      inside the model and cannot be read directly.
+
+  - type: explain
+    title: Why AI is used, and what it cannot do
+    body: |-
+      AI is attractive when the rules are too complex or too numerous to write by hand — nobody can
+      write down every rule for recognising a face or understanding a sentence.
+
+      Its strengths:
+
+      - it finds patterns in large, messy data that people would miss;
+      - it keeps working at scale, all day, without fatigue;
+      - it improves as more (good) data becomes available;
+      - it can handle several inputs at once, such as image plus sound plus text.
+
+      Its limits:
+
+      - it needs a lot of **representative, high-quality** data; poor data gives poor predictions;
+      - it can be **biased**, because it copies patterns in its training data — including unfair
+        ones;
+      - it is often a **black box**: even its developers may not be able to explain a particular
+        decision;
+      - it is **not reliable outside its training range** and can fail confidently;
+      - it costs money and energy to train and run large models.
+
+  - type: intuition
+    title: "The student who only saw one textbook"
+    body: |-
+      A model is like a student who learned a subject from a single, unusual textbook. Ask a question
+      covered by that book and the answer is excellent. Ask something slightly different and the
+      student answers with complete confidence and no idea that they are wrong.
+
+      That is why **training data** is an ethical issue, not just a technical one: the data decides
+      what the system treats as normal, and therefore whom it treats fairly.
+
+  - type: explain
+    title: The ethical questions AI raises
+    body: |-
+      AI makes old ethical questions bigger, because decisions are made at scale and by systems
+      that cannot explain themselves.
+
+      - **Bias and fairness.** A recruitment model trained on past hiring can repeat past
+        discrimination. The output looks objective, which makes the unfairness harder to challenge.
+      - **Accountability.** If an autonomous system harms someone, who is responsible — the
+        developer, the trainer of the data, the operator, or the organisation that deployed it?
+        A professional cannot hide behind "the algorithm decided".
+      - **Privacy.** Training data often contains personal information, and models can leak it or
+        be used to identify people.
+      - **Transparency.** A decision that affects someone's loan, job or medical care should be
+        explainable to them; a black box makes that difficult.
+      - **Employment.** Automation removes some jobs and changes others, with real effects on
+        people's lives.
+      - **Misuse.** Deepfakes, automated disinformation and voice cloning are AI used to deceive.
+
+  - type: example
+    title: "Worked example: AI or ordinary program?"
+    problem: |-
+      A supermarket wants to (a) calculate the total on a receipt, and (b) decide which customers
+      are likely to stop shopping there so it can offer them a discount.
+
+      Which task suits AI, and why?
+    steps:
+      - |-
+        **(a) The receipt total** has clear, fixed rules: add the prices, apply tax, subtract
+        discounts. A conventional program does this exactly, cheaply and explainably.
+      - |-
+        **(b) Predicting who will leave** has no written rule. It depends on many weak signals —
+        visits, basket size, complaints, time since last order — that interact in ways nobody can
+        state precisely.
+      - |-
+        That is the classic case for machine learning: collect historical data about customers who
+        did and did not leave, label it, and train a model to estimate the probability for each
+        current customer.
+      - |-
+        The output must be treated as a **probability**, not a fact, and the company must consider
+        fairness (is it targeting one group?) and privacy (was the data collected for this purpose?).
+    answer: |-
+      (a) suits an ordinary program because the rules are known and fixed; (b) suits machine
+      learning because the pattern is too complex to write as rules and enough historical data
+      exists.
+
+  - type: check
+    title: Quick check
+    questions: [what-is-ai, rules-source, expert-system]
+  - type: check
+    title: Practice
+    questions: [bias-from-data, training-data-quality, ai-spot-error]
+
+  - type: misconceptions
+    items:
+      - wrong: AI means a computer that thinks and understands like a person.
+        right: |-
+          Current AI finds patterns in data. It does not understand meaning, and it can fail
+          confidently on inputs unlike its training data.
+      - wrong: An AI system is programmed with the rules it uses.
+        right: |-
+          In machine learning the rules are learned from data. Only expert systems have rules written
+          by people.
+      - wrong: More training data always makes a model better.
+        right: |-
+          More data helps only if it is relevant and representative. Biased or poor-quality data
+          produces biased or poor-quality predictions at greater cost.
+      - wrong: An AI decision is objective because a computer made it.
+        right: |-
+          The model reflects its training data and the choices of its developers, so human bias can
+          be built in and hidden.
+      - wrong: If an AI system causes harm, nobody is responsible.
+        right: |-
+          Responsibility stays with people: the developers, the data providers, the operator and the
+          organisation that deployed the system.
+
+  - type: exam
+    body: |-
+      - "Understand AI" questions usually ask for a definition, a description of how a system is
+        trained, or an example of a use and its impact.
+      - Give the definition in terms of tasks needing human intelligence, and say that machine
+        learning derives rules from data rather than being programmed with them.
+      - For benefits and drawbacks, link each to a consequence: "it can be biased because it learns
+        from historical data that contains past discrimination".
+      - Mention the need for large amounts of representative data, and the problem of explaining a
+        decision.
+      - Do not claim AI is conscious or fully autonomous; a human remains accountable.
+
+  - type: takeaways
+    items:
+      - AI performs tasks that normally need human intelligence, such as learning, perception and language.
+      - Machine learning is trained on labelled examples and produces a model, rather than following hand-written rules.
+      - Main types include expert systems, supervised and unsupervised learning, reinforcement learning, neural networks, NLP and computer vision.
+      - AI needs large, representative data; biased data produces biased predictions.
+      - AI raises ethical issues of bias, accountability, privacy, transparency, employment and misuse.
+
+questions:
+  - id: what-is-ai
+    format: mcq
+    difficulty: 1
+    objectives: ["7.1.5"]
+    prompt: |-
+      Which statement best defines artificial intelligence?
+    options:
+      - text: Systems that perform tasks normally requiring human intelligence, such as learning or recognising speech
+        correct: true
+        why: |-
+          That is the standard definition: the tasks are ones we associate with human intelligence.
+      - text: Any program that runs quickly on a large computer
+        why: |-
+          Speed and size are not intelligence; a spreadsheet can be fast without being AI.
+      - text: A program written with if–then rules by a programmer
+        why: |-
+          Rule-based programs are ordinary software; an expert system is only one narrow kind of AI.
+      - text: A computer that is conscious of what it is doing
+        why: |-
+          Current AI has no consciousness or understanding; it finds patterns in data.
+    explanation: |-
+      AI is defined by the kind of task performed, not by speed, size or consciousness.
+
+  - id: rules-source
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      What is the key difference between a machine-learning system and an ordinary program?
+    options:
+      - text: The machine-learning system derives its rules from training data instead of being programmed with them
+        correct: true
+        why: |-
+          The model's behaviour comes from patterns in the data, not from hand-written instructions.
+      - text: The machine-learning system does not need a processor
+        why: |-
+          It runs on ordinary hardware; only the way it is built differs.
+      - text: The ordinary program cannot use data
+        why: |-
+          Ordinary programs use data all the time; they simply follow rules written by a programmer.
+      - text: The machine-learning system never makes mistakes
+        why: |-
+          Machine-learning systems can be confidently wrong, especially outside their training data.
+    explanation: |-
+      Rules from data (machine learning) versus rules from a programmer (ordinary software).
+
+  - id: expert-system
+    format: cloze
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      An expert system stores facts in a knowledge base and applies a set of {{1}} rules using an
+      {{2}} engine.
+    blanks:
+      - accept: ["if-then", "if then", "if–then", "conditional", "production"]
+      - accept: ["inference", "reasoning"]
+    explanation: |-
+      Expert systems apply hand-written if–then rules to a knowledge base through an inference
+      engine.
+
+  - id: bias-from-data
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      A model that screens job applications is trained on ten years of a company's hiring decisions,
+      during which one group was rarely hired. What is the likely result?
+    options:
+      - text: The model learns the past pattern and continues to reject that group
+        correct: true
+        why: |-
+          The model copies patterns in its training data, including unfair historical ones.
+      - text: The model ignores the training data and decides randomly
+        why: |-
+          Its whole behaviour comes from the training data.
+      - text: The model automatically corrects past unfairness
+        why: |-
+          It has no concept of fairness unless that is explicitly built in and tested for.
+      - text: The model refuses to produce an answer
+        why: |-
+          It will produce a confident prediction; that is exactly the danger.
+    explanation: |-
+      Training on biased history produces a model that reproduces the bias, while appearing
+      objective.
+
+  - id: training-data-quality
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      Why must a model be tested on data it was **not** trained on?
+    options:
+      - text: To check that it generalises rather than memorising the training examples
+        correct: true
+        why: |-
+          A model can score perfectly on data it has seen and still fail on new cases.
+      - text: To make training faster
+        why: |-
+          Testing happens after training and does not speed it up.
+      - text: Because training data must never be reused
+        why: |-
+          Training data is reused during training; the point is to measure performance on unseen data.
+      - text: To reduce the amount of data needed
+        why: |-
+          Splitting the data reduces the training set; the reason is honest evaluation, not saving data.
+    explanation: |-
+      Unseen test data shows whether the model generalises to new cases.
+
+  - id: ai-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      A student describes an AI system that sorts incoming emails. Which line contains the first
+      error?
+    lines:
+      - The system is trained on thousands of emails that people have already labelled as spam or not spam.
+      - During training, the algorithm adjusts the model so its answers match those labels more closely.
+      - Because a computer produced the decisions, they are automatically fair and unbiased.
+      - The model should be tested on emails it has not seen before it is used for real.
+    errorLine: 3
+    fix: |-
+      A model learns from its training data and can reproduce bias in it. Being produced by a
+      computer makes a decision neither fair nor unbiased.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. Line 3 wrongly assumes computer decisions are automatically fair.

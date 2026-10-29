@@ -1,0 +1,134 @@
+id: p2-differentiation-parametric-curves
+subject: "9709"
+topic: "2.4"
+title: Tangents and normals to parametric curves
+summary: Find dy/dx from x and y in terms of a parameter, then use it for tangent and normal lines.
+order: 3
+minutes: 5
+kind: core
+objectives: ["2.4.3"]
+prerequisites: [p1-differentiation-tangents-and-normals]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027, topic 2.4 learning outcome 2.4.3: find and use the first derivative of a
+    function defined parametrically, including tangents and normals. All questions are original;
+    no illustrative data are used. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end, you can find the gradient dy/dx when x and y are both given using a parameter, and use it to find tangent or normal equations.
+  - type: explain
+    title: Both coordinates change with t
+    body: |-
+      A parametric curve gives x and y separately in terms of a third variable, often t. For a tiny change in t, x changes by dx/dt and y changes by dy/dt.
+
+      The gradient is change in y divided by change in x, so:
+
+      dy/dx = (dy/dt)/(dx/dt), provided dx/dt is not zero.
+
+      Differentiate both formulas with respect to t first. Then divide in the order shown.
+  - type: example
+    title: Find the tangent at t = 2
+    problem: |-
+      A curve is given by x = t^2 + 1 and y = t^3 - 3t. Find the tangent when t = 2.
+    steps:
+      - |-
+        Differentiate: dx/dt = 2t and dy/dt = 3t^2 - 3.
+      - |-
+        At t = 2, dx/dt = 4 and dy/dt = 9. So dy/dx = 9/4.
+      - |-
+        Find the point: x = 2^2 + 1 = 5; y = 2^3 - 3(2) = 2. The point is (5, 2).
+      - |-
+        Use point-gradient form: y - 2 = (9/4)(x - 5).
+    answer: |-
+      The tangent is y - 2 = (9/4)(x - 5).
+  - type: check
+    questions: [param-gradient, param-point]
+  - type: explain
+    title: The normal is perpendicular
+    body: |-
+      A **normal** is a line at right angles to the tangent. If the tangent gradient is m, the normal gradient is -1/m (when m is not zero).
+
+      In the example, the tangent gradient is 9/4, so the normal gradient is -4/9. Keep the same point, then use point-gradient form again.
+  - type: check
+    questions: [normal-gradient, param-tangent-mcq]
+  - type: misconceptions
+    items:
+      - wrong: |-
+          dy/dx = (dx/dt)/(dy/dt).
+        right: |-
+          Keep the y-change on top: dy/dx = (dy/dt)/(dx/dt).
+      - wrong: |-
+          At t = 2, the point is (2, 2).
+        right: |-
+          Substitute t into both coordinate formulas: x = 5 and y = 2.
+      - wrong: |-
+          The normal gradient is the negative of the tangent gradient.
+        right: |-
+          It is the negative reciprocal: multiply the two gradients and get -1.
+  - type: exam
+    body: |-
+      - Find dy/dx before substituting the parameter value if the question asks for a general gradient.
+      - Substitute t into both x and y to locate the point.
+      - For a normal, take the negative reciprocal of the tangent gradient.
+  - type: takeaways
+    items:
+      - |-
+        dy/dx = (dy/dt)/(dx/dt).
+      - |-
+        Substitute the parameter into both coordinates to get the point.
+      - |-
+        Tangent uses gradient m; normal uses gradient -1/m.
+questions:
+  - id: param-gradient
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.3"]
+    prompt: |-
+      For x = t^2 + 1 and y = t^3 - 3t, find dy/dx when t = 2.
+    fields: [{answer: 2.25}]
+    explanation: |-
+      At t = 2, dy/dt = 9 and dx/dt = 4, so dy/dx = 9/4.
+  - id: param-point
+    format: numeric
+    difficulty: 1
+    objectives: ["2.4.3"]
+    prompt: |-
+      For x = t^2 + 1 and y = t^3 - 3t, find the x-coordinate when t = 2.
+    fields: [{answer: 5}]
+    explanation: |-
+      Substitute t = 2 into x = t^2 + 1: x = 4 + 1 = 5.
+  - id: normal-gradient
+    format: numeric
+    difficulty: 2
+    objectives: ["2.4.3"]
+    prompt: |-
+      A tangent has gradient 9/4. What is the gradient of its normal?
+    fields: [{answer: -0.4444444444}]
+    explanation: |-
+      A perpendicular gradient is the negative reciprocal: -1/(9/4) = -4/9.
+  - id: param-tangent-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["2.4.3"]
+    prompt: |-
+      At t = 2 on x = t^2 + 1, y = t^3 - 3t, which is the tangent equation?
+    options:
+      - text: |-
+          y - 2 = (9/4)(x - 5)
+        correct: true
+        why: |-
+          The point is (5, 2), and the gradient is 9/4.
+      - text: |-
+          y - 5 = (9/4)(x - 2)
+        why: |-
+          The coordinates have been reversed.
+      - text: |-
+          y - 2 = (4/9)(x - 5)
+        why: |-
+          This uses the reciprocal, not the tangent gradient.
+    explanation: |-
+      Use the point (5, 2) and tangent gradient 9/4.

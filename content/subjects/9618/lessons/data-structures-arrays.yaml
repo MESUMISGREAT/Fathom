@@ -1,0 +1,320 @@
+id: data-structures-arrays
+subject: "9618"
+topic: "10.2"
+title: Arrays — 1D and 2D arrays, indexing, bubble sort, linear search
+summary: Understand array terminology (index, bounds); write pseudocode for 1D/2D arrays; implement bubble sort and linear search.
+order: 2
+minutes: 9
+kind: core
+objectives: ["10.2.1", "10.2.2", "10.2.3", "10.2.4"]
+prerequisites: ["data-types-records", "programming-constructs"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 10.2 Arrays. Covers objectives 10.2.1-10.2.4.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can use array terminology (index, upper bound, lower bound), choose between 1D and 2D arrays, declare and initialise arrays in pseudocode, and write pseudocode for bubble sort and linear search.
+
+  - type: explain
+    title: Array terminology
+    body: |
+      An **array** is a fixed-size, ordered collection of elements of the *same* data type.
+
+      | Term | Meaning |
+      |------|---------|
+      | **Index** | Position of an element (usually 1-based in pseudocode) |
+      | **Lower bound (LB)** | Smallest valid index (typically 1) |
+      | **Upper bound (UB)** | Largest valid index (size of array) |
+      | **Element** | A single value stored at an index |
+
+      In Cambridge pseudocode, arrays are **1-indexed** by default: first element at index 1, last at index N.
+
+      **Declaration syntax:**
+      ```
+      DECLARE scores : ARRAY[1:10] OF INTEGER
+      DECLARE names : ARRAY[1:5] OF STRING
+      DECLARE matrix : ARRAY[1:3, 1:4] OF REAL   // 2D: 3 rows × 4 columns
+      ```
+
+  - type: explain
+    title: 1D arrays — declaration and access
+    body: |
+      **Declaration with initialisation:**
+      ```
+      DECLARE scores : ARRAY[1:5] OF INTEGER
+      scores[1] ← 85
+      scores[2] ← 92
+      scores[3] ← 78
+      scores[4] ← 90
+      scores[5] ← 88
+      ```
+
+      **Or using a loop:**
+      ```
+      DECLARE scores : ARRAY[1:5] OF INTEGER
+      FOR i ← 1 TO 5
+        INPUT scores[i]
+      ENDFOR
+      ```
+
+      **Accessing elements:**
+      ```
+      PRINT scores[3]        // prints 78
+      scores[2] ← scores[2] + 5   // 92 becomes 97
+      ```
+
+      **Key point:** Index must be within bounds (1 to UB). Out-of-bounds = run-time error.
+
+  - type: explain
+    title: 2D arrays — rows and columns
+    body: |
+      A 2D array is a **grid** (matrix) with rows and columns. Declared as:
+      ```
+      DECLARE grid : ARRAY[1:3, 1:4] OF INTEGER
+      ```
+
+      This creates 3 rows × 4 columns = 12 elements.
+
+      **Accessing elements (row, column):**
+      ```
+      grid[1, 1] ← 10    // row 1, column 1
+      grid[2, 3] ← 25    // row 2, column 3
+      PRINT grid[3, 4]   // row 3, column 4
+      ```
+
+      **Visualisation:**
+      ```
+      Columns:   1   2   3   4
+      Row 1:   [10] [ 0] [ 0] [ 0]
+      Row 2:   [ 0] [ 0] [25] [ 0]
+      Row 3:   [ 0] [ 0] [ 0] [ 0]
+      ```
+
+      **Nested loops for processing:**
+      ```
+      FOR row ← 1 TO 3
+        FOR col ← 1 TO 4
+          INPUT grid[row, col]
+        ENDFOR
+      ENDFOR
+      ```
+
+  - type: explain
+    title: Choosing 1D vs 2D
+    body: |
+      | Scenario | Choice | Reason |
+      |----------|--------|--------|
+      | List of 20 test scores | 1D | Single sequence of same-type values |
+      | Seating plan (5 rows × 6 seats) | 2D | Natural row/column structure |
+      | Weekly temperatures (7 days) | 1D | One value per day |
+      | Monthly sales (12 months × 4 regions) | 2D | Two dimensions: time × region |
+      | Student names in a class | 1D | Simple list |
+      | Theatre booking (rows × seats) | 2D | Grid layout |
+
+      **Rule of thumb:** If data has *two independent dimensions* (row AND column meaning), use 2D. If just a *single list*, use 1D.
+
+  - type: explain
+    title: Linear search
+    body: |
+      **Linear search** checks each element in order until the target is found or the end is reached.
+
+      **Pseudocode:**
+      ```
+      FUNCTION linearSearch(arr : ARRAY[1:n] OF INTEGER, target : INTEGER) RETURNS INTEGER
+        FOR i ← 1 TO n
+          IF arr[i] = target THEN
+            RETURN i    // found at position i
+          ENDIF
+        ENDFOR
+        RETURN -1       // not found
+      ENDFUNCTION
+      ```
+
+      **Characteristics:**
+      - Works on **unsorted** or sorted data
+      - Time complexity: O(n) — worst case checks all n elements
+      - Simple to implement
+
+  - type: explain
+    title: Bubble sort
+    body: |
+      **Bubble sort** repeatedly steps through the list, compares adjacent elements, and swaps them if in wrong order. Larger values "bubble" to the end.
+
+      **Pseudocode (ascending order):**
+      ```
+      PROCEDURE bubbleSort(arr : ARRAY[1:n] OF INTEGER)
+        DECLARE swapped : BOOLEAN
+        REPEAT
+          swapped ← FALSE
+          FOR i ← 1 TO n - 1
+            IF arr[i] > arr[i + 1] THEN
+              // swap
+              DECLARE temp : INTEGER
+              temp ← arr[i]
+              arr[i] ← arr[i + 1]
+              arr[i + 1] ← temp
+              swapped ← TRUE
+            ENDIF
+          ENDFOR
+        UNTIL swapped = FALSE
+      ENDPROCEDURE
+      ```
+
+      **How it works (pass by pass):**
+      ```
+      Start:  [5, 2, 8, 1, 9]
+      Pass 1: [2, 5, 1, 8, 9]   // 9 bubbled to end
+      Pass 2: [2, 1, 5, 8, 9]   // 8 bubbled to position 4
+      Pass 3: [1, 2, 5, 8, 9]   // 5 bubbled to position 3
+      Pass 4: [1, 2, 5, 8, 9]   // no swaps → sorted, stop
+      ```
+
+      **Characteristics:**
+      - **In-place** — no extra array needed
+      - **Stable** — equal elements keep relative order
+      - Time complexity: O(n²) — inefficient for large datasets
+      - Optimisation: stops early if no swaps (already sorted)
+
+  - type: example
+    title: Processing a 2D array — class grades
+    problem: "A teacher has 4 students and 3 subjects. Store grades in a 2D array and calculate each student's average."
+    steps:
+      - "Declare 2D array [1:4, 1:3]"
+      - "Input grades using nested loops"
+      - "For each student (row), sum across subjects and divide by 3"
+    answer: |
+      DECLARE grades : ARRAY[1:4, 1:3] OF REAL
+      DECLARE averages : ARRAY[1:4] OF REAL
+
+      // Input grades
+      FOR student ← 1 TO 4
+        FOR subject ← 1 TO 3
+          INPUT grades[student, subject]
+        ENDFOR
+      ENDFOR
+
+      // Calculate averages
+      FOR student ← 1 TO 4
+        DECLARE total : REAL
+        total ← 0
+        FOR subject ← 1 TO 3
+          total ← total + grades[student, subject]
+        ENDFOR
+        averages[student] ← total / 3
+        PRINT "Student ", student, ": ", averages[student]
+      ENDFOR
+
+  - type: check
+    title: Quick check — arrays
+    questions: [array-bounds, choose-1d-2d, linear-search-trace, bubble-sort-pass]
+
+  - type: misconceptions
+    items:
+      - wrong: Arrays are 0-indexed in pseudocode.
+        right: |
+          Cambridge pseudocode uses **1-based indexing** (LB=1). The first element is at index 1, not 0.
+      - wrong: Bubble sort is efficient for large datasets.
+        right: |
+          Bubble sort is O(n²) — only suitable for small arrays or teaching. Real systems use quicksort, mergesort, or built-in sorts.
+      - wrong: 2D arrays are completely different from 1D arrays.
+        right: |
+          A 2D array is conceptually an array of arrays. `ARRAY[1:3, 1:4]` can be thought of as 3 rows, each a 1D array of length 4.
+      - wrong: Linear search requires sorted data.
+        right: |
+          Linear search works on *any* data. Binary search requires sorted data (not in AS syllabus).
+
+  - type: exam
+    body: |
+      - **Trace tables**: Given array and loop code, complete a trace table showing index and array values.
+      - **Declare arrays**: Write DECLARE statements for 1D and 2D arrays with given bounds and types.
+      - **Algorithm implementation**: Write bubble sort or linear search pseudocode from memory.
+      - **Choose structure**: Given a scenario, justify 1D vs 2D array.
+      - **Off-by-one**: Watch for loop bounds (1 TO n vs 1 TO n-1 in bubble sort).
+
+  - type: takeaways
+    items:
+      - "Arrays: fixed-size, same-type, 1-indexed in pseudocode"
+      - "Terminology: index, lower bound (1), upper bound (size)"
+      - "1D = list; 2D = grid (rows, columns)"
+      - "Linear search: O(n), works on unsorted data"
+      - "Bubble sort: O(n²), in-place, stable, stops early if sorted"
+      - "Swap pattern: temp ← a[i]; a[i] ← a[j]; a[j] ← temp"
+
+questions:
+  - id: array-bounds
+    format: mcq
+    difficulty: 1
+    objectives: ["10.2.1"]
+    prompt: |
+      An array is declared as `DECLARE data : ARRAY[1:10] OF INTEGER`. What is the upper bound?
+    options:
+      - text: "1"
+        why: That's the lower bound.
+      - text: "9"
+        why: Upper bound is the size, not size-1.
+      - text: "10"
+        correct: true
+        why: Upper bound = 10 (indices 1 through 10 inclusive).
+      - text: "11"
+        why: That would be out of bounds.
+    explanation: |
+      Declaration `ARRAY[1:10]` means lower bound = 1, upper bound = 10. Valid indices: 1, 2, ..., 10.
+
+  - id: choose-1d-2d
+    format: mcq
+    difficulty: 2
+    objectives: ["10.2.2"]
+    prompt: |
+      A program stores the daily high temperature for each day of a 30-day month. Which array structure is most appropriate?
+    options:
+      - text: 1D array of size 30
+        correct: true
+        why: Single list of 30 values — one dimension (day).
+      - text: 2D array of size 5×6
+        why: No natural row/column structure; artificially splitting a list adds complexity.
+      - text: 2D array of size 30×1
+        why: Technically works but 1D is simpler and clearer for a single sequence.
+      - text: Array of records
+        why: Each day has only one value (temperature), not multiple fields.
+    explanation: |
+      A single sequence of values → 1D array. 2D is for data with two meaningful dimensions (e.g., weeks × weekdays).
+
+  - id: linear-search-trace
+    format: cloze
+    difficulty: 2
+    objectives: ["10.2.4"]
+    prompt: |
+      Trace linear search on array `[12, 5, 19, 5, 8]` searching for `5`.
+      The function returns index **{{1}}** (first occurrence).
+      Searching for `99` returns **{{2}}**.
+    blanks:
+      - accept: ["2"]
+      - accept: ["-1"]
+    explanation: |
+      Linear search returns first match index (2 for value 5 at position 2). Returns -1 if not found.
+
+  - id: bubble-sort-pass
+    format: explain
+    difficulty: 2
+    objectives: ["10.2.4"]
+    prompt: |
+      After one complete pass of bubble sort on `[7, 3, 9, 1, 5]`, what is the array state? Explain why.
+    model: |
+      After pass 1: `[3, 7, 1, 5, 9]`
+
+      The largest element (9) "bubbles" to the last position through successive swaps:
+      - Compare 7,3 → swap → [3, 7, 9, 1, 5]
+      - Compare 7,9 → no swap
+      - Compare 9,1 → swap → [3, 7, 1, 9, 5]
+      - Compare 9,5 → swap → [3, 7, 1, 5, 9]
+    keyPoints:
+      - "Largest element moves to end"
+      - "Adjacent comparisons and swaps"
+      - "Result: [3, 7, 1, 5, 9]"
+    explanation: |
+      Each pass places the next-largest element in its final position at the end of the unsorted portion.

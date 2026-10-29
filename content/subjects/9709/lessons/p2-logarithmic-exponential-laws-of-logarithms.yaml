@@ -1,0 +1,180 @@
+id: p2-logarithmic-exponential-laws-of-logarithms
+subject: "9709"
+topic: "2.2"
+title: Laws of logarithms and indices
+summary: Use the relationship between logarithms and indices together with the log laws to simplify expressions and solve problems.
+order: 1
+minutes: 5
+kind: core
+objectives: ["2.2.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): learning outcome 2.2.1, "Understand the relationship
+    between logarithms and indices, and use the laws of logarithms (excluding change of base)."
+    Examples and questions are original; any arithmetic has been checked in Python. Not yet
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-25. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can move between logarithms and indices and use the log laws to simplify expressions without a calculator.
+
+  - type: explain
+    title: What they ask
+    body: |-
+      *Evaluate* $\log_2 8 + \log_2 4$ or *rewrite* $\log_a(xy)$ in a simpler form.
+
+      - Logarithms are just another way of writing indices.
+      - The laws are there to turn products, quotients and powers into something simpler.
+
+  - type: definition
+    term: Logarithm and index
+    body: |-
+      If $a^x=y$, then $x=\log_a y$, where $a>0$, $a\ne1$ and $y>0$.
+
+      So a logarithm is the **power** or **index** you raise $a$ to in order to get $y$.
+
+      The log laws below also require positive arguments.
+
+  - type: explain
+    title: The method
+    body: |-
+      1. **Forgotten step: check that the base is the same.** The product and quotient laws need positive arguments.
+      2. Rewrite the expression in the simplest form you can see.
+      3. Match the law to the shape: product, quotient or power.
+      4. If you are stuck, convert back to indices: $\log_a b=n$ means $a^n=b$.
+
+      - Product inside the log? Add the logarithms.
+      - Quotient inside the log? Subtract the logarithms.
+      - Power inside the log? Bring the power to the front.
+
+  - type: diagram
+    diagram: p2-logarithmic-exponential-log-laws
+    alt: >-
+      Three rows show the product, quotient and power laws for logarithms. A note says all arguments
+      must be positive and the base must stay the same.
+    caption: |-
+      The log laws are the index laws in disguise. The tricky bit is spotting which one you have.
+
+  - type: example
+    title: Easy example with a check
+    problem: |-
+      Simplify $\log_5 25 + \log_5 5$.
+    steps:
+      - |-
+        Product rule: $\log_5(25 \times 5)$.
+      - |-
+        $25 \times 5 = 125 = 5^3$.
+      - |-
+        So the answer is $3$.
+    answer: |-
+      $\log_5 25 + \log_5 5 = 3$.
+
+      Check: $\log_5 125=3$, and $25\times5=125$.
+
+  - type: check
+    questions: [log-product, log-power]
+
+  - type: example
+    title: Exam-style change in form
+    problem: |-
+      Write $\log_3 81 - \log_3 9$ as a single logarithm, then evaluate it.
+    steps:
+      - |-
+        Quotient rule: $\log_3\left(\dfrac{81}{9}\right)$.
+      - |-
+        $\dfrac{81}{9} = 9 = 3^2$.
+      - |-
+        So the value is $2$.
+    answer: |-
+      $\log_3 81 - \log_3 9 = \log_3 9 = 2$.
+
+      Check: $\log_3 9=2$, which matches the subtraction $4-2$.
+
+  - type: check
+    questions: [log-quotient, log-index-conversion]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\log_a(xy) = \log_a x \times \log_a y$
+        right: |-
+          The product law is an **addition** law: $\log_a(xy) = \log_a x + \log_a y$.
+      - wrong: |-
+          $\log_a\left(\dfrac{x}{y}\right) = \log_a x \div \log_a y$
+        right: |-
+          It is a **subtraction** law: $\log_a\left(\dfrac{x}{y}\right) = \log_a x - \log_a y$.
+      - wrong: |-
+          $\log_a x^n = x\log_a n$
+        right: |-
+          The power law is $\log_a x^n = n\log_a x$.
+
+  - type: exam
+    body: |-
+      - The laws are only for the same base. You cannot combine different bases.
+      - Rewrite the logarithm as a power if you are unsure which law to use.
+      - Check your answer by turning it back into an index statement.
+
+  - type: takeaways
+    items:
+      - |-
+        $\log_a y = x$ means $a^x = y$.
+      - |-
+        $\log_a(xy) = \log_a x + \log_a y$
+      - |-
+        $\log_a\left(\dfrac{x}{y}\right) = \log_a x - \log_a y$
+      - |-
+        $\log_a(x^n) = n\log_a x$
+
+questions:
+  - id: log-product
+    format: numeric
+    difficulty: 1
+    objectives: ["2.2.1"]
+    prompt: |-
+      Evaluate $\log_2 8 + \log_2 4$.
+    fields:
+      - label: "value ="
+        answer: 5
+    explanation: |-
+      $\log_2 8 = 3$ and $\log_2 4 = 2$, so the sum is $5$.
+
+  - id: log-power
+    format: numeric
+    difficulty: 1
+    objectives: ["2.2.1"]
+    prompt: |-
+      Simplify $\log_5(25^3)$.
+    fields:
+      - label: "value ="
+        answer: 6
+    explanation: |-
+      $25 = 5^2$, so $25^3 = (5^2)^3 = 5^6$.
+
+      Therefore $\log_5(25^3) = 6$.
+
+  - id: log-quotient
+    format: numeric
+    difficulty: 2
+    objectives: ["2.2.1"]
+    prompt: |-
+      Evaluate $\log_3 81 - \log_3 9$.
+    fields:
+      - label: "value ="
+        answer: 2
+    explanation: |-
+      $\log_3 81 - \log_3 9 = \log_3\left(\dfrac{81}{9}\right) = \log_3 9 = 2$.
+
+  - id: log-index-conversion
+    format: cloze
+    difficulty: 1
+    objectives: ["2.2.1"]
+    prompt: |-
+      If $\log_a x = n$, then $x = {{1}}$.
+    blanks:
+      - accept: [a^n, a to the n]
+    explanation: |-
+      The logarithm tells you the exponent. If the exponent is $n$, then the number is $a^n$.

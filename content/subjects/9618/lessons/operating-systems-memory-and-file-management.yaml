@@ -1,0 +1,269 @@
+id: operating-systems-memory-and-file-management
+subject: "9618"
+topic: "5.1"
+title: "Managing memory and files"
+summary: Memory management hands out RAM and takes it back; file management keeps track of what is stored where, who may open it, and how much space is left.
+order: 2
+minutes: 6
+kind: core
+objectives: ["5.1.2"]
+prerequisites: [operating-systems-why-needed]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.1 learning outcome 5.1.2 (memory management and file
+    management). All questions are original; the worked example uses invented sizes.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can describe what memory management and file management involve, and explain why each is needed.
+
+  - type: explain
+    title: Memory management
+    body: |-
+      RAM is finite and shared. **Memory management** is the OS deciding which process gets which part of memory, for how long, and making sure no process strays outside its own area.
+
+      The tasks:
+
+      - **Allocate memory** to a process when it starts (and more as it asks for it).
+      - **Deallocate memory** when a process finishes, so the space can be reused.
+      - **Protect memory** so one process cannot read or overwrite another's area.
+      - **Track free and used memory**, so the next request can be satisfied.
+      - **Move data between RAM and secondary storage** when RAM is full (virtual memory — background, not required detail).
+
+      Without this, two programs would be handed the same address and both would crash.
+
+  - type: diagram
+    diagram: cs-operating-systems-memory-map
+    alt: >-
+      A block of RAM drawn as a column of equal cells, some labelled with the process that owns
+      them (operating system, word processor, browser, game), some marked free. A new process
+      waits with an arrow pointing at a free region.
+    caption: |-
+      The OS keeps a map of which blocks belong to which process and which are free.
+
+  - type: example
+    title: "Worked example: allocating and freeing blocks"
+    problem: |-
+      RAM has 16 blocks. The OS uses 2, a word processor uses 4, and a browser uses 3. Two blocks are used by a driver.
+
+      A game needs 5 blocks. Can it start?
+    steps:
+      - |-
+        Add up what is in use: $2 + 4 + 3 + 2 = 11$ blocks.
+      - |-
+        Free blocks: $16 - 11 = 5$.
+      - |-
+        The game needs 5, so it just fits — but only if those 5 free blocks are **contiguous** (next to each other), because a process is loaded into one continuous region.
+      - |-
+        When the browser closes, its 3 blocks are freed and the OS records them as available for the next process.
+    answer: |-
+      Yes — exactly 5 blocks are free, and they must be next to each other.
+
+  - type: explain
+    title: File management
+    body: |-
+      **File management** is the OS organising everything stored on disk so that files can be found, opened, protected and deleted.
+
+      The tasks:
+
+      - **Create, delete, rename and copy files** and folders.
+      - **Maintain a directory structure** (folders inside folders), so files are grouped and easy to locate.
+      - **Keep a record of where each file is stored** — which blocks or clusters hold its data — plus its size, type and dates.
+      - **Set and check access rights** (read-only, read/write, which user may open it).
+      - **Track free space** on each storage device.
+      - **Handle file extensions** so the correct application opens the file.
+
+  - type: explain
+    title: A file's entry, in plain words
+    body: |-
+      Every file has a **directory entry**, like a library catalogue card:
+
+      | Field | Example | Why it matters |
+      |---|---|---|
+      | Name and extension | `report.docx` | identifies the file and its type |
+      | Location | blocks 41–44 | where the data actually is |
+      | Size | 96 KB | tells the OS how much to read |
+      | Dates | created / modified | used for backups and sorting |
+      | Access rights | read-only for group B | security |
+
+      The user sees a friendly name; the OS uses the rest.
+
+  - type: check
+    title: Quick check
+    questions: [which-management, contiguous-blocks, directory-entry]
+
+  - type: check
+    title: Practice
+    questions: [deallocation, access-rights, why-protect]
+
+  - type: misconceptions
+    items:
+      - wrong: A program is given memory once and keeps it forever.
+        right: |-
+          Memory is allocated when needed and **deallocated** when the process ends, so the space
+          can be reused.
+      - wrong: File management only means deleting old files.
+        right: |-
+          It covers creating, renaming, organising into directories, recording locations, access
+          rights and tracking free space.
+      - wrong: The OS stores a file as a single block.
+        right: |-
+          A file usually occupies several blocks, and the directory entry records which ones.
+      - wrong: Memory management is needed only when the computer is slow.
+        right: |-
+          It is needed whenever more than one program runs, which is essentially always.
+      - wrong: Access rights are set by the application, not the OS.
+        right: |-
+          The OS enforces them; an application cannot bypass the OS's permission check.
+
+  - type: exam
+    body: |-
+      - Split "management tasks" answers by type: memory, file, security, hardware, process. One sentence each earns marks quickly.
+      - Use the verbs examiners look for: allocate, deallocate, protect, maintain, track, enforce.
+      - For file management, mentioning the **directory structure** and **access rights** usually picks up extra marks.
+
+  - type: takeaways
+    items:
+      - 'Memory management: allocate, deallocate, protect, track free space.'
+      - 'A process must fit in contiguous free memory.'
+      - 'File management: create/delete/rename, directory structure, locations, access rights, free space.'
+      - 'Each file has a directory entry: name, type, location, size, dates, rights.'
+      - 'The OS, not the application, enforces access rights.'
+
+  - type: deeper
+    title: Why memory is handed out in pages
+    body: |-
+      Real operating systems split memory into fixed-size **pages** (often 4 KB) and keep a page table for each process.
+
+      This avoids the "must be contiguous" problem in the worked example: a process can be scattered across free pages, and the hardware translates each virtual address to a real one.
+
+      It also makes protection simple: a page either belongs to your process or it does not.
+
+questions:
+  - id: which-management
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.2"]
+    prompt: |-
+      Which task belongs to **file** management rather than memory management?
+    options:
+      - text: Recording which blocks on the disk hold a file's data
+        correct: true
+        why: |-
+          Tracking file locations is part of file management.
+      - text: Deciding which process gets which RAM addresses
+        why: |-
+          That is memory management.
+      - text: Freeing a process's RAM when it closes
+        why: |-
+          Deallocation is memory management.
+      - text: Stopping one process reading another's RAM
+        why: |-
+          Protection is memory management.
+    explanation: |-
+      Disk locations and directory entries belong to file management; RAM allocation and protection to memory management.
+
+  - id: contiguous-blocks
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      RAM has 20 blocks. In use: OS 3, two applications 4 each, and drivers 2. How many blocks are free?
+    fields:
+      - answer: 7
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      Used $= 3 + 4 + 4 + 2 = 13$, so free $= 20 - 13 = 7$.
+
+  - id: directory-entry
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      Which item would **not** normally be stored in a file's directory entry?
+    options:
+      - text: The contents of the file
+        correct: true
+        why: |-
+          The entry stores information about the file, including where its data is, not the data
+          itself.
+      - text: The file's size
+        why: |-
+          Size is standard metadata.
+      - text: Access rights
+        why: |-
+          Rights are recorded so the OS can enforce them.
+      - text: The date it was last modified
+        why: |-
+          Dates are kept for sorting and backup.
+    explanation: |-
+      Directory entries hold information *about* the file; its contents live in data blocks.
+
+  - id: deallocation
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.2"]
+    prompt: |-
+      A word processor is closed. What does the OS do with its memory?
+    options:
+      - text: Deallocates it and marks those blocks free for another process
+        correct: true
+        why: |-
+          Releasing memory is what makes it available again.
+      - text: Keeps it reserved in case the program reopens
+        why: |-
+          Memory is reclaimed; nothing is permanently reserved for a closed program.
+      - text: Copies it to the processor
+        why: |-
+          The processor does not store program memory that way.
+      - text: Deletes the file the program was editing
+        why: |-
+          Closing a program does not delete files.
+    explanation: |-
+      When a process ends, its memory is released for reuse.
+
+  - id: access-rights
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      A user can open a file but not change it. Which OS mechanism is responsible?
+    options:
+      - text: Access rights stored for the file and enforced by the OS
+        correct: true
+        why: |-
+          Read-only permission is recorded on the file and checked whenever it is opened.
+      - text: The file extension
+        why: |-
+          The extension tells the OS which application to use, not what the user may do.
+      - text: The amount of free RAM
+        why: |-
+          RAM availability has nothing to do with permissions.
+      - text: The directory structure
+        why: |-
+          Folders organise files; they do not enforce read-only access by themselves.
+    explanation: |-
+      Read-only access is an access right; the OS refuses the write request.
+
+  - id: why-protect
+    format: text
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |-
+      Give one reason why the OS must protect each process's memory.
+    accept:
+      - so one process cannot overwrite or corrupt another process's data
+      - to stop programs overwriting each other's memory
+      - so a faulty program cannot crash other programs
+      - to prevent unauthorised access to another process's data
+    model: |-
+      Each process is given its own protected region of memory, so a buggy or malicious program
+      cannot overwrite another program's data or read data it should not see.
+    explanation: |-
+      Without protection a buggy or malicious program could overwrite another program's data and
+      crash it, or read data it should not see.

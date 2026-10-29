@@ -17,9 +17,11 @@ user's full specs live in the docs it links to. Read those docs **by section** (
 ## 1. What Fathom is
 
 A free learning site for Cambridge International AS & A Level: 9709 Maths, 9618 Computer
-Science, 9702 Physics and 9701 Chemistry. Each lesson is one short concept (2–5 min) with
-recall questions, worked examples and SVG diagrams. Spaced review, XP, levels and badges are
-included. It is built for students with ADHD: short chunks, instant feedback, no shame.
+Science, 9702 Physics and 9701 Chemistry. Each lesson teaches one concept with recall
+questions, worked examples and SVG diagrams; its length is determined by what students need
+to understand and apply it. The 2–5 minute target is guidance, never a cap. Spaced review, XP,
+levels and badges are included. It is built for students with ADHD: clear structure, instant
+feedback, no shame. Readability must never mean cutting necessary teaching.
 
 - Live: https://fathom-steel-ten.vercel.app. Every push to `main` deploys to production.
 - Repo: https://github.com/MESUMISGREAT/Fathom (branch `main`).
@@ -54,14 +56,21 @@ Rules the user stressed:
     (`showPoints`), and they are stored on the server.
 - **Write lessons for every syllabus topic.** This is the main remaining job (section 4).
   Keep the queue order: all AS units first, then A2 (the user confirmed this on 23 Oct).
-- **Easy to read for ADHD (user, 23 Oct).** Paragraphs of at most 2 sentences, bullets wherever
-  possible, white space, one idea per block. Start with an easy example the student can check
-  another way. This is in `docs/CONTENT_GUIDE.md` ("Writing style") and in the writer and
-  reviewer prompts.
-- **Keep the teaching simple (user, 23 Oct).** Don't add notation a first-timer doesn't need.
-  The chain rule is taught as "power down, box stays the same, then multiply by the derivative
-  of the box"; dy/du × du/dx appears only in an optional block. Not every diagram has to be a
-  graph: a rule table (x² → 2x) or numbered steps are often clearer.
+- **Teaching philosophy: understanding before brevity.** The complete rules are in
+  `docs/CONTENT_GUIDE.md` under "Teaching philosophy: understanding before brevity"; the writer
+  and reviewer prompts in `scripts/lessons/templates.mjs` must enforce them. Teach from zero:
+  define unfamiliar terms and notation, explain what to do and why it works, show necessary
+  intermediate steps, use examples and visuals when they improve understanding, preserve
+  Cambridge requirements, and check that a beginner can apply the concept independently. The
+  2–5 minute duration is a guideline, never a cap. Short paragraphs, bullets and focused blocks
+  govern presentation, not lesson depth. Never cut necessary teaching to fit a screen or save
+  tokens; split only when it improves the learning sequence. Optimise wasted effort, not learning.
+- **Fun, engaging lesson writing.** Lessons must be genuinely fun, conversational and easy to read. Use accessible explanations, short paragraphs, clear structure, useful examples, relatable analogies and appropriate humour. Avoid dry textbook-style exposition and dense walls of text. Fun should support learning, not distract from it; never remove necessary reasoning or syllabus content to make a lesson feel lighter.
+- **Accessible teaching, not missing rigour.** Avoid notation that is genuinely unnecessary for
+  a first-timer, but explain every symbol and method needed for the syllabus. The chain rule can
+  start with "power down, box stays the same, then multiply by the derivative of the box" before
+  introducing dy/du × du/dx where it helps understanding. Not every diagram has to be a graph:
+  a rule table (x² → 2x) or numbered steps are often clearer.
 - **Proper maths typesetting (user, 23 Oct).** Real fraction bars and root signs that cover the
   whole expression, never slash fractions like 1 ⁄ (2√u). Diagrams use `MathLabel` / `FracLabel`
   (see "Diagrams" in `docs/CONTENT_GUIDE.md`); `tests/diagram-notation.test.ts` enforces it.
@@ -81,10 +90,10 @@ Rules the user stressed:
 Follow the project skill `.claude/skills/token-efficient-workflow/SKILL.md`, including its
 "Agent budget and token control" section. In short:
 
-- **Agents:** at most **3 agents at once**.
-  - Use exactly one independent reviewer per batch of lessons.
-  - Never spawn agents to review your own work.
+- **Agents:** use dynamic concurrency for genuinely independent tasks, coordinated through `docs/AGENT_COORDINATION.md` when local agents share a filesystem. Let available CPU/RAM, provider limits, file contention and coordination overhead determine the number. Solo operation must always work.
+  - Use an independent reviewer for each lesson batch where required; never spawn an agent to review its own work.
   - Hand each agent only the files and sections it needs.
+  - Use atomic task claims and one owner for shared files; never let agents write or review the same unit concurrently.
 - **Reading:** search before reading.
   - Print only the Markdown section you need with
     `python3 .claude/skills/token-efficient-workflow/scripts/md_section.py FILE "Heading"`
@@ -135,8 +144,17 @@ Priority order:
 2. Writers for `partial` units.
 3. The next `todo` writers, in queue order.
 
-Never run more than 3 agents at once. A writer and the reviewer for that same unit never
-run at the same time. For each agent:
+**Keep cycling until the entire queue is complete.** After each batch, re-run
+`node scripts/lessons/status.mjs`, then continue writing missing/partial units, independently
+reviewing drafted units, fixing issues, publishing reviewed lessons, confirming the deploy, and
+snapshotting remaining drafts. Repeat this write → review → fix/revalidate → publish → verify
+cycle across the queue until every in-scope syllabus unit is `published` and no `todo`,
+`partial`, `drafted`, or `reviewed` units remain. Do not treat finishing one batch, one subject,
+or one chat session as completion. Preserve the AS-first-then-A2 queue order, required checks,
+agent limits and user session-budget rule. If blocked by limits or an external dependency, report
+the exact remaining states and resume from the status queue; never claim completion early.
+
+Use the shared coordination protocol to choose a safe number of concurrent agents. A writer and the reviewer for that same unit never run at the same time. For each agent:
 
 ```bash
 node scripts/lessons/prompts.mjs write "9701 3.1+3.2"     # or: review "9709 1.6+1.7"
@@ -193,10 +211,396 @@ changes alongside lessons:
   include draft diagrams) and untracked draft lessons are expected in `git status`.
   `publish.sh` handles both.
 
-## 5. Current state (24 Oct 2026, third chat)
+## 5. Current state (29 Oct 2026, Freebuff desktop session)
 
-- On `main`: **207 reviewed lessons, 1246 questions** (9709: 68, 9618: 59, 9702: 42, 9701: 38).
-  All are live. Tests: 166 vitest and 25 Playwright e2e.
+- **Published in this session, verified on `origin/main`:**
+  - **9618 8.1 Database Concepts** (1e84b75): 6 lessons, 38 questions, 4 diagrams
+    (`cs-database-concepts-dbms-layer`, `-keys`, `-er-relationships`,
+    `-transitive-dependency`). Every objective 8.1.1-8.1.7 taught and tested.
+  - **9702 7.5 Polarisation** (d1e20bd): 3 lessons, 19 questions, 3 diagrams
+    (`phys-polarisation-transverse-planes`, `-malus-graph`, `-filter-chain`). Both
+    objectives 7.5.1-7.5.2 taught and tested.
+  - **9701 8.1+8.2 Rate of reaction and temperature** (085c64b): 4 lessons, 23 questions,
+    3 diagrams (`chem-rate-reaction-tangent`, `-boltzmann`, `-temperature-curves`). Every
+    objective 8.1.1-8.1.3 and 8.2.1-8.2.3 taught and tested.
+  - **9702 8.1+8.2 Stationary waves and diffraction** (86578aa): 6 lessons, 36 questions,
+    5 diagrams (`phys-stationary-waves-superposition`, `-formation`, `-string-modes`,
+    `-air-column`, `phys-diffraction-basics-gap-width`). Every objective 8.1.1-8.1.4 and
+    8.2.1-8.2.2 taught and tested.
+  - **9709 4.2+4.3 Kinematics and momentum** (872bb72): 7 lessons, 42 questions, 5 diagrams
+    (`kinematics-distance-displacement`, `-graphs`, `-vt-area`, `-calculus`,
+    `mech-momentum-collision`). Every objective 4.2.1-4.2.4 and 4.3.1-4.3.2 taught and tested.
+  - **9702 8.3+8.4 Interference and the diffraction grating** (65c5330): 6 lessons, 36 questions,
+    5 diagrams (`phys-interference-path-difference`, `-fringes`, `-coherence`, `-double-slit`,
+    `phys-diffraction-grating-paths`). Every objective 8.3.1-8.3.4 and 8.4.1-8.4.2 taught and
+    tested.
+  - **9709 4.1 Forces and equilibrium** was already complete when checked (five lessons on
+    `origin/main`); nothing was duplicated for it.
+  - All six batches: `content-check` 0 errors / 0 warnings in a clean worktree from
+    `origin/main`, `tsc` clean, diagram registry + notation tests pass, every diagram
+    rendered and inspected in light and dark. The commit body and provenance say plainly
+    that the review was a second adversarial pass by the **same AI model**, with no separate
+    reviewer model and no teacher.
+- **No coding subagents exist in this environment** (only `researcher-web`); the
+  write/review/publish roles had to be done by one agent. `spawn_agents` rejects
+  `basher`/`opus-agent`. Disclose this whenever reporting review status.
+- **Diagram rendering on Windows:** `npm run diagram:render` fails because
+  `scripts/render-diagram.tsx` dynamically imports a Windows absolute path
+  (`ERR_UNSUPPORTED_ESM_URL_SCHEME`). Working harness: `.work-logs/render-9618.tsx` and
+  `.work-logs/render-9702.tsx` import the diagrams statically, render the same HTML with
+  `react-dom/server` and screenshot with Playwright using
+  `CHROMIUM_PATH="C:\Program Files\Google\Chrome\Application\chrome.exe"`. Output in
+  `.work-logs/dg/`. Copy the pattern for a new subject.
+- **`node scripts/lessons/status.mjs` now tolerates a broken YAML file** (returns the unit
+  as `partial` with the filename) instead of crashing; another agent's in-progress 9709 3.8
+  files had broken YAML and hid the whole queue.
+- **Concurrent agents in this checkout.** Other agents are writing **9709 3.8 differential
+  equations** (commit history `differential-equations-*`, two files currently broken),
+  **9709 3.9 complex numbers**, **9701 7.2 acid-base**, **9618 7.1 ethics**. Do not touch
+  their files. `origin/main` is authoritative.
+- **Local `main` is at f21b3b0**, an unpushed local commit containing ten **invalid** 9709
+  vector/numerical lessons (missing `explanation` fields). It is deliberately left alone so
+  another agent's working state is not destroyed. Therefore `status.mjs` reports the two
+  units published this session as `reviewed` (they are in `origin/main`, not in this local
+  index). Publish future units from a worktree built on `origin/main`, as done here; do not
+  re-publish `database-concepts-*` or `polarisation-*`.
+- **Publishing recipe used (scoped, safe with concurrent agents):**
+  `git worktree add --detach .work-logs/publish-wt origin/main`; copy only the new lessons
+  and diagrams; `npx tsx scripts/gen-diagrams.ts`; run content-check, `tsc` and the diagram
+  tests there; `git add` only those paths plus the subject's `index.ts`; commit with the
+  Codebuff trailer; `git fetch`; rebase if `origin/main` moved; push `HEAD:refs/heads/main`.
+  Never `git add -A` and never stage deletions; other agents' broken drafts must not be
+  swept in.
+- **Deployment is NOT verified.** The four commits are on `origin/main` and their files are in
+  the remote tree (`git ls-tree`), but the live site cannot confirm them. Note also that
+  `https://fathom-steel-ten.vercel.app/subjects/physics/8-1/not-a-real-lesson-xyz` returns
+  **200**, and the server HTML of a real lesson URL does not contain that lesson's title, so
+  the HTTP status is not a valid check at all — the lesson body is fetched client-side. Either
+  the Vercel auto-deploy is paused/failing or the production content import has not run. Check
+  the Vercel dashboard for the deployment at `86578aa` before assuming this content is live;
+  only report it live once the lesson page shows its title.
+- **Next unit: 9709 3.9** (complex numbers) if it is still free, then 9709 4.4+4.5, then
+  9701 8.3 and 9618 9.1+9.2. The last two already have other agents' chemical-equilibria and
+  SQL files in this checkout, so inspect before starting; 9709 3.8 is `partial` (missing
+  3.8.4) and belongs to whoever is writing differential equations. If those are taken, the
+  unclaimed option is 9702 9.1+9.2 (electricity).
+  Run `node scripts/lessons/status.mjs`, `ls content/subjects/<code>/lessons` and
+  `git status --short` first; four agents share this tree.
+- **The local checkout is mid-merge and must not be resolved blindly.** `.git/MERGE_HEAD`
+  (58ccb54) is present with three conflicts from another agent's pull:
+  `content/subjects/9701/lessons/chemical-equilibria-topic.yaml` (deleted by them, modified
+  here), `content/subjects/9701/lessons/rate-reaction-measuring.yaml` (added on both sides),
+  and `src/components/diagrams/9709/index.ts`. Their lessons were named differently from the
+  four published in 085c64b, so the duplicates need a deliberate decision, not a reset.
+  Because of this, `npm run content:check` in the main checkout reports ~41 unrelated errors;
+  publish from a clean worktree.
+- **Remaining queue after this session:** `node scripts/lessons/status.mjs` reports
+  50 published, 1 partial, 102 todo and 1 reviewed. The reviewed unit (9702 8.3+8.4) is on
+  `origin/main` and only shows that way because local `main` is behind. So roughly 51 units
+  are really published and about 100 are left. The queue is far from complete; continue with
+  the same cycle.
+
+## 5b. Earlier current state (28 Oct 2026, cloud chat)
+
+- **9701 7.1 was written twice (29 Oct).** This chat drafted 9 lessons under
+  `chemical-equilibria-*` (plus 2 diagrams) while the chat at `0b8e8fe21ee9b5f6eaa0ce13` published its
+  ten-lesson set (`0b48020`). The drafts were reviewed, then **discarded unpushed** on `git fetch`
+  showing the published unit; `git reset --hard FETCH_HEAD` removed them, so nothing collided. Lesson:
+  fetch `origin/main` **before** drafting a unit, not only before pushing, and check `git log
+  --all --oneline -- 'content/subjects/<code>/lessons/<prefix>-*'`.
+- **9618 7.1 Ethics and Ownership is PUBLISHED** (29 Oct, `3e848aa`, from this chat): 4 lessons,
+  24 questions, 1 diagram, covering all five outcomes 7.1.1-7.1.5:
+  `ethics-ownership-ethics-in-computing` (7.1.1+7.1.2), `-copyright` (7.1.3),
+  `-software-licences` (7.1.4), `-artificial-intelligence` (7.1.5). Diagram
+  `cs-ai-system-pipeline` (data → train → model → predict, with a feedback loop).
+  **Verified:** `content:check` 0 errors / 0 warnings, `tsc --noEmit` clean,
+  `vitest run tests/diagrams.test.ts tests/diagram-notation.test.ts` 5 tests pass, and the live page
+  `https://fathom-steel-ten.vercel.app/subjects/9618/lessons/ethics-ownership-artificial-intelligence`
+  returns 200 with the lesson title. The lesson body itself loads client-side, so the rendered
+  diagram was not confirmed on the live page.
+  - Note the lesson URL shape: `/subjects/<code>/lessons/<id>` — `/lessons/<id>` returns 404.
+  - 9709 3.6+3.7 was skipped deliberately: `src/components/diagrams/9709/index.ts` was committed
+    importing `p3-vectors-*`/`p3-numerical-solution-*` modules that do not exist on `main`, which
+    means another chat was drafting exactly that unit. Treat 3.6+3.7 as claimed until proven otherwise.
+  - Review caveat as elsewhere: second adversarial pass by the **same agent**, no separate reviewer
+    model, no teacher. Legal details (UK copyright duration and exceptions, GPL copyleft vs MIT/Apache
+    permissive) were re-checked; every MCQ has exactly one correct option by construction of the schema.
+- **9618 8.2 DBMS is PUBLISHED** (29 Oct, `d5f9239`, from this chat): 2 lessons, 12 questions,
+  no diagrams — `dbms-file-based-approach-problems` (8.2.1) and `dbms-software-tools` (8.2.2).
+  `content:check` 0 errors / 0 warnings, `tsc` clean, `vitest run tests/diagrams.test.ts` passes,
+  and `https://fathom-steel-ten.vercel.app/subjects/9618/lessons/dbms-software-tools` returns 200
+  with the title "The tools inside a DBMS" once the deploy finished (the generic "Lesson · Fathom"
+  title for the first minute is the old deployment, not an error).
+  - Review caveat as elsewhere: second adversarial pass by the same agent, no separate reviewer
+    model and no teacher review.
+- **9618 8.3 SQL (DDL and DML) is PUBLISHED** (29 Oct, `6753d72`, from this chat): 6 lessons,
+  36 questions, 5 diagrams. `sql-ddl-and-dml` (8.3.1/8.3.2/8.3.3), `sql-create-table` and
+  `sql-alter-table-foreign-keys` (8.3.4), `sql-select-where-order-group`, `sql-inner-join` and
+  `sql-insert-update-delete` (8.3.5). Diagrams: `cs-sql-ddl-vs-dml`, `-create-table-anatomy`,
+  `-foreign-key-link`, `-select-clause-order`, `-inner-join-rows`. Objectives 8.3.1–8.3.5 are
+  each taught by a core lesson and tested, which completes the 8.2+8.3 queue unit.
+  `content:check` 0 errors / 0 warnings, `tsc` clean, `vitest run tests/diagrams.test.ts
+  tests/diagram-notation.test.ts` 5/5, and all five diagrams rendered and inspected.
+  - Conventions recorded: the `diagram:` field needs the **subject prefix** (`cs-sql-...`), not
+    the bare file name — five lessons failed validation on that first. Cambridge's DDL sub-set
+    is CREATE DATABASE / CREATE TABLE / ALTER TABLE plus PRIMARY KEY and FOREIGN KEY ...
+    REFERENCES; `DROP` is taught as DDL for "read this statement" questions, not as a write
+    target. Data types stay exactly the seven listed in 8.3.4.
+  - Render gotcha, still true here: Chromium cannot launch in this VM (no libnss3, no root), so
+    the five diagrams were rasterised with `.work-logs/render-svg.tsx` —
+    `npx tsx .work-logs/render-svg.tsx <key> .work-logs/previews` with `FONTCONFIG_FILE` set.
+    Its inline CSS is light-mode only, so this catches geometry, overlaps and clipping but **not**
+    dark-mode contrast or KaTeX overflow; run `npm run diagram:render` on a machine that can
+    launch Chromium before treating them as final.
+  - That render pass earned its keep: it caught four layout defects (overlapping panel notes, a
+    badge sitting on top of the code, an arrow crossing a table header, and rows overflowing
+    their table boxes by one row) plus four `alt` texts still describing the pre-fix figures.
+  - `publish.sh` in this VM ends in "push failed" and **resets** instead of leaving its commit, so
+    recover by committing the verified files yourself and pushing with `cloud_git`.
+  - Review caveat as elsewhere: second adversarial pass by the same agent, with every answer key
+    recomputed (counts, the 67.75 average, the 6-row join and the class-1 count of 4) and every
+    MCQ confirmed single-correct. No separate reviewer model and no teacher review.
+
+- **9701 topic 8 has TWO overlapping lesson sets and needs its owner's decision** (29 Oct). `main`
+  carried `rate-reaction-collision-theory` / `-concentration-pressure` / `-calculations` /
+  `activation-energy-boltzmann` / `rate-reaction-temperature` **and** `rate-reaction-meaning-and-collisions` /
+  `rate-reaction-measuring` / `effect-temperature-boltzmann`, teaching the same 8.1 and 8.2 outcomes.
+  That duplication, not bad content, caused the duplicate `order` errors. To unblock publishing this
+  chat only **renumbered** the second set (8.1 → order 4 and 5; 8.2 → order 3) and fixed the two
+  KaTeX failures in `effect-temperature-boltzmann` (a single-quoted YAML string kept `\\text{A}`, which
+  KaTeX read as a line break; now `E_{\text{A}}`). **No lesson text was changed.** Someone should
+  decide which set stays and delete the other before topic 8 is considered finished.
+  `content:check` is GREEN on `main` again as of `3e848aa`.
+- **Rendering diagrams without Chromium.** Chromium cannot launch in this VM (missing system
+  libraries, no root), so `.work-logs/render-svg.tsx` renders a registered diagram through
+  `renderToStaticMarkup` + `sharp` with the `dg-*` CSS injected into the SVG (librsvg needs plain
+  selectors: `:where(...)` is silently dropped, so an un-injected or `:where`-based stylesheet makes
+  every curve render as a solid black fill). It renders light mode only. Use it for a quick look,
+  and still run `npm run diagram:render` on a machine with Chromium for light/dark.
+
+- **`content:check` is RED on `main` as of `62caa9c`, caused by the chat writing 9701 topic 8
+  (rates), not by 9701 7.1.** Five errors, all in that chat's newest files: `order 1 in topic
+  8.2 is also used by activation-energy-boltzmann` and `order 1/2 in topic 8.1 ...` (duplicate
+  `order` values within a topic), plus two KaTeX failures in `effect-temperature-boltzmann`
+  where a doubled backslash was left in the maths (a YAML double-quoted string turned
+  `\text{A}` into a literal double backslash, which KaTeX reads as a line break). The publish
+  script refuses to publish while any lesson is invalid, so fix these first if you are
+  publishing anything. Left untouched here because that chat is actively writing those files.
+
+- **9702 7.2+7.3+7.4 is published** (28 Oct, 5498a33, from this chat): 6 lessons
+  (`transverse-longitudinal-compare` 7.2.1, `transverse-longitudinal-graphs` 7.2.2,
+  `doppler-effect-moving-source` 7.3.1, `doppler-effect-formula` 7.3.2,
+  `electromagnetic-spectrum-transverse` 7.4.1, `electromagnetic-spectrum-wavelengths`
+  7.4.2+7.4.3), 33 questions, 5 diagrams
+  (`phys-transverse-longitudinal-compare`, `-graphs`, `phys-doppler-effect-wavefronts`,
+  `phys-electromagnetic-spectrum-transverse-wave`, `-wavelength-ladder`). `content:check`
+  0 errors / 0 warnings, `tsc` clean, 166 tests pass, and the production lesson page returned
+  200 with its title.
+  - **Diagrams were NOT rendered.** Chromium downloads but cannot launch in this VM: 15 shared
+    libraries are missing (libnss3, libatk, libcairo, libpango …), there is no root to install
+    them, and `apt-get download` has no usable package lists. The five diagrams were checked by
+    reading their coordinates and label boxes instead, which caught and fixed four faults: an
+    off-canvas label, two overlapping labels, and `dg-text-muted` used on a stroke (it is a
+    **fill** class, so the line stayed unstroked). **On a machine with Chromium, still run
+    `npm run diagram:render` for the five keys and look at the light and dark PNGs.**
+  - Review caveat, same as the other batches: the review was a second adversarial pass by the
+    **same agent** (no separate reviewer model here), with every answer key recomputed in
+    Python from the question's own data. A reviewer should still be run over these six files.
+  - Teaching choices worth keeping: 7.2.2 is taught as “a transverse graph is a photograph, a
+    longitudinal graph is a plot”; compressions sit at the **steepest zero crossings**, never
+    at the crests, and a `deeper` block derives that from particle spacing. The Doppler sign
+    rule is derived from $\lambda = (v \mp v_s)/f_s$ *before* the formula is stated, and
+    $v_s$ (source) is contrasted with $v$ (sound) throughout. The EM ranges use the conventional
+    Cambridge table (radio $> 0.1$ m … gamma $< 0.01$ nm) with visible $400$–$700$ nm, and the
+    lesson says plainly that the boundaries are approximate.
+  - **Cloud-VM gotcha:** `scripts/lessons/publish.sh` now fails earlier than before. With no git
+    identity it dies at `git commit` (“Author identity unknown”); after
+    `git config user.name/user.email` (repo-local) it verifies in its temp worktree and then
+    fails at the push **without leaving a commit in the working tree**. Stage the six lessons,
+    the five diagrams and the regenerated `index.ts` by hand, commit, then `cloud_git push`.
+- **The other chat’s worktree is gone from this VM.** `/workspace/chats/` contains only this
+  chat, so its uncommitted 9701 7.1 drafts are not visible here. Treat 9701 7.1 as claimed
+  until proven otherwise, and check `git log --all` plus `wip-snapshot` before writing it.
+- **9701 7.1 Chemical equilibria is PUBLISHED** (28 Oct, `0b48020`, from chat
+  `0b8e8fe21ee9b5f6eaa0ce13`; production page returns 200 with the lesson title):
+  10 lessons, 63 questions, 5 diagrams, covering all ten outcomes 7.1.1-7.1.10 one lesson per
+  outcome (`chemical-equilibria-reversible-dynamic` 7.1.1, `-le-chatelier` 7.1.2+7.1.3,
+  `-temperature-catalyst` 7.1.2+7.1.3, `-kc-expressions` 7.1.4, `-mole-fraction-partial-pressure`
+  7.1.5, `-kp-expressions` 7.1.6, `-kc-kp-calculations` 7.1.7, `-quantities` 7.1.8,
+  `-what-changes-k` 7.1.9, `-haber-contact` 7.1.10), 2,000-2,600 words each, 6-7 questions each.
+  Diagrams: `chem-equilibria-approach-equilibrium`, `-count-gas-moles`,
+  `-temperature-energy-profile`, `-mole-fraction`, `-haber-tradeoff`; each was rasterised with
+  resvg and inspected in light and dark (`npx tsx .work-logs/render-preview.tsx`), which caught
+  and fixed five label collisions and a clipped caption.
+  - **This unit REPLACED the four thin `chemical-equilibria-rebuild-*` lessons** published earlier
+    the same day (735-982 words each, 19 questions between them, no diagrams, one lesson covering
+    four outcomes). Those four were deleted in the same commit; they remain in history at
+    `9bb1a35` if anyone wants to recover them. Reason: two sets for one topic would collide on
+    `order` and the thin set could not teach 7.1.4-7.1.7 in 982 words. Do not resurrect them
+    alongside the ten-lesson unit.
+  - **Diagram labels in this unit are plain SVG text, not `MathLabel`.** `MathLabel` renders via
+    `foreignObject`, which resvg cannot draw, so any KaTeX label is invisible in local previews
+    and cannot be inspected. Subscripts are real `<tspan>` shifts (`dy=4`, `fontSize=11`) because
+    DejaVu Sans has no U+2080-2089 glyphs and falls back to full-size digits.
+  - **`src/components/diagrams/9709/index.ts` was broken on `main`** (commit `085c64b`): it
+    imported twelve `p3-vectors-*`/`p3-numerical-solution-*` modules that do not exist in the
+    repo, so `tsc` failed for anyone starting from `main`. `npm run diagrams:gen` regenerated it
+    and the repair is included in this batch. If you see that file churn, it is this fix.
+  - Review caveat, as elsewhere: the re-check was a second adversarial pass by the **same agent**
+    (no separate reviewer model was available), with every worked value recomputed and
+    substituted back in Python, every answer key checked against the site's own checker, and all
+    ten outcomes confirmed taught *and* tested. A teacher review is still outstanding.
+  - **Verification actually run:** `content:check` 0 errors / 0 warnings, `tsc --noEmit` clean,
+    `vitest run` 166 tests pass, `vitest run tests/diagrams.test.ts` pass, and every string was
+    pushed through the site's own `renderMd` (`.work-logs/check-math.ts`) to confirm KaTeX markup
+    with no leftover `$`. **No browser check was possible** (no Chromium here), so the rendered
+    layout of these equations on the live page is still unconfirmed by eye.
+  - Deleted lessons are archived by the importer, not dropped, so replacing the rebuild set does
+    not break anyone's attempt history.
+- **Before starting a unit, check that no other chat has it in flight.** Two cloud chats
+  share this VM (`/workspace/chats/0b8e8fe21ee9b5f6eaa0ce13` and this one). On 28 Oct the
+  other chat was writing **9618 6.1** (three `data-security-*` lessons on disk) and touching
+  the **9709** lessons broadly, so this chat left both alone and took **9702 6.2** instead.
+  Quick check: `ls <sibling>/content/subjects/*/lessons | grep '^<prefix>'`, plus
+  `git log --all --oneline -- 'content/subjects/<code>/lessons/<prefix>-*'` and the
+  `wip-snapshot` tree. Never edit the sibling worktree. That chat published **9618 6.1**
+  (7 lessons, a93ff08) during this session; it also restyles 9709 lessons, so leave 9709
+  alone while it is active.
+- **`scripts/lessons/units.json` prefixes now match the published 9709 3.3-3.5 lessons**
+  (`p3-trig`, `p3-diff`, `p3-int`). They had been listed as `p3-trigonometry`,
+  `p3-differentiation` and `p3-integration`, so `status.mjs` reported that published unit as
+  `todo` and a future writer would have duplicated 15 lessons. `status.mjs` now says
+  **38 published, 116 todo**.
+- **9702 7.1 Progressive waves is published** (28 Oct, e880df1): 6 lessons
+  (`progressive-waves-what-is-a-wave` 7.1.1+7.1.6, `-key-terms` 7.1.2, `-phase-difference`
+  7.1.2, `-wave-equation` 7.1.4+7.1.5, `-cro` 7.1.3, `-intensity` 7.1.7), 36 questions,
+  4 diagrams (`phys-progressive-waves-rope-pulse`, `-key-terms`, `-phase-difference`,
+  `-cro-trace`). All seven objectives 7.1.1-7.1.7 are taught by a core lesson and tested.
+  `content:check` 0 errors / 0 warnings, `tsc` clean, 166 tests pass, all four diagrams
+  rendered and inspected in light and dark. Nothing was checked on the production URL after
+  the push.
+    - Teaching choices worth keeping: the unit opens with "the rope moves up and down, the
+      pulse moves along" (P drawn on the rope with a vertical arrow, not travelling);
+      displacement–distance vs displacement–time graphs are contrasted by the quantity on the
+      horizontal axis; phase difference is taught as `Δφ = 360° × Δx/λ` with the same idea in
+      radians ($2\pi\,\Delta x/\lambda$); the CRO lesson reads period across (time-base ×
+      divisions per cycle) before frequency, and amplitude from the **centre line** to a peak,
+      never peak-to-peak; intensity is power/area with $I \propto A^2$ for the same wave.
+    - **Rendering trap found here — fix it in every future lesson.** Numeric-answer `unit:`
+      fields are printed as plain text (`<span className="unit">{f.unit}</span>` in
+      `src/components/questions/QuestionCard.tsx`), so a unit written as `"m s^{-1}"` shows the
+      braces and caret literally on the page. Use Unicode superscripts (`m s⁻¹`, `W m⁻²`,
+      `N m⁻¹`). One already-published 9702 6.2 lesson had the same bug and was fixed in this
+      commit. The `$...$`-in-prompt fields are unaffected; only `unit:` is plain text.
+    - Review caveat as usual: second adversarial pass by the **same agent** — every worked
+      answer and key recomputed from its own data, every MCQ checked for exactly one correct
+      option, objectives re-read against the syllabus wording. No separate reviewer model and
+      no teacher. A reviewer should still be run over `progressive-waves-*`.
+- **DUPLICATE WARNING (28 Oct, 11:2x): both chats wrote 9702 7.1 at the same time.** This
+  chat's 6-lesson batch is on `main` (e880df1) and live. The other chat
+  (`0b8e8fe21ee9b5f6eaa0ce13`) has uncommitted drafts of the *same unit* under different
+  names: `progressive-waves-wave-motion`, `-terms`, `-wave-equation`, `-cro`, `-intensity`
+  plus `src/components/diagrams/9702/progressive-waves-{cro,energy-not-matter,intensity,terms,wave-equation}.tsx`.
+  **Do not publish those drafts** — delete them, or the site gets two sets of 7.1 lessons with
+  the same objectives and no way for a student to tell which to read. Keep `progressive-waves-*`
+  as it is on `main`. The check that failed: this chat checked the sibling worktree *before*
+  writing, found 7.1 empty, and the sibling started the same unit minutes later. Check again
+  immediately before publishing, not only before writing, and record your target unit in this
+  file when you start it.
+- **Diagram rendering works again after a runner restart — here is the setup.** `npm run
+  diagram:render` fails with "executable doesn't exist at /opt/pw-browsers/chromium" because
+  Chromium's shared libraries are not installed system-wide. Playwright's browser is in
+  `$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome`, and the libraries were
+  extracted earlier into `.work-logs/libs/x/usr/lib` (gitignored). Export all three and it
+  renders:
+  ```bash
+  export LD_LIBRARY_PATH=$(find $PWD/.work-logs/libs/x/usr/lib -maxdepth 2 -type d | tr '\n' ':')
+  export FONTCONFIG_PATH=$PWD/.work-logs/libs/x/etc/fonts
+  export CHROMIUM_PATH=$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome
+  npm run diagram:render -- <diagram-key> --out /tmp/dg
+  ```
+  The script falls back to `/opt/pw-browsers/chromium` and hides the real error, so a failure
+  message about that path usually means a missing `LD_LIBRARY_PATH`, not a missing browser.
+  If `.work-logs/libs` is gone, re-extract the debs in `.work-logs/libs/debs` with
+  `dpkg -x` into `.work-logs/libs/x`.
+- On `main`: **404 reviewed lessons, 2337 questions** (9709: 118, 9618: 105, 9702: 93,
+  9701: 88). All are live. Latest content, all 28 Oct: 9702 7.2–7.4 wave types, Doppler and
+  the EM spectrum (5498a33), 9702 7.1 progressive waves (e880df1),
+  9618 6.2 data integrity (3c37a6a), 9701 6.1 redox processes (8b3064d), 9702 6.2 elastic and
+  plastic behaviour (77f2e9c) and 9618 6.1 data security (a93ff08).
+- **9701 6.1 Redox processes is published** (28 Oct, 8b3064d): 5 lessons
+  (`redox-processes-oxidation-numbers`, `-special-cases-roman-numerals`, `-electron-transfer`,
+  `-disproportionation`, `-balancing-equations`), 33 questions, 3 diagrams
+  (`chem-redox-oxidation-number-rules`, `-electron-transfer`, `-disproportionation`).
+  Objectives 6.1.1-6.1.5 are each taught by a core lesson and tested. `content:check` 0
+  errors / 0 warnings, `tsc` clean, 166 tests pass, all three diagrams rendered and inspected
+  in light and dark. The lesson page returned 200 with its title on the production URL.
+    - Conventions recorded: the rules are taught in priority order (element, monatomic ion,
+      F, O, H, Group 1/2/Al, then the total charge), with peroxides ($-1$), $\text{OF}_2$
+      ($+2$) and metal hydrides ($-1$) as the required exceptions; $\text{Fe}_3\text{O}_4$ is
+      taught as a $+8/3$ average of one $\text{Fe}^{2+}$ and two $\text{Fe}^{3+}$; Roman
+      numerals give the oxidation number, not the atom count.
+    - Balancing uses the oxidation-number method in a fixed order: changes, ratio, other atoms,
+      O with $\text{H}_2\text{O}$, H with $\text{H}^+$, then a charge check. The copper/nitric
+      acid example calls out the nitrogen that stays at $+5$ in the nitrate.
+    - Same caveat as the other batches: the review was a second adversarial pass by the **same
+      agent** with every oxidation number and balanced equation re-derived in Python; no
+      separate reviewer model was available. A reviewer should still be run over the five files.
+    - **Diagram gotcha:** in a JSX string attribute, `tex="\\text{...}"` (two backslashes) is
+      passed through literally and KaTeX renders the word "text"; use a single backslash in
+      attribute values (two are needed only inside JS string literals such as a data array).
+- **9702 6.2 Elastic and plastic behaviour is published** (28 Oct, 77f2e9c): 5 lessons
+  (`elastic-plastic-deformation`, `-elastic-limit`, `-work-done-area`, `-strain-energy`,
+  `-energy-past-limit`), 25 questions, 3 diagrams
+  (`phys-elastic-plastic-loading-unloading`, `-work-area`, `-strain-energy`). Objectives
+  6.2.1-6.2.4 are each taught by a core lesson and tested. `content:check` 0 errors /
+  0 warnings, `tsc` clean, 166 tests pass, all three diagrams rendered and inspected in
+  light and dark. The lesson page returned 200 with its title on the production URL.
+    - Conventions recorded: the **limit of proportionality** (graph stops being straight) and
+      the **elastic limit** (object stops returning to its original length) are taught as
+      distinct points, with the LOP usually reached first for a metal wire; the unloading line
+      is parallel to the initial straight part, so the permanent extension is where it meets the
+      x-axis; area under the loading graph = work done, area under the unloading line = energy
+      recovered, and the difference is dissipated past the elastic limit.
+    - Same caveat as the other batches: the review was a second adversarial pass by the **same
+      agent** with every numeric key recomputed in Python; no separate reviewer model was
+      available. A reviewer should still be run over the five files before treating them as final.
+    - **Diagram gotcha:** `dg-fill-accent`/`dg-fill-accent-2` are already semi-transparent
+      (`rgba(..., 0.14-0.2)`). Adding `opacity={0.2}` on top makes the shading invisible; use
+      `opacity={1}` (or omit it).
+    - Another cloud chat was writing 9618 6.1 (and restyling 9709) at the same time. This chat
+      checked for in-flight files before starting and took 9702 6.2 instead. Check again before
+      the next unit: the two chats share this VM and both push to `main`; rebase, never force.
+- **9618 6.1 Data Security is published** (28 Oct, a93ff08): 7 lessons, 42 questions, 6
+  diagrams. `data-security-privacy-integrity` (6.1.1), `-system-and-data` (6.1.2),
+  `-accounts-authentication` and `-system-measures` (6.1.3, split into identity then
+  firewall/anti-malware/encryption), `-network-threats` (6.1.4), `-restricting-risk`
+  (6.1.5), `-encryption-access-rights` (6.1.6). Diagrams: `cs-data-security-privacy-integrity`,
+  `-system-vs-data`, `-authentication-factors`, `-defence-layers`, `-phishing-vs-pharming`,
+  `-access-rights`. `content:check` 0/0, `tsc` clean, 166 tests pass, all six diagrams
+  rendered and inspected in light and dark.
+    - Teaching choices worth keeping: digital signatures are taught as hash → sign with the
+      **private** key → verify with the **public** key, with an explicit warning that this is
+      the reverse of encryption-for-confidentiality (lesson 7 repeats the warning, because the
+      two lessons would otherwise contradict each other). Phishing vs pharming is separated by
+      **who is fooled** (the user vs the name lookup), with pharming shown as needing no click.
+      Anti-virus vs anti-spyware is contrasted by purpose (replication/damage vs secret data
+      collection), and a firewall is explicitly said **not** to scan file contents.
+    - Review caveat, same as other batches: the review was a second adversarial pass by the
+      **same agent** (no separate reviewer model in this environment), and every provenance
+      note says so. A reviewer should still be run over `data-security-*` before treating it
+      as final.
+    - Cloud-VM rendering: Chromium cannot run here (no libnss3/atk/cups and no root), so the
+      six diagrams were rasterised with `@resvg/resvg-js` into `.work-logs/previews/` by
+      `.work-logs/render-preview.tsx` (both gitignored/untracked work files), using the DejaVu
+      TTFs bundled with matplotlib and inlined `dg-*` colours from `src/styles/tokens.css`.
+      That catches geometry, overlaps, clipping and dark-mode contrast, but **not** KaTeX
+      overflow: none of these six diagrams uses `MathLabel`, so the proper check is still
+      `npm run diagram:render` on a machine that can launch Chromium.
+      Caught that way: a clipped footer in `-defence-layers`, notes overlapping the last box in
+      `-phishing-vs-pharming`, a stray icon dot in `-privacy-integrity`, and an ambiguous
+      "two factors" caption in `-authentication-factors` (now "any two from different
+      columns").
 - Done in the second and third chats:
   - published 9618 2.1 (networks), 9709 1.6+1.7 (series, differentiation), 9702 3.2+3.3
     (non-uniform motion, linear momentum), 9701 3.1+3.2 (electronegativity, ionic bonding;
@@ -213,11 +617,273 @@ changes alongside lessons:
     description if needed). Use this structure for new Maths lessons too;
   - the "Expected" line after a wrong numeric answer now typesets maths labels;
   - the snapshot, restore and browser tooling was fixed.
-- Queue: 14 published, 140 todo.
-- **START HERE** (updated 24 Oct, 19:20 UTC). `main` holds only reviewed work; drafts are
-  only on `wip-snapshot`.
-  1. In a fresh container, run `bash scripts/lessons/restore-drafts.sh` to bring the drafts
-     back, then `npm run diagrams:gen`.
+- **9702 6.1 Stress and strain is published** (28 Oct, a621c26): 6 lessons
+  (`stress-strain-deformation`, `-hookes-law`, `-spring-constant`, `-stress-and-strain`,
+  `-young-modulus`, `-young-modulus-experiment`), 37 questions, 6 diagrams
+  (`phys-stress-strain-tension-compression`, `-force-extension-graph`, `-spring-stiffness`,
+  `-stress-strain-definitions`, `-young-modulus`, `-young-modulus-apparatus`). Objectives
+  6.1.1–6.1.6 are each taught by a core lesson and tested (`content:check` clean, `tsc` clean,
+  166 tests pass, all 6 diagrams rendered and inspected in light and dark).
+    - Definitions follow the mark-scheme wording: stress = force per unit cross-sectional area,
+      strain = extension per unit **original** length (no unit), $E$ = ratio of tensile stress to
+      tensile strain, valid within the limit of proportionality.
+    - The experiment lesson teaches Searle's apparatus: two wires, micrometer for $d$ in several
+      places and two directions, vernier for $x$, graph of $F$ against $x$, then $E = kL/A$. Note
+      the gradient is $k$, not $E$ — a real student trap that is called out explicitly.
+    - Review caught two real errors: a stress/strain comparison question whose reasoning said
+      strain falls by 2 when it falls by 4 (strain is proportional to stress, so to $1/A$), and a
+      garbled "stiff vs strong" sentence. Both fixed before publishing.
+    - Same caveat: the review was a second adversarial pass by the **same agent**. A reviewer
+      should still be run over these before treating them as final.
+- **9701 5.2 Hess's law is published** (28 Oct, ed32d0e): 4 lessons
+  (`hess-law-route-independence`, `-formation-cycles`, `-combustion-cycles`,
+  `-bond-energies`), 24 questions, 4 diagrams (`chem-hess-law-route-independence`,
+  `-formation-cycle`, `-combustion-cycle`, `-bond-energy-route`). Objectives 5.2.1 and 5.2.2
+  (including 5.2.2(a) cycles for unmeasurable changes and 5.2.2(b) bond-energy data) are taught
+  and tested (`content:check` clean, `tsc` clean, 166 tests pass, all 4 diagrams rendered and
+  inspected in light and dark).
+    - Conventions recorded: formation cycles route reactants → elements → products with the
+      reactants' formation arrows **reversed**; combustion cycles put the shared oxides
+      (CO₂ + H₂O) at the bottom; bond calculations use
+      $\Delta H_r = \sum$ broken $-$ $\sum$ formed and say plainly that mean bond enthalpies are
+      averages, so the answer is approximate.
+    - Review caught one real error: the methanol formation key was written as $-238.1$; the
+      correct cycle value is $-239.1$ (fixed, and recomputed independently in Python).
+    - Same caveat: the review was a second adversarial pass by the **same agent** — a reviewer
+      should still be run over these before treating them as final.
+- **9709 3.3+3.4+3.5 is published** (28 Oct, 0cad6e0): 15 lessons, 85 questions, no new
+  diagrams. Trigonometry (`p3-trig-sec-cosec-cot`, `-pythagorean-identities`,
+  `-addition-formulae`, `-double-angle`, `-r-form`), differentiation
+  (`p3-diff-standard-derivatives`, `-products-quotients`, `-implicit`, `-parametric`) and
+  integration (`p3-int-standard-integrals`, `-trig-integrals`, `-partial-fractions`,
+  `-f-prime-over-f`, `-by-parts`, `-substitution`). Objectives 3.3.1-3.3.2, 3.4.1-3.4.3 and
+  3.5.1-3.5.6 are each taught by a core lesson and tested.
+    - `content:check` 0 errors / 0 warnings, `tsc` clean, 166 tests pass.
+    - Every antiderivative was verified by numeric differentiation in Python and every definite
+      key recomputed (`∫₀¹2x(x²+1)⁵dx = 10.5`, `½ln 5 ≈ 0.8047`, `1 − π/4 ≈ 0.2146`, etc.).
+    - **Diagrams are missing for this unit on purpose.** Six diagram blocks referenced SVG keys
+      that were never written (`math-p3-trig-r-form`, `math-p3-trig-reciprocal-graphs`,
+      `math-p3-diff-derivatives-table`, `math-p3-int-by-parts-recipe`, `math-p3-int-f-over-f`,
+      `math-p3-int-substitution-flow`); they were removed rather than shipped broken. Writing
+      those six diagrams is the obvious next quality job for this unit.
+    - Review caveat: a second adversarial pass by the **same** agent, plus the numeric checks
+      above. No separate reviewer model and no teacher has seen them.
+    - YAML gotcha worth remembering: never build these files with
+      `open(path,'w').write(open(path).read() + ...)` — the `'w'` truncates before the read and
+      silently wipes a lesson. Read first into a variable, then write.
+- **9709 3.2 logarithms was corrected after publication** (28 Oct, e55fe7c). A review of the four
+  live lessons found: an MCQ distractor `2\ln 5^{x}` that is algebraically *equal* to the correct
+  answer (replaced); the claim that `5^x + 2^x = 7` "has no elementary algebraic solution" (x = 1
+  works, so it now says "no general algebraic method"); a garbled `y`-against-`ln x` explanation in
+  `p3-logarithmic-exponential-linear-form`; and two label collisions in
+  `math-p3-logarithmic-exponential-inverse-graphs` (the `y = ln x` label sat on the `y = x` line and
+  `(1, 0)` collided with the tick `1`). All four numeric chapters' keys were re-verified; the maths
+  was right, these were explanation/label defects.
+    - Diagram previews need fontconfig fonts. On a fresh cloud runner `fc-list` is empty, so all
+      SVG text renders as invisible; copy `.work-logs/libs/x/usr/share/fonts/truetype/*` into
+      `~/.local/share/fonts`, run `fc-cache -f`, and render with
+      `LD_LIBRARY_PATH=$PWD/.work-logs/libs/x/usr/lib/x86_64-linux-gnu` and
+      `CHROMIUM_PATH=$HOME/.cache/ms-playwright/chromium-1194/chrome-linux/chrome` (the wrapper in
+      `.work-logs/chromium-wrapper.sh` adds `--no-sandbox`).
+- **9618 6.2 Data Integrity is published** (28 Oct, 3c37a6a, from the other chat): 5 lessons,
+  32 questions, 5 diagrams. `data-integrity-validation-vs-verification` (6.2.1),
+  `-validation-checks` and `-check-digits` (6.2.2), `-entry-verification` and
+  `-transfer-verification` (6.2.3). Diagrams: `cs-data-integrity-validation-vs-verification`,
+  `-validation-toolbox`, `-check-digit`, `-double-entry`, `-block-parity`. `content:check` 0/0,
+  `tsc` clean, 166 tests pass, all five diagrams rendered and inspected in light and dark.
+    - Conventions recorded: **range check** = two boundaries, **limit check** = one;
+      **length** counts characters while **format** tests the pattern; **existence** looks a
+      value up in stored reference data. Check digits are taught twice (modulus 11 with weights
+      10 down to 2, and modulus 10 with weights 3 and 1), both with full tables and the
+      "exclude the check digit from the calculation" trap. Block parity is presented as column
+      parity (equal to the XOR of the bytes), with the two-bit error that byte parity misses.
+    - Every check digit, parity bit, block check character and checksum in the lesson text and
+      the answer keys was recomputed in Python during the review pass.
+    - Review caveat as usual: second adversarial pass by the **same agent**, no separate
+      reviewer model here. A reviewer should still be run over `data-integrity-*`.
+- Queue: 46 published, 108 todo (`node scripts/lessons/status.mjs`). The queue's head is
+  **9709 3.6+3.7**. 9709 was being restyled by the other chat, so it was skipped; that
+  worktree is no longer on this VM, so check `git log --all` before taking it. 9702 7.1 is
+  done; take **9701 7.1** or **9702 7.2+7.3+7.4** next, after checking the sibling worktree and
+  `git log --all` for in-flight files. A whole-unit cycle (write → independent review →
+  validate → publish → update this file) runs without asking the user; they asked for it to
+  repeat autonomously on 28 Oct. 9702 6.2, 9702 7.1 and 9701 6.1 came from this chat; 9618 6.1
+  and 9618 6.2 came from the other chat.
+- **Pushing now needs a rebase, not just a push.** Two chats published from the same
+  `77cd89e` base on 28 Oct, so the first `cloud_git` push succeeded and the other was
+  rejected as non-fast-forward. The working recovery, repeated twice:
+  `cloud_git fetch` → `git log --oneline HEAD..FETCH_HEAD` and
+  `git diff --name-only` to confirm no overlap → `git rebase FETCH_HEAD` → `cloud_git push`.
+  Never force. `publish.sh` itself still ends in "push failed" here (no git credentials in the
+  VM) after it has verified and committed; recover its commit with
+  `git fsck --unreachable --no-reflogs` and reset --soft to it, as described below.
+- **START HERE** (updated 27 Oct 2026, cloud chat). `main` holds only reviewed work; drafts
+  are only on `wip-snapshot`.
+  - **Teaching-depth rules landed on 27 Oct (51b4384 + 6 earlier commits).** CLAUDE.md,
+    `docs/CONTENT_GUIDE.md` §"Teaching philosophy: understanding before brevity" and both
+    prompt templates in `scripts/lessons/templates.mjs` now forbid shortening a lesson for
+    brevity: assume zero prior knowledge, define notation before use, show every needed
+    intermediate step, explain why a method works, and let a lesson exceed 2–5 minutes when
+    the concept needs it. Read that section before writing or reviewing anything. The 9701
+    batch below was written in the same understanding-first structure before the expansion
+    landed; if you touch it, deepen it, never trim it for length.
+  - **9709 3.1+3.2 Algebra and logarithmic/exponential functions is published** (28 Oct,
+    48ddba4): 13 lessons (`p3-algebra-*` 9 files, `p3-logarithmic-exponential-*` 4 files),
+    79 questions, 7 diagrams (`math-p3-algebra-long-division`, `-modulus-graph`,
+    `-modulus-inequality`, `-binomial-validity`, `math-p3-logarithmic-exponential-inverse-graphs`,
+    `-index-graph`, `-linear-form-plot`). Every objective 3.1.1–3.1.5 and 3.2.1–3.2.4 is
+    taught and tested (`content:check` clean, `tsc` clean, 166 tests pass, all diagrams
+    rendered and inspected in light and dark).
+    - Written in the maths "one question type, one method" style: what they ask, a numbered
+      method with the forgotten step in bold, easy example, check, exam-style example, check,
+      misconceptions, exam technique, takeaways, one deeper section.
+    - Coverage traps worth remembering: factor/remainder theorem must include divisors of the
+      form `(ax + b)` and answer "factorise completely" by dividing then factorising the
+      quotient; partial fractions need all three syllabus forms, including the `(cx + d)^2`
+      and irreducible-quadratic cases; 3.1.5 includes adapting the series (factor out the
+      constant **and** raise it to the power n) and stating the new validity range.
+    - Same caveat as the other batches: the review was a second adversarial pass by the **same
+      agent**, recomputing every key from the question's own data in Python. It caught two
+      wrong keys written into the first draft (`4^x = 3^(x+2)` answered 3.82 instead of 7.64,
+      and a `3x + 5` partial-fraction check answered 1 instead of 3) plus three questions left
+      outside a check block. A separate reviewer should still be run before treating them as
+      final.
+    - **New YAML traps this batch hit** (all now in the "YAML traps" list below): an unquoted
+      `title:` containing `: ` ("Inequalities: the one extra rule"); a `summary:` or `title:`
+      in **double** quotes holding `\ln` (`\l` is an invalid escape — use single quotes); and
+      every question must be listed in a `type: check` block, so a lesson with 7 questions
+      needs a second check block (`title: Practice`) or content:check errors out.
+    - `scripts/lessons/publish.sh`'s commit body was reworded this session: it no longer claims
+      a "separate AI reviewer" when the second pass is the same agent.
+
+  - **9701 5.1 Enthalpy change is published** (28 Oct, f31adaa): 7 lessons (`enthalpy-change-*`),
+    43 questions, 7 diagrams (`chem-enthalpy-change-exo-endo`, `-pathway`, `-standard-state`,
+    `-named-changes`, `-bonds`, `-bond-energy-steps`, `-calorimetry`). Objectives 5.1.1–5.1.7 are
+    each taught by a core lesson and tested (`content:check` clean, `tsc` clean, 166 tests pass,
+    all 7 diagrams rendered and inspected in light and dark).
+    - Definitions follow the mark-scheme wording: "one mole of…", "standard conditions",
+      "standard states", plus "completely"/"excess oxygen" for combustion and "from its elements"
+      for formation. ⦵ is written `$\Delta H^{\ominus}$` in maths (the raw ⦵ glyph is not in the
+      bundled fonts and renders as a tofu box in diagrams).
+    - Same caveat: the review was a second adversarial pass by the **same agent**. That pass
+      caught three real errors — a gas-phase hydrogen calculation using a whole mole of O=O
+      instead of half, a wrong key in a calorimetry question, and an inconsistent vaporisation
+      figure. A reviewer should still be run over these before treating them as final.
+  - **9702 5.2 Gravitational and kinetic energy is published** (28 Oct, 2df96dc): 5 lessons
+    (`gpe-ke-*`), 31 questions, 5 diagrams (`phys-gpe-ke-work-to-gpe`, `-gpe-height-graph`,
+    `-derivation`, `-v-squared`, `-falling-exchange`). Objectives 5.2.1–5.2.4 are each taught
+    by a core lesson and tested (`content:check` clean, `tsc` clean, 166 tests pass, all 5
+    diagrams rendered and inspected in light and dark). 5.2.3 is taught in the suvat route
+    *and* the average-speed route, so the ½ is explained rather than asserted.
+    - Same caveat: the review was a second adversarial pass by the **same agent**, with every
+      numeric key recomputed in Python from the question's own data. A reviewer should still be
+      run over these before treating them as final.
+    - **Fresh-cloud-VM rendering now needs `FONTCONFIG_FILE`.** `$HOME/.fonts` is populated but
+      `fc-list` is empty, and without `FONTCONFIG_FILE=$PWD/.work-logs/libs/x/etc/fonts/fonts.conf`
+      Chromium renders **every label invisibly** (boxes and arrows only). Export
+      `LD_LIBRARY_PATH`, `FONTCONFIG_FILE` and `CHROMIUM_PATH` before `npm run diagram:render`.
+    - YAML traps in this batch: a plain list item containing `: ` becomes a mapping (quote it),
+      and **double**-quoted strings silently mangle `\frac`/`\Delta` (`\f` is a form feed) — use
+      single quotes for any line holding LaTeX.
+  - **9618 4.2+4.3 Assembly language + bit manipulation is published** (28 Oct, f20c04e):
+    9 lessons (`assembly-language-*` 6 files, `bit-manipulation-*` 3 files), 54 questions,
+    9 diagrams (`cs-assembly-language-machine-code`, `-two-pass`, `-instruction-set`,
+    `-trace-table`, `-groups`, `-addressing-modes`, `cs-bit-manipulation-shifts`,
+    `-masking`, `-device-control`). Every objective 4.2.1–4.2.7 and 4.3.1–4.3.3 is taught
+    and tested (`content:check` clean, `tsc` clean, 166 tests pass, all 9 diagrams rendered
+    and inspected). Written from the current syllabuses: `MOV` copies the accumulator to the
+    given register, `CMI` is an indirect compare (a real trap), and the instruction groups
+    are data movement / input-output / arithmetic / unconditional / conditional.
+    - Same caveat: the review was a second adversarial pass by the **same agent** — a
+      reviewer should still be run over these before treating them as final. Key values
+      (every trace, bit pattern and mask) were recomputed from scratch in Python during that
+      pass rather than trusted from the drafts.
+    - YAML traps this batch hit: a list item that starts with `**` is parsed as an alias, and
+      an unquoted item containing `: ` becomes a mapping. Quote or reword them.
+  - **9701 4.1+4.2 The gaseous state + Bonding and structure is published** (27 Oct,
+    d1ab38f): 11 lessons (`gases-*` 4 files, `bonding-structure-*` 7 files), 41 questions,
+    6 diagrams (`chem-gases-molecular-collisions`, `chem-bonding-structure-ionic-lattice`,
+    `-simple-molecular`, `-giant-molecular`, `-giant-metallic`, `-melting-points`). All six
+    objectives 4.1.1–4.1.3, 4.2.1–4.2.3 are taught and tested (`content:check` clean,
+    `tsc` clean, diagram tests pass, all 6 diagrams rendered and inspected in light and
+    dark). The lesson pages are live at `/subjects/chemistry/4-1/...` and `4-2/...`.
+    - Same caveat as below: the review was a second, adversarial pass by the **same agent**,
+      cross-checked against web sources (R, melting points, graphite sublimation and
+      conduction, Cu⁺ model); the provenance notes say so. A reviewer should still be run
+      over `gases-*` and `bonding-structure-*` before treating them as final.
+    - Corrections made during review, keep them: copper's lattice is Cu⁺ cores with one
+      delocalised 4s electron per atom (not Cu²⁺); graphite's delocalised electrons are
+      *within* the layers; diamond and graphite sublime near 3800 °C rather than melt at
+      1 atm.
+  - **9702 5.1 Work, energy and power is published** (27 Oct, 595af22): 8 lessons
+    (`energy-conservation-*`), 40 original questions, 8 diagrams. Objectives 5.1.1–5.1.7 are
+    each taught by a core lesson and tested by questions (`content:check` clean, `tsc` clean,
+    diagram registry/notation tests pass, all 8 diagrams rendered and inspected in light and
+    dark).
+    - Same caveat as 9618 4.1 below: the review was a second, adversarial pass by the **same
+      agent** (no separate reviewer model in this environment); the provenance notes say so.
+      A reviewer should still be run over `energy-conservation-*` before treating it as final.
+    - The batch was written in one lesson per objective except 5.1.1 (two lessons: work done,
+      then work at an angle and zero-work cases). `\dfrac` is used everywhere; the checker
+      rejects display maths split across lines, so keep each `$$…$$` on one line.
+  - **Publishing in this cloud VM:** plain `git push` has no credentials, so `publish.sh`
+    always ends with "push failed" *after* it has verified and committed (it does not run its
+    final `git reset` on failure). Recover its commit instead of rebuilding it:
+    `git fsck --unreachable --no-reflogs | awk '$2=="commit"{print $3}'`, find the one whose
+    subject is `Add N reviewed lessons`, then `git reset --soft <sha> && git reset -q`,
+    `git commit --amend` (fix the boilerplate message: it claims a *separate* reviewer), and
+    push with the `cloud_git` tool. Docs commits: plain `git commit`, then `cloud_git` again.
+    `snapshot.sh`'s push also fails here; the drafts stay in the worktree.
+  - **Rendering diagrams in a fresh cloud VM:** `npx playwright install chromium`, extract
+    `fonts-dejavu-core` plus the missing X11/NSS/Cairo/fontconfig debs with `dpkg-deb -x`
+    into one directory (this chat used `/tmp/libs/x`), copy the DejaVu TTFs into `$HOME/.fonts`
+    (a VM with no fonts renders every label invisibly), then run with
+    `LD_LIBRARY_PATH=<extract>/usr/lib/x86_64-linux-gnu:<extract>/usr/lib` and
+    `CHROMIUM_PATH` pointing at a wrapper that execs
+    `$HOME/.cache/ms-playwright/chromium-*/chrome-linux/chrome --no-sandbox "$@"`.
+  - **9709 2.6 Numerical solution of equations is published** (27 Oct, 3935a04): 4 lessons
+    (`p2-numerical-solution-*`: sign change, approximations, using iteration, rearranging),
+    24 questions, 3 diagrams (`math-p2-numerical-solution-sign-change`, `-staircase`,
+    `-divergence`). Objectives 2.6.1–2.6.3 are each taught and tested. Written in the Maths
+    "one question type, one method" structure above. `content:check` clean, `tsc` clean,
+    diagram notation tests pass, all 3 diagrams rendered and inspected in light and dark
+    (label collisions and a clipped footer were fixed). Same review caveat: the review was a
+    second adversarial pass by the **same agent**, and the provenance notes say so.
+  - **Fun-writing rules landed on 27 Oct (e4d3816 + 5 earlier commits) after that batch was
+    written.** CLAUDE.md §"Lesson-writing style: fun and easy to read", CONTENT_GUIDE §6 and
+    HANDOFF §2 now require conversational, genuinely engaging lessons with analogies and
+    appropriate humour. The four `p2-numerical-solution-*` lessons are conversational and
+    analogy-led but predate the rule, so give them a fun/engagement pass when you next touch
+    9709 2.6; write every new lesson in that voice from the start.
+  - **Queue order** (`node scripts/lessons/status.mjs`): **9618 4.2+4.3 next**, then
+    9702 5.2, 9701 5.1, 9709 3.1+3.2, …
+  - **Tooling fixes (27 Oct, later cloud chat):** `scripts/render-diagram.tsx` dropped the
+    first key whenever `--out` was omitted (it treated `outIdx + 1 = 0` as the value to
+    skip) — fixed; `scripts/lessons/snapshot.sh` now copies the index via
+    `git rev-parse --git-path index` so it also works in cloud worktrees where `.git` is a
+    gitdir file; `.work-logs/` (render scratch: extracted debs, fonts, wrapper) is now
+    gitignored. Rendering in a fresh VM also needs `FONTCONFIG_PATH` pointing at an
+    extracted `fontconfig-config`'s `etc/fonts` — fonts alone still render every label
+    invisibly.
+  - **Running the e2e suite in this VM:** set the same `LD_LIBRARY_PATH` and
+    `FONTCONFIG_PATH` as for rendering, plus `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1`
+    (without it all 25 tests fail at browser launch with "Host system is missing
+    dependencies"). With them, `npx playwright test` passes 25/25 in about 1.2 minutes; it
+    serves on :3210 with `tests/fixtures/content` and its own throwaway DB in
+    `data/e2e-pglite`, so the real `data/pglite` stays clean.
+  - **9618 4.1 CPU architecture is published** (27 Oct, a8198e7): 10 lessons, 52 questions,
+    10 diagrams plus the shared `src/components/diagrams/9618/cpu-architecture-kit.tsx`
+    helper. The review there was also a same-agent second pass — run a reviewer over those 10
+    files if independent review is required.
+  - `scripts/lessons/templates.mjs` was repaired on 27 Oct: the writer prompt template had
+    unescaped backticks inside a template literal, so the module no longer parsed and
+    `prompts.mjs` failed. Keep `\`minutes\`` and `\`objectives\`` escaped.
+  - Leftovers in the cloud worktree are expected and ignored by `publish.sh`: regenerated
+    `src/components/diagrams/*/index.ts`, the unreferenced draft
+    `src/components/diagrams/9702/turning-effects-toppling.tsx`, and the restored drafts.
+  1. Older round (24 Oct), kept for reference: in a fresh container, run
+     `bash scripts/lessons/restore-drafts.sh` to bring the drafts back, then
+     `npm run diagrams:gen`.
   2. **9709 1.8 Integration: published 24 Oct** (ef055f1, reviewed; marker tests 166/166).
   3. **9618 3.1 Computers and their components: published 24 Oct** (5960250, reviewed).
   4. **Halted by the user on 24 Oct at 19:20 UTC ("we will continue next week").** No agents
@@ -308,3 +974,33 @@ changes alongside lessons:
   test with any change to marking.
 - **Content sync** drops invalid lesson files instead of failing the whole import
   (`withoutInvalidLessons`, `tests/content-sync.test.ts`).
+
+
+## 8. Shared coordination for multiple local agents
+
+Before any agent selects a lesson, read `docs/AGENT_COORDINATION.md` and join the shared runtime mailbox. The user may start many local agents with the same prompt, so **every agent must follow the same protocol**:
+
+- Resolve and verify the shared coordination path (`FATHOM_AGENT_COORD_DIR` or `.agent-coordination/`). Agents in separate worktrees must point to the same absolute shared directory. If they cannot see each other's test messages, coordination is not active.
+- Register a unique agent ID, post a hello/proposal, inspect recent messages and active claims, then claim one distinct unit before editing. Do not work on a claimed unit or shared file owned by another agent.
+- Negotiate roles briefly: coordinator/queue manager, writer, independent reviewer, validator, diagram specialist, publisher/deployment verifier. If nobody coordinates, self-assign the highest-priority unclaimed task from `node scripts/lessons/status.mjs` and announce it.
+- Keep the number of agents dynamic. Parallelize independent units when resources allow; reduce concurrency when contention or resource limits make it counterproductive. If alone, continue solo rather than waiting for other agents.
+- Use one owner for `docs/HANDOFF.md`, shared queue metadata, generated indexes, and publication operations at a time. Send proposed changes to the owner instead of editing the same shared file concurrently.
+- Write one immutable message file per message, refresh agent heartbeat and task claims, and announce handoffs and completion. Never automatically steal a stale-looking claim without checking that its owner is inactive.
+- Runtime messages, claims, and heartbeats are local coordination state. Do not commit them. Use the handoff for durable progress summaries, not rapid chat.
+- Only one publisher at a time. Preserve independent review and all validation/provenance gates; a self-review is not independent. Do not push drafts or falsely mark teacher review.
+- If the shared mailbox is unavailable, state that fact and safely continue on an unclaimed task solo or use an actually available messaging mechanism. Do not claim to have negotiated or communicated unless you verified it.
+
+The mailbox is file-based and near-real-time only through polling; it is not a magic push channel. See `docs/AGENT_COORDINATION.md` for the message format, atomic claim convention, and solo/two-agent/team workflows.
+
+
+## 9. Heartbeat-driven messaging and stall handling
+
+The coordination helper now broadcasts a mailbox message whenever an agent explicitly runs `heartbeat`. All agents must read heartbeat messages and communicate more actively instead of updating status silently.
+
+- During active collaboration, check messages at task boundaries and poll every 2–5 seconds while waiting for another agent. During long work, send heartbeats about every 30–60 seconds when practical.
+- Read each heartbeat's status, task, role, and files. Reply promptly to blockers, direct questions, overlapping file ownership, review requests, and handoffs. Offer a concrete next step when another agent is blocked.
+- Do not reply to every normal heartbeat; that creates message storms. Acknowledge meaningful updates and any message requiring a decision or action.
+- If an active task has no heartbeat for more than 2 minutes, send a short stall-check message and inspect current agent/claim state. A stale heartbeat alone does not prove the agent is dead.
+- Never take over a claim just because it looks stale. Check the process/session if possible, ask the owner, and record an explicit handoff before taking over. If the owner cannot be verified as inactive, work on another unclaimed task.
+- An agent that is stalled must message its current status, blocker, what it tried, and the help/decision it needs. Do not silently wait.
+- Heartbeats are notifications, not proof of completed work. Validate files and tests before reporting completion.

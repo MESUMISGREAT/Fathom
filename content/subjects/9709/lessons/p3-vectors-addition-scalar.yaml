@@ -1,0 +1,240 @@
+id: p3-vectors-addition-scalar
+subject: "9709"
+topic: "3.7"
+title: Adding vectors and multiplying by scalars
+summary: "Master vector addition (triangle and parallelogram laws) and scalar multiplication. Understand the geometry: shifting, stretching, and reversing vectors."
+order: 2
+minutes: 8
+kind: core
+objectives: ["3.7.2"]
+prerequisites: [p3-vectors-notation]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.7 outcome "Carry out addition and subtraction of vectors
+    and multiplication of a vector by a scalar, and interpret these operations in geometrical
+    terms. For example, 'OABC is a parallelogram' is equivalent to the vector OB being equal
+    to the vector OA plus the vector OC. The general form of the ratio theorem is not included,
+    but candidates are expected to understand that the midpoint of AB has position vector
+    1/2(OA + OB), where OA and OB are vectors." All examples, questions and diagrams are original.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can add and subtract vectors component-wise, multiply by scalars, and explain what these operations mean geometrically (translation, scaling, reversal).
+
+  - type: explain
+    title: Component-wise arithmetic
+    body: |-
+      Vectors in component form make arithmetic trivial:
+
+      **Addition:** $\begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix} + \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix} = \begin{pmatrix} x_1 + x_2 \\ y_1 + y_2 \\ z_1 + z_2 \end{pmatrix}$
+
+      **Subtraction:** $\begin{pmatrix} x_1 \\ y_1 \\ z_1 \end{pmatrix} - \begin{pmatrix} x_2 \\ y_2 \\ z_2 \end{pmatrix} = \begin{pmatrix} x_1 - x_2 \\ y_1 - y_2 \\ z_1 - z_2 \end{pmatrix}$
+
+      **Scalar multiplication:** $k \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} kx \\ ky \\ kz \end{pmatrix}$
+
+      In i/j/k notation, just collect like terms: $(a\mathbf{i} + b\mathbf{j} + c\mathbf{k}) + (p\mathbf{i} + q\mathbf{j} + r\mathbf{k}) = (a+p)\mathbf{i} + (b+q)\mathbf{j} + (c+r)\mathbf{k}$.
+
+  - type: diagram
+    diagram: p3-vectors-addition-scalar
+    alt: >-
+      Three panels. Left: triangle law - vector a then vector b gives a+b. Middle: parallelogram
+      law - a and b from same tail, diagonal is a+b. Right: scalar multiplication - 2a stretches,
+      -a reverses, 0.5a shrinks.
+    caption: |-
+      Top: triangle and parallelogram laws for addition (same result). Bottom: scalar multiplication stretches, shrinks, or reverses.
+
+  - type: example
+    title: "Example 1: component-wise arithmetic"
+    problem: |-
+      $\mathbf{a} = \begin{pmatrix} 2 \\ -3 \\ 1 \end{pmatrix}$, $\mathbf{b} = \begin{pmatrix} -1 \\ 4 \\ 2 \end{pmatrix}$. Find (a) $\mathbf{a} + \mathbf{b}$, (b) $2\mathbf{a} - \mathbf{b}$, (c) $-\frac{1}{2}\mathbf{b}$.
+    steps:
+      - |-
+        (a) $\mathbf{a} + \mathbf{b} = \begin{pmatrix} 2-1 \\ -3+4 \\ 1+2 \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \\ 3 \end{pmatrix}$.
+      - |-
+        (b) $2\mathbf{a} - \mathbf{b} = \begin{pmatrix} 4 \\ -6 \\ 2 \end{pmatrix} - \begin{pmatrix} -1 \\ 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 5 \\ -10 \\ 0 \end{pmatrix}$.
+      - |-
+        (c) $-\frac{1}{2}\mathbf{b} = -\frac{1}{2}\begin{pmatrix} -1 \\ 4 \\ 2 \end{pmatrix} = \begin{pmatrix} 0.5 \\ -2 \\ -1 \end{pmatrix}$.
+    answer: |-
+      (a) $\begin{pmatrix} 1 \\ 1 \\ 3 \end{pmatrix}$, (b) $\begin{pmatrix} 5 \\ -10 \\ 0 \end{pmatrix}$, (c) $\begin{pmatrix} 0.5 \\ -2 \\ -1 \end{pmatrix}$.
+
+  - type: check
+    questions: [vec-add-comps, vec-scalar-mult]
+
+  - type: explain
+    title: The triangle law (head-to-tail)
+    body: |-
+      To add $\mathbf{a} + \mathbf{b}$ geometrically: draw $\mathbf{a}$, then draw $\mathbf{b}$ starting at the tip of $\mathbf{a}$. The vector from the tail of $\mathbf{a}$ to the tip of $\mathbf{b}$ is $\mathbf{a} + \mathbf{b}$.
+
+      This is why $\overrightarrow{AB} + \overrightarrow{BC} = \overrightarrow{AC}$ — the intermediate point B cancels out. It's the "head-to-tail" or "triangle" rule.
+
+  - type: explain
+    title: The parallelogram law
+    body: |-
+      To add $\mathbf{a} + \mathbf{b}$ when both start at the same point: complete the parallelogram. The diagonal from the common tail to the opposite corner is $\mathbf{a} + \mathbf{b}$.
+
+      **Both laws give the same result.** The parallelogram law is just the triangle law with $\mathbf{b}$ shifted to start at the same point as $\mathbf{a}$.
+
+  - type: intuition
+    title: What scalar multiplication does geometrically
+    body: |-
+      Multiply by $k$:
+      - $k > 1$: stretches the vector, same direction.
+      - $0 < k < 1$: shrinks the vector, same direction.
+      - $k = -1$: reverses the vector (same length, opposite direction).
+      - $k < -1$: stretches *and* reverses.
+      - $-1 < k < 0$: shrinks *and* reverses.
+      - $k = 0$: gives the zero vector $\mathbf{0}$ (no direction, zero length).
+
+      The zero vector $\mathbf{0} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$ is the additive identity: $\mathbf{a} + \mathbf{0} = \mathbf{a}$.
+
+  - type: example
+    title: "Example 2: parallelogram geometry"
+    problem: |-
+      OABC is a parallelogram. $\overrightarrow{OA} = \mathbf{a}$, $\overrightarrow{OC} = \mathbf{c}$. Express $\overrightarrow{OB}$ and $\overrightarrow{AC}$ in terms of $\mathbf{a}$ and $\mathbf{c}$.
+    steps:
+      - |-
+        $\overrightarrow{OB}$ is the diagonal from O. By parallelogram law, $\overrightarrow{OB} = \overrightarrow{OA} + \overrightarrow{OC} = \mathbf{a} + \mathbf{c}$.
+      - |-
+        $\overrightarrow{AC} = \overrightarrow{OC} - \overrightarrow{OA} = \mathbf{c} - \mathbf{a}$ (triangle law: go from A to O, then O to C).
+    answer: |-
+      $\overrightarrow{OB} = \mathbf{a} + \mathbf{c}$, $\overrightarrow{AC} = \mathbf{c} - \mathbf{a}$.
+
+  - type: check
+    questions: [vec-parallelogram, vec-midpoint]
+
+  - type: explain
+    title: Midpoint formula (ratio theorem special case)
+    body: |-
+      The midpoint $M$ of $AB$ has position vector:
+
+      $$ \overrightarrow{OM} = \frac{1}{2}(\overrightarrow{OA} + \overrightarrow{OB}) = \frac{\mathbf{a} + \mathbf{b}}{2} $$
+
+      **Why?** $\overrightarrow{AM} = \frac{1}{2}\overrightarrow{AB} = \frac{1}{2}(\mathbf{b} - \mathbf{a})$. Then $\overrightarrow{OM} = \overrightarrow{OA} + \overrightarrow{AM} = \mathbf{a} + \frac{1}{2}(\mathbf{b} - \mathbf{a}) = \frac{\mathbf{a} + \mathbf{b}}{2}$.
+
+      This is the "average of the endpoints" — a very useful fact.
+
+  - type: example
+    title: "Example 3: midpoint in 3D"
+    problem: |-
+      A = (2, −3, 5), B = (8, 1, −1). Find the position vector of the midpoint M of AB.
+    steps:
+      - |-
+        $\overrightarrow{OA} = \begin{pmatrix} 2 \\ -3 \\ 5 \end{pmatrix}$, $\overrightarrow{OB} = \begin{pmatrix} 8 \\ 1 \\ -1 \end{pmatrix}$.
+      - |-
+        $\overrightarrow{OM} = \frac{1}{2}\begin{pmatrix} 2+8 \\ -3+1 \\ 5-1 \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 10 \\ -2 \\ 4 \end{pmatrix} = \begin{pmatrix} 5 \\ -1 \\ 2 \end{pmatrix}$.
+    answer: |-
+      $\overrightarrow{OM} = \begin{pmatrix} 5 \\ -1 \\ 2 \end{pmatrix}$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\mathbf{a} + \mathbf{b}$ means add the magnitudes.
+        right: |-
+          You add components, not magnitudes. $|\mathbf{a} + \mathbf{b}|$ is usually *not* $|\mathbf{a}| + |\mathbf{b}|$ (only if they are parallel and same direction).
+      - wrong: |-
+          $-\mathbf{a}$ means the components become negative reciprocals.
+        right: |-
+          $-\mathbf{a}$ just flips every component's sign: $-\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -x \\ -y \\ -z \end{pmatrix}$. Same length, opposite direction.
+      - wrong: |-
+          $\overrightarrow{AB} = \overrightarrow{OA} + \overrightarrow{OB}$.
+        right: |-
+          $\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA}$ (tip minus tail). The order A then B matters.
+      - wrong: |-
+          The midpoint of AB is $(\mathbf{a} + \mathbf{b})/2$ only if O is the origin.
+        right: |-
+          The formula $\overrightarrow{OM} = (\mathbf{a} + \mathbf{b})/2$ *assumes* $\mathbf{a} = \overrightarrow{OA}$ and $\mathbf{b} = \overrightarrow{OB}$ with the same origin O. That's the standard position vector setup.
+
+  - type: exam
+    body: |-
+      - "Express $\overrightarrow{AC}$ in terms of $\mathbf{a}$ and $\mathbf{c}$" — draw the diagram, use triangle law: $\overrightarrow{AC} = \overrightarrow{OC} - \overrightarrow{OA}$.
+      - "OABC is a parallelogram" — immediately write $\overrightarrow{OB} = \mathbf{a} + \mathbf{c}$.
+      - "Find the midpoint of AB" — $(\mathbf{a} + \mathbf{b})/2$. Don't overthink it.
+      - "Simplify $3(\mathbf{a} - 2\mathbf{b}) + 4\mathbf{b}$" — distribute: $3\mathbf{a} - 6\mathbf{b} + 4\mathbf{b} = 3\mathbf{a} - 2\mathbf{b}$.
+      - Check: are you adding vectors or points? Points have position vectors; vectors don't have a fixed location. But in practice, "point A has position vector $\mathbf{a}$" lets you treat them interchangeably.
+
+  - type: takeaways
+    items:
+      - |-
+        Add/subtract component-wise. Multiply each component by the scalar.
+      - |-
+        Triangle law: head-to-tail. Parallelogram law: diagonal from common tail. Same result.
+      - |-
+        Scalar $k > 0$: same direction, scaled length. $k < 0$: opposite direction, scaled length.
+      - |-
+        Midpoint of AB: $\frac{1}{2}(\mathbf{a} + \mathbf{b})$ where $\mathbf{a}, \mathbf{b}$ are position vectors of A, B.
+      - |-
+        $\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$ (tip minus tail).
+
+questions:
+  - id: vec-add-comps
+    format: text
+    difficulty: 1
+    objectives: ["3.7.2"]
+    prompt: |-
+      $\mathbf{a} = \begin{pmatrix} 3 \\ -2 \\ 1 \end{pmatrix}$, $\mathbf{b} = \begin{pmatrix} -1 \\ 4 \\ -2 \end{pmatrix}$. Find $\mathbf{a} - 2\mathbf{b}$ as a column vector.
+    accept:
+      - (5, -10, 5)^T
+      - \begin{pmatrix} 5 \\ -10 \\ 5 \end{pmatrix}
+      - 5, -10, 5
+    model: |-
+      $\begin{pmatrix} 5 \\ -10 \\ 5 \end{pmatrix}$
+    explanation: |-
+      $2\mathbf{b} = \begin{pmatrix} -2 \\ 8 \\ -4 \end{pmatrix}$. $\mathbf{a} - 2\mathbf{b} = \begin{pmatrix} 3 - (-2) \\ -2 - 8 \\ 1 - (-4) \end{pmatrix} = \begin{pmatrix} 5 \\ -10 \\ 5 \end{pmatrix}$.
+
+  - id: vec-scalar-mult
+    format: mcq
+    difficulty: 1
+    objectives: ["3.7.2"]
+    prompt: |-
+      What does multiplying a vector by $-2$ do geometrically?
+    options:
+      - text: Reverses the direction and doubles the length
+        correct: true
+        why: |-
+          Negative reverses direction; magnitude $|-2| = 2$ doubles the length.
+      - text: Reverses the direction but keeps the length the same
+        why: |-
+          That would be multiplying by $-1$.
+      - text: Keeps the direction but doubles the length
+        why: |-
+          That would be multiplying by $2$.
+      - text: Halves the length and reverses direction
+        why: |-
+          That would be multiplying by $-\frac{1}{2}$.
+    explanation: |
+      A negative scalar reverses the arrow, and its magnitude scales the length: multiplying by $-2$ doubles the length and points the vector the opposite way.
+
+  - id: vec-parallelogram
+    format: text
+    difficulty: 2
+    objectives: ["3.7.2"]
+    prompt: |-
+      OABC is a parallelogram. $\overrightarrow{OA} = \mathbf{a}$, $\overrightarrow{OC} = \mathbf{c}$. Write $\overrightarrow{CA}$ in terms of $\mathbf{a}$ and $\mathbf{c}$.
+    accept:
+      - a - c
+      - \mathbf{a} - \mathbf{c}
+      - a - c
+      - \mathbf{a} - \mathbf{c}
+    model: |-
+      $\mathbf{a} - \mathbf{c}$
+    explanation: |-
+      $\overrightarrow{CA} = \overrightarrow{OA} - \overrightarrow{OC} = \mathbf{a} - \mathbf{c}$ (tip A minus tail C).
+
+  - id: vec-midpoint
+    format: text
+    difficulty: 2
+    objectives: ["3.7.2"]
+    prompt: |-
+      A has position vector $3\mathbf{i} - 2\mathbf{j} + \mathbf{k}$, B has position vector $-\mathbf{i} + 4\mathbf{j} - 3\mathbf{k}$. Find the position vector of the midpoint of AB.
+    accept:
+      - i + j - k
+      - \mathbf{i} + \mathbf{j} - \mathbf{k}
+      - (1, 1, -1)^T
+      - \begin{pmatrix} 1 \\ 1 \\ -1 \end{pmatrix}
+    model: |-
+      $\mathbf{i} + \mathbf{j} - \mathbf{k}$
+    explanation: |-
+      Midpoint = $\frac{1}{2}((3\mathbf{i} - 2\mathbf{j} + \mathbf{k}) + (-\mathbf{i} + 4\mathbf{j} - 3\mathbf{k})) = \frac{1}{2}(2\mathbf{i} + 2\mathbf{j} - 2\mathbf{k}) = \mathbf{i} + \mathbf{j} - \mathbf{k}$.

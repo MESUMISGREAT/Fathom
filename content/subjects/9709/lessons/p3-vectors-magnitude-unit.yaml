@@ -1,0 +1,260 @@
+id: p3-vectors-magnitude-unit
+subject: "9709"
+topic: "3.7"
+title: Magnitude and unit vectors
+summary: Calculate the length (magnitude) of a vector in 2D and 3D. Find unit vectors in the same direction, and understand displacement and position vectors.
+order: 3
+minutes: 7
+kind: core
+objectives: ["3.7.3"]
+prerequisites: [p3-vectors-addition-scalar]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.7 outcome "Calculate the magnitude of a vector, and use
+    unit vectors, displacement vectors and position vectors. In 2 or 3 dimensions." All
+    examples, questions and diagrams are original.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can compute the magnitude of any vector, construct a unit vector in the same direction, and distinguish between position vectors and displacement vectors.
+
+  - type: explain
+    title: Magnitude (length)
+    body: |-
+      The magnitude of a vector $\mathbf{v} = \begin{pmatrix} x \\ y \end{pmatrix}$ or $\begin{pmatrix} x \\ y \\ z \end{pmatrix}$ is its length:
+
+      **2D:** $|\mathbf{v}| = \sqrt{x^2 + y^2}$
+
+      **3D:** $|\mathbf{v}| = \sqrt{x^2 + y^2 + z^2}$
+
+      In i/j/k notation: $|x\mathbf{i} + y\mathbf{j} + z\mathbf{k}| = \sqrt{x^2 + y^2 + z^2}$.
+
+      This is just Pythagoras' theorem extended to 3D. The magnitude is always $\ge 0$, and $|\mathbf{v}| = 0$ only for the zero vector $\mathbf{0}$.
+
+  - type: diagram
+    diagram: p3-vectors-magnitude-unit
+    alt: >-
+      3D diagram showing a vector from origin to (3, 4, 12). The magnitude is sqrt(3^2 + 4^2 + 12^2) = 13.
+      A unit vector in the same direction is (3/13, 4/13, 12/13) with length 1.
+    caption: |-
+      The magnitude is the distance from tail to tip. The unit vector has the same direction but length 1.
+
+  - type: example
+    title: "Example 1: magnitude in 2D and 3D"
+    problem: |-
+      Find the magnitude of (a) $\mathbf{a} = \begin{pmatrix} 3 \\ -4 \end{pmatrix}$, (b) $\mathbf{b} = 2\mathbf{i} - 3\mathbf{j} + 6\mathbf{k}$.
+    steps:
+      - |-
+        (a) $|\mathbf{a}| = \sqrt{3^2 + (-4)^2} = \sqrt{9 + 16} = \sqrt{25} = 5$.
+      - |-
+        (b) $|\mathbf{b}| = \sqrt{2^2 + (-3)^2 + 6^2} = \sqrt{4 + 9 + 36} = \sqrt{49} = 7$.
+    answer: |-
+      (a) 5, (b) 7.
+
+  - type: check
+    questions: [vec-mag-2d, vec-mag-3d]
+
+  - type: explain
+    title: Unit vectors
+    body: |-
+      A **unit vector** is a vector of magnitude 1. For any non-zero vector $\mathbf{v}$, the unit vector in the same direction is:
+
+      $$ \hat{\mathbf{v}} = \frac{\mathbf{v}}{|\mathbf{v}|} $$
+
+      The hat notation ($\hat{\mathbf{v}}$) means "unit vector in the direction of $\mathbf{v}$". You can also write $\mathbf{u} = \frac{\mathbf{v}}{|\mathbf{v}|}$.
+
+      **Check:** $|\hat{\mathbf{v}}| = \left|\frac{\mathbf{v}}{|\mathbf{v}|}\right| = \frac{|\mathbf{v}|}{|\mathbf{v}|} = 1$. ✓
+
+      The standard unit vectors $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are exactly the unit vectors along the coordinate axes: $|\mathbf{i}| = |\mathbf{j}| = |\mathbf{k}| = 1$.
+
+  - type: example
+    title: "Example 2: finding a unit vector"
+    problem: |-
+      Find a unit vector in the direction of $\mathbf{v} = \begin{pmatrix} 4 \\ -3 \\ 12 \end{pmatrix}$.
+    steps:
+      - |-
+        $|\mathbf{v}| = \sqrt{4^2 + (-3)^2 + 12^2} = \sqrt{16 + 9 + 144} = \sqrt{169} = 13$.
+      - |-
+        $\hat{\mathbf{v}} = \frac{1}{13}\begin{pmatrix} 4 \\ -3 \\ 12 \end{pmatrix} = \begin{pmatrix} 4/13 \\ -3/13 \\ 12/13 \end{pmatrix}$.
+      - |-
+        Check: $\sqrt{(4/13)^2 + (-3/13)^2 + (12/13)^2} = \frac{1}{13}\sqrt{16+9+144} = 1$. ✓
+    answer: |-
+      $\hat{\mathbf{v}} = \frac{1}{13}\begin{pmatrix} 4 \\ -3 \\ 12 \end{pmatrix} = \begin{pmatrix} 4/13 \\ -3/13 \\ 12/13 \end{pmatrix}$.
+
+  - type: check
+    questions: [vec-unit-2d, vec-unit-check]
+
+  - type: explain
+    title: Position vectors vs displacement vectors
+    body: |-
+      **Position vector** of point $P$: $\overrightarrow{OP} = \mathbf{p}$. It describes *where* P is relative to the origin O.
+
+      **Displacement vector** from A to B: $\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$. It describes *how to get* from A to B.
+
+      **Key relationship:** $\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \mathbf{b} - \mathbf{a}$.
+
+      - If you know the position vectors $\mathbf{a}$ and $\mathbf{b}$, the displacement is just subtraction.
+      - If you know the displacement $\overrightarrow{AB}$ and the position $\mathbf{a}$, the position of B is $\mathbf{b} = \mathbf{a} + \overrightarrow{AB}$.
+      - The magnitude of a displacement vector is the **distance** between the two points: $AB = |\overrightarrow{AB}| = |\mathbf{b} - \mathbf{a}|$.
+
+  - type: example
+    title: "Example 3: distance between points"
+    problem: |-
+      A = (1, −2, 3), B = (4, 2, −1). Find (a) the displacement $\overrightarrow{AB}$, (b) the distance AB.
+    steps:
+      - |-
+        (a) $\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \begin{pmatrix} 4 \\ 2 \\ -1 \end{pmatrix} - \begin{pmatrix} 1 \\ -2 \\ 3 \end{pmatrix} = \begin{pmatrix} 3 \\ 4 \\ -4 \end{pmatrix}$.
+      - |-
+        (b) $AB = |\overrightarrow{AB}| = \sqrt{3^2 + 4^2 + (-4)^2} = \sqrt{9 + 16 + 16} = \sqrt{41}$.
+    answer: |-
+      (a) $\overrightarrow{AB} = \begin{pmatrix} 3 \\ 4 \\ -4 \end{pmatrix}$, (b) $AB = \sqrt{41}$.
+
+  - type: check
+    questions: [vec-displacement, vec-distance]
+
+  - type: intuition
+    title: Why unit vectors matter
+    body: |-
+      Unit vectors separate **direction** from **magnitude**. Any vector $\mathbf{v}$ can be written as:
+
+      $$ \mathbf{v} = |\mathbf{v}| \, \hat{\mathbf{v}} $$
+
+      This is powerful: the direction is $\hat{\mathbf{v}}$, the magnitude is $|\mathbf{v}|$. In physics, force is $F = m\mathbf{a}$ — the direction of acceleration matters separately from its magnitude. In geometry, the angle between two vectors depends only on their unit vectors (the scalar product uses unit vectors).
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The magnitude of $\begin{pmatrix} -3 \\ 4 \end{pmatrix}$ is $-5$.
+        right: |-
+          Magnitude is a length, always non-negative. $\sqrt{(-3)^2 + 4^2} = 5$, not $-5$. The negative sign is inside the square, so it becomes positive.
+      - wrong: |-
+          A unit vector has magnitude 0.
+        right: |-
+          A unit vector has magnitude exactly 1. The zero vector has magnitude 0.
+      - wrong: |-
+          The unit vector in the direction of $\mathbf{v}$ is $\mathbf{v} / \mathbf{v}$ (dividing vector by vector).
+        right: |-
+          You divide the vector by its **magnitude** (a scalar): $\mathbf{v} / |\mathbf{v}|$. Vector division is not defined.
+      - wrong: |-
+          $\overrightarrow{AB} = \mathbf{a} - \mathbf{b}$ (first minus second).
+        right: |-
+          $\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$ (tip minus tail). Think: from A to B means start at A, end at B.
+      - wrong: |-
+          Distance AB is $|\mathbf{a}| - |\mathbf{b}|$.
+        right: |-
+          Distance is $|\mathbf{b} - \mathbf{a}|$, the magnitude of the displacement. Magnitudes don't subtract like that.
+
+  - type: exam
+    body: |-
+      - "Find the magnitude of..." — just apply Pythagoras. Leave as $\sqrt{n}$ if not a perfect square.
+      - "Find a unit vector in the direction of..." — divide by the magnitude. Show the magnitude calculation.
+      - "Find the distance between A and B" — compute $\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$, then $|\overrightarrow{AB}|$.
+      - "Point P divides AB in the ratio 2:1" — use section formula: $\mathbf{p} = \frac{1}{3}\mathbf{a} + \frac{2}{3}\mathbf{b}$ (or $\frac{2\mathbf{a} + 1\mathbf{b}}{3}$ depending on direction). The simple midpoint is the 1:1 case.
+      - Always distinguish: $\mathbf{a}$ is a position vector (from origin). $\overrightarrow{AB}$ is a displacement (from A to B).
+
+  - type: takeaways
+    items:
+      - |-
+        Magnitude: 2D $\sqrt{x^2 + y^2}$, 3D $\sqrt{x^2 + y^2 + z^2}$. Always $\ge 0$.
+      - |-
+        Unit vector: $\hat{\mathbf{v}} = \mathbf{v} / |\mathbf{v}|$. Direction only, length 1.
+      - |-
+        Position vector = from origin to point. Displacement vector = from one point to another.
+      - |-
+        $\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$. Distance $AB = |\mathbf{b} - \mathbf{a}|$.
+      - |-
+        Any vector = (magnitude) × (unit vector in its direction).
+
+questions:
+  - id: vec-mag-2d
+    format: numeric
+    difficulty: 1
+    objectives: ["3.7.3"]
+    prompt: |-
+      Find the magnitude of $\begin{pmatrix} -5 \\ 12 \end{pmatrix}$.
+    fields:
+      - label: "|v| ="
+        answer: 13
+    explanation: |-
+      $\sqrt{(-5)^2 + 12^2} = \sqrt{25 + 144} = \sqrt{169} = 13$.
+
+  - id: vec-mag-3d
+    format: numeric
+    difficulty: 1
+    objectives: ["3.7.3"]
+    prompt: |-
+      Find the magnitude of $3\mathbf{i} - 4\mathbf{j} + 12\mathbf{k}$.
+    fields:
+      - label: "|v| ="
+        answer: 13
+    explanation: |-
+      $\sqrt{3^2 + (-4)^2 + 12^2} = \sqrt{9 + 16 + 144} = \sqrt{169} = 13$.
+
+  - id: vec-unit-2d
+    format: text
+    difficulty: 2
+    objectives: ["3.7.3"]
+    prompt: |-
+      Find a unit vector in the direction of $\begin{pmatrix} 6 \\ -8 \end{pmatrix}$.
+    accept:
+      - (3/5, -4/5)^T
+      - \begin{pmatrix} 3/5 \\ -4/5 \end{pmatrix}
+      - 0.6, -0.8
+      - \begin{pmatrix} 0.6 \\ -0.8 \end{pmatrix}
+    model: |-
+      $\begin{pmatrix} 3/5 \\ -4/5 \end{pmatrix}$
+    explanation: |-
+      $|\mathbf{v}| = \sqrt{36 + 64} = 10$. Unit vector = $\frac{1}{10}\begin{pmatrix} 6 \\ -8 \end{pmatrix} = \begin{pmatrix} 0.6 \\ -0.8 \end{pmatrix}$.
+
+  - id: vec-unit-check
+    format: mcq
+    difficulty: 1
+    objectives: ["3.7.3"]
+    prompt: |-
+      If $\mathbf{u}$ is a unit vector, what is $|\mathbf{u}|$?
+    options:
+      - text: "1"
+        correct: true
+        why: |-
+          By definition, a unit vector has magnitude 1.
+      - text: "0"
+        why: |-
+          That's the zero vector.
+      - text: It depends on the vector
+        why: |-
+          No, *unit* means magnitude 1 for all unit vectors.
+      - text: The same as the original vector
+        why: |-
+          The original vector may have any magnitude; the unit vector always has magnitude 1.
+    explanation: |
+      A unit vector is defined as a vector of length 1, so $|\mathbf{u}| = 1$ whatever direction it points.
+
+  - id: vec-displacement
+    format: text
+    difficulty: 2
+    objectives: ["3.7.3"]
+    prompt: |-
+      A has position vector $2\mathbf{i} - \mathbf{j} + 3\mathbf{k}$, B has position vector $-\mathbf{i} + 4\mathbf{j} - 2\mathbf{k}$. Find the displacement $\overrightarrow{AB}$.
+    accept:
+      - -3i + 5j - 5k
+      - -3\mathbf{i} + 5\mathbf{j} - 5\mathbf{k}
+      - \begin{pmatrix} -3 \\ 5 \\ -5 \end{pmatrix}
+    model: |-
+      $-3\mathbf{i} + 5\mathbf{j} - 5\mathbf{k}$
+    explanation: |-
+      $\overrightarrow{AB} = \mathbf{b} - \mathbf{a} = (-\mathbf{i} + 4\mathbf{j} - 2\mathbf{k}) - (2\mathbf{i} - \mathbf{j} + 3\mathbf{k}) = -3\mathbf{i} + 5\mathbf{j} - 5\mathbf{k}$.
+
+  - id: vec-distance
+    format: numeric
+    difficulty: 2
+    objectives: ["3.7.3"]
+    prompt: |-
+      A = (1, 2, 3), B = (4, 6, 3). Find the distance AB.
+    fields:
+      - label: "AB ="
+        answer: 5
+    explanation: |-
+      $\overrightarrow{AB} = (3, 4, 0)$. $AB = \sqrt{3^2 + 4^2 + 0^2} = \sqrt{25} = 5$.

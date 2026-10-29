@@ -1,0 +1,266 @@
+id: doppler-effect-formula
+subject: "9702"
+topic: "7.3"
+title: "The Doppler formula, sign by sign"
+summary: Where f-o equals f-s v over (v plus or minus v-s) comes from, how to choose the sign every time, and how to use it backwards.
+order: 2
+minutes: 10
+kind: core
+objectives: ["7.3.2"]
+prerequisites: [doppler-effect-moving-source, progressive-waves-key-terms]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 7.3, learning outcome 7.3.2 (use f_o = f_s v / (v plus or minus v_s) for a
+    source moving relative to a stationary observer). Every numeric answer was recomputed in
+    Python from the question's own data. All questions are original.
+    Re-checked line by line in a second, adversarial pass by the same agent on 2026-10-28: every worked answer and every answer key was recomputed in Python from the question's own data, each MCQ was checked for exactly one defensible correct option, and every objective was re-read against the syllabus wording. Chromium cannot launch in this environment, so the diagrams were checked by reading their coordinates and label boxes rather than by viewing a render, and that caught four label and stroke faults that were fixed. No separate reviewer model was available and no teacher has reviewed this lesson.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can derive the Doppler formula, choose the correct sign for an approaching or receding source, and rearrange it to find a source speed.
+
+  - type: explain
+    title: Name the four quantities first
+    body: |-
+      The formula has four symbols, and mixing up two of them is the usual reason answers go wrong. Before writing anything down, name them:
+
+      - $f_s$ is the **frequency emitted by the source** (s for source). It does not change.
+      - $f_o$ is the **frequency detected by the observer** (o for observer). This is what changes.
+      - $v$ is the **speed of the wave through the air** — about $340\ \text{m s}^{-1}$ for sound.
+      - $v_s$ is the **speed of the source**. It is a speed of an object, never a speed of sound.
+
+      Notice the two speeds are different animals. $v$ belongs to the wave, $v_s$ belongs to the ambulance.
+
+  - type: explain
+    title: Where the formula comes from
+    body: |-
+      Take a source moving at speed $v_s$ directly towards a stationary observer, and let the air be still.
+
+      **Step 1 — one period of the source.** In the time $T = 1/f_s$ between two wavefronts, the source moves a distance $v_s T$ towards the observer.
+
+      **Step 2 — one wavelength.** The first wavefront has travelled $vT$ from where it started. The second wavefront starts $v_s T$ closer to the observer, so the gap between the two wavefronts is
+
+      $$\lambda_{\text{ahead}} = vT - v_sT = (v - v_s)T = \frac{v - v_s}{f_s}$$
+
+      **Step 3 — what the observer counts.** The observer is stationary, so wavefronts pass at speed $v$ with this new spacing. The frequency detected is
+
+      $$f_o = \frac{v}{\lambda_{\text{ahead}}} = \frac{v}{(v - v_s)/f_s} = \frac{f_s\, v}{v - v_s}$$
+
+      For a source moving **away**, the second wavefront starts further from the observer, so the wavelength is $(v + v_s)/f_s$ and the plus sign appears in the denominator instead.
+
+      Notice what did **not** change: $v$ never changed, and $f_s$ never changed. Only the spacing of the wavefronts did.
+
+  - type: definition
+    term: The Doppler formula
+    body: |-
+      For a source moving relative to a **stationary** observer:
+
+      $$f_o = \frac{f_s\, v}{v \pm v_s}$$
+
+      - Use the **minus** sign when the source is moving **towards** the observer. A smaller denominator gives a higher detected frequency.
+      - Use the **plus** sign when the source is moving **away** from the observer. A larger denominator gives a lower detected frequency.
+
+      $v$ is the speed of the wave in the air and $v_s$ is the speed of the source.
+
+  - type: example
+    title: "Worked example: approaching"
+    problem: |-
+      A car horn emits a note of frequency $500\ \text{Hz}$. The car moves directly towards a stationary pedestrian at $25\ \text{m s}^{-1}$. Take the speed of sound in air as $340\ \text{m s}^{-1}$.
+
+      Find the frequency the pedestrian detects.
+    steps:
+      - |-
+        Write down what you have, with the names attached: $f_s = 500\ \text{Hz}$, $v = 340\ \text{m s}^{-1}$, $v_s = 25\ \text{m s}^{-1}$, approaching.
+      - |-
+        Choose the sign. The source is approaching, so the detected frequency must be higher, which needs the smaller denominator:
+
+        $$f_o = \frac{f_s\, v}{v - v_s}$$
+      - |-
+        Substitute:
+
+        $$f_o = \frac{500 \times 340}{340 - 25} = \frac{170\,000}{315}$$
+      - |-
+        $170\,000 \div 315 = 539.7$, so $f_o = 540\ \text{Hz}$ to 3 s.f.
+
+        The answer is higher than $500\ \text{Hz}$, which is what we expected for an approaching source. ✔
+    answer: |-
+      $f_o \approx 540\ \text{Hz}$, about $40\ \text{Hz}$ above the emitted note.
+
+  - type: example
+    title: "Worked example: receding"
+    problem: |-
+      The same car has passed the pedestrian and is now moving directly away at $25\ \text{m s}^{-1}$, still sounding $500\ \text{Hz}$.
+
+      Find the new detected frequency and the change from the approaching case.
+    steps:
+      - |-
+        The source is now receding, so use the plus sign:
+
+        $$f_o = \frac{f_s\, v}{v + v_s}$$
+      - |-
+        Substitute:
+
+        $$f_o = \frac{500 \times 340}{340 + 25} = \frac{170\,000}{365}$$
+      - |-
+        $170\,000 \div 365 = 465.8$, so $f_o = 466\ \text{Hz}$ to 3 s.f.
+      - |-
+        The change as the car passes is $539.7 - 465.8 = 73.9\ \text{Hz}$, which is about $74\ \text{Hz}$.
+    answer: |-
+      $f_o \approx 466\ \text{Hz}$; the note drops by about $74\ \text{Hz}$ as the car goes by.
+
+  - type: check
+    title: Quick check
+    questions: [formula-sign, approach-frequency, recede-frequency]
+
+  - type: example
+    title: "Worked example: running the formula backwards"
+    problem: |-
+      A source emitting $800\ \text{Hz}$ approaches a stationary observer and is detected at $860\ \text{Hz}$. Take $v = 340\ \text{m s}^{-1}$.
+
+      Find the speed of the source.
+    steps:
+      - |-
+        The detected frequency is higher, so the source is approaching and the denominator is $v - v_s$:
+
+        $$860 = \frac{800 \times 340}{340 - v_s}$$
+      - |-
+        Multiply both sides by $(340 - v_s)$:
+
+        $$860(340 - v_s) = 800 \times 340$$
+      - |-
+        Divide both sides by $860$:
+
+        $$340 - v_s = \frac{800 \times 340}{860} = 316.3$$
+      - |-
+        Rearrange:
+
+        $$v_s = 340 - 316.3 = 23.7\ \text{m s}^{-1}$$
+      - |-
+        Check: $23.7\ \text{m s}^{-1}$ is a sensible speed for a vehicle, and a source speed above $340\ \text{m s}^{-1}$ would make no sense for sound at all.
+    answer: |-
+      $v_s \approx 23.7\ \text{m s}^{-1}$.
+
+  - type: misconceptions
+    items:
+      - wrong: The frequency goes up, so use the plus sign.
+        right: |-
+          The plus sign makes the denominator larger, which makes $f_o$ **smaller**. A higher detected frequency needs the minus sign.
+      - wrong: $v_s$ is the speed of sound.
+        right: |-
+          $v$ is the speed of sound; $v_s$ is the speed of the source. Swapping them gives a wildly wrong answer.
+      - wrong: The formula also handles a moving observer.
+        right: |-
+          The syllabus formula is for a moving source and a stationary observer. A moving observer is not required, so do not stretch this formula to cover it.
+      - wrong: If the source is stationary, the formula gives zero.
+        right: |-
+          With $v_s = 0$ the denominator is just $v$, so $f_o = f_s$. That is a useful check on your algebra.
+
+  - type: exam
+    body: |-
+      - Write the formula, substitute the numbers, then state the sign choice in words: "minus, because the source is approaching". That sentence is often worth a mark and protects you if the arithmetic slips.
+      - Sanity-check the direction. An approaching source must give $f_o > f_s$; a receding source must give $f_o < f_s$. If your answer disagrees, you chose the wrong sign.
+      - Give two or three significant figures and include the unit, Hz.
+      - For a source that passes the observer, apply the formula twice: once with the minus sign, once with the plus sign.
+
+  - type: takeaways
+    items:
+      - '$f_o = \dfrac{f_s\, v}{v \mp v_s}$ describes the frequency detected from a source moving relative to a stationary observer.'
+      - "Use the minus sign for an approaching source and the plus sign for a receding one."
+      - '$v$ is the speed of sound and $v_s$ is the speed of the source — keep them apart.'
+      - 'Always check that the answer is higher than $f_s$ when approaching and lower when receding.'
+
+  - type: check
+    title: Practice
+    questions: [find-source-speed, formula-spot-error]
+questions:
+  - id: formula-sign
+    format: mcq
+    difficulty: 1
+    objectives: ["7.3.2"]
+    prompt: |-
+      A source of sound moves towards a stationary observer. Which expression gives the frequency the observer detects?
+    options:
+      - text: $\dfrac{f_s\, v}{v - v_s}$
+        correct: true
+        why: |-
+          The smaller denominator gives a larger frequency, which is what an approaching source produces.
+      - text: $\dfrac{f_s\, v}{v + v_s}$
+        why: |-
+          This is the expression for a source moving away, and it gives a frequency lower than $f_s$.
+      - text: $\dfrac{f_s\, (v - v_s)}{v}$
+        why: |-
+          This is upside down: it multiplies by a number below 1 and gives a lower frequency.
+      - text: $\dfrac{f_s\, v_s}{v}$
+        why: |-
+          This has no sound speed in the denominator and gives nonsense values.
+    explanation: |-
+      Approaching means a smaller denominator, so $f_o = f_s v/(v - v_s)$.
+
+  - id: approach-frequency
+    format: numeric
+    difficulty: 2
+    objectives: ["7.3.2"]
+    prompt: |-
+      A siren emits $800\ \text{Hz}$ and moves directly towards a stationary observer at $30\ \text{m s}^{-1}$. Take the speed of sound as $340\ \text{m s}^{-1}$.
+
+      What frequency does the observer detect, in Hz?
+    fields:
+      - label: "f_o ="
+        answer: 877
+        unit: Hz
+        tolerance: { rel: 0.01 }
+    explanation: |-
+      $f_o = 800 \times 340/(340 - 30) = 272\,000/310 = 877\ \text{Hz}$ (3 s.f.).
+
+  - id: recede-frequency
+    format: numeric
+    difficulty: 2
+    objectives: ["7.3.2"]
+    prompt: |-
+      The same siren, emitting $800\ \text{Hz}$, has passed the observer and now moves directly away at $30\ \text{m s}^{-1}$. Take the speed of sound as $340\ \text{m s}^{-1}$.
+
+      What frequency does the observer detect, in Hz?
+    fields:
+      - label: "f_o ="
+        answer: 735
+        unit: Hz
+        tolerance: { rel: 0.01 }
+    explanation: |-
+      $f_o = 800 \times 340/(340 + 30) = 272\,000/370 = 735\ \text{Hz}$ (3 s.f.).
+
+  - id: find-source-speed
+    format: numeric
+    difficulty: 3
+    objectives: ["7.3.2"]
+    prompt: |-
+      A source emitting $800\ \text{Hz}$ approaches a stationary observer, who detects $860\ \text{Hz}$. Take the speed of sound as $340\ \text{m s}^{-1}$.
+
+      What is the speed of the source, in $\text{m s}^{-1}$?
+    fields:
+      - label: "v_s ="
+        answer: 23.7
+        unit: m s⁻¹
+        tolerance: { abs: 0.3 }
+    explanation: |-
+      From $860 = 800 \times 340/(340 - v_s)$, the denominator is $340 - v_s = 272\,000/860 = 316.3$, so $v_s = 23.7\ \text{m s}^{-1}$.
+
+  - id: formula-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["7.3.2"]
+    prompt: |-
+      A student works out the frequency detected from an approaching source. Which line contains the first error?
+    lines:
+      - A source of $600\ \text{Hz}$ moves at $20\ \text{m s}^{-1}$ towards a stationary observer, with $v = 340\ \text{m s}^{-1}$.
+      - An approaching source bunches the wavefronts, so the detected frequency should be higher than $600\ \text{Hz}$.
+      - Use the plus sign, so $f_o = 600 \times 340/(340 + 20)$.
+      - This gives $567\ \text{Hz}$, which is lower than $600\ \text{Hz}$ and so contradicts line 2.
+    errorLine: 3
+    fix: |-
+      Use the **minus** sign: $f_o = 600 \times 340/(340 - 20) = 637.5\ \text{Hz}$. The plus sign is for a receding source.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. The student chose the wrong sign in line 3, and line 4 is the check that exposes it.

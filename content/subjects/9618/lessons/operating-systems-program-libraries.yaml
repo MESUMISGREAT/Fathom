@@ -1,0 +1,273 @@
+id: operating-systems-program-libraries
+subject: "9618"
+topic: "5.1"
+title: "Program libraries and DLLs"
+summary: Developers reuse tested code from libraries instead of rewriting it — and a dynamic link library shares that code between programs at run time.
+order: 5
+minutes: 6
+kind: core
+objectives: ["5.1.4"]
+prerequisites: [operating-systems-why-needed]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618
+    syllabus (2024-2026), topic 5.1 learning outcome 5.1.4 (program libraries, including the
+    benefits of library files and DLL files). All questions are original.
+    Re-checked in a second adversarial pass by the same agent on 2026-10-28: every numeric key recomputed from the question's own data, every MCQ checked for exactly one correct option, every cloze accept list and text model answer checked against the taught wording, and every diagram rendered and inspected in light and dark. No separate reviewer model was available here. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain what a program library is, why developers use one, and what a DLL does differently from code copied in at compile time.
+
+  - type: explain
+    title: What a library is
+    body: |-
+      A **program library** is a collection of pre-written, ready-to-use routines — code for common jobs such as reading a file, drawing a window, sorting a list or calculating a square root.
+
+      Instead of writing that code again, a developer **calls** the library routine. Software under development is very often built from existing code in this way.
+
+      Think of it as cooking with ready-made stock instead of boiling bones every time. You still choose the recipe; you just do not redo the boring part.
+
+  - type: explain
+    title: Why developers use libraries
+    body: |-
+      - **Time:** a tested routine is available immediately, so the project is finished sooner and costs less.
+      - **Reliability:** the routine has been used by thousands of programs, so its bugs have mostly been found already.
+      - **Consistency:** every program that uses the library behaves the same way, which helps users.
+      - **Complexity is hidden:** the developer uses a simple call without needing to understand the implementation.
+      - **Maintenance:** when the library is improved or a bug is fixed, programs that use it benefit.
+
+  - type: explain
+    title: Static linking versus DLLs
+    body: |-
+      There are two ways the library code reaches your program.
+
+      | | **Static library** | **Dynamic Link Library (DLL)** |
+      |---|---|---|
+      | When the code is joined | At compile time, copied into the executable | At run time, loaded when needed |
+      | Executable size | Larger (the code is inside it) | Smaller (code stays in the DLL) |
+      | Sharing | Each program has its own copy | One copy in memory can be shared by several programs |
+      | Updating | Recompile the program | Replace the DLL, and every program using it gets the fix |
+      | Risk | None beyond the program itself | If the DLL is missing, the wrong version or corrupted, the program fails ("DLL not found") |
+
+      A DLL is a **dynamic link library**: it is linked to the program when the program runs, not when it is compiled.
+
+  - type: diagram
+    diagram: cs-operating-systems-dynamic-linking
+    alt: >-
+      Two application programs on the left, each with a thin arrow into a single shared DLL box
+      in the middle labelled "one copy loaded into memory", and the OS below managing both. A
+      separate smaller panel shows the static alternative, where each executable contains its own
+      copy of the library code.
+    caption: |-
+      With dynamic linking one copy of the library serves every program; with static linking each
+      executable carries its own copy.
+
+  - type: example
+    title: "Worked example: which approach, and why"
+    problem: |-
+      A team is writing a photo editor. It needs routines to read JPEG files, and 12 other programs on the same machine also use those routines.
+
+      Should the JPEG code be in a static library or a DLL? Give two reasons.
+    steps:
+      - |-
+        Sharing matters here: 12 programs need the same code, and a DLL is loaded once and shared.
+      - |-
+        A DLL keeps each executable smaller, saving disk space and memory.
+      - |-
+        If a bug is found in the JPEG routine, replacing the DLL fixes all 12 programs without recompiling them.
+      - |-
+        The trade-off: every one of those programs now depends on that DLL being present and correct.
+    answer: |-
+      A DLL — one shared copy, smaller executables and a single fix for every program.
+
+  - type: check
+    title: Quick check
+    questions: [what-is-library, dll-when-linked, dll-benefit]
+
+  - type: check
+    title: Practice
+    questions: [static-drawback, maintenance-benefit, dll-drawback]
+
+  - type: misconceptions
+    items:
+      - wrong: A library is a collection of books about programming.
+        right: |-
+          In this context a library is a collection of pre-written code routines that programs can
+          call.
+      - wrong: Using a library means the developer did not write the program.
+        right: |-
+          The developer still writes the program; the library supplies common routines it calls.
+      - wrong: A DLL's code is copied into the executable when the program is compiled.
+        right: |-
+          That is static linking. A DLL is linked at run time, so the executable only records that
+          it needs the DLL.
+      - wrong: DLLs make programs immune to bugs.
+        right: |-
+          The library code may still contain bugs, and a missing or wrong version of the DLL stops
+          the program from starting.
+      - wrong: A static library saves memory because it is shared.
+        right: |-
+          Static code is copied into each executable, so it is not shared; DLLs are the shared
+          option.
+      - wrong: Libraries are only useful for very large projects.
+        right: |-
+          Even small programs commonly use libraries for file handling, maths and graphics.
+
+  - type: exam
+    body: |-
+      - For benefits, give a benefit plus its effect: "saves development time because the routine is already written and tested".
+      - For DLL questions, mention **loaded at run time**, **shared**, **smaller executable** and **updating one file fixes every program**.
+      - If asked for a drawback, the classic answer is dependence on the DLL being present and the correct version.
+
+  - type: takeaways
+    items:
+      - 'A program library is reusable pre-written code that programs call.'
+      - 'Benefits: saves time and cost, tested code, consistency, hidden complexity, easier maintenance.'
+      - 'A DLL is linked at run time, not compiled into the executable.'
+      - 'DLL advantages: smaller executables, one shared copy, easy updates.'
+      - 'DLL drawback: the program depends on the DLL being present and the right version.'
+
+  - type: deeper
+    title: "Why it is called \"DLL hell\""
+    body: |-
+      If program A needs version 1 of a DLL and program B needs version 2, installing one program can break the other — the classic "DLL hell".
+
+      Modern systems reduce this by keeping libraries per application, or by using versioned package managers, so two programs can use different versions at once.
+
+questions:
+  - id: what-is-library
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.4"]
+    prompt: |-
+      What is a program library?
+    options:
+      - text: A collection of pre-written routines that programs can reuse
+        correct: true
+        why: |-
+          Libraries supply ready-made, tested code for common tasks.
+      - text: The folder where a program's source files are saved
+        why: |-
+          That is just a folder; a library is reusable code with a defined interface.
+      - text: A tool that translates source code into machine code
+        why: |-
+          That is a compiler, which is a separate kind of software.
+      - text: A backup copy of a program
+        why: |-
+          A backup is a copy for recovery, not reusable code.
+    explanation: |-
+      Libraries hold reusable routines.
+
+  - id: dll-when-linked
+    format: mcq
+    difficulty: 1
+    objectives: ["5.1.4"]
+    prompt: |-
+      When is the code in a DLL linked to the program that uses it?
+    options:
+      - text: At run time, when the program is loaded
+        correct: true
+        why: |-
+          "Dynamic" means the link happens while the program runs, not during compilation.
+      - text: At compile time, when the executable is produced
+        why: |-
+          That describes static linking.
+      - text: When the source code is first written
+        why: |-
+          Nothing is linked while the code is being written.
+      - text: When the operating system is installed
+        why: |-
+          Some DLLs ship with the OS, but the link to a particular program still happens at run
+          time.
+    explanation: |-
+      A DLL is a dynamic link library: linked at run time.
+
+  - id: dll-benefit
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: |-
+      Which is a genuine benefit of using a DLL rather than a static library?
+    options:
+      - text: One copy in memory can be shared by several running programs
+        correct: true
+        why: |-
+          Sharing code saves memory and disk space, and the executable stays smaller.
+      - text: The program no longer needs an operating system
+        why: |-
+          DLLs are loaded with help from the OS; they do not replace it.
+      - text: The program cannot fail because of missing files
+        why: |-
+          The opposite: a missing DLL stops the program from running.
+      - text: The code runs without a processor
+        why: |-
+          All code still needs the processor.
+    explanation: |-
+      Dynamic linking shares one copy of the library between programs.
+
+  - id: static-drawback
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: |-
+      A developer statically links a large graphics library into three separate programs. What is the main disadvantage?
+    options:
+      - text: Each executable contains its own copy, so the total size on disk is much larger
+        correct: true
+        why: |-
+          Static linking copies the library into each executable; nothing is shared.
+      - text: The programs cannot access the graphics hardware
+        why: |-
+          They can; static code works exactly as dynamic code does once loaded.
+      - text: The library must be downloaded each time a program runs
+        why: |-
+          The code is already inside the executable.
+      - text: The programs will not compile
+        why: |-
+          Static linking is a normal, working approach.
+    explanation: |-
+      Static copies inflate each executable, with no sharing.
+
+  - id: maintenance-benefit
+    format: text
+    difficulty: 2
+    objectives: ["5.1.4"]
+    prompt: |-
+      Give one reason why using library routines can make a project more reliable.
+    accept:
+      - the routines are already tested and debugged
+      - the code has been used in many programs so its errors have been found
+      - it has been widely used and so is likely to be correct
+      - bugs have already been found and fixed by other users
+    model: |-
+      The routines have already been written, tested and used in many other programs, so most of
+      their errors have been found and fixed before this project uses them.
+    explanation: |-
+      Reuse means you inherit other people's testing.
+
+  - id: dll-drawback
+    format: mcq
+    difficulty: 3
+    objectives: ["5.1.4"]
+    prompt: |-
+      A program that worked yesterday now shows "missing DLL" when it starts. What has most likely happened?
+    options:
+      - text: The DLL it needs has been deleted, moved or replaced by an incompatible version
+        correct: true
+        why: |-
+          The program depends on that file being present and compatible at run time.
+      - text: The program's source code was lost
+        why: |-
+          Source code is not needed to run a compiled program.
+      - text: The processor has become slower
+        why: |-
+          Speed does not cause a missing-file error.
+      - text: The monitor was changed
+        why: |-
+          Display hardware does not cause this error.
+    explanation: |-
+      Dynamic linking creates a dependency on the DLL at run time.

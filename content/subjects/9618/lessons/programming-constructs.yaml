@@ -1,0 +1,319 @@
+id: programming-constructs
+subject: "9618"
+topic: "11.2"
+title: Programming Constructs — IF, CASE, and loop structures
+summary: Write pseudocode for IF statements (with ELSE, nested), CASE structures, count-controlled loops, post-condition loops, and pre-condition loops. Justify loop choice for a given problem.
+order: 2
+minutes: 6
+kind: core
+objectives: ["11.2.1", "11.2.2"]
+prerequisites: ["programming-basics", "algorithms-control-structures"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >
+    Written against Cambridge International AS & A Level Computer Science 9618
+    syllabus for 2027-2029, topic 11.2 Constructs. Covers objectives 11.2.1-11.2.2.
+    Questions are original. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can write pseudocode for all selection and iteration constructs: IF/ELSE (including nested), CASE, FOR loops (count-controlled), WHILE loops (pre-condition), and REPEAT...UNTIL loops (post-condition). You can justify which loop type fits a problem.
+
+  - type: explain
+    title: Selection — IF statements
+    body: |
+      **Simple IF**:
+      ```
+      IF condition THEN
+        statement(s)
+      ENDIF
+      ```
+
+      **IF...ELSE** (two-way branch):
+      ```
+      IF condition THEN
+        statement(s)
+      ELSE
+        statement(s)
+      ENDIF
+      ```
+
+      **IF...ELSE IF...ELSE** (multi-way branch):
+      ```
+      IF condition1 THEN
+        statement(s)
+      ELSE IF condition2 THEN
+        statement(s)
+      ELSE
+        statement(s)
+      ENDIF
+      ```
+
+      **Nested IF** — an IF inside another IF:
+      ```
+      IF score >= 50 THEN
+        IF score >= 75 THEN
+          PRINT "Distinction"
+        ELSE
+          PRINT "Pass"
+        ENDIF
+      ELSE
+        PRINT "Fail"
+      ENDIF
+      ```
+
+      Conditions use relational operators (`=`, `≠`, `<`, `>`, `≤`, `≥`) and logical operators (`AND`, `OR`, `NOT`).
+
+  - type: example
+    title: Nested IF — grade calculator
+    problem: "Input a mark (0-100). Output grade: A (80+), B (70-79), C (60-69), D (50-59), F (<50)."
+    steps:
+      - "Identifier table: mark (INTEGER, input), grade (CHAR, output)"
+      - "INPUT: READ mark"
+      - "PROCESS: Nested IF...ELSE IF chain"
+      - "OUTPUT: PRINT grade"
+    answer: |
+      IF mark >= 80 THEN
+        grade ← 'A'
+      ELSE IF mark >= 70 THEN
+        grade ← 'B'
+      ELSE IF mark >= 60 THEN
+        grade ← 'C'
+      ELSE IF mark >= 50 THEN
+        grade ← 'D'
+      ELSE
+        grade ← 'F'
+      ENDIF
+      PRINT grade
+
+  - type: explain
+    title: Selection — CASE structure
+    body: |
+      **CASE** (also called SELECT CASE) handles multi-way selection on a single expression. Cleaner than long IF...ELSE IF chains when comparing one value against many constants.
+
+      ```
+      CASE variable OF
+        value1: statement(s)
+        value2: statement(s)
+        ...
+        valueN: statement(s)
+        OTHERWISE: statement(s)
+      ENDCASE
+      ```
+
+      - Expression evaluated once
+      - Matches first case that equals the value
+      - OTHERWISE catches all other values (optional but recommended)
+      - No fall-through (unlike C switch)
+
+  - type: example
+    title: CASE — menu selection
+    problem: "Input a menu choice (1-4). Output the action: 1=Add, 2=Delete, 3=Search, 4=Exit, else Invalid."
+    steps:
+      - "Identifier table: choice (INTEGER, input)"
+      - "INPUT: READ choice"
+      - "PROCESS: CASE on choice"
+      - "OUTPUT: PRINT action"
+    answer: |
+      CASE choice OF
+        1: PRINT "Add"
+        2: PRINT "Delete"
+        3: PRINT "Search"
+        4: PRINT "Exit"
+        OTHERWISE: PRINT "Invalid"
+      ENDCASE
+
+  - type: explain
+    title: Iteration — three loop types
+    body: |
+      The syllabus requires three loop constructs:
+
+      **1. Count-controlled loop (FOR)** — known number of iterations:
+      ```
+      FOR counter ← start TO end [STEP step]
+        statement(s)
+      ENDFOR
+      ```
+      - Counter initialised automatically
+      - Condition checked before each iteration (pre-test)
+      - Counter incremented automatically (default step = 1)
+      - Use when iteration count is known in advance
+
+      **2. Pre-condition loop (WHILE)** — condition checked before each iteration:
+      ```
+      WHILE condition
+        statement(s)
+      ENDWHILE
+      ```
+      - May execute zero times if condition initially false
+      - Condition must be updated inside the loop
+      - Use when iteration count unknown, but you need to check before first iteration
+
+      **3. Post-condition loop (REPEAT...UNTIL)** — condition checked after each iteration:
+      ```
+      REPEAT
+        statement(s)
+      UNTIL condition
+      ```
+      - **Always executes at least once**
+      - Condition checked at the end
+      - Use when loop body must run at least once (e.g., menu display, input validation)
+
+  - type: example
+    title: Loop comparison — sum numbers until negative
+    problem: "Read integers until a negative is entered. Output the sum of positive numbers."
+    steps:
+      - "WHILE version: check before reading"
+      - "REPEAT version: read first, then check"
+      - "FOR version: not suitable (unknown count)"
+    answer: |
+      // WHILE — pre-condition
+      sum ← 0
+      READ num
+      WHILE num >= 0
+        sum ← sum + num
+        READ num
+      ENDWHILE
+      PRINT sum
+
+      // REPEAT...UNTIL — post-condition
+      sum ← 0
+      REPEAT
+        READ num
+        IF num >= 0 THEN sum ← sum + num ENDIF
+      UNTIL num < 0
+      PRINT sum
+
+  - type: explain
+    title: Choosing the right loop
+    body: |
+      | Situation | Best loop | Reason |
+      |-----------|-----------|--------|
+      | Known iteration count (e.g., 1 to n) | FOR | Counter managed automatically |
+      | Unknown count, may be zero iterations | WHILE | Check condition first |
+      | Must execute at least once | REPEAT...UNTIL | Body runs before check |
+      | Input validation (re-prompt until valid) | REPEAT...UNTIL | At least one prompt |
+      | Process all items in a collection | FOR | Fixed bounds |
+      | Search until found or end | WHILE | Exit condition checked each iteration |
+
+      **Key distinction**: WHILE checks *before* the first iteration; REPEAT...UNTIL checks *after* the first iteration. If the condition is initially false, WHILE runs 0 times, REPEAT...UNTIL runs 1 time.
+
+  - type: example
+    title: Input validation — REPEAT...UNTIL
+    problem: "Prompt for a mark between 0 and 100. Re-prompt until valid."
+    steps:
+      - "Must prompt at least once → REPEAT...UNTIL"
+      - "Condition: mark < 0 OR mark > 100"
+    answer: |
+      REPEAT
+        PRINT "Enter mark (0-100): "
+        READ mark
+      UNTIL mark >= 0 AND mark <= 100
+
+  - type: example
+    title: Search loop — WHILE
+    problem: "Search an array for a target value. Stop when found or end reached."
+    steps:
+      - "Unknown if found, check each iteration → WHILE"
+      - "Two exit conditions: found OR end of array"
+    answer: |
+      found ← FALSE
+      i ← 0
+      WHILE i < LENGTH(arr) AND NOT found
+        IF arr[i] = target THEN
+          found ← TRUE
+        ELSE
+          i ← i + 1
+        ENDIF
+      ENDWHILE
+
+  - type: check
+    title: Quick check — constructs
+    questions: [if-else-if-vs-case, loop-choice-validation, loop-choice-search]
+
+  - type: misconceptions
+    items:
+      - wrong: FOR loops can only count up by 1.
+        right: |
+          FOR supports STEP: `FOR i ← 10 TO 1 STEP -1` counts down. `FOR i ← 0 TO 10 STEP 2` counts by 2.
+      - wrong: WHILE and REPEAT...UNTIL are interchangeable.
+        right: |
+          WHILE may run 0 times; REPEAT...UNTIL runs at least once. For input validation, REPEAT...UNTIL is correct.
+      - wrong: CASE falls through like C switch.
+        right: |
+          In pseudocode, CASE executes only the matching branch. No fall-through.
+      - wrong: Nested IFs are always better than CASE.
+        right: |
+          CASE is cleaner for single-expression multi-way selection. Use IF for complex/compound conditions.
+
+  - type: exam
+    body: |
+      - **IF/ELSE**: Must have ENDIF. ELSE IF is one keyword (not ELSE IF as two words). Nesting allowed.
+      - **CASE**: Expression evaluated once. OTHERWISE is optional but good practice. No fall-through.
+      - **FOR**: Count-controlled. Start, end, optional STEP. Pre-test.
+      - **WHILE**: Pre-condition. Zero or more iterations. Update condition inside loop.
+      - **REPEAT...UNTIL**: Post-condition. One or more iterations. At least once.
+      - **Justify loop choice**: "Use REPEAT...UNTIL because the prompt must appear at least once." "Use FOR because the number of iterations is known (n)." "Use WHILE because the loop may not execute if the condition is initially false."
+
+  - type: takeaways
+    items:
+      - "IF/ELSE/ENDIF for selection. Nested IFs for complex logic. ELSE IF chains for multi-way."
+      - "CASE for single-expression multi-way selection. Cleaner than long IF chains."
+      - "FOR: known count, pre-test. WHILE: unknown count, pre-test, may run 0 times."
+      - "REPEAT...UNTIL: unknown count, post-test, runs at least once. Best for input validation."
+      - "Justify loop choice by: known/unknown count, must-run-once requirement, pre-vs-post test."
+
+questions:
+  - id: if-else-if-vs-case
+    format: explain
+    difficulty: 2
+    objectives: ["11.2.1"]
+    prompt: |
+      When is a CASE structure preferred over an IF...ELSE IF...ELSE chain? Give one advantage.
+    model: |
+      CASE is preferred when selecting on a single variable/expression against multiple constant values. Advantage: the expression is evaluated only once, and the code is more readable and maintainable than a long IF...ELSE IF chain.
+    keyPoints:
+      - "Single expression evaluated once"
+      - "Multiple constant value comparisons"
+      - "More readable/maintainable"
+    explanation: |
+      IF...ELSE IF re-evaluates conditions each branch. CASE evaluates the selector once and jumps to the matching branch.
+
+  - id: loop-choice-validation
+    format: mcq
+    difficulty: 2
+    objectives: ["11.2.2"]
+    prompt: |
+      Which loop is **most appropriate** for validating user input (re-prompting until a valid value is entered)?
+    options:
+      - text: FOR
+        why: Iteration count is unknown.
+      - text: WHILE
+        why: May not prompt if condition initially true, but we need at least one prompt.
+      - text: REPEAT...UNTIL
+        correct: true
+        why: Guarantees the prompt appears at least once before checking validity.
+      - text: Any loop works equally well
+        why: The semantic difference matters for input validation.
+    explanation: |
+      Input validation must show the prompt at least once. REPEAT...UNTIL is the only construct that guarantees this.
+
+  - id: loop-choice-search
+    format: mcq
+    difficulty: 2
+    objectives: ["11.2.2"]
+    prompt: |
+      You are searching an array for a target value. The array might not contain the target. Which loop is most appropriate and why?
+    options:
+      - text: FOR — because we iterate through all indices
+        why: FOR doesn't allow early exit on found condition cleanly.
+      - text: WHILE — because we stop when found OR end reached, and may not enter if array is empty
+        correct: true
+        why: WHILE checks condition first (handles empty array) and allows compound exit condition.
+      - text: REPEAT...UNTIL — because we must check at least one element
+        why: Array could be empty; REPEAT would error on arr[0].
+      - text: FOR with a BREAK statement
+        why: BREAK is not in Cambridge pseudocode.
+    explanation: |
+      WHILE handles empty arrays (0 iterations) and compound exit conditions (found OR end). REPEAT...UNTIL would fail on empty array. FOR doesn't support early exit cleanly in pseudocode.

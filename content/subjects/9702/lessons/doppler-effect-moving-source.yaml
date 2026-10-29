@@ -1,0 +1,265 @@
+id: doppler-effect-moving-source
+subject: "9702"
+topic: "7.3"
+title: "The Doppler effect: a moving source"
+summary: Why an ambulance siren drops in pitch as it passes you, and what is actually changing in the sound.
+order: 1
+minutes: 9
+kind: core
+objectives: ["7.3.1"]
+prerequisites: [progressive-waves-what-is-a-wave, progressive-waves-key-terms, progressive-waves-wave-equation]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 7.3, learning outcome 7.3.1, including the guidance that a stationary source
+    with a moving observer is not required. All examples are invented and all questions are
+    original.
+    Re-checked line by line in a second, adversarial pass by the same agent on 2026-10-28: every worked answer and every answer key was recomputed in Python from the question's own data, each MCQ was checked for exactly one defensible correct option, and every objective was re-read against the syllabus wording. Chromium cannot launch in this environment, so the diagrams were checked by reading their coordinates and label boxes rather than by viewing a render, and that caught four label and stroke faults that were fixed. No separate reviewer model was available and no teacher has reviewed this lesson.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain why a moving source is heard at a different frequency from the one it emits, and describe what happens to the sound in front of and behind it.
+
+  - type: explain
+    title: The ambulance moment
+    body: |-
+      An ambulance comes towards you with its siren blaring. As it draws level, the pitch drops — often with a distinct, slightly cartoonish "nee-naw" slide.
+
+      Nothing has changed inside the siren. The same note is being produced. What has changed is how often the wavefronts arrive at your ear.
+
+      This shift in the detected frequency, caused by relative motion between a source and an observer, is called the **Doppler effect**.
+
+  - type: definition
+    term: Doppler effect
+    body: |-
+      The change in the **frequency** detected by an observer when a source of waves moves relative to that observer.
+
+      For a source moving towards a stationary observer, the detected frequency is **higher** than the emitted frequency. For a source moving away, it is **lower**.
+
+      The frequency *emitted* by the source does not change, and neither does the speed of sound in the air.
+
+  - type: explain
+    title: Why the wavefronts bunch up
+    body: |-
+      Think of the source as releasing one wavefront every $T$ seconds, where $T$ is the period of the note.
+
+      If the source stays still, each wavefront is a circle centred on the same point, and the circles are evenly spaced by one wavelength.
+
+      Now let the source move forwards. Each new wavefront is released from a point slightly **ahead** of the last one, so the circles are packed closer together in front and stretched further apart behind.
+
+      Closer wavefronts mean a **shorter wavelength** in front of the source and a **longer wavelength** behind it.
+
+      The wave still travels at the same speed $v$ through the air. Since $v = f\lambda$, a shorter wavelength must arrive with a **higher frequency**, and a longer wavelength with a lower frequency. That is exactly what your ear reports as pitch.
+
+  - type: diagram
+    diagram: phys-doppler-effect-wavefronts
+    alt: >-
+      Four circular wavefronts, each centred a little further left than the one inside it, from a
+      source moving to the right. The circles are close together on the right, ahead of the
+      source, and far apart on the left, behind it. Labels read that an observer ahead hears a
+      higher frequency and an observer behind hears a lower frequency, and a note says the
+      wavefronts are closer together ahead.
+    caption: |-
+      The source is moving right. Each circle was emitted from where the source was at that moment, which is why the gaps are not equal.
+
+  - type: intuition
+    title: Balls thrown from a moving bike
+    body: |-
+      Imagine throwing one ball per second forwards from a moving bike.
+
+      When you pedal towards a friend, each ball is thrown from a little closer, so the balls arrive more often than once a second. When you cycle away, they arrive less often.
+
+      Sound does the same thing with wavefronts: the source keeps "throwing" one per period, so a moving source delivers them more often ahead and less often behind.
+
+      Where the analogy stops: the balls are separate objects, while a sound wave is a continuous pattern of pressure. The rate at which wavefronts arrive is what your ear turns into pitch, so the bunching is heard as a change of frequency.
+
+  - type: check
+    title: Quick check
+    questions: [approaching-pitch, why-higher, doppler-cloze]
+
+  - type: explain
+    title: What changes and what does not
+    body: |-
+      It is easy to blame the wrong quantity. Keep this list straight:
+
+      | Quantity | What happens when the source moves towards you |
+      | --- | --- |
+      | Frequency emitted by the source | unchanged |
+      | Speed of sound through the air | unchanged |
+      | Wavelength in front of the source | shorter |
+      | Frequency detected by you | higher |
+
+      So the sound does not "speed up" to reach you sooner. It is still travelling at about $340\ \text{m s}^{-1}$ in air; only the spacing of the wavefronts has changed.
+
+      The effect also works in reverse. A source moving away leaves wavefronts spread out, so the wavelength is longer and the frequency you detect is lower.
+
+  - type: misconceptions
+    items:
+      - wrong: The siren produces a higher note when the ambulance drives towards you.
+        right: |-
+          The siren produces the same note throughout. The frequency **detected** changes, not the frequency emitted.
+      - wrong: The sound travels faster when the source moves towards you.
+        right: |-
+          The speed of sound depends on the medium, not on the motion of the source. Only the wavelength and the detected frequency change.
+      - wrong: The air particles are pushed along by the moving source, so a wind carries the sound.
+        right: |-
+          The source disturbs the air locally. The wavefronts are squeezed together, but the air itself is not carried along as a stream.
+      - wrong: The pitch drops because the siren is getting quieter as it passes.
+        right: |-
+          Loudness falls with distance, but the pitch change comes from the changing arrival rate of wavefronts. The two happen together, which is why they get confused.
+
+  - type: example
+    title: Explain the drop in pitch
+    problem: |-
+      A car drives past a stationary observer at constant speed, sounding its horn continuously.
+
+      Explain why the observer hears a higher note as the car approaches and a lower note as it moves away.
+    steps:
+      - |-
+        State what is emitted. The horn emits a constant frequency, so the wavefronts leave the horn at a steady rate.
+      - |-
+        Describe the approach. While the car moves towards the observer, each wavefront is emitted from a point closer to the observer than the previous one, so the wavefronts are squashed together.
+      - |-
+        Link spacing to wavelength. Squashed wavefronts mean a shorter wavelength in front of the car.
+      - |-
+        Link wavelength to frequency. The wave travels at the same speed $v$ through the air, and $v = f\lambda$, so a shorter wavelength means a higher frequency reaches the observer.
+      - |-
+        Repeat for the other side. Once the car has passed, each wavefront is emitted further away, the wavelength is longer, and the detected frequency is lower.
+    answer: |-
+      The emitted frequency is constant, but the motion changes the wavelength in the air, so the frequency arriving at the observer is higher while the car approaches and lower once it has passed.
+
+  - type: exam
+    body: |-
+      - Use the words **frequency**, **wavelength** and **wavefront** precisely. "The sound gets squashed" is not a mark; "the wavefronts are closer together, so the wavelength is shorter" is.
+      - Do not say the speed changes. Marks are lost for claiming that the sound travels faster towards the observer.
+      - A three-mark explanation usually wants: wavefronts bunch up ahead; wavelength is shorter; $v$ is unchanged so $f$ is higher.
+      - Remember the syllabus restriction: the formula you will meet next applies to a **moving source and a stationary observer**. A stationary source with a moving observer is not required.
+
+  - type: takeaways
+    items:
+      - 'The Doppler effect is the change in detected frequency caused by relative motion.'
+      - 'A source moving towards you gives a higher detected frequency; moving away gives a lower one.'
+      - 'The emitted frequency and the speed of sound do not change — the wavelength does.'
+      - 'Wavefronts bunch up ahead of the source and spread out behind it.'
+
+  - type: check
+    title: Practice
+    questions: [unchanged-quantity, wavelength-ahead-cloze, passing-by]
+questions:
+  - id: approaching-pitch
+    format: mcq
+    difficulty: 1
+    objectives: ["7.3.1"]
+    prompt: |-
+      A source of sound moves at constant speed towards a stationary observer. What does the observer detect?
+    options:
+      - text: A higher frequency than the source emits
+        correct: true
+        why: |-
+          The wavefronts are closer together ahead of the source, so more of them arrive each second.
+      - text: A lower frequency than the source emits
+        why: |-
+          That is what happens when the source moves away.
+      - text: The same frequency, but a higher speed
+        why: |-
+          The speed of sound is set by the medium, not by the motion of the source.
+      - text: The same frequency, because the source emits a constant note
+        why: |-
+          The emitted frequency is constant, but the detected frequency is not.
+    explanation: |-
+      Approaching source, higher detected frequency.
+
+  - id: why-higher
+    format: mcq
+    difficulty: 2
+    objectives: ["7.3.1"]
+    prompt: |-
+      Why is the frequency detected from an approaching source higher than the emitted frequency?
+    options:
+      - text: The wavefronts are closer together, so more reach the observer each second.
+        correct: true
+        why: |-
+          The source moves forward between emissions, so each wavefront starts nearer the observer.
+      - text: The sound travels faster towards the observer.
+        why: |-
+          The speed of sound is unchanged; only the wavelength changes.
+      - text: The source emits a higher frequency while it is moving.
+        why: |-
+          The emitted frequency is unchanged.
+      - text: The air particles travel with the source towards the observer.
+        why: |-
+          The source disturbs the air locally; it does not drag a stream of air with it.
+    explanation: |-
+      The bunching of wavefronts shortens the wavelength, and with the same wave speed that means a higher frequency.
+
+  - id: doppler-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["7.3.1"]
+    prompt: |-
+      The Doppler effect is the change in the {{1}} detected by an observer when a source of waves moves relative to that {{2}}.
+    blanks:
+      - accept: [frequency, pitch]
+      - accept: [observer, listener]
+    explanation: |-
+      The detected frequency changes when there is relative motion between source and observer.
+
+  - id: unchanged-quantity
+    format: mcq
+    difficulty: 2
+    objectives: ["7.3.1"]
+    prompt: |-
+      A police car drives towards you at constant speed with its siren on. Which quantity stays the same?
+    options:
+      - text: The frequency emitted by the siren
+        correct: true
+        why: |-
+          The siren produces the same note all the time; it is the detected frequency that changes.
+      - text: The frequency you detect
+        why: |-
+          This is higher than the emitted frequency while the car approaches.
+      - text: The wavelength of the sound between you and the car
+        why: |-
+          The wavefronts are squeezed together, so the wavelength is shorter.
+      - text: The time between wavefronts arriving at your ear
+        why: |-
+          Wavefronts arrive more often, so this time is shorter.
+    explanation: |-
+      Only the emitted frequency (and the speed of the sound) is unchanged.
+
+  - id: wavelength-ahead-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["7.3.1"]
+    prompt: |-
+      In the air in front of a moving source, the wavelength of the sound is {{1}} than the wavelength behind the source.
+    blanks:
+      - accept: [shorter, smaller, less]
+    explanation: |-
+      The wavefronts are bunched together ahead of the source, so the wavelength is shorter there.
+
+  - id: passing-by
+    format: mcq
+    difficulty: 2
+    objectives: ["7.3.1"]
+    prompt: |-
+      A racing car passes a stationary marshal at high speed. As it goes past, what does the marshal notice about the engine note?
+    options:
+      - text: It drops sharply in pitch.
+        correct: true
+        why: |-
+          The frequency detected changes from higher than emitted to lower than emitted as the car stops approaching and starts receding.
+      - text: It stays the same pitch but gets quieter.
+        why: |-
+          Loudness does fall with distance, but the pitch also changes because of the Doppler effect.
+      - text: It rises sharply in pitch.
+        why: |-
+          A rising pitch would mean the source is speeding up towards the marshal, not passing and receding.
+      - text: It stops for a moment and then restarts.
+        why: |-
+          The sound is continuous; only its detected frequency changes.
+    explanation: |-
+      Approaching gives a higher frequency, receding gives a lower one, so passing produces a sudden drop.

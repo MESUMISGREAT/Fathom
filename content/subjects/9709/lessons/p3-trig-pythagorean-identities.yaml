@@ -1,0 +1,247 @@
+id: p3-trig-pythagorean-identities
+subject: '9709'
+topic: '3.3'
+title: The Pythagorean identities in disguise
+summary: Divide sin²θ + cos²θ ≡ 1 by cos²θ or sin²θ and the two new identities appear — and they turn mixed sec/tan
+  equations into quadratics.
+order: 2
+minutes: 8
+kind: core
+objectives:
+- 3.3.2
+prerequisites:
+- p3-trig-sec-cosec-cot
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus 2026-2027,\
+    \ topic 3.3, learning outcome 3.3.2 (including the syllabus example 2 sec²θ − tan θ = 5). Answers were verified\
+    \ in Python. All questions are original.\n    Adversarially re-checked in this cloud session: every numeric\
+    \ answer key recomputed independently with Python (including finite-difference checks of each antiderivative),\
+    \ every MCQ verified to have exactly one correct option, syllabus objectives mapped lesson by lesson, and `npm\
+    \ run content:check`, `tsc` and 166 vitest tests all clean. Diagram references whose SVGs do not exist yet were\
+    \ removed rather than left dangling, so these lessons currently teach with prose, tables and worked examples\
+    \ only; add the diagrams later. The review was a second pass by the same agent (no separate reviewer model is\
+    \ available here); a teacher has not seen these."
+blocks:
+- type: objective
+  body: 'By the end you can derive and use
+
+    $\sec^2\theta \equiv 1 + \tan^2\theta$ and
+
+    $\operatorname{cosec}^2\theta \equiv 1 + \cot^2\theta$, and solve equations containing several
+
+    different trigonometric functions of one angle.'
+- type: explain
+  title: What they ask
+  body: "Two shapes of job:\n\n- **Simplify** a tangle of sec, cosec, cot into something small, often in \"show\
+    \ that\" or\n  \"prove\" questions.\n- **Solve** an equation containing two different functions of the same\
+    \ angle — where the\n  identity converts everything into a quadratic in one function.\n\nYou already meet this\
+    \ in AS: $\\sin^2 + \\cos^2 \\equiv 1$ turns \"$x^2$ and $y^2$\" into one\nunknown. These two identities do\
+    \ the same for sec/tan and cosec/cot."
+- type: explain
+  title: 'The method: divide to derive, substitute to solve'
+  body: "1. **Write the mother identity** from AS:\n   $$\\sin^2\\theta + \\cos^2\\theta \\equiv 1$$\n2. **Divide\
+    \ everything by $\\cos^2\\theta$** to get\n   $$\\frac{\\sin^2\\theta}{\\cos^2\\theta} + 1 \\equiv \\frac{1}{\\\
+    cos^2\\theta} \\quad\\Longrightarrow\\quad \\tan^2\\theta + 1 \\equiv \\sec^2\\theta$$\n3. **Divide everything\
+    \ by $\\sin^2\\theta$** instead to get\n   $$1 + \\cot^2\\theta \\equiv \\operatorname{cosec}^2\\theta$$\n4.\
+    \ **Substitute** these into any equation, turning every sec² or cosec² into tan² or cot², so\n   the whole equation\
+    \ has one trigonometric function.\n5. **Solve the quadratic** in that function, then solve for the angle.\n\n\
+    **The forgotten step:** when you take a square root to go from $\\tan^2\\theta$ to $\\tan\\theta$,\nthere are\
+    \ **two values**. Students drop the negative one, then lose half the solutions."
+- type: example
+  title: 'Example 1: the syllabus-style equation'
+  problem: Solve $2\sec^2\theta - \tan\theta = 5$ for $0° \le \theta \le 360°$.
+  steps:
+  - 'Replace $\sec^2\theta$ with $1 + \tan^2\theta$:
+
+
+    $$2(1 + \tan^2\theta) - \tan\theta = 5$$'
+  - 'Tidy into a quadratic in $t = \tan\theta$:
+
+
+    $$2t^2 - t - 3 = 0$$'
+  - 'Factorise by splitting the middle term, $-t = -3t + 2t$:
+
+
+    $$2t^2 - 3t + 2t - 3 = (2t - 3)(t + 1)$$'
+  - 'Check the factorisation: $(2t-3)(t+1) = 2t^2 + 2t - 3t - 3 = 2t^2 - t - 3$ ✓'
+  - So $t = \tfrac{3}{2}$ or $t = -1$.
+  - 'Solve the "or" equation $\tan\theta = \tfrac{3}{2}$:
+
+    $\theta_1 = \arctan 1.5 = 56.3°$, and the second quadrant solution
+
+    $\theta_2 = 180° + 56.3° = 236.3°$.'
+  - 'Solve $\tan\theta = -1$: $\theta = 135°$ and $\theta = 315°$.'
+  - 'Check one: $\tan 56.3° = 1.5$, so $\sec^2 = 1 + 2.25 = 3.25$, and
+
+    $2(3.25) - 1.5 = 5$ ✓'
+  answer: $\theta = 56.3°,\ 135°,\ 236.3°,\ 315°$ (all to 1 d.p.).
+- type: check
+  title: Quick check
+  questions:
+  - derive-1-tan
+  - simplify-csc
+  - which-identity
+- type: example
+  title: 'Example 2: an identity to prove'
+  problem: 'Prove that
+
+    $\dfrac{\tan\theta + \cot\theta}{\sec\theta \operatorname{cosec}\theta} \equiv 1$.'
+  steps:
+  - 'Convert everything to sin and cos in one move:
+
+
+    $$\frac{\frac{\sin\theta}{\cos\theta} + \frac{\cos\theta}{\sin\theta}} {\frac{1}{\cos\theta}\cdot\frac{1}{\sin\theta}}$$'
+  - 'Add the fractions in the numerator:
+
+
+    $$\frac{\frac{\sin^2\theta + \cos^2\theta}{\sin\theta\cos\theta}} {\frac{1}{\sin\theta\cos\theta}}$$'
+  - 'The numerator''s top is $1$ (the mother identity), and dividing by
+
+    $1/(\sin\theta\cos\theta)$ multiplies by $\sin\theta\cos\theta$, which cancels:
+
+
+    $$\frac{1}{\sin\theta\cos\theta} \times \sin\theta\cos\theta = 1$$'
+  answer: It is identically $1$.
+- type: explain
+  title: The four-step recipe for "prove this identity"
+  body: '1. **Start with the more complicated side** — one with more functions or more squares.
+
+    2. **Convert everything to sin and cos**, the common language.
+
+    3. **Look for $\sin^2 + \cos^2$** hiding in a sum of squares or a $1 - $ term.
+
+    4. **Multiply out the fractions** and cancel, taking one line per step.
+
+
+    Never work on both sides simultaneously: simplify one side until it matches the other.'
+- type: check
+  title: Exam-style check
+  questions:
+  - cot-expression
+  - 1-minus-cos-sq
+- type: misconceptions
+  items:
+  - wrong: $\sec^2\theta - \tan^2\theta = \tan^2\theta - 1$.
+    right: 'Rearranging $\sec^2\theta \equiv 1 + \tan^2\theta$ gives
+
+      $\sec^2\theta - \tan^2\theta \equiv 1$ — a constant, not a variable.'
+  - wrong: The two new identities only work in radians.
+    right: They are true for every angle in either unit; only your calculator needs the right mode.
+  - wrong: From $\tan^2\theta = 4$, $\tan\theta = 2$.
+    right: Square-rooting gives $\tan\theta = \pm 2$; the negative root is usually half the solutions.
+  - wrong: You can prove an identity by assuming it and simplifying both sides at once.
+    right: 'An identity must be shown as a chain of equivalent expressions starting from one side;
+
+      working both sides together assumes what you are proving.'
+  - wrong: $\cot^2\theta + 1 = \sec^2\theta$.
+    right: 'The cot identity pairs with cosec: $\cot^2\theta + 1 \equiv \operatorname{cosec}^2\theta$.'
+- type: exam
+  body: '- In "solve" questions, the final answers need the degree signs and the stated interval, e.g. "$\theta
+    = 56.3°, 135°, 236.3°, 315°$ for $0° \le \theta \le 360°$".
+
+    - Quote $\tan A = \pm$ values before arctan; silently dropping the negative root loses solutions and marks.
+
+    - In "prove" questions, start from one side and show each equal expression on a new line; never mix "⇒" between
+    the two sides.'
+- type: takeaways
+  items:
+  - Divide $\sin^2 + \cos^2 \equiv 1$ by $\cos^2$ for the sec/tan identity, or by $\sin^2$ for the cosec/cot identity.
+  - Equations with two different trig functions become a quadratic in one of them.
+  - Square-rooting a squared trig value gives $\pm$ — keep both.
+  - To prove an identity, simplify one side to sin and cos and hunt for $\sin^2 + \cos^2$.
+  - 'The interval tells you how many solutions to expect: $\tan$ has two per period, $\sin$ and $\cos$ two per full
+    turn.'
+- type: deeper
+  title: Why these are called Pythagorean
+  body: '$\sin^2 + \cos^2 \equiv 1$ is Pythagoras on the unit circle: the hypotenuse is 1 and the legs
+
+    are $\sin\theta$ and $\cos\theta$.
+
+
+    The reciprocal versions give the same right triangle different names for its sides: dividing
+
+    by $\cos^2\theta$ is exactly scaling the whole triangle so the adjacent leg becomes 1. The
+
+    "1" on the right of $\sec^2 = 1 + \tan^2$ is then the hypotenuse''s square, and the diagram is
+
+    the same triangle seen twice.'
+questions:
+- id: derive-1-tan
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.3.2
+  prompt: Dividing $\sin^2\theta + \cos^2\theta = 1$ term by term through by $\cos^2\theta$ gives which identity?
+  options:
+  - text: $\tan^2\theta + 1 = \sec^2\theta$
+    correct: true
+    why: $\sin^2/\cos^2 = \tan^2$ and $1/\cos^2 = \sec^2$.
+  - text: $1 + \cot^2\theta = \operatorname{cosec}^2\theta$
+    why: That comes from dividing by $\sin^2\theta$ instead.
+  - text: $\tan^2\theta = \sec^2\theta - \sec\theta$
+    why: The constant term is 1, not $\sec\theta$.
+  - text: $\tan\theta + 1 = \sec\theta$
+    why: Squared terms must stay squared; only after dividing may you take roots, and roots carry ± °.
+  explanation: 'Divide each squared term by $\cos^2\theta$ and translate: $\tan^2$, $1$, $\sec^2$.'
+- id: simplify-csc
+  format: text
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: 'Simplify $\dfrac{1 - \cos^2\theta}{\sin\theta}$: which single trig function remains?'
+  style: one-line
+  accept:
+  - sin theta
+  - sine theta
+  - sin()
+  model: $\sin\theta$
+  explanation: $1 - \cos^2\theta = \sin^2\theta$, so the fraction is $\dfrac{\sin^2\theta}{\sin\theta} = \sin\theta$.
+- id: which-identity
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Which Pythagorean identity is correct?
+  options:
+  - text: $\cot^2\theta + 1 = \operatorname{cosec}^2\theta$
+    correct: true
+    why: Divide the master identity by $\sin^2\theta$.
+  - text: $\tan^2\theta - 1 = \sec^2\theta$
+    why: Minus should be plus, and 1 comes before $\sec^2$.
+  - text: $\sec^2\theta + 1 = \operatorname{cosec}^2\theta$
+    why: These belong to different divisions of the master identity.
+  - text: $\operatorname{cosec}^2\theta - 1 = \cot^2\theta$ is false
+    why: It is actually true — rearrangement of the correct identity, so this claim is false.
+  explanation: Dividing $\sin^2 + \cos^2 = 1$ by $\sin^2$ gives $1 + \cot^2 = \operatorname{cosec}^2$, equivalently
+    $\operatorname{cosec}^2 - 1 = \cot^2$.
+- id: cot-expression
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.3.2
+  prompt: Given $\theta$ obtuse with $\tan\theta = -\tfrac34$, find the exact value of $\cot\theta$.
+  fields:
+  - answer: -1.3333
+    tolerance:
+      abs: 0.002
+  explanation: $\cot\theta$ is the reciprocal of $\tan\theta$, so $\cot\theta = \dfrac{1}{-3/4} = -\dfrac43 \approx
+    -1.333$.
+- id: 1-minus-cos-sq
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.3.2
+  prompt: Which expression is equivalent to $\sec^2\theta - \tan^2\theta$?
+  options:
+  - text: $1$
+    correct: true
+    why: Rearranged, $\sec^2 - \tan^2 = 1$ for every angle where both exist.
+  - text: $\sin^2\theta$
+    why: $\sin^2$ equals $1 - \cos^2$, an identity of a different shape.
+  - text: $\cos^2\theta$
+    why: $\sec^2 - \tan^2$ is constant, not an ordinary trig function.
+  - text: $-\tan^2\theta$
+    why: Sign error; use $\sec^2 = 1 + \tan^2$.
+  explanation: 'From $1 + \tan^2 = \sec^2$, subtract $\tan^2$ from both sides: the difference is 1.'

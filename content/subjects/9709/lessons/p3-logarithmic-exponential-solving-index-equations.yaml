@@ -1,0 +1,303 @@
+id: p3-logarithmic-exponential-solving-index-equations
+subject: '9709'
+topic: '3.2'
+title: Solving equations and inequalities with x in the index
+summary: When the unknown is an exponent, take logarithms of both sides — the power law brings the exponent down
+  where you can solve for it.
+order: 3
+minutes: 8
+kind: core
+objectives:
+- 3.2.3
+prerequisites:
+- p3-logarithmic-exponential-logs-and-indices
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: "Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus (2026-2027),\
+    \ topic 3.2 outcome 3.2.3, using the syllabus examples 2^x < 5, 3*2^(3x-1) < 5 and 3^(x+1) = 4^(2x-1). Every\
+    \ solution checked by substitution in Python. All questions are original. Not yet reviewed by a teacher.\n \
+    \   Corrections after a later review (28 Oct): the \"$2\\ln 5^{x}$\" distractor was algebraically equal to the\
+    \ correct answer and was replaced, and the claim that $5^x+2^x=7$ has no solution was softened to \"no general\
+    \ algebraic method\" (x = 1 does satisfy it)."
+blocks:
+- type: objective
+  body: By the end you can solve $a^x = b$ and more complicated index equations, and handle inequalities where the
+    unknown is in the index.
+- type: explain
+  title: The method in three moves
+  body: '1. **Isolate the exponential** — get $a^{\text{something}}$ alone on one side.
+
+    2. **Take logarithms of both sides.** Any base works; use $\ln$ or $\lg$ because they are on your calculator.
+
+    3. **Use the power law** $\ln(a^{u}) = u\ln a$ to bring the exponent down, then solve the resulting linear equation.
+
+
+    For example, $2^x = 5$:
+
+
+    $$x\ln 2 = \ln 5 \quad\Rightarrow\quad x = \frac{\ln 5}{\ln 2} = 2.32$$
+
+
+    This is how logarithms earn their keep: they turn an exponent problem into a multiplication.'
+- type: explain
+  title: 'Inequalities: the one extra rule'
+  body: 'Taking $\ln$ of both sides of an inequality **keeps the direction**, because $\ln$ is an
+
+    increasing function:
+
+
+    $$2^x < 5 \quad\Rightarrow\quad x\ln 2 < \ln 5 \quad\Rightarrow\quad x < 2.32$$
+
+
+    But there is a trap later on: if you ever **divide by a negative number** (for instance
+
+    $\ln a - \ln b$ when $a < b$), the inequality reverses. Do the algebra carefully and then test a
+
+    value, which settles the direction immediately.
+
+
+    Also: $\log_a x$ with $0 < a < 1$ is a *decreasing* function. Taking such a log of both sides
+
+    does reverse the inequality — another reason to test a value at the end.'
+- type: example
+  title: 'Example 1: the syllabus inequality'
+  problem: Solve $2^x < 5$, giving your answer to 3 significant figures.
+  steps:
+  - 'The exponential is already isolated. Take $\ln$ of both sides:
+
+    $$\ln\left(2^x\right) < \ln 5$$'
+  - 'Bring the exponent down:
+
+    $$x\ln 2 < \ln 5$$'
+  - 'Divide by $\ln 2$, which is positive, so the inequality direction is unchanged:
+
+    $$x < \frac{\ln 5}{\ln 2} = 2.3219\ldots$$'
+  - 'Test $x = 0$: $2^0 = 1 < 5$ ✓ — the direction is right.'
+  answer: $x < 2.32$ (3 s.f.).
+- type: diagram
+  diagram: math-p3-logarithmic-exponential-index-graph
+  alt: The curve y = 2^x on axes, cut by the dashed horizontal line y = 5. A dashed vertical line drops from the
+    crossing point to the x-axis at x = 2.32, and a note records that 2^x < 5 for every x below 2.32.
+  caption: 'Reading the solution off the graph: the crossing is at x = 2.32, and the curve is lower than
+
+    y = 5 to its left.'
+- type: example
+  title: 'Example 2: x on both sides'
+  problem: Solve $3^{x+1} = 4^{2x-1}$, giving your answer to 3 significant figures.
+  steps:
+  - 'Take $\ln$ of both sides and bring both exponents down:
+
+    $$(x+1)\ln 3 = (2x-1)\ln 4$$'
+  - 'Expand both sides:
+
+    $$x\ln 3 + \ln 3 = 2x\ln 4 - \ln 4$$'
+  - 'Collect the $x$ terms on one side:
+
+    $$x\ln 3 - 2x\ln 4 = -\ln 4 - \ln 3$$'
+  - 'Factor out $x$:
+
+    $$x(\ln 3 - 2\ln 4) = -(\ln 4 + \ln 3)$$'
+  - 'Divide, being careful with the signs:
+
+    $$x = \frac{-(\ln 4 + \ln 3)}{\ln 3 - 2\ln 4} = \frac{-2.4849}{-1.6740} = 1.4844\ldots$$'
+  - 'Check: $3^{2.484} = 15.32$ and $4^{1.969} = 15.32$ ✓'
+  answer: $x = 1.48$ (3 s.f.).
+- type: example
+  title: 'Example 3: scaling first'
+  problem: Solve $3 \times 2^{3x-1} < 5$, giving your answer to 3 significant figures.
+  steps:
+  - 'Divide by 3 to isolate the power:
+
+    $$2^{3x-1} < \frac{5}{3}$$'
+  - 'Take $\ln$ and bring the exponent down:
+
+    $$(3x - 1)\ln 2 < \ln\frac{5}{3}$$'
+  - 'Divide by $\ln 2$ (positive, so no reversal):
+
+    $$3x - 1 < \frac{\ln(5/3)}{\ln 2} = 0.7370\ldots$$'
+  - $$3x < 1.7370\ldots \quad\Rightarrow\quad x < 0.57899\ldots$$
+  - 'Test $x = 0$: $3 \times 2^{-1} = 1.5 < 5$ ✓'
+  answer: $x < 0.579$ (3 s.f.).
+- type: check
+  title: Quick check
+  questions:
+  - two-to-x
+  - both-sides
+  - scaled-inequality
+- type: check
+  title: Practice
+  questions:
+  - ln-of-power
+  - exponential-eq-with-e
+  - negative-solution
+  - inequality-direction
+  - power-of-power
+- type: misconceptions
+  items:
+  - wrong: $2^x = 5$ gives $x = 5/2 = 2.5$.
+    right: 'Dividing by 2 only works for a coefficient, not an exponent. Take logs: $x = \ln 5/\ln 2 = 2.32$.'
+  - wrong: $\ln(2^x) = x + \ln 2$
+    right: The power law gives $x\ln 2$ — a product, not a sum.
+  - wrong: You may take the log of one term only.
+    right: Taking logs applies to the whole side. If there is a sum, isolate the exponential first.
+  - wrong: Dividing by $\ln 2$ reverses the inequality because logs are involved.
+    right: Direction reverses only when dividing by a negative number. $\ln 2 > 0$, so it stays.
+  - wrong: An answer to 3 s.f. can be rounded part-way through.
+    right: Keep full accuracy in the working and round only at the end, or the last digit drifts.
+  - wrong: $5^x + 2^x = 7$ can be solved by taking logs of both sides.
+    right: 'Logs do not split sums, so taking logs does not help. This equation has no general algebraic
+
+      method (a lucky guess such as $x = 1$ may exist); Cambridge questions always let you isolate
+
+      a single exponential first.'
+- type: exam
+  body: '- Show "take $\ln$ of both sides" explicitly; it is often a method mark.
+
+    - Use brackets when several terms are in the exponent: $\ln(4^{2x-1}) = (2x-1)\ln 4$.
+
+    - Keep an exact expression such as $\dfrac{\ln 5}{\ln 2}$ before the decimal answer.
+
+    - For inequalities, finish with a quick test value to confirm the direction.'
+- type: takeaways
+  items:
+  - Isolate the exponential, take logs of both sides, then use $\ln(a^u) = u\ln a$.
+  - $a^x = b$ gives $x = \frac{\ln b}{\ln a}$.
+  - Taking $\ln$ preserves an inequality, since $\ln$ is increasing.
+  - Dividing by a negative quantity reverses the inequality; test a value to check.
+  - With $x$ on both sides, expand, collect $x$ terms, factorise, then divide.
+- type: deeper
+  title: Why any base works
+  body: 'Using $\lg$ instead of $\ln$ gives the same answer, because the base cancels:
+
+
+    $$x = \frac{\ln 5}{\ln 2} = \frac{\lg 5}{\lg 2} = 2.3219\ldots$$
+
+
+    The change-of-base identity $\log_a b = \dfrac{\ln b}{\ln a}$ is exactly this cancellation. The
+
+    syllabus does not require change of base as a skill, but it explains why the choice of log
+
+    base never changes your answer.
+
+
+    For inequalities, though, the *value* of the base matters when you take logs with a base between
+
+    0 and 1: that function decreases, so the inequality flips. Sticking to $\ln$ or $\lg$ (both
+
+    increasing) avoids the problem entirely.'
+questions:
+- id: two-to-x
+  format: numeric
+  difficulty: 1
+  objectives:
+  - 3.2.3
+  prompt: Solve $2^x = 5$, giving $x$ to 3 significant figures.
+  fields:
+  - answer: 2.32
+    tolerance:
+      abs: 0.01
+  explanation: $x\ln 2 = \ln 5$, so $x = \dfrac{\ln 5}{\ln 2} = 2.32$.
+- id: both-sides
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.2.3
+  prompt: Solve $3^{x+1} = 4^{2x-1}$, giving $x$ to 3 significant figures.
+  fields:
+  - answer: 1.48
+    tolerance:
+      abs: 0.01
+  explanation: '$(x+1)\ln 3 = (2x-1)\ln 4$ gives $x(\ln 3 - 2\ln 4) = -\ln 4 - \ln 3$, so
+
+    $x = \dfrac{-(\ln 4 + \ln 3)}{\ln 3 - 2\ln 4} = 1.48$.'
+- id: scaled-inequality
+  format: mcq
+  difficulty: 2
+  objectives:
+  - 3.2.3
+  prompt: Which is the solution of $3 \times 2^{3x-1} < 5$?
+  options:
+  - text: $x < 0.579$
+    correct: true
+    why: $2^{3x-1} < \tfrac{5}{3}$ gives $3x - 1 < 0.7370$, so $x < 0.579$.
+  - text: $x > 0.579$
+    why: The inequality direction is unchanged because $\ln 2 > 0$.
+  - text: $x < 2.32$
+    why: That solves $2^x < 5$; the coefficient 3 and the $3x-1$ exponent both change the answer.
+  - text: $x < 1.74$
+    why: That is the value of $3x - 1$, not of $x$; the division by 3 is still needed.
+  explanation: Isolate, take logs, then solve the linear inequality for $x$.
+- id: ln-of-power
+  format: mcq
+  difficulty: 1
+  objectives:
+  - 3.2.3
+  prompt: Simplify $\ln\left(5^{2x}\right)$.
+  options:
+  - text: $2x\ln 5$
+    correct: true
+    why: The power law puts the exponent in front as a multiplier.
+  - text: $2x + \ln 5$
+    why: The power law multiplies, it does not add.
+  - text: $\ln 5 + 2x$
+    why: The log of a power is a product $x\ln a$, never a sum with the exponent standing alone.
+  - text: $\ln 5 \cdot \ln(2x)$
+    why: Logs do not multiply that way.
+  explanation: $\ln(a^u) = u\ln a$ with $u = 2x$.
+- id: exponential-eq-with-e
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.2.3
+  prompt: Solve $5^{2x-1} = 2$, giving $x$ to 3 significant figures.
+  fields:
+  - answer: 0.715
+    tolerance:
+      abs: 0.001
+  explanation: $(2x-1)\ln 5 = \ln 2$, so $2x - 1 = \dfrac{\ln 2}{\ln 5} = 0.4307$ and $x = 0.715$.
+- id: negative-solution
+  format: numeric
+  difficulty: 2
+  objectives:
+  - 3.2.3
+  prompt: Solve $2^x = 0.3$, giving $x$ to 3 significant figures.
+  fields:
+  - answer: -1.74
+    tolerance:
+      abs: 0.01
+  explanation: '$x = \dfrac{\ln 0.3}{\ln 2} = \dfrac{-1.2040}{0.6931} = -1.74$. A negative answer is expected
+
+    because $2^x$ shrinks below 1 for negative $x$.'
+- id: inequality-direction
+  format: mcq
+  difficulty: 3
+  objectives:
+  - 3.2.3
+  prompt: Solve $7^{x-1} > 2^{x+2}$.
+  options:
+  - text: $x > 2.66$
+    correct: true
+    why: '$(x-1)\ln 7 > (x+2)\ln 2$ gives $x(\ln 7 - \ln 2) > \ln 7 + 2\ln 2$, and $\ln 7 - \ln 2 > 0$,
+
+      so $x > 2.66$.'
+  - text: $x < 2.66$
+    why: Dividing by $\ln 7 - \ln 2$, which is positive, keeps the direction as $>$.
+  - text: $x > 0.845$
+    why: That comes from mishandling the constants after expanding.
+  - text: No solution
+    why: Since $7^{x-1}$ grows faster than $2^{x+2}$, large $x$ certainly satisfies it.
+  explanation: Take logs, expand, collect, then divide by the positive quantity $\ln 7 - \ln 2$.
+- id: power-of-power
+  format: numeric
+  difficulty: 3
+  objectives:
+  - 3.2.3
+  prompt: Solve $4^{x} = 3^{x+2}$, giving $x$ to 3 significant figures.
+  fields:
+  - answer: 7.64
+    tolerance:
+      abs: 0.02
+  explanation: '$x\ln 4 = (x+2)\ln 3$, so $x(\ln 4 - \ln 3) = 2\ln 3$ and
+
+    $x = \dfrac{2\ln 3}{\ln 4 - \ln 3} = \dfrac{2.1972}{0.2877} = 7.64$.'

@@ -3,7 +3,7 @@
  * its centre of gravity G at the middle. Every force has the same size F.
  * (a) One force at one end: resultant force F, and a moment about G, so the rod accelerates AND turns.
  * (b) Two equal, opposite forces along the same line (the rod's axis): resultant force zero and no
- *     moment about any point, so nothing happens (the rod is only stretched).
+ *     moment about any point, so there is no translational or angular acceleration (though the rod may deform).
  * (c) A couple: equal, opposite, parallel forces with separated lines of action at the two ends.
  *     Resultant force zero, but both forces turn the rod the same way: it rotates about G and G
  *     does not accelerate.
@@ -62,7 +62,7 @@ export function TurningEffectsCoupleEffects() {
       <TurnArrow c={{ x: a, y: Y }} r={36} a1={40} a2={140} />
 
       {/* (b) equal and opposite, same line */}
-      <Notes cx={b} title="Equal, opposite, same line" lines={['resultant force 0, no moment', 'no motion']} />
+      <Notes cx={b} title="Equal, opposite, same line" lines={['resultant force 0, no moment', 'no overall motion']} />
       <Rod cx={b} />
       <Force p={{ x: b - HALF, y: Y }} u={{ x: -1, y: 0 }} l={40} label="F" dy={-16} />
       <Force p={{ x: b + HALF, y: Y }} u={{ x: 1, y: 0 }} l={40} label="F" dy={-16} />
