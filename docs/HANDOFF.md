@@ -90,10 +90,10 @@ Rules the user stressed:
 Follow the project skill `.claude/skills/token-efficient-workflow/SKILL.md`, including its
 "Agent budget and token control" section. In short:
 
-- **Agents:** at most **3 agents at once**.
-  - Use exactly one independent reviewer per batch of lessons.
-  - Never spawn agents to review your own work.
+- **Agents:** use dynamic concurrency for genuinely independent tasks, coordinated through `docs/AGENT_COORDINATION.md` when local agents share a filesystem. Let available CPU/RAM, provider limits, file contention and coordination overhead determine the number. Solo operation must always work.
+  - Use an independent reviewer for each lesson batch where required; never spawn an agent to review its own work.
   - Hand each agent only the files and sections it needs.
+  - Use atomic task claims and one owner for shared files; never let agents write or review the same unit concurrently.
 - **Reading:** search before reading.
   - Print only the Markdown section you need with
     `python3 .claude/skills/token-efficient-workflow/scripts/md_section.py FILE "Heading"`
@@ -154,8 +154,7 @@ or one chat session as completion. Preserve the AS-first-then-A2 queue order, re
 agent limits and user session-budget rule. If blocked by limits or an external dependency, report
 the exact remaining states and resume from the status queue; never claim completion early.
 
-Never run more than 3 agents at once. A writer and the reviewer for that same unit never
-run at the same time. For each agent:
+Use the shared coordination protocol to choose a safe number of concurrent agents. A writer and the reviewer for that same unit never run at the same time. For each agent:
 
 ```bash
 node scripts/lessons/prompts.mjs write "9701 3.1+3.2"     # or: review "9709 1.6+1.7"
