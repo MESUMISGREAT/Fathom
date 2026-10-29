@@ -243,11 +243,35 @@ changes alongside lessons:
   and `https://fathom-steel-ten.vercel.app/subjects/9618/lessons/dbms-software-tools` returns 200
   with the title "The tools inside a DBMS" once the deploy finished (the generic "Lesson · Fathom"
   title for the first minute is the old deployment, not an error).
-  - **Next in this queue: 9618 8.3** (SQL: DDL for 8.3.1/8.3.3/8.3.4, DML for 8.3.2/8.3.3/8.3.5).
-    `units.json` groups 8.2+8.3 into one unit, so `status.mjs` still reports that unit as
-    **partial** until 8.3 exists — that is expected, not a bug.
   - Review caveat as elsewhere: second adversarial pass by the same agent, no separate reviewer
     model and no teacher review.
+- **9618 8.3 SQL (DDL and DML) is PUBLISHED** (29 Oct, `6753d72`, from this chat): 6 lessons,
+  36 questions, 5 diagrams. `sql-ddl-and-dml` (8.3.1/8.3.2/8.3.3), `sql-create-table` and
+  `sql-alter-table-foreign-keys` (8.3.4), `sql-select-where-order-group`, `sql-inner-join` and
+  `sql-insert-update-delete` (8.3.5). Diagrams: `cs-sql-ddl-vs-dml`, `-create-table-anatomy`,
+  `-foreign-key-link`, `-select-clause-order`, `-inner-join-rows`. Objectives 8.3.1–8.3.5 are
+  each taught by a core lesson and tested, which completes the 8.2+8.3 queue unit.
+  `content:check` 0 errors / 0 warnings, `tsc` clean, `vitest run tests/diagrams.test.ts
+  tests/diagram-notation.test.ts` 5/5, and all five diagrams rendered and inspected.
+  - Conventions recorded: the `diagram:` field needs the **subject prefix** (`cs-sql-...`), not
+    the bare file name — five lessons failed validation on that first. Cambridge's DDL sub-set
+    is CREATE DATABASE / CREATE TABLE / ALTER TABLE plus PRIMARY KEY and FOREIGN KEY ...
+    REFERENCES; `DROP` is taught as DDL for "read this statement" questions, not as a write
+    target. Data types stay exactly the seven listed in 8.3.4.
+  - Render gotcha, still true here: Chromium cannot launch in this VM (no libnss3, no root), so
+    the five diagrams were rasterised with `.work-logs/render-svg.tsx` —
+    `npx tsx .work-logs/render-svg.tsx <key> .work-logs/previews` with `FONTCONFIG_FILE` set.
+    Its inline CSS is light-mode only, so this catches geometry, overlaps and clipping but **not**
+    dark-mode contrast or KaTeX overflow; run `npm run diagram:render` on a machine that can
+    launch Chromium before treating them as final.
+  - That render pass earned its keep: it caught four layout defects (overlapping panel notes, a
+    badge sitting on top of the code, an arrow crossing a table header, and rows overflowing
+    their table boxes by one row) plus four `alt` texts still describing the pre-fix figures.
+  - `publish.sh` in this VM ends in "push failed" and **resets** instead of leaving its commit, so
+    recover by committing the verified files yourself and pushing with `cloud_git`.
+  - Review caveat as elsewhere: second adversarial pass by the same agent, with every answer key
+    recomputed (counts, the 67.75 average, the 6-row join and the class-1 count of 4) and every
+    MCQ confirmed single-correct. No separate reviewer model and no teacher review.
 
 - **9701 topic 8 has TWO overlapping lesson sets and needs its owner's decision** (29 Oct). `main`
   carried `rate-reaction-collision-theory` / `-concentration-pressure` / `-calculations` /
@@ -589,7 +613,7 @@ changes alongside lessons:
       the answer keys was recomputed in Python during the review pass.
     - Review caveat as usual: second adversarial pass by the **same agent**, no separate
       reviewer model here. A reviewer should still be run over `data-integrity-*`.
-- Queue: 39 published, 115 todo (`node scripts/lessons/status.mjs`). The queue's head is
+- Queue: 46 published, 108 todo (`node scripts/lessons/status.mjs`). The queue's head is
   **9709 3.6+3.7**. 9709 was being restyled by the other chat, so it was skipped; that
   worktree is no longer on this VM, so check `git log --all` before taking it. 9702 7.1 is
   done; take **9701 7.1** or **9702 7.2+7.3+7.4** next, after checking the sibling worktree and
