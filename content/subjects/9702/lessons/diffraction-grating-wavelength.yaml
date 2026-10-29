@@ -1,0 +1,292 @@
+id: diffraction-grating-wavelength
+subject: "9702"
+topic: "8.4"
+title: "Measuring wavelength with a grating"
+summary: "Measure the angle of a bright order, find sin θ, and d sin θ = nλ gives the wavelength to three significant figures."
+order: 2
+minutes: 7
+kind: core
+objectives: ["8.4.2"]
+prerequisites: ["diffraction-grating-equation"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Physics 9702 syllabus, topic 8.4 The
+    diffraction grating, learning outcome 8.4.2 (describe how a diffraction grating is used to
+    determine the wavelength of light; spectrometer excluded). All questions are original; the quoted
+    measurements are illustrative. Re-checked line by line on 2026-10-29 in a separate adversarial
+    pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe how to **measure the wavelength of light** with a grating, carry out
+      the calculation from distances on a screen, and explain why the grating gives an accurate
+      result.
+
+  - type: explain
+    title: The apparatus
+    body: |
+      You need:
+
+      - a source of **monochromatic** light — a laser is ideal, or a lamp with a coloured filter,
+      - a **diffraction grating** of known slit spacing,
+      - a **screen** (or a wall) a measured distance away,
+      - a **metre rule** to measure distances.
+
+      Shine the light at **normal incidence** on the grating, so the beam arrives perpendicular to its
+      surface. The central maximum then goes straight through, and the orders appear symmetrically on
+      either side.
+
+  - type: explain
+    title: What to measure
+    body: |
+      Let the screen be a distance $D$ from the grating. Choose an order $n$ — the first order is
+      usually bright and easy to find.
+
+      Measure the distance from the **central maximum** to the $n$-th order maximum. Call it $y$.
+
+      A better method is to measure the distance between the $+n$ and $-n$ maxima and **halve** it.
+      This avoids having to locate the centre to the nearest millimetre, and it makes the measured
+      distance twice as large, which reduces the percentage uncertainty.
+
+      Then:
+
+      $$\tan\theta = \frac{y}{D}.$$
+
+      From $\tan\theta$ you get $\theta$, and hence $\sin\theta$. Finally
+
+      $$\lambda = \frac{d\sin\theta}{n}.$$
+
+  - type: explain
+    title: Do not confuse tan with sin
+    body: |
+      On a screen you measure two sides of a right-angled triangle: $y$ opposite the angle and $D$
+      adjacent to it. So the ratio $\dfrac{y}{D}$ is $\tan\theta$, **not** $\sin\theta$.
+
+      For small angles the two are nearly equal, which is why the double-slit formula uses
+      $\dfrac{ax}{D}$ as an approximation. But grating angles are often large — $30^\circ$ or
+      more — so the difference matters.
+
+      For example, if $\tan\theta = 0.75$ then $\theta = 36.9^\circ$ and $\sin\theta = 0.60$. Using
+      $0.75$ instead of $0.60$ would make the wavelength $25\%$ too large.
+
+      If you know $\tan\theta$, you can find $\sin\theta$ from
+      $\sin\theta = \dfrac{\tan\theta}{\sqrt{1 + \tan^2\theta}}$.
+
+  - type: example
+    title: A full measurement
+    problem: |
+      A grating with $1000$ lines per millimetre is placed $0.40\ \text{m}$ from a screen. The
+      first-order maximum is $0.30\ \text{m}$ from the central maximum.
+
+      Calculate the wavelength of the light.
+    steps:
+      - |
+        Slit spacing: $d = \dfrac{1}{1000\ \text{mm}^{-1}} = 1.0 \times 10^{-6}\ \text{m}$.
+      - |
+        $\tan\theta = \dfrac{y}{D} = \dfrac{0.30}{0.40} = 0.75$, so $\theta = 36.9^\circ$.
+      - |
+        $\sin\theta = 0.60$ (check: the 0.30–0.40–0.50 triangle gives $\sin\theta = 0.30/0.50$).
+      - |
+        $\lambda = \dfrac{d\sin\theta}{n} = \dfrac{(1.0 \times 10^{-6})(0.60)}{1} =
+        6.0 \times 10^{-7}\ \text{m}$.
+    answer: |
+      $\lambda = 6.0 \times 10^{-7}\ \text{m} = 600\ \text{nm}$
+
+  - type: example
+    title: Using a higher order
+    problem: |
+      A grating has slit spacing $2.0 \times 10^{-6}\ \text{m}$. The second-order maximum is at
+      $30^\circ$.
+
+      Calculate the wavelength.
+    steps:
+      - |
+        Rearrange: $\lambda = \dfrac{d\sin\theta}{n}$.
+      - |
+        $\sin 30^\circ = 0.50$.
+      - |
+        $\lambda = \dfrac{(2.0 \times 10^{-6})(0.50)}{2} = 5.0 \times 10^{-7}\ \text{m}$.
+    answer: |
+      $\lambda = 5.0 \times 10^{-7}\ \text{m} = 500\ \text{nm}$
+
+  - type: explain
+    title: Why a grating beats two slits
+    body: |
+      With a double slit the maxima are broad, so locating their centres is imprecise. A grating
+      produces **narrow, sharp** maxima, so the angle can be measured accurately.
+
+      The angles are also large, and you can use **higher orders**, where a small error in distance
+      corresponds to a small error in angle.
+
+      Practical points:
+
+      - Measure across several orders and average, or use the largest order you can see clearly.
+      - Measure $D$ from the grating to the screen with the same rule, and keep the screen
+        perpendicular to the beam.
+      - Use a dark room so faint orders are visible.
+      - **Never look directly into a laser beam.** Use a screen to view the pattern.
+
+  - type: misconceptions
+    items:
+      - wrong: "Use sin θ = y/D."
+        right: >-
+          On a screen $y/D$ is $\tan\theta$. Convert properly, especially at large angles.
+      - wrong: "The distance between the ±1 maxima is y."
+        right: >-
+          That distance is $2y$; halve it before using it in the triangle.
+      - wrong: "A grating is just a double slit with wider slits."
+        right: >-
+          It has thousands of narrow, equally spaced slits. That is what makes the maxima sharp.
+      - wrong: "The measurement works with white light."
+        right: >-
+          White light gives overlapping spectra. Use monochromatic light so each order is a single
+          sharp line.
+
+  - type: exam
+    body: |
+      Describe the procedure in order: set up, measure $D$, measure the position of an order, find
+      $\theta$, then use $\lambda = \dfrac{d\sin\theta}{n}$.
+
+      Show the trigonometric step explicitly. Writing $\sin\theta = y/D$ loses the accuracy mark and
+      is wrong at large angles.
+
+      Give the wavelength in metres or nanometres with a sensible number of significant figures, and
+      mention one precaution — dark room, normal incidence, or not looking into the beam.
+
+  - type: check
+    title: Check yourself
+    questions: [measure-lambda, second-order-angle]
+
+  - type: check
+    title: Method and precision
+    questions: [both-sides, grating-advantage]
+
+  - type: check
+    title: Explain and spot the slip
+    questions: [describe-method, tan-sin-error]
+
+  - type: takeaways
+    items:
+      - Measure D from grating to screen, and y from the centre to an order (or half the distance between ±n).
+      - "tan θ = y/D; then find sin θ before using λ = d sin θ / n."
+      - Sharp maxima and large angles make the grating more accurate than two slits.
+      - Use monochromatic light, normal incidence and a dark room; never look into the beam.
+
+questions:
+  - id: measure-lambda
+    format: numeric
+    difficulty: 2
+    objectives: ["8.4.2"]
+    prompt: |
+      A grating with $1000$ lines per millimetre is $0.40\ \text{m}$ from a screen. The first-order
+      maximum is $0.30\ \text{m}$ from the central maximum.
+
+      Calculate the wavelength, in nanometres.
+    fields:
+      - answer: 600
+        tolerance: { abs: 6 }
+        unit: nm
+    explanation: |
+      $d = 1/(1000 \times 10^{3}) = 1.0 \times 10^{-6}\ \text{m}$.
+      $\tan\theta = 0.30/0.40 = 0.75$, so $\theta = 36.9^\circ$ and $\sin\theta = 0.60$. Then
+      $\lambda = d\sin\theta = 6.0 \times 10^{-7}\ \text{m} = 600\ \text{nm}$.
+
+  - id: second-order-angle
+    format: numeric
+    difficulty: 2
+    objectives: ["8.4.2"]
+    prompt: |
+      A grating has slit spacing $2.0 \times 10^{-6}\ \text{m}$. The second-order maximum is at
+      $30^\circ$.
+
+      Calculate the wavelength, in nanometres.
+    fields:
+      - answer: 500
+        tolerance: { abs: 5 }
+        unit: nm
+    explanation: |
+      $\lambda = \dfrac{d\sin\theta}{n} = \dfrac{(2.0 \times 10^{-6})(0.50)}{2} =
+      5.0 \times 10^{-7}\ \text{m} = 500\ \text{nm}$.
+
+  - id: both-sides
+    format: mcq
+    difficulty: 2
+    objectives: ["8.4.2"]
+    prompt: |
+      Why is it better to measure the distance between the $+n$ and $-n$ maxima and halve it?
+    options:
+      - text: "It doubles the measured length and avoids relying on locating the centre precisely."
+        correct: true
+        why: "Correct: a longer measurement has a smaller percentage uncertainty, and the centre is not needed."
+      - text: "It gives twice the wavelength directly."
+        why: "The wavelength still comes from the geometry and the equation; halving restores y."
+      - text: "It removes the need for the grating spacing."
+        why: "d is still needed in d sin θ = nλ."
+      - text: "It makes the maxima sharper."
+        why: "Sharpness comes from the grating, not from how you measure."
+    explanation: |
+      Measuring across the pattern gives a larger distance with the same ruler uncertainty, and it
+      avoids an error in locating the centre.
+
+  - id: grating-advantage
+    format: mcq
+    difficulty: 2
+    objectives: ["8.4.2"]
+    prompt: |
+      Why does a diffraction grating give a more accurate wavelength than a double slit?
+    options:
+      - text: "Its maxima are sharp and occur at large angles, so the angles can be measured precisely."
+        correct: true
+        why: "Correct: narrow maxima and large angles reduce the uncertainty in θ."
+      - text: "It produces brighter light."
+        why: "Brightness is not the main advantage; precision of the angle is."
+      - text: "It does not need monochromatic light."
+        why: "A grating with white light gives overlapping spectra, so monochromatic light is still needed."
+      - text: "It has only two slits, so the pattern is simpler."
+        why: "A grating has thousands of slits, which is exactly why its maxima are sharp."
+    explanation: |
+      Thousands of slits make the maxima narrow and the angles large, so θ is measured accurately and
+      the wavelength follows precisely.
+
+  - id: describe-method
+    format: text
+    style: short
+    difficulty: 2
+    objectives: ["8.4.2"]
+    prompt: |
+      Outline how the wavelength of monochromatic light is measured with a diffraction grating.
+    accept:
+      - "measure the distance D to the screen, the distance y of an order from the centre, find tan theta = y/D then sin theta, and use lambda = d sin theta / n"
+      - "measure D and y, calculate theta from tan theta = y/D, then use d sin theta = n lambda"
+      - "shine light through the grating, measure the angle of an order with a screen, then use lambda = d sin theta / n"
+    model: |
+      Shine monochromatic light normally through a grating of known spacing d and place a screen a
+      measured distance D away. Measure the distance y from the central maximum to an order n (or
+      half the distance between the ±n maxima). Find tan θ = y/D, then sin θ, and calculate
+      λ = d sin θ / n.
+    explanation: |
+      The key steps are D, y, then θ from tan θ = y/D, then the grating equation.
+
+  - id: tan-sin-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["8.4.2"]
+    prompt: |
+      A student measures a wavelength with a grating. One line is wrong.
+    lines:
+      - |
+        The grating spacing is $1.0 \times 10^{-6}\ \text{m}$, the screen is $0.40\ \text{m}$ away
+        and the first-order maximum is $0.30\ \text{m}$ from the centre.
+      - |
+        Then $\tan\theta = \dfrac{0.30}{0.40} = 0.75$, so $\sin\theta = 0.75$.
+      - |
+        Hence $\lambda = d\sin\theta = 7.5 \times 10^{-7}\ \text{m}$.
+    errorLine: 2
+    fix: |
+      $\tan\theta = 0.75$ gives $\theta = 36.9^\circ$, so $\sin\theta = 0.60$ (from the 0.30–0.40–0.50
+      triangle). Then $\lambda = 6.0 \times 10^{-7}\ \text{m} = 600\ \text{nm}$.
+    explanation: |
+      $y/D$ is $\tan\theta$, not $\sin\theta$. At this large angle the difference is substantial:
+      using 0.75 instead of 0.60 makes the wavelength 25% too large.

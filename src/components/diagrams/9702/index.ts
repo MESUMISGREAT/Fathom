@@ -6,6 +6,7 @@ import DensityPressureLiquidColumn from './density-pressure-liquid-column';
 import DensityPressurePressureArea from './density-pressure-pressure-area';
 import DensityPressureUpthrust from './density-pressure-upthrust';
 import DiffractionBasicsGapWidth from './diffraction-basics-gap-width';
+import DiffractionGratingPaths from './diffraction-grating-paths';
 import DopplerEffectWavefronts from './doppler-effect-wavefronts';
 import ElasticPlasticLoadingUnloading from './elastic-plastic-loading-unloading';
 import ElasticPlasticStrainEnergy from './elastic-plastic-strain-energy';
@@ -47,6 +48,10 @@ import GpeKeFallingExchange from './gpe-ke-falling-exchange';
 import GpeKeGpeHeightGraph from './gpe-ke-gpe-height-graph';
 import GpeKeVSquared from './gpe-ke-v-squared';
 import GpeKeWorkToGpe from './gpe-ke-work-to-gpe';
+import InterferenceCoherence from './interference-coherence';
+import InterferenceDoubleSlit from './interference-double-slit';
+import InterferenceFringes from './interference-fringes';
+import InterferencePathDifference from './interference-path-difference';
 import LinearMomentumApproachSeparation from './linear-momentum-approach-separation';
 import LinearMomentumCollision_1d from './linear-momentum-collision-1d';
 import LinearMomentumExplosionTriangle from './linear-momentum-explosion-triangle';
@@ -109,6 +114,7 @@ export const diagrams: DiagramRegistry = {
   'phys-density-pressure-pressure-area': DensityPressurePressureArea,
   'phys-density-pressure-upthrust': DensityPressureUpthrust,
   'phys-diffraction-basics-gap-width': DiffractionBasicsGapWidth,
+  'phys-diffraction-grating-paths': DiffractionGratingPaths,
   'phys-doppler-effect-wavefronts': DopplerEffectWavefronts,
   'phys-elastic-plastic-loading-unloading': ElasticPlasticLoadingUnloading,
   'phys-elastic-plastic-strain-energy': ElasticPlasticStrainEnergy,
@@ -150,6 +156,10 @@ export const diagrams: DiagramRegistry = {
   'phys-gpe-ke-gpe-height-graph': GpeKeGpeHeightGraph,
   'phys-gpe-ke-v-squared': GpeKeVSquared,
   'phys-gpe-ke-work-to-gpe': GpeKeWorkToGpe,
+  'phys-interference-coherence': InterferenceCoherence,
+  'phys-interference-double-slit': InterferenceDoubleSlit,
+  'phys-interference-fringes': InterferenceFringes,
+  'phys-interference-path-difference': InterferencePathDifference,
   'phys-linear-momentum-approach-separation': LinearMomentumApproachSeparation,
   'phys-linear-momentum-collision-1d': LinearMomentumCollision_1d,
   'phys-linear-momentum-explosion-triangle': LinearMomentumExplosionTriangle,
