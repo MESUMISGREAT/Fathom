@@ -1,0 +1,246 @@
+id: mech-momentum-definition
+subject: "9709"
+topic: "4.3"
+title: "Linear momentum"
+summary: "Momentum is mass times velocity. It is a vector, so opposite directions cancel in a total."
+order: 1
+minutes: 6
+kind: core
+objectives: ["4.3.1"]
+prerequisites: ["kinematics-scalars-and-vectors"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Mathematics 9709 syllabus, topic 4.3
+    Momentum, learning outcome 4.3.1 (use the definition of linear momentum and understand its
+    vector nature; motion in one dimension). All questions and examples are original. Re-checked
+    line by line on 2026-10-29 in a separate adversarial pass by the same AI model. No separate
+    reviewer model and no teacher have reviewed it.
+blocks:
+  - type: objective
+    body: |
+      By the end you can calculate the **momentum** of a particle, add momenta as **vectors** in one
+      dimension, and find the **change** in momentum when a velocity reverses.
+
+  - type: explain
+    title: Why a lorry hurts more than a bicycle
+    body: |
+      A bicycle and a lorry can move at the same speed, but the lorry is far harder to stop. What
+      matters is not speed alone, nor mass alone, but their product.
+
+      That product is **momentum**: a measure of "quantity of motion". Doubling the mass doubles it;
+      doubling the speed doubles it; doing both multiplies it by four.
+
+  - type: definition
+    term: Linear momentum
+    body: |
+      The **momentum** of a particle is its mass multiplied by its velocity:
+      $$p = mv.$$
+      It is a **vector** in the direction of the velocity, measured in
+      $\text{kg m s}^{-1}$.
+
+  - type: explain
+    title: One dimension, one sign
+    body: |
+      In this course all motion is in a straight line, so momentum is handled with signs.
+
+      Choose a positive direction, then:
+
+      - a particle moving that way has positive momentum;
+      - a particle moving the other way has negative momentum.
+
+      The **total momentum** of several particles is the **vector sum**:
+
+      $$p_{\text{total}} = m_1 v_1 + m_2 v_2 + \cdots$$
+
+      Two equal masses moving towards each other at the same speed have momenta $+mv$ and $-mv$, so
+      the total is **zero**. Nothing is lost or cancelled in a mysterious way: the momenta simply
+      point in opposite directions.
+
+  - type: explain
+    title: Change in momentum
+    body: |
+      When the velocity changes, the momentum changes. The change is
+
+      $$\Delta p = mv - mu = m(v - u),$$
+
+      where $u$ is the velocity before and $v$ after. The order matters, and so do the signs.
+
+      A ball hitting a wall and bouncing back has $u$ and $v$ in opposite directions. If the wall is
+      taken as positive, then $u$ is positive and $v$ is negative, so the change in momentum is
+      larger than it first appears — it is not just the difference of two speeds.
+
+  - type: example
+    title: A ball bouncing off a wall
+    problem: |
+      A ball of mass $0.20\ \text{kg}$ hits a wall at $6.0\ \text{m s}^{-1}$ and rebounds at
+      $4.0\ \text{m s}^{-1}$. Take the direction towards the wall as positive.
+
+      Find the change in momentum of the ball.
+    steps:
+      - |
+        Before: $u = +6.0\ \text{m s}^{-1}$, so $p_{\text{before}} = 0.20 \times 6.0 =
+        +1.2\ \text{kg m s}^{-1}$.
+      - |
+        After: $v = -4.0\ \text{m s}^{-1}$, so $p_{\text{after}} = 0.20 \times (-4.0) =
+        -0.80\ \text{kg m s}^{-1}$.
+      - |
+        Change: $\Delta p = p_{\text{after}} - p_{\text{before}} = -0.80 - 1.2 =
+        -2.0\ \text{kg m s}^{-1}$.
+      - |
+        The minus sign means the change points away from the wall, with magnitude
+        $2.0\ \text{kg m s}^{-1}$.
+    answer: |
+      $\Delta p = -2.0\ \text{kg m s}^{-1}$, i.e. $2.0\ \text{kg m s}^{-1}$ away from the wall.
+
+  - type: misconceptions
+    items:
+      - wrong: "Momentum is a scalar because it is just mass times speed."
+        right: >-
+          It uses **velocity**, not speed, so it carries a direction. Opposite momenta can cancel in
+          a total.
+      - wrong: "A change in momentum is always positive."
+        right: >-
+          $\Delta p = m(v-u)$ can be negative; the sign gives the direction of the change.
+      - wrong: "Two particles with non-zero momenta must have a non-zero total momentum."
+        right: >-
+          If they move in opposite directions with equal products of mass and speed, the vector sum
+          is zero.
+      - wrong: "Momentum and kinetic energy are the same kind of quantity."
+        right: >-
+          Momentum is a vector proportional to $v$; kinetic energy is a scalar proportional to
+          $v^2$. They are different quantities with different units.
+
+  - type: exam
+    body: |
+      State your positive direction and give momenta with signs. Examiners accept a negative answer
+      as a direction, but they cannot follow arithmetic in which the sign convention changes halfway.
+
+      For a reversal, write $u$ and $v$ with **opposite signs** explicitly. This is the single most
+      common error in the topic.
+
+      Quote the unit $\text{kg m s}^{-1}$ and do not confuse momentum with force or energy.
+
+  - type: check
+    title: Check yourself
+    questions: [momentum-basic, momentum-total]
+
+  - type: check
+    title: Changes and directions
+    questions: [change-on-rebound, opposite-momenta]
+
+  - type: check
+    title: Explain and name units
+    questions: [momentum-vector, momentum-units]
+
+  - type: takeaways
+    items:
+      - "Momentum $p = mv$, measured in kg m s⁻¹."
+      - "It is a vector: in one dimension its direction is a sign."
+      - "Total momentum is the vector sum, so opposite momenta can cancel."
+      - "Change in momentum is $m(v-u)$; for a rebound, u and v have opposite signs."
+
+questions:
+  - id: momentum-basic
+    format: numeric
+    difficulty: 1
+    objectives: ["4.3.1"]
+    prompt: |
+      A trolley of mass $3.0\ \text{kg}$ moves at $5.0\ \text{m s}^{-1}$.
+
+      Calculate its momentum.
+    fields:
+      - answer: 15
+        tolerance: { abs: 0.1 }
+        unit: kg m s⁻¹
+    explanation: |
+      $p = mv = 3.0 \times 5.0 = 15\ \text{kg m s}^{-1}$.
+
+  - id: momentum-total
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.1"]
+    prompt: |
+      A $2.0\ \text{kg}$ trolley moves at $+3.0\ \text{m s}^{-1}$ and a $4.0\ \text{kg}$ trolley
+      moves at $-1.0\ \text{m s}^{-1}$ along the same line.
+
+      Find the total momentum.
+    fields:
+      - answer: 2
+        tolerance: { abs: 0.1 }
+        unit: kg m s⁻¹
+    explanation: |
+      $p = 2.0(3.0) + 4.0(-1.0) = 6.0 - 4.0 = 2.0\ \text{kg m s}^{-1}$, in the positive
+      direction.
+
+  - id: change-on-rebound
+    format: numeric
+    difficulty: 2
+    objectives: ["4.3.1"]
+    prompt: |
+      A ball of mass $0.50\ \text{kg}$ hits a wall at $8.0\ \text{m s}^{-1}$ and rebounds along the
+      same line at $4.0\ \text{m s}^{-1}$.
+
+      Find the **magnitude** of the change in momentum of the ball.
+    fields:
+      - answer: 6
+        tolerance: { abs: 0.1 }
+        unit: kg m s⁻¹
+    explanation: |
+      Taking the original direction as positive, $u = +8.0$ and $v = -4.0$. Then
+      $\Delta p = 0.50(-4.0 - 8.0) = -6.0\ \text{kg m s}^{-1}$, so the magnitude is
+      $6.0\ \text{kg m s}^{-1}$.
+
+  - id: opposite-momenta
+    format: mcq
+    difficulty: 2
+    objectives: ["4.3.1"]
+    prompt: |
+      Two particles of equal mass move towards each other with equal speeds along the same line.
+      What is their total momentum?
+    options:
+      - text: "Zero, because their momenta are equal and opposite."
+        correct: true
+        why: "Correct: the vector sum of +mv and −mv is zero."
+      - text: "Twice the momentum of one particle."
+        why: "That would be the case if they moved in the same direction."
+      - text: "Equal to the momentum of one particle."
+        why: "Equal and opposite vectors add to zero, not to one of them."
+      - text: "Undefined, because momentum cannot be negative."
+        why: "Momentum can be negative: the sign simply gives the direction of motion."
+    explanation: |
+      Momentum is a vector. Equal masses at equal speeds in opposite directions have momenta $+mv$
+      and $-mv$, whose sum is zero.
+
+  - id: momentum-vector
+    format: text
+    style: short
+    difficulty: 1
+    objectives: ["4.3.1"]
+    prompt: |
+      Explain why momentum is described as a vector quantity.
+    accept:
+      - "it has direction as well as size"
+      - "because velocity is a vector"
+      - "it depends on velocity which has a direction"
+      - "it has magnitude and direction"
+    model: |
+      Momentum is mass times velocity, and velocity has a direction, so momentum has both magnitude
+      and direction. In one dimension the direction is given by a sign.
+    explanation: |
+      The direction comes from the velocity, which is a vector.
+
+  - id: momentum-units
+    format: cloze
+    difficulty: 1
+    objectives: ["4.3.1"]
+    prompt: |
+      Momentum is measured in **{{1}}**, and it is calculated as mass multiplied by
+      **{{2}}**.
+    blanks:
+      - accept: ["kg m s-1", "kg m/s", "kg m s⁻¹", "N s"]
+      - accept: ["velocity"]
+    explanation: |
+      $p = mv$ gives units $\text{kg} \times \text{m s}^{-1} = \text{kg m s}^{-1}$, equivalent to
+      $\text{N s}$.

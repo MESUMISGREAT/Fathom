@@ -5,6 +5,7 @@ import DensityPressureDensityCubes from './density-pressure-density-cubes';
 import DensityPressureLiquidColumn from './density-pressure-liquid-column';
 import DensityPressurePressureArea from './density-pressure-pressure-area';
 import DensityPressureUpthrust from './density-pressure-upthrust';
+import DiffractionBasicsGapWidth from './diffraction-basics-gap-width';
 import DopplerEffectWavefronts from './doppler-effect-wavefronts';
 import ElasticPlasticLoadingUnloading from './elastic-plastic-loading-unloading';
 import ElasticPlasticStrainEnergy from './elastic-plastic-strain-energy';
@@ -79,6 +80,10 @@ import ProgressiveWavesCroTrace from './progressive-waves-cro-trace';
 import ProgressiveWavesKeyTerms from './progressive-waves-key-terms';
 import ProgressiveWavesPhaseDifference from './progressive-waves-phase-difference';
 import ProgressiveWavesRopePulse from './progressive-waves-rope-pulse';
+import StationaryWavesAirColumn from './stationary-waves-air-column';
+import StationaryWavesFormation from './stationary-waves-formation';
+import StationaryWavesStringModes from './stationary-waves-string-modes';
+import StationaryWavesSuperposition from './stationary-waves-superposition';
 import StressStrainForceExtensionGraph from './stress-strain-force-extension-graph';
 import StressStrainSpringStiffness from './stress-strain-spring-stiffness';
 import StressStrainStressStrainDefinitions from './stress-strain-stress-strain-definitions';
@@ -103,6 +108,7 @@ export const diagrams: DiagramRegistry = {
   'phys-density-pressure-liquid-column': DensityPressureLiquidColumn,
   'phys-density-pressure-pressure-area': DensityPressurePressureArea,
   'phys-density-pressure-upthrust': DensityPressureUpthrust,
+  'phys-diffraction-basics-gap-width': DiffractionBasicsGapWidth,
   'phys-doppler-effect-wavefronts': DopplerEffectWavefronts,
   'phys-elastic-plastic-loading-unloading': ElasticPlasticLoadingUnloading,
   'phys-elastic-plastic-strain-energy': ElasticPlasticStrainEnergy,
@@ -177,6 +183,10 @@ export const diagrams: DiagramRegistry = {
   'phys-progressive-waves-key-terms': ProgressiveWavesKeyTerms,
   'phys-progressive-waves-phase-difference': ProgressiveWavesPhaseDifference,
   'phys-progressive-waves-rope-pulse': ProgressiveWavesRopePulse,
+  'phys-stationary-waves-air-column': StationaryWavesAirColumn,
+  'phys-stationary-waves-formation': StationaryWavesFormation,
+  'phys-stationary-waves-string-modes': StationaryWavesStringModes,
+  'phys-stationary-waves-superposition': StationaryWavesSuperposition,
   'phys-stress-strain-force-extension-graph': StressStrainForceExtensionGraph,
   'phys-stress-strain-spring-stiffness': StressStrainSpringStiffness,
   'phys-stress-strain-stress-strain-definitions': StressStrainStressStrainDefinitions,

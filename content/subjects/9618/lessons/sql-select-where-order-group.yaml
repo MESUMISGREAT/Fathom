@@ -1,0 +1,412 @@
+id: sql-select-where-order-group
+subject: "9618"
+topic: "8.3"
+title: "Asking questions: SELECT, WHERE, ORDER BY and GROUP BY"
+summary: A query is a sentence with fixed slots. Learn where the filter goes, where the sorting goes, and how GROUP BY turns many rows into one summary row.
+order: 4
+minutes: 10
+kind: core
+objectives: ["8.3.5"]
+prerequisites: [sql-ddl-and-dml, sql-create-table]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus
+    (2027-2029, Version 2, December 2025), topic 8.3, learning outcome 8.3.5 (SELECT ... FROM,
+    WHERE, ORDER BY, GROUP BY and the aggregate functions SUM, COUNT, AVG). All questions are
+    original; the sample table is invented.
+    Second-pass review by the same agent on 2026-10-29 (no separate reviewer model was available):
+    every SQL statement was checked for syntax and semantics, every answer key recomputed (counts,
+    averages and join row counts verified in Python), every MCQ confirmed to have exactly one correct
+    option, and all five diagrams rendered and inspected. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write a `SELECT` query that filters rows, sorts them, and summarises them
+      with `COUNT`, `SUM` and `AVG` — and you can read a query someone else wrote.
+
+  - type: explain
+    title: A query has slots, not free word order
+    body: |-
+      Every single-table query uses the same skeleton:
+
+      ```sql
+      SELECT   which fields you want
+      FROM     which table
+      WHERE    which rows qualify
+      ORDER BY how to sort the result;
+      ```
+
+      Only `SELECT` and `FROM` are compulsory. The others slot in at fixed positions, and putting
+      them in the wrong order is a syntax error — not a matter of style.
+
+      ```sql
+      SELECT Name, Mark
+      FROM Student
+      WHERE ClassID = 1
+      ORDER BY Mark DESC;
+      ```
+
+      That reads as: "give me the name and mark of every student in class 1, highest mark first."
+
+  - type: explain
+    title: WHERE — choosing rows
+    body: |-
+      `WHERE` takes a **condition** and keeps only the rows where it is true.
+
+      | Operator | Means | Example |
+      |---|---|---|
+      | `=` | equal to | `WHERE ClassID = 1` |
+      | `<>` | not equal to | `WHERE Grade <> 'A'` |
+      | `>` `<` `>=` `<=` | comparisons | `WHERE Mark >= 60` |
+      | `AND`, `OR`, `NOT` | combine conditions | `WHERE Mark > 60 AND Grade = 'A'` |
+
+      Two rules that catch people out:
+
+      - **Text goes in single quotes.** `WHERE Grade = 'A'` works; `WHERE Grade = A` makes the DBMS
+        look for a *field* named A.
+      - **Dates are compared as text in date order**: `WHERE Enrolled > '2026-09-01'`. That only
+        works because `DATE` fields sort correctly — one more reason not to store dates in a
+        `VARCHAR`.
+
+  - type: diagram
+    diagram: cs-sql-select-clause-order
+    alt: >-
+      Two rows of five boxes. The top row, labelled "the order you write", runs SELECT, FROM, WHERE,
+      GROUP BY, ORDER BY with small arrows between the boxes. The bottom row, labelled "the order the
+      DBMS works it out", runs FROM, WHERE, GROUP BY, SELECT, ORDER BY. Notes below explain that FROM
+      gets the rows, WHERE keeps the matches, GROUP BY makes the groups, SELECT chooses the fields to
+      show and ORDER BY sorts last, which is why WHERE cannot use a nickname created by SELECT.
+    caption: |-
+      You write SELECT first, but the DBMS works out the table and the filter first.
+
+  - type: explain
+    title: ORDER BY — sorting the answer
+    body: |-
+      `ORDER BY` sorts the result rows. It goes **last**, and it sorts by a field, not by a row
+      number:
+
+      ```sql
+      SELECT Name, Mark FROM Student ORDER BY Mark DESC;
+      SELECT Name, Mark FROM Student ORDER BY Mark DESC, Name ASC;
+      ```
+
+      - `ASC` is ascending (smallest first) and is the default, so `ORDER BY Mark` means ascending.
+      - `DESC` is descending (largest first).
+      - With several fields, the first is the main sort and the second breaks ties.
+
+      `ORDER BY` changes only the **order of the output**. It does not change which rows are
+      returned and it does not change the table itself.
+
+  - type: explain
+    title: Summary numbers with COUNT, SUM and AVG
+    body: |-
+      Three **aggregate functions** turn many rows into one number:
+
+      | Function | Answers | Example |
+      |---|---|---|
+      | `COUNT` | how many rows? | `SELECT COUNT(*) FROM Student;` |
+      | `SUM` | what do the values add up to? | `SELECT SUM(Mark) FROM Student;` |
+      | `AVG` | what is the mean value? | `SELECT AVG(Mark) FROM Student;` |
+
+      `SUM` and `AVG` need a numeric field. `COUNT(*)` counts rows, including rows that have empty
+      fields; `COUNT(field)` counts only rows where that field is filled in.
+
+      On its own, an aggregate returns **one row**. That is why this is legal even though `Name` is
+      not aggregated — it is not selected at all:
+
+      ```sql
+      SELECT AVG(Mark) FROM Student WHERE ClassID = 1;
+      ```
+
+  - type: explain
+    title: GROUP BY — one summary row per group
+    body: |-
+      `AVG(Mark)` for the whole school is rarely what you want. You want the average **per class**.
+      That is `GROUP BY`: it splits the rows into groups that share a value, then applies the
+      aggregates to each group.
+
+      ```sql
+      SELECT ClassID, COUNT(*) AS NumberOfStudents, AVG(Mark) AS AverageMark
+      FROM Student
+      GROUP BY ClassID;
+      ```
+
+      Result: one row per class, with the count and average for that class.
+
+      One rule, and it is the one that loses marks: **every field in `SELECT` that is not inside an
+      aggregate must appear in `GROUP BY`.** `SELECT ClassID, Name, COUNT(*) ... GROUP BY ClassID`
+      is invalid, because there are many names per class and the DBMS cannot choose one.
+
+      `GROUP BY` comes after `WHERE` and before `ORDER BY`:
+
+      ```sql
+      SELECT ClassID, AVG(Mark)
+      FROM Student
+      WHERE Mark >= 40
+      GROUP BY ClassID
+      ORDER BY AVG(Mark) DESC;
+      ```
+
+  - type: example
+    title: "Worked example: three questions, one table"
+    problem: |-
+      Using the `Student` table below, write a query for each request.
+
+      | StudentID | Name | ClassID | Grade | Mark |
+      |---|---|---|---|---|
+      | 1 | Ada | 1 | A | 62 |
+      | 2 | Ben | 2 | B | 55 |
+      | 3 | Cleo | 1 | A | 71 |
+      | 4 | Dev | 2 | C | 48 |
+      | 5 | Eve | 1 | A | 58 |
+      | 6 | Finn | 2 | B | 66 |
+      | 7 | Gus | 1 | A | 80 |
+      | 8 | Hana | 2 | A | 74 |
+
+      (a) The names of students with grade A, alphabetically.
+      (b) The number of students in each class.
+      (c) The average mark in class 1, to two decimal places.
+    steps:
+      - |-
+        **(a) Fields, table, filter, sort.** `SELECT Name FROM Student WHERE Grade = 'A' ORDER BY
+        Name;` The quotes around `A` matter, and `ASC` is implied.
+      - |-
+        **Check it by hand:** Ada, Cleo, Eve, Gus and Hana — five rows, alphabetical.
+      - |-
+        **(b) Group, then count.** `SELECT ClassID, COUNT(*) FROM Student GROUP BY ClassID;` One row
+        per class, each with the number of students in it.
+      - |-
+        **Check it by hand:** class 1 has Ada, Cleo, Eve, Gus = 4; class 2 has Ben, Dev, Finn, Hana
+        = 4.
+      - |-
+        **(c) Filter the class, then average.** `SELECT AVG(Mark) FROM Student WHERE ClassID = 1;`
+      - |-
+        **Check it by hand:** $(62 + 71 + 58 + 80) = 271$, and $271 \div 4 = 67.75$. No rounding is
+        needed, but say the answer is 67.75 to two decimal places.
+    answer: |-
+      ```sql
+      SELECT Name FROM Student WHERE Grade = 'A' ORDER BY Name;
+      SELECT ClassID, COUNT(*) FROM Student GROUP BY ClassID;
+      SELECT AVG(Mark) FROM Student WHERE ClassID = 1;
+      ```
+
+  - type: check
+    title: Quick check
+    questions: [where-filter, order-by-desc, count-a-grade]
+
+  - type: check
+    title: Practice
+    questions: [avg-class-one, group-by-rule, spot-error-clause]
+
+  - type: misconceptions
+    items:
+      - wrong: WHERE can go after ORDER BY if it reads better.
+        right: |-
+          The clause order is fixed: `WHERE` comes before `GROUP BY`, which comes before `ORDER BY`.
+      - wrong: ORDER BY rearranges the rows in the table.
+        right: |-
+          It sorts only the result set. The stored table is unchanged.
+      - wrong: COUNT(*) counts only filled-in fields.
+        right: |-
+          `COUNT(*)` counts rows. `COUNT(Field)` skips rows where that field is empty.
+      - wrong: You can select Name with COUNT(*) grouped by ClassID.
+        right: |-
+          Every non-aggregated field in `SELECT` must appear in `GROUP BY`; there is no single name
+          per class to show.
+      - wrong: AVG(Mark) of a group returns a row per student.
+        right: |-
+          An aggregate collapses each group to **one** value, so the result has one row per group.
+
+  - type: exam
+    body: |-
+      - Learn the clause order as a chant: `SELECT … FROM … WHERE … GROUP BY … ORDER BY …`.
+      - Quote text values. A mark scheme will not give the quote mark, but the DBMS and the marker
+        both expect `'A'`.
+      - Use the aggregate names exactly: `COUNT`, `SUM`, `AVG`. Not `TOTAL`, `MEAN` or `NUMBER`.
+      - When a question says "for each class", that is your signal for `GROUP BY` — and every other
+        selected field must be grouped too.
+      - `SELECT *` returns every field, which is fine for a quick check but rarely what a "state
+        the output" question wants.
+
+  - type: takeaways
+    items:
+      - "The clause order is fixed: SELECT, FROM, WHERE, GROUP BY, ORDER BY."
+      - "WHERE keeps rows that satisfy a condition; text values go in single quotes."
+      - "ORDER BY sorts the result, ASC by default, DESC for largest first."
+      - "COUNT, SUM and AVG collapse rows into one number; with GROUP BY you get one per group."
+      - "Every non-aggregated field in SELECT must be in GROUP BY."
+
+  - type: deeper
+    title: "HAVING, LIKE and aliases"
+    body: |-
+      Three extras that make real queries much more useful. The first is beyond the listed sub-set,
+      the other two you may meet in a "read this statement" question.
+
+      ```sql
+      SELECT ClassID, AVG(Mark) AS Mean
+      FROM Student
+      WHERE Grade <> 'U'
+      GROUP BY ClassID
+      HAVING AVG(Mark) > 60
+      ORDER BY Mean DESC;
+      ```
+
+      - `WHERE` filters **rows before grouping**; `HAVING` filters **groups after aggregation**.
+        You cannot put `HAVING AVG(Mark) > 60` in `WHERE`, because the average does not exist yet.
+      - `LIKE` pattern-matches text: `WHERE Name LIKE 'A%'` finds names starting with A, and `_`
+        matches exactly one character.
+      - `AS` renames a column in the output (`AS Mean`). Most DBMS also allow the alias in
+        `ORDER BY`, which is why `ORDER BY Mean` works above.
+
+questions:
+  - id: where-filter
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.5"]
+    prompt: |-
+      Which query lists the names of students whose mark is 60 or more, highest mark first?
+    options:
+      - text: "`SELECT Name FROM Student WHERE Mark >= 60 ORDER BY Mark DESC;`"
+        correct: true
+        why: |-
+          Filter first with `WHERE`, then sort the result with `ORDER BY ... DESC`.
+      - text: "`SELECT Name FROM Student ORDER BY Mark DESC WHERE Mark >= 60;`"
+        why: |-
+          The clauses are in the wrong order: `WHERE` must come before `ORDER BY`.
+      - text: "`SELECT Name FROM Student WHERE Mark >= 60 ORDER BY Mark ASC;`"
+        why: |-
+          That sorts lowest first, not highest first.
+      - text: "`SELECT Name FROM Student WHERE Mark > 60 ORDER BY Mark DESC;`"
+        why: |-
+          `>` excludes a mark of exactly 60.
+    explanation: |-
+      `WHERE Mark >= 60` filters, `ORDER BY Mark DESC` sorts highest first.
+
+  - id: order-by-desc
+    format: cloze
+    difficulty: 1
+    objectives: ["8.3.5"]
+    prompt: |-
+      Complete the query so that the largest mark appears first:
+
+      `SELECT Name FROM Student ORDER BY Mark {{1}};`
+    blanks:
+      - accept: ["desc", "descending"]
+    explanation: |-
+      `DESC` sorts descending. The default, `ASC`, would put the smallest mark first.
+
+  - id: count-a-grade
+    format: numeric
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      A `Student` table holds these rows:
+
+      | StudentID | Name | Grade |
+      |---|---|---|
+      | 1 | Ada | A |
+      | 2 | Ben | B |
+      | 3 | Cleo | A |
+      | 4 | Dev | C |
+      | 5 | Eve | A |
+      | 6 | Finn | B |
+      | 7 | Gus | A |
+      | 8 | Hana | A |
+
+      What does this query return?
+
+      ```sql
+      SELECT COUNT(*) FROM Student WHERE Grade = 'A';
+      ```
+    fields:
+      - answer: 5
+        unit: rows
+    explanation: |-
+      Ada, Cleo, Eve, Gus and Hana have grade A — five rows. The other three are filtered out
+      before the count.
+
+  - id: avg-class-one
+    format: numeric
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      Using the same `Student` table:
+
+      | StudentID | Name | ClassID | Mark |
+      |---|---|---|---|
+      | 1 | Ada | 1 | 62 |
+      | 2 | Ben | 2 | 55 |
+      | 3 | Cleo | 1 | 71 |
+      | 4 | Dev | 2 | 48 |
+      | 5 | Eve | 1 | 58 |
+      | 6 | Finn | 2 | 66 |
+      | 7 | Gus | 1 | 80 |
+      | 8 | Hana | 2 | 74 |
+
+      What does this query return, as a decimal?
+
+      ```sql
+      SELECT AVG(Mark) FROM Student WHERE ClassID = 1;
+      ```
+    fields:
+      - answer: 67.75
+        tolerance:
+          abs: 0.01
+    explanation: |-
+      The four class 1 marks are 62, 71, 58 and 80. They total 271, and $271 \div 4 = 67.75$.
+      `AVG` divides by the number of rows **after** `WHERE` has filtered.
+
+  - id: group-by-rule
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      Which query is valid for finding the number of students in each class?
+    options:
+      - text: "`SELECT ClassID, COUNT(*) FROM Student GROUP BY ClassID;`"
+        correct: true
+        why: |-
+          The only selected field outside an aggregate is `ClassID`, and it is the grouping field.
+      - text: "`SELECT ClassID, Name, COUNT(*) FROM Student GROUP BY ClassID;`"
+        why: |-
+          `Name` is not aggregated and not grouped, so the DBMS cannot choose one name per class.
+      - text: "`SELECT COUNT(*) FROM Student GROUP BY ClassID;`"
+        why: |-
+          This counts per group but never shows which class each count belongs to, so the result is
+          unusable for the question.
+      - text: "`SELECT ClassID, COUNT(*) FROM Student;`"
+        why: |-
+          `COUNT(*)` with `ClassID` and no `GROUP BY` mixes an aggregate with a plain field.
+    explanation: |-
+      Group by the field you want one row per value of, and only select that field plus
+      aggregates.
+
+  - id: spot-error-clause
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      A student writes a query to list class 1 students by mark. Which line contains the first
+      error?
+
+      ```sql
+      SELECT Name, Mark
+      FROM Student
+      ORDER BY Mark DESC
+      WHERE ClassID = 1;
+      ```
+    lines:
+      - "Line 1 `SELECT Name, Mark` — the fields to show."
+      - "Line 2 `FROM Student` — the table to read."
+      - "Line 3 `ORDER BY Mark DESC` — sorts highest mark first."
+      - "Line 4 `WHERE ClassID = 1;` — keeps only class 1 rows."
+    errorLine: 3
+    fix: |-
+      `WHERE` must come **before** `ORDER BY`. The correct order is:
+      `SELECT … FROM … WHERE ClassID = 1 ORDER BY Mark DESC;`
+    explanation: |-
+      The clauses are individually right but in the wrong order — line 3 is the first line that is
+      out of place.

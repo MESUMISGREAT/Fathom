@@ -1,0 +1,324 @@
+id: chemical-equilibria-kc-kp-calculations
+subject: "9701"
+topic: "7.1"
+title: "Calculating with $K_c$ and $K_p$"
+summary: Two routines cover almost every equilibrium calculation — turn moles into concentrations, or mole fractions into partial pressures, then substitute.
+order: 7
+minutes: 10
+kind: core
+objectives: ["7.1.7"]
+prerequisites: [chemical-equilibria-kc-expressions, chemical-equilibria-kp-expressions, chemical-equilibria-mole-fraction-partial-pressure]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 7.1, learning outcome 7.1.7 (using $K_c$ and $K_p$ expressions to carry out
+    calculations), within the syllabus guidance that calculations will not require solving
+    quadratic equations. Every answer was computed and re-substituted in Python on 2026-10-28.
+    All questions are original.
+
+    Independently re-checked line by line on 2026-10-28 in a second adversarial pass by the same
+    agent: every worked value was recomputed and substituted back, every answer key was checked
+    against the site's own checker, all ten outcomes 7.1.1-7.1.10 were confirmed taught and tested,
+    and each diagram was rendered and inspected in light and dark. No separate reviewer model or
+    teacher reviewed this lesson.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can calculate $K_c$ from equilibrium amounts in a known volume, calculate $K_p$ from mole fractions and a total pressure, and decide which routine a question is asking for.
+
+  - type: explain
+    title: The two routines
+    body: |-
+      Every calculation in this topic follows one of two paths.
+
+      **For $K_c$:** amounts → concentrations (divide by volume) → substitute → answer.
+
+      **For $K_p$:** amounts → mole fractions (divide by total moles) → partial pressures (multiply by total pressure) → substitute → answer.
+
+      In both cases the substitution step is identical; only the preparation differs.
+
+  - type: explain
+    title: Three checks before you substitute
+    body: |-
+      Most lost marks in these calculations are not chemistry errors. They are these three:
+
+      1. **Is the equation balanced?** Every coefficient becomes a power, so an unbalanced equation poisons the whole calculation.
+      2. **Are these equilibrium amounts?** The expression only accepts what is present *at equilibrium*, never what you started with.
+      3. **Have you converted units?** A volume in $\text{cm}^3$ must be divided by 1000 to give $\text{dm}^3$; a total pressure in $\text{kPa}$ must be used consistently.
+
+  - type: example
+    title: "Worked example: $K_c$ from equilibrium concentrations"
+    problem: |-
+      Hydrogen and iodine are mixed in a $1.00\ \text{dm}^3$ flask at $700\ \text{K}$:
+
+      $$\text{H}_2(g) + \text{I}_2(g) \rightleftharpoons 2\text{HI}(g)$$
+
+      Initially there is $1.00\ \text{mol}$ of each reactant. At equilibrium the flask contains $1.80\ \text{mol}$ of $\text{HI}$. Calculate $K_c$.
+    steps:
+      - |-
+        Work out how much $\text{HI}$ was formed: $1.80\ \text{mol}$.
+      - |-
+        From the equation, 2 mol of $\text{HI}$ comes from 1 mol of $\text{H}_2$ and 1 mol of $\text{I}_2$. So the amount reacted is
+
+        $$\frac{1.80}{2} = 0.90\ \text{mol}$$
+
+        of each reactant.
+      - |-
+        Amounts remaining at equilibrium:
+
+        $$n_{\text{H}_2} = 1.00 - 0.90 = 0.10\ \text{mol}$$
+
+        $$n_{\text{I}_2} = 1.00 - 0.90 = 0.10\ \text{mol}$$
+      - |-
+        The volume is $1.00\ \text{dm}^3$, so the concentrations are numerically the same as the amounts:
+
+        $$[\text{H}_2] = [\text{I}_2] = 0.10\ \text{mol dm}^{-3} \qquad [\text{HI}] = 1.80\ \text{mol dm}^{-3}$$
+      - |-
+        Substitute into the expression:
+
+        $$K_c = \frac{[\text{HI}]^2}{[\text{H}_2][\text{I}_2]} = \frac{(1.80)^2}{0.10 \times 0.10}$$
+      - |-
+        Evaluate:
+
+        $$K_c = \frac{3.24}{0.010} = 324$$
+    answer: |-
+      $K_c = 324$. A value far greater than 1 means the equilibrium lies well to the right.
+
+  - type: example
+    title: "Worked example: $K_c$ when the volume is not 1"
+    problem: |-
+      Nitrogen dioxide is sealed in a $2.00\ \text{dm}^3$ vessel and equilibrates:
+
+      $$2\text{NO}_2(g) \rightleftharpoons \text{N}_2\text{O}_4(g)$$
+
+      Initially there is $2.00\ \text{mol}$ of $\text{NO}_2$. At equilibrium $0.60\ \text{mol}$ of $\text{NO}_2$ remains. Calculate $K_c$.
+    steps:
+      - |-
+        Amount of $\text{NO}_2$ reacted: $2.00 - 0.60 = 1.40\ \text{mol}$.
+      - |-
+        From the equation, 2 mol of $\text{NO}_2$ gives 1 mol of $\text{N}_2\text{O}_4$, so the amount formed is
+
+        $$\frac{1.40}{2} = 0.70\ \text{mol}$$
+      - |-
+        Convert to concentrations by dividing by $2.00\ \text{dm}^3$:
+
+        $$[\text{NO}_2] = \frac{0.60}{2.00} = 0.30\ \text{mol dm}^{-3}$$
+
+        $$[\text{N}_2\text{O}_4] = \frac{0.70}{2.00} = 0.35\ \text{mol dm}^{-3}$$
+      - |-
+        Substitute:
+
+        $$K_c = \frac{[\text{N}_2\text{O}_4]}{[\text{NO}_2]^2} = \frac{0.35}{(0.30)^2}$$
+      - |-
+        Evaluate:
+
+        $$K_c = \frac{0.35}{0.090} = 3.9$$
+    answer: |-
+      $K_c = 3.9$ (to 2 significant figures). Note that dividing by the volume was essential: using moles directly would have given
+
+      $$\frac{0.70}{(0.60)^2} = 1.9$$
+
+      which is a different — and wrong — answer.
+
+  - type: example
+    title: "Worked example: $K_p$ from mole fractions"
+    problem: |-
+      At equilibrium a mixture of $\text{SO}_2$, $\text{O}_2$ and $\text{SO}_3$ has mole fractions $0.20$, $0.40$ and $0.40$ respectively. The total pressure is $2.0\ \text{atm}$. Calculate $K_p$ for
+
+      $$2\text{SO}_2(g) + \text{O}_2(g) \rightleftharpoons 2\text{SO}_3(g)$$
+    steps:
+      - |-
+        Convert mole fractions to partial pressures by multiplying by $2.0\ \text{atm}$:
+
+        $$p_{\text{SO}_2} = 0.20 \times 2.0 = 0.40\ \text{atm}$$
+
+        $$p_{\text{O}_2} = 0.40 \times 2.0 = 0.80\ \text{atm}$$
+
+        $$p_{\text{SO}_3} = 0.40 \times 2.0 = 0.80\ \text{atm}$$
+      - |-
+        Check: $0.40 + 0.80 + 0.80 = 2.0\ \text{atm}$, the total pressure.
+      - |-
+        Write the expression, remembering the coefficient 2:
+
+        $$K_p = \frac{p_{\text{SO}_3}^{\,2}}{p_{\text{SO}_2}^{\,2}\, p_{\text{O}_2}}$$
+      - |-
+        Substitute:
+
+        $$K_p = \frac{(0.80)^2}{(0.40)^2 \times 0.80} = \frac{0.64}{0.16 \times 0.80}$$
+      - |-
+        Evaluate:
+
+        $$K_p = \frac{0.64}{0.128} = 5.0\ \text{atm}^{-1}$$
+    answer: |-
+      $K_p = 5.0\ \text{atm}^{-1}$.
+
+  - type: explain
+    title: Reading a question for the right routine
+    body: |-
+      Look at what the question supplies before deciding which constant it wants.
+
+      | Given | Use |
+      | --- | --- |
+      | amounts and a volume | $K_c$ |
+      | concentrations directly | $K_c$ |
+      | partial pressures | $K_p$ |
+      | mole fractions and total pressure | $K_p$ |
+      | amounts and total pressure, no volume | $K_p$ |
+
+      If a volume is given but the question asks for $K_p$, the volume is a distraction — mole fractions do not need it.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Moles can be substituted directly into a $K_c$ expression.
+        right: |-
+          $K_c$ requires concentrations, so divide amounts by the volume in $\text{dm}^3$ first.
+      - wrong: |-
+          Starting amounts are used in the expression.
+        right: |-
+          Only equilibrium amounts or concentrations belong in $K_c$ or $K_p$.
+      - wrong: |-
+          A larger volume always increases $K_c$.
+        right: |-
+          $K_c$ depends only on temperature. Changing the volume changes the mixture, not the constant.
+      - wrong: |-
+          If the value works out to $324$, it must be wrong because $K_c$ should be near 1.
+        right: |-
+          $K_c$ ranges over many orders of magnitude. $324$ simply means the equilibrium lies well to the right.
+      - wrong: |-
+          You must convert $K_c$ into $K_p$ before answering a $K_p$ question.
+        right: |-
+          Calculate $K_p$ directly from partial pressures; converting between the constants is not required.
+
+  - type: exam
+    body: |-
+      - Write the expression **before** substituting; method marks are awarded for it.
+      - Divide by the volume in $\text{dm}^3$ (not $\text{cm}^3$) for $K_c$, and show the division.
+      - Round only at the end, and give the same number of significant figures as the least precise datum.
+      - For $K_p$, show the mole fraction calculation and the multiplication by total pressure separately.
+      - State the units of $K_p$; do not invent units for $K_c$.
+
+  - type: check
+    title: Checking the idea
+    questions: [eq7-mcq-volume, eq7-numeric-kc, eq7-cloze-method]
+
+  - type: check
+    title: End-of-lesson check
+    questions: [eq7-numeric-kp, eq7-spot-error, eq7-explain]
+
+  - type: takeaways
+    items:
+      - Convert amounts to concentrations before using $K_c$.
+      - Convert mole fractions to partial pressures before using $K_p$.
+      - Use equilibrium amounts, never starting amounts.
+      - Balance the equation first; coefficients become powers.
+      - $K_c$ and $K_p$ change only with temperature.
+
+questions:
+  - id: eq7-mcq-volume
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.7"]
+    prompt: |-
+      At equilibrium a $4.00\ \text{dm}^3$ vessel contains $0.80\ \text{mol}$ of $\text{SO}_2$, $0.40\ \text{mol}$ of $\text{O}_2$ and $1.60\ \text{mol}$ of $\text{SO}_3$. What is $[\text{SO}_3]$?
+    options:
+      - text: $0.40\ \text{mol dm}^{-3}$
+        correct: true
+        why: |-
+          $1.60\ \text{mol} / 4.00\ \text{dm}^3 = 0.40\ \text{mol dm}^{-3}$.
+      - text: $1.60\ \text{mol dm}^{-3}$
+        why: |-
+          That is the amount in moles; the volume must be divided out.
+      - text: $6.40\ \text{mol dm}^{-3}$
+        why: |-
+          This multiplies by the volume instead of dividing by it.
+      - text: $0.10\ \text{mol dm}^{-3}$
+        why: |-
+          This divides the volume by the amount rather than the other way round.
+    explanation: |-
+      Concentration is amount divided by volume: $\dfrac{1.60}{4.00} = 0.40\ \text{mol dm}^{-3}$.
+
+  - id: eq7-numeric-kc
+    format: numeric
+    difficulty: 3
+    objectives: ["7.1.7"]
+    prompt: |-
+      In a $1.00\ \text{dm}^3$ flask, $0.50\ \text{mol}$ of $\text{H}_2$ and $0.50\ \text{mol}$ of $\text{I}_2$ are allowed to reach equilibrium at $700\ \text{K}$:
+
+      $$\text{H}_2(g) + \text{I}_2(g) \rightleftharpoons 2\text{HI}(g)$$
+
+      At equilibrium the flask contains $0.80\ \text{mol}$ of $\text{HI}$. Calculate $K_c$.
+    fields:
+      - label: "Kc ="
+        answer: 64
+        tolerance: { rel: 0.01 }
+    explanation: |-
+      $0.80\ \text{mol}$ of $\text{HI}$ uses $0.40\ \text{mol}$ of each reactant, leaving $0.10\ \text{mol}$ of each. Then
+
+      $$K_c = \frac{(0.80)^2}{0.10 \times 0.10} = \frac{0.64}{0.010} = 64$$
+
+  - id: eq7-cloze-method
+    format: cloze
+    difficulty: 2
+    objectives: ["7.1.7"]
+    prompt: |-
+      To calculate $K_c$ from amounts, divide each amount by the {{1}} to obtain concentrations. To calculate $K_p$ from amounts and a total pressure, divide each amount by the total number of moles to obtain {{2}}, then multiply by the total pressure to obtain {{3}}.
+    blanks:
+      - accept: [volume]
+      - accept: [mole fractions, mole fraction]
+      - accept: [partial pressures, partial pressure]
+    explanation: |-
+      $K_c$ needs concentrations; $K_p$ needs partial pressures, reached through mole fractions.
+
+  - id: eq7-numeric-kp
+    format: numeric
+    difficulty: 3
+    objectives: ["7.1.7"]
+    prompt: |-
+      An equilibrium mixture of $\text{SO}_2$, $\text{O}_2$ and $\text{SO}_3$ has mole fractions $0.20$, $0.40$ and $0.40$ respectively at a total pressure of $2.0\ \text{atm}$.
+
+      Calculate $K_p$ for $2\text{SO}_2(g) + \text{O}_2(g) \rightleftharpoons 2\text{SO}_3(g)$, giving your answer in $\text{atm}^{-1}$.
+    fields:
+      - label: "Kp ="
+        answer: 5.0
+        tolerance: { abs: 0.1 }
+        unit: atm^-1
+    explanation: |-
+      The partial pressures are $0.40$, $0.80$ and $0.80\ \text{atm}$, so
+
+      $$K_p = \frac{(0.80)^2}{(0.40)^2 \times 0.80} = \frac{0.64}{0.128} = 5.0\ \text{atm}^{-1}$$
+
+  - id: eq7-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["7.1.7"]
+    prompt: |-
+      A student calculates $K_c$ for a reaction in a $2.0\ \text{dm}^3$ vessel. Which line contains the first error?
+    lines:
+      - The equilibrium is $2\text{NO}_2(g) \rightleftharpoons \text{N}_2\text{O}_4(g)$.
+      - At equilibrium the vessel contains $0.60\ \text{mol}$ of $\text{NO}_2$ and $0.70\ \text{mol}$ of $\text{N}_2\text{O}_4$.
+      - So $K_c = \dfrac{0.70}{(0.60)^2} = 1.9$.
+      - The value of $K_c$ shows that the equilibrium contains both gases in comparable amounts.
+    errorLine: 3
+    fix: |-
+      Divide each amount by the $2.0\ \text{dm}^3$ volume first: $[\text{NO}_2] = 0.30$ and $[\text{N}_2\text{O}_4] = 0.35\ \text{mol dm}^{-3}$. Then $K_c = 0.35/(0.30)^2 = 3.9$.
+    explanation: |-
+      Line 3 substitutes moles where concentrations are required; because the two sides of this equation have different numbers of gas molecules, the volume does not cancel and the answer changes.
+
+  - id: eq7-explain
+    format: explain
+    difficulty: 3
+    objectives: ["7.1.7"]
+    prompt: |-
+      Describe the steps you would follow to calculate $K_c$ for a reaction from the starting amounts and the equilibrium amount of one substance, and explain why each step is needed.
+    model: |-
+      First balance the equation, because the coefficients determine the powers in the expression and the ratios in which substances react. Next use the equilibrium amount of the substance given, together with the equation's ratios, to work out how much of every other substance reacted or formed, and hence the equilibrium amount of each. Then divide every equilibrium amount by the volume of the vessel in cubic decimetres, because $K_c$ is defined in terms of concentrations in $\text{mol dm}^{-3}$, not amounts. Write the $K_c$ expression with products on the top and each concentration raised to its coefficient, omitting any pure solid or liquid. Finally substitute the equilibrium concentrations, evaluate, and round to an appropriate number of significant figures. The order matters because the expression is only valid when the concentrations substituted are the ones present at equilibrium.
+    keyPoints:
+      - Balance the equation first.
+      - Use the equation's ratios to find every equilibrium amount.
+      - Divide by the volume to get concentrations.
+      - Write the expression, then substitute and round at the end.
+    explanation: |-
+      The expression is defined for equilibrium concentrations, so the amounts must be corrected to equilibrium and converted to concentrations before substitution.

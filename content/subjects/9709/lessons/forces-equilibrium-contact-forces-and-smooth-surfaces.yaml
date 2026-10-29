@@ -1,0 +1,112 @@
+id: forces-equilibrium-contact-forces-and-smooth-surfaces
+subject: "9709"
+topic: "4.1"
+title: Contact forces and smooth surfaces
+summary: Separate contact force into normal reaction and friction, and use the smooth-contact model correctly.
+order: 4
+minutes: 6
+kind: core
+objectives: ["4.1.4", "4.1.5"]
+prerequisites: ["forces-equilibrium-forces-and-force-diagrams"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus objectives 4.1.4 and 4.1.5. All questions and examples are original; numerical
+    values are illustrative. Not yet independently reviewed or reviewed by a teacher. Independently re-checked line by line (Cambridge objectives, worked examples, vector calculations, every answer key, MCQ cardinality and schema) in a separate GitHub Copilot review on 2026-10-29. Reviewer: GitHub Copilot; model identity was not exposed in this session. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: By the end you can split a contact force into normal reaction and friction, and explain what the smooth-contact assumption changes.
+  - type: explain
+    title: One contact, two possible jobs
+    body: |-
+      When two surfaces touch, the contact force can be represented by two perpendicular components:
+
+      - the **normal reaction** $R$, perpendicular to the surfaces;
+      - the **frictional force** $F$, parallel to the surfaces.
+
+      The combined contact force is the vector sum of $R$ and $F$. They are not two unrelated contacts; they are two components of one contact interaction.
+  - type: definition
+    term: Smooth contact
+    body: A smooth contact is an idealised contact with no frictional force, so the contact force is entirely normal to the surface.
+  - type: intuition
+    title: Smooth means slippery in the model
+    body: |-
+      “Smooth” does not mean the object has no contact with the surface. The surface can still push hard in the normal direction; it simply cannot provide a tangential grip in the model.
+
+      This is an approximation. Real surfaces usually have some roughness, but ignoring friction can make a first model manageable.
+  - type: example
+    title: Block on a smooth slope
+    problem: A block rests on a smooth plane inclined at angle $\alpha$. Identify the contact force and the component of weight along the plane.
+    steps:
+      - |-
+        Because the plane is smooth, there is no frictional force along the plane.
+      - |-
+        The plane's contact force is therefore a normal reaction $R$ perpendicular to the plane.
+      - |-
+        The weight $mg$ acts vertically downwards. Resolving relative to the slope gives a component $mg\sin\alpha$ down the plane and $mg\cos\alpha$ into the plane.
+    answer: The contact force is normal reaction only; the down-slope component of weight is $mg\sin\alpha$.
+  - type: check
+    questions: [contact-components, smooth-definition, slope-component, normal-reaction]
+  - type: misconceptions
+    items:
+      - wrong: The normal reaction is always equal to the weight.
+        right: It equals the weight only in particular situations, such as a stationary particle on a horizontal surface with no other vertical forces.
+      - wrong: Smooth means the surface exerts no force.
+        right: Smooth removes friction only; the normal reaction remains.
+  - type: exam
+    body: On an inclined plane, draw the normal reaction perpendicular to the plane, not vertically upwards. State explicitly when a contact is smooth so the friction component can be set to zero.
+  - type: takeaways
+    items:
+      - Contact force can be resolved into normal reaction and friction.
+      - Normal reaction is perpendicular to the surface.
+      - Friction is parallel to the surface.
+      - A smooth contact has zero friction, not zero contact force.
+questions:
+  - id: contact-components
+    format: mcq
+    difficulty: 1
+    objectives: ["4.1.4"]
+    prompt: Which statement correctly describes the two components of a contact force?
+    options:
+      - text: Normal reaction is perpendicular to the surface and friction is parallel to it.
+        correct: true
+        why: These are the normal and tangential components of the contact interaction.
+      - text: Both components are perpendicular to the surface.
+        correct: false
+        why: Friction acts along the surface, not perpendicular to it.
+      - text: Normal reaction is parallel to the surface and friction is perpendicular.
+        correct: false
+        why: The names and directions have been interchanged.
+      - text: Contact force has no components.
+        correct: false
+        why: Resolving the contact force into perpendicular components is the model being used.
+    explanation: The normal reaction pushes away from the surface; friction acts along it.
+  - id: smooth-definition
+    format: text
+    difficulty: 1
+    objectives: ["4.1.5"]
+    prompt: In the mechanics model, what does it mean when a surface is described as smooth?
+    style: definition
+    accept: ["there is no friction", "no frictional force acts", "the frictional force is zero"]
+    model: A smooth contact has no frictional force, so the contact force is normal to the surface.
+    explanation: Smooth is an idealisation that removes the tangential component of contact force.
+  - id: slope-component
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.4"]
+    prompt: A $5\text{ kg}$ particle is on a plane inclined at $30^\circ$. Using $g=10\text{ m s}^{-2}$, find the component of its weight down the plane in newtons.
+    fields:
+      - answer: 25
+        unit: N
+    explanation: The down-slope component is $mg\sin30^\circ=5(10)(0.5)=25\text{ N}$.
+  - id: normal-reaction
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.4"]
+    prompt: A $5\text{ kg}$ particle rests on a smooth horizontal surface. Using $g=10\text{ m s}^{-2}$, find the normal reaction in newtons.
+    fields:
+      - answer: 50
+        unit: N
+    explanation: There are no other vertical forces, so vertical equilibrium gives $R=mg=5(10)=50\text{ N}$.

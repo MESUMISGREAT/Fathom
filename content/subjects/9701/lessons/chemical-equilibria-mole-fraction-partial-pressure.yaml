@@ -1,0 +1,287 @@
+id: chemical-equilibria-mole-fraction-partial-pressure
+subject: "9701"
+topic: "7.1"
+title: "Mole fractions and partial pressures"
+summary: In a gas mixture each gas contributes part of the total pressure. Work out its share with a mole fraction, then multiply by the total pressure.
+order: 5
+minutes: 10
+kind: core
+objectives: ["7.1.5"]
+prerequisites: [chemical-equilibria-kc-expressions]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 7.1, learning outcome 7.1.5 (use of the terms mole fraction and partial
+    pressure). Every mole fraction and partial pressure was computed in Python on 2026-10-28.
+    All questions are original.
+
+    Independently re-checked line by line on 2026-10-28 in a second adversarial pass by the same
+    agent: every worked value was recomputed and substituted back, every answer key was checked
+    against the site's own checker, all ten outcomes 7.1.1-7.1.10 were confirmed taught and tested,
+    and each diagram was rendered and inspected in light and dark. No separate reviewer model or
+    teacher reviewed this lesson.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can define mole fraction and partial pressure, calculate both for a gas mixture, and move confidently between amounts in moles, mole fractions and partial pressures.
+
+  - type: explain
+    title: Every gas in a mixture pulls its own weight
+    body: |-
+      In a mixture of gases, each gas behaves as if the others were not there. Each one collides with the walls and contributes its own share of the total pressure.
+
+      That share is called the gas's **partial pressure**. It is the pressure the gas would exert if it alone occupied the same volume at the same temperature.
+
+  - type: definition
+    term: Partial pressure
+    body: |-
+      The **partial pressure** of a gas in a mixture, $p_{\text{A}}$, is the pressure that gas would exert if it were the only gas present in the same volume at the same temperature.
+
+      The partial pressures add up to the **total pressure**:
+
+      $$p_{\text{total}} = p_{\text{A}} + p_{\text{B}} + p_{\text{C}} + \dots$$
+
+      This is **Dalton's law of partial pressures**.
+
+  - type: definition
+    term: Mole fraction
+    body: |-
+      The **mole fraction** of a substance A, written $x_{\text{A}}$, is the fraction of the total number of moles that is A:
+
+      $$x_{\text{A}} = \frac{n_{\text{A}}}{n_{\text{total}}}$$
+
+      It has **no units** and is always between 0 and 1. The mole fractions of all the substances in a mixture add up to exactly 1.
+
+  - type: explain
+    title: Linking the two ideas
+    body: |-
+      Mole fraction measures *how much of the mixture* is a given gas; partial pressure measures *how much of the pressure* it supplies. The two are in the same proportion.
+
+      $$p_{\text{A}} = x_{\text{A}} \times p_{\text{total}}$$
+
+      Because $x_{\text{A}} = n_{\text{A}}/n_{\text{total}}$, the same result comes from
+
+      $$p_{\text{A}} = \frac{n_{\text{A}}}{n_{\text{total}}} \times p_{\text{total}}$$
+
+      Both forms are accepted; the second is quicker when you are given moles and a total pressure.
+
+  - type: example
+    title: "Worked example: an ammonia mixture"
+    problem: |-
+      At equilibrium a mixture contains $2.0\ \text{mol}$ of $\text{N}_2$, $3.0\ \text{mol}$ of $\text{H}_2$ and $1.0\ \text{mol}$ of $\text{NH}_3$. The total pressure is $200\ \text{atm}$. Calculate the mole fraction and the partial pressure of each gas.
+    steps:
+      - |-
+        Total number of moles:
+
+        $$n_{\text{total}} = 2.0 + 3.0 + 1.0 = 6.0\ \text{mol}$$
+      - |-
+        Mole fractions, dividing each amount by 6.0:
+
+        $$x_{\text{N}_2} = \frac{2.0}{6.0} = 0.333$$
+
+        $$x_{\text{H}_2} = \frac{3.0}{6.0} = 0.500$$
+
+        $$x_{\text{NH}_3} = \frac{1.0}{6.0} = 0.167$$
+      - |-
+        Check: $0.333 + 0.500 + 0.167 = 1.000$, as it must.
+      - |-
+        Partial pressures, multiplying each mole fraction by $200\ \text{atm}$:
+
+        $$p_{\text{N}_2} = 0.333 \times 200 = 66.7\ \text{atm}$$
+
+        $$p_{\text{H}_2} = 0.500 \times 200 = 100\ \text{atm}$$
+
+        $$p_{\text{NH}_3} = 0.167 \times 200 = 33.3\ \text{atm}$$
+      - |-
+        Check: $66.7 + 100 + 33.3 = 200\ \text{atm}$, the total pressure.
+    answer: |-
+      $x_{\text{N}_2} = 0.333$, $x_{\text{H}_2} = 0.500$, $x_{\text{NH}_3} = 0.167$; the partial pressures are $66.7$, $100$ and $33.3\ \text{atm}$ respectively.
+
+  - type: diagram
+    diagram: chem-equilibria-mole-fraction
+    alt: >-
+      A box containing twelve gas molecules: six of one kind, four of a second and two of a third.
+      A bar beneath the box is split into three sections of six, four and two units, labelled with
+      mole fractions 0.50, 0.33 and 0.17, and with the share of a total pressure of 100 kPa shown
+      as 50, 33 and 17 kPa. The caption notes that the mole fractions add to 1 and the partial
+      pressures add to the total pressure.
+    caption: |-
+      Count the molecules to get the mole fractions, then share out the total pressure in the same proportions.
+
+  - type: example
+    title: "Worked example: working backwards from per cent by volume"
+    problem: |-
+      A mixture of $\text{SO}_2$, $\text{O}_2$ and $\text{SO}_3$ at equilibrium is $40\%$ $\text{SO}_2$, $30\%$ $\text{O}_2$ and $30\%$ $\text{SO}_3$ by volume, at a total pressure of $300\ \text{kPa}$. Calculate the partial pressure of each gas.
+    steps:
+      - |-
+        For gases at the same temperature and pressure, percentage by volume equals percentage by moles.
+      - |-
+        So the mole fractions are simply the percentages written as decimals:
+
+        $$x_{\text{SO}_2} = 0.40 \qquad x_{\text{O}_2} = 0.30 \qquad x_{\text{SO}_3} = 0.30$$
+      - |-
+        Multiply each by the total pressure:
+
+        $$p_{\text{SO}_2} = 0.40 \times 300 = 120\ \text{kPa}$$
+
+        $$p_{\text{O}_2} = 0.30 \times 300 = 90\ \text{kPa}$$
+
+        $$p_{\text{SO}_3} = 0.30 \times 300 = 90\ \text{kPa}$$
+      - |-
+        Check: $120 + 90 + 90 = 300\ \text{kPa}$.
+    answer: |-
+      $p_{\text{SO}_2} = 120\ \text{kPa}$, $p_{\text{O}_2} = 90\ \text{kPa}$, $p_{\text{SO}_3} = 90\ \text{kPa}$.
+
+  - type: intuition
+    title: Why volume percentage is mole percentage
+    body: |-
+      Equal volumes of any gases at the same temperature and pressure contain equal numbers of molecules — that is Avogadro's law.
+
+      So if $40\%$ of the volume is sulfur dioxide, $40\%$ of the molecules are sulfur dioxide, and the mole fraction is $0.40$.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Mole fraction is the same as mass fraction.
+        right: |-
+          Mole fraction counts **moles**, not grams. A mixture that is $50\%$ by mass can have a completely different mole fraction.
+      - wrong: |-
+          Partial pressures add up to the sum of the gas moles.
+        right: |-
+          Partial pressures add up to the **total pressure**; moles add up to the total number of moles.
+      - wrong: |-
+          You can calculate a partial pressure without knowing the total pressure.
+        right: |-
+          $p_{\text{A}} = x_{\text{A}} \times p_{\text{total}}$ needs the total; only a ratio of partial pressures can be found without it.
+      - wrong: |-
+          Mole fractions are quoted in $\text{mol dm}^{-3}$.
+        right: |-
+          Mole fraction is a ratio of two amounts in moles, so it is unitless and always between 0 and 1.
+      - wrong: |-
+          Adding an inert gas at constant volume raises every partial pressure.
+        right: |-
+          At constant volume the partial pressures of the reacting gases do not change; only the total pressure rises.
+
+  - type: exam
+    body: |-
+      - Give the definition with the words "the pressure that the gas would exert if it alone occupied the same volume at the same temperature".
+      - For mole fraction, state $x_{\text{A}} = n_{\text{A}}/n_{\text{total}}$ and remember it has **no units**.
+      - Always show $n_{\text{total}}$ before dividing; it is worth a mark and prevents arithmetic slips.
+      - Check that your mole fractions add to 1 and your partial pressures add to the total.
+      - Quote partial pressures in the unit given ($\text{atm}$ or $\text{kPa}$) and give the same number of significant figures as the data.
+
+  - type: check
+    title: Checking the idea
+    questions: [eq5-mcq-definition, eq5-cloze-link, eq5-numeric-mole-fraction]
+
+  - type: check
+    title: End-of-lesson check
+    questions: [eq5-numeric-partial-pressure, eq5-spot-error, eq5-explain]
+
+  - type: takeaways
+    items:
+      - Partial pressure is the pressure one gas in a mixture would exert alone.
+      - Partial pressures add up to the total pressure (Dalton's law).
+      - Mole fraction $x_{\text{A}} = n_{\text{A}}/n_{\text{total}}$ is unitless and the fractions sum to 1.
+      - $p_{\text{A}} = x_{\text{A}} \times p_{\text{total}}$.
+      - Percentage by volume is the same as percentage by moles for gases.
+
+questions:
+  - id: eq5-mcq-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["7.1.5"]
+    prompt: |-
+      What is meant by the partial pressure of a gas in a mixture?
+    options:
+      - text: The pressure that gas would exert if it alone occupied the same volume at the same temperature.
+        correct: true
+        why: |-
+          This is the standard definition, and it is usually worth a mark word for word.
+      - text: The total pressure of the mixture divided by the number of gases present.
+        why: |-
+          That would be an equal share for every gas, which is only true for an equimolar mixture.
+      - text: The mass of that gas divided by the total mass of the mixture.
+        why: |-
+          That is a mass fraction, not a pressure.
+      - text: The pressure needed to liquefy that gas.
+        why: |-
+          That is a vapour pressure, which describes a saturated vapour rather than a gas in a mixture.
+    explanation: |-
+      Each gas contributes to the total pressure in proportion to its amount, and its own contribution is its partial pressure.
+
+  - id: eq5-cloze-link
+    format: cloze
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      The mole fraction of a gas is calculated by dividing its number of moles by the {{1}} number of moles, so it has {{2}} units. The partial pressure of the gas is then found by multiplying its mole fraction by the {{3}} pressure.
+    blanks:
+      - accept: [total]
+      - accept: [no, none]
+      - accept: [total]
+    explanation: |-
+      Mole fraction is a ratio (unitless) and scales the total pressure to give the partial pressure.
+
+  - id: eq5-numeric-mole-fraction
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      A gas mixture contains $0.40\ \text{mol}$ of $\text{SO}_2$, $0.60\ \text{mol}$ of $\text{O}_2$ and $1.00\ \text{mol}$ of $\text{SO}_3$. Calculate the mole fraction of $\text{SO}_3$. Give your answer to 2 significant figures.
+    fields:
+      - label: "x(SO3) ="
+        answer: 0.5
+        tolerance: { abs: 0.01 }
+        sigFigs: 2
+    explanation: |-
+      The total is $0.40 + 0.60 + 1.00 = 2.00\ \text{mol}$, so $x_{\text{SO}_3} = 1.00/2.00 = 0.50$.
+
+  - id: eq5-numeric-partial-pressure
+    format: numeric
+    difficulty: 2
+    objectives: ["7.1.5"]
+    prompt: |-
+      In the same mixture ($0.40\ \text{mol}$ $\text{SO}_2$, $0.60\ \text{mol}$ $\text{O}_2$, $1.00\ \text{mol}$ $\text{SO}_3$) the total pressure is $300\ \text{kPa}$. Calculate the partial pressure of $\text{SO}_2$.
+    fields:
+      - label: "p(SO2) ="
+        answer: 60
+        tolerance: { abs: 1 }
+        unit: kPa
+    explanation: |-
+      The mole fraction of $\text{SO}_2$ is $0.40/2.00 = 0.20$, so $p_{\text{SO}_2} = 0.20 \times 300 = 60\ \text{kPa}$.
+
+  - id: eq5-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["7.1.5"]
+    prompt: |-
+      A student calculates a partial pressure. Which line contains the first error?
+    lines:
+      - At equilibrium a mixture contains $1.0\ \text{mol}$ of $\text{H}_2$, $1.0\ \text{mol}$ of $\text{I}_2$ and $2.0\ \text{mol}$ of $\text{HI}$.
+      - The total number of moles is $1.0 + 1.0 + 2.0 = 4.0\ \text{mol}$.
+      - The mole fraction of $\text{HI}$ is therefore $2.0/1.0 = 2.0$.
+      - At a total pressure of $1.0\ \text{atm}$, the partial pressure of $\text{HI}$ is $2.0 \times 1.0 = 2.0\ \text{atm}$.
+    errorLine: 3
+    fix: |-
+      The mole fraction divides by the **total** number of moles, so $x_{\text{HI}} = 2.0/4.0 = 0.50$ and $p_{\text{HI}} = 0.50\ \text{atm}$. A mole fraction can never exceed 1, which is the warning sign here.
+    explanation: |-
+      Lines 1 and 2 are correct, so the division in line 3 is the first error; line 4 inherits it.
+
+  - id: eq5-explain
+    format: explain
+    difficulty: 3
+    objectives: ["7.1.5"]
+    prompt: |-
+      Explain what is meant by the mole fraction and the partial pressure of a gas in a mixture, and explain why $p_{\text{A}} = x_{\text{A}} \times p_{\text{total}}$.
+    model: |-
+      The mole fraction of a gas is the number of moles of that gas divided by the total number of moles of gas in the mixture, so it is a unitless ratio between 0 and 1 and the mole fractions of all the gases add up to 1. The partial pressure of a gas is the pressure it would exert if it alone occupied the same volume at the same temperature; the partial pressures of all the gases add up to the total pressure. The two quantities are linked because each gas contributes to the total pressure in proportion to the fraction of the molecules it supplies. If a gas makes up half the molecules, half of the collisions with the walls come from it, so it supplies half the pressure. Multiplying the total pressure by the mole fraction therefore gives that gas's share, which is its partial pressure.
+    keyPoints:
+      - Mole fraction = moles of gas ÷ total moles; unitless and sums to 1.
+      - Partial pressure = pressure the gas would exert alone.
+      - Each gas contributes pressure in proportion to its share of the molecules.
+      - Hence $p_{\text{A}} = x_{\text{A}} p_{\text{total}}$.
+    explanation: |-
+      Pressure comes from molecular collisions, so a gas's share of the pressure matches its share of the molecules.

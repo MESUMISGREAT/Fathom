@@ -1,0 +1,290 @@
+id: chemical-equilibria-kp-expressions
+subject: "9701"
+topic: "7.1"
+title: "Writing $K_p$ expressions"
+summary: For gas-phase equilibria the constant can be built from partial pressures instead of concentrations. The pattern is identical — but now the units need checking.
+order: 6
+minutes: 10
+kind: core
+objectives: ["7.1.6"]
+prerequisites: [chemical-equilibria-mole-fraction-partial-pressure, chemical-equilibria-kc-expressions]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Chemistry 9701 syllabus
+    2025-2027, topic 7.1, learning outcome 7.1.6 (deducing expressions for equilibrium constants
+    in terms of partial pressures). The syllabus guidance that the relationship between $K_p$ and
+    $K_c$ is not required is respected: $K_p$ is developed independently. Every value and unit
+    was checked in Python on 2026-10-28. All questions are original.
+
+    Independently re-checked line by line on 2026-10-28 in a second adversarial pass by the same
+    agent: every worked value was recomputed and substituted back, every answer key was checked
+    against the site's own checker, all ten outcomes 7.1.1-7.1.10 were confirmed taught and tested,
+    and each diagram was rendered and inspected in light and dark. No separate reviewer model or
+    teacher reviewed this lesson.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write a $K_p$ expression from a balanced gas equation, work out its units, and evaluate it from partial pressures.
+
+  - type: explain
+    title: The same idea, measured differently
+    body: |-
+      Concentrations work well for solutions. For gases, though, the pressure of each gas is what a chemist usually measures and controls.
+
+      So there is a second equilibrium constant, $K_p$, built from **partial pressures**. It has exactly the same structure as $K_c$ — only the quantity in the brackets changes.
+
+  - type: definition
+    term: Equilibrium constant, $K_p$
+    body: |-
+      For the gas equilibrium
+
+      $$a\text{A}(g) + b\text{B}(g) \rightleftharpoons c\text{C}(g) + d\text{D}(g)$$
+
+      the equilibrium constant in terms of partial pressures is
+
+      $$K_p = \frac{p_{\text{C}}^{\,c}\, p_{\text{D}}^{\,d}}{p_{\text{A}}^{\,a}\, p_{\text{B}}^{\,b}}$$
+
+      Here $p$ means the **equilibrium partial pressure** of that gas, in $\text{atm}$ or $\text{Pa}$ (or $\text{kPa}$).
+
+  - type: explain
+    title: Working out the units
+    body: |-
+      $K_p$ usually has units, because pressures have units and they appear to different powers on the top and bottom. Treat the units exactly like algebraic symbols.
+
+      For the Haber equilibrium:
+
+      $$K_p = \frac{p_{\text{NH}_3}^{\,2}}{p_{\text{N}_2}\, p_{\text{H}_2}^{\,3}}$$
+
+      $$\text{units} = \frac{\text{atm}^2}{\text{atm} \times \text{atm}^3} = \frac{\text{atm}^2}{\text{atm}^4} = \text{atm}^{-2}$$
+
+      For $2\text{SO}_2(g) + \text{O}_2(g) \rightleftharpoons 2\text{SO}_3(g)$:
+
+      $$K_p = \frac{p_{\text{SO}_3}^{\,2}}{p_{\text{SO}_2}^{\,2}\, p_{\text{O}_2}} \qquad \text{units} = \frac{\text{atm}^2}{\text{atm}^3} = \text{atm}^{-1}$$
+
+      When the powers on top and bottom are equal, as in $\text{H}_2 + \text{I}_2 \rightleftharpoons 2\text{HI}$, the units cancel and $K_p$ has **no units**.
+
+  - type: example
+    title: "Worked example: $K_p$ for the Haber equilibrium"
+    problem: |-
+      At $700\ \text{K}$ an equilibrium mixture of nitrogen, hydrogen and ammonia has partial pressures
+
+      $$p_{\text{N}_2} = 2.0\ \text{atm} \qquad p_{\text{H}_2} = 6.0\ \text{atm} \qquad p_{\text{NH}_3} = 4.0\ \text{atm}$$
+
+      Write the $K_p$ expression, state its units, and calculate $K_p$ to 2 significant figures.
+    steps:
+      - |-
+        Start from the balanced equation:
+
+        $$\text{N}_2(g) + 3\text{H}_2(g) \rightleftharpoons 2\text{NH}_3(g)$$
+      - |-
+        Products on top, each raised to its coefficient:
+
+        $$K_p = \frac{p_{\text{NH}_3}^{\,2}}{p_{\text{N}_2}\, p_{\text{H}_2}^{\,3}}$$
+      - |-
+        Units: $\text{atm}^2/\text{atm}^4 = \text{atm}^{-2}$.
+      - |-
+        Substitute the partial pressures:
+
+        $$K_p = \frac{(4.0)^2}{2.0 \times (6.0)^3}$$
+      - |-
+        Work out the denominator first: $(6.0)^3 = 216$, so $2.0 \times 216 = 432$.
+      - |-
+        Then
+
+        $$K_p = \frac{16}{432} = 0.0370\ \text{atm}^{-2}$$
+      - |-
+        To 2 significant figures: $K_p = 3.7 \times 10^{-2}\ \text{atm}^{-2}$.
+    answer: |-
+      $K_p = \dfrac{p_{\text{NH}_3}^{\,2}}{p_{\text{N}_2}\, p_{\text{H}_2}^{\,3}} = 3.7 \times 10^{-2}\ \text{atm}^{-2}$.
+
+  - type: example
+    title: "Worked example: a heterogeneous gas equilibrium"
+    problem: |-
+      Carbon dioxide reacts with carbon at high temperature:
+
+      $$\text{CO}_2(g) + \text{C}(s) \rightleftharpoons 2\text{CO}(g)$$
+
+      At equilibrium $p_{\text{CO}_2} = 0.20\ \text{atm}$ and $p_{\text{CO}} = 0.60\ \text{atm}$. Write the $K_p$ expression and calculate $K_p$.
+    steps:
+      - |-
+        Carbon is a solid, so it does not appear in the expression.
+      - |-
+        That leaves the two gases, with the coefficient 2 becoming a power:
+
+        $$K_p = \frac{p_{\text{CO}}^{\,2}}{p_{\text{CO}_2}}$$
+      - |-
+        Units: $\text{atm}^2/\text{atm} = \text{atm}$.
+      - |-
+        Substitute:
+
+        $$K_p = \frac{(0.60)^2}{0.20} = \frac{0.36}{0.20} = 1.8\ \text{atm}$$
+    answer: |-
+      $K_p = \dfrac{p_{\text{CO}}^{\,2}}{p_{\text{CO}_2}} = 1.8\ \text{atm}$.
+
+  - type: intuition
+    title: Which constant should you use?
+    body: |-
+      Use whichever constant matches the data you are given. Moles and volumes point to $K_c$; partial pressures or a total pressure with mole fractions point to $K_p$.
+
+      You do not need to convert between them: the relationship between $K_p$ and $K_c$ is outside the 9701 syllabus.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $K_p$ uses the total pressure of the mixture.
+        right: |-
+          It uses the **partial pressure of each gas**, raised to its own coefficient. The total pressure only enters through mole fractions.
+      - wrong: |-
+          $K_p$ is always unitless because constants are just numbers.
+        right: |-
+          $K_c$ is usually quoted without units, but $K_p$ often carries units such as $\text{atm}^{-2}$, which you must work out.
+      - wrong: |-
+          The square brackets in a $K_p$ expression mean concentration.
+        right: |-
+          In $K_p$ there are no square brackets: $p_{\text{A}}$ is a partial pressure. Square brackets are reserved for $K_c$.
+      - wrong: |-
+          Reversing the equation changes the units of $K_p$.
+        right: |-
+          Reversing inverts the value but leaves the units alone, since the ratio is simply turned upside down.
+      - wrong: |-
+          A solid such as carbon contributes a partial pressure of zero.
+        right: |-
+          Solids have no partial pressure in this context; they are simply omitted from the expression.
+
+  - type: exam
+    body: |-
+      - Use **$p$** with a subscript for each gas, and never square brackets in a $K_p$ expression.
+      - Give units unless the powers cancel; examiners often award a separate mark for them.
+      - Substitute into the expression before doing any arithmetic, so the working is visible.
+      - Check the equation is balanced first — a wrong coefficient gives a wrong power and a wrong unit.
+      - Leave out any species marked $(s)$ or $(l)$.
+
+  - type: check
+    title: Checking the idea
+    questions: [eq6-mcq-expression, eq6-mcq-units, eq6-cloze-haber]
+
+  - type: check
+    title: End-of-lesson check
+    questions: [eq6-numeric-value, eq6-spot-error, eq6-explain]
+
+  - type: takeaways
+    items:
+      - $K_p$ is built from equilibrium partial pressures, with products on top.
+      - Coefficients become powers, exactly as for $K_c$.
+      - Pure solids and liquids are omitted.
+      - Work out the units by treating them as algebra; sometimes they cancel.
+      - $K_p$, like $K_c$, depends only on temperature.
+
+questions:
+  - id: eq6-mcq-expression
+    format: mcq
+    difficulty: 2
+    objectives: ["7.1.6"]
+    prompt: |-
+      Which is the correct $K_p$ expression for
+
+      $$2\text{SO}_2(g) + \text{O}_2(g) \rightleftharpoons 2\text{SO}_3(g)$$
+    options:
+      - text: $\dfrac{p_{\text{SO}_3}^{\,2}}{p_{\text{SO}_2}^{\,2}\, p_{\text{O}_2}}$
+        correct: true
+        why: |-
+          Products on top, each partial pressure raised to its coefficient.
+      - text: $\dfrac{p_{\text{SO}_3}}{p_{\text{SO}_2}\, p_{\text{O}_2}}$
+        why: |-
+          The coefficients have been dropped; they must appear as powers.
+      - text: $\dfrac{p_{\text{SO}_2}^{\,2}\, p_{\text{O}_2}}{p_{\text{SO}_3}^{\,2}}$
+        why: |-
+          This is inverted; products belong on top.
+      - text: $\dfrac{[\text{SO}_3]^2}{[\text{SO}_2]^2[\text{O}_2]}$
+        why: |-
+          That is the $K_c$ expression; $K_p$ uses partial pressures.
+    explanation: |-
+      $K_p = \dfrac{p_{\text{SO}_3}^{\,2}}{p_{\text{SO}_2}^{\,2}\, p_{\text{O}_2}}$, with a coefficient of 2 becoming a power of 2.
+
+  - id: eq6-mcq-units
+    format: mcq
+    difficulty: 3
+    objectives: ["7.1.6"]
+    prompt: |-
+      For $\text{N}_2(g) + 3\text{H}_2(g) \rightleftharpoons 2\text{NH}_3(g)$ with pressures in atm, what are the units of $K_p$?
+    options:
+      - text: $\text{atm}^{-2}$
+        correct: true
+        why: |-
+          $\text{atm}^2$ on top divided by $\text{atm}^4$ underneath gives $\text{atm}^{-2}$.
+      - text: $\text{atm}^{2}$
+        why: |-
+          The top has 2 powers of atm and the bottom has 4, so the net power is negative.
+      - text: $\text{atm}^{-1}$
+        why: |-
+          $\text{atm}^{-1}$ belongs to $2\text{SO}_2 + \text{O}_2 \rightleftharpoons 2\text{SO}_3$, where the counts are different.
+      - text: No units
+        why: |-
+          The powers do not cancel here, as they would for $\text{H}_2 + \text{I}_2 \rightleftharpoons 2\text{HI}$.
+    explanation: |-
+      The numerator contributes $\text{atm}^2$ and the denominator $\text{atm}^{1+3} = \text{atm}^4$, so $K_p$ has units $\text{atm}^{-2}$.
+
+  - id: eq6-cloze-haber
+    format: cloze
+    difficulty: 2
+    objectives: ["7.1.6"]
+    prompt: |-
+      In a $K_p$ expression the quantities are equilibrium {{1}} pressures, each raised to the power of its {{2}} in the balanced equation. A substance that is a pure solid is {{3}} from the expression.
+    blanks:
+      - accept: [partial]
+      - accept: [coefficient, coefficients]
+      - accept: [omitted, left out, excluded, ignored, not included]
+    explanation: |-
+      $K_p$ uses partial pressures with coefficient powers, and pure solids are omitted exactly as in $K_c$.
+
+  - id: eq6-numeric-value
+    format: numeric
+    difficulty: 3
+    objectives: ["7.1.6"]
+    prompt: |-
+      At $700\ \text{K}$ an equilibrium mixture of $\text{N}_2$, $\text{H}_2$ and $\text{NH}_3$ has $p_{\text{N}_2} = 2.0\ \text{atm}$, $p_{\text{H}_2} = 6.0\ \text{atm}$ and $p_{\text{NH}_3} = 4.0\ \text{atm}$.
+
+      Calculate $K_p$ for $\text{N}_2(g) + 3\text{H}_2(g) \rightleftharpoons 2\text{NH}_3(g)$, giving your answer in $\text{atm}^{-2}$ to 2 significant figures.
+    fields:
+      - label: "Kp ="
+        answer: 0.037
+        tolerance: { abs: 0.001 }
+        sigFigs: 2
+        unit: atm^-2
+    explanation: |-
+      $K_p = \dfrac{(4.0)^2}{2.0 \times (6.0)^3} = \dfrac{16}{432} = 0.037\ \text{atm}^{-2}$.
+
+  - id: eq6-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["7.1.6"]
+    prompt: |-
+      A student writes a $K_p$ expression. Which line contains the first error?
+    lines:
+      - The equilibrium is $\text{H}_2(g) + \text{I}_2(g) \rightleftharpoons 2\text{HI}(g)$.
+      - The products go on the top of the expression.
+      - So $K_p = \dfrac{p_{\text{HI}}}{p_{\text{H}_2}\, p_{\text{I}_2}}$.
+      - Because the coefficients balance, this $K_p$ has no units.
+    errorLine: 3
+    fix: |-
+      The coefficient 2 must appear as a **power**, so $K_p = \dfrac{p_{\text{HI}}^{\,2}}{p_{\text{H}_2}\, p_{\text{I}_2}}$. Line 4 then becomes correct.
+    explanation: |-
+      Lines 1 and 2 are correct, so line 3 is the first error: the power of 2 on hydrogen iodide has been lost.
+
+  - id: eq6-explain
+    format: explain
+    difficulty: 3
+    objectives: ["7.1.6"]
+    prompt: |-
+      Explain why a $K_p$ expression can be written for a gas-phase equilibrium, and why $K_p$ sometimes has units and sometimes does not.
+    model: |-
+      For a gas, the partial pressure is the quantity that changes when the amount of that gas changes at constant volume and temperature, in the same way that concentration changes for a solute. Since the equilibrium condition is a constant ratio of the amounts of products to reactants, it can equally well be written using partial pressures, giving $K_p$ with products on top and each partial pressure raised to its coefficient. The units depend on how many pressure terms appear above and below the line. Each gas contributes one power of pressure per unit coefficient, so if the total coefficients on both sides are equal, the powers of pressure cancel and $K_p$ is unitless. If the products side has fewer gas molecules, as in the Haber equilibrium, the denominator carries the higher power and the units are negative, such as $\text{atm}^{-2}$.
+    keyPoints:
+      - Partial pressure plays the same role for a gas as concentration does for a solute.
+      - Products on top, each raised to its coefficient.
+      - Units are found by treating pressure as an algebraic symbol.
+      - Equal total coefficients on both sides cancel the units.
+    explanation: |-
+      $K_p$ is the same constant idea expressed in a different variable, so its units follow from the balance of pressure powers.

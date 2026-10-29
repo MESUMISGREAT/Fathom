@@ -224,7 +224,16 @@ changes alongside lessons:
   - **9701 8.1+8.2 Rate of reaction and temperature** (085c64b): 4 lessons, 23 questions,
     3 diagrams (`chem-rate-reaction-tangent`, `-boltzmann`, `-temperature-curves`). Every
     objective 8.1.1-8.1.3 and 8.2.1-8.2.3 taught and tested.
-  - All three batches: `content-check` 0 errors / 0 warnings in a clean worktree from
+  - **9702 8.1+8.2 Stationary waves and diffraction** (86578aa): 6 lessons, 36 questions,
+    5 diagrams (`phys-stationary-waves-superposition`, `-formation`, `-string-modes`,
+    `-air-column`, `phys-diffraction-basics-gap-width`). Every objective 8.1.1-8.1.4 and
+    8.2.1-8.2.2 taught and tested.
+  - **9709 4.2+4.3 Kinematics and momentum** (872bb72): 7 lessons, 42 questions, 5 diagrams
+    (`kinematics-distance-displacement`, `-graphs`, `-vt-area`, `-calculus`,
+    `mech-momentum-collision`). Every objective 4.2.1-4.2.4 and 4.3.1-4.3.2 taught and tested.
+  - **9709 4.1 Forces and equilibrium** was already complete when checked (five lessons on
+    `origin/main`); nothing was duplicated for it.
+  - All five batches: `content-check` 0 errors / 0 warnings in a clean worktree from
     `origin/main`, `tsc` clean, diagram registry + notation tests pass, every diagram
     rendered and inspected in light and dark. The commit body and provenance say plainly
     that the review was a second adversarial pass by the **same AI model**, with no separate
@@ -259,24 +268,120 @@ changes alongside lessons:
   Codebuff trailer; `git fetch`; rebase if `origin/main` moved; push `HEAD:refs/heads/main`.
   Never `git add -A` and never stage deletions; other agents' broken drafts must not be
   swept in.
-- **Deployment is NOT verified.** The three commits are on `origin/main` and the files are in
-  the remote tree (`git ls-tree`), but `https://fathom-steel-ten.vercel.app` still returns the
-  "Lesson · Fathom" 404 page for all three new units after 4+ minutes, while an existing
-  lesson (9618 6.1) renders normally at the same URL pattern. Either the Vercel auto-deploy is
-  paused/failing or the production content import has not run. Check the Vercel dashboard for
-  the deployment at `085c64b` before assuming this content is live; do not report it as live
-  until a lesson page returns its title.
-- **Next unit in queue order that no one has claimed: 9709 4.1 Forces and equilibrium.**
-  After that, 9618 8.2+8.3 (DBMS and SQL) and 9702 8.1+8.2 (stationary waves and
-  diffraction). Re-check for in-flight files before each; another agent is actively writing
-  9709 3.8 and 3.9, so check `ls content/subjects/9709/lessons` and `git log origin/main`
-  first.
+- **Deployment is NOT verified.** The four commits are on `origin/main` and their files are in
+  the remote tree (`git ls-tree`), but the live site cannot confirm them. Note also that
+  `https://fathom-steel-ten.vercel.app/subjects/physics/8-1/not-a-real-lesson-xyz` returns
+  **200**, and the server HTML of a real lesson URL does not contain that lesson's title, so
+  the HTTP status is not a valid check at all — the lesson body is fetched client-side. Either
+  the Vercel auto-deploy is paused/failing or the production content import has not run. Check
+  the Vercel dashboard for the deployment at `86578aa` before assuming this content is live;
+  only report it live once the lesson page shows its title.
+- **Next unit to take: 9702 8.3+8.4** (interference and diffraction gratings) — it follows
+  the 8.1+8.2 unit just published and had no files or in-flight edits at the last check.
+  After it: 9709 4.4+4.5, then 9701 8.3 and 9618 9.1+9.2, both of which already have other
+  agents' chemical-equilibria and SQL files in this checkout, so check before starting.
+  Run `node scripts/lessons/status.mjs`, `ls content/subjects/<code>/lessons` and
+  `git status --short` first; four agents share this tree.
+- **The local checkout is mid-merge and must not be resolved blindly.** `.git/MERGE_HEAD`
+  (58ccb54) is present with three conflicts from another agent's pull:
+  `content/subjects/9701/lessons/chemical-equilibria-topic.yaml` (deleted by them, modified
+  here), `content/subjects/9701/lessons/rate-reaction-measuring.yaml` (added on both sides),
+  and `src/components/diagrams/9709/index.ts`. Their lessons were named differently from the
+  four published in 085c64b, so the duplicates need a deliberate decision, not a reset.
+  Because of this, `npm run content:check` in the main checkout reports ~41 unrelated errors;
+  publish from a clean worktree.
 - **Remaining queue after this session:** `node scripts/lessons/status.mjs` reports
-  41 published, 1 partial, 110 todo, 2 reviewed on the local index. Add the three units
-  published here (not in the local index because local `main` is behind): 44 published,
-  roughly 107 todo. The queue is far from complete; continue with the same cycle.
+  46 published, 2 partial, 1 drafted, 103 todo and 2 reviewed. The two `reviewed` units
+  (9702 8.1+8.2 and 9709 4.2+4.3) are on `origin/main`; they show as reviewed only because
+  local `main` is still behind and mid-merge. So roughly 48 units are really published and
+  about 101 are left. The queue is far from complete; continue with the same cycle.
 
 ## 5b. Earlier current state (28 Oct 2026, cloud chat)
+
+- **9701 7.1 was written twice (29 Oct).** This chat drafted 9 lessons under
+  `chemical-equilibria-*` (plus 2 diagrams) while the chat at `0b8e8fe21ee9b5f6eaa0ce13` published its
+  ten-lesson set (`0b48020`). The drafts were reviewed, then **discarded unpushed** on `git fetch`
+  showing the published unit; `git reset --hard FETCH_HEAD` removed them, so nothing collided. Lesson:
+  fetch `origin/main` **before** drafting a unit, not only before pushing, and check `git log
+  --all --oneline -- 'content/subjects/<code>/lessons/<prefix>-*'`.
+- **9618 7.1 Ethics and Ownership is PUBLISHED** (29 Oct, `3e848aa`, from this chat): 4 lessons,
+  24 questions, 1 diagram, covering all five outcomes 7.1.1-7.1.5:
+  `ethics-ownership-ethics-in-computing` (7.1.1+7.1.2), `-copyright` (7.1.3),
+  `-software-licences` (7.1.4), `-artificial-intelligence` (7.1.5). Diagram
+  `cs-ai-system-pipeline` (data → train → model → predict, with a feedback loop).
+  **Verified:** `content:check` 0 errors / 0 warnings, `tsc --noEmit` clean,
+  `vitest run tests/diagrams.test.ts tests/diagram-notation.test.ts` 5 tests pass, and the live page
+  `https://fathom-steel-ten.vercel.app/subjects/9618/lessons/ethics-ownership-artificial-intelligence`
+  returns 200 with the lesson title. The lesson body itself loads client-side, so the rendered
+  diagram was not confirmed on the live page.
+  - Note the lesson URL shape: `/subjects/<code>/lessons/<id>` — `/lessons/<id>` returns 404.
+  - 9709 3.6+3.7 was skipped deliberately: `src/components/diagrams/9709/index.ts` was committed
+    importing `p3-vectors-*`/`p3-numerical-solution-*` modules that do not exist on `main`, which
+    means another chat was drafting exactly that unit. Treat 3.6+3.7 as claimed until proven otherwise.
+  - Review caveat as elsewhere: second adversarial pass by the **same agent**, no separate reviewer
+    model, no teacher. Legal details (UK copyright duration and exceptions, GPL copyleft vs MIT/Apache
+    permissive) were re-checked; every MCQ has exactly one correct option by construction of the schema.
+- **9618 8.2 DBMS is PUBLISHED** (29 Oct, `d5f9239`, from this chat): 2 lessons, 12 questions,
+  no diagrams — `dbms-file-based-approach-problems` (8.2.1) and `dbms-software-tools` (8.2.2).
+  `content:check` 0 errors / 0 warnings, `tsc` clean, `vitest run tests/diagrams.test.ts` passes,
+  and `https://fathom-steel-ten.vercel.app/subjects/9618/lessons/dbms-software-tools` returns 200
+  with the title "The tools inside a DBMS" once the deploy finished (the generic "Lesson · Fathom"
+  title for the first minute is the old deployment, not an error).
+  - Review caveat as elsewhere: second adversarial pass by the same agent, no separate reviewer
+    model and no teacher review.
+- **9618 8.3 SQL (DDL and DML) is PUBLISHED** (29 Oct, `6753d72`, from this chat): 6 lessons,
+  36 questions, 5 diagrams. `sql-ddl-and-dml` (8.3.1/8.3.2/8.3.3), `sql-create-table` and
+  `sql-alter-table-foreign-keys` (8.3.4), `sql-select-where-order-group`, `sql-inner-join` and
+  `sql-insert-update-delete` (8.3.5). Diagrams: `cs-sql-ddl-vs-dml`, `-create-table-anatomy`,
+  `-foreign-key-link`, `-select-clause-order`, `-inner-join-rows`. Objectives 8.3.1–8.3.5 are
+  each taught by a core lesson and tested, which completes the 8.2+8.3 queue unit.
+  `content:check` 0 errors / 0 warnings, `tsc` clean, `vitest run tests/diagrams.test.ts
+  tests/diagram-notation.test.ts` 5/5, and all five diagrams rendered and inspected.
+  - Conventions recorded: the `diagram:` field needs the **subject prefix** (`cs-sql-...`), not
+    the bare file name — five lessons failed validation on that first. Cambridge's DDL sub-set
+    is CREATE DATABASE / CREATE TABLE / ALTER TABLE plus PRIMARY KEY and FOREIGN KEY ...
+    REFERENCES; `DROP` is taught as DDL for "read this statement" questions, not as a write
+    target. Data types stay exactly the seven listed in 8.3.4.
+  - Render gotcha, still true here: Chromium cannot launch in this VM (no libnss3, no root), so
+    the five diagrams were rasterised with `.work-logs/render-svg.tsx` —
+    `npx tsx .work-logs/render-svg.tsx <key> .work-logs/previews` with `FONTCONFIG_FILE` set.
+    Its inline CSS is light-mode only, so this catches geometry, overlaps and clipping but **not**
+    dark-mode contrast or KaTeX overflow; run `npm run diagram:render` on a machine that can
+    launch Chromium before treating them as final.
+  - That render pass earned its keep: it caught four layout defects (overlapping panel notes, a
+    badge sitting on top of the code, an arrow crossing a table header, and rows overflowing
+    their table boxes by one row) plus four `alt` texts still describing the pre-fix figures.
+  - `publish.sh` in this VM ends in "push failed" and **resets** instead of leaving its commit, so
+    recover by committing the verified files yourself and pushing with `cloud_git`.
+  - Review caveat as elsewhere: second adversarial pass by the same agent, with every answer key
+    recomputed (counts, the 67.75 average, the 6-row join and the class-1 count of 4) and every
+    MCQ confirmed single-correct. No separate reviewer model and no teacher review.
+
+- **9701 topic 8 has TWO overlapping lesson sets and needs its owner's decision** (29 Oct). `main`
+  carried `rate-reaction-collision-theory` / `-concentration-pressure` / `-calculations` /
+  `activation-energy-boltzmann` / `rate-reaction-temperature` **and** `rate-reaction-meaning-and-collisions` /
+  `rate-reaction-measuring` / `effect-temperature-boltzmann`, teaching the same 8.1 and 8.2 outcomes.
+  That duplication, not bad content, caused the duplicate `order` errors. To unblock publishing this
+  chat only **renumbered** the second set (8.1 → order 4 and 5; 8.2 → order 3) and fixed the two
+  KaTeX failures in `effect-temperature-boltzmann` (a single-quoted YAML string kept `\\text{A}`, which
+  KaTeX read as a line break; now `E_{\text{A}}`). **No lesson text was changed.** Someone should
+  decide which set stays and delete the other before topic 8 is considered finished.
+  `content:check` is GREEN on `main` again as of `3e848aa`.
+- **Rendering diagrams without Chromium.** Chromium cannot launch in this VM (missing system
+  libraries, no root), so `.work-logs/render-svg.tsx` renders a registered diagram through
+  `renderToStaticMarkup` + `sharp` with the `dg-*` CSS injected into the SVG (librsvg needs plain
+  selectors: `:where(...)` is silently dropped, so an un-injected or `:where`-based stylesheet makes
+  every curve render as a solid black fill). It renders light mode only. Use it for a quick look,
+  and still run `npm run diagram:render` on a machine with Chromium for light/dark.
+
+- **`content:check` is RED on `main` as of `62caa9c`, caused by the chat writing 9701 topic 8
+  (rates), not by 9701 7.1.** Five errors, all in that chat's newest files: `order 1 in topic
+  8.2 is also used by activation-energy-boltzmann` and `order 1/2 in topic 8.1 ...` (duplicate
+  `order` values within a topic), plus two KaTeX failures in `effect-temperature-boltzmann`
+  where a doubled backslash was left in the maths (a YAML double-quoted string turned
+  `\text{A}` into a literal double backslash, which KaTeX reads as a line break). The publish
+  script refuses to publish while any lesson is invalid, so fix these first if you are
+  publishing anything. Left untouched here because that chat is actively writing those files.
 
 - **9702 7.2+7.3+7.4 is published** (28 Oct, 5498a33, from this chat): 6 lessons
   (`transverse-longitudinal-compare` 7.2.1, `transverse-longitudinal-graphs` 7.2.2,
@@ -312,12 +417,42 @@ changes alongside lessons:
 - **The other chat’s worktree is gone from this VM.** `/workspace/chats/` contains only this
   chat, so its uncommitted 9701 7.1 drafts are not visible here. Treat 9701 7.1 as claimed
   until proven otherwise, and check `git log --all` plus `wip-snapshot` before writing it.
-- **CLAIMED by chat `0b8e8fe21ee9b5f6eaa0ce13` from 28 Oct ~11:45: 9701 7.1 Chemical
-  equilibria** (10 objectives, prefix `chemical-equilibria`). That chat is writing it now; do
-  not start 9701 7.1 as well. The duplicate 9702 7.1 drafts listed in the warning below were
-  deleted on 28 Oct (never committed), so only the six live `progressive-waves-*` lessons exist.
-  Before starting anything, check this bullet and the `status.mjs` queue; before *publishing*,
-  check both again plus `git fetch`.
+- **9701 7.1 Chemical equilibria is PUBLISHED** (28 Oct, `0b48020`, from chat
+  `0b8e8fe21ee9b5f6eaa0ce13`; production page returns 200 with the lesson title):
+  10 lessons, 63 questions, 5 diagrams, covering all ten outcomes 7.1.1-7.1.10 one lesson per
+  outcome (`chemical-equilibria-reversible-dynamic` 7.1.1, `-le-chatelier` 7.1.2+7.1.3,
+  `-temperature-catalyst` 7.1.2+7.1.3, `-kc-expressions` 7.1.4, `-mole-fraction-partial-pressure`
+  7.1.5, `-kp-expressions` 7.1.6, `-kc-kp-calculations` 7.1.7, `-quantities` 7.1.8,
+  `-what-changes-k` 7.1.9, `-haber-contact` 7.1.10), 2,000-2,600 words each, 6-7 questions each.
+  Diagrams: `chem-equilibria-approach-equilibrium`, `-count-gas-moles`,
+  `-temperature-energy-profile`, `-mole-fraction`, `-haber-tradeoff`; each was rasterised with
+  resvg and inspected in light and dark (`npx tsx .work-logs/render-preview.tsx`), which caught
+  and fixed five label collisions and a clipped caption.
+  - **This unit REPLACED the four thin `chemical-equilibria-rebuild-*` lessons** published earlier
+    the same day (735-982 words each, 19 questions between them, no diagrams, one lesson covering
+    four outcomes). Those four were deleted in the same commit; they remain in history at
+    `9bb1a35` if anyone wants to recover them. Reason: two sets for one topic would collide on
+    `order` and the thin set could not teach 7.1.4-7.1.7 in 982 words. Do not resurrect them
+    alongside the ten-lesson unit.
+  - **Diagram labels in this unit are plain SVG text, not `MathLabel`.** `MathLabel` renders via
+    `foreignObject`, which resvg cannot draw, so any KaTeX label is invisible in local previews
+    and cannot be inspected. Subscripts are real `<tspan>` shifts (`dy=4`, `fontSize=11`) because
+    DejaVu Sans has no U+2080-2089 glyphs and falls back to full-size digits.
+  - **`src/components/diagrams/9709/index.ts` was broken on `main`** (commit `085c64b`): it
+    imported twelve `p3-vectors-*`/`p3-numerical-solution-*` modules that do not exist in the
+    repo, so `tsc` failed for anyone starting from `main`. `npm run diagrams:gen` regenerated it
+    and the repair is included in this batch. If you see that file churn, it is this fix.
+  - Review caveat, as elsewhere: the re-check was a second adversarial pass by the **same agent**
+    (no separate reviewer model was available), with every worked value recomputed and
+    substituted back in Python, every answer key checked against the site's own checker, and all
+    ten outcomes confirmed taught *and* tested. A teacher review is still outstanding.
+  - **Verification actually run:** `content:check` 0 errors / 0 warnings, `tsc --noEmit` clean,
+    `vitest run` 166 tests pass, `vitest run tests/diagrams.test.ts` pass, and every string was
+    pushed through the site's own `renderMd` (`.work-logs/check-math.ts`) to confirm KaTeX markup
+    with no leftover `$`. **No browser check was possible** (no Chromium here), so the rendered
+    layout of these equations on the live page is still unconfirmed by eye.
+  - Deleted lessons are archived by the importer, not dropped, so replacing the rebuild set does
+    not break anyone's attempt history.
 - **Before starting a unit, check that no other chat has it in flight.** Two cloud chats
   share this VM (`/workspace/chats/0b8e8fe21ee9b5f6eaa0ce13` and this one). On 28 Oct the
   other chat was writing **9618 6.1** (three `data-security-*` lessons on disk) and touching
@@ -562,7 +697,7 @@ changes alongside lessons:
       the answer keys was recomputed in Python during the review pass.
     - Review caveat as usual: second adversarial pass by the **same agent**, no separate
       reviewer model here. A reviewer should still be run over `data-integrity-*`.
-- Queue: 39 published, 115 todo (`node scripts/lessons/status.mjs`). The queue's head is
+- Queue: 46 published, 108 todo (`node scripts/lessons/status.mjs`). The queue's head is
   **9709 3.6+3.7**. 9709 was being restyled by the other chat, so it was skipped; that
   worktree is no longer on this VM, so check `git log --all` before taking it. 9702 7.1 is
   done; take **9701 7.1** or **9702 7.2+7.3+7.4** next, after checking the sibling worktree and

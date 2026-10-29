@@ -1,0 +1,366 @@
+id: sql-insert-update-delete
+subject: "9618"
+topic: "8.3"
+title: "Changing the data: INSERT, UPDATE and DELETE"
+summary: Three DML statements keep a table current. They look harmless — and one missing WHERE clause can rewrite every row in the table.
+order: 6
+minutes: 9
+kind: core
+objectives: ["8.3.5"]
+prerequisites: [sql-select-where-order-group, sql-create-table]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus
+    (2027-2029, Version 2, December 2025), topic 8.3, learning outcome 8.3.5 (data maintenance with
+    INSERT INTO, UPDATE and DELETE FROM). All questions are original; the sample table is invented.
+    Second-pass review by the same agent on 2026-10-29 (no separate reviewer model was available):
+    every SQL statement was checked for syntax and semantics, every answer key recomputed (counts,
+    averages and join row counts verified in Python), every MCQ confirmed to have exactly one correct
+    option, and all five diagrams rendered and inspected. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write `INSERT INTO`, `UPDATE` and `DELETE FROM` statements that change the
+      right rows, and explain why leaving out `WHERE` is the classic way to destroy a table.
+
+  - type: explain
+    title: Three verbs, one table
+    body: |-
+      `SELECT` only reads. The three statements that **change** stored data are:
+
+      | Statement | Does | Rows affected |
+      |---|---|---|
+      | `INSERT INTO` | adds a new row | one per `VALUES` list |
+      | `UPDATE` | changes values in existing rows | those matching `WHERE` |
+      | `DELETE FROM` | removes rows | those matching `WHERE` |
+
+      All three are **DML**, because they manipulate data. None of them changes the table's
+      structure — that job belongs to DDL.
+
+  - type: explain
+    title: INSERT INTO — adding a row
+    body: |-
+      The safest form names the fields, then gives the values in the same order:
+
+      ```sql
+      INSERT INTO Student (StudentID, FirstName, Average)
+      VALUES (9, 'Iris', 63.5);
+      ```
+
+      The fields you leave out get NULL (or their `DEFAULT` value, if the field defines one). The
+      number of values must match the number of fields, and the types must fit: text in single
+      quotes, numbers bare, `TRUE`/`FALSE` for booleans.
+
+      If you list **no** fields, you must supply a value for **every** field, in the order the table
+      was defined:
+
+      ```sql
+      INSERT INTO Student
+      VALUES (10, 'Jonas', TRUE, 58.0, '2026-09-01');
+      ```
+
+      Miss one value, or put them in the wrong order, and the DBMS either errors or stores the wrong
+      data in the wrong field — hence the field list is worth the typing.
+
+  - type: explain
+    title: UPDATE — changing values
+    body: |-
+      ```sql
+      UPDATE Student
+      SET Average = 68.0
+      WHERE StudentID = 9;
+      ```
+
+      Read it as: "in the `Student` table, set `Average` to 68.0 **for the rows where** `StudentID`
+      is 9."
+
+      Several fields can change in one statement, separated by commas:
+
+      ```sql
+      UPDATE Student
+      SET Average = 68.0, FeePaid = TRUE
+      WHERE StudentID = 9;
+      ```
+
+      `SET` names the field, then `=`, then the **new value**. The `WHERE` decides which rows are
+      touched; without it, every row is updated.
+
+  - type: intuition
+    title: The missing WHERE disaster
+    body: |-
+      ```sql
+      UPDATE Student SET Average = 0;
+      ```
+
+      No `WHERE`, so there is no condition to fail. Every row in the table now has an average of 0 —
+      including the rows you never meant to touch. The statement is perfectly valid SQL, which is
+      exactly the problem: the DBMS is doing what you asked, not what you meant.
+
+      `DELETE FROM Student;` is the same story: every row is deleted and the table is left empty but
+      still existing.
+
+      Two habits that prevent this:
+
+      - Write the `WHERE` clause **first**, then fill in `SET`.
+      - Run the same condition as a `SELECT` before updating, to see exactly which rows will change.
+
+      This is also why DBMS backup tools matter: an accidental `UPDATE` is a data-loss incident, and
+      recovery means restoring the backup and replaying the transaction log.
+
+  - type: explain
+    title: DELETE FROM — removing rows
+    body: |-
+      ```sql
+      DELETE FROM Student WHERE StudentID = 10;
+      ```
+
+      The row is gone; the table and its other rows are untouched.
+
+      Compare the three statements that students mix up:
+
+      | Statement | What survives |
+      |---|---|
+      | `DELETE FROM Student WHERE ...` | the table and all rows not matching |
+      | `DELETE FROM Student;` | the table, but no rows at all |
+      | `DROP TABLE Student;` | nothing — the table definition goes too |
+
+      Deleting rows is not always the right answer. If a student leaves, a school may keep the record
+      and add a `Left` date, because exam boards and audits need the history. `DELETE` is for data
+      that should never have been there.
+
+  - type: example
+    title: "Worked example: a term's worth of changes"
+    problem: |-
+      A `Student` table already holds rows for `StudentID` 1 to 8. Write the statements to:
+
+      (a) add Iris, `StudentID` 9, with an average of 63.5;
+      (b) record that Iris has now paid her fee;
+      (c) remove `StudentID` 4, who was entered twice by mistake.
+
+      The table is `Student (StudentID, FirstName, FeePaid, Average, Enrolled)`.
+    steps:
+      - |-
+        **(a) Insert with a field list.** Only three values are known, so name those three fields:
+        `INSERT INTO Student (StudentID, FirstName, Average) VALUES (9, 'Iris', 63.5);`
+        `FeePaid` and `Enrolled` become NULL.
+      - |-
+        **Check the value types.** 9 and 63.5 have no quotes; `'Iris'` does, because it is text.
+      - |-
+        **(b) Update one field, for one row.** `UPDATE Student SET FeePaid = TRUE WHERE StudentID =
+        9;` The `WHERE` is what restricts it to Iris.
+      - |-
+        **Check the WHERE.** Without it, every student would be marked as having paid — a data error
+        that would take a term to notice.
+      - |-
+        **(c) Delete one row.** `DELETE FROM Student WHERE StudentID = 4;` The other seven rows stay.
+      - |-
+        **Check before deleting.** Running `SELECT * FROM Student WHERE StudentID = 4;` first shows
+        exactly one row, which confirms the condition identifies the duplicate and nothing else.
+    answer: |-
+      ```sql
+      INSERT INTO Student (StudentID, FirstName, Average) VALUES (9, 'Iris', 63.5);
+      UPDATE Student SET FeePaid = TRUE WHERE StudentID = 9;
+      DELETE FROM Student WHERE StudentID = 4;
+      ```
+
+  - type: check
+    title: Quick check
+    questions: [insert-syntax, update-all-rows, delete-vs-drop]
+
+  - type: check
+    title: Practice
+    questions: [insert-cloze, spot-error-insert, explain-dml]
+
+  - type: misconceptions
+    items:
+      - wrong: UPDATE without WHERE is an error, so the DBMS refuses it.
+        right: |-
+          It is valid SQL and it updates **every** row. The DBMS has no idea which rows you meant.
+      - wrong: DELETE FROM Student removes the table.
+        right: |-
+          It removes the rows and leaves an empty table. `DROP TABLE` removes the table itself.
+      - wrong: INSERT must always give a value for every field.
+        right: |-
+          Only if you omit the field list. Naming the fields lets the rest default to NULL or their
+          `DEFAULT` value.
+      - wrong: UPDATE can add a new row if no matching row exists.
+        right: |-
+          `UPDATE` only changes existing rows. Adding a row needs `INSERT`.
+      - wrong: INSERT, UPDATE and DELETE are DDL because they change the database.
+        right: |-
+          They change the **data**, so they are DML. DDL changes the structure.
+
+  - type: exam
+    body: |-
+      - Learn the three skeletons exactly:
+        `INSERT INTO Table (fields) VALUES (values);`
+        `UPDATE Table SET Field = value WHERE condition;`
+        `DELETE FROM Table WHERE condition;`
+      - A `WHERE` clause is worth marks: an update or delete without one is almost always wrong in
+        an exam answer, and markers look for it.
+      - Quote text values and write dates as `'YYYY-MM-DD'`. Do not quote numbers.
+      - Match the number of values to the number of fields when writing an `INSERT`.
+      - If a question says "state the effect", say **how many rows** change: "the average of student
+        9 becomes 68.0; no other row is affected".
+
+  - type: takeaways
+    items:
+      - "`INSERT INTO Table (fields) VALUES (values);` adds a row; unnamed fields become NULL."
+      - "`UPDATE Table SET Field = value WHERE condition;` changes existing rows."
+      - "`DELETE FROM Table WHERE condition;` removes rows but keeps the table."
+      - "No WHERE means every row: `UPDATE Student SET Average = 0` wipes every average."
+      - "DML changes data; `DROP TABLE` (DDL) is the only one of these that removes structure."
+
+  - type: deeper
+    title: "Why DBAs wrap changes in a transaction"
+    body: |-
+      A transaction groups statements so they succeed or fail together:
+
+      ```sql
+      START TRANSACTION;
+      UPDATE Account SET Balance = Balance - 50 WHERE AccountID = 1;
+      UPDATE Account SET Balance = Balance + 50 WHERE AccountID = 2;
+      COMMIT;
+      ```
+
+      If the second statement fails, `ROLLBACK` undoes the first — so money cannot vanish between the
+      two. A transfer that half-happens is exactly the kind of data-integrity failure topic 6.2
+      warns about.
+
+      Transactions are beyond the listed sub-set. What you should take from it: a `COMMIT` is the
+      point where a change becomes permanent, and it is what the transaction log records — the same
+      log used to recover a database after a crash.
+
+questions:
+  - id: insert-syntax
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.5"]
+    prompt: |-
+      Which statement adds a new student with ID 11, name `Kai` and average 59.0 to the `Student`
+      table?
+    options:
+      - text: "`INSERT INTO Student (StudentID, FirstName, Average) VALUES (11, 'Kai', 59.0);`"
+        correct: true
+        why: |-
+          The field list matches the values, in order and type.
+      - text: "`INSERT INTO Student VALUES (11, 'Kai', 59.0);`"
+        why: |-
+          With no field list, a value is needed for **every** field in the table, in definition
+          order — this table has five.
+      - text: "`INSERT Student (StudentID, FirstName, Average) VALUES (11, 'Kai', 59.0);`"
+        why: |-
+          The keyword `INTO` is missing.
+      - text: "`UPDATE Student VALUES (11, 'Kai', 59.0);`"
+        why: |-
+          `UPDATE` changes existing rows and uses `SET`, not `VALUES`.
+    explanation: |-
+      `INSERT INTO Table (fields) VALUES (values);` with matching counts and quoted text.
+
+  - id: update-all-rows
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      A table has 200 rows. This statement runs: `UPDATE Student SET Average = 0;`
+      What is the effect?
+    options:
+      - text: Every one of the 200 rows now has an average of 0
+        correct: true
+        why: |-
+          With no `WHERE`, no row is excluded, so all rows are updated.
+      - text: The statement is rejected because WHERE is missing
+        why: |-
+          `WHERE` is optional. Omitting it is legal and dangerous.
+      - text: Only the first row changes
+        why: |-
+          Nothing limits the update to one row.
+      - text: A new row with an average of 0 is added
+        why: |-
+          Adding rows is `INSERT`; `UPDATE` touches existing rows.
+    explanation: |-
+      An `UPDATE` without `WHERE` applies to every row — the classic accidental data loss.
+
+  - id: delete-vs-drop
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      What is the difference between `DELETE FROM Student;` and `DROP TABLE Student;`?
+    options:
+      - text: DELETE removes every row but keeps the table; DROP removes the table definition too
+        correct: true
+        why: |-
+          `DELETE` is DML on rows; `DROP` is DDL on the structure.
+      - text: DELETE removes the table; DROP removes only the rows
+        why: |-
+          That is the wrong way round.
+      - text: They are identical; DROP is just shorter
+        why: |-
+          One leaves an empty table you can reuse, the other leaves nothing.
+      - text: DELETE can only remove one row at a time
+        why: |-
+          One `DELETE` can remove any number of rows matching the condition, including all of them.
+    explanation: |-
+      `DELETE FROM Student;` empties the table; `DROP TABLE Student;` deletes the table itself.
+
+  - id: insert-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      Complete the statement that adds one row to `Student`:
+
+      `INSERT {{1}} Student (StudentID, FirstName) {{2}} (12, 'Leah');`
+    blanks:
+      - accept: ["into"]
+      - accept: ["values"]
+    explanation: |-
+      `INSERT INTO` names the table and fields; `VALUES` introduces the data.
+
+  - id: spot-error-insert
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      A student writes three statements. Which line contains the first error?
+
+      ```sql
+      INSERT INTO Student (StudentID, FirstName, Average) VALUES (13, 'Mira');
+      UPDATE Student SET Average = 61.0 WHERE StudentID = 13;
+      DELETE FROM Student WHERE StudentID = 13;
+      ```
+    lines:
+      - "Line 1 adds a row for Mira with a student ID, a first name and an average."
+      - "Line 2 sets Mira's average to 61.0 and leaves other rows alone."
+      - "Line 3 removes Mira's row and keeps the table."
+      - "All three statements are DML and none changes the table's structure."
+    errorLine: 1
+    fix: |-
+      Line 1 lists **three** fields but supplies only **two** values. It needs a third value, for
+      example `(13, 'Mira', 61.0)` — otherwise the DBMS rejects the statement.
+    explanation: |-
+      The number of values must equal the number of named fields. Lines 2 and 3 are correct.
+
+  - id: explain-dml
+    format: explain
+    difficulty: 3
+    objectives: ["8.3.5"]
+    prompt: |-
+      Explain what `UPDATE Student SET Average = Average + 5 WHERE ClassID = 2;` does, and why the
+      `WHERE` clause matters.
+    model: |-
+      For every row whose `ClassID` is 2, the `Average` value is replaced by its current value plus
+      5, so each of those students gains five marks. Rows with any other `ClassID` are not touched.
+      Without the `WHERE` clause the same calculation would run on every row in the table, raising
+      the average of every student — a valid statement that does the wrong thing.
+    keyPoints:
+      - "Only rows with ClassID = 2 are changed."
+      - "Average is replaced by its old value plus 5 (not set to 5)."
+      - "Other rows are unaffected because of the WHERE clause."
+      - "Without WHERE, every row in the table would be updated."
+    explanation: |-
+      `SET Average = Average + 5` uses the existing value; `WHERE` limits which rows are affected.

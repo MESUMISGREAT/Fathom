@@ -1,0 +1,269 @@
+id: kinematics-calculus
+subject: "9709"
+topic: "4.2"
+title: "Calculus for motion: differentiating and integrating"
+summary: "Velocity is the derivative of displacement and acceleration the derivative of velocity. Integration runs the chain backwards."
+order: 4
+minutes: 8
+kind: core
+objectives: ["4.2.3"]
+prerequisites: ["kinematics-velocity-time-graphs"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Mathematics 9709 syllabus, topic 4.2
+    Kinematics of motion in a straight line, learning outcome 4.2.3 (use differentiation and
+    integration with respect to time, restricted to Paper 1 calculus). All questions and examples
+    are original. Re-checked line by line on 2026-10-29 in a separate adversarial pass by the same
+    AI model. No separate reviewer model and no teacher have reviewed it.
+blocks:
+  - type: objective
+    body: |
+      By the end you can differentiate a **displacement** function to get velocity and acceleration,
+      integrate an **acceleration** function to recover velocity and displacement, and use the
+      starting conditions to fix the constants.
+
+  - type: explain
+    title: The same motion, three functions
+    body: |
+      When a particle moves, its displacement changes with time. Write it as $s(t)$.
+
+      The **rate of change** of displacement is velocity, and the rate of change of velocity is
+      acceleration. In calculus language:
+
+      $$v = \frac{ds}{dt}, \qquad a = \frac{dv}{dt} = \frac{d^2s}{dt^2}$$
+
+      So one function contains all the information. Differentiate once for velocity, twice for
+      acceleration.
+
+      Going the other way, integrate: acceleration gives velocity, and velocity gives displacement.
+      Each integration brings an arbitrary constant, fixed by what the particle was doing at
+      $t = 0$.
+
+  - type: diagram
+    diagram: kinematics-calculus
+    alt: >-
+      Three boxes linked by arrows: displacement s(t), velocity v = ds/dt and acceleration a = dv/dt.
+      Solid arrows pointing right are labelled differentiate; arrows pointing left are labelled
+      integrate. A note explains that integrating brings back an arbitrary constant.
+    caption: >-
+      Differentiate to move right along the chain, integrate to move left.
+
+  - type: explain
+    title: What the derivatives tell you
+    body: |
+      Once you have $v(t)$ and $a(t)$, the physics is quick to read off:
+
+      - **At rest:** $v = 0$. Solve the velocity equation.
+      - **Moving in the positive direction:** $v > 0$; **negative direction:** $v < 0$.
+      - **Reversing:** $v$ changes sign, which happens where $v = 0$ and the graph of $v$ crosses the
+        axis.
+      - **Constant velocity:** $a = 0$.
+      - **Maximum or minimum displacement:** $v = 0$ (a stationary point of $s$).
+
+      Notice that "at rest" is a statement about $v$, not about $a$. A ball at the top of its flight
+      has $v = 0$ but $a = -10\ \text{m s}^{-2}$.
+
+  - type: example
+    title: From displacement to velocity and acceleration
+    problem: |
+      A particle moves so that its displacement is
+      $$s = t^3 - 6t^2 + 9t \quad (\text{metres, } t \text{ in seconds}).$$
+
+      Find $v$ and $a$, the velocity and acceleration at $t = 0$, and the times when the particle is
+      at rest.
+    steps:
+      - |
+        Differentiate once: $v = \dfrac{ds}{dt} = 3t^2 - 12t + 9$.
+      - |
+        Differentiate again: $a = \dfrac{dv}{dt} = 6t - 12$.
+      - |
+        At $t = 0$: $v = 9\ \text{m s}^{-1}$ and $a = -12\ \text{m s}^{-2}$.
+      - |
+        At rest means $v = 0$:
+        $$3t^2 - 12t + 9 = 0 \Rightarrow t^2 - 4t + 3 = 0 \Rightarrow (t-1)(t-3) = 0.$$
+        So the particle is at rest at $t = 1\ \text{s}$ and $t = 3\ \text{s}$.
+    answer: |
+      $v = 3t^2 - 12t + 9$, $a = 6t - 12$; at $t = 0$, $v = 9\ \text{m s}^{-1}$ and
+      $a = -12\ \text{m s}^{-2}$; at rest at $t = 1$ and $t = 3$.
+
+  - type: example
+    title: Integrating back from acceleration
+    problem: |
+      A particle has acceleration $a = 6t - 4\ \text{m s}^{-2}$. At $t = 0$ its velocity is
+      $3\ \text{m s}^{-1}$.
+
+      Find its velocity at $t = 2\ \text{s}$.
+    steps:
+      - |
+        Integrate: $v = \displaystyle\int (6t - 4)\,dt = 3t^2 - 4t + C$.
+      - |
+        Use $v = 3$ when $t = 0$: $3 = 0 - 0 + C$, so $C = 3$.
+      - |
+        Hence $v = 3t^2 - 4t + 3$.
+      - |
+        At $t = 2$: $v = 12 - 8 + 3 = 7\ \text{m s}^{-1}$.
+    answer: |
+      $v = 3t^2 - 4t + 3$, so $v(2) = 7\ \text{m s}^{-1}$.
+
+  - type: explain
+    title: Never lose the constant
+    body: |
+      Integrating acceleration gives a whole family of velocity functions, differing by a constant.
+      The starting velocity picks out the one that describes this particle.
+
+      The same happens again when you integrate velocity to get displacement: you need the initial
+      displacement.
+
+      In an exam, write the "$+C$" line explicitly, then substitute the initial condition. Skipping
+      that step is the most common way to lose marks in this topic.
+
+      Also check the units of your answer. Differentiating a displacement in metres with respect to
+      time in seconds gives metres per second; differentiating again gives metres per second squared.
+
+  - type: misconceptions
+    items:
+      - wrong: "Acceleration is the second derivative of displacement, so you differentiate v to get s."
+        right: >-
+          It is the other way round with derivatives: differentiating $s$ gives $v$, and
+          differentiating $v$ gives $a$. Integration goes back.
+      - wrong: "If $v = 0$ then $a = 0$ as well."
+        right: >-
+          At the top of a vertical throw $v = 0$ but $a$ is still $-g$; the velocity is changing
+          through zero.
+      - wrong: "You can integrate without a constant because the particle starts at the origin."
+        right: >-
+          Starting at the origin fixes the constant to be zero, but you still have to say so and
+          show the substitution.
+      - wrong: "The derivative of $6t^2$ is $6t$."
+        right: >-
+          It is $12t$: multiply by the power and reduce it by one.
+
+  - type: exam
+    body: |
+      Show the differentiation or integration clearly, then answer the question that was asked. If
+      the question says "find the time at rest", do not stop at the velocity expression: solve
+      $v = 0$.
+
+      When a displacement function has powers of $t$, differentiate term by term and keep track of
+      coefficients.
+
+      For an integration question, write "$+C$", substitute the given condition, and state the final
+      function before evaluating at the required time.
+
+  - type: check
+    title: Check yourself
+    questions: [differentiate-velocity, acceleration-at-time]
+
+  - type: check
+    title: At rest and integrating
+    questions: [first-rest-time, integrate-acceleration]
+
+  - type: check
+    title: Spot the slip
+    questions: [wrong-derivative, derivative-cloze]
+
+  - type: takeaways
+    items:
+      - '$v = \dfrac{ds}{dt}$ and $a = \dfrac{dv}{dt} = \dfrac{d^2s}{dt^2}$.'
+      - At rest means $v = 0$; reversing means $v$ changes sign.
+      - Integrating acceleration gives velocity plus a constant; integrating velocity gives displacement plus a constant.
+      - Fix each constant with the initial velocity or initial displacement.
+
+questions:
+  - id: differentiate-velocity
+    format: expression
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      A particle has displacement $s = 5t^3 - 2t^2 + 7t$, with $s$ in metres and $t$ in seconds.
+
+      Find its velocity $v$ as a function of $t$.
+    answer: "15t^2 - 4t + 7"
+    variables: ["t"]
+    display: "$v = 15t^2 - 4t + 7$"
+    explanation: |
+      Differentiate term by term: $15t^2 - 4t + 7$. The constant term $7t$ differentiates to $7$.
+
+  - id: acceleration-at-time
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      A particle has displacement $s = t^3 - 6t^2 + 9t$, in metres, with $t$ in seconds.
+
+      Find its acceleration at $t = 2\ \text{s}$.
+    fields:
+      - answer: 0
+        tolerance: { abs: 0.01 }
+        unit: m s⁻²
+    explanation: |
+      $v = 3t^2 - 12t + 9$ and $a = 6t - 12$. At $t = 2$, $a = 12 - 12 = 0$.
+
+  - id: first-rest-time
+    format: numeric
+    difficulty: 2
+    objectives: ["4.2.3"]
+    prompt: |
+      A particle has velocity $v = 3t^2 - 12t + 9\ \text{m s}^{-1}$.
+
+      Find the **first** time at which it is at rest.
+    fields:
+      - answer: 1
+        tolerance: { abs: 0.01 }
+        unit: s
+    explanation: |
+      $3t^2 - 12t + 9 = 0$ gives $t^2 - 4t + 3 = 0$, so $(t-1)(t-3) = 0$. The first time is
+      $t = 1\ \text{s}$, and the particle is at rest again at $t = 3\ \text{s}$.
+
+  - id: integrate-acceleration
+    format: numeric
+    difficulty: 3
+    objectives: ["4.2.3"]
+    prompt: |
+      A particle has acceleration $a = 6t - 4\ \text{m s}^{-2}$ and velocity
+      $3\ \text{m s}^{-1}$ at $t = 0$.
+
+      Find its velocity at $t = 2\ \text{s}$.
+    fields:
+      - answer: 7
+        tolerance: { abs: 0.05 }
+        unit: m s⁻¹
+    explanation: |
+      $v = 3t^2 - 4t + C$, and $v(0) = 3$ gives $C = 3$. So $v = 3t^2 - 4t + 3$, and at $t = 2$,
+      $v = 12 - 8 + 3 = 7\ \text{m s}^{-1}$.
+
+  - id: wrong-derivative
+    format: spot-error
+    difficulty: 3
+    objectives: ["4.2.3"]
+    prompt: |
+      A student differentiates a displacement function. One line is wrong.
+    lines:
+      - |
+        A particle has displacement $s = t^3 - 6t^2 + 9t$.
+      - |
+        $v = \dfrac{ds}{dt} = 3t^2 - 6t + 9$.
+      - |
+        At $t = 1$, $v = 3 - 6 + 9 = 6\ \text{m s}^{-1}$, so the particle is not at rest.
+    errorLine: 2
+    fix: |
+      $v = 3t^2 - 12t + 9$, so at $t = 1$ the velocity is $3 - 12 + 9 = 0$ and the particle **is**
+      at rest.
+    explanation: |
+      Differentiating $-6t^2$ gives $-12t$, not $-6t$. With the correct derivative,
+      $v(1) = 0$.
+
+  - id: derivative-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["4.2.3"]
+    prompt: |
+      Velocity is the rate of change of **{{1}}** with respect to time, and acceleration is the rate
+      of change of **{{2}}** with respect to time.
+    blanks:
+      - accept: ["displacement", "position"]
+      - accept: ["velocity"]
+    explanation: |
+      $v = \dfrac{ds}{dt}$ and $a = \dfrac{dv}{dt}$.

@@ -1,0 +1,290 @@
+id: stationary-waves-wavelength-from-nodes
+subject: "9702"
+topic: "8.1"
+title: "Finding the wavelength from nodes and antinodes"
+summary: "Node spacing is half a wavelength. Measure it carefully, count intervals rather than points, and the wavelength follows."
+order: 4
+minutes: 7
+kind: core
+objectives: ["8.1.4"]
+prerequisites: ["stationary-waves-formation", "stationary-waves-experiments"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Physics 9702 syllabus, topic 8.1
+    Stationary waves, learning outcome 8.1.4 (use the positions of nodes or antinodes to determine
+    the wavelength). All questions are original; the quoted measurements are illustrative.
+    Re-checked line by line on 2026-10-29 in a separate adversarial pass by the same AI model. No
+    separate reviewer model and no teacher have reviewed it.
+blocks:
+  - type: objective
+    body: |
+      By the end you can find a **wavelength** from the positions of nodes or antinodes, choose
+      measurements that reduce uncertainty, and combine the result with $v = f\lambda$.
+
+  - type: explain
+    title: The pattern is a ruler
+    body: |
+      A stationary wave gives you a ruler printed on the medium. Its marks are the nodes, and they
+      are always in the same places.
+
+      Neighbouring nodes are **half a wavelength** apart:
+
+      $$\text{node spacing} = \frac{\lambda}{2}$$
+
+      So one measurement is enough in principle:
+
+      $$\lambda = 2 \times (\text{distance between neighbouring nodes})$$
+
+      The same applies to antinodes: neighbouring antinodes are also $\dfrac{\lambda}{2}$ apart. A
+      node and the nearest antinode are $\dfrac{\lambda}{4}$ apart.
+
+  - type: explain
+    title: Count intervals, not points
+    body: |
+      Measuring one small gap gives a large percentage uncertainty. It is much better to measure
+      across **many** gaps and divide.
+
+      If you measure from the first node to the last node and there are $N$ **intervals** between
+      them, then
+
+      $$d = N\frac{\lambda}{2} \quad\Rightarrow\quad \lambda = \frac{2d}{N}$$
+
+      The trap: counting the nodes gives one more than the number of intervals.
+
+      | nodes marked | intervals | relation |
+      | --- | --- | --- |
+      | 2 | 1 | $d = \dfrac{\lambda}{2}$ |
+      | 3 | 2 | $d = \lambda$ |
+      | 5 | 4 | $d = 2\lambda$ |
+
+      So five nodes spread over $0.48\ \text{m}$ give $\lambda = \dfrac{2 \times 0.48}{4} =
+      0.24\ \text{m}$, **not** $\dfrac{0.48}{5}$.
+
+  - type: diagram
+    diagram: phys-stationary-waves-string-modes
+    alt: >-
+      A string fixed at both ends with one, two and three loops. The nodes are marked, showing that
+      each loop spans half a wavelength, so the string length equals a whole number of
+      half-wavelengths.
+    caption: >-
+      Count loops, not nodes: $n$ loops means $L = n\dfrac{\lambda}{2}$.
+
+  - type: explain
+    title: Two more routes to the wavelength
+    body: |
+      **From two resonances in a tube.** Successive resonances differ in length by half a
+      wavelength:
+
+      $$\lambda = 2(L_2 - L_1)$$
+
+      This is more accurate than using $4L_1$, because any end-correction error cancels in the
+      difference (and in this course end corrections are negligible anyway).
+
+      **From the wave equation.** Once you know $\lambda$ and the frequency $f$, the speed is
+
+      $$v = f\lambda$$
+
+      For a string, $f$ is the vibrator frequency; for sound, it is the tuning-fork frequency; for
+      microwaves, it is the transmitter frequency.
+
+  - type: example
+    title: "String: wavelength and speed"
+    problem: |
+      A string of length $1.50\ \text{m}$ is fixed at both ends and driven at $120\ \text{Hz}$. It
+      vibrates in a steady pattern with three loops.
+
+      Calculate (a) the wavelength and (b) the speed of the wave on the string.
+    steps:
+      - |
+        Three loops means three half-wavelengths: $L = 3\dfrac{\lambda}{2}$.
+      - |
+        $\lambda = \dfrac{2L}{3} = \dfrac{2 \times 1.50}{3} = 1.00\ \text{m}$.
+      - |
+        $v = f\lambda = 120 \times 1.00 = 120\ \text{m s}^{-1}$.
+    answer: |
+      (a) $\lambda = 1.00\ \text{m}$  (b) $v = 120\ \text{m s}^{-1}$
+
+  - type: example
+    title: "Air column: frequency from a resonance length"
+    problem: |
+      A tube closed by a water surface resonates first when the air column is
+      $0.20\ \text{m}$ long. The speed of sound is $340\ \text{m s}^{-1}$.
+
+      Calculate (a) the wavelength and (b) the frequency of the sound.
+    steps:
+      - |
+        The first resonance is a quarter wavelength: $L_1 = \dfrac{\lambda}{4}$.
+      - |
+        $\lambda = 4L_1 = 4 \times 0.20 = 0.80\ \text{m}$.
+      - |
+        $f = \dfrac{v}{\lambda} = \dfrac{340}{0.80} = 425\ \text{Hz}$.
+    answer: |
+      (a) $\lambda = 0.80\ \text{m}$  (b) $f = 425\ \text{Hz}$
+
+  - type: misconceptions
+    items:
+      - wrong: "Five nodes means five half-wavelengths."
+        right: >-
+          Five nodes make only **four** intervals, so there are four half-wavelengths between the
+          first and last node.
+      - wrong: "The distance between a node and an antinode is a half-wavelength."
+        right: >-
+          Node to nearest antinode is a **quarter** wavelength. Half a wavelength takes you from a
+          node to the next node.
+      - wrong: "You can read the wavelength straight off the length of the string."
+        right: >-
+          Only if you also know how many half-wavelengths fit on it: $L = n\dfrac{\lambda}{2}$.
+
+  - type: exam
+    body: |
+      When a question gives node positions, find the **spacing between neighbours** and double it
+      — or count intervals across the whole span.
+
+      Show the interval count explicitly, e.g. "$5$ nodes $\Rightarrow 4$ intervals $\Rightarrow
+      2\lambda = 0.48\ \text{m}$". Examiners award that.
+
+      If a length and a frequency are given, finish with $v = f\lambda$ and quote the unit
+      $\text{m s}^{-1}$.
+
+  - type: check
+    title: Check yourself
+    questions: [adjacent-nodes, five-nodes]
+
+  - type: check
+    title: Waves on strings and in tubes
+    questions: [string-lambda-speed, air-column-frequency]
+
+  - type: check
+    title: Spot the slip
+    questions: [node-antinode-gap, interval-error]
+
+  - type: takeaways
+    items:
+      - 'Neighbouring nodes (or antinodes) are $\dfrac{\lambda}{2}$ apart; node to antinode is $\dfrac{\lambda}{4}$.'
+      - 'Across $N$ intervals of length $d$: $\lambda = \dfrac{2d}{N}$. Count intervals, not points.'
+      - 'Two resonances: $\lambda = 2(L_2 - L_1)$.'
+      - 'Finish with $v = f\lambda$ when the frequency is known.'
+
+questions:
+  - id: adjacent-nodes
+    format: numeric
+    difficulty: 1
+    objectives: ["8.1.4"]
+    prompt: |
+      In a stationary wave, two neighbouring nodes are $0.30\ \text{m}$ apart.
+
+      Calculate the wavelength.
+    fields:
+      - answer: 0.6
+        tolerance: { abs: 0.005 }
+        unit: m
+    explanation: |
+      Neighbouring nodes are half a wavelength apart, so
+      $\lambda = 2 \times 0.30 = 0.60\ \text{m}$.
+
+  - id: five-nodes
+    format: numeric
+    difficulty: 2
+    objectives: ["8.1.4"]
+    prompt: |
+      A stationary wave has nodes at $0.10\ \text{m}$, $0.34\ \text{m}$, $0.58\ \text{m}$,
+      $0.82\ \text{m}$ and $1.06\ \text{m}$.
+
+      Calculate the wavelength.
+    fields:
+      - answer: 0.48
+        tolerance: { abs: 0.005 }
+        unit: m
+    explanation: |
+      Five nodes make four intervals. The span is
+      $1.06 - 0.10 = 0.96\ \text{m}$, so $4 \times \dfrac{\lambda}{2} = 0.96$ and
+      $\lambda = 0.48\ \text{m}$. (Equivalently, neighbouring nodes are $0.24\ \text{m}$ apart.)
+
+  - id: string-lambda-speed
+    format: numeric
+    difficulty: 2
+    objectives: ["8.1.4"]
+    prompt: |
+      A string of length $1.50\ \text{m}$ is fixed at both ends and driven at $120\ \text{Hz}$. It
+      vibrates in a steady pattern with three loops.
+
+      Calculate the wavelength and the speed of the wave on the string.
+    fields:
+      - label: "λ ="
+        answer: 1.0
+        tolerance: { abs: 0.01 }
+        unit: m
+      - label: "v ="
+        answer: 120
+        tolerance: { abs: 1 }
+        unit: m s⁻¹
+    explanation: |
+      Three loops means three half-wavelengths: $\lambda = \dfrac{2 \times 1.50}{3} =
+      1.00\ \text{m}$. Then $v = f\lambda = 120 \times 1.00 = 120\ \text{m s}^{-1}$.
+
+  - id: air-column-frequency
+    format: numeric
+    difficulty: 2
+    objectives: ["8.1.4"]
+    prompt: |
+      A tube closed by a water surface resonates first when the air column is
+      $0.20\ \text{m}$ long. The speed of sound is $340\ \text{m s}^{-1}$.
+
+      Calculate the wavelength and the frequency.
+    fields:
+      - label: "λ ="
+        answer: 0.8
+        tolerance: { abs: 0.005 }
+        unit: m
+      - label: "f ="
+        answer: 425
+        tolerance: { abs: 2 }
+        unit: Hz
+    explanation: |
+      The first resonance is a quarter wavelength, so $\lambda = 4 \times 0.20 = 0.80\ \text{m}$.
+      Then $f = \dfrac{v}{\lambda} = \dfrac{340}{0.80} = 425\ \text{Hz}$.
+
+  - id: node-antinode-gap
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.4"]
+    prompt: |
+      The distance from a node to the nearest antinode is $6.0\ \text{cm}$. What is the wavelength?
+    options:
+      - text: '$24\ \text{cm}$'
+        correct: true
+        why: "Correct: node to antinode is a quarter wavelength, so λ = 4 × 6.0 = 24 cm."
+      - text: '$12\ \text{cm}$'
+        why: "That would make the gap half a wavelength, which is node-to-node."
+      - text: '$6.0\ \text{cm}$'
+        why: "A quarter wavelength is 6.0 cm, not the whole wavelength."
+      - text: '$48\ \text{cm}$'
+        why: "That is twice the correct value."
+    explanation: |
+      Node to nearest antinode is $\dfrac{\lambda}{4}$, so $\lambda = 4 \times 6.0 =
+      24\ \text{cm}$.
+
+  - id: interval-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["8.1.4"]
+    prompt: |
+      A student uses node positions to find a wavelength. One line is wrong.
+    lines:
+      - |
+        A stationary wave has nodes at $0.10\ \text{m}$, $0.34\ \text{m}$, $0.58\ \text{m}$,
+        $0.82\ \text{m}$ and $1.06\ \text{m}$.
+      - |
+        That is five nodes, so there are five half-wavelengths between the first and last:
+        $1.06 - 0.10 = 0.96\ \text{m}$.
+      - |
+        So $\lambda = \dfrac{0.96}{5} = 0.192\ \text{m}$.
+    errorLine: 2
+    fix: |
+      Five nodes make **four** intervals, so there are four half-wavelengths:
+      $0.96 = 4 \times \dfrac{\lambda}{2}$, giving $\lambda = 0.48\ \text{m}$.
+    explanation: |
+      The number of gaps is one fewer than the number of nodes. Neighbouring nodes are
+      $0.24\ \text{m}$ apart, which confirms $\lambda = 0.48\ \text{m}$.
