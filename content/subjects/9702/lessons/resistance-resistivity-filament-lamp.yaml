@@ -1,0 +1,257 @@
+id: resistance-resistivity-filament-lamp
+subject: "9702"
+topic: "9.3"
+title: Why a filament lamp's resistance rises
+summary: A filament lamp is non-ohmic because the current heats it. Hotter lattice ions vibrate more, electrons collide more often, and R = V/I climbs as current rises.
+order: 3
+minutes: 8
+kind: core
+objectives: ["9.3.4"]
+prerequisites: ["resistance-resistivity-ohms-law-iv"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 9.3 outcome "Explain that a filament lamp’s resistance rises as the
+    current increases, because its temperature rises." Builds on the I–V characteristics
+    lesson (9.3.3) rather than repeating its graph-sketching examples. All questions and
+    numbers are original.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-29: the table 1.2/0.10 = 12, 3.0/0.19 = 15.8 (16 to 2 s.f.),
+    6.0/0.25 = 24 ohm; 2.4/0.20 = 12 and 9.0/0.30 = 30 ohm; the 12 V 36 W lamp giving 3.0 A and
+    4.0 ohm with a 40 A switch-on surge from the 0.30 ohm cold filament. Confirmed that the
+    lesson keeps the definition R = V/I separate from Ohm's law, and that the spot-error's first
+    error is the constant-resistance assumption on line 3. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain, in terms of temperature and collisions, why the resistance of a filament lamp rises as the current through it increases, and read a resistance from a lamp's I–V characteristic at any point.
+
+  - type: explain
+    title: A lamp's I–V curve is not a straight line
+    body: |
+      For a **metallic conductor at constant temperature** the I–V graph is a straight line through the origin: doubling the p.d. doubles the current, so $R = V/I$ is constant (Ohm's law).
+
+      A **filament lamp** fails that condition. Its characteristic curves over:
+
+      | p.d. $V$ / V | current $I$ / A | $R = V/I$ / Ω |
+      |---|---|---|
+      | 1.2 | 0.10 | 12 |
+      | 3.0 | 0.19 | 16 |
+      | 6.0 | 0.25 | 24 |
+
+      As the p.d. rises, the current rises **more and more slowly**. Because $R = V/I$, the ratio $V/I$ climbs at every step — the resistance is not a fixed property of the lamp.
+
+      Two things to keep straight:
+
+      - The lamp still obeys $R = V/I$ **at every point** — that equation is the definition of resistance.
+      - What it does not obey is **Ohm's law**, $I \propto V$ at constant temperature. The filament's temperature is not constant; that is exactly why it is called **non-ohmic**.
+
+  - type: example
+    title: Resistance at two operating points
+    problem: |
+      A filament lamp has a p.d. of $2.4\ \text{V}$ when the current is $0.20\ \text{A}$, and a p.d. of $9.0\ \text{V}$ when the current is $0.30\ \text{A}$.
+
+      Calculate the resistance at each point and comment on the change.
+    steps:
+      - |
+        At the first point: $R = \dfrac{V}{I} = \dfrac{2.4}{0.20} = 12\ \Omega$.
+      - |
+        At the second point: $R = \dfrac{9.0}{0.30} = 30\ \Omega$.
+      - |
+        The p.d. rose by a factor of $9.0/2.4 = 3.75$ but the current rose only by $0.30/0.20 = 1.5$, so the ratio $V/I$ rose from $12\ \Omega$ to $30\ \Omega$.
+      - |
+        The resistance has **increased with current** (roughly 2.5 times). A single value of $R$ therefore cannot be used for this lamp across its working range.
+    answer: |
+      $12\ \Omega$ at $2.4\ \text{V}$ and $30\ \Omega$ at $9.0\ \text{V}$; the resistance rises as the current (and temperature) rises.
+
+  - type: check
+    questions: [lamp-iv-shape, lamp-resistance-two-points]
+
+  - type: explain
+    title: Why heating raises the resistance
+    body: |
+      The filament is a thin tungsten wire, chosen because tungsten melts at about $3695\ \text{K}$ and can glow white-hot without melting. In normal operation it sits near $2700\ \text{K}$.
+
+      In a metal, the **lattice ions** are fixed in place and the **conduction electrons** drift past them. The electrons do not move freely: they are repeatedly scattered by the ions, and that scattering is what we call resistance.
+
+      When the current raises the temperature:
+
+      1. the lattice ions **vibrate with greater amplitude** about their fixed positions;
+      2. the electrons therefore **collide with them more often** (and lose energy faster);
+      3. for the same applied p.d. the electrons make slower average progress, so the **current is smaller**;
+      4. since $R = V/I$, a smaller current at the same p.d. means a **larger resistance**.
+
+      So the chain is: **more current → higher temperature → more vigorous lattice vibration → more frequent electron collisions → higher resistance**. The increase feeds back slightly: extra current gives extra heating, which raises $R$ further until the lamp settles at its operating temperature.
+
+      A tungsten filament's resistance at operating temperature is typically **ten to fifteen times** its resistance at room temperature, because the resistivity of a metal rises roughly in proportion to absolute temperature.
+
+  - type: check
+    questions: [lamp-mechanism, spot-lamp-ohmic]
+
+  - type: example
+    title: Cold resistance and the switch-on surge
+    problem: |
+      A $12\ \text{V}$, $36\ \text{W}$ car headlamp has an operating resistance of $4.0\ \Omega$. Before it is switched on, an ohmmeter reads $0.30\ \Omega$.
+
+      Explain the difference and calculate the current at the instant of switch-on.
+    steps:
+      - |
+        At its operating point $P = VI$, so $I = \dfrac{P}{V} = \dfrac{36}{12} = 3.0\ \text{A}$ and $R = \dfrac{V}{I} = \dfrac{12}{3.0} = 4.0\ \Omega$, matching the stated value.
+      - |
+        An ohmmeter passes only a tiny current, so the filament stays at room temperature and has not yet heated up. Its resistance is then only $0.30\ \Omega$ — about $13$ times smaller than at operating temperature.
+      - |
+        At switch-on the full $12\ \text{V}$ is applied across this cold filament: $I = \dfrac{12}{0.30} = 40\ \text{A}$.
+      - |
+        That surge is more than ten times the operating current. It lasts only until the filament heats, but it is the reason filament lamps most often fail at the moment they are switched on.
+    answer: |
+      The cold filament has far lower resistance, so the initial current is $40\ \text{A}$ rather than the operating $3.0\ \text{A}$.
+
+  - type: check
+    questions: [switch-on-surge, explain-lamp-temperature]
+
+  - type: misconceptions
+    items:
+      - wrong: A filament lamp "breaks Ohm's law", so $R = V/I$ does not apply to it.
+        right: |
+          $R = V/I$ is the **definition of resistance** and always applies — you use it to find a lamp's resistance at each operating point. What the lamp does not obey is Ohm's law, the statement that $I \propto V$ **at constant temperature**.
+      - wrong: The resistance is constant, so a curved I–V graph must be a mistake in the readings.
+        right: |
+          The curve is real and expected. As the current heats the filament the resistance rises, so the graph flattens. A straight line through the origin is what you get only for a conductor held at constant temperature.
+      - wrong: You can read the lamp's resistance as the gradient of its I–V graph.
+        right: |
+          The gradient is $\dfrac{\Delta I}{\Delta V}$, not $V/I$. For a lamp the gradient changes along the curve too, so use $R = V/I$ at the point you are told about — that is the chord from the origin.
+      - wrong: The resistance rises because the filament's length increases as it expands when hot.
+        right: |
+          Thermal expansion changes the dimensions by well under a percent, nowhere near the tenfold rise observed. The cause is the **temperature dependence of the metal's resistivity**, through more frequent electron–ion collisions.
+
+  - type: exam
+    body: |
+      - "Explain why the resistance of a filament lamp increases as the current increases" — the marks are for the chain: current heats filament → temperature rises → lattice ions vibrate more → more frequent collisions with electrons → smaller current for the same p.d. → $R = V/I$ increases. Naming only "it gets hot" earns little.
+      - "Use the graph to find the resistance at $V = 6.0\ \\text{V}$" — read the current at that p.d., then divide. Do not read a gradient, and do not reuse an answer from a different point.
+      - Comparing a filament lamp with a metal wire at constant temperature: the wire gives a straight line through the origin; the lamp gives a curve that flattens. Link the difference to the lamp's changing temperature.
+      - Expect a question on why a lamp is described as non-ohmic. The answer is that its resistance changes with temperature, so current is not proportional to p.d. — not that the equation $R = V/I$ has stopped working.
+
+  - type: takeaways
+    items:
+      - "A filament lamp is non-ohmic: its I–V graph curves, flattening as the current rises."
+      - "Resistance is $R = V/I$ at each operating point; it is not constant for a lamp."
+      - "Mechanism: current heats the filament, lattice ions vibrate more, electrons collide more often, so $R$ rises."
+      - "Tungsten's hot resistance is about ten to fifteen times its cold resistance, which is why lamps fail at switch-on."
+
+questions:
+  - id: lamp-iv-shape
+    format: mcq
+    difficulty: 1
+    objectives: ["9.3.4"]
+    prompt: |
+      Which description matches the I–V characteristic of a filament lamp?
+    options:
+      - text: The current increases with p.d., but the curve flattens so that equal increases in p.d. produce smaller and smaller increases in current.
+        correct: true
+        why: |
+          As the current heats the filament its resistance rises, so the current grows more slowly than the p.d. $V/I$ increases along the curve.
+      - text: A straight line through the origin, because the lamp has a fixed resistance.
+        why: |
+          A straight line through the origin is the characteristic of a metallic conductor held at **constant temperature**. The lamp's temperature changes with current, so its resistance does not stay fixed.
+      - text: A curve that bends the other way, so the current rises faster and faster as the p.d. increases.
+        why: |
+          That shape means the resistance is **falling** as the current rises — the behaviour of a thermistor or a diode as it conducts, not of a metal filament that is getting hotter.
+      - text: A straight line that does not pass through the origin, showing the lamp needs a minimum p.d. before any current flows.
+        why: |
+          With no p.d. across a lamp there is no current, so the graph must pass through the origin.
+    explanation: |
+      The lamp's resistance rises as it heats, so the graph of $I$ against $V$ bends over. Sketching it with the axes swapped (V against I) gives the same information: the gradient $V/I$ increases with current.
+
+  - id: lamp-resistance-two-points
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.4"]
+    prompt: |
+      A filament lamp has a p.d. of $2.4\ \text{V}$ when the current is $0.20\ \text{A}$, and a p.d. of $9.0\ \text{V}$ when the current is $0.30\ \text{A}$.
+
+      Calculate the resistance at each of these two operating points.
+    fields:
+      - label: "R at 2.4 V ="
+        answer: 12
+        tolerance: { rel: 0.01 }
+        unit: "Ω"
+      - label: "R at 9.0 V ="
+        answer: 30
+        tolerance: { rel: 0.01 }
+        unit: "Ω"
+    explanation: |
+      Use $R = V/I$ at each point separately: $R_1 = 2.4/0.20 = 12\ \Omega$ and $R_2 = 9.0/0.30 = 30\ \Omega$. The resistance has risen because the larger current has made the filament hotter.
+
+  - id: lamp-mechanism
+    format: mcq
+    difficulty: 2
+    objectives: ["9.3.4"]
+    prompt: |
+      Why does the resistance of a filament lamp increase as the current through it increases?
+    options:
+      - text: The current heats the filament, so its lattice ions vibrate more vigorously and the conduction electrons collide with them more often.
+        correct: true
+        why: |
+          More frequent scattering of the drifting electrons impedes them more, so the current is smaller for the same p.d. and $R = V/I$ is larger.
+      - text: The current is gradually used up as it passes through the filament, so less current remains for the rest of the circuit.
+        why: |
+          Charge is conserved: the current is the same either side of the lamp. Energy is transferred to the filament, not current.
+      - text: The p.d. across the filament falls as the current rises, and a smaller p.d. means a larger resistance.
+        why: |
+          For a lamp both $V$ and $I$ rise together; the p.d. does not fall. And the definition is $R = V/I$, so a smaller p.d. would not by itself raise the resistance.
+      - text: The filament expands when hot, becoming longer, and a longer wire has a larger resistance.
+        why: |
+          Thermal expansion changes the filament's dimensions by less than a percent, whereas the resistance rises by more than a factor of ten. The expansion is not the cause; the rise comes from the metal's resistivity increasing with temperature.
+    explanation: |
+      The examinable chain is: larger current → greater heating → higher filament temperature → more vigorous lattice vibration → more frequent electron–ion collisions → smaller current for the same p.d. → larger $R = V/I$.
+
+  - id: spot-lamp-ohmic
+    format: spot-error
+    difficulty: 2
+    objectives: ["9.3.4"]
+    prompt: |
+      A student calculates the resistance of a filament lamp at two p.d.s. Identify the first line that is wrong.
+    lines:
+      - "At a p.d. of 6.0 V the current in the lamp is 0.25 A."
+      - "So the resistance of the lamp is R = 6.0 / 0.25 = 24 Ω."
+      - "The lamp is a resistor, so its resistance is 24 Ω at every p.d."
+      - "At a p.d. of 1.2 V the current is 0.12 A, so the resistance is also 24 Ω."
+    errorLine: 3
+    fix: |
+      The lamp is non-ohmic: its resistance depends on its temperature, so it is not 24 Ω everywhere. Use R = V/I at each point — at 1.2 V with 0.12 A the resistance is 10 Ω, not 24 Ω.
+    explanation: |
+      Lines 1 and 2 are correct: $6.0/0.25 = 24\ \Omega$. The first error is line 3, which assumes a constant resistance. At the lower p.d. the filament is cooler, and $1.2/0.12 = 10\ \Omega$ indeed comes out smaller.
+
+  - id: switch-on-surge
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.4"]
+    prompt: |
+      A $12\ \text{V}$ lamp has an operating resistance of $4.0\ \Omega$ and a cold resistance of $0.30\ \Omega$.
+
+      Calculate the current through the filament at the instant it is switched on.
+    fields:
+      - label: "I ="
+        answer: 40
+        tolerance: { rel: 0.01 }
+        unit: "A"
+    explanation: |
+      At switch-on the filament is still at room temperature, so the full $12\ \text{V}$ acts across $0.30\ \Omega$: $I = 12/0.30 = 40\ \text{A}$. Once it heats, the resistance rises to $4.0\ \Omega$ and the current settles at $3.0\ \text{A}$, which is why the surge is brief but can destroy the filament.
+
+  - id: explain-lamp-temperature
+    format: explain
+    difficulty: 3
+    objectives: ["9.3.4"]
+    prompt: |
+      Explain, in terms of the charge carriers in the filament, why a filament lamp is described as a non-ohmic component.
+    model: |
+      Passing a current transfers energy to the filament, raising its temperature — in a lamp the filament reaches roughly 2700 K. At a higher temperature the lattice ions vibrate with greater amplitude about their fixed positions, so the conduction electrons drifting past them collide with them more frequently. Those collisions impede the electrons, so for a given p.d. they make slower average progress and the current is smaller. Since resistance is defined as R = V/I, a smaller current at the same p.d. means a larger resistance. The resistance therefore changes as the current changes, so the current is not proportional to the p.d. — that is what makes the lamp non-ohmic. The equation R = V/I still holds at every operating point; it is Ohm's law, with its constant-resistance condition, that fails.
+    keyPoints:
+      - "Current transfers energy to the filament, so its temperature rises"
+      - "Hotter lattice ions vibrate more, so electrons collide with them more often"
+      - "More frequent collisions mean less current for the same p.d., so R = V/I is larger"
+      - "Resistance changes with current, so I is not proportional to V: the lamp is non-ohmic"
+    explanation: |
+      Full marks need the mechanism (temperature → lattice vibration → more frequent collisions) and the link to $R = V/I$, not simply the statement that the lamp gets hot. Mention that the definition $R = V/I$ still applies at each point; it is the constancy of $R$ that fails.

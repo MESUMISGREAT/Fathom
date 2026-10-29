@@ -1,0 +1,348 @@
+id: resistance-resistivity-ohms-law-iv
+subject: "9702"
+topic: "9.3"
+title: Ohm's law and I-V characteristics
+summary: Ohm's law and the constant-temperature condition it needs; sketching and interpreting the I-V characteristics of a metallic conductor, a diode and a filament lamp.
+order: 2
+minutes: 10
+kind: core
+objectives: ["9.3.5", "9.3.3"]
+prerequisites: ["resistance-resistivity-definition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027. Covers learning outcome 9.3.5 "State Ohm's law." and 9.3.3 "Sketch the
+    I-V characteristics of a metallic conductor at constant temperature, a semiconductor diode
+    and a filament lamp." All examples and questions are original. The full treatment of why a
+    filament lamp's resistance rises is left to the 9.3.4 lesson.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-29: 2.0/0.040 = 50 ohm, 12/0.10 = 120 ohm and
+    5.0/2.0e-6 = 2.5e6 ohm verified, the spot-error's first error confirmed as the
+    gradient line, and the claim that an I-V gradient is 1/R qualified - on a curved
+    characteristic the gradient is not the conductance, only a straight line through the origin
+    has gradient 1/R, so resistance is always read as V/I. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can state Ohm's law and say exactly which conditions it requires, and you
+      can sketch and interpret the I-V characteristic of a metallic conductor at constant
+      temperature, a semiconductor diode and a filament lamp.
+
+  - type: explain
+    title: What Ohm's law does and does not say
+    body: |
+      **Ohm's law is a statement about one kind of conductor under one condition.** It says the
+      current through a metallic conductor is **directly proportional** to the potential
+      difference across it, **provided its temperature stays constant** (and the other physical
+      conditions - length, cross-sectional area, material - do not change).
+
+      So for an ohmic conductor:
+
+      $$I \propto V \quad\Longleftrightarrow\quad V = IR \text{ with } R \text{ constant}$$
+
+      The graph of $I$ against $V$ is a **straight line through the origin**. Double the p.d.
+      and you double the current.
+
+      Two things students get wrong here:
+
+      1. **Ohm's law is not the definition of resistance.** $R = V/I$ defines resistance and
+         works for *every* component, ohmic or not. Ohm's law is the extra claim that for a
+         metallic conductor at constant temperature, that ratio $R$ happens to be the **same**
+         at every point on the characteristic.
+      2. **It is not a law of nature that applies to everything.** A filament lamp, a diode and
+         a thermistor all disobey it. Even a metal wire obeys it only while its temperature is
+         held constant - pass a large enough current and the wire heats up, and its $R$ changes.
+
+      Because Ohm's law is usually tested as a statement to recall, learn it with the condition
+      attached. "Current is proportional to p.d." alone is not a complete answer.
+
+  - type: definition
+    term: Ohm's law
+    body: |
+      The current through a metallic conductor is directly proportional to the potential
+      difference across it, provided its temperature (and other physical conditions) remain
+      constant.
+
+  - type: check
+    questions: [ohm-law-statement, ohms-law-condition]
+
+  - type: explain
+    title: The three I-V characteristics you must be able to sketch
+    body: |
+      An **I-V characteristic** is a graph of current through a component against the potential
+      difference across it. On the usual axes (**current vertical, p.d. horizontal**) the gradient
+      of the graph is $\Delta I/\Delta V$. For a **straight line through the origin** that gradient
+      is also the **conductance** $1/R$; on a **curved** characteristic such as a lamp's the
+      gradient changes from point to point and is *not* the reciprocal of the resistance, so there
+      you must read the resistance from the coordinates of the point, $R = V/I$. If your axes are
+      the other way round, a straight line's gradient is $R$ itself - always check which way round
+      the axes are.
+
+      | Component | Shape of the I-V graph | What that means for R |
+      | --- | --- | --- |
+      | Metallic conductor at constant temperature | Straight line through the origin, same gradient for positive and negative p.d. | Constant: $R$ has one value at every point (ohmic) |
+      | Semiconductor diode | Almost no current until about 0.6 V forward, then a very steep rise; tiny current in reverse until breakdown | Very large in reverse ($\sim$M$\Omega$), falling sharply above the threshold forward |
+      | Filament lamp | A curve through the origin that flattens as $V$ increases, steepest near the origin; same shape for both polarities | Rises as the current (and so the temperature) rises; not ohmic |
+
+      Points examiners look for in the sketch:
+
+      - **Metallic conductor:** a ruler-straight line **through the origin**, extended into the
+        third quadrant. Constant temperature is what keeps it straight.
+      - **Diode:** the forward branch stays near zero then turns almost vertical at the
+        threshold (about 0.6-0.7 V for silicon); the reverse branch stays close to the axis.
+        It is **not** symmetric - that asymmetry is the whole point.
+      - **Filament lamp:** starts steep, then **curves over** and becomes flatter. Do not draw a
+        straight line that simply stops; the curvature is the mark.
+
+  - type: check
+    questions: [metal-iv-graph, lamp-gradient-trap]
+
+  - type: example
+    title: Reading a resistance off the axes
+    problem: |
+      A filament lamp is tested. At a p.d. of 2.0 V the current is 0.040 A; at 12 V the current
+      is 0.10 A. Calculate the resistance of the lamp at each p.d. and comment.
+    steps:
+      - |
+        Use the definition of resistance with the coordinates of each point:
+        $R = V/I$.
+      - |
+        At 2.0 V: $R = \dfrac{2.0}{0.040} = 50\ \Omega$.
+      - |
+        At 12 V: $R = \dfrac{12}{0.10} = 120\ \Omega$.
+      - |
+        The resistance has more than doubled. The lamp is **not ohmic**: as the current rises
+        the filament gets hotter, and its resistance rises with temperature.
+      - |
+        Note the trap: the gradient of this curve is not the resistance, and not even $1/R$ -
+        that shortcut only works for a straight line through the origin. It is the *ratio*
+        $V/I$ at a point that gives the resistance there.
+    answer: |
+      $50\ \Omega$ at 2.0 V and $120\ \Omega$ at 12 V, so the lamp's resistance rises with
+      current because the filament heats up.
+
+  - type: check
+    questions: [lamp-resistance-value, diode-resistance-value]
+
+  - type: misconceptions
+    items:
+      - wrong: Ohm's law applies to every component in a circuit.
+        right: "It applies to a **metallic conductor at constant temperature**. A diode, a thermistor and a filament lamp all have characteristics that are not straight lines."
+      - wrong: Resistance is the gradient of the I-V graph.
+        right: "With $I$ vertical, a **straight line through the origin** has gradient $1/R$ (the conductance). Resistance is $R = V/I$ at the point, and on a curved characteristic the gradient is not $1/R$ at all - so use the coordinates, not the slope."
+      - wrong: A steeper I-V line means a bigger resistance.
+        right: "A **steeper** line means more current for the same p.d., so a **smaller** resistance - steep means easy to push current through."
+      - wrong: The I-V graph of a diode is just a straight line once it starts conducting.
+        right: "It rises **very steeply** after the threshold, but it is still curved, and the reverse branch stays almost flat - the graph is asymmetric, unlike a resistor's."
+
+  - type: check
+    questions: [diode-reverse-bias, spot-gradient-error, explain-lamp-characteristic]
+
+  - type: exam
+    body: |
+      - "State Ohm's law" needs **both** halves: current proportional to p.d. **and** the
+        condition that temperature stays constant. A definition without the condition loses a
+        mark.
+      - "Sketch the I-V characteristic of ..." is marked on shape: straight through the origin
+        for a metal at constant temperature, threshold-then-vertical for a diode, curved and
+        flattening for a lamp. Label the axes and include a negative branch where asked.
+      - Calculation questions usually give a graph and ask for $R$ at a stated p.d. Read the
+        current from the graph at that p.d. and divide $V$ by $I$ - do not take the gradient.
+      - A common follow-up asks you to explain *why* a lamp's resistance rises; that is 9.3.4,
+        and the answer is the rise in temperature of the filament, not "the current fights
+        itself".
+
+  - type: takeaways
+    items:
+      - "Ohm's law: current is directly proportional to p.d. for a metallic conductor at constant temperature."
+      - "$R = V/I$ defines resistance and works for all components; Ohm's law says that value stays constant for an ohmic conductor."
+      - "Metallic conductor: straight line through the origin. Diode: threshold near 0.6 V forward, tiny reverse current. Lamp: curve flattening as V rises."
+      - "On axes with I vertical, a straight line's gradient = 1/R; the resistance at any point is V/I, which is what you use on a curve."
+
+questions:
+  - id: ohm-law-statement
+    format: text
+    difficulty: 1
+    objectives: ["9.3.5"]
+    style: definition
+    prompt: |
+      State Ohm's law.
+    accept:
+      - "the current through a metallic conductor is directly proportional to the potential difference across it provided its temperature remains constant"
+      - "current is proportional to pd for a metallic conductor at constant temperature"
+      - "I is proportional to V if temperature is constant"
+      - "current proportional to potential difference at constant temperature"
+    model: |
+      The current through a metallic conductor is directly proportional to the potential
+      difference across it, provided its temperature (and other physical conditions) remain
+      constant.
+    explanation: |
+      The condition is part of the law. "Current proportional to p.d." on its own is incomplete,
+      because it fails for a filament lamp and for a wire that heats up.
+
+  - id: ohms-law-condition
+    format: mcq
+    difficulty: 1
+    objectives: ["9.3.5"]
+    prompt: |
+      Which of these is required for a metallic conductor to obey Ohm's law?
+    options:
+      - text: Its temperature must stay constant.
+        correct: true
+        why: Resistance changes with temperature, so a rising temperature spoils the proportionality between current and p.d.
+      - text: The current must be larger than 1 A.
+        why: There is no such threshold; ohmic behaviour holds for small currents and fails when the current heats the conductor.
+      - text: The potential difference must be positive.
+        why: A metal reverses symmetrically - the characteristic is a straight line through the origin into the third quadrant.
+      - text: The conductor must have a large cross-sectional area.
+        why: Area affects the value of the resistance, not whether the conductor is ohmic.
+    explanation: |
+      Ohm's law holds for a metallic conductor only while its temperature is constant. Pass a
+      large enough current and $I^2R$ heating changes the resistance, so the graph stops being
+      a straight line.
+
+  - id: metal-iv-graph
+    format: mcq
+    difficulty: 2
+    objectives: ["9.3.3"]
+    prompt: |
+      A metal wire is kept in a water bath at constant temperature while its p.d. is varied. Its
+      graph of current against p.d. is:
+    options:
+      - text: A straight line through the origin, the same gradient for both directions of p.d.
+        correct: true
+        why: At constant temperature the ratio I/V is fixed, so the line is straight and passes through the origin, and a metal behaves the same way when the p.d. is reversed.
+      - text: A curve that gets steeper as p.d. increases.
+        why: A steeper graph would mean the conductance was rising, which needs R to fall - the water bath holds the temperature, so R does not fall.
+      - text: A curve that flattens as p.d. increases.
+        why: Flattening is the filament lamp's signature, where heating raises R. A constant-temperature bath removes that effect.
+      - text: Zero current until a threshold p.d., then a steep rise.
+        why: A threshold is a diode feature, caused by the junction potential barrier - a metal wire has no such barrier.
+    explanation: |
+      Constant temperature is the whole point of the water bath. With $R$ fixed, $I = V/R$ is a
+      straight line through the origin, and reversing $V$ reverses $I$ equally.
+
+  - id: lamp-gradient-trap
+    format: mcq
+    difficulty: 3
+    objectives: ["9.3.3"]
+    prompt: |
+      For a filament lamp, the graph of current against p.d. curves over as the p.d. rises. What
+      does that show about the lamp?
+    options:
+      - text: Its resistance rises as the current rises, because the filament gets hotter.
+        correct: true
+        why: Less extra current per extra volt means a larger V/I, so the resistance at the higher p.d. is greater - consistent with the filament's temperature rise.
+      - text: Its resistance falls, because the gradient of the graph falls.
+        why: "A straight I-V line has gradient $1/R$, not $R$ - and on a curve the gradient is not the conductance at all. What matters here is that the curve flattens, so $V/I$ grows: the resistance is rising, not falling."
+      - text: Its resistance stays constant but the graph is drawn badly.
+        why: The curvature is real and repeatable; it appears because the filament temperature changes with current.
+      - text: Ohm's law fails because the p.d. became too large for the meter.
+        why: Ohm's law fails because the temperature changes - an instrument range has nothing to do with the shape of the characteristic.
+    explanation: |
+      The trap is the word "gradient". On axes with $I$ vertical, the gradient is $1/R$. A
+      gradient that falls as $V$ rises means $1/R$ is falling, so $R$ is rising. The physical
+      reason is the filament's temperature rise, treated fully in the 9.3.4 lesson.
+
+  - id: lamp-resistance-value
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.3"]
+    prompt: |
+      At a p.d. of 12 V the current through a filament lamp is 0.10 A. Calculate the resistance
+      of the lamp at this p.d.
+    fields:
+      - label: "R ="
+        answer: 120
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      $R = V/I = 12/0.10 = 120\ \Omega$. Use the ratio, not the gradient of the curve.
+
+  - id: diode-resistance-value
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.3"]
+    prompt: |
+      A diode is connected in reverse bias with a p.d. of 5.0 V across it. The reverse current is
+      2.0 μA. Calculate the resistance of the diode in this state, in ohms.
+    fields:
+      - label: "R ="
+        answer: 2500000
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      $R = V/I = 5.0/(2.0 \times 10^{-6}) = 2.5 \times 10^{6}\ \Omega$. The enormous value is why
+      a reverse-biased diode blocks current: the junction has very few charge carriers available.
+
+  - id: diode-reverse-bias
+    format: mcq
+    difficulty: 2
+    objectives: ["9.3.3"]
+    prompt: |
+      Which statement about a semiconductor diode's I-V characteristic is correct?
+    options:
+      - text: In reverse bias the current is tiny for a wide range of p.d., so the resistance is very large.
+        correct: true
+        why: Only a small leakage current flows until breakdown, so V/I is enormous and the diode behaves almost like an open switch.
+      - text: The characteristic is symmetric, like a resistor's.
+        why: The diode conducts readily in forward bias and hardly at all in reverse - the asymmetry is its defining feature.
+      - text: In forward bias the current rises steadily in a straight line from zero.
+        why: The current stays negligible until the p.d. reaches about 0.6 V, then rises very steeply - there is no straight line from the origin.
+      - text: The diode's resistance is the same in both directions, only the current direction changes.
+        why: Resistance differs enormously between the two directions, which is why a diode can be used as a rectifier.
+    explanation: |
+      A diode conducts above a forward threshold (about 0.6-0.7 V for silicon) and conducts only
+      tiny leakage currents in reverse until breakdown. Its characteristic is asymmetric, unlike
+      a resistor's straight line.
+
+  - id: spot-gradient-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["9.3.3", "9.3.5"]
+    prompt: |
+      A student works out the resistance of a filament lamp from its I-V graph. Identify the
+      first error in the working.
+    lines:
+      - "The graph of current against p.d. for the lamp curves over as the p.d. rises."
+      - "At a p.d. of 12 V the current is 0.10 A, so R = gradient = 0.10/12 = 8.3 × 10⁻³ Ω."
+      - "At a p.d. of 2.0 V the current is 0.040 A, which gives R = 2.0/0.040 = 50 Ω."
+      - "Since the resistance at 12 V is much larger than at 2.0 V, the lamp is not ohmic."
+    errorLine: 2
+    fix: |
+      R = V/I = 12/0.10 = 120 Ω. The gradient of an I-V graph is not the resistance: at best a
+      straight line's gradient is 1/R, and on a lamp's curve it is not even that. Read the
+      resistance from the coordinates, R = V/I.
+    explanation: |
+      Line 2 both takes the gradient and divides in the wrong order. With $I$ vertical the
+      gradient is $\Delta I/\Delta V$, which equals $1/R$ only for a straight line through the
+      origin; the resistance at a point always comes from the coordinates, $R = V/I$. The later
+      comparison with 50 Ω only makes sense with the correct 120 Ω.
+
+  - id: explain-lamp-characteristic
+    format: explain
+    difficulty: 3
+    objectives: ["9.3.3", "9.3.5"]
+    prompt: |
+      Explain why the I-V characteristic of a filament lamp is a curve rather than a straight
+      line, and why a metal wire at constant temperature gives a straight line.
+    model: |
+      In a metal the charge carriers are free electrons that collide with the vibrating lattice
+      ions as they drift. In the filament lamp, a larger current transfers more energy to the
+      filament and its temperature rises. The ions vibrate more strongly, collisions become more
+      frequent, and the resistance rises, so each extra volt produces less extra current - the
+      graph curves over. A wire held at constant temperature cannot heat up, its lattice
+      vibration stays the same, so its resistance stays constant and the graph is a straight line
+      through the origin, as Ohm's law requires.
+    keyPoints:
+      - "Current in a metal is drifting electrons colliding with lattice ions"
+      - "A larger current heats the filament, so its temperature rises"
+      - "Stronger lattice vibration means more collisions and higher resistance"
+      - "Constant temperature keeps R fixed, so I is proportional to V"
+      - "Ohm's law needs that constant-temperature condition"
+    explanation: |
+      The contrast is the point of the question: the same collision mechanism explains both
+      cases. Nothing about the filament is special except that it gets hot; the metal wire's
+      straight line is simply the same physics with the temperature held fixed.

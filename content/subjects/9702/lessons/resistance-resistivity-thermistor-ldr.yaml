@@ -1,0 +1,302 @@
+id: resistance-resistivity-thermistor-ldr
+subject: "9702"
+topic: "9.3"
+title: Thermistors and light-dependent resistors
+summary: A thermistor's resistance falls as it warms and an LDR's resistance falls as light intensity rises - the opposite trend to a metal wire.
+order: 5
+minutes: 8
+kind: core
+objectives: ["9.3.7", "9.3.8"]
+prerequisites: ["resistance-resistivity-resistivity"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 9.3. Learning outcome 9.3.7 is "Understand that the resistance of a
+    light-dependent resistor (LDR) falls as the light intensity rises" and 9.3.8 is "Understand
+    that the resistance of a thermistor falls as the temperature rises". All tables, worked
+    examples and questions are original. Independently re-checked line by line on 2026-10-29
+    (both tables, every factor and percentage, both divider voltages, the single-key MCQs and
+    the spot-error line), with no factual change needed. The potential-divider application here
+    is objective 10.3.4's context, worked only with series reasoning (total R, then I = V/R,
+    then V = IR) so it needs nothing beyond 9.3; a teacher may prefer it deferred to topic 10.
+    Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why the resistance of an NTC thermistor falls as its temperature rises and why the resistance of an LDR falls as the light intensity rises, read values from their characteristic data tables, and predict how the voltage across each device changes in a potential divider.
+
+  - type: explain
+    title: Why a semiconductor behaves differently from a wire
+    body: |
+      A metal wire and a thermistor look similar, yet they respond to heating in **opposite** ways. The reason is what limits the current in each.
+
+      In a **metal**, the number of free electrons is fixed. Heating makes the positive ions vibrate more strongly, so the electrons collide with them more often and the resistance **rises**.
+
+      In a **semiconductor** — the material a thermistor or an LDR is made from — there are very few free charge carriers when it is cool. Heating, or absorbing light, frees many more of them. That increase in the **number of charge carriers** outweighs the extra scattering, so the resistance **falls**.
+
+      Resistance depends on two things: how many charge carriers there are, and how easily they move. In a metal only the movement changes. In a thermistor or an LDR the *number* changes, and that dominates.
+
+  - type: definition
+    term: Thermistor (NTC)
+    body: |
+      A semiconductor component whose resistance falls as its temperature rises. The common negative temperature coefficient (NTC) thermistor is used as a temperature sensor: a rise from 20 °C to 60 °C can reduce its resistance by a factor of four.
+
+  - type: example
+    title: Reading a thermistor's characteristic
+    problem: |
+      A student measures the resistance of an NTC thermistor as it warms.
+
+      | Temperature / °C | 0 | 20 | 40 | 60 | 80 |
+      | --- | --- | --- | --- | --- | --- |
+      | Resistance / kΩ | 12.0 | 6.0 | 3.0 | 1.5 | 0.75 |
+
+      (a) By what factor does the resistance fall between 20 °C and 60 °C?
+
+      (b) What is the percentage decrease in resistance between 20 °C and 40 °C?
+    steps:
+      - |
+        Read the table: at 20 °C the resistance is 6.0 kΩ and at 60 °C it is 1.5 kΩ.
+      - |
+        Factor $= 6.0 \div 1.5 = 4.0$, so the resistance is four times smaller at 60 °C.
+      - |
+        Between 20 °C and 40 °C the resistance falls from 6.0 kΩ to 3.0 kΩ, a decrease of 3.0 kΩ.
+      - |
+        Percentage decrease $= \frac{3.0}{6.0} \times 100 = 50\%$.
+    answer: |
+      (a) a factor of 4.0; (b) a 50% decrease. The resistance keeps falling as the temperature rises — that is what "negative temperature coefficient" means.
+
+  - type: check
+    questions: [th-mcq-direction, th-factor-20-60, th-percent-decrease]
+
+  - type: explain
+    title: The light-dependent resistor
+    body: |
+      An LDR is also a semiconductor. In the dark it has very few free charge carriers, so its resistance is high — often hundreds of kilohms. When light falls on it, each photon with enough energy frees an electron (leaving a hole behind), so the number of charge carriers rises and the resistance falls.
+
+      The response is not linear, and it is not instant: a typical LDR takes tens of milliseconds to respond, and its resistance may change by a factor of a hundred or more between darkness and bright daylight.
+
+  - type: definition
+    term: Light-dependent resistor (LDR)
+    body: |
+      A semiconductor component whose resistance falls as the light intensity falling on it rises. In darkness the resistance is high (often hundreds of kΩ); in bright light it can fall below a few kΩ.
+
+  - type: example
+    title: Reading an LDR's characteristic
+    problem: |
+      An LDR is placed at different distances from a lamp and its resistance is measured.
+
+      | Light intensity / lux | 1 | 10 | 100 | 1000 |
+      | --- | --- | --- | --- | --- |
+      | Resistance / kΩ | 200 | 40 | 8.0 | 1.25 |
+
+      (a) What is the resistance at 100 lux?
+
+      (b) By what factor does the resistance fall between 10 lux and 1000 lux?
+    steps:
+      - |
+        At 100 lux the table gives 8.0 kΩ.
+      - |
+        At 10 lux the resistance is 40 kΩ and at 1000 lux it is 1.25 kΩ.
+      - |
+        Factor $= 40 \div 1.25 = 32$.
+    answer: |
+      (a) 8.0 kΩ; (b) a factor of 32. Increasing the light intensity by a factor of 100 has reduced the resistance by a factor of 32 — the change is not proportional.
+
+  - type: check
+    questions: [ldr-spot-error, ldr-cloze]
+
+  - type: explain
+    title: Using these devices in a potential divider
+    body: |
+      Both devices are usually used in a **potential divider**: the sensor in series with a fixed resistor across a supply. The supply voltage is shared in proportion to the resistances, so
+
+      $$V_{\text{sensor}} = V_{\text{supply}} \times \frac{R_{\text{sensor}}}{R_{\text{sensor}} + R_{\text{fixed}}}$$
+
+      Because the sensor's resistance changes, the voltage across it changes too. That changing voltage is the signal the circuit uses — it can switch a transistor, light a lamp or trigger an alarm.
+
+      - **Thermistor:** as the temperature rises, its resistance falls, so the voltage across it falls (and the voltage across the fixed resistor rises).
+      - **LDR:** as the light intensity rises, its resistance falls, so the voltage across it falls (and the voltage across the fixed resistor rises).
+
+      If the output is taken across the fixed resistor instead, the signal moves the other way. Always check which component the output is taken across before you predict the direction.
+
+  - type: example
+    title: A thermistor divider
+    problem: |
+      A 6.0 V supply is connected across a thermistor in series with a 2.0 kΩ fixed resistor. At 40 °C the thermistor's resistance is 3.0 kΩ. Calculate the voltage across the thermistor and the voltage across the fixed resistor.
+    steps:
+      - |
+        Total resistance $= 3.0\ \text{k}\Omega + 2.0\ \text{k}\Omega = 5.0\ \text{k}\Omega$, so $I = \frac{6.0\ \text{V}}{5.0\ \text{k}\Omega} = 1.2\ \text{mA}$.
+      - |
+        Voltage across the thermistor $= IR = 1.2\ \text{mA} \times 3.0\ \text{k}\Omega = 3.6\ \text{V}$.
+      - |
+        Voltage across the fixed resistor $= 1.2\ \text{mA} \times 2.0\ \text{k}\Omega = 2.4\ \text{V}$.
+      - |
+        Check: $3.6\ \text{V} + 2.4\ \text{V} = 6.0\ \text{V}$, the supply voltage.
+    answer: |
+      3.6 V across the thermistor and 2.4 V across the fixed resistor. Notice that 3.6 : 2.4 is the same as 3.0 : 2.0, the ratio of the two resistances.
+
+  - type: check
+    questions: [th-divider-40, ldr-divider-bright]
+
+  - type: explain
+    title: The contrast with a metal wire
+    body: |
+      The two trends are easy to mix up, so hold them side by side:
+
+      | Material | What heating does | Resistance |
+      | --- | --- | --- |
+      | Metal | ions vibrate more, so electrons scatter more | rises |
+      | NTC thermistor (semiconductor) | many more charge carriers are freed | falls |
+
+      Both statements are about the same physical quantity. The resistance changes because the balance between the number of carriers and their mobility changes. In a metal only the mobility changes; in a thermistor the number of carriers changes so much that it dominates.
+
+      An LDR fits the thermistor pattern: light, rather than heat, frees the carriers, and the resistance falls as the light intensity rises.
+
+  - type: check
+    questions: [th-vs-metal-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: A thermistor and a metal wire both have a lower resistance when they are heated.
+        right: "Only the thermistor does. In a metal, heating increases the lattice vibrations and the resistance **rises**; in an NTC thermistor, heating frees many more charge carriers and the resistance **falls**."
+      - wrong: An LDR has zero resistance in bright light.
+        right: "Its resistance falls to a low value — often a few kΩ — but not to zero. It still obeys $R = V/I$ and still limits the current."
+      - wrong: A thermistor's resistance falls because its electrons move faster and push through more easily.
+        right: "The electrons do move a little faster, but faster motion means more scattering. The resistance falls because the **number of charge carriers** increases, and that effect is far larger."
+
+  - type: exam
+    body: |
+      - "Describe the characteristic of a thermistor or an LDR" — state the direction of the change with temperature or light intensity, and that the relationship is non-linear.
+      - "Explain why" — more charge carriers are released (by thermal energy or by photon energy), so the material conducts better and its resistance falls.
+      - Data questions — read values from a table or graph and take ratios; nothing beyond $R = V/I$ and the potential divider is needed.
+      - Potential divider questions — find the total resistance, then the current, then $V = IR$ for the component the question asks about. State which voltage falls and which rises as the sensor changes.
+
+  - type: takeaways
+    items:
+      - "NTC thermistor: temperature up, resistance down."
+      - "LDR: light intensity up, resistance down."
+      - "Both are semiconductors — the change is in the number of charge carriers."
+      - "Metal wire: temperature up, resistance up (fixed number of carriers, more scattering)."
+      - "In a potential divider the sensor's share of the supply voltage follows the ratio of the resistances."
+
+questions:
+  - id: th-mcq-direction
+    format: mcq
+    difficulty: 1
+    objectives: ["9.3.8"]
+    prompt: |
+      The resistance of an NTC thermistor is measured as it is warmed. Which statement describes what happens, and why?
+    options:
+      - text: The resistance falls, because heating frees more charge carriers in the semiconductor.
+        correct: true
+        why: Thermal energy releases carriers, and the extra carriers outweigh the extra scattering.
+      - text: The resistance falls, because the electrons move faster through the material.
+        why: Faster motion means more scattering, which would raise the resistance. The change in carrier number is the reason.
+      - text: The resistance rises, because the ions in the material vibrate more.
+        why: That describes a metal, not an NTC thermistor.
+      - text: The resistance stays the same, because resistance is a fixed property of a component.
+        why: Resistance depends on temperature (and, for an LDR, on light intensity), so it is not fixed.
+    explanation: |
+      In an NTC thermistor the number of free charge carriers increases rapidly with temperature, so the resistance falls. In a metal the opposite happens: the number of carriers is fixed and heating only increases scattering.
+
+  - id: th-factor-20-60
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.8"]
+    prompt: |
+      From the table in the worked example, the resistance is 6.0 kΩ at 20 °C and 1.5 kΩ at 60 °C. By what factor does the resistance fall between these two temperatures?
+    fields:
+      - label: "Factor"
+        answer: 4
+        tolerance: { rel: 0.01 }
+    explanation: |
+      $6.0\ \text{k}\Omega \div 1.5\ \text{k}\Omega = 4.0$. A factor is a pure number, so it has no unit.
+
+  - id: th-percent-decrease
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.8"]
+    prompt: |
+      Using the same thermistor, the resistance falls from 6.0 kΩ at 20 °C to 3.0 kΩ at 40 °C. What is the percentage decrease in resistance?
+    fields:
+      - label: "Percentage decrease"
+        answer: 50
+        tolerance: { rel: 0.01 }
+        unit: "%"
+    explanation: |
+      The decrease is $6.0 - 3.0 = 3.0\ \text{k}\Omega$, so the percentage decrease is $\frac{3.0}{6.0} \times 100 = 50\%$. Dividing by the *starting* value, not the final one, is what makes it a percentage decrease.
+
+  - id: th-divider-40
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.8"]
+    prompt: |
+      A thermistor is in series with a 2.0 kΩ fixed resistor across a 6.0 V supply. At a certain temperature the thermistor's resistance is 3.0 kΩ. What is the voltage across the thermistor?
+    fields:
+      - label: "Voltage"
+        answer: 3.6
+        tolerance: { rel: 0.01 }
+        unit: "V"
+    explanation: |
+      Total resistance $= 5.0\ \text{k}\Omega$, so $I = 6.0 / 5.0 = 1.2\ \text{mA}$; then $V = IR = 1.2\ \text{mA} \times 3.0\ \text{k}\Omega = 3.6\ \text{V}$. Equivalently $6.0 \times \frac{3.0}{5.0} = 3.6\ \text{V}$.
+
+  - id: ldr-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["9.3.7"]
+    prompt: |
+      A student describes an LDR in a circuit. Exactly one line contains the first error — find it.
+    lines:
+      - "An LDR is connected in series with a fixed resistor across a battery."
+      - "In bright light the resistance of the LDR rises, so the current in the circuit falls."
+      - "In darkness the LDR has a very high resistance, so the current is very small."
+    errorLine: 2
+    fix: |
+      In bright light the resistance of the LDR falls, so the current in the circuit rises.
+    explanation: |
+      Light frees extra charge carriers in the LDR, so its resistance falls as the intensity rises and the current through the series circuit increases. The other two lines are correct.
+
+  - id: ldr-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["9.3.7", "9.3.8"]
+    prompt: |
+      As the temperature of an NTC thermistor rises, its resistance {{1}}. As the light intensity on an LDR rises, its resistance {{2}}.
+    blanks:
+      - accept: [falls, fall, decreases, decrease, drops, drop, goes down, reduces]
+      - accept: [falls, fall, decreases, decrease, drops, drop, goes down, reduces]
+    explanation: |
+      Both devices are semiconductors, and in both the resistance falls as the condition that frees more charge carriers becomes stronger — heating for the thermistor, light for the LDR.
+
+  - id: ldr-divider-bright
+    format: numeric
+    difficulty: 3
+    objectives: ["9.3.7"]
+    prompt: |
+      An LDR is in series with a 1.0 kΩ fixed resistor across a 9.0 V supply. In bright light (1000 lux) the LDR's resistance is 1.25 kΩ. What is the voltage across the fixed resistor?
+    fields:
+      - label: "Voltage"
+        answer: 4.0
+        tolerance: { rel: 0.02 }
+        unit: "V"
+    explanation: |
+      Total resistance $= 1.25 + 1.0 = 2.25\ \text{k}\Omega$, so $I = 9.0 / 2.25 = 4.0\ \text{mA}$. Across the fixed resistor $V = IR = 4.0\ \text{mA} \times 1.0\ \text{k}\Omega = 4.0\ \text{V}$. The low LDR resistance in bright light is what makes its share of the supply voltage small.
+
+  - id: th-vs-metal-explain
+    format: explain
+    difficulty: 3
+    objectives: ["9.3.8"]
+    prompt: |
+      Explain why the resistance of a metal wire rises when it is heated, whereas the resistance of an NTC thermistor falls.
+    model: |
+      In a metal the number of free electrons is fixed. Heating makes the positive ions vibrate with a larger amplitude, so the electrons collide with them more often and the resistance rises. In an NTC thermistor the material is a semiconductor, which has few free charge carriers at room temperature. Heating gives electrons enough energy to break free, so the number of charge carriers increases enormously; this outweighs the increased scattering and the resistance falls.
+    keyPoints:
+      - "A metal has a fixed number of free electrons"
+      - "Heating increases the lattice vibrations, so electrons scatter more and metal resistance rises"
+      - "A thermistor is a semiconductor with few charge carriers when cool"
+      - "Heating releases many more charge carriers"
+      - "The rise in carrier number outweighs the extra scattering, so the thermistor's resistance falls"
+    explanation: |
+      Both halves are needed: the same heating has two competing effects — more scattering, and in a semiconductor more carriers. In a metal only the scattering changes; in a thermistor the carrier number changes so much that it dominates.

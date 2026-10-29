@@ -1,0 +1,363 @@
+id: resistance-resistivity-resistivity
+subject: "9702"
+topic: "9.3"
+title: Resistivity and R = ρL/A
+summary: Resistivity is a property of the material, not the wire. R = ρL/A makes resistance rise with length and fall with cross-sectional area.
+order: 4
+minutes: 10
+kind: core
+objectives: ["9.3.6"]
+prerequisites: ["resistance-resistivity-definition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, topic 9.3 (Resistance and resistivity), learning outcome 9.3.6 "Recall and use
+    R = ρL / A." All worked examples, data and questions are original. Independently
+    re-checked line by line on 2026-10-29 (every area conversion, every ρ, L and R answer,
+    the gradient = ρ/A claim and the spot-error line), when one ratio was corrected: nichrome
+    and copper differ by about sixty-five times, not a hundred thousand. Not yet reviewed by a
+    teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can explain why resistance depends on the *dimensions* of a specimen, define
+      resistivity as a property of the *material*, and use $R = \rho L / A$ in both directions:
+      to calculate a resistance from a length and cross-sectional area, and to calculate the
+      resistivity of a material from measurements on a wire.
+
+  - type: explain
+    title: Why length and area matter
+    body: |
+      Take a wire and think of it as a stack of identical slices, end to end.
+
+      **Make it longer.** Every extra slice is more material for the charge carriers to push
+      through, and the slices are in **series**, so their resistances add. Double the length and
+      you double the resistance:
+
+      $$R \propto L$$
+
+      **Make it thicker.** A thicker wire is like several thinner wires joined **side by side**:
+      extra parallel paths for the current, so the resistance falls. Doubling the cross-sectional
+      area halves the resistance:
+
+      $$R \propto \frac{1}{A}$$
+
+      Putting the two together introduces a constant that belongs to the material itself:
+
+      $$R = \frac{\rho L}{A}$$
+
+      where $\rho$ (Greek "rho") is the **resistivity** of the material.
+
+  - type: definition
+    term: Resistivity (ρ)
+    body: |
+      The resistivity of a material is the resistance of a specimen of that material of length
+      $1\ \text{m}$ and cross-sectional area $1\ \text{m}^2$ — equivalently, the resistance of a
+      unit cube of the material measured between opposite faces.
+
+      Its unit is the **ohm metre ($\Omega\,\text{m}$)**, from $\rho = RA/L$:
+      $(\Omega \times \text{m}^2)/\text{m} = \Omega\,\text{m}$.
+
+      Resistivity is a property of the **material** (and its temperature), not of the particular
+      wire. Copper has a very low resistivity (about $1.7 \times 10^{-8}\ \Omega\,\text{m}$);
+      nichrome, used in heating elements, has about $1.1 \times 10^{-6}\ \Omega\,\text{m}$.
+
+  - type: intuition
+    title: Why "ohm metre" and not just "ohm"?
+    body: |
+      Resistance alone cannot describe a material, because the same copper gives you a different
+      resistance depending on how long and how thick you cut it. Two wires can have the *same*
+      resistance while being made of completely different materials — one a short, thin piece of
+      nichrome, the other a long, thick piece of copper.
+
+      Resistivity removes the geometry. $\rho = RA/L$ combines the measured resistance with the
+      dimensions, so what is left depends only on the substance. That is why the unit carries a
+      length: $\Omega\,\text{m}$ is resistance multiplied by an area and divided by a length.
+
+      Because resistivity depends on temperature, it is quoted "at 20 °C" in data tables. For a
+      metal, heating makes the lattice vibrate more and $\rho$ rises; for a thermistor, $\rho$
+      falls sharply as temperature rises.
+
+  - type: example
+    title: Resistance of a copper wire
+    problem: |
+      A copper wire is $2.00\ \text{m}$ long and has a diameter of $0.50\ \text{mm}$. The
+      resistivity of copper is $1.7 \times 10^{-8}\ \Omega\,\text{m}$. Calculate its resistance.
+    steps:
+      - |
+        Convert the diameter to metres and find the cross-sectional area:
+        $d = 0.50\ \text{mm} = 0.50 \times 10^{-3}\ \text{m} = 5.0 \times 10^{-4}\ \text{m}$.
+
+        $$A = \frac{\pi d^2}{4} = \frac{\pi (5.0 \times 10^{-4})^2}{4} = \frac{\pi \times 2.5 \times 10^{-7}}{4} = 1.96 \times 10^{-7}\ \text{m}^2$$
+      - |
+        Substitute into $R = \rho L / A$:
+
+        $$R = \frac{(1.7 \times 10^{-8})(2.00)}{1.96 \times 10^{-7}} = \frac{3.4 \times 10^{-8}}{1.96 \times 10^{-7}} = 0.17\ \Omega$$
+    answer: |
+      $R \approx 0.17\ \Omega$ (2 s.f.)
+
+  - type: check
+    questions: [rr-length-and-area-scaling]
+
+  - type: example
+    title: Finding the resistivity of an unknown alloy
+    problem: |
+      A wire of an unknown alloy is $1.50\ \text{m}$ long and has a diameter of $0.40\ \text{mm}$.
+      Its resistance is measured as $12\ \Omega$. Calculate the resistivity of the alloy.
+    steps:
+      - |
+        Cross-sectional area:
+        $d = 0.40 \times 10^{-3}\ \text{m}$, so
+
+        $$A = \frac{\pi d^2}{4} = \frac{\pi (4.0 \times 10^{-4})^2}{4} = 1.26 \times 10^{-7}\ \text{m}^2$$
+      - |
+        Rearrange $R = \rho L / A$ for the resistivity:
+
+        $$\rho = \frac{RA}{L} = \frac{12 \times 1.26 \times 10^{-7}}{1.50} = \frac{1.51 \times 10^{-6}}{1.50} = 1.0 \times 10^{-6}\ \Omega\,\text{m}$$
+      - |
+        This is close to nichrome (about $1.1 \times 10^{-6}\ \Omega\,\text{m}$), a typical
+        resistance-wire alloy — the value is far too large for a pure metal.
+    answer: |
+      $\rho \approx 1.0 \times 10^{-6}\ \Omega\,\text{m}$ (2 s.f.)
+
+  - type: example
+    title: Getting ρ from the gradient of an R–L graph
+    problem: |
+      A student keeps the diameter of a wire fixed at $0.30\ \text{mm}$ and measures the
+      resistance for several different lengths. A graph of $R$ against $L$ is a straight line
+      through the origin with gradient $8.0\ \Omega\,\text{m}^{-1}$. Calculate the resistivity.
+    steps:
+      - |
+        Since $R = (\rho/A)L$, the gradient is $\rho/A$, so $\rho = \text{gradient} \times A$.
+      - |
+        $$A = \frac{\pi (0.30 \times 10^{-3})^2}{4} = 7.07 \times 10^{-8}\ \text{m}^2$$
+      - |
+        $$\rho = 8.0 \times 7.07 \times 10^{-8} = 5.7 \times 10^{-7}\ \Omega\,\text{m}$$
+    answer: |
+      $\rho \approx 5.7 \times 10^{-7}\ \Omega\,\text{m}$ (2 s.f.)
+
+  - type: check
+    questions: [rr-resistivity-from-measurements, rr-resistivity-definition]
+
+  - type: explain
+    title: Measuring resistivity in the laboratory
+    body: |
+      A standard experiment measures $\rho$ for a wire:
+
+      1. Measure the **length** $L$ with a metre rule, and the **diameter** $d$ with a
+         micrometer screw gauge at several places and orientations (wire is rarely perfectly
+         circular). Use the mean diameter to find $A = \pi d^2/4$.
+      2. Connect the wire in series with an **ammeter** and a **variable power supply**, with a
+         **voltmeter** in parallel across the wire. Take readings and calculate $R = V/I$.
+      3. Repeat for several lengths of the same wire and plot $R$ against $L$. The line passes
+         through the origin and its **gradient is $\rho/A$** — so $\rho = \text{gradient} \times A$.
+
+      Using a graph rather than a single pair of readings spreads the uncertainty and reveals
+      whether the wire is heating: **keep the current small**, because a large current raises the
+      temperature and therefore the resistivity, making the gradient drift upwards at long
+      lengths.
+
+      A useful dimensional check: the gradient $\rho/A$ must come out in $\Omega\,\text{m}^{-1}$,
+      which is resistance per metre — exactly the slope of an $R$–$L$ graph.
+
+  - type: check
+    questions: [rr-length-needed, rr-copper-wire-resistance]
+
+  - type: misconceptions
+    items:
+      - wrong: "Resistance and resistivity are the same thing, just with different units."
+        right: |
+          Resistance is a property of a **specimen** and depends on its length and thickness.
+          Resistivity is a property of the **material**. A short thick copper rod and a long thin
+          nichrome wire can have the same resistance while their resistivities differ by a factor
+          of about sixty-five (1.1 × 10⁻⁶ Ω m against 1.7 × 10⁻⁸ Ω m).
+      - wrong: "Doubling the diameter of a wire doubles its resistance, because there is twice as much wire across."
+        right: |
+          $A = \pi d^2/4$, so **doubling $d$ multiplies $A$ by four** and therefore *quarters* the
+          resistance, since $R \propto 1/A$. Diameter is not area.
+      - wrong: "A thicker wire has more material, so it has more resistance."
+        right: |
+          The extra material provides **parallel paths** for the charge carriers, so the resistance
+          is *lower*. More material in series (longer) raises $R$; more material in parallel
+          (thicker) lowers it.
+      - wrong: "Resistivity is a fixed constant for a given material, whatever happens to it."
+        right: |
+          Resistivity changes with **temperature**: it rises for a metal because the lattice
+          vibrates more, and falls sharply for a thermistor. This is why the current in the
+          resistivity experiment must be kept small.
+
+  - type: exam
+    body: |
+      - Typical wording: "A wire of length $L$, cross-sectional area $A$ and resistivity $\\rho$
+        has resistance $R$. Calculate the resistance of a wire of the same material with length
+        $3L$ and area $A/2$." Scale both factors: $3 \times 2 = 6R$.
+      - You must be able to **rearrange** for any variable: $\rho = RA/L$, $L = RA/\rho$,
+        $A = \rho L/R$.
+      - Always convert **mm and mm² to metres first**. $1\ \text{mm}^2 = 1 \times 10^{-6}\ \text{m}^2$,
+        and a diameter in mm must be divided by 1000 before squaring.
+      - If a graph of $R$ against $L$ is given, the **gradient is $\rho/A$**; read the gradient
+        off the line, not off one data point.
+      - Quote resistivity in $\Omega\,\text{m}$ and check the power of ten — answers between
+        $10^{-8}$ (pure metals) and $10^{-6}$ (alloys) are typical.
+
+  - type: check
+    questions: [rr-spot-unit-slip, rr-why-length-and-area]
+
+  - type: takeaways
+    items:
+      - "$R = \\rho L / A$, with $R \\propto L$ and $R \\propto 1/A$."
+      - "Resistivity $\\rho$ is a property of the material, measured in $\\Omega\\,\\text{m}$."
+      - "Cross-sectional area from a diameter: $A = \\pi d^2/4$ — convert mm to m before squaring."
+      - "In the experiment, the gradient of an $R$–$L$ graph equals $\\rho/A$."
+      - "Resistivity depends on temperature, so keep the measuring current small."
+
+questions:
+  - id: rr-length-and-area-scaling
+    format: mcq
+    difficulty: 2
+    objectives: ["9.3.6"]
+    prompt: |
+      A wire of length $L$ and cross-sectional area $A$, made of a material of resistivity $\rho$,
+      has resistance $R$. A second wire of the **same material** has length $2L$ and
+      cross-sectional area $A/2$. Its resistance is:
+    options:
+      - text: "$4R$"
+        correct: true
+        why: "Scaling both factors: doubling $L$ doubles $R$, and halving $A$ doubles it again, so $2 \\times 2 = 4$."
+      - text: "$2R$"
+        why: "This accounts only for the doubled length and ignores that the area has halved."
+      - text: "$R/2$"
+        why: "This halves instead of doubling: a smaller area gives a *larger* resistance, not a smaller one."
+      - text: "$R/4$"
+        why: "This reverses both scalings — it would be right for length $L/2$ and area $2A$."
+    explanation: |
+      $R = \rho L/A$. The new resistance is $\rho(2L)/(A/2) = 4\rho L/A = 4R$. Resistivity is
+      unchanged because the material is the same.
+
+  - id: rr-resistivity-from-measurements
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.6"]
+    prompt: |
+      A wire is $0.80\ \text{m}$ long and has a diameter of $0.50\ \text{mm}$. Its resistance is
+      $4.0\ \Omega$. Calculate the resistivity of the material.
+    fields:
+      - label: "ρ"
+        answer: 9.8e-7
+        tolerance: { rel: 0.03 }
+        unit: "Ω m"
+    explanation: |
+      $A = \pi d^2/4 = \pi(5.0 \times 10^{-4})^2/4 = 1.96 \times 10^{-7}\ \text{m}^2$.
+      Then $\rho = RA/L = (4.0 \times 1.96 \times 10^{-7})/0.80 = 9.8 \times 10^{-7}\ \Omega\,\text{m}$.
+      A value of about $10^{-6}\ \Omega\,\text{m}$ suggests a resistance alloy such as nichrome,
+      not a pure metal.
+
+  - id: rr-resistivity-definition
+    format: text
+    difficulty: 1
+    objectives: ["9.3.6"]
+    style: definition
+    prompt: |
+      Define resistivity and state its unit.
+    accept:
+      - "the resistance of a unit cube of the material, unit ohm metre"
+      - "resistance of a specimen of length 1 m and cross-sectional area 1 m^2, ohm metre"
+      - "RA/L, ohm metre"
+      - "resistance times area divided by length, ohm metre"
+    model: |
+      Resistivity is the resistance of a specimen of the material of length $1\ \text{m}$ and
+      cross-sectional area $1\ \text{m}^2$ (a unit cube, measured between opposite faces). From
+      $\rho = RA/L$ its unit is the ohm metre ($\Omega\,\text{m}$).
+    explanation: |
+      The definition must make clear that resistivity belongs to the material, not to a particular
+      wire, which is why a unit cube is specified. The unit follows from
+      $(\Omega \times \text{m}^2)/\text{m} = \Omega\,\text{m}$.
+
+  - id: rr-length-needed
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.6"]
+    prompt: |
+      A heating element is made from nichrome wire of resistivity $1.1 \times 10^{-6}\ \Omega\,\text{m}$
+      and cross-sectional area $0.020\ \text{mm}^2$. What length of wire is needed to give a
+      resistance of $22\ \Omega$?
+    fields:
+      - label: "L"
+        answer: 0.40
+        tolerance: { rel: 0.03 }
+        unit: "m"
+    explanation: |
+      Convert the area first: $0.020\ \text{mm}^2 = 0.020 \times 10^{-6}\ \text{m}^2 = 2.0 \times 10^{-8}\ \text{m}^2$.
+      Then $L = RA/\rho = (22 \times 2.0 \times 10^{-8})/(1.1 \times 10^{-6}) = (4.4 \times 10^{-7})/(1.1 \times 10^{-6}) = 0.40\ \text{m}$.
+      Forgetting the area conversion gives an answer 1000 times too small, which is the usual slip.
+
+  - id: rr-copper-wire-resistance
+    format: numeric
+    difficulty: 2
+    objectives: ["9.3.6"]
+    prompt: |
+      A copper wire of length $3.0\ \text{m}$ has a cross-sectional area of
+      $1.5 \times 10^{-7}\ \text{m}^2$. The resistivity of copper is
+      $1.7 \times 10^{-8}\ \Omega\,\text{m}$. Calculate its resistance.
+    fields:
+      - label: "R"
+        answer: 0.34
+        tolerance: { rel: 0.03 }
+        unit: "Ω"
+    explanation: |
+      $R = \rho L/A = (1.7 \times 10^{-8} \times 3.0)/(1.5 \times 10^{-7}) = (5.1 \times 10^{-8})/(1.5 \times 10^{-7}) = 0.34\ \Omega$.
+      The area is already in $\text{m}^2$, so no conversion is needed.
+
+  - id: rr-spot-unit-slip
+    format: spot-error
+    difficulty: 2
+    objectives: ["9.3.6"]
+    prompt: |
+      A student calculates the resistance of a nichrome wire. Identify the first line containing
+      an error.
+    lines:
+      - |
+        The wire has diameter $0.40\ \text{mm}$, so its radius is $0.20\ \text{mm} = 2.0 \times 10^{-4}\ \text{m}$.
+      - |
+        Cross-sectional area $A = \pi r^2 = \pi(2.0 \times 10^{-4})^2 = 1.26 \times 10^{-7}\ \text{m}^2$.
+      - |
+        With $L = 1.5\ \text{m}$ and $\rho = 1.1 \times 10^{-6}\ \Omega\,\text{m}$,
+        $R = \rho L/A = (1.1 \times 10^{-6} \times 1.5)/(1.26 \times 10^{-7})$.
+      - |
+        $R = 1.65 \times 10^{-6} / (1.26 \times 10^{-7}) = 0.013\ \Omega$.
+    errorLine: 4
+    fix: |
+      The division gives $13\ \Omega$, not $0.013\ \Omega$: $1.65 \times 10^{-6} / 1.26 \times 10^{-7} = 13.1$.
+      The powers of ten were mishandled — this is a milliohm-scale slip on a result that should be
+      tens of ohms.
+    explanation: |
+      The area and substitution in the earlier lines are correct. Only the arithmetic of the final
+      line is wrong: dividing $1.65 \times 10^{-6}$ by $1.26 \times 10^{-7}$ gives about 13, which
+      is also the physically sensible order of magnitude for 1.5 m of resistance wire.
+
+  - id: rr-why-length-and-area
+    format: explain
+    difficulty: 3
+    objectives: ["9.3.6"]
+    prompt: |
+      Explain, in terms of the motion of charge carriers, why doubling the length of a wire doubles
+      its resistance while doubling its cross-sectional area halves the resistance.
+    model: |
+      Resistance measures how hard it is for charge carriers to drift through the specimen. Making
+      the wire twice as long puts two identical lengths in series, so the charge carriers pass
+      through twice as much lattice; collisions with vibrating ions occur twice as often and the
+      total resistance doubles. Making the cross-sectional area twice as large is equivalent to
+      putting two identical wires side by side in parallel: the same potential difference now
+      drives charge through twice the area, so the current doubles for the same p.d. and the
+      resistance halves, since $R = V/I$.
+    keyPoints:
+      - "Longer wire = two lengths in series, so resistances add and R doubles"
+      - "Thicker wire = parallel paths for charge carriers, so current is larger for the same p.d."
+      - "R = V/I, so a larger current for the same potential difference means a smaller resistance"
+      - "Resistivity stays constant because the material is unchanged"
+    explanation: |
+      The series/parallel view is the examiners' expected explanation: the dimensions change the
+      geometry of the conducting path, not the material. That is exactly what
+      $R = \rho L/A$ encodes, with $\rho$ fixed.
