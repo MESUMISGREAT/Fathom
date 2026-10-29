@@ -1,0 +1,149 @@
+id: complex-numbers-introduction
+subject: "9709"
+topic: "3.9"
+title: Complex numbers — the new number on the block
+summary: "What complex numbers are, their parts (real, imaginary, modulus, argument, conjugate), and when two are equal."
+order: 1
+minutes: 5
+kind: core
+objectives: ["3.9.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 3.9 learning outcome 1 (idea of a complex number,
+    real part, imaginary part, modulus, argument, conjugate, equality). Examples and questions are
+    original; all arithmetic checked in Python. Not yet teacher-reviewed.
+blocks:
+  - type: objective
+    body: |
+      By the end you can state what a complex number is, identify its real part, imaginary part,
+      modulus, argument and conjugate, and decide when two complex numbers are equal.
+
+  - type: explain
+    title: Why do we need complex numbers?
+    body: |
+      The equation $x^2 + 1 = 0$ has **no real solution** — no real number squared gives $-1$.
+      Mathematicians **invented** a new number, $i$, with the defining property $i^2 = -1$.
+      A **complex number** is any number of the form $z = x + iy$ where $x$ and $y$ are real.
+      The set of all complex numbers is written $\mathbb{C}$. Real numbers are just the special case $y = 0$.
+
+  - type: definition
+    title: The vocabulary of complex numbers
+    body: |
+      For $z = x + iy$ (with $x, y \in \mathbb{R}$):
+
+      | Term | Notation | Meaning |
+      |------|----------|---------|
+      | Real part | $\operatorname{Re} z$ | $x$ |
+      | Imaginary part | $\operatorname{Im} z$ | $y$ (note: **not** $iy$) |
+      | Modulus | $|z|$ | $\sqrt{x^2 + y^2}$ — distance from the origin |
+      | Argument | $\arg z$ | Angle $\theta$ with $-\pi < \theta \le \pi$ (principal value) |
+      | Conjugate | $z^*$ | $x - iy$ — reflection in the real axis |
+
+      **Equality**: $z_1 = z_2 \iff \operatorname{Re} z_1 = \operatorname{Re} z_2$ **and** $\operatorname{Im} z_1 = \operatorname{Im} z_2$.
+
+  - type: example
+    title: Parts of $z = 3 - 4i$
+    problem: "Find $\operatorname{Re} z$, $\operatorname{Im} z$, $|z|$, $\arg z$ and $z^*$."
+    steps:
+      - "Real part: $\operatorname{Re} z = 3$."
+      - "Imaginary part: $\operatorname{Im} z = -4$ (just the number, not $-4i$)."
+      - "Modulus: $|z| = \sqrt{3^2 + (-4)^2} = \sqrt{9 + 16} = 5$."
+      - "Argument: $\tan \theta = \frac{-4}{3}$. Since $z$ is in the 4th quadrant, $\theta \approx -0.927$ rad (or $5.356$ rad). Principal value: $-0.927$ rad."
+      - "Conjugate: $z^* = 3 + 4i$."
+    answer: |
+      $\operatorname{Re} z = 3$, $\operatorname{Im} z = -4$, $|z| = 5$, $\arg z \approx -0.927$, $z^* = 3 + 4i$.
+
+  - type: check
+    title: Quick check
+    questions: [cn-parts-1, cn-equality-1]
+
+  - type: intuition
+    title: The Argand diagram — complex numbers as points
+    body: |
+      A complex number $x + iy$ corresponds to the point $(x, y)$ in the plane.
+      - The **real axis** is the $x$-axis.
+      - The **imaginary axis** is the $y$-axis.
+      - $|z|$ is the distance from the origin.
+      - $\arg z$ is the angle from the positive real axis.
+      - $z^*$ is the mirror image across the real axis.
+
+      This geometric view makes everything click — addition is vector addition, multiplication
+      scales and rotates, and conjugation flips.
+
+  - type: diagram
+    diagram: complex-numbers-argand-intro
+    alt: |
+      Argand diagram showing the point for z = 3 − 4i at coordinates (3, −4). The real axis
+      is horizontal, imaginary axis vertical. A dashed line from the origin to (3, −4) is
+      labelled with length 5 (modulus) and angle −0.927 rad (argument). The conjugate point
+      (3, 4) is shown as a mirror reflection across the real axis.
+    caption: |
+      $z = 3 - 4i$ on the Argand diagram. Modulus 5, argument $\approx -0.927$ rad.
+      The conjugate $z^* = 3 + 4i$ reflects across the real axis.
+
+  - type: misconceptions
+    items:
+      - wrong: "The imaginary part of $3 - 4i$ is $-4i$."
+        right: "The imaginary part is the **real number** $-4$. The term 'imaginary part' is a name, not a description — it's the coefficient of $i$."
+      - wrong: "$\arg z$ is always between $0$ and $2\pi$."
+        right: "The **principal argument** is conventionally $-\pi < \arg z \le \pi$. Some questions use $0 \le \arg z < 2\pi$; read the wording."
+      - wrong: "$|z| = \sqrt{x^2 + y^2}$ can be negative."
+        right: "Modulus is a distance, so $|z| \ge 0$ always."
+
+  - type: takeaways
+    items:
+      - "A complex number is $z = x + iy$ with $x, y \in \mathbb{R}$ and $i^2 = -1$."
+      - "$\operatorname{Re} z = x$, $\operatorname{Im} z = y$ (just the number, not $iy$)."
+      - "$|z| = \sqrt{x^2 + y^2}$, $\arg z$ is the angle ($-\pi < \arg z \le \pi$)."
+      - "$z^* = x - iy$ (reflection in the real axis)."
+      - "Equality: $z_1 = z_2$ iff both real parts AND both imaginary parts match."
+
+questions:
+  - id: cn-parts-1
+    format: numeric
+    difficulty: 1
+    objectives: ["3.9.1"]
+    prompt: |
+      For $z = -2 + 5i$, state:
+    fields:
+      - label: "Re z ="
+        answer: -2
+      - label: "Im z ="
+        answer: 5
+      - label: "|z| ="
+        answer: 5.385
+        tolerance:
+          abs: 0.001
+      - label: "arg z (radians) ="
+        answer: 1.951
+        tolerance:
+          abs: 0.001
+    explanation: |
+      $x = -2$, $y = 5$. $\operatorname{Re} z = -2$, $\operatorname{Im} z = 5$.
+      $|z| = \sqrt{(-2)^2 + 5^2} = \sqrt{29} \approx 5.385$.
+      The point is in the 2nd quadrant. $\tan \theta = \frac{5}{-2} = -2.5$, so
+      $\theta = \pi - \arctan(2.5) \approx 3.142 - 1.190 = 1.951$ rad.
+
+  - id: cn-equality-1
+    format: mcq
+    difficulty: 1
+    objectives: ["3.9.1"]
+    prompt: |
+      If $z_1 = a + 3i$ and $z_2 = 4 + bi$ and $z_1 = z_2$, what are $a$ and $b$?
+    options:
+      - text: "$a = 4$, $b = 3$"
+        correct: true
+        why: "Equality means real parts match ($a = 4$) and imaginary parts match ($3 = b$)."
+      - text: "$a = 3$, $b = 4$"
+        why: "Swapped real and imaginary parts."
+      - text: "$a = -4$, $b = -3$"
+        why: "Signs flipped; equality requires exact match."
+      - text: "$a = 3$, $b = -4$"
+        why: "Both parts wrong."
+    explanation: |
+      Complex numbers are equal exactly when their real parts are equal AND their imaginary parts are equal.
+      So $a = 4$ and $3 = b$, giving $a = 4$, $b = 3$.

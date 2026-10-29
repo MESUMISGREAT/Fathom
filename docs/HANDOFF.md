@@ -231,9 +231,13 @@ changes alongside lessons:
   - **9709 4.2+4.3 Kinematics and momentum** (872bb72): 7 lessons, 42 questions, 5 diagrams
     (`kinematics-distance-displacement`, `-graphs`, `-vt-area`, `-calculus`,
     `mech-momentum-collision`). Every objective 4.2.1-4.2.4 and 4.3.1-4.3.2 taught and tested.
+  - **9702 8.3+8.4 Interference and the diffraction grating** (65c5330): 6 lessons, 36 questions,
+    5 diagrams (`phys-interference-path-difference`, `-fringes`, `-coherence`, `-double-slit`,
+    `phys-diffraction-grating-paths`). Every objective 8.3.1-8.3.4 and 8.4.1-8.4.2 taught and
+    tested.
   - **9709 4.1 Forces and equilibrium** was already complete when checked (five lessons on
     `origin/main`); nothing was duplicated for it.
-  - All five batches: `content-check` 0 errors / 0 warnings in a clean worktree from
+  - All six batches: `content-check` 0 errors / 0 warnings in a clean worktree from
     `origin/main`, `tsc` clean, diagram registry + notation tests pass, every diagram
     rendered and inspected in light and dark. The commit body and provenance say plainly
     that the review was a second adversarial pass by the **same AI model**, with no separate
@@ -276,10 +280,11 @@ changes alongside lessons:
   the Vercel auto-deploy is paused/failing or the production content import has not run. Check
   the Vercel dashboard for the deployment at `86578aa` before assuming this content is live;
   only report it live once the lesson page shows its title.
-- **Next unit to take: 9702 8.3+8.4** (interference and diffraction gratings) — it follows
-  the 8.1+8.2 unit just published and had no files or in-flight edits at the last check.
-  After it: 9709 4.4+4.5, then 9701 8.3 and 9618 9.1+9.2, both of which already have other
-  agents' chemical-equilibria and SQL files in this checkout, so check before starting.
+- **Next unit: 9709 3.9** (complex numbers) if it is still free, then 9709 4.4+4.5, then
+  9701 8.3 and 9618 9.1+9.2. The last two already have other agents' chemical-equilibria and
+  SQL files in this checkout, so inspect before starting; 9709 3.8 is `partial` (missing
+  3.8.4) and belongs to whoever is writing differential equations. If those are taken, the
+  unclaimed option is 9702 9.1+9.2 (electricity).
   Run `node scripts/lessons/status.mjs`, `ls content/subjects/<code>/lessons` and
   `git status --short` first; four agents share this tree.
 - **The local checkout is mid-merge and must not be resolved blindly.** `.git/MERGE_HEAD`
@@ -291,10 +296,10 @@ changes alongside lessons:
   Because of this, `npm run content:check` in the main checkout reports ~41 unrelated errors;
   publish from a clean worktree.
 - **Remaining queue after this session:** `node scripts/lessons/status.mjs` reports
-  46 published, 2 partial, 1 drafted, 103 todo and 2 reviewed. The two `reviewed` units
-  (9702 8.1+8.2 and 9709 4.2+4.3) are on `origin/main`; they show as reviewed only because
-  local `main` is still behind and mid-merge. So roughly 48 units are really published and
-  about 101 are left. The queue is far from complete; continue with the same cycle.
+  50 published, 1 partial, 102 todo and 1 reviewed. The reviewed unit (9702 8.3+8.4) is on
+  `origin/main` and only shows that way because local `main` is behind. So roughly 51 units
+  are really published and about 100 are left. The queue is far from complete; continue with
+  the same cycle.
 
 ## 5b. Earlier current state (28 Oct 2026, cloud chat)
 

@@ -27,7 +27,7 @@ export function InterferenceCoherence() {
         Coherent or not? Watch the phase difference
       </Label>
 
-      <Label x={40} y={92} anchor="start" className="dg-text-small dg-text-accent">
+      <Label x={90} y={52} anchor="start" className="dg-text-small dg-text-accent">
         coherent
       </Label>
       <path d={wave(90, () => 0)} className="dg-accent" />
@@ -38,7 +38,7 @@ export function InterferenceCoherence() {
 
       <line x1={X0} y1={160} x2={X1} y2={160} className="dg-grid" />
 
-      <Label x={40} y={212} anchor="start" className="dg-text-small dg-text-accent">
+      <Label x={90} y={170} anchor="start" className="dg-text-small dg-text-accent">
         not coherent
       </Label>
       <path d={wave(210, () => 0)} className="dg-accent" />

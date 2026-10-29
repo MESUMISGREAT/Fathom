@@ -8,7 +8,11 @@ import { Label, MathLabel, Svg } from '../primitives';
 export const diagramKey = 'phys-interference-path-difference';
 
 const W = 640;
-const H = 330;
+const H = 390;
+
+const S1 = { x: 170, y: 300 };
+const S2 = { x: 300, y: 300 };
+const P = { x: 470, y: 90 };
 
 export function InterferencePathDifference() {
   return (
@@ -17,40 +21,38 @@ export function InterferencePathDifference() {
         Path difference decides what happens at P
       </Label>
 
-      <line x1={170} y1={280} x2={470} y2={80} className="dg-line" />
-      <line x1={300} y1={280} x2={470} y2={80} className="dg-line" />
+      <line x1={S1.x} y1={S1.y} x2={P.x} y2={P.y} className="dg-line" />
+      <line x1={S2.x} y1={S2.y} x2={P.x} y2={P.y} className="dg-line" />
 
-      <circle cx={170} cy={280} r={6} className="dg-dot-accent" />
-      <circle cx={300} cy={280} r={6} className="dg-dot-accent" />
-      <circle cx={470} cy={80} r={7} className="dg-dot" />
+      <circle cx={S1.x} cy={S1.y} r={6} className="dg-dot-accent" />
+      <circle cx={S2.x} cy={S2.y} r={6} className="dg-dot-accent" />
+      <circle cx={P.x} cy={P.y} r={7} className="dg-dot" />
 
-      <Label x={170} y={304} className="dg-text-small dg-text-accent">
+      <Label x={S1.x} y={S1.y + 24} className="dg-text-small dg-text-accent">
         S₁
       </Label>
-      <Label x={300} y={304} className="dg-text-small dg-text-accent">
+      <Label x={S2.x} y={S2.y + 24} className="dg-text-small dg-text-accent">
         S₂
       </Label>
-      <Label x={490} y={80} anchor="start" className="dg-text-small dg-bold">
+      <Label x={P.x + 18} y={P.y} anchor="start" className="dg-text-small dg-bold">
         P
       </Label>
+      <Label x={P.x + 18} y={P.y + 20} anchor="start" className="dg-text-small dg-text-muted">
+        minimum
+      </Label>
 
-      <Label x={286} y={166} className="dg-text-small dg-text-muted">
+      <Label x={296} y={168} anchor="end" className="dg-text-small dg-text-muted">
         S₁P = 5.0 λ
       </Label>
-      <Label x={404} y={228} className="dg-text-small dg-text-muted">
+      <Label x={404} y={228} anchor="start" className="dg-text-small dg-text-muted">
         S₂P = 4.5 λ
-      </Label>
-
-      <MathLabel x={320} y={148} tex="\text{path difference}=0.5\lambda" w={260} h={40} tone="accent-2" />
-      <Label x={320} y={196} className="dg-text-small dg-text-muted">
-        the waves arrive in antiphase, so P is a minimum
       </Label>
 
       <MathLabel
         x={320}
-        y={240}
-        tex="\text{path difference}=n\lambda \Rightarrow \text{max; } (n+\tfrac{1}{2})\lambda \Rightarrow \text{min}"
-        w={520}
+        y={352}
+        tex="0.5\lambda\ \text{path difference}\ \Rightarrow\ \text{antiphase}\ \Rightarrow\ \text{minimum}"
+        w={600}
         h={40}
       />
     </Svg>
