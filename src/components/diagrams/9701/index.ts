@@ -7,6 +7,9 @@ import BondingStructureMeltingPoints from './bonding-structure-melting-points';
 import BondingStructureMetallicLattice from './bonding-structure-metallic-lattice';
 import BondingStructureSimpleMolecular from './bonding-structure-simple-molecular';
 import BronstedLowryTitrationCurves from './bronsted-lowry-titration-curves';
+import ChemCatalysisBoltzmannShift from './chem-catalysis-boltzmann-shift';
+import ChemCatalysisEnergyProfile from './chem-catalysis-energy-profile';
+import ChemCatalysisSurface from './chem-catalysis-surface';
 import ChemEquilibriaApproachEquilibrium from './chem-equilibria-approach-equilibrium';
 import ChemEquilibriaCountGasMoles from './chem-equilibria-count-gas-moles';
 import ChemEquilibriaHaberTradeoff from './chem-equilibria-haber-tradeoff';
@@ -96,6 +99,9 @@ export const diagrams: DiagramRegistry = {
   'chem-bonding-structure-metallic-lattice': BondingStructureMetallicLattice,
   'chem-bonding-structure-simple-molecular': BondingStructureSimpleMolecular,
   'chem-bronsted-lowry-titration-curves': BronstedLowryTitrationCurves,
+  'chem-catalysis-boltzmann-shift': ChemCatalysisBoltzmannShift,
+  'chem-catalysis-energy-profile': ChemCatalysisEnergyProfile,
+  'chem-catalysis-surface': ChemCatalysisSurface,
   'chem-chemical-formulas-balancing-particles': ChemicalFormulasBalancingParticles,
   'chem-chemical-formulas-charge-balance': ChemicalFormulasChargeBalance,
   'chem-chemical-formulas-combustion-tracking': ChemicalFormulasCombustionTracking,
