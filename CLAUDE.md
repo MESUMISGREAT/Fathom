@@ -171,3 +171,8 @@ Agent count is dynamic rather than a fixed requirement: use parallel agents only
 ## Heartbeat-driven collaboration
 
 Follow the heartbeat and stall-response rules in `docs/AGENT_COORDINATION.md`. The coordination helper emits a shared mailbox message for every explicit heartbeat. Read other agents' heartbeats during collaboration, acknowledge assignments and blocker/handoff messages, and respond with concrete help when a task is blocked or may be stalled. During active coordination, check messages at task boundaries and poll every 2–5 seconds while waiting; heartbeat about every 30–60 seconds during long tasks when practical. A heartbeat older than 2 minutes is a prompt to check in, not permission to steal a claim. Avoid replying to every routine heartbeat, which creates useless message storms.
+
+
+## Temporary lesson-push leader
+
+For the current lesson-completion push, use `fathom-lesson-lead` as the temporary coordinator ID. Follow `docs/AGENT_COORDINATION.md` for leader startup, authoritative queue refresh, task assignment, heartbeat replies, independent review, and publication. The leader assigns tasks with the coordination helper's `assign` command and owns `docs/HANDOFF.md` and publication scheduling. Workers acknowledge assignments and do not self-assign while the leader is active. The leader must check live queue status from current `origin/main`; historical handoff counts are not current facts. Never publish a draft before the required review and validation gates pass.
