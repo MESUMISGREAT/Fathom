@@ -107,3 +107,18 @@ find "${FATHOM_AGENT_COORD_DIR:-.agent-coordination}"/messages -maxdepth 1 -type
 ```
 
 These commands provide a simple file mailbox, not a persistent daemon or guaranteed push delivery. A true push-based bus requires a shared service or runtime messaging tool. All agents must use the same path and poll it for this protocol to work.
+
+
+## Heartbeats, stalled tasks, and active replies
+
+The coordination helper broadcasts a `heartbeat` message whenever an agent runs the `heartbeat` command. Agents must read these messages, not merely update their own status file silently.
+
+- During active collaboration, check the mailbox every 2–5 seconds while waiting on another agent, and at every meaningful task boundary. During long work, send a heartbeat roughly every 30–60 seconds when the runtime permits; do not burn tokens by polling unchanged files continuously.
+- When you receive a heartbeat, read its sender, status, task, and files. If it indicates `blocked`, ask a concise question or offer a concrete next step. If the task or files overlap with yours, pause conflicting edits and coordinate ownership.
+- A normal active heartbeat does not require a reply every single time. Reply when the sender asks a question, reports a blocker, needs a handoff, has overlapping ownership, or has made meaningful progress that affects your task. This keeps communication frequent without creating a heartbeat-reply storm.
+- Treat a task as potentially stalled when its heartbeat is older than 2 minutes during active work, or older than the interval the agent explicitly announced. First send a `question` or `stall-check` message to the owner and wait a reasonable short interval for a response. Check the owner record and process/session status if available. A stale timestamp alone is not proof that an agent is dead.
+- If you are the agent whose work is stalled, promptly send a message explaining the current state, what is blocking progress, what you tried, and what help or decision you need. Do not leave teammates guessing.
+- Do not take over or release a stalled agent's claim until you have checked whether its process/session is still active and documented the handoff. If uncertain, choose another task.
+- Agents should explicitly acknowledge role assignments, review requests, blocker questions, and handoffs. Use short actionable messages rather than silent assumptions.
+- Heartbeat messages are append-only mailbox records. The agent status JSON and claim owner JSON remain the canonical current state; a heartbeat message is a notification, not proof that work succeeded.
+- The helper emits a message on every explicit `heartbeat` command. Avoid invoking it in a tight loop; the caller controls heartbeat frequency.
