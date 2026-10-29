@@ -1,0 +1,205 @@
+id: complex-numbers-geometric-effects
+subject: "9709"
+topic: "3.9"
+title: Geometric effects — what operations do on the Argand diagram
+summary: "Understanding the geometrical meaning of conjugation, addition, subtraction, multiplication and division on the Argand diagram."
+order: 7
+minutes: 4
+kind: core
+objectives: ["3.9.7"]
+prerequisites: ["complex-numbers-argand-diagram", "complex-numbers-polar-form"]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
+    for 2026-2027 (Version 4, December 2025): topic 3.9 learning outcome 7 (geometrical effects
+    of conjugating, adding, subtracting, multiplying, dividing). Examples and questions are
+    original; all arithmetic checked in Python. Not yet teacher-reviewed.
+blocks:
+  - type: objective
+    body: |
+      By the end you can describe and sketch the geometrical effects of conjugation, addition,
+      subtraction, multiplication and division on the Argand diagram.
+
+  - type: explain
+    title: Conjugation = reflection in the real axis
+    body: |
+      $z = x + iy \mapsto z^* = x - iy$.
+      - Mirror image across the real axis.
+      - $|z^*| = |z|$ (same distance from origin).
+      - $\arg(z^*) = -\arg(z)$ (angle flips sign).
+
+  - type: explain
+    title: Addition = translation (vector addition)
+    body: |
+      $z \mapsto z + w$ shifts $z$ by the vector representing $w$.
+      - If $w = a + ib$, the translation is $a$ right, $b$ up.
+      - The shape of a set of points is preserved (rigid translation).
+      - Parallelogram law: $z_1 + z_2$ is the fourth vertex of the parallelogram with vertices $0, z_1, z_1+z_2, z_2$.
+
+  - type: explain
+    title: Subtraction = vector from $w$ to $z$
+    body: |
+      $z - w$ is the vector from $w$ to $z$.
+      - $|z - w|$ = distance between $z$ and $w$.
+      - $\arg(z - w)$ = direction from $w$ to $z$.
+
+  - type: explain
+    title: Multiplication = scaling + rotation
+    body: |
+      In polar: $z = re^{i\theta}$, $w = \rho e^{i\phi}$.
+      $zw = (r\rho)e^{i(\theta+\phi)}$.
+      - **Scale** by factor $\rho = |w|$.
+      - **Rotate** anticlockwise by angle $\phi = \arg w$.
+      - If $|w| = 1$, it's a pure rotation (e.g., multiplication by $i$ rotates by $\pi/2$).
+      - If $\arg w = 0$ (i.e., $w$ is positive real), it's a pure scaling.
+
+  - type: explain
+    title: Division = shrinking + rotation backwards
+    body: |
+      $\frac{z}{w} = \frac{r}{\rho}e^{i(\theta-\phi)}$.
+      - **Shrink** by factor $\frac{1}{|w|}$.
+      - **Rotate** clockwise by $\arg w$ (or anticlockwise by $-\arg w$).
+      - Division by $i$ rotates by $-\pi/2$ (clockwise 90°).
+
+  - type: example
+    title: Geometric effect of multiplying by $1 + i$
+    problem: "Describe the geometric transformation $z \mapsto (1 + i)z$."
+    steps:
+      - "$1 + i = \sqrt{2} e^{i\pi/4}$ (modulus $\sqrt{2}$, argument $\pi/4$)."
+      - "Multiplying by $1 + i$ scales all points by $\sqrt{2}$ and rotates them anticlockwise by $45^\circ$ ($\pi/4$ rad)."
+      - "The origin stays fixed (since $0 \times (1+i) = 0$)."
+    answer: |
+      Enlargement by factor $\sqrt{2}$ centred at the origin, followed by rotation of $\pi/4$ anticlockwise.
+
+  - type: example
+    title: Geometric effect of $z \mapsto z + (2 - 3i)$
+    problem: "Describe the transformation."
+    steps:
+      - "Translation by vector $2 - 3i$ (right 2, down 3)."
+      - "Every point moves the same amount — a rigid shift."
+      - "Shapes and sizes are unchanged."
+    answer: |
+      Translation by $(2, -3)$ (right 2, down 3).
+
+  - type: check
+    title: Identify the transformation
+    questions: [cn-geom-multiply-i, cn-geom-translate, cn-geom-divide]
+
+  - type: diagram
+    diagram: complex-numbers-geometric-transformations
+    alt: |
+      Four Argand diagrams showing: (1) conjugation as reflection in real axis, (2) addition as
+      translation by a vector, (3) multiplication by i as 90° anticlockwise rotation, (4) division
+      by 2 as shrinking by factor 1/2.
+    caption: |
+      Geometric effects: conjugation reflects, addition translates, multiplication by i rotates 90°,
+      division by 2 shrinks.
+
+  - type: intuition
+    title: Visual summary
+    body: |
+      | Operation | Geometric effect |
+      |-----------|------------------|
+      | $z \mapsto z^*$ | Reflection in real axis |
+      | $z \mapsto z + w$ | Translation by vector $w$ |
+      | $z \mapsto z - w$ | Vector from $w$ to $z$ |
+      | $z \mapsto wz$ | Scale by $|w|$, rotate by $\arg w$ |
+      | $z \mapsto z/w$ | Scale by $1/|w|$, rotate by $-\arg w$ |
+      | $z \mapsto iz$ | Rotate by $90^\circ$ anticlockwise |
+      | $z \mapsto -z$ | Rotate by $180^\circ$ (or scale by $-1$) |
+
+  - type: misconceptions
+    items:
+      - wrong: "Multiplying by $i$ stretches the plane."
+        right: "Multiplying by $i$ is a pure rotation by $\pi/2$ — $|i| = 1$, so no scaling."
+      - wrong: "Adding $w$ moves points in a circle."
+        right: "Adding $w$ translates ALL points by the same vector — it's a rigid shift, not a rotation."
+      - wrong: "$\arg(z/w) = \arg z / \arg w$."
+        right: "Arguments subtract: $\arg(z/w) = \arg z - \arg w$. Division of arguments is meaningless."
+
+  - type: deeper
+    title: Multiplication as a spiral similarity
+    body: |
+      Any multiplication $z \mapsto wz$ (with $w \neq 0$) is a **spiral similarity** centred at the origin:
+      a combination of a rotation and a uniform scaling.
+      - If $|w| > 1$, it's an enlargement + rotation.
+      - If $|w| < 1$, it's a reduction + rotation.
+      - If $w$ is real and positive, it's pure scaling (no rotation).
+      - If $w$ is real and negative, it's scaling + rotation by $\pi$ (half-turn).
+
+  - type: exam
+    body: |
+      - "Describe fully the geometrical transformation that maps $z$ to $(2 - 2i)z$." — answer: enlargement by factor $2\sqrt{2}$ centred at origin, rotation by $-\pi/4$ (or $7\pi/4$).
+      - "The point $z$ is rotated by $\pi/2$ about the origin. Write the transformation in the form $z \mapsto wz$." — answer: $w = i$.
+      - "The point $z$ is reflected in the real axis and then translated by $3 + 4i$. Find the image of $z = 1 + 2i$." — answer: $(1 - 2i) + (3 + 4i) = 4 + 2i$.
+
+  - type: takeaways
+    items:
+      - "Conjugation: reflection in the real axis."
+      - "Addition: translation by a vector."
+      - "Subtraction: vector between two points; length = distance."
+      - "Multiplication by $w$: scale by $|w|$, rotate by $\arg w$."
+      - "Division by $w$: scale by $1/|w|$, rotate by $-\arg w$."
+      - "Multiplication by $i$: $90^\circ$ anticlockwise rotation."
+      - "Multiplication by $-1$: $180^\circ$ rotation (half-turn)."
+
+questions:
+  - id: cn-geom-multiply-i
+    format: mcq
+    difficulty: 1
+    objectives: ["3.9.7"]
+    prompt: |
+      The transformation $z \mapsto iz$ on the Argand diagram is:
+    options:
+      - text: "Rotation by 90° anticlockwise about the origin"
+        correct: true
+        why: "$i = e^{i\pi/2}$. Multiplication by $i$ scales by $|i|=1$ and rotates by $\pi/2$."
+      - text: "Rotation by 90° clockwise about the origin"
+        why: "That would be multiplication by $-i$."
+      - text: "Reflection in the imaginary axis"
+        why: "That's not a simple multiplication."
+      - text: "Translation by $(0, 1)$"
+        why: "That would be $z \mapsto z + i$."
+    explanation: |
+      $i = 1 \cdot e^{i\pi/2}$. Modulus 1 means no scaling; argument $\pi/2$ means rotation by $90^\circ$ anticlockwise.
+
+  - id: cn-geom-translate
+    format: mcq
+    difficulty: 2
+    objectives: ["3.9.7"]
+    prompt: |
+      The set of points satisfying $|z - (1 + 2i)| = 3$ is transformed by $z \mapsto z + (2 - i)$.
+      What is the new equation?
+    options:
+      - text: "$|z - (3 + i)| = 3$"
+        correct: true
+        why: "Translation adds $(2, -1)$ to the centre: $(1, 2) + (2, -1) = (3, 1)$. Radius unchanged."
+      - text: "$|z - (-1 + 3i)| = 3$"
+        why: "Wrong translation direction."
+      - text: "$|z - (3 + i)| = 6$"
+        why: "Translation doesn't change the radius."
+      - text: "$|z - (1 + 2i)| = 0$"
+        why: "Nonsense."
+    explanation: |
+      Original: circle centre $1+2i$, radius 3. Translation $z \mapsto z + 2 - i$ shifts centre to $(1+2) + (2-1)i = 3 + i$. Radius stays 3.
+
+  - id: cn-geom-divide
+    format: mcq
+    difficulty: 2
+    objectives: ["3.9.7"]
+    prompt: |
+      The transformation $z \mapsto \frac{z}{2i}$ is:
+    options:
+      - text: "Enlargement by factor 2 and rotation by 90° anticlockwise"
+        why: "Division by $2i$ scales by $1/2$, not 2."
+      - text: "Reduction by factor 1/2 and rotation by 90° clockwise"
+        correct: true
+        why: "$|2i| = 2$, so scale by $1/2$. $\arg(2i) = \pi/2$, so rotate by $-\pi/2$ (clockwise 90°)."
+      - text: "Reflection in the real axis and reduction by 1/2"
+        why: "That would be division by $2$."
+      - text: "Rotation by 90° anticlockwise only"
+        why: "That would be multiplication by $i$."
+    explanation: |
+      $\frac{1}{2i} = \frac{1}{2} e^{-i\pi/2}$. Scale by $1/2$, rotate by $-\pi/2$ (clockwise 90°).
