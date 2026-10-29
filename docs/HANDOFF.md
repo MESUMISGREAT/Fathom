@@ -1004,3 +1004,18 @@ The coordination helper now broadcasts a mailbox message whenever an agent expli
 - Never take over a claim just because it looks stale. Check the process/session if possible, ask the owner, and record an explicit handoff before taking over. If the owner cannot be verified as inactive, work on another unclaimed task.
 - An agent that is stalled must message its current status, blocker, what it tried, and the help/decision it needs. Do not silently wait.
 - Heartbeats are notifications, not proof of completed work. Validate files and tests before reporting completion.
+
+
+## 3c. Temporary multi-agent lesson-push leadership (29 Oct 2026)
+
+**Temporary coordinator ID: `fathom-lesson-lead`.** This role is for the current lesson-completion push only. Follow `docs/AGENT_COORDINATION.md`; it is the authoritative operating contract for role assignment and messaging.
+
+- The leader registers as `fathom-lesson-lead`, runs `node scripts/agents/coordination.mjs set-leader --id fathom-lesson-lead`, and owns queue triage, assignments, cross-agent conflicts, the global handoff, final review coordination, and publication scheduling.
+- Workers register unique IDs, read the shared mailbox and leader state, acknowledge assigned tasks, and do not self-assign while the leader is active. The leader assigns work using `node scripts/agents/coordination.mjs assign --from fathom-lesson-lead --to WORKER_ID --task "9709-3.9" --role writer --files "path/to/file" --text "specific acceptance criteria"`.
+- Each assignment must be scoped to a distinct unit/file set and include acceptance criteria and required validation. The helper reserves the claim before notifying the recipient. If already claimed, the leader must resolve the ownership conflict instead of overwriting it.
+- Workers heartbeat every 30–60 seconds during long work when practical, check messages at task boundaries, acknowledge questions/blockers/handoffs, and return exact changed files, objective coverage, checks, review state, and blockers. The leader replies with assignments or concrete next steps.
+- Queue priority: `reviewed` units needing final checks/publication; then `drafted` units needing independent review; then `partial` units; then `todo` units in AS-first-then-A2 order. The last recorded count (50 published, 1 partial, 102 todo, 1 reviewed) is historical and must **not** be treated as current until rechecked.
+- At startup, refresh `origin/main` and run `node scripts/lessons/status.mjs --all` from a clean current-main worktree. The leader should broadcast a concise queue summary and distribute work across active agents without duplicating claims.
+- The leader may publish reviewed units through the existing scoped publication workflow after final review, validation, and checking exact staged paths. Never publish unreviewed drafts, stage all changes, sweep up other agents' deletions, bypass tests, or falsely mark teacher review. Verify the deployed lesson page before claiming it is live.
+- Keep `docs/HANDOFF.md` as the durable summary; workers send handoff updates to the leader rather than editing it concurrently. The leader updates this file after meaningful batches and before any stop.
+- Solo fallback remains mandatory if the leader is unavailable. Workers send a leader check-in, wait briefly, then work only on a safely unclaimed task if no leader responds; document that coordination degraded.
