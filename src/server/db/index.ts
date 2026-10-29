@@ -39,7 +39,7 @@ async function connect(): Promise<DbState> {
   let client: InstanceType<typeof PGlite>;
   if (url === 'memory') client = new PGlite();
   else {
-    const dir = path.resolve(process.env.PGLITE_DIR ?? path.join(process.cwd(), 'data', 'pglite'));
+    const dir = path.resolve(/*turbopackIgnore: true*/ process.env.PGLITE_DIR ?? path.join(process.cwd(), 'data', 'pglite'));
     await mkdir(path.dirname(dir), { recursive: true }); // PGlite creates only the last segment
     client = new PGlite(dir);
   }

@@ -37,12 +37,12 @@ export default function P3VectorsNotation() {
       <g fontSize={12} fill="#374151">
         <text x={20} y={50} className="dg-bold">Four names for the same vector:</text>
         <text x={20} y={80}>Column: <tspan className="dg-code">(3, 2, 4)^T</tspan></text>
-        <text x={20} y={105}>i/j/k: <tspan className="dg-code">3i + 2j + 4k</tspan></text>
+        <text x={20} y={105}>i, j, k: <tspan className="dg-code">3i + 2j + 4k</tspan></text>
         <text x={20} y={130}>Bold letter: <tspan className="dg-code">a = 3i + 2j + 4k</tspan></text>
         <text x={20} y={155}>Directed segment: <tspan className="dg-code">OA (arrow over)</tspan></text>
       </g>
       <Label x={W / 2} y={H - 12} className="dg-text-small dg-bold">
-        Column, i/j/k, bold letter, directed segment — all represent the same vector
+        Column, i, j, k, bold letter, directed segment — all represent the same vector
       </Label>
     </Svg>
   );

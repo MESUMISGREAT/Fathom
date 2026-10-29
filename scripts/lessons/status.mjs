@@ -23,7 +23,7 @@ const syllabi = Object.fromEntries(
 
 function unitState(u) {
   const dir = path.join(root, 'content/subjects', u.subject, 'lessons');
-  const files = existsSync(dir) ? readdirSync(dir).filter((f) => u.topics.some((t) => f.startsWith(`${t.prefix}-`))) : [];
+  const files = existsSync(dir) ? readdirSync(dir).filter((f) => u.topics.some((t) => f.startsWith(`${t.prefix}-`) || f === `${t.prefix}.yaml`)) : [];
   if (!files.length) return { state: 'todo', lessons: 0 };
   // A writer may be halfway through a file: one broken YAML must not hide the whole queue.
   const lessons = files.map((f) => {

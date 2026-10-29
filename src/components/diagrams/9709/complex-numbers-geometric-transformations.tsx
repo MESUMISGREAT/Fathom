@@ -154,7 +154,8 @@ export default function ComplexNumbersGeometricTransformations() {
 
       {/* --- Cell 4: Division by 2 (shrinking) --- */}
       <g transform={`translate(${c4.x}, ${c4.y})`}>
-        {drawAxes(CELL_W / 2, CELL_H / 2, scale, 'Division by 2: shrinking by factor 1/2')}
+        {drawAxes(CELL_W / 2, CELL_H / 2, scale, 'Division by 2: shrinking by factor')}
+        <MathLabel x={CELL_W / 2} y={CELL_H / 2 - CELL_H / 2 - 32} tex="\\frac{1}{2}" anchor="middle" w={40} h={24} size="small" tone="muted" />
         {/* Original z */}
         <Arrow
           x1={CELL_W / 2}

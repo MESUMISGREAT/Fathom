@@ -212,9 +212,13 @@ export default function P3VectorsScalarProduct() {
         <MathLabel x={PANEL_W / 2} y={210} tex="t = -((\\mathbf{a}-\\mathbf{p})\\cdot \\mathbf{d})/|\\mathbf{d}|^2" anchor="middle" w={180} h={24} size="small" />
       </g>
 
-      <Label x={W / 2} y={H - 10} className="dg-text-small dg-text-muted">
-        a\u00b7b = a\u2081b\u2081+a\u2082b\u2082+a\u2083b\u2083 | cos \u03b8 = (a\u00b7b)/(|a||b|) | a\u27c2b \u21d4 a\u00b7b=0 | Foot: t = -((a-p)\u00b7d)/|d|\u00b2
+      <Label x={W / 2} y={H - 25} className="dg-text-small dg-text-muted">
+        Key formulae:
       </Label>
+      <MathLabel x={W / 2} y={H - 10} tex="a\\cdot b = a_1b_1 + a_2b_2 + a_3b_3" anchor="middle" w={300} h={24} size="small" tone="muted" />
+      <MathLabel x={W / 2} y={H + 10} tex="\\cos\\theta = \\frac{a\\cdot b}{|a||b|}" anchor="middle" w={300} h={24} size="small" tone="muted" />
+      <MathLabel x={W / 2} y={H + 30} tex="a \\perp b \\iff a\\cdot b = 0" anchor="middle" w={300} h={24} size="small" tone="muted" />
+      <MathLabel x={W / 2} y={H + 50} tex="t = -\\frac{(a-p)\\cdot d}{|d|^2}" anchor="middle" w={300} h={24} size="small" tone="muted" />
     </Svg>
   );
 }
