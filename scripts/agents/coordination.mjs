@@ -107,6 +107,12 @@ async function run() {
       const of = path.join(dirs.claims, taskKey(updated.task), "owner.json"), owner = await readJson(of);
       if (owner?.agentId === id) await atomicJson(of, { ...owner, heartbeatAt: now() });
     }
+    // Heartbeats are also visible to other agents through the mailbox.
+    // Keep the message concise so frequent liveness checks do not flood the channel.
+    await sendMessage(id, "all", "heartbeat",
+      "Heartbeat: status=" + updated.status + "; task=" + (updated.task || "none") +
+      "; role=" + (updated.role || "unassigned") + "; files=" + ((updated.files || []).join(", ") || "none"),
+      updated.task || "", updated.files || []);
     output(updated); return;
   }
   if (command === "release") {
