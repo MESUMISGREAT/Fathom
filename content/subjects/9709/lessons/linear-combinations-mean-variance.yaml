@@ -1,0 +1,407 @@
+id: linear-combinations-mean-variance
+subject: "9709"
+topic: "6.2"
+title: Linear combinations of random variables
+summary: How means and variances behave when you shift, scale, add or subtract random variables, and which distributions survive the combination.
+order: 1
+minutes: 10
+kind: core
+objectives: ["6.2.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 6.2 outcome "Use, when solving problems, the results that
+    E(aX + b) = aE(X) + b and Var(aX + b) = a^2 Var(X); E(aX + bY) = aE(X) + bE(Y);
+    Var(aX + bY) = a^2 Var(X) + b^2 Var(Y) for independent X and Y; if X has a normal
+    distribution then so does aX + b; if X and Y have independent normal distributions
+    then aX + bY has a normal distribution; and if X and Y have independent Poisson
+    distributions then X + Y has a Poisson distribution." The syllabus guidance states
+    that proofs are not required, so every result here is used rather than derived from
+    first principles. The sample-mean result is included as a consequence of the
+    independent-sum variance rule. All examples and questions are original.
+    Independently re-checked line by line in a separate AI review on 2026-10-29: every mean
+    and variance re-derived (55 and 81; 35 and 97, sd 9.85; 5 and 13, sd 3.61), the Poisson
+    and normal closure claims checked, P(X + Y = 3) = 0.1954 for Po(4), z = 0.556 giving 0.289, and the
+    sample-mean spread 12/sqrt(16) = 3 giving 0.1587. No correction was needed. Not yet
+    reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find the mean and variance of $aX + b$ and of $aX + bY$,
+      explain why variances add even when the combination subtracts, and say when a
+      normal or Poisson distribution is preserved by a combination.
+
+  - type: explain
+    title: Means add up; spreads square-up
+    body: |-
+      A random variable's **mean** behaves like a weighted average, so it is always
+      linear:
+
+      $$E(aX + b) = aE(X) + b$$
+
+      A **variance** is measured from the mean, so shifting every value by $b$ moves the
+      mean with it and changes nothing about the spread. Scaling by $a$ multiplies every
+      deviation from the mean by $a$, and variance is built from *squared* deviations, so
+      the factor is squared:
+
+      $$\text{Var}(aX + b) = a^2\,\text{Var}(X)$$
+
+      Notice what is missing: $b$ does not appear, and the sign of $a$ does not matter
+      because $a^2$ is positive. Scaling by $-4$ stretches the spread by 4 just as much as
+      scaling by $+4$ does.
+
+  - type: definition
+    term: Independent random variables
+    body: |-
+      $X$ and $Y$ are **independent** when knowing the value of one tells you nothing
+      about the value of the other. Every combined-variance result below needs this
+      assumption; the mean results do not.
+
+  - type: example
+    title: "Example 1: shifting and scaling one variable"
+    problem: |-
+      $X$ has $E(X) = 20$ and $\text{Var}(X) = 9$. Find the mean and standard deviation of
+      $Y = 3X - 5$.
+    steps:
+      - |-
+        Mean: $E(3X - 5) = 3E(X) - 5 = 3(20) - 5 = 55$.
+      - |-
+        Variance: $\text{Var}(3X - 5) = 3^2\,\text{Var}(X) = 9 \times 9 = 81$.
+      - |-
+        Standard deviation: $\sqrt{81} = 9$.
+    answer: '$E(Y) = 55$, $\text{sd}(Y) = 9$'
+
+  - type: check
+    questions: [lc-mean-shift, lc-var-scale]
+
+  - type: explain
+    title: Two variables at once
+    body: |-
+      For independent $X$ and $Y$:
+
+      $$E(aX + bY) = aE(X) + bE(Y)$$
+
+      $$\text{Var}(aX + bY) = a^2\,\text{Var}(X) + b^2\,\text{Var}(Y)$$
+
+      The second line is the one that catches people. Even for $X - Y$ the variances
+      **add**:
+
+      $$\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y)$$
+
+      This is not a bookkeeping trick. If $X$ is unusually large and $Y$ unusually small,
+      $X - Y$ comes out even larger than either surprise alone, so the spread of a
+      difference cannot be smaller than the spread of its parts. With independence there
+      is no systematic cancellation.
+
+  - type: example
+    title: "Example 2: a weighted total and a difference"
+    problem: |-
+      $X$ and $Y$ are independent with $E(X) = 10$, $\text{Var}(X) = 4$, $E(Y) = 5$ and
+      $\text{Var}(Y) = 9$. Find the mean and standard deviation of (a) $T = 2X + 3Y$ and
+      (b) $D = X - Y$.
+    steps:
+      - |-
+        (a) $E(T) = 2(10) + 3(5) = 35$.
+      - |-
+        (a) $\text{Var}(T) = 2^2(4) + 3^2(9) = 16 + 81 = 97$, so $\text{sd}(T) = \sqrt{97} = 9.85$ (3 s.f.).
+      - |-
+        (b) $E(D) = 10 - 5 = 5$.
+      - |-
+        (b) $\text{Var}(D) = 4 + 9 = 13$, so $\text{sd}(D) = \sqrt{13} = 3.61$ (3 s.f.).
+    answer: '(a) $E(T) = 35$, $\text{sd}(T) = 9.85$; (b) $E(D) = 5$, $\text{sd}(D) = 3.61$'
+
+  - type: check
+    questions: [lc-combo-mean, lc-combo-var]
+
+  - type: explain
+    title: Which distributions survive
+    body: |-
+      Some families of distribution are closed under these combinations, which is why the
+      results are worth memorising:
+
+      - If $X \sim N(\mu, \sigma^2)$ then $aX + b \sim N(a\mu + b,\ a^2\sigma^2)$.
+      - If $X$ and $Y$ are independent with normal distributions then $aX + bY$ is also
+        normal, with the mean and variance from the rules above.
+      - If $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$ are independent,
+        then $X + Y \sim \text{Po}(\lambda_1 + \lambda_2)$.
+
+      The Poisson result is a consequence of the mean-equals-variance property: the total
+      has mean $\lambda_1 + \lambda_2$ and variance $\lambda_1 + \lambda_2$, exactly what a
+      single Poisson variable with that parameter looks like. What it does **not** give you
+      is a Poisson distribution for $X - Y$ or for $2X$: scaling by anything other than 1
+      destroys the mean-equals-variance structure, so those combinations are not Poisson.
+
+  - type: example
+    title: "Example 3: using the preserved distributions"
+    problem: |-
+      (a) $X \sim \text{Po}(2.5)$ and $Y \sim \text{Po}(1.5)$ are independent. Find
+      $P(X + Y = 3)$.
+      (b) $X \sim N(20, 9)$ and $Y = 3X - 5$. Find $P(Y > 60)$.
+    steps:
+      - |-
+        (a) $X + Y \sim \text{Po}(4)$, so $P(X + Y = 3) = e^{-4}\dfrac{4^3}{3!} = e^{-4} \times \dfrac{64}{6} = 0.1954$.
+
+        That is $0.195$ to 3 s.f.
+      - |-
+        (b) $E(Y) = 3(20) - 5 = 55$ and $\text{Var}(Y) = 9 \times 9 = 81$, so $Y \sim N(55, 81)$ with $\text{sd}(Y) = 9$.
+      - |-
+        (b) $z = \dfrac{60 - 55}{9} = 0.556$, so $P(Y > 60) = 1 - \Phi(0.556) = 0.289$ (3 s.f.).
+    answer: "(a) $0.195$; (b) $0.289$"
+
+  - type: check
+    questions: [lc-poisson-sum, lc-normal-scaled]
+
+  - type: explain
+    title: Averages of repeated observations
+    body: |-
+      The same variance rule explains why an average is more precise than a single reading.
+      If $n$ observations are independent, each with variance $\sigma^2$, then by the
+      independent-sum rule the total has variance $n\sigma^2$. Dividing by $n$ squares the
+      factor, so
+
+      $$
+      \text{Var}(\bar{X}) = \frac{1}{n^2}\left(n\sigma^2\right) = \frac{\sigma^2}{n},
+      \qquad \text{sd}(\bar{X}) = \frac{\sigma}{\sqrt{n}}
+      $$
+
+      and $E(\bar{X}) = \mu$. The spread shrinks like $1/\sqrt{n}$, so quadrupling the sample
+      size only halves the standard deviation of the mean.
+
+  - type: example
+    title: "Example 4: spread of a sample mean"
+    problem: |-
+      A population has mean $\mu$ and standard deviation $12$. A sample of 16 independent
+      observations is taken. Find the probability that the sample mean exceeds $\mu + 3$.
+      Assume the sample mean is normally distributed.
+    steps:
+      - |-
+        $\text{sd}(\bar{X}) = \dfrac{12}{\sqrt{16}} = 3$.
+      - |-
+        So $\mu + 3$ is exactly one standard deviation above the mean of $\bar{X}$.
+      - |-
+        $P(\bar{X} > \mu + 3) = P(Z > 1) = 1 - 0.8413 = 0.1587$.
+    answer: "$0.159$ (3 s.f.)"
+
+  - type: check
+    questions: [lc-sample-mean]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          $\text{Var}(X - Y) = \text{Var}(X) - \text{Var}(Y)$, because the sign matches the
+          sign in the combination.
+        right: |-
+          The variances **add**: $\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y)$ for
+          independent $X$ and $Y$. A spread cannot shrink just because you subtract.
+      - wrong: |-
+          Multiplying a variable by 3 multiplies its variance by 3.
+        right: |-
+          It multiplies the variance by $3^2 = 9$. Standard deviation scales by 3, variance
+          scales by the square of the scaling factor.
+      - wrong: |-
+          Adding a constant 20 to every value increases the variance by 20.
+        right: |-
+          Adding a constant shifts the whole distribution, so the mean rises by 20 and the
+          variance is unchanged: $\text{Var}(X + 20) = \text{Var}(X)$.
+      - wrong: |-
+          The variance of the sample mean of $n$ observations is $n\sigma^2$.
+        right: |-
+          That is the variance of the **total**. The mean has variance $\sigma^2/n$, which
+          is why averaging reduces spread.
+      - wrong: |-
+          If $X \sim \text{Po}(3)$ then $2X \sim \text{Po}(6)$.
+        right: |-
+          $2X$ is not Poisson at all: it is always even, whereas a Poisson variable takes
+          every non-negative integer. Poissons combine only by **adding independent**
+          variables.
+
+  - type: exam
+    body: |-
+      Questions usually give you $E(X)$, $\text{Var}(X)$, $E(Y)$, $\text{Var}(Y)$ and a
+      combination, then ask for a mean and a variance, or a probability once you have
+      identified the distribution. Marks are commonly lost in three places: subtracting
+      variances for a difference, forgetting to square the coefficient, and quoting a
+      variance where a standard deviation is needed. If a normal probability follows, keep
+      the variance until you have written down the standard deviation, then standardise.
+
+  - type: check
+    title: Mixed practice
+    questions: [lc-spot-error, lc-why-add]
+
+  - type: takeaways
+    items:
+      - '$E(aX + b) = aE(X) + b$ and $\text{Var}(aX + b) = a^2\,\text{Var}(X)$: a shift never touches the variance.'
+      - 'For independent $X$ and $Y$: $E(aX + bY) = aE(X) + bE(Y)$ and $\text{Var}(aX + bY) = a^2\text{Var}(X) + b^2\text{Var}(Y)$.'
+      - 'Variances add for a difference too: $\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y)$.'
+      - "Normal stays normal under $aX + b$ and under sums of independent normals; independent Poissons add to a Poisson with parameters added."
+      - '$E(\bar{X}) = \mu$ and $\text{sd}(\bar{X}) = \sigma/\sqrt{n}$.'
+
+questions:
+  - id: lc-mean-shift
+    format: numeric
+    difficulty: 1
+    objectives: ["6.2.1"]
+    prompt: |-
+      A random variable $X$ has $E(X) = 15$. Find $E(2X - 7)$.
+    fields:
+      - label: "E(2X - 7) ="
+        answer: 23
+    explanation: |-
+      $E(2X - 7) = 2E(X) - 7 = 30 - 7 = 23$. Expectation is linear, so both the scaling and
+      the shift pass straight through.
+
+  - id: lc-var-scale
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      A random variable $X$ has $\text{Var}(X) = 25$. Find $\text{Var}(3 - 4X)$.
+    fields:
+      - label: "Var(3 - 4X) ="
+        answer: 400
+    explanation: |-
+      The constant 3 does not change the variance, and the factor $-4$ is squared:
+      $\text{Var}(3 - 4X) = (-4)^2 \times 25 = 16 \times 25 = 400$. The sign of the factor is
+      irrelevant because it is squared.
+
+  - id: lc-combo-mean
+    format: numeric
+    difficulty: 1
+    objectives: ["6.2.1"]
+    prompt: |-
+      $X$ and $Y$ are random variables with $E(X) = 12$ and $E(Y) = 7$. Find $E(3X - 2Y)$.
+    fields:
+      - label: "E(3X - 2Y) ="
+        answer: 22
+    explanation: |-
+      $E(3X - 2Y) = 3E(X) - 2E(Y) = 36 - 14 = 22$. No independence assumption is needed for
+      a mean.
+
+  - id: lc-combo-var
+    format: mcq
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      Independent random variables $X$ and $Y$ have $\text{Var}(X) = 6$ and
+      $\text{Var}(Y) = 5$. What is $\text{Var}(X - Y)$?
+    options:
+      - text: "1"
+        why: |-
+          This subtracts the variances. The spread of a difference is larger than either
+          spread, not smaller, so the variances must add.
+        correct: false
+      - text: "11"
+        why: |-
+          The variances add for independent variables, and subtracting inside the
+          combination does not change that: $6 + 5 = 11$.
+        correct: true
+      - text: "61"
+        why: |-
+          This squares the variances themselves ($36 + 25$). The coefficients 1 and $-1$ are
+          squared, not the variances.
+        correct: false
+      - text: "6"
+        why: |-
+          This ignores $Y$ altogether. The uncertainty in $Y$ also contributes to the
+          uncertainty in $X - Y$.
+        correct: false
+    explanation: |-
+      For independent $X$ and $Y$, $\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y) = 6 + 5 = 11$.
+      Independent contributions to spread always add, whatever the signs in the combination.
+
+  - id: lc-poisson-sum
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      $X \sim \text{Po}(2)$ and $Y \sim \text{Po}(3)$ are independent. Find $P(X + Y = 2)$,
+      correct to 3 decimal places.
+    fields:
+      - label: "P(X + Y = 2) ="
+        answer: 0.084
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      Independent Poissons add, so $X + Y \sim \text{Po}(5)$. Then
+      $P(X + Y = 2) = e^{-5}\dfrac{5^2}{2!} = 0.006738 \times 12.5 = 0.0842$, so $0.084$ to
+      3 d.p.
+
+  - id: lc-normal-scaled
+    format: numeric
+    difficulty: 3
+    objectives: ["6.2.1"]
+    prompt: |-
+      $X \sim N(20, 9)$ and $Y = 3X - 5$. Find $P(Y > 60)$, correct to 3 decimal places.
+    fields:
+      - label: "P(Y > 60) ="
+        answer: 0.289
+        tolerance: { abs: 0.002 }
+    explanation: |-
+      $E(Y) = 3(20) - 5 = 55$ and $\text{Var}(Y) = 9 \times 9 = 81$, so $Y \sim N(55, 81)$ and
+      $\text{sd}(Y) = 9$. Then $z = \dfrac{60 - 55}{9} = 0.556$ and
+      $P(Y > 60) = 1 - \Phi(0.556) = 1 - 0.7107 = 0.289$.
+
+  - id: lc-sample-mean
+    format: numeric
+    difficulty: 2
+    objectives: ["6.2.1"]
+    prompt: |-
+      A population has standard deviation 20. Independent samples of 25 observations are
+      taken. Find the standard deviation of the sample mean.
+    fields:
+      - label: "sd of sample mean ="
+        answer: 4
+    explanation: |-
+      $\text{sd}(\bar{X}) = \dfrac{\sigma}{\sqrt{n}} = \dfrac{20}{\sqrt{25}} = \dfrac{20}{5} = 4$.
+
+  - id: lc-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.2.1"]
+    prompt: |-
+      Independent random variables $X$ and $Y$ have $\text{Var}(X) = 8$ and
+      $\text{Var}(Y) = 3$. A student finds the standard deviation of $X - Y$. Which line
+      contains the first error?
+    lines:
+      - |-
+        $X$ and $Y$ are independent with $\text{Var}(X) = 8$ and $\text{Var}(Y) = 3$.
+      - |-
+        $\text{Var}(X - Y) = \text{Var}(X) - \text{Var}(Y)$
+      - |-
+        $= 8 - 3 = 5$
+      - |-
+        so the standard deviation of $X - Y$ is $\sqrt{5} \approx 2.24$.
+    errorLine: 2
+    fix: |-
+      $\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y) = 8 + 3 = 11$, so the standard
+      deviation is $\sqrt{11} \approx 3.32$.
+    explanation: |-
+      Line 1 is correct. Line 2 is where the argument goes wrong: for independent variables
+      the variances **add** in a difference as well, because the coefficient $-1$ is squared
+      to $+1$. Every later line inherits that mistake, so the first error is line 2.
+
+  - id: lc-why-add
+    format: explain
+    difficulty: 3
+    objectives: ["6.2.1"]
+    prompt: |-
+      Explain why the variance of $X - Y$ is the sum of the two variances, rather than their
+      difference, when $X$ and $Y$ are independent.
+    explanation: |-
+      Squaring is what removes the sign: in $X - Y$ the coefficient of $Y$ is $-1$, and
+      $(-1)^2 = 1$, so the $Y$ variance enters with a plus. Independence is what makes that
+      legitimate - without it the two deviations could systematically oppose each other and
+      a covariance term would be needed.
+    model: |-
+      Variance measures typical squared distance from the mean. In the combination
+      $X - Y$, a deviation of $X$ above its mean and a deviation of $Y$ below its mean push
+      the result in the same direction, so they reinforce rather than cancel. Independence
+      rules out any systematic tendency for the two deviations to oppose each other, so the
+      squared contributions add: $\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y)$.
+    keyPoints:
+      - The coefficient on Y in X - Y is minus one.
+      - Variance scales by the square of a coefficient, and (-1)^2 = 1.
+      - Independent deviations cannot cancel systematically.
+      - A spread is a typical distance, so it cannot become smaller than the spread of one of the parts.

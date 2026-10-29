@@ -1,0 +1,265 @@
+id: poisson-distribution-formula
+subject: "9709"
+topic: "6.1"
+title: "The Poisson distribution: calculating probabilities"
+summary: Model random events with the Poisson distribution and compute P(X = r) from the parameter lambda.
+order: 1
+minutes: 10
+kind: core
+objectives: ["6.1.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 6.1 outcome "Use formulae to calculate probabilities for
+    the distribution Po(λ)." All examples, questions and numbers are original; every key
+    was re-derived from the probability mass function P(X = r) = e^{-λ} λ^{r} / r!.
+    Independently re-checked line by line on 2026-10-29: all keys re-derived against
+    e^{-λ} λ^{r}/r! (0.0821, 0.1954, 0.2231, 0.8009), the 3.2 / 4.5 / 12 worked examples
+    including 12^{10}/10! = 17062.8 giving 0.1048, every λ rescaling against the interval
+    actually asked about, and the spot-error's first error (the single term on line 2).
+    Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can recognise when a Poisson model applies, write down its parameter λ
+      for the interval in the question, and calculate P(X = r), P(X ≤ r) and P(X ≥ r).
+
+  - type: definition
+    term: Poisson distribution
+    body: |-
+      A discrete random variable $X$ has a **Poisson distribution** with parameter λ > 0, written
+
+      $$X \sim \mathrm{Po}(\lambda),$$
+
+      if its probability function is
+
+      $$P(X = r) = \frac{e^{-\lambda}\lambda^{r}}{r!} \qquad r = 0, 1, 2, \dots$$
+
+      Here λ is the **mean number of events in the interval being considered**. The interval may be
+      a length of time, an area, a volume, or a number of items.
+
+  - type: explain
+    title: When is a Poisson model appropriate?
+    body: |-
+      A Poisson model fits random events when all of the following hold:
+
+      - events happen **singly** (two cannot occur at exactly the same point);
+      - events happen **independently** of one another;
+      - events occur at a **constant average rate** throughout the interval.
+
+      Typical settings: radioactive decays in a second, misprints on a page, calls arriving at a
+      switchboard, flaws in a length of cable. The events must be countable and the interval fixed
+      in advance. If instead you have a **fixed number of trials** with a constant probability of
+      success, that is binomial, not Poisson.
+
+  - type: explain
+    title: The formula, and reading it off a calculator
+    body: |-
+      $$P(X = r) = \frac{e^{-\lambda}\lambda^{r}}{r!}$$
+
+      - $e^{-\lambda}$ is a constant for the whole distribution, so it is often factored out when you
+        sum several terms.
+      - $r!$ grows very quickly, which is why the probabilities fall away for large $r$.
+      - The probabilities over all $r$ add to 1, so
+
+      $$P(X \le r) = \sum_{k=0}^{r} P(X = k), \qquad P(X \ge r) = 1 - P(X \le r-1).$$
+
+      For "at least one" questions it is almost always quicker to subtract from 1:
+      $P(X \ge 1) = 1 - P(X = 0) = 1 - e^{-\lambda}$.
+
+  - type: example
+    title: "Example 1: faults in a cable, λ = 3.2"
+    problem: |-
+      A cable has flaws at a constant average rate of 3.2 per kilometre. A one-kilometre length is
+      inspected. Find the probability that it contains (a) no flaws, (b) exactly two flaws,
+      (c) at most two flaws.
+    steps:
+      - |-
+        Take $X \sim \mathrm{Po}(3.2)$ for a one-kilometre length, and note $e^{-3.2} = 0.040762$.
+      - |-
+        (a) $P(X = 0) = e^{-3.2} = 0.0408$ (4 d.p.).
+      - |-
+        (b) $P(X = 2) = e^{-3.2}\dfrac{3.2^{2}}{2!} = 0.040762 \times 5.12 = 0.2087$ (4 d.p.).
+      - |-
+        (c) $P(X \le 2) = e^{-3.2}\left(1 + 3.2 + \dfrac{3.2^{2}}{2}\right)
+        = 0.040762 \times 9.32 = 0.3799$ (4 d.p.).
+    answer: "(a) 0.0408  (b) 0.2087  (c) 0.3799"
+
+  - type: check
+    questions: [po-f-definition, po-f-zero-term]
+
+  - type: explain
+    title: Changing the interval
+    body: |-
+      λ is tied to the interval, so **rescale it before you compute**. If events occur at a rate
+      of 2.4 per square metre and you examine 5 square metres, then
+
+      $$\lambda = 2.4 \times 5 = 12.$$
+
+      If the rate is given per 10 minutes and the question asks about 25 minutes, multiply by 2.5.
+      A very common slip is to use the rate per unit interval directly when the question is about a
+      longer or shorter interval; every probability then comes out wrong.
+
+  - type: example
+    title: "Example 2: calls at a switchboard"
+    problem: |-
+      Calls arrive at a switchboard at a constant average rate of 4.5 per 10 minutes.
+      Find the probability that in a 10-minute period there is at least one call.
+    steps:
+      - |-
+        Take $X \sim \mathrm{Po}(4.5)$ for a 10-minute period, with $e^{-4.5} = 0.011109$.
+      - |-
+        $P(X = 0) = e^{-4.5} = 0.0111$ (4 d.p.).
+      - |-
+        $P(X \ge 1) = 1 - P(X = 0) = 1 - 0.011109 = 0.9889$ (4 d.p.).
+    answer: "0.9889"
+
+  - type: check
+    questions: [po-f-three-terms, po-f-scaled-rate]
+
+  - type: example
+    title: "Example 3: a larger λ"
+    problem: |-
+      Flaws occur at 2.4 per square metre of fabric. A sample of 5 square metres is examined.
+      Find the probability that it has exactly 10 flaws, giving your answer to 3 significant figures.
+    steps:
+      - |-
+        Rescale the parameter to the interval asked about: $\lambda = 2.4 \times 5 = 12$.
+      - |-
+        $P(X = 10) = \dfrac{e^{-12} \times 12^{10}}{10!}$, with $e^{-12} = 6.1442 \times 10^{-6}$.
+      - |-
+        $\dfrac{12^{10}}{10!} = \dfrac{6.1917 \times 10^{10}}{3628800} = 17062.8$.
+      - |-
+        $P(X = 10) = 6.1442 \times 10^{-6} \times 17062.8 = 0.1048$.
+    answer: "0.105 (3 s.f.)"
+
+  - type: check
+    questions: [po-f-at-least-two, po-f-spot-cumulative]
+
+  - type: misconceptions
+    items:
+      - wrong: λ is the probability of an event.
+        right: >-
+          λ is a **mean count** in the interval, so it can be any positive number (3.2 flaws per
+          kilometre, for instance). Probabilities are the outputs of the formula, and they never
+          exceed 1.
+      - wrong: P(X = r) and P(X ≤ r) are the same thing.
+        right: >-
+          $P(X = r)$ is a single term of the sum; $P(X \le r)$ adds the terms for every value from
+          0 to r. For "at most" or "no more than" you must add.
+      - wrong: You can use the given rate as λ whatever interval the question asks about.
+        right: >-
+          λ belongs to the interval. If the rate is per 10 minutes and you are asked about 25
+          minutes, use $\lambda = 2.5 \times$ the rate.
+      - wrong: A Poisson model applies whenever you count something.
+        right: >-
+          You also need a **constant average rate** and independent events occurring singly. A count
+          with a fixed number of trials and a fixed success probability is binomial.
+
+  - type: exam
+    body: |-
+      State the distribution you are using and the value of λ first, e.g. "$X \sim \mathrm{Po}(3.2)$",
+      because the parameter is often worth a mark on its own. Give probabilities to 3 or 4 decimal
+      places or 3 significant figures as the question asks, and remember that "at least" and "more
+      than" differ by one term: $P(X \ge 3) = 1 - P(X \le 2)$.
+
+  - type: takeaways
+    items:
+      - 'Use the Poisson model for single, independent events at a constant average rate.'
+      - 'λ is the mean number of events in the interval, not a probability.'
+      - 'P(X = r) = e^{-λ} λ^{r} / r!'
+      - 'P(X ≤ r) sums the terms from 0 to r; P(X ≥ r) = 1 − P(X ≤ r − 1).'
+      - 'Rescale λ to the interval in the question before computing anything.'
+
+questions:
+  - id: po-f-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: Which set of conditions makes a Poisson distribution an appropriate model for the number of events in a fixed interval?
+    options:
+      - text: Events occur singly and independently, at a constant average rate throughout the interval.
+        why: These are exactly the three conditions for a Poisson model, together with a fixed interval chosen in advance.
+        correct: true
+      - text: There is a fixed number of trials, each with the same probability of success.
+        why: That describes a binomial model. A Poisson model has no fixed number of trials.
+        correct: false
+      - text: The events occur in pairs, so the count is always even.
+        why: A Poisson model requires events to occur singly, never in pairs.
+        correct: false
+      - text: Each of k equally likely outcomes is recorded once.
+        why: That is a discrete uniform model over k outcomes, not a count of events.
+        correct: false
+    explanation: |-
+      The Poisson model needs events that happen singly and independently at a constant average rate
+      λ over the interval being considered. A fixed number of trials with a constant probability of
+      success is the binomial setting instead.
+
+  - id: po-f-zero-term
+    format: numeric
+    difficulty: 1
+    objectives: ["6.1.1"]
+    prompt: If X ~ Po(2.5), find P(X = 0), giving your answer to 4 decimal places.
+    fields:
+      - answer: 0.0821
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      P(X = 0) = e^{-2.5} × 2.5^{0} / 0! = e^{-2.5} = 0.082085..., so 0.0821 to 4 d.p.
+
+  - id: po-f-three-terms
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.1"]
+    prompt: If X ~ Po(4), find P(X = 3), giving your answer to 4 decimal places.
+    fields:
+      - answer: 0.1954
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      P(X = 3) = e^{-4} × 4^{3} / 3! = 0.0183156 × 64 / 6 = 0.0183156 × 10.6667 = 0.19537..., so
+      0.1954 to 4 d.p.
+
+  - id: po-f-scaled-rate
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.1"]
+    prompt: Faults occur at a constant average rate of 0.6 per 1000 components. Find the probability that a batch of 2500 components contains no faults, giving your answer to 4 decimal places.
+    fields:
+      - answer: 0.2231
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      Rescale the rate to the batch size: λ = 0.6 × 2.5 = 1.5. Then
+      P(X = 0) = e^{-1.5} = 0.223130..., so 0.2231 to 4 d.p.
+
+  - id: po-f-at-least-two
+    format: numeric
+    difficulty: 3
+    objectives: ["6.1.1"]
+    prompt: If X ~ Po(3), find P(X ≥ 2), giving your answer to 4 decimal places.
+    fields:
+      - answer: 0.8009
+        tolerance: { abs: 0.001 }
+    explanation: |-
+      P(X ≥ 2) = 1 − P(X ≤ 1) = 1 − [P(X = 0) + P(X = 1)]
+      = 1 − e^{-3}(1 + 3) = 1 − 0.0497871 × 4 = 1 − 0.199148 = 0.800852..., so 0.8009 to 4 d.p.
+
+  - id: po-f-spot-cumulative
+    format: spot-error
+    difficulty: 3
+    objectives: ["6.1.1"]
+    prompt: A student is asked to find P(X ≤ 2) for X ~ Po(3), correct to 3 decimal places.
+    lines:
+      - X ~ Po(3), so use the Poisson probability function with λ = 3.
+      - P(X ≤ 2) = e^{-3} × 3^{2} / 2!
+      - = 0.0498 × 4.5 = 0.224
+      - So P(X ≤ 2) = 0.224 (3 d.p.)
+    errorLine: 2
+    fix: >-
+      At most 2 means r = 0, 1 and 2, so sum all three terms:
+      P(X ≤ 2) = e^{-3}(1 + 3 + 4.5) = 0.0498 × 8.5 = 0.423 (3 d.p.).
+    explanation: |-
+      The student substituted r = 2 into the probability function, which gives P(X = 2) only. A ≤
+      sign requires the whole sum from 0 to 2, so the line with the single term is the first error;
+      everything after it carries that mistake forward.

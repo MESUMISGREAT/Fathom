@@ -1,0 +1,371 @@
+id: poisson-distribution-mean-variance-events
+subject: "9709"
+topic: "6.1"
+title: Mean, variance and modelling random events
+summary: For X ~ Po(λ) the mean and variance are both λ, and the equality is what makes the Poisson model testable against real data.
+order: 2
+minutes: 10
+kind: core
+objectives: ["6.1.2", "6.1.3"]
+prerequisites: ["poisson-distribution-formula"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: |-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 6.1 outcomes, quoted verbatim:
+    "Use the fact that if X ~ Po(λ) then the mean and the variance of X are each equal to λ."
+    "Understand the relevance of the Poisson distribution to the distribution of random events,
+    and use the Poisson distribution as a model."
+    All examples, questions and tables are original. Every figure was recomputed by hand.
+    Independently re-checked line by line on 2026-10-29: both frequency tables re-totalled
+    (Set A mean 1.96 and variance 1.7584, Set B mean 2.2 and variance 9.36), √6.25 = 2.5, the
+    0.6 × 5 = 3.0 rescaling, and the spot-error's first error. One fix: Example 2 now states
+    that the calls are modelled by a Poisson distribution, which is what justifies quoting
+    sd = √λ. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can state and use the facts that a Poisson distribution Po(λ) has mean λ
+      and variance λ, decide whether a Poisson model is plausible for a real situation, and
+      scale a rate from one interval to another.
+
+  - type: explain
+    title: One parameter carries both the centre and the spread
+    body: |-
+      If X ~ Po(λ) then
+
+      **E(X) = λ   and   Var(X) = λ**
+
+      so the **standard deviation is √λ**. This is unusual: most distributions need one parameter
+      to fix the mean and another to fix the spread, but here a single number λ does both. λ is the
+      average number of events in the interval you are counting in.
+
+      Two consequences are worth memorising because examiners use them constantly:
+
+      - If you are told the mean, you already know the variance. There is nothing to work out.
+      - If you are given data and asked whether a Poisson model is suitable, compare the sample
+        mean with the sample variance. A Poisson model predicts they are approximately equal.
+
+      The standard deviation is smaller than the mean whenever λ > 1 (since √λ < λ), so a Poisson
+      count is *less* variable relative to its mean than you might guess for large λ. For λ = 4,
+      the spread is √4 = 2 about a mean of 4.
+
+  - type: definition
+    term: The Poisson model
+    body: |-
+      A random variable X has a Poisson distribution with parameter λ, written X ~ Po(λ), when X
+      counts the number of events in a fixed interval and
+
+      - events occur **singly** (two at the same instant is impossible);
+      - events occur **independently** of one another;
+      - the events occur at a **constant average rate**, so the mean count is proportional to the
+        length of the interval.
+
+      λ is the mean number of occurrences in that interval. The interval may be one of time,
+      length, area or volume, and it must be fixed in advance: λ for 2 minutes is not the same as
+      λ for 1 minute.
+
+  - type: example
+    title: "Example 1: nothing to calculate"
+    problem: |-
+      The number of emails arriving at an office in a 10-minute period is modelled as
+      X ~ Po(3.5). State the mean, the variance and the standard deviation of X.
+    steps:
+      - |-
+        The parameter is λ = 3.5, and for a Poisson distribution the mean equals λ.
+      - |-
+        The variance is also λ, so Var(X) = 3.5. It is *not* 3.5² = 12.25.
+      - |-
+        The standard deviation is √λ = √3.5 = 1.8708...
+    answer: "Mean = 3.5, variance = 3.5, standard deviation = 1.87 (3 s.f.)"
+
+  - type: check
+    questions: [pd-mv-mean-variance, pd-mv-sd]
+
+  - type: explain
+    title: Scaling the rate to a different interval
+    body: |-
+      Because events occur at a constant average rate, λ is **proportional to the interval length**.
+      If the rate is 0.6 events per minute, then
+
+      - in 1 minute, λ = 0.6;
+      - in 5 minutes, λ = 5 × 0.6 = 3.0;
+      - in 30 seconds, λ = 0.5 × 0.6 = 0.3.
+
+      Change λ first, and only then quote the mean or the variance. Quoting the variance of the
+      one-minute count as the variance of the five-minute count is the most common error in this
+      topic: both mean and variance become 3.0, not 0.6.
+
+  - type: example
+    title: "Example 2: a five-minute interval"
+    problem: |-
+      Calls to a helpline arrive at a constant average rate of 0.6 per minute, and the number of
+      calls in any interval is modelled by a Poisson distribution. Let Y be the number of calls in
+      a 5-minute interval. Find the mean and standard deviation of Y.
+    steps:
+      - |-
+        The model is Poisson, so find λ for the interval actually being counted: λ = 0.6 × 5 = 3.0.
+      - |-
+        Hence E(Y) = 3.0 and Var(Y) = 3.0.
+      - |-
+        Standard deviation = √3.0 = 1.732...
+    answer: "Mean = 3.0 calls, standard deviation = 1.73 calls (3 s.f.)"
+
+  - type: check
+    questions: [pd-mv-scaled, pd-mv-spot-variance]
+
+  - type: explain
+    title: Is a Poisson model plausible?
+    body: |-
+      Translation: use the Poisson distribution *as a model*. A model is a claim, and the claim can
+      be checked against data. The test that matters at this level is the **mean-versus-variance
+      comparison**:
+
+      - For a Poisson model, mean and variance are equal, so sample mean ≈ sample variance.
+      - If the **variance is much larger than the mean**, the events are clustered - they arrive in
+        groups or bursts (accidents in a motorway pile-up, insects in a swarm) - and a Poisson model
+        is not suitable.
+      - If the **variance is much smaller than the mean**, the events are more regular than random
+        (a bus every 10 minutes), which a Poisson model also does not describe.
+
+      The same reasoning explains when a Poisson model *is* appropriate: phone calls to a large
+      switchboard, radioactive decays, typing errors on a page, flaws in a manufactured sheet -
+      single, independent events at a roughly constant rate, with no clustering.
+
+  - type: example
+    title: "Example 3: two sets of counts"
+    problem: |-
+      Two sets of 50 observations of a count are summarised below. Decide in each case whether a
+      Poisson model is plausible.
+
+      **Set A** - defects per sheet of glass:
+
+      | defects | 0 | 1 | 2 | 3 | 4 | 5 |
+      |---|---|---|---|---|---|---|
+      | frequency | 7 | 13 | 14 | 9 | 5 | 2 |
+
+      **Set B** - birds counted per field:
+
+      | birds | 0 | 1 | 2 | 3 | 8 |
+      |---|---|---|---|---|---|
+      | frequency | 25 | 5 | 5 | 5 | 10 |
+    steps:
+      - |-
+        Set A: Σf = 50 and Σfx = 0(7) + 1(13) + 2(14) + 3(9) + 4(5) + 5(2) = 98, so the sample
+        mean is 98/50 = 1.96.
+      - |-
+        Set A: Σfx² = 0 + 13 + 4(14) + 9(9) + 16(5) + 25(2) = 280, so the variance is
+        280/50 - 1.96² = 5.6 - 3.8416 = 1.7584 ≈ 1.76.
+      - |-
+        Set A: mean 1.96 and variance 1.76 are close, so a Poisson model is plausible.
+      - |-
+        Set B: Σfx = 0(25) + 1(5) + 2(5) + 3(5) + 8(10) = 110, so the mean is 110/50 = 2.2.
+      - |-
+        Set B: Σfx² = 0 + 5 + 4(5) + 9(5) + 64(10) = 710, so the variance is
+        710/50 - 2.2² = 14.2 - 4.84 = 9.36.
+      - |-
+        Set B: the variance 9.36 is far larger than the mean 2.2, which indicates clustering (the
+        ten fields holding 8 birds each), so a Poisson model is not suitable.
+    answer: "Set A: plausible (mean 1.96 ≈ variance 1.76). Set B: not plausible (variance 9.36 ≫ mean 2.2)."
+
+  - type: check
+    questions: [pd-mv-plausible, pd-mv-clustered, pd-mv-model-explain]
+
+  - type: misconceptions
+    items:
+      - wrong: The variance of a Poisson distribution is the square root of the mean.
+        right: |-
+          The **variance** is λ, exactly the same as the mean. It is the **standard deviation** that
+          is √λ, so for λ = 6.25 the variance is 6.25 and the standard deviation is 2.5.
+      - wrong: Any set of counts can be modelled by a Poisson distribution.
+        right: |-
+          A Poisson model requires single, independent events at a constant rate. Clustered data -
+          accidents, swarms, multiple births - have variance much greater than the mean and need a
+          different model.
+      - wrong: The mean and variance must be found separately from the data.
+        right: |-
+          For a Poisson model, one parameter fixes both. Estimate λ once (usually from the sample
+          mean) and the variance follows as λ; if the sample variance disagrees badly, that is
+          evidence the model does not fit.
+      - wrong: The variance of the number of events in 5 minutes is the same as in 1 minute.
+        right: |-
+          λ scales with the interval, so both the mean and the variance scale with it: at 0.6 per
+          minute, a 5-minute count has λ = 3.0 and variance 3.0.
+
+  - type: exam
+    body: |-
+      Questions on 6.1.2 are usually one mark: state the variance of X ~ Po(λ) and nothing else is
+      needed. Where the examiner wants the standard deviation, "√λ" must be shown, not "λ".
+
+      For 6.1.3 the mark is for the *decision plus its justification*. Write the comparison
+      explicitly: "the sample mean is 1.96 and the sample variance is 1.76, which are close, so a
+      Poisson model is plausible" scores; "yes, it looks random" does not. If the data are
+      clustered, name the clustering as the reason the model fails rather than saying the numbers
+      are wrong.
+
+      Always state λ for the interval you are counting before quoting a mean or variance.
+
+  - type: takeaways
+    items:
+      - "X ~ Po(λ) has mean λ and variance λ, so the standard deviation is √λ."
+      - "One parameter fixes both the centre and the spread; there is no second parameter to find."
+      - "λ scales with interval length: λ = rate × interval, and both mean and variance change with it."
+      - "A Poisson model is plausible when the sample mean and sample variance are close."
+      - "Variance much larger than the mean means clustering, so the Poisson model is unsuitable."
+
+questions:
+  - id: pd-mv-mean-variance
+    format: mcq
+    difficulty: 1
+    objectives: ["6.1.2"]
+    prompt: "The random variable X has the distribution Po(4.5). Which statement is correct?"
+    options:
+      - text: "E(X) = 4.5 and Var(X) = 4.5"
+        why: |-
+          For a Poisson distribution the mean and variance are both equal to the parameter λ = 4.5.
+        correct: true
+      - text: "E(X) = 4.5 and Var(X) = 2.12"
+        why: |-
+          2.12 is √4.5, the standard deviation. The variance equals the mean, 4.5.
+        correct: false
+      - text: "E(X) = 2.12 and Var(X) = 4.5"
+        why: |-
+          2.12 is the standard deviation, not the mean; the mean is λ = 4.5.
+        correct: false
+      - text: "E(X) = 4.5 and Var(X) = 20.25"
+        why: |-
+          20.25 is 4.5², which is λ². That is neither the variance nor the standard deviation.
+        correct: false
+    explanation: |-
+      If X ~ Po(λ) then E(X) = λ and Var(X) = λ. With λ = 4.5 both the mean and the variance are
+      4.5, and the standard deviation is √4.5 = 2.12 (3 s.f.).
+
+  - id: pd-mv-sd
+    format: numeric
+    difficulty: 1
+    objectives: ["6.1.2"]
+    prompt: "The number of faults in a metre of cable is modelled as Po(6.25). Find the standard deviation of the number of faults per metre."
+    fields:
+      - answer: 2.5
+        tolerance: { abs: 0.01 }
+    explanation: |-
+      For Po(λ) the variance is λ = 6.25, so the standard deviation is √6.25 = 2.5.
+
+  - id: pd-mv-scaled
+    format: numeric
+    difficulty: 2
+    objectives: ["6.1.2", "6.1.3"]
+    prompt: "A call centre receives calls at a constant average rate of 0.6 per minute, modelled by a Poisson distribution. Find the variance of the number of calls received in a 5-minute interval."
+    fields:
+      - answer: 3
+    explanation: |-
+      Scale the rate to the interval first: λ = 0.6 × 5 = 3.0. For a Poisson distribution the
+      variance equals λ, so the variance is 3.0. (The variance of the one-minute count, 0.6, is the
+      common wrong answer.)
+
+  - id: pd-mv-spot-variance
+    format: spot-error
+    difficulty: 2
+    objectives: ["6.1.2"]
+    prompt: "A student is working with X ~ Po(2.4). One line of their solution is the first error. Identify it."
+    lines:
+      - "The parameter of the distribution is λ = 2.4."
+      - "The variance is √2.4 = 1.55."
+      - "Therefore the standard deviation is 2.4."
+      - "The mean is also 2.4, so the mean and the variance are not equal here."
+    errorLine: 2
+    fix: |-
+      The variance is λ = 2.4, not √2.4. The standard deviation is √2.4 = 1.55, so line 3 is also
+      wrong, and the mean and variance *are* equal.
+    explanation: |-
+      For a Poisson distribution the variance equals λ, and it is the standard deviation that is
+      the square root of λ. Swapping those two is the most common error in this topic; here it
+      makes the student's final conclusion false as well.
+
+  - id: pd-mv-plausible
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      In 50 one-second intervals, a counter records a total of 98 decays, with Σx² = 280.
+      Which conclusion is justified?
+    options:
+      - text: "A Poisson model is plausible, because the sample mean 1.96 and the sample variance 1.76 are close."
+        why: |-
+          A Poisson distribution has mean equal to variance, and the two statistics agree to within
+          about 10%, so the model is plausible.
+        correct: true
+      - text: "A Poisson model is not suitable, because the mean and the variance are not exactly equal."
+        why: |-
+          Data from a Poisson process never give exactly equal statistics; closeness within ordinary
+          sampling variation is what matters.
+        correct: false
+      - text: "A Poisson model is not suitable, because the variance is smaller than the mean."
+        why: |-
+          The variance is 1.76 against a mean of 1.96 - close, and a small difference in this
+          direction is unremarkable for 50 observations.
+        correct: false
+      - text: "The mean cannot be found without knowing the individual observations."
+        why: |-
+          The totals are enough: mean = Σfx/Σf = 98/50 = 1.96.
+        correct: false
+    explanation: |-
+      Mean = 98/50 = 1.96 and variance = Σfx²/n - mean² = 280/50 - 1.96² = 5.6 - 3.8416 = 1.7584.
+      Since a Poisson distribution has mean equal to variance and 1.96 ≈ 1.76, a Poisson model is
+      plausible.
+
+  - id: pd-mv-clustered
+    format: mcq
+    difficulty: 2
+    objectives: ["6.1.3"]
+    prompt: |-
+      For a set of counts the sample mean is 2.2 and the sample variance is 9.36. What does this
+      tell you about using a Poisson model?
+    options:
+      - text: "It is unsuitable, because the variance is much larger than the mean, which indicates clustering of events."
+        why: |-
+          A Poisson model requires mean = variance. A variance four times the mean means the events
+          arrive in groups rather than independently.
+        correct: true
+      - text: "It is suitable, because the variance is larger than the mean and Poisson counts are always more spread out than their mean."
+        why: |-
+          The opposite is true: for a Poisson distribution the variance equals the mean, not four
+          times it.
+        correct: false
+      - text: "It is suitable, because any count data can be modelled by a Poisson distribution as long as the mean is known."
+        why: |-
+          A Poisson model also requires single, independent events at a constant rate, which
+          clustered data violates.
+        correct: false
+      - text: "The model cannot be assessed from the mean and variance alone, so no conclusion is possible."
+        why: |-
+          Comparing the mean with the variance is exactly the check the syllabus expects, and it
+          gives a clear answer here.
+        correct: false
+    explanation: |-
+      For X ~ Po(λ), E(X) = Var(X). Here the variance 9.36 is far greater than the mean 2.2, so the
+      counts are clustered (events arriving in groups), and a Poisson model is not suitable.
+
+  - id: pd-mv-model-explain
+    format: explain
+    difficulty: 3
+    objectives: ["6.1.3"]
+    prompt: |-
+      The number of emails arriving at a large company's mail server in a one-minute interval is
+      modelled as a Poisson random variable. Give two reasons why this model may be appropriate and
+      one reason why it might fail in practice.
+    model: |-
+      A Poisson model needs single, independent events at a constant average rate. Emails arrive
+      one at a time, whether one user sends a message is unrelated to whether another does, and the
+      average rate is roughly steady over a working period, so the model is reasonable. It fails
+      when the rate is not constant - a marketing email to all staff produces a burst of arrivals
+      at the same moment, which is clustering rather than independent events.
+    keyPoints:
+      - "Emails arrive singly and independently of one another."
+      - "The average arrival rate is roughly constant over the chosen interval (which makes λ proportional to interval length)."
+      - "A burst or broadcast at one instant makes events non-independent and clustered, so the variance would exceed the mean."
+      - "The interval must be fixed in advance, because λ depends on its length."
+    explanation: |-
+      Marks are for matching the Poisson conditions - single, independent events at a constant rate -
+      to the situation, and for naming a realistic failure (clustering or a rate that varies).
