@@ -180,13 +180,15 @@ questions:
       - text: All three converge
         why: |-
           Only the cube root form has |F'(α)| < 1 at the root.
+    explanation: |
+      Convergence needs $|F'(x)| < 1$ near the root. For $x = \sqrt[3]{2x + 5}$, $F'(x) = \dfrac{2}{3(2x+5)^{2/3}} \approx 0.19$ near $x = 2$, comfortably below 1; the other rearrangements have $|F'| > 1$ there and diverge.
 
   - id: rearrange-valid
     format: cloze
     difficulty: 1
     objectives: ["3.6.3"]
     prompt: |-
-      Rearrange x³ + 3x − 2 = 0 into the form x = F(x) by taking a cube root.
+      Rearrange x³ + 3x − 2 = 0 into the form x = {{1}} by taking a cube root.
     blanks:
       - accept: ["x = \\sqrt[3]{2 - 3x}", "x = (2 - 3x)^{1/3}", "cube root of (2 - 3x)"]
     explanation: |-
@@ -212,3 +214,5 @@ questions:
       - text: It would oscillate between two values forever
         why: |-
           The iteration does not have a period-2 cycle; it converges.
+    explanation: |
+      Here $F'(-2) = \dfrac{2}{3 \cdot 1^{2/3}} \approx 0.67 < 1$, so the iteration still converges. Starting further from the root only means a few more steps.

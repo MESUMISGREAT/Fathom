@@ -5,6 +5,11 @@ import CircularMeasureRadianDefinition from './circular-measure-radian-definitio
 import CircularMeasureSectorParts from './circular-measure-sector-parts';
 import CircularMeasureSegment from './circular-measure-segment';
 import CircularMeasureTangentRegion from './circular-measure-tangent-region';
+import ComplexNumbersArgandIntro from './complex-numbers-argand-intro';
+import ComplexNumbersArgandOperations from './complex-numbers-argand-operations';
+import ComplexNumbersGeometricTransformations from './complex-numbers-geometric-transformations';
+import ComplexNumbersLociSummary from './complex-numbers-loci-summary';
+import ComplexNumbersPolarMultiply from './complex-numbers-polar-multiply';
 import CoordinateGeometryChordMidpoint from './coordinate-geometry-chord-midpoint';
 import CoordinateGeometryCircleExpanded from './coordinate-geometry-circle-expanded';
 import CoordinateGeometryCircleProperties from './coordinate-geometry-circle-properties';
@@ -20,6 +25,7 @@ import CoordinateGeometryPerpendicularGradients from './coordinate-geometry-perp
 import CoordinateGeometrySlidingLine from './coordinate-geometry-sliding-line';
 import CoordinateGeometryTangentAtPoint from './coordinate-geometry-tangent-at-point';
 import DiscriminantCases from './discriminant-cases';
+import ForcesEquilibriumForceDiagram from './forces-equilibrium-force-diagram';
 import FunctionsCombinedInside from './functions-combined-inside';
 import FunctionsCombinedSequence from './functions-combined-sequence';
 import FunctionsCompositeMachines from './functions-composite-machines';
@@ -119,6 +125,11 @@ export const diagrams: DiagramRegistry = {
   'circular-measure-sector-parts': CircularMeasureSectorParts,
   'circular-measure-segment': CircularMeasureSegment,
   'circular-measure-tangent-region': CircularMeasureTangentRegion,
+  'complex-numbers-argand-intro': ComplexNumbersArgandIntro,
+  'complex-numbers-argand-operations': ComplexNumbersArgandOperations,
+  'complex-numbers-geometric-transformations': ComplexNumbersGeometricTransformations,
+  'complex-numbers-loci-summary': ComplexNumbersLociSummary,
+  'complex-numbers-polar-multiply': ComplexNumbersPolarMultiply,
   'coordinate-geometry-chord-midpoint': CoordinateGeometryChordMidpoint,
   'coordinate-geometry-circle-expanded': CoordinateGeometryCircleExpanded,
   'coordinate-geometry-circle-properties': CoordinateGeometryCircleProperties,
@@ -134,6 +145,7 @@ export const diagrams: DiagramRegistry = {
   'coordinate-geometry-sliding-line': CoordinateGeometrySlidingLine,
   'coordinate-geometry-tangent-at-point': CoordinateGeometryTangentAtPoint,
   'discriminant-cases': DiscriminantCases,
+  'forces-equilibrium-force-diagram': ForcesEquilibriumForceDiagram,
   'functions-combined-inside': FunctionsCombinedInside,
   'functions-combined-sequence': FunctionsCombinedSequence,
   'functions-composite-machines': FunctionsCompositeMachines,

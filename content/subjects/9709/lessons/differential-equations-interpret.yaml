@@ -232,15 +232,11 @@ questions:
       The voltage across a charging capacitor is $V = 12(1 - e^{-t/0.01})$ volts, $t$ in seconds.
       (a) What is the supply voltage? (b) What is the time constant? (c) After how many time
       constants is the capacitor 95% charged?
-    fields:
-      - label: "Supply voltage"
-        answer: 12
-        unit: V
-      - label: "Time constant"
-        answer: 0.01
-        unit: s
-      - label: "Time constants for 95%"
-        answer: 3
+    accept:
+      - "12 V, 0.01 s, 3"
+      - "12, 0.01, 3"
+    model: |
+      (a) 12 V (b) 0.01 s (c) 3 time constants
     explanation: |
       (a) As $t \to \infty$, $V \to 12$ V, so the supply is 12 V. (b) The exponent is $-t/0.01$,
       so the time constant $\tau = 0.01$ s. (c) $1 - e^{-n} = 0.95 \Rightarrow e^{-n} = 0.05
@@ -254,17 +250,21 @@ questions:
       A reaction follows $\frac{dx}{dt} = k(a - x)$ with $x=0$ at $t=0$. The solution is
       $x = a(1 - e^{-kt})$. Which statement is correct?
     options:
-      - text: "The reaction is never 100% complete in finite time, but approaches completion as $t \to \infty$."
+      - text: >
+          The reaction is never 100% complete in finite time, but approaches completion as $t \to \infty$.
         correct: true
         why: >
           $x \to a$ as $t \to \infty$, but $x = a$ only in the limit.
-      - text: "The reaction completes exactly when $t = 1/k$."
+      - text: >
+          The reaction completes exactly when $t = 1/k$.
         why: >
           At $t = 1/k$, $x = a(1 - e^{-1}) \approx 0.63a$, only 63% complete.
-      - text: "The reaction goes past completion and $x$ exceeds $a$."
+      - text: >
+          The reaction goes past completion and $x$ exceeds $a$.
         why: >
           $x = a(1 - e^{-kt}) < a$ for all finite $t$.
-      - text: "The rate is constant throughout the reaction."
+      - text: >
+          The rate is constant throughout the reaction.
         why: >
           The rate $dx/dt = ka e^{-kt}$ decreases as $x$ increases.
     explanation: |

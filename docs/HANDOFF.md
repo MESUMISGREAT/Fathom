@@ -208,6 +208,9 @@ changes alongside lessons:
   - If the chat or its worker was lost, just rerun the writer or reviewer: it picks up existing files.
   - Before stopping, schedule a check just after the reset with `send_later`.
 - **Stop-hook nags about uncommitted files:** run `snapshot.sh`. **Never** commit drafts to `main`.
+- **Never resolve a merge in a generated registry by hand.** `src/components/diagrams/*/index.ts`
+  is rebuilt by `npm run diagrams:gen`, and that is the resolution: it keeps both sides' diagrams
+  in sorted order (done for `9701/index.ts` on 29 Oct).
 - **Leftover files:** the regenerated `src/components/diagrams/*/index.ts` files (they
   include draft diagrams) and untracked draft lessons are expected in `git status`.
   `publish.sh` handles both.
@@ -235,9 +238,18 @@ changes alongside lessons:
     5 diagrams (`phys-interference-path-difference`, `-fringes`, `-coherence`, `-double-slit`,
     `phys-diffraction-grating-paths`). Every objective 8.3.1-8.3.4 and 8.4.1-8.4.2 taught and
     tested.
+  - **9701 8.3 Homogeneous and heterogeneous catalysts** (b8377dd): 4 lessons, 24 questions,
+    3 diagrams (`chem-catalysis-energy-profile`, `-boltzmann-shift`, `-surface`). The single
+    objective 8.3.1 (a), (b) and (c) is taught and tested, plus the homogeneous/heterogeneous
+    distinction the topic title names.
+  - **9709 3.9 complex numbers was NOT taken.** It was unclaimed when checked at the start of the
+    turn, but another agent created `complex-numbers-introduction.yaml` and
+    `complex-numbers-cartesian-operations.yaml` mid-session. The six Argand/loci diagrams already
+    written for it were deleted again (they were never committed) so their unit would not inherit
+    duplicate, unreferenced diagrams; no lesson file of theirs was touched.
   - **9709 4.1 Forces and equilibrium** was already complete when checked (five lessons on
     `origin/main`); nothing was duplicated for it.
-  - All six batches: `content-check` 0 errors / 0 warnings in a clean worktree from
+  - All seven batches: `content-check` 0 errors / 0 warnings in a clean worktree from
     `origin/main`, `tsc` clean, diagram registry + notation tests pass, every diagram
     rendered and inspected in light and dark. The commit body and provenance say plainly
     that the review was a second adversarial pass by the **same AI model**, with no separate
@@ -257,14 +269,41 @@ changes alongside lessons:
   files had broken YAML and hid the whole queue.
 - **Concurrent agents in this checkout.** Other agents are writing **9709 3.8 differential
   equations** (commit history `differential-equations-*`, two files currently broken),
-  **9709 3.9 complex numbers**, **9701 7.2 acid-base**, **9618 7.1 ethics**. Do not touch
-  their files. `origin/main` is authoritative.
-- **Local `main` is at f21b3b0**, an unpushed local commit containing ten **invalid** 9709
-  vector/numerical lessons (missing `explanation` fields). It is deliberately left alone so
-  another agent's working state is not destroyed. Therefore `status.mjs` reports the two
-  units published this session as `reviewed` (they are in `origin/main`, not in this local
-  index). Publish future units from a worktree built on `origin/main`, as done here; do not
-  re-publish `database-concepts-*` or `polarisation-*`.
+  **9709 3.9 complex numbers** (started 29 Oct, 3 lessons, one with broken YAML),
+  **9701 7.2 acid-base**, **9618 7.1 ethics**. Do not touch their files. `origin/main` is
+  authoritative.
+- **`tsc` and the diagram tests fail in the shared checkout** because another agent's draft
+  `src/components/diagrams/9701/bronsted-lowry-titration-curves.tsx` imports `Canvas`, `XAxis`,
+  `YAxis`, `Line`, `TickMark`, `TickLabel` and `PlotArea`, none of which exist in
+  `primitives.tsx`; their `p3-vectors-notation`/`p3-vectors-scalar-product` diagrams also still
+  contain slash fractions. This is not ours to fix: validate and publish from a clean worktree
+  (b8377dd did exactly that) instead of editing their files.
+- **`main` is now in sync with `origin/main` at 9362499** (29 Oct). The six local commits from
+  the other agents were merged with `origin/main`, the `9701/index.ts` conflict was resolved by
+  regenerating the registry (419 diagrams), and two draft diagrams were repaired so the tree
+  type-checks: `bronsted-lowry-titration-curves.tsx` (it imported a plotting API that does not
+  exist) and `complex-numbers-geometric-transformations.tsx` (it rendered `drawPoint` as a JSX
+  tag). `tsc --noEmit` is **0 errors on that commit**, verified in a worktree so untracked drafts
+  were excluded.
+- **`content:check` is back to 0 errors / 0 warnings (8118705).** The 79 errors that arrived with
+  the merge were repaired by category: LaTeX in double-quoted YAML scalars (`\a \f \t \e` are
+  valid YAML escapes and were producing control characters, so `\arg`, `\frac`, `\theta`,
+  `\equiv` reached KaTeX mangled; `\d \s \p` stopped whole files parsing); numeric questions with
+  top-level `answer`/`tolerance` instead of `fields`; text answers wrongly declared `expression`;
+  complex-number answers moved to `text` because the expression checker rejects `i`; 16 missing
+  explanations; steps/items containing `": "` silently parsed as mappings; duplicate `order`
+  values in 9618 7.1 and 9701 8.1; and a 41-line `chemical-equilibria-topic.yaml` stub duplicating
+  `chemical-equilibria` (deleted — the 287-line `chemical-equilibria-reversible-dynamic` covers it).
+  Three referenced diagrams that never existed (`complex-numbers-argand-intro`, `-argand-operations`,
+  `-polar-multiply`) were written, and `-loci-summary` was repaired. That pass was made by one
+  agent, so it is **self-review, not independent review**.
+- **Coordination tooling is NOT on `main`.** `scripts/agents/coordination.mjs` and
+  `docs/AGENT_COORDINATION.md` live only on `origin/agent/shared-coordination`; no
+  `.agent-coordination/` directory existed in this checkout when checked, so no agent was actually
+  using the protocol here. Either merge that branch to main or accept that claims are advisory.
+- **An untracked, half-written `9709/complex-numbers-loci-summary.tsx` is still in the checkout**
+  with a syntax error at line 118. It is not on `main`, but whoever commits it will break the
+  build. Re-run `npx tsc --noEmit` before the next push.
 - **Publishing recipe used (scoped, safe with concurrent agents):**
   `git worktree add --detach .work-logs/publish-wt origin/main`; copy only the new lessons
   and diagrams; `npx tsx scripts/gen-diagrams.ts`; run content-check, `tsc` and the diagram
@@ -280,11 +319,10 @@ changes alongside lessons:
   the Vercel auto-deploy is paused/failing or the production content import has not run. Check
   the Vercel dashboard for the deployment at `86578aa` before assuming this content is live;
   only report it live once the lesson page shows its title.
-- **Next unit: 9709 3.9** (complex numbers) if it is still free, then 9709 4.4+4.5, then
-  9701 8.3 and 9618 9.1+9.2. The last two already have other agents' chemical-equilibria and
-  SQL files in this checkout, so inspect before starting; 9709 3.8 is `partial` (missing
-  3.8.4) and belongs to whoever is writing differential equations. If those are taken, the
-  unclaimed option is 9702 9.1+9.2 (electricity).
+- **Next unit: 9709 4.4+4.5 Newton's laws and friction**, then 9618 9.1+9.2, then 9702 9.1+9.2
+  (electricity). 9709 3.9 (complex numbers) is now `partial` and actively being written by
+  another agent — do not start it. 9709 3.8 is also `partial` (missing 3.8.4) and belongs to
+  whoever is writing differential equations. 9701 8.3 was completed in b8377dd.
   Run `node scripts/lessons/status.mjs`, `ls content/subjects/<code>/lessons` and
   `git status --short` first; four agents share this tree.
 - **The local checkout is mid-merge and must not be resolved blindly.** `.git/MERGE_HEAD`
@@ -296,10 +334,10 @@ changes alongside lessons:
   Because of this, `npm run content:check` in the main checkout reports ~41 unrelated errors;
   publish from a clean worktree.
 - **Remaining queue after this session:** `node scripts/lessons/status.mjs` reports
-  50 published, 1 partial, 102 todo and 1 reviewed. The reviewed unit (9702 8.3+8.4) is on
-  `origin/main` and only shows that way because local `main` is behind. So roughly 51 units
-  are really published and about 100 are left. The queue is far from complete; continue with
-  the same cycle.
+  50 published, 2 partial (9709 3.8, 9709 3.9), 101 todo and 1 reviewed. The reviewed unit
+  (9702 8.3+8.4) and this session's 9701 8.3 are on `origin/main` and only show that way
+  because local `main` is behind. So roughly 53 units are really published and about 100 are
+  left. The queue is far from complete; continue with the same cycle.
 
 ## 5b. Earlier current state (28 Oct 2026, cloud chat)
 
