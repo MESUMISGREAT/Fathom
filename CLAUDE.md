@@ -166,3 +166,8 @@ The usual 2–5 minute lesson target is a guideline, not a hard limit. Understan
 When multiple agents work in the same checkout, follow `docs/AGENT_COORDINATION.md` before selecting work. Use the shared runtime mailbox, announce roles, atomically claim distinct lesson units, heartbeat ownership, and avoid simultaneous edits to shared files. Coordination state is local runtime data and must never be committed. If the mailbox is not genuinely shared, say so and work safely solo or use messaging actually provided by the runtime; do not pretend files are real-time push messaging.
 
 Agent count is dynamic rather than a fixed requirement: use parallel agents only for independent tasks, within available machine/provider capacity. Solo mode must always work. Keep one owner for shared handoff/publication state and one publisher at a time. The coordination protocol never overrides syllabus quality, independent review, validation, provenance, or production safety gates.
+
+
+## Heartbeat-driven collaboration
+
+Follow the heartbeat and stall-response rules in `docs/AGENT_COORDINATION.md`. The coordination helper emits a shared mailbox message for every explicit heartbeat. Read other agents' heartbeats during collaboration, acknowledge assignments and blocker/handoff messages, and respond with concrete help when a task is blocked or may be stalled. During active coordination, check messages at task boundaries and poll every 2–5 seconds while waiting; heartbeat about every 30–60 seconds during long tasks when practical. A heartbeat older than 2 minutes is a prompt to check in, not permission to steal a claim. Avoid replying to every routine heartbeat, which creates useless message storms.
