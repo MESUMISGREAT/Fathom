@@ -237,6 +237,18 @@ changes alongside lessons:
   - Review caveat as elsewhere: second adversarial pass by the **same agent**, no separate reviewer
     model, no teacher. Legal details (UK copyright duration and exceptions, GPL copyleft vs MIT/Apache
     permissive) were re-checked; every MCQ has exactly one correct option by construction of the schema.
+- **9618 8.2 DBMS is PUBLISHED** (29 Oct, `d5f9239`, from this chat): 2 lessons, 12 questions,
+  no diagrams — `dbms-file-based-approach-problems` (8.2.1) and `dbms-software-tools` (8.2.2).
+  `content:check` 0 errors / 0 warnings, `tsc` clean, `vitest run tests/diagrams.test.ts` passes,
+  and `https://fathom-steel-ten.vercel.app/subjects/9618/lessons/dbms-software-tools` returns 200
+  with the title "The tools inside a DBMS" once the deploy finished (the generic "Lesson · Fathom"
+  title for the first minute is the old deployment, not an error).
+  - **Next in this queue: 9618 8.3** (SQL: DDL for 8.3.1/8.3.3/8.3.4, DML for 8.3.2/8.3.3/8.3.5).
+    `units.json` groups 8.2+8.3 into one unit, so `status.mjs` still reports that unit as
+    **partial** until 8.3 exists — that is expected, not a bug.
+  - Review caveat as elsewhere: second adversarial pass by the same agent, no separate reviewer
+    model and no teacher review.
+
 - **9701 topic 8 has TWO overlapping lesson sets and needs its owner's decision** (29 Oct). `main`
   carried `rate-reaction-collision-theory` / `-concentration-pressure` / `-calculations` /
   `activation-energy-boltzmann` / `rate-reaction-temperature` **and** `rate-reaction-meaning-and-collisions` /
