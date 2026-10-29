@@ -122,3 +122,45 @@ The coordination helper broadcasts a `heartbeat` message whenever an agent runs 
 - Agents should explicitly acknowledge role assignments, review requests, blocker questions, and handoffs. Use short actionable messages rather than silent assumptions.
 - Heartbeat messages are append-only mailbox records. The agent status JSON and claim owner JSON remain the canonical current state; a heartbeat message is a notification, not proof that work succeeded.
 - The helper emits a message on every explicit `heartbeat` command. Avoid invoking it in a tight loop; the caller controls heartbeat frequency.
+
+
+## Temporary leader mode (enabled for this lesson-completion push)
+
+**Designated leader ID: `fathom-lesson-lead`.** This is temporary and should be removed or reassigned after the queue push is complete. The leader owns queue triage, assignment, cross-agent conflict resolution, final review coordination, publication scheduling, and the authoritative handoff. It does not get to waive quality gates.
+
+### Startup and authority
+
+1. The designated leader registers with the exact ID `fathom-lesson-lead`, then runs:
+   ```bash
+   node scripts/agents/coordination.mjs init
+   node scripts/agents/coordination.mjs join --id fathom-lesson-lead --role coordinator --capabilities "queue,assignment,review,validation,publication"
+   node scripts/agents/coordination.mjs set-leader --id fathom-lesson-lead
+   node scripts/agents/coordination.mjs status
+   ```
+2. Every worker registers with a unique ID, checks the mailbox, and reads the current leader from `.agent-coordination/state/leader.json`. Workers must not self-assign while the leader is active; they request or accept assignments. If the leader is genuinely unavailable, workers may choose unclaimed work only after sending a check-in and waiting briefly, and must announce fallback mode.
+3. The leader refreshes its heartbeat while active and checks messages frequently. Workers send concise progress updates at task boundaries and heartbeat about every 30–60 seconds during long work when practical.
+4. The leader uses the `assign` command, which atomically reserves the task and sends an assignment message:
+   ```bash
+   node scripts/agents/coordination.mjs assign --from fathom-lesson-lead --to WORKER_ID --task "9709-3.9" --role writer --files "content/subjects/9709/lessons/complex-numbers-regions-loci.yaml" --text "Write the assigned unit using the repository prompts and syllabus. Validate your files, report exact coverage, and message me when ready for independent review."
+   ```
+   The claim is reserved for the recipient. The recipient must not try to claim the same task again; they should read the assignment, acknowledge it, heartbeat with the task ID, then work only within its scope. If a claim already exists, assignment fails rather than overwriting it.
+5. The leader assigns separate tasks to separate agents. It does not assign two agents to the same lesson or shared file. A reviewer is a different agent from the writer. If there are fewer agents, the leader works on a different unclaimed task while waiting, or performs review only after writing has ended and the repo's independent-review requirements are still satisfied.
+6. The leader is the sole temporary owner of `docs/HANDOFF.md`, the global task board, queue-wide decisions, and publication scheduling. Workers send updates and proposed handoff text to the leader rather than editing those shared files concurrently.
+
+### Assignment message contract
+
+Every assignment must state: task/unit, role, exact file scope, source prompt to use, acceptance criteria, validator/test requirements, dependency/blocker, and what response the worker must send back. Workers must acknowledge with an ETA or blocker; send progress when scope changes; and finish with files changed, objectives covered, checks run, review status, and commit/branch details. Silence is not acceptance.
+
+### Queue triage and final publication
+
+At startup, the leader must fetch the latest `origin/main`, run `node scripts/lessons/status.mjs --all` from a clean current-main worktree, and publish a compact queue summary to the mailbox. Never treat the historical numbers in `docs/HANDOFF.md` as live state. Assign in this order:
+1. `reviewed` units, after checking they are truly on the current branch and pass final checks;
+2. `drafted` units to independent reviewers;
+3. `partial` units to writers, respecting existing claims and AS-first-then-A2 queue order;
+4. `todo` units in the authoritative queue order.
+
+After a reviewer approves a unit and fixes are revalidated, the leader may publish it through the repository's existing scoped publishing workflow. Before each publication, inspect the exact staged paths, ensure no unrelated changes or deletions are included, run the required checks, and verify the commit is on `origin/main`. Publishing to `main` may deploy to production. Do not publish unreviewed drafts, bypass the review requirement, or mark anything `human-reviewed` without a teacher. After publishing, verify the deployment using the documented live-page checks; if deployment cannot be confirmed, say so clearly and do not claim the lesson is live.
+
+### Temporary mode exit
+
+When all 154 queue units are published or a documented external blocker prevents progress, the leader records final counts and remaining blockers in `docs/HANDOFF.md`, announces completion, and marks its status done. Remove or revise this temporary leader section only after the human owner approves the next operating mode.
