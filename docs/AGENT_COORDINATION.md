@@ -80,9 +80,18 @@ Messages are append-only: create a new file instead of editing another agent's m
 
 ## Minimum commands
 
-From the repository root:
+The helper script `scripts/agents/coordination.mjs` implements the mailbox, agent registration, messages, atomic task claims, heartbeats, status, and polling watcher. From the repository root:
 
 ```bash
+node scripts/agents/coordination.mjs init
+node scripts/agents/coordination.mjs join --id nemotron-a --role coordinator --capabilities "queue,review,validation"
+node scripts/agents/coordination.mjs message --from nemotron-a --to all --type proposal --text "I can coordinate queue and shared files."
+node scripts/agents/coordination.mjs status
+node scripts/agents/coordination.mjs claim --id nemotron-a --task "9701-1.1" --role writer --files "content/subjects/9701/lessons/example.yaml"
+node scripts/agents/coordination.mjs heartbeat --id nemotron-a --task "9701-1.1"
+node scripts/agents/coordination.mjs watch --id nemotron-a
+node scripts/agents/coordination.mjs release --id nemotron-a --task "9701-1.1"
+
 # Choose a shared runtime directory if agents do not share the same checkout:
 export FATHOM_AGENT_COORD_DIR="/absolute/path/shared-by-all-agents"
 
