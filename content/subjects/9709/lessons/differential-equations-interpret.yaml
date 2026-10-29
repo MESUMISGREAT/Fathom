@@ -18,14 +18,14 @@ provenance:
     and diagrams are original.
 blocks:
   - type: objective
-    body: |-
+    body: |
       By the end you can interpret the solution of a differential equation in the context of the
       problem it models, including identifying limiting values, the practical domain, and the
       meaning of constants and parameters.
 
   - type: explain
     title: The maths is only half the answer
-    body: |-
+    body: |
       Solving a differential equation gives you a formula — for example, $y = 200(1 - e^{-0.1t})$.
       The syllabus objective 3.8.4 asks you to **interpret** that formula: what does it say about
       the real situation? What happens in the long run? Are there values the model cannot reach?
@@ -41,7 +41,7 @@ blocks:
 
   - type: explain
     title: Limiting values
-    body: |-
+    body: |
       Many real-world models have a **limiting value** — a value the dependent variable
       approaches but never exceeds. For example:
       - **Newton's law of cooling**: $\frac{d\theta}{dt} = -k(\theta - \theta_0)$ gives
@@ -58,28 +58,28 @@ blocks:
 
   - type: example
     title: Interpreting a cooling model
-    problem: |-
+    problem: |
       A cup of tea cools according to $\frac{d\theta}{dt} = -0.05(\theta - 20)$, where
       $\theta$ is the temperature in °C and $t$ is time in minutes. Initially $\theta = 90$.
       The solution is $\theta = 20 + 70e^{-0.05t}$.
       (a) What is the temperature after a long time? (b) What does the constant 20 represent?
       (c) Why is the model not valid for $t < 0$?
     steps:
-      - |-
+      - |
         (a) As $t \to \infty$, $e^{-0.05t} \to 0$, so $\theta \to 20$. The tea approaches
         20 °C.
-      - |-
+      - |
         (b) The constant 20 is the ambient (room) temperature. The tea cannot cool below this.
-      - |-
+      - |
         (c) For $t < 0$ the formula gives $\theta > 90$, which is the temperature before the
         tea was made. The model only describes the cooling process after the initial moment.
-    answer: |-
+    answer: |
       (a) 20 °C — the tea approaches room temperature. (b) 20 is the ambient temperature.
       (c) The model only applies for $t \ge 0$; before that the tea didn't exist in this state.
 
   - type: explain
     title: Practical domain and range
-    body: |-
+    body: |
       The mathematical solution may be defined for all real $t$, but the **practical domain**
       is restricted by the real situation:
       - Time $t \ge 0$ (or $t \ge t_0$ for some starting time).
@@ -92,41 +92,41 @@ blocks:
 
   - type: example
     title: Practical domain of a chemical reaction model
-    problem: |-
+    problem: |
       In a reaction, the concentration $x$ (in mol dm⁻³) of a product satisfies
       $\frac{dx}{dt} = k(a - x)^2$, where $a$ is the initial concentration of the limiting
       reactant. The solution is $x = a - \frac{1}{kt + 1/a}$.
       (a) What happens to $x$ as $t \to \infty$? (b) What is the practical domain of $t$?
     steps:
-      - |-
+      - |
         (a) As $t \to \infty$, $\frac{1}{kt + 1/a} \to 0$, so $x \to a$. The product
         concentration approaches the initial reactant concentration — all reactant is converted.
-      - |-
+      - |
         (b) The formula is defined for all $t \ge 0$. However, as $t$ increases, $x$
         approaches $a$ but never exceeds it. The model is valid for $t \ge 0$; negative $t$
         would mean time before the reaction started.
-    answer: |-
+    answer: |
       (a) $x \to a$; all limiting reactant is converted to product. (b) $t \ge 0$; the
       model starts when the reaction begins.
 
   - type: misconceptions
     items:
       - wrong: "The limiting value is just the value when $t$ is very large."
-        right: |-
+        right: |
           The limiting value is the value the variable **approaches** as $t \to \infty$. It
           is a mathematical limit, not just a large-$t$ approximation.
       - wrong: "The model works for all time, past and future."
-        right: |-
+        right: |
           Models usually only apply from the moment the process starts ($t \ge 0$) and may
           break down when predictions become unrealistic (negative population, exceeding
           carrying capacity, etc.).
       - wrong: "All constants in the solution are just numbers."
-        right: |-
+        right: |
           Every constant has a physical meaning: initial amount, rate constant, carrying
           capacity, ambient temperature, etc. You must be able to explain what each one means.
 
   - type: exam
-    body: |-
+    body: |
       - "State the value that $y$ approaches as $t \to \infty$" → give the limiting value
         and its units. Explain what it represents in context.
       - "State the range of values of $t$ for which the model is valid" → usually $t \ge 0$,
@@ -147,30 +147,38 @@ blocks:
 
   - type: takeaways
     items:
-      - "The solution of a DE is a mathematical formula; interpreting it means explaining what it says about the real situation."
-      - "State the limiting value and its physical meaning (e.g., ambient temperature, carrying capacity, maximum charge)."
-      - "The practical domain is usually $t \\ge 0$; check that predicted quantities stay physically possible."
-      - "Every constant in the solution has a meaning — initial value, rate constant, carrying capacity, etc."
+      - |
+        The solution of a DE is a mathematical formula; interpreting it means explaining what it says about the real situation.
+      - |
+        State the limiting value and its physical meaning (e.g., ambient temperature, carrying capacity, maximum charge).
+      - |
+        The practical domain is usually $t \ge 0$; check that predicted quantities stay physically possible.
+      - |
+        Every constant in the solution has a meaning — initial value, rate constant, carrying capacity, etc.
 
 questions:
   - id: limiting-value-cooling
     format: mcq
     difficulty: 1
     objectives: ["3.8.4"]
-    prompt: |-
+    prompt: |
       A body cools according to $\theta = 15 + 65e^{-0.1t}$, where $\theta$ is in °C and $t$ in minutes.
       What temperature does the body approach as $t \to \infty$?
     options:
       - text: "15 °C"
         correct: true
-        why: "As $t \to \infty$, $e^{-0.1t} \to 0$, so $\theta \to 15$. This is the ambient temperature."
+        why: >
+          As $t \to \infty$, $e^{-0.1t} \to 0$, so $\theta \to 15$. This is the ambient temperature.
       - text: "65 °C"
-        why: "65 is the initial excess over ambient, not the limiting value."
+        why: >
+          65 is the initial excess over ambient, not the limiting value.
       - text: "80 °C"
-        why: "80 is the initial temperature ($\theta = 15 + 65 = 80$ at $t=0$)."
+        why: >
+          80 is the initial temperature ($\theta = 15 + 65 = 80$ at $t=0$).
       - text: "0 °C"
-        why: "The body cannot cool below the ambient temperature in this model."
-    explanation: |-
+        why: >
+          The body cannot cool below the ambient temperature in this model.
+    explanation: |
       The exponential term decays to zero, leaving the constant term 15, which represents the
       ambient (room) temperature.
 
@@ -179,15 +187,15 @@ questions:
     style: short
     difficulty: 2
     objectives: ["3.8.4"]
-    prompt: |-
+    prompt: |
       A population grows according to $P = \frac{1000}{1 + 9e^{-0.2t}}$. State the practical domain of $t$.
     accept:
       - "t ≥ 0"
       - "t greater than or equal to 0"
       - "t >= 0"
-    model: |-
+    model: |
       $t \ge 0$ (time cannot be negative; the model describes growth from the initial moment).
-    explanation: |-
+    explanation: |
       The model starts at $t=0$. For $t < 0$ it would describe a hypothetical past before the
       population was measured.
 
@@ -195,20 +203,24 @@ questions:
     format: mcq
     difficulty: 2
     objectives: ["3.8.4"]
-    prompt: |-
+    prompt: |
       The charge on a capacitor is given by $Q = 0.02(1 - e^{-50t})$ coulombs, where $t$ is in seconds.
       What does the constant 0.02 represent?
     options:
       - text: "The maximum charge the capacitor can hold (CV)"
         correct: true
-        why: "As $t \to \infty$, $Q \to 0.02$ C. This is the charge on the fully charged capacitor."
+        why: >
+          As $t \to \infty$, $Q \to 0.02$ C. This is the charge on the fully charged capacitor.
       - text: "The initial charge on the capacitor"
-        why: "At $t=0$, $Q=0$. The capacitor starts uncharged."
+        why: >
+          At $t=0$, $Q=0$. The capacitor starts uncharged.
       - text: "The time constant of the circuit"
-        why: "The time constant is $1/50 = 0.02$ s, but 0.02 in the formula is the maximum charge."
+        why: >
+          The time constant is $1/50 = 0.02$ s, but 0.02 in the formula is the maximum charge.
       - text: "The resistance of the circuit"
-        why: "Resistance does not appear directly as 0.02 in this formula."
-    explanation: |-
+        why: >
+          Resistance does not appear directly as 0.02 in this formula.
+    explanation: |
       The constant multiplying the bracket is the limiting charge $CV$. The 50 in the exponent
       is $1/RC$.
 
@@ -216,7 +228,7 @@ questions:
     format: text
     difficulty: 2
     objectives: ["3.8.4"]
-    prompt: |-
+    prompt: |
       The voltage across a charging capacitor is $V = 12(1 - e^{-t/0.01})$ volts, $t$ in seconds.
       (a) What is the supply voltage? (b) What is the time constant? (c) After how many time
       constants is the capacitor 95% charged?
@@ -229,7 +241,7 @@ questions:
         unit: s
       - label: "Time constants for 95%"
         answer: 3
-    explanation: |-
+    explanation: |
       (a) As $t \to \infty$, $V \to 12$ V, so the supply is 12 V. (b) The exponent is $-t/0.01$,
       so the time constant $\tau = 0.01$ s. (c) $1 - e^{-n} = 0.95 \Rightarrow e^{-n} = 0.05
       \Rightarrow n \approx 3$ time constants.
@@ -238,19 +250,23 @@ questions:
     format: mcq
     difficulty: 2
     objectives: ["3.8.4"]
-    prompt: |-
+    prompt: |
       A reaction follows $\frac{dx}{dt} = k(a - x)$ with $x=0$ at $t=0$. The solution is
       $x = a(1 - e^{-kt})$. Which statement is correct?
     options:
       - text: "The reaction is never 100% complete in finite time, but approaches completion as $t \to \infty$."
         correct: true
-        why: "$x \to a$ as $t \to \infty$, but $x = a$ only in the limit."
+        why: >
+          $x \to a$ as $t \to \infty$, but $x = a$ only in the limit.
       - text: "The reaction completes exactly when $t = 1/k$."
-        why: "At $t = 1/k$, $x = a(1 - e^{-1}) \approx 0.63a$, only 63% complete."
+        why: >
+          At $t = 1/k$, $x = a(1 - e^{-1}) \approx 0.63a$, only 63% complete.
       - text: "The reaction goes past completion and $x$ exceeds $a$."
-        why: "$x = a(1 - e^{-kt}) < a$ for all finite $t$."
+        why: >
+          $x = a(1 - e^{-kt}) < a$ for all finite $t$.
       - text: "The rate is constant throughout the reaction."
-        why: "The rate $dx/dt = ka e^{-kt}$ decreases as $x$ increases."
-    explanation: |-
+        why: >
+          The rate $dx/dt = ka e^{-kt}$ decreases as $x$ increases.
+    explanation: |
       The exponential approach means the reaction asymptotically approaches completion but never
       reaches it in finite time — a classic feature of first-order kinetics.
