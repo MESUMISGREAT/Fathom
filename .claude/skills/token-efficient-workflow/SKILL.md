@@ -142,3 +142,12 @@ Follow `docs/AGENT_COORDINATION.md` when multiple agents are active. The coordin
 - Respond to blockers, questions, ownership conflicts, review requests, and handoffs with concise actionable messages. A normal heartbeat does not need a reply every time.
 - If an active task has no heartbeat for more than 2 minutes, message the owner and inspect status before considering a handoff. Never steal a claim based on age alone.
 - If blocked, report what you tried, the exact blocker, and what decision or assistance is needed. Keep useful work moving on a separate unclaimed task while waiting.
+
+
+## Temporary leader and reliable task assignment
+
+During the current lesson-completion push, follow `docs/AGENT_COORDINATION.md` and route work through the temporary leader ID `fathom-lesson-lead`. The leader owns queue refresh, assignments, shared handoff updates, final review coordination, and publication scheduling. Workers must acknowledge assignments and must not self-assign while the leader is active.
+
+Use the coordination helper's `set-leader` and `assign` commands. An assignment reserves the task before notifying the worker; if it is already claimed, do not overwrite it. Refresh the queue from current `origin/main` and run `node scripts/lessons/status.mjs --all`; never rely on old counts in the handoff as live state. Work priority is reviewed → drafted → partial → todo, while preserving AS-first-then-A2 ordering within eligible work. Keep the handoff owned by the leader and ask workers to send updates rather than concurrently editing it.
+
+The leader may publish only after the unit's required independent review, fixes, validation, and exact-path staging checks pass. Publishing may deploy to production; verify deployment before claiming success. Solo fallback remains mandatory if the leader is genuinely unavailable.
