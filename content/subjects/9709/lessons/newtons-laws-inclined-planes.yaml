@@ -1,0 +1,257 @@
+id: newtons-laws-inclined-planes
+subject: "9709"
+topic: "4.4"
+title: "Motion on inclined planes: resolving weight"
+summary: "On a slope, weight splits into components parallel and perpendicular to the plane. The parallel part causes acceleration; the perpendicular part affects friction."
+order: 3
+minutes: 8
+kind: core
+objectives: ["4.4.3"]
+prerequisites: ["newtons-laws-mass-weight", "forces-equilibrium-forces-and-force-diagrams"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus,
+    topic 4.4 Newton's laws of motion, learning outcome 4.4.3 (solve problems modelled as motion
+    on an inclined plane with constant acceleration, including rough planes where acceleration up
+    and down differs). All questions and examples are original. AI-reviewed for syllabus alignment and mathematical accuracy.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a separate
+    AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can resolve weight on an inclined plane, handle friction on a slope, and find
+      acceleration up or down a plane.
+
+  - type: explain
+    title: Why slopes are different
+    body: |
+      On a horizontal surface, weight acts straight down and the normal reaction pushes straight up.
+      They balance (if no vertical acceleration). But on a slope, weight doesn't line up with the
+      surface — it points straight down while the plane is tilted.
+
+      The trick: **resolve weight into two components** — one perpendicular to the plane, one
+      parallel to it. Then apply F = ma along the plane.
+
+      If the plane is inclined at angle $\theta$ to the horizontal:
+      - Component **perpendicular** to the plane: $mg \cos \theta$
+      - Component **parallel** to the plane (down the slope): $mg \sin \theta$
+
+      The normal reaction $R$ balances the perpendicular component (no acceleration off the plane):
+      $R = mg \cos \theta$.
+
+      The parallel component $mg \sin \theta$ pulls the particle down the slope.
+
+  - type: definition
+    term: Weight components on an inclined plane
+    body: |
+      For a particle of mass $m$ on a plane inclined at $\theta$ to the horizontal:
+      - Perpendicular to plane: $mg \cos \theta$
+      - Parallel to plane (down the slope): $mg \sin \theta$
+      - Normal reaction: $R = mg \cos \theta$ (if no other perpendicular forces)
+
+  - type: intuition
+    title: Where the trig comes from
+    body: |
+      Draw the weight vector vertically down. The plane is at angle $\theta$ to horizontal, so the
+      angle between the weight vector and the **perpendicular** to the plane is also $\theta$. (The
+      normal is 90° to the plane; the vertical is 90° to the horizontal; the difference is $\theta$.)
+
+      The component along the perpendicular is adjacent to $\theta$, so it's $mg \cos \theta$.
+      The component along the plane is opposite to $\theta$, so it's $mg \sin \theta$.
+
+      Check the extremes:
+      - $\theta = 0$ (horizontal): $\cos 0 = 1$, $\sin 0 = 0$. All weight is perpendicular,
+        none parallel. Correct — no tendency to slide.
+      - $\theta = 90^\circ$ (vertical): $\cos 90^\circ = 0$, $\sin 90^\circ = 1$. All weight
+        is parallel, none perpendicular. Correct — free fall.
+
+  - type: example
+    title: Smooth inclined plane
+    problem: |
+      A particle of mass $4\\ \text{kg}$ is released from rest on a **smooth** plane inclined at
+      $30^\circ$ to the horizontal. Find its acceleration down the plane. Take $g = 10\\ \text{m
+      s}^{-2}$.
+    steps:
+      - |
+        Smooth means no friction. Forces: weight $mg = 40\\ \text{N}$ down, normal reaction $R$
+        perpendicular to plane.
+      - |
+        Resolve weight: parallel component $= 40 \sin 30^\circ = 40 \\times 0.5 = 20\\ \text{N}$
+        down the slope. Perpendicular component $= 40 \cos 30^\circ = 40 \\times \tfrac{\sqrt{3}}{2}
+        = 20\sqrt{3}\\ \text{N}$.
+      - |
+        No friction, so net force down the slope $= 20\\ \text{N}$.
+      - |
+        $F = ma$: $20 = 4a$, so $a = 5\\ \text{m s}^{-2}$ down the slope.
+    answer: |
+      $a = 5\\ \text{m s}^{-2}$ down the slope.
+
+  - type: example
+    title: Rough inclined plane — moving up
+    problem: |
+      A particle of mass $2\\ \text{kg}$ is projected up a rough plane inclined at $30^\circ$
+      with initial speed $10\\ \text{m s}^{-1}$. The coefficient of friction is $\mu = 0.2$.
+      Find the deceleration while moving up. Take $g = 10\\ \text{m s}^{-2}$.
+    steps:
+      - |
+        Forces: weight $mg = 20\\ \text{N}$ down, normal reaction $R$, friction $F$ down the slope
+        (opposes motion up).
+      - |
+        Perpendicular: $R = mg \cos 30^\circ = 20 \\times \tfrac{\sqrt{3}}{2} = 10\sqrt{3}\\
+        \text{N}$.
+      - |
+        Friction $F = \mu R = 0.2 \\times 10\sqrt{3} = 2\sqrt{3}\\ \text{N}$.
+      - |
+        Parallel to plane (up positive): weight component down $= mg \sin 30^\circ = 20 \\times
+        0.5 = 10\\ \text{N}$. Friction down $= 2\sqrt{3}\\ \text{N}$.
+        Net force $= -10 - 2\sqrt{3} = -(10 + 2\sqrt{3})\\ \text{N}$.
+      - |
+        $F = ma$: $-(10 + 2\sqrt{3}) = 2a$, so $a = -(5 + \sqrt{3}) \approx -6.73\\ \text{m
+        s}^{-2}$.
+    answer: |
+      Deceleration $= 5 + \sqrt{3} \approx 6.73\\ \text{m s}^{-2}$ (acceleration is
+      $-(5 + \sqrt{3})\\ \text{m s}^{-2}$).
+
+  - type: example
+    title: Rough inclined plane — moving down
+    problem: |
+      The same particle ($2\\ \text{kg}$, $\mu = 0.2$, $\theta = 30^\circ$) now slides **down**
+      the plane from rest. Find its acceleration.
+    steps:
+      - |
+        Forces: weight $20\\ \text{N}$ down, normal $R = 10\sqrt{3}\\ \text{N}$, friction $F =
+        2\sqrt{3}\\ \text{N}$ **up** the slope (opposes motion down).
+      - |
+        Take down the slope as positive. Weight component $= 10\\ \text{N}$. Friction $=
+        -2\sqrt{3}\\ \text{N}$.
+        Net force $= 10 - 2\sqrt{3} = 2(5 - \sqrt{3})\\ \text{N}$.
+      - |
+        $F = ma$: $2(5 - \sqrt{3}) = 2a$, so $a = 5 - \sqrt{3} \approx 3.27\\ \text{m
+        s}^{-2}$.
+    answer: |
+      Acceleration $= 5 - \sqrt{3} \approx 3.27\\ \text{m s}^{-2}$ down the slope.
+
+  - type: explain
+    title: Why up and down accelerations differ on a rough plane
+    body: |
+      In the examples above:
+      - Moving **up**: weight component and friction **both act down** the slope. They add up.
+        Deceleration $= g\sin\theta + \mu g\cos\theta$.
+      - Moving **down**: weight component acts down, friction acts **up**. They oppose. Acceleration
+        $= g\sin\theta - \mu g\cos\theta$.
+
+      The syllabus explicitly says the acceleration up the plane differs from the acceleration down
+      the plane. That difference **is** the friction term.
+
+      If $\mu$ is large enough that $g\sin\theta < \mu g\cos\theta$, the particle won't slide
+      down at all — it stays put (or slides back if you push it). That's limiting equilibrium.
+
+  - type: check
+    title: Check yourself
+    questions: [smooth-slope, rough-up, rough-down, which-mu]
+
+  - type: misconceptions
+    items:
+      - wrong: "On a slope, the normal reaction equals the weight (R = mg)."
+        right: |
+          R = mg cos θ, not mg. The weight has a component pulling into the plane and a component
+          pulling along it. Only the perpendicular component is balanced by R.
+      - wrong: "Friction always acts up the slope."
+        right: |
+          Friction always **opposes the motion (or tendency to move)**. If the particle moves up,
+          friction acts down. If it moves down, friction acts up. If it's on the point of slipping
+          down, friction acts up.
+      - wrong: "The angle in the trig is the angle of the slope to the vertical."
+        right: |
+          The angle θ is the angle of the plane to the **horizontal**. The component down the slope
+          is mg sin θ, perpendicular is mg cos θ.
+
+  - type: exam
+    body: |
+      - Always draw the slope, the particle, and the weight vector vertically down. Then resolve.
+      - Write R = mg cos θ explicitly — it's a common method mark.
+      - Friction F = μR. Substitute R = mg cos θ to get F = μ mg cos θ.
+      - For motion up the plane: acceleration = -(g sin θ + μ g cos θ).
+      - For motion down the plane: acceleration = g sin θ - μ g cos θ.
+      - If the question gives tan θ = 3/4, use the 3-4-5 triangle: sin θ = 3/5, cos θ = 4/5.
+        No calculator needed, exact answers preferred.
+
+  - type: takeaways
+    items:
+      - "On a slope at angle θ: weight parallel = mg sin θ, weight perpendicular = mg cos θ."
+      - "Normal reaction R = mg cos θ (if no other perpendicular forces)."
+      - "Friction F = μR = μ mg cos θ. Direction: always opposes motion."
+      - "Moving up: a = -(g sin θ + μ g cos θ). Moving down: a = g sin θ - μ g cos θ."
+      - "If g sin θ < μ g cos θ, the particle won't slide down (limiting equilibrium)."
+
+questions:
+  - id: smooth-slope
+    format: numeric
+    difficulty: 1
+    objectives: ["4.4.3"]
+    prompt: |
+      A block of mass $3\\ \text{kg}$ is released from rest on a **smooth** plane inclined at
+      $30^\circ$ to the horizontal. Find its acceleration. Take $g = 10\\ \text{m s}^{-2}$.
+    fields:
+      - answer: 5
+        unit: "m s⁻²"
+        tolerance: { abs: 0.1 }
+    explanation: |
+      Weight component down slope = mg sin 30° = 3 × 10 × 0.5 = 15 N. F = ma: 15 = 3a, so a = 5 m s⁻².
+
+  - id: rough-up
+    format: numeric
+    difficulty: 2
+    objectives: ["4.4.3"]
+    prompt: |
+      A particle of mass $2\\ \text{kg}$ is projected up a rough plane inclined at $30^\circ$
+      with initial speed $10\\ \text{m s}^{-1}$. The coefficient of friction is $\mu = 0.2$.
+      Find the deceleration while moving up. Take $g = 10\\ \text{m s}^{-2}$. (Give an exact
+      value or decimal.)
+    fields:
+      - answer: 6.732
+        unit: "m s⁻²"
+        tolerance: { abs: 0.05 }
+    explanation: |
+      R = mg cos 30° = 20 × √3/2 = 10√3 N. F = μR = 2√3 N (down the slope).
+      Weight component down slope = mg sin 30° = 10 N. Net force down slope = 10 + 2√3 N.
+      a = F/m = (10 + 2√3)/2 = 5 + √3 ≈ 6.732 m s⁻². Deceleration = 5 + √3 m s⁻².
+
+  - id: rough-down
+    format: numeric
+    difficulty: 2
+    objectives: ["4.4.3"]
+    prompt: |
+      The same particle (2 kg, μ = 0.2, θ = 30°) now slides **down** the plane from rest. Find
+      its acceleration. Take $g = 10\\ \text{m s}^{-2}$.
+    fields:
+      - answer: 3.268
+        unit: "m s⁻²"
+        tolerance: { abs: 0.05 }
+    explanation: |
+      Weight component down = 10 N. Friction up = 2√3 N. Net force down = 10 - 2√3 N.
+      a = (10 - 2√3)/2 = 5 - √3 ≈ 3.268 m s⁻².
+
+  - id: which-mu
+    format: mcq
+    difficulty: 2
+    objectives: ["4.4.3"]
+    prompt: |
+      A particle rests on a rough plane inclined at 30° to the horizontal. The coefficient of
+      friction is μ. The particle is on the point of slipping down the plane. Which equation
+      relates μ and the angle?
+    options:
+      - text: "μ = tan 30°"
+        correct: true
+        why: "At limiting equilibrium, friction = mg sin θ and R = mg cos θ. μ = F/R = (mg sin θ)/(mg cos θ) = tan θ."
+      - text: "μ = sin 30°"
+        why: "This would be the coefficient if R = mg, but R = mg cos θ."
+      - text: "μ = cos 30°"
+        why: "This uses the wrong component."
+      - text: "μ = 1/tan 30°"
+        why: "That's cot θ, which is the reciprocal of the correct answer."
+    explanation: |
+      At the point of slipping down, friction acts up the plane and equals mg sin θ. Normal reaction R = mg cos θ.
+      By definition μ = F/R = (mg sin θ)/(mg cos θ) = tan θ. For θ = 30°, μ = tan 30° = 1/√3.
