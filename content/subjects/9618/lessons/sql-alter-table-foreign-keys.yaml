@@ -1,0 +1,354 @@
+id: sql-alter-table-foreign-keys
+subject: "9618"
+topic: "8.3"
+title: "Changing a table and linking tables: ALTER TABLE and foreign keys"
+summary: Real tables are never right the first time. ALTER TABLE changes a definition after the data exists, and a foreign key is what stops a row pointing at a class that does not exist.
+order: 3
+minutes: 9
+kind: core
+objectives: ["8.3.4"]
+prerequisites: [sql-create-table]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus
+    (2027-2029, Version 2, December 2025), topic 8.3, learning outcome 8.3.4 (ALTER TABLE,
+    adding a primary key, FOREIGN KEY ... REFERENCES). All questions are original.
+    Second-pass review by the same agent on 2026-10-29 (no separate reviewer model was available):
+    every SQL statement was checked for syntax and semantics, every answer key recomputed (counts,
+    averages and join row counts verified in Python), every MCQ confirmed to have exactly one correct
+    option, and all five diagrams rendered and inspected. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can use `ALTER TABLE` to add or remove a field and to add keys, and you can
+      explain what a foreign key enforces and why the referenced table has to exist first.
+
+  - type: explain
+    title: Why a table changes after it is built
+    body: |-
+      You build a `Student` table, load 400 rows, and then a teacher asks for everyone's email
+      address. The design was not wrong — it was just incomplete.
+
+      You have two options. Delete everything and rebuild, or **alter** the definition in place.
+      Rebuilding is slow, loses data and needs everyone to stop working. So SQL gives you
+      `ALTER TABLE`, which changes the structure of a table that is already full of rows.
+
+      It is still **DDL**: it changes a definition, not the data. The DBMS updates the data
+      dictionary to match, so the schema and the programs agree afterwards.
+
+  - type: explain
+    title: The two changes you must be able to write
+    body: |-
+      ```sql
+      ALTER TABLE Student ADD Email VARCHAR(60);
+      ALTER TABLE Student DROP Email;
+      ```
+
+      - **`ADD`** puts a new field at the end of the table. Every existing row gets an empty
+        (NULL) value in it, because the data was never collected.
+      - **`DROP`** removes the field **and every value stored in it**. The other fields are
+        untouched.
+
+      You can add several fields at once with a comma-separated list:
+
+      ```sql
+      ALTER TABLE Student ADD Email VARCHAR(60), Guardian VARCHAR(50);
+      ```
+
+      Notice the pattern: `ALTER TABLE` + table name + `ADD`/`DROP` + field definition (or just
+      the field name when dropping).
+
+  - type: example
+    title: "Worked example: adding then removing a field"
+    problem: |-
+      A school's `Student` table has `StudentID`, `FirstName`, `Average` and `Enrolled`. The school
+      starts collecting mobile numbers, then decides to stop storing them. Write both statements.
+    steps:
+      - |-
+        **Adding a field that was never there:** use `ADD` and give the full definition — name and
+        type.
+        `ALTER TABLE Student ADD Mobile VARCHAR(15);`
+      - |-
+        **What happens to the 400 existing rows?** Each one gains a `Mobile` field containing NULL.
+        No row is deleted and no other value changes.
+      - |-
+        **Removing it again:** `DROP` needs only the field name.
+        `ALTER TABLE Student DROP Mobile;`
+      - |-
+        **What happens to the numbers?** They are gone. `DROP` removes the field and its data
+        together, and there is no undo unless you have a backup.
+    answer: |-
+      ```sql
+      ALTER TABLE Student ADD Mobile VARCHAR(15);
+      ALTER TABLE Student DROP Mobile;
+      ```
+
+  - type: explain
+    title: Adding keys to a table that already exists
+    body: |-
+      Sometimes a table was created without its keys — perhaps the data was imported from a
+      spreadsheet. You can add them with `ALTER TABLE`:
+
+      ```sql
+      ALTER TABLE Student ADD PRIMARY KEY (StudentID);
+
+      ALTER TABLE Student ADD FOREIGN KEY (ClassID) REFERENCES Class (ClassID);
+      ```
+
+      Both use the same `ADD`, and both put the field name in brackets after the rule.
+
+      A **foreign key** is a field in one table whose values must match the **primary key** of
+      another table. It is how two tables are linked:
+
+      - `Class` is the **parent** table: `ClassID` is its primary key.
+      - `Student` is the **child** table: its `ClassID` says which class that student is in.
+      - `REFERENCES Class (ClassID)` tells the DBMS to check every `Student.ClassID` against the
+        values in `Class.ClassID`.
+
+  - type: diagram
+    diagram: cs-sql-foreign-key-link
+    alt: >-
+      Two tables, one above the other. The parent table Class shows ClassID marked primary key and
+      Teacher. The child table Student shows StudentID as primary key, Name, and ClassID marked foreign
+      key and highlighted. A connector runs out of the child's ClassID row, up the right-hand side and
+      back into the parent's ClassID row, with the label FOREIGN KEY (ClassID) REFERENCES Class
+      (ClassID) and a note that the child's value must already exist in the parent. A caption says a
+      ClassID that does not exist in Class is rejected.
+    caption: |-
+      A foreign key points at the parent's primary key. A value with no match is rejected.
+
+  - type: intuition
+    title: What a foreign key actually stops
+    body: |-
+      Without the foreign key, nothing stops a clerk typing `ClassID = 4` for a student when there
+      is no class 4. The row is saved, and the student is now in a class that does not exist. Later
+      reports quietly leave them out, and nobody notices for a term.
+
+      With the foreign key, the DBMS checks the reference and rejects that row immediately. This is
+      **referential integrity**: every reference points at something real.
+
+      The rule cuts both ways:
+
+      - You cannot insert a child row whose foreign key has no match in the parent.
+      - You cannot delete a parent row that children still point at, unless the relationship is
+        set up to cascade — again, the DBMS refuses rather than leaving orphans.
+
+      Analogy: a hotel key card. The card only works for a room that exists. If the room is taken
+      out of service, the card stops opening it. Where it breaks down: a hotel can renumber rooms
+      and relabel cards; a database would need the key values updated in every child row.
+
+  - type: explain
+    title: "Order matters: parent first"
+    body: |-
+      Because the DBMS checks that the referenced field exists, you must create the parent table
+      **before** the child's foreign key:
+
+      1. `CREATE TABLE Class (...)` with `ClassID` as its primary key.
+      2. `CREATE TABLE Student (...)` with a `ClassID` field.
+      3. Add the foreign key, either inside the `CREATE TABLE` or later with `ALTER TABLE`.
+
+      The referenced field must be a **primary key** in the parent (in Cambridge questions it always
+      is). If you try to reference a field that does not exist, or reference it before the parent
+      table exists, the DBMS rejects the statement with an error.
+
+  - type: check
+    title: Quick check
+    questions: [alter-add-field, alter-drop-effect, fk-syntax]
+
+  - type: check
+    title: Practice
+    questions: [add-primary-key-alter, fk-purpose, spot-error-alter]
+
+  - type: misconceptions
+    items:
+      - wrong: ALTER TABLE ADD deletes the existing rows and rebuilds the table.
+        right: |-
+          Existing rows stay; each one simply gains the new field, filled with NULL.
+      - wrong: ALTER TABLE DROP Email only removes the heading and keeps the addresses.
+        right: |-
+          The field **and its data** are removed. Only a backup brings them back.
+      - wrong: A foreign key must have the same field name as the primary key it references.
+        right: |-
+          The names can differ; what must match is the **data**. `REFERENCES Class (ClassID)` names
+          the target explicitly.
+      - wrong: A foreign key makes the child field unique.
+        right: |-
+          Many students can share one `ClassID`. A foreign key constrains *where the value comes
+          from*, not how often it appears.
+      - wrong: You can add a foreign key before the parent table exists and it will work later.
+        right: |-
+          The statement fails: the DBMS checks the referenced table and field at the moment you run
+          it.
+
+  - type: exam
+    body: |-
+      - Write `ALTER TABLE` statements in the exact form:
+        `ALTER TABLE Table ADD Field Type;` / `ALTER TABLE Table DROP Field;`
+      - For keys: `ALTER TABLE Table ADD PRIMARY KEY (Field);` and
+        `ALTER TABLE Table ADD FOREIGN KEY (Field) REFERENCES Table (Field);`
+      - Brackets around field names in key definitions are part of the syntax the mark scheme
+        expects.
+      - When asked *why* a foreign key is used, use the phrase **referential integrity** and give
+        the concrete effect: it prevents a row referencing a record that does not exist.
+      - State the order when asked: create the parent (referenced) table before adding the foreign
+        key.
+
+  - type: takeaways
+    items:
+      - "`ALTER TABLE ... ADD` adds a field (existing rows get NULL); `ALTER TABLE ... DROP` removes a field and its data."
+      - "Keys can be added to an existing table with `ALTER TABLE ... ADD PRIMARY KEY (Field)`."
+      - "A foreign key is written `FOREIGN KEY (Field) REFERENCES Table (Field)`."
+      - "A foreign key enforces referential integrity: its values must match the parent's primary key."
+      - "The parent table must exist before the foreign key can be added."
+
+  - type: deeper
+    title: "ON DELETE CASCADE, and why DBAs are careful with it"
+    body: |-
+      Some DBMS let you add a rule to a foreign key so that deleting a parent row also deletes its
+      children:
+
+      ```sql
+      ALTER TABLE Student
+          ADD FOREIGN KEY (ClassID) REFERENCES Class (ClassID) ON DELETE CASCADE;
+      ```
+
+      Convenient, and dangerous: deleting one class could silently delete 30 student records. The
+      default (no rule) is to **refuse** the delete, which is why careful designers leave it that
+      way and archive rows instead of deleting them. This is beyond the listed sub-set; you only
+      need to recognise what the clause does.
+
+questions:
+  - id: alter-add-field
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.4"]
+    prompt: |-
+      Which statement adds a `DateOfBirth` field of type `DATE` to an existing `Member` table?
+    options:
+      - text: "`ALTER TABLE Member ADD DateOfBirth DATE;`"
+        correct: true
+        why: |-
+          `ALTER TABLE ... ADD` with a name and type is exactly how a field is added.
+      - text: "`ALTER TABLE Member DATE DateOfBirth;`"
+        why: |-
+          The order is wrong: the field name comes before its type, and `ADD` is missing.
+      - text: "`UPDATE Member ADD DateOfBirth DATE;`"
+        why: |-
+          `UPDATE` changes data in rows; it cannot change the structure.
+      - text: "`INSERT INTO Member ADD DateOfBirth DATE;`"
+        why: |-
+          `INSERT` adds a row, not a field.
+    explanation: |-
+      `ALTER TABLE Table ADD Field Type;` adds the field; existing rows get a NULL in it.
+
+  - id: alter-drop-effect
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.4"]
+    prompt: |-
+      A table has 400 rows. `ALTER TABLE Member DROP Phone;` runs successfully. What is true
+      afterwards?
+    options:
+      - text: There are still 400 rows; the Phone values have been permanently removed
+        correct: true
+        why: |-
+          `DROP` removes a field definition and all the data in it, leaving other fields and all
+          rows intact.
+      - text: There are still 400 rows with their Phone values, but the heading is hidden
+        why: |-
+          Nothing is hidden: the field no longer exists.
+      - text: All 400 rows are deleted and the table is rebuilt
+        why: |-
+          That is what dropping and recreating the table would do — not this statement.
+      - text: The statement fails because the field contains data
+        why: |-
+          It succeeds; the DBMS does not ask permission because of data.
+    explanation: |-
+      `DROP` removes the field and its values. The rows themselves stay.
+
+  - id: fk-syntax
+    format: cloze
+    difficulty: 2
+    objectives: ["8.3.4"]
+    prompt: |-
+      Complete the statement that links `Student.ClassID` to the `Class` table:
+
+      `ALTER TABLE Student ADD FOREIGN KEY (ClassID) {{1}} Class ({{2}});`
+    blanks:
+      - accept: ["references", "reference"]
+      - accept: ["classid", "class id"]
+    explanation: |-
+      `REFERENCES` names the parent table and, in brackets, the primary key field it points at:
+      `REFERENCES Class (ClassID)`.
+
+  - id: add-primary-key-alter
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.4"]
+    prompt: |-
+      A table was imported from a spreadsheet with no key. Which statement makes `MemberID` its
+      primary key?
+    options:
+      - text: "`ALTER TABLE Member ADD PRIMARY KEY (MemberID);`"
+        correct: true
+        why: |-
+          `ALTER TABLE ... ADD PRIMARY KEY (Field)` adds the key to an existing table.
+      - text: "`ALTER TABLE Member ADD MemberID PRIMARY KEY;`"
+        why: |-
+          That adds a *new field* called MemberID with an incomplete definition; it does not make
+          the existing field the key.
+      - text: "`CREATE TABLE Member PRIMARY KEY (MemberID);`"
+        why: |-
+          The table already exists, so `CREATE TABLE` would fail (and the syntax is wrong).
+      - text: "`UPDATE Member SET PRIMARY KEY = MemberID;`"
+        why: |-
+          `UPDATE` changes data values; keys are structure, so this is not valid SQL.
+    explanation: |-
+      Keys on an existing table are added with `ALTER TABLE ... ADD PRIMARY KEY (Field)`; the DBMS
+      refuses if the existing values are not unique or contain NULLs.
+
+  - id: fk-purpose
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.4"]
+    prompt: |-
+      A clerk tries to insert a student with `ClassID = 4`, but the `Class` table has no class 4.
+      Why does the DBMS reject the row?
+    options:
+      - text: The foreign key requires the value to match a primary key in the parent table
+        correct: true
+        why: |-
+          That check is referential integrity: a child row cannot point at a parent that does not
+          exist.
+      - text: The primary key of Student is duplicated
+        why: |-
+          The problem is the class reference, not the student's own key.
+      - text: INTEGER fields cannot store the value 4
+        why: |-
+          4 is a perfectly valid integer.
+      - text: The Student table has no foreign key, so all inserts are checked
+        why: |-
+          There is nothing to check without the foreign key — and that absence is the danger.
+    explanation: |-
+      The foreign key makes the DBMS verify that `Student.ClassID` exists in `Class.ClassID`.
+
+  - id: spot-error-alter
+    format: spot-error
+    difficulty: 3
+    objectives: ["8.3.4"]
+    prompt: |-
+      A student describes how to link two tables. Which line contains the first error?
+    lines:
+      - "Create the Class table first, with ClassID as its primary key."
+      - "`ALTER TABLE Student ADD FOREIGN KEY (ClassID) REFERENCES Class (ClassID);`"
+      - "The referenced field must be the primary key of the parent table."
+      - "A foreign key can be added before the parent table exists, and the DBMS checks it later."
+    errorLine: 4
+    fix: |-
+      The parent table must exist **before** the foreign key is added; the DBMS checks the
+      referenced table and field when the statement runs, and rejects it if they are missing.
+    explanation: |-
+      Lines 1, 2 and 3 are correct. Line 4 reverses the order that the DBMS actually enforces.

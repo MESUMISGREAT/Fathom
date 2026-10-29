@@ -106,6 +106,11 @@ import OperatingSystemsMemoryMap from './operating-systems-memory-map';
 import OperatingSystemsProcessStates from './operating-systems-process-states';
 import OperatingSystemsUtilities from './operating-systems-utilities';
 import PrefixGap from './prefix-gap';
+import SqlCreateTableAnatomy from './sql-create-table-anatomy';
+import SqlDdlVsDml from './sql-ddl-vs-dml';
+import SqlForeignKeyLink from './sql-foreign-key-link';
+import SqlInnerJoinRows from './sql-inner-join-rows';
+import SqlSelectClauseOrder from './sql-select-clause-order';
 import TwosComplementWeights from './twos-complement-weights';
 import TwosComplementWheel from './twos-complement-wheel';
 
@@ -217,6 +222,11 @@ export const diagrams: DiagramRegistry = {
   'cs-operating-systems-process-states': OperatingSystemsProcessStates,
   'cs-operating-systems-utilities': OperatingSystemsUtilities,
   'cs-prefix-gap': PrefixGap,
+  'cs-sql-create-table-anatomy': SqlCreateTableAnatomy,
+  'cs-sql-ddl-vs-dml': SqlDdlVsDml,
+  'cs-sql-foreign-key-link': SqlForeignKeyLink,
+  'cs-sql-inner-join-rows': SqlInnerJoinRows,
+  'cs-sql-select-clause-order': SqlSelectClauseOrder,
   'cs-twos-complement-weights': TwosComplementWeights,
   'cs-twos-complement-wheel': TwosComplementWheel,
 };

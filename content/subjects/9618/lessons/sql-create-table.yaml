@@ -1,0 +1,382 @@
+id: sql-create-table
+subject: "9618"
+topic: "8.3"
+title: "Building a table: CREATE TABLE and data types"
+summary: A table definition is a promise about what each field will hold. CREATE TABLE writes that promise, and the data type you pick decides what the DBMS will accept.
+order: 2
+minutes: 9
+kind: core
+objectives: ["8.3.4"]
+prerequisites: [sql-ddl-and-dml]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus
+    (2027-2029, Version 2, December 2025), topic 8.3, learning outcome 8.3.4 (CREATE DATABASE,
+    CREATE TABLE, the listed data types and PRIMARY KEY). All questions are original.
+    Second-pass review by the same agent on 2026-10-29 (no separate reviewer model was available):
+    every SQL statement was checked for syntax and semantics, every answer key recomputed (counts,
+    averages and join row counts verified in Python), every MCQ confirmed to have exactly one correct
+    option, and all five diagrams rendered and inspected. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write `CREATE DATABASE` and `CREATE TABLE` statements that use the
+      syllabus data types sensibly, and explain why each field needs a type at all.
+
+  - type: explain
+    title: A type is a promise
+    body: |-
+      Before any data goes in, someone has to decide what each field will hold. `FirstName` holds
+      text. `Average` holds a number that can have a decimal part. `Enrolled` holds a date.
+
+      That decision is the field's **data type**, and it is the DBMS's main defence against rubbish
+      data. Put `'Amara'` into an `INTEGER` field and the DBMS refuses the row. You cannot store
+      half a date.
+
+      So a table definition is really a set of promises, and the DBMS enforces every one of them on
+      every row, for ever.
+
+  - type: explain
+    title: The two CREATE statements
+    body: |-
+      A database is a container. A table lives inside one, so create the database first:
+
+      ```sql
+      CREATE DATABASE School;
+      ```
+
+      Then define the table inside it:
+
+      ```sql
+      CREATE TABLE Student (
+          StudentID   INTEGER       PRIMARY KEY,
+          FirstName   VARCHAR(30),
+          FeePaid     BOOLEAN,
+          Average     REAL,
+          Enrolled    DATE
+      );
+      ```
+
+      Read it in this order:
+
+      1. `CREATE TABLE Student` — make a table called `Student`.
+      2. The brackets hold the **field list**, one field per line.
+      3. Each line is `field name`, then `data type`, then any extra rule such as `PRIMARY KEY`.
+      4. The semicolon ends the statement.
+
+      Spelling and punctuation matter: an extra comma before the last bracket is a syntax error,
+      and a missing comma between two fields is too.
+
+  - type: explain
+    title: The seven types in the syllabus
+    body: |-
+      You need to recognise these and choose between them.
+
+      | Type | Holds | Example value |
+      |---|---|---|
+      | `CHARACTER` | a fixed number of characters | `'AB'` |
+      | `VARCHAR(n)` | up to `n` characters, variable length | `'Amara'` |
+      | `BOOLEAN` | true or false | `TRUE` |
+      | `INTEGER` | a whole number | `42` |
+      | `REAL` | a number with a fractional part | `72.5` |
+      | `DATE` | a calendar date | `'2026-10-29'` |
+      | `TIME` | a time of day | `'14:30:00'` |
+
+      How to choose, in one line each:
+
+      - **Text of unpredictable length** (names, emails, addresses) → `VARCHAR(n)`. Reserve enough
+        characters, but not 500 "just in case".
+      - **Text of fixed length** (a two-letter country code, a product code like `AB-1234`) →
+        `CHARACTER`. The syllabus lists it as `CHARACTER`; most DBMS let you write `CHARACTER(2)`
+        or `CHAR(2)` to fix the length.
+      - **A yes/no flag** (fee paid? account active?) → `BOOLEAN`.
+      - **A count or an identifier** (number of seats, student ID) → `INTEGER`.
+      - **A measurement that can have decimals** (average mark, mass in kg) → `REAL`.
+      - **A date** or **a time of day** → `DATE` or `TIME`. Never store a date in a text field: you
+        could not then compare dates or sort them properly.
+
+  - type: diagram
+    diagram: cs-sql-create-table-anatomy
+    alt: >-
+      The CREATE TABLE statement for a Student table laid out in columns, with numbered badges marking
+      four parts: 1 the table name after CREATE TABLE, 2 the field name StudentID, 3 the data type
+      INTEGER beside it, and 4 the PRIMARY KEY rule at the end of that line. A key below explains each
+      number: table name, field name, data type, key rule. The statement lists StudentID INTEGER
+      PRIMARY KEY, FirstName VARCHAR(30), FeePaid BOOLEAN and Enrolled DATE.
+    caption: |-
+      Every line of a table definition says the same three things: field name, data type, and any
+      extra rule.
+
+  - type: explain
+    title: PRIMARY KEY in the definition
+    body: |-
+      `PRIMARY KEY` marks the field that uniquely identifies each row. `StudentID` is a good
+      choice; `FirstName` is not, because two students can share a name.
+
+      The primary key comes with two guarantees, enforced by the DBMS:
+
+      - **Unique** — no two rows may have the same key value.
+      - **Not null** — every row must have one.
+
+      A table can have only **one** primary key, though that key can be made of more than one field.
+      You write it on its own line when it is the last rule:
+
+      ```sql
+      CREATE TABLE Booking (
+          StudentID  INTEGER,
+          ClassID    INTEGER,
+          PRIMARY KEY (StudentID, ClassID)
+      );
+      ```
+
+      That is a **composite key**: the *pair* must be unique, so one student cannot book the same
+      class twice, but may book many classes.
+
+  - type: example
+    title: "Worked example: defining a library table"
+    problem: |-
+      Write the DDL to create a database called `Library` and a table called `Book` with these
+      fields: a whole-number `BookID` that uniquely identifies a book, a title of up to 120
+      characters, an author of up to 60 characters, a `Fiction` flag, and the date it was added.
+    steps:
+      - |-
+        **Database first.** A table must belong to a database:
+        `CREATE DATABASE Library;`
+      - |-
+        **Name the table and open the field list:** `CREATE TABLE Book (`
+      - |-
+        **The identifier.** A whole number that is unique → `INTEGER`, plus the key rule:
+        `BookID INTEGER PRIMARY KEY,`
+      - |-
+        **The text fields.** Their lengths vary, so use `VARCHAR` with a sensible maximum:
+        `Title VARCHAR(120),` and `Author VARCHAR(60),`
+      - |-
+        **The yes/no flag.** Fiction or not → `BOOLEAN`: `Fiction BOOLEAN,`
+      - |-
+        **The date.** Not text — dates must sort and compare → `DATE`: `DateAdded DATE`
+      - |-
+        **Close and finish.** No comma after the last field, then the bracket and semicolon:
+        `);`
+    answer: |-
+      ```sql
+      CREATE DATABASE Library;
+
+      CREATE TABLE Book (
+          BookID     INTEGER      PRIMARY KEY,
+          Title      VARCHAR(120),
+          Author     VARCHAR(60),
+          Fiction    BOOLEAN,
+          DateAdded  DATE
+      );
+      ```
+
+  - type: check
+    title: Quick check
+    questions: [choose-varchar, choose-real, boolean-type]
+
+  - type: check
+    title: Practice
+    questions: [create-database-blank, spot-error-types, primary-key-rule]
+
+  - type: misconceptions
+    items:
+      - wrong: You can store a date in a VARCHAR field and it works fine.
+        right: |-
+          It *stores*, but `DATE` carries the meaning. With text, sorting and comparing dates goes
+          wrong (`'9/1/2026'` sorts after `'10/1/2026'`).
+      - wrong: VARCHAR(30) stores exactly 30 characters.
+        right: |-
+          It stores **up to** 30. Use `CHARACTER` when the length really is fixed.
+      - wrong: A primary key may repeat as long as the rows are different in other ways.
+        right: |-
+          The key value must be unique, and it can never be empty (NULL).
+      - wrong: Every table needs a primary key or the data is invalid.
+        right: |-
+          SQL allows a table without one, but a well-designed table has one — without it, rows
+          cannot be reliably told apart.
+      - wrong: INTEGER can hold 72.5 if you are careful.
+        right: |-
+          `INTEGER` is whole numbers only. Use `REAL` for values with a fractional part.
+      - wrong: The semicolon in SQL is optional decoration.
+        right: |-
+          It ends the statement. Leaving it out is a syntax error in most DBMS.
+
+  - type: exam
+    body: |-
+      - Learn the exact syntax: `CREATE TABLE name (field type, field type, ...);` with brackets,
+        commas between fields and a semicolon at the end.
+      - Match the type to the **data**, not to the field's name: "date of birth" wants `DATE`,
+        "number of seats" wants `INTEGER`.
+      - The syllabus names seven types. If a question says "state a suitable data type", one of
+        those seven is the expected answer.
+      - Put `PRIMARY KEY` where the marker expects it: after the type of that field, or on its own
+        line as `PRIMARY KEY (Field)`.
+      - Do not invent types such as `STRING`, `TEXT` or `FLOAT`. They exist in some DBMS but are
+        not in the syllabus sub-set.
+
+  - type: takeaways
+    items:
+      - "`CREATE DATABASE` makes the container; `CREATE TABLE` defines a table inside it."
+      - "A field definition is: name, data type, then any rule such as `PRIMARY KEY`."
+      - "The seven types: CHARACTER, VARCHAR(n), BOOLEAN, INTEGER, REAL, DATE, TIME."
+      - "`VARCHAR(n)` is up to n characters; `CHARACTER` is a fixed length."
+      - "A primary key is unique, never null, and there is only one per table."
+
+  - type: deeper
+    title: "NOT NULL and DEFAULT: optional extra rules"
+    body: |-
+      The syllabus sub-set does not require these, but you will meet them in real schemas and
+      sometimes in a "read this statement" question:
+
+      ```sql
+      CREATE TABLE Student (
+          StudentID  INTEGER       PRIMARY KEY,
+          FirstName  VARCHAR(30)   NOT NULL,
+          FeePaid    BOOLEAN       DEFAULT FALSE
+      );
+      ```
+
+      - `NOT NULL` — the DBMS rejects a row that leaves this field empty.
+      - `DEFAULT value` — if the `INSERT` leaves the field out, this value is used instead.
+
+      `NOT NULL` on every field except the key is a common design rule: an empty field usually
+      means someone forgot to fill the form in properly.
+
+questions:
+  - id: choose-varchar
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.4"]
+    prompt: |-
+      A field must hold a customer's email address, which is usually 20 to 35 characters long. Which
+      data type is most suitable?
+    options:
+      - text: "`VARCHAR(60)`"
+        correct: true
+        why: |-
+          The length varies, so a variable-length text type with room to spare is right.
+      - text: "`CHARACTER`"
+        why: |-
+          `CHARACTER` is fixed length, so short addresses would be padded and long ones rejected.
+      - text: "`INTEGER`"
+        why: |-
+          An email address is text, not a whole number.
+      - text: "`BOOLEAN`"
+        why: |-
+          `BOOLEAN` stores only true or false.
+    explanation: |-
+      Variable-length text → `VARCHAR(n)`, with `n` big enough for the longest realistic value.
+
+  - id: choose-real
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.4"]
+    prompt: |-
+      A field stores a student's average mark, for example 72.5. Which data type should it be?
+    options:
+      - text: "`REAL`"
+        correct: true
+        why: |-
+          `REAL` holds numbers with a fractional part.
+      - text: "`INTEGER`"
+        why: |-
+          `INTEGER` would reject the .5 or silently lose it.
+      - text: "`DATE`"
+        why: |-
+          A mark is not a date.
+      - text: "`VARCHAR(5)`"
+        why: |-
+          Storing a number as text stops the DBMS calculating averages for you.
+    explanation: |-
+      A measurement with decimals → `REAL`.
+
+  - id: boolean-type
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.4"]
+    prompt: |-
+      Which data type is designed for a field that records only whether a fee has been paid?
+    options:
+      - text: "`BOOLEAN`"
+        correct: true
+        why: |-
+          `BOOLEAN` holds exactly two values: `TRUE` and `FALSE`.
+      - text: "`INTEGER`"
+        why: |-
+          It could hold 1 and 0, but the type does not express "yes or no", and other numbers would
+          be allowed.
+      - text: "`CHARACTER`"
+        why: |-
+          Text such as 'Y'/'N' works in practice but is not the purpose-built type.
+      - text: "`TIME`"
+        why: |-
+          `TIME` holds a time of day.
+    explanation: |-
+      `BOOLEAN` expresses a two-state flag directly and rejects anything else.
+
+  - id: create-database-blank
+    format: cloze
+    difficulty: 1
+    objectives: ["8.3.4"]
+    prompt: |-
+      Complete the statement that creates a new database called `Attendance`:
+      `CREATE {{1}} Attendance;`
+    blanks:
+      - accept: ["database", "databases"]
+    explanation: |-
+      `CREATE DATABASE Attendance;` creates the empty container that tables can then be added to.
+
+  - id: spot-error-types
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.3.4"]
+    prompt: |-
+      A student defines a table for club members. Which line contains the first error?
+
+      ```sql
+      CREATE TABLE Member (
+          MemberID   INTEGER    PRIMARY KEY,
+          FullName   VARCHAR(50),
+          Joined     INTEGER,
+          Paid       BOOLEAN
+      );
+      ```
+    lines:
+      - "Line 1: `CREATE TABLE Member (` — opens the definition."
+      - "Line 2: `MemberID INTEGER PRIMARY KEY,` — a whole-number identifier that is the key."
+      - "Line 3: `FullName VARCHAR(50),` — an up-to-50-character name."
+      - "Line 4: `Joined INTEGER,` — the date the member joined, stored as a whole number."
+      - "Line 5: `Paid BOOLEAN` — a yes/no flag."
+    errorLine: 4
+    fix: |-
+      `Joined` should be `DATE`, not `INTEGER`. A calendar date is not a whole number, and as an
+      integer it could not be compared, sorted or validated as a date.
+    explanation: |-
+      Lines 1, 2, 3 and 5 are correct. Line 4 uses a numeric type for a date, which is the first
+      error.
+
+  - id: primary-key-rule
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.4"]
+    prompt: |-
+      A table has `PRIMARY KEY (StudentID)`. Which pair of guarantees does the DBMS enforce?
+    options:
+      - text: Every value is unique, and no row may leave it empty
+        correct: true
+        why: |-
+          That is exactly what a primary key enforces.
+      - text: Every value is unique, and values must be in ascending order
+        why: |-
+          Uniqueness yes, but keys are not stored in any required order.
+      - text: Values may repeat, but only twice
+        why: |-
+          No repetition at all is allowed.
+      - text: The field must be a whole number
+        why: |-
+          A key can be text (a product code, for example) as long as values are unique.
+    explanation: |-
+      A primary key is unique and mandatory for every row.

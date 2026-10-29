@@ -1,0 +1,398 @@
+id: sql-inner-join
+subject: "9618"
+topic: "8.3"
+title: "Joining two tables: INNER JOIN"
+summary: Splitting data into two tables avoids repeating the same teacher's name in every student row — but then one question needs both tables. INNER JOIN puts them back together, matching rows on a key.
+order: 5
+minutes: 9
+kind: core
+objectives: ["8.3.5"]
+prerequisites: [sql-select-where-order-group, sql-alter-table-foreign-keys]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus
+    (2027-2029, Version 2, December 2025), topic 8.3, learning outcome 8.3.5 (queries over at most
+    two tables, including INNER JOIN). All questions are original; the sample tables are invented.
+    Second-pass review by the same agent on 2026-10-29 (no separate reviewer model was available):
+    every SQL statement was checked for syntax and semantics, every answer key recomputed (counts,
+    averages and join row counts verified in Python), every MCQ confirmed to have exactly one correct
+    option, and all five diagrams rendered and inspected. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write a query that uses `INNER JOIN` to answer a question from two tables,
+      say which rows a join returns and which it drops, and combine a join with `GROUP BY`.
+
+  - type: explain
+    title: Why the data is split up
+    body: |-
+      Suppose every student row stored the teacher's name:
+
+      | StudentID | Name | ClassID | Teacher |
+      |---|---|---|---|
+      | 1 | Ada | 1 | Mr Okafor |
+      | 3 | Cleo | 1 | Mr Okafor |
+      | 5 | Eve | 1 | Mr Okafor |
+
+      "Mr Okafor" is typed three times. Misspell one and the class has two different teachers as far
+      as the database is concerned. If he is replaced, you must update every row — and miss one.
+
+      So the teacher is stored **once**, in a `Class` table, and each student stores only the
+      `ClassID`. That is why a foreign key exists: it guarantees the `ClassID` means something.
+
+      The cost is that no single table answers "which teacher takes Ada?". You need both — and that
+      is what a **join** does.
+
+  - type: explain
+    title: The INNER JOIN skeleton
+    body: |-
+      ```sql
+      SELECT Student.Name, Class.Teacher
+      FROM Student
+      INNER JOIN Class ON Student.ClassID = Class.ClassID;
+      ```
+
+      Read it in four pieces:
+
+      1. `SELECT Student.Name, Class.Teacher` — the fields you want, each written as
+         `Table.Field` because two tables are in play.
+      2. `FROM Student` — the first table.
+      3. `INNER JOIN Class` — bring in the second table.
+      4. `ON Student.ClassID = Class.ClassID` — the **matching rule**: pair a student row with the
+         class row that has the same `ClassID`.
+
+      `ON` is almost always "the child's foreign key equals the parent's primary key". Get that pair
+      wrong and you get nonsense rows rather than an error, which is worse.
+
+      **`INNER JOIN` keeps only pairs that match in both tables.** A student whose `ClassID` has no
+      matching class does not appear at all. Neither does a class with no students.
+
+  - type: diagram
+    diagram: cs-sql-inner-join-rows
+    alt: >-
+      Three tables. Class holds ClassID (primary key) with rows 1 Mr Okafor, 2 Ms Lindqvist and
+      3 Mr Adeyemi. Student holds Name and ClassID (foreign key) with rows Ada 1, Ben 2, Cleo 1, Dev 2,
+      Eve 1, Finn 4 and Gus 1, and the Finn row is drawn dashed. The result table on the right lists
+      Ada, Ben, Cleo, Dev, Eve and Gus with their teachers. Notes underneath explain that dashed rows
+      are dropped: Finn's class 4 does not exist and class 3 has no students, so seven students give
+      six rows.
+    caption: |-
+      Only matching pairs survive an INNER JOIN. Unmatched rows on either side disappear.
+
+  - type: explain
+    title: Qualifying names, and aliases
+    body: |-
+      When two tables both have a field called `ClassID`, `ClassID` on its own is **ambiguous** and
+      the DBMS rejects it. Write `Student.ClassID` or `Class.ClassID` to say which you mean.
+
+      Long table names make queries noisy, so SQL lets you nickname them:
+
+      ```sql
+      SELECT S.Name, C.Teacher
+      FROM Student AS S
+      INNER JOIN Class AS C ON S.ClassID = C.ClassID
+      WHERE C.Teacher = 'Mr Okafor';
+      ```
+
+      `AS S` creates the alias for this query only; nothing about the table changes. Mark schemes
+      accept either the full names or short aliases, as long as they are used consistently.
+
+  - type: example
+    title: "Worked example: which teacher takes which student?"
+    problem: |-
+      `Class` holds `ClassID` and `Teacher`. `Student` holds `StudentID`, `Name` and `ClassID`.
+
+      Write a query that lists each student's name and their teacher's name, sorted by teacher and
+      then by student.
+
+      | ClassID | Teacher |
+      |---|---|
+      | 1 | Mr Okafor |
+      | 2 | Ms Lindqvist |
+      | 3 | Mr Adeyemi |
+
+      | StudentID | Name | ClassID |
+      |---|---|---|
+      | 1 | Ada | 1 |
+      | 2 | Ben | 2 |
+      | 3 | Cleo | 1 |
+      | 4 | Dev | 2 |
+      | 5 | Eve | 1 |
+      | 6 | Finn | 4 |
+      | 7 | Gus | 1 |
+    steps:
+      - |-
+        **Choose the fields, with table names.** `Student.Name` and `Class.Teacher` — `Name` and
+        `Teacher` are unique here, but qualifying them is good practice.
+      - |-
+        **Start from the child table.** `FROM Student`, then `INNER JOIN Class`.
+      - |-
+        **Write the matching rule.** `ON Student.ClassID = Class.ClassID`.
+      - |-
+        **Sort.** Two fields, teacher first so each teacher's students are together:
+        `ORDER BY Class.Teacher, Student.Name;`
+      - |-
+        **Predict the output before running it.** Finn's `ClassID` is 4, and there is no class 4, so
+        Finn is **not** in the result. Class 3 has no students, so Mr Adeyemi does not appear
+        either. That leaves Ada, Cleo, Eve and Gus with Mr Okafor, and Ben and Dev with Ms Lindqvist.
+    answer: |-
+      ```sql
+      SELECT Student.Name, Class.Teacher
+      FROM Student
+      INNER JOIN Class ON Student.ClassID = Class.ClassID
+      ORDER BY Class.Teacher, Student.Name;
+      ```
+
+      Six rows: Mr Okafor with Ada, Cleo, Eve, Gus; Ms Lindqvist with Ben, Dev.
+
+  - type: explain
+    title: Join first, then group
+    body: |-
+      A join can feed straight into the aggregates from the previous lesson. To count students per
+      teacher:
+
+      ```sql
+      SELECT Class.Teacher, COUNT(*) AS Students
+      FROM Student
+      INNER JOIN Class ON Student.ClassID = Class.ClassID
+      GROUP BY Class.Teacher;
+      ```
+
+      The order of the clauses never changes: `FROM` and `JOIN` first, then `WHERE`, then `GROUP BY`,
+      then `ORDER BY`. The join builds one combined set of rows; everything after it works on that
+      set.
+
+      Watch the row counts. With `INNER JOIN`, Mr Adeyemi's class 3 has no students, so there is no
+      row to count and he does not appear at all — not even with a zero. If a question asks for
+      "every teacher, including those with no students", `INNER JOIN` is the wrong tool.
+
+  - type: check
+    title: Quick check
+    questions: [join-on-keyword, join-row-count, join-unmatched]
+
+  - type: check
+    title: Practice
+    questions: [join-which-query, join-count-class-one, spot-error-join]
+
+  - type: misconceptions
+    items:
+      - wrong: INNER JOIN returns every row from both tables.
+        right: |-
+          It returns only **matching pairs**. Unmatched rows on either side are dropped.
+      - wrong: The ON clause can be left out because the foreign key already links the tables.
+        right: |-
+          The foreign key stops bad data going in; it does not tell the query how to pair rows.
+          `ON` states the matching rule explicitly.
+      - wrong: Writing ClassID when both tables have it is fine.
+        right: |-
+          It is ambiguous, so the DBMS rejects it. Qualify it as `Student.ClassID` or
+          `Class.ClassID`.
+      - wrong: A class with no students appears with a count of 0 in an INNER JOIN.
+        right: |-
+          It has no matching row, so it is dropped. Showing zero counts needs an outer join, which
+          is outside this sub-set.
+      - wrong: The alias AS S renames the table permanently.
+        right: |-
+          It is a nickname for that query only.
+
+  - type: exam
+    body: |-
+      - Write the join in the expected shape: `FROM A INNER JOIN B ON A.field = B.field`. The `ON`
+        condition is worth a mark on its own.
+      - Match **foreign key to primary key**, and check which table holds which.
+      - If two tables share a field name, qualify every use of it in `SELECT`, `ON`, `WHERE` and
+        `ORDER BY`.
+      - Say what happens to unmatched rows when asked: INNER JOIN drops them.
+      - For "for each teacher" questions, add `GROUP BY Class.Teacher` and make every other selected
+        field an aggregate.
+
+  - type: takeaways
+    items:
+      - "Splitting data into linked tables avoids repeating values; a join puts them back together."
+      - "`INNER JOIN ... ON A.field = B.field` pairs rows where the foreign key matches the primary key."
+      - "INNER JOIN drops rows with no match on either side."
+      - "Qualify shared field names (`Student.ClassID`) or alias the tables with `AS`."
+      - "A join can be combined with WHERE, GROUP BY and ORDER BY in the usual clause order."
+
+  - type: deeper
+    title: "The comma join, and a peek at outer joins"
+    body: |-
+      Before `JOIN` was standard syntax, two tables were listed with a comma and the matching rule
+      was put in `WHERE`:
+
+      ```sql
+      SELECT S.Name, C.Teacher
+      FROM Student AS S, Class AS C
+      WHERE S.ClassID = C.ClassID;
+      ```
+
+      This returns exactly the same rows as the `INNER JOIN` version, and older mark schemes accept
+      it. The `JOIN ... ON` form is clearer because the matching rule cannot be accidentally left
+      out — forget the `WHERE` above and you get every student paired with every class.
+
+      An **outer join** keeps unmatched rows too:
+
+      ```sql
+      SELECT C.Teacher, COUNT(S.StudentID) AS Students
+      FROM Class AS C
+      LEFT JOIN Student AS S ON S.ClassID = C.ClassID
+      GROUP BY C.Teacher;
+      ```
+
+      `LEFT JOIN` keeps every class, so Mr Adeyemi now appears with a count of 0. (Note `COUNT(S.StudentID)`
+      rather than `COUNT(*)`, so the empty match counts as zero.) Outer joins are not in the listed
+      sub-set — recognise them, do not feel obliged to write them.
+
+questions:
+  - id: join-on-keyword
+    format: cloze
+    difficulty: 1
+    objectives: ["8.3.5"]
+    prompt: |-
+      Complete the join so that each student is paired with their class:
+
+      `SELECT S.Name, C.Teacher FROM Student AS S INNER JOIN Class AS C {{1}} S.ClassID = C.ClassID;`
+    blanks:
+      - accept: ["on"]
+    explanation: |-
+      `ON` introduces the matching rule — here, the student's foreign key equals the class's primary
+      key.
+
+  - id: join-row-count
+    format: numeric
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      `Class` has entries for `ClassID` 1, 2 and 3. `Student` has seven rows, with `ClassID` values
+      1, 2, 1, 2, 1, 4 and 1. Exactly one student has `ClassID` 4.
+
+      How many rows does this query return?
+
+      ```sql
+      SELECT S.Name, C.Teacher
+      FROM Student AS S
+      INNER JOIN Class AS C ON S.ClassID = C.ClassID;
+      ```
+    fields:
+      - answer: 6
+        unit: rows
+    explanation: |-
+      Six students have a `ClassID` of 1 or 2, which exist in `Class`. The student with `ClassID` 4
+      has no match, so that row is dropped. Class 3 having no students does not add a row either.
+
+  - id: join-unmatched
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      A student row has `ClassID = 9`, but the `Class` table has no class 9. What does an
+      `INNER JOIN` between the two tables do with that student?
+    options:
+      - text: Leaves the student out of the result, because there is no matching class row
+        correct: true
+        why: |-
+          INNER JOIN returns only pairs that match in both tables.
+      - text: Includes the student with an empty teacher name
+        why: |-
+          That is what a LEFT JOIN from Student would do, not an INNER JOIN.
+      - text: Stops with an error and returns nothing
+        why: |-
+          A missing match is not an error in a join; the row is simply not paired.
+      - text: Creates a new class row with ID 9
+        why: |-
+          A query never changes the data — that needs `INSERT`.
+    explanation: |-
+      Unmatched rows are silently dropped by an INNER JOIN, which is why bad foreign-key data can
+      make records vanish from reports.
+
+  - id: join-which-query
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.5"]
+    prompt: |-
+      Which query lists the names of students taught by `Ms Lindqvist`?
+    options:
+      - text: "`SELECT S.Name FROM Student AS S INNER JOIN Class AS C ON S.ClassID = C.ClassID WHERE C.Teacher = 'Ms Lindqvist';`"
+        correct: true
+        why: |-
+          The join pairs students with their class, then `WHERE` keeps the rows for that teacher.
+      - text: "`SELECT S.Name FROM Student AS S INNER JOIN Class AS C ON S.StudentID = C.ClassID WHERE C.Teacher = 'Ms Lindqvist';`"
+        why: |-
+          The `ON` condition is wrong: a student ID is not a class ID, so the pairs are meaningless.
+      - text: "`SELECT Name FROM Student WHERE Teacher = 'Ms Lindqvist';`"
+        why: |-
+          `Student` has no `Teacher` field — that is the whole reason for joining.
+      - text: "`SELECT S.Name FROM Student AS S, Class AS C WHERE C.Teacher = 'Ms Lindqvist';`"
+        why: |-
+          With no matching rule this pairs every student with that class, giving the same name
+          repeated for every student.
+    explanation: |-
+      Join on `ClassID = ClassID`, then filter on the teacher's name.
+
+  - id: join-count-class-one
+    format: numeric
+    difficulty: 3
+    objectives: ["8.3.5"]
+    prompt: |-
+      Using the tables below:
+
+      | ClassID | Teacher |
+      |---|---|
+      | 1 | Mr Okafor |
+      | 2 | Ms Lindqvist |
+      | 3 | Mr Adeyemi |
+
+      | StudentID | Name | ClassID |
+      |---|---|---|
+      | 1 | Ada | 1 |
+      | 2 | Ben | 2 |
+      | 3 | Cleo | 1 |
+      | 4 | Dev | 2 |
+      | 5 | Eve | 1 |
+      | 6 | Finn | 4 |
+      | 7 | Gus | 1 |
+
+      What does this query return?
+
+      ```sql
+      SELECT C.Teacher, COUNT(*) AS Students
+      FROM Student AS S
+      INNER JOIN Class AS C ON S.ClassID = C.ClassID
+      WHERE C.ClassID = 1
+      GROUP BY C.Teacher;
+      ```
+    fields:
+      - label: "Students ="
+        answer: 4
+    explanation: |-
+      Class 1 has Ada, Cleo, Eve and Gus — four matching student rows. Finn (class 4) never matches
+      and is dropped before the count.
+
+  - id: spot-error-join
+    format: spot-error
+    difficulty: 3
+    objectives: ["8.3.5"]
+    prompt: |-
+      A student joins two tables that both have a `ClassID` field. Which line contains the first
+      error?
+
+      ```sql
+      SELECT S.Name, C.Teacher
+      FROM Student AS S
+      INNER JOIN Class AS C ON ClassID = ClassID;
+      ```
+    lines:
+      - "Line 1 selects the student name and teacher name, qualified with the aliases."
+      - "Line 2 starts from the Student table, nicknamed S."
+      - "Line 3 joins Class, nicknamed C, matching on `ClassID = ClassID`."
+      - "Lines 4 onwards would add WHERE, GROUP BY or ORDER BY clauses."
+    errorLine: 3
+    fix: |-
+      `ClassID` exists in **both** tables, so it is ambiguous. It must be qualified:
+      `ON S.ClassID = C.ClassID;`
+    explanation: |-
+      Lines 1, 2 and 4 are fine. Line 3 compares a field with itself and does not say which table
+      each `ClassID` belongs to.

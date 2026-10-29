@@ -1,0 +1,359 @@
+id: sql-ddl-and-dml
+subject: "9618"
+topic: "8.3"
+title: "Two jobs, one language: DDL and DML"
+summary: A database has a structure and it has data. SQL changes the structure with DDL and the data with DML — and it is the industry standard for both.
+order: 1
+minutes: 8
+kind: core
+objectives: ["8.3.1", "8.3.2", "8.3.3"]
+prerequisites: [dbms-software-tools]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus
+    (2027-2029, Version 2, December 2025), topic 8.3, learning outcomes 8.3.1, 8.3.2 and 8.3.3.
+    All questions are original.
+    Second-pass review by the same agent on 2026-10-29 (no separate reviewer model was available):
+    every SQL statement was checked for syntax and semantics, every answer key recomputed (counts,
+    averages and join row counts verified in Python), every MCQ confirmed to have exactly one correct
+    option, and all five diagrams rendered and inspected. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can look at any SQL statement and say whether it is **DDL** or **DML**, say
+      exactly what it changes, and explain why one language is the industry standard for both jobs.
+
+  - type: explain
+    title: A database is two things at once
+    body: |-
+      Think of a spreadsheet. It has a **structure** — the sheet names, the column headings, the
+      fact that "Date of birth" holds a date and not a paragraph. And it has **data** — the actual
+      cells.
+
+      These are separate things, and you can change one without touching the other. You can rename
+      the column "DOB" to "Date of birth" and every cell underneath stays exactly as it was.
+
+      A database works the same way, which is why it needs two kinds of statement:
+
+      - statements that change the **structure** (tables, fields, keys, the database itself);
+      - statements that change the **data** (the rows inside those tables).
+
+      SQL is the language for both, but the two jobs have their own names.
+
+  - type: explain
+    title: DDL — the architect
+    body: |-
+      **DDL** is the **Data Definition Language**: the part of SQL that defines and modifies the
+      structure of the database.
+
+      | DDL statement | What it does |
+      |---|---|
+      | `CREATE DATABASE` | makes a new, empty database |
+      | `CREATE TABLE` | makes a new table and defines its fields and data types |
+      | `ALTER TABLE` | changes an existing table: adds/removes a field, adds a key |
+      | `DROP TABLE` | deletes a table and its structure completely |
+
+      The keyword at the start gives it away: `CREATE`, `ALTER` and `DROP` are all about
+      **definitions**.
+
+      This is the important link back to the DBMS: the DBMS carries out **all** creation and
+      modification of the structure using its DDL. You never edit the data dictionary by hand.
+      You send a DDL statement, and the DBMS updates the data dictionary to match — field names,
+      data types, keys and constraints all at once.
+
+  - type: explain
+    title: DML — the librarian
+    body: |-
+      **DML** is the **Data Manipulation Language**: the part of SQL that queries the data and
+      keeps it up to date.
+
+      | DML statement | What it does |
+      |---|---|
+      | `SELECT` | reads rows that match a condition |
+      | `INSERT INTO` | adds new rows |
+      | `UPDATE` | changes values in existing rows |
+      | `DELETE FROM` | removes rows |
+
+      Notice what is **not** in that list: nothing here creates or renames a field. DML works on
+      the data inside a structure that already exists.
+
+      `SELECT` is the odd one out in the list — it changes nothing at all. It is still DML because
+      it manipulates data: it retrieves and combines it.
+
+  - type: diagram
+    diagram: cs-sql-ddl-vs-dml
+    alt: >-
+      Two panels side by side. The left panel, headed DDL and labelled structure, lists CREATE TABLE
+      (makes a new table), ALTER TABLE (changes a table's fields or keys) and DROP TABLE (removes the
+      whole table). The right panel, headed DML and labelled data, lists SELECT (reads rows that match
+      a condition), INSERT INTO (adds new rows), UPDATE (changes values in existing rows) and DELETE
+      FROM (removes rows). Notes underneath say that DDL changes what a table is, that DML works on
+      the rows inside it, and that SQL is the industry standard for both.
+    caption: |-
+      Structure on the left, data on the right — both are written in SQL.
+
+  - type: explain
+    title: Why one language for both jobs is a big deal
+    body: |-
+      **SQL** stands for **Structured Query Language**. It is the **industry standard** for both
+      DDL and DML.
+
+      "Standard" here is not a marketing word. SQL is published as an official standard by the
+      standards bodies ISO and ANSI, and every major relational DBMS — MySQL, SQL Server, Oracle,
+      PostgreSQL — implements it.
+
+      Three consequences worth remembering:
+
+      - **Portability.** A script written for one DBMS mostly runs on another. Moving a system to a
+        different DBMS does not mean rewriting everything.
+      - **Transferable skill.** Someone who knows SQL can work with almost any relational database,
+        so it is taught, hired for and examined everywhere.
+      - **One language, one place.** Because DDL and DML are the same language, one script can
+        create the structure and then fill it with data.
+
+      The word *mostly* matters. Each DBMS adds its own extra commands and small differences
+      (**dialects**), and they also report errors slightly differently. Cambridge questions use the
+      standard sub-set, which is the part you are learning here.
+
+  - type: definition
+    term: SQL (Structured Query Language)
+    body: |-
+      The standard language for relational databases. Its **DDL** part creates and modifies the
+      structure (database, tables, fields, keys); its **DML** part queries and maintains the data.
+
+  - type: intuition
+    title: Declarative — you say what, not how
+    body: |-
+      SQL is **declarative**. You describe the result you want; you do not describe the steps the
+      computer should take to get it.
+
+      Write `SELECT FirstName FROM Student WHERE Average > 60` and you never mention which disk
+      block to read, which index to use, or in what order to visit rows. The DBMS's **query
+      processor** works that out — the same tool you met in topic 8.2.
+
+      Analogy: ordering a coffee. You say "a flat white, oat milk". You do not specify the order of
+      the grinding, tamping and steaming. Where it breaks down: if the coffee shop has no oat milk,
+      you get an error message — and SQL errors are just as blunt.
+
+  - type: example
+    title: Classifying statements you have never seen
+    problem: |-
+      For each statement, say whether it is DDL or DML and what it does to the database.
+
+      1. `ALTER TABLE Student ADD Email VARCHAR(60);`
+      2. `DELETE FROM Student WHERE ClassID = 4;`
+      3. `CREATE DATABASE Attendance;`
+      4. `SELECT ClassID, Teacher FROM Class;`
+    steps:
+      - |-
+        **Find the first keyword.** It is the verb that tells you the job: `ALTER`, `DELETE`,
+        `CREATE`, `SELECT`.
+      - |-
+        **`ALTER TABLE` → DDL.** `ALTER` changes a definition. This statement adds a **field** to
+        the table `Student`; existing rows get a blank (NULL) value in that field. No data is
+        deleted, but the structure has changed.
+      - |-
+        **`DELETE FROM` → DML.** It removes **rows** whose `ClassID` is 4. The table and its fields
+        stay exactly as they were.
+      - |-
+        **`CREATE DATABASE` → DDL.** It creates a new empty database called `Attendance` — no tables
+        and no data yet.
+      - |-
+        **`SELECT` → DML.** It reads two fields from every row of `Class`. Nothing is changed; the
+        query only returns a result set.
+    answer: |-
+      DDL: 1 and 3. DML: 2 and 4. Statements that end in a definition (`CREATE`, `ALTER`, `DROP`)
+      are DDL; statements that touch rows (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) are DML.
+
+  - type: check
+    title: Quick check
+    questions: [ddl-or-dml, dml-role, sql-stands-for]
+
+  - type: check
+    title: Practice
+    questions: [structure-change-rule, classify-create-table, spot-error-ddl-dml]
+
+  - type: misconceptions
+    items:
+      - wrong: SELECT is DDL because it starts with a keyword and looks like a command.
+        right: |-
+          `SELECT` is **DML**: it manipulates data (reads it). DDL is only about structure.
+      - wrong: Changing a table's structure is done by editing the data dictionary directly.
+        right: |-
+          The DBMS changes the structure **only** through DDL, and updates the data dictionary
+          itself as a result.
+      - wrong: DDL and DML are two different languages.
+        right: |-
+          Both are parts of the same language, SQL — two families of statement with different jobs.
+      - wrong: SQL is a standard, so a statement behaves identically in every DBMS.
+        right: |-
+          The core is standard, but each DBMS has its own **dialect** with extra commands and small
+          differences. That is why exam questions stick to the standard sub-set.
+      - wrong: DELETE FROM Student removes the Student table.
+        right: |-
+          It removes the **rows**. `DROP TABLE Student` is the DDL statement that removes the table
+          itself.
+
+  - type: exam
+    body: |-
+      - "State whether this statement is DDL or DML" wants the classification **and** the reason:
+        "it is DDL because it changes the structure of the table, not the data in it".
+      - When asked what a statement does, name the **object** it acts on: the database, a table, a
+        field, a key, or particular rows.
+      - For "why is SQL the industry standard", give reasons, not history: it is an official
+        standard, supported by all major relational DBMS, so scripts are portable and skills
+        transfer.
+      - Do not say "SQL is a programming language for making websites". It is a query language for
+        relational databases.
+
+  - type: takeaways
+    items:
+      - "DDL defines and changes the structure: CREATE DATABASE, CREATE TABLE, ALTER TABLE, DROP TABLE."
+      - "DML queries and maintains the data: SELECT, INSERT INTO, UPDATE, DELETE FROM."
+      - "The DBMS makes all structural changes through DDL and records them in the data dictionary."
+      - "SQL is the industry standard for both DDL and DML, published by ISO/ANSI and supported by all major relational DBMS."
+      - "SQL is declarative: you describe the result, the query processor decides how to get it."
+
+  - type: deeper
+    title: "DROP, TRUNCATE and the DELETE trap"
+    body: |-
+      Three statements look similar but do different amounts of damage:
+
+      | Statement | Removes | Structure survives? |
+      |---|---|---|
+      | `DELETE FROM Student;` | every row | yes — an empty table is left |
+      | `DROP TABLE Student;` | every row **and** the table definition | no |
+      | `TRUNCATE TABLE Student;` | every row, very quickly | yes |
+
+      `DELETE` and `TRUNCATE` are data operations, while `DROP` is DDL, because it removes a
+      definition. Cambridge questions expect you to know `DROP TABLE` as DDL; naming `TRUNCATE` is
+      a bonus, not a requirement.
+
+questions:
+  - id: ddl-or-dml
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.1", "8.3.2"]
+    prompt: |-
+      Which of these statements is **DDL**?
+    options:
+      - text: "`ALTER TABLE Student ADD Email VARCHAR(60);`"
+        correct: true
+        why: |-
+          `ALTER TABLE` changes the structure of a table, which is exactly what DDL does.
+      - text: "`SELECT FirstName FROM Student;`"
+        why: |-
+          `SELECT` reads data, so it is DML.
+      - text: "`INSERT INTO Student VALUES (7, 'Ada');`"
+        why: |-
+          `INSERT` adds a row, so it is DML.
+      - text: "`UPDATE Student SET Average = 70;`"
+        why: |-
+          `UPDATE` changes values in rows, so it is DML.
+    explanation: |-
+      DDL is the structure half of SQL. `ALTER` changes a definition; the other three change data.
+
+  - id: dml-role
+    format: mcq
+    difficulty: 1
+    objectives: ["8.3.2"]
+    prompt: |-
+      What is the job of the Data Manipulation Language (DML)?
+    options:
+      - text: To query the data and to keep the data in the tables up to date
+        correct: true
+        why: |-
+          DML covers `SELECT`, `INSERT`, `UPDATE` and `DELETE` — reading and maintaining rows.
+      - text: To create and change tables, fields and keys
+        why: |-
+          That is DDL's job.
+      - text: To store the data dictionary
+        why: |-
+          The data dictionary is maintained by the DBMS as a result of DDL statements.
+      - text: To design entity-relationship diagrams
+        why: |-
+          Those are design tools, not a language.
+    explanation: |-
+      DML manipulates data: it queries rows and maintains them. Changing the structure is DDL.
+
+  - id: sql-stands-for
+    format: cloze
+    difficulty: 1
+    objectives: ["8.3.3"]
+    prompt: |-
+      Complete the name: SQL stands for {{1}} {{2}} {{3}}.
+    blanks:
+      - accept: ["structured"]
+      - accept: ["query"]
+      - accept: ["language"]
+    explanation: |-
+      SQL — Structured Query Language — is the standard language for relational databases.
+
+  - id: structure-change-rule
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.1"]
+    prompt: |-
+      A developer wants to add a new field called `Email` to an existing table. Which statement
+      describes how the DBMS does this?
+    options:
+      - text: The developer sends a DDL statement and the DBMS updates the table and the data dictionary
+        correct: true
+        why: |-
+          All structural change goes through DDL, and the DBMS keeps the data dictionary in step.
+      - text: The developer edits the data dictionary directly with a text editor
+        why: |-
+          The dictionary is the DBMS's own record; it is not edited by hand.
+      - text: The developer uses DML because a field holds data
+        why: |-
+          A field is part of the structure, so changing it is DDL.
+      - text: The developer deletes the table and retypes every row
+        why: |-
+          Unnecessary and destructive: `ALTER TABLE` changes the definition in place.
+    explanation: |-
+      Structure changes are made with DDL only, and the DBMS records the new definition in the
+      data dictionary.
+
+  - id: classify-create-table
+    format: mcq
+    difficulty: 2
+    objectives: ["8.3.1", "8.3.3"]
+    prompt: |-
+      What does `CREATE TABLE Booking (BookingID INTEGER PRIMARY KEY);` do?
+    options:
+      - text: It defines a new table called Booking with one integer field that is its primary key
+        correct: true
+        why: |-
+          `CREATE TABLE` defines the structure: the table name, its fields, their types and keys.
+      - text: It adds one row of data to an existing Booking table
+        why: |-
+          Adding a row is `INSERT`, which is DML.
+      - text: It creates an empty database called Booking
+        why: |-
+          Creating a database uses `CREATE DATABASE`, and a table is not a database.
+      - text: It queries the Booking table for its primary key
+        why: |-
+          A query starts with `SELECT`.
+    explanation: |-
+      `CREATE TABLE` is DDL: it defines the table, the field, the data type and the key.
+
+  - id: spot-error-ddl-dml
+    format: spot-error
+    difficulty: 2
+    objectives: ["8.3.1", "8.3.2"]
+    prompt: |-
+      A student writes four statements about SQL. Which line contains the first error?
+    lines:
+      - "`CREATE TABLE` and `ALTER TABLE` are DDL statements because they change the structure."
+      - "`INSERT INTO` and `DELETE FROM` are DML statements because they change rows."
+      - "`SELECT` is DDL because it starts a new query on the database."
+      - "SQL is the industry standard language for both DDL and DML."
+    errorLine: 3
+    fix: |-
+      `SELECT` is **DML**. It reads data; it does not define or change the structure.
+    explanation: |-
+      Lines 1, 2 and 4 are correct. Line 3 misclassifies `SELECT`, which manipulates data, not
+      structure.
