@@ -79,7 +79,7 @@ async function run() {
       if (c) claims.push(c);
       else { try { const s = await stat(path.join(dirs.claims, n)); claims.push({ task: n, warning: "Claim directory exists without owner.json; inspect before cleanup", createdAt: s.birthtime.toISOString() }); } catch {} }
     }
-    output({ directory: root, agents, claims, recentMessages: await listMessages(Number(flags.limit || 15)) }); return;
+    output({ directory: root, leader: await readJson(path.join(dirs.state, "leader.json")), agents, claims, recentMessages: await listMessages(Number(flags.limit || 15)) }); return;
   }
   if (command === "set-leader") {
     const id = agentId();
@@ -101,8 +101,12 @@ async function run() {
       if (e.code === "EEXIST") { output({ assigned: false, task, owner: await readJson(path.join(claimDir, "owner.json")), message: "Task already claimed or assigned. Inspect owner and negotiate a handoff; do not overwrite." }); process.exitCode = 2; return; }
       throw e;
     }
+    const targetFile = path.join(dirs.agents, taskKey(to) + ".json"), existingTarget = await readJson(targetFile);
+    if (!existingTarget) { output({ assigned: false, task, message: "Recipient is not registered. Ask the agent to join first; do not assign work to an invisible mailbox." }); process.exitCode = 2; return; }
+    const lastBeat = Date.parse(existingTarget.heartbeatAt || "");
+    if (existingTarget.status === "blocked" || existingTarget.status === "done" || !Number.isFinite(lastBeat) || Date.now() - lastBeat > 5 * 60 * 1000) { output({ assigned: false, task, recipient: existingTarget, message: "Recipient is not confirmed active (blocked/done/stale heartbeat). Ask them to heartbeat before assigning." }); process.exitCode = 2; return; }
     const filesList = parseList(flags.files);
-    const claim = { task, agentId: to, role: flags.role || "writer", files: filesList, status: "assigned", assignedBy: from, instructions: String(flags.text), startedAt: now(), heartbeatAt: now(), host: null, pid: null };
+    const claim = { task, agentId: to, role: flags.role || "writer", files: filesList, status: "assigned", assignedBy: from, instructions: String(flags.text), startedAt: now(), heartbeatAt: now(), host: existingTarget.host || null, pid: existingTarget.pid || null };
     try {
       await atomicJson(path.join(claimDir, "owner.json"), claim);
       const agentFile = path.join(dirs.agents, taskKey(to) + ".json"), target = await readJson(agentFile) || { id: to, startedAt: now(), capabilities: [] };
