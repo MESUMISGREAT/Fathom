@@ -1,0 +1,337 @@
+id: kirchhoffs-laws-second-law
+subject: "9702"
+topic: "10.2"
+title: "Kirchhoff's second law: energy around a loop"
+summary: The loop rule — the e.m.f. around a closed loop equals the total p.d. — and why it is conservation of energy in disguise.
+order: 2
+minutes: 9
+kind: core
+objectives: ["10.2.2"]
+prerequisites: ["electric-current-flow-of-charge", "resistance-resistivity-definition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  reviewedBy: buffy-content-worker-1
+  reviewedAt: 2026-10-29
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcome 10.2.2 ("Recall Kirchhoff's second law and understand that it
+    follows from conservation of energy"). The e.m.f. and p.d. definitions are used here only as
+    working tools; their full treatment is the separate unit 10.1. All examples and questions are
+    original. Not yet independently reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-29 by buffy-content-worker-1. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can state Kirchhoff's second law, explain why it follows from conservation
+      of energy, and use it to find an e.m.f. or a p.d. in a circuit loop.
+
+  - type: explain
+    title: Two kinds of energy transfer per unit charge
+    body: |
+      Before the law itself, you need the two quantities it compares. Both are energies divided
+      by charge, so both are measured in volts: $1\ \text{V} = 1\ \text{J C}^{-1}$.
+
+      - The **electromotive force (e.m.f.)** of a source is the energy transferred per unit charge
+        in driving charge round a complete circuit. A 12 V cell gives each coulomb 12 J of
+        electrical energy.
+      - The **potential difference (p.d.)** across a component is the energy transferred from
+        electrical energy to other forms per unit charge passing through it. An 8.0 V p.d. across
+        a resistor means 8.0 J of electrical energy becomes thermal energy for every coulomb.
+
+      The full treatment of e.m.f., terminal p.d. and internal resistance belongs to the
+      practical-circuits lessons (topic 10.1). Here you only need e.m.f. as "energy given per
+      unit charge" and p.d. as "energy taken per unit charge".
+
+  - type: intuition
+    body: |
+      Imagine walking a circular route that brings you back to your starting point. However many
+      hills you climb and descend, your net change in height is zero, because you finished where
+      you began.
+
+      Charge going round a loop is like that, except the "height" is energy per unit charge. It
+      gains energy in the source and gives it up in the components, so when it returns to its
+      starting point it has gained nothing overall.
+
+      Where the analogy breaks: the charge does not "remember" the journey, and energy is not
+      stored as height. The point is simply that the energy gains and losses must cancel.
+
+  - type: definition
+    term: Kirchhoff's second law
+    body: |
+      The sum of the electromotive forces around any closed loop of a circuit is equal to the sum
+      of the potential differences around that loop.
+
+  - type: explain
+    title: Why it follows from conservation of energy
+    body: |
+      **Conservation of energy** says energy cannot be created or destroyed, only transferred
+      between forms.
+
+      Take one coulomb of charge all the way round a loop. The source gives it some electrical
+      energy. The components take electrical energy away and transfer it to the surroundings. The
+      charge comes back to where it started, so it cannot have a net gain.
+
+      Therefore the energy given per unit charge equals the energy taken per unit charge: the
+      total e.m.f. equals the total p.d. That is the loop rule.
+
+  - type: explain
+    title: Using signs without tears
+    body: |
+      In calculations, choose a direction to go round the loop and then be consistent.
+
+      - Crossing a source from its negative terminal to its positive terminal **adds** e.m.f.
+      - Crossing a resistor **in the direction of the current** takes energy away, so it
+        contributes a p.d. $IR$.
+      - Crossing a resistor against the current would **add** energy back, which is why direction
+        matters.
+
+      In practice, most AS questions have one source and several resistors in a single loop, so
+      the arithmetic is just "e.m.f. = sum of the p.d.s".
+
+  - type: diagram
+    diagram: phys-kirchhoffs-laws-loop
+    alt: |
+      A single loop containing a 12 V cell on the left, a 4.0 ohm resistor on the top and a
+      2.0 ohm resistor on the bottom. Arrows show the conventional current going clockwise, with
+      I equal to 2.0 A. The p.d. across the top resistor is labelled 8.0 V and across the bottom
+      resistor 4.0 V, and the equation below reads 12 V = 8.0 V + 4.0 V.
+
+  - type: example
+    title: Checking the loop rule in a two-resistor circuit
+    problem: |
+      A cell of e.m.f. 12 V is connected to a 4.0 Ω resistor and a 2.0 Ω resistor in series. Show
+      that the loop rule holds.
+    steps:
+      - |
+        There is one path, so the same current flows everywhere. The combined resistance is
+        $R = 4.0 + 2.0 = 6.0\ \Omega$.
+      - |
+        From the definition of resistance, $I = \dfrac{V}{R} = \dfrac{12}{6.0} = 2.0\ \text{A}$.
+      - |
+        The p.d. across each resistor is $V = IR$, so
+        $V_1 = 2.0 \times 4.0 = 8.0\ \text{V}$ and $V_2 = 2.0 \times 2.0 = 4.0\ \text{V}$.
+      - |
+        Add the p.d.s: $8.0 + 4.0 = 12\ \text{V}$, which equals the e.m.f. The loop rule is
+        satisfied.
+    answer: |
+      $12\ \text{V} = 8.0\ \text{V} + 4.0\ \text{V}$, so the e.m.f. equals the total p.d. round the
+      loop.
+
+  - type: check
+    questions: [law-from-energy, missing-pd]
+
+  - type: example
+    title: Finding an e.m.f. from the p.d.s
+    problem: |
+      A lamp and a 6.0 Ω resistor are in series with a battery. The current is 0.40 A and the p.d.
+      across the lamp is 2.4 V. Calculate the e.m.f. of the battery.
+    steps:
+      - |
+        Find the p.d. across the resistor using $V = IR$:
+        $V_R = 0.40 \times 6.0 = 2.4\ \text{V}$.
+      - |
+        The two components are in series, so the same 0.40 A flows through both and the p.d.s add
+        round the loop.
+      - |
+        By the loop rule, e.m.f. = $V_{\text{lamp}} + V_R = 2.4 + 2.4 = 4.8\ \text{V}$.
+    answer: |
+      e.m.f. $= 4.8\ \text{V}$.
+
+  - type: check
+    questions: [state-second-law, current-in-series-loop]
+
+  - type: deeper
+    title: Two sources in the same loop
+    body: |
+      The loop rule still works when a circuit has more than one source; you simply add the
+      e.m.f.s, giving each one the sign that matches the direction you are going round.
+
+      Suppose a 6.0 V cell and a 4.0 V cell are connected in the same loop with a 5.0 Ω resistor,
+      both driving current the same way. The total e.m.f. is $6.0 + 4.0 = 10\ \text{V}$, so
+      $I = \dfrac{10}{5.0} = 2.0\ \text{A}$.
+
+      Now turn one cell round so the two oppose each other. The net e.m.f. is
+      $6.0 - 4.0 = 2.0\ \text{V}$, so $I = \dfrac{2.0}{5.0} = 0.40\ \text{A}$, in the direction
+      pushed by the 6.0 V cell.
+
+      In both cases the p.d. across the resistor ($10\ \text{V}$ and $2.0\ \text{V}$ respectively)
+      equals the net e.m.f., so energy is still conserved round the loop.
+
+  - type: misconceptions
+    items:
+      - wrong: "Electromotive force is a force, so it should be measured in newtons."
+        right: |
+          Despite the name, e.m.f. is **energy per unit charge**, measured in volts
+          ($\text{J C}^{-1}$). It is not a force.
+      - wrong: "The current is smaller after passing through the first resistor, so the second resistor gets less current."
+        right: |
+          In a single loop the current is the same everywhere. Energy is transferred in each
+          resistor, but charge is not consumed.
+      - wrong: "Kirchhoff's second law says the p.d.s round a loop add up to zero."
+        right: |
+          It says the **e.m.f.s** add up to the **p.d.s** round the loop; the p.d.s add to the
+          e.m.f., not to zero. Only the algebraic sum of e.m.f.s *minus* p.d.s is zero, which is
+          the same statement with signs attached.
+      - wrong: "The loop rule only applies to simple single-loop circuits."
+        right: |
+          It applies to every closed loop in any circuit, which is how multi-loop networks are
+          solved.
+
+  - type: check
+    questions: [two-cells-aiding, spot-energy-error, explain-second-law]
+
+  - type: exam
+    body: |
+      - "State Kirchhoff's second law" needs the words **sum of e.m.f.s = sum of p.d.s** around a
+        closed loop. Adding "because energy is conserved" earns the explanation mark when the
+        question asks why.
+      - "Show that" questions want the arithmetic laid out: p.d.s from $V = IR$, then the sum, then
+        the comparison with the e.m.f.
+      - A missing p.d. in a loop is found by subtracting the known p.d.s from the e.m.f.
+      - If a question gives you a current and a resistance, find the p.d. first. Students often
+        try to add resistances and currents directly, which mixes up the two laws.
+
+  - type: takeaways
+    items:
+      - "Kirchhoff's second law (loop rule): sum of e.m.f.s round a closed loop = sum of p.d.s."
+      - "It follows from conservation of energy: energy gained per unit charge = energy lost per unit charge."
+      - "E.m.f. and p.d. are both energies per unit charge, so both are in volts ($\\text{J C}^{-1}$)."
+      - "With several sources, add the e.m.f.s with signs: aiding cells add, opposing cells subtract."
+questions:
+  - id: law-from-energy
+    format: mcq
+    difficulty: 1
+    objectives: ["10.2.2"]
+    prompt: |
+      Kirchhoff's second law follows from which conservation principle?
+    options:
+      - text: Conservation of energy.
+        correct: true
+        why: |
+          The law says the energy given per unit charge by the sources equals the energy taken per
+          unit charge by the components around a loop, which is conservation of energy.
+      - text: Conservation of charge.
+        why: |
+          Conservation of charge gives the **first** law, about currents at a junction.
+      - text: Conservation of momentum.
+        why: |
+          Momentum conservation is about forces and motion, not about energy transfers per unit
+          charge in a circuit.
+      - text: The principle of moments.
+        why: |
+          Moments are about turning effects of forces; they play no part in the loop rule.
+    explanation: |
+      Round a complete loop the charge returns to its starting point, so it cannot have gained
+      net energy. The e.m.f.s supplying energy must equal the p.d.s taking it away.
+
+  - id: missing-pd
+    format: numeric
+    difficulty: 1
+    objectives: ["10.2.2"]
+    prompt: |
+      A cell of e.m.f. 9.0 V drives a current round a loop containing two resistors. The p.d.
+      across one resistor is 5.4 V. Calculate the p.d. across the other resistor.
+    fields:
+      - label: "V ="
+        answer: 3.6
+        tolerance: { rel: 0.02 }
+        unit: V
+    explanation: |
+      By the loop rule the p.d.s add to the e.m.f.: $5.4 + V = 9.0$, so
+      $V = 9.0 - 5.4 = 3.6\ \text{V}$.
+
+  - id: state-second-law
+    format: text
+    difficulty: 1
+    objectives: ["10.2.2"]
+    style: definition
+    prompt: |
+      State Kirchhoff's second law.
+    accept:
+      - "the sum of the electromotive forces around a closed loop is equal to the sum of the potential differences around the loop"
+      - "the sum of the emfs around a closed loop equals the sum of the pds around the loop"
+      - "the sum of the e.m.f.s round any closed loop equals the sum of the p.d.s round that loop"
+      - "the net emf around a closed loop equals the total pd around the loop"
+      - "the algebraic sum of the emfs and pds around a closed loop is zero"
+    model: |
+      The sum of the electromotive forces around any closed loop of a circuit is equal to the sum
+      of the potential differences around that loop.
+    explanation: |
+      The law compares **e.m.f.s** with **p.d.s** round a closed loop. Describing it as "voltage
+      is conserved" is too vague to score the mark.
+
+  - id: current-in-series-loop
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.2"]
+    prompt: |
+      A 12 V cell is connected in series with an 8.0 Ω resistor and a 12 Ω resistor. The current
+      is 0.60 A. Calculate the p.d. across the 12 Ω resistor.
+    fields:
+      - label: "V ="
+        answer: 7.2
+        tolerance: { rel: 0.02 }
+        unit: V
+    explanation: |
+      $V = IR = 0.60 \times 12 = 7.2\ \text{V}$. As a check, the p.d. across the 8.0 Ω resistor is
+      $0.60 \times 8.0 = 4.8\ \text{V}$, and $4.8 + 7.2 = 12\ \text{V}$, the e.m.f.
+
+  - id: two-cells-aiding
+    format: numeric
+    difficulty: 3
+    objectives: ["10.2.2"]
+    prompt: |
+      A 6.0 V cell and a 4.0 V cell are connected in the same loop so that they drive current the
+      same way round, in series with a 5.0 Ω resistor. Calculate the current in the loop.
+    fields:
+      - label: "I ="
+        answer: 2.0
+        tolerance: { rel: 0.02 }
+        unit: A
+    explanation: |
+      The e.m.f.s add because they push the same way: net e.m.f. $= 6.0 + 4.0 = 10\ \text{V}$.
+      Then $I = \dfrac{10}{5.0} = 2.0\ \text{A}$.
+
+  - id: spot-energy-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["10.2.2"]
+    prompt: |
+      A student checks a single-loop circuit. Identify the first error in the reasoning.
+    lines:
+      - "A cell of e.m.f. 6.0 V drives a current round a loop containing a 4.0 Ω and a 2.0 Ω resistor."
+      - "The current is 6.0/(4.0 + 2.0) = 1.0 A, so the p.d.s are 4.0 V and 2.0 V."
+      - "The p.d.s total 6.0 V, which equals the e.m.f. of the cell."
+      - "Because the p.d.s add up to the e.m.f., energy is not conserved in the resistors."
+    errorLine: 4
+    fix: |
+      Energy **is** conserved: the cell transfers 6.0 J of energy to each coulomb of charge, and
+      the resistors transfer that same 6.0 J per coulomb to the surroundings as thermal energy.
+    explanation: |
+      The first three lines are correct. The loop rule is a statement **of** conservation of
+      energy, so a circuit that obeys it is conserving energy, not breaking the principle.
+
+  - id: explain-second-law
+    format: explain
+    difficulty: 3
+    objectives: ["10.2.2"]
+    prompt: |
+      Explain how Kirchhoff's second law follows from conservation of energy.
+    model: |
+      Take a unit charge once round a closed loop. The sources transfer energy to it, giving it
+      an amount of energy equal to the e.m.f. The components transfer energy from it to the
+      surroundings, and each contributes a p.d. The charge returns to its starting point with the
+      same energy it had at the start, so the energy supplied per unit charge must equal the
+      energy removed per unit charge. That is why the sum of the e.m.f.s round the loop equals the
+      sum of the p.d.s.
+    keyPoints:
+      - "Energy cannot be created or destroyed, only transferred"
+      - "Sources supply energy per unit charge (the e.m.f.)"
+      - "Components transfer energy away per unit charge (the p.d.s)"
+      - "Charge returns to its starting point with no net energy gain"
+      - "So total e.m.f. equals total p.d. round the loop"
+    explanation: |
+      The key step is that the charge completes the loop, so any energy given to it by the source
+      must have been transferred away by the components.

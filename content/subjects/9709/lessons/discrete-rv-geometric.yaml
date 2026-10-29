@@ -1,0 +1,338 @@
+id: discrete-rv-geometric
+subject: "9709"
+topic: "5.4"
+title: The geometric distribution
+summary: Model the number of trials up to and including the first success with Geo(p), use P(X = r) = p(1 - p)^(r-1) and E(X) = 1/p, and find probabilities of "more than r trials".
+order: 6
+minutes: 8
+kind: core
+objectives: ["5.4.2", "5.4.3"]
+prerequisites: ["discrete-rv-binomial-model"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.4 Discrete random variables, outcomes 5.4.2 and 5.4.3,
+    using the syllabus notation Geo(p) with p_r = p(1 − p)^(r − 1) for r = 1, 2, 3, …
+    and the expectation 1/p. All examples, questions and diagrams are original. The
+    geometric variance is included only as clearly labelled enrichment because the syllabus
+    does not require it.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can recognise a **geometric** situation, write it as $X \sim Geo(p)$, use
+      $P(X = r) = p(1-p)^{r-1}$ and $E(X) = \dfrac{1}{p}$, and handle questions about "more
+      than $r$ trials".
+
+  - type: explain
+    title: Waiting for the first success
+    body: |-
+      The geometric distribution answers a different question from the binomial one.
+
+      The binomial counts successes in a **fixed** number of trials. The geometric
+      distribution has **no fixed number**: you keep going until the first success, then stop,
+      and $X$ records how many trials that took.
+
+      Typical situations: rolling a die until the first six appears, testing components until
+      the first defective one, or phoning numbers until someone answers.
+
+      The number of trials is not known in advance, so $X$ has no upper limit. Its possible
+      values are $1, 2, 3, \dots$ and they continue indefinitely.
+
+  - type: definition
+    term: The geometric distribution
+    body: |-
+      Suppose independent trials each succeed with constant probability $p$. Let $X$ be the
+      number of trials **up to and including** the first success. Then $X$ has the
+      **geometric distribution**, written $X \sim Geo(p)$, with
+
+      $$P(X = r) = p(1-p)^{r-1} \qquad \text{for } r = 1, 2, 3, \dots$$
+
+      and expectation
+
+      $$E(X) = \dfrac{1}{p}$$
+
+  - type: intuition
+    title: Reading the formula as a sentence
+    body: |-
+      The formula describes exactly one sequence of events.
+
+      For the first success to happen on trial $r$, the first $r - 1$ trials must all fail and
+      trial $r$ must succeed. Independence lets us multiply:
+
+      $$\underbrace{(1-p) \times (1-p) \times \cdots \times (1-p)}_{r-1 \text{ failures}} \times\ p = p(1-p)^{r-1}$$
+
+      There is no $^{n}C_{r}$ factor, and that is the key contrast with the binomial
+      distribution: the successes and failures are **not free to be in any order**. The
+      failures must all come first. There is exactly one arrangement.
+
+      The expectation $1/p$ also passes a sanity check. If a trial succeeds one time in five,
+      you would expect to wait about $5$ trials, and indeed $1/0.2 = 5$.
+
+  - type: diagram
+    diagram: discrete-rv-geometric-bars
+    alt: A bar chart of the geometric distribution Geo of zero point two, showing the probability that the first success occurs on trial r for r from one to ten. The tallest bar is at r equals one and the heights decrease steadily as r increases, forming a smooth decay rather than a hump.
+    caption: |-
+      $Geo(0.2)$. The most likely place for the first success is trial $1$, and the
+      probabilities tail off by a constant factor of $0.8$ each time. Compare the humped
+      shape of the binomial distribution: this one always starts highest.
+
+  - type: example
+    title: "Example 1: the first success on a particular trial"
+    problem: |-
+      A biased die shows a six with probability $0.2$ on each roll, independently. The die is
+      rolled until a six appears. Find the probability that the first six appears on the
+      fourth roll.
+    steps:
+      - |-
+        Check the model: independent rolls, constant success probability $p = 0.2$, and no
+        fixed number of trials. So $X \sim Geo(0.2)$, where $X$ is the roll on which the first
+        six appears.
+      - |-
+        For the first six to appear on roll $4$, rolls $1$, $2$ and $3$ must all fail and
+        roll $4$ must succeed.
+      - |-
+        Each failure has probability $1 - 0.2 = 0.8$, and the success has probability $0.2$.
+        By independence:
+        $P(X = 4) = (0.8) \times (0.8) \times (0.8) \times 0.2 = (0.8)^{3} \times 0.2$.
+      - |-
+        Compute: $(0.8)^{3} = 0.512$, so $P(X = 4) = 0.512 \times 0.2 = 0.1024$. This matches
+        the formula $p(1-p)^{r-1}$ with $p = 0.2$ and $r = 4$.
+    answer: |-
+      $P(X = 4) = 0.1024$.
+
+  - type: check
+    title: Check 1 — using the formula
+    questions: [drv-geo-fourth, drv-geo-recognise]
+
+  - type: explain
+    title: "More than r trials"
+    body: |-
+      Questions often ask for the probability that the first success takes **more than** $r$
+      trials. There is a neat shortcut.
+
+      "$X > r$" means the first $r$ trials all failed. No other condition is needed, because
+      if the first $r$ trials fail then the success certainly has not happened yet. So
+
+      $$P(X > r) = (1-p)^{r}$$
+
+      Be careful about the exponent: it is $r$, not $r - 1$. For "$X \geq r$", the first
+      $r - 1$ trials must fail, giving $(1-p)^{r-1}$.
+
+      This shortcut is much faster than adding infinitely many terms, and it is worth being
+      confident with the off-by-one distinction.
+
+  - type: example
+    title: "Example 2: expectation and a tail probability"
+    problem: |-
+      For the same die with $p = 0.2$, find the expected number of rolls until the first six,
+      and the probability that more than $3$ rolls are needed.
+    steps:
+      - |-
+        By the formula, $E(X) = \dfrac{1}{p} = \dfrac{1}{0.2} = 5$. On average the first six
+        arrives on the fifth roll.
+      - |-
+        "More than $3$ rolls" means the first $3$ rolls all miss the six. Each roll misses with
+        probability $0.8$.
+      - |-
+        So $P(X > 3) = (0.8)^{3} = 0.512$.
+      - |-
+        Check the complement: $P(X \leq 3) = 1 - 0.512 = 0.488$, so slightly less than half the
+        time you need three rolls or fewer.
+    answer: |-
+      $E(X) = 5$ and $P(X > 3) = 0.512$.
+
+  - type: check
+    title: Check 2 — expectation and tails
+    questions: [drv-geo-expectation, drv-geo-more-than]
+
+  - type: explain
+    title: Telling geometric from binomial
+    body: |-
+      Ask one question: **is the number of trials fixed in advance?**
+
+      - Fixed number of trials, counting successes → **binomial** $B(n, p)$.
+      - Keep going until the first success, counting trials → **geometric** $Geo(p)$.
+
+      "Roll a die $10$ times and count the sixes" is binomial. "Roll a die until you get a
+      six" is geometric. The same physical action gives two different models, depending
+      entirely on when you stop.
+
+      Both need independence and a constant $p$. If trials affect each other, neither model
+      applies.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "$P(X = r) = (1-p)^{r-1}$."
+        right: |-
+          The final trial must be a success, so the $p$ is required:
+          $P(X = r) = p(1-p)^{r-1}$. Leaving it out gives the probability of $r - 1$ failures,
+          not of a first success.
+      - wrong: |-
+          "The distribution starts at $r = 0$."
+        right: |-
+          You cannot have a first success on trial $0$. The smallest value is $r = 1$, which is
+          why $\sum_{r \geq 1} p(1-p)^{r-1} = 1$.
+      - wrong: |-
+          "$P(X > r) = (1-p)^{r-1}$."
+        right: |-
+          More than $r$ trials means $r$ failures, so the exponent is $r$. Using $r - 1$ gives
+          $P(X \geq r)$ instead.
+      - wrong: |-
+          "The geometric distribution has an upper limit because probabilities must total $1$."
+        right: |-
+          Infinitely many small probabilities can total $1$. The values continue without limit,
+          though the probabilities become tiny.
+
+  - type: exam
+    body: |-
+      Geometric questions usually appear in a part (a)/(b) pair: one "exactly $r$" and one
+      "more than $r$", or a request for the expectation.
+
+      - State the model and define $X$ precisely, including that it counts trials **up to and
+        including** the first success. A definition that omits that is a common lost mark.
+      - Show the failures-then-success product before quoting the formula; it demonstrates
+        understanding of the independence assumption.
+      - For "more than", use $(1-p)^{r}$ and check the exponent against a small case you can
+        list.
+      - Give answers to $3$ significant figures unless told otherwise, and note that
+        $E(X) = 1/p$ need not be a whole number.
+
+  - type: enrichment
+    title: The variance of a geometric distribution
+    body: |-
+      This is beyond the 9709 syllabus and is shown for interest only.
+
+      The variance of $Geo(p)$ is $\dfrac{1-p}{p^{2}}$. For $p = 0.2$ that gives
+      $\dfrac{0.8}{0.04} = 20$, so the standard deviation is $\sqrt{20} \approx 4.47$ trials.
+      That is almost as large as the mean of $5$ itself, which reflects how variable waiting
+      times really are: sometimes the first six appears immediately, and sometimes you roll
+      twenty times without one.
+
+  - type: takeaways
+    items:
+      - "$X \\sim Geo(p)$ counts the trials up to and including the first success."
+      - "$P(X = r) = p(1-p)^{r-1}$ for $r = 1, 2, 3, \\dots$ — failures first, then a success."
+      - "$E(X) = \\dfrac{1}{p}$."
+      - "$P(X > r) = (1-p)^{r}$: the first $r$ trials must all fail."
+      - "Fixed number of trials → binomial; stop at the first success → geometric."
+
+  - type: check
+    title: Check 3 — consolidation
+    questions: [drv-geo-or-binomial]
+
+questions:
+  - id: drv-geo-fourth
+    format: numeric
+    difficulty: 2
+    objectives: ["5.4.2"]
+    prompt: |-
+      A biased die shows a six with probability $0.2$ on each roll, independently. It is
+      rolled until the first six appears. Find the probability that the first six appears on
+      the fourth roll.
+    fields:
+      - answer: 0.1024
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      With $X \sim Geo(0.2)$, $P(X = 4) = 0.2 \times (0.8)^{3} = 0.2 \times 0.512 = 0.1024$.
+      The first three rolls fail and the fourth succeeds.
+
+  - id: drv-geo-recognise
+    format: mcq
+    difficulty: 1
+    objectives: ["5.4.2"]
+    prompt: |-
+      Which situation is modelled by a geometric distribution?
+    options:
+      - text: |-
+          The number of times a basketball player shoots until the first basket, when each
+          shot succeeds independently with probability $0.7$.
+        correct: true
+        why: |-
+          There is no fixed number of shots, the trials are independent with constant
+          probability, and $X$ counts trials up to and including the first success.
+      - text: |-
+          The number of baskets in $10$ shots, when each shot succeeds independently with
+          probability $0.7$.
+        why: |-
+          Here the number of trials is fixed at $10$, so this is binomial: $B(10, 0.7)$.
+      - text: |-
+          The number of shots taken in a match.
+        why: |-
+          That is not a count of trials until a first success, and it is decided by the match,
+          not by chance.
+      - text: |-
+          The number of players in a team who score at least once.
+        why: |-
+          Each player contributes one trial, so the number of trials is fixed and the count of
+          scorers is binomial, not geometric.
+    explanation: |-
+      Geometric means repeating identical independent trials until the first success,
+      counting how many trials were needed. Only the "shoot until the first basket" case has
+      no fixed number of trials.
+
+  - id: drv-geo-expectation
+    format: numeric
+    difficulty: 1
+    objectives: ["5.4.3", "5.4.2"]
+    prompt: |-
+      For $X \sim Geo(0.2)$, find $E(X)$.
+    fields:
+      - answer: 5
+        tolerance:
+          abs: 0.005
+    explanation: |-
+      $E(X) = \frac{1}{p} = \frac{1}{0.2} = 5$.
+
+  - id: drv-geo-more-than
+    format: numeric
+    difficulty: 3
+    objectives: ["5.4.2"]
+    prompt: |-
+      For $X \sim Geo(0.2)$, find $P(X > 3)$.
+    fields:
+      - answer: 0.512
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      $X > 3$ means the first $3$ trials all fail, so $P(X > 3) = (0.8)^{3} = 0.512$. Notice
+      the exponent is $3$, the number of failures required.
+
+  - id: drv-geo-or-binomial
+    format: mcq
+    difficulty: 2
+    objectives: ["5.4.2"]
+    prompt: |-
+      A die is rolled repeatedly. How do the models differ between "count the sixes in $10$
+      rolls" and "count the rolls until the first six"?
+    options:
+      - text: |-
+          The first is binomial $B(10, \tfrac{1}{6})$; the second is geometric
+          $Geo(\tfrac{1}{6})$.
+        correct: true
+        why: |-
+          A fixed number of trials with a count of successes is binomial, while counting
+          trials until the first success is geometric.
+      - text: |-
+          Both are binomial, because a die has a constant probability of showing six.
+        why: |-
+          A constant $p$ is not enough; the geometric model is needed when the number of
+          trials is not fixed.
+      - text: |-
+          Both are geometric, because each roll is independent.
+        why: |-
+          Independence alone does not determine the model; the stopping rule does.
+      - text: |-
+          The first is geometric and the second is binomial.
+        why: |-
+          This reverses the two definitions: $10$ rolls is a fixed number, so it is binomial.
+    explanation: |-
+      The number of trials decides the model. Fixed at $10$ gives binomial
+      $B(10, \frac{1}{6})$; continuing until the first six gives geometric
+      $Geo(\frac{1}{6})$.

@@ -1,0 +1,239 @@
+id: probability-tree-diagrams
+subject: "9709"
+topic: "5.3"
+title: Tree diagrams for multi-stage experiments
+summary: Draw a tree diagram for a two-stage experiment, multiply along the branches to get outcome probabilities, and add across branches to get events.
+order: 6
+minutes: 8
+kind: core
+objectives: ["5.3.2", "5.3.4"]
+prerequisites: ["probability-conditional", "probability-independent-events-multiplication"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.3 Probability, outcomes 5.3.2 and 5.3.4, using tree
+    diagrams as the syllabus guidance permits for conditional and multi-stage situations.
+    All examples, questions and diagrams are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can build a tree diagram for a two-stage experiment, use the rule
+      **multiply along, add across** to get probabilities, and deal correctly with sampling
+      without replacement.
+
+  - type: explain
+    title: Why a picture helps
+    body: |-
+      A tree diagram organises a multi-stage experiment into stages. Each stage branches
+      into its possible results, and every path from the left to a leaf represents one
+      complete outcome.
+
+      Two rules do all the work:
+
+      - **Multiply along** a branch to get the probability of that whole path.
+      - **Add across** the paths that make up an event.
+
+      Once the tree is drawn, most of the thinking is already finished.
+
+  - type: diagram
+    diagram: probability-tree-two-stages
+    alt: A two-stage tree diagram for drawing two counters without replacement from a bag of four red and six blue counters. The first branches are four tenths and six tenths. After a red first, the second branches are three ninths and six ninths; after a blue first they are four ninths and five ninths. The four complete paths are labelled with their products, two fifteenths, four fifteenths, four fifteenths and one third.
+    caption: |-
+      Compare the second-stage fractions: they differ depending on the first draw, because
+      the bag has changed. The four path probabilities add to $1$, which is a useful check
+      that the tree is complete.
+
+  - type: example
+    title: "Example 1: both counters the same colour"
+    problem: |-
+      A bag holds $4$ red and $6$ blue counters. Two counters are taken at random without
+      replacement. Find the probability that both are red.
+    steps:
+      - |-
+        First draw: $P(\text{red}) = \dfrac{4}{10}$.
+      - |-
+        After a red is removed, $3$ reds remain among $9$ counters, so on the second branch
+        $P(\text{red} \mid \text{first red}) = \dfrac{3}{9}$.
+      - |-
+        Multiply along the branch:
+        $\dfrac{4}{10} \times \dfrac{3}{9} = \dfrac{12}{90} = \dfrac{2}{15}$.
+      - |-
+        For both blue, the same reasoning gives
+        $\dfrac{6}{10} \times \dfrac{5}{9} = \dfrac{30}{90} = \dfrac{1}{3}$.
+    answer: |-
+      $P(\text{both red}) = \dfrac{2}{15} \approx 0.133$.
+
+  - type: check
+    title: Check 1 — multiplying along
+    questions: [pt-both-red, pt-both-blue]
+
+  - type: example
+    title: "Example 2: adding across paths"
+    problem: |-
+      With the same bag, find the probability that the two counters are **different**
+      colours.
+    steps:
+      - |-
+        "Different colours" happens in two ways: red then blue, or blue then red. These are
+        mutually exclusive, so we add their probabilities.
+      - |-
+        Red then blue: $\dfrac{4}{10} \times \dfrac{6}{9} = \dfrac{24}{90}$.
+      - |-
+        Blue then red: $\dfrac{6}{10} \times \dfrac{4}{9} = \dfrac{24}{90}$.
+      - |-
+        Add across: $\dfrac{24}{90} + \dfrac{24}{90} = \dfrac{48}{90} = \dfrac{8}{15}$.
+      - |-
+        Check: $\dfrac{2}{15} + \dfrac{8}{15} + \dfrac{1}{3} = \dfrac{2}{15} + \dfrac{8}{15}
+        + \dfrac{5}{15} = 1$, so the four paths account for every possibility.
+    answer: |-
+      $\dfrac{8}{15} \approx 0.533$.
+
+  - type: check
+    title: Check 2 — adding across
+    questions: [pt-exactly-one-red]
+
+  - type: deeper
+    title: Reading a conditional probability off the tree
+    body: |-
+      A tree diagram is also a conditional-probability picture, because each branch already
+      *is* a conditional probability.
+
+      The branch from a red first to a red second is
+      $P(\text{second red} \mid \text{first red}) = \dfrac{3}{9}$.
+
+      To find $P(\text{first red} \mid \text{second red})$ you must travel backwards:
+      restrict to the paths ending in red, which are RR and BR, and compare within that set.
+
+      $$P(\text{first red} \mid \text{second red}) = \dfrac{2}{15} \div \dfrac{6}{15} = \dfrac{2}{6} = \dfrac{1}{3}$$
+
+      This is the conditional formula $P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$ at work: the
+      numerator is the one path you want and the denominator is every path that satisfies the
+      condition.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "Use $\frac{4}{10}$ again on the second branch because the counters are the same."
+        right: |-
+          Without replacement, the bag has changed: one counter is gone and so is one of that
+          colour. Only replacement keeps the second fraction identical to the first.
+      - wrong: |-
+          "Add along the branches to get the probability of a whole path."
+        right: |-
+          Along a path you are requiring stage 1 **and** stage 2, so you multiply. Adding
+          along a path would give an answer far too large.
+      - wrong: |-
+          "For 'different colours', just take $1 - P(\text{same colour})$ and you are
+          finished."
+        right: |-
+          That is a valid route —
+          $1 - \left(\frac{2}{15} + \frac{1}{3}\right) = \frac{8}{15}$ — but you must count
+          *both* same-colour paths (RR and BB) before subtracting.
+
+  - type: exam
+    body: |-
+      Tree diagrams are usually worth $4$ to $6$ marks, and the diagram itself often earns
+      one.
+
+      - Draw the tree with **fractions on every branch**, including the repeated first-stage
+        values. Unlabelled branches rarely score.
+      - State whether replacement occurs; this decides whether the second-stage fractions
+        stay the same.
+      - Show the multiplication for each path and the addition for the event.
+      - As a check, your final probabilities for all the paths must total $1$.
+      - Convert to a decimal only at the end, and only if asked.
+
+  - type: takeaways
+    items:
+      - "Multiply along a path; add across the paths that make up an event."
+      - "Without replacement, the second-stage fractions change; with replacement they do not."
+      - "All the complete paths must add to $1$ — a quick check that nothing is missing."
+      - "A branch is a conditional probability, so trees and $P(A \\mid B)$ describe the same thing."
+
+  - type: check
+    title: Check 3 — consolidation
+    questions: [pt-at-least-one-red, pt-with-replacement]
+
+questions:
+  - id: pt-both-red
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2", "5.3.4"]
+    prompt: |-
+      A bag holds $4$ red and $6$ blue counters. Two counters are taken without replacement.
+      Find the probability that both are red, as a decimal.
+    fields:
+      - answer: 0.1333
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Multiply along the branch:
+      $\frac{4}{10} \times \frac{3}{9} = \frac{12}{90} = \frac{2}{15} \approx 0.133$.
+      The second fraction uses $3$ reds out of the $9$ counters left.
+
+  - id: pt-both-blue
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2", "5.3.4"]
+    prompt: |-
+      From the same bag of $4$ red and $6$ blue counters, two are taken without replacement.
+      Find the probability that both are blue, as a decimal.
+    fields:
+      - answer: 0.3333
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      $\frac{6}{10} \times \frac{5}{9} = \frac{30}{90} = \frac{1}{3} \approx 0.333$.
+
+  - id: pt-exactly-one-red
+    format: numeric
+    difficulty: 3
+    objectives: ["5.3.2", "5.3.4"]
+    prompt: |-
+      From the same bag, two counters are taken without replacement. Find the probability
+      that exactly one is red, as a decimal.
+    fields:
+      - answer: 0.5333
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Two paths qualify: red then blue, $\frac{4}{10} \times \frac{6}{9} = \frac{24}{90}$,
+      and blue then red, $\frac{6}{10} \times \frac{4}{9} = \frac{24}{90}$. Adding across
+      gives $\frac{48}{90} = \frac{8}{15} \approx 0.533$.
+
+  - id: pt-at-least-one-red
+    format: numeric
+    difficulty: 3
+    objectives: ["5.3.2"]
+    prompt: |-
+      From the same bag, two counters are taken without replacement. Find the probability
+      that at least one is red, as a decimal.
+    fields:
+      - answer: 0.6667
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Use the complement: "at least one red" fails only for the path BB, whose probability
+      is $\frac{1}{3}$. So the answer is $1 - \frac{1}{3} = \frac{2}{3} \approx 0.667$.
+
+  - id: pt-with-replacement
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2"]
+    prompt: |-
+      A bag holds $4$ red and $6$ blue counters. Two are taken **with** replacement. Find the
+      probability that both are blue, as a decimal.
+    fields:
+      - answer: 0.36
+        tolerance:
+          abs: 0.001
+    explanation: |-
+      With replacement the bag is unchanged before the second draw, so both branches carry
+      $\frac{6}{10}$ and the probability is $\frac{6}{10} \times \frac{6}{10} = 0.36$.
+      Compare this with the without-replacement answer of $\frac{1}{3}$: removing a blue makes
+      a second blue slightly less likely.

@@ -54,6 +54,11 @@ import InterferenceCoherence from './interference-coherence';
 import InterferenceDoubleSlit from './interference-double-slit';
 import InterferenceFringes from './interference-fringes';
 import InterferencePathDifference from './interference-path-difference';
+import KirchhoffsLawsJunction from './kirchhoffs-laws-junction';
+import KirchhoffsLawsLoop from './kirchhoffs-laws-loop';
+import KirchhoffsLawsMixed from './kirchhoffs-laws-mixed';
+import KirchhoffsLawsParallel from './kirchhoffs-laws-parallel';
+import KirchhoffsLawsSeries from './kirchhoffs-laws-series';
 import LinearMomentumApproachSeparation from './linear-momentum-approach-separation';
 import LinearMomentumCollision_1d from './linear-momentum-collision-1d';
 import LinearMomentumExplosionTriangle from './linear-momentum-explosion-triangle';
@@ -167,6 +172,11 @@ export const diagrams: DiagramRegistry = {
   'phys-interference-double-slit': InterferenceDoubleSlit,
   'phys-interference-fringes': InterferenceFringes,
   'phys-interference-path-difference': InterferencePathDifference,
+  'phys-kirchhoffs-laws-junction': KirchhoffsLawsJunction,
+  'phys-kirchhoffs-laws-loop': KirchhoffsLawsLoop,
+  'phys-kirchhoffs-laws-mixed': KirchhoffsLawsMixed,
+  'phys-kirchhoffs-laws-parallel': KirchhoffsLawsParallel,
+  'phys-kirchhoffs-laws-series': KirchhoffsLawsSeries,
   'phys-linear-momentum-approach-separation': LinearMomentumApproachSeparation,
   'phys-linear-momentum-collision-1d': LinearMomentumCollision_1d,
   'phys-linear-momentum-explosion-triangle': LinearMomentumExplosionTriangle,

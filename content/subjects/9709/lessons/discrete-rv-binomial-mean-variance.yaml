@@ -1,0 +1,210 @@
+id: discrete-rv-binomial-mean-variance
+subject: "9709"
+topic: "5.4"
+title: Mean and variance of the binomial distribution
+summary: Use E(X) = np and Var(X) = np(1 - p) for a binomial variable, and use them in reverse to find n or p from a given mean and variance.
+order: 5
+minutes: 7
+kind: core
+objectives: ["5.4.2", "5.4.3"]
+prerequisites: ["discrete-rv-binomial-model", "discrete-rv-variance"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.4 Discrete random variables, outcomes 5.4.2 and 5.4.3
+    "Use formulae for the expectation and variance of the binomial distribution and for the
+    expectation of the geometric distribution", noting that the syllabus does not require
+    proofs of these formulae. All examples, questions and diagrams are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can state and use $E(X) = np$ and $Var(X) = np(1-p)$ for
+      $X \sim B(n, p)$, and work backwards from a given mean or variance to find $n$ or $p$.
+
+  - type: explain
+    title: Two formulae worth memorising
+    body: |-
+      For $X \sim B(n, p)$ there is no need to build a table and apply
+      $\sum x P(X = x)$. Two standard results give the mean and variance directly:
+
+      $$E(X) = np \qquad Var(X) = np(1 - p)$$
+
+      The syllabus does not require proofs, but the mean is easy to believe: if each of $n$
+      trials succeeds with probability $p$, then in the long run you expect $np$ successes
+      out of $n$. Ten trials with $p = 0.3$ should give about $3$ successes.
+
+  - type: intuition
+    title: Why the variance has the (1 - p) factor
+    body: |-
+      Read $p(1-p)$ as the uncertainty in a **single** trial. It is largest when
+      $p = 0.5$, where the outcome is as unpredictable as possible, and it falls to $0$ when
+      $p$ is $0$ or $1$, where the result is certain.
+
+      The $n$ factor reflects that uncertainty accumulates across trials, but only in
+      proportion to the number of trials, not its square.
+
+      So a binomial variable is most spread out when $p = 0.5$ and least spread out when the
+      trial is nearly certain either way. That is exactly what the formula predicts.
+
+  - type: example
+    title: "Example 1: mean and variance from n and p"
+    problem: |-
+      $X \sim B(20, 0.4)$. Find $E(X)$, $Var(X)$ and the standard deviation of $X$.
+    steps:
+      - |-
+        Read off $n = 20$ and $p = 0.4$, so $1 - p = 0.6$.
+      - |-
+        Mean: $E(X) = np = 20 \times 0.4 = 8$. About $8$ successes out of $20$ is
+        $40\%$, matching $p$.
+      - |-
+        Variance: $Var(X) = np(1-p) = 20 \times 0.4 \times 0.6 = 4.8$.
+      - |-
+        Standard deviation: $\sigma = \sqrt{4.8} \approx 2.19$.
+    answer: |-
+      $E(X) = 8$, $Var(X) = 4.8$ and $\sigma \approx 2.19$.
+
+  - type: check
+    title: Check 1 — applying the formulae
+    questions: [drv-bin-mean, drv-bin-variance]
+
+  - type: example
+    title: "Example 2: working backwards to find n"
+    problem: |-
+      $X \sim B(n, 0.3)$ and $E(X) = 12$. Find $n$ and $Var(X)$.
+    steps:
+      - |-
+        Start from the mean formula and substitute what is known:
+        $np = 12$, so $n \times 0.3 = 12$.
+      - |-
+        Divide both sides by $0.3$: $n = \dfrac{12}{0.3} = 40$.
+      - |-
+        Now find the variance with the full model $B(40, 0.3)$:
+        $Var(X) = 40 \times 0.3 \times 0.7 = 8.4$.
+      - |-
+        Check for consistency: the mean is $40 \times 0.3 = 12$, as required.
+    answer: |-
+      $n = 40$ and $Var(X) = 8.4$.
+
+  - type: check
+    title: Check 2 — working backwards
+    questions: [drv-bin-find-n, drv-bin-find-p]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "$Var(X) = np$ as well as $E(X) = np$."
+        right: |-
+          The variance is $np(1-p)$. The two are equal only in the special case $p = 0$, which
+          is degenerate.
+      - wrong: |-
+          "$E(X) = np$ gives the most likely number of successes."
+        right: |-
+          It gives the long-run mean. When $np$ is not a whole number, the most likely value
+          must be an integer near it, and the mode can be a different integer.
+      - wrong: |-
+          "The formula only works if $p = 0.5$."
+        right: |-
+          $E(X) = np$ and $Var(X) = np(1-p)$ hold for every $p$ between $0$ and $1$.
+      - wrong: |-
+          "Substituting $p$ into $np(1-p)$ without checking $n$ gives the variance of the
+          sample."
+        right: |-
+          $n$ must be the number of trials in the model, and $p$ the single-trial success
+          probability. Mixing up a count of successes with $n$ is a common slip.
+
+  - type: exam
+    body: |-
+      These formulae appear most often in short "state the mean and variance" parts, and in
+      problems where $n$ or $p$ is unknown.
+
+      - Write the formulae before substituting; they are worth a mark on their own.
+      - When $n$ or $p$ is unknown, set up the equation from $E(X) = np$ first. A second
+        equation from the variance then determines $p$ if both are unknown.
+      - Keep the standard deviation to $3$ significant figures, and give the variance in
+        squared units.
+      - If the question says "state", no working is needed; if it says "find", show the
+        substitution.
+
+  - type: takeaways
+    items:
+      - "For $X \\sim B(n, p)$: $E(X) = np$."
+      - "For $X \\sim B(n, p)$: $Var(X) = np(1-p)$ and $\\sigma = \\sqrt{np(1-p)}$."
+      - "The single-trial uncertainty $p(1-p)$ is largest at $p = 0.5$."
+      - "Work backwards by solving $np = E(X)$ for the unknown, then substitute."
+
+  - type: check
+    title: Check 3 — consolidation
+    questions: [drv-bin-sd]
+
+questions:
+  - id: drv-bin-mean
+    format: numeric
+    difficulty: 1
+    objectives: ["5.4.2", "5.4.3"]
+    prompt: |-
+      $X \sim B(20, 0.4)$. Find $E(X)$.
+    fields:
+      - answer: 8
+        tolerance:
+          abs: 0.005
+    explanation: |-
+      $E(X) = np = 20 \times 0.4 = 8$.
+
+  - id: drv-bin-variance
+    format: numeric
+    difficulty: 2
+    objectives: ["5.4.2", "5.4.3"]
+    prompt: |-
+      $X \sim B(20, 0.4)$. Find $Var(X)$.
+    fields:
+      - answer: 4.8
+        tolerance:
+          abs: 0.005
+    explanation: |-
+      $Var(X) = np(1-p) = 20 \times 0.4 \times 0.6 = 4.8$.
+
+  - id: drv-bin-find-n
+    format: numeric
+    difficulty: 2
+    objectives: ["5.4.2", "5.4.3"]
+    prompt: |-
+      $X \sim B(n, 0.3)$ and $E(X) = 12$. Find $n$.
+    fields:
+      - answer: 40
+        tolerance:
+          abs: 0.005
+    explanation: |-
+      From $E(X) = np$ we get $0.3n = 12$, so $n = \frac{12}{0.3} = 40$.
+
+  - id: drv-bin-find-p
+    format: numeric
+    difficulty: 3
+    objectives: ["5.4.2", "5.4.3"]
+    prompt: |-
+      $X \sim B(40, p)$ has $Var(X) = 8.4$. Given that $p < 0.5$, find $p$.
+    fields:
+      - answer: 0.3
+        tolerance:
+          abs: 0.005
+    explanation: |-
+      $Var(X) = np(1-p)$ gives $40p(1-p) = 8.4$, so $p(1-p) = 0.21$. Rearranging,
+      $p^2 - p + 0.21 = 0$, whose solutions are $p = 0.3$ and $p = 0.7$. Since $p < 0.5$, the
+      answer is $p = 0.3$.
+
+  - id: drv-bin-sd
+    format: numeric
+    difficulty: 2
+    objectives: ["5.4.2", "5.4.3"]
+    prompt: |-
+      $X \sim B(50, 0.2)$. Find the standard deviation of $X$, to $3$ significant figures.
+    fields:
+      - answer: 2.83
+        tolerance:
+          abs: 0.01
+    explanation: |-
+      $Var(X) = 50 \times 0.2 \times 0.8 = 8$, so $\sigma = \sqrt{8} \approx 2.83$.

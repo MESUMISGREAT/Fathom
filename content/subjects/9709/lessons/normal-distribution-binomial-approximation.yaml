@@ -1,0 +1,287 @@
+id: normal-distribution-binomial-approximation
+subject: "9709"
+topic: "5.5"
+title: The normal approximation to the binomial
+summary: When n is large and np and nq both exceed 5, a binomial distribution is approximately normal. Learn the conditions, the mean and variance, and the continuity correction.
+order: 4
+minutes: 9
+kind: core
+objectives: ["5.5.3"]
+prerequisites: ["normal-distribution-standardising"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.5 outcome 5.5.3: recalling the conditions under which the
+    normal distribution can be used as an approximation to the binomial distribution and
+    using the approximation with a continuity correction, with the syllabus guidance that
+    n must be large enough that both np > 5 and nq > 5. Every example, question and diagram
+    is original. All approximations were computed and checked directly. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can state when a binomial distribution may be approximated by a normal
+      one, find the approximating mean and variance, apply a continuity correction, and solve
+      probability problems with it.
+
+  - type: explain
+    title: When a binomial starts to look normal
+    body: |-
+      Recall that if $X \sim \mathrm{B}(n,p)$, then $X$ counts successes in $n$ independent
+      trials, each with success probability $p$. Its mean and variance are
+      $$\mathrm{E}(X)=np, \qquad \mathrm{Var}(X)=npq,$$
+      where $q=1-p$.
+
+      For small $n$ the probability bar chart can be lopsided. As $n$ grows, with $p$ not too
+      close to 0 or 1, the bars become a symmetric bell. Then a normal curve with the **same
+      mean and variance** gives good estimates of binomial probabilities.
+
+      Working with the normal is much quicker than adding many binomial terms, which is why
+      the approximation is useful.
+
+  - type: definition
+    term: Conditions for the normal approximation
+    body: |-
+      The normal distribution may be used to approximate $X \sim \mathrm{B}(n,p)$ when $n$ is
+      large enough that **both**
+      $$np>5 \qquad \text{and} \qquad nq>5,$$
+      where $q=1-p$. If either product is 5 or less, the distribution is too skewed and the
+      approximation should not be used.
+
+      Under these conditions, take
+      $$Y \sim \mathrm{N}(np,\ npq)$$
+      as the approximating normal variable, so the standard deviation is $\sqrt{npq}$.
+
+  - type: explain
+    title: Why a continuity correction is needed
+    body: |-
+      A binomial variable takes whole-number values: 8, 9, 10. A normal variable is
+      continuous. To bridge the gap, give each whole number a bar of width 1, centred on the
+      number.
+
+      The bar for 9 runs from 8.5 to 9.5. So a binomial event such as "$X \le 9$" includes the
+      whole bar for 9 and stops at its right-hand edge, 9.5:
+      $$\mathrm{P}(X \le 9) \approx \mathrm{P}(Y<9.5).$$
+
+      This adjustment of half a unit is the **continuity correction**. The direction matters:
+      extend the interval outwards, into the half-unit gap beyond the last included bar.
+
+      | Binomial event | Normal approximation |
+      | --- | --- |
+      | $\mathrm{P}(X \le r)$ | $\mathrm{P}(Y<r+0.5)$ |
+      | $\mathrm{P}(X<r)$ | $\mathrm{P}(Y<r-0.5)$ |
+      | $\mathrm{P}(X \ge r)$ | $\mathrm{P}(Y>r-0.5)$ |
+      | $\mathrm{P}(X>r)$ | $\mathrm{P}(Y>r+0.5)$ |
+      | $\mathrm{P}(X=r)$ | $\mathrm{P}(r-0.5<Y<r+0.5)$ |
+      | $\mathrm{P}(a \le X \le b)$ | $\mathrm{P}(a-0.5<Y<b+0.5)$ |
+
+  - type: diagram
+    diagram: normal-distribution-continuity-correction
+    alt: A binomial bar chart for X ~ B(20, 0.4) with a normal curve of mean 8 and variance 4.8 drawn over it. The bars for 0 to 9 are shaded and a dashed line at 9.5 marks the right-hand edge of the bar for 9, illustrating that the probability X is at most 9 is estimated by the normal probability Y is less than 9.5.
+    caption: Each whole-number bar has width 1, so the bar for 9 ends at 9.5.
+
+  - type: example
+    title: A cumulative probability with a continuity correction
+    problem: |-
+      The random variable $X \sim \mathrm{B}(50,0.3)$. Use a normal approximation to estimate
+      $\mathrm{P}(X \le 18)$.
+    steps:
+      - |-
+        Check the conditions: $np=50(0.3)=15>5$ and $nq=50(0.7)=35>5$. The approximation is
+        valid.
+      - |-
+        Mean: $\mu=np=15$.
+      - |-
+        Variance: $\sigma^2=npq=50(0.3)(0.7)=10.5$, so $\sigma=\sqrt{10.5}=3.240\ldots$
+      - |-
+        Apply the continuity correction. "$X \le 18$" includes the whole bar for 18, which
+        ends at 18.5:
+        $$\mathrm{P}(X \le 18) \approx \mathrm{P}(Y<18.5).$$
+      - |-
+        Standardise: $z=\dfrac{18.5-15}{3.240}=1.080$.
+      - |-
+        From the table, $\Phi(1.080)=0.8600$.
+      - |-
+        So $\mathrm{P}(X \le 18) \approx 0.860$ (3 s.f.).
+    answer: '$\mathrm{P}(X \le 18) \approx 0.860$'
+
+  - type: check
+    title: Check yourself
+    questions: [nd-approx-conditions, nd-approx-cumulative]
+
+  - type: example
+    title: An upper-tail probability
+    problem: |-
+      The random variable $X \sim \mathrm{B}(80,0.25)$. Use a normal approximation to estimate
+      $\mathrm{P}(X \ge 25)$.
+    steps:
+      - |-
+        Conditions: $np=80(0.25)=20>5$ and $nq=80(0.75)=60>5$, so the approximation is valid.
+      - |-
+        $\mu=np=20$ and $\sigma^2=npq=80(0.25)(0.75)=15$, so $\sigma=\sqrt{15}=3.873\ldots$
+      - |-
+        "$X \ge 25$" includes the bar for 25, which starts at 24.5:
+        $$\mathrm{P}(X \ge 25) \approx \mathrm{P}(Y>24.5).$$
+      - |-
+        Standardise: $z=\dfrac{24.5-20}{3.873}=1.162$.
+      - |-
+        The area above 1.162 is $1-\Phi(1.162)=1-0.8774=0.1226$.
+      - |-
+        So $\mathrm{P}(X \ge 25) \approx 0.123$ (3 s.f.).
+    answer: '$\mathrm{P}(X \ge 25) \approx 0.123$'
+
+  - type: check
+    title: Check yourself
+    questions: [nd-approx-upper, nd-approx-equal-mcq]
+
+  - type: explain
+    title: Avoiding the classic errors
+    body: |-
+      **Use $\sigma=\sqrt{npq}$, not $\sigma=npq$.** The normal notation is
+      $\mathrm{N}(\mu,\sigma^2)$, so the second parameter is the variance.
+
+      **Check both conditions.** $np>5$ alone is not enough; $nq>5$ must hold too, otherwise
+      the distribution is still skewed.
+
+      **Move each boundary outwards by 0.5.** For $\mathrm{P}(X \le r)$ use $r+0.5$; for
+      $\mathrm{P}(X \ge r)$ use $r-0.5$. Never move a boundary towards the mean.
+
+      **Do not mix up the exact and approximate questions.** If the question says "use a
+      normal approximation", show the correction. If it asks for the exact binomial
+      probability, the normal approximation is not what is wanted.
+
+  - type: exam
+    body: |-
+      State the two conditions before using the approximation — this is often worth a mark:
+      $np=15>5$ and $nq=35>5$.
+
+      Then write the approximating distribution explicitly, for example
+      $Y \sim \mathrm{N}(15,10.5)$, show the continuity correction, standardise, and use the
+      table.
+
+      Give the final probability to 3 significant figures. A quick check: the approximation
+      should give an answer close to, but not identical to, the exact binomial probability.
+
+  - type: check
+    title: Final check
+    questions: [nd-approx-interval, nd-approx-spot-error, nd-approx-why-cloze]
+
+  - type: takeaways
+    items:
+      - "Use the normal approximation to $\\mathrm{B}(n,p)$ only when $np>5$ and $nq>5$."
+      - "Approximate with $Y \\sim \\mathrm{N}(np,\\ npq)$."
+      - "Apply a continuity correction of 0.5, moving each boundary outwards."
+      - "$\\mathrm{P}(X \\le r) \\approx \\mathrm{P}(Y<r+0.5)$ and $\\mathrm{P}(X \\ge r) \\approx \\mathrm{P}(Y>r-0.5)$."
+      - "For a single value, $\\mathrm{P}(X=r) \\approx \\mathrm{P}(r-0.5<Y<r+0.5)$."
+
+questions:
+  - id: nd-approx-conditions
+    format: mcq
+    difficulty: 1
+    objectives: ["5.5.3"]
+    prompt: 'Which conditions must hold before a normal distribution may be used to approximate $X \sim \mathrm{B}(n,p)$?'
+    options:
+      - text: "$np>5$ and $nq>5$, where $q=1-p$"
+        correct: true
+        why: "Both expected counts, successes and failures, must exceed 5 so the distribution is not too skewed."
+      - text: "$np>5$ only"
+        why: "This ignores the failures. If nq is small the distribution is skewed and the normal approximation is poor."
+      - text: "$n>30$"
+        why: "A large n alone is not the syllabus condition; np and nq must both exceed 5."
+      - text: "$p=0.5$"
+        why: "p = 0.5 gives a symmetric binomial, but the approximation also works for other p provided np and nq both exceed 5."
+    explanation: |-
+      The syllabus condition is that n is large enough for both np > 5 and nq > 5. These are
+      the expected numbers of successes and failures.
+
+  - id: nd-approx-cumulative
+    format: numeric
+    difficulty: 2
+    objectives: ["5.5.3"]
+    prompt: 'The random variable $X \sim \mathrm{B}(100,0.4)$. Use a normal approximation to estimate $\mathrm{P}(X \le 45)$. Give your answer to 4 decimal places.'
+    fields:
+      - answer: 0.8692
+        tolerance:
+          abs: 0.0008
+    explanation: |-
+      np = 40 and nq = 60, both above 5. μ = 40, σ² = 100(0.4)(0.6) = 24, σ = 4.899.
+      Continuity correction: P(X ≤ 45) ≈ P(Y < 45.5).
+      z = (45.5 − 40)/4.899 = 1.123, and Φ(1.123) = 0.8692.
+
+  - id: nd-approx-upper
+    format: numeric
+    difficulty: 3
+    objectives: ["5.5.3"]
+    prompt: 'The random variable $X \sim \mathrm{B}(60,0.7)$. Use a normal approximation to estimate $\mathrm{P}(X \ge 45)$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 0.2406
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      np = 42 and nq = 18, both above 5. μ = 42, σ² = 60(0.7)(0.3) = 12.6, σ = 3.550.
+      Continuity correction: P(X ≥ 45) ≈ P(Y > 44.5).
+      z = (44.5 − 42)/3.550 = 0.704, so the probability is 1 − Φ(0.704) = 1 − 0.7594 = 0.2406.
+
+  - id: nd-approx-equal-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["5.5.3"]
+    prompt: 'For $X \sim \mathrm{B}(n,p)$ approximated by a normal variable $Y$, which expression correctly estimates $\mathrm{P}(X=12)$?'
+    options:
+      - text: '$\mathrm{P}(11.5<Y<12.5)$'
+        correct: true
+        why: "The bar for 12 runs from 11.5 to 12.5, so the whole bar is included."
+      - text: '$\mathrm{P}(Y<12)$'
+        why: "This uses no continuity correction and covers only half of the bar for 12, and none of the bar above it."
+      - text: '$\mathrm{P}(Y<12.5)$'
+        why: "This includes all bars up to 12, estimating P(X ≤ 12), not P(X = 12)."
+      - text: '$\mathrm{P}(11<Y<13)$'
+        why: "This widens the interval by 1 on each side instead of the required half-unit."
+    explanation: |-
+      A single binomial value corresponds to one bar of width 1, centred on 12. Its edges are
+      11.5 and 12.5, so P(X = 12) ≈ P(11.5 < Y < 12.5).
+
+  - id: nd-approx-interval
+    format: numeric
+    difficulty: 3
+    objectives: ["5.5.3"]
+    prompt: 'The random variable $X \sim \mathrm{B}(80,0.3)$. Use a normal approximation to estimate $\mathrm{P}(20 \le X \le 30)$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 0.8075
+        tolerance:
+          abs: 0.0008
+    explanation: |-
+      μ = 24 and σ² = 80(0.3)(0.7) = 16.8, so σ = 4.099.
+      Continuity correction: P(19.5 < Y < 30.5).
+      Lower z = (19.5 − 24)/4.099 = −1.098, Φ = 0.1361.
+      Upper z = (30.5 − 24)/4.099 = 1.586, Φ = 0.9436.
+      Probability = 0.9436 − 0.1361 = 0.8075.
+
+  - id: nd-approx-spot-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["5.5.3"]
+    prompt: 'A student approximates $\mathrm{P}(X \le 30)$ for $X \sim \mathrm{B}(64,0.5)$ by a normal distribution. Exactly one line is wrong. Which line is it?'
+    lines:
+      - "$X \\sim \\mathrm{B}(64,0.5)$, so $np=32$ and $npq=16$, giving $\\sigma=4$."
+      - "Approximate with $Y \\sim \\mathrm{N}(32,16)$."
+      - "$\\mathrm{P}(X \\le 30) \\approx \\mathrm{P}(Y<30)$ using the continuity correction."
+      - "$z=\\dfrac{30-32}{4}=-0.5$, so the probability is approximately $\\Phi(-0.5)=0.3085$."
+    errorLine: 3
+    fix: "P(X ≤ 30) ≈ P(Y < 30.5): the bar for 30 ends at 30.5, so the correction adds 0.5."
+    explanation: |-
+      Lines 1, 2 and 4 are consistent, but line 3 has the continuity correction wrong for an
+      upper limit. P(X ≤ 30) includes the whole bar for 30, so the correct boundary is 30.5,
+      not 30.
+
+  - id: nd-approx-why-cloze
+    format: cloze
+    difficulty: 2
+    objectives: ["5.5.3"]
+    prompt: 'For $X \sim \mathrm{B}(n,p)$ approximated by $Y \sim \mathrm{N}(np,npq)$, the standard deviation of $Y$ is {{1}}.'
+    blanks:
+      - accept: ["√(npq)", "sqrt(npq)", "√npq", "the square root of npq"]
+    explanation: |-
+      The variance of the approximating normal is npq, so the standard deviation is √(npq).
+      Using npq itself as σ is a common error.

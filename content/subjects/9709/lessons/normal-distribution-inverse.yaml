@@ -1,0 +1,285 @@
+id: normal-distribution-inverse
+subject: "9709"
+topic: "5.5"
+title: Working backwards — finding x, μ or σ from a probability
+summary: Use the normal table in reverse to find the boundary value for a given probability, and rearrange z = (x − μ)/σ to find an unknown mean or standard deviation.
+order: 3
+minutes: 8
+kind: core
+objectives: ["5.5.2"]
+prerequisites: ["normal-distribution-standardising"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.5 outcome 5.5.2: solving problems for X ~ N(μ, σ²),
+    including finding a relationship between x₁, μ and σ given a probability, with full
+    standardisation working shown. Every example, question and diagram is original. All
+    inverse normal values were computed and checked directly. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find a boundary value $x$ from a given probability, and find an
+      unknown $\mu$ or $\sigma$ by rearranging $z=\dfrac{x-\mu}{\sigma}$.
+
+  - type: explain
+    title: Read the table backwards
+    body: |-
+      In the last lesson the value $x$ was given and you found an area. Now the area is given
+      and you must find $x$.
+
+      The table lists $\Phi(z)=\mathrm{P}(Z<z)$. To reverse it, look **inside** the table for
+      the probability, then read **out** to the $z$ value.
+
+      The area you search for must be a **left-tail** area, because that is what the table
+      stores. If the question gives an upper-tail probability, subtract it from 1 first:
+      $$\mathrm{P}(X>k)=0.2 \quad\Longrightarrow\quad \mathrm{P}(X<k)=0.8.$$
+
+      Once you have $z$, convert back to the original scale:
+      $$x=\mu+\sigma z.$$
+
+  - type: explain
+    title: Useful values to recognise
+    body: |-
+      Some probabilities appear so often that it is worth knowing their z-values. These come
+      from the table:
+
+      | Left-tail probability | 0.75 | 0.80 | 0.90 | 0.95 | 0.975 | 0.99 |
+      | --- | --- | --- | --- | --- | --- | --- |
+      | $z$ | 0.674 | 0.842 | 1.282 | 1.645 | 1.960 | 2.326 |
+
+      For a left-tail probability below 0.5, the z-value is **negative**. For example, the
+      lower 10% boundary has $z=-1.282$, since $\Phi(-1.282)=0.10$.
+
+      Always sketch. Shade the area named in the question, decide whether $k$ is above or below
+      the mean, and check that the sign of your z matches the picture.
+
+  - type: example
+    title: Finding a value from a lower-tail probability
+    problem: |-
+      The random variable $X \sim \mathrm{N}(50,100)$. Find $k$ such that
+      $\mathrm{P}(X<k)=0.9$.
+    steps:
+      - |-
+        Here $\mu=50$ and $\sigma=\sqrt{100}=10$.
+      - |-
+        The area 0.9 is a left-tail area, so look for 0.9 in the body of the table.
+      - |-
+        The closest entry is $\Phi(1.28)=0.8997$, and interpolating towards 0.9000 gives
+        $z \approx 1.282$. A sketch confirms $k$ should be above the mean.
+      - |-
+        Convert back: $k=\mu+\sigma z=50+10(1.282)$.
+      - |-
+        So $k=62.82$, which is 62.8 to 3 significant figures.
+    answer: '$k \approx 62.8$'
+
+  - type: diagram
+    diagram: normal-distribution-inverse
+    alt: A normal curve with the left-hand area 0.9 shaded up to a boundary k. The mean is marked at 50, the boundary at k = 62.8, and the corresponding standard normal value z = 1.282 is labelled.
+    caption: The area 0.9 fixes $z=1.282$, and then $k=\mu+\sigma z$.
+
+  - type: check
+    title: Check yourself
+    questions: [nd-inv-lower-95, nd-inv-upper-20]
+
+  - type: explain
+    title: Finding an unknown σ or μ
+    body: |-
+      The standardising equation contains four quantities:
+      $$z=\frac{x-\mu}{\sigma}.$$
+      If you know any three, you can find the fourth.
+
+      **Unknown standard deviation.** Rearrange by multiplying by $\sigma$ and dividing by $z$:
+      $$\sigma=\frac{x-\mu}{z}.$$
+      Keep the sign consistent: if $x$ is below the mean, both $x-\mu$ and $z$ are negative, so
+      $\sigma$ comes out positive.
+
+      **Unknown mean.** Rearrange to make $\mu$ the subject:
+      $$\mu=x-\sigma z.$$
+      A boundary in the upper tail has positive $z$, so it pulls the mean below $x$; a lower-tail
+      boundary gives the opposite.
+
+  - type: example
+    title: Finding the standard deviation
+    problem: |-
+      The random variable $X \sim \mathrm{N}(60,\sigma^2)$ satisfies
+      $\mathrm{P}(X>70)=0.05$. Find $\sigma$.
+    steps:
+      - |-
+        Convert to a left-tail area: $\mathrm{P}(X<70)=1-0.05=0.95$.
+      - |-
+        From the table, the z-value with left-tail area 0.95 is $z=1.645$.
+      - |-
+        Standardise with the known boundary:
+        $$1.645=\frac{70-60}{\sigma}=\frac{10}{\sigma}.$$
+      - |-
+        Multiply both sides by $\sigma$: $1.645\sigma=10$.
+      - |-
+        Divide: $\sigma=\dfrac{10}{1.645}=6.0796\ldots$
+      - |-
+        So $\sigma \approx 6.08$ (3 s.f.).
+    answer: '$\sigma \approx 6.08$'
+
+  - type: example
+    title: Finding the mean
+    problem: |-
+      The random variable $X \sim \mathrm{N}(\mu,64)$ satisfies
+      $\mathrm{P}(X<45)=0.10$. Find $\mu$.
+    steps:
+      - |-
+        The area 0.10 is already a left-tail area, and it is below 0.5, so $z$ will be negative.
+      - |-
+        From the table, $\Phi(1.282)=0.9$, so by symmetry $z=-1.282$.
+      - |-
+        Here $\sigma=\sqrt{64}=8$. Standardise:
+        $$-1.282=\frac{45-\mu}{8}.$$
+      - |-
+        Multiply by 8: $45-\mu=-10.256$.
+      - |-
+        Rearrange: $\mu=45+10.256=55.256\ldots$
+      - |-
+        So $\mu \approx 55.3$ (3 s.f.). A sketch makes sense: 45 is below the mean, and the
+        lower 10% boundary should sit below it.
+    answer: '$\mu \approx 55.3$'
+
+  - type: check
+    title: Check yourself
+    questions: [nd-inv-sigma, nd-inv-mu]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          For $\mathrm{P}(X<k)=0.9$, use $z=0.9$ because 0.9 is the probability.
+        right: |-
+          The 0.9 is an **area**, not a z-value. Look up 0.9 in the body of the table and read
+          off the corresponding $z \approx 1.282$.
+      - wrong: |-
+          For $\mathrm{P}(X>k)=0.2$, look up 0.2 directly and use that z.
+        right: |-
+          Look up $1-0.2=0.8$ instead, because the table gives left-tail areas. If you look up
+          0.2 you get a negative z and a value on the wrong side of the mean.
+      - wrong: |-
+          After finding $z$, the answer is $x=\mu+\sigma^2 z$.
+        right: |-
+          Convert back with the standard deviation: $x=\mu+\sigma z$. The variance only appears
+          inside the notation $\mathrm{N}(\mu,\sigma^2)$.
+
+  - type: exam
+    body: |-
+      Show the reverse lookup clearly: state the left-tail area you are using, the z-value, and
+      the equation $x=\mu+\sigma z$ before substituting.
+
+      For an upper-tail probability, write the subtraction explicitly:
+      $\mathrm{P}(X>k)=0.2 \Rightarrow \mathrm{P}(X<k)=0.8 \Rightarrow z=0.8416$.
+
+      Answers are usually required to 3 significant figures. Keep 4 decimal places on z while
+      calculating, then round at the end.
+
+  - type: check
+    title: Final check
+    questions: [nd-inv-z-mcq, nd-inv-tail-cloze, nd-std-inverse-x]
+
+  - type: takeaways
+    items:
+      - "Reverse the table by finding the probability inside it and reading out z."
+      - "Convert upper-tail areas to left-tail areas: $\\mathrm{P}(X<k)=1-\\mathrm{P}(X>k)$."
+      - "Convert back with $x=\\mu+\\sigma z$."
+      - "Unknown σ: $\\sigma=\\dfrac{x-\\mu}{z}$; unknown μ: $\\mu=x-\\sigma z$."
+      - "Left-tail areas below 0.5 give negative z-values; sketch to check the sign."
+
+questions:
+  - id: nd-inv-lower-95
+    format: numeric
+    difficulty: 2
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(30,25)$. Find $k$ such that $\mathrm{P}(X<k)=0.95$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 38.2
+        tolerance:
+          abs: 0.05
+    explanation: |-
+      The left-tail area 0.95 corresponds to z = 1.645. Here σ = √25 = 5.
+      Then k = μ + σz = 30 + 5(1.645) = 38.2245, so k = 38.2 to 3 s.f.
+
+  - id: nd-inv-upper-20
+    format: numeric
+    difficulty: 2
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(50,100)$. Find $k$ such that $\mathrm{P}(X>k)=0.2$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 58.4
+        tolerance:
+          abs: 0.05
+    explanation: |-
+      P(X > k) = 0.2 means P(X < k) = 0.8, so z = 0.8416. With σ = 10,
+      k = 50 + 10(0.8416) = 58.416, so k = 58.4 to 3 s.f.
+
+  - id: nd-inv-sigma
+    format: numeric
+    difficulty: 3
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(60,\sigma^2)$ satisfies $\mathrm{P}(X>70)=0.05$. Find $\sigma$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 6.08
+        tolerance:
+          abs: 0.02
+    explanation: |-
+      P(X < 70) = 0.95, so z = 1.645. Then 1.645 = (70 − 60)/σ = 10/σ,
+      giving σ = 10/1.645 = 6.0796, so σ = 6.08 to 3 s.f.
+
+  - id: nd-inv-mu
+    format: numeric
+    difficulty: 3
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(\mu,64)$ satisfies $\mathrm{P}(X<45)=0.10$. Find $\mu$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 55.3
+        tolerance:
+          abs: 0.05
+    explanation: |-
+      The lower 10% boundary has z = −1.282, and σ = 8.
+      From −1.282 = (45 − μ)/8: 45 − μ = −10.256, so μ = 55.256 ≈ 55.3.
+
+  - id: nd-inv-z-mcq
+    format: mcq
+    difficulty: 2
+    objectives: ["5.5.2"]
+    prompt: 'Which z-value corresponds to the lower 10% of a standard normal distribution, so that $\mathrm{P}(Z<z)=0.10$?'
+    options:
+      - text: "$z=-1.282$"
+        correct: true
+        why: "The lower tail is below the mean, so z is negative; Φ(1.282) = 0.9, so Φ(−1.282) = 0.1."
+      - text: "$z=1.282$"
+        why: "This is the upper 10% boundary: Φ(1.282) = 0.9, so 90% lies below it."
+      - text: "$z=-0.10$"
+        why: "−0.10 is the probability written with a minus sign, not a z-value; Φ(−0.10) ≈ 0.46."
+      - text: "$z=-0.900$"
+        why: "0.900 is the complementary area, not a z-value; using it as z ignores the table lookup."
+    explanation: |-
+      The lower 10% boundary is below the mean, so its z-value is negative. Since
+      Φ(1.282) = 0.9, symmetry gives Φ(−1.282) = 0.1.
+
+  - id: nd-inv-tail-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["5.5.2"]
+    prompt: 'If $\mathrm{P}(X>k)=0.2$, then the left-tail probability needed for the table is $\mathrm{P}(X<k)=$ {{1}}.'
+    blanks:
+      - accept: ["0.8", ".8", "0.80", "80%"]
+    explanation: |-
+      The total area is 1, so P(X < k) = 1 − 0.2 = 0.8. The table stores left-tail areas,
+      so 0.8 is the value to look up.
+
+  - id: nd-std-inverse-x
+    format: numeric
+    difficulty: 3
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(40,64)$. Find the value $x$ such that $\mathrm{P}(X>x)=0.25$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 45.4
+        tolerance:
+          abs: 0.05
+    explanation: |-
+      P(X > x) = 0.25 means P(X < x) = 0.75, so z = 0.6745 from the table.
+      Then x = μ + σz = 40 + 8(0.6745) = 45.396, which is 45.4 to 3 s.f.

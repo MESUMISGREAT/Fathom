@@ -1,0 +1,283 @@
+id: probability-conditional
+subject: "9709"
+topic: "5.3"
+title: Conditional probability
+summary: Find the probability of an event given that another has happened, using a reduced sample space or the formula P(A|B) = P(A and B) / P(B).
+order: 5
+minutes: 8
+kind: core
+objectives: ["5.3.4", "5.3.3"]
+prerequisites: ["probability-sample-space", "probability-independent-events-multiplication"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.3 Probability, outcome 5.3.4 "Calculate and use
+    conditional probabilities in simple cases", with guidance that this may use a sample
+    space of equiprobable elementary events, a tree diagram, or P(A|B) = P(A ∩ B)/P(B) in
+    simple cases. All examples, questions, tables and diagrams are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can calculate $P(A \mid B)$, the probability of $A$ **given that** $B$
+      has happened, both by shrinking the sample space and by using the formula
+      $P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$.
+
+  - type: explain
+    title: Extra information changes the question
+    body: |-
+      Conditional probability answers a question asked **after** some information arrives.
+
+      "A card is drawn from a pack. What is the probability it is a king?" The answer is
+      $\frac{4}{52}$.
+
+      "A card is drawn and you are told it is a picture card. What is the probability it is a
+      king?" Now the pack of $52$ is irrelevant, because we already know the card is one of
+      the $12$ picture cards. The answer is $\frac{4}{12} = \frac{1}{3}$.
+
+      The notation $P(A \mid B)$ means "the probability of $A$, given $B$". The vertical bar
+      is read as "given".
+
+  - type: definition
+    term: Conditional probability
+    body: |-
+      For events $A$ and $B$ with $P(B) > 0$,
+
+      $$P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$$
+
+      The condition $P(B) > 0$ matters: you cannot condition on an event that never happens.
+
+  - type: intuition
+    title: The sample space shrinks
+    body: |-
+      The formula is just the counting formula applied to a smaller world.
+
+      Knowing $B$ happened throws away every outcome outside $B$. The new sample space is
+      $B$ itself, and inside it, the outcomes that also belong to $A$ are exactly
+      $A \cap B$.
+
+      So
+
+      $$P(A \mid B) = \frac{\text{outcomes in } A \cap B}{\text{outcomes in } B}$$
+
+      Dividing the top and bottom of that fraction by the size of the original sample space
+      turns the counts into probabilities, which gives the formula above. Both versions
+      always agree — use whichever the question makes easier.
+
+  - type: example
+    title: "Example 1: shrinking the sample space"
+    problem: |-
+      A fair six-sided die is rolled. You are told the score is greater than $3$. Find the
+      probability that the score is even.
+    steps:
+      - |-
+        Let $B$ be "score greater than $3$", so $B = \{4, 5, 6\}$. This is the new sample
+        space, with $3$ equally likely outcomes.
+      - |-
+        Let $A$ be "score is even", so $A = \{2, 4, 6\}$.
+      - |-
+        The intersection is $A \cap B = \{4, 6\}$, which has $2$ outcomes.
+      - |-
+        Inside the reduced space: $P(A \mid B) = \dfrac{2}{3}$.
+      - |-
+        Check with the formula:
+        $P(A \cap B) = \dfrac{2}{6}$ and $P(B) = \dfrac{3}{6}$, so
+        $P(A \mid B) = \dfrac{2/6}{3/6} = \dfrac{2}{3}$. It agrees.
+    answer: |-
+      $\dfrac{2}{3}$. Without the information it would be $\dfrac{1}{2}$, so the extra
+      information genuinely changed the answer.
+
+  - type: check
+    title: Check 1 — a reduced sample space
+    questions: [pcond-die-greater-three, pcond-formula]
+
+  - type: explain
+    title: Reading a two-way table
+    body: |-
+      Two-way tables are the friendliest setting for conditional probability, because you can
+      see the reduced sample space as a single row or column.
+
+      Suppose $40$ students are surveyed about sport:
+
+      | | Plays sport | No sport | Total |
+      | --- | --- | --- | --- |
+      | Boys | $12$ | $6$ | $18$ |
+      | Girls | $9$ | $13$ | $22$ |
+      | Total | $21$ | $19$ | $40$ |
+
+      For $P(\text{boy} \mid \text{plays sport})$, the condition fixes us in the
+      "plays sport" column. That column totals $21$ and contains $12$ boys, so the answer is
+      $\frac{12}{21} = \frac{4}{7}$.
+
+      For $P(\text{plays sport} \mid \text{boy})$, the condition fixes us in the "Boys" row.
+      That row totals $18$ and contains $12$ who play sport, so the answer is
+      $\frac{12}{18} = \frac{2}{3}$.
+
+      These are different numbers. **$P(A \mid B)$ and $P(B \mid A)$ are not the same thing.**
+      Always identify which group the condition puts you inside before you divide.
+
+  - type: check
+    title: Check 2 — condition reverses the answer
+    questions: [pcond-table-boy-given-sport, pcond-table-sport-given-boy]
+
+  - type: deeper
+    title: Connecting back to independence
+    body: |-
+      Conditional probability gives the sharpest statement of independence.
+
+      Events $A$ and $B$ are independent exactly when
+
+      $$P(A \mid B) = P(A)$$
+
+      In words: being told that $B$ happened tells you nothing about $A$, so $A$'s
+      probability is unchanged.
+
+      Substituting the formula gives $P(A \mid B) = \dfrac{P(A \cap B)}{P(B)} = P(A)$, which
+      rearranges to $P(A \cap B) = P(A)P(B)$ — the test you already met.
+
+      In the table above, $P(\text{boy}) = \frac{18}{40} = 0.45$ but
+      $P(\text{boy} \mid \text{plays sport}) = \frac{4}{7} \approx 0.571$. Since these differ,
+      being a boy and playing sport are **not** independent for this group.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "$P(A \mid B)$ is the same as $P(B \mid A)$."
+        right: |-
+          They are usually different. The probability a student is a boy given they play
+          sport is not the probability they play sport given they are a boy.
+      - wrong: |-
+          "Just divide by the whole sample space, as usual."
+        right: |-
+          The condition replaces the sample space with $B$. Dividing by the original total
+          ignores the information you were given.
+      - wrong: |-
+          "The condition only matters if the events are independent."
+        right: |-
+          If the events are independent, conditioning changes nothing — that is the
+          definition of independence. The condition matters most when the events are
+          dependent.
+
+  - type: exam
+    body: |-
+      Conditional probability often appears as "given that" in the question stem, or after a
+      table or tree diagram.
+
+      - Highlight the phrase "given that" and write down what it makes the new sample space.
+        That single step avoids most lost marks.
+      - In a two-way table, put your finger on the conditioning row or column and read only
+        from there.
+      - When using the formula, quote both $P(A \cap B)$ and $P(B)$ before dividing.
+      - Check whether the question wants $P(A \mid B)$ or $P(B \mid A)$; they are rarely
+        equal.
+
+  - type: takeaways
+    items:
+      - "$P(A \\mid B)$ means the probability of $A$ given that $B$ has happened."
+      - "$P(A \\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$, and also $\\dfrac{\\text{outcomes in } A \\cap B}{\\text{outcomes in } B}$."
+      - "Conditioning shrinks the sample space to $B$; divide by the size of $B$, not the original total."
+      - "$P(A \\mid B)$ and $P(B \\mid A)$ are different in general."
+      - "Independent events satisfy $P(A \\mid B) = P(A)$."
+
+  - type: check
+    title: Check 3 — consolidation
+    questions: [pcond-independence-meaning]
+
+questions:
+  - id: pcond-die-greater-three
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.4"]
+    prompt: |-
+      A fair six-sided die is rolled. Given that the score is greater than $3$, find the
+      probability that the score is even, as a decimal.
+    fields:
+      - answer: 0.6667
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Given the score exceeds $3$, the possible scores are $4, 5, 6$. Two of these, $4$ and
+      $6$, are even. So the probability is $\frac{2}{3} \approx 0.667$.
+
+  - id: pcond-formula
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.4"]
+    prompt: |-
+      Events $A$ and $B$ satisfy $P(A \cap B) = 0.12$ and $P(B) = 0.3$. Find
+      $P(A \mid B)$.
+    fields:
+      - answer: 0.4
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      Apply the formula: $P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{0.12}{0.3} = 0.4$.
+
+  - id: pcond-table-boy-given-sport
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.4"]
+    prompt: |-
+      In the survey table, $40$ students are recorded: $18$ boys of whom $12$ play sport, and
+      $22$ girls of whom $9$ play sport. A student who plays sport is chosen at random. Find
+      the probability that the student is a boy, as a decimal.
+    fields:
+      - answer: 0.5714
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      The condition is "plays sport", so the reduced sample space is the $12 + 9 = 21$
+      students who play sport. Of these, $12$ are boys, giving
+      $\frac{12}{21} = \frac{4}{7} \approx 0.571$.
+
+  - id: pcond-table-sport-given-boy
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.4"]
+    prompt: |-
+      Using the same table, a boy is chosen at random. Find the probability that he plays
+      sport, as a decimal.
+    fields:
+      - answer: 0.6667
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      The condition is "boy", so the reduced sample space is the $18$ boys. Of these, $12$
+      play sport, giving $\frac{12}{18} = \frac{2}{3} \approx 0.667$. Compare this with the
+      previous question: swapping the condition changes the answer.
+
+  - id: pcond-independence-meaning
+    format: mcq
+    difficulty: 3
+    objectives: ["5.3.4", "5.3.3"]
+    prompt: |-
+      Which statement is equivalent to "$A$ and $B$ are independent"?
+    options:
+      - text: |-
+          $P(A \mid B) = P(A)$
+        correct: true
+        why: |-
+          Independence means knowing $B$ happened does not change the probability of $A$,
+          which is exactly this equation.
+      - text: |-
+          $P(A \mid B) = P(B)$
+        why: |-
+          This relates the probability of $A$ to the probability of $B$, which is not what
+          independence says.
+      - text: |-
+          $P(A \cap B) = 0$
+        why: |-
+          That is mutual exclusivity, which actually forces dependence when both
+          probabilities are non-zero.
+      - text: |-
+          $P(A \cup B) = P(A) + P(B)$
+        why: |-
+          That is the addition rule for mutually exclusive events, not a statement about
+          independence.
+    explanation: |-
+      Independence means $B$ carries no information about $A$, so $P(A \mid B) = P(A)$. This
+      rearranges to the familiar test $P(A \cap B) = P(A) \times P(B)$.

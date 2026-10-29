@@ -1,0 +1,306 @@
+id: kirchhoffs-laws-parallel-resistance
+subject: "9702"
+topic: "10.2"
+title: "Parallel resistors: deriving 1/R = 1/R₁ + 1/R₂"
+summary: Use Kirchhoff's two laws to prove the parallel formula, then use it to find combined resistance and branch currents.
+order: 4
+minutes: 9
+kind: core
+objectives: ["10.2.5", "10.2.6"]
+prerequisites: ["kirchhoffs-laws-first-law", "kirchhoffs-laws-series-resistance"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  reviewedBy: buffy-content-worker-1
+  reviewedAt: 2026-10-29
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcomes 10.2.5 and 10.2.6 ("Use Kirchhoff's laws to derive a formula for
+    the combined resistance of two or more resistors in parallel" and "... use the parallel
+    formula"). All examples and questions are original; resistor values are illustrative. Not yet
+    independently reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-29 by buffy-content-worker-1. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can derive $\\dfrac{1}{R} = \\dfrac{1}{R_1} + \\dfrac{1}{R_2}$ for resistors
+      in parallel using Kirchhoff's laws, and use it to find a combined resistance, a branch
+      current or a p.d.
+
+  - type: explain
+    title: What "in parallel" means
+    body: |
+      Two components are **in parallel** when they are connected across the same two points, so
+      each one has its own separate path for charge.
+
+      Both of Kirchhoff's laws have something to say about this arrangement.
+
+      - **Kirchhoff's second law** gives the p.d.: each branch connects the same two points, so the
+        p.d. across every branch is the same.
+      - **Kirchhoff's first law** gives the current: the current splits at the junction, and the
+        branch currents add back up to the total current.
+
+  - type: diagram
+    diagram: phys-kirchhoffs-laws-parallel
+    alt: |
+      A parallel circuit: a 12 V cell on the left, then a top wire that splits at a junction into
+      two vertical branches holding a 6.0 ohm and a 3.0 ohm resistor, which rejoin at a second
+      junction at the bottom. The total current is labelled 6.0 A, and the branch currents 2.0 A
+      and 4.0 A. The equation below reads 1/R = 1/R1 + 1/R2 = 1/6.0 + 1/3.0, giving R = 2.0 ohms.
+
+  - type: explain
+    title: Deriving the parallel formula
+    body: |
+      Connect two resistors $R_1$ and $R_2$ in parallel across a source of e.m.f. $V$. Call the
+      total current leaving the source $I$.
+
+      1. **Same p.d. (second law).** Both branches are connected between the same two points, so
+         the p.d. across each is $V$.
+      2. **Branch currents from $V = IR$.** Each branch obeys the definition of resistance, so
+         $I_1 = \dfrac{V}{R_1}$ and $I_2 = \dfrac{V}{R_2}$.
+      3. **Currents add (first law).** At the junction, $I = I_1 + I_2$.
+      4. **Substitute and match forms.**
+         $I = \dfrac{V}{R_1} + \dfrac{V}{R_2} = V\left(\dfrac{1}{R_1} + \dfrac{1}{R_2}\right)$.
+         The pair behaves like one resistor $R$ with $I = \dfrac{V}{R}$, so comparing the two
+         expressions gives
+         $\dfrac{1}{R} = \dfrac{1}{R_1} + \dfrac{1}{R_2}$.
+
+      For three or more resistors in parallel, extend the sum:
+      $\dfrac{1}{R} = \dfrac{1}{R_1} + \dfrac{1}{R_2} + \dfrac{1}{R_3} + \dots$
+
+  - type: example
+    title: A worked parallel circuit
+    problem: |
+      A 12 V supply is connected across a 6.0 Ω resistor and a 3.0 Ω resistor in parallel. Find
+      the combined resistance, the current in each branch and the total current.
+    steps:
+      - |
+        Combined resistance:
+        $\dfrac{1}{R} = \dfrac{1}{6.0} + \dfrac{1}{3.0} = 0.167 + 0.333 = 0.500\ \Omega^{-1}$, so
+        $R = \dfrac{1}{0.500} = 2.0\ \Omega$.
+      - |
+        Each branch has the full 12 V across it, so the branch currents come from $I = V/R$.
+      - |
+        First branch: $I_1 = \dfrac{12}{6.0} = 2.0\ \text{A}$.
+      - |
+        Second branch: $I_2 = \dfrac{12}{3.0} = 4.0\ \text{A}$.
+      - |
+        Total current from the supply joins these at the junction:
+        $I = 2.0 + 4.0 = 6.0\ \text{A}$.
+      - |
+        Check with the combined resistance: $I = \dfrac{12}{2.0} = 6.0\ \text{A}$. It agrees.
+    answer: |
+      $R = 2.0\ \Omega$, branch currents $2.0\ \text{A}$ and $4.0\ \text{A}$, total current
+      $6.0\ \text{A}$.
+
+  - type: check
+    questions: [parallel-pd-statement, combine-two-parallel]
+
+  - type: explain
+    title: Three shortcuts worth knowing
+    body: |
+      These are not extra formulas to memorise; they are quick consequences of the parallel
+      formula, and using them saves time under exam pressure.
+
+      - **Three or more branches.** Just keep adding reciprocals:
+        $\dfrac{1}{R} = \dfrac{1}{R_1} + \dfrac{1}{R_2} + \dfrac{1}{R_3}$. For 2.0 Ω, 3.0 Ω and
+        6.0 Ω: $\dfrac{1}{R} = 0.50 + 0.333 + 0.167 = 1.00\ \Omega^{-1}$, so $R = 1.0\ \Omega$.
+      - **Two equal resistors.** $n$ identical resistors $R$ in parallel have combined resistance
+        $R/n$, so two 4.0 Ω resistors give 2.0 Ω. Equal resistors share the current equally.
+      - **A sanity check.** The combined resistance is **always smaller** than the smallest branch
+        resistance. More branches mean more paths, so the supply finds it easier to push charge
+        round the circuit.
+
+  - type: check
+    questions: [combine-three-parallel, branch-current-value]
+
+  - type: intuition
+    title: Why does adding a branch lower the resistance?
+    body: |
+      Adding a resistor in **series** blocks the single path, so the resistance grows. Adding one
+      in **parallel** opens a second path that charge can take, so the supply can deliver more
+      current for the same p.d. — and more current for the same p.d. is exactly what a smaller
+      resistance means.
+
+      That is why a 6.0 Ω and a 3.0 Ω resistor in parallel act like a single 2.0 Ω resistor, which
+      is smaller than either of them. A common exam answer is simply "there are more paths for the
+      charge, so the combined resistance is less".
+
+  - type: misconceptions
+    items:
+      - wrong: "Parallel resistors are added like series resistors: R = R₁ + R₂."
+        right: |
+          That is the series formula. In parallel you add the **reciprocals**:
+          $\dfrac{1}{R} = \dfrac{1}{R_1} + \dfrac{1}{R_2}$, and the answer is smaller than either
+          branch.
+      - wrong: "The current splits equally between the branches."
+        right: |
+          It splits in inverse proportion to resistance: the smaller resistance carries more
+          current. In a 6.0 Ω and a 3.0 Ω branch across the same p.d., the 3.0 Ω branch carries
+          twice the current.
+      - wrong: "The p.d. splits between parallel branches, just as it does in series."
+        right: |
+          Each parallel branch has the **whole** supply p.d. across it. It is the current that is
+          shared, not the p.d.
+      - wrong: "The combined resistance must be bigger than each branch, because you have added another resistor."
+        right: |
+          Adding a parallel branch makes the combined resistance **smaller**, because it gives the
+          charge an extra path.
+
+  - type: check
+    questions: [parallel-reciprocal-expression, spot-parallel-error, explain-parallel-smaller]
+
+  - type: exam
+    body: |
+      - A derivation needs all four ingredients named: same p.d. (second law), branch currents
+        $V/R$, currents adding (first law), then comparing with $I = V/R$ for the pair.
+      - "Calculate the combined resistance" of two in parallel is usually quickest by adding the
+        reciprocals. Keep the answer in ohms, and check it is smaller than the smaller resistance.
+      - To find a branch current, use the full supply p.d. across that branch, $I = V/R$ — do not
+        use the combined resistance.
+      - If a question says the branches are identical, you may say the current splits equally.
+        Otherwise, do not assume it.
+
+  - type: takeaways
+    items:
+      - "In parallel every branch has the same p.d. across it, because the branches connect the same two points."
+      - "The branch currents add at the junction: $I = I_1 + I_2 + \\dots$"
+      - "Combined resistance: $\\dfrac{1}{R} = \\dfrac{1}{R_1} + \\dfrac{1}{R_2} + \\dots$, always smaller than the smallest branch."
+      - "Branch currents are inversely proportional to branch resistance, so the smallest resistance carries the largest current."
+questions:
+  - id: parallel-pd-statement
+    format: mcq
+    difficulty: 1
+    objectives: ["10.2.5", "10.2.6"]
+    prompt: |
+      Two resistors are connected in parallel across a battery. Which statement is correct?
+    options:
+      - text: The p.d. across each resistor is the same, and the currents through them add to the total current.
+        correct: true
+        why: |
+          Both branches connect the same two points, so the second law gives them the same p.d.,
+          and the junction rule makes the branch currents add.
+      - text: The current through each resistor is the same, and the p.d.s add to the supply p.d.
+        why: |
+          That describes a **series** circuit, not a parallel one.
+      - text: Both the current and the p.d. are the same for each resistor.
+        why: |
+          The p.d.s are the same, but the currents differ unless the resistances are equal.
+      - text: The total current is the same as the current in the smallest branch.
+        why: |
+          The total current is the sum of the branch currents, so it is larger than any single
+          branch current.
+    explanation: |
+      Parallel means "across the same two points": p.d. common (second law), currents adding
+      (first law), combined resistance from the reciprocals.
+
+  - id: combine-two-parallel
+    format: numeric
+    difficulty: 1
+    objectives: ["10.2.6"]
+    prompt: |
+      A 12 Ω resistor and a 6.0 Ω resistor are connected in parallel. Calculate their combined
+      resistance.
+    fields:
+      - label: "R ="
+        answer: 4.0
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      $\dfrac{1}{R} = \dfrac{1}{12} + \dfrac{1}{6.0} = 0.0833 + 0.167 = 0.250\ \Omega^{-1}$, so
+      $R = \dfrac{1}{0.250} = 4.0\ \Omega$. As expected it is smaller than 6.0 Ω.
+
+  - id: combine-three-parallel
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.6"]
+    prompt: |
+      Resistors of 2.0 Ω, 3.0 Ω and 6.0 Ω are connected in parallel. Calculate their combined
+      resistance.
+    fields:
+      - label: "R ="
+        answer: 1.0
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      $\dfrac{1}{R} = \dfrac{1}{2.0} + \dfrac{1}{3.0} + \dfrac{1}{6.0} = 0.500 + 0.333 + 0.167
+      = 1.00\ \Omega^{-1}$, so $R = 1.0\ \Omega$.
+
+  - id: branch-current-value
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.5", "10.2.6"]
+    prompt: |
+      A 12 Ω resistor and a 6.0 Ω resistor are connected in parallel across a 12 V supply.
+      Calculate the current in the 6.0 Ω branch.
+    fields:
+      - label: "I ="
+        answer: 2.0
+        tolerance: { rel: 0.02 }
+        unit: A
+    explanation: |
+      Every parallel branch has the full supply p.d. of 12 V across it, so
+      $I = \dfrac{12}{6.0} = 2.0\ \text{A}$. The 12 Ω branch takes 1.0 A, and the total current is
+      the sum, 3.0 A, which equals $12/4.0$ using the combined resistance of 4.0 Ω.
+
+  - id: parallel-reciprocal-expression
+    format: expression
+    difficulty: 2
+    objectives: ["10.2.5"]
+    prompt: |
+      Two resistors of resistance a and b are connected in parallel. Write an expression for their
+      combined resistance in terms of a and b.
+    answer: "a*b/(a+b)"
+    variables: ["a", "b"]
+    domain: { min: 1, max: 10 }
+    display: |
+      $R = \dfrac{ab}{a+b}$
+    explanation: |
+      From $\dfrac{1}{R} = \dfrac{1}{a} + \dfrac{1}{b} = \dfrac{a+b}{ab}$, inverting gives
+      $R = \dfrac{ab}{a+b}$.
+
+  - id: spot-parallel-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["10.2.6"]
+    prompt: |
+      A student calculates a combined resistance. Identify the first error in the working.
+    lines:
+      - "A 6.0 Ω resistor and a 3.0 Ω resistor are connected in parallel across a 12 V supply."
+      - "Combined resistance = 6.0 + 3.0 = 9.0 Ω."
+      - "So the total current is 12/9.0 = 1.3 A."
+      - "Each branch carries half of that total, about 0.67 A."
+    errorLine: 2
+    fix: |
+      In parallel you add the reciprocals:
+      1/R = 1/6.0 + 1/3.0 = 0.500 per ohm, so R = 2.0 Ω. The total current is then 12/2.0 = 6.0 A,
+      with 2.0 A in the 6.0 Ω branch and 4.0 A in the 3.0 Ω branch.
+    explanation: |
+      The series formula has been used on a parallel circuit. The later lines go wrong too: the
+      current does not split equally (the smaller resistance takes more), and 1.3 A is not the
+      total current.
+
+  - id: explain-parallel-smaller
+    format: explain
+    difficulty: 3
+    objectives: ["10.2.5", "10.2.6"]
+    prompt: |
+      Explain why the combined resistance of resistors in parallel is smaller than the resistance
+      of any single branch.
+    model: |
+      Each branch is an extra path through which charge can flow between the same two points. With
+      the same p.d. across the combination, the total current is the sum of the branch currents,
+      and each branch current is V/R for that branch. So the total current is larger than the
+      current in any one branch. Since resistance is V/I for the combination, a larger total
+      current for the same p.d. means a smaller combined resistance. Adding another parallel
+      branch always adds more current, so it always lowers the combined resistance.
+    keyPoints:
+      - "Each branch gives charge an extra path between the same two points"
+      - "The p.d. across each branch is the same"
+      - "The total current is the sum of the branch currents, so it is larger than any one branch current"
+      - "R = V/I: larger total current for the same p.d. means smaller combined resistance"
+      - "Adding a branch adds more current, so the combined resistance falls further"
+    explanation: |
+      The argument runs from paths to current to resistance: more paths, more total current at the
+      same p.d., so a smaller combined resistance.

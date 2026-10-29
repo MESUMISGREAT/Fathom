@@ -1,0 +1,263 @@
+id: probability-sample-space
+subject: "9709"
+topic: "5.3"
+title: Sample spaces and equally likely outcomes
+summary: List the sample space of a simple experiment and use it to find probabilities by counting equally likely outcomes, including the probability that an event does not happen.
+order: 1
+minutes: 7
+kind: core
+objectives: ["5.3.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.3 Probability, learning outcome 5.3.1 "Evaluate
+    probabilities in simple cases by enumerating equiprobable elementary events, or by
+    calculation using permutations or combinations." This lesson covers the enumeration
+    route; the counting route is in the next lesson. All examples, questions and diagrams
+    are original; the dice and coin situations are standard teaching contexts, not copied
+    from any past paper.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can write down the **sample space** of a simple random experiment, count
+      the outcomes that belong to an event, and use those counts to find a probability,
+      including the probability that the event does **not** happen.
+
+  - type: explain
+    title: What probability is measuring
+    body: |-
+      Probability is a number from $0$ to $1$ that measures how likely an event is.
+
+      An event with probability $0$ cannot happen. An event with probability $1$ is certain.
+      Everything in between is a matter of degree, and $0.5$ means "just as likely to happen
+      as not".
+
+      To compute a probability we need a precise description of what *could* happen. That
+      description is the sample space.
+
+  - type: definition
+    term: Sample space
+    body: |-
+      The **sample space**, usually written $S$, is the set of **all** possible outcomes of an
+      experiment. Each individual outcome is called an **elementary event**, and an
+      **event** is a collection of outcomes — that is, a subset of $S$.
+
+  - type: explain
+    title: The counting formula
+    body: |-
+      Suppose the experiment has finitely many outcomes and they are all **equally likely**.
+      Then, for any event $E$,
+
+      $$P(E) = \dfrac{\text{number of outcomes in } E}{\text{number of outcomes in } S}$$
+
+      The logic is that probability is shared out evenly between the equally likely outcomes,
+      so each one gets $1/n$ where $n$ is the size of $S$. An event made of $k$ outcomes
+      collects $k$ of those shares.
+
+      **The equally likely condition is essential.** This formula fails if the outcomes are
+      not equally likely. Rolling two dice and adding the scores is the classic trap: the
+      *sums* $2$ to $12$ are not equally likely, even though the two dice are fair.
+
+  - type: diagram
+    diagram: probability-sample-space-two-dice
+    alt: A six by six grid of the thirty-six equally likely ordered pairs from rolling two fair dice. The five cells whose scores total eight, (2,6), (3,5), (4,4), (5,3) and (6,2), are shaded and labelled, showing that the total eight occupies five of the thirty-six outcomes.
+    caption: |-
+      Every one of the 36 cells is equally likely. The total 8 appears in only 5 of them, so
+      $P(\text{total } 8) = \frac{5}{36}$. Notice that the diagonals are *not* equal in length,
+      which is exactly why sums such as 7 are more likely than 2.
+
+  - type: example
+    title: "Example 1: counting a total"
+    problem: |-
+      Two fair six-sided dice are rolled and the two scores are added. Find the probability
+      that the total is $8$.
+    steps:
+      - |-
+        Write the sample space. An outcome is an ordered pair $(\text{die 1}, \text{die 2})$.
+        Each die has 6 faces, so $S$ has $6 \times 6 = 36$ equally likely outcomes.
+      - |-
+        List the outcomes in the event "the total is 8". They are
+        $(2,6)$, $(3,5)$, $(4,4)$, $(5,3)$ and $(6,2)$.
+      - |-
+        Count them: there are $5$ such outcomes.
+      - |-
+        Apply the formula: $P(\text{total } 8) = \dfrac{5}{36}$.
+    answer: |-
+      $\dfrac{5}{36} \approx 0.139$, so about a $14\%$ chance.
+
+  - type: check
+    title: Check 1 — reading a sample space
+    questions: [ps-dice-sum-eight, ps-sample-space-definition]
+
+  - type: explain
+    title: The complement rule
+    body: |-
+      Sometimes it is far easier to count the outcomes where an event does **not** happen.
+      The event "A does not happen" is called the **complement** of $A$ and is written
+      $A'$ (or $\bar{A}$).
+
+      Between them, $A$ and $A'$ cover every outcome in the sample space and never overlap.
+      So their probabilities must add to $1$:
+
+      $$P(A') = 1 - P(A)$$
+
+      This saves real work. "At least one six" over many rolls is awkward to count directly,
+      but its complement — "no sixes at all" — is easy.
+
+  - type: example
+    title: "Example 2: working with the complement"
+    problem: |-
+      A fair coin is tossed $4$ times. Find the probability of getting **at least one** head.
+    steps:
+      - |-
+        The complement of "at least one head" is "no heads at all", which means all four
+        tosses are tails.
+      - |-
+        The sample space has $2^4 = 16$ equally likely sequences of heads and tails.
+      - |-
+        Only one sequence is all tails: TTTT. So $P(\text{no heads}) = \dfrac{1}{16}$.
+      - |-
+        Therefore $P(\text{at least one head}) = 1 - \dfrac{1}{16} = \dfrac{15}{16}$.
+    answer: |-
+      $\dfrac{15}{16} = 0.9375$.
+
+  - type: check
+    title: Check 2 — the complement rule
+    questions: [ps-complement]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "Two dice are rolled, so each total from $2$ to $12$ has probability $\frac{1}{11}$."
+        right: |-
+          The eleven possible totals are not equally likely. Only the $36$ ordered pairs are
+          equally likely, and they are shared unevenly between the totals.
+      - wrong: |-
+          "$P(\text{not } A) = -P(A)$ when $A$ is unlikely."
+        right: |-
+          Probabilities are never negative. $P(A') = 1 - P(A)$ is always between $0$ and $1$.
+      - wrong: |-
+          "A probability of $0.4$ means the event happens $40$ times out of $100$ every time
+          you repeat the experiment $100$ times."
+        right: |-
+          Probability describes long-run behaviour, not a guarantee about any particular run
+          of trials. $0.4$ means the proportion tends towards $0.4$ over many repetitions.
+
+  - type: exam
+    body: |-
+      Exam questions on this objective almost always ask you to **show the sample space** or
+      to justify why outcomes are equally likely, and that working carries marks.
+
+      - Write the sample space as a **grid** or an explicit list rather than describing it in
+        words; examiners can then see that you have counted every outcome once.
+      - State the number of outcomes in $S$ and in the event separately before dividing.
+      - Leave probabilities as **exact fractions** unless the question asks for a decimal or a
+        percentage. $\frac{5}{36}$ is exact; $0.139$ is not.
+      - If the question says "at least one", pause and consider the complement before counting
+        directly.
+
+  - type: takeaways
+    items:
+      - "The sample space $S$ is the set of all possible outcomes of the experiment."
+      - "For equally likely outcomes, $P(E) = \\dfrac{\\text{outcomes in } E}{\\text{outcomes in } S}$."
+      - "Check that outcomes really are equally likely before dividing — sums of two dice are not."
+      - "The complement rule is $P(A') = 1 - P(A)$; use it for \"at least one\" events."
+
+  - type: check
+    title: Check 3 — putting it together
+    questions: [ps-two-heads, ps-dice-sample-space-size]
+
+questions:
+  - id: ps-sample-space-definition
+    format: mcq
+    difficulty: 1
+    objectives: ["5.3.1"]
+    prompt: |-
+      A fair six-sided die is rolled once. Which of these is the sample space of the
+      experiment?
+    options:
+      - text: |-
+          $\{1, 2, 3, 4, 5, 6\}$
+        correct: true
+        why: |-
+          The sample space lists every possible outcome exactly once, and the six faces are
+          the six possible results.
+      - text: |-
+          $\{1, 2, 3\}$
+        why: |-
+          This is only an event (rolling at most 3), not the full set of possibilities.
+      - text: |-
+          $\{\text{even}, \text{odd}\}$
+        why: |-
+          These two results group outcomes together, so they are events rather than
+          elementary events.
+      - text: |-
+          $\{6\}$
+        why: |-
+          This is the event "rolling a six", a single outcome rather than all of them.
+    explanation: |-
+      The sample space is the set of all possible outcomes: the six faces $1$ to $6$. Each
+      has probability $\frac{1}{6}$ because the die is fair.
+
+  - id: ps-dice-sum-eight
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.1"]
+    prompt: |-
+      Two fair six-sided dice are rolled and the scores are added. Find the probability
+      that the total is $8$, giving your answer as a decimal.
+    fields:
+      - answer: 0.1389
+        tolerance:
+          abs: 0.001
+    explanation: |-
+      The sample space has $6 \times 6 = 36$ equally likely ordered pairs. A total of $8$
+      comes from $(2,6)$, $(3,5)$, $(4,4)$, $(5,3)$ and $(6,2)$, which is $5$ outcomes. So
+      $P = \frac{5}{36} \approx 0.139$.
+
+  - id: ps-complement
+    format: numeric
+    difficulty: 1
+    objectives: ["5.3.1"]
+    prompt: |-
+      For an event $A$ we are told $P(A) = 0.35$. Find $P(\text{not } A)$.
+    fields:
+      - answer: 0.65
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      An event and its complement cover the whole sample space with no overlap, so their
+      probabilities add to $1$. Hence $P(\text{not } A) = 1 - 0.35 = 0.65$.
+
+  - id: ps-two-heads
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.1"]
+    prompt: |-
+      A fair coin is tossed three times. Find the probability of getting exactly two heads.
+    fields:
+      - answer: 0.375
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      The $2^3 = 8$ sequences HHH, HHT, HTH, HTT, THH, THT, TTH, TTT are equally likely.
+      Exactly two heads occur in HHT, HTH and THH, so the probability is $\frac{3}{8} = 0.375$.
+
+  - id: ps-dice-sample-space-size
+    format: numeric
+    difficulty: 1
+    objectives: ["5.3.1"]
+    prompt: |-
+      Two fair six-sided dice are rolled and the two scores are recorded as an ordered pair.
+      How many outcomes are in the sample space?
+    fields:
+      - answer: 36
+    explanation: |-
+      The first die has $6$ possible scores and, for each of those, the second die has $6$.
+      That gives $6 \times 6 = 36$ ordered pairs.

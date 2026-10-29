@@ -1,0 +1,290 @@
+id: kirchhoffs-laws-series-resistance
+subject: "9702"
+topic: "10.2"
+title: "Series resistors: deriving R = R₁ + R₂"
+summary: Use Kirchhoff's two laws to prove that resistors in series simply add, then use the result to find currents and p.d.s.
+order: 3
+minutes: 8
+kind: core
+objectives: ["10.2.3", "10.2.4"]
+prerequisites: ["kirchhoffs-laws-second-law", "resistance-resistivity-definition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  reviewedBy: buffy-content-worker-1
+  reviewedAt: 2026-10-29
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcomes 10.2.3 and 10.2.4 ("Use Kirchhoff's laws to derive a formula for
+    the combined resistance of two or more resistors in series" and "... use the series
+    formula"). All examples and questions are original; resistor values are illustrative. Not yet
+    independently reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-29 by buffy-content-worker-1. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can derive $R = R_1 + R_2$ for resistors in series using Kirchhoff's laws,
+      and use the series formula to find a combined resistance, a current or a p.d.
+
+  - type: explain
+    title: What "in series" means
+    body: |
+      Two components are **in series** when they are connected one after the other along a single
+      path, so the same current has to pass through both of them.
+
+      That single path has two immediate consequences, and both come from Kirchhoff's laws.
+
+      - **Kirchhoff's first law** rules out any way for the current to change: there is no
+        junction to divide it, so the current is the same through every component in series.
+      - **Kirchhoff's second law** says the p.d.s add up round the loop, so the total p.d. across
+        the pair is the sum of the individual p.d.s.
+
+  - type: diagram
+    diagram: phys-kirchhoffs-laws-series
+    alt: |
+      A series circuit with a 12 V cell on the left and a 4.0 ohm resistor followed by a 6.0 ohm
+      resistor along the top wire. The current is labelled 1.2 A and is drawn going clockwise, so
+      it is the same through both resistors. The p.d.s are labelled 4.8 V and 7.2 V, and the text
+      notes that they add to the 12 V e.m.f. The combined resistance is stated as
+      R = R1 + R2 = 4.0 + 6.0 = 10 ohms.
+
+  - type: explain
+    title: Deriving the series formula
+    body: |
+      Connect two resistors $R_1$ and $R_2$ in series with a source of e.m.f. $V$. They behave
+      like one single resistor of resistance $R$, and here is why, step by step.
+
+      1. **Same current (first law).** The path is unbroken, so a current $I$ passes through both.
+      2. **p.d.s from the definition of resistance.** $R = V/I$ rearranges to $V = IR$, so
+         $V_1 = IR_1$ and $V_2 = IR_2$.
+      3. **p.d.s add (second law).** Going round the loop, $V = V_1 + V_2$.
+      4. **Substitute and match forms.** $V = IR_1 + IR_2 = I(R_1 + R_2)$. The pair behaves like
+         one resistor with $V = IR$, so $R = R_1 + R_2$.
+
+      The same argument repeats for any number of resistors: $R = R_1 + R_2 + R_3 + \dots$
+
+  - type: example
+    title: A worked series circuit
+    problem: |
+      A 12 V cell is connected to a 4.0 Ω resistor and a 6.0 Ω resistor in series. Find the
+      combined resistance, the current, and the p.d. across each resistor.
+    steps:
+      - |
+        Combined resistance: $R = 4.0 + 6.0 = 10\ \Omega$.
+      - |
+        Current: $I = \dfrac{V}{R} = \dfrac{12}{10} = 1.2\ \text{A}$. This is the same through both
+        resistors, because there is only one path.
+      - |
+        p.d. across the 4.0 Ω resistor: $V_1 = IR_1 = 1.2 \times 4.0 = 4.8\ \text{V}$.
+      - |
+        p.d. across the 6.0 Ω resistor: $V_2 = IR_2 = 1.2 \times 6.0 = 7.2\ \text{V}$.
+      - |
+        Check with the loop rule: $4.8 + 7.2 = 12\ \text{V}$, which equals the e.m.f.
+    answer: |
+      $R = 10\ \Omega$, $I = 1.2\ \text{A}$, with p.d.s of $4.8\ \text{V}$ and $7.2\ \text{V}$.
+
+  - type: check
+    questions: [series-current-statement, combine-two-series]
+
+  - type: example
+    title: Three resistors in series
+    problem: |
+      A 6.0 V cell is connected to resistors of 2.0 Ω, 3.0 Ω and 5.0 Ω in series. Calculate the
+      current and the p.d. across each resistor.
+    steps:
+      - |
+        Add the resistances: $R = 2.0 + 3.0 + 5.0 = 10\ \Omega$.
+      - |
+        Current: $I = \dfrac{6.0}{10} = 0.60\ \text{A}$.
+      - |
+        p.d.s: $0.60 \times 2.0 = 1.2\ \text{V}$, $0.60 \times 3.0 = 1.8\ \text{V}$ and
+        $0.60 \times 5.0 = 3.0\ \text{V}$.
+      - |
+        Check: $1.2 + 1.8 + 3.0 = 6.0\ \text{V}$, the e.m.f. of the cell.
+    answer: |
+      $I = 0.60\ \text{A}$, with p.d.s $1.2\ \text{V}$, $1.8\ \text{V}$ and $3.0\ \text{V}$.
+
+  - type: check
+    questions: [series-current-value, series-pd-value]
+
+  - type: explain
+    title: Which resistor takes the bigger share?
+    body: |
+      In the worked example the 6.0 Ω resistor took 7.2 V while the 4.0 Ω resistor took only 4.8 V.
+
+      Because the current is the same in both, the p.d. is proportional to the resistance: the
+      bigger resistor gets the bigger share of the e.m.f. Here the resistances are in the ratio
+      $6.0 : 4.0 = 3 : 2$, and so are the p.d.s: $7.2 : 4.8 = 3 : 2$.
+
+      That is the seed of the **potential divider** idea (topic 10.3): a pair of series resistors
+      shares out the supply p.d. in proportion to their resistances.
+
+  - type: misconceptions
+    items:
+      - wrong: "The current is used up by the first resistor, so the second resistor gets less."
+        right: |
+          The current is the **same** through every component in series. What is shared out is the
+          **p.d.**: each resistor takes a p.d. $IR$, and those p.d.s add to the supply.
+      - wrong: "A bigger resistor in series takes a smaller p.d., because it slows the current down."
+        right: |
+          With a common current, $V = IR$ makes the bigger resistance take the **bigger** p.d.
+      - wrong: "Adding resistors in series can reduce the total resistance."
+        right: |
+          Series resistance only ever adds: $R = R_1 + R_2 + \dots$ is always larger than the
+          largest individual resistance.
+      - wrong: "The combined resistance is the average of the two resistances."
+        right: |
+          Average would give 5.0 Ω for 4.0 Ω and 6.0 Ω, but the true combined value is 10 Ω. The
+          current must pass through both resistors one after the other, so their resistances add.
+
+  - type: check
+    questions: [cloze-series-derivation, spot-series-current-error, series-pd-ratio]
+
+  - type: exam
+    body: |
+      - A derivation question expects both laws to appear: the **same current** (first law) and
+        the **p.d.s adding** (second law). Write $V = V_1 + V_2$, substitute $V_1 = IR_1$ and
+        $V_2 = IR_2$, factorise to $I(R_1 + R_2)$, then conclude $R = R_1 + R_2$.
+      - "Calculate the combined resistance" is one addition - but only for components that are
+        genuinely in series, so check the circuit diagram first.
+      - When a question gives a supply p.d. and asks for the p.d. across one resistor, find the
+        current first, then use $V = IR$ for that resistor.
+      - Keep a loop check in reserve: if your p.d.s do not add to the e.m.f., something is wrong.
+
+  - type: takeaways
+    items:
+      - "In series the same current passes through every component, because there is a single path."
+      - "The p.d.s add: $V = V_1 + V_2 + \\dots$"
+      - "Combined resistance: $R = R_1 + R_2 + \\dots$, which is always bigger than the largest single resistance."
+      - "With a common current, p.d.s are shared in proportion to resistance: the bigger resistor takes the bigger p.d."
+questions:
+  - id: series-current-statement
+    format: mcq
+    difficulty: 1
+    objectives: ["10.2.3", "10.2.4"]
+    prompt: |
+      Which statement about two resistors connected in series is correct?
+    options:
+      - text: The same current passes through both, and the p.d.s across them add to the supply p.d.
+        correct: true
+        why: |
+          There is a single path, so the first law guarantees a common current, and the second law
+          makes the p.d.s add round the loop.
+      - text: The same p.d. appears across both, and the currents add.
+        why: |
+          That describes components in **parallel**. In series it is the current that is common
+          and the p.d.s that add.
+      - text: Both the current and the p.d. are the same for both resistors.
+        why: |
+          The current is the same, but the p.d.s differ unless the resistances happen to be equal.
+      - text: The current divides between the two resistors.
+        why: |
+          There is no junction for the current to divide at, so it cannot split between them.
+    explanation: |
+      Series means one path: current common (first law), p.d.s adding to the supply p.d. (second
+      law), and resistances adding.
+
+  - id: combine-two-series
+    format: numeric
+    difficulty: 1
+    objectives: ["10.2.4"]
+    prompt: |
+      A 6.0 Ω resistor and a 9.0 Ω resistor are connected in series. Calculate their combined
+      resistance.
+    fields:
+      - label: "R ="
+        answer: 15
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      In series the resistances add: $R = 6.0 + 9.0 = 15\ \Omega$.
+
+  - id: series-current-value
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.4"]
+    prompt: |
+      A 12 V cell is connected to a 6.0 Ω resistor and a 9.0 Ω resistor in series. Calculate the
+      current in the circuit.
+    fields:
+      - label: "I ="
+        answer: 0.80
+        tolerance: { rel: 0.02 }
+        unit: A
+    explanation: |
+      Combined resistance $= 6.0 + 9.0 = 15\ \Omega$, so
+      $I = \dfrac{12}{15} = 0.80\ \text{A}$.
+
+  - id: series-pd-value
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.4"]
+    prompt: |
+      A 12 V cell is connected to a 6.0 Ω resistor and a 9.0 Ω resistor in series. Calculate the
+      p.d. across the 6.0 Ω resistor.
+    fields:
+      - label: "V ="
+        answer: 4.8
+        tolerance: { rel: 0.02 }
+        unit: V
+    explanation: |
+      The current is $\dfrac{12}{15} = 0.80\ \text{A}$, so
+      $V = IR = 0.80 \times 6.0 = 4.8\ \text{V}$. The other resistor takes
+      $0.80 \times 9.0 = 7.2\ \text{V}$, and the two p.d.s add to 12 V as the loop rule requires.
+
+  - id: cloze-series-derivation
+    format: cloze
+    difficulty: 2
+    objectives: ["10.2.3"]
+    prompt: |
+      In a series circuit the current is the {{1}} through each resistor, because there is only
+      one {{2}} for the charge to follow. Kirchhoff's second law then gives
+      $V = V_1 + V_2$, and substituting $V_1 = IR_1$ and $V_2 = IR_2$ leads to the combined
+      resistance $R = R_1 + R_2$.
+    blanks:
+      - accept: ["same", "identical", "equal"]
+      - accept: ["path", "route", "loop"]
+    explanation: |
+      The same current follows the single path (first law), and the p.d.s add round the loop
+      (second law). Substituting $V = IR$ for each resistor and factorising $I$ gives
+      $R = R_1 + R_2$.
+
+  - id: spot-series-current-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["10.2.3", "10.2.4"]
+    prompt: |
+      A student works through a series circuit. Identify the first error in the working.
+    lines:
+      - "A 9.0 V cell is connected to a 2.0 Ω and a 4.0 Ω resistor in series."
+      - "Total resistance = 2.0 + 4.0 = 6.0 Ω, so the current leaving the cell is 1.5 A."
+      - "The 2.0 Ω resistor uses up 1.5 A, so the 4.0 Ω resistor only gets a smaller current."
+      - "The p.d. across the 4.0 Ω resistor is therefore less than the p.d. across the 2.0 Ω resistor."
+    errorLine: 3
+    fix: |
+      The current is the same all round a series loop, so 1.5 A passes through both resistors. The
+      2.0 Ω resistor takes a p.d. of 3.0 V and the 4.0 Ω resistor takes 6.0 V; the p.d.s are
+      shared, not the current.
+    explanation: |
+      Line 2 is correct: $9.0/6.0 = 1.5\ \text{A}$ through the whole loop. The error is saying the
+      current is used up. In fact the larger resistor takes the larger p.d.,
+      $1.5 \times 4.0 = 6.0\ \text{V}$ against $1.5 \times 2.0 = 3.0\ \text{V}$.
+
+  - id: series-pd-ratio
+    format: numeric
+    difficulty: 3
+    objectives: ["10.2.3", "10.2.4"]
+    prompt: |
+      Two resistors are in series with a 12 V supply. The p.d. across the first resistor is 4.0 V
+      and its resistance is 8.0 Ω. Calculate the resistance of the second resistor.
+    fields:
+      - label: "R₂ ="
+        answer: 16
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      The current is the same through both, so
+      $I = \dfrac{V_1}{R_1} = \dfrac{4.0}{8.0} = 0.50\ \text{A}$. The p.d. across the second
+      resistor is $12 - 4.0 = 8.0\ \text{V}$, so
+      $R_2 = \dfrac{8.0}{0.50} = 16\ \Omega$.

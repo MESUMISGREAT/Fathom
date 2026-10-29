@@ -1,0 +1,269 @@
+id: probability-independent-events-multiplication
+subject: "9709"
+topic: "5.3"
+title: Independent events and multiplying probabilities
+summary: Use multiplication for "A and B" events, test whether two events are independent by comparing P(A and B) with P(A) x P(B), and spot when sampling without replacement breaks independence.
+order: 4
+minutes: 8
+kind: core
+objectives: ["5.3.2", "5.3.3"]
+prerequisites: ["probability-sample-space", "probability-mutually-exclusive-addition"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.3 Probability, outcomes 5.3.2 and 5.3.3, covering
+    multiplication of probabilities and the independence test that compares P(A ∩ B) with
+    P(A) × P(B). All examples, questions and diagrams are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find $P(A \text{ and } B)$ for independent events, decide whether
+      two events are independent by comparing $P(A \cap B)$ with $P(A) \times P(B)$, and
+      explain why sampling without replacement usually makes repeated draws dependent.
+
+  - type: explain
+    title: "What \"and\" means in probability"
+    body: |-
+      "A and B" means **both** happen. For two stages of an experiment, it means the first
+      stage gives an outcome in $A$ **and** the second gives an outcome in $B$.
+
+      When the two stages do not influence each other, the probabilities multiply:
+
+      $$P(A \cap B) = P(A) \times P(B)$$
+
+      That is what **independence** means, and it is a definition rather than a coincidence.
+      Two coin tosses are independent because the first coin has no memory of the second.
+
+  - type: definition
+    term: Independent events
+    body: |-
+      Two events $A$ and $B$ are **independent** if the occurrence of one does not change
+      the probability of the other.
+
+      Equivalently, $P(A \cap B) = P(A) \times P(B)$.
+
+      This equation is also the **test** for independence: compute both sides from the
+      information given and compare.
+
+  - type: intuition
+    title: Why the test works
+    body: |-
+      Imagine repeating the experiment many times. If $A$ happens in a proportion $P(A)$ of
+      trials, and $B$ happens independently in a proportion $P(B)$ of *those* trials, then
+      both happen in a proportion $P(A) \times P(B)$ of the whole set.
+
+      Independence is about **information**, not about physical separation. Two events in the
+      same experiment can still be independent if knowing one tells you nothing about the
+      other.
+
+      For example, "the first die shows 3" and "the second die shows 5" are independent.
+      But "the first die shows 3" and "the total of two dice is 8" are **not**: the total
+      being $8$ tells you a good deal about the first die.
+
+  - type: example
+    title: "Example 1: testing whether events are independent"
+    problem: |-
+      For two events $A$ and $B$, $P(A) = 0.5$, $P(B) = 0.4$ and $P(A \cap B) = 0.15$.
+      Determine whether $A$ and $B$ are independent.
+    steps:
+      - |-
+        Compute the product of the separate probabilities:
+        $P(A) \times P(B) = 0.5 \times 0.4 = 0.2$.
+      - |-
+        Compare with the given intersection: $P(A \cap B) = 0.15$.
+      - |-
+        These are not equal, since $0.15 \neq 0.2$.
+      - |-
+        Conclude that $A$ and $B$ are **not** independent. They occur together slightly less
+        often than independence would predict.
+    answer: |-
+      Not independent, because $P(A \cap B) = 0.15 \neq 0.2 = P(A) \times P(B)$.
+
+  - type: check
+    title: Check 1 — the independence test
+    questions: [pi-independence-test, pi-both-happen]
+
+  - type: explain
+    title: Sampling with and without replacement
+    body: |-
+      This is where most independence mistakes happen.
+
+      - **With replacement** (the item goes back in before the next draw), the composition of
+        the bag is unchanged, so the draws are independent. Multiply unchanged
+        probabilities.
+      - **Without replacement**, the first draw removes an item, so the second probability
+        changes. The draws are dependent, and you must use the new proportion.
+
+      A bag with $4$ red and $6$ blue counters, two drawn **without** replacement:
+
+      - $P(\text{both red}) = \dfrac{4}{10} \times \dfrac{3}{9} = \dfrac{12}{90}
+        = \dfrac{2}{15}$.
+      - $P(\text{both red with replacement}) = \dfrac{4}{10} \times \dfrac{4}{10}
+        = \dfrac{16}{100} = \dfrac{4}{25}$.
+
+      Both start with $\frac{4}{10}$. Only the replacement rule decides what comes second.
+
+  - type: example
+    title: "Example 2: two independent machines"
+    problem: |-
+      Two machines work independently. Machine A fails on a given day with probability
+      $0.05$ and machine B fails with probability $0.02$. Find the probability that both
+      fail on the same day, and the probability that neither fails.
+    steps:
+      - |-
+        "Both fail" is an **and** event with independent parts, so multiply:
+        $0.05 \times 0.02 = 0.001$.
+      - |-
+        Work out each machine's probability of not failing:
+        $1 - 0.05 = 0.95$ and $1 - 0.02 = 0.98$.
+      - |-
+        "Neither fails" is again an **and** event of independent events, so multiply:
+        $0.95 \times 0.98 = 0.931$.
+    answer: |-
+      $P(\text{both fail}) = 0.001$ and $P(\text{neither fails}) = 0.931$.
+
+  - type: check
+    title: Check 2 — independent stages
+    questions: [pi-with-replacement, pi-without-replacement]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "Two events are independent if they cannot happen at the same time."
+        right: |-
+          That is mutual exclusivity, and it is the opposite. Mutually exclusive events are
+          strongly dependent: if one happens, the other certainly did not.
+      - wrong: |-
+          "Because the events are described in the same sentence, they must be dependent."
+        right: |-
+          Dependence is decided by the probabilities, not by how the question is written. Use
+          the test $P(A \cap B) = P(A) \times P(B)$.
+      - wrong: |-
+          "Without replacement, you still multiply $\frac{4}{10} \times \frac{4}{10}$."
+        right: |-
+          After removing one counter the bag holds $9$, and the count of the colour you drew
+          has dropped by one. The second probability must use the new totals.
+
+  - type: exam
+    body: |-
+      Expect either a "show that the events are not independent" instruction or two-part
+      probability questions about repeated trials.
+
+      - Write the test out in full: quote $P(A \cap B)$, quote $P(A) \times P(B)$, then state
+        the comparison and the conclusion. All three steps usually carry marks.
+      - For "at least one" in repeated trials, use $1 - P(\text{none})$; multiplying the
+        "none" probabilities is usually far quicker than adding all the other cases.
+      - Check that your answer is not larger than the probability of either single event —
+        an intersection can never exceed either one.
+
+  - type: takeaways
+    items:
+      - "For independent events, $P(A \\cap B) = P(A) \\times P(B)$."
+      - "Test independence by comparing $P(A \\cap B)$ with $P(A) \\times P(B)$."
+      - "With replacement keeps trials independent; without replacement makes them dependent."
+      - "Use $1 - P(\\text{none})$ for repeated-trial \"at least one\" events."
+      - "An intersection probability can never exceed either single probability."
+
+  - type: check
+    title: Check 3 — consolidation
+    questions: [pi-at-least-one]
+
+questions:
+  - id: pi-independence-test
+    format: mcq
+    difficulty: 2
+    objectives: ["5.3.3"]
+    prompt: |-
+      For events $A$ and $B$, $P(A) = 0.6$, $P(B) = 0.5$ and $P(A \cap B) = 0.3$. What can
+      you conclude?
+    options:
+      - text: |-
+          $A$ and $B$ are independent, because $0.3 = 0.6 \times 0.5$.
+        correct: true
+        why: |-
+          The intersection probability equals the product of the separate probabilities,
+          which is exactly the independence test.
+      - text: |-
+          $A$ and $B$ are mutually exclusive, because $P(A \cap B)$ is smaller than both
+          $P(A)$ and $P(B)$.
+        why: |-
+          Mutually exclusive would require $P(A \cap B) = 0$, and here it is $0.3$.
+      - text: |-
+          $A$ and $B$ are dependent, because $P(A \cap B) \neq 0$.
+        why: |-
+          A non-zero intersection is normal; dependence is decided by comparing the
+          intersection with the product, not with zero.
+      - text: |-
+          Nothing can be concluded without knowing the sample space.
+        why: |-
+          The three probabilities given are enough to run the independence test directly.
+    explanation: |-
+      Compute $P(A) \times P(B) = 0.6 \times 0.5 = 0.3$, which equals the given
+      $P(A \cap B)$. So the events are independent.
+
+  - id: pi-both-happen
+    format: numeric
+    difficulty: 1
+    objectives: ["5.3.2"]
+    prompt: |-
+      Independent events $A$ and $B$ have $P(A) = 0.8$ and $P(B) = 0.7$. Find
+      $P(A \cap B)$.
+    fields:
+      - answer: 0.56
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      For independent events the probabilities multiply:
+      $P(A \cap B) = 0.8 \times 0.7 = 0.56$.
+
+  - id: pi-with-replacement
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2"]
+    prompt: |-
+      A bag holds $4$ red and $6$ blue counters. One counter is taken at random and
+      replaced, then a second is taken. Find the probability that both are red, as a
+      decimal.
+    fields:
+      - answer: 0.16
+        tolerance:
+          abs: 0.001
+    explanation: |-
+      Replacing the first counter restores the bag, so the draws are independent:
+      $\frac{4}{10} \times \frac{4}{10} = 0.16$.
+
+  - id: pi-without-replacement
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2"]
+    prompt: |-
+      From the same bag of $4$ red and $6$ blue counters, two are taken without
+      replacement. Find the probability that both are red, as a decimal.
+    fields:
+      - answer: 0.1333
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      There are $4$ reds among $10$ counters first, then $3$ reds among the remaining $9$:
+      $\frac{4}{10} \times \frac{3}{9} = \frac{12}{90} = \frac{2}{15} \approx 0.133$.
+
+  - id: pi-at-least-one
+    format: numeric
+    difficulty: 3
+    objectives: ["5.3.2"]
+    prompt: |-
+      Two fair dice are rolled. Find the probability that at least one die shows a six, as
+      a decimal.
+    fields:
+      - answer: 0.3056
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Use the complement. The dice are independent and $P(\text{not a six}) = \frac{5}{6}$
+      for each, so $P(\text{no sixes}) = \frac{5}{6} \times \frac{5}{6} = \frac{25}{36}$.
+      Hence $P(\text{at least one six}) = 1 - \frac{25}{36} = \frac{11}{36} \approx 0.306$.

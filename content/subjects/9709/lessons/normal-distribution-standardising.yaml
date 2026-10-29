@@ -1,0 +1,252 @@
+id: normal-distribution-standardising
+subject: "9709"
+topic: "5.5"
+title: Standardising — from any normal curve to the table
+summary: Convert X ~ N(μ, σ²) into a standard normal z-value, then use the table for lower-tail, upper-tail and between-values probabilities, showing full working.
+order: 2
+minutes: 8
+kind: core
+objectives: ["5.5.1", "5.5.2"]
+prerequisites: ["normal-distribution-model"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.5 outcomes 5.5.1 and 5.5.2, including the guidance that
+    sketches of normal curves may be required and that full details of the standardisation
+    working should be shown. Every example, question and diagram is original. All z-values
+    and probabilities were computed and checked directly. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can standardise any normal variable with $z=\dfrac{x-\mu}{\sigma}$,
+      sketch the relevant area, and find $\mathrm{P}(X<x)$, $\mathrm{P}(X>x)$ and
+      $\mathrm{P}(a<X<b)$ using the standard normal table.
+
+  - type: explain
+    title: One table, infinitely many normal curves
+    body: |-
+      Heights of adults, waiting times and measurement errors all follow normal curves, but
+      with different means and spreads. Printing a table for every possible pair $(\mu,\sigma)$
+      is impossible.
+
+      The trick is that all normal curves are the same shape once you measure horizontally in
+      units of $\sigma$ from the mean. That single standardised curve is the standard normal
+      $Z \sim \mathrm{N}(0,1)$.
+
+      Standardising does not change areas. It slides the curve so its centre is 0 and rescales
+      the horizontal axis so one standard deviation is 1. Every shaded region keeps the same
+      share of the total area.
+
+  - type: definition
+    term: Standardised normal variable
+    body: |-
+      If $X \sim \mathrm{N}(\mu,\sigma^2)$, the **standardised variable** is
+      $$Z=\frac{X-\mu}{\sigma}.$$
+      Then $Z \sim \mathrm{N}(0,1)$, and for any value $x$,
+      $$\mathrm{P}(X<x)=\mathrm{P}\left(Z<\frac{x-\mu}{\sigma}\right)=\Phi\left(\frac{x-\mu}{\sigma}\right).$$
+
+      The value $z=\dfrac{x-\mu}{\sigma}$ says how many standard deviations $x$ lies from the
+      mean: positive above the mean, negative below.
+
+  - type: diagram
+    diagram: normal-distribution-standardising
+    alt: Two normal curves side by side. Left, X ~ N(30, 25) with the area below 38 shaded. Right, the standard normal Z ~ N(0, 1) with the area below 1.6 shaded, showing the same probability after standardising with z equals (x minus 30) over 5.
+    caption: 'The same area, two scales: $X<38$ becomes $Z<1.6$.'
+
+  - type: explain
+    title: Why the formula is (x − μ) over σ
+    body: |-
+      Start at the mean $\mu$. Moving to $x$ is a distance $x-\mu$ along the axis.
+
+      Divide by $\sigma$ to express that distance in standard deviations. If $x$ is one
+      standard deviation above the mean, then $z=1$, whatever the original units.
+
+      Subtracting $\mu$ slides the centre to 0; dividing by $\sigma$ stretches or squashes the
+      axis to a standard width. Both operations are horizontal only, so the area between two
+      values is preserved.
+
+  - type: example
+    title: Finding a lower-tail probability
+    problem: |-
+      The mass $X$ grams of a component satisfies $X \sim \mathrm{N}(30,25)$.
+      Find $\mathrm{P}(X<38)$.
+    steps:
+      - |-
+        Write down the parameters: $\mu=30$ and $\sigma^2=25$, so $\sigma=5$.
+      - |-
+        Standardise the boundary 38:
+        $$z=\frac{x-\mu}{\sigma}=\frac{38-30}{5}=\frac{8}{5}=1.6.$$
+      - |-
+        So $\mathrm{P}(X<38)=\mathrm{P}(Z<1.6)=\Phi(1.6)$.
+      - |-
+        From the table, $\Phi(1.6)=0.9452$.
+      - |-
+        Sense check: 38 is above the mean, so the answer should be more than 0.5.
+        $0.9452>0.5$.
+    answer: '$\mathrm{P}(X<38)=0.945$ (3 s.f.)'
+
+  - type: check
+    title: Check yourself
+    questions: [nd-std-lower, nd-std-upper]
+
+  - type: explain
+    title: Upper tails and intervals
+    body: |-
+      **Above a value.** The total area is 1, so the area to the right is 1 minus the area to
+      the left:
+      $$\mathrm{P}(X>x)=1-\Phi(z), \quad z=\frac{x-\mu}{\sigma}.$$
+
+      **Between two values.** Find a z for each boundary and subtract the smaller area:
+      $$\mathrm{P}(a<X<b)=\Phi(z_b)-\Phi(z_a).$$
+      Always subtract the **left** area from the **right** one, so the result is positive.
+
+      A quick sketch makes both rules obvious: shade the region first, then decide whether you
+      need the table value, its complement, or a difference of two table values.
+
+  - type: example
+    title: An interval probability
+    problem: |-
+      The random variable $X \sim \mathrm{N}(100,144)$. Find $\mathrm{P}(85<X<112)$.
+    steps:
+      - |-
+        $\mu=100$ and $\sigma^2=144$, so $\sigma=12$.
+      - |-
+        Lower boundary: $z_1=\dfrac{85-100}{12}=-1.25$.
+      - |-
+        Upper boundary: $z_2=\dfrac{112-100}{12}=1$.
+      - |-
+        So $\mathrm{P}(85<X<112)=\Phi(1)-\Phi(-1.25)$.
+      - |-
+        Use symmetry for the negative value:
+        $\Phi(-1.25)=1-\Phi(1.25)=1-0.8944=0.1056$.
+      - |-
+        Therefore the probability is $0.8413-0.1056=0.7357$.
+      - |-
+        Sense check: the interval runs from just over one standard deviation below the mean to
+        one above, so a bit more than two-thirds is plausible.
+    answer: '$\mathrm{P}(85<X<112)=0.736$ (3 s.f.)'
+
+  - type: check
+    title: Check yourself
+    questions: [nd-std-between, nd-std-formula-cloze, nd-std-spot-error]
+
+  - type: deeper
+    title: Why standardising preserves area
+    body: |-
+      Let $z=\dfrac{x-\mu}{\sigma}$, so $x=\mu+\sigma z$ and $\dfrac{dx}{dz}=\sigma$.
+
+      The normal density for $X$ is
+      $$f(x)=\frac{1}{\sigma\sqrt{2\pi}}\,e^{-\frac{(x-\mu)^2}{2\sigma^2}}.$$
+
+      Substituting $x=\mu+\sigma z$ turns the exponent into $-\frac{z^2}{2}$ and the factor
+      $\frac{1}{\sigma}$ cancels against $dx=\sigma\,dz$ when you integrate. What is left is
+      exactly the standard normal density. This is why one table is enough for every normal
+      distribution — but you do not need the derivation in the exam.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          Find $\mathrm{P}(X>70)$ by looking up $z=1$ and writing the table value 0.8413.
+        right: |-
+          The table gives the area to the **left**. Above 70 is the right tail, so subtract
+          from 1: $1-0.8413=0.1587$.
+      - wrong: |-
+          Divide by $\sigma^2$ when standardising, because the notation shows $\sigma^2$.
+        right: |-
+          Standardising divides by the standard deviation $\sigma$, not the variance. Take the
+          square root of the second parameter first.
+      - wrong: |-
+          A z-value of $-1.25$ cannot be used because the table only has positive z.
+        right: |-
+          Use $\Phi(-z)=1-\Phi(z)$ to turn it into a positive table value.
+
+  - type: exam
+    body: |-
+      The syllabus expects **full standardisation working** when tables are used. Write the
+      distribution, the z-value and the table value:
+      $$X \sim \mathrm{N}(30,25), \quad z=\frac{38-30}{5}=1.6, \quad \mathrm{P}(X<38)=\Phi(1.6)=0.9452.$$
+
+      Keep at least 4 decimal places from the table until the final answer, then round to
+      3 significant figures.
+
+      Never standardise with $\sigma^2$ in place of $\sigma$, and always sketch the curve so
+      you can see whether the answer should be above or below 0.5.
+
+  - type: takeaways
+    items:
+      - "Standardise with $z=\\dfrac{x-\\mu}{\\sigma}$, where σ is the standard deviation."
+      - "Lower tail: $\\mathrm{P}(X<x)=\\Phi(z)$."
+      - "Upper tail: $\\mathrm{P}(X>x)=1-\\Phi(z)$."
+      - "Interval: $\\mathrm{P}(a<X<b)=\\Phi(z_b)-\\Phi(z_a)$."
+      - "Use $\\Phi(-z)=1-\\Phi(z)$ for negative z, and sketch before calculating."
+
+questions:
+  - id: nd-std-lower
+    format: numeric
+    difficulty: 2
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(30,25)$. Find $\mathrm{P}(X<38)$. Give your answer to 4 decimal places.'
+    fields:
+      - answer: 0.9452
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      σ = √25 = 5. Standardise: z = (38 − 30)/5 = 1.6.
+      P(X < 38) = Φ(1.6) = 0.9452.
+
+  - id: nd-std-upper
+    format: numeric
+    difficulty: 2
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(100,144)$. Find $\mathrm{P}(X>85)$. Give your answer to 4 decimal places.'
+    fields:
+      - answer: 0.8944
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      σ = √144 = 12. z = (85 − 100)/12 = −1.25.
+      P(X > 85) = P(Z > −1.25) = P(Z < 1.25) = Φ(1.25) = 0.8944.
+
+  - id: nd-std-between
+    format: numeric
+    difficulty: 3
+    objectives: ["5.5.2"]
+    prompt: 'The random variable $X \sim \mathrm{N}(28,36)$. Find $\mathrm{P}(20<X<35)$. Give your answer to 3 significant figures.'
+    fields:
+      - answer: 0.7871
+        tolerance:
+          abs: 0.0008
+    explanation: |-
+      σ = 6. Lower: z = (20 − 28)/6 = −1.333, Φ = 0.0912.
+      Upper: z = (35 − 28)/6 = 1.167, Φ = 0.8783.
+      Probability = 0.8783 − 0.0912 = 0.7871, so 0.787 to 3 s.f.
+
+  - id: nd-std-formula-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["5.5.1"]
+    prompt: 'To standardise a value $x$ from $X \sim \mathrm{N}(\mu,\sigma^2)$, subtract the {{1}} and divide by the {{2}}.'
+    blanks:
+      - accept: ["μ", "mu", "the mean", "mean"]
+      - accept: ["σ", "sigma", "the standard deviation", "standard deviation"]
+    explanation: |-
+      Subtract the mean and divide by the standard deviation:
+      z = (x − μ)/σ. Dividing by the variance σ² would be wrong.
+
+  - id: nd-std-spot-error
+    format: spot-error
+    difficulty: 2
+    objectives: ["5.5.2"]
+    prompt: 'A student finds $\mathrm{P}(X>70)$ for $X \sim \mathrm{N}(60,100)$. Exactly one line is wrong. Which line is it?'
+    lines:
+      - "$X \\sim \\mathrm{N}(60,100)$, so $\\mu=60$ and $\\sigma=10$."
+      - "Standardise: $z=\\dfrac{70-60}{10}=1$."
+      - "From the table, $\\Phi(1)=0.8413$."
+      - "So $\\mathrm{P}(X>70)=0.8413$."
+    errorLine: 4
+    fix: "The table gives the area below 70, so P(X > 70) = 1 − 0.8413 = 0.1587."
+    explanation: |-
+      Lines 1–3 are correct. The error is on line 4: Φ(1) is the area to the left of 70,
+      but the question asks for the area to the right, so it must be subtracted from 1.

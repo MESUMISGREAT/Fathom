@@ -1,0 +1,284 @@
+id: discrete-rv-binomial-model
+subject: "9709"
+topic: "5.4"
+title: The binomial distribution
+summary: Recognise when a situation is modelled by B(n, p) and use the binomial formula to calculate the probability of exactly r successes in n independent trials.
+order: 4
+minutes: 9
+kind: core
+objectives: ["5.4.2"]
+prerequisites: ["discrete-rv-probability-distributions", "probability-independent-events-multiplication"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.4 Discrete random variables, outcome 5.4.2 "Use formulae
+    for probabilities for the binomial and geometric distributions, and recognise practical
+    situations in which these distributions are suitable models", including the notation
+    B(n, p). All examples, questions and diagrams are original. Mean and variance of the
+    binomial distribution are covered in the next lesson (5.4.3).
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can decide whether a situation fits the **binomial** model, write it as
+      $X \sim B(n, p)$, and calculate $P(X = r)$ with the binomial formula.
+
+  - type: explain
+    title: A shortcut for repeated identical trials
+    body: |-
+      Many experiments are the same trial repeated a fixed number of times: ten archers each
+      take one shot, twenty components are each tested, a coin is tossed eight times.
+
+      If each trial has just two possible results, we usually call them **success** and
+      **failure**. Success is bookkeeping, not a compliment: in a quality check, a defective
+      component can be the "success" if that is what you are counting.
+
+      When the trials are identical and independent, counting successes has a standard
+      formula, and it saves writing out a huge distribution table.
+
+  - type: definition
+    term: The binomial distribution
+    body: |-
+      If $X$ is the number of successes in $n$ independent trials, each with the same
+      probability $p$ of success, then $X$ has a **binomial distribution**, written
+
+      $$X \sim B(n, p)$$
+
+      Its probability function is
+
+      $$P(X = r) = {}^{n}C_{r}\, p^{r}(1-p)^{\,n-r} \qquad \text{for } r = 0, 1, \dots, n$$
+
+      Here $1 - p$ is the probability of failure on a single trial, often written $q$.
+
+  - type: intuition
+    title: Where the formula comes from
+    body: |-
+      Look at one specific order of successes and failures, say S S F with $n = 3$.
+
+      Independence lets us multiply: the probability of that order is
+      $p \times p \times (1-p)$, that is $p^2(1-p)^{1}$. In general, any particular sequence
+      with $r$ successes has probability $p^{r}(1-p)^{n-r}$.
+
+      But we do not care about the order. There are $^{n}C_{r}$ different orders that place
+      $r$ successes among $n$ trials, and combinations are exactly the tool for choosing
+      positions.
+
+      Adding those equally probable sequences gives the formula. So the two factors do
+      distinct jobs:
+
+      - $p^{r}(1-p)^{n-r}$ is the probability of **one** arrangement.
+      - $^{n}C_{r}$ counts **how many** arrangements there are.
+
+  - type: diagram
+    diagram: discrete-rv-binomial-bars
+    alt: A bar chart of the binomial distribution B of ten and zero point three, showing the probability of each number of successes from zero to ten. The bars rise to a maximum at three successes and then fall away towards zero at ten successes.
+    caption: |-
+      $B(10, 0.3)$: the likely number of successes is around $3$, which matches
+      $n p = 10 \times 0.3$. The falling tails are why questions often ask for
+      $P(X \geq \text{something})$ rather than a long list of exact values.
+
+  - type: example
+    title: "Example 1: exactly three successes"
+    problem: |-
+      A biased coin lands heads with probability $0.3$. It is tossed $10$ times, independently.
+      Find the probability of exactly $3$ heads.
+    steps:
+      - |-
+        Check the conditions: a fixed number of trials ($n = 10$), two outcomes per toss
+        (head or tail), the same probability each time ($p = 0.3$), and independent tosses.
+        So $X \sim B(10, 0.3)$.
+      - |-
+        Identify the parts of the formula. We need $r = 3$, so $n - r = 7$.
+      - |-
+        Count the arrangements: $^{10}C_{3} = \dfrac{10!}{3!\,7!} = 120$.
+      - |-
+        Probability of one specific arrangement with $3$ heads and $7$ tails:
+        $(0.3)^{3}(0.7)^{7}$.
+      - |-
+        Multiply:
+        $P(X = 3) = 120 \times (0.3)^{3} \times (0.7)^{7} = 120 \times 0.027 \times 0.0823543
+        \approx 0.2668$.
+    answer: |-
+      $P(X = 3) \approx 0.267$.
+
+  - type: check
+    title: Check 1 — using the formula
+    questions: [drv-binom-three-heads, drv-binom-identify]
+
+  - type: example
+    title: "Example 2: no successes at all"
+    problem: |-
+      A machine produces components of which $20\%$ are defective, independently of each
+      other. A sample of $8$ is checked. Find the probability that none is defective.
+    steps:
+      - |-
+        Let $X$ be the number of defective components. The sample size is fixed at $n = 8$
+        and each component is defective with probability $p = 0.2$, independently. So
+        $X \sim B(8, 0.2)$.
+      - |-
+        We want $P(X = 0)$. Here $r = 0$, so $n - r = 8$.
+      - |-
+        The combination factor is $^{8}C_{0} = 1$, because there is only one way to choose no
+        items.
+      - |-
+        So $P(X = 0) = 1 \times (0.2)^{0} \times (0.8)^{8} = (0.8)^{8} \approx 0.1678$.
+      - |-
+        Notice that the whole calculation collapses to "$0.8$ multiplied by itself $8$ times",
+        which makes sense: every one of the $8$ components must be good.
+    answer: |-
+      $P(X = 0) \approx 0.168$.
+
+  - type: check
+    title: Check 2 — zero and at least one
+    questions: [drv-binom-none, drv-binom-at-least-one]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "Sampling $5$ counters from a bag **without replacement** is binomial."
+        right: |-
+          Removing a counter changes the proportions, so the trials are not independent and
+          $p$ is not constant. Binomial requires independence; without replacement, use a
+          tree diagram with the changing probabilities, or multiply the dependent
+          probabilities directly.
+      - wrong: |-
+          "$B(n, p)$ means $p$ is the probability of exactly one success."
+        right: |-
+          $p$ is the probability of success on a **single** trial. The probability of $r$
+          successes out of $n$ comes from the formula.
+      - wrong: |-
+          "You should always use $1 - p$ for the failure probability in the formula."
+        right: |-
+          Use $(1-p)$ only for the failures, raised to $n - r$. Writing $(1-p)^{r}$ instead of
+          $p^{r}$ swaps the roles of success and failure.
+      - wrong: |-
+          "If the probability changes slightly between trials it is still binomial."
+        right: |-
+          A constant $p$ is required. In practice a large population sampled with replacement,
+          or a small sample from a large population, is often treated as binomial; that is a
+          modelling decision worth stating.
+
+  - type: exam
+    body: |-
+      Questions ask you to identify the model, then compute a probability. Marks are usually
+      split between the identification and the calculation.
+
+      - State the model explicitly: "Let $X$ be the number of $\dots$, then $X \sim B(n, p)$."
+        This earns a mark and locks in your $n$ and $p$.
+      - Justify the four conditions in a phrase each: fixed $n$, two outcomes, constant $p$,
+        independence.
+      - Write $^{n}C_{r}$ as a number before multiplying; it shows the arrangement count.
+      - Give probabilities to $3$ significant figures unless told otherwise, and keep enough
+        working to avoid rounding early.
+      - For "at least one", use $1 - P(X = 0)$, which is far quicker than adding every other
+        case.
+
+  - type: takeaways
+    items:
+      - "$X \\sim B(n, p)$ counts successes in $n$ independent trials with constant success probability $p$."
+      - "$P(X = r) = {}^{n}C_{r}\\,p^{r}(1-p)^{n-r}$."
+      - "$p^{r}(1-p)^{n-r}$ is the probability of one arrangement; $^{n}C_{r}$ counts the arrangements."
+      - "Binomial needs fixed $n$, two outcomes, constant $p$ and independence — sampling without replacement fails the last two."
+      - "$P(X \\geq 1) = 1 - P(X = 0)$ for a binomial variable."
+
+  - type: check
+    title: Check 3 — consolidation
+    questions: [drv-binom-two-of-five]
+
+questions:
+  - id: drv-binom-identify
+    format: mcq
+    difficulty: 1
+    objectives: ["5.4.2"]
+    prompt: |-
+      Which of these situations is best modelled by a binomial distribution?
+    options:
+      - text: |-
+          The number of sixes when a fair die is rolled $12$ times.
+        correct: true
+        why: |-
+          There are $12$ independent rolls, each with the same probability $\frac{1}{6}$ of a
+          six, so $X \sim B(12, \frac{1}{6})$.
+      - text: |-
+          The number of red counters when $5$ counters are taken from a bag without
+          replacement.
+        why: |-
+          Each counter removed changes the proportion of red, so the trials are not
+          independent and $p$ is not constant.
+      - text: |-
+          The number of calls arriving at a switchboard in an hour.
+        why: |-
+          There is no fixed number of trials here; the count has no upper limit, so the
+          binomial model does not apply.
+      - text: |-
+          The time until a radioactive particle decays.
+        why: |-
+          A time is a continuous quantity, not a count of successes in a fixed number of
+          trials.
+    explanation: |-
+      Binomial requires a fixed number of independent trials with a constant success
+      probability. Only the repeated die rolls satisfy all of these.
+
+  - id: drv-binom-three-heads
+    format: numeric
+    difficulty: 2
+    objectives: ["5.4.2"]
+    prompt: |-
+      A biased coin lands heads with probability $0.3$. It is tossed $10$ times. Find the
+      probability of exactly $3$ heads, to $3$ significant figures.
+    fields:
+      - answer: 0.267
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      With $X \sim B(10, 0.3)$,
+      $P(X = 3) = {}^{10}C_{3}(0.3)^{3}(0.7)^{7} = 120 \times 0.027 \times 0.0823543
+      \approx 0.267$.
+
+  - id: drv-binom-none
+    format: numeric
+    difficulty: 2
+    objectives: ["5.4.2"]
+    prompt: |-
+      In a large batch, $20\%$ of components are defective, independently. A sample of $8$ is
+      tested. Find the probability that none is defective, to $3$ significant figures.
+    fields:
+      - answer: 0.168
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      With $X \sim B(8, 0.2)$, $P(X = 0) = (0.8)^{8} \approx 0.1678$, since every component
+      must be good and $^{8}C_{0} = 1$.
+
+  - id: drv-binom-at-least-one
+    format: numeric
+    difficulty: 3
+    objectives: ["5.4.2"]
+    prompt: |-
+      Using the same situation, $X \sim B(8, 0.2)$, find the probability that at least one of
+      the $8$ components is defective, to $3$ significant figures.
+    fields:
+      - answer: 0.832
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Use the complement: $P(X \geq 1) = 1 - P(X = 0) = 1 - 0.1678 = 0.8322 \approx 0.832$.
+
+  - id: drv-binom-two-of-five
+    format: numeric
+    difficulty: 2
+    objectives: ["5.4.2"]
+    prompt: |-
+      A fair coin is tossed $5$ times. Find the probability of exactly $2$ heads.
+    fields:
+      - answer: 0.3125
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      With $X \sim B(5, 0.5)$,
+      $P(X = 2) = {}^{5}C_{2}(0.5)^{2}(0.5)^{3} = 10 \times \frac{1}{32} = \frac{10}{32}
+      = 0.3125$.

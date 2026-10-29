@@ -1,0 +1,279 @@
+id: probability-mutually-exclusive-addition
+subject: "9709"
+topic: "5.3"
+title: Mutually exclusive events and adding probabilities
+summary: Use addition of probabilities for "A or B" events, understand what makes two events mutually exclusive, and adjust for the overlap when they can both happen.
+order: 3
+minutes: 8
+kind: core
+objectives: ["5.3.2", "5.3.3"]
+prerequisites: ["probability-sample-space"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.3 Probability, outcomes 5.3.2 "Use addition and
+    multiplication of probabilities, as appropriate, in simple cases" and 5.3.3 "Understand
+    the meaning of exclusive and independent events...". The syllabus guidance for 5.3.2
+    notes that explicit use of the general addition formula is not required, so the lesson
+    teaches the sample-space route first and presents the formula as an optional shortcut.
+    All examples, questions and diagrams are original.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can find $P(A \text{ or } B)$, recognise when two events are
+      **mutually exclusive**, and explain why the overlap must be subtracted when they are
+      not.
+
+  - type: explain
+    title: "What \"or\" means in probability"
+    body: |-
+      In a probability question, "A or B" means **A happens, or B happens, or both happen**.
+      It is the event that at least one of them occurs.
+
+      That "or both" is easy to miss, and it is the whole difficulty of this topic. If A and
+      B can never happen together, the arithmetic is easy: just add.
+
+      If they *can* happen together, adding double-counts the shared outcomes, and we must
+      correct for it.
+
+  - type: definition
+    term: Mutually exclusive events
+    body: |-
+      Two events are **mutually exclusive** if they cannot both happen in the same trial.
+
+      Formally, $A$ and $B$ are mutually exclusive when $P(A \cap B) = 0$, where
+      $A \cap B$ means "A and B both happen".
+
+      For mutually exclusive events, $P(A \cup B) = P(A) + P(B)$, where $A \cup B$ means
+      "A or B".
+
+  - type: intuition
+    title: Why the overlap must be subtracted
+    body: |-
+      Think of the sample space as a tray of outcomes and each event as a region drawn round
+      its outcomes.
+
+      Adding $P(A)$ and $P(B)$ measures the two regions one after the other. Any outcome
+      sitting in **both** regions gets measured twice, so the total comes out too large by
+      exactly the probability of the overlap.
+
+      Subtracting $P(A \cap B)$ once repairs that:
+
+      $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+      The syllabus does not require you to use this formula — you may always list the
+      outcomes in $A \cup B$ instead — but it is much faster once you trust it.
+
+  - type: diagram
+    diagram: probability-venn-addition
+    alt: A rectangle representing the sample space containing two overlapping circles labelled A and B. The lens where they overlap is labelled A intersect B and marked as counted twice, with the region outside both circles labelled neither A nor B, alongside the formula P of A union B equals P of A plus P of B minus P of A intersect B.
+    caption: |-
+      The lens belongs to both circles. Adding $P(A)$ and $P(B)$ counts it twice, so the
+      addition rule takes one copy of it away.
+
+  - type: example
+    title: "Example 1: mutually exclusive, so just add"
+    problem: |-
+      A fair six-sided die is rolled once. Event $A$ is "the score is 2" and event $B$ is
+      "the score is 5". Find $P(A \text{ or } B)$.
+    steps:
+      - |-
+        A single roll cannot show 2 and 5 at once, so $A$ and $B$ are mutually exclusive.
+      - |-
+        $P(A) = \dfrac{1}{6}$ and $P(B) = \dfrac{1}{6}$.
+      - |-
+        Since they cannot overlap, add: $P(A \cup B) = \dfrac{1}{6} + \dfrac{1}{6}
+        = \dfrac{2}{6} = \dfrac{1}{3}$.
+    answer: |-
+      $\dfrac{1}{3}$. Check by listing: the scores in the event are $2$ and $5$, that is
+      $2$ of the $6$ outcomes.
+
+  - type: example
+    title: "Example 2: not exclusive, so subtract the overlap"
+    problem: |-
+      A fair six-sided die is rolled once. Event $A$ is "the score is even", so
+      $A = \{2, 4, 6\}$, and event $B$ is "the score is greater than 4", so $B = \{5, 6\}$.
+      Find $P(A \text{ or } B)$.
+    steps:
+      - |-
+        The score $6$ is both even and greater than $4$, so the events are not mutually
+        exclusive. Any answer that simply adds will be wrong.
+      - |-
+        $P(A) = \dfrac{3}{6}$ and $P(B) = \dfrac{2}{6}$.
+      - |-
+        The overlap is $A \cap B = \{6\}$, so $P(A \cap B) = \dfrac{1}{6}$.
+      - |-
+        Apply the rule:
+        $P(A \cup B) = \dfrac{3}{6} + \dfrac{2}{6} - \dfrac{1}{6} = \dfrac{4}{6}
+        = \dfrac{2}{3}$.
+      - |-
+        Check by listing: $A \cup B = \{2, 4, 5, 6\}$, which is $4$ outcomes out of $6$. It
+        agrees.
+    answer: |-
+      $\dfrac{2}{3} \approx 0.667$.
+
+  - type: check
+    title: Check 1 — addition in action
+    questions: [pe-union-overlap, pe-mutually-exclusive-add, pe-die-even-greater]
+
+  - type: explain
+    title: Mutually exclusive is not the same as independent
+    body: |-
+      These two words sound similar and mean completely different things.
+
+      - **Mutually exclusive**: the events cannot happen together, so $P(A \cap B) = 0$.
+      - **Independent**: one happening does not change the other's probability, so
+        $P(A \cap B) = P(A) \times P(B)$.
+
+      In fact, if two events with non-zero probability are mutually exclusive then they
+      **cannot** be independent. Knowing $A$ happened tells you for certain that $B$ did not,
+      which changes $B$'s probability dramatically.
+
+      So "$A$ and $B$ cannot both happen, therefore they are independent" is never true.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "$P(A \text{ or } B)$ is always $P(A) + P(B)$."
+        right: |-
+          Adding is only correct when the events are mutually exclusive. Otherwise the
+          overlap is counted twice and must be subtracted once.
+      - wrong: |-
+          "Events are mutually exclusive because they look unrelated."
+        right: |-
+          Test it against the actual outcomes. "It rained" and "I lost my keys" may feel
+          unrelated, but if they can happen on the same day the events are not mutually
+          exclusive.
+      - wrong: |-
+          "$A$ and $A'$ are independent because the probability of $A'$ does not depend on
+          $A$."
+        right: |-
+          $A$ and $A'$ are mutually exclusive (they never occur together) and they are also
+          completely dependent: if $A$ happens, $A'$ certainly did not.
+
+  - type: exam
+    body: |-
+      This objective is usually tested through a two- or three-part question about a bag,
+      a spinner or two dice, often asking for "at least one" as well.
+
+      - Say whether the events are mutually exclusive **and say why**, in terms of the
+        outcomes they contain. That reasoning is worth a mark.
+      - If you use the subtraction, show the value of $P(A \cap B)$ explicitly.
+      - Listing the outcomes in $A \cup B$ and counting them is always acceptable and is a
+        good way to check your formula.
+      - For "neither" or "at least one", use the complement:
+        $P(\text{neither}) = 1 - P(A \cup B)$.
+
+  - type: takeaways
+    items:
+      - "Mutually exclusive means the events cannot happen together, so $P(A \\cap B) = 0$."
+      - "For mutually exclusive events, $P(A \\text{ or } B) = P(A) + P(B)$."
+      - "In general, $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$; the subtraction removes the double count."
+      - "\"At least one\" and \"neither\" are complement statements of one another."
+      - "Mutually exclusive and independent are opposite ideas, not synonyms."
+
+  - type: check
+    title: Check 2 — complements and consolidation
+    questions: [pe-neither, pe-exclusive-vs-independent]
+
+questions:
+  - id: pe-exclusive-vs-independent
+    format: mcq
+    difficulty: 1
+    objectives: ["5.3.3"]
+    prompt: |-
+      Events $A$ and $B$ both have non-zero probability. Which statement must be true if
+      $A$ and $B$ are mutually exclusive?
+    options:
+      - text: |-
+          $P(A \cap B) = 0$, so $A$ and $B$ are not independent.
+        correct: true
+        why: |-
+          Mutually exclusive means they never occur together, so the intersection has
+          probability zero — which also means $B$ cannot be independent of $A$.
+      - text: |-
+          $P(A \cap B) = P(A) \times P(B)$, so $A$ and $B$ are independent.
+        why: |-
+          That is the test for independence, and it cannot hold here: $P(A) \times P(B)$ is
+          positive while $P(A \cap B) = 0$.
+      - text: |-
+          $A$ and $B$ together contain every outcome in the sample space.
+        why: |-
+          That describes complementary events such as $A$ and $A'$, which is a much stronger
+          condition than mutual exclusivity.
+      - text: |-
+          $P(A) + P(B) = 1$.
+        why: |-
+          The probabilities of two exclusive events need not add to $1$; for instance a die
+          showing $2$ or $5$ gives $\frac{1}{3}$.
+    explanation: |-
+      Mutually exclusive events have $P(A \cap B) = 0$. Since $P(A) \times P(B) > 0$, the
+      independence test $P(A \cap B) = P(A) \times P(B)$ fails, so exclusive events are
+      dependent.
+
+  - id: pe-union-overlap
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2", "5.3.3"]
+    prompt: |-
+      Events $A$ and $B$ satisfy $P(A) = 0.5$, $P(B) = 0.4$ and $P(A \cap B) = 0.2$. Find
+      $P(A \cup B)$.
+    fields:
+      - answer: 0.7
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      Apply the addition rule:
+      $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.5 + 0.4 - 0.2 = 0.7$.
+
+  - id: pe-mutually-exclusive-add
+    format: numeric
+    difficulty: 1
+    objectives: ["5.3.2", "5.3.3"]
+    prompt: |-
+      Events $A$ and $B$ are mutually exclusive with $P(A) = 0.3$ and $P(B) = 0.45$. Find
+      $P(A \cup B)$.
+    fields:
+      - answer: 0.75
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      Mutually exclusive means $P(A \cap B) = 0$, so the probabilities simply add:
+      $0.3 + 0.45 = 0.75$.
+
+  - id: pe-die-even-greater
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2"]
+    prompt: |-
+      A fair six-sided die is rolled once. Find the probability that the score is even or
+      greater than $4$, as a decimal.
+    fields:
+      - answer: 0.6667
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Let $A$ be even, so $P(A) = \frac{3}{6}$, and $B$ be greater than $4$, so
+      $P(B) = \frac{2}{6}$. The overlap is the score $6$, with probability $\frac{1}{6}$.
+      Hence $P(A \cup B) = \frac{3}{6} + \frac{2}{6} - \frac{1}{6} = \frac{4}{6}
+      = \frac{2}{3} \approx 0.667$.
+
+  - id: pe-neither
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.2"]
+    prompt: |-
+      For two events $A$ and $B$ we know $P(A \cup B) = 0.7$. Find the probability that
+      neither $A$ nor $B$ happens.
+    fields:
+      - answer: 0.3
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      "Neither $A$ nor $B$" is the complement of $A \cup B$, so its probability is
+      $1 - 0.7 = 0.3$.

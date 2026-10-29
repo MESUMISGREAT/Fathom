@@ -1,0 +1,262 @@
+id: normal-distribution-model
+subject: "9709"
+topic: "5.5"
+title: The normal distribution — modelling continuous data
+summary: Why a smooth bell curve models many continuous measurements, what X ~ N(μ, σ²) means, and how to read probabilities from the standard normal table.
+order: 1
+minutes: 7
+kind: core
+objectives: ["5.5.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 5.5 outcome "Understand the use of a normal distribution to
+    model a continuous random variable, and use normal distribution tables", including the
+    guidance that sketches of normal curves to illustrate distributions or probabilities
+    may be required. Every example, question and diagram is original. Values of Φ(z) were
+    computed and checked directly, not copied from a mark scheme. Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can explain when a normal distribution is a sensible model, write it as
+      $X \sim \mathrm{N}(\mu,\sigma^2)$, sketch the curve, and use the standard normal table
+      to find simple probabilities.
+
+  - type: explain
+    title: From a histogram to a smooth curve
+    body: |-
+      Measure the heights of 1,000 adults to the nearest centimetre and draw a histogram.
+      Most people cluster near the middle, fewer are very short or very tall, and the outline
+      is roughly symmetric.
+
+      Now imagine measuring to the nearest millimetre, then to the nearest micrometre. The
+      bars get narrower and more numerous, and their outline becomes a smooth curve.
+
+      A **continuous random variable** is one that can take any value in an interval — height,
+      time, mass — rather than isolated values such as 0, 1, 2.
+
+      For many continuous variables, that limiting curve is the **normal curve**. It is a model:
+      a convenient, accurate description of how the values are spread.
+
+  - type: diagram
+    diagram: normal-distribution-curve
+    alt: A symmetric bell-shaped normal curve with its centre marked μ, tick marks at μ minus two standard deviations up to μ plus two standard deviations, a double arrow of length σ from the mean to μ plus σ, and the left half shaded to show that the probability of being below the mean is 0.5.
+    caption: The normal curve is symmetric about its mean, and the total area underneath it is 1.
+
+  - type: definition
+    term: Normal distribution
+    body: |-
+      A continuous random variable $X$ has a **normal distribution** with mean $\mu$ and
+      variance $\sigma^2$ if its probability curve is the symmetric bell-shaped curve centred
+      at $\mu$ with spread controlled by $\sigma$. We write
+      $$X \sim \mathrm{N}(\mu,\sigma^2).$$
+
+      The probability that $X$ lies between two values is the **area under the curve** between
+      them. The total area under the curve is 1.
+
+  - type: intuition
+    title: What μ and σ actually do
+    body: |-
+      **μ slides the curve.** Change the mean and the whole bell moves left or right without
+      changing shape.
+
+      **σ stretches the curve.** A small $\sigma$ gives a tall, narrow bell: values hug the
+      mean. A large $\sigma$ gives a short, wide bell: values are more spread out.
+
+      The curve is symmetric about $\mu$, so it has equal areas on each side. It follows that
+      $$\mathrm{P}(X<\mu)=\mathrm{P}(X>\mu)=0.5.$$
+
+      The mean, median and mode are all $\mu$: the single peak sits above the mean, and
+      symmetry makes the median the same value.
+
+  - type: explain
+    title: A probability at one exact value is zero
+    body: |-
+      Because the curve is continuous, there is no bar standing over a single value. The area
+      above one exact point has zero width, so
+      $$\mathrm{P}(X=x)=0 \quad \text{for every } x.$$
+
+      This has a practical consequence: for a continuous normal variable,
+      $$\mathrm{P}(X \le x)=\mathrm{P}(X<x).$$
+      Including or excluding the endpoint makes no difference to the area.
+
+      So do not expect the height of the curve to be a probability. The height is a
+      **probability density**; only areas give probabilities. A tall narrow curve can still
+      have a peak height greater than 1, which is impossible for a probability.
+
+  - type: explain
+    title: The standard normal and its table
+    body: |-
+      Every normal distribution has the same shape after standardising, so one table serves
+      them all. The **standard normal** variable is
+      $$Z \sim \mathrm{N}(0,1),$$
+      with mean 0 and variance 1. Its cumulative distribution is written
+      $$\Phi(z)=\mathrm{P}(Z<z).$$
+
+      Your formulae booklet tabulates $\Phi(z)$ for $z \ge 0$. Some values you will use again
+      and again:
+
+      | $z$ | 0.50 | 1.00 | 1.50 | 1.96 | 2.00 |
+      | --- | --- | --- | --- | --- | --- |
+      | $\Phi(z)$ | 0.6915 | 0.8413 | 0.9332 | 0.9750 | 0.9772 |
+
+      For negative $z$, use symmetry: the area below $-z$ equals the area above $z$.
+      $$\Phi(-z)=1-\Phi(z)$$
+
+      For example, $\Phi(-1)=1-0.8413=0.1587$.
+
+  - type: example
+    title: Reading the table in both directions
+    problem: |-
+      Let $Z \sim \mathrm{N}(0,1)$. Find (a) $\mathrm{P}(Z<1.5)$ and (b) $\mathrm{P}(Z>-0.5)$.
+    steps:
+      - |-
+        (a) The table gives $\Phi(z)$ directly, so $\mathrm{P}(Z<1.5)=\Phi(1.5)$.
+      - |-
+        Read down the $z$ column to 1.5 and across for the second decimal 0: $\Phi(1.5)=0.9332$.
+      - |-
+        (b) The table only gives areas to the **left**. By symmetry, the area to the right of
+        $-0.5$ equals the area to the left of $0.5$.
+      - |-
+        So $\mathrm{P}(Z>-0.5)=\mathrm{P}(Z<0.5)=\Phi(0.5)=0.6915$.
+      - |-
+        Check: $-0.5$ is below the mean, so more than half the area should be to its right.
+        $0.6915>0.5$, which is consistent.
+    answer: "(a) 0.9332 (b) 0.6915"
+
+  - type: check
+    title: Check yourself
+    questions: [nd-sigma-from-notation, nd-table-left, nd-table-upper]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The curve's height at a point is the probability of that value.
+        right: |-
+          For a continuous variable, probabilities are **areas** under the curve, not heights.
+          $\mathrm{P}(X=x)=0$ for every $x$.
+      - wrong: |-
+          In $X \sim \mathrm{N}(20,9)$, the spread parameter is 9, so $\sigma=9$.
+        right: |-
+          The notation is $\mathrm{N}(\mu,\sigma^2)$, so the second number is the **variance**.
+          Here $\sigma^2=9$, giving $\sigma=3$.
+      - wrong: |-
+          Since the curve extends forever, the total area under it is infinite.
+        right: |-
+          The tails get extremely close to the axis but the total area is exactly 1 — it is a
+          probability distribution.
+
+  - type: exam
+    body: |-
+      A sketch is often worth a mark, and it stops you making tail errors. Mark $\mu$ on the
+      axis, draw a symmetric bell, and shade the region the question asks for.
+
+      Questions usually give $X \sim \mathrm{N}(\mu,\sigma^2)$ rather than $Z$. In the next
+      lesson you will standardise first; then show both the standardised value and the table
+      value you used, for example $z=\frac{x-\mu}{\sigma}=1.60$ and $\Phi(1.60)=0.9452$.
+
+      Give probabilities to 3 significant figures unless the question asks for more. A
+      probability must lie between 0 and 1; if you get 1.4 or $-0.2$, go back to your sketch.
+
+  - type: check
+    title: One more check
+    questions: [nd-symmetry-cloze, nd-area-meaning, nd-point-probability]
+
+  - type: takeaways
+    items:
+      - '$X \sim \mathrm{N}(\mu,\sigma^2)$: the curve is symmetric about μ; σ is the standard deviation, σ² the variance.'
+      - 'Probabilities are areas under the curve; the total area is 1 and $\mathrm{P}(X<\mu)=0.5$.'
+      - 'For a continuous variable, $\mathrm{P}(X=x)=0$, so $\mathrm{P}(X \le x)=\mathrm{P}(X<x)$.'
+      - '$\Phi(z)=\mathrm{P}(Z<z)$ for $Z \sim \mathrm{N}(0,1)$; use $\Phi(-z)=1-\Phi(z)$ for negative z.'
+      - "Sketch the curve and shade the region before calculating."
+
+questions:
+  - id: nd-sigma-from-notation
+    format: mcq
+    difficulty: 1
+    objectives: ["5.5.1"]
+    prompt: 'The random variable $X$ has the distribution $\mathrm{N}(20,9)$. What is the standard deviation of $X$?'
+    options:
+      - text: "9"
+        why: "9 is the variance σ², the second parameter of N(μ, σ²), not the standard deviation."
+      - text: "3"
+        correct: true
+        why: "The notation is N(μ, σ²), so σ² = 9 and σ = √9 = 3."
+      - text: "81"
+        why: "81 = 9², which would be σ⁴ here; squaring the variance does not give the standard deviation."
+      - text: "4.5"
+        why: "4.5 is half of 9; there is no reason to halve the variance."
+    explanation: |-
+      In $\mathrm{N}(\mu,\sigma^2)$ the second number is the variance. Here $\sigma^2=9$, so
+      $\sigma=\sqrt{9}=3$.
+
+  - id: nd-table-left
+    format: numeric
+    difficulty: 1
+    objectives: ["5.5.1"]
+    prompt: 'For $Z \sim \mathrm{N}(0,1)$, find $\mathrm{P}(Z<1.5)$, using the normal table. Give your answer to 4 decimal places.'
+    fields:
+      - answer: 0.9332
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      $\mathrm{P}(Z<1.5)=\Phi(1.5)=0.9332$ from the table.
+
+  - id: nd-table-upper
+    format: numeric
+    difficulty: 2
+    objectives: ["5.5.1"]
+    prompt: 'For $Z \sim \mathrm{N}(0,1)$, find $\mathrm{P}(Z>-0.5)$. Give your answer to 4 decimal places.'
+    fields:
+      - answer: 0.6915
+        tolerance:
+          abs: 0.0005
+    explanation: |-
+      The area to the right of −0.5 equals the area to the left of 0.5 by symmetry:
+      $\mathrm{P}(Z>-0.5)=\mathrm{P}(Z<0.5)=\Phi(0.5)=0.6915$.
+
+  - id: nd-symmetry-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["5.5.1"]
+    prompt: 'For $X \sim \mathrm{N}(\mu,\sigma^2)$, the curve is symmetric about {{1}}, so $\mathrm{P}(X<\mu)=$ {{2}}.'
+    blanks:
+      - accept: ["μ", "mu", "the mean", "mean", "μ (the mean)"]
+      - accept: ["0.5", "1/2", "one half", "half", ".5"]
+    explanation: |-
+      The normal curve is symmetric about its mean μ. Half the total area of 1 lies on each
+      side, so P(X < μ) = 0.5.
+
+  - id: nd-area-meaning
+    format: mcq
+    difficulty: 2
+    objectives: ["5.5.1"]
+    prompt: "The area under the normal curve between $x=a$ and $x=b$ represents which probability?"
+    options:
+      - text: '$\mathrm{P}(a<X<b)$'
+        correct: true
+        why: "Area under a continuous probability curve between two values is the probability that X lies between them."
+      - text: "$f(b)-f(a)$, where $f$ is the height of the curve"
+        why: "Heights of the curve are probability densities, not probabilities; subtracting heights does not give an area."
+      - text: '$\mathrm{P}(X=a)+\mathrm{P}(X=b)$'
+        why: "Each of these is zero for a continuous variable, so the sum is zero whatever a and b are."
+      - text: "$b-a$"
+        why: "b − a is the width of the interval, not the area under the curve over it."
+    explanation: |-
+      For a continuous random variable, probability is area under the curve. Between $a$ and
+      $b$ that area is $\mathrm{P}(a<X<b)$.
+
+  - id: nd-point-probability
+    format: numeric
+    difficulty: 2
+    objectives: ["5.5.1"]
+    prompt: 'The continuous random variable $X$ has a normal distribution. Find $\mathrm{P}(X=\mu)$.'
+    fields:
+      - answer: 0
+    explanation: |-
+      For any continuous distribution, the probability of one exact value is zero: the area
+      over a single point has zero width. So P(X = μ) = 0, even though μ is the most likely
+      region to be near.

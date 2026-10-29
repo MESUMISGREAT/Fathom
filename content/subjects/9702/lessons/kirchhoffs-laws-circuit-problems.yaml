@@ -1,0 +1,331 @@
+id: kirchhoffs-laws-circuit-problems
+subject: "9702"
+topic: "10.2"
+title: "Solving circuit problems with Kirchhoff's laws"
+summary: A reliable method for mixed series-parallel circuits, worked through step by step, plus loop equations for two-loop networks.
+order: 5
+minutes: 9
+kind: core
+objectives: ["10.2.7"]
+prerequisites: ["kirchhoffs-laws-series-resistance", "kirchhoffs-laws-parallel-resistance"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  reviewedBy: buffy-content-worker-1
+  reviewedAt: 2026-10-29
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcome 10.2.7 ("Solve simple circuit problems using Kirchhoff's laws").
+    All examples and questions are original; circuit values are illustrative. Not yet independently
+    reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-29 by buffy-content-worker-1. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can solve a mixed series-parallel circuit by reducing it in stages, and check
+      your answer with the junction rule and the loop rule — and you can set up loop equations for
+      a network with more than one loop.
+
+  - type: explain
+    title: A method that always works
+    body: |
+      Most circuit problems fall to the same four steps. The trick is not to rush the arithmetic.
+
+      1. **Mark the currents.** Label the current in each branch, and draw an arrow for each one.
+         Your arrow is a guess, and a negative answer later just means the real current flows the
+         other way.
+      2. **Reduce what is clearly in series or parallel.** Series resistances add; parallel ones
+         add as reciprocals. Keep going until you have one combined resistance.
+      3. **Work back out.** Use $I = V/R$ for the total current, then $V = IR$ to find p.d.s and
+         branch currents from the outside in.
+      4. **Check with Kirchhoff.** The branch currents must add up at each junction, and the p.d.s
+         must add up round each loop. A check that fails means an arithmetic slip, not a new law.
+
+  - type: diagram
+    diagram: phys-kirchhoffs-laws-mixed
+    alt: |
+      A circuit with a 12 V cell, a 2.0 ohm resistor in series with a parallel pair of 6.0 ohm and
+      3.0 ohm resistors. The total current is labelled 3.0 A through the series resistor, and the
+      branch currents 1.0 A and 2.0 A. The p.d. across the parallel pair is labelled 6.0 V, and
+      the equation below reads R = 2.0 + (6.0 x 3.0)/(6.0 + 3.0) = 4.0 ohms.
+
+  - type: example
+    title: Reducing a mixed circuit
+    problem: |
+      A 12 V supply is connected to a 2.0 Ω resistor in series with a parallel pair of 6.0 Ω and
+      3.0 Ω. Find the total current, the p.d. across the parallel pair and the current in each
+      parallel branch.
+    steps:
+      - |
+        **Reduce the parallel pair.**
+        $\dfrac{1}{R_p} = \dfrac{1}{6.0} + \dfrac{1}{3.0} = 0.167 + 0.333 = 0.500\ \Omega^{-1}$,
+        so $R_p = 2.0\ \Omega$.
+      - |
+        **Add the series resistor.** The whole supply current passes through the 2.0 Ω resistor and
+        then through the pair, so
+        $R_{\text{total}} = 2.0 + 2.0 = 4.0\ \Omega$.
+      - |
+        **Total current.** $I = \dfrac{V}{R_{\text{total}}} = \dfrac{12}{4.0} = 3.0\ \text{A}$.
+      - |
+        **p.d. across the series resistor.** $V_s = IR = 3.0 \times 2.0 = 6.0\ \text{V}$.
+      - |
+        **p.d. across the parallel pair.** The loop rule gives
+        $V_p = 12 - 6.0 = 6.0\ \text{V}$. (Equivalently, $I R_p = 3.0 \times 2.0$.)
+      - |
+        **Branch currents.** Each branch has the full 6.0 V across it:
+        $I_1 = \dfrac{6.0}{6.0} = 1.0\ \text{A}$ and $I_2 = \dfrac{6.0}{3.0} = 2.0\ \text{A}$.
+      - |
+        **Check with Kirchhoff.** Junction: $1.0 + 2.0 = 3.0\ \text{A}$, the total current. Loop:
+        $3.0 \times 2.0 + 6.0 = 12\ \text{V}$, the e.m.f. Both agree.
+    answer: |
+      $I = 3.0\ \text{A}$, p.d. across the pair $= 6.0\ \text{V}$, branch currents $1.0\ \text{A}$
+      and $2.0\ \text{A}$.
+
+  - type: check
+    questions: [mixed-total-resistance, mixed-total-current]
+
+  - type: example
+    title: Finding an unknown resistance from the loop rule
+    problem: |
+      A cell of e.m.f. 9.0 V is connected to a 3.0 Ω resistor and an unknown resistor $R$ in
+      series. The current is 0.75 A. Find $R$ and the p.d. across each resistor.
+    steps:
+      - |
+        There is one loop, so the same 0.75 A flows through both resistors.
+      - |
+        From the loop rule, the total resistance follows from $V = IR_{\text{total}}$:
+        $R_{\text{total}} = \dfrac{9.0}{0.75} = 12\ \Omega$.
+      - |
+        In series the resistances add, so $3.0 + R = 12$, giving $R = 9.0\ \Omega$.
+      - |
+        p.d. across the 3.0 Ω resistor: $V = 0.75 \times 3.0 = 2.25\ \text{V}$.
+      - |
+        p.d. across $R$: $V = 0.75 \times 9.0 = 6.75\ \text{V}$. Check:
+        $2.25 + 6.75 = 9.0\ \text{V}$, the e.m.f.
+    answer: |
+      $R = 9.0\ \Omega$, with p.d.s $2.25\ \text{V}$ and $6.75\ \text{V}$.
+
+  - type: check
+    questions: [unknown-resistance, branch-current-in-pair, junction-rule-equation]
+
+  - type: deeper
+    title: Setting up loop equations for a two-loop network
+    body: |
+      When a network cannot be reduced by series and parallel rules alone, you write down the
+      junction and loop equations and solve them together. The skills are the same; only the
+      algebra is longer.
+
+      Take an 18 V supply in series with a 6.0 Ω resistor, feeding a parallel pair of 12 Ω and 6.0 Ω.
+      Label the supply current $I$, the 12 Ω branch current $I_1$ and the 6.0 Ω branch current
+      $I_2$.
+
+      - **Junction rule:** $I = I_1 + I_2$.
+      - **Outer loop (the supply and both branches):** $18 = 6.0I + 12I_1$.
+      - **Inner loop (the two parallel branches):** $12I_1 = 6.0I_2$, because the same p.d. $V_p$
+        appears across both branches.
+
+      From the third equation $I_2 = 2I_1$. Substituting into the junction rule gives $I = 3I_1$,
+      and the loop equation gives $18 = 6.0(3I_1) + 12I_1 = 30I_1$, so $I_1 = 0.60\ \text{A}$.
+
+      Then $I_2 = 1.2\ \text{A}$ and $I = 1.8\ \text{A}$, and the p.d. across the pair is
+      $12 \times 0.60 = 7.2\ \text{V}$. Reducing the circuit directly gives the same answer:
+      $12\ \Omega \parallel 6.0\ \Omega = 4.0\ \Omega$, so $R_{\text{total}} = 10\ \Omega$ and
+      $I = 1.8\ \text{A}$.
+
+      Use whichever method is quicker. The equations are insurance when simple reduction will not
+      do the job.
+
+  - type: misconceptions
+    items:
+      - wrong: "All the resistors in a mixed circuit are added together."
+        right: |
+          Only resistors in **series** add directly. A parallel pair must be combined with the
+          reciprocal formula first, then added to the series part.
+      - wrong: "The current through the parallel pair is the same as the current in each branch."
+        right: |
+          The total current splits between the branches. In the worked example 3.0 A enters the
+          pair and splits into 1.0 A and 2.0 A.
+      - wrong: "If a calculation gives a negative current, the circuit is impossible."
+        right: |
+          A negative answer only means the current flows **opposite** to the arrow you guessed.
+          Reverse the arrow and take the positive value.
+      - wrong: "You can find a branch current by dividing the supply p.d. by the branch resistance."
+        right: |
+          That only works when the branch is connected directly across the supply. In a mixed
+          circuit, first find the p.d. **across the parallel section**, then use that p.d. with each
+          branch resistance.
+
+  - type: check
+    questions: [mixed-pd-check, spot-mixed-error, explain-circuit-method]
+
+  - type: exam
+    body: |
+      - Show the reduction in stages: parallel pair first, then add the series part. Examiners give
+        method marks even when the final number slips.
+      - Quote a Kirchhoff check when a question says "show that" or asks you to verify a value.
+        One junction check and one loop check is usually enough.
+      - Keep p.d.s and currents labelled with the part of the circuit they belong to, or it becomes
+        impossible to see which value goes where.
+      - For two-loop networks, a sensible starting pair is the junction rule plus one loop
+        equation; a second loop equation then pins down the remaining unknown.
+
+  - type: takeaways
+    items:
+      - "Reduce the network in stages: parallel pairs by reciprocals, then series parts by addition."
+      - "Find the total current with $I = V/R_{\\text{total}}$, then work back out to p.d.s and branch currents."
+      - "Always check: currents add at every junction, and p.d.s plus e.m.f.s balance round every loop."
+      - "In a two-loop network, the junction rule and the loop rule give simultaneous equations; a shared parallel branch has the same p.d. across it."
+questions:
+  - id: mixed-total-resistance
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.7"]
+    prompt: |
+      A 5.0 Ω resistor is in series with a parallel pair of 12 Ω and 4.0 Ω. Calculate the total
+      resistance of the network.
+    fields:
+      - label: "R ="
+        answer: 8.0
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      The parallel pair has $\dfrac{1}{R_p} = \dfrac{1}{12} + \dfrac{1}{4.0} = \dfrac{1}{3.0}$,
+      so $R_p = 3.0\ \Omega$. Adding the series resistor:
+      $R = 5.0 + 3.0 = 8.0\ \Omega$.
+
+  - id: mixed-total-current
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.7"]
+    prompt: |
+      A 5.0 Ω resistor is in series with a parallel pair of 12 Ω and 4.0 Ω, and the network is
+      connected across a 16 V supply. Calculate the total current.
+    fields:
+      - label: "I ="
+        answer: 2.0
+        tolerance: { rel: 0.02 }
+        unit: A
+    explanation: |
+      The total resistance is $8.0\ \Omega$, so $I = \dfrac{16}{8.0} = 2.0\ \text{A}$.
+
+  - id: mixed-pd-check
+    format: numeric
+    difficulty: 3
+    objectives: ["10.2.7"]
+    prompt: |
+      A 5.0 Ω resistor is in series with a parallel pair of 12 Ω and 4.0 Ω, connected across a 16 V
+      supply. The total current is 2.0 A. Calculate the p.d. across the parallel pair.
+    fields:
+      - label: "V ="
+        answer: 6.0
+        tolerance: { rel: 0.02 }
+        unit: V
+    explanation: |
+      The series resistor takes $V = IR = 2.0 \times 5.0 = 10\ \text{V}$. By the loop rule the
+      parallel pair takes the rest: $16 - 10 = 6.0\ \text{V}$. (Check: the pair's resistance is
+      3.0 Ω and $2.0 \times 3.0 = 6.0\ \text{V}$.)
+
+  - id: branch-current-in-pair
+    format: numeric
+    difficulty: 3
+    objectives: ["10.2.7"]
+    prompt: |
+      In the network above, the p.d. across the parallel pair (12 Ω and 4.0 Ω) is 6.0 V. Calculate
+      the current in the 12 Ω branch.
+    fields:
+      - label: "I ="
+        answer: 0.50
+        tolerance: { rel: 0.02 }
+        unit: A
+    explanation: |
+      Each branch has the full 6.0 V across it, so $I = \dfrac{6.0}{12} = 0.50\ \text{A}$. The
+      4.0 Ω branch takes $6.0/4.0 = 1.5\ \text{A}$, and $0.50 + 1.5 = 2.0\ \text{A}$, the total
+      current.
+
+  - id: unknown-resistance
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.7"]
+    prompt: |
+      A cell of e.m.f. 9.0 V drives a current of 0.75 A through a 3.0 Ω resistor and an unknown
+      resistor in series. Calculate the resistance of the unknown resistor.
+    fields:
+      - label: "R ="
+        answer: 9.0
+        tolerance: { rel: 0.02 }
+        unit: "Ω"
+    explanation: |
+      Total resistance $= \dfrac{9.0}{0.75} = 12\ \Omega$. In series, $3.0 + R = 12$, so
+      $R = 9.0\ \Omega$.
+
+  - id: junction-rule-equation
+    format: mcq
+    difficulty: 1
+    objectives: ["10.2.7"]
+    prompt: |
+      A current I splits at a junction into two branch currents I₁ and I₂. Which equation states
+      Kirchhoff's first law for this junction?
+    options:
+      - text: "I = I₁ + I₂"
+        correct: true
+        why: |
+          The current entering the junction equals the sum of the currents leaving it.
+      - text: "I₁ = I₂"
+        why: |
+          The branch currents are equal only if the branches have equal resistance, so this is not
+          the junction rule.
+      - text: "I = I₁ − I₂"
+        why: |
+          That would mean I₂ flows into the junction instead of away from it. With both branches
+          carrying current away, the currents add.
+      - text: "I = I₁I₂"
+        why: |
+          Currents add at a junction; multiplying them has no physical meaning here.
+    explanation: |
+      The junction rule is a statement about currents adding: total in equals total out.
+
+  - id: spot-mixed-error
+    format: spot-error
+    difficulty: 3
+    objectives: ["10.2.7"]
+    prompt: |
+      A student works out the total resistance of a mixed network. Identify the first error.
+    lines:
+      - "A 3.0 Ω resistor is in series with a parallel pair of 12 Ω and 4.0 Ω, across a 16 V supply."
+      - "The parallel pair has combined resistance 12 + 4.0 = 16 Ω."
+      - "So the total resistance is 3.0 + 16 = 19 Ω."
+      - "The current from the supply is 16/19 = 0.84 A."
+    errorLine: 2
+    fix: |
+      For a parallel pair add the reciprocals:
+      1/R = 1/12 + 1/4.0 = 1/3.0, so the pair is 3.0 Ω. The total resistance is then
+      3.0 + 3.0 = 6.0 Ω and the current is 16/6.0 = 2.7 A.
+    explanation: |
+      Adding resistances directly is only valid in series. The parallel pair must be combined with
+      the reciprocal formula, which lowers the resistance rather than raising it.
+
+  - id: explain-circuit-method
+    format: explain
+    difficulty: 3
+    objectives: ["10.2.7"]
+    prompt: |
+      Describe how Kirchhoff's laws are used to solve a mixed series-parallel circuit, and explain
+      why checking the answer matters.
+    model: |
+      First combine parts that are in parallel using 1/R = 1/R1 + 1/R2, then add any series
+      resistances and use I = V/R to find the total current. Work back outwards: use V = IR to find
+      the p.d. across each part, then use that p.d. with each branch resistance to find the branch
+      currents. Kirchhoff's laws then check the result: the branch currents must add to the total
+      current at every junction, and the p.d.s must add up round every closed loop to equal the
+      e.m.f. If either check fails, an arithmetic error has been made, because the laws themselves
+      cannot be broken.
+    keyPoints:
+      - "Combine parallel parts with reciprocals, then add series resistances"
+      - "Total current from I = V/R with the combined resistance"
+      - "Use V = IR for each part, then branch currents from the p.d. across each branch"
+      - "Check currents at junctions and p.d.s round loops against the e.m.f."
+      - "A failed check means an arithmetic error, since Kirchhoff's laws must hold"
+    explanation: |
+      The method is reduction followed by working back out; the checks are the junction rule and
+      the loop rule, which convert a suspicious answer into a definite error.

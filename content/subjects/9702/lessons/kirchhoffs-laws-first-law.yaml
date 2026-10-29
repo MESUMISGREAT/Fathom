@@ -1,0 +1,287 @@
+id: kirchhoffs-laws-first-law
+subject: "9702"
+topic: "10.2"
+title: "Kirchhoff's first law: charge doesn't pile up"
+summary: The junction rule — the current into a junction equals the current out — and why it is conservation of charge in disguise.
+order: 1
+minutes: 6
+kind: core
+objectives: ["10.2.1"]
+prerequisites: ["electric-current-flow-of-charge"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  reviewedBy: buffy-content-worker-1
+  reviewedAt: 2026-10-29
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Physics 9702 syllabus
+    2025-2027, learning outcome 10.2.1 ("Recall Kirchhoff's first law and understand that it
+    follows from conservation of charge"). All examples and questions are original; the junction
+    currents (2.0 A, 1.2 A, 0.80 A) are illustrative numbers. Not yet independently reviewed.
+    Independently re-checked line by line (facts, worked examples, every answer key) in a
+    separate AI review on 2026-10-29 by buffy-content-worker-1. Not yet reviewed by a teacher.
+blocks:
+  - type: objective
+    body: |
+      By the end you can state Kirchhoff's first law, explain why it follows from conservation
+      of charge, and use it to find an unknown current at a junction.
+
+  - type: explain
+    body: |
+      Stand at a **junction**: a point in a circuit where two or more wires meet.
+
+      Charge carriers arrive along some of those wires and leave along others. In a steady
+      circuit they cannot simply stop at the junction and stay there, because that would mean
+      charge collecting in one place.
+
+      So charge must arrive as fast as it leaves. The rate at which charge flows is the
+      **current**, so the total current into the junction equals the total current out.
+
+  - type: intuition
+    body: |
+      Picture a water pipe that splits into two. Whatever volume of water flows into the split
+      each second has to flow out of the branches each second, because the water has nowhere
+      else to go.
+
+      The analogy is reliable for the "what goes in must come out" idea. It stops being accurate
+      in one way: a wire is not a pipe that gradually fills with charge. The junction rule is
+      about a circuit in a **steady state**, not about a container filling up.
+
+  - type: definition
+    term: Kirchhoff's first law
+    body: |
+      The sum of the currents entering a junction is equal to the sum of the currents leaving it.
+
+  - type: explain
+    title: Why it follows from conservation of charge
+    body: |
+      **Conservation of charge** says charge is never created and never destroyed.
+
+      Now watch one junction for one second. Suppose 3.0 C of charge arrives and only 2.0 C
+      leaves. Where did the other 1.0 C go? There is nowhere for it to go: it cannot vanish, and
+      it cannot stay at the junction without charge building up there.
+
+      So the charge arriving per second equals the charge leaving per second. Divide both by one
+      second, and you have the junction rule: current in equals current out.
+
+  - type: diagram
+    diagram: phys-kirchhoffs-laws-junction
+    alt: |
+      A junction with two wires carrying current in and two carrying current out. 2.0 A arrives
+      from the left and 1.2 A arrives from the top. 0.80 A leaves to the right and an unknown
+      current I leaves at the bottom. A dot marks the junction, and below it the equation
+      2.0 A + 1.2 A = 0.80 A + I records the junction rule.
+
+  - type: example
+    title: Finding the unknown current
+    problem: |
+      At a junction, 2.0 A arrives along one wire and 1.2 A arrives along another. One wire
+      leaves carrying 0.80 A. What current leaves along the fourth wire?
+    steps:
+      - |
+        Write the junction rule with the entering currents on one side and the leaving currents
+        on the other: $2.0 + 1.2 = 0.80 + I$.
+      - |
+        Add the entering currents: $2.0 + 1.2 = 3.2\ \text{A}$.
+      - |
+        Subtract the current that already leaves: $I = 3.2 - 0.80 = 2.4\ \text{A}$.
+      - |
+        Check by adding the leaving currents: $0.80 + 2.4 = 3.2\ \text{A}$, which matches the
+        total entering. The answer is consistent.
+    answer: |
+      $I = 2.4\ \text{A}$ leaves along the fourth wire.
+
+  - type: check
+    questions: [law-from-charge, unknown-junction-current]
+
+  - type: example
+    title: A junction where the current splits three ways
+    problem: |
+      A current of 5.0 A reaches a junction. The wires leaving carry 1.5 A and 2.5 A. What is the
+      current in the third wire leaving the junction?
+    steps:
+      - |
+        Charge is conserved, so the three leaving currents together must carry the 5.0 A that
+        arrives: $5.0 = 1.5 + 2.5 + I$.
+      - |
+        Add the two known branches: $1.5 + 2.5 = 4.0\ \text{A}$.
+      - |
+        Subtract: $I = 5.0 - 4.0 = 1.0\ \text{A}$.
+    answer: |
+      $I = 1.0\ \text{A}$.
+
+  - type: check
+    questions: [three-branch-split, state-first-law]
+
+  - type: deeper
+    title: The sign-bookkeeping version
+    body: |
+      You may also meet the law written as "the algebraic sum of the currents at a junction is
+      zero".
+
+      That is the same statement with a sign convention added. Choose "towards the junction" as
+      positive: currents entering count $+$, currents leaving count $-$, and the total is zero.
+
+      At the junction in the example above:
+      $+2.0 + 1.2 - 0.80 - 2.4 = 0$, which is just "in = out" written differently. Use whichever
+      form you find clearer; both are accepted.
+
+  - type: misconceptions
+    items:
+      - wrong: "Current gets used up as charge goes round a circuit."
+        right: |
+          Charge is conserved and current is the flow of charge, so the current entering a
+          junction is not reduced. What a component does use up is **energy**: the charge leaves
+          with less energy after passing through a resistor.
+      - wrong: "If 3.0 A enters a junction and 1.0 A leaves, the other 2.0 A is stored in the wires."
+        right: |
+          Charge does not accumulate at a junction. The remaining 2.0 A must leave along some
+          other wire.
+      - wrong: "The current always splits equally between the branches at a junction."
+        right: |
+          It splits so that the total is conserved. When two branches connect the **same two
+          points** (in parallel), the smaller resistance carries the larger current, because both
+          have the same p.d. across them.
+
+  - type: check
+    questions: [spot-used-up-current, explain-junction-rule]
+
+  - type: exam
+    body: |
+      - "State Kirchhoff's first law" is a recall mark: **sum of currents entering = sum of
+        currents leaving** a junction. Saying only "current is conserved" is usually too vague to
+        earn the mark.
+      - "Explain why" questions want the link to **conservation of charge**: charge cannot
+        accumulate at the junction, so the rate in equals the rate out.
+      - Calculation questions give you all but one current. Add the currents entering, then
+        subtract the ones you know are leaving.
+      - Watch for arrows: a current drawn pointing **away** from the junction is leaving, even if
+        its label sits on the wire that brings current to the junction.
+
+  - type: takeaways
+    items:
+      - "Kirchhoff's first law (junction rule): current into a junction = current out."
+      - "It follows from conservation of charge: charge cannot build up at a junction."
+      - "Use it to find an unknown branch current by making the entering and leaving totals equal."
+      - "Current is not used up in a circuit; energy is transferred in the components."
+questions:
+  - id: law-from-charge
+    format: mcq
+    difficulty: 1
+    objectives: ["10.2.1"]
+    prompt: |
+      Kirchhoff's first law follows from which conservation principle?
+    options:
+      - text: Conservation of charge.
+        correct: true
+        why: |
+          The law says the total current into a junction equals the total current out, which is
+          exactly what conservation of charge requires in a steady circuit.
+      - text: Conservation of energy.
+        why: |
+          Conservation of energy leads to Kirchhoff's **second** law, about e.m.f.s and p.d.s
+          around a loop.
+      - text: Conservation of momentum.
+        why: |
+          Momentum conservation applies to collisions and interactions of bodies, not to the
+          currents meeting at a junction.
+      - text: Conservation of mass.
+        why: |
+          Mass conservation is not the principle behind the junction rule; the charge carriers
+          are not being created or destroyed, but it is their **charge** that is conserved.
+    explanation: |
+      Charge cannot accumulate at a junction, so the rate at which charge arrives equals the rate
+      at which it leaves. That is conservation of charge, expressed as currents.
+
+  - id: unknown-junction-current
+    format: numeric
+    difficulty: 1
+    objectives: ["10.2.1"]
+    prompt: |
+      A current of 1.8 A and a current of 0.60 A both arrive at a junction. One wire leaves the
+      junction carrying 0.90 A. Calculate the current in the other wire leaving the junction.
+    fields:
+      - label: "I ="
+        answer: 1.5
+        tolerance: { rel: 0.02 }
+        unit: A
+    explanation: |
+      Current in = $1.8 + 0.60 = 2.4\ \text{A}$. Current out must also be 2.4 A, so the unknown
+      current is $2.4 - 0.90 = 1.5\ \text{A}$.
+
+  - id: three-branch-split
+    format: numeric
+    difficulty: 2
+    objectives: ["10.2.1"]
+    prompt: |
+      A current of 4.2 A arrives at a junction and splits into three branches. Two of the
+      branches carry 1.4 A and 0.70 A. Calculate the current in the third branch.
+    fields:
+      - label: "I ="
+        answer: 2.1
+        tolerance: { rel: 0.02 }
+        unit: A
+    explanation: |
+      The three branch currents must add to the current arriving:
+      $1.4 + 0.70 + I = 4.2$, so $I = 4.2 - 2.1 = 2.1\ \text{A}$.
+
+  - id: state-first-law
+    format: text
+    difficulty: 1
+    objectives: ["10.2.1"]
+    style: definition
+    prompt: |
+      State Kirchhoff's first law.
+    accept:
+      - "the sum of the currents entering a junction is equal to the sum of the currents leaving it"
+      - "the sum of the currents entering a junction equals the sum of the currents leaving it"
+      - "the total current entering a junction equals the total current leaving it"
+      - "sum of currents entering a junction = sum of currents leaving a junction"
+      - "the algebraic sum of the currents at a junction is zero"
+      - "current entering a junction is equal to current leaving a junction"
+    model: |
+      The sum of the currents entering a junction is equal to the sum of the currents leaving it.
+    explanation: |
+      The law compares the currents at a **junction**, not the whole circuit, and it is about
+      currents adding up, not about current being used up.
+
+  - id: spot-used-up-current
+    format: spot-error
+    difficulty: 2
+    objectives: ["10.2.1"]
+    prompt: |
+      A student describes what happens at a junction. Identify the first error in the reasoning.
+    lines:
+      - "A current of 3.0 A reaches a junction, and two wires leave it carrying 1.0 A and 0.50 A."
+      - "The currents leaving so far add up to 1.5 A."
+      - "The remaining 1.5 A is used up at the junction, so no other wire is needed."
+    errorLine: 3
+    fix: |
+      The remaining 1.5 A must leave along another wire, because charge is conserved at a
+      junction: charge cannot accumulate there.
+    explanation: |
+      Nothing is "used up" at a junction. If 3.0 A arrives and only 1.5 A leaves along the two
+      wires, the rest must flow out along some other path, or the charge would build up at the
+      junction.
+
+  - id: explain-junction-rule
+    format: explain
+    difficulty: 3
+    objectives: ["10.2.1"]
+    prompt: |
+      Explain, in terms of charge, why the current entering a junction equals the current leaving
+      it.
+    model: |
+      Charge is conserved: it cannot be created or destroyed. In a steady circuit, charge cannot
+      accumulate at the junction either, because that would mean the junction was gaining charge
+      continuously. So the amount of charge passing into the junction each second must equal the
+      amount passing out each second. Charge per second is current, so the currents into and out
+      of the junction are equal.
+    keyPoints:
+      - "Charge is conserved (cannot be created or destroyed)"
+      - "Charge cannot accumulate at a junction in a steady circuit"
+      - "Charge in per second equals charge out per second"
+      - "Charge per second is current, so currents in and out are equal"
+    explanation: |
+      The mark-earning chain is charge conservation, then no accumulation at the junction, then
+      equal charge per second, then equal currents.

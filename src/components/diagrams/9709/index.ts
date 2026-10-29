@@ -24,6 +24,9 @@ import CoordinateGeometryPerpendicularBisector from './coordinate-geometry-perpe
 import CoordinateGeometryPerpendicularGradients from './coordinate-geometry-perpendicular-gradients';
 import CoordinateGeometrySlidingLine from './coordinate-geometry-sliding-line';
 import CoordinateGeometryTangentAtPoint from './coordinate-geometry-tangent-at-point';
+import DiscreteRvBarChart from './discrete-rv-bar-chart';
+import DiscreteRvBinomialBars from './discrete-rv-binomial-bars';
+import DiscreteRvGeometricBars from './discrete-rv-geometric-bars';
 import DiscriminantCases from './discriminant-cases';
 import ForcesEquilibriumComponentsResultants from './forces-equilibrium-components-resultants';
 import ForcesEquilibriumContactSmooth from './forces-equilibrium-contact-smooth';
@@ -51,6 +54,10 @@ import KinematicsVtArea from './kinematics-vt-area';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
 import MechMomentumCollision from './mech-momentum-collision';
+import NormalDistributionContinuityCorrection from './normal-distribution-continuity-correction';
+import NormalDistributionCurve from './normal-distribution-curve';
+import NormalDistributionInverse from './normal-distribution-inverse';
+import NormalDistributionStandardising from './normal-distribution-standardising';
 import P1DifferentiationBoxNet from './p1-differentiation-box-net';
 import P1DifferentiationChainBox from './p1-differentiation-chain-box';
 import P1DifferentiationChordsToTangent from './p1-differentiation-chords-to-tangent';
@@ -113,6 +120,9 @@ import P3VectorsLineRelationships from './p3-vectors-line-relationships';
 import P3VectorsMagnitudeUnit from './p3-vectors-magnitude-unit';
 import P3VectorsNotation from './p3-vectors-notation';
 import P3VectorsScalarProduct from './p3-vectors-scalar-product';
+import ProbabilitySampleSpaceTwoDice from './probability-sample-space-two-dice';
+import ProbabilityTreeTwoStages from './probability-tree-two-stages';
+import ProbabilityVennAddition from './probability-venn-addition';
 import QuadraticInequality from './quadratic-inequality';
 import QuadraticVertex from './quadratic-vertex';
 import SeriesApGpShared from './series-ap-gp-shared';
@@ -149,6 +159,9 @@ export const diagrams: DiagramRegistry = {
   'coordinate-geometry-perpendicular-gradients': CoordinateGeometryPerpendicularGradients,
   'coordinate-geometry-sliding-line': CoordinateGeometrySlidingLine,
   'coordinate-geometry-tangent-at-point': CoordinateGeometryTangentAtPoint,
+  'discrete-rv-bar-chart': DiscreteRvBarChart,
+  'discrete-rv-binomial-bars': DiscreteRvBinomialBars,
+  'discrete-rv-geometric-bars': DiscreteRvGeometricBars,
   'discriminant-cases': DiscriminantCases,
   'forces-equilibrium-components-resultants': ForcesEquilibriumComponentsResultants,
   'forces-equilibrium-contact-smooth': ForcesEquilibriumContactSmooth,
@@ -183,6 +196,10 @@ export const diagrams: DiagramRegistry = {
   'math-p3-logarithmic-exponential-inverse-graphs': P3LogarithmicExponentialInverseGraphs,
   'math-p3-logarithmic-exponential-linear-form-plot': P3LogarithmicExponentialLinearFormPlot,
   'mech-momentum-collision': MechMomentumCollision,
+  'normal-distribution-continuity-correction': NormalDistributionContinuityCorrection,
+  'normal-distribution-curve': NormalDistributionCurve,
+  'normal-distribution-inverse': NormalDistributionInverse,
+  'normal-distribution-standardising': NormalDistributionStandardising,
   'p1-differentiation-box-net': P1DifferentiationBoxNet,
   'p1-differentiation-chain-box': P1DifferentiationChainBox,
   'p1-differentiation-chords-to-tangent': P1DifferentiationChordsToTangent,
@@ -238,6 +255,9 @@ export const diagrams: DiagramRegistry = {
   'p3-vectors-magnitude-unit': P3VectorsMagnitudeUnit,
   'p3-vectors-notation': P3VectorsNotation,
   'p3-vectors-scalar-product': P3VectorsScalarProduct,
+  'probability-sample-space-two-dice': ProbabilitySampleSpaceTwoDice,
+  'probability-tree-two-stages': ProbabilityTreeTwoStages,
+  'probability-venn-addition': ProbabilityVennAddition,
   'quadratic-inequality': QuadraticInequality,
   'quadratic-vertex': QuadraticVertex,
   'series-ap-gp-shared': SeriesApGpShared,

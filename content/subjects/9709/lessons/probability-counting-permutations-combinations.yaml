@@ -1,0 +1,275 @@
+id: probability-counting-permutations-combinations
+subject: "9709"
+topic: "5.3"
+title: Counting outcomes with permutations and combinations
+summary: Find probabilities when the sample space is too large to list, by counting outcomes with permutations when order matters and combinations when it does not.
+order: 2
+minutes: 7
+kind: core
+objectives: ["5.3.1"]
+prerequisites: ["stats-permutations-combinations", "probability-sample-space"]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026-2027), topic 5.3 Probability, learning outcome 5.3.1, covering the
+    "by calculation using permutations or combinations" route. All examples, questions and
+    diagrams are original; the bag-and-committee contexts are invented for teaching and
+    are not taken from any past paper.
+    Independently re-checked line by line (facts, worked examples, every answer key)
+    in a separate AI review on 2026-10-29. Not yet reviewed by a teacher.
+
+blocks:
+  - type: objective
+    body: |-
+      By the end you can decide whether the outcomes in a probability question are counted
+      with **permutations** or **combinations**, and use that count to find a probability
+      when the sample space is far too large to write out.
+
+  - type: explain
+    title: When listing is hopeless
+    body: |-
+      The counting formula $P(E) = \dfrac{n(E)}{n(S)}$ still works when $S$ is enormous.
+      What changes is how we get the numbers $n(E)$ and $n(S)$.
+
+      You cannot list the ways to choose 3 students from 10 — there are $120$ of them, and
+      real exam questions have more. So we count with the permutation and combination
+      formulae from topic 5.2.
+
+      **The one rule that prevents almost every error:** count the top and the bottom of the
+      fraction the *same way*. If the denominator counts ordered selections, the numerator
+      must too.
+
+  - type: definition
+    term: Permutations and combinations
+    body: |-
+      A **permutation** is a selection in which the **order matters**: choosing A then B is
+      different from choosing B then A. The number of ways to choose $r$ objects from $n$
+      distinct objects in order is $^{n}P_{r} = \dfrac{n!}{(n-r)!}$.
+
+      A **combination** is a selection in which the **order does not matter**, so AB and BA
+      are the same selection. The number of ways to choose $r$ objects from $n$ is
+      $^{n}C_{r} = \dfrac{n!}{r!\,(n-r)!}$.
+
+      Since $^{n}P_{r} = r! \times {}^{n}C_{r}$, a permutation count is a combination count
+      with the chosen objects also arranged among themselves.
+
+  - type: intuition
+    title: How to tell them apart
+    body: |-
+      Ask yourself: *if I swapped two chosen items, would that be a different outcome of the
+      experiment?*
+
+      - Selecting two counters from a bag and looking at their colours: swapping them gives
+        the same pair, so use **combinations**.
+      - Picking a president then a treasurer: swapping the two people gives different job
+        holders, so use **permutations**.
+      - Dealing the first two cards of a hand and caring which came first: **permutations**.
+
+      In most probability questions about choosing a group, the answer is combinations,
+      because "which items ended up chosen" is all we observe.
+
+  - type: example
+    title: "Example 1: two counters from a bag"
+    problem: |-
+      A bag contains $5$ red and $3$ blue counters. Two counters are taken out at random,
+      without replacement. Find the probability that both are red.
+    steps:
+      - |-
+        Order does not matter: taking "red 1 then red 3" is the same pair as "red 3 then
+        red 1". So count with combinations.
+      - |-
+        Count the whole sample space: choose any $2$ of the $8$ counters,
+        $^{8}C_{2} = 28$.
+      - |-
+        Count the event: choose $2$ of the $5$ red counters, $^{5}C_{2} = 10$.
+      - |-
+        Divide: $P(\text{both red}) = \dfrac{10}{28} = \dfrac{5}{14}$.
+    answer: |-
+      $\dfrac{5}{14} \approx 0.357$.
+
+  - type: check
+    title: Check 1 — counting a pair
+    questions: [pc-both-red, pc-choose-method]
+
+  - type: example
+    title: "Example 2: a committee"
+    problem: |-
+      A committee of $3$ is chosen at random from $6$ boys and $4$ girls. Find the
+      probability that all three are girls.
+    steps:
+      - |-
+        A committee is an unordered group, so use combinations for both counts.
+      - |-
+        Total selections: choose $3$ from all $10$ students, $^{10}C_{3} = 120$.
+      - |-
+        Favourable selections: choose $3$ from the $4$ girls, $^{4}C_{3} = 4$.
+      - |-
+        Divide: $P(\text{all girls}) = \dfrac{4}{120} = \dfrac{1}{30}$.
+    answer: |-
+      $\dfrac{1}{30} \approx 0.033$.
+
+  - type: check
+    title: Check 2 — committees
+    questions: [pc-all-girls]
+
+  - type: deeper
+    title: Mixed selections need a product
+    body: |-
+      When the event needs items of more than one type, multiply the combination counts.
+
+      For "exactly one red" from Example 1, you must choose $1$ of the $5$ red **and** $1$ of
+      the $3$ blue. The "and" means multiply:
+
+      $$n(\text{exactly one red}) = {}^{5}C_{1} \times {}^{3}C_{1} = 5 \times 3 = 15$$
+
+      So $P(\text{exactly one red}) = \dfrac{15}{28}$. Notice that
+      $\dfrac{10}{28} + \dfrac{15}{28} = \dfrac{25}{28}$, and the remaining
+      $\dfrac{3}{28}$ is "both blue", which is $\dfrac{^{3}C_{2}}{28} = \dfrac{3}{28}$. The
+      three cases cover every possibility, so the fractions must add to $1$ — a useful check
+      on your counting.
+
+  - type: check
+    title: Check 3 — mixed selections
+    questions: [pc-exactly-one-red]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "Use $^{8}P_{2} = 56$ for the top and $^{8}C_{2} = 28$ for the bottom, or vice
+          versa."
+        right: |-
+          Mixing the two counts inflates or deflates the answer, because you would be
+          comparing ordered selections with unordered ones. Both must be counted the same way.
+      - wrong: |-
+          "$^{5}C_{2} = 10$ means there are $10$ equally likely single outcomes of the
+          experiment."
+        right: |-
+          $10$ is the number of red-red **pairs**, not the number of elementary outcomes. Each
+          of the $28$ unordered pairs of counters is equally likely, so the $10$ red-red pairs
+          are $10$ of $28$ equally likely cases — which is exactly why the ratio is the
+          probability.
+      - wrong: |-
+          "Without replacement, use permutations because the order of drawing is visible."
+        right: |-
+          Drawing order is often unobservable or irrelevant — you only see the final pair. If
+          the final set is all that matters, combinations are correct even without
+          replacement.
+
+  - type: exam
+    body: |-
+      A typical question gives two or three categories and asks for the probability of a
+      specific mixture, often worth 3 or 4 marks.
+
+      - State explicitly whether order matters; that justification earns a mark.
+      - Show the two combination or permutation counts **before** dividing. An unsupported
+        decimal usually scores nothing.
+      - If the question asks for "at least one", consider $1 - P(\text{none})$ and count the
+        complementary selection instead.
+      - Give exact fractions unless a decimal is requested, and check that the cases you can
+        think of add up to $1$.
+
+  - type: takeaways
+    items:
+      - "Order matters → permutations ${}^{n}P_{r}$; order does not → combinations ${}^{n}C_{r}$."
+      - "Count $n(E)$ and $n(S)$ the same way, or the fraction is meaningless."
+      - "For a mixture of types, multiply the separate combination counts (the \"and\" rule)."
+      - "Use the complement for \"at least one\" questions."
+
+  - type: check
+    title: Check 4 — consolidation
+    questions: [pc-permutation-or-combination]
+
+questions:
+  - id: pc-choose-method
+    format: mcq
+    difficulty: 1
+    objectives: ["5.3.1"]
+    prompt: |-
+      Two students are chosen at random from a class of $30$ to collect books. Which count
+      gives the number of possible pairs?
+    options:
+      - text: |-
+          $^{30}C_{2}$, because the pair is a group and the order of choosing is irrelevant.
+        correct: true
+        why: |-
+          The two students end up doing the same job, so AB and BA are the same pair; that is
+          a combination.
+      - text: |-
+          $^{30}P_{2}$, because the first student is chosen first.
+        why: |-
+          The order of choosing is not part of the outcome, so counting both orders would
+          double every pair.
+      - text: |-
+          $30 \times 30$, because each choice has $30$ options.
+        why: |-
+          That would allow the same student to be chosen twice, which cannot happen when
+          choosing two different people.
+      - text: |-
+          $2^{30}$, because each student is either chosen or not.
+        why: |-
+          That counts every possible subset of the class, not just the pairs.
+    explanation: |-
+      The outcome is the unordered pair of students, so the number of pairs is
+      $^{30}C_{2} = 435$.
+
+  - id: pc-both-red
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.1"]
+    prompt: |-
+      A bag contains $5$ red and $3$ blue counters. Two are taken at random without
+      replacement. Find the probability that both are red, as a decimal.
+    fields:
+      - answer: 0.3571
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      There are $^{8}C_{2} = 28$ equally likely pairs and $^{5}C_{2} = 10$ red-red pairs, so
+      $P = \frac{10}{28} = \frac{5}{14} \approx 0.357$.
+
+  - id: pc-all-girls
+    format: numeric
+    difficulty: 2
+    objectives: ["5.3.1"]
+    prompt: |-
+      A committee of $3$ is chosen at random from $6$ boys and $4$ girls. Find the
+      probability that all three are girls, as a decimal.
+    fields:
+      - answer: 0.0333
+        tolerance:
+          abs: 0.001
+    explanation: |-
+      The total number of committees is $^{10}C_{3} = 120$ and the number made only of girls
+      is $^{4}C_{3} = 4$, so $P = \frac{4}{120} = \frac{1}{30} \approx 0.033$.
+
+  - id: pc-exactly-one-red
+    format: numeric
+    difficulty: 3
+    objectives: ["5.3.1"]
+    prompt: |-
+      From the same bag of $5$ red and $3$ blue counters, two are taken at random without
+      replacement. Find the probability that exactly one is red, as a decimal.
+    fields:
+      - answer: 0.5357
+        tolerance:
+          abs: 0.002
+    explanation: |-
+      Choose $1$ red from $5$ and $1$ blue from $3$: $^{5}C_{1} \times {}^{3}C_{1} = 15$
+      favourable pairs out of $^{8}C_{2} = 28$. So $P = \frac{15}{28} \approx 0.536$.
+
+  - id: pc-permutation-or-combination
+    format: cloze
+    difficulty: 2
+    objectives: ["5.3.1"]
+    prompt: |-
+      When the order of a selection matters, the number of selections is counted with
+      {{1}}; when the order does not matter, it is counted with {{2}}.
+    blanks:
+      - accept: ["permutations", "permutation", "nPr", "^nP_r", "P"]
+      - accept: ["combinations", "combination", "nCr", "^nC_r", "C"]
+    explanation: |-
+      Permutations count ordered selections and combinations count unordered ones. In a
+      probability fraction, both counts must use the same type, otherwise the fraction
+      compares different kinds of thing.
