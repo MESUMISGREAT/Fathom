@@ -991,3 +991,16 @@ Before any agent selects a lesson, read `docs/AGENT_COORDINATION.md` and join th
 - If the shared mailbox is unavailable, state that fact and safely continue on an unclaimed task solo or use an actually available messaging mechanism. Do not claim to have negotiated or communicated unless you verified it.
 
 The mailbox is file-based and near-real-time only through polling; it is not a magic push channel. See `docs/AGENT_COORDINATION.md` for the message format, atomic claim convention, and solo/two-agent/team workflows.
+
+
+## 9. Heartbeat-driven messaging and stall handling
+
+The coordination helper now broadcasts a mailbox message whenever an agent explicitly runs `heartbeat`. All agents must read heartbeat messages and communicate more actively instead of updating status silently.
+
+- During active collaboration, check messages at task boundaries and poll every 2–5 seconds while waiting for another agent. During long work, send heartbeats about every 30–60 seconds when practical.
+- Read each heartbeat's status, task, role, and files. Reply promptly to blockers, direct questions, overlapping file ownership, review requests, and handoffs. Offer a concrete next step when another agent is blocked.
+- Do not reply to every normal heartbeat; that creates message storms. Acknowledge meaningful updates and any message requiring a decision or action.
+- If an active task has no heartbeat for more than 2 minutes, send a short stall-check message and inspect current agent/claim state. A stale heartbeat alone does not prove the agent is dead.
+- Never take over a claim just because it looks stale. Check the process/session if possible, ask the owner, and record an explicit handoff before taking over. If the owner cannot be verified as inactive, work on another unclaimed task.
+- An agent that is stalled must message its current status, blocker, what it tried, and the help/decision it needs. Do not silently wait.
+- Heartbeats are notifications, not proof of completed work. Validate files and tests before reporting completion.
