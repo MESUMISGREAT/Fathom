@@ -152,6 +152,18 @@ The usual 2–5 minute lesson target is a guideline, not a hard limit. Understan
   - Never claim a teacher reviewed anything.
 - **Content:** write all content fresh. Never copy past papers. How to write it is in
   `docs/CONTENT_GUIDE.md`.
+- **Before committing any content change, run `npm run content:check` on the whole tree**
+  (no `--only`, no `--subject`). A production deploy fails if the import rejects a single
+  lesson, and the build log only shows the imported errors. Four failure modes have broken
+  deploys already:
+  - `provenance` is a strict object: only `origin`, `status`, `reviewedBy`, `reviewedAt`,
+    `notes`. Keys such as `reviewer` or `reviewDate` are rejected outright.
+  - `order` must be unique within a topic. Two agents writing the same unit produce
+    `order 1 in topic 10.4 is also used by ...`; keep one lesson per unit, not two drafts.
+  - The lesson file name must equal its `id` (`user-defined-types.yaml`, not
+    `user-defined-types-introduction.yaml`).
+  - Drafts stay out of `content/subjects/<code>/lessons/`; the importer reads every YAML
+    there, so a working copy left in place breaks the deploy.
 - **UI:** follow §5 of `docs/design/fun-and-points.md`:
   - a playful but polished look, using the palette and subject colours;
   - full interaction states;
