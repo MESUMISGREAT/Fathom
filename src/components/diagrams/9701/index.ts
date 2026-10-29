@@ -57,6 +57,9 @@ import MetallicBondingSeaOfElectrons from './metallic-bonding-sea-of-electrons';
 import MoleAvogadroMoleMap from './mole-avogadro-mole-map';
 import MoleAvogadroSameCount from './mole-avogadro-same-count';
 import OrbitalShapes from './orbital-shapes';
+import RateReactionBoltzmann from './rate-reaction-boltzmann';
+import RateReactionTangent from './rate-reaction-tangent';
+import RateReactionTemperatureCurves from './rate-reaction-temperature-curves';
 import ReactingMassesCombustionVolumes from './reacting-masses-combustion-volumes';
 import ReactingMassesDilution from './reacting-masses-dilution';
 import ReactingMassesLimitingParticles from './reacting-masses-limiting-particles';
@@ -137,6 +140,9 @@ export const diagrams: DiagramRegistry = {
   'chem-mole-avogadro-mole-map': MoleAvogadroMoleMap,
   'chem-mole-avogadro-same-count': MoleAvogadroSameCount,
   'chem-orbital-shapes': OrbitalShapes,
+  'chem-rate-reaction-boltzmann': RateReactionBoltzmann,
+  'chem-rate-reaction-tangent': RateReactionTangent,
+  'chem-rate-reaction-temperature-curves': RateReactionTemperatureCurves,
   'chem-reacting-masses-combustion-volumes': ReactingMassesCombustionVolumes,
   'chem-reacting-masses-dilution': ReactingMassesDilution,
   'chem-reacting-masses-limiting-particles': ReactingMassesLimitingParticles,

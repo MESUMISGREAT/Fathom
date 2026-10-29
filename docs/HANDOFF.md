@@ -212,7 +212,71 @@ changes alongside lessons:
   include draft diagrams) and untracked draft lessons are expected in `git status`.
   `publish.sh` handles both.
 
-## 5. Current state (28 Oct 2026, cloud chat)
+## 5. Current state (29 Oct 2026, Freebuff desktop session)
+
+- **Published in this session, verified on `origin/main`:**
+  - **9618 8.1 Database Concepts** (1e84b75): 6 lessons, 38 questions, 4 diagrams
+    (`cs-database-concepts-dbms-layer`, `-keys`, `-er-relationships`,
+    `-transitive-dependency`). Every objective 8.1.1-8.1.7 taught and tested.
+  - **9702 7.5 Polarisation** (d1e20bd): 3 lessons, 19 questions, 3 diagrams
+    (`phys-polarisation-transverse-planes`, `-malus-graph`, `-filter-chain`). Both
+    objectives 7.5.1-7.5.2 taught and tested.
+  - **9701 8.1+8.2 Rate of reaction and temperature** (085c64b): 4 lessons, 23 questions,
+    3 diagrams (`chem-rate-reaction-tangent`, `-boltzmann`, `-temperature-curves`). Every
+    objective 8.1.1-8.1.3 and 8.2.1-8.2.3 taught and tested.
+  - All three batches: `content-check` 0 errors / 0 warnings in a clean worktree from
+    `origin/main`, `tsc` clean, diagram registry + notation tests pass, every diagram
+    rendered and inspected in light and dark. The commit body and provenance say plainly
+    that the review was a second adversarial pass by the **same AI model**, with no separate
+    reviewer model and no teacher.
+- **No coding subagents exist in this environment** (only `researcher-web`); the
+  write/review/publish roles had to be done by one agent. `spawn_agents` rejects
+  `basher`/`opus-agent`. Disclose this whenever reporting review status.
+- **Diagram rendering on Windows:** `npm run diagram:render` fails because
+  `scripts/render-diagram.tsx` dynamically imports a Windows absolute path
+  (`ERR_UNSUPPORTED_ESM_URL_SCHEME`). Working harness: `.work-logs/render-9618.tsx` and
+  `.work-logs/render-9702.tsx` import the diagrams statically, render the same HTML with
+  `react-dom/server` and screenshot with Playwright using
+  `CHROMIUM_PATH="C:\Program Files\Google\Chrome\Application\chrome.exe"`. Output in
+  `.work-logs/dg/`. Copy the pattern for a new subject.
+- **`node scripts/lessons/status.mjs` now tolerates a broken YAML file** (returns the unit
+  as `partial` with the filename) instead of crashing; another agent's in-progress 9709 3.8
+  files had broken YAML and hid the whole queue.
+- **Concurrent agents in this checkout.** Other agents are writing **9709 3.8 differential
+  equations** (commit history `differential-equations-*`, two files currently broken),
+  **9709 3.9 complex numbers**, **9701 7.2 acid-base**, **9618 7.1 ethics**. Do not touch
+  their files. `origin/main` is authoritative.
+- **Local `main` is at f21b3b0**, an unpushed local commit containing ten **invalid** 9709
+  vector/numerical lessons (missing `explanation` fields). It is deliberately left alone so
+  another agent's working state is not destroyed. Therefore `status.mjs` reports the two
+  units published this session as `reviewed` (they are in `origin/main`, not in this local
+  index). Publish future units from a worktree built on `origin/main`, as done here; do not
+  re-publish `database-concepts-*` or `polarisation-*`.
+- **Publishing recipe used (scoped, safe with concurrent agents):**
+  `git worktree add --detach .work-logs/publish-wt origin/main`; copy only the new lessons
+  and diagrams; `npx tsx scripts/gen-diagrams.ts`; run content-check, `tsc` and the diagram
+  tests there; `git add` only those paths plus the subject's `index.ts`; commit with the
+  Codebuff trailer; `git fetch`; rebase if `origin/main` moved; push `HEAD:refs/heads/main`.
+  Never `git add -A` and never stage deletions; other agents' broken drafts must not be
+  swept in.
+- **Deployment is NOT verified.** The three commits are on `origin/main` and the files are in
+  the remote tree (`git ls-tree`), but `https://fathom-steel-ten.vercel.app` still returns the
+  "Lesson · Fathom" 404 page for all three new units after 4+ minutes, while an existing
+  lesson (9618 6.1) renders normally at the same URL pattern. Either the Vercel auto-deploy is
+  paused/failing or the production content import has not run. Check the Vercel dashboard for
+  the deployment at `085c64b` before assuming this content is live; do not report it as live
+  until a lesson page returns its title.
+- **Next unit in queue order that no one has claimed: 9709 4.1 Forces and equilibrium.**
+  After that, 9618 8.2+8.3 (DBMS and SQL) and 9702 8.1+8.2 (stationary waves and
+  diffraction). Re-check for in-flight files before each; another agent is actively writing
+  9709 3.8 and 3.9, so check `ls content/subjects/9709/lessons` and `git log origin/main`
+  first.
+- **Remaining queue after this session:** `node scripts/lessons/status.mjs` reports
+  41 published, 1 partial, 110 todo, 2 reviewed on the local index. Add the three units
+  published here (not in the local index because local `main` is behind): 44 published,
+  roughly 107 todo. The queue is far from complete; continue with the same cycle.
+
+## 5b. Earlier current state (28 Oct 2026, cloud chat)
 
 - **9702 7.2+7.3+7.4 is published** (28 Oct, 5498a33, from this chat): 6 lessons
   (`transverse-longitudinal-compare` 7.2.1, `transverse-longitudinal-graphs` 7.2.2,

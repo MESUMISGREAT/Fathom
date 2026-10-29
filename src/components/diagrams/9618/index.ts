@@ -59,6 +59,10 @@ import DataSecurityDefenceLayers from './data-security-defence-layers';
 import DataSecurityPhishingVsPharming from './data-security-phishing-vs-pharming';
 import DataSecurityPrivacyIntegrity from './data-security-privacy-integrity';
 import DataSecuritySystemVsData from './data-security-system-vs-data';
+import DatabaseConceptsDbmsLayer from './database-concepts-dbms-layer';
+import DatabaseConceptsErRelationships from './database-concepts-er-relationships';
+import DatabaseConceptsKeys from './database-concepts-keys';
+import DatabaseConceptsTransitiveDependency from './database-concepts-transitive-dependency';
 import HexNibbles from './hex-nibbles';
 import LanguageTranslatorsCompileVsInterpret from './language-translators-compile-vs-interpret';
 import LanguageTranslatorsIdeLayout from './language-translators-ide-layout';
@@ -165,6 +169,10 @@ export const diagrams: DiagramRegistry = {
   'cs-data-security-phishing-vs-pharming': DataSecurityPhishingVsPharming,
   'cs-data-security-privacy-integrity': DataSecurityPrivacyIntegrity,
   'cs-data-security-system-vs-data': DataSecuritySystemVsData,
+  'cs-database-concepts-dbms-layer': DatabaseConceptsDbmsLayer,
+  'cs-database-concepts-er-relationships': DatabaseConceptsErRelationships,
+  'cs-database-concepts-keys': DatabaseConceptsKeys,
+  'cs-database-concepts-transitive-dependency': DatabaseConceptsTransitiveDependency,
   'cs-hex-nibbles': HexNibbles,
   'cs-language-translators-compile-vs-interpret': LanguageTranslatorsCompileVsInterpret,
   'cs-language-translators-ide-layout': LanguageTranslatorsIdeLayout,

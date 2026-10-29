@@ -1,0 +1,269 @@
+id: database-concepts-tables-keys-terminology
+subject: "9618"
+topic: "8.1"
+title: Tables, records, fields and keys
+summary: Learn the vocabulary of the relational model, from entity and tuple to primary, candidate, secondary and foreign keys.
+order: 3
+minutes: 6
+kind: core
+objectives: ["8.1.3"]
+prerequisites: [database-concepts-relational-databases]
+provenance:
+  origin: ai-drafted
+  status: ai-checked
+  notes: >-
+    Drafted against the Cambridge International AS & A Level Computer Science 9618 syllabus,
+    topic 8.1 Database Concepts, learning outcome 8.1.3 (terminology of the relational model,
+    including entity, table, record, field, tuple, attribute, primary key, candidate key,
+    secondary key, foreign key, relationships, referential integrity and indexing). All
+    questions are original; the library tables are illustrative data.
+    Re-checked line by line on 2026-10-29: every fact, worked example and answer key was re-derived in a separate adversarial pass by the same AI model. No separate reviewer model and no teacher have reviewed it.
+
+blocks:
+  - type: objective
+    body: |
+      By the end you can use the terminology of a relational database correctly, and choose appropriate **primary**, **candidate**, **secondary** and **foreign** keys for a table.
+
+  - type: explain
+    title: Two names for almost everything
+    body: |
+      Database books borrow words from mathematics, so most ideas have two names. Examiners accept either, but you should recognise both.
+
+      | Everyday word | Relational word | What it is |
+      | --- | --- | --- |
+      | Table | **Relation** | All the data about one kind of thing |
+      | Row | **Record** or **tuple** | One complete item in the table |
+      | Column | **Field** or **attribute** | One property shared by every item |
+
+      An **entity** is the real-world thing the table describes: a student, a book, a loan. The table is how that entity is represented in the database.
+
+  - type: explain
+    title: A table you can point at
+    body: |
+      Here is a small `Book` table.
+
+      | BookID | Title | Author | Year |
+      | --- | --- | --- | --- |
+      | B1042 | The Cartographer's Apprentice | R. Okafor | 2019 |
+      | B1088 | Salt and Semaphore | M. Lindqvist | 2021 |
+      | B1103 | A Short History of Rain | J. Adeyemi | 2015 |
+
+      - The entity is **Book**.
+      - The table has four **fields**: `BookID`, `Title`, `Author`, `Year`.
+      - It has three **records**: one per book.
+      - `BookID` is the **primary key**: every value is different, so it identifies exactly one book.
+
+      Notice that `Title` could also be unique in this tiny table. Uniqueness in the data you happen to have is not enough; a key must be guaranteed unique by the rules of the system.
+
+  - type: diagram
+    diagram: cs-database-concepts-keys
+    alt: A Student table with StudentID underlined as the primary key, plus a Loan table whose StudentID column is marked as a foreign key pointing back to the Student table. Annotations define candidate key, secondary key and referential integrity.
+    caption: |
+      A primary key identifies a row inside its table. A foreign key refers to a primary key in another table, which is how tables are linked.
+
+  - type: definition
+    term: Primary key
+    body: |
+      A field (or combination of fields) that **uniquely identifies each record** in a table. It cannot be null, and no two records may share the same value.
+
+  - type: explain
+    title: Candidate, secondary and foreign keys
+    body: |
+      **Candidate key.** Any field or combination of fields that *could* serve as the primary key, because it is unique and not null. A table may have several candidate keys; one is chosen as the primary key and the others are called **alternate keys**.
+
+      **Secondary key.** A field used to **search** for records, which is indexed to make that search fast. It does not have to be unique: a `Surname` secondary key might match many students. It is a search aid, not an identifier.
+
+      **Foreign key.** A field in one table that is the **primary key in another table**. It creates the link between the tables. In the diagram, `Loan.StudentID` is a foreign key referring to `Student.StudentID`.
+
+      A foreign key may repeat. One student can have many loans, so their `StudentID` appears in many `Loan` records. That repetition is the whole point: each row is a different loan by the same student.
+
+  - type: definition
+    term: Referential integrity
+    body: |
+      The rule that every **foreign key value must match an existing primary key value** in the related table, or be null. A database that enforces this cannot contain a loan for a student who does not exist.
+
+  - type: explain
+    title: Indexing, in one minute
+    body: |
+      An **index** is a separate structure that keeps field values in order with pointers to their records, much like the index at the back of a book.
+
+      Without an index, finding every book by a particular author means checking every row. With an index on `Author`, the DBMS jumps close to the right place and follows the pointers.
+
+      Indexes make **searching faster** but **writing slower**, because every insert, update or delete must also update the index, and they take extra storage. That is why you index the fields you search often, not every field.
+
+  - type: misconceptions
+    items:
+      - wrong: A primary key must be a single field.
+        right: |
+          A primary key can be a **composite key**, made of two or more fields together. For example, a `Loan` table might use `(StudentID, BookID, DueDate)` if a student can borrow the same book more than once.
+      - wrong: A foreign key must be unique.
+        right: |
+          A foreign key often repeats, because one parent record can be referenced by many child records. Uniqueness is the job of the primary key.
+      - wrong: Any field with no repeated values in the current data is a good primary key.
+        right: |
+          A primary key must stay unique as the database grows. A phone number looks unique until two students share a household, or someone changes number. A meaningless identifier such as `StudentID` is safer.
+      - wrong: An index changes the data stored in the table.
+        right: |
+          An index is additional structure pointing into the table. The rows themselves are unchanged.
+
+  - type: exam
+    body: |
+      - Definition questions want precision: a primary key "uniquely identifies a record"; a foreign key "is a primary key in another table that creates a relationship". Vague answers such as "the main key" score nothing.
+      - When asked to **identify** a key in a table, check uniqueness against the data shown and say why: "`BookID`, because no two books share a value and it cannot be empty."
+      - When asked to **choose** a primary key for a new table, prefer a stable identifier over a natural fact such as a name or address.
+      - For referential integrity, always mention both halves: the foreign key must match an existing primary key **or be null**. Missing the null case loses a mark.
+
+  - type: takeaways
+    items:
+      - Relation = table, tuple or record = row, attribute or field = column.
+      - A primary key uniquely identifies a record and cannot be null.
+      - A candidate key could be the primary key; a secondary key is an indexed search field.
+      - A foreign key is a primary key from another table and creates the relationship.
+      - Referential integrity requires every foreign key to match an existing primary key, or be null.
+      - Indexes speed up searches at the cost of storage and slower writes.
+
+  - type: check
+    title: Vocabulary
+    questions: [tuple-meaning, attribute-cloze, candidate-key]
+
+  - type: check
+    title: Keys and rules
+    questions: [foreign-key-definition, referential-integrity-explain, index-tradeoff, composite-key]
+
+questions:
+  - id: tuple-meaning
+    format: mcq
+    difficulty: 1
+    objectives: ["8.1.3"]
+    prompt: |
+      In a relational database, what is a **tuple**?
+    options:
+      - text: One record (row) in a table
+        correct: true
+        why: |
+          Tuple is the relational word for a row: one complete item described by the table's fields.
+      - text: One field (column) in a table
+        why: |
+          A column is an attribute. A tuple is a whole row.
+      - text: The name of the table
+        why: |
+          The table itself is the relation.
+      - text: A key that refers to another table
+        why: |
+          That is a foreign key, which is a field, not a row.
+    explanation: |
+      Tuple = record = row. Attribute = field = column. Relation = table.
+
+  - id: attribute-cloze
+    format: cloze
+    difficulty: 1
+    objectives: ["8.1.3"]
+    prompt: |
+      In the relational model, a column of a table is called an {{1}}, while the whole table is called a {{2}}.
+    blanks:
+      - accept: [attribute, field]
+      - accept: [relation, table]
+    explanation: |
+      Attribute (or field) is the column; relation (or table) is the whole set of records.
+
+  - id: candidate-key
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.3"]
+    prompt: |
+      A `Student` table has `StudentID`, `NationalInsuranceNumber`, `Forename` and `Surname`. Both `StudentID` and `NationalInsuranceNumber` are unique and never empty. `StudentID` is chosen as the primary key. What is `NationalInsuranceNumber`?
+    options:
+      - text: A candidate key that was not chosen, so it is an alternate key
+        correct: true
+        why: |
+          It satisfies the requirements to be a primary key, but another candidate was chosen instead.
+      - text: A foreign key
+        why: |
+          A foreign key refers to a primary key in a different table. This field identifies the student within this table.
+      - text: A secondary key, because it is not the primary key
+        why: |
+          A secondary key is an indexed search field and need not be unique. This field is unique, so it is a candidate key.
+      - text: A composite key
+        why: |
+          A composite key combines two or more fields. This is a single field.
+    explanation: |
+      Candidate keys are all the fields that could uniquely identify a record. The one chosen becomes the primary key; the rest are alternate keys.
+
+  - id: foreign-key-definition
+    format: text
+    difficulty: 2
+    objectives: ["8.1.3"]
+    style: definition
+    prompt: |
+      Define a **foreign key**.
+    accept:
+      - a field in one table that is the primary key in another table
+      - a field that is the primary key of another table
+      - an attribute in one table that is the primary key in another table
+      - a field in one table which is the primary key in another table
+    model: |
+      A foreign key is a field (or fields) in one table that is the primary key in another table. It creates a relationship between the two tables and is used to enforce referential integrity.
+    explanation: |
+      The key idea is the link: the value in the child table must refer to an existing record in the parent table.
+
+  - id: referential-integrity-explain
+    format: explain
+    difficulty: 2
+    objectives: ["8.1.3"]
+    prompt: |
+      A database has `Student(StudentID, ...)` and `Loan(StudentID, BookID, ...)`. Explain what **referential integrity** means here, and what it prevents.
+    model: |
+      `StudentID` in `Loan` is a foreign key referring to the primary key `StudentID` in `Student`. Referential integrity means every value of `Loan.StudentID` must match an existing `Student.StudentID`, or be null. It therefore prevents a loan being recorded for a student who does not exist, which would leave a record that cannot be linked to anyone. It also prevents a student being deleted while loans still refer to them, unless those loans are handled first.
+    keyPoints:
+      - Loan.StudentID is a foreign key to Student.StudentID
+      - Every foreign key value must match an existing primary key or be null
+      - It prevents loans for nonexistent students
+      - It protects links when records are deleted or changed
+    explanation: |
+      Referential integrity keeps the links between tables valid. Without it, a foreign key could point at nothing.
+
+  - id: index-tradeoff
+    format: mcq
+    difficulty: 2
+    objectives: ["8.1.3"]
+    prompt: |
+      A library adds an index on the `Author` field of its `Book` table. What is the effect?
+    options:
+      - text: Searching by author becomes faster, but inserting and updating books becomes slower
+        correct: true
+        why: |
+          The index speeds up lookups, but every write must also update the index, and the index uses extra storage.
+      - text: Searching by author becomes faster and writes become faster too
+        why: |
+          Writes cannot also get faster: each change must be reflected in the index.
+      - text: Every author value becomes unique
+        why: |
+          An index does not impose uniqueness unless it is declared as a unique index, and authors can certainly repeat.
+      - text: The `Author` field becomes the primary key
+        why: |
+          Indexing a field does not change which key identifies the record.
+    explanation: |
+      Indexes trade write speed and storage for faster searches. Index the fields you search often.
+
+  - id: composite-key
+    format: mcq
+    difficulty: 3
+    objectives: ["8.1.3"]
+    prompt: |
+      A `Loan` table records which student borrowed which copy of a book, and when. No single field is unique, but the combination `(StudentID, BookID, DateBorrowed)` never repeats. What is this combination?
+    options:
+      - text: A composite primary key
+        correct: true
+        why: |
+          A primary key can be made of several fields together, as long as the combination is unique and not null.
+      - text: A foreign key
+        why: |
+          Each field may also be a foreign key, but the combination used to identify the row is a composite key.
+      - text: A secondary key
+        why: |
+          A secondary key is for searching and need not be unique. Here the combination identifies the record.
+      - text: Not allowed, because a primary key must be one field
+        why: |
+          Composite primary keys are allowed and are common in link tables.
+    explanation: |
+      A composite key uses two or more fields together to guarantee uniqueness.

@@ -1,0 +1,252 @@
+id: differential-equations-particular
+subject: "9709"
+topic: "3.8"
+title: Particular solutions using initial conditions
+summary: "Take a general solution with its arbitrary constant and use an initial condition (boundary condition) to find the particular solution that fits the specific problem."
+order: 3
+minutes: 8
+kind: core
+objectives: ["3.8.3"]
+prerequisites: ["differential-equations-separable"]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.8 outcome "Use an initial condition to find a particular
+    solution." All examples, questions and diagrams are original.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can substitute an initial condition into a general solution to find the particular solution of a separable differential equation.
+
+  - type: explain
+    title: General vs particular solutions
+    body: |-
+      When you solve a separable DE by integration, you get a **general solution** containing an arbitrary constant (usually $C$ or $A$). This represents a *family* of curves — infinitely many solutions.
+
+      An **initial condition** (or boundary condition) gives you one specific point $(x_0, y_0)$ that the solution must pass through. Substituting this into the general solution determines the constant, giving the **particular solution** — the single curve that satisfies both the DE and the condition.
+
+      **Terminology:** "initial condition" usually means a value at $t=0$ (for time problems); "boundary condition" means a value at some other point. Cambridge uses both interchangeably.
+
+  - type: example
+    title: "Example 1: Basic initial condition"
+    problem: |-
+      Solve $\frac{dy}{dx} = 2xy$ given that $y = 3$ when $x = 0$.
+    steps:
+      - General solution (from previous lesson): $y = Ae^{x^2}$.
+      - Substitute $x=0$, $y=3$: $3 = Ae^{0} = A$.
+      - So $A = 3$.
+      - Particular solution: $y = 3e^{x^2}$.
+    answer: |-
+      $y = 3e^{x^2}$
+
+  - type: check
+    questions: [de-particular-1, de-particular-2]
+
+  - type: explain
+    title: Initial conditions with implicit solutions
+    body: |-
+      If your general solution is implicit (e.g. $\ln|y| = x^2 + C$ or $y^2 = 2x^2 + C$), substitute the given values directly into the implicit form — it's often easier than solving for $y$ first.
+
+      **Example:** $y^2 = 2x^2 + C$, with $y = 4$ when $x = 1$.
+      - $4^2 = 2(1)^2 + C$ → $16 = 2 + C$ → $C = 14$.
+      - Particular solution: $y^2 = 2x^2 + 14$ (or $y = \sqrt{2x^2 + 14}$ since $y=4>0$ at the initial point).
+
+  - type: example
+    title: "Example 2: Implicit general solution with initial condition"
+    problem: |-
+      Solve $\frac{dy}{dx} = \frac{x}{y}$ given that $y = 2$ when $x = 0$.
+    steps:
+      - |-
+        Separate: $y\,dy = x\,dx$.
+      - |-
+        Integrate: $\frac{1}{2}y^2 = \frac{1}{2}x^2 + C$ → $y^2 = x^2 + 2C$. Let $K = 2C$: $y^2 = x^2 + K$.
+      - |-
+        Substitute $x=0$, $y=2$: $4 = 0 + K$ → $K = 4$.
+      - |-
+        $y^2 = x^2 + 4$. Since $y=2>0$ at $x=0$, we take the positive root: $y = \sqrt{x^2 + 4}$.
+    answer: |-
+      $y = \sqrt{x^2 + 4}$
+
+  - type: check
+    questions: [de-particular-3, de-particular-4]
+
+  - type: explain
+    title: Choosing the correct branch (sign)
+    body: |-
+      When your solution involves $\pm$ (from square roots, or from $|y| = \text{something}$), the initial condition tells you which sign to pick.
+
+      **Rule:** Evaluate the expression at the initial point. The sign must match the given $y$-value.
+
+      **Example:** $|y| = e^{x^2+C}$, $y = -3$ when $x = 0$.
+      - $3 = e^C$ → $e^C = 3$.
+      - $|y| = 3e^{x^2}$. At $x=0$, $|y|=3$, but $y=-3$, so $y = -3e^{x^2}$.
+
+      Don't just write $y = \pm \dots$ — commit to the sign that fits the condition.
+
+  - type: example
+    title: "Example 3: Trigonometric DE with initial condition"
+    problem: |-
+      Solve $\frac{dy}{dx} = y \tan x$ given that $y = 2$ when $x = 0$.
+    steps:
+      - General solution: $y = A \sec x$ (from previous lesson).
+      - Substitute $x=0$, $y=2$: $2 = A \sec 0 = A \cdot 1$ → $A = 2$.
+      - Particular solution: $y = 2 \sec x$.
+    answer: |-
+      $y = 2 \sec x$
+
+  - type: check
+    questions: [de-particular-5]
+
+  - type: explain
+    title: Initial conditions that find the constant in the DE itself
+    body: |-
+      Sometimes the question gives you the DE with an unknown constant $k$, plus an initial condition, and asks you to find both $k$ and the particular solution.
+
+      **Two-step process:**
+      1. Use the given rate/derivative value to find $k$ in the DE (this is objective 3.8.1).
+      2. Solve the DE with that $k$, then use the initial condition to find the integration constant.
+
+  - type: example
+    title: "Example 4: Finding k AND the particular solution"
+    problem: |-
+      The rate of increase of $P$ is proportional to $P$. When $t=0$, $P=100$ and $\frac{dP}{dt}=20$. Find $P$ as a function of $t$.
+    steps:
+      - Formulate DE: $\frac{dP}{dt} = kP$.
+      - Find $k$: at $t=0$, $P=100$, $\frac{dP}{dt}=20$. So $20 = k(100)$ → $k = 0.2$.
+      - DE: $\frac{dP}{dt} = 0.2P$.
+      - Solve: $\frac{1}{P}\,dP = 0.2\,dt$ → $\ln|P| = 0.2t + C$ → $P = Ae^{0.2t}$.
+      - Initial condition: $P=100$ when $t=0$ → $100 = Ae^0 = A$.
+      - Particular solution: $P = 100e^{0.2t}$.
+    answer: |-
+      $P = 100e^{0.2t}$
+
+  - type: check
+    questions: [de-particular-6]
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          The constant of integration $C$ is the same as the constant of proportionality $k$.
+        right: |-
+          They are completely different. $k$ comes from the problem statement (proportionality); $C$ comes from integration. You find $k$ from rate data; you find $C$ from the initial condition.
+      - wrong: |-
+          You can substitute the initial condition before integrating.
+        right: |-
+          You must integrate first to get the general solution with the integration constant, THEN substitute the initial condition.
+      - wrong: |-
+          If $y^2 = x^2 + C$ and $y=2$ at $x=0$, then $y = \pm\sqrt{x^2+4}$.
+        right: |-
+          The initial condition $y=2>0$ picks the positive branch: $y = +\sqrt{x^2+4}$. The negative branch would give $y=-2$ at $x=0$, which contradicts the condition.
+      - wrong: |-
+          An initial condition at $x=0$ is special — the constant is just the $y$-value.
+        right: |-
+          Only if the solution is $y = f(x) + C$ or $y = Ce^{f(x)}$ with $f(0)=0$. In general, substitute $x_0, y_0$ into the general solution and solve for the constant.
+
+  - type: exam
+    body: |-
+      - "Given that $y=5$ when $x=1$, find the particular solution." → Substitute $x=1, y=5$ into your general solution.
+      - "Express $y$ in terms of $x$." → After finding the constant, solve explicitly for $y$ if possible.
+      - "Find the value of $y$ when $x=2$." → Find the particular solution first, then substitute $x=2$.
+      - Show the substitution step clearly: "$2 = A e^0 \Rightarrow A = 2$".
+      - If the question gives $\frac{dy}{dx}$ at a point, use it to find $k$ in the DE before solving.
+
+  - type: takeaways
+    items:
+      - General solution = family of curves with arbitrary constant $C$ (or $A$).
+      - Initial/boundary condition = specific point $(x_0, y_0)$ the solution passes through.
+      - Substitute $x_0, y_0$ into the general solution to find the constant.
+      - If the solution is implicit, substitute directly — don't solve for $y$ first.
+      - The initial condition picks the correct branch ($\pm$) when there's a square root or absolute value.
+      - Sometimes you must first find $k$ (proportionality constant) from rate data, then find $C$ from the initial condition.
+
+questions:
+  - id: de-particular-1
+    format: text
+    difficulty: 1
+    objectives: ["3.8.3"]
+    prompt: |-
+      The general solution of a differential equation is $y = Ae^{3x}$. Given that $y = 4$ when $x = 0$, find the particular solution.
+    accept:
+      - y = 4e^{3x}
+      - y = 4*e^{3x}
+      - y = 4 e^{3x}
+    model: |-
+      $y = 4e^{3x}$
+    explanation: |-
+      Substitute $x=0, y=4$: $4 = Ae^0 = A$. So $A=4$ and $y = 4e^{3x}$.
+
+  - id: de-particular-2
+    format: text
+    difficulty: 2
+    objectives: ["3.8.3"]
+    prompt: |-
+      The general solution is $y^2 = x^2 + C$. Given that $y = -3$ when $x = 0$, find the particular solution (express $y$ in terms of $x$).
+    accept:
+      - y = -sqrt(x^2+9)
+      - y = -√(x^2+9)
+      - y = -(x^2+9)^{1/2}
+    model: |-
+      $y = -\sqrt{x^2 + 9}$
+    explanation: |-
+      Substitute: $(-3)^2 = 0 + C$ → $C=9$. So $y^2 = x^2 + 9$. Since $y=-3<0$ at $x=0$, we take the negative root: $y = -\sqrt{x^2+9}$.
+
+  - id: de-particular-3
+    format: text
+    difficulty: 2
+    objectives: ["3.8.3"]
+    prompt: |-
+      Solve $\frac{dy}{dx} = \frac{2x}{y}$ given that $y = 1$ when $x = 2$. Give the particular solution in the form $y = f(x)$.
+    accept:
+      - y = sqrt(2x^2 - 7)
+      - y = √(2x^2 - 7)
+      - y = (2x^2 - 7)^{1/2}
+    model: |-
+      $y = \sqrt{2x^2 - 7}$
+    explanation: |-
+      Separate: $y\,dy = 2x\,dx$ → $\frac{1}{2}y^2 = x^2 + C$ → $y^2 = 2x^2 + K$. Substitute $x=2, y=1$: $1 = 8 + K$ → $K = -7$. $y^2 = 2x^2 - 7$. Since $y=1>0$ at $x=2$, $y = \sqrt{2x^2 - 7}$.
+
+  - id: de-particular-4
+    format: text
+    difficulty: 2
+    objectives: ["3.8.3"]
+    prompt: |-
+      Solve $\frac{dy}{dx} = 3y \cos x$ given that $y = 2$ when $x = \frac{\pi}{2}$. Give the particular solution.
+    accept:
+      - y = 2e^{3sin x - 3}
+      - y = 2*e^{3sin x - 3}
+      - y = 2 e^{3(sin x - 1)}
+    model: |-
+      $y = 2e^{3\sin x - 3}$
+    explanation: |-
+      Separate: $\frac{1}{y}dy = 3\cos x\,dx$ → $\ln|y| = 3\sin x + C$ → $y = Ae^{3\sin x}$. Substitute $x=\pi/2, y=2$: $2 = Ae^3$ → $A = 2e^{-3}$. So $y = 2e^{-3}e^{3\sin x} = 2e^{3\sin x - 3}$.
+
+  - id: de-particular-5
+    format: text
+    difficulty: 3
+    objectives: ["3.8.3"]
+    prompt: |-
+      Solve $\frac{dy}{dx} = \frac{y}{x}$ given that $y = -4$ when $x = -2$. Give the particular solution.
+    accept:
+      - y = 2x
+      - y = 2*x
+    model: |-
+      $y = 2x$
+    explanation: |-
+      Separate: $\frac{1}{y}dy = \frac{1}{x}dx$ → $\ln|y| = \ln|x| + C$ → $|y| = A|x|$ → $y = kx$. Substitute $x=-2, y=-4$: $-4 = k(-2)$ → $k=2$. So $y=2x$.
+
+  - id: de-particular-6
+    format: text
+    difficulty: 3
+    objectives: ["3.8.3"]
+    prompt: |-
+      The rate of change of $N$ is proportional to $N$. When $t=0$, $N=50$ and $\frac{dN}{dt}=5$. Find $N$ in terms of $t$.
+    accept:
+      - N = 50e^{0.1t}
+      - N = 50*e^{0.1t}
+      - N = 50 e^{0.1t}
+    model: |-
+      $N = 50e^{0.1t}$
+    explanation: |-
+      DE: $\frac{dN}{dt} = kN$. At $t=0$, $N=50$, $\frac{dN}{dt}=5$: $5 = k(50)$ → $k=0.1$. Solve: $N = Ae^{0.1t}$. Initial: $50 = A$. So $N = 50e^{0.1t}$.

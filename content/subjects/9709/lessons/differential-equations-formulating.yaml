@@ -1,0 +1,226 @@
+id: differential-equations-formulating
+subject: "9709"
+topic: "3.8"
+title: Formulating differential equations from rates of change
+summary: "Learn to translate real-world situations involving rates of change into differential equations. The key insight: 'rate of change' means derivative, and proportionality introduces a constant."
+order: 1
+minutes: 8
+kind: core
+objectives: ["3.8.1"]
+prerequisites: []
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >-
+    Drafted against the official Cambridge International AS & A Level Mathematics 9709
+    syllabus (2026–2027), topic 3.8 outcome "Formulate a simple statement involving a rate
+    of change as a differential equation." All examples, questions and diagrams are original.
+blocks:
+  - type: objective
+    body: |-
+      By the end you can translate a verbal description of a rate of change into a differential equation, including introducing and evaluating constants of proportionality.
+
+  - type: explain
+    title: The big idea
+    body: |-
+      A **differential equation** is simply an equation that involves a derivative. In Cambridge 9709 Paper 3, we meet first-order differential equations — equations with $\frac{dy}{dx}$ (or $\frac{dV}{dt}$, $\frac{dP}{dt}$, etc.) but no higher derivatives.
+
+      The syllabus phrase "formulate a simple statement involving a rate of change" means: **read the words, spot the derivative, write the equation.**
+
+      **Translation table:**
+
+      | Phrase | Math |
+      |--------|------|
+      | rate of change of $y$ with respect to $x$ | $\frac{dy}{dx}$ |
+      | rate of change of $V$ with respect to time $t$ | $\frac{dV}{dt}$ |
+      | is proportional to | $= k \times$ (something) |
+      | is inversely proportional to | $= \frac{k}{\text{something}}$ |
+      | increases at a rate proportional to | $\frac{dy}{dt} = ky$ |
+      | decreases at a rate proportional to | $\frac{dy}{dt} = -ky$ |
+
+  - type: example
+    title: "Example 1: Basic proportionality"
+    problem: |-
+      The rate of change of $y$ with respect to $x$ is proportional to $y$. Write a differential equation.
+    steps:
+      - |-
+        "Rate of change of $y$ with respect to $x$" becomes $\frac{dy}{dx}$.
+      - |-
+        "Is proportional to $y$" becomes $k y$ for some constant $k$.
+      - |-
+        Put together: $\frac{dy}{dx} = ky$.
+    answer: |-
+      $\frac{dy}{dx} = ky$
+
+  - type: example
+    title: "Example 2: Inverse proportionality with a square root"
+    problem: |-
+      The volume $V$ of a spherical balloon decreases at a rate proportional to the square root of its surface area $A$. Given that $A = 4\pi r^2$ and $V = \frac{4}{3}\pi r^3$, write a differential equation for $\frac{dV}{dt}$ in terms of $V$.
+    steps:
+      - |-
+        "Decreases at a rate" means $\frac{dV}{dt}$ is negative.
+      - |-
+        "Proportional to the square root of $A$" gives $\frac{dV}{dt} = -k\sqrt{A}$.
+      - |-
+        We need it in terms of $V$. From $V = \frac{4}{3}\pi r^3$, we get $r = \left(\frac{3V}{4\pi}\right)^{1/3}$.
+      - |-
+        $A = 4\pi r^2 = 4\pi \left(\frac{3V}{4\pi}\right)^{2/3} = (36\pi)^{1/3} V^{2/3}$.
+      - |-
+        $\sqrt{A} = (36\pi)^{1/6} V^{1/3}$.
+      - |-
+        So $\frac{dV}{dt} = -k(36\pi)^{1/6} V^{1/3}$.
+      - |-
+        Combine constants: let $K = k(36\pi)^{1/6}$, then $\frac{dV}{dt} = -K V^{1/3}$.
+    answer: |-
+      $\frac{dV}{dt} = -K V^{1/3}$ (where $K > 0$ is a constant)
+
+  - type: check
+    questions: [de-formulate-1, de-formulate-2]
+
+  - type: explain
+    title: Evaluating the constant of proportionality
+    body: |-
+      Often the problem gives you extra information to find the numerical value of $k$. You substitute the given values into the differential equation and solve for $k$.
+
+      **Typical wording:** "When $x = 2$, $y = 5$ and $\frac{dy}{dx} = 3$."
+
+      This means: plug $x=2$, $y=5$, $\frac{dy}{dx}=3$ into your equation and solve for $k$.
+
+  - type: example
+    title: "Example 3: Finding the constant"
+    problem: |-
+      Newton's law of cooling: the rate of decrease of temperature $\theta$ of a body is proportional to the difference between $\theta$ and the room temperature $\theta_0$ (a constant). When $\theta = 80$, $\theta_0 = 20$ and the temperature is falling at $2^\circ\text{C/min}$, find the differential equation with the constant evaluated.
+    steps:
+      - |-
+        "Rate of decrease of $\theta$" means $-\frac{d\theta}{dt}$ (negative because it's decreasing).
+      - |-
+        "Proportional to $\theta - \theta_0$" gives $-\frac{d\theta}{dt} = k(\theta - \theta_0)$, so $\frac{d\theta}{dt} = -k(\theta - \theta_0)$.
+      - |-
+        Given: when $\theta = 80$, $\theta_0 = 20$, rate of decrease is $2$ means $\frac{d\theta}{dt} = -2$.
+      - |-
+        Substitute: $-2 = -k(80 - 20) = -60k$, so $k = \frac{1}{30}$.
+      - |-
+        Final equation: $\frac{d\theta}{dt} = -\frac{1}{30}(\theta - 20)$.
+    answer: |-
+      $\frac{d\theta}{dt} = -\frac{1}{30}(\theta - 20)$
+
+  - type: check
+    questions: [de-formulate-3, de-formulate-4]
+
+  - type: explain
+    title: Common modelling scenarios
+    body: |-
+      | Situation | Typical DE |
+      |-----------|------------|
+      | Population growth (unlimited) | $\frac{dP}{dt} = kP$ |
+      | Radioactive decay | $\frac{dN}{dt} = -kN$ |
+      | Newton's law of cooling | $\frac{d\theta}{dt} = -k(\theta - \theta_0)$ |
+      | Chemical reaction (rate $\propto$ concentration) | $\frac{dx}{dt} = k(a-x)$ |
+      | Water leaking from a tank (rate $\propto \sqrt{h}$) | $\frac{dV}{dt} = -k\sqrt{h}$ |
+
+      **Exam tip:** Always define your variables clearly. State "Let $y$ be the mass at time $t$" or similar. The examiner needs to know what your letters mean.
+
+  - type: misconceptions
+    items:
+      - wrong: |-
+          "Rate of change" means the same as "change".
+        right: |-
+          "Rate of change" means **derivative** — how fast it changes *per unit of the independent variable*. $\frac{dy}{dx}$, not $\Delta y$.
+      - wrong: |-
+          If $y$ decreases, the derivative is positive.
+        right: |-
+          If $y$ decreases as $x$ increases, $\frac{dy}{dx} < 0$. "Decreases at a rate proportional to..." means the derivative is negative.
+      - wrong: |-
+          The constant of proportionality $k$ is always positive.
+        right: |-
+          $k$ can be positive or negative. The wording "increases at a rate proportional to" implies $k>0$; "decreases at a rate proportional to" implies $k>0$ with a minus sign in front. Don't double-count the sign!
+      - wrong: |-
+          You can leave $k$ as a letter even when given numerical data.
+        right: |-
+          If the question gives numbers to find $k$, you **must** evaluate it. "Find the differential equation" with data given means find it *with the constant evaluated*.
+
+  - type: exam
+    body: |-
+      - "The rate of increase of $y$ is proportional to $x^2$." → $\frac{dy}{dx} = kx^2$.
+      - "The mass $m$ decreases at a rate proportional to $\sqrt{m}$." → $\frac{dm}{dt} = -k\sqrt{m}$.
+      - "Given that when $t=0$, $P=100$ and $\frac{dP}{dt}=5$, find $k$." → Substitute into your DE.
+      - Always use correct notation: $\frac{dV}{dt}$, not $V'$ or $\dot{V}$ (Cambridge uses Leibniz notation).
+      - The constant $k$ should be simplified (e.g. $\frac{1}{30}$ not $0.0333$).
+
+  - type: takeaways
+    items:
+      - |-
+        "Rate of change of $y$ with respect to $x$" means $\frac{dy}{dx}$.
+      - |-
+        "Proportional to" → multiply by constant $k$; "inversely proportional to" → divide by it.
+      - |-
+        "Increases" → derivative positive; "decreases" → derivative negative.
+      - |-
+        If numerical data is given, substitute to find $k$ and write the final DE with the number.
+      - |-
+        Define your variables: "Let $y$ be the ... at time $t$".
+
+questions:
+  - id: de-formulate-1
+    format: text
+    difficulty: 1
+    objectives: ["3.8.1"]
+    prompt: |-
+      The rate of change of $y$ with respect to $t$ is proportional to $y$. Write the differential equation.
+    accept:
+      - dy/dt = ky
+      - dy/dt = k*y
+      - \\frac{dy}{dt} = ky
+      - \\frac{dy}{dt} = k y
+    model: |-
+      $\frac{dy}{dt} = ky$
+    explanation: |-
+      "Rate of change of $y$ with respect to $t$" = $\frac{dy}{dt}$; "proportional to $y$" = $ky$.
+
+  - id: de-formulate-2
+    format: text
+    difficulty: 2
+    objectives: ["3.8.1"]
+    prompt: |-
+      The radius $r$ of a circle increases at a rate inversely proportional to $r$. Write the differential equation for $\frac{dr}{dt}$.
+    accept:
+      - dr/dt = k/r
+      - dr/dt = k/r
+      - \\frac{dr}{dt} = \\frac{k}{r}
+      - \\frac{dr}{dt} = k/r
+    model: |-
+      $\frac{dr}{dt} = \frac{k}{r}$
+    explanation: |-
+      "Increases" → positive derivative; "inversely proportional to $r$" → $k/r$.
+
+  - id: de-formulate-3
+    format: numeric
+    difficulty: 2
+    objectives: ["3.8.1"]
+    prompt: |-
+      The rate of decrease of $V$ is proportional to $V$. When $V = 50$, $\frac{dV}{dt} = -10$. Find the constant $k$ in the differential equation $\frac{dV}{dt} = -kV$.
+    answer: 0.2
+    tolerance: 0.001
+    explanation: |-
+      Substitute $V=50$, $\frac{dV}{dt}=-10$ into $\frac{dV}{dt} = -kV$: $-10 = -k(50)$ → $k = 0.2$.
+
+  - id: de-formulate-4
+    format: mcq
+    difficulty: 2
+    objectives: ["3.8.1"]
+    prompt: |-
+      A population $P$ grows at a rate proportional to $P$. When $P = 200$, the rate of increase is $30$ per year. Which is the correct differential equation with the constant evaluated?
+    options:
+      - text: $\frac{dP}{dt} = 0.15P$
+        correct: true
+        why: |-
+          $\frac{dP}{dt} = kP$. When $P=200$, $\frac{dP}{dt}=30$. So $30 = k(200)$ → $k = 0.15$.
+      - text: $\frac{dP}{dt} = 30P$
+        why: |-
+          This uses the rate value as $k$, but $k = \text{rate}/P = 30/200 = 0.15$.
+      - text: $\frac{dP}{dt} = \frac{1}{15}P$
+        why: |-
+          $1/15 \approx 0.0667$, not $0.15$.
+      - text: $\frac{dP}{dt} = \frac{P}{30}$
+        why: |-
+          This would mean $k = 1/30$, giving rate $200/30 \approx 6.67$, not $30$.
