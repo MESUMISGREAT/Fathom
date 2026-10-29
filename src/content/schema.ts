@@ -11,7 +11,43 @@
  */
 import { z } from 'zod';
 
-export const Md = z.string().trim().min(1);
+/**
+ * A raw C0 control character that can only get into content by accident: a LaTeX
+ * command written with a single backslash inside a *double-quoted* YAML scalar,
+ * where \t becomes TAB, \r becomes CR and so on, so "\rightarrow" arrives as CR
+ * followed by "ightarrow". Newline (U+000A) is excluded because block scalars
+ * legitimately contain it.
+ */
+const CONTROL_CHAR = /[\u0000-\u0009\u000B-\u001F]/;
+const CONTROL_NAMES: Record<number, string> = {
+  0x00: 'NUL',
+  0x07: 'BEL',
+  0x08: 'backspace',
+  0x09: 'TAB',
+  0x0b: 'vertical tab',
+  0x0c: 'form feed',
+  0x0d: 'carriage return',
+};
+
+/** Markdown text. Rejects control characters, which always mean broken LaTeX. */
+export const Md = z
+  .string()
+  .trim()
+  .min(1)
+  .superRefine((value, ctx) => {
+    const hit = CONTROL_CHAR.exec(value);
+    if (!hit) return;
+    const code = hit[0].codePointAt(0)!;
+    const name = CONTROL_NAMES[code] ?? 'control';
+    const around = value.slice(Math.max(0, hit.index - 12), hit.index + 12).replace(CONTROL_CHAR, '␍');
+    ctx.addIssue({
+      code: 'custom',
+      message:
+        `contains a raw ${name} character (U+${code.toString(16).toUpperCase().padStart(4, '0')}) near "${around}" - ` +
+        'this is a LaTeX command written with a single backslash inside a double-quoted YAML scalar. ' +
+        "Put maths in a block scalar (| or >) or a single-quoted string, e.g. '\\rightarrow' or $\\rightarrow$, and never in \"...\" with single backslashes.",
+    });
+  });
 const Slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'lowercase-kebab-case');
 const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD');
 
