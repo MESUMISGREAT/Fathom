@@ -9,6 +9,7 @@ import { XpRules } from '@/components/points/PointsViews';
 import { BRAND } from '@/lib/brand';
 
 export const metadata: Metadata = { title: 'How it works' };
+export const dynamic = 'force-dynamic';
 
 const ROADMAP: Array<{ phase: string; title: string; status: 'Available' | 'Planned'; items: string[] }> = [
   {

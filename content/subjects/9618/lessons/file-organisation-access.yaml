@@ -1,0 +1,244 @@
+id: file-organisation-access
+subject: "9618"
+topic: "13.2"
+title: "File organisation — serial, sequential, random; file access methods; hashing"
+summary: "Understand serial, sequential, and random file organisation; select appropriate organisation and access methods; describe and use hashing algorithms for file access."
+order: 2
+minutes: 10
+kind: core
+objectives: ["13.2.1", "13.2.2", "13.2.3"]
+prerequisites: ["files-text-file-handling"]
+provenance:
+  origin: ai-drafted
+  status: draft
+  notes: >
+    Drafted against the official Cambridge International AS & A Level Computer Science 9618 syllabus
+    for 2027-2029, topic 13.2 File organisation and access. Covers objectives 13.2.1-13.2.3.
+    All questions and examples are original. Not yet independently reviewed.
+blocks:
+  - type: objective
+    body: |
+      By the end you can distinguish between serial, sequential, and random file organisation,
+      choose the appropriate organisation and access method for a given problem, and describe
+      and use hashing algorithms to calculate record addresses in random files.
+
+  - type: explain
+    title: File organisation methods
+    body: |
+      **File organisation** determines how records are physically stored on the storage medium.
+      The choice affects access speed, storage efficiency, and ease of maintenance.
+
+      | Organisation | Description | Best for |
+      |--------------|-------------|----------|
+      | **Serial** | Records stored in order of arrival (no key order). New records appended at end. | Log files, audit trails, temporary data |
+      | **Sequential** | Records stored in sorted order by a key field. | Master files processed in batch (e.g., payroll) |
+      | **Random (Direct)** | Records stored at addresses calculated from the key (hashing). Direct access by key. | Real-time systems, databases, indexes |
+
+  - type: explain
+    title: Serial files
+    body: |
+      - Records written in the order they arrive
+      - No sorting by key
+      - **Access**: Sequential only (must read from start)
+      - **Insertion**: Append at end (fast)
+      - **Deletion**: Mark as deleted; periodic reorganisation needed
+      - **Update**: Read entire file, modify in memory, rewrite (slow)
+
+      Example: A transaction log where each entry is appended with a timestamp.
+
+  - type: explain
+    title: Sequential files
+    body: |
+      - Records stored in ascending/descending order of a **key field** (e.g., EmployeeID)
+      - **Access**: Sequential (can stop early when key is passed)
+      - **Insertion**: Must shift subsequent records or use overflow area
+      - **Deletion**: Mark as deleted; periodic reorganisation
+      - **Update**: May require rewriting if key changes
+
+      Example: A customer master file sorted by CustomerID, processed monthly for statements.
+
+  - type: explain
+    title: Random (direct) files
+    body: |
+      - Record address calculated from key using a **hashing algorithm**
+      - **Access**: Direct (O(1) average) — go straight to calculated address
+      - **Insertion**: Hash key -> address; if occupied, use collision resolution
+      - **Deletion**: Mark slot as deleted; may need special handling for collision chains
+      - **Update**: Direct access to record; fast if key unchanged
+
+      Example: A student record system where StudentID hashes to a disk address for instant lookup.
+
+  - type: explain
+    title: File access methods
+    body: |
+      **Sequential access** — read records one after another from the beginning.
+      - Used with: serial files, sequential files
+      - Required for: serial files; optional for sequential/random
+
+      **Direct (random) access** — jump straight to a specific record by address.
+      - Used with: random files (essential); also possible with sequential files if index exists
+      - Requires: ability to calculate or look up record address
+
+      **Choosing access method:**
+      - Process all records in order → sequential access
+      - Need specific record by key → direct access (requires random organisation or index)
+      - Mixed workload → random organisation with direct access
+
+  - type: explain
+    title: Hashing algorithms for random files
+    body: |
+      A **hash function** maps a key (e.g., StudentID) to a storage address (block/record number).
+
+      **Desirable properties:**
+      - Uniform distribution (minimise collisions)
+      - Fast to compute
+      - Deterministic (same key always gives same address)
+
+      **Common hash functions:**
+      1. **Division method**: `address = key MOD tableSize`
+         - tableSize should be a prime number for better distribution
+      2. **Mid-square method**: Square the key, take middle digits
+      3. **Folding method**: Split key into parts, add them, take MOD tableSize
+      4. **Multiplication method**: `address = floor(tableSize * frac(key * A))` where 0 < A < 1
+
+      **Example (division method):**
+      - Table size = 13 (prime)
+      - Key = 12345
+      - Address = 12345 MOD 13 = 8
+
+      **Collision resolution:**
+      - **Linear probing**: If address occupied, try (address + 1) MOD size, then +2, etc.
+      - **Chaining**: Each address holds a linked list of records with that hash
+      - **Rehashing**: Apply a second hash function
+
+  - type: example
+    title: Choosing file organisation and hashing
+    problem: |
+      A school needs to store 5000 student records. Each record has StudentID (key), Name, DOB, Form.
+      The system must support:
+      1. Printing all students in StudentID order (termly report)
+      2. Looking up a single student by StudentID (daily, frequent)
+      3. Adding new students (start of year, ~200/year)
+      Which file organisation and access method would you recommend?
+    steps:
+      - "Requirement 1 (full ordered listing) suggests sequential organisation"
+      - "Requirement 2 (frequent single lookup) suggests random organisation with direct access"
+      - "Requirement 3 (batch inserts) works with either but sequential insertion is slower"
+      - "Trade-off: Random with hashing gives O(1) lookup but unordered full scan"
+      - "Solution: Use random organisation with hashing for daily lookups; maintain a separate index or sort for reports"
+    answer: |
+      Recommended: Random file organisation with division-method hashing (tableSize = prime > 5000, e.g., 5003).
+      Use direct access for lookups. For termly reports, either sort in memory or maintain a separate sorted index file.
+      Collision resolution: linear probing or chaining.
+
+  - type: check
+    title: Check yourself
+    questions: [serial-vs-sequential, random-access-method, hash-division, collision-resolution]
+
+  - type: misconceptions
+    items:
+      - wrong: "Sequential files can be accessed directly by record number."
+        right: |
+          Sequential files store records in key order, but there is no direct mapping from key to
+          physical address. You must read sequentially (or use an index).
+      - wrong: "Hashing guarantees no collisions."
+        right: |
+          Collisions are inevitable when the key space exceeds the address space. Good hash functions
+          and collision resolution are essential.
+      - wrong: "Random files are always faster than sequential files."
+        right: |
+          For full-file processing (e.g., printing all records), sequential files are faster because
+          they avoid the overhead of hashing and random disk seeks.
+      - wrong: "Serial and sequential files are the same."
+        right: |
+          Serial files have no key order (arrival order); sequential files are sorted by key field.
+
+  - type: exam
+    body: |
+      - Given a scenario, choose serial, sequential, or random file organisation and justify.
+      - Explain the difference between sequential access and direct access.
+      - Calculate a record address using the division hash method: address = key MOD tableSize.
+      - Describe linear probing and chaining as collision resolution techniques.
+      - Explain why tableSize should be a prime number in the division method.
+
+  - type: takeaways
+    items:
+      - "Serial: arrival order, sequential access only, fast append"
+      - "Sequential: sorted by key, sequential access (can stop early), slow insert/delete"
+      - "Random: address = hash(key), direct access O(1), requires collision handling"
+      - "Sequential access: read in order; Direct access: jump to address"
+      - "Hash function: key -> address; division method uses MOD prime"
+      - "Collisions: linear probing (next slot) or chaining (linked list at each slot)"
+
+questions:
+  - id: serial-vs-sequential
+    format: mcq
+    difficulty: 1
+    objectives: ["13.2.1"]
+    prompt: |
+      What is the key difference between a serial file and a sequential file?
+    options:
+      - text: "Serial files are sorted by key; sequential files are not"
+        why: "This is the opposite of the correct distinction."
+      - text: "Sequential files are sorted by a key field; serial files are in arrival order"
+        correct: true
+        why: "Sequential files maintain key order; serial files store records as they arrive."
+      - text: "Serial files allow direct access; sequential files do not"
+        why: "Neither serial nor sequential files support direct access by key."
+      - text: "Sequential files use hashing; serial files do not"
+        why: "Hashing is used for random files, not sequential files."
+    explanation: |
+      Serial = arrival order (like a log). Sequential = sorted by key field (like a master file).
+
+  - id: random-access-method
+    format: mcq
+    difficulty: 2
+    objectives: ["13.2.2"]
+    prompt: |
+      A random file organisation is used. Which access method is required to achieve O(1) record lookup by key?
+    options:
+      - text: "Sequential access"
+        why: "Sequential access reads records in order, O(n)."
+      - text: "Direct (random) access"
+        correct: true
+        why: "Direct access uses the hashed address to jump straight to the record."
+      - text: "Indexed sequential access"
+        why: "This uses an index on a sequential file, not pure random organisation."
+      - text: "Sequential access with early termination"
+        why: "Still O(n) in worst case; only works if file is sorted by key."
+    explanation: |
+      Random file organisation stores records at addresses calculated from the key. Direct access
+      uses this calculated address to retrieve the record in constant time on average.
+
+  - id: hash-division
+    format: numeric
+    difficulty: 2
+    objectives: ["13.2.3"]
+    prompt: |
+      A random file uses the division hashing method with a table size of 17 (prime). What address is calculated for a record with key = 1234?
+    fields:
+      - answer: 10
+        tolerance: { abs: 0.5 }
+        unit: "address"
+    explanation: |
+      address = key MOD tableSize = 1234 MOD 17 = 10. (17 * 72 = 1224; 1234 - 1224 = 10)
+
+  - id: collision-resolution
+    format: mcq
+    difficulty: 2
+    objectives: ["13.2.3"]
+    prompt: |
+      Two different keys hash to the same address in a random file. Which collision resolution method stores all colliding records in a linked list at that address?
+    options:
+      - text: "Linear probing"
+        why: "Linear probing searches for the next free slot in the table."
+      - text: "Chaining"
+        correct: true
+        why: "Chaining maintains a linked list of records at each hash address."
+      - text: "Rehashing"
+        why: "Rehashing applies a second hash function to find a different address."
+      - text: "Quadratic probing"
+        why: "Quadratic probing uses a quadratic function to find the next slot."
+    explanation: |
+      Chaining stores a linked list (or chain) of records at each hash table address. All records
+      with the same hash value are linked together at that address.
