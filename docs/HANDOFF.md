@@ -214,6 +214,46 @@ changes alongside lessons:
 
 ## 5. Current state (28 Oct 2026, cloud chat)
 
+- **9701 7.1 was written twice (29 Oct).** This chat drafted 9 lessons under
+  `chemical-equilibria-*` (plus 2 diagrams) while the chat at `0b8e8fe21ee9b5f6eaa0ce13` published its
+  ten-lesson set (`0b48020`). The drafts were reviewed, then **discarded unpushed** on `git fetch`
+  showing the published unit; `git reset --hard FETCH_HEAD` removed them, so nothing collided. Lesson:
+  fetch `origin/main` **before** drafting a unit, not only before pushing, and check `git log
+  --all --oneline -- 'content/subjects/<code>/lessons/<prefix>-*'`.
+- **9618 7.1 Ethics and Ownership is PUBLISHED** (29 Oct, `3e848aa`, from this chat): 4 lessons,
+  24 questions, 1 diagram, covering all five outcomes 7.1.1-7.1.5:
+  `ethics-ownership-ethics-in-computing` (7.1.1+7.1.2), `-copyright` (7.1.3),
+  `-software-licences` (7.1.4), `-artificial-intelligence` (7.1.5). Diagram
+  `cs-ai-system-pipeline` (data → train → model → predict, with a feedback loop).
+  **Verified:** `content:check` 0 errors / 0 warnings, `tsc --noEmit` clean,
+  `vitest run tests/diagrams.test.ts tests/diagram-notation.test.ts` 5 tests pass, and the live page
+  `https://fathom-steel-ten.vercel.app/subjects/9618/lessons/ethics-ownership-artificial-intelligence`
+  returns 200 with the lesson title. The lesson body itself loads client-side, so the rendered
+  diagram was not confirmed on the live page.
+  - Note the lesson URL shape: `/subjects/<code>/lessons/<id>` — `/lessons/<id>` returns 404.
+  - 9709 3.6+3.7 was skipped deliberately: `src/components/diagrams/9709/index.ts` was committed
+    importing `p3-vectors-*`/`p3-numerical-solution-*` modules that do not exist on `main`, which
+    means another chat was drafting exactly that unit. Treat 3.6+3.7 as claimed until proven otherwise.
+  - Review caveat as elsewhere: second adversarial pass by the **same agent**, no separate reviewer
+    model, no teacher. Legal details (UK copyright duration and exceptions, GPL copyleft vs MIT/Apache
+    permissive) were re-checked; every MCQ has exactly one correct option by construction of the schema.
+- **9701 topic 8 has TWO overlapping lesson sets and needs its owner's decision** (29 Oct). `main`
+  carried `rate-reaction-collision-theory` / `-concentration-pressure` / `-calculations` /
+  `activation-energy-boltzmann` / `rate-reaction-temperature` **and** `rate-reaction-meaning-and-collisions` /
+  `rate-reaction-measuring` / `effect-temperature-boltzmann`, teaching the same 8.1 and 8.2 outcomes.
+  That duplication, not bad content, caused the duplicate `order` errors. To unblock publishing this
+  chat only **renumbered** the second set (8.1 → order 4 and 5; 8.2 → order 3) and fixed the two
+  KaTeX failures in `effect-temperature-boltzmann` (a single-quoted YAML string kept `\\text{A}`, which
+  KaTeX read as a line break; now `E_{\text{A}}`). **No lesson text was changed.** Someone should
+  decide which set stays and delete the other before topic 8 is considered finished.
+  `content:check` is GREEN on `main` again as of `3e848aa`.
+- **Rendering diagrams without Chromium.** Chromium cannot launch in this VM (missing system
+  libraries, no root), so `.work-logs/render-svg.tsx` renders a registered diagram through
+  `renderToStaticMarkup` + `sharp` with the `dg-*` CSS injected into the SVG (librsvg needs plain
+  selectors: `:where(...)` is silently dropped, so an un-injected or `:where`-based stylesheet makes
+  every curve render as a solid black fill). It renders light mode only. Use it for a quick look,
+  and still run `npm run diagram:render` on a machine with Chromium for light/dark.
+
 - **`content:check` is RED on `main` as of `62caa9c`, caused by the chat writing 9701 topic 8
   (rates), not by 9701 7.1.** Five errors, all in that chat's newest files: `order 1 in topic
   8.2 is also used by activation-energy-boltzmann` and `order 1/2 in topic 8.1 ...` (duplicate
