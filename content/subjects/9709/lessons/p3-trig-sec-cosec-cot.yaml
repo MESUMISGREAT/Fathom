@@ -25,7 +25,7 @@ provenance:
 blocks:
 - type: objective
   body: By the end you can define $\sec\theta$, $\operatorname{cosec}\theta$ and $\cot\theta$, state where each
-    is undefined, sketch their graphs, and use them (including small-angle approximations) to evaluate expressions.
+    is undefined, sketch their graphs, and use them to evaluate and simplify expressions.
 - type: explain
   title: What they ask
   body: 'They give you three new names for three old ideas:
@@ -53,9 +53,22 @@ blocks:
 
     undefined where $\tan\theta$ is undefined, that is where $\sin\theta = 0$. Undefined means
 
-    "the fraction blows up and the graph runs off to infinity" — those vertical lines in the
+    "the fraction blows up and the graph runs off to infinity". On the graphs below, each of those
 
-    diagram are the asymptotes.'
+    values becomes a dashed vertical line, an **asymptote**, which the curve approaches but never
+
+    touches.'
+- type: diagram
+  diagram: p2-trigonometry-reciprocal-graphs
+  alt: Three graph panels for sec x, cosec x and cot x from minus pi to pi. Sec has a U-shaped branch
+    above the axis with minimum 1 at zero and downward branches below minus 1 near plus and minus pi, with
+    dashed asymptotes where cos x is zero. Cosec has an upward branch between 0 and pi and a downward branch
+    between minus pi and 0, with dashed asymptotes at minus pi, 0 and pi. Cot decreases between asymptotes at
+    multiples of pi and crosses zero at plus and minus pi over 2.
+  caption: |-
+    Every dashed line sits where the denominator ($\cos x$ for sec, $\sin x$ for cosec and cot) is zero.
+    Sec and cosec never come between $-1$ and $1$. The graphs are labelled in radians, where $\pi$ means
+    $180°$, so the asymptotes of sec at $\pm\tfrac{\pi}{2}$ are the $\pm 90°$ used in the text.
 - type: explain
   title: 'Graphs: only three facts to memorise'
   body: '1. **The graphs never cross the axis of their denominator.** $\sec\theta = 1/\cos\theta$ is never between
@@ -96,25 +109,9 @@ blocks:
   answer: 'It equals $\sin\theta$ for all $\theta$ except $\theta = 0°, 180°, 360°$ (and their coterminal
 
     copies).'
-- type: explain
-  title: Small angles, in radians
-  body: 'You already know $\sin\theta \approx \theta$, $\cos\theta \approx 1 - \tfrac{1}{2}\theta^2$ and
-
-    $\tan\theta \approx \theta$ for small $\theta$ in **radians**.
-
-
-    Invert them carefully — reciprocating an approximation is fine:
-
-
-    - $\operatorname{cosec}\theta \approx \dfrac{1}{\theta}$
-
-    - $\sec\theta \approx \dfrac{1}{1 - \frac{1}{2}\theta^2} \approx 1 + \tfrac{1}{2}\theta^2$
-
-    - $\cot\theta \approx \dfrac{1}{\theta}$'
 - type: check
   title: Exam-style check
   questions:
-  - small-angle
   - identity-check
   - branch-zero
 - type: misconceptions
@@ -131,10 +128,6 @@ blocks:
     right: '$\cot 90° = \dfrac{\cos 90°}{\sin 90°} = \dfrac{0}{1} = 0$. It is **defined** and equal to
 
       zero there; it is undefined at $0°, 180°, 360°$ where $\sin\theta = 0$.'
-  - wrong: $\operatorname{cosec}\theta \approx \theta$ for small angles.
-    right: 'Inverting the approximation flips it: $\operatorname{cosec}\theta \approx 1/\theta$, which
-
-      is *large*, exactly matching the near-vertical branches at $0°$.'
   - wrong: $\sin^{-1}\theta$ means $\operatorname{cosec}\theta$.
     right: '$\sin^{-1}$ is the **inverse function** (arcsin). The reciprocal function is written
 
@@ -152,8 +145,6 @@ blocks:
   - '"co pairs with plain": sec ↔ cos, cosec ↔ sin, cot ↔ tan.'
   - $|\sec\theta| \ge 1$ and $|\operatorname{cosec}\theta| \ge 1$ wherever defined.
   - Undefined points sit where the partner function is zero; they become asymptotes.
-  - 'Small-angle: $\operatorname{cosec}\theta \approx 1/\theta$, $\sec\theta \approx 1 + \tfrac{1}{2}\theta^2$,
-    $\cot\theta \approx 1/\theta$.'
 - type: deeper
   title: Why the graphs look like that
   body: 'Take $y = \sec\theta = 1/\cos\theta$. Near $\theta = 90°$, $\cos\theta$ is a tiny positive or
@@ -213,23 +204,6 @@ questions:
   - text: Nowhere in $0° \le \theta < 360°$
     why: $\cot$ blows up twice per turn, wherever $\sin\theta = 0$.
   explanation: 'Undefined points are where the denominator function is zero: for cot, $\sin\theta = 0$.'
-- id: small-angle
-  format: mcq
-  difficulty: 2
-  objectives:
-  - 3.3.1
-  prompt: For small $\theta$ in radians, which is the correct approximation for $\operatorname{cosec}\theta$?
-  options:
-  - text: $\dfrac{1}{\theta}$
-    correct: true
-    why: Inverting $\sin\theta \approx \theta$ flips the approximation to the reciprocal.
-  - text: $\theta$
-    why: That is $\sin\theta$ itself; the reciprocal is large, not small.
-  - text: $1 + \dfrac12\theta^2$
-    why: That is the small-angle form of $\sec\theta$.
-  - text: $-\ln\theta$
-    why: No such approximation exists here.
-  explanation: $\operatorname{cosec}\theta \approx \dfrac{1}{\theta}$, which is why the branches shoot up at $0$.
 - id: identity-check
   format: numeric
   difficulty: 2

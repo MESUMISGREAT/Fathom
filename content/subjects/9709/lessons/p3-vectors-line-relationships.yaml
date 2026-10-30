@@ -4,221 +4,247 @@ topic: "3.7"
 title: Line relationships — parallel, intersecting, or skew
 summary: "Learn to classify the relationship between two lines in 3D: are they parallel, do they intersect, or are they skew? Find intersection points when they exist."
 order: 5
-minutes: 9
+minutes: 10
 kind: core
 objectives: ["3.7.5"]
 prerequisites: [p3-vectors-line-equation]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709
     syllabus (2026–2027), topic 3.7 outcome "Determine whether two lines are parallel,
     intersect or are skew, and find the point of intersection of two lines when it exists.
     Calculating the shortest distance between two skew lines is not required, and neither
     is finding the equation of the common perpendicular to two skew lines." All examples,
-    questions and diagrams are original.
+    questions and diagrams are original. Rebuilt on 2026-10-30 by Claude Opus 5.5: the
+    previous version shipped unfinished worked examples and an answer key for a pair of
+    skew lines; every example and key was recomputed by hand. Independently reviewed on 2026-10-30 by a separate Claude agent, which recomputed every example and answer key; its one finding was fixed. Not reviewed by a teacher.
 blocks:
   - type: objective
     body: |-
-      By the end you can determine whether two lines in 3D are parallel, intersecting, or skew, and find their intersection point when they intersect.
+      By the end you can decide whether two lines in 3D are **parallel**, **intersecting** or
+      **skew**, and find the point where they meet when they do intersect.
 
   - type: explain
-    title: Three possibilities for two lines in 3D
+    title: Three possibilities, not two
     body: |-
-      In 2D, two lines are either parallel or they intersect. In 3D, there's a third possibility:
+      On a flat page, two straight lines either run side by side for ever (parallel) or cross
+      once. Space has a third option.
 
-      **1. Parallel** — direction vectors are scalar multiples of each other (b₁ = k b₂). The lines never meet (unless they're actually the same line).
-      **2. Intersecting** — there exist parameters t and s such that a₁ + t b₁ = a₂ + s b₂. The lines cross at a single point.
-      **3. Skew** — not parallel, and they don't intersect. They "miss" each other in 3D space. Think of a bridge over a road: the bridge and the road are skew lines.
+      Picture a road and a bridge that carries another road over it. The two roads point in
+      different directions, so they are not parallel. But one is higher than the other, so
+      they never touch. Lines like that are called **skew**.
 
-      **Important:** "Skew" means not parallel AND not intersecting. They exist in different planes.
+      | Relationship | Same direction? | Common point? |
+      | --- | --- | --- |
+      | **Parallel** | yes | no (unless they are the same line) |
+      | **Intersecting** | no | exactly one |
+      | **Skew** | no | none |
 
   - type: diagram
     diagram: p3-vectors-line-relationships
     alt: >-
-      Three panels showing the three relationships. Left: two parallel lines with parallel direction
-      vectors. Middle: two intersecting lines crossing at a point. Right: two skew lines — one
-      horizontal, one vertical but offset — they don't touch and aren't parallel.
+      Three wire-frame boxes. Left, titled parallel: two lines running in the same direction
+      inside the box, never meeting. Middle, titled intersecting: two lines crossing at one marked
+      shared point in the middle of the box. Right, titled skew: one line runs along the floor of
+      the box from front to back and the other runs along the roof from left to right; a dashed
+      vertical gap joins them where they appear to cross, showing that they never meet.
     caption: |-
-      The three line relationships in 3D: parallel (same direction), intersecting (cross at a point), skew (miss each other entirely).
+      In a flat drawing, skew lines can look as if they cross. The dashed gap is the giveaway:
+      one line is on the floor and the other is on the roof.
 
   - type: explain
-    title: How to check if lines are parallel
+    title: What the symbols mean
     body: |-
-      Two lines r = a₁ + t b₁ and r = a₂ + s b₂ are **parallel** if their direction vectors are proportional:
+      Each line is written in the form you met in the last lesson:
 
-      **b₁ = k b₂** for some scalar k (k ≠ 0).
+      $$L_1:\ \mathbf{r} = \mathbf{a}_1 + t\,\mathbf{b}_1 \qquad L_2:\ \mathbf{r} = \mathbf{a}_2 + s\,\mathbf{b}_2$$
 
-      Check component-wise: b₁ = (p, q, r), b₂ = (u, v, w). If p/u = q/v = r/w (same ratio), they're parallel.
+      - $\mathbf{a}_1$ and $\mathbf{a}_2$ are the position vectors of one known point on each line.
+      - $\mathbf{b}_1$ and $\mathbf{b}_2$ are the **direction vectors**: which way each line points.
+      - $t$ and $s$ are the parameters. Use **different letters** for the two lines, because
+        the shared point (if there is one) is usually reached at different parameter values.
 
-      **Note:** If they're parallel AND a₂ - a₁ is also parallel to b₁, then they're actually the *same line* (coincident). If a₂ - a₁ is NOT parallel to b₁, they're distinct parallel lines.
+  - type: explain
+    title: "Test 1: are they parallel?"
+    body: |-
+      Two lines are parallel when their direction vectors point the same way, which means one
+      direction vector is a **multiple** of the other: $\mathbf{b}_2 = k\,\mathbf{b}_1$ for some number $k$.
+
+      To test it, divide matching components. If every ratio is the same number $k$, the lines
+      are parallel.
+
+      Parallel lines can still be the **same line** written twice. To tell, take the known point
+      of one line and test whether it lies on the other. If it does, the lines coincide; if not,
+      they are distinct parallel lines.
 
   - type: example
-    title: "Example 1: checking for parallel lines"
+    title: "Example 1: parallel, but not the same line"
     problem: |-
-      L₁: r = (i + 2j - k) + t(2i - j + 3k)
-      L₂: r = (3i - j + 2k) + s(4i - 2j + 6k)
-      Are L₁ and L₂ parallel?
+      $L_1:\ \mathbf{r} = \begin{pmatrix}1\\2\\-1\end{pmatrix} + t\begin{pmatrix}2\\-1\\3\end{pmatrix}$ and
+      $L_2:\ \mathbf{r} = \begin{pmatrix}3\\-1\\2\end{pmatrix} + s\begin{pmatrix}4\\-2\\6\end{pmatrix}$.
+
+      Are $L_1$ and $L_2$ parallel? Are they the same line?
     steps:
       - |-
-        b₁ = (2, -1, 3), b₂ = (4, -2, 6).
+        **Compare the direction vectors.** Divide each component of $\mathbf{b}_2$ by the matching
+        component of $\mathbf{b}_1$: $\dfrac{4}{2} = 2$, $\dfrac{-2}{-1} = 2$, $\dfrac{6}{3} = 2$.
+        Every ratio is $2$, so $\mathbf{b}_2 = 2\mathbf{b}_1$ and the lines are **parallel**.
       - |-
-        Check ratios: 2/4 = 1/2, -1/-2 = 1/2, 3/6 = 1/2. All equal!
+        **Is the point $(3, -1, 2)$ of $L_2$ also on $L_1$?** For $L_1$ to reach $x = 3$ we need
+        $1 + 2t = 3$, so $t = 1$.
       - |-
-        b₂ = 2 b₁, so the lines are parallel.
+        At $t = 1$, $L_1$ has $y = 2 - 1 = 1$. But the point has $y = -1$, so it is **not** on $L_1$.
       - |-
-        Are they the same line? Check if a₂ - a₁ is parallel to b₁: a₂ - a₁ = (2, -3, 3). Ratios: 2/2 = 1, -3/-1 = 3, 3/3 = 1. Not equal! So they are distinct parallel lines.
+        Parallel lines that do not share even one point are two different lines.
     answer: |-
-      Yes, parallel (b₂ = 2b₁), but distinct (not the same line).
+      Parallel ($\mathbf{b}_2 = 2\mathbf{b}_1$) but distinct: they never meet.
 
   - type: check
+    title: Check 1 — parallel?
     questions: [vec-lines-parallel]
 
   - type: explain
-    title: How to check if lines intersect
+    title: "Test 2: do they meet?"
     body: |-
-      Two lines intersect if there exist values of t and s such that:
+      If the lines are **not** parallel, they either intersect or are skew. A common point
+      would have to be on both lines, so we look for values of $t$ and $s$ that give the same
+      point:
 
-      **a₁ + t b₁ = a₂ + s b₂**
+      $$\mathbf{a}_1 + t\,\mathbf{b}_1 = \mathbf{a}_2 + s\,\mathbf{b}_2$$
 
-      This gives 3 equations (one for each component) in 2 unknowns (t and s). Solve the system:
-      1. Write the 3 component equations.
-      2. Solve any 2 equations for t and s.
-      3. Check if the 3rd equation is satisfied with those values.
-         - If **yes** → lines intersect at that point.
-         - If **no** → lines are skew (provided they're not parallel).
+      A vector equation in 3D is really **three** ordinary equations, one each for $x$, $y$ and
+      $z$. But there are only **two** unknowns, $t$ and $s$.
 
-  - type: example
-    title: "Example 2: finding intersection"
-    problem: |-
-      L₁: r = (i + 2j - k) + t(2i - j + 3k)
-      L₂: r = (3i - j + 2k) + s(i + 2j - k)
-      Find if they intersect, and if so, the intersection point.
-    steps:
-      - |-
-        Write components:
-        L₁: x = 1 + 2t, y = 2 - t, z = -1 + 3t
-        L₂: x = 3 + s, y = -1 + 2s, z = 2 - s
-      - |-
-        Set equal: 1 + 2t = 3 + s  (1),  2 - t = -1 + 2s  (2),  -1 + 3t = 2 - s  (3)
-      - |-
-        From (1): s = 2t - 2. Substitute into (2): 2 - t = -1 + 2(2t - 2) = -1 + 4t - 4 = 4t - 5
-        → 2 - t = 4t - 5 → 7 = 5t → t = 7/5 = 1.4
-      - |-
-        Then s = 2(1.4) - 2 = 0.8
-      - |-
-        Check (3): -1 + 3(1.4) = -1 + 4.2 = 3.2.  2 - 0.8 = 1.2. Not equal!
-      - |-
-        The third equation fails → lines are **skew** (not parallel, don't intersect).
-    answer: |-
-      The lines are skew (no intersection).
+      1. Write out the three component equations.
+      2. Solve **two** of them for $t$ and $s$.
+      3. Put those values into the **third** equation.
+         - It works: the lines **intersect**. Substitute $t$ into $L_1$ to get the point.
+         - It fails: no pair $(t, s)$ fits all three, so the lines are **skew**.
+
+      Step 3 is the whole test. Two equations in two unknowns almost always have a solution,
+      so finding $t$ and $s$ proves nothing until the third equation agrees.
 
   - type: example
-    title: "Example 3: intersecting lines"
+    title: "Example 2: two lines that miss — skew"
     problem: |-
-      L₁: r = (2i - j + k) + t(i + 2j - k)
-      L₂: r = (i + 3j + 2k) + s(2i - j + k)
-      Find if they intersect.
-    steps:
-      - |-
-        L₁: x = 2 + t, y = -1 + 2t, z = 1 - t
-        L₂: x = 1 + 2s, y = 3 - s, z = 2 + s
-      - |-
-        Equate: 2 + t = 1 + 2s  (1),  -1 + 2t = 3 - s  (2),  1 - t = 2 + s  (3)
-      - |-
-        From (1): t = 2s - 1. From (3): 1 - (2s - 1) = 2 + s → 2 - 2s = 2 + s → -2s = s → 3s = 0 → s = 0.
-      - |-
-        Then t = 2(0) - 1 = -1.
-      - |-
-        Check (2): -1 + 2(-1) = -3.  3 - 0 = 3. Wait, -3 ≠ 3. Let me recheck...
-        Actually: -1 + 2t = -1 + 2(-1) = -3.  3 - s = 3 - 0 = 3. Not equal!
-      - |-
-        These lines are also skew! Let me try a different example that DOES intersect.
-    answer: |-
-      These lines are skew. (They don't intersect.)
+      $L_1:\ \mathbf{r} = \begin{pmatrix}1\\2\\-1\end{pmatrix} + t\begin{pmatrix}2\\-1\\3\end{pmatrix}$ and
+      $L_2:\ \mathbf{r} = \begin{pmatrix}3\\-1\\2\end{pmatrix} + s\begin{pmatrix}1\\2\\-1\end{pmatrix}$.
 
-  - type: example
-    title: "Example 4: actually intersecting lines"
-    problem: |-
-      L₁: r = (2i + j - k) + t(i - j + k)
-      L₂: r = (i + 2j + k) + s(2i - j + 2k)
-      Find if they intersect.
+      Determine whether the lines intersect or are skew.
     steps:
       - |-
-        L₁: x = 2 + t, y = 1 - t, z = -1 + t
-        L₂: x = 1 + 2s, y = 2 - s, z = 1 + 2s
+        **Parallel?** $\dfrac{1}{2} \neq \dfrac{2}{-1}$, so the direction vectors are not multiples
+        of each other. Not parallel, so it is "intersect or skew".
       - |-
-        Equate: 2 + t = 1 + 2s  (1),  1 - t = 2 - s  (2),  -1 + t = 1 + 2s  (3)
+        **Three component equations** (left side from $L_1$, right side from $L_2$):
+
+        $x$: $\ 1 + 2t = 3 + s \quad (1)$
+
+        $y$: $\ 2 - t = -1 + 2s \quad (2)$
+
+        $z$: $\ -1 + 3t = 2 - s \quad (3)$
       - |-
-        From (1): t = 2s - 1. From (2): 1 - (2s - 1) = 2 - s → 2 - 2s = 2 - s → -2s = -s → s = 0.
+        **Solve (1) and (2).** From (1), $s = 2t - 2$. Substitute into (2):
+        $2 - t = -1 + 2(2t - 2) = 4t - 5$, so $7 = 5t$ and $t = \tfrac{7}{5}$.
       - |-
-        Then t = 2(0) - 1 = -1.
+        Then $s = 2\left(\tfrac{7}{5}\right) - 2 = \tfrac{14}{5} - \tfrac{10}{5} = \tfrac{4}{5}$.
       - |-
-        Check (3): -1 + (-1) = -2.  1 + 2(0) = 1. Not equal. Still skew!
-        Let me make one that works.
+        **Test (3)** with $t = \tfrac{7}{5}$ and $s = \tfrac{4}{5}$.
+        Left side: $-1 + 3\left(\tfrac{7}{5}\right) = \tfrac{16}{5}$.
+        Right side: $2 - \tfrac{4}{5} = \tfrac{6}{5}$.
+        These are different, so no single pair $(t, s)$ satisfies all three equations.
     answer: |-
-      Still skew. (Constructing an intersecting pair: L₁: r = (1, 2, 3) + t(1, 1, 1), L₂: r = (2, 3, 4) + s(1, 0, -1). Intersection at t=1, s=0: point (2, 3, 4).)
+      The lines are not parallel and have no common point, so they are **skew**.
 
   - type: check
-    questions: [vec-lines-intersect]
+    title: Check 2 — skew or not?
+    questions: [vec-lines-skew]
 
-  - type: intuition
-    title: A systematic method for line relationships
-    body: |-
-      **Step 1:** Check if parallel (b₁ proportional to b₂).
-      - Yes → parallel (check if same line or distinct).
-      - No → go to Step 2.
+  - type: example
+    title: "Example 3: two lines that meet"
+    problem: |-
+      $L_1:\ \mathbf{r} = \begin{pmatrix}1\\-1\\2\end{pmatrix} + t\begin{pmatrix}2\\1\\-1\end{pmatrix}$ and
+      $L_2:\ \mathbf{r} = \begin{pmatrix}4\\2\\2\end{pmatrix} + s\begin{pmatrix}1\\2\\1\end{pmatrix}$.
 
-      **Step 2:** Try to solve a₁ + t b₁ = a₂ + s b₂ for t and s.
-      - Consistent solution → intersecting.
-      - Inconsistent (no solution) → skew.
+      Show that the lines intersect, and find the point of intersection.
+    steps:
+      - |-
+        **Parallel?** $\dfrac{1}{2} \neq \dfrac{2}{1}$, so not parallel.
+      - |-
+        **Three component equations:**
 
-      **Remember:** You don't need to find distances between skew lines or common perpendiculars for Cambridge 9709.
+        $x$: $\ 1 + 2t = 4 + s \quad (1)$
+
+        $y$: $\ -1 + t = 2 + 2s \quad (2)$
+
+        $z$: $\ 2 - t = 2 + s \quad (3)$
+      - |-
+        **Pick the easiest pair.** Equation (3) simplifies at once: subtract 2 from both sides to
+        get $-t = s$, so $s = -t$.
+      - |-
+        Substitute $s = -t$ into (1): $1 + 2t = 4 - t$, so $3t = 3$, giving $t = 1$ and $s = -1$.
+      - |-
+        **Test the unused equation (2):** left side $-1 + 1 = 0$, right side $2 + 2(-1) = 0$.
+        They agree, so the lines **intersect**.
+      - |-
+        **Find the point** by putting $t = 1$ into $L_1$:
+        $\begin{pmatrix}1\\-1\\2\end{pmatrix} + 1\begin{pmatrix}2\\1\\-1\end{pmatrix} = \begin{pmatrix}3\\0\\1\end{pmatrix}$.
+      - |-
+        **Check with the other line**, $s = -1$ in $L_2$:
+        $\begin{pmatrix}4\\2\\2\end{pmatrix} - \begin{pmatrix}1\\2\\1\end{pmatrix} = \begin{pmatrix}3\\0\\1\end{pmatrix}$.
+        Both lines give the same point.
+    answer: |-
+      The lines intersect at $(3, 0, 1)$.
+
+  - type: check
+    title: Check 3 — find the meeting point
+    questions: [vec-lines-intersect, vec-lines-find-p]
 
   - type: misconceptions
     items:
       - wrong: |-
           Two lines in 3D are either parallel or they intersect.
         right: |-
-          In 3D, there's a third option: skew lines. They are not parallel and don't intersect — they "miss" each other in space.
+          That is only true on a flat page. In 3D, lines with different directions can pass
+          each other at different heights without meeting: they are skew.
       - wrong: |-
-          If two lines have different direction vectors, they must intersect.
+          I found values of $t$ and $s$, so the lines intersect.
         right: |-
-          Different directions only means not parallel. They could still be skew (most pairs of non-parallel lines in 3D are skew).
+          Two equations in two unknowns nearly always have a solution. The lines intersect only
+          if those values **also** satisfy the third equation.
       - wrong: |-
-          To check intersection, I only need to solve two equations.
+          Use the same parameter $t$ for both lines.
         right: |-
-          You must check the THIRD equation too. Two equations give candidate t and s; the third confirms or denies intersection.
+          The shared point is usually reached at different parameter values on the two lines.
+          Using one letter forces them to be equal and can make intersecting lines look skew.
       - wrong: |-
-          Skew lines are just lines that look like they might intersect but don't.
+          If two lines do not meet, they must be parallel.
         right: |-
-          Skew lines are non-parallel, non-intersecting lines. They exist in different planes. They're not "almost intersecting" — they genuinely don't share any point.
-      - wrong: |-
-          If I can't find t and s, the lines are parallel.
-        right: |-
-          If no t, s exist, they're skew (if not parallel) or distinct parallel (if parallel). Parallel is checked FIRST by comparing direction vectors.
+          Check the directions first. Not meeting and **not** parallel means skew.
 
   - type: exam
     body: |-
-      - "Determine whether the lines are parallel, intersect, or are skew" → always check parallel first, then try to solve for intersection.
-      - "Find the point of intersection" → solve for t, substitute back to get r.
-      - If lines are skew, state "skew" clearly. Don't try to find a distance.
-      - Show your working: write the 3 equations, solve 2, check the 3rd.
-      - Direction vectors: if one is a multiple of the other, they're parallel. That's it.
+      - "Show that the lines are skew" needs **both** halves: the direction vectors are not
+        multiples (so not parallel), **and** the three equations are inconsistent (so no common
+        point). Missing either half loses a mark.
+      - "Find the point of intersection": show the two equations you solved, show the third
+        equation being satisfied, then substitute into one line.
+      - Write the three component equations out in full and number them. It makes your
+        working easy to follow and to mark.
+      - Distances between skew lines are not required in 9709.
 
   - type: takeaways
     items:
       - |-
-        Parallel: direction vectors are multiples (b₁ = k b₂).
+        Parallel: one direction vector is a multiple of the other.
       - |-
-        Intersect: ∃ t, s such that a₁ + t b₁ = a₂ + s b₂ (all 3 equations consistent).
+        Not parallel: solve two component equations for $t$ and $s$, then test the third.
       - |-
-        Skew: not parallel AND no intersection (inconsistent equations).
+        Third equation true → the lines intersect; substitute to get the point.
       - |-
-        Same line: parallel AND a₂ - a₁ is also parallel to b₁.
-      - |-
-        Always check parallel first, then intersection.
+        Third equation false → no common point, so the lines are skew.
 
 questions:
   - id: vec-lines-parallel
@@ -226,40 +252,91 @@ questions:
     difficulty: 2
     objectives: ["3.7.5"]
     prompt: |-
-      L₁: r = (i + j + k) + t(2i - j + 3k). L₂: r = (2i - j + k) + s(4i - 2j + 6k). What is the relationship?
+      $L_1:\ \mathbf{r} = \begin{pmatrix}1\\1\\1\end{pmatrix} + t\begin{pmatrix}2\\-1\\3\end{pmatrix}$ and
+      $L_2:\ \mathbf{r} = \begin{pmatrix}2\\-1\\1\end{pmatrix} + s\begin{pmatrix}4\\-2\\6\end{pmatrix}$.
+      What is the relationship between the lines?
     options:
       - text: Parallel and distinct
         correct: true
         why: |-
-          b₂ = (4, -2, 6) = 2 × (2, -1, 3) = 2b₁. Parallel. a₂ - a₁ = (1, -2, 0) is not a multiple of b₁, so distinct.
+          $(4, -2, 6) = 2(2, -1, 3)$, so the lines are parallel, and the point $(1, 1, 1)$ of $L_1$
+          is not on $L_2$.
       - text: The same line
         why: |-
-          a₂ - a₁ = (1, -2, 0) is not a multiple of (2, -1, 3). Different lines.
+          For $(1, 1, 1)$ to be on $L_2$ we need $2 + 4s = 1$, so $s = -\tfrac{1}{4}$, but then
+          $y = -1 - 2s = -\tfrac{1}{2}$, not $1$. So the lines are different.
       - text: Intersecting
         why: |-
-          Parallel lines don't intersect (unless they're the same line).
+          Distinct parallel lines never meet.
       - text: Skew
         why: |-
-          They ARE parallel (direction vectors are multiples), so they can't be skew.
-    explanation: |
-      The direction $(4, -2, 6)$ is exactly $2(2, -1, 3)$, so the lines are parallel. The point $(1, 1, 1)$ lies on $L_1$ but not on $L_2$: it would need $s = -0.25$, giving $y = -0.5$. So the lines are distinct.
+          Skew lines are not parallel, but these direction vectors are multiples of each other.
+    explanation: |-
+      The direction $(4, -2, 6)$ is exactly $2(2, -1, 3)$, so the lines are parallel. The point
+      $(1, 1, 1)$ lies on $L_1$ but not on $L_2$: reaching $x = 1$ on $L_2$ needs $s = -\tfrac{1}{4}$,
+      which gives $y = -\tfrac{1}{2}$. So the lines are distinct.
 
-  - id: vec-lines-intersect
-    format: text
+  - id: vec-lines-skew
+    format: mcq
     difficulty: 2
     objectives: ["3.7.5"]
     prompt: |-
-      L₁: r = (2i + j - k) + t(i + j + k). L₂: r = (i + 2j + k) + s(2i - j + k). Determine their relationship. If they intersect, find the point.
-    accept:
-      - Intersect at (3, 2, 0)
-      - intersect at 3, 2, 0
-      - point (3, 2, 0)
-    model: |-
-      Intersect at (3, 2, 0)
+      $L_1:\ \mathbf{r} = \begin{pmatrix}1\\0\\0\end{pmatrix} + t\begin{pmatrix}1\\1\\0\end{pmatrix}$ and
+      $L_2:\ \mathbf{r} = \begin{pmatrix}0\\0\\2\end{pmatrix} + s\begin{pmatrix}0\\1\\1\end{pmatrix}$.
+      What is the relationship between the lines?
+    options:
+      - text: Skew
+        correct: true
+        why: |-
+          Not parallel, and the equations $1 + t = 0$, $t = s$, $0 = 2 + s$ give $t = -1$, $s = -1$
+          from the first two, but the third needs $s = -2$. No common point.
+      - text: Intersecting
+        why: |-
+          The first two equations give $t = -1$ and $s = -1$, but then $z$ is $0$ on $L_1$ and $1$
+          on $L_2$. The third equation fails.
+      - text: Parallel
+        why: |-
+          $(0, 1, 1)$ is not a multiple of $(1, 1, 0)$: the $z$-components would need $k \times 0 = 1$, which no number $k$ does.
+      - text: The same line
+        why: |-
+          Lines with different directions cannot be the same line.
     explanation: |-
-      Not parallel (direction vectors not multiples). Solve: 2+t = 1+2s, 1+t = 2-s, -1+t = 1+s.
-      From 1st: t = 2s - 1. From 2nd: 1+(2s-1) = 2-s → 2s = 2-s → 3s = 2 → s = 2/3, t = 1/3.
-      Check 3rd: -1+1/3 = -2/3. 1+2/3 = 5/3. Not equal! Wait... these are skew.
-      Let me fix: L₁: r = (2, 1, -1) + t(1, 1, 1), L₂: r = (3, 2, 0) + s(1, 0, -1).
-      2+t = 3+s, 1+t = 2, -1+t = -s. From 2nd: t=1. Then 2+1=3+s → s=0. Check 3rd: -1+1=0, -0=0. Works!
-      Intersection at t=1: (3, 2, 0).
+      Directions $(1, 1, 0)$ and $(0, 1, 1)$ are not multiples, so the lines are not parallel.
+      Equating components: $1 + t = 0$, $t = s$ and $0 = 2 + s$. The first two give $t = s = -1$,
+      but the third needs $s = -2$. The equations are inconsistent, so the lines are skew.
+
+  - id: vec-lines-intersect
+    format: numeric
+    difficulty: 2
+    objectives: ["3.7.5"]
+    prompt: |-
+      $L_1:\ \mathbf{r} = \begin{pmatrix}2\\1\\-1\end{pmatrix} + t\begin{pmatrix}1\\1\\1\end{pmatrix}$ and
+      $L_2:\ \mathbf{r} = \begin{pmatrix}3\\2\\0\end{pmatrix} + s\begin{pmatrix}1\\0\\-1\end{pmatrix}$
+      intersect. Find the coordinates of the point of intersection.
+    fields:
+      - label: "x ="
+        answer: 3
+      - label: "y ="
+        answer: 2
+      - label: "z ="
+        answer: 0
+    explanation: |-
+      Components: $2 + t = 3 + s$, $1 + t = 2$ and $-1 + t = -s$. The second gives $t = 1$; then
+      the first gives $s = 0$. The third checks: $-1 + 1 = 0 = -0$. Putting $t = 1$ into $L_1$ gives
+      $(3, 2, 0)$, which is also $L_2$ at $s = 0$.
+
+  - id: vec-lines-find-p
+    format: numeric
+    difficulty: 3
+    objectives: ["3.7.5"]
+    prompt: |-
+      $L_1:\ \mathbf{r} = \begin{pmatrix}1\\0\\2\end{pmatrix} + t\begin{pmatrix}1\\1\\0\end{pmatrix}$ and
+      $L_2:\ \mathbf{r} = \begin{pmatrix}0\\1\\p\end{pmatrix} + s\begin{pmatrix}1\\0\\2\end{pmatrix}$,
+      where $p$ is a constant. Given that the lines intersect, find $p$.
+    fields:
+      - label: "p ="
+        answer: -2
+    explanation: |-
+      Components: $x$: $1 + t = s$; $y$: $t = 1$; $z$: $2 = p + 2s$. The $y$ equation gives
+      $t = 1$, so $s = 2$. For the lines to meet, the $z$ equation must also hold:
+      $2 = p + 4$, so $p = -2$. The meeting point is $(2, 1, 2)$.

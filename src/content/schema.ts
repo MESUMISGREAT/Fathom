@@ -29,24 +29,58 @@ const CONTROL_NAMES: Record<number, string> = {
   0x0d: 'carriage return',
 };
 
-/** Markdown text. Rejects control characters, which always mean broken LaTeX. */
+/**
+ * The opposite mistake: "\\text" written in a block scalar or single-quoted string, where YAML
+ * keeps both backslashes. KaTeX reads "\\" as a line break, so students see "textms−2" or
+ * "dfracddx". A row break "\\" before a single letter (a matrix row "x\\y") is legitimate, so only
+ * a command name (two or more letters) or a spacing command ("\\," "\\;" "\\!" "\\:") counts.
+ */
+const DOUBLED_BACKSLASH = /\\\\(?:[a-zA-Z]{2,}|[,;!:])/;
+const MATH = /\$\$[\s\S]*?\$\$|\$[^$\n]*\$/g;
+
+/**
+ * A "|" inside $...$ on a markdown table row: GFM splits the cell there, so "$|z - a| = r$"
+ * renders as "$ || z - a || = r$". Write \lvert ... \rvert (or \mid) inside tables instead.
+ */
+function tableRowWithBar(value: string): string | undefined {
+  return value.split('\n').find((line) => line.trim().startsWith('|') && (line.match(MATH) ?? []).some((m) => m.includes('|')));
+}
+
+/** Markdown text. Rejects control characters and doubled backslashes, which always mean broken LaTeX. */
 export const Md = z
   .string()
   .trim()
   .min(1)
   .superRefine((value, ctx) => {
     const hit = CONTROL_CHAR.exec(value);
-    if (!hit) return;
-    const code = hit[0].codePointAt(0)!;
-    const name = CONTROL_NAMES[code] ?? 'control';
-    const around = value.slice(Math.max(0, hit.index - 12), hit.index + 12).replace(CONTROL_CHAR, '␍');
-    ctx.addIssue({
-      code: 'custom',
-      message:
-        `contains a raw ${name} character (U+${code.toString(16).toUpperCase().padStart(4, '0')}) near "${around}" - ` +
-        'this is a LaTeX command written with a single backslash inside a double-quoted YAML scalar. ' +
-        "Put maths in a block scalar (| or >) or a single-quoted string, e.g. '\\rightarrow' or $\\rightarrow$, and never in \"...\" with single backslashes.",
-    });
+    if (hit) {
+      const code = hit[0].codePointAt(0)!;
+      const name = CONTROL_NAMES[code] ?? 'control';
+      const around = value.slice(Math.max(0, hit.index - 12), hit.index + 12).replace(CONTROL_CHAR, '␍');
+      ctx.addIssue({
+        code: 'custom',
+        message:
+          `contains a raw ${name} character (U+${code.toString(16).toUpperCase().padStart(4, '0')}) near "${around}" - ` +
+          'this is a LaTeX command written with a single backslash inside a double-quoted YAML scalar. ' +
+          "Put maths in a block scalar (| or >) or a single-quoted string, e.g. '\\rightarrow' or $\\rightarrow$, and never in \"...\" with single backslashes.",
+      });
+    }
+    const doubled = (value.match(MATH) ?? []).find((m) => DOUBLED_BACKSLASH.test(m));
+    if (doubled) {
+      ctx.addIssue({
+        code: 'custom',
+        message:
+          `contains a doubled backslash in maths ("${doubled.slice(0, 60)}"), which renders as a line break followed by plain letters. ` +
+          'In a block scalar (| or >) or a single-quoted string write one backslash, e.g. $\\text{m s}^{-1}$; only "..." strings need \\\\.',
+      });
+    }
+    const row = tableRowWithBar(value);
+    if (row) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `table row has "|" inside maths ("${row.trim().slice(0, 60)}"), which splits the cell. Use \\lvert ... \\rvert instead.`,
+      });
+    }
   });
 const Slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'lowercase-kebab-case');
 const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD');

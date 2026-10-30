@@ -1,191 +1,103 @@
 /**
- * Three line relationships in 3D: parallel, intersecting, skew.
- * Three panels side by side showing each case.
- * Uses a simple 2D projection (x right, y up, z out diagonal).
+ * Three relationships between two lines in 3D: parallel, intersecting, skew.
+ * Each panel draws a wire-frame box in oblique projection so depth is visible. The skew panel
+ * shows the "bridge over a road" picture: in the drawing the lines appear to cross, but a dashed
+ * vertical gap shows that one line runs along the floor and the other along the roof.
  */
-import { Label, MathLabel, Svg, Arrow } from '../primitives';
+import { Label, Svg } from '../primitives';
 
 export const diagramKey = 'p3-vectors-line-relationships';
 
-const W = 680;
-const H = 300;
-const PANEL_W = 200;
+const W = 660;
+const H = 290;
+const BOX = { w: 130, d: 70, h: 90 }; // width (x), depth (y), height (z) in viewBox units
 
-const origin = { x: 40, y: 200 };
-const scale = 40;
+/** Oblique projection of (x, y, z) inside a panel whose front-bottom-left corner is (ox, oy). */
+function project(ox: number, oy: number, x: number, y: number, z: number): [number, number] {
+  return [ox + x + 0.6 * y, oy - z - 0.45 * y];
+}
 
-interface Point2D { x: number; y: number; }
-
-function proj(x: number, y: number, z: number, panelX: number): Point2D {
-  return {
-    x: origin.x + panelX + x * scale,
-    y: origin.y - y * scale - z * scale * 0.5,
+function Box({ ox, oy }: { ox: number; oy: number }) {
+  const p = (x: number, y: number, z: number) => project(ox, oy, x, y, z);
+  const { w, d, h } = BOX;
+  const edges: [number, number, number, number, number, number][] = [
+    [0, 0, 0, w, 0, 0], [0, 0, h, w, 0, h], [0, d, h, w, d, h], [0, 0, 0, 0, 0, h],
+    [w, 0, 0, w, 0, h], [w, 0, 0, w, d, 0], [w, d, 0, w, d, h], [0, 0, h, 0, d, h], [w, 0, h, w, d, h],
+  ];
+  const hidden: [number, number, number, number, number, number][] = [
+    [0, 0, 0, 0, d, 0], [0, d, 0, w, d, 0], [0, d, 0, 0, d, h],
+  ];
+  const seg = ([a, b, c, e, f, g]: [number, number, number, number, number, number], cls: string, k: number) => {
+    const [x1, y1] = p(a, b, c);
+    const [x2, y2] = p(e, f, g);
+    return <line key={k} x1={x1} y1={y1} x2={x2} y2={y2} className={cls} />;
   };
-}
-
-function line3D(panelX: number, x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): string {
-  const p1: Point2D = proj(x1, y1, z1, panelX);
-  const p2: Point2D = proj(x2, y2, z2, panelX);
-  return `M${p1.x.toFixed(1)},${p1.y.toFixed(1)} L${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
-}
-
-function axes3D(panelX: number) {
-  const o: Point2D = proj(0, 0, 0, panelX);
-  const x: Point2D = proj(3.5, 0, 0, panelX);
-  const y: Point2D = proj(0, 3.5, 0, panelX);
-  const z: Point2D = proj(0, 0, 3.5, panelX);
   return (
     <g>
-      <Arrow x1={o.x} y1={o.y} x2={x.x} y2={x.y} className="dg-thin" head={5} />
-      <Arrow x1={o.x} y1={o.y} x2={y.x} y2={y.y} className="dg-thin" head={5} />
-      <Arrow x1={o.x} y1={o.y} x2={z.x} y2={z.y} className="dg-thin" head={5} />
-      <Label x={o.x - 8} y={o.y + 10} className="dg-text-small">O</Label>
+      {edges.map((e, k) => seg(e, 'dg-grid', k))}
+      {hidden.map((e, k) => seg(e, 'dg-grid dg-dashed', 100 + k))}
     </g>
   );
 }
 
-function grid3D(panelX: number) {
-  return (
-    <g className="dg-grid">
-      {[-0.5, 0.5, 1.5, 2.5, 3.5].map(x => {
-        const p1: Point2D = proj(x, -0.5, 0, panelX);
-        const p2: Point2D = proj(x, 3.5, 0, panelX);
-        return <line key={`gx${panelX}-${x}`} x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} />;
-      })}
-      {[-0.5, 0.5, 1.5, 2.5, 3.5].map(y => {
-        const p1: Point2D = proj(-0.5, y, 0, panelX);
-        const p2: Point2D = proj(3.5, y, 0, panelX);
-        return <line key={`gy${panelX}-${y}`} x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} />;
-      })}
-      {[-0.5, 0.5, 1.5, 2.5].map(z => {
-        const p1: Point2D = proj(0, 0, z, panelX);
-        const p2: Point2D = proj(3.5, 0, z, panelX);
-        return <line key={`gz${panelX}-${z}`} x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} />;
-      })}
-    </g>
-  );
+function Line3({ ox, oy, from, to, cls }: { ox: number; oy: number; from: [number, number, number]; to: [number, number, number]; cls: string }) {
+  const [x1, y1] = project(ox, oy, from[0], from[1], from[2]);
+  const [x2, y2] = project(ox, oy, to[0], to[1], to[2]);
+  return <line x1={x1} y1={y1} x2={x2} y2={y2} className={cls} strokeWidth={3} />;
 }
 
-interface PanelConfig {
-  title: string;
-  a1: [number, number, number];
-  b1: [number, number, number];
-  a2: [number, number, number];
-  b2: [number, number, number];
-  color: string;
-}
-
-const panelConfig: PanelConfig[] = [
-  {
-    title: 'Parallel',
-    a1: [0.5, 1, 0.5],
-    b1: [1.5, 0.5, 0.8],
-    a2: [2, 2.5, 2],
-    b2: [1.5, 0.5, 0.8], // same direction
-    color: 'dg-accent',
-  },
-  {
-    title: 'Intersecting',
-    a1: [0.5, 1, 0.5],
-    b1: [1.5, 0.5, 0.8],
-    a2: [2.5, 0.5, 2],
-    b2: [0.5, 1.5, -0.5], // different direction, they cross
-    color: 'dg-accent-2',
-  },
-  {
-    title: 'Skew',
-    a1: [0.5, 0.5, 0.5],
-    b1: [1.5, 0, 0.8], // mostly horizontal
-    a2: [1.5, 2.5, 1.5],
-    b2: [0, 1.5, 0.5], // vertical-ish, different plane
-    color: 'dg-muted',
-  },
-];
-
-export default function P3VectorsLineRelationships() {
+export function LineRelationships() {
+  const oy = 215;
+  const panels = [20, 240, 460] as const;
+  const { w, d, h } = BOX;
+  const meet = project(panels[1], oy, w / 2, d / 2, h / 2);
+  // Skew: line A along the floor's front-to-back middle, line B along the roof, left to right.
+  const floorMid = project(panels[2], oy, w / 2, d / 2, 0);
+  const roofMid = project(panels[2], oy, w / 2, d / 2, h);
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={W / 2} y={20} tex="Line relationships in 3D" w={200} h={28} />
+      <Label x={110} y={24} className="dg-text dg-bold">
+        Parallel
+      </Label>
+      <Box ox={panels[0]} oy={oy} />
+      <Line3 ox={panels[0]} oy={oy} from={[0, 15, 20]} to={[w, 15, 70]} cls="dg-accent" />
+      <Line3 ox={panels[0]} oy={oy} from={[0, 55, 20]} to={[w, 55, 70]} cls="dg-accent-2" />
+      <Label x={110} y={252} className="dg-text-small dg-text-muted">
+        same direction, never meet
+      </Label>
 
-      {panelConfig.map((cfg, idx) => {
-        const panelX = 20 + idx * (PANEL_W + 20);
-        const intersectT = 0.8; // approximate intersection parameter
-        const intersectionPoint = [
-          cfg.a1[0]! + intersectT * cfg.b1[0]!,
-          cfg.a1[1]! + intersectT * cfg.b1[1]!,
-          cfg.a1[2]! + intersectT * cfg.b1[2]!,
-        ];
+      <Label x={330} y={24} className="dg-text dg-bold">
+        Intersecting
+      </Label>
+      <Box ox={panels[1]} oy={oy} />
+      <Line3 ox={panels[1]} oy={oy} from={[0, 0, 0]} to={[w, d, h]} cls="dg-accent" />
+      <Line3 ox={panels[1]} oy={oy} from={[0, 0, h]} to={[w, d, 0]} cls="dg-accent-2" />
+      <circle cx={meet[0]} cy={meet[1]} r={5} className="dg-dot" />
+      <Label x={meet[0]} y={meet[1] + 22} className="dg-text-small">
+        shared point
+      </Label>
+      <Label x={330} y={252} className="dg-text-small dg-text-muted">
+        meet at exactly one point
+      </Label>
 
-        const a1Proj: Point2D = proj(cfg.a1[0]!, cfg.a1[1]!, cfg.a1[2]!, panelX);
-        const a1PlusB1Proj: Point2D = proj(cfg.a1[0]! + cfg.b1[0]!, cfg.a1[1]! + cfg.b1[1]!, cfg.a1[2]! + cfg.b1[2]!, panelX);
-        const a2Proj: Point2D = proj(cfg.a2[0]!, cfg.a2[1]!, cfg.a2[2]!, panelX);
-        const a2PlusB2Proj: Point2D = proj(cfg.a2[0]! + cfg.b2[0]!, cfg.a2[1]! + cfg.b2[1]!, cfg.a2[2]! + cfg.b2[2]!, panelX);
-        const intersectionProj: Point2D = proj(intersectionPoint[0]!, intersectionPoint[1]!, intersectionPoint[2]!, panelX);
-
-        return (
-          <g key={idx} transform={`translate(${panelX}, 40)`}>
-            <Label x={PANEL_W / 2} y={-10} className="dg-text-small dg-bold" anchor="middle">
-              {cfg.title}
-            </Label>
-            {grid3D(panelX)}
-            {axes3D(panelX)}
-
-            {/* Line 1 */}
-            <path
-              d={line3D(panelX,
-                cfg.a1[0]! - 0.5 * cfg.b1[0]!, cfg.a1[1]! - 0.5 * cfg.b1[1]!, cfg.a1[2]! - 0.5 * cfg.b1[2]!,
-                cfg.a1[0]! + 2.5 * cfg.b1[0]!, cfg.a1[1]! + 2.5 * cfg.b1[1]!, cfg.a1[2]! + 2.5 * cfg.b1[2]!
-              )}
-              className="dg-accent"
-            />
-
-            {/* Line 2 */}
-            <path
-              d={line3D(panelX,
-                cfg.a2[0]! - 0.5 * cfg.b2[0]!, cfg.a2[1]! - 0.5 * cfg.b2[1]!, cfg.a2[2]! - 0.5 * cfg.b2[2]!,
-                cfg.a2[0]! + 2.5 * cfg.b2[0]!, cfg.a2[1]! + 2.5 * cfg.b2[1]!, cfg.a2[2]! + 2.5 * cfg.b2[2]!
-              )}
-              className={cfg.color === 'dg-accent' ? 'dg-accent' : cfg.color === 'dg-accent-2' ? 'dg-accent-2' : 'dg-muted'}
-            />
-
-            {/* Intersection point for intersecting case */}
-            {cfg.title === 'Intersecting' && (
-              <circle
-                cx={intersectionProj.x}
-                cy={intersectionProj.y}
-                r={5}
-                className="dg-dot-accent-2"
-              />
-            )}
-
-            {/* Arrow showing direction for parallel case */}
-            {cfg.title === 'Parallel' && (
-              <>
-                <Arrow
-                  x1={a1Proj.x}
-                  y1={a1Proj.y}
-                  x2={a1PlusB1Proj.x}
-                  y2={a1PlusB1Proj.y}
-                  className="dg-accent"
-                  head={5}
-                />
-                <Arrow
-                  x1={a2Proj.x}
-                  y1={a2Proj.y}
-                  x2={a2PlusB2Proj.x}
-                  y2={a2PlusB2Proj.y}
-                  className="dg-accent"
-                  head={5}
-                />
-              </>
-            )}
-          </g>
-        );
-      })}
-
-      <Label x={W / 2} y={H - 12} className="dg-text-small dg-text-muted">
-        Parallel: b\u2082 = k b\u2081 | Intersect: \u2203 t,s with a\u2081+tb\u2081 = a\u2082+sb\u2082 | Skew: neither parallel nor intersecting
+      <Label x={550} y={24} className="dg-text dg-bold">
+        Skew
+      </Label>
+      <Box ox={panels[2]} oy={oy} />
+      <Line3 ox={panels[2]} oy={oy} from={[w / 2, 0, 0]} to={[w / 2, d, 0]} cls="dg-accent" />
+      <Line3 ox={panels[2]} oy={oy} from={[0, d / 2, h]} to={[w, d / 2, h]} cls="dg-accent-2" />
+      <line x1={floorMid[0]} y1={floorMid[1]} x2={roofMid[0]} y2={roofMid[1]} className="dg-muted dg-dashed" />
+      <Label x={roofMid[0] + 8} y={(floorMid[1] + roofMid[1]) / 2} anchor="start" className="dg-text-small">
+        gap
+      </Label>
+      <Label x={550} y={252} className="dg-text-small dg-text-muted">
+        not parallel, yet
+      </Label>
+      <Label x={550} y={270} className="dg-text-small dg-text-muted">
+        never meet
       </Label>
     </Svg>
   );
 }
+
+export default LineRelationships;

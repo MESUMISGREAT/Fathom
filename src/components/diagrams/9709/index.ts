@@ -132,6 +132,7 @@ import SeriesGpSumShift from './series-gp-sum-shift';
 import SeriesGpTerms from './series-gp-terms';
 import SeriesPascalTriangle from './series-pascal-triangle';
 import SeriesSumToInfinity from './series-sum-to-infinity';
+import StatsCfgParcels from './stats-cfg-parcels';
 
 /** Diagrams for 9709 lessons. Keys are referenced from lesson YAML (`diagram: <key>`). */
 export const diagrams: DiagramRegistry = {
@@ -267,4 +268,5 @@ export const diagrams: DiagramRegistry = {
   'series-gp-terms': SeriesGpTerms,
   'series-pascal-triangle': SeriesPascalTriangle,
   'series-sum-to-infinity': SeriesSumToInfinity,
+  'stats-cfg-parcels': StatsCfgParcels,
 };

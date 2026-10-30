@@ -19,7 +19,7 @@ export default function ReciprocalTrigGraphs() {
         const top = index * (panelHeight + 8);
         const endpointLabelOffset = index === 0 ? 0 : 18;
         let label = '\\sec x';
-        if (panel.name === 'cosec') label = '\\csc x';
+        if (panel.name === 'cosec') label = '\\operatorname{cosec} x';
         if (panel.name === 'cot') label = '\\cot x';
         return (
           <g key={panel.name} transform={`translate(0, ${top})`}>

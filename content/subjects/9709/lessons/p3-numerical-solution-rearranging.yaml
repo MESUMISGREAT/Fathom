@@ -59,30 +59,41 @@ blocks:
     questions: [rearrange-ways, rearrange-which-converges]
 
   - type: explain
-    title: How to tell if it will converge (the gradient rule)
+    title: How to tell whether it works — run it and watch
     body: |-
-      A rearrangement x = F(x) converges **locally** near a root α if:
+      The syllabus does **not** ask you to prove whether an iteration converges. It asks you to
+      understand that an iteration **may fail**, and to recognise failure when you see it.
 
-      > |F'(α)| < 1
+      So run a few steps and look at the numbers:
 
-      That is, the **magnitude of the derivative at the root is less than 1**.
+      - **Settling:** the values change by less and less each step. That iteration is working.
+      - **Running away or bouncing:** the values grow, jump about, or never close in. That
+        iteration has failed, even though the equation still has a root.
 
-      - If |F'(α)| < 1: the iteration converges (staircase or spiral).
-      - If |F'(α)| > 1: the iteration diverges (spirals away).
-      - If |F'(α)| = 1: inconclusive (may converge slowly or not at all).
+      For $x^3 - 2x - 5 = 0$ with $x_1 = 2$, the three rearrangements behave like this:
 
-      **In the exam:** you are not asked to differentiate F and check |F'(α)| < 1. But you *are* expected to understand that "an iteration may fail to converge" and to recognise a divergent cobweb diagram when you see one.
+      | Rearrangement | $x_1$ | $x_2$ | $x_3$ | $x_4$ | Verdict |
+      | --- | --- | --- | --- | --- | --- |
+      | $x = \sqrt[3]{2x + 5}$ | $2$ | $2.0801$ | $2.0924$ | $2.0942$ | settles near $2.095$ |
+      | $x = \dfrac{x^3 - 5}{2}$ | $2$ | $1.5$ | $-0.8125$ | $-2.7682$ | runs away |
+      | $x = \dfrac{5}{x^2 - 2}$ | $2$ | $2.5$ | $1.1765$ | $-8.118$ | jumps about |
 
-      **Practical tip:** if you have to choose a rearrangement, avoid dividing by something that gets small near the root (that makes F' large). Taking roots (∛, √) or using the form that "isolates x on the smaller side" usually works better.
+      Same equation, same starting value, three very different outcomes. If a question tells
+      you which rearrangement to use, it will be one that works; if you choose, try one and
+      check that it settles.
 
-  - type: intuition
-    title: Why the derivative matters
+  - type: enrichment
+    title: Beyond the syllabus — why some rearrangements fail
     body: |-
-      Imagine you are at xₙ, near the root α. The next step is xₙ₊₁ = F(xₙ). The error is eₙ = xₙ − α. Then:
+      Near a root $\alpha$, each step multiplies the error by roughly $F'(\alpha)$, the gradient of
+      $y = F(x)$ at the root. If $|F'(\alpha)| < 1$ the error shrinks and the iteration settles; if
+      $|F'(\alpha)| > 1$ it grows.
 
-      eₙ₊₁ = xₙ₊₁ − α = F(xₙ) − F(α) ≈ F'(α)(xₙ − α) = F'(α) eₙ.
+      For $F(x) = \sqrt[3]{2x + 5}$, $F'(\alpha) \approx 0.15$ near the root, so the error shrinks fast.
+      For $F(x) = \dfrac{x^3 - 5}{2}$, the gradient is far bigger than 1 (even at $x = 2$, $F'(2) = 6$),
+      so each step makes the error bigger.
 
-      So the error gets multiplied by roughly F'(α) each step. If |F'(α)| < 1, the error shrinks. If |F'(α)| > 1, the error grows. This is the whole story.
+      You will not be asked to use this test in 9709; it is here to explain the table above.
 
   - type: example
     title: "Example 2: choosing a starting value for a given rearrangement"
@@ -90,16 +101,20 @@ blocks:
       For x³ − 2x − 5 = 0, the iteration xₙ₊₁ = ∛(2xₙ + 5) is used.
       (a) Show that this rearrangement is valid.
       (b) With x₁ = 2, find the root to 3 d.p.
-      (c) Explain why x₁ = −2 would be a poor choice.
+      (c) Show that the rearrangement x = (x³ − 5)/2, started at x₁ = 2, does not find the root.
     steps:
       - |-
-        (a) x³ − 2x − 5 = 0 → x³ = 2x + 5 → x = ∛(2x + 5). Valid.
+        (a) x³ − 2x − 5 = 0 → x³ = 2x + 5 → x = ∛(2x + 5). Every step is reversible, so a value that
+        satisfies x = ∛(2x + 5) also satisfies the original equation.
       - |-
-        (b) x₂ = ∛(4 + 5) = ∛9 = 2.08008…; x₃ = ∛(4.16016… + 5) = 2.0929…; x₄ = 2.0943…; x₅ = 2.0945…; x₆ = 2.0945…. Root = 2.095 (3 d.p.).
+        (b) x₂ = ∛(4 + 5) = ∛9 = 2.0801; x₃ = ∛(9.1602) = 2.0924; x₄ = 2.0942; x₅ = 2.0945; x₆ = 2.0945.
+        x₅ and x₆ both round to 2.095, so the root is 2.095 (3 d.p.).
       - |-
-        (c) x₁ = −2 → x₂ = ∛(−4 + 5) = ∛1 = 1 → x₃ = ∛7 ≈ 1.91 → x₄ = ∛8.82 ≈ 2.07… It eventually converges but takes longer and jumps across zero. A starting value far from the root works, but closer is faster.
+        (c) x₂ = (8 − 5)/2 = 1.5, x₃ = (3.375 − 5)/2 = −0.8125, x₄ = −2.7682, x₅ = −13.106. The values
+        move further from 2.095 every step, so this iteration fails to converge.
     answer: |-
-      (a) x³ = 2x + 5 → x = ∛(2x + 5). (b) Root = 2.095 (3 d.p.). (c) x₁ = −2 gives a longer, oscillating path; starting near the root is faster.
+      (a) x³ = 2x + 5 → x = ∛(2x + 5). (b) Root = 2.095 (3 d.p.). (c) The values run away
+      (1.5, −0.81, −2.77, −13.1, …), so that rearrangement does not converge to the root.
 
   - type: check
     questions: [rearrange-valid, rearrange-start]
@@ -109,11 +124,13 @@ blocks:
       - wrong: |-
           Any rearrangement x = F(x) will work as an iteration.
         right: |-
-          Some converge, some diverge. You must check (or the question tells you which one to use). The derivative condition |F'(α)| < 1 is the theoretical test.
+          Some settle, some run away. Run a few steps and check that the values close in (or use
+          the rearrangement the question gives you).
       - wrong: |-
           The rearrangement x = (x³ − 5)/2 is simpler (no roots), so it must be better.
         right: |-
-          Simpler algebra ≠ better convergence. For x³ − 2x − 5 = 0 near 2, F'(x) = 3x²/2, so |F'(2)| = 6 > 1. This iteration **diverges**.
+          Simpler algebra is not better convergence. From x₁ = 2 it gives 1.5, −0.81, −2.77, −13.1:
+          it runs away from the root instead of settling.
       - wrong: |-
           If the iteration diverges, the equation has no root.
         right: |-
@@ -127,17 +144,19 @@ blocks:
     body: |-
       - "Rearrange the equation… to the form x = F(x)" — do the algebra, show the steps.
       - "Hence use the iteration… with x₁ = … to find the root…" — now just compute.
-      - If asked "State, with a reason, whether the iteration will converge", draw or describe the cobweb: if the curve y = F(x) crosses y = x with slope less than 1 (in magnitude), it converges.
-      - You may be given two rearrangements and asked which one to use. Sketch or reason: the one with the gentler slope near the root wins.
+      - Keep at least 4 decimal places in every iterate, and stop when two in a row agree to the
+        accuracy asked for.
+      - If your values grow or jump about, recheck your arithmetic and the formula. If they are
+        right, say plainly that the iteration does not converge.
 
   - type: takeaways
     items:
       - |-
         A root of f(x) = 0 is a fixed point of x = F(x). Different rearrangements give different F.
       - |-
-        Convergence depends on |F'(α)|: less than 1 converges; greater than 1 diverges.
+        Some rearrangements settle on the root and some run away: run a few steps and check.
       - |-
-        Cube roots, square roots, and "isolate x on the side with smaller powers" usually work.
+        If a question gives you the rearrangement, use it; if you choose one, check that its values settle.
       - |-
         In the exam: if given the formula, just run it. If asked to rearrange, do the algebra then run it.
 
@@ -165,23 +184,23 @@ questions:
     difficulty: 2
     objectives: ["3.6.3"]
     prompt: |-
-      For x³ − 2x − 5 = 0 near x = 2, which rearrangement is likely to converge?
+      For x³ − 2x − 5 = 0, each rearrangement is run from x₁ = 2. Which one settles on the root?
     options:
       - text: x = ∛(2x + 5)
         correct: true
         why: |-
-          F(x) = (2x + 5)^(1/3). F'(x) = 2/3 (2x + 5)^(-2/3). At x = 2, F'(2) = 2/3 × 9^(-2/3) = 2/3 × 1/∛81 ≈ 0.09 < 1. Converges.
+          It gives 2.0801, 2.0924, 2.0942, 2.0945, … — the changes shrink each step, so it settles on 2.095.
       - text: x = (x³ − 5)/2
         why: |-
-          F(x) = (x³ − 5)/2. F'(x) = 3x²/2. At x = 2, F'(2) = 6 > 1. Diverges.
+          It gives 1.5, −0.8125, −2.7682, −13.106, … — the values run away from the root.
       - text: x = 5/(x² − 2)
         why: |-
-          F(x) = 5(x² − 2)^(-1). F'(x) = −10x(x² − 2)^(-2). At x = 2, F'(2) = −20/4 = −5, |F'(2)| = 5 > 1. Diverges.
-      - text: All three converge
+          It gives 2.5, 1.1765, −8.118, … — the values jump about and never close in.
+      - text: All three settle on the root
         why: |-
-          Only the cube root form has |F'(α)| < 1 at the root.
+          Only the cube-root form settles; the other two run away from x₁ = 2.
     explanation: |
-      Convergence needs $|F'(x)| < 1$ near the root. For $x = \sqrt[3]{2x + 5}$, $F'(x) = \dfrac{2}{3(2x+5)^{2/3}} \approx 0.19$ near $x = 2$, comfortably below 1; the other rearrangements have $|F'| > 1$ there and diverge.
+      Run each formula for a few steps. Only $x = \sqrt[3]{2x + 5}$ produces values that change by less and less ($2.0801, 2.0924, 2.0942, \dots$). The other two move further from the root, which is what "fails to converge" looks like.
 
   - id: rearrange-valid
     format: cloze
@@ -204,7 +223,7 @@ questions:
       - text: It would still converge, but take more steps
         correct: true
         why: |-
-          The sequence would go: −2 → 1 → 1.91 → 2.07 → … and eventually approach 2.095. The basin of attraction includes negative starts, but closer is faster.
+          The sequence goes −2 → 1 → 1.913 → 2.067 → 2.090 → … and still settles on 2.095. Starting further away only costs a few extra steps.
       - text: It would diverge to infinity
         why: |-
           The cube root function is defined for all real numbers; it cannot blow up.
@@ -215,4 +234,4 @@ questions:
         why: |-
           The iteration does not have a period-2 cycle; it converges.
     explanation: |
-      Here $F'(-2) = \dfrac{2}{3 \cdot 1^{2/3}} \approx 0.67 < 1$, so the iteration still converges. Starting further from the root only means a few more steps.
+      Run it: $x_2 = \sqrt[3]{-4 + 5} = 1$, $x_3 = \sqrt[3]{7} \approx 1.913$, $x_4 \approx 2.067$, $x_5 \approx 2.090$. The values close in on $2.095$, just from further away, so it takes a few more steps.

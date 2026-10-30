@@ -49,3 +49,40 @@ describe('markdown fields reject raw control characters', () => {
     expect(Md.safeParse('| x | y |\n|---|---|\n| 1 | 2 |').success).toBe(true);
   });
 });
+
+/**
+ * The opposite slip: a doubled backslash kept literally by a block scalar. KaTeX reads "\\" as a
+ * line break, so "$g = 10\\ \\text{m s}^{-2}$" showed students "g = 10 textms−2".
+ */
+describe('markdown fields reject doubled backslashes in maths', () => {
+  it.each([
+    ['a unit', String.raw`use $g = 10\\ \\text{m s}^{-2}$`],
+    ['a fraction', String.raw`$\\dfrac{d}{dx}(e^{3x})$`],
+    ['a thin space', String.raw`$\int x\\,dx$`],
+    ['display maths', String.raw`$$P = \\frac{W}{t}$$`],
+  ])('rejects %s', (_label, value) => {
+    const result = Md.safeParse(value);
+    expect(result.success).toBe(false);
+    expect(result.success ? '' : result.error.issues[0]!.message).toContain('doubled backslash');
+  });
+
+  it('accepts matrix row breaks and doubled backslashes outside maths', () => {
+    expect(Md.safeParse(String.raw`$\begin{pmatrix}1\\2\\-1\end{pmatrix}$`).success).toBe(true);
+    expect(Md.safeParse(String.raw`$\begin{pmatrix}x\\y\\z\end{pmatrix}$`).success).toBe(true);
+    expect(Md.safeParse(String.raw`$\begin{pmatrix} x \\ y \end{pmatrix}$`).success).toBe(true);
+    expect(Md.safeParse(String.raw`a Windows path C:\\Users is not maths`).success).toBe(true);
+  });
+});
+
+describe('table rows reject modulus bars inside maths', () => {
+  it('rejects |z - a| in a table cell', () => {
+    const result = Md.safeParse('| Condition | Locus |\n| --- | --- |\n| $|z - a| = r$ | Circle |');
+    expect(result.success).toBe(false);
+    expect(result.success ? '' : result.error.issues[0]!.message).toContain('lvert');
+  });
+
+  it('accepts \\lvert in a table and |z| outside tables', () => {
+    expect(Md.safeParse(String.raw`| Condition | Locus |` + '\n| --- | --- |\n' + String.raw`| $\lvert z - a\rvert = r$ | Circle |`).success).toBe(true);
+    expect(Md.safeParse('The modulus $|z|$ is a distance.').success).toBe(true);
+  });
+});

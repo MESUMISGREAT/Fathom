@@ -4,7 +4,7 @@ topic: "5.1"
 title: Using cumulative frequency graphs
 summary: Use cumulative frequency graphs to estimate medians, quartiles, percentiles, and proportions of a distribution.
 order: 4
-minutes: 8
+minutes: 9
 kind: core
 objectives: ["5.1.4"]
 prerequisites: ["stats-data-drawing-displays"]
@@ -16,265 +16,282 @@ provenance:
     syllabus (2026–2027), topic 5.1 outcome "Use a cumulative frequency graph. For example,
     to estimate medians, quartiles and percentiles, the proportion of a distribution above
     (or below) a given value, or the proportion between two values." All examples, questions
-    and diagrams are original. Validated for accuracy and syllabus alignment. Fixed interpolation question (CF before=17 gives median 25.71). Independent review recomputed all five worked examples (including the interpolation case: 20 + (8/14)×10 = 172.86 cm for Example 5's table, and 25.71 for the question) and all four answer keys, and replaced a self-contradictory instruction that told students not to divide by "the maximum CF shown (which is n)".
+    and diagrams are original. Rebuilt on 2026-10-30 by Claude Opus 5.5: the previous
+    worked examples referred to a graph the lesson never showed ("exact values depend on the
+    graph"), so every example now reads from one drawn graph of 80 parcel masses, with each
+    reading recomputed by linear interpolation. Independently reviewed on 2026-10-30 by a separate Claude agent, which recomputed every example and answer key; its findings (syllabus scope of the interpolation formula, notation in the questions) were fixed. Not reviewed by a teacher.
 blocks:
   - type: objective
     body: |-
-      By the end you can read a cumulative frequency graph to estimate the median,
-      quartiles, percentiles, and the proportion of data above, below, or between
-      given values.
+      By the end you can read a cumulative frequency graph to estimate the median, the
+      quartiles, any percentile, and the proportion of the data above, below or between given
+      values.
 
   - type: explain
-    title: What a cumulative frequency graph shows
+    title: What the graph is counting
     body: |-
-      A cumulative frequency graph (ogive) plots **cumulative frequency** (running total)
-      against the **upper class boundary** of each interval. The curve rises from 0 at the
-      lower boundary of the first class to n (total frequency) at the upper boundary of
-      the last class.
+      **Cumulative frequency** means "how many so far". For each value on the horizontal axis,
+      the graph tells you how many data items are **at or below** that value.
 
-      Key points on the graph:
-      - **Median (Q₂)** = value at cumulative frequency n/2
-      - **Lower quartile (Q₁)** = value at n/4
-      - **Upper quartile (Q₃)** = value at 3n/4
-      - **k-th percentile (Pₖ)** = value at k·n/100
+      Here is the running data set for this lesson: the masses of 80 parcels at a depot.
 
-      Always show your working: draw horizontal lines from the CF axis and vertical lines
-      down to the variable axis.
+      | Mass $m$ (kg) | $0 < m \le 1$ | $1 < m \le 2$ | $2 < m \le 3$ | $3 < m \le 4$ | $4 < m \le 5$ | $5 < m \le 6$ |
+      | --- | --- | --- | --- | --- | --- | --- |
+      | Frequency | 6 | 14 | 24 | 20 | 12 | 4 |
+      | Cumulative frequency | 6 | 20 | 44 | 64 | 76 | 80 |
+
+      Each cumulative frequency is the previous one plus the next frequency: $6$, then
+      $6 + 14 = 20$, then $20 + 24 = 44$, and so on. The last value is the total, $n = 80$.
+
+      Each cumulative frequency is plotted at the **upper end** of its class. "20 parcels weigh
+      2 kg or less" belongs at mass 2, because only once you reach 2 kg have all 20 been counted.
+
+  - type: diagram
+    diagram: stats-cfg-parcels
+    alt: >-
+      A cumulative frequency graph for the masses of 80 parcels. Mass in kilograms from 0 to 6
+      is on the horizontal axis and cumulative frequency from 0 to 80 on the vertical axis. The
+      points (0, 0), (1, 6), (2, 20), (3, 44), (4, 64), (5, 76) and (6, 80) are joined by straight
+      lines. Dashed reading lines go across from cumulative frequencies 20, 40 and 60 to the
+      graph and down to the mass axis at 2.0, about 2.83 and 3.8 kilograms, labelled lower
+      quartile, median and upper quartile.
+    caption: |-
+      Across from the cumulative frequency you want, down to the mass. The steepest part of the
+      graph is where the data is most crowded: lots of parcels between 2 and 4 kg.
+
+  - type: explain
+    title: Where to read the median and quartiles
+    body: |-
+      If you lined all $n$ parcels up from lightest to heaviest:
+
+      - the **median** is the one halfway along, at cumulative frequency $\tfrac{1}{2}n$;
+      - the **lower quartile** $Q_1$ is a quarter of the way along, at $\tfrac{1}{4}n$;
+      - the **upper quartile** $Q_3$ is three quarters of the way along, at $\tfrac{3}{4}n$.
+
+      For $n = 80$ those positions are $40$, $20$ and $60$.
+
+      **The method:** find the position on the cumulative frequency axis, go **across** to the
+      graph, then **down** to the horizontal axis and read the value. In an exam, draw those
+      lines on the graph: they are your working.
 
   - type: example
-    title: "Example 1: estimating median and quartiles"
+    title: "Example 1: median and quartiles from the graph"
     problem: |-
-      A cumulative frequency graph shows the weights of 80 parcels.
-      The total frequency n = 80.
-      Estimate the median, lower quartile, and upper quartile.
+      Use the graph of the 80 parcel masses to estimate the median, the lower quartile, the upper
+      quartile and the interquartile range.
     steps:
       - |-
-        Median position = n/2 = 40. Draw horizontal line from CF = 40 to curve, then
-        vertical down to weight axis.
+        **Positions:** median at $\tfrac{1}{2} \times 80 = 40$, $Q_1$ at $\tfrac{1}{4} \times 80 = 20$,
+        $Q_3$ at $\tfrac{3}{4} \times 80 = 60$.
       - |-
-        Q₁ position = n/4 = 20. Draw horizontal line from CF = 20 to curve, then
-        vertical down.
+        **$Q_1$:** across from 20, the graph is reached exactly at a plotted point, $(2, 20)$, so
+        $Q_1 = 2.0$ kg.
       - |-
-        Q₃ position = 3n/4 = 60. Draw horizontal line from CF = 60 to curve, then
-        vertical down.
+        **Median:** across from 40 lands between the points $(2, 20)$ and $(3, 44)$. On that
+        stretch the graph climbs $24$ in $1$ kg, and we need to climb $40 - 20 = 20$ of those $24$.
+        So we go $\tfrac{20}{24}$ of the way from 2 to 3: median $= 2 + \tfrac{20}{24} \approx 2.83$ kg.
+      - |-
+        **$Q_3$:** across from 60 lands between $(3, 44)$ and $(4, 64)$. We need $60 - 44 = 16$ of
+        the $20$ on that stretch: $Q_3 = 3 + \tfrac{16}{20} = 3.8$ kg.
+      - |-
+        **Interquartile range:** $Q_3 - Q_1 = 3.8 - 2.0 = 1.8$ kg. The middle half of the parcels
+        lie within a 1.8 kg band.
     answer: |-
-      Median ≈ value at CF 40; Q₁ ≈ value at CF 20; Q₃ ≈ value at CF 60.
-      (Exact values depend on the graph.)
+      Median $\approx 2.83$ kg, $Q_1 = 2.0$ kg, $Q_3 = 3.8$ kg, interquartile range $1.8$ kg.
+      (A smooth curve through the points would give very similar readings; straight lines make
+      the arithmetic checkable.)
 
   - type: check
+    title: Check 1 — reading positions
     questions: [sc-cfg-median-quartiles]
 
   - type: explain
-    title: Estimating percentiles
+    title: Percentiles are the same idea
     body: |-
-      The **k-th percentile** Pₖ is the value below which k% of the data lies.
-      Position on CF axis = k·n/100.
+      The **$k$th percentile** is the value below which $k\%$ of the data lies, so you read it at
+      cumulative frequency $\dfrac{k}{100} \times n$.
 
-      Common percentiles:
-      - P₁₀ (10th percentile) at CF = 0.1n
-      - P₂₅ = Q₁ at CF = 0.25n
-      - P₅₀ = median at CF = 0.5n
-      - P₇₅ = Q₃ at CF = 0.75n
-      - P₉₀ at CF = 0.9n
-
-      To estimate: find the CF value, read across to curve, read down to variable axis.
+      The quartiles are just special percentiles: $Q_1$ is the 25th, the median the 50th and $Q_3$
+      the 75th.
 
   - type: example
-    title: "Example 2: estimating the 90th percentile"
+    title: "Example 2: the 90th percentile"
     problem: |-
-      A CF graph represents 200 students' test scores. Estimate the 90th percentile.
+      Estimate the 90th percentile of the parcel masses.
     steps:
       - |-
-        n = 200. P₉₀ position = 0.90 × 200 = 180.
+        **Position:** $\dfrac{90}{100} \times 80 = 72$.
       - |-
-        Find CF = 180 on vertical axis, read across to curve, down to score axis.
-    answer: Score at CF = 180.
+        **Across from 72:** this is between $(4, 64)$ and $(5, 76)$, where the graph climbs $12$
+        per kg.
+      - |-
+        **Interpolate:** we need $72 - 64 = 8$ of those $12$, so the value is
+        $4 + \tfrac{8}{12} \approx 4.67$ kg.
+    answer: |-
+      About $4.67$ kg: 90% of the parcels weigh less than this.
 
   - type: check
+    title: Check 2 — percentiles
     questions: [sc-cfg-percentile]
 
   - type: explain
-    title: Proportion above or below a given value
+    title: Proportions above, below and between values
     body: |-
-      To find the **proportion (or percentage) of data above a value X**:
-      1. Find X on the horizontal axis.
-      2. Read up to the curve, then across to the CF axis → CF at X.
-      3. Proportion above X = (n − CF at X) / n
-      4. Percentage above X = 100 × (n − CF at X) / n
+      Now go the other way: start from a value on the **horizontal** axis, go **up** to the
+      graph and **across** to read how many items are at or below it.
 
-      To find the **proportion below X**:
-      - Proportion below X = CF at X / n
-      - Percentage below X = 100 × CF at X / n
+      - **Below** a value $X$: the cumulative frequency at $X$, out of $n$.
+      - **Above** $X$: everything else, $n - (\text{CF at } X)$, out of $n$.
+      - **Between** $A$ and $B$: $(\text{CF at } B) - (\text{CF at } A)$, out of $n$, because the
+        items up to $B$ include all the items up to $A$, and subtracting removes them.
 
-      **Always divide by the total frequency n** — the final value on the CF axis — not by the
-      number of classes, and not by a value read off the variable axis.
+      Always divide by the total $n$, the top value of the cumulative frequency axis.
 
   - type: example
-    title: "Example 3: proportion above a value"
+    title: "Example 3: heavier than 4.5 kg"
     problem: |-
-      The CF graph shows 120 students' heights. At height 170 cm, the CF reads 72.
-      What percentage of students are taller than 170 cm?
+      Estimate the percentage of parcels that weigh more than 4.5 kg.
     steps:
       - |-
-        n = 120. CF at 170 cm = 72.
+        **Up from 4.5:** halfway between $(4, 64)$ and $(5, 76)$, so the cumulative frequency is
+        halfway between 64 and 76: $64 + \tfrac{1}{2}(12) = 70$. About 70 parcels weigh 4.5 kg or less.
       - |-
-        Number above 170 cm = 120 − 72 = 48.
+        **Above:** $80 - 70 = 10$ parcels.
       - |-
-        Percentage = (48 / 120) × 100 = 40%.
-    answer: 40%
-
-  - type: check
-    questions: [sc-cfg-proportion-above]
-
-  - type: explain
-    title: Proportion between two values
-    body: |-
-      To find the **proportion between values A and B** (A < B):
-      1. Find CF at A (CF_A) and CF at B (CF_B) by reading up from A and B to the curve.
-      2. Number between A and B = CF_B − CF_A.
-      3. Proportion = (CF_B − CF_A) / n.
-      4. Percentage = 100 × (CF_B − CF_A) / n.
-
-      This works because CF_B is the total up to B, and CF_A is the total up to A.
-      The difference is the number in the interval (A, B].
+        **Percentage:** $\dfrac{10}{80} \times 100 = 12.5\%$.
+    answer: |-
+      About $12.5\%$ of the parcels weigh more than 4.5 kg.
 
   - type: example
-    title: "Example 4: proportion between two values"
+    title: "Example 4: between 1.5 kg and 3.5 kg"
     problem: |-
-      A CF graph for 150 observations. CF at 20 = 45. CF at 50 = 120.
-      What proportion of the data lies between 20 and 50?
+      Estimate the proportion of parcels with mass between 1.5 kg and 3.5 kg.
     steps:
       - |-
-        n = 150. CF_A = 45, CF_B = 120.
+        **CF at 1.5:** halfway between $(1, 6)$ and $(2, 20)$: $6 + \tfrac{1}{2}(14) = 13$.
       - |-
-        Number between = 120 − 45 = 75.
+        **CF at 3.5:** halfway between $(3, 44)$ and $(4, 64)$: $44 + \tfrac{1}{2}(20) = 54$.
       - |-
-        Proportion = 75 / 150 = 0.5.
-    answer: 0.5 (or 50%)
+        **Between:** $54 - 13 = 41$ parcels, so the proportion is $\dfrac{41}{80} \approx 0.51$.
+    answer: |-
+      About $0.51$, so roughly half of the parcels.
 
   - type: check
-    questions: [sc-cfg-proportion-between]
+    title: Check 3 — proportions
+    questions: [sc-cfg-proportion-above, sc-cfg-proportion-between, sc-cfg-parcels-heavy]
 
-  - type: explain
-    title: Estimating the median from a grouped table (interpolation formula)
+  - type: enrichment
+    title: Beyond this objective — the same reading as a formula
     body: |-
-      If you don't have the graph but have the grouped frequency table, you can estimate
-      the median (and quartiles) by **linear interpolation**:
-      **Median = L + ((n/2 − CF) / f) × w**
-      where:
-      - L = lower class boundary of the median class
-      - CF = cumulative frequency before the median class
-      - f = frequency of the median class
-      - w = class width of the median class
-      - n/2 = median position
+      Every reading above was "how far along the straight piece do I go?". Written as a formula
+      for the median from a grouped table:
 
-      This formula assumes data is evenly spread within the class. It gives the same
-      result as reading from an accurately drawn CF graph.
+      $$\text{median} \approx L + \frac{\tfrac{1}{2}n - F}{f} \times w$$
 
-  - type: example
-    title: "Example 5: median by interpolation"
-    problem: |-
-      Height (cm) | Frequency
-      150–160     | 12
-      160–170     | 20
-      170–180     | 28
-      180–190     | 15
-      190–200     | 5
-      Estimate the median height.
-    steps:
-      - |-
-        n = 12+20+28+15+5 = 80. Median position = 40.
-      - |-
-        CF: 12, 32, 60, 75, 80. Median class = 170–180 (CF reaches 60 at this class).
-      - |-
-        L = 170, CF before = 32, f = 28, w = 10.
-      - |-
-        Median = 170 + ((40 − 32) / 28) × 10 = 170 + (8/28)×10 = 170 + 2.86 = 172.86 cm.
-    answer: 172.9 cm (to 1 d.p.)
+      - $L$ is the lower boundary of the class containing the median;
+      - $F$ is the cumulative frequency **before** that class;
+      - $f$ is the frequency **of** that class;
+      - $w$ is the class width.
 
-  - type: check
-    questions: [sc-cfg-interpolation]
+      Check it on the parcels: $L = 2$, $F = 20$, $f = 24$, $w = 1$ gives
+      $2 + \tfrac{40 - 20}{24} \times 1 \approx 2.83$ kg, exactly the reading from the graph. It
+      assumes the items are spread evenly through the class, which is what the straight line
+      assumes too.
 
   - type: takeaways
     items:
-      - "Median at CF = n/2, Q₁ at n/4, Q₃ at 3n/4, Pₖ at k·n/100."
-      - "Proportion above X = (n − CF at X) / n."
-      - "Proportion below X = CF at X / n."
-      - "Proportion between A and B = (CF at B − CF at A) / n."
-      - "Always divide by total frequency n."
-      - "Show working: horizontal line to curve, vertical line to axis."
-      - "Interpolation formula: Median = L + ((n/2 − CF)/f) × w."
+      - "Cumulative frequency is a running total, plotted at the upper end of each class."
+      - "Median, quartiles and percentiles: across from the position ($\\tfrac12 n$, $\\tfrac14 n$, $\\tfrac34 n$, $\\tfrac{k}{100}n$), then down."
+      - "Proportions: up from the value, across to the CF, then divide by the total $n$."
+      - "Between two values: subtract the two cumulative frequencies."
+      - "Draw your reading lines on the graph; they are your working."
 
 questions:
   - id: sc-cfg-median-quartiles
     format: mcq
     difficulty: 1
     objectives: ["5.1.4"]
-    prompt: A cumulative frequency graph represents 60 observations. At what cumulative frequency do you read the upper quartile Q₃?
+    prompt: |-
+      A cumulative frequency graph represents 60 observations. At what cumulative frequency do you read the upper quartile $Q_3$?
     options:
       - text: "15"
-        why: That is n/4 = Q₁ position.
+        why: |-
+          That is $\tfrac{1}{4}n$, the position of $Q_1$.
         correct: false
       - text: "30"
-        why: That is n/2 = median position.
+        why: |-
+          That is $\tfrac{1}{2}n$, the position of the median.
         correct: false
       - text: "45"
-        why: Q₃ position = 3n/4 = 3×60/4 = 45.
+        why: |-
+          $Q_3$ is three quarters of the way along: $\tfrac{3}{4} \times 60 = 45$.
         correct: true
       - text: "60"
-        why: That is the maximum CF (total frequency).
+        why: |-
+          That is the total frequency $n$, the top of the graph.
         correct: false
-    explanation: |
-      Q₃ position = 3n/4 = 3×60/4 = 45. The upper quartile is read at cumulative frequency 45.
+    explanation: |-
+      $Q_3$ is read at $\tfrac{3}{4}n = \tfrac{3}{4} \times 60 = 45$ on the cumulative frequency axis.
 
   - id: sc-cfg-percentile
     format: mcq
     difficulty: 1
     objectives: ["5.1.4"]
-    prompt: For a data set of 250 values, the 80th percentile P₈₀ is read at which cumulative frequency?
+    prompt: |-
+      For a data set of 250 values, at which cumulative frequency is the 80th percentile read?
     options:
       - text: "20"
-        why: 20 is for P₈, not P₈₀.
+        why: |-
+          That would be the 8th percentile, $\tfrac{8}{100} \times 250$.
         correct: false
       - text: "200"
-        why: P₈₀ position = 0.80 × 250 = 200.
+        why: |-
+          $\tfrac{80}{100} \times 250 = 200$.
         correct: true
       - text: "250"
-        why: That is the total frequency n.
+        why: |-
+          That is the total frequency $n$.
         correct: false
       - text: "80"
-        why: That is the percentile number, not the CF position.
+        why: |-
+          That is the percentile number, not its position on the cumulative frequency axis.
         correct: false
-    explanation: |
-      P₈₀ position = 0.80 × 250 = 200. The 80th percentile is read at cumulative frequency 200.
+    explanation: |-
+      The $k$th percentile is read at $\tfrac{k}{100} \times n = \tfrac{80}{100} \times 250 = 200$.
 
   - id: sc-cfg-proportion-above
     format: numeric
     difficulty: 2
     objectives: ["5.1.4"]
-    prompt: A CF graph for 160 observations has CF = 112 at X = 50. What percentage of data is greater than 50?
+    prompt: |-
+      A cumulative frequency graph for 160 observations reads $112$ at the value $50$. What percentage of the data is greater than $50$?
     fields:
-      - answer: 30
-    explanation: |
-      n = 160, CF at X = 112. Number above = 160 - 112 = 48. Percentage = (48/160) × 100 = 30%.
+      - label: "percentage ="
+        answer: 30
+    explanation: |-
+      $112$ items are at or below $50$, so $160 - 112 = 48$ are above it, and $\tfrac{48}{160} \times 100 = 30\%$.
 
   - id: sc-cfg-proportion-between
     format: numeric
     difficulty: 2
     objectives: ["5.1.4"]
-    prompt: For 200 observations, CF at 30 = 60 and CF at 70 = 150. What proportion lies between 30 and 70?
+    prompt: |-
+      For 200 observations, the cumulative frequency is $60$ at the value $30$ and $150$ at the value $70$. What proportion of the data lies between $30$ and $70$?
     fields:
-      - answer: 0.45
-    explanation: |
-      Number between = CF at 70 - CF at 30 = 150 - 60 = 90. Proportion = 90 / 200 = 0.45.
+      - label: "proportion ="
+        answer: 0.45
+    explanation: |-
+      Between the two values: $150 - 60 = 90$ items, and $\tfrac{90}{200} = 0.45$.
 
-  - id: sc-cfg-interpolation
+  - id: sc-cfg-parcels-heavy
     format: numeric
     difficulty: 2
     objectives: ["5.1.4"]
-    prompt: "Grouped data: n=50, median class 20-30, L=20, CF before=17, f=14, w=10. Estimate the median using interpolation."
+    prompt: |-
+      Using the graph of the 80 parcel masses, estimate how many parcels weigh more than $3.5$ kg.
     fields:
-      - answer: 25.71
-        tolerance: { abs: 0.02 }
-    explanation: |
-      Median = L + ((n/2 - CF) / f) × w = 20 + ((25 - 17) / 14) × 10 = 20 + (8/14)×10 = 20 + 5.71 = 25.71.
+      - label: "number ="
+        answer: 26
+        tolerance: { abs: 1 }
+    explanation: |-
+      Up from $3.5$ kg: halfway between the points $(3, 44)$ and $(4, 64)$, so the cumulative frequency is $44 + 10 = 54$. That many weigh $3.5$ kg or less, so $80 - 54 = 26$ weigh more.

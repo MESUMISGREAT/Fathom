@@ -94,14 +94,17 @@ blocks:
         Use $n = -1$ with variable $u = -\tfrac{1}{4}x$, since $(1+u)^{-1} = 1 - u + u^2 - \cdots$:
         $$\left(1 - \tfrac{1}{4}x\right)^{-1} = 1 + \tfrac{1}{4}x + \tfrac{1}{16}x^2 + \cdots$$
       - |-
-        Multiply every term by $\tfrac{1}{2}$:
-        $$(2 - \tfrac{1}{2}x)^{-1} = \tfrac{1}{2} - \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$$
+        Multiply every term by $\tfrac{1}{2}$. Every term in the bracket is positive, so every term
+        of the answer is positive too — halving does not change any signs:
+        $$(2 - \tfrac{1}{2}x)^{-1} = \tfrac{1}{2} + \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$$
       - |-
         Validity: $\left|\tfrac{1}{4}x\right| < 1$, so $|x| < 4$.
       - |-
-        Check at $x = 0.2$: three terms give $0.5 - 0.025 + 0.00125 = 0.47625$; the exact value is $\dfrac{1}{1.9} = 0.5263\ldots$ — still far off, because even $x = 0.2$ is a sizeable fraction of the allowed range, so more terms are needed.
+        Check at $x = 0.2$: three terms give $0.5 + 0.025 + 0.00125 = 0.52625$, and the exact value
+        is $\dfrac{1}{2 - 0.1} = \dfrac{1}{1.9} = 0.52631\ldots$ — already within $0.0001$. If your
+        check is far off, look for a sign slip before blaming the number of terms.
     answer: |-
-      $\tfrac{1}{2} - \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$, valid for $|x| < 4$.
+      $\tfrac{1}{2} + \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$, valid for $|x| < 4$.
 
   - type: check
     title: Quick check
@@ -222,12 +225,12 @@ questions:
     prompt: |-
       Expand $(2 - \tfrac{1}{2}x)^{-1}$ up to the term in $x^2$. What is the coefficient of $x$?
     fields:
-      - answer: -0.125
+      - answer: 0.125
         tolerance: { abs: 0.001 }
     explanation: |-
       $\left(1 - \tfrac{x}{4}\right)^{-1} = 1 + \tfrac{x}{4} + \tfrac{x^2}{16} + \cdots$ (the $n = -1$
       series with variable $-\tfrac{x}{4}$). Multiplying by $\tfrac{1}{2}$ gives
-      $\tfrac{1}{2} - \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$, so the coefficient of $x$ is $-\tfrac{1}{8}$.
+      $\tfrac{1}{2} + \tfrac{1}{8}x + \tfrac{1}{32}x^2 + \cdots$, so the coefficient of $x$ is $\tfrac{1}{8}$.
 
   - id: rescale-constant
     format: numeric

@@ -102,33 +102,35 @@ blocks:
   - type: explain
     title: Trigonometric integrals and substitutions
     body: |-
-      Topic 3.5 techniques you may need:
-      - $\int \tan x\,dx = \ln|\sec x| + C$
-      - $\int \cot x\,dx = \ln|\sin x| + C$
-      - $\int \sec x\,dx = \ln|\sec x + \tan x| + C$
-      - $\int \csc x\,dx = \ln|\csc x - \cot x| + C$
-      - $\int \frac{1}{x^2+a^2}\,dx = \frac{1}{a}\tan^{-1}\frac{x}{a} + C$
-      - $\int \frac{1}{\sqrt{a^2-x^2}}\,dx = \sin^{-1}\frac{x}{a} + C$
-      - Integration by parts: $\int u\,dv = uv - \int v\,du$
-      - Substitution (given in the question)
-      
-      **Cambridge expects you to recognise and use these.**
+      After separating, each side is an ordinary integral, so every technique from topic 3.5 is
+      available. The ones that turn up most often here:
+      - the standard integrals of $e^{ax+b}$, $\dfrac{1}{ax+b}$, $\sin(ax+b)$, $\cos(ax+b)$, $\sec^2(ax+b)$ and $\dfrac{1}{x^2+a^2}$;
+      - "top is a multiple of the derivative of the bottom": $\int \tan x\,dx = \ln|\sec x| + C$ and $\int \cot x\,dx = \ln|\sin x| + C$;
+      - partial fractions, when the $y$-side is a fraction such as $\dfrac{1}{y(1-y)}$;
+      - integration by parts, and a substitution when the question gives one.
+
+      9709 questions are written so that both sides can be integrated with these tools. If one
+      side looks impossible, check the separation step before reaching for anything new.
 
   - type: example
     title: "Example 3: Trigonometric separation"
     problem: |-
-      Solve $\frac{dy}{dx} = \frac{y^2}{\cos x}$, given that $y = 1$ when $x = 0$. (This is a preview of the next lesson — here we find the general solution.)
+      Find the general solution of $\frac{dy}{dx} = y^2 \cos x$.
     steps:
       - |-
-        Separate: $\frac{1}{y^2}\,dy = \sec x\,dx$.
+        Separate: divide both sides by $y^2$ and move $dx$ across, giving $\frac{1}{y^2}\,dy = \cos x\,dx$.
       - |-
-        Integrate: $\int y^{-2}\,dy = \int \sec x\,dx$.
+        Integrate both sides. On the left, $\int y^{-2}\,dy = \frac{y^{-1}}{-1} = -\frac{1}{y}$. On the
+        right, $\int \cos x\,dx = \sin x$. One constant is enough:
+        $-\frac{1}{y} = \sin x + C$.
       - |-
-        $-\frac{1}{y} = \ln|\sec x + \tan x| + C$.
+        Solve for $y$: multiply both sides by $-1$ to get $\frac{1}{y} = -\sin x - C$, then flip both
+        sides: $y = -\frac{1}{\sin x + C}$.
       - |-
-        Solve for $y$: $y = -\frac{1}{\ln|\sec x + \tan x| + C}$.
+        Check by differentiating: $y = -(\sin x + C)^{-1}$ gives
+        $\frac{dy}{dx} = (\sin x + C)^{-2}\cos x = y^2 \cos x$ ✓
     answer: |-
-      $y = -\frac{1}{\ln|\sec x + \tan x| + C}$
+      $y = -\frac{1}{\sin x + C}$
 
   - type: check
     questions: [de-separable-5]

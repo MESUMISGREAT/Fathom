@@ -19,7 +19,8 @@ const bundle = await loadContent();
 const scan = scanDiagrams();
 for (const p of scan.problems) bundle.issues.push({ level: 'error', file: path.join(process.cwd(), p.split(':')[0]!), message: p.slice(p.indexOf(':') + 2) });
 const { issues, coverage } = validateContent(bundle, new Set(scan.files.map((f) => f.key)));
-const rel = (f: string) => path.relative(process.cwd(), f);
+// Forward slashes on every OS, so --only/--subject filters written as "lessons/foo" also match on Windows.
+const rel = (f: string) => path.relative(process.cwd(), f).split(path.sep).join('/');
 const shown = issues.filter(
   (i) => (!only || rel(i.file).includes(`/${only}/`)) && (!match || match.some((m) => rel(i.file).includes(m))),
 );
