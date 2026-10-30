@@ -1,39 +1,40 @@
 /**
- * Adding complex numbers on an Argand diagram is vector addition: the arrows for z and w are the
- * two sides of a parallelogram, and the diagonal is z + w. Here z = 2 + i and w = 1 + 2i, so
- * z + w = 3 + 3i; the dashed copies show w moved to the tip of z and z moved to the tip of w.
+ * Adding complex numbers on an Argand diagram is vector addition: the arrows for z1 = 2 + i and
+ * z2 = 1 + 3i are two sides of a parallelogram, and its far corner is z1 + z2 = 3 + 4i. The conjugate
+ * z1* = 2 − i is drawn as the reflection of z1 in the real axis.
  */
 import { Arrow, Label, MathLabel, Svg } from '../primitives';
 
 export const diagramKey = 'complex-numbers-argand-operations';
 
 const W = 620;
-const H = 380;
+const H = 400;
 const OX = 180;
-const OY = 310;
-const S = 62;
+const OY = 300;
+const S = 56;
 
 const px = (x: number) => OX + x * S;
 const py = (y: number) => OY - y * S;
 
 const Z = { x: px(2), y: py(1) };
-const Wv = { x: px(1), y: py(2) };
-const SUM = { x: px(3), y: py(3) };
+const Wv = { x: px(1), y: py(3) };
+const SUM = { x: px(3), y: py(4) };
+const CONJ = { x: px(2), y: py(-1) };
 
 export default function ComplexNumbersArgandOperations() {
   return (
     <Svg width={W} height={H}>
-      <Label x={W / 2} y={26} className="dg-text dg-bold">
+      <Label x={W / 2 + 50} y={26} className="dg-text dg-bold">
         Addition: complete the parallelogram
       </Label>
 
       {/* axes */}
       <Arrow x1={110} y1={OY} x2={px(4.6)} y2={OY} className="dg-thin" head={7} />
-      <Arrow x1={OX} y1={OY + 30} x2={OX} y2={py(3.7)} className="dg-thin" head={7} />
+      <Arrow x1={OX} y1={py(-1.35)} x2={OX} y2={py(4.6)} className="dg-thin" head={7} />
       <Label x={px(4.6) + 8} y={OY} anchor="start" className="dg-text-small dg-text-muted">
         Re
       </Label>
-      <Label x={OX} y={py(3.7) - 12} className="dg-text-small dg-text-muted">
+      <Label x={OX - 12} y={py(4.6)} anchor="end" className="dg-text-small dg-text-muted">
         Im
       </Label>
 
@@ -50,15 +51,16 @@ export default function ComplexNumbersArgandOperations() {
       <circle cx={Wv.x} cy={Wv.y} r={4.5} className="dg-dot-accent-2" />
       <circle cx={SUM.x} cy={SUM.y} r={5} className="dg-dot" />
 
-      <MathLabel x={Z.x + 16} y={Z.y + 12} tex="z" anchor="start" w={30} h={24} size="small" tone="accent" />
-      <MathLabel x={Wv.x + 16} y={Wv.y - 12} tex="w" anchor="start" w={30} h={24} size="small" tone="accent-2" />
-      <MathLabel x={SUM.x + 4} y={SUM.y - 20} tex="z + w" anchor="start" w={60} h={26} size="small" />
+      <line x1={Z.x} y1={Z.y} x2={CONJ.x} y2={CONJ.y} className="dg-dashed dg-thin" />
+      <circle cx={CONJ.x} cy={CONJ.y} r={4.5} className="dg-dot" />
 
-      <Label x={W / 2} y={H - 34} className="dg-text-small dg-text-muted">
-        The dashed sides are copies of w and z, so the diagonal is their sum.
-      </Label>
-      <Label x={W / 2} y={H - 14} className="dg-text-small dg-text-muted">
-        Real parts add, imaginary parts add: (2 + i) + (1 + 2i) = 3 + 3i.
+      <MathLabel x={Z.x + 14} y={Z.y + 4} tex="z_1 = 2 + i" anchor="start" w={110} h={24} size="small" tone="accent" />
+      <MathLabel x={Wv.x - 30} y={Wv.y - 4} tex="z_2 = 1 + 3i" anchor="end" w={110} h={24} size="small" tone="accent-2" />
+      <MathLabel x={SUM.x + 10} y={SUM.y - 8} tex="z_1 + z_2 = 3 + 4i" anchor="start" w={150} h={26} size="small" />
+      <MathLabel x={CONJ.x + 14} y={CONJ.y + 4} tex="z_1^* = 2 - i" anchor="start" w={110} h={26} size="small" />
+
+      <Label x={W / 2} y={H - 8} className="dg-text-small dg-text-muted">
+        Dashed: copies of z₂ and z₁ complete the parallelogram; z₁* is z₁ reflected in Re.
       </Label>
     </Svg>
   );

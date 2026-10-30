@@ -4,7 +4,7 @@ topic: "1.3"
 title: "Cuts, touches or misses: lines and quadratic curves"
 summary: Slide a line across a curve and watch the meeting points go 2, 1, 0. The discriminant of the combined equation tells you which, and finds the k for a tangent.
 order: 11
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["1.3.5"]
 prerequisites: [coordinate-geometry-graphs-and-equations, quadratics-unknown-constants]
@@ -20,6 +20,7 @@ provenance:
     meet a quadratic curve. All examples and questions are original; every discriminant and point
     of contact checked in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -35,7 +36,19 @@ blocks:
       - Lower down, it just kisses the curve: **one** point. That's a **tangent**.
       - Lower still, it sails underneath: **none**.
 
-      The number of meeting points is the number of real roots of one quadratic, so the discriminant decides.
+      **How do we count the meeting points with algebra?** A meeting point lies on *both* graphs, so at that point the two $y$-values are equal. Setting the two right-hand sides equal, $x^2 - 3x + 6 = x + k$, gives an equation whose solutions are exactly the $x$-coordinates of the meeting points. Rearranged, it's a quadratic $ax^2 + bx + c = 0$.
+
+      **Reminder: the discriminant.** The quadratic formula is
+
+      $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.$$
+
+      The part under the square root, $b^2 - 4ac$, is the **discriminant**. It decides how many solutions there are:
+
+      - positive: $\pm$ gives two different answers, so **two** roots;
+      - zero: $\pm 0$ gives the same answer twice, so **one** (repeated) root;
+      - negative: a negative number has no **real** square root, so **no** real roots.
+
+      So: number of meeting points = number of real roots of that one quadratic. The discriminant decides.
 
   - type: diagram
     diagram: coordinate-geometry-sliding-line
@@ -55,9 +68,9 @@ blocks:
       Find the values of $k$ for which the line $y = x + k$ (a) meets the curve $y = x^2 - 3x + 6$ at two distinct points, (b) is a tangent to the curve, (c) does not meet the curve.
     steps:
       - |-
-        Set equal: $x^2 - 3x + 6 = x + k$, so $x^2 - 4x + (6 - k) = 0$.
+        Set equal: $x^2 - 3x + 6 = x + k$. Subtract $x$ and $k$ from both sides so everything is on the left: $x^2 - 4x + (6 - k) = 0$. Keep $6 - k$ together in a bracket: it is the constant term.
       - |-
-        $a = 1$, $b = -4$, $c = 6 - k$. Discriminant: $16 - 4(6 - k) = 16 - 24 + 4k = 4k - 8$.
+        Read off $a = 1$, $b = -4$, $c = 6 - k$. Discriminant: $b^2 - 4ac = (-4)^2 - 4(1)(6 - k) = 16 - 24 + 4k = 4k - 8$.
       - |-
         (a) Two distinct points: $4k - 8 > 0$, so $k > 2$.
       - |-
@@ -88,17 +101,35 @@ blocks:
       Find the two values of $m$ for which the line $y = mx + 2$ is a tangent to the curve $y = x^2 - 2x + 6$. For each, find the point of contact.
     steps:
       - |-
-        Set equal: $x^2 - 2x + 6 = mx + 2$, so $x^2 - (2 + m)x + 4 = 0$.
+        Set equal: $x^2 - 2x + 6 = mx + 2$. Move everything to the left: $x^2 - 2x - mx + 4 = 0$. The two $x$ terms combine as $-(2 + m)x$, so $x^2 - (2 + m)x + 4 = 0$.
       - |-
-        Tangent: $(2 + m)^2 - 4(1)(4) = 0$, so $(2 + m)^2 = 16$ and $2 + m = \pm 4$.
+        Here $a = 1$, $b = -(2 + m)$, $c = 4$. Tangent means discriminant $= 0$: $(2 + m)^2 - 4(1)(4) = 0$. (Squaring $-(2 + m)$ gives $(2 + m)^2$, because a negative squared is positive.)
       - |-
-        So $m = 2$ or $m = -6$.
+        So $(2 + m)^2 = 16$. Square-root both sides, remembering both signs: $2 + m = 4$ or $2 + m = -4$. So $m = 2$ or $m = -6$.
       - |-
-        At a tangent the root is repeated, so $x = -\dfrac{b}{2a} = \dfrac{2 + m}{2}$.
+        At a tangent the discriminant is 0, so the quadratic formula collapses to $x = \dfrac{-b \pm 0}{2a} = -\dfrac{b}{2a}$. With $b = -(2 + m)$ and $a = 1$, that's $x = \dfrac{2 + m}{2}$.
       - |-
         $m = 2$: $x = 2$, $y = 2(2) + 2 = 6$. $\;m = -6$: $x = -2$, $y = -6(-2) + 2 = 14$.
     answer: |-
       $m = 2$, touching at $(2, 6)$; $\;m = -6$, touching at $(-2, 14)$. Check on the curve: $4 - 4 + 6 = 6$ ✓ and $4 + 4 + 6 = 14$ ✓
+
+  - type: example
+    title: When the discriminant is itself a quadratic
+    problem: |-
+      Find the set of values of $m$ for which the line $y = mx - 1$ meets the curve $y = 2x^2 + 1$ at two distinct points.
+    steps:
+      - |-
+        Set equal and rearrange: $2x^2 + 1 = mx - 1$, so $2x^2 - mx + 2 = 0$. Here $a = 2$, $b = -m$, $c = 2$.
+      - |-
+        Two distinct points: $b^2 - 4ac > 0$, so $m^2 - 16 > 0$.
+      - |-
+        This is a quadratic inequality in $m$. Find where $m^2 - 16 = 0$: $m = -4$ or $m = 4$.
+      - |-
+        Sketch $y = m^2 - 16$ against $m$: a ∪-shaped curve crossing the axis at $-4$ and $4$. It is **above** the axis (positive) **outside** the two roots, and below it between them.
+      - |-
+        We want $m^2 - 16 > 0$, the "above" part, so $m < -4$ or $m > 4$.
+    answer: |-
+      $m < -4$ or $m > 4$. A common slip is writing $-4 < m < 4$: that's where the discriminant is *negative*, so the line misses the curve. Test one value to check: $m = 5$ gives $25 - 16 = 9 > 0$ ✓
 
   - type: check
     questions: [lm-tangent-k, lm-set]

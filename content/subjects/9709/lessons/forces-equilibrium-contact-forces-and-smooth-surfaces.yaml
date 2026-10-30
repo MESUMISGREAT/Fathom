@@ -4,7 +4,7 @@ topic: "4.1"
 title: Contact forces and smooth surfaces
 summary: Separate contact force into normal reaction and friction, and use the smooth-contact model correctly.
 order: 4
-minutes: 6
+minutes: 8
 kind: core
 objectives: ["4.1.4", "4.1.5"]
 prerequisites: ["forces-equilibrium-forces-and-force-diagrams"]
@@ -15,57 +15,137 @@ provenance:
     Drafted against the official Cambridge International AS & A Level Mathematics 9709
     syllabus objectives 4.1.4 and 4.1.5. All questions and examples are original; numerical
     values are illustrative. Not yet independently reviewed or reviewed by a teacher. Independently re-checked line by line (Cambridge objectives, worked examples, vector calculations, every answer key, MCQ cardinality and schema) in a separate GitHub Copilot review on 2026-10-29. Reviewer: GitHub Copilot; model identity was not exposed in this session. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
-    body: By the end you can split a contact force into normal reaction and friction, and explain what the smooth-contact assumption changes.
-  - type: explain
-    title: One contact, two possible jobs
     body: |-
-      When two surfaces touch, the contact force can be represented by two perpendicular components:
+      By the end you can split a contact force into its **normal reaction** and **friction**, explain what "smooth" means in a model, and resolve a weight along and perpendicular to a slope.
 
-      - the **normal reaction** $R$, perpendicular to the surfaces;
-      - the **frictional force** $F$, parallel to the surfaces.
+  - type: explain
+    title: One push, two parts
+    body: |-
+      Put a book on a table. The table pushes back on the book. That push is the **contact force**: one force from one touch.
 
-      The combined contact force is the vector sum of $R$ and $F$. They are not two unrelated contacts; they are two components of one contact interaction.
+      It's easiest to work with in two perpendicular parts (components):
+
+      - the **normal reaction** $R$, at right angles to the surface ("normal" means perpendicular). It stops the book sinking into the table;
+      - the **frictional force** $F$, along the surface. If something tries to slide the book (like the pull $P$ in the diagram), friction acts along the surface against that. A book left alone on a level table feels no friction at all.
+
+      $R$ and $F$ aren't two separate contacts. They are two components of the same push, just as a slanted arrow can be split into "across" and "up" parts. In the left panel of the diagram the dashed arrow is the whole contact force, and $R$ and $F$ are its parts.
+
+      All forces here are measured in newtons (N), and $g$ is the acceleration due to gravity, which 9709 takes as $10\text{ m s}^{-2}$, so an object of mass $m$ kg has weight $mg$ newtons.
+
   - type: definition
     term: Smooth contact
-    body: A smooth contact is an idealised contact with no frictional force, so the contact force is entirely normal to the surface.
-  - type: intuition
-    title: Smooth means slippery in the model
     body: |-
-      “Smooth” does not mean the object has no contact with the surface. The surface can still push hard in the normal direction; it simply cannot provide a tangential grip in the model.
+      A **smooth** contact is a modelling assumption: there is **no friction**, so the contact force is entirely the normal reaction $R$, at right angles to the surface.
 
-      This is an approximation. Real surfaces usually have some roughness, but ignoring friction can make a first model manageable.
-  - type: example
-    title: Block on a smooth slope
-    problem: A block rests on a smooth plane inclined at angle $\alpha$. Identify the contact force and the component of weight along the plane.
-    steps:
-      - |-
-        Because the plane is smooth, there is no frictional force along the plane.
-      - |-
-        The plane's contact force is therefore a normal reaction $R$ perpendicular to the plane.
-      - |-
-        The weight $mg$ acts vertically downwards. Resolving relative to the slope gives a component $mg\sin\alpha$ down the plane and $mg\cos\alpha$ into the plane.
-    answer: The contact force is normal reaction only; the down-slope component of weight is $mg\sin\alpha$.
+  - type: intuition
+    title: Smooth means slippery, not absent
+    body: |-
+      "Smooth" doesn't mean the surface has stopped pushing. Ice still holds you up; it just can't grip you sideways. A smooth surface still gives a normal reaction, possibly a big one. Only the along-the-surface part is switched off.
+
+      Real surfaces always have some friction. Calling one smooth is a simplification that makes the maths easier and is close enough when friction is small, like a puck on ice or a well-oiled track.
+
+      **Its limitation:** a smooth model can't explain anything that relies on grip. A block resting on a slope with nothing holding it would, in a smooth model, slide straight down; in real life friction can hold it still.
+
   - type: diagram
     diagram: forces-equilibrium-contact-smooth
-    alt: A block on a smooth inclined plane showing the normal reaction perpendicular to the surface and the weight component down the slope
+    alt: >-
+      Two panels. Left, "Rough floor, pulled by P: R and F": a block on a horizontal floor pulled to the
+      right by a force P, with the normal reaction R pointing straight up, friction F pointing left
+      along the floor, the weight mg pointing down, and a
+      dashed arrow up and to the left labelled contact force, which is R and F combined. Right, "Smooth
+      slope: R only, no friction": a block on a slope at angle α to the horizontal. R points out of the
+      slope at right angles to it, mg points straight down, and the weight is split into dashed
+      components mg sin α down the slope and mg cos α into the slope. The angle between mg and the
+      into-slope component is also marked α.
+    caption: |-
+      Left: the contact force has two parts, $R$ and $F$. Right: on a smooth slope there's no $F$, and the weight splits into $mg\sin\alpha$ down the slope and $mg\cos\alpha$ into it.
+
+  - type: explain
+    title: Splitting the weight on a slope
+    body: |-
+      On a slope, $R$ is at right angles to the **slope**, not straight up. So it pays to use two new directions: **along** the slope and **perpendicular** to it. $R$ already lies in one of them. The weight doesn't, so split it.
+
+      **Why is the angle between $mg$ and the perpendicular equal to $\alpha$?** Tilt a horizontal floor up by $\alpha$ to make the slope. Its perpendicular, which was straight up and down, tilts by the same $\alpha$. So the line "into the slope" makes angle $\alpha$ with the vertical, and the weight is vertical.
+
+      Now use a right-angled triangle with $mg$ as the hypotenuse:
+
+      - the side **next to** $\alpha$ (into the slope) is $mg\cos\alpha$;
+      - the side **opposite** $\alpha$ (down the slope) is $mg\sin\alpha$.
+
+      Sanity check: on flat ground, $\alpha = 0$ gives $mg\sin 0 = 0$ down the slope (nothing pulls you sideways) and $mg\cos 0 = mg$ into the ground ✓
+
+  - type: example
+    title: A block held on a smooth slope
+    problem: |-
+      A block of mass $4\text{ kg}$ rests on a smooth plane inclined at $25^\circ$ to the horizontal. It is held in equilibrium by a light string parallel to the plane. Take $g = 10\text{ m s}^{-2}$. Find the tension $T$ in the string and the normal reaction $R$.
+    steps:
+      - |-
+        Forces: weight $4g = 40\text{ N}$ down; $R$ perpendicular to the plane; $T$ up the plane. The plane is smooth, so there is **no friction**.
+      - |-
+        Equilibrium means the forces balance in every direction, so resolve along and perpendicular to the plane.
+      - |-
+        Along the plane: up-slope forces equal down-slope forces, so $T = 40\sin 25^\circ = 16.90\ldots$
+      - |-
+        Perpendicular to the plane: $R$ balances the into-slope part of the weight, so $R = 40\cos 25^\circ = 36.25\ldots$
+    answer: |-
+      $T = 16.9\text{ N}$ and $R = 36.3\text{ N}$ (3 s.f.). Notice $R$ is **less** than the weight, $40\text{ N}$: the slope only has to hold up part of it.
+
+  - type: example
+    title: R is not always mg, even on the flat
+    problem: |-
+      A crate of mass $5\text{ kg}$ is on smooth horizontal ground. A rope pulls it with a force of $20\text{ N}$ at $30^\circ$ above the horizontal, and the crate stays on the ground. Take $g = 10\text{ m s}^{-2}$. Find $R$.
+    steps:
+      - |-
+        The crate doesn't move up or down, so the vertical forces balance.
+      - |-
+        Up: $R$ and the vertical part of the pull, $20\sin 30^\circ = 10\text{ N}$. Down: the weight $5g = 50\text{ N}$.
+      - |-
+        $R + 10 = 50$, so $R = 40\text{ N}$.
+    answer: |-
+      $R = 40\text{ N}$, not $50\text{ N}$: the rope is helping to lift the crate. Always find $R$ by balancing forces, never by assuming $R = mg$.
+
   - type: check
-    questions: [contact-components, smooth-definition, slope-component, normal-reaction]
+    questions: [contact-components, smooth-definition, slope-component, normal-reaction, normal-on-slope]
+
   - type: misconceptions
     items:
-      - wrong: The normal reaction is always equal to the weight.
-        right: It equals the weight only in particular situations, such as a stationary particle on a horizontal surface with no other vertical forces.
-      - wrong: Smooth means the surface exerts no force.
-        right: Smooth removes friction only; the normal reaction remains.
+      - wrong: |-
+          The normal reaction always equals the weight.
+        right: |-
+          Only for an object resting on horizontal ground with no other vertical forces. On a slope $R = mg\cos\alpha$; with an angled pull, $R$ changes again.
+      - wrong: |-
+          Smooth means the surface exerts no force.
+        right: |-
+          Smooth removes friction only. The normal reaction is still there.
+      - wrong: |-
+          On a slope, $R$ points straight up.
+        right: |-
+          $R$ is always at right angles to the surface it comes from, so on a slope it tilts with the slope.
+      - wrong: |-
+          The down-slope part of the weight is $mg\cos\alpha$.
+        right: |-
+          It's $mg\sin\alpha$. Check with $\alpha = 0$: flat ground should give 0 down the "slope", and $\sin 0 = 0$.
+
   - type: exam
-    body: On an inclined plane, draw the normal reaction perpendicular to the plane, not vertically upwards. State explicitly when a contact is smooth so the friction component can be set to zero.
+    body: |-
+      - Draw a force diagram first, with $R$ perpendicular to the surface, not vertical.
+      - On slopes, resolve along and perpendicular to the plane. That way $R$ and friction each appear in only one equation.
+      - When the question says *smooth*, write "smooth, so no friction" in your working. It shows the examiner why $F$ is missing.
+
   - type: takeaways
     items:
-      - Contact force can be resolved into normal reaction and friction.
-      - Normal reaction is perpendicular to the surface.
-      - Friction is parallel to the surface.
-      - A smooth contact has zero friction, not zero contact force.
+      - |-
+        A contact force has two components: the normal reaction $R$ (perpendicular to the surface) and friction $F$ (along it).
+      - |-
+        Smooth means $F = 0$, but $R$ still acts.
+      - |-
+        On a slope at angle $\alpha$, the weight splits into $mg\sin\alpha$ down the slope and $mg\cos\alpha$ into it.
+      - |-
+        Find $R$ by resolving forces. It equals $mg$ only in the simplest case.
+
 questions:
   - id: contact-components
     format: mcq
@@ -75,7 +155,7 @@ questions:
     options:
       - text: Normal reaction is perpendicular to the surface and friction is parallel to it.
         correct: true
-        why: These are the normal and tangential components of the contact interaction.
+        why: "These are the two components of the contact force: one perpendicular to the surface and one along it."
       - text: Both components are perpendicular to the surface.
         correct: false
         why: Friction acts along the surface, not perpendicular to it.
@@ -113,3 +193,16 @@ questions:
       - answer: 50
         unit: N
     explanation: There are no other vertical forces, so vertical equilibrium gives $R=mg=5(10)=50\text{ N}$.
+  - id: normal-on-slope
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.4"]
+    prompt: |-
+      A $5\text{ kg}$ particle rests on a smooth plane inclined at $30^\circ$, held by a string parallel to the plane. Using $g = 10\text{ m s}^{-2}$, find the normal reaction in newtons, to 3 significant figures.
+    fields:
+      - answer: 43.3
+        unit: N
+        tolerance:
+          abs: 0.1
+    explanation: |-
+      Perpendicular to the plane, $R$ balances the into-slope part of the weight: $R = mg\cos 30^\circ = 50 \times 0.866\ldots = 43.3\text{ N}$. It's less than the weight, $50\text{ N}$, because the slope only supports part of it.

@@ -4,7 +4,7 @@ topic: "1.4"
 title: Chords, triangles and segments
 summary: Find the area of triangle OAB with ½r² sin θ, the chord length with 2r sin(θ/2), and the area and perimeter of a segment.
 order: 3
-minutes: 5
+minutes: 8
 kind: core
 objectives: ["1.4.2"]
 prerequisites: [circular-measure-arc-length-and-sector-area]
@@ -19,6 +19,7 @@ provenance:
     All examples and questions are original; all arithmetic checked in Python. Independently
     re-checked line by line (facts, worked examples, every answer key) in a separate AI review
     on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -51,15 +52,51 @@ blocks:
       chord AB = 2r sin(θ/2); θ in radians.
 
   - type: explain
-    title: The three formulas you need
+    title: "Piece 1: the triangle's area"
     body: |-
-      | Piece | Formula | Where it comes from |
-      | --- | --- | --- |
-      | Triangle $OAB$ | $\tfrac12 r^2 \sin\theta$ | $\tfrac12 ab\sin C$ with $a = b = r$, $C = \theta$ |
-      | Segment | $\tfrac12 r^2\theta - \tfrac12 r^2\sin\theta = \tfrac12 r^2(\theta - \sin\theta)$ | sector minus triangle |
-      | Chord $AB$ | $2r\sin\tfrac{\theta}{2}$ | half the triangle is right-angled: $MB = r\sin\tfrac{\theta}{2}$ |
+      Throughout, $r$ is the radius and $\theta$ (the Greek letter "theta") is the angle $AOB$ at the centre, **in radians**.
 
-      The chord can also come from the cosine rule: $AB^2 = r^2 + r^2 - 2r^2\cos\theta$. Same answer, pick whichever you trust.
+      You may know "area of a triangle $= \tfrac12 \times$ base $\times$ height". Picture this (the height line isn't drawn in the diagram): put $OB$ (length $r$) along the bottom as the base. The height is how far $A$ sits above the line $OB$. In the right-angled triangle formed by dropping a perpendicular from $A$ onto $OB$, the hypotenuse is $OA = r$ and the height is the side opposite the angle $\theta$, so
+
+      $$\text{height} = r\sin\theta \qquad (\text{SOH: opposite} = \text{hypotenuse} \times \sin).$$
+
+      So the area is $\tfrac12 \times r \times r\sin\theta$:
+
+      $$\text{triangle } OAB = \tfrac12 r^2 \sin\theta.$$
+
+      This is the general rule "area $= \tfrac12 ab\sin C$" (two sides times the sine of the angle between them, halved) with both sides equal to $r$. That rule works for any angle, obtuse ones included, so the formula holds for every sector, not just narrow ones.
+
+  - type: explain
+    title: "Piece 2: the segment's area"
+    body: |-
+      The segment is the sector with the triangle cut out. The sector's area is $\tfrac12 r^2\theta$ (from the sectors lesson), so
+
+      $$\text{segment} = \underbrace{\tfrac12 r^2\theta}_{\text{sector}} - \underbrace{\tfrac12 r^2\sin\theta}_{\text{triangle}} = \tfrac12 r^2(\theta - \sin\theta).$$
+
+      The last step just takes out the common factor $\tfrac12 r^2$.
+
+  - type: explain
+    title: "Piece 3: the chord's length"
+    body: |-
+      Look at the dashed line $OM$ in the diagram. Because $OA = OB$, the triangle is isosceles, and the line from $O$ to the midpoint $M$ of $AB$ meets $AB$ at a right angle and cuts the angle $\theta$ exactly in half.
+
+      Now use the right-angled triangle $OMB$:
+
+      - hypotenuse $OB = r$;
+      - angle at $O$ is $\tfrac{\theta}{2}$;
+      - $MB$ is opposite that angle, so $MB = r\sin\tfrac{\theta}{2}$.
+
+      The chord is two of these halves:
+
+      $$AB = 2r\sin\tfrac{\theta}{2}.$$
+
+      You can also get it from the cosine rule: $AB^2 = r^2 + r^2 - 2r^2\cos\theta$. Same answer, so pick whichever you trust.
+
+      | Piece | Formula |
+      | --- | --- |
+      | Triangle $OAB$ | $\tfrac12 r^2 \sin\theta$ |
+      | Segment | $\tfrac12 r^2(\theta - \sin\theta)$ |
+      | Chord $AB$ | $2r\sin\tfrac{\theta}{2}$ |
 
   - type: check
     questions: [triangle-area, segment-formula-mcq]
@@ -91,7 +128,7 @@ blocks:
       A sector has radius $6$ cm and angle $\tfrac{\pi}{3}$. Find the exact area of the minor segment.
     steps:
       - |-
-        Use $\sin\tfrac{\pi}{3} = \tfrac{\sqrt3}{2}$ (one of the exact values in the trigonometry topic; it's worth knowing early).
+        $\tfrac{\pi}{3}$ radians is $60^\circ$, and $\sin 60^\circ = \tfrac{\sqrt3}{2}$, so use $\sin\tfrac{\pi}{3} = \tfrac{\sqrt3}{2}$ (one of the exact values in the trigonometry topic; it's worth knowing early).
       - |-
         Sector $= \tfrac12 \times 36 \times \tfrac{\pi}{3} = 6\pi$.
       - |-

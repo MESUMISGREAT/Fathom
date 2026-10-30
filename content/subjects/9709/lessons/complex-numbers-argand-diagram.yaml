@@ -4,7 +4,7 @@ topic: "3.9"
 title: Argand diagrams — complex numbers as geometry
 summary: "Representing complex numbers geometrically on the Argand diagram, and interpreting addition, subtraction, and conjugation as transformations."
 order: 4
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["3.9.4"]
 prerequisites: ["complex-numbers-introduction"]
@@ -18,101 +18,168 @@ provenance:
     Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate
     AI review on 2026-10-29. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
-    body: |
-      By the end you can plot complex numbers on an Argand diagram, interpret addition and
-      subtraction as vector operations, and see conjugation as reflection in the real axis.
+    body: |-
+      By the end you can plot complex numbers on an Argand diagram, find the modulus and argument of a point, and see addition, subtraction and the conjugate as moves on the diagram.
 
   - type: explain
-    title: The Argand diagram
-    body: |
-      A complex number $z = x + iy$ is the point $(x, y)$.
-      - Horizontal axis = **real axis** ($\operatorname{Re} z$)
-      - Vertical axis = **imaginary axis** ($\operatorname{Im} z$)
-      - $|z|$ = distance from origin
-      - $\arg z$ = angle from positive real axis ($-\pi < \arg z \le \pi$)
+    title: A map for complex numbers
+    body: |-
+      A complex number $z = x + iy$ has two parts, both ordinary real numbers:
+
+      - the **real part** $x$, written $\operatorname{Re} z$;
+      - the **imaginary part** $y$, written $\operatorname{Im} z$. (It's the number $y$, not $iy$.)
+
+      Two numbers make a point, so plot $z$ at $(x, y)$. The grid you plot on is an **Argand diagram**:
+
+      - the horizontal axis is the **real axis** (real part);
+      - the vertical axis is the **imaginary axis** (imaginary part).
+
+      So $3 + 4i$ sits 3 right and 4 up. $-2i$ is the same as $0 - 2i$, so it sits on the imaginary axis, 2 down. A plain real number like 5 sits on the real axis.
+
+      It often helps to picture $z$ as an arrow (a vector) from the origin $O$ to its point.
 
   - type: explain
-    title: Addition = vector addition
-    body: |
-      $z_1 + z_2$ corresponds to adding the vectors.
-      If $z_1 = a + ib$ and $z_2 = c + id$, then $z_1 + z_2 = (a+c) + i(b+d)$.
-      Geometrically: draw $z_1$ as a vector from origin, then $z_2$ from the tip of $z_1$ —
-      the sum is the vector from origin to the new tip. It's the **parallelogram rule**.
+    title: Modulus and argument
+    body: |-
+      Two measurements describe where the arrow points:
+
+      - The **modulus** $\lvert z \rvert$ is the length of the arrow, the distance from $O$ to the point. By Pythagoras, $\lvert z \rvert = \sqrt{x^2 + y^2}$.
+      - The **argument** $\arg z$ is the angle the arrow makes with the positive real axis, measured anticlockwise (clockwise counts as negative). Cambridge uses the range $-\pi < \arg z \leqslant \pi$, in radians.
+
+      To find the argument, **sketch the point first** so you know which quadrant it is in. Then find the angle in a right-angled triangle using $\tan^{-1}\left\lvert \tfrac{y}{x} \right\rvert$, and adjust:
+
+      - top right (first quadrant): $\arg z = \alpha$, where $\alpha = \tan^{-1}\left\lvert \tfrac{y}{x} \right\rvert$;
+      - top left (second quadrant): $\arg z = \pi - \alpha$;
+      - bottom left (third quadrant): $\arg z = -(\pi - \alpha)$;
+      - bottom right (fourth quadrant): $\arg z = -\alpha$.
 
   - type: example
-    title: Addition on the Argand diagram
-    problem: "Plot $z_1 = 2 + i$, $z_2 = 1 + 3i$, and their sum $z_1 + z_2$."
+    title: Modulus and argument of −1 + √3 i
+    problem: |-
+      Find the modulus and argument of $z = -1 + \sqrt3\,i$.
     steps:
-      - "$z_1$ goes to $(2, 1)$."
-      - "$z_2$ goes to $(1, 3)$."
-      - "$z_1 + z_2 = 3 + 4i$ goes to $(3, 4)$."
-      - "From the tip of $z_1$ at $(2,1)$, add $z_2$ by moving right $1$ and up $3$ to $(3,4)$."
-    answer: |
-      Points: $z_1(2,1)$, $z_2(1,3)$, sum $(3,4)$. Forms a parallelogram with the origin.
+      - |-
+        Sketch: real part $-1$ (left), imaginary part $\sqrt3$ (up), so the point is in the **top left** quadrant.
+      - |-
+        Modulus: $\lvert z \rvert = \sqrt{(-1)^2 + (\sqrt3)^2} = \sqrt{1 + 3} = 2$.
+      - |-
+        Angle in the triangle: $\alpha = \tan^{-1}\dfrac{\sqrt3}{1} = \dfrac{\pi}{3}$.
+      - |-
+        Top left, so $\arg z = \pi - \dfrac{\pi}{3} = \dfrac{2\pi}{3}$.
+    answer: |-
+      $\lvert z \rvert = 2$, $\arg z = \dfrac{2\pi}{3}$. Typing $\tan^{-1}\left(\tfrac{\sqrt3}{-1}\right)$ straight into a calculator gives $-\tfrac{\pi}{3}$, which points bottom right: wrong quadrant. That's why you sketch first.
 
   - type: explain
-    title: Subtraction = vector from $z_2$ to $z_1$
-    body: |
-      $z_1 - z_2 = (a-c) + i(b-d)$ is the vector from the point $z_2$ to the point $z_1$.
-      Distance $|z_1 - z_2|$ is the distance between the two points.
+    title: Adding is following arrows
+    body: |-
+      To add complex numbers, add the real parts and add the imaginary parts:
+
+      $$(a + ib) + (c + id) = (a + c) + i(b + d).$$
+
+      On the diagram that's exactly vector addition: walk along the arrow for $z_1$, then from where you land, walk along the arrow for $z_2$. You finish at $z_1 + z_2$.
+
+      Drawn both ways round ($z_1$ then $z_2$, or $z_2$ then $z_1$), the two routes make a **parallelogram**, and $z_1 + z_2$ is its far corner.
 
   - type: example
-    title: Distance between $3 + 4i$ and $1 + i$
-    problem: "Find the distance between $z_1 = 3 + 4i$ and $z_2 = 1 + i$ on the Argand diagram."
+    title: Adding on the Argand diagram
+    problem: |-
+      Plot $z_1 = 2 + i$, $z_2 = 1 + 3i$ and $z_1 + z_2$.
     steps:
-      - '$z_1 - z_2 = (3-1) + i(4-1) = 2 + 3i$'
-      - 'Distance $= |z_1 - z_2| = |2 + 3i| = \sqrt{2^2 + 3^2} = \sqrt{13}$'
-    answer: |
-      Distance $= \sqrt{13}$.
-
-  - type: check
-    title: Argand diagram skills
-    questions: [cn-argand-plot, cn-argand-distance, cn-argand-sum]
-
-  - type: intuition
-    title: Conjugation = reflection in the real axis
-    body: |
-      $z = x + iy$ and $z^* = x - iy$ are mirror images across the real axis.
-      - $|z| = |z^*|$ (same distance from origin)
-      - $\arg(z^*) = -\arg(z)$ (angle flips sign)
-      - $z + z^* = 2x = 2\operatorname{Re} z$ (purely real)
-      - $z - z^* = 2iy = 2i\operatorname{Im} z$ (purely imaginary)
+      - |-
+        $z_1$ is the point $(2, 1)$ and $z_2$ is the point $(1, 3)$.
+      - |-
+        $z_1 + z_2 = (2 + 1) + (1 + 3)i = 3 + 4i$, the point $(3, 4)$.
+      - |-
+        As arrows: start at $(2, 1)$, the tip of $z_1$, and move by $z_2$ (1 right, 3 up). You land on $(3, 4)$ ✓
+    answer: |-
+      $O$, $z_1$, $z_1 + z_2$ and $z_2$ are the four corners of a parallelogram, as in the diagram below.
 
   - type: diagram
     diagram: complex-numbers-argand-operations
-    alt: |
-      Argand diagram showing z1 = 2+i (blue vector), z2 = 1+3i (green vector), and their sum
-      z1+z2 = 3+4i (purple vector). A parallelogram is formed with vertices at origin, z1,
-      z1+z2, and z2. Also shown is the conjugate of z1 reflected across the real axis.
-    caption: |
-      $z_1 + z_2$ as the diagonal of the parallelogram. Conjugation reflects across the real axis.
+    alt: >-
+      Argand diagram showing z1 = 2 + i and z2 = 1 + 3i as arrows from the origin, and their sum
+      z1 + z2 = 3 + 4i. A parallelogram is formed with corners at the origin, z1, z1 + z2 and z2. The
+      conjugate of z1, the point 2 − i, is shown as the reflection of z1 in the real axis.
+    caption: |-
+      $z_1 + z_2$ is the far corner of the parallelogram. The conjugate $z_1^* = 2 - i$ is the mirror image of $z_1$ in the real axis.
 
-  - type: deeper
-    title: The parallelogram law
-    body: |
-      For any $z_1, z_2$:
-      $$|z_1 + z_2|^2 + |z_1 - z_2|^2 = 2(|z_1|^2 + |z_2|^2)$$
-      This is the **parallelogram law** — the sum of squares of the diagonals equals the sum of
-      squares of all four sides. It comes straight from the vector interpretation.
+  - type: explain
+    title: Subtracting gives the gap between two points
+    body: |-
+      $z_1 - z_2$ is the arrow that goes **from the point $z_2$ to the point $z_1$**.
+
+      Why? Because $z_2 + (z_1 - z_2) = z_1$. In words: start at $z_2$, move by $z_1 - z_2$, and you arrive at $z_1$.
+
+      So its length, $\lvert z_1 - z_2 \rvert$, is the **distance between the two points**. This idea is the key to the loci lesson that comes later.
+
+  - type: example
+    title: Distance between 3 + 4i and 1 + i
+    problem: |-
+      Find the distance between the points representing $z_1 = 3 + 4i$ and $z_2 = 1 + i$.
+    steps:
+      - |-
+        $z_1 - z_2 = (3 - 1) + (4 - 1)i = 2 + 3i$.
+      - |-
+        Distance $= \lvert 2 + 3i \rvert = \sqrt{2^2 + 3^2} = \sqrt{13}$.
+      - |-
+        Same as the distance formula between $(3, 4)$ and $(1, 1)$: gaps of 2 across and 3 up.
+    answer: |-
+      $\sqrt{13} \approx 3.61$
+
+  - type: check
+    title: Argand diagram skills
+    questions: [cn-argand-plot, cn-argand-arg, cn-argand-distance, cn-argand-sum]
+
+  - type: intuition
+    title: The conjugate is a mirror image
+    body: |-
+      The **complex conjugate** of $z = x + iy$ is $z^* = x - iy$: same real part, imaginary part with its sign flipped.
+
+      On the diagram, flipping the sign of the vertical coordinate is a **reflection in the real axis**. That explains its properties at a glance:
+
+      - $\lvert z^* \rvert = \lvert z \rvert$: a mirror image is the same distance from $O$.
+      - $\arg(z^*) = -\arg z$: the angle flips from above the axis to below it (for $z$ not on the negative real axis).
+      - $z + z^* = 2x$: the imaginary parts cancel, so the answer is real.
+      - $z - z^* = 2iy$: the real parts cancel, so the answer is purely imaginary.
 
   - type: misconceptions
     items:
-      - wrong: 'The imaginary axis is the $y$-axis but labelled $i, 2i, 3i\dots$'
-        right: 'The axis is the imaginary axis. The coordinates are real numbers: the point is $x + iy$, so the $y$-coordinate is the real number $y$, not $iy$.'
-      - wrong: '$\arg(z_1 + z_2) = \arg z_1 + \arg z_2$.'
-        right: "That's true for **multiplication** in polar form. Addition adds vectors, not angles."
-      - wrong: 'The point $3 + 4i$ is 5 units from the origin, so $\arg z = 5$.'
-        right: 'Modulus is 5. Argument is the angle ($\approx 0.927$ rad here). Different quantities entirely.'
+      - wrong: |-
+          $3 + 4i$ is plotted at $(3, 4i)$.
+        right: |-
+          Both coordinates are real numbers: the point is $(3, 4)$. The axis is *called* imaginary, but you measure along it in ordinary numbers.
+      - wrong: |-
+          $\arg(-1 + \sqrt3\,i) = \tan^{-1}\left(\tfrac{\sqrt3}{-1}\right) = -\tfrac{\pi}{3}$.
+        right: |-
+          The point is top left, so $\arg z = \tfrac{2\pi}{3}$. A calculator's $\tan^{-1}$ can't tell top left from bottom right; your sketch can.
+      - wrong: |-
+          $\arg(z_1 + z_2) = \arg z_1 + \arg z_2$.
+        right: |-
+          Adding complex numbers adds arrows, not angles. (Angles add when you **multiply**, which comes in a later lesson.)
+      - wrong: |-
+          $z_1 - z_2$ is the arrow from $z_1$ to $z_2$.
+        right: |-
+          It goes from $z_2$ to $z_1$ ("end minus start"), because $z_2 + (z_1 - z_2) = z_1$.
+
+  - type: exam
+    body: |-
+      - *Show on an Argand diagram …*: label the axes Re and Im and mark points clearly with their numbers.
+      - Arguments in radians, in the range $-\pi < \arg z \leqslant \pi$, unless the question says otherwise.
+      - Always sketch before finding an argument. It takes five seconds and saves the quadrant mark.
 
   - type: takeaways
     items:
-      - "Plot $x + iy$ at $(x, y)$ on the Argand diagram."
-      - "Addition = vector addition (parallelogram rule)."
-      - "Subtraction $z_1 - z_2$ = vector from $z_2$ to $z_1$; length is distance between points."
-      - "Conjugation = reflection in the real axis."
-      - "$|z_1 - z_2|$ = distance between the points representing $z_1$ and $z_2$."
+      - |-
+        Plot $x + iy$ at $(x, y)$: real part across, imaginary part up.
+      - |-
+        $\lvert z \rvert = \sqrt{x^2 + y^2}$ is the length; $\arg z$ is the angle from the positive real axis, in $(-\pi, \pi]$. Sketch to get the quadrant right.
+      - |-
+        Adding follows arrows (parallelogram); $z_1 - z_2$ goes from $z_2$ to $z_1$, and $\lvert z_1 - z_2 \rvert$ is the distance between them.
+      - |-
+        The conjugate $z^*$ is the reflection of $z$ in the real axis.
 
 questions:
   - id: cn-argand-plot
@@ -162,8 +229,29 @@ questions:
       - text: "$(3, -2)$"
         why: "That would be $z_1 - z_2$."
       - text: "$(1, -2)$"
-        why: "Wrong signs."
+        why: 'The real parts were added correctly, but the imaginary parts were subtracted ($1 - 3$) instead of added.'
       - text: "$(-1, 4)$"
-        why: "Real part is wrong."
+        why: 'The real part should be $2 + (-1) = 1$, not $-1$.'
     explanation: |
       $z_1 + z_2 = (2 + (-1)) + i(1 + 3) = 1 + 4i$. Point $(1, 4)$.
+  - id: cn-argand-arg
+    format: numeric
+    difficulty: 2
+    objectives: ["3.9.4"]
+    prompt: |-
+      Find the modulus and the argument of $z = -2 - 2i$. Give the argument in radians, in the range $-\pi < \arg z \leqslant \pi$, to 3 significant figures.
+    fields:
+      - label: "|z| ="
+        answer: 2.828
+        tolerance:
+          abs: 0.01
+      - label: "arg z ="
+        answer: -2.356
+        tolerance:
+          abs: 0.01
+    explanation: |-
+      Both parts are negative, so the point $(-2, -2)$ is in the **bottom left** quadrant.
+
+      Modulus: $\sqrt{(-2)^2 + (-2)^2} = \sqrt8 = 2\sqrt2 \approx 2.83$.
+
+      Angle in the triangle: $\alpha = \tan^{-1}\tfrac22 = \tfrac{\pi}{4}$. Bottom left, so $\arg z = -\left(\pi - \tfrac{\pi}{4}\right) = -\tfrac{3\pi}{4} \approx -2.36$.

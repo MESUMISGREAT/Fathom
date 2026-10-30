@@ -4,7 +4,7 @@ topic: "4.4"
 title: "Connected particles: pulleys and tow-bars"
 summary: "When particles are connected by a string or rod, they move together. Apply F = ma to each particle separately, or to the whole system — both work if you do it carefully."
 order: 4
-minutes: 8
+minutes: 10
 kind: core
 objectives: ["4.4.4"]
 prerequisites: ["newtons-laws-first-second", "newtons-laws-mass-weight"]
@@ -18,156 +18,169 @@ provenance:
     trailer by light rope or rigid tow-bar). All questions and examples are original. AI-reviewed for syllabus alignment and mathematical accuracy.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate
     AI review on 2026-10-29. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
-    body: |
-      By the end you can model connected particles with a light inextensible string over a smooth
-      pulley, or a car and trailer connected by a rope or tow-bar, and find acceleration and
-      tension/thrust.
+    body: |-
+      By the end you can handle two objects joined together, either by a string over a pulley or by a rope or tow-bar between a car and a trailer, and find their acceleration and the force in the connection.
 
   - type: explain
-    title: What "connected" means
-    body: |
-      **Light** means the string/rod has negligible mass. **Inextensible** means it doesn't stretch.
-      **Smooth pulley** means no friction at the pulley — the tension is the same on both sides.
+    title: The words the question uses
+    body: |-
+      Connected-particle questions come with a short list of modelling words. Each one tells you something you can use:
 
-      The key consequence: **both particles have the same acceleration magnitude** (they move
-      together). If one speeds up, the other does too, by the same amount. The string/rod
-      transmits the force.
+      - **Light** string or rod: its mass is ignored, so it doesn't need any force to accelerate it. The pull is the same all along it.
+      - **Inextensible**: it doesn't stretch. So the two objects always move together, with the **same speed** and the **same size of acceleration**.
+      - **Smooth pulley**: no friction at the pulley, so the **tension** (the pulling force in the string, $T$) is the same on both sides.
+      - **Particle**: treat each object as a dot, so you ignore its size and rotation.
+      - **Driving force**: the forward push from a car's engine. **Resistance**: the backward forces (air resistance, friction) that oppose the motion.
 
-      Two approaches work:
-      1. **Separate particles:** Apply F = ma to each particle. You get two equations with two
-         unknowns (acceleration a and tension T or thrust). Solve them simultaneously.
-      2. **Whole system:** Treat the connected particles as one system. Internal forces (tension/
-         thrust) cancel out. The net external force = (total mass) × a. This often gives a
-         directly, then substitute back to find T.
+      Throughout, we use Newton's second law, $F = ma$: the **resultant** (overall) force on an object equals its mass times its acceleration. Take $g = 10\text{ m s}^{-2}$, as Cambridge 9709 does unless a question says otherwise.
 
-      Both are valid. The system method is faster for finding a; the separate method is needed
-      when you want the internal force.
-
-  - type: example
-    title: Two masses on a smooth pulley
-    problem: |
-      Two particles A (mass 3 kg) and B (mass 5 kg) are connected by a light inextensible string
-      passing over a smooth fixed pulley. They are released from rest. Find (a) the acceleration of
-      the system and (b) the tension in the string. Take g = 10 m s⁻².
-    steps:
-      - |
-        Draw force diagrams. A: weight 30 N down, tension T up. B: weight 50 N down, tension T up.
-        B is heavier, so B goes down, A goes up. Take the direction of motion as positive for each:
-        for A, up is positive; for B, down is positive.
-      - |
-        **System method:** Net external force = 50 - 30 = 20 N (down on B). Total mass = 8 kg.
-        20 = 8a → a = 2.5 m s⁻².
-      - |
-        **Separate method (to find T):** For A (up positive): T - 30 = 3a. For B (down positive):
-        50 - T = 5a.
-        Add: 20 = 8a → a = 2.5 m s⁻² (same).
-        Substitute: T - 30 = 3(2.5) = 7.5 → T = 37.5 N.
-    answer: |
-      (a) a = 2.5 m s⁻². (b) T = 37.5 N.
-
-  - type: example
-    title: Car and trailer — rope and tow-bar
-    problem: |
-      A car of mass 1000 kg tows a trailer of mass 600 kg by a light inextensible rope. The car's
-      engine provides a driving force of 3000 N. Resistances: car 500 N, trailer 300 N. Find (a)
-      the acceleration and (b) the tension in the rope.
-    steps:
-      - |
-        System method: Net external force = driving force - total resistance = 3000 - (500 + 300)
-        = 2200 N. Total mass = 1600 kg. 2200 = 1600a → a = 1.375 m s⁻².
-      - |
-        Separate for tension: For trailer (forward positive): T - 300 = 600a = 600 × 1.375 = 825.
-        So T = 1125 N.
-        (Check with car: 3000 - 500 - T = 1000a → 2500 - 1125 = 1375 = 1000 × 1.375 ✓)
-    answer: |
-      (a) a = 1.375 m s⁻². (b) T = 1125 N.
+  - type: diagram
+    diagram: mech-connected-particles
+    alt: >-
+      Two panels. Left: a smooth pulley hanging from a ceiling, with a string over it. Particle A, 3 kg,
+      hangs on the left and particle B, 5 kg, hangs lower on the right. Each has tension T pointing up
+      the string and its weight (3g and 5g) pointing down. An acceleration arrow a points up beside A and
+      down beside B. Caption: smooth pulley, same T both sides. Right: a trailer of 600 kg joined by a bar
+      to a car of 1000 kg on a road. The car has a 3000 N driving force forwards. Resistances of 500 N
+      on the car and 300 N on the trailer point backwards. In the bar, tension T acts forwards on the
+      trailer and backwards on the car. Caption: the bar pulls the trailer forward and the car back.
+    caption: |-
+      Draw a separate force diagram for each object. The connection pulls **both** objects towards each other with the same $T$.
 
   - type: explain
-    title: Rope vs tow-bar — the crucial difference
-    body: |
-      A **rope** can only pull (tension). If the car brakes, the rope goes slack — it cannot push
-      the trailer. The trailer would then decelerate only due to its own resistance.
+    title: Two ways to get the answers
+    body: |-
+      **Method 1: one object at a time.** Apply $F = ma$ to each object separately, using only the forces on *that* object. You get two equations in two unknowns (usually $a$ and $T$). Solve them together.
 
-      A **rigid tow-bar** can both pull (tension) and push (thrust/compression). If the car brakes,
-      the tow-bar pushes the trailer forward (thrust), so both still have the same acceleration.
+      **Method 2: the whole system.** Treat the two objects as one big object of mass $m_1 + m_2$. The tension pulls one forward and the other back by the same amount, so inside the system it **cancels**. Only the outside (external) forces count:
 
-      The syllabus says "light rope or light rigid tow-bar". If it's a rope, tension ≥ 0 always. If
-      it's a tow-bar, the internal force can be tension (pull) or thrust (push).
+      $$\text{resultant external force} = (m_1 + m_2)\,a.$$
+
+      Method 2 gets $a$ in one line, but it can't give you $T$, because $T$ has cancelled. So a good routine is: whole system for $a$, then one object for $T$.
+
+      **Choose a positive direction for each object: the way it moves.** For the pulley, that's up for the lighter object and down for the heavier one.
 
   - type: example
-    title: Car and trailer with tow-bar — braking
-    problem: |
-      A car (mass 1000 kg) and trailer (mass 600 kg) are connected by a light rigid tow-bar. They
-      move at constant speed with the engine providing 800 N driving force. The resistances are
-      500 N (car) and 300 N (trailer). The driver then applies the brakes, exerting a braking force
-      of 1200 N on the car (backwards). Find (a) the acceleration and (b) the force in the tow-bar,
-      stating whether it is tension or thrust.
+    title: Two particles over a pulley
+    problem: |-
+      Particles $A$ (mass $3\text{ kg}$) and $B$ (mass $5\text{ kg}$) are joined by a light inextensible string over a smooth fixed pulley, as in the diagram, and released from rest. Find the acceleration and the tension.
     steps:
-      - |
-        First, check constant speed: driving 800 N = total resistance 500 + 300 = 800 N. Net force
-        zero, so a = 0. Consistent.
-      - |
-        Now braking: forces on system = driving force - braking force - resistances = 800 - 1200
-        - 800 = -1200 N. Total mass = 1600 kg. a = -1200/1600 = -0.75 m s⁻² (deceleration).
-      - |
-        Force in tow-bar (on trailer, forward positive): T - 300 = 600(-0.75) = -450. So T = -150 N.
-        Negative means the force on the trailer is backwards — the tow-bar is pushing it. This is
-        **thrust** of 150 N.
-    answer: |
-      (a) a = -0.75 m s⁻² (deceleration). (b) Thrust = 150 N (force in tow-bar is a push).
+      - |-
+        $B$ is heavier, so $B$ moves down and $A$ moves up. Weights: $A$ has $3g = 30\text{ N}$, $B$ has $5g = 50\text{ N}$.
+      - |-
+        **$A$ (up positive):** forces up minus forces down $=$ mass $\times a$: $\;T - 30 = 3a$.
+      - |-
+        **$B$ (down positive):** $\;50 - T = 5a$.
+      - |-
+        Add the two equations. The $T$ terms cancel: $50 - 30 = 8a$. (This is the whole-system method in disguise: taking "round the pulley" as the positive direction, $B$'s weight pulls the system round and $A$'s weight resists.) So $a = \dfrac{20}{8} = 2.5\text{ m s}^{-2}$.
+      - |-
+        Substitute into $A$'s equation: $T = 30 + 3(2.5) = 37.5\text{ N}$.
+      - |-
+        Check with $B$: $50 - 37.5 = 12.5 = 5 \times 2.5$ ✓
+    answer: |-
+      $a = 2.5\text{ m s}^{-2}$ and $T = 37.5\text{ N}$. Notice $T$ is between the two weights: bigger than $30$ (so $A$ speeds up going up) but less than $50$ (so $B$ speeds up going down).
+
+  - type: example
+    title: Car and trailer
+    problem: |-
+      A car of mass $1000\text{ kg}$ tows a trailer of mass $600\text{ kg}$ with a light inextensible rope, as in the diagram. The driving force is $3000\text{ N}$. The resistances are $500\text{ N}$ on the car and $300\text{ N}$ on the trailer. Find the acceleration and the tension in the rope.
+    steps:
+      - |-
+        **Whole system (forwards positive):** external forces are the driving force and both resistances. $3000 - 500 - 300 = 1600a$, so $2200 = 1600a$ and $a = 1.375\text{ m s}^{-2}$.
+      - |-
+        **Trailer alone:** the only forward force on it is $T$; the backward force is its resistance. $T - 300 = 600 \times 1.375 = 825$, so $T = 1125\text{ N}$.
+      - |-
+        **Check with the car alone:** forward $3000$; backward $500$ and the rope's pull $T$. $3000 - 500 - 1125 = 1375 = 1000 \times 1.375$ ✓
+    answer: |-
+      $a = 1.375\text{ m s}^{-2}$ and $T = 1125\text{ N}$.
 
   - type: check
     title: Check yourself
-    questions: [pulley-two-mass, car-trailer-rope, car-trailer-brake, tow-bar-thrust]
+    questions: [pulley-two-mass, car-trailer-rope]
+
+  - type: explain
+    title: Rope or tow-bar?
+    body: |-
+      A **rope** can only pull. If the car slows down sharply, the rope just goes slack; it can't push.
+
+      A rigid **tow-bar** can pull *or* push. A push in a rod is called a **thrust**. When the car brakes hard, the trailer "wants" to keep going and runs up against the bar. The bar then pushes the trailer **backwards** (slowing it down) and pushes the car **forwards**.
+
+      **How to handle it:** call the force in the bar $T$ and draw it as a tension (forwards on the trailer). Solve as usual. If $T$ comes out **negative**, your guess of direction was wrong: the bar is in thrust, with size $\lvert T \rvert$.
+
+  - type: example
+    title: Braking with a tow-bar
+    problem: |-
+      The same car ($1000\text{ kg}$) and trailer ($600\text{ kg}$) are now joined by a light rigid tow-bar. The driving force is $800\text{ N}$ and the resistances are still $500\text{ N}$ and $300\text{ N}$, so they move at constant speed. The driver then brakes, adding a backward braking force of $1200\text{ N}$ on the car (the driving force stays at $800\text{ N}$). Find the acceleration and the force in the tow-bar.
+    steps:
+      - |-
+        Before braking: $800 - 500 - 300 = 0$, so no resultant force and constant speed ✓
+      - |-
+        **Whole system (forwards positive):** $800 - 1200 - 500 - 300 = 1600a$, so $-1200 = 1600a$ and $a = -0.75\text{ m s}^{-2}$. The minus sign means it's slowing down.
+      - |-
+        **Trailer alone**, with the bar force $T$ drawn forwards: $T - 300 = 600 \times (-0.75) = -450$, so $T = -150\text{ N}$.
+      - |-
+        $T$ is negative, so the bar actually pushes the trailer **backwards** with $150\text{ N}$. That's a thrust.
+      - |-
+        Does that make sense? On its own, the trailer's $300\text{ N}$ resistance would only slow it at $300 \div 600 = 0.5\text{ m s}^{-2}$. The car is slowing at $0.75\text{ m s}^{-2}$, so the bar must push back on the trailer to make it slow down just as fast.
+    answer: |-
+      Deceleration $0.75\text{ m s}^{-2}$; the tow-bar is in **thrust**, $150\text{ N}$. With a rope instead, it would go slack here.
+
+  - type: check
+    title: Check yourself
+    questions: [car-trailer-brake, tow-bar-thrust]
 
   - type: misconceptions
     items:
-      - wrong: "Tension is different on each side of a smooth pulley."
-        right: |
-          A smooth pulley means no friction. The tension is the same throughout a light inextensible
-          string. That's a key modelling assumption.
-      - wrong: "In a tow-bar problem, the force is always tension."
-        right: |
-          A rigid tow-bar can transmit thrust (a push) as well as tension (a pull). If the car
-          brakes, the tow-bar pushes the trailer. The force can be negative in your chosen
-          positive direction.
-      - wrong: "The acceleration of the two particles might be different if one is heavier."
-        right: |
-          The string/rod is inextensible — it doesn't stretch. The particles must have the same
-          acceleration magnitude. Different masses mean different net forces, not different
-          accelerations.
+      - wrong: |-
+          The tension is different on each side of the pulley.
+        right: |-
+          With a light string over a smooth pulley, the tension is the same all the way along.
+      - wrong: |-
+          The heavier particle has a bigger acceleration.
+        right: |-
+          The string doesn't stretch, so both move together with the same size of acceleration. The heavier one simply has a bigger resultant force.
+      - wrong: |-
+          For the pulley, the resultant force on the system is $5g + 3g$.
+        right: |-
+          The weights pull in opposite directions around the pulley, one with the motion and one against it, so the resultant is $5g - 3g$.
+      - wrong: |-
+          The force in a tow-bar is always a tension.
+        right: |-
+          A rigid bar can push too. A negative answer for $T$ means thrust.
+      - wrong: |-
+          The tension in the rope equals the driving force.
+        right: |-
+          The rope only has to accelerate the trailer and overcome the trailer's resistance, so $T$ is much smaller than the driving force.
 
   - type: exam
-    body: |
-      - Draw separate force diagrams for each particle. Label tension T (or thrust) on both.
-      - Write your sign convention for each particle (usually direction of motion = positive).
-      - System method: external forces only, total mass. Finds a quickly.
-      - Separate method: includes internal forces. Needed for T or thrust.
-      - "Light inextensible string" = same tension both sides, same acceleration magnitude.
-      - "Smooth pulley" = same tension both sides.
-      - Rope: tension only (≥ 0). Tow-bar: tension or thrust (can be negative).
-      - If the rope goes slack, the particles separate — they no longer move together. The
-        question will usually ask about the moment it becomes taut again.
+    body: |-
+      - Draw a separate force diagram for each object, with $T$ on both.
+      - State your positive direction for each object (usually the direction of motion).
+      - Whole system for $a$, then one object for $T$. Use the other object as a check.
+      - Write the equations in words-and-numbers form, like "$T - 300 = 600a$". Each correct equation is worth a mark on its own.
+      - If the force in a tow-bar comes out negative, say in words that it is a thrust of that size.
 
   - type: takeaways
     items:
-      - "Light inextensible string + smooth pulley → same tension, same acceleration magnitude."
-      - "System method: ΣF_external = (total mass) × a. Fast for finding a."
-      - "Separate method: F = ma for each particle. Needed for internal force (T or thrust)."
-      - "Rope = tension only (≥ 0). Tow-bar = tension or thrust (can push)."
-      - "If car brakes with tow-bar, thrust appears in the bar."
+      - |-
+        Light inextensible string over a smooth pulley: same tension both sides, same size of acceleration.
+      - |-
+        Whole system: resultant external force $= (m_1 + m_2)a$. The tension cancels, so this finds $a$ only.
+      - |-
+        One object at a time: $F = ma$ with all the forces on that object, including $T$. This finds $T$.
+      - |-
+        A rope only pulls. A tow-bar can pull (tension) or push (thrust); a negative $T$ means thrust.
 
 questions:
   - id: pulley-two-mass
     format: numeric
     difficulty: 2
     objectives: ["4.4.4"]
-    prompt: |
-      Particles of mass 2 kg and 7 kg are connected by a light inextensible string over a smooth
-      pulley. Find (a) the acceleration of the system and (b) the tension in the string. Take
-      g = 10 m s⁻².
+    prompt: |-
+      Particles of mass $2\text{ kg}$ and $7\text{ kg}$ are connected by a light inextensible string over a smooth fixed pulley and released from rest. Take $g = 10\text{ m s}^{-2}$. Find the acceleration and the tension, to 3 significant figures.
     fields:
       - label: "a (m s⁻²)"
         answer: 5.56
@@ -175,18 +188,19 @@ questions:
       - label: "T (N)"
         answer: 31.1
         tolerance: { abs: 0.2 }
-    explanation: |
-      System: net force = 70 - 20 = 50 N. Total mass = 9 kg. a = 50/9 ≈ 5.56 m s⁻².
-      For the 2 kg mass (up positive): T - 20 = 2(50/9) = 100/9. T = 20 + 100/9 = 280/9 ≈ 31.1 N.
+    explanation: |-
+      The $7\text{ kg}$ particle goes down and the $2\text{ kg}$ particle goes up.
+
+      Whole system: $70 - 20 = 9a$, so $a = \dfrac{50}{9} \approx 5.56\text{ m s}^{-2}$.
+
+      $2\text{ kg}$ particle (up positive): $T - 20 = 2 \times \dfrac{50}{9}$, so $T = 20 + \dfrac{100}{9} = \dfrac{280}{9} \approx 31.1\text{ N}$.
 
   - id: car-trailer-rope
     format: numeric
     difficulty: 2
     objectives: ["4.4.4"]
-    prompt: |
-      A car of mass 1200 kg tows a trailer of mass 400 kg by a light inextensible rope. The
-      driving force is 2000 N. Resistances: car 600 N, trailer 200 N. Find (a) the acceleration
-      and (b) the tension in the rope.
+    prompt: |-
+      A car of mass $1200\text{ kg}$ tows a trailer of mass $400\text{ kg}$ with a light inextensible rope. The driving force is $2000\text{ N}$, and the resistances are $600\text{ N}$ on the car and $200\text{ N}$ on the trailer. Find the acceleration and the tension in the rope.
     fields:
       - label: "a (m s⁻²)"
         answer: 0.75
@@ -194,51 +208,52 @@ questions:
       - label: "T (N)"
         answer: 500
         tolerance: { abs: 1 }
-    explanation: |
-      System: net force = 2000 - 600 - 200 = 1200 N. Total mass = 1600 kg. a = 1200/1600 = 0.75 m s⁻².
-      Trailer: T - 200 = 400 × 0.75 = 300. T = 500 N.
+    explanation: |-
+      Whole system: $2000 - 600 - 200 = 1600a$, so $a = \dfrac{1200}{1600} = 0.75\text{ m s}^{-2}$.
+
+      Trailer: $T - 200 = 400 \times 0.75 = 300$, so $T = 500\text{ N}$.
+
+      Check with the car: $2000 - 600 - 500 = 900 = 1200 \times 0.75$ ✓
 
   - id: car-trailer-brake
     format: numeric
     difficulty: 3
     objectives: ["4.4.4"]
-    prompt: |
-      A car (mass 900 kg) and trailer (mass 300 kg) are connected by a light rigid tow-bar. The
-      resistances are 450 N on the car and 150 N on the trailer. They move at constant speed with
-      a driving force of 600 N. The driver applies brakes giving a braking force of 800 N on the
-      car. Find the deceleration and the force in the tow-bar (state tension or thrust).
+    prompt: |-
+      A car (mass $900\text{ kg}$) and trailer (mass $300\text{ kg}$) are joined by a light rigid tow-bar. The resistances are $450\text{ N}$ on the car and $150\text{ N}$ on the trailer, and they move at constant speed with a driving force of $600\text{ N}$. The driver brakes, adding a backward braking force of $800\text{ N}$ on the car (the driving force stays at $600\text{ N}$). Find the deceleration and the size of the thrust in the tow-bar.
     fields:
       - label: "deceleration (m s⁻²)"
         answer: 0.6667
         tolerance: { abs: 0.02 }
-      - label: "force in tow-bar (N)"
-        answer: -50
+      - label: "thrust (N)"
+        answer: 50
         tolerance: { abs: 1 }
-    explanation: |
-      Net force on system = driving - braking - total resistance = 600 - 800 - 600 = -800 N.
-      Total mass = 1200 kg. a = -800/1200 = -2/3 ≈ -0.667 m s⁻² (deceleration).
-      Trailer (forward positive): T - 150 = 300 × (-2/3) = -200. T = -50 N. The negative sign
-      means the force on the trailer is backwards — the tow-bar pushes it. This is thrust of 50 N.
+    explanation: |-
+      Whole system (forwards positive): $600 - 800 - 450 - 150 = 1200a$, so $-800 = 1200a$ and $a = -\tfrac23 \approx -0.667\text{ m s}^{-2}$: a deceleration of $0.667\text{ m s}^{-2}$.
+
+      Trailer, with the bar force $T$ drawn forwards: $T - 150 = 300 \times \left(-\tfrac23\right) = -200$, so $T = -50\text{ N}$.
+
+      Negative, so the bar pushes the trailer backwards: a **thrust** of $50\text{ N}$.
 
   - id: tow-bar-thrust
     format: mcq
     difficulty: 2
     objectives: ["4.4.4"]
-    prompt: |
-      A car and trailer are connected by a light rigid tow-bar and are moving forwards. The car
-      brakes. What is the force in the tow-bar acting on the trailer?
+    prompt: |-
+      A car and trailer are joined by a light rigid tow-bar. The car brakes hard, so the car slows down faster than the trailer's own resistance alone would slow the trailer. What does the tow-bar do to the **trailer**?
     options:
-      - text: "Tension (pulling the trailer forwards)"
-        why: "This would be true if the car were accelerating, not braking."
-      - text: "Thrust (pushing the trailer forwards)"
+      - text: It pushes the trailer backwards (thrust).
         correct: true
-        why: "The car slows down, the trailer tends to keep moving forward, so the tow-bar pushes it forward."
-      - text: "Zero — the tow-bar goes slack"
-        why: "A rigid tow-bar does not go slack; only a rope does. The tow-bar pushes (thrust)."
-      - text: "Tension (pulling the trailer backwards)"
-        why: "The tow-bar is rigid, not a rope. It pushes, it doesn't pull backwards."
-    explanation: |
-      When the car brakes, it decelerates. The trailer's inertia makes it tend to continue at the
-      original speed, so it pushes against the tow-bar. The tow-bar, being rigid, pushes back on
-      the trailer (thrust) and the trailer pushes on the car. This is the key difference from a
-      rope, which would go slack.
+        why: |-
+          The trailer must slow down as fast as the car, and its own resistance isn't enough, so the bar pushes back on it. A push in a rod is a thrust.
+      - text: It pulls the trailer forwards (tension).
+        why: |-
+          That's what happens when the car is speeding up or cruising, not braking hard.
+      - text: Nothing, because the tow-bar goes slack.
+        why: |-
+          Only a rope goes slack. A rigid bar can push.
+      - text: It pushes the trailer forwards.
+        why: |-
+          A forward push would make the trailer slow down *less*, but it has to slow down *more* to keep up with the car.
+    explanation: |-
+      Both vehicles must have the same deceleration. The trailer's resistance alone gives too little, so the bar supplies an extra backward push on the trailer, and by Newton's third law an equal forward push on the car. The bar is in thrust.

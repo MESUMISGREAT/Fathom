@@ -2,7 +2,7 @@ id: work-energy-power-work-energy-principle
 subject: "9709"
 topic: "4.5"
 title: "Work-energy principle and conservation of mechanical energy"
-summary: "Apply the work-energy principle: net work = change in kinetic energy. Understand conservation of mechanical energy when only conservative forces act."
+summary: "Treat energy like a bank account: work done by driving forces minus work done against resistances equals the change in kinetic plus potential energy. With no resistances, energy is conserved."
 order: 3
 minutes: 8
 kind: core
@@ -17,91 +17,121 @@ provenance:
     All questions and examples are original. AI-reviewed for syllabus alignment and mathematical accuracy.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate
     AI review on 2026-10-29. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
-    body: |
-      By the end you can state and apply the work-energy principle (net work = ΔKE), distinguish conservative and non-conservative forces, and use conservation of mechanical energy when only conservative forces do work.
+    body: |-
+      By the end you can use energy as a bookkeeping system: link the work done by forces to the change in kinetic and potential energy, and use conservation of energy when nothing else does work.
 
   - type: explain
-    title: Key to the symbols
-    body: |
-      The main symbols used in this lesson:
+    title: The pieces you already have
+    body: |-
+      Quick recap of the three ideas this lesson joins together (all measured in joules, J):
 
-      | Symbol | Meaning |
-      | --- | --- |
-      | $\Delta$ | a change in, so $\Delta v$ means "the change in $v$" |
+      - **Work done by a force** $= Fd\cos\theta$, where $F$ is the force in newtons, $d$ is the distance moved in metres, and $\theta$ is the angle between the force and the direction of motion. If the force is along the motion, $\cos 0 = 1$ and the work is just $Fd$.
+      - **Kinetic energy** (KE), the energy of movement: $\tfrac12 mv^2$, where $m$ is the mass in kg and $v$ the speed in m s⁻¹.
+      - **Gravitational potential energy** (GPE), the energy of height: $mgh$, where $h$ is the height above a level you choose as zero. Take $g = 10\text{ m s}^{-2}$.
 
-  - type: explain
-    title: The work-energy principle
-    body: |
-      The **work-energy principle** (or work-energy theorem) states:
-      $$W_{\text{net}} = \Delta \text{KE} = \text{KE}_{\text{final}} - \text{KE}_{\text{initial}}$$
-
-      where $W_{\text{net}}$ is the **total work done by all forces** acting on the particle.
-      - This follows directly from $F = ma$ and $v^2 = u^2 + 2as$.
-      - It applies to **any** forces (conservative or not).
-      - If $W_{\text{net}} > 0$, KE increases (speeds up).
-      - If $W_{\text{net}} < 0$, KE decreases (slows down).
-      - If $W_{\text{net}} = 0$, KE is constant (constant speed).
-
-  - type: definition
-    term: Conservative force
-    body: |
-      A force is **conservative** if the work it does depends **only on the start and end points**, not the path taken.
-      - Gravity is conservative: $W_{\text{gravity}} = -mg\Delta h = -\Delta\text{GPE}$.
-      - Elastic force (spring) is conservative (not in this topic).
-      - For a conservative force, we can define a **potential energy** function.
-
-  - type: definition
-    term: Non-conservative force
-    body: |
-      A force is **non-conservative** (or dissipative) if the work it does **depends on the path**.
-      - Friction and air resistance are non-conservative.
-      - Work done by friction along a path = $-F_{\text{friction}} \times \text{path length}$.
-      - Friction **always** does negative work (removes mechanical energy as heat).
-      - There is no potential energy function for non-conservative forces.
+      The symbol $\Delta$ ("delta") means "change in", so $\Delta\text{KE}$ is the final KE minus the initial KE.
 
   - type: explain
-    title: Conservation of mechanical energy
-    body: |
-      **Mechanical energy** $E = \text{KE} + \text{GPE}$ (and elastic PE if present).
+    title: Energy as a bank account
+    body: |-
+      Think of an object's energy (its KE plus its GPE) as a bank balance.
 
-      When **only conservative forces** do work:
-      $$W_{\text{net}} = W_{\text{conservative}} = -\Delta\text{GPE}$$
-      But $W_{\text{net}} = \Delta\text{KE}$, so:
-      $$\Delta\text{KE} = -\Delta\text{GPE} \quad\Rightarrow\quad \Delta(\text{KE} + \text{GPE}) = 0$$
-      **Mechanical energy is conserved:**
-      $$\text{KE}_{\text{initial}} + \text{GPE}_{\text{initial}} = \text{KE}_{\text{final}} + \text{GPE}_{\text{final}}$$
+      - A force that pushes **with** the motion (an engine, a pull, a push) does positive work: it **pays in**.
+      - A force that acts **against** the motion (friction, air resistance) **takes money out**, turning energy into heat and sound. We write this as a positive amount, the *work done against* the resistance (force × distance), and subtract it.
+      - Gravity is already counted in the GPE, so don't count it again as work. (Equivalently, the work done by gravity equals the GPE lost; use one or the other, never both.) Normal reactions are at right angles to the motion, so they do no work at all ($\cos 90^\circ = 0$).
 
-      When **non-conservative forces** (e.g., friction) do work:
-      $$W_{\text{non-conservative}} = \Delta\text{KE} + \Delta\text{GPE} = \Delta E_{\text{mechanical}}$$
-      Mechanical energy is **not** conserved; it changes by the amount of work done by non-conservative forces.
+      That gives the one equation this lesson is about, the **work–energy principle**:
+
+      $$\text{work done by driving forces} - \text{work done against resistances} = \Delta\text{KE} + \Delta\text{GPE}.$$
+
+      Here "driving forces" means anything except gravity that helps the motion: an engine, a push or a pull. In words: what you pay in, minus what's taken out, equals how much the balance changed.
+
+  - type: intuition
+    title: Why is this true?
+    body: |-
+      It comes from $F = ma$ and the equation $v^2 = u^2 + 2as$ (where $u$ is the start speed and $s$ the distance).
+
+      For a resultant force $F$ along the motion, $a = \tfrac{F}{m}$, so $v^2 = u^2 + 2\tfrac{F}{m}s$. Multiply through by $\tfrac12 m$:
+
+      $$\tfrac12 mv^2 - \tfrac12 mu^2 = Fs.$$
+
+      The left side is the change in KE; the right side is the work done by the resultant force. Moving gravity's share of that work over to the GPE side gives the bank-account equation.
+
+  - type: explain
+    title: The special case — conservation of energy
+    body: |-
+      If no forces other than gravity do any work (the surface is **smooth**, there's no air resistance and no engine), nothing is paid in or taken out. The balance stays the same:
+
+      $$\text{KE}_{\text{start}} + \text{GPE}_{\text{start}} = \text{KE}_{\text{end}} + \text{GPE}_{\text{end}}.$$
+
+      This is the **principle of conservation of energy**. Energy just swaps between height and speed.
+
+      A big bonus: it only cares about the start and the end, not the path. So it works for **curved** slides and ramps, where $F = ma$ would be very hard because the forces keep changing direction.
 
   - type: example
-    title: Work-energy with friction
-    problem: |
-      A block of mass $2\text{ kg}$ slides down a rough slope of length $5\text{ m}$ inclined at $30^\circ$. The frictional force is $4\text{ N}$. If it starts from rest, find its speed at the bottom. Use $g = 10\text{ m s}^{-2}$.
+    title: A smooth curved slide
+    problem: |-
+      A child of mass $30\text{ kg}$ starts from rest at the top of a smooth curved slide and comes off the bottom, $3.2\text{ m}$ lower. Find the child's speed at the bottom.
     steps:
-      - 'Height lost: $\Delta h = 5 \sin 30^\circ = 2.5\text{ m}$'
-      - 'Work by gravity = $mg\Delta h = 2 \times 10 \times 2.5 = 50\text{ J}$'
-      - 'Work by friction = $-Fd = -4 \times 5 = -20\text{ J}$'
-      - 'Net work = $50 - 20 = 30\text{ J} = \Delta\text{KE} = ½mv^2$'
-      - '$v^2 = 2 \times 30 / 2 = 30$, so $v = \sqrt{30} \approx 5.48\text{ m s}^{-1}$'
-    answer: |
-      $v \approx 5.48\text{ m s}^{-1}$
+      - |-
+        Smooth, so no friction: energy is conserved. Measure heights from the bottom of the slide.
+      - |-
+        Start: KE $= 0$ (at rest), GPE $= 30 \times 10 \times 3.2 = 960\text{ J}$.
+      - |-
+        End: KE $= \tfrac12 \times 30 \times v^2 = 15v^2$, GPE $= 0$.
+      - |-
+        Conservation: $0 + 960 = 15v^2 + 0$, so $v^2 = 64$ and $v = 8\text{ m s}^{-1}$.
+    answer: |-
+      $8\text{ m s}^{-1}$. The shape of the slide doesn't matter, only the drop in height. (The mass cancels too: $mgh = \tfrac12 mv^2$ gives $v = \sqrt{2gh}$ for any $m$.)
 
   - type: example
-    title: Conservation of energy on a smooth slope
-    problem: |
-      A particle is projected up a **smooth** (frictionless) plane inclined at $20^\circ$ with initial speed $12\text{ m s}^{-1}$. Find the distance it travels up the plane before coming to rest. Use $g = 10\text{ m s}^{-2}$.
+    title: The same slide, but not smooth
+    problem: |-
+      On a real slide the child arrives at the bottom with speed $7\text{ m s}^{-1}$. How much work was done against resistance?
     steps:
-      - 'Smooth plane → only gravity does work → mechanical energy conserved'
-      - 'Initial: KE = ½m(12²) = 72m, GPE = 0 (take start as zero)'
-      - 'Final: KE = 0, GPE = mgh'
-      - 'Conservation: $72m = mgh \Rightarrow h = 7.2\text{ m}$'
-      - 'Distance up slope: $d = h / \sin 20^\circ = 7.2 / 0.342 \approx 21.0\text{ m}$'
-    answer: |
-      $d \approx 21.0\text{ m}$
+      - |-
+        GPE lost $= 960\text{ J}$ (as before).
+      - |-
+        KE gained $= \tfrac12 \times 30 \times 7^2 = 735\text{ J}$.
+      - |-
+        The rest was taken out by resistance: $960 - 735 = 225\text{ J}$.
+    answer: |-
+      $225\text{ J}$ of work was done against resistance. In bank-account form: $0 - W = \Delta\text{KE} + \Delta\text{GPE} = 735 - 960$, so $W = 225$.
+
+  - type: example
+    title: Sliding down a rough slope
+    problem: |-
+      A block of mass $2\text{ kg}$ slides $5\text{ m}$ down a rough slope inclined at $30^\circ$ to the horizontal, starting from rest. The frictional force is a constant $4\text{ N}$. Find its speed at the bottom.
+    steps:
+      - |-
+        Height lost: the block moves $5\text{ m}$ along the slope, so it drops $5\sin 30^\circ = 2.5\text{ m}$ vertically (opposite side of the right-angled triangle).
+      - |-
+        GPE lost $= 2 \times 10 \times 2.5 = 50\text{ J}$. This is paid into KE.
+      - |-
+        Work done against friction $= 4 \times 5 = 20\text{ J}$. Friction acts along the whole $5\text{ m}$ path, so use the distance along the slope, not the height.
+      - |-
+        KE gained $= 50 - 20 = 30\text{ J}$, so $\tfrac12 \times 2 \times v^2 = 30$, $v^2 = 30$.
+    answer: |-
+      $v = \sqrt{30} \approx 5.48\text{ m s}^{-1}$.
+
+  - type: example
+    title: A pull at an angle
+    problem: |-
+      A crate of mass $10\text{ kg}$ is moving at $1\text{ m s}^{-1}$ along a rough horizontal floor. It is pulled $8\text{ m}$ by a rope with tension $50\text{ N}$ at $20^\circ$ above the horizontal. The friction is $20\text{ N}$. Find its new speed.
+    steps:
+      - |-
+        Work done by the pull $= Fd\cos\theta = 50 \times 8 \times \cos 20^\circ = 375.9\text{ J}$ (only the horizontal part of the pull does work).
+      - |-
+        Work done against friction $= 20 \times 8 = 160\text{ J}$.
+      - |-
+        Level floor, so $\Delta\text{GPE} = 0$. Work–energy: $375.9 - 160 = \tfrac12 \times 10 \times v^2 - \tfrac12 \times 10 \times 1^2$.
+      - |-
+        $215.9 = 5v^2 - 5$, so $v^2 = 44.18$.
+    answer: |-
+      $v \approx 6.65\text{ m s}^{-1}$.
 
   - type: check
     title: Check yourself
@@ -109,54 +139,58 @@ blocks:
 
   - type: misconceptions
     items:
-      - wrong: 'Work-energy principle only works for constant forces.'
-        right: |
-          It works for **any** forces (even varying ones) if you use the integral definition of work. In 9709, forces are constant, so $W = Fd\cos\theta$.
-      - wrong: 'Mechanical energy is always conserved.'
-        right: |
-          Only when **no non-conservative forces do work**. Friction, air resistance, or an applied force that isn't conservative will change mechanical energy.
-      - wrong: 'Work done by gravity = +mgΔh.'
-        right: |
-          If the object goes **up**, gravity does negative work: $W_{\text{gravity}} = -mg\Delta h$. If it goes **down**, $W_{\text{gravity}} = +mg\Delta h$. In general, $W_{\text{gravity}} = -\Delta\text{GPE}$.
-      - wrong: 'Normal reaction does work on an incline.'
-        right: |
-          Normal reaction is perpendicular to the displacement (along the plane), so its work is zero. Only the component of weight parallel to the plane does work.
+      - wrong: |-
+          Energy is always conserved, so KE + GPE is always constant.
+        right: |-
+          Total energy is conserved, but friction turns some into heat. KE + GPE stays constant only if no resistances or driving forces do work.
+      - wrong: |-
+          Work done against friction on a slope is friction × height.
+        right: |-
+          Friction acts along the path, so use the distance travelled along the slope.
+      - wrong: |-
+          Count the work done by gravity **and** the change in GPE.
+        right: |-
+          They're the same thing. Use one or the other, never both.
+      - wrong: |-
+          The normal reaction does work on a slope.
+        right: |-
+          It's at right angles to the motion, so it does no work.
 
   - type: exam
-    body: |
-      - For "smooth" surfaces: mechanical energy conserved. Set initial KE + GPE = final KE + GPE.
-      - For "rough" surfaces: include work done by friction. $W_{\text{friction}} = -F_{\text{friction}} \times \text{distance}$.
-      - Choose a convenient zero for GPE (often the lowest point or starting point).
-      - Signs matter: work done **by** a force can be positive or negative. Work done **against** a force is positive (magnitude).
-      - The work-energy principle is often faster than $F=ma$ + kinematics when asked for speed/distance.
+    body: |-
+      - Say which principle you're using: "by conservation of energy" (smooth) or "by the work–energy principle" (rough or driven).
+      - Choose a zero level for GPE and say what it is, often the lowest point.
+      - Write each energy term separately before combining: "PE loss $= 50$, WD against friction $= 20$, KE gain $= 30$". Each is often worth a mark.
+      - For curved paths, energy is usually the only sensible method.
 
   - type: takeaways
     items:
-      - 'Work-energy principle: $W_{\text{net}} = \Delta\text{KE}$'
-      - 'Conservative forces: work path-independent (gravity). Can define PE.'
-      - 'Non-conservative forces: work path-dependent (friction). No PE.'
-      - 'Only conservative forces → mechanical energy conserved (KE + GPE constant)'
-      - 'Non-conservative forces present → $W_{\text{nc}} = \Delta E_{\text{mech}}$'
+      - |-
+        Work done by driving forces $-$ work done against resistances $= \Delta\text{KE} + \Delta\text{GPE}$.
+      - |-
+        No resistances or driving forces (smooth): KE + GPE stays constant.
+      - |-
+        Energy only cares about start and end, so it works on curved paths.
+      - |-
+        Friction's work uses the distance along the path; GPE uses the vertical height.
 
 questions:
   - id: wep-friction
     format: numeric
     difficulty: 2
     objectives: ["4.5.3"]
-    prompt: |
-      A box of mass $3\text{ kg}$ slides $4\text{ m}$ down a rough slope inclined at $30^\circ$. The coefficient of friction is $0.2$. Starting from rest, find its speed at the bottom. Use $g = 10\text{ m s}^{-2}$.
+    prompt: |-
+      A box of mass $3\text{ kg}$ slides $4\text{ m}$ down a rough slope inclined at $30^\circ$ to the horizontal, starting from rest. The frictional force is a constant $5.2\text{ N}$. Find its speed at the bottom. Use $g = 10\text{ m s}^{-2}$.
     fields:
       - answer: 5.11
         unit: "m s⁻¹"
         tolerance: { abs: 0.05 }
-    explanation: |
-      Weight component down slope = $mg\sin 30^\circ = 3 \times 10 \times 0.5 = 15\text{ N}$.
-      Normal reaction $R = mg\cos 30^\circ = 30 \times (\sqrt{3}/2) = 15\sqrt{3} \approx 25.98\text{ N}$.
-      Friction $F = \mu R = 0.2 \times 15\sqrt{3} = 3\sqrt{3} \approx 5.20\text{ N}$.
-      Work by gravity = $mgd\sin 30^\circ = 3 \times 10 \times 4 \times 0.5 = 60\text{ J}$.
-      Work by friction = $-Fd = -3\sqrt{3} \times 4 = -12\sqrt{3} \approx -20.78\text{ J}$.
-      Net work = $60 - 12\sqrt{3} \approx 39.22\text{ J} = \frac{1}{2}mv^2 = 1.5v^2$.
-      $v^2 = 39.22 / 1.5 = 26.15$, $v = \sqrt{26.15} \approx 5.11\text{ m s}^{-1}$.
+    explanation: |-
+      Height lost: $4\sin 30^\circ = 2\text{ m}$, so PE loss $= 3 \times 10 \times 2 = 60\text{ J}$.
+
+      Work done against friction $= 5.2 \times 4 = 20.8\text{ J}$ (distance along the slope).
+
+      KE gain $= 60 - 20.8 = 39.2\text{ J}$, so $\tfrac12 \times 3 \times v^2 = 39.2$, $v^2 = 26.13$ and $v \approx 5.11\text{ m s}^{-1}$.
 
   - id: wep-conservation
     format: numeric
@@ -169,8 +203,9 @@ questions:
         unit: m
         tolerance: { abs: 0.1 }
     explanation: |
-      Energy conserved: ½m(10²) = mgh → 50 = 10h → h = 5 m.
-      Distance $d = h / \sin 25^\circ = 5 / 0.4226 \approx 11.8\text{ m}$ (to 3 s.f.).
+      Smooth, so energy is conserved: $\tfrac12 m(10^2) = mgh$. The mass cancels, so $50 = 10h$ and $h = 5\text{ m}$.
+
+      That's the height gained. Along the slope, height $= d\sin 25^\circ$, so $d = \dfrac{5}{\sin 25^\circ} \approx 11.8\text{ m}$.
 
   - id: wep-signs
     format: mcq

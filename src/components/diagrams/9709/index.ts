@@ -57,6 +57,7 @@ import KinematicsVtArea from './kinematics-vt-area';
 import LineCircleIntersection from './line-circle-intersection';
 import LineCurvePivot from './line-curve-pivot';
 import MechCarOnSlope from './mech-car-on-slope';
+import MechConnectedParticles from './mech-connected-particles';
 import MechMomentumCollision from './mech-momentum-collision';
 import NormalDistributionContinuityCorrection from './normal-distribution-continuity-correction';
 import NormalDistributionCurve from './normal-distribution-curve';
@@ -207,6 +208,7 @@ export const diagrams: DiagramRegistry = {
   'math-p3-logarithmic-exponential-inverse-graphs': P3LogarithmicExponentialInverseGraphs,
   'math-p3-logarithmic-exponential-linear-form-plot': P3LogarithmicExponentialLinearFormPlot,
   'mech-car-on-slope': MechCarOnSlope,
+  'mech-connected-particles': MechConnectedParticles,
   'mech-momentum-collision': MechMomentumCollision,
   'normal-distribution-continuity-correction': NormalDistributionContinuityCorrection,
   'normal-distribution-curve': NormalDistributionCurve,

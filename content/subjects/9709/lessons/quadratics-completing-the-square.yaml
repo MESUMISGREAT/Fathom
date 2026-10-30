@@ -4,7 +4,7 @@ topic: "1.1"
 title: Completing the square and the vertex
 summary: Rewrite ax² + bx + c as a(x + p)² + q, then read off the vertex, the line of symmetry and the minimum or maximum value.
 order: 1
-minutes: 5
+minutes: 8
 kind: core
 objectives: ["1.1.1"]
 prerequisites: []
@@ -19,6 +19,7 @@ provenance:
     arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key)
     in a separate AI review on 2026-10-19. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -26,18 +27,34 @@ blocks:
       By the end you can write any quadratic $ax^2 + bx + c$ in **completed-square form** $a(x + p)^2 + q$, and use it to find the vertex of the graph and sketch it.
 
   - type: explain
+    title: First, some words and why we bother
+    body: |-
+      A few words this lesson leans on:
+
+      - A **quadratic** is an expression like $2x^2 - 8x + 5$: the highest power of $x$ is 2.
+      - A **coefficient** is the number multiplying a letter. In $2x^2 - 8x + 5$ the coefficient of $x^2$ is 2 and the coefficient of $x$ is $-8$. The lone number, 5, is the **constant**.
+      - The graph of a quadratic is a curve called a **parabola**. If the $x^2$ coefficient is positive it is shaped like a valley, ∪. If it is negative it is shaped like a hill, ∩.
+      - The **vertex** is the turning point of that curve: the bottom of the valley or the top of the hill.
+
+      **Why rewrite a quadratic at all?** From $x^2 - 6x + 11$ you cannot see where the bottom of the valley is. Rewrite the same thing as $(x - 3)^2 + 2$ and it jumps out: the bracket is squared, so it is never negative, and it is smallest (zero) when $x = 3$. So the lowest point of the graph is at $x = 3$, height 2. Completing the square is the tool that does this rewrite.
+
+  - type: explain
     title: The trick in one line
     body: |-
       Expand a perfect square and look at the pattern:
 
-      $$(x + 3)^2 = x^2 + 6x + 9$$
+      $$(x + 3)^2 = (x + 3)(x + 3) = x^2 + 3x + 3x + 9 = x^2 + 6x + 9$$
 
-      The $6x$ came from *doubling* the 3. So run it backwards. To "complete" $x^2 + 6x$:
+      The $6x$ is two lots of $3x$, so the number in the bracket (3) is **half** of the coefficient of $x$ (6). The $+9$ is that half, squared.
 
-      1. **Halve** the coefficient of $x$ and put it in a bracket: $(x + 3)^2$.
-      2. **Subtract** the extra square you just sneaked in: $(x + 3)^2 - 9$.
+      So run it backwards. To "complete" $x^2 + 6x$:
 
-      In general: $x^2 + bx = \left(x + \tfrac{b}{2}\right)^2 - \left(\tfrac{b}{2}\right)^2$.
+      1. **Halve** the coefficient of $x$ and put it in a bracket: $(x + 3)^2$. This bracket gives you the $x^2 + 6x$ you wanted...
+      2. ...but it also brings an unwanted $+9$. **Subtract** it to cancel it out: $(x + 3)^2 - 9$.
+
+      Check: $(x + 3)^2 - 9 = x^2 + 6x + 9 - 9 = x^2 + 6x$ ✓. Nothing has changed except the way it is written.
+
+      In general, for any number $b$: $x^2 + bx = \left(x + \tfrac{b}{2}\right)^2 - \left(\tfrac{b}{2}\right)^2$.
 
   - type: example
     title: When the coefficient of x² is 1
@@ -61,9 +78,11 @@ blocks:
   - type: explain
     title: When a is not 1
     body: |-
-      Take the factor $a$ out of the $x^2$ and $x$ terms **only**. Leave the constant outside.
+      The halving trick only works when the $x^2$ has coefficient 1, because $(x + p)^2$ always starts with a plain $x^2$. So if you have, say, $2x^2$, you first make it plain:
 
-      Then complete the square inside the bracket, and multiply $a$ back through **everything** in it. That last bit is where most marks go missing.
+      1. Take the coefficient of $x^2$ (call it $a$) out as a factor of the $x^2$ and $x$ terms **only**. Leave the constant outside; it isn't involved yet.
+      2. Complete the square inside the bracket, exactly as before.
+      3. Multiply $a$ back through **everything** in that bracket, including the number you subtracted. That last bit is where most marks go missing.
 
   - type: example
     title: Taking out a factor first
@@ -89,7 +108,13 @@ blocks:
   - type: explain
     title: Reading the graph from the form
     body: |-
-      For $y = a(x + p)^2 + q$:
+      Take $y = a(x + p)^2 + q$, where $a$, $p$ and $q$ are just numbers.
+
+      **Where is the vertex?** The bracket $(x + p)^2$ is zero when $x + p = 0$, that is when $x = -p$. That is the turning point. Then $y = a \times 0 + q = q$. So the vertex is $(-p,\ q)$.
+
+      That's why the sign flips: $(x - 3)^2$ is zero at $x = +3$, and $(x + 3)^2$ is zero at $x = -3$. Always ask "what $x$ makes the bracket zero?" rather than copying the number.
+
+      The graph is a mirror image either side of the vertical line through the vertex. This line is the **line of symmetry**.
 
       | Feature | What you read off |
       | --- | --- |
@@ -126,7 +151,9 @@ blocks:
 
       Exam questions often ask for this as $a - (x + b)^2$. The letters in the requested form are new constants, not the $a$, $b$, $c$ you started with, so match the form exactly: here $a = 11$, $b = -2$.
 
-      Handy check (not a replacement for the working): the vertex of $y = ax^2 + bx + c$ is always at $x = -\dfrac{b}{2a}$.
+      Handy check (not a replacement for the working): the vertex of $y = ax^2 + bx + c$ is always at $x = -\dfrac{b}{2a}$, using the coefficients of the **original** quadratic. For $7 + 4x - x^2$ that's $a = -1$ (the $x^2$ coefficient) and $b = 4$, so $x = -\dfrac{4}{2(-1)} = 2$ ✓
+
+      **To sketch** the graph, mark four things: the shape (∪ or ∩), the vertex, the $y$-intercept, and the roots if there are any.
 
   - type: check
     questions: [vertex-max, vertex-fractions, min-explain]

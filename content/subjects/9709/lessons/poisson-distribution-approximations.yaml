@@ -25,217 +25,175 @@ provenance:
     in Example 1 that had the two cases swapped, and an overstated "nearly half a standard
     deviation" claim for omitting the correction. Not yet reviewed by a teacher.
     Independence record: the writer and the reviewer were different agents. Each lesson was drafted by one agent (status left at draft), then reviewed by a separate reviewer agent in a six-agent fan-out on 2026-10-29; only the reviewer set status to ai-checked and recorded the corrections above. The fan-out runtime does not expose reviewer instance ids, so the reviewer is identified by role and date rather than by an id. Not reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |-
-      By the end you can decide when a binomial may be treated as a Poisson, when a
-      Poisson may be treated as a normal, and carry out either approximation correctly -
-      including the continuity correction, which is where most of the marks are lost.
+      By the end you can decide when a binomial can be replaced by a Poisson, and when a Poisson can be replaced by a normal, and carry out either approximation correctly, including the **continuity correction** (where most marks are lost).
 
   - type: explain
-    title: Key to the symbols
-    body: |
-      The main symbols used in this lesson:
-
-      | Symbol | Meaning |
-      | --- | --- |
-      | $\lambda$ | the mean number of events (the Poisson parameter) |
-      | $Y$ | the random variable |
-      | $N$ | a large number of trials |
-      | $\sigma$ | the standard deviation |
-
-  - type: explain
-    title: Two approximations, two directions
+    title: The notation, and why approximate at all
     body: |-
-      The approximations in this topic run in a chain, and each one has its own
-      **condition** and its own **parameter translation**:
+      Quick reminder of the three distributions:
 
-      | From | To | Use when | Parameters |
-      |---|---|---|---|
-      | Binomial B(n, p) | Poisson | n large, p small (about n > 50, np < 5) | lambda = np |
-      | Poisson | Normal | lambda large (about lambda > 15) | mean = lambda, variance = lambda |
+      - $X \sim \text{B}(n, p)$, **binomial**: the number of successes in $n$ independent trials, each with probability $p$ of success. Mean $np$, variance $np(1 - p)$.
+      - $X \sim \text{Po}(\lambda)$, **Poisson**: the number of random events in a fixed interval when they happen at an average rate of $\lambda$ (the Greek letter "lambda"). Mean $\lambda$ **and** variance $\lambda$.
+      - $Y \sim \text{N}(\mu, \sigma^2)$, **normal**: a continuous, bell-shaped distribution with mean $\mu$ ("mu") and standard deviation $\sigma$ ("sigma"). $\Phi(z)$ ("phi") is the table value $\text{P}(Z < z)$ for the standard normal $Z \sim \text{N}(0, 1)$.
 
-      Notice that the Poisson sits in the middle: it is the *limit* of a binomial with
-      many trials and a small success probability, and it is itself *approximated* by a
-      normal once its mean is big enough to make the distribution roughly symmetric.
+      **Why approximate?** Exact binomial or Poisson sums can be huge. $\text{P}(X \leqslant 40)$ for $X \sim \text{B}(1000, 0.003)$ needs 41 messy terms. A simpler distribution with the same shape gives a very close answer in a line or two.
+
+      | From | To | Use when (syllabus guide) | New parameters |
+      | --- | --- | --- | --- |
+      | $\text{B}(n, p)$ | Poisson | $n > 50$ and $np < 5$ | $\lambda = np$ |
+      | $\text{Po}(\lambda)$ | normal | $\lambda > 15$ | $\mu = \lambda$, $\sigma^2 = \lambda$ |
 
   - type: explain
-    title: Poisson approximating the binomial
+    title: Binomial → Poisson
     body: |-
-      A binomial B(n, p) counts successes in n independent trials. When n is large and p
-      is small, successes are rare events scattered across many trials, which is exactly
-      what a Poisson model describes. The parameter is
+      Picture 200 light bulbs, each with a $2\%$ chance of being faulty. Lots of trials, and a success (a fault) in any one is rare. "Rare events scattered among many opportunities" is exactly what a Poisson describes. So the binomial count of faults behaves almost like a Poisson with the **same mean**:
 
-      $$\lambda = np.$$
+      $$\lambda = np = 200 \times 0.02 = 4.$$
 
-      The syllabus rule of thumb is about **n > 50 and np < 5**. Two warnings:
-
-      - The condition is on **np**, not on n alone. With n = 1000 and p = 0.4, np = 400,
-        so the successes are not rare at all: the binomial variance is np(1 - p) = 240,
-        nowhere near its mean of 400, whereas a Poisson with lambda = 400 would have
-        variance 400. The approximation works only while p is small enough for np(1 - p)
-        to stay close to np.
-      - As p grows the approximation gets worse. With n = 200 and p = 0.02 it is already
-        excellent; with p = 0.10 the Poisson still gives a usable answer but the error in
-        the tail is visible.
-
-      Both distributions have mean np, but only the Poisson fixes the variance at the same
-      value: binomial variance np(1 - p) is slightly smaller, by the factor (1 - p). That
-      small difference is the price of the approximation.
+      **Why must $np$ be small, not just $n$ large?** A Poisson always has variance equal to its mean. The binomial's variance is $np(1 - p)$, which is close to $np$ only when $p$ is small (so $1 - p \approx 1$). With $n = 1000$ and $p = 0.4$, the mean is 400 but the binomial variance is only 240: a Poisson would have the wrong spread. That's why the rule is about $np < 5$ too.
 
   - type: example
-    title: "Example 1: binomial against its Poisson approximation"
+    title: "Example 1: how good is it?"
     problem: |-
-      Let X be binomial with n = 200 and p = 0.02, so np = 4. Compare the exact binomial
-      probabilities of X = 0 and X = 3 with the Poisson approximation.
+      $X \sim \text{B}(200, 0.02)$. Compare the exact values of $\text{P}(X = 0)$ and $\text{P}(X = 3)$ with a Poisson approximation.
     steps:
       - |-
-        Check the condition: n = 200 > 50 and np = 4 < 5, so the Poisson approximation is
-        appropriate with lambda = np = 4.
+        Conditions: $n = 200 > 50$ and $np = 4 < 5$, so use $\text{Po}(4)$.
       - |-
-        Exact binomial, X = 0: P = (0.98)^200 = 0.0176 (4 d.p.).
-        Poisson: e^(-4) = 0.0183.
+        $\text{P}(X = 0)$. Binomial: every bulb is fine, $(0.98)^{200} = 0.0176$. Poisson: $e^{-4} = 0.0183$.
       - |-
-        Exact binomial, X = 3:
-        C(200,3)(0.02)^3(0.98)^197 = 1 313 400 x 8 x 10^-6 x 0.018661 = 0.1961.
-        Poisson: e^(-4) x 4^3 / 3! = 0.018316 x 64/6 = 0.1954.
-      - |-
-        At X = 3 the two agree to about 1 part in 300 (0.1961 against 0.1954); at X = 0 the
-        relative gap is about 4 per cent, so the agreement is weakest where the probability
-        itself is small. Both are accepted as soon as the conditions hold.
-    answer: "Binomial 0.0176 and 0.1961 against Poisson 0.0183 and 0.1954."
+        $\text{P}(X = 3)$. Binomial: $\binom{200}{3}(0.02)^3(0.98)^{197} = 0.1963$. Poisson: $e^{-4}\dfrac{4^3}{3!} = 0.1954$.
+    answer: |-
+      $0.0176$ vs $0.0183$, and $0.1963$ vs $0.1954$. Close enough for exam work, and the Poisson takes a fraction of the effort.
 
   - type: check
     questions: [pq-lambda-np, pq-pzero, pq-ready-conditions]
 
   - type: explain
-    title: Normal approximating the Poisson
+    title: Poisson → normal
     body: |-
-      For small lambda a Poisson distribution is strongly right-skewed, so a normal curve
-      is a bad fit. As lambda grows the distribution becomes symmetric and bell-shaped,
-      and by about **lambda > 15** (the syllabus rule of thumb) the normal is good enough
-      for exam use.
+      For small $\lambda$ a Poisson is lopsided (skewed): most of its probability sits near 0 with a long tail to the right. As $\lambda$ grows, it spreads out into a symmetrical bell shape, and by about $\lambda > 15$ a normal curve fits it well.
 
-      Since a Poisson has mean and variance both equal to lambda,
+      Match the mean and variance. A Poisson has both equal to $\lambda$, so
 
-      $$Y \sim N(\lambda, \lambda), \quad \sigma = \sqrt{\lambda}.$$
+      $$Y \sim \text{N}(\lambda, \lambda), \qquad \sigma = \sqrt{\lambda}.$$
 
-      The single most common error is forgetting that X is **discrete** while Y is
-      **continuous**: an exact count of 12 has to be represented by an interval of length 1
-      centred on 12, not by the single point 12.
+      Careful: the second number in $\text{N}(\mu, \sigma^2)$ is the **variance**. For standardising you need the standard deviation, $\sqrt{\lambda}$.
 
   - type: explain
     title: The continuity correction
     body: |-
-      Treat each whole-number value r as occupying the strip from r - 0.5 to r + 0.5.
+      The Poisson $X$ is **discrete**: it only takes whole numbers 0, 1, 2, … The normal $Y$ is **continuous**: it can be any value, and the probability of hitting one exact value like 12.000… is zero.
 
-      | Wanted, discrete | Use, continuous |
-      |---|---|
-      | P(X <= 12) | P(Y < 12.5) |
-      | P(X < 12) | P(Y < 11.5) |
-      | P(X >= 8) | P(Y > 7.5) |
-      | P(X > 8) | P(Y > 8.5) |
-      | P(10 <= X <= 20) | P(9.5 < Y < 20.5) |
-      | P(X = 10) | P(9.5 < Y < 10.5) |
+      So picture each whole number as a bar of width 1 in a bar chart. The value 12 is the bar from $11.5$ to $12.5$. To turn a statement about $X$ into one about $Y$, decide which bars you want, then go to the **outer edge** of the last bar:
 
-      Read the boundary off the inequality: P(X >= 8) includes 8, so the continuous region
-      must reach down to 7.5; P(X > 8) excludes 8, so it starts at 8.5.
+      | You want | Bars included | Use |
+      | --- | --- | --- |
+      | $\text{P}(X \leqslant 12)$ | up to and including 12 | $\text{P}(Y < 12.5)$ |
+      | $\text{P}(X < 12)$ | up to 11 | $\text{P}(Y < 11.5)$ |
+      | $\text{P}(X \geqslant 8)$ | 8 and above | $\text{P}(Y > 7.5)$ |
+      | $\text{P}(X > 8)$ | 9 and above | $\text{P}(Y > 8.5)$ |
+      | $\text{P}(X = 10)$ | just 10 | $\text{P}(9.5 < Y < 10.5)$ |
+
+      Tip: rewrite strict inequalities first. "$X < 12$" means "$X \leqslant 11$", so its edge is $11.5$.
 
   - type: example
-    title: "Example 2: a tail probability"
+    title: "Example 2: a lower tail"
     problem: |-
-      X ~ Po(20). Use a normal approximation to estimate P(X <= 12).
+      $X \sim \text{Po}(20)$. Use a suitable approximation to estimate $\text{P}(X \leqslant 12)$.
     steps:
       - |-
-        lambda = 20 > 15, so the approximation is appropriate, with mean 20 and
-        variance 20, giving standard deviation sqrt(20) = 4.472.
+        $\lambda = 20 > 15$, so use $Y \sim \text{N}(20, 20)$, with $\sigma = \sqrt{20} = 4.472$.
       - |-
-        Continuity correction: 12 is included, so P(X <= 12) becomes P(Y < 12.5).
+        Continuity correction: 12 is included, so go to the top of its bar: $\text{P}(Y < 12.5)$.
       - |-
-        Standardise: z = (12.5 - 20) / 4.472 = -7.5 / 4.472 = -1.677, which rounds to -1.68.
+        Standardise with $z = \dfrac{\text{value} - \mu}{\sigma}$: $\;z = \dfrac{12.5 - 20}{4.472} = -1.677$, so $-1.68$ to 2 d.p.
       - |-
-        From tables, Phi(-1.68) = 0.0465.
-    answer: "P(X <= 12) is about 0.0465."
+        Tables give $\Phi(1.68) = 0.9535$, and by symmetry $\Phi(-1.68) = 1 - 0.9535 = 0.0465$.
+    answer: |-
+      $\text{P}(X \leqslant 12) \approx 0.0465$. (The exact Poisson value is $0.0390$: at $\lambda = 20$ the curve is still slightly skewed, so the far tail is the least accurate part.)
 
   - type: check
     questions: [pq-norm-25]
 
   - type: example
-    title: "Example 3: an upper tail, with a convenient sigma"
+    title: "Example 3: an upper tail"
     problem: |-
-      X ~ Po(49). Estimate P(X >= 60) using a normal approximation.
+      $X \sim \text{Po}(49)$. Estimate $\text{P}(X \geqslant 60)$.
     steps:
       - |-
-        lambda = 49, so sigma = sqrt(49) = 7 exactly - a deliberate choice, since it keeps
-        the standardisation clean.
+        $\lambda = 49 > 15$, so $Y \sim \text{N}(49, 49)$ with $\sigma = \sqrt{49} = 7$.
       - |-
-        P(X >= 60) includes 60, so the continuous version is P(Y > 59.5).
+        "$\geqslant 60$" includes 60, so go to the bottom of its bar: $\text{P}(Y > 59.5)$.
       - |-
-        z = (59.5 - 49) / 7 = 10.5 / 7 = 1.5.
+        $z = \dfrac{59.5 - 49}{7} = 1.5$.
       - |-
-        P(Z > 1.5) = 1 - 0.9332 = 0.0668.
-    answer: "About 0.0668."
+        $\text{P}(Z > 1.5) = 1 - \Phi(1.5) = 1 - 0.9332 = 0.0668$.
+    answer: |-
+      About $0.0668$.
 
   - type: example
-    title: "Example 4: a single value needs both boundaries"
+    title: "Example 4: a single value needs both edges"
     problem: |-
-      X ~ Po(20). Estimate P(X = 18) using a normal approximation.
+      $X \sim \text{Po}(20)$. Estimate $\text{P}(X = 18)$ using a normal approximation.
     steps:
       - |-
-        The value 18 becomes the interval (17.5, 18.5).
+        The value 18 is the bar from $17.5$ to $18.5$, so find $\text{P}(17.5 < Y < 18.5)$.
       - |-
-        Lower: z = (17.5 - 20) / 4.472 = -0.559. Upper: z = (18.5 - 20) / 4.472 = -0.335.
+        $z$-values: $\dfrac{17.5 - 20}{4.472} = -0.559$ and $\dfrac{18.5 - 20}{4.472} = -0.335$.
       - |-
-        Phi(-0.335) = 0.3688 and Phi(-0.559) = 0.2881.
+        $\Phi(-0.335) = 0.3688$ and $\Phi(-0.559) = 0.2881$ (using the third-decimal \"add\" columns of the normal table).
       - |-
-        P = 0.3688 - 0.2881 = 0.0807.
-      - |-
-        Exact Poisson value for comparison: e^(-20) x 20^18 / 18! = 0.0844, so the normal
-        approximation underestimates here by about 4 per cent.
-    answer: "About 0.0807, against the exact 0.0844."
+        Area between them: $0.3688 - 0.2881 = 0.0807$.
+    answer: |-
+      About $0.0807$. The exact Poisson value is $e^{-20}\dfrac{20^{18}}{18!} = 0.0844$.
 
   - type: check
     questions: [pq-single-value]
 
   - type: misconceptions
     items:
-      - wrong: Apply the Poisson approximation whenever n is large.
+      - wrong: |-
+          Use a Poisson whenever $n$ is large.
         right: |-
-          n large alone is not enough. The syllabus adds np < 5, so n = 500 with p = 0.2
-          (np = 100) must stay binomial. It is the expected number of successes that has
-          to be small for the Poisson to model the count.
-      - wrong: Set lambda equal to n when converting a binomial to a Poisson.
+          You also need $np < 5$. $\text{B}(500, 0.2)$ has $np = 100$, so successes aren't rare and a Poisson has the wrong variance.
+      - wrong: |-
+          For $\text{B}(n, p) \to \text{Po}$, set $\lambda = n$.
         right: |-
-          lambda = np, the expected number of successes. Using n gives a mean hundreds of
-          times too large and a nonsense probability.
-      - wrong: The continuity correction applies only when the answer must be exact.
+          $\lambda = np$, the expected number of successes.
+      - wrong: |-
+          $\text{N}(20, 20)$ has standard deviation 20.
         right: |-
-          It applies every time you use a normal to approximate a discrete distribution.
-          Omitting it moves the boundary by half a unit - half a unit divided by sigma in
-          standard deviations - which is worth marks even when the final figure is only an
-          estimate.
-      - wrong: Any Poisson can be approximated by a normal, so check nothing.
+          The 20 in the second place is the variance. $\sigma = \sqrt{20} = 4.47$.
+      - wrong: |-
+          The continuity correction is optional.
         right: |-
-          Only when lambda is large, about lambda > 15. Po(3) is so skewed that a normal
-          curve gives a poor, even negative-looking, fit in the tails.
+          It's needed every time a continuous normal stands in for a whole-number count, and it carries a mark.
+      - wrong: |-
+          $\text{P}(X > 8)$ becomes $\text{P}(Y > 7.5)$.
+        right: |-
+          "More than 8" starts at 9, so the edge is the bottom of the 9 bar: $\text{P}(Y > 8.5)$.
 
   - type: exam
     body: |-
-      Expect the condition to be worth a mark in its own right: write it down, do not just
-      use the approximation. Quote it with the numbers in the question, for example
-      "n = 200 > 50 and np = 4 < 5, so the Poisson approximation is valid". For the normal
-      approximation, state the corrected boundary explicitly, for example
-      "P(X <= 12) becomes P(Y < 12.5)", and quote the z value to 2 decimal places before
-      reading the table. Use the same number of decimal places in the final probability as
-      the tables give.
+      - State the condition with the question's numbers, e.g. "$n = 200 > 50$ and $np = 4 < 5$, so a Poisson approximation is valid". It is often worth a mark on its own.
+      - Write the corrected boundary explicitly: "$\text{P}(X \leqslant 12) \approx \text{P}(Y < 12.5)$".
+      - Quote $z$ to at least 2 d.p. before using tables, and give probabilities to 3 s.f.
 
   - type: takeaways
     items:
-      - "Binomial to Poisson: n > 50 and np < 5, with lambda = np."
-      - "The Poisson variance equals its mean; the binomial variance np(1 - p) is slightly smaller."
-      - "Poisson to normal: lambda > 15, with mean lambda and standard deviation sqrt(lambda)."
-      - "P(X <= 12) becomes P(Y < 12.5); P(X >= 8) becomes P(Y > 7.5); P(X = 10) becomes P(9.5 < Y < 10.5)."
-      - "State the condition and the corrected boundary in words - both carry marks."
+      - |-
+        Binomial → Poisson when $n > 50$ and $np < 5$, with $\lambda = np$.
+      - |-
+        Poisson → normal when $\lambda > 15$, with $Y \sim \text{N}(\lambda, \lambda)$ and $\sigma = \sqrt\lambda$.
+      - |-
+        Continuity correction: each whole number $r$ is the bar from $r - 0.5$ to $r + 0.5$; go to the outer edge of the bars you want.
+      - |-
+        State the condition and the corrected boundary in your working.
 
   - type: check
     questions: [pq-spot-continuity, pq-why-continuity]
@@ -245,115 +203,121 @@ questions:
     format: numeric
     difficulty: 1
     objectives: ["6.1.4"]
-    prompt: 'A binomial variable has n = 300 trials and p = 0.01. A Poisson approximation is used. Give the value of lambda.'
+    prompt: |-
+      $X \sim \text{B}(300, 0.01)$ is approximated by a Poisson distribution. What is $\lambda$?
     fields:
       - answer: 3
     explanation: |-
-      lambda = np = 300 x 0.01 = 3. The conditions also hold, since n = 300 > 50 and
-      np = 3 < 5.
+      $\lambda = np = 300 \times 0.01 = 3$. The conditions hold: $n = 300 > 50$ and $np = 3 < 5$.
 
   - id: pq-pzero
     format: numeric
     difficulty: 2
     objectives: ["6.1.4"]
-    prompt: 'Using the model Po(3), find P(X = 0). Give your answer to 3 significant figures.'
+    prompt: |-
+      Using the model $\text{Po}(3)$, find $\text{P}(X = 0)$ to 3 significant figures.
     fields:
       - answer: 0.0498
         tolerance: { abs: 0.0002 }
         sigFigs: 3
     explanation: |-
-      P(X = 0) = e^(-3) = 0.049787, which is 0.0498 to 3 significant figures. The exact
-      binomial value with n = 300 and p = 0.01 is (0.99)^300 = 0.0490, so the Poisson is
-      close but not exact.
+      $\text{P}(X = 0) = e^{-3}\dfrac{3^0}{0!} = e^{-3} = 0.049787\ldots = 0.0498$ to 3 s.f. The exact binomial value with $n = 300$, $p = 0.01$ is $(0.99)^{300} = 0.0490$: close, but not identical.
 
   - id: pq-ready-conditions
     format: mcq
     difficulty: 1
     objectives: ["6.1.4"]
-    prompt: 'Which set of conditions makes the Poisson distribution a suitable approximation to a binomial distribution?'
+    prompt: |-
+      Which conditions make a Poisson distribution a suitable approximation to $\text{B}(n, p)$?
     options:
-      - text: 'n is large and p is small, roughly n > 50 and np < 5'
+      - text: |-
+          $n$ large and $p$ small: roughly $n > 50$ and $np < 5$
         correct: true
-        why: This is the syllabus rule of thumb, and it is a condition on the expected number of successes np, not on n alone.
-      - text: 'n is small and p is large'
+        why: |-
+          Many trials, rare successes. The condition is on the expected number of successes $np$, not on $n$ alone.
+      - text: |-
+          $n$ small and $p$ large
         correct: false
-        why: Rare successes are what a Poisson models; many trials with a large p is the opposite situation.
-      - text: 'n > 50 and p > 0.5'
+        why: |-
+          A Poisson models rare events among many opportunities, the opposite of this.
+      - text: |-
+          $n > 50$ and $p > 0.5$
         correct: false
-        why: A large p makes the count roughly symmetric about a large mean, where a normal is the better approximation.
-      - text: 'np > 5'
+        why: |-
+          With $p$ that big, successes aren't rare and the variance $np(1 - p)$ is far from $np$.
+      - text: |-
+          $np > 5$
         correct: false
-        why: np > 5 is the condition for a normal approximation to the binomial, not a Poisson one.
+        why: |-
+          A large $np$ means successes aren't rare; that's not the Poisson situation.
     explanation: |-
-      The Poisson approximates a binomial when there are many trials and a small chance of
-      success in each - about n > 50 and np < 5 - with lambda = np.
+      A Poisson approximates a binomial when there are many trials and a small chance of success in each, about $n > 50$ and $np < 5$, with $\lambda = np$.
 
   - id: pq-norm-25
     format: numeric
     difficulty: 2
     objectives: ["6.1.5"]
-    prompt: 'X ~ Po(36). Using a normal approximation with a continuity correction, estimate P(X <= 25). Give your answer to 3 significant figures.'
+    prompt: |-
+      $X \sim \text{Po}(36)$. Using a normal approximation with a continuity correction, estimate $\text{P}(X \leqslant 25)$ to 3 significant figures.
     fields:
       - answer: 0.0401
         tolerance: { abs: 0.0005 }
         sigFigs: 3
     explanation: |-
-      Mean 36, standard deviation sqrt(36) = 6. With the continuity correction
-      P(X <= 25) becomes P(Y < 25.5), so z = (25.5 - 36)/6 = -1.75 and
-      P = Phi(-1.75) = 0.0401. Using 25 instead of 25.5 would give z = -1.83 and 0.0336 -
-      the correction changes the answer by about 16 per cent.
+      $Y \sim \text{N}(36, 36)$, so $\sigma = 6$. 25 is included, so use $\text{P}(Y < 25.5)$.
+
+      $z = \dfrac{25.5 - 36}{6} = -1.75$, and $\Phi(-1.75) = 1 - 0.9599 = 0.0401$.
+
+      Forgetting the correction gives $z = -1.83$ and $0.0336$, a very different answer.
 
   - id: pq-single-value
     format: numeric
     difficulty: 3
     objectives: ["6.1.5"]
-    prompt: 'X ~ Po(25). Estimate P(X = 20) using a normal approximation with a continuity correction. Give your answer to 4 decimal places.'
+    prompt: |-
+      $X \sim \text{Po}(25)$. Estimate $\text{P}(X = 20)$ using a normal approximation with a continuity correction. Give your answer to 4 decimal places.
     fields:
       - answer: 0.0484
         tolerance: { abs: 0.0003 }
     explanation: |-
-      Mean 25 and standard deviation 5. The value 20 becomes the interval (19.5, 20.5):
-      z = (19.5 - 25)/5 = -1.1 and z = (20.5 - 25)/5 = -0.9. So
-      P = Phi(-0.9) - Phi(-1.1) = 0.1841 - 0.1357 = 0.0484.
+      $Y \sim \text{N}(25, 25)$, so $\sigma = 5$. The value 20 is the bar from $19.5$ to $20.5$.
+
+      $z = \dfrac{19.5 - 25}{5} = -1.1$ and $z = \dfrac{20.5 - 25}{5} = -0.9$.
+
+      $\text{P} = \Phi(-0.9) - \Phi(-1.1) = 0.1841 - 0.1357 = 0.0484$.
 
   - id: pq-spot-continuity
     format: spot-error
     difficulty: 3
     objectives: ["6.1.5"]
-    prompt: 'A student approximates P(X <= 20) for X ~ Po(30). Exactly one line is wrong; identify the first error.'
+    prompt: |-
+      A student estimates $\text{P}(X \leqslant 20)$ for $X \sim \text{Po}(30)$. Which line contains the first error?
     lines:
-      - 'X ~ Po(30), so use Y ~ N(30, 30): the mean is 30, the variance is 30, and the standard deviation is sqrt(30) = 5.48.'
-      - 'We want P(X <= 20), and 20 is the largest value allowed, so use P(Y <= 20).'
-      - 'Standardise: z = (20 - 30)/5.48 = -1.82.'
-      - 'From tables, Phi(-1.82) = 0.0344.'
-      - 'Therefore P(X <= 20) is approximately 0.0344.'
+      - |-
+        $X \sim \text{Po}(30)$, so use $Y \sim \text{N}(30, 30)$ with $\sigma = \sqrt{30} = 5.48$.
+      - |-
+        20 is the largest value allowed, so use $\text{P}(Y \leqslant 20)$.
+      - |-
+        $z = \dfrac{20 - 30}{5.48} = -1.82$.
+      - |-
+        $\Phi(-1.82) = 0.0344$, so $\text{P}(X \leqslant 20) \approx 0.0344$.
     errorLine: 2
     fix: |-
-      The value 20 is included, so the continuity correction is P(Y < 20.5), not P(Y <= 20).
-      That gives z = (20.5 - 30)/5.48 = -1.73 and Phi(-1.73) = 0.0418.
+      20 is included, so go to the top of its bar: $\text{P}(Y < 20.5)$. Then $z = \dfrac{20.5 - 30}{5.48} = -1.73$ and $\Phi(-1.73) = 0.0418$.
     explanation: |-
-      Line 1 is correct: for a Poisson the mean and the variance are both lambda, so the
-      standard deviation is sqrt(lambda). The error comes at the first boundary written
-      down: a discrete value equal to 20 occupies the continuous strip up to 20.5, so the
-      corrected probability is P(Y < 20.5). Everything after line 2 inherits that mistake,
-      which is why 0.0344 is too small.
+      Line 1 is right: a Poisson's mean and variance are both $\lambda$, so $\sigma = \sqrt{30}$. Line 2 forgets the continuity correction, and everything after it inherits the mistake.
 
   - id: pq-why-continuity
     format: explain
     difficulty: 2
     objectives: ["6.1.5"]
-    prompt: 'Explain why a continuity correction is needed when a normal distribution is used to approximate a Poisson distribution, and give the corrected form of P(X <= 12).'
+    prompt: |-
+      Explain why a continuity correction is needed when a normal distribution approximates a Poisson distribution, and give the corrected form of $\text{P}(X \leqslant 12)$.
     model: |-
-      X is discrete and takes whole-number values with positive probability, whereas Y is
-      continuous and the probability of any single point is zero. A whole-number value has
-      to be represented by a strip of width 1, so 12 represents the interval from 11.5 to
-      12.5. Including 12 in P(X <= 12) therefore means taking the continuous region up to
-      the upper edge of that strip, 12.5, giving P(Y < 12.5).
+      The Poisson variable $X$ is discrete: it takes whole-number values, each with its own probability. The normal variable $Y$ is continuous, so the probability of any single exact value is zero. Each whole number $r$ is therefore represented by the interval from $r - 0.5$ to $r + 0.5$. $\text{P}(X \leqslant 12)$ includes 12, so the continuous region must go up to the top of 12's interval: $\text{P}(Y < 12.5)$.
     keyPoints:
-      - 'X is discrete with point probabilities; Y is continuous, so P(Y = 12) = 0.'
-      - 'Each whole number r is represented by the interval r - 0.5 to r + 0.5.'
-      - 'P(X <= 12) becomes P(Y < 12.5).'
-      - 'Without the correction the estimate is systematically off by up to half a unit.'
+      - X is discrete (whole numbers); Y is continuous, so P(Y = 12) = 0
+      - Each whole number r is represented by the interval from r − 0.5 to r + 0.5
+      - P(X ≤ 12) becomes P(Y < 12.5)
     explanation: |-
-      The correction converts a discrete count into the continuous interval it stands for.
-      Since 12 is included in P(X <= 12), the continuous region runs up to 12.5.
+      The correction turns each whole-number count into the strip of width 1 it stands for. Since 12 is included in $\text{P}(X \leqslant 12)$, the continuous region runs up to 12.5.

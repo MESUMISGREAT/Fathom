@@ -1,16 +1,16 @@
 id: p3-vectors-scalar-product
 subject: "9709"
 topic: "3.7"
-title: Scalar product — angles, perpendiculars, and projections
+title: Scalar product — angles, perpendiculars and the foot of a perpendicular
 summary: Learn the dot product (scalar product) of vectors. Use it to find angles between lines, test for perpendicularity, and find the foot of the perpendicular from a point to a line.
 order: 6
-minutes: 9
+minutes: 10
 kind: core
 objectives: ["3.7.6"]
 prerequisites: [p3-vectors-line-relationships]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709
     syllabus (2026–2027), topic 3.7 outcome "Use formulae to calculate the scalar product
@@ -18,96 +18,135 @@ provenance:
     example, finding the angle between two lines, and finding the foot of the perpendicular
     from a point to a line; questions may involve 3D objects such as cuboids and tetrahedra
     (pyramids). Knowledge of the vector product is not required." All examples, questions
-    and diagrams are original.
+    and diagrams are original. Rewritten on 2026-10-31 for beginners (typeset maths, the
+    foot-of-perpendicular method derived rather than quoted). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |-
-      By the end you can compute the scalar (dot) product, use it to find angles between vectors and lines, test for perpendicularity, and find the foot of a perpendicular from a point to a line.
+      By the end you can work out the **scalar product** of two vectors, and use it to find the angle between two vectors or two lines, to test whether they are perpendicular, and to find the foot of the perpendicular from a point to a line.
 
   - type: explain
-    title: The scalar product (dot product)
+    title: Notation first
     body: |-
-      The **scalar product** of two vectors a = (a₁, a₂, a₃) and b = (b₁, b₂, b₃) is:
+      - A **vector** has a size and a direction. We write vectors in bold: $\mathbf{a}$, $\mathbf{b}$. (By hand you underline them: $\underline{a}$.)
+      - In 3D, $\mathbf{i}$, $\mathbf{j}$ and $\mathbf{k}$ are one-unit steps along the $x$-, $y$- and $z$-axes. So $\mathbf{a} = 2\mathbf{i} - 3\mathbf{j} + \mathbf{k}$ means "2 along $x$, 3 back along $y$, 1 up $z$". The same vector as a column is $\begin{pmatrix} 2 \\ -3 \\ 1 \end{pmatrix}$. The three numbers are its **components**; we'll call them $a_1, a_2, a_3$.
+      - $\lvert \mathbf{a} \rvert$ is the **magnitude** (length) of $\mathbf{a}$: $\lvert \mathbf{a} \rvert = \sqrt{a_1^2 + a_2^2 + a_3^2}$, which is Pythagoras in 3D.
+      - A **scalar** is an ordinary number, with no direction.
 
-      **a · b = a₁b₁ + a₂b₂ + a₃b₃**
+  - type: explain
+    title: The scalar product
+    body: |-
+      The **scalar product** (also called the **dot product**) of $\mathbf{a}$ and $\mathbf{b}$ is written $\mathbf{a} \cdot \mathbf{b}$. You work it out by multiplying matching components and adding:
 
-      In i/j/k notation: (a₁i + a₂j + a₃k) · (b₁i + b₂j + b₃k) = a₁b₁ + a₂b₂ + a₃b₃.
+      $$\mathbf{a} \cdot \mathbf{b} = a_1 b_1 + a_2 b_2 + a_3 b_3.$$
 
-      **Result is a SCALAR (a number), not a vector.** That's why it's called the "scalar product".
+      The answer is a single **number** (a scalar), not a vector. That's where the name comes from.
 
-      **Geometric meaning:** a · b = |a| |b| cos θ, where θ is the angle between the vectors (0 ≤ θ ≤ π).
+      It also has a geometric meaning. If $\theta$ is the angle between $\mathbf{a}$ and $\mathbf{b}$ when they are drawn from the same point (with $0 \leqslant \theta \leqslant 180^\circ$), then
+
+      $$\mathbf{a} \cdot \mathbf{b} = \lvert \mathbf{a} \rvert \, \lvert \mathbf{b} \rvert \cos\theta.$$
+
+      Both formulas give the same number. Putting them together is what makes the scalar product so useful: the first is easy to calculate, and the second contains the angle.
 
   - type: diagram
     diagram: p3-vectors-scalar-product
     alt: >-
-      Two vectors a and b with angle θ between them. The scalar product is |a||b|cos θ.
-      Right panel: a perpendicular to b, so cos 90° = 0, so a·b = 0.
+      Two panels. Left: vectors a and b drawn from the same point with the angle θ between them marked,
+      and the formula a · b = |a||b| cos θ underneath. Right: a straight line through a point A, with a
+      direction vector d drawn along it from A. A point P lies off the line. A dashed line from P meets
+      the line at right angles at the point F, the foot of the perpendicular; a right-angle mark is drawn
+      at F. Underneath: the vector PF dotted with d equals 0.
     caption: |-
-      Left: a · b = |a||b|cos θ. Right: if a ⟂ b, then a · b = 0.
+      Left: the angle $\theta$ between $\mathbf{a}$ and $\mathbf{b}$. Right: $F$ is the point on the line closest to $P$, so $\overrightarrow{PF}$ is at right angles to the line's direction $\mathbf{d}$.
+
+  - type: intuition
+    title: Why do the two formulas agree?
+    body: |-
+      Draw $\mathbf{a}$ and $\mathbf{b}$ from the same point. The third side of the triangle they make is $\mathbf{a} - \mathbf{b}$. The cosine rule says
+
+      $$\lvert \mathbf{a} - \mathbf{b} \rvert^2 = \lvert \mathbf{a} \rvert^2 + \lvert \mathbf{b} \rvert^2 - 2\lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert \cos\theta.$$
+
+      Now work out the left side with components instead: $(a_1 - b_1)^2 + (a_2 - b_2)^2 + (a_3 - b_3)^2$. The first bracket is $(a_1 - b_1)^2 = a_1^2 - 2a_1b_1 + b_1^2$, and the other two expand the same way. Collecting the squares, the total is $\lvert \mathbf{a} \rvert^2 + \lvert \mathbf{b} \rvert^2 - 2(a_1b_1 + a_2b_2 + a_3b_3)$.
+
+      Compare the two lines: the only difference is the last term, so $a_1b_1 + a_2b_2 + a_3b_3 = \lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert \cos\theta$. That's the whole reason it works.
 
   - type: example
-    title: "Example 1: computing the scalar product"
+    title: "Example 1: computing a scalar product"
     problem: |-
-      Find a · b for a = 2i - 3j + k and b = i + 4j - 2k.
+      Find $\mathbf{a} \cdot \mathbf{b}$ for $\mathbf{a} = 2\mathbf{i} - 3\mathbf{j} + \mathbf{k}$ and $\mathbf{b} = \mathbf{i} + 4\mathbf{j} - 2\mathbf{k}$.
     steps:
       - |-
-        a · b = (2)(1) + (-3)(4) + (1)(-2) = 2 - 12 - 2 = -12.
+        Line up the components: $\mathbf{a} = \begin{pmatrix} 2 \\ -3 \\ 1 \end{pmatrix}$, $\mathbf{b} = \begin{pmatrix} 1 \\ 4 \\ -2 \end{pmatrix}$.
+      - |-
+        Multiply matching pairs: $2 \times 1 = 2$, $\;(-3) \times 4 = -12$, $\;1 \times (-2) = -2$.
+      - |-
+        Add: $2 - 12 - 2 = -12$.
     answer: |-
-      -12
+      $\mathbf{a} \cdot \mathbf{b} = -12$. A negative answer means $\cos\theta < 0$, so the angle between them is obtuse (more than $90^\circ$).
 
   - type: check
     questions: [vec-dot-product]
 
   - type: explain
-    title: Finding the angle between two vectors
+    title: Finding an angle
     body: |-
-      From a · b = |a| |b| cos θ, we get:
+      Rearrange $\mathbf{a} \cdot \mathbf{b} = \lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert \cos\theta$ by dividing both sides by $\lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert$:
 
-      **cos θ = (a · b) / (|a| |b|)**
+      $$\cos\theta = \frac{\mathbf{a} \cdot \mathbf{b}}{\lvert \mathbf{a} \rvert \, \lvert \mathbf{b} \rvert}.$$
 
-      Then θ = arccos((a · b) / (|a| |b|)).
+      The recipe:
 
-      **Important:** The angle between vectors is always 0 ≤ θ ≤ π (0° to 180°). The acute angle between two lines is the smaller of θ and π - θ.
+      1. Work out $\mathbf{a} \cdot \mathbf{b}$ (multiply matching components, add).
+      2. Work out both magnitudes.
+      3. Divide, then use $\cos^{-1}$ on your calculator.
+
+      **The sign tells you the type of angle.** A positive scalar product gives an acute angle, zero gives exactly $90^\circ$, and negative gives an obtuse angle.
 
   - type: example
-    title: "Example 2: angle between vectors"
+    title: "Example 2: the angle between two lines"
     problem: |-
-      Find the angle between a = (1, 2, 2) and b = (2, -2, 1).
+      Line $L_1$ has direction $\begin{pmatrix} 1 \\ -2 \\ 2 \end{pmatrix}$ and line $L_2$ has direction $\begin{pmatrix} 2 \\ 1 \\ -2 \end{pmatrix}$. Find the acute angle between the lines.
     steps:
       - |-
-        a · b = 1(2) + 2(-2) + 2(1) = 2 - 4 + 2 = 0.
+        The angle between two lines is the angle between their **direction** vectors. The position vectors (the points they pass through) play no part.
       - |-
-        |a| = √(1+4+4) = 3. |b| = √(4+4+1) = 3.
+        Scalar product: $1(2) + (-2)(1) + 2(-2) = 2 - 2 - 4 = -4$.
       - |-
-        cos θ = 0 / (3×3) = 0 → θ = 90° (π/2).
+        Magnitudes: $\sqrt{1 + 4 + 4} = 3$ and $\sqrt{4 + 1 + 4} = 3$.
       - |-
-        The vectors are perpendicular.
+        $\cos\theta = \dfrac{-4}{3 \times 3} = -\dfrac{4}{9}$, so $\theta = 116.4^\circ$.
+      - |-
+        That's obtuse. Two crossing lines make two angles that add to $180^\circ$ (picture an X). Even when lines in 3D don't actually meet, the angle between them is defined by their directions in the same way. So the acute one is $180^\circ - 116.4^\circ = 63.6^\circ$.
     answer: |-
-      90° (the vectors are perpendicular)
+      $63.6^\circ$ (to 1 d.p.). Shortcut: use $\lvert \mathbf{a} \cdot \mathbf{b} \rvert$, ignoring the minus sign, and you get the acute angle straight away: $\cos^{-1}\tfrac49 = 63.6^\circ$.
 
   - type: check
     questions: [vec-angle]
 
   - type: explain
-    title: Perpendicular vectors
+    title: The perpendicular test
     body: |-
-      **a ⟂ b  ⇔  a · b = 0**
+      Two vectors are **perpendicular** (at right angles) when $\theta = 90^\circ$. Since $\cos 90^\circ = 0$, the formula gives $\mathbf{a} \cdot \mathbf{b} = \lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert \times 0 = 0$.
 
-      This is the most useful test for perpendicularity. No need to find angles — just compute the dot product and check if it's zero.
+      So, for non-zero vectors:
 
-      Works in 2D and 3D. Works for direction vectors of lines (lines are perpendicular if their direction vectors are perpendicular).
+      $$\mathbf{a} \perp \mathbf{b} \quad \Longleftrightarrow \quad \mathbf{a} \cdot \mathbf{b} = 0.$$
+
+      ($\perp$ means "is perpendicular to", and $\Longleftrightarrow$ means "exactly when".) No angle or magnitude needed: just check whether the scalar product is zero. Two lines are perpendicular when their direction vectors are.
 
   - type: example
-    title: "Example 3: finding a value for perpendicular lines"
+    title: "Example 3: finding a constant"
     problem: |-
-      Line L₁ has direction vector d₁ = (2, k, 1). Line L₂ has direction vector d₂ = (1, -2, 3). Find k if L₁ ⟂ L₂.
+      Line $L_1$ has direction $\begin{pmatrix} 2 \\ k \\ 1 \end{pmatrix}$ and line $L_2$ has direction $\begin{pmatrix} 1 \\ -2 \\ 3 \end{pmatrix}$. Find $k$ given that the lines are perpendicular.
     steps:
       - |-
-        Perpendicular means d₁ · d₂ = 0.
+        Perpendicular, so the scalar product of the directions is zero: $2(1) + k(-2) + 1(3) = 0$.
       - |-
-        2(1) + k(-2) + 1(3) = 0 → 2 - 2k + 3 = 0 → 5 - 2k = 0 → 2k = 5 → k = 2.5.
+        Simplify: $5 - 2k = 0$, so $k = 2.5$.
+      - |-
+        Check: $2 - 5 + 3 = 0$ ✓
     answer: |-
-      k = 2.5
+      $k = 2.5$
 
   - type: check
     questions: [vec-perpendicular]
@@ -115,103 +154,82 @@ blocks:
   - type: explain
     title: Foot of the perpendicular from a point to a line
     body: |-
-      Given line L: r = a + t d, and point P with position vector p. We want the point F on L such that PF ⟂ L.
+      A line has equation $\mathbf{r} = \mathbf{a} + t\mathbf{d}$: start at the point with position vector $\mathbf{a}$ (here $\mathbf{a}$ is a point on the line, not the general vector from earlier), then move $t$ steps of the direction vector $\mathbf{d}$. Every value of the number $t$ gives one point on the line.
 
-      **Method:**
-      1. Let F be the point on L with parameter t. Then f = a + t d.
-      2. Vector PF = f - p = (a + t d) - p.
-      3. Since PF ⟂ L, we need PF · d = 0.
-      4. Solve (a + t d - p) · d = 0 for t.
-         → (a - p) · d + t (d · d) = 0
-         → t = -((a - p) · d) / |d|²
-      5. Substitute t back to get f = a + t d.
+      $P$ is a point **not** on the line, with position vector $\mathbf{p}$. The **foot of the perpendicular** is the point $F$ on the line where a line from $P$ meets it at right angles. It is the point on the line closest to $P$, and $PF$ is the shortest distance from $P$ to the line.
 
-      **The foot F is the closest point on the line to P.** Distance PF is the shortest distance from P to the line.
+      **The method, and why it works:**
+
+      1. $F$ is on the line, so for some unknown $t$ its position vector is $\mathbf{f} = \mathbf{a} + t\mathbf{d}$. Write it out in components; each will contain $t$.
+      2. The vector from $P$ to $F$ is $\overrightarrow{PF} = \mathbf{f} - \mathbf{p}$ (end minus start). Again, components in terms of $t$.
+      3. $PF$ is perpendicular to the line, so $\overrightarrow{PF} \cdot \mathbf{d} = 0$. This gives one simple equation in $t$.
+      4. Solve for $t$, then put it back into $\mathbf{a} + t\mathbf{d}$ to get $F$.
+      5. If you need the shortest distance, it is $\lvert \overrightarrow{PF} \rvert$.
 
   - type: example
-    title: "Example 4: foot of perpendicular"
+    title: "Example 4: foot of the perpendicular"
     problem: |-
-      Line L: r = (i + 2j - k) + t(2i - j + 2k). Point P has position vector 3i + j + 4k.
-      Find the foot of the perpendicular from P to L, and the perpendicular distance.
+      The line $L$ has equation $\mathbf{r} = \begin{pmatrix} 1 \\ 2 \\ -1 \end{pmatrix} + t\begin{pmatrix} 2 \\ -1 \\ 2 \end{pmatrix}$ and $P$ has position vector $\begin{pmatrix} 3 \\ 1 \\ 4 \end{pmatrix}$. Find the foot of the perpendicular from $P$ to $L$, and the shortest distance from $P$ to $L$.
     steps:
       - |-
-        a = (1, 2, -1), d = (2, -1, 2), p = (3, 1, 4).
+        **Step 1.** A general point on $L$: $\mathbf{f} = \begin{pmatrix} 1 + 2t \\ 2 - t \\ -1 + 2t \end{pmatrix}$.
       - |-
-        a - p = (-2, 1, -5).
+        **Step 2.** $\overrightarrow{PF} = \mathbf{f} - \mathbf{p} = \begin{pmatrix} 1 + 2t - 3 \\ 2 - t - 1 \\ -1 + 2t - 4 \end{pmatrix} = \begin{pmatrix} 2t - 2 \\ 1 - t \\ 2t - 5 \end{pmatrix}$.
       - |-
-        (a - p) · d = (-2)(2) + (1)(-1) + (-5)(2) = -4 - 1 - 10 = -15.
+        **Step 3.** Dot with the direction $\mathbf{d} = \begin{pmatrix} 2 \\ -1 \\ 2 \end{pmatrix}$ and set it to zero: $2(2t - 2) - 1(1 - t) + 2(2t - 5) = 0$.
       - |-
-        |d|² = 2² + (-1)² + 2² = 4 + 1 + 4 = 9.
+        Expand: $4t - 4 - 1 + t + 4t - 10 = 0$, so $9t - 15 = 0$ and $t = \dfrac{15}{9} = \dfrac53$.
       - |-
-        t = -(-15) / 9 = 15/9 = 5/3.
+        **Step 4.** Put $t = \tfrac53$ into $\mathbf{f}$: $\left(1 + \tfrac{10}{3},\ 2 - \tfrac53,\ -1 + \tfrac{10}{3}\right) = \left(\tfrac{13}{3},\ \tfrac13,\ \tfrac73\right)$.
       - |-
-        f = a + t d = (1, 2, -1) + (5/3)(2, -1, 2) = (1 + 10/3, 2 - 5/3, -1 + 10/3) = (13/3, 1/3, 7/3).
-      - |-
-        PF = f - p = (13/3 - 3, 1/3 - 1, 7/3 - 4) = (4/3, -2/3, -5/3).
-      - |-
-        Distance = |PF| = √((16+4+25)/9) = √(45/9) = √5.
+        **Step 5.** $\overrightarrow{PF} = \begin{pmatrix} 2t - 2 \\ 1 - t \\ 2t - 5 \end{pmatrix}$ at $t = \tfrac53$ is $\begin{pmatrix} 4/3 \\ -2/3 \\ -5/3 \end{pmatrix}$, so $\lvert \overrightarrow{PF} \rvert = \sqrt{\tfrac{16 + 4 + 25}{9}} = \sqrt{5}$.
     answer: |-
-      Foot F = (13/3, 1/3, 7/3). Distance = √5.
+      $F = \left(\tfrac{13}{3}, \tfrac13, \tfrac73\right)$ and the shortest distance is $\sqrt5 \approx 2.24$. Check: $\overrightarrow{PF} \cdot \mathbf{d} = \tfrac83 + \tfrac23 - \tfrac{10}{3} = 0$ ✓
 
   - type: check
     questions: [vec-foot-perpendicular]
 
-  - type: intuition
-    title: Why the scalar product is powerful
-    body: |-
-      The scalar product converts geometry into algebra:
-      - **Angle** → cos θ = (a·b)/(|a||b|)
-      - **Perpendicular** → a·b = 0
-      - **Parallel** → |a·b| = |a||b| (cos θ = ±1)
-      - **Projection** of a onto b = (a·b/|b|²) b
-      - **Foot of perpendicular** → minimises distance
-
-      It's the bridge between vector arithmetic and geometric properties. Every 3D geometry problem (angles, distances, perpendiculars) ultimately uses the scalar product.
-
   - type: misconceptions
     items:
       - wrong: |-
-          a · b is a vector.
+          $\mathbf{a} \cdot \mathbf{b}$ is a vector.
         right: |-
-          a · b is a SCALAR (a number). The vector product (cross product) gives a vector, but that's not in the 9709 syllabus.
+          It's a single number. You add the three products together at the end.
       - wrong: |-
-          The angle between lines is found using position vectors of points on the lines.
+          To find the angle between two lines, use position vectors of points on them.
         right: |-
-          Use the DIRECTION vectors of the lines, not position vectors. The angle between lines is the angle between their direction vectors.
+          Use the **direction** vectors. The position vectors only say where the lines are, not which way they point.
       - wrong: |-
-          If a · b = 0, then a = 0 or b = 0.
+          If $\mathbf{a} \cdot \mathbf{b} = 0$ then $\mathbf{a}$ or $\mathbf{b}$ must be zero.
         right: |-
-          a · b = 0 means they are perpendicular (or one is the zero vector). Non-zero vectors can have dot product zero!
+          Not with vectors. $\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} = 0$, yet neither is zero: they're perpendicular.
       - wrong: |-
-          To find the foot of perpendicular, I need to find the intersection of the line with a perpendicular line through P.
+          $\mathbf{a} \cdot \mathbf{a} = \lvert \mathbf{a} \rvert$.
         right: |-
-          That works but is more work. The formula t = -((a-p)·d)/|d|² is direct and always works. Use it.
+          $\mathbf{a} \cdot \mathbf{a} = a_1^2 + a_2^2 + a_3^2 = \lvert \mathbf{a} \rvert^2$, the magnitude **squared** (the angle between a vector and itself is $0$, and $\cos 0 = 1$).
       - wrong: |-
-          The scalar product of a vector with itself is its magnitude.
+          My angle came out as $116^\circ$, so that's the angle between the lines.
         right: |-
-          a · a = |a|² (magnitude squared). √(a·a) = |a|.
+          Questions usually want the **acute** angle between lines: $180^\circ - 116^\circ = 64^\circ$.
 
   - type: exam
     body: |-
-      - "Find the angle between the lines..." → use DIRECTION vectors in cos θ = (d₁·d₂)/(|d₁||d₂|).
-      - "Find the value of k for which the lines are perpendicular" → set d₁·d₂ = 0, solve for k.
-      - "Find the foot of the perpendicular from P to the line" → use the formula t = -((a-p)·d)/|d|².
-      - "Find the shortest distance from P to the line" → find foot F, then distance = |PF|.
-      - "Cuboid/tetrahedron problems" → label vertices with position vectors, compute needed vectors, use dot products.
-      - Always state clearly: angle is acute (or specify obtuse if asked). 0 ≤ θ ≤ π.
+      - *Find the angle between the lines …*: use the direction vectors in $\cos\theta = \dfrac{\mathbf{a} \cdot \mathbf{b}}{\lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert}$, and give the acute angle unless told otherwise.
+      - *Show that the lines are perpendicular*: show the scalar product of the directions is 0, with the working written out.
+      - *Find the foot of the perpendicular*: write the general point, form $\overrightarrow{PF}$, dot with $\mathbf{d}$, set to 0. Each step earns a mark.
+      - Cuboid and pyramid questions: label the corners with position vectors first, then get each vector you need as "end minus start".
+      - The vector (cross) product is not needed for 9709.
 
   - type: takeaways
     items:
       - |-
-        a · b = a₁b₁ + a₂b₂ + a₃b₃ = |a||b|cos θ. Result is a scalar.
+        $\mathbf{a} \cdot \mathbf{b} = a_1b_1 + a_2b_2 + a_3b_3 = \lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert \cos\theta$, and the answer is a number.
       - |-
-        Perpendicular ⇔ a · b = 0. Use direction vectors for lines.
+        Angle: $\cos\theta = \dfrac{\mathbf{a} \cdot \mathbf{b}}{\lvert \mathbf{a} \rvert \lvert \mathbf{b} \rvert}$. For lines, use direction vectors and give the acute angle.
       - |-
-        Angle between lines: cos θ = (d₁·d₂)/(|d₁||d₂|).
+        Perpendicular exactly when the scalar product is 0.
       - |-
-        Foot of perpendicular from P to r = a + td: t = -((a-p)·d)/|d|², then f = a + td.
-      - |-
-        Works in 2D and 3D. No cross product needed for 9709.
+        Foot of the perpendicular: general point $\mathbf{a} + t\mathbf{d}$, then $\overrightarrow{PF} \cdot \mathbf{d} = 0$ to find $t$.
 
 questions:
   - id: vec-dot-product
@@ -219,61 +237,64 @@ questions:
     difficulty: 1
     objectives: ["3.7.6"]
     prompt: |-
-      Find the scalar product of a = (3, -2, 4) and b = (1, 5, -2).
+      Find $\mathbf{a} \cdot \mathbf{b}$ for $\mathbf{a} = 3\mathbf{i} - 2\mathbf{j} + 4\mathbf{k}$ and $\mathbf{b} = \mathbf{i} + 5\mathbf{j} - 2\mathbf{k}$.
     fields:
       - label: "a · b ="
         answer: -15
     explanation: |-
-      3(1) + (-2)(5) + 4(-2) = 3 - 10 - 8 = -15.
+      Multiply matching components and add: $3(1) + (-2)(5) + 4(-2) = 3 - 10 - 8 = -15$.
 
   - id: vec-angle
     format: mcq
     difficulty: 2
     objectives: ["3.7.6"]
     prompt: |-
-      The angle between vectors a = (1, 1, 0) and b = (0, 1, 1) is:
+      What is the angle between $\mathbf{a} = \mathbf{i} + \mathbf{j}$ and $\mathbf{b} = \mathbf{j} + \mathbf{k}$?
     options:
-      - text: 60°
+      - text: $60^\circ$
         correct: true
         why: |-
-          a·b = 1. |a| = √2, |b| = √2. cos θ = 1/2 → θ = 60°.
-      - text: 45°
+          $\mathbf{a} \cdot \mathbf{b} = 0 + 1 + 0 = 1$ and both magnitudes are $\sqrt2$, so $\cos\theta = \tfrac12$ and $\theta = 60^\circ$.
+      - text: $45^\circ$
         why: |-
-          cos 45° = √2/2 ≈ 0.707, not 0.5.
-      - text: 90°
+          $\cos 45^\circ = \tfrac{\sqrt2}{2} \approx 0.707$, but here $\cos\theta = \tfrac12$.
+      - text: $90^\circ$
         why: |-
-          a·b = 1 ≠ 0, so not perpendicular.
-      - text: 30°
+          The scalar product is 1, not 0, so they aren't perpendicular.
+      - text: $30^\circ$
         why: |-
-          cos 30° = √3/2 ≈ 0.866, not 0.5.
-    explanation: |
-      $\mathbf{a} \cdot \mathbf{b} = 1$, and $|\mathbf{a}| = |\mathbf{b}| = \sqrt{2}$, so $\cos\theta = \dfrac{1}{2}$ and $\theta = 60^\circ$.
+          $\cos 30^\circ = \tfrac{\sqrt3}{2} \approx 0.866$, not $0.5$.
+    explanation: |-
+      $\mathbf{a} \cdot \mathbf{b} = 1(0) + 1(1) + 0(1) = 1$, and $\lvert \mathbf{a} \rvert = \lvert \mathbf{b} \rvert = \sqrt2$, so $\cos\theta = \dfrac{1}{\sqrt2 \times \sqrt2} = \dfrac12$ and $\theta = 60^\circ$.
 
   - id: vec-perpendicular
     format: numeric
     difficulty: 2
     objectives: ["3.7.6"]
     prompt: |-
-      The vectors (2, k, 3) and (1, -2, 4) are perpendicular. Find k.
+      The vectors $\begin{pmatrix} 2 \\ k \\ 3 \end{pmatrix}$ and $\begin{pmatrix} 1 \\ -2 \\ 4 \end{pmatrix}$ are perpendicular. Find $k$.
     fields:
       - label: "k ="
         answer: 7
     explanation: |-
-      (2)(1) + k(-2) + 3(4) = 0 → 2 - 2k + 12 = 0 → 14 - 2k = 0 → k = 7.
+      Perpendicular means the scalar product is 0: $2(1) + k(-2) + 3(4) = 0$, so $14 - 2k = 0$ and $k = 7$.
 
   - id: vec-foot-perpendicular
-    format: text
-    difficulty: 2
+    format: numeric
+    difficulty: 3
     objectives: ["3.7.6"]
     prompt: |-
-      Line L: r = (1, 2, -1) + t(2, -1, 2). Point P = (3, 1, 4). Find the foot of the perpendicular from P to L.
-    accept:
-      - (13/3, 1/3, 7/3)
-      - (4.33, 0.33, 2.33)
-      - 13/3, 1/3, 7/3
-    model: |-
-      (13/3, 1/3, 7/3)
+      The line $L$ has equation $\mathbf{r} = \begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix} + t\begin{pmatrix} 1 \\ 2 \\ -2 \end{pmatrix}$ and $P$ is the point $(7, 5, -5)$. Find the coordinates of the foot of the perpendicular from $P$ to $L$.
+    fields:
+      - label: "x ="
+        answer: 5
+      - label: "y ="
+        answer: 6
+      - label: "z ="
+        answer: -5
     explanation: |-
-      a = (1, 2, -1), d = (2, -1, 2), p = (3, 1, 4). a-p = (-2, 1, -5).
-      (a-p)·d = -4 -1 -10 = -15. |d|² = 9. t = -(-15)/9 = 5/3.
-      f = a + (5/3)d = (1+10/3, 2-5/3, -1+10/3) = (13/3, 1/3, 7/3).
+      General point on $L$: $\mathbf{f} = \begin{pmatrix} 2 + t \\ 2t \\ 1 - 2t \end{pmatrix}$, so $\overrightarrow{PF} = \mathbf{f} - \mathbf{p} = \begin{pmatrix} t - 5 \\ 2t - 5 \\ 6 - 2t \end{pmatrix}$.
+
+      Perpendicular to $\mathbf{d}$: $1(t - 5) + 2(2t - 5) - 2(6 - 2t) = 0$, so $t - 5 + 4t - 10 - 12 + 4t = 9t - 27 = 0$ and $t = 3$.
+
+      So $F = (2 + 3,\ 6,\ 1 - 6) = (5, 6, -5)$. Check: $\overrightarrow{PF} = \begin{pmatrix} -2 \\ 1 \\ 0 \end{pmatrix}$ and $-2 + 2 + 0 = 0$ ✓

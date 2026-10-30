@@ -19,223 +19,270 @@ provenance:
     10C4 210, 7C5 21, 14C5 2002, 8C3 × 6C2 = 840, 420 for the "at least 2 girls" case, 210
     and 1316 in the questions); replaced a distractor justified only as "incorrect
     calculation" with one that names the slip it comes from.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |-
-      By the end you can distinguish between permutations and combinations, calculate
-      nPr and nCr (with and without a calculator), and solve selection problems by
-      choosing the correct method.
+      By the end you can count arrangements and selections without listing them, tell when order matters (a **permutation**) and when it doesn't (a **combination**), and use ${}^nP_r$ and ${}^nC_r$ to solve selection problems.
+
+  - type: explain
+    title: Start by counting a podium
+    body: |-
+      Eight runners are in a race. How many different ways can the gold, silver and bronze medals be given out?
+
+      Fill the places one at a time:
+
+      - **Gold:** any of the 8 runners, so 8 choices.
+      - **Silver:** anyone except the gold winner, so 7 choices.
+      - **Bronze:** anyone except those two, so 6 choices.
+
+      For each of the 8 golds there are 7 silvers, and for each of those, 6 bronzes. So the total is
+
+      $$8 \times 7 \times 6 = 336.$$
+
+      This is the **multiplication principle**: if you make several choices one after another, multiply the number of options at each step.
+
+  - type: explain
+    title: Factorials
+    body: |-
+      Multiplying down to 1 happens so often that it has a symbol. $n!$, read "$n$ factorial", means
+
+      $$n! = n \times (n - 1) \times (n - 2) \times \dots \times 2 \times 1.$$
+
+      For example, $5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$. That's the number of ways to arrange 5 different books in a row: 5 choices for the first spot, 4 for the next, and so on.
+
+      By agreement, $0! = 1$. (There is exactly one way to arrange nothing: do nothing.) This keeps the formulas below working when $r = n$ or $r = 0$.
 
   - type: definition
     term: Permutation
     body: |-
-      An **arrangement** of objects in a specific order. The order of selection matters.
-      The number of permutations of r objects chosen from n distinct objects is:
-      **ⁿPᵣ = n! / (n−r)!** = n × (n−1) × … × (n−r+1)
+      A **permutation** is an arrangement where **order matters**. The number of ways to arrange $r$ objects chosen from $n$ different objects is
+
+      $${}^nP_r = n \times (n - 1) \times \dots \times (n - r + 1) = \frac{n!}{(n - r)!}.$$
+
+      That's the podium count: start at $n$ and multiply $r$ numbers going down. Dividing $n!$ by $(n - r)!$ just cancels the tail of the product that you don't use: ${}^8P_3 = \dfrac{8!}{5!} = 8 \times 7 \times 6 = 336$.
+
+  - type: explain
+    title: When order doesn't matter
+    body: |-
+      Now choose a **team** of 3 from the 8 runners. There are no medals: the team $\{\text{Ali, Bo, Cy}\}$ is the same team as $\{\text{Cy, Ali, Bo}\}$.
+
+      The podium count, 336, counts every team many times over: once for each way of ordering its 3 members. Three people can be ordered in $3! = 6$ ways. So
+
+      $$\text{number of teams} = \frac{336}{6} = 56.$$
+
+      That's the whole idea behind combinations: **count as if order mattered, then divide by the number of orders each group has been counted in.**
 
   - type: definition
     term: Combination
     body: |-
-      A **selection** of objects where the order does not matter. The number of combinations
-      of r objects chosen from n distinct objects is:
-      **ⁿCᵣ = n! / [r!(n−r)!]** = ⁿPᵣ / r!
-      Also written as C(n, r) or binomial coefficient (n choose r).
+      A **combination** is a selection where **order doesn't matter**. The number of ways to choose $r$ objects from $n$ different objects is
+
+      $${}^nC_r = \frac{{}^nP_r}{r!} = \frac{n!}{r!\,(n - r)!}.$$
+
+      It's also written $\binom{n}{r}$ and read "$n$ choose $r$". Your calculator has $nPr$ and $nCr$ buttons.
 
   - type: explain
-    title: The key question — does order matter?
+    title: The swap test
     body: |-
-      **Permutation (order matters):**
-      - Arranging books on a shelf
-      - Choosing a president, vice-president, secretary (different roles)
-      - Forming a 3-digit PIN code
-      - Lining up people in a queue
+      To decide which to use, imagine **swapping two of the chosen items**. Do you get a different outcome?
 
-      **Combination (order does not matter):**
-      - Choosing a committee of 3 from 10 people
-      - Selecting 5 cards from a deck (hand of cards)
-      - Picking lottery numbers
-      - Choosing toppings for a pizza
+      | Situation | Swap two chosen items... | So use |
+      | --- | --- | --- |
+      | 1st, 2nd, 3rd prizes | different result | permutation |
+      | a 4-digit PIN (no repeated digits) | different PIN | permutation |
+      | people in a queue | different queue | permutation |
+      | a committee of 3 | same committee | combination |
+      | a hand of 5 cards | same hand | combination |
+      | 3 pizza toppings | same pizza | combination |
 
-      **Test:** If swapping two chosen items gives a **different outcome**, it's a permutation.
-      If swapping gives the **same outcome**, it's a combination.
+      **Roles, positions or a sequence** mean order matters. **A group, set or hand** means it doesn't.
 
   - type: example
-    title: "Example 1: permutation vs combination"
+    title: "Example 1: which one?"
     problem: |-
-      Decide whether each situation is a permutation or combination:
-      (a) Selecting 4 students from a class of 20 to form a team.
-      (b) Awarding 1st, 2nd, and 3rd prizes in a competition with 8 entrants.
-      (c) Choosing 3 pizza toppings from a menu of 10.
+      Decide whether each is a permutation or a combination, and work out the number. (a) Choosing 4 students from 20 to form a team. (b) Awarding 1st, 2nd and 3rd prizes among 8 entrants. (c) Choosing 3 toppings from 10.
     steps:
       - |-
-        (a) Team — order doesn't matter. **Combination**.
+        (a) Swap two team members: same team. Combination: ${}^{20}C_4 = 4845$.
       - |-
-        (b) Prizes — 1st, 2nd, 3rd are distinct. Order matters. **Permutation**.
+        (b) Swap the 1st and 2nd prize winners: different result. Permutation: ${}^8P_3 = 336$.
       - |-
-        (c) Toppings — a pizza with {pepperoni, mushroom, olive} is the same regardless of order. **Combination**.
+        (c) Swap two toppings: same pizza. Combination: ${}^{10}C_3 = 120$.
     answer: |-
-      (a) Combination. (b) Permutation. (c) Combination.
+      (a) combination, 4845; (b) permutation, 336; (c) combination, 120.
 
   - type: check
     questions: [sc-pc-identify]
 
-  - type: explain
-    title: Factorials and notation
-    body: |-
-      **n! (n factorial)** = n × (n−1) × (n−2) × … × 2 × 1, with 0! = 1.
-      - 5! = 120, 6! = 720, 7! = 5040.
-
-      **ⁿPᵣ = n! / (n−r)!**
-      - ⁵P₃ = 5! / 2! = 120 / 2 = 60 = 5 × 4 × 3
-
-      **ⁿCᵣ = n! / [r!(n−r)!]**
-      - ⁵C₃ = 5! / (3!2!) = 120 / (6×2) = 10
-
-      **Symmetry:** ⁿCᵣ = ⁿCₙ₋ᵣ (choosing r is same as rejecting n−r).
-      **Pascal's rule:** ⁿCᵣ = ⁿ⁻¹Cᵣ₋₁ + ⁿ⁻¹Cᵣ
-
-      On a calculator: use nPr and nCr buttons (or nCr, nPr functions).
-
   - type: example
-    title: "Example 2: calculating permutations and combinations"
+    title: "Example 2: working them out by hand"
     problem: |-
-      Calculate: (a) ⁸P₃  (b) ¹⁰C₄  (c) ⁷C₅
+      Without the $nPr$/$nCr$ buttons, find (a) ${}^8P_3$, (b) ${}^{10}C_4$, (c) ${}^7C_5$.
     steps:
       - |-
-        (a) ⁸P₃ = 8! / 5! = 8 × 7 × 6 = 336.
+        (a) Multiply 3 numbers down from 8: $8 \times 7 \times 6 = 336$.
       - |-
-        (b) ¹⁰C₄ = 10! / (4!6!) = (10×9×8×7) / (4×3×2×1) = 5040 / 24 = 210.
+        (b) Ordered count first: $10 \times 9 \times 8 \times 7 = 5040$. Each group of 4 was counted $4! = 24$ times, so $\dfrac{5040}{24} = 210$.
       - |-
-        (c) ⁷C₅ = ⁷C₂ (by symmetry) = 7×6 / 2 = 21.
+        (c) Choosing 5 to **take** is the same as choosing 2 to **leave behind**, so ${}^7C_5 = {}^7C_2 = \dfrac{7 \times 6}{2!} = \dfrac{42}{2} = 21$ (divide by $2!$ because each pair was counted in 2 orders).
     answer: |-
-      (a) 336  (b) 210  (c) 21
+      (a) 336, (b) 210, (c) 21. The trick in (c), ${}^nC_r = {}^nC_{n-r}$, is often a time-saver.
 
   - type: check
     questions: [sc-pc-calculate]
 
   - type: explain
-    title: Simple selection problems
+    title: Multiply for "and", add for "or"
     body: |-
-      **Method:**
-      1. **Identify** if order matters (permutation) or not (combination).
-      2. **Identify n** (total items available) and **r** (items to choose).
-      3. **Calculate** ⁿPᵣ or ⁿCᵣ.
+      Bigger problems split into smaller choices. Two rules glue them together:
 
-      If there are **multiple independent choices**, multiply the counts.
-      If there are **mutually exclusive cases**, add the counts.
+      - **AND: multiply.** If you choose the men *and then* choose the women, every choice of men pairs with every choice of women, so multiply.
+      - **OR: add.** If the answer splits into separate cases that can't both happen (exactly 2 girls *or* exactly 3 girls), count each case and add.
 
   - type: example
-    title: "Example 3: committee selection"
+    title: "Example 3: a committee"
     problem: |-
-      A committee of 5 people is to be chosen from 8 men and 6 women.
-      (a) How many different committees are possible?
-      (b) How many if the committee must have exactly 3 men and 2 women?
+      A committee of 5 is chosen from 8 men and 6 women. (a) How many committees are possible? (b) How many have exactly 3 men and 2 women?
     steps:
       - |-
-        (a) Total people = 14. Choose 5, order doesn't matter. ¹⁴C₅ = 2002.
+        (a) 14 people, choose 5, order doesn't matter: ${}^{14}C_5 = 2002$.
       - |-
-        (b) Choose 3 men from 8: ⁸C₃ = 56. Choose 2 women from 6: ⁶C₂ = 15.
+        (b) Choose 3 of the 8 men: ${}^8C_3 = 56$. **And** choose 2 of the 6 women: ${}^6C_2 = 15$.
       - |-
-        Multiply (independent choices): 56 × 15 = 840.
+        "And" means multiply: $56 \times 15 = 840$.
     answer: |-
-      (a) 2002  (b) 840
+      (a) 2002, (b) 840.
 
   - type: check
     questions: [sc-pc-committee]
 
-  - type: explain
-    title: Problems with "at least" or "at most"
-    body: |-
-      When a condition says "at least k" or "at most k", split into **mutually exclusive cases**
-      and **add** the results.
-
-      Example: Committee of 5 from 8 men, 6 women. At least 3 women.
-      Cases: exactly 3 women, exactly 4 women, exactly 5 women.
-      Add: ⁶C₃×⁸C₂ + ⁶C₄×⁸C₁ + ⁶C₅×⁸C₀
-
   - type: example
-    title: "Example 4: at least / at most"
+    title: "Example 4: at least"
     problem: |-
-      A team of 4 is chosen from 5 boys and 7 girls. The team must contain at least 2 girls.
-      How many different teams are possible?
+      A team of 4 is chosen from 5 boys and 7 girls. It must contain **at least 2 girls**. How many teams are possible?
     steps:
       - |-
-        Cases: 2 girls + 2 boys, 3 girls + 1 boy, 4 girls + 0 boys.
+        "At least 2 girls" means 2, 3 or 4 girls. These cases can't overlap, so count each and add.
       - |-
-        2G,2B: ⁷C₂ × ⁵C₂ = 21 × 10 = 210.
+        2 girls and 2 boys: ${}^7C_2 \times {}^5C_2 = 21 \times 10 = 210$.
       - |-
-        3G,1B: ⁷C₃ × ⁵C₁ = 35 × 5 = 175.
+        3 girls and 1 boy: ${}^7C_3 \times {}^5C_1 = 35 \times 5 = 175$.
       - |-
-        4G,0B: ⁷C₄ × ⁵C₀ = 35 × 1 = 35.
+        4 girls and 0 boys: ${}^7C_4 \times {}^5C_0 = 35 \times 1 = 35$.
       - |-
-        Total = 210 + 175 + 35 = 420.
-    answer: "420"
+        Total: $210 + 175 + 35 = 420$.
+    answer: |-
+      420. Check another way: all teams minus the ones with fewer than 2 girls. ${}^{12}C_4 = 495$; teams with 0 girls ${}^5C_4 = 5$; teams with 1 girl ${}^7C_1 \times {}^5C_3 = 70$. $495 - 5 - 70 = 420$ ✓
 
   - type: check
     questions: [sc-pc-at-least]
 
+  - type: misconceptions
+    items:
+      - wrong: |-
+          A committee of 3 from 8 is ${}^8P_3 = 336$.
+        right: |-
+          A committee has no roles, so order doesn't matter: ${}^8C_3 = 56$. Using $P$ counts each committee 6 times.
+      - wrong: |-
+          3 men and 2 women: ${}^8C_3 + {}^6C_2$.
+        right: |-
+          You choose the men **and** the women, so multiply: ${}^8C_3 \times {}^6C_2 = 840$.
+      - wrong: |-
+          At least 2 girls: ${}^7C_2 \times {}^{10}C_2$ (pick 2 girls, then any 2 of the rest).
+        right: |-
+          That counts some teams more than once (a team with 3 girls gets counted 3 times). Split into exact cases and add instead.
+      - wrong: |-
+          $0! = 0$.
+        right: |-
+          $0! = 1$, so that ${}^nC_0 = {}^nC_n = 1$: there's exactly one way to choose nothing, or everything.
+
+  - type: exam
+    body: |-
+      - Write the calculation, not just the answer: "${}^8C_3 \times {}^6C_2 = 56 \times 15 = 840$" earns method marks even if one number slips.
+      - For "at least" and "at most", list the cases explicitly before calculating.
+      - Use the complement ("all minus the ones you don't want") as a check, or when it has fewer cases.
+
   - type: takeaways
     items:
-      - "Permutation = order matters. ⁿPᵣ = n!/(n−r)!."
-      - "Combination = order doesn't matter. ⁿCᵣ = n!/[r!(n−r)!]."
-      - "Test: does swapping two chosen items change the outcome?"
-      - "Multiple independent choices → multiply. Mutually exclusive cases → add."
-      - "Use symmetry ⁿCᵣ = ⁿCₙ₋ᵣ to simplify calculations."
-      - "'At least' / 'at most' → split into cases and add."
+      - |-
+        Multiplication principle: choices made one after another multiply.
+      - |-
+        Order matters (roles, positions): ${}^nP_r = \dfrac{n!}{(n - r)!}$.
+      - |-
+        Order doesn't matter (groups, sets): ${}^nC_r = \dfrac{n!}{r!\,(n - r)!}$, the permutation count divided by $r!$.
+      - |-
+        "And" → multiply; separate cases ("or") → add.
 
 questions:
   - id: sc-pc-identify
     format: mcq
-    prompt: A 4-digit PIN code is created from the digits 0–9 with no repetition. Is this a permutation or combination problem?
+    prompt: |-
+      A 4-digit PIN is made from the digits 0–9 with no digit repeated. Is counting the PINs a permutation or a combination problem?
     options:
       - text: Permutation
-        why: The order of digits matters (1234 ≠ 4321).
+        why: |-
+          Swap two digits and you get a different PIN (1234 is not 4321), so order matters.
         correct: true
       - text: Combination
-        why: Order does not matter for a PIN.
+        why: |-
+          Try the swap test: 1234 and 4321 open different locks, so order does matter.
         correct: false
     difficulty: 1
     objectives: ["5.2.1"]
-    explanation: |
-      A PIN code has a specific order (1234 is different from 4321), so this is a permutation problem.
+    explanation: |-
+      Order matters, so it's a permutation: ${}^{10}P_4 = 10 \times 9 \times 8 \times 7 = 5040$ PINs.
 
   - id: sc-pc-calculate
     format: mcq
-    prompt: What is the value of ⁹C₄?
+    prompt: |-
+      What is the value of ${}^9C_4$?
     options:
       - text: "126"
-        why: ⁹C₄ = 9×8×7×6 / (4×3×2×1) = 3024 / 24 = 126.
+        why: |-
+          $\dfrac{9 \times 8 \times 7 \times 6}{4 \times 3 \times 2 \times 1} = \dfrac{3024}{24} = 126$.
         correct: true
       - text: "84"
-        why: That is ⁹C₃.
+        why: |-
+          That's ${}^9C_3$.
         correct: false
       - text: "3024"
-        why: That is ⁹P₄ (permutation).
+        why: |-
+          That's ${}^9P_4$: the ordered count, before dividing by $4! = 24$.
         correct: false
       - text: "252"
-        why: That is 3024 ÷ 12 — the 4! in the denominator was halved instead of used in full.
+        why: |-
+          That's $3024 \div 12$: the division should be by $4! = 24$.
         correct: false
     difficulty: 1
     objectives: ["5.2.1"]
-    explanation: |
-      ⁹C₄ = 9! / (4!5!) = (9×8×7×6) / (4×3×2×1) = 3024 / 24 = 126.
+    explanation: |-
+      Ordered count $9 \times 8 \times 7 \times 6 = 3024$; each group of 4 is counted $4! = 24$ times, so ${}^9C_4 = \dfrac{3024}{24} = 126$.
 
   - id: sc-pc-committee
     format: numeric
-    prompt: A committee of 4 is chosen from 7 men and 5 women. How many committees have exactly 2 men and 2 women?
+    prompt: |-
+      A committee of 4 is chosen from 7 men and 5 women. How many committees have exactly 2 men and 2 women?
     fields:
       - answer: 210
     difficulty: 2
     objectives: ["5.2.1"]
-    explanation: |
-      Choose 2 men from 7: ⁷C₂ = 21. Choose 2 women from 5: ⁵C₂ = 10. Multiply: 21 × 10 = 210.
+    explanation: |-
+      Choose 2 of the 7 men: ${}^7C_2 = 21$. **And** choose 2 of the 5 women: ${}^5C_2 = 10$. Multiply: $21 \times 10 = 210$.
 
   - id: sc-pc-at-least
     format: numeric
-    prompt: From 6 boys and 8 girls, a team of 5 is chosen with at least 3 girls. How many possible teams?
+    prompt: |-
+      From 6 boys and 8 girls, a team of 5 is chosen with at least 3 girls. How many teams are possible?
     fields:
       - answer: 1316
     difficulty: 2
     objectives: ["5.2.1"]
-    explanation: |
-      Cases: 3 girls + 2 boys: ⁸C₃ × ⁶C₂ = 56 × 15 = 840. 4 girls + 1 boy: ⁸C₄ × ⁶C₁ = 70 × 6 = 420. 5 girls + 0 boys: ⁸C₅ × ⁶C₀ = 56 × 1 = 56. Total = 840 + 420 + 56 = 1316.
+    explanation: |-
+      Split into cases and add:
+
+      - 3 girls, 2 boys: ${}^8C_3 \times {}^6C_2 = 56 \times 15 = 840$
+      - 4 girls, 1 boy: ${}^8C_4 \times {}^6C_1 = 70 \times 6 = 420$
+      - 5 girls, 0 boys: ${}^8C_5 \times {}^6C_0 = 56 \times 1 = 56$
+
+      Total: $840 + 420 + 56 = 1316$.

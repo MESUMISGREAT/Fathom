@@ -3,7 +3,7 @@
  * Step 1, translation by (−2, 0): y = f(x + 2) = x² + 2x (dashed), vertex (1, −1) → (−1, −1).
  * Step 2, stretch parallel to the x-axis with factor ½: y = f(2x + 2) = 4x² + 4x,
  * vertex (−1, −1) → (−½, −1). The point (3, 3) goes (3, 3) → (1, 3) → (½, 3).
- * Inside the bracket the steps run "add 2 first, then double", so undoing them on
+ * Inside the bracket the steps run "double, then add 2", so undoing them (last step first) on
  * the x-coordinate means translate first, then stretch.
  */
 import { Arrow, Label, Svg, graph, MathLabel } from '../primitives';

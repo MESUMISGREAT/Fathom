@@ -1,165 +1,96 @@
 /**
- * Contact force split into normal reaction and friction. Smooth vs rough contact.
- * Left: rough contact with R and F. Right: smooth contact with only R.
- * Bottom: block on smooth inclined plane.
+ * Left: a block on a rough floor pulled right by P, with normal reaction R, friction F, weight mg and the single contact
+ * force (R and F combined). Right: a block on a smooth slope at angle α, with R perpendicular to the
+ * slope, the weight mg, and its components mg sin α down the slope and mg cos α into the slope.
  */
-import { Arrow, Label, MathLabel, Svg } from '../primitives';
+import { Label, MathLabel, Svg } from '../primitives';
 
 export const diagramKey = 'forces-equilibrium-contact-smooth';
 
-const W = 660;
-const H = 420;
+const W = 680;
+const H = 330;
 
-export function ForcesEquilibriumContactSmooth() {
-  // ROUGH CONTACT constants
-  const BX1 = 115;
-  const BY1 = 130;
-  const BW = 80;
-  const BH = 50;
+type Pt = { x: number; y: number };
 
-  // SMOOTH CONTACT constants
-  const BX2 = 445;
-  const BY2 = 130;
-
-  // INCLINED PLANE constants
-  const PX = 180;
-  const PY = 290;
-  const alpha = 30;
-  const rad = (alpha * Math.PI) / 180;
-  const planeLen = 200;
-  const planeH = 100;
-  const blockX = PX + 80;
-  const blockY = PY - 60;
-  const blockW = 50;
-  const blockH = 30;
-  const cx = blockX + blockW / 2;
-  const cy = blockY + blockH / 2;
-
+function Arrow({ from, to, className, head }: { from: Pt; to: Pt; className: string; head: string }) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const len = Math.hypot(dx, dy);
+  const ux = dx / len;
+  const uy = dy / len;
+  const s = 11;
+  const tri = `${to.x},${to.y} ${to.x - s * ux - (s / 2) * uy},${to.y - s * uy + (s / 2) * ux} ${to.x - s * ux + (s / 2) * uy},${to.y - s * uy - (s / 2) * ux}`;
   return (
-    <Svg width={W} height={H}>
-      <Label x={330} y={30} className="dg-text dg-bold">
-        Contact force components: rough and smooth surfaces
-      </Label>
-
-      {/* ROUGH CONTACT - left side */}
-      <Label x={165} y={70} className="dg-text dg-bold dg-accent">
-        Rough contact
-      </Label>
-
-      {/* Block on rough surface */}
-
-      <rect x={BX1} y={BY1} width={BW} height={BH} rx={4} className="dg-fill-accent dg-thin" />
-      <Label x={BX1 + BW / 2} y={BY1 + BH / 2} className="dg-text-small dg-bold">block</Label>
-
-      {/* Surface */}
-      <line x1={BX1 - 40} y1={BY1 + BH} x2={BX1 + BW + 40} y2={BY1 + BH} className="dg-line" strokeWidth={3} />
-      <Label x={BX1 + BW / 2} y={BY1 + BH + 20} className="dg-text-small dg-text-muted">rough surface</Label>
-
-      {/* Normal reaction R */}
-      <Arrow x1={BX1 + BW / 2} y1={BY1} x2={BX1 + BW / 2} y2={BY1 - 50} className="dg-accent" headClassName="dg-dot-accent" />
-      <MathLabel x={BX1 + BW / 2 - 30} y={BY1 - 35} tex="R" w={30} h={32} anchor="end" tone="accent" />
-      <Label x={BX1 + BW / 2 - 40} y={BY1 - 35} className="dg-text-small dg-text-muted">normal reaction</Label>
-
-      {/* Friction F */}
-      <Arrow x1={BX1} y1={BY1 + BH / 2} x2={BX1 - 50} y2={BY1 + BH / 2} className="dg-accent-2" headClassName="dg-dot-accent-2" />
-      <MathLabel x={BX1 - 55} y={BY1 + BH / 2 - 18} tex="F" w={30} h={32} anchor="end" tone="accent-2" />
-      <Label x={BX1 - 65} y={BY1 + BH / 2 - 18} className="dg-text-small dg-text-muted">friction</Label>
-
-      {/* Weight mg */}
-      <Arrow x1={BX1 + BW / 2} y1={BY1 + BH} x2={BX1 + BW / 2} y2={BY1 + BH + 50} className="dg-line" headClassName="dg-dot" />
-      <MathLabel x={BX1 + BW / 2 - 30} y={BY1 + BH + 30} tex="mg" w={30} h={32} anchor="end" />
-      <Label x={BX1 + BW / 2 - 40} y={BY1 + BH + 30} className="dg-text-small dg-text-muted">weight</Label>
-
-      {/* Combined contact force annotation */}
-      <Label x={165} y={200} className="dg-text-small">
-        Contact force = R + F (vector sum)
-      </Label>
-      <MathLabel x={165} y={220} tex="F \leq \mu R" w={80} h={32} tone="muted" />
-
-      {/* SMOOTH CONTACT - right side */}
-      <Label x={495} y={70} className="dg-text dg-bold dg-accent-2">
-        Smooth contact
-      </Label>
-
-      {/* Block on smooth surface */}
-      <rect x={BX2} y={BY2} width={BW} height={BH} rx={4} className="dg-fill-accent-2 dg-thin" />
-      <Label x={BX2 + BW / 2} y={BY2 + BH / 2} className="dg-text-small dg-bold">block</Label>
-
-      {/* Surface */}
-      <line x1={BX2 - 40} y1={BY2 + BH} x2={BX2 + BW + 40} y2={BY2 + BH} className="dg-line" strokeWidth={3} />
-      <Label x={BX2 + BW / 2} y={BY2 + BH + 20} className="dg-text-small dg-text-muted">smooth surface</Label>
-
-      {/* Normal reaction R only */}
-      <Arrow x1={BX2 + BW / 2} y1={BY2} x2={BX2 + BW / 2} y2={BY2 - 50} className="dg-accent-2" headClassName="dg-dot-accent-2" />
-      <MathLabel x={BX2 + BW / 2 - 30} y={BY2 - 35} tex="R" w={30} h={32} anchor="end" tone="accent-2" />
-      <Label x={BX2 + BW / 2 - 40} y={BY2 - 35} className="dg-text-small dg-text-muted">normal reaction</Label>
-
-      {/* No friction - crossed out F */}
-      <Label x={BX2 - 15} y={BY2 + BH / 2 - 5} className="dg-text-small dg-text-muted dg-italic">
-        F = 0
-      </Label>
-
-      {/* Weight mg */}
-      <Arrow x1={BX2 + BW / 2} y1={BY2 + BH} x2={BX2 + BW / 2} y2={BY2 + BH + 50} className="dg-line" headClassName="dg-dot" />
-      <MathLabel x={BX2 + BW / 2 - 30} y={BY2 + BH + 30} tex="mg" w={30} h={32} anchor="end" />
-      <Label x={BX2 + BW / 2 - 40} y={BY2 + BH + 30} className="dg-text-small dg-text-muted">weight</Label>
-
-      {/* Smooth definition */}
-      <Label x={495} y={200} className="dg-text-small">
-        Contact force = R only (no friction)
-      </Label>
-      <MathLabel x={495} y={220} tex="F = 0" w={50} h={32} tone="muted" />
-
-      <line x1={40} y1={245} x2={620} y2={245} className="dg-grid" />
-
-      {/* INCLINED PLANE - bottom */}
-      <Label x={330} y={265} className="dg-text dg-bold">
-        Block on a smooth inclined plane (angle α)
-      </Label>
-
-      {/* Inclined plane */}
-      <path d={`M${PX},${PY} L${PX + planeLen},${PY} L${PX + planeLen - planeH * Math.tan(rad)},${PY - planeH} L${PX - planeH * Math.tan(rad)},${PY - planeH} Z`} className="dg-fill-muted dg-thin" />
-      <line x1={PX} y1={PY} x2={PX + planeLen} y2={PY} className="dg-line" strokeWidth={3} />
-
-      {/* Block on plane */}
-      <rect x={blockX} y={blockY} width={blockW} height={blockH} rx={3} className="dg-fill-accent dg-thin" transform={`rotate(${alpha} ${blockX + blockW / 2} ${blockY + blockH / 2})`} />
-      <Label x={blockX + blockW / 2} y={blockY + blockH / 2 + 40} className="dg-text-small dg-bold">block</Label>
-
-      {/* Weight mg - vertical down from block center */}
-      <Arrow x1={cx} y1={cy + 15} x2={cx} y2={cy + 75} className="dg-line" headClassName="dg-dot" />
-      <MathLabel x={cx - 25} y={cy + 45} tex="mg" w={30} h={32} anchor="end" />
-      <Label x={cx - 35} y={cy + 45} className="dg-text-small dg-text-muted">weight</Label>
-
-      {/* Weight components */}
-      {/* Perpendicular to plane: mg cos α */}
-      <Arrow x1={cx} y1={cy} x2={cx - 40} y2={cy - 69} className="dg-dashed dg-accent-2" headClassName="dg-dot-accent-2" />
-      <MathLabel x={cx - 80} y={cy - 45} tex="mg\cos\alpha" w={80} h={32} anchor="end" tone="accent-2" size="small" />
-
-      {/* Parallel to plane: mg sin α */}
-      <Arrow x1={cx} y1={cy} x2={cx + 55} y2={cy + 32} className="dg-dashed dg-accent" headClassName="dg-dot-accent" />
-      <MathLabel x={cx + 70} y={cy + 20} tex="mg\sin\alpha" w={80} h={32} anchor="start" tone="accent" size="small" />
-
-      {/* Normal reaction R perpendicular to plane */}
-      <Arrow x1={cx} y1={cy - 15} x2={cx - 35} y2={cy - 70} className="dg-accent-2" headClassName="dg-dot-accent-2" />
-      <MathLabel x={cx - 75} y={cy - 55} tex="R" w={30} h={32} anchor="end" tone="accent-2" />
-      <Label x={cx - 85} y={cy - 55} className="dg-text-small dg-text-muted">normal reaction</Label>
-
-      {/* Angle alpha annotation */}
-      <path d={`M${PX + 25},${PY} A25,25 0 0,1 ${PX + 25 - 25 * Math.sin(rad)},${PY - 25 * Math.cos(rad)}`} className="dg-thin dg-muted" />
-      <MathLabel x={PX + 35} y={PY - 12} tex="\alpha" w={30} h={32} tone="muted" size="small" />
-
-      <Label x={450} y={330} anchor="start" className="dg-text-small">
-        On smooth incline: no friction, so R = mg cos α
-      </Label>
-      <Label x={450} y={350} anchor="start" className="dg-text-small dg-text-muted">
-        Down-slope component = mg sin α (causes acceleration if released)
-      </Label>
-
-      <Label x={330} y={400} className="dg-text-small dg-text-muted">
-        Smooth means F = 0, not R = 0. The normal reaction still acts perpendicular to the surface.
-      </Label>
-    </Svg>
+    <g>
+      <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} className={className} strokeWidth={2.5} />
+      <polygon points={tri} className={head} />
+    </g>
   );
 }
 
-export default ForcesEquilibriumContactSmooth;
+// Slope at 30°: u points up the slope, n points out of the slope (both in SVG coordinates).
+const A = (30 * Math.PI) / 180;
+const base = { x: 380, y: 280 };
+const u = { x: Math.cos(A), y: -Math.sin(A) };
+const n = { x: -Math.sin(A), y: -Math.cos(A) };
+const along = (d: number) => ({ x: base.x + d * u.x, y: base.y + d * u.y });
+const top = along(323);
+const touch = along(185);
+const C = { x: touch.x + 18 * n.x, y: touch.y + 18 * n.y };
+const at = (v: Pt, k: number) => ({ x: C.x + k * v.x, y: C.y + k * v.y });
+const rTip = at(n, 85);
+const wTip = { x: C.x, y: C.y + 90 };
+const sinTip = at({ x: -u.x, y: -u.y }, 45);
+const cosTip = at({ x: -n.x, y: -n.y }, 78);
+
+export default function ForcesEquilibriumContactSmooth() {
+  return (
+    <Svg width={W} height={H}>
+      <Label x={165} y={28} className="dg-text-small">Rough floor, pulled by P: R and F</Label>
+      <line x1={30} y1={230} x2={300} y2={230} className="dg-line" strokeWidth={3} />
+      <rect x={110} y={180} width={80} height={50} rx={4} className="dg-fill-surface dg-line" />
+      <Arrow from={{ x: 150, y: 180 }} to={{ x: 150, y: 90 }} className="dg-accent" head="dg-dot-accent" />
+      <Arrow from={{ x: 110, y: 222 }} to={{ x: 50, y: 222 }} className="dg-accent-2" head="dg-dot-accent-2" />
+      <Arrow from={{ x: 150, y: 205 }} to={{ x: 150, y: 295 }} className="dg-line" head="dg-dot" />
+      <Arrow from={{ x: 150, y: 180 }} to={{ x: 90, y: 90 }} className="dg-muted dg-dashed" head="dg-dot" />
+      <MathLabel x={168} y={98} tex="R" w={30} tone="accent" />
+      <MathLabel x={62} y={204} tex="F" w={30} tone="accent-2" />
+      <Arrow from={{ x: 190, y: 205 }} to={{ x: 255, y: 205 }} className="dg-line" head="dg-dot" />
+      <MathLabel x={240} y={186} tex="P" w={30} />
+      <MathLabel x={176} y={286} tex="mg" w={40} />
+      <Label x={80} y={74} className="dg-text-small dg-text-muted">contact force</Label>
+
+      <Label x={520} y={28} className="dg-text-small">Smooth slope: R only, no friction</Label>
+      <path d={`M${base.x},${base.y} L${top.x},${base.y} L${top.x},${top.y} Z`} className="dg-line" fill="none" />
+      <rect
+        x={C.x - 30}
+        y={C.y - 18}
+        width={60}
+        height={36}
+        rx={3}
+        className="dg-fill-surface dg-line"
+        transform={`rotate(-30 ${C.x} ${C.y})`}
+      />
+      <Arrow from={C} to={rTip} className="dg-accent" head="dg-dot-accent" />
+      <Arrow from={C} to={wTip} className="dg-line" head="dg-dot" />
+      <Arrow from={C} to={sinTip} className="dg-accent-2 dg-dashed" head="dg-dot-accent-2" />
+      <Arrow from={C} to={cosTip} className="dg-accent-2 dg-dashed" head="dg-dot-accent-2" />
+      <MathLabel x={rTip.x - 16} y={rTip.y - 4} tex="R" w={30} tone="accent" />
+      <MathLabel x={wTip.x - 22} y={wTip.y + 4} tex="mg" w={40} />
+      <MathLabel x={sinTip.x - 44} y={sinTip.y - 18} tex="mg\sin\alpha" w={90} tone="accent-2" size="small" />
+      <MathLabel x={cosTip.x + 50} y={cosTip.y - 4} tex="mg\cos\alpha" w={90} tone="accent-2" size="small" />
+      <path
+        d={`M${base.x + 42},${base.y} A42,42 0 0 0 ${base.x + 42 * u.x},${base.y + 42 * u.y}`}
+        className="dg-line"
+        fill="none"
+      />
+      <MathLabel x={base.x + 56} y={base.y - 11} tex="\alpha" w={24} size="small" />
+      <path
+        d={`M${C.x},${C.y + 30} A30,30 0 0 0 ${C.x - 30 * n.x},${C.y - 30 * n.y}`}
+        className="dg-line"
+        fill="none"
+      />
+      <MathLabel x={C.x + 7} y={C.y + 42} tex="\alpha" w={24} size="small" />
+    </Svg>
+  );
+}
