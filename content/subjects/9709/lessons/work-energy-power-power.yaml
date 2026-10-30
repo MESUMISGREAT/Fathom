@@ -7,17 +7,17 @@ order: 4
 minutes: 10
 kind: core
 objectives: ["4.5.4"]
-prerequisites: ["work-energy-power-work-done"]
+prerequisites: ["work-energy-power-work-done", "newtons-laws-inclined-planes"]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Redrafted on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the previous version
     5-6/10 (formulas stated without meaning; off-syllabus material on calculus, P = Fv cos θ, horsepower and
     engine torque curves). Written against the official Cambridge International AS & A Level Mathematics 9709
     syllabus for 2026-2027, topic 4.5 outcome 4 (power as the rate at which a force does work; P = Fv for a
     force in the direction of motion). The three worked examples and three questions were kept and rechecked.
-    Awaiting independent review; not reviewed by a teacher.
+    Independently reviewed on 2026-10-30 by a separate Claude agent, which recomputed every value and answer key; its findings were fixed. Not reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -52,6 +52,22 @@ blocks:
       usually measured in kilowatts: $1\ \text{kW} = 1000\ \text{W}$. **Always convert kW to W** before
       calculating.
 
+      If the work isn't done at a steady rate, $\dfrac{W}{t}$ gives the **average** power over that time.
+
+  - type: example
+    title: Average power on the stairs
+    problem: |
+      A $60$ kg student climbs a flight of stairs $3$ m high. Find the work done against gravity, and the
+      average power if the climb takes (a) $5$ seconds, (b) $20$ seconds. Use $g = 10\ \text{m s}^{-2}$.
+    steps:
+      - "To lift the student, the force needed equals their weight, $mg = 60 \\times 10 = 600$ N."
+      - "Work done $=$ force $\\times$ distance moved upwards $= 600 \\times 3 = 1800$ J."
+      - "(a) Average power $= \\dfrac{1800}{5} = 360$ W."
+      - "(b) Average power $= \\dfrac{1800}{20} = 90$ W."
+      - "Same work, but running up needs four times the power, because it is done in a quarter of the time."
+    answer: |
+      The work done is $1800$ J. The average power is (a) $360$ W and (b) $90$ W.
+
   - type: explain
     title: Why P = Fv
     body: |
@@ -66,7 +82,7 @@ blocks:
 
       This is the formula you will use most. It links the power of an engine to the force it produces and the
       speed it is going. Notice the trade-off: for a fixed power, **the faster you go, the smaller the force**
-      the engine can produce, because $F = \dfrac{P}{v}$. That is why a car accelerates hard from rest but
+      the engine can produce, because $F = \dfrac{P}{v}$. That is why a car accelerates hard at low speed but
       struggles to gain speed near its top speed.
 
   - type: explain
@@ -127,7 +143,7 @@ blocks:
 
   - type: check
     title: Check power
-    questions: [power-constant, power-max-speed, power-hill]
+    questions: [power-average, power-constant, power-max-speed, power-hill]
 
   - type: misconceptions
     items:
@@ -194,3 +210,15 @@ questions:
       Weight component down slope = $mg\sin 8^\circ = 80 \times 10 \times \sin 8^\circ = 800 \times 0.1392 = 111.3\text{ N}$.
       Total opposing force = $111.3 + 40 = 151.3\text{ N}$.
       Power $P = Fv = 151.3 \times 6 = 908\text{ W}$ (to 3 s.f.).
+  - id: power-average
+    format: numeric
+    difficulty: 1
+    objectives: ["4.5.4"]
+    prompt: |
+      A crane lifts a load of weight $2000$ N through a height of $15$ m in $25$ s. Find the average power of the crane, in watts.
+    fields:
+      - label: "P ="
+        answer: 1200
+        unit: W
+    explanation: |
+      Work done $= 2000 \times 15 = 30\,000$ J. Average power $= \dfrac{30\,000}{25} = 1200$ W.

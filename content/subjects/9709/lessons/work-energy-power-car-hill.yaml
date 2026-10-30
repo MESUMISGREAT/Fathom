@@ -10,15 +10,14 @@ objectives: ["4.5.5"]
 prerequisites: ["work-energy-power-power", "work-energy-power-gpe-ke", "work-energy-power-work-energy-principle"]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Redrafted on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the previous version
     6/10 (all maths in plain text, steps without reasons, a symbol key with wrong meanings, and a slightly
     wrong intermediate value, 1668 N for 12000 sin 8°, which is 1670 N). Written against the official
     Cambridge International AS & A Level Mathematics 9709 syllabus for 2026-2027, topic 4.5 outcome 5
     (problems such as the instantaneous acceleration of a car on a hill against a resistance). The worked
-    examples and the six questions were kept, typeset and rechecked. Awaiting independent review; not
-    reviewed by a teacher.
+    examples and the six questions were kept, typeset and rechecked. Independently reviewed on 2026-10-30 by a separate Claude agent, which recomputed every value and answer key; its findings were fixed. Not reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -52,13 +51,20 @@ blocks:
       2. **The resistance** $R$, always against the direction of motion.
       3. **Part of the weight**, $mg\sin\alpha$, always pointing **down** the slope.
 
-      Why $mg\sin\alpha$? Split the weight $mg$ into a part along the slope and a part pressing into it. The
+      Why $mg\sin\alpha$? Look at the diagram below. Split the weight $mg$ into a part along the slope and a part pressing into it. The
       angle between the weight (straight down) and the line at right angles to the slope is $\alpha$, so the
       part along the slope is the side opposite that angle: $mg\sin\alpha$. On a flat road $\alpha = 0$ and
       $\sin 0 = 0$, so this force disappears, as it should.
 
       (The other part of the weight, $mg\cos\alpha$, presses into the road and is balanced by the road's push.
       It doesn't affect motion along the slope.)
+
+  - type: diagram
+    diagram: mech-car-on-slope
+    alt: "A car on a slope inclined at angle alpha to the horizontal, moving up the slope. The driving force D = P/v points up the slope, the resistance R points down the slope, and the weight mg points straight down. The weight is split into mg sin alpha down the slope and mg cos alpha into the slope, and the angle between the weight and the line at right angles to the slope is marked alpha."
+    caption: |
+      The angle between the weight and the line at right angles to the slope is the same $\alpha$ as the slope
+      itself, so the part of the weight along the slope is $mg\sin\alpha$.
 
   - type: explain
     title: Newton's second law along the slope
@@ -218,11 +224,11 @@ questions:
       A car of mass $800$ kg travels at $15\ \text{m s}^{-1}$ up a hill inclined at $10°$. The engine's power is $40$ kW and the resistance is $250$ N. Find the acceleration at this instant. Use $g = 10\ \text{m s}^{-2}$.
     fields:
       - label: "a ="
-        answer: 1.29
-        tolerance: { abs: 0.05 }
+        answer: 1.28
+        tolerance: { abs: 0.01 }
         unit: "m s⁻²"
     explanation: |
-      $D = \dfrac{40\,000}{15} \approx 2667$ N. Weight component $= 800 \times 10 \times \sin 10° \approx 1389$ N. Resultant $= 2667 - 1389 - 250 = 1028$ N, so $a = \dfrac{1028}{800} \approx 1.29\ \text{m s}^{-2}$.
+      $D = \dfrac{40\,000}{15} = 2666.7$ N. Weight component $= 800 \times 10 \times \sin 10° = 1389.2$ N. Resultant $= 2666.7 - 1389.2 - 250 = 1027.5$ N, so $a = \dfrac{1027.5}{800} \approx 1.28\ \text{m s}^{-2}$. (Rounding the forces to whole numbers first gives 1.29, which is why you keep full accuracy until the end.)
 
   - id: car-max-speed-hill
     format: numeric

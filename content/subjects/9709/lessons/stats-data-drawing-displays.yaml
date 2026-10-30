@@ -10,7 +10,7 @@ objectives: ["5.1.2"]
 prerequisites: ["stats-data-choosing-presentation"]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
     previous version 5.5/10 (a lesson about diagrams with no diagrams; plain-text recipes). Written against
@@ -19,7 +19,7 @@ provenance:
     frequency graphs). Cumulative frequency graphs are taught in full in their own lesson, so this lesson
     introduces them briefly and links forward. New diagrams stats-box-plot-pulse and
     stats-histogram-seedlings. Examples and questions are original; every figure was recomputed by hand.
-    Awaiting independent review; not reviewed by a teacher.
+    Independently reviewed on 2026-10-30 by a separate Claude agent, which recomputed every value and answer key; its findings were fixed. Not reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -187,6 +187,25 @@ blocks:
 
       To read a histogram the other way, turn it around: **frequency $=$ frequency density $\times$ class width.**
 
+  - type: explain
+    title: Class boundaries — where a class really starts and ends
+    body: |
+      Tables don't always say $10 \le h < 20$. Often they say "10–19" for data recorded **to the nearest
+      whole number**. Then the class really runs from **9.5 to 19.5**, because anything from 9.5 up to (but not
+      including) 19.5 rounds to a number between 10 and 19. These real edges are the **class boundaries**.
+
+      | Class as written | Lower boundary | Upper boundary | Class width |
+      | --- | --- | --- | --- |
+      | 10–19 | 9.5 | 19.5 | 10 |
+      | 20–29 | 19.5 | 29.5 | 10 |
+      | 30–49 | 29.5 | 49.5 | 20 |
+
+      Always draw bars and work out widths from the **boundaries**, not the numbers as written. Using
+      $19 - 10 = 9$ as the width is a very common mistake.
+
+      **Ages** are the exception: someone who is "19" can be anywhere up to their 20th birthday, so an age class
+      "10–19" runs from 10 to 20.
+
   - type: example
     title: A histogram with unequal class widths
     problem: |
@@ -215,7 +234,7 @@ blocks:
 
   - type: check
     title: Check histograms
-    questions: [sc-draw-hist, sc-draw-hist-area]
+    questions: [sc-draw-hist, sc-draw-hist-area, sc-draw-boundaries]
 
   - type: explain
     title: Cumulative frequency graphs, briefly
@@ -225,7 +244,7 @@ blocks:
       end** of each class, so each point goes at the **upper boundary** of its class, and the graph climbs from
       0 to the total. It is the best diagram for reading off the median and quartiles of grouped data.
 
-      It has its own lesson next, with a full worked example and diagram.
+      It has its own lesson ("Using cumulative frequency graphs"), with a full worked example and diagram.
 
   - type: check
     title: Check cumulative frequency
@@ -325,6 +344,18 @@ questions:
         answer: 60
     explanation: |
       Frequency is the area of the bar: width $\times$ height $= (30 - 15) \times 4 = 15 \times 4 = 60$.
+
+  - id: sc-draw-boundaries
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.2"]
+    prompt: |
+      Masses are recorded to the nearest kilogram. One class is written as "30–49 kg" and has frequency $40$. What is the frequency density of its histogram bar?
+    fields:
+      - label: "frequency density ="
+        answer: 2
+    explanation: |
+      The class boundaries are $29.5$ and $49.5$, so the width is $49.5 - 29.5 = 20$, not $19$. Frequency density $= 40 \div 20 = 2$.
 
   - id: sc-draw-cfg
     format: mcq

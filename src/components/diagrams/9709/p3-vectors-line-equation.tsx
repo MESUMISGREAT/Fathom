@@ -1,165 +1,59 @@
 /**
- * Vector line equation r = a + tb. Shows a 3D line with anchor point a, direction vector b,
- * and the running point r = a + tb for t = 0, 1, 2, -1.
- * Uses a simple 2D projection (x right, y up, z out of screen diagonal).
+ * The line r = a + tb: the position vector a drawn from the origin O to the point A (t = 0), the direction
+ * vector b drawn from A along the line, and the points for t = −1, 1 and 2 marked on the line.
  */
-import { Label, MathLabel, Svg, Arrow } from '../primitives';
+import { Label, MathLabel, Svg } from '../primitives';
 
 export const diagramKey = 'p3-vectors-line-equation';
 
-const W = 500;
-const H = 400;
+const W = 600;
+const H = 380;
+const O = { x: 330, y: 330 };
+const A = { x: 230, y: 230 };
+const B = { x: 110, y: -46 }; // one step of the direction vector, in pixels
+const pt = (t: number) => ({ x: A.x + t * B.x, y: A.y + t * B.y });
 
-// 3D-ish projection: x right, y up, z out (diagonal up-left)
-const origin = { x: 60, y: 320 };
-const scale = 50;
-
-interface Point2D { x: number; y: number; }
-
-function proj(x: number, y: number, z: number): Point2D {
-  return {
-    x: origin.x + x * scale,
-    y: origin.y - y * scale - z * scale * 0.5,
-  };
-}
-
-function line3D(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): string {
-  const p1: Point2D = proj(x1, y1, z1);
-  const p2: Point2D = proj(x2, y2, z2);
-  return `M${p1.x.toFixed(1)},${p1.y.toFixed(1)} L${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
-}
-
-function dot3D(x: number, y: number, z: number, r: number, className: string) {
-  const p: Point2D = proj(x, y, z);
-  return <circle key={`dot-${x}-${y}-${z}`} cx={p.x} cy={p.y} r={r} className={className} />;
+function Arrow({ from, to, className, head }: { from: { x: number; y: number }; to: { x: number; y: number }; className: string; head: string }) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const len = Math.hypot(dx, dy);
+  const ux = dx / len;
+  const uy = dy / len;
+  const s = 12;
+  const tri = `${to.x},${to.y} ${to.x - s * ux - (s / 2) * uy},${to.y - s * uy + (s / 2) * ux} ${to.x - s * ux + (s / 2) * uy},${to.y - s * uy - (s / 2) * ux}`;
+  return (
+    <g>
+      <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} className={className} strokeWidth={3} />
+      <polygon points={tri} className={head} />
+    </g>
+  );
 }
 
 export default function P3VectorsLineEquation() {
-  const a: [number, number, number] = [1, 1, 1];
-  const b: [number, number, number] = [1.5, 0.8, 1.2];
-  const ts: number[] = [0, 1, 2, -1];
-  const points = ts.map(t => [
-    a[0] + t * b[0],
-    a[1] + t * b[1],
-    a[2] + t * b[2],
-  ]);
-
-  // Line from t = -2.5 to t = 3.5
-  const lineStart = [a[0] - 2.5 * b[0], a[1] - 2.5 * b[1], a[2] - 2.5 * b[2]] as const;
-  const lineEnd = [a[0] + 3.5 * b[0], a[1] + 3.5 * b[1], a[2] + 3.5 * b[2]] as const;
-
-  // Pre-compute projected points
-  const aProj: Point2D = proj(a[0], a[1], a[2]);
-  const aPlusBProj: Point2D = proj(a[0] + b[0], a[1] + b[1], a[2] + b[2]);
-  const aMidBProj: Point2D = proj(a[0] + b[0] / 2, a[1] + b[1] / 2, a[2] + b[2] / 2);
-
-  // Assert array types for TS
-  const _bVec = b;
-
-  // Axes projections
-  const proj000: Point2D = proj(0, 0, 0);
-  const proj500: Point2D = proj(5, 0, 0);
-  const proj040: Point2D = proj(0, 4, 0);
-  const proj004: Point2D = proj(0, 0, 4);
-
+  const start = pt(-1.9);
+  const end = pt(2.9);
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={W / 2} y={22} tex="\mathbf{r} = \mathbf{a} + t\mathbf{b}" w={200} h={30} />
-      <g transform="translate(40, 20)">
-        {/* Axes */}
-        <Arrow x1={proj000.x} y1={proj000.y} x2={proj500.x} y2={proj500.y} className="dg-thin" head={6} />
-        <Arrow x1={proj000.x} y1={proj000.y} x2={proj040.x} y2={proj040.y} className="dg-thin" head={6} />
-        <Arrow x1={proj000.x} y1={proj000.y} x2={proj004.x} y2={proj004.y} className="dg-thin" head={6} />
-        <Label x={proj500.x + 8} y={proj500.y + 4} className="dg-text dg-italic">x</Label>
-        <Label x={proj040.x - 12} y={proj040.y - 4} className="dg-text dg-italic">y</Label>
-        <Label x={proj004.x + 8} y={proj004.y + 4} className="dg-text dg-italic">z</Label>
-        <Label x={proj000.x - 8} y={proj000.y + 10} className="dg-text-small">O</Label>
+      <line x1={start.x} y1={start.y} x2={end.x} y2={end.y} className="dg-line" strokeWidth={2} />
+      <Arrow from={O} to={A} className="dg-accent-2" head="dg-dot-accent-2" />
+      <Arrow from={A} to={pt(1)} className="dg-accent" head="dg-dot-accent" />
+      <circle cx={O.x} cy={O.y} r={4} className="dg-dot" />
+      <MathLabel x={O.x - 16} y={O.y + 14} tex="O" w={30} />
+      <MathLabel x={(O.x + A.x) / 2 + 22} y={(O.y + A.y) / 2 + 6} tex="\mathbf{a}" w={30} tone="accent-2" />
+      <MathLabel x={(A.x + pt(1).x) / 2 + 6} y={(A.y + pt(1).y) / 2 + 26} tex="\mathbf{b}" w={30} tone="accent" />
 
-        {/* Grid lines */}
-        <g className="dg-grid">
-          {[-1, 1, 2, 3, 4].map(x => {
-            const p1: Point2D = proj(x, -1, 0);
-            const p2: Point2D = proj(x, 4, 0);
-            return <line key={`gx${x}`} x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} />;
-          })}
-          {[-1, 1, 2, 3, 4].map(y => {
-            const p1: Point2D = proj(-1, y, 0);
-            const p2: Point2D = proj(5, y, 0);
-            return <line key={`gy${y}`} x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} />;
-          })}
-          {[-1, 1, 2, 3].map(z => {
-            const p1: Point2D = proj(0, 0, z);
-            const p2: Point2D = proj(5, 0, z);
-            return <line key={`gz${z}`} x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} />;
-          })}
-        </g>
-
-        {/* The line */}
-        <path d={line3D(lineStart[0]!, lineStart[1]!, lineStart[2]!, lineEnd[0]!, lineEnd[1]!, lineEnd[2]!)} className="dg-accent" strokeWidth={2} />
-
-        {/* Direction vector b from anchor a */}
-        <Arrow
-          x1={aProj.x}
-          y1={aProj.y}
-          x2={aPlusBProj.x}
-          y2={aPlusBProj.y}
-          className="dg-accent-2"
-          head={8}
-        />
-        <MathLabel
-          x={aMidBProj.x}
-          y={aMidBProj.y}
-          tex="\mathbf{b}"
-          anchor="middle"
-          w={40}
-          h={24}
-          size="small"
-          tone="accent-2"
-        />
-
-        {/* Anchor point a */}
-        {dot3D(a[0]!, a[1]!, a[2]!, 5, "dg-fill-surface dg-accent")}
-        <MathLabel
-          x={aProj.x - 12}
-          y={aProj.y - 24}
-          tex="\mathbf{a}"
-          anchor="end"
-          w={40}
-          h={24}
-          size="small"
-          tone="accent"
-        />
-
-        {/* Points for different t values */}
-        {points.map((pt, i) => {
-          const t = ts[i]!;
-          const color = t === 0 ? 'dg-accent' : t > 0 ? 'dg-accent-2' : 'dg-muted';
-          const p: Point2D = proj(pt[0]!, pt[1]!, pt[2]!);
-          return (
-            <g key={t}>
-              <circle cx={p.x} cy={p.y} r={4} className={`dg-dot-${color}`} />
-              <MathLabel
-                x={p.x + 8}
-                y={p.y - 16}
-                tex={`t = ${t}`}
-                anchor="start"
-                w={50}
-                h={20}
-                size="small"
-                tone={color === 'dg-accent' ? 'accent' : color === 'dg-accent-2' ? 'accent-2' : 'muted'}
-              />
-            </g>
-          );
-        })}
-
-        {/* Origin */}
-        {dot3D(0, 0, 0, 3, "dg-dot-muted")}
-      </g>
-      <Label x={W / 2} y={H - 24} className="dg-text-small dg-bold">
-        a = anchor point, b = direction, t \∈ \ℝ slides along the line
-      </Label>
-      <Label x={W / 2} y={H - 8} className="dg-text-small dg-text-muted">
-        t = 0 gives a; t = 1 gives a + b; negative t goes backwards
+      {[-1, 0, 1, 2].map((t) => {
+        const p = pt(t);
+        return (
+          <g key={t}>
+            <circle cx={p.x} cy={p.y} r={5} className="dg-dot" />
+            <MathLabel x={p.x - 8} y={p.y - 30} tex={`t = ${t}`} w={70} size="small" />
+          </g>
+        );
+      })}
+      <MathLabel x={A.x - 46} y={A.y + 4} tex="A" w={30} />
+      <Label x={W / 2} y={H - 14} className="dg-text-small dg-text-muted">
+        Start at A (t = 0) and move t steps of b. Negative t goes backwards.
       </Label>
     </Svg>
   );

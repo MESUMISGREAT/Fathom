@@ -10,14 +10,14 @@ objectives: ["3.9.8"]
 prerequisites: ["complex-numbers-argand-diagram", "complex-numbers-geometric-effects"]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
     previous version 4.5-6/10 (a list of shapes to memorise, a wrong statement about arg(z − a) = arg(z − b),
     an off-syllabus ellipse, and an ambiguous shaded-region example). Written against the official Cambridge
     International AS & A Level Mathematics 9709 syllabus for 2026-2027, topic 3.9 learning outcome 8 (loci
     such as |z − a| < k, |z − a| = |z − b|, arg(z − a) = α). The four original questions are kept and one was
-    added. Every equation was rechecked by hand. Awaiting independent review; not reviewed by a teacher.
+    added. Every equation was rechecked by hand. Independently reviewed on 2026-10-30 by a separate Claude agent, which recomputed every value and answer key; its findings were fixed. Not reviewed by a teacher.
 blocks:
   - type: objective
     body: |
@@ -180,6 +180,45 @@ blocks:
     answer: |
       The left half of the disc with centre $(2, 2)$ and radius 2, boundaries included.
 
+  - type: explain
+    title: Argument inequalities — wedges
+    body: |
+      An argument rule with an inequality, such as $\dfrac{\pi}{6} \leqslant \arg(z - a) \leqslant \dfrac{\pi}{2}$,
+      says: **the direction from $a$ to $z$ is somewhere between $\dfrac{\pi}{6}$ and $\dfrac{\pi}{2}$.**
+
+      Draw the two half-lines from $a$ at those two angles. Every direction between them is allowed, so the
+      region is the **wedge** (like a slice of pie) between the two half-lines, going on forever. The point $a$
+      itself is still excluded.
+
+      A single inequality such as $\arg(z - a) \geqslant 0$ also gives a wedge, because arguments only run up
+      to $\pi$: it means "any direction from $0$ round to $\pi$", which is everything **on or above** the
+      horizontal line through $a$ (except $a$ itself).
+
+  - type: explain
+    title: Greatest and least distances
+    body: |
+      Questions often ask for the **greatest or least value of $\lvert z \rvert$** for points on a circle or in a
+      disc. Remember $\lvert z \rvert$ is the distance from the origin. The nearest and furthest points of a circle
+      from the origin both lie on the straight line through the origin and the centre:
+
+      - **least** $\lvert z \rvert$ $=$ (distance from origin to centre) $-$ radius,
+      - **greatest** $\lvert z \rvert$ $=$ (distance from origin to centre) $+$ radius.
+
+      (The first one only works if the origin is outside the circle.)
+
+  - type: example
+    title: The nearest and furthest points of a circle
+    problem: |
+      The point $z$ lies on the circle $\lvert z - 3 - 4i \rvert = 2$. Find the least and greatest possible values
+      of $\lvert z \rvert$.
+    steps:
+      - "Rewrite as $\\lvert z - (3 + 4i) \\rvert = 2$: the circle has centre $(3, 4)$ and radius 2."
+      - "The distance from the origin to the centre is $\\lvert 3 + 4i \\rvert = \\sqrt{3^2 + 4^2} = 5$. That is more than 2, so the origin is outside the circle."
+      - "Walking from the origin towards the centre, you hit the circle 2 units before the centre: least $\\lvert z \\rvert = 5 - 2 = 3$."
+      - "Carrying on through the centre to the far side of the circle: greatest $\\lvert z \\rvert = 5 + 2 = 7$."
+    answer: |
+      The least value of $\lvert z \rvert$ is $3$ and the greatest is $7$.
+
   - type: check
     title: Check regions
     questions: [cn-locus-region, cn-locus-closer]
@@ -276,7 +315,7 @@ questions:
     options:
       - text: "The upper half of the disc with centre $(0, 2)$ and radius 2"
         correct: true
-        why: "The disc rule gives centre $(0, 2)$, radius 2. The argument rule keeps directions from $0$ up to $\\pi$ from the centre: everything on or above the horizontal line through the centre."
+        why: "The disc rule gives centre $(0, 2)$, radius 2. The argument rule keeps directions from $0$ up to $\\pi$ from the centre: everything on or above the horizontal line through the centre, except the centre itself."
       - text: "The lower half of the disc with centre $(0, 2)$ and radius 2"
         why: "Directions below the horizontal have negative arguments, which $\\arg \\geqslant 0$ rules out."
       - text: "The right half of the disc with centre $(2, 0)$ and radius 2"
@@ -284,7 +323,7 @@ questions:
       - text: "The whole disc with centre $(0, 2)$ and radius 2"
         why: "The argument rule removes everything below the centre."
     explanation: |
-      $\lvert z - 2i \rvert \leqslant 2$ is the disc with centre $(0, 2)$ and radius 2. $\arg(z - 2i) \geqslant 0$ keeps the directions from the centre between $0$ and $\pi$, which is everything on or above the horizontal line through $(0, 2)$. Together: the upper half of the disc.
+      $\lvert z - 2i \rvert \leqslant 2$ is the disc with centre $(0, 2)$ and radius 2. $\arg(z - 2i) \geqslant 0$ keeps the directions from the centre between $0$ and $\pi$, which is everything on or above the horizontal line through $(0, 2)$, except the centre itself. Together: the upper half of the disc.
 
   - id: cn-locus-closer
     format: mcq
