@@ -84,7 +84,7 @@ export function KinematicsSuvat() {
       <Label x={x(t) + 10} y={y(u / 2)} anchor="start" className="dg-text-small dg-text-accent">
         rectangle: ut
       </Label>
-      <MathLabel x={x(t / 2)} y={y(u) - 18} anchor="middle" tex="\\frac{1}{2}at^2" w={80} h={32} tone="accent-2" size="small" />
+      <MathLabel x={x(t / 2)} y={y(u) - 18} anchor="middle" tex="\frac{1}{2}at^2" w={80} h={32} tone="accent-2" size="small" />
 
       {/* Formulae box */}
       <rect x={30} y={120} width={620} height={160} rx={10} className="dg-fill-muted dg-thin" />
@@ -94,9 +94,9 @@ export function KinematicsSuvat() {
       </Label>
 
       <MathLabel x={180} y={180} tex="v = u + at" w={180} h={44} anchor="start" tone="accent" />
-      <MathLabel x={180} y={215} tex="s = ut + \\tfrac{1}{2}at^2" w={220} h={44} anchor="start" tone="accent" />
+      <MathLabel x={180} y={215} tex="s = ut + \tfrac{1}{2}at^2" w={220} h={44} anchor="start" tone="accent" />
       <MathLabel x={420} y={180} tex="v^2 = u^2 + 2as" w={220} h={44} anchor="start" tone="accent-2" />
-      <MathLabel x={420} y={215} tex="s = \\tfrac{1}{2}(u + v)t" w={220} h={44} anchor="start" tone="accent-2" />
+      <MathLabel x={420} y={215} tex="s = \tfrac{1}{2}(u + v)t" w={220} h={44} anchor="start" tone="accent-2" />
 
       <Label x={60} y={250} className="dg-text-small dg-text-muted">
         Each formula omits one of {`u, v, a, s, t`} — pick the one that skips the
@@ -106,7 +106,7 @@ export function KinematicsSuvat() {
       <Label x={60} y={276} className="dg-text-small dg-text-muted">
         The graph area is the trapezium s = rectangle + triangle = ut + 
       </Label>
-      <MathLabel x={60} y={290} tex="s = \\frac{1}{2}(u+v)t = ut + \\frac{1}{2}at^2" w={300} h={32} anchor="start" tone="muted" size="small" />
+      <MathLabel x={60} y={290} tex="s = \frac{1}{2}(u+v)t = ut + \frac{1}{2}at^2" w={300} h={32} anchor="start" tone="muted" size="small" />
 
       {/* Small labels on the graph */}
       <Label x={x(0) - 6} y={y(u) - 14} anchor="end" className="dg-text-small dg-text-accent">

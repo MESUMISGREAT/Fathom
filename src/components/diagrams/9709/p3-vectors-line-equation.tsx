@@ -64,7 +64,7 @@ export default function P3VectorsLineEquation() {
 
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={W / 2} y={22} tex="\\mathbf{r} = \\mathbf{a} + t\\mathbf{b}" w={200} h={30} />
+      <MathLabel x={W / 2} y={22} tex="\mathbf{r} = \mathbf{a} + t\mathbf{b}" w={200} h={30} />
       <g transform="translate(40, 20)">
         {/* Axes */}
         <Arrow x1={proj000.x} y1={proj000.y} x2={proj500.x} y2={proj500.y} className="dg-thin" head={6} />
@@ -109,7 +109,7 @@ export default function P3VectorsLineEquation() {
         <MathLabel
           x={aMidBProj.x}
           y={aMidBProj.y}
-          tex="\\mathbf{b}"
+          tex="\mathbf{b}"
           anchor="middle"
           w={40}
           h={24}
@@ -122,7 +122,7 @@ export default function P3VectorsLineEquation() {
         <MathLabel
           x={aProj.x - 12}
           y={aProj.y - 24}
-          tex="\\mathbf{a}"
+          tex="\mathbf{a}"
           anchor="end"
           w={40}
           h={24}

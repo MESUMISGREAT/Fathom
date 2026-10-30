@@ -74,7 +74,7 @@ export function ForcesEquilibriumContactSmooth() {
       <Label x={165} y={200} className="dg-text-small">
         Contact force = R + F (vector sum)
       </Label>
-      <MathLabel x={165} y={220} tex="F \\leq \\mu R" w={80} h={32} tone="muted" />
+      <MathLabel x={165} y={220} tex="F \leq \mu R" w={80} h={32} tone="muted" />
 
       {/* SMOOTH CONTACT - right side */}
       <Label x={495} y={70} className="dg-text dg-bold dg-accent-2">
@@ -133,11 +133,11 @@ export function ForcesEquilibriumContactSmooth() {
       {/* Weight components */}
       {/* Perpendicular to plane: mg cos α */}
       <Arrow x1={cx} y1={cy} x2={cx - 40} y2={cy - 69} className="dg-dashed dg-accent-2" headClassName="dg-dot-accent-2" />
-      <MathLabel x={cx - 80} y={cy - 45} tex="mg\\cos\\alpha" w={80} h={32} anchor="end" tone="accent-2" size="small" />
+      <MathLabel x={cx - 80} y={cy - 45} tex="mg\cos\alpha" w={80} h={32} anchor="end" tone="accent-2" size="small" />
 
       {/* Parallel to plane: mg sin α */}
       <Arrow x1={cx} y1={cy} x2={cx + 55} y2={cy + 32} className="dg-dashed dg-accent" headClassName="dg-dot-accent" />
-      <MathLabel x={cx + 70} y={cy + 20} tex="mg\\sin\\alpha" w={80} h={32} anchor="start" tone="accent" size="small" />
+      <MathLabel x={cx + 70} y={cy + 20} tex="mg\sin\alpha" w={80} h={32} anchor="start" tone="accent" size="small" />
 
       {/* Normal reaction R perpendicular to plane */}
       <Arrow x1={cx} y1={cy - 15} x2={cx - 35} y2={cy - 70} className="dg-accent-2" headClassName="dg-dot-accent-2" />
@@ -146,7 +146,7 @@ export function ForcesEquilibriumContactSmooth() {
 
       {/* Angle alpha annotation */}
       <path d={`M${PX + 25},${PY} A25,25 0 0,1 ${PX + 25 - 25 * Math.sin(rad)},${PY - 25 * Math.cos(rad)}`} className="dg-thin dg-muted" />
-      <MathLabel x={PX + 35} y={PY - 12} tex="\\alpha" w={30} h={32} tone="muted" size="small" />
+      <MathLabel x={PX + 35} y={PY - 12} tex="\alpha" w={30} h={32} tone="muted" size="small" />
 
       <Label x={450} y={330} anchor="start" className="dg-text-small">
         On smooth incline: no friction, so R = mg cos α

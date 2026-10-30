@@ -23,7 +23,7 @@ const yBase = 120;
 export default function P3NumericalSolutionApproximations() {
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={W / 2} y={28} tex="x_{n+1} = \\tfrac{1}{2}(x_n + 2/x_n),\\quad x_1 = 1" w={380} h={32} />
+      <MathLabel x={W / 2} y={28} tex="x_{n+1} = \tfrac{1}{2}(x_n + 2/x_n),\quad x_1 = 1" w={380} h={32} />
       {/* number line */}
       <line x1={scaleX(LEFT)} y1={yBase} x2={scaleX(RIGHT)} y2={yBase} className="dg-line" />
       {/* ticks */}
@@ -37,7 +37,7 @@ export default function P3NumericalSolutionApproximations() {
       </g>
       {/* alpha marker */}
       <line x1={scaleX(ALPHA)} y1={yBase - 16} x2={scaleX(ALPHA)} y2={yBase + 16} className="dg-accent-2" strokeWidth={2} />
-      <MathLabel x={scaleX(ALPHA)} y={yBase - 32} tex="\\alpha = \\sqrt{2}" anchor="middle" w={100} h={24} size="small" tone="accent-2" />
+      <MathLabel x={scaleX(ALPHA)} y={yBase - 32} tex="\alpha = \sqrt{2}" anchor="middle" w={100} h={24} size="small" tone="accent-2" />
       {/* points */}
       {[
         { x: x1, label: 'x_1', yOffset: -60 },
@@ -51,9 +51,9 @@ export default function P3NumericalSolutionApproximations() {
         </g>
       ))}
       {/* convergence arrows */}
-      <MathLabel x={scaleX((x1 + x2) / 2)} y={yBase - 52} tex="\\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
-      <MathLabel x={scaleX((x2 + x3) / 2)} y={yBase - 52} tex="\\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
-      <MathLabel x={scaleX((x3 + x4) / 2)} y={yBase - 52} tex="\\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
+      <MathLabel x={scaleX((x1 + x2) / 2)} y={yBase - 52} tex="\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
+      <MathLabel x={scaleX((x2 + x3) / 2)} y={yBase - 52} tex="\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
+      <MathLabel x={scaleX((x3 + x4) / 2)} y={yBase - 52} tex="\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
       {/* distance labels */}
       <Label x={scaleX((x1 + x2) / 2)} y={yBase + 50} anchor="middle" className="dg-text-xs dg-text-muted">
         large step

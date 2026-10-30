@@ -37,7 +37,7 @@ export default function P3NumericalSolutionRearrangingCobweb() {
 
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={140} y={24} tex="x = \\sqrt[3]{2x + 5}" w={200} h={28} size="small" tone="accent" />
+      <MathLabel x={140} y={24} tex="x = \sqrt[3]{2x + 5}" w={200} h={28} size="small" tone="accent" />
       <MathLabel x={420} y={24} tex="x = (x^3 - 5)/2" w={200} h={28} size="small" tone="muted" />
       {/* Converging */}
       <g transform="translate(20, 50)">

@@ -115,7 +115,7 @@ const rightAngleProj2: Point2D = proj(panel3_f[0]! + 0.1, panel3_f[1]! - 0.1, pa
 export default function P3VectorsScalarProduct() {
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={W / 2} y={20} tex="\\mathbf{a} \\cdot \\mathbf{b} = |a||b|\\cos\\theta" w={300} h={30} />
+      <MathLabel x={W / 2} y={20} tex="\mathbf{a} \cdot \mathbf{b} = |a||b|\cos\theta" w={300} h={30} />
 
       {/* Panel 1: Angle between vectors */}
       <g transform="translate(30, 50)">
@@ -129,7 +129,7 @@ export default function P3VectorsScalarProduct() {
         <MathLabel
           x={p1_aHalfProj.x}
           y={p1_aHalfProj.y}
-          tex="\\mathbf{a}"
+          tex="\mathbf{a}"
           anchor="middle"
           w={40}
           h={20}
@@ -139,15 +139,15 @@ export default function P3VectorsScalarProduct() {
         <MathLabel
           x={p1_bHalfProj.x}
           y={p1_bHalfProj.y}
-          tex="\\mathbf{b}"
+          tex="\mathbf{b}"
           anchor="middle"
           w={40}
           h={20}
           size="small"
           tone="accent-2"
         />
-        <MathLabel x={p1_thetaProj.x} y={p1_thetaProj.y} tex="\\theta" anchor="middle" w={30} h={20} size="small" tone="muted" />
-        <MathLabel x={PANEL_W / 2} y={210} tex="\\mathbf{a} \\cdot \\mathbf{b} = |a||b|\\cos\\theta" anchor="middle" w={180} h={24} size="small" />
+        <MathLabel x={p1_thetaProj.x} y={p1_thetaProj.y} tex="\theta" anchor="middle" w={30} h={20} size="small" tone="muted" />
+        <MathLabel x={PANEL_W / 2} y={210} tex="\mathbf{a} \cdot \mathbf{b} = |a||b|\cos\theta" anchor="middle" w={180} h={24} size="small" />
       </g>
 
       {/* Panel 2: Perpendicular vectors */}
@@ -162,7 +162,7 @@ export default function P3VectorsScalarProduct() {
         <MathLabel
           x={p2_aHalfProj.x}
           y={p2_aHalfProj.y}
-          tex="\\mathbf{a}"
+          tex="\mathbf{a}"
           anchor="middle"
           w={40}
           h={20}
@@ -172,7 +172,7 @@ export default function P3VectorsScalarProduct() {
         <MathLabel
           x={p2_bHalfProj.x}
           y={p2_bHalfProj.y}
-          tex="\\mathbf{b}"
+          tex="\mathbf{b}"
           anchor="middle"
           w={40}
           h={20}
@@ -181,7 +181,7 @@ export default function P3VectorsScalarProduct() {
         />
         {/* Right angle marker - approximate position */}
         <path d={line3D(0, 0.3, 0, 0.15, 0.6, 0, 0.3)} className="dg-line-muted" />
-        <MathLabel x={PANEL_W / 2} y={210} tex="\\mathbf{a} \\cdot \\mathbf{b} = 0 \\iff \\mathbf{a} \\perp \\mathbf{b}" anchor="middle" w={180} h={24} size="small" />
+        <MathLabel x={PANEL_W / 2} y={210} tex="\mathbf{a} \cdot \mathbf{b} = 0 \iff \mathbf{a} \perp \mathbf{b}" anchor="middle" w={180} h={24} size="small" />
       </g>
 
       {/* Panel 3: Foot of perpendicular from point to line */}
@@ -209,16 +209,16 @@ export default function P3VectorsScalarProduct() {
         {/* Right angle at F - approximate */}
         <path d={`M${rightAngleProj1.x.toFixed(1)},${rightAngleProj1.y.toFixed(1)} L${rightAngleProj2.x.toFixed(1)},${rightAngleProj2.y.toFixed(1)}`} className="dg-line-muted" />
 
-        <MathLabel x={PANEL_W / 2} y={210} tex="t = -((\\mathbf{a}-\\mathbf{p})\\cdot \\mathbf{d})/|\\mathbf{d}|^2" anchor="middle" w={180} h={24} size="small" />
+        <MathLabel x={PANEL_W / 2} y={210} tex="t = -((\mathbf{a}-\mathbf{p})\cdot \mathbf{d})/|\mathbf{d}|^2" anchor="middle" w={180} h={24} size="small" />
       </g>
 
       <Label x={W / 2} y={H - 25} className="dg-text-small dg-text-muted">
         Key formulae:
       </Label>
-      <MathLabel x={W / 2} y={H - 10} tex="a\\cdot b = a_1b_1 + a_2b_2 + a_3b_3" anchor="middle" w={300} h={24} size="small" tone="muted" />
-      <MathLabel x={W / 2} y={H + 10} tex="\\cos\\theta = \\frac{a\\cdot b}{|a||b|}" anchor="middle" w={300} h={24} size="small" tone="muted" />
-      <MathLabel x={W / 2} y={H + 30} tex="a \\perp b \\iff a\\cdot b = 0" anchor="middle" w={300} h={24} size="small" tone="muted" />
-      <MathLabel x={W / 2} y={H + 50} tex="t = -\\frac{(a-p)\\cdot d}{|d|^2}" anchor="middle" w={300} h={24} size="small" tone="muted" />
+      <MathLabel x={W / 2} y={H - 10} tex="a\cdot b = a_1b_1 + a_2b_2 + a_3b_3" anchor="middle" w={300} h={24} size="small" tone="muted" />
+      <MathLabel x={W / 2} y={H + 10} tex="\cos\theta = \frac{a\cdot b}{|a||b|}" anchor="middle" w={300} h={24} size="small" tone="muted" />
+      <MathLabel x={W / 2} y={H + 30} tex="a \perp b \iff a\cdot b = 0" anchor="middle" w={300} h={24} size="small" tone="muted" />
+      <MathLabel x={W / 2} y={H + 50} tex="t = -\frac{(a-p)\cdot d}{|d|^2}" anchor="middle" w={300} h={24} size="small" tone="muted" />
     </Svg>
   );
 }

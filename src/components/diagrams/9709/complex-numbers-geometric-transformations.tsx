@@ -21,8 +21,8 @@ function drawAxes(x0: number, y0: number, s: number, label = '') {
     <g>
       <Arrow x1={x0 - 2.5 * s} y1={y0} x2={x0 + 2.5 * s} y2={y0} className="dg-thin" head={6} />
       <Arrow x1={x0} y1={y0 + 2.5 * s} x2={x0} y2={y0 - 2.5 * s} className="dg-thin" head={6} />
-      <MathLabel x={x0 + 2.6 * s} y={y0 + 4} tex="\\Re" anchor="start" w={24} h={20} size="small" />
-      <MathLabel x={x0 - 10} y={y0 - 2.6 * s - 4} tex="\\Im" anchor="end" w={24} h={20} size="small" />
+      <MathLabel x={x0 + 2.6 * s} y={y0 + 4} tex="\Re" anchor="start" w={24} h={20} size="small" />
+      <MathLabel x={x0 - 10} y={y0 - 2.6 * s - 4} tex="\Im" anchor="end" w={24} h={20} size="small" />
       {label && <Label x={x0} y={y0 - CELL_H / 2 - 8} className="dg-bold">{label}</Label>}
     </g>
   );
@@ -149,13 +149,13 @@ export default function ComplexNumbersGeometricTransformations() {
           fill="none"
           strokeWidth={2}
         />
-        <MathLabel x={CELL_W / 2 + 0.7 * scale} y={CELL_H / 2 - 0.9 * scale} tex="\\frac{\\pi}{2}" anchor="middle" w={40} h={24} size="small" tone="accent" />
+        <MathLabel x={CELL_W / 2 + 0.7 * scale} y={CELL_H / 2 - 0.9 * scale} tex="\frac{\pi}{2}" anchor="middle" w={40} h={24} size="small" tone="accent" />
       </g>
 
       {/* --- Cell 4: Division by 2 (shrinking) --- */}
       <g transform={`translate(${c4.x}, ${c4.y})`}>
         {drawAxes(CELL_W / 2, CELL_H / 2, scale, 'Division by 2: shrinking by factor')}
-        <MathLabel x={CELL_W / 2} y={CELL_H / 2 - CELL_H / 2 - 32} tex="\\frac{1}{2}" anchor="middle" w={40} h={24} size="small" tone="muted" />
+        <MathLabel x={CELL_W / 2} y={CELL_H / 2 - CELL_H / 2 - 32} tex="\frac{1}{2}" anchor="middle" w={40} h={24} size="small" tone="muted" />
         {/* Original z */}
         <Arrow
           x1={CELL_W / 2}

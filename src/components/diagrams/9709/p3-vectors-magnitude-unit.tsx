@@ -56,15 +56,15 @@ export default function P3VectorsMagnitudeUnit() {
 
       {/* Unit vector u (shorter, same direction) */}
       <Arrow x1={origin.x} y1={origin.y} x2={uTip.x} y2={uTip.y} className="dg-accent-2" head={6} />
-      <MathLabel x={uTip.x + 10} y={uTip.y + 10} tex="\\hat{v} = (3/13, 4/13, 12/13)" anchor="start" w={160} h={24} size="small" tone="accent-2" />
+      <MathLabel x={uTip.x + 10} y={uTip.y + 10} tex="\hat{v} = (3/13, 4/13, 12/13)" anchor="start" w={160} h={24} size="small" tone="accent-2" />
 
       {/* Info box - use MathLabel for all text to avoid JSX interpretation issues */}
       <g transform="translate(20, 50)">
         <MathLabel x={0} y={20} tex="Magnitude:" size="small" tone="accent" w={200} h={20} />
-        <MathLabel x={0} y={45} tex="|v| = \\sqrt{3^2 + 4^2 + 12^2} = \\sqrt{169} = 13" size="small" w={300} h={20} />
-        <MathLabel x={0} y={70} tex="Unit vector: \\hat{v} = v / |v| = (3/13, 4/13, 12/13)" size="small" w={300} h={20} />
-        <MathLabel x={0} y={95} tex="|\\hat{v}| = \\sqrt{(3/13)^2 + (4/13)^2 + (12/13)^2} = 1" size="small" w={300} h={20} />
-        <MathLabel x={0} y={120} tex="Key: v = |v| \\hat{v} (magnitude x direction)" size="small" tone="muted" w={300} h={20} />
+        <MathLabel x={0} y={45} tex="|v| = \sqrt{3^2 + 4^2 + 12^2} = \sqrt{169} = 13" size="small" w={300} h={20} />
+        <MathLabel x={0} y={70} tex="Unit vector: \hat{v} = v / |v| = (3/13, 4/13, 12/13)" size="small" w={300} h={20} />
+        <MathLabel x={0} y={95} tex="|\hat{v}| = \sqrt{(3/13)^2 + (4/13)^2 + (12/13)^2} = 1" size="small" w={300} h={20} />
+        <MathLabel x={0} y={120} tex="Key: v = |v| \hat{v} (magnitude x direction)" size="small" tone="muted" w={300} h={20} />
       </g>
 
       <Label x={W / 2} y={H - 12} className="dg-text-small dg-bold">

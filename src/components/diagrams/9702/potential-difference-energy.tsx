@@ -30,7 +30,7 @@ export function PotentialDifferenceEnergy() {
       {/* Energy arrow UP (chemical work on charges) */}
       <Arrow x1={80} y1={90} x2={80} y2={110} className="dg-accent" head={10} headClassName="dg-dot-accent" />
       <Label x={95} y={100} className="dg-text-accent dg-bold">emf ε</Label>
-      <MathLabel x={95} y={115} w={80} h={30} tex="W = \\varepsilon Q" size="small" tone="accent" />
+      <MathLabel x={95} y={115} w={80} h={30} tex="W = \varepsilon Q" size="small" tone="accent" />
       <Label x={95} y={135} className="dg-text-small dg-text-muted">Chemical → electrical energy</Label>
 
       {/* Charge flow arrow */}
@@ -40,7 +40,7 @@ export function PotentialDifferenceEnergy() {
       {/* ==================== Wire (zero p.d.) ==================== */}
       <Label x={200} y={60} className="dg-text dg-bold" anchor="middle">Connecting wires</Label>
       <line x1={110} y1={110} x2={290} y2={110} className="dg-line" strokeWidth={3} />
-      <MathLabel x={200} y={95} w={120} h={30} anchor="middle" tex="V \\approx 0" size="small" tone="muted" />
+      <MathLabel x={200} y={95} w={120} h={30} anchor="middle" tex="V \approx 0" size="small" tone="muted" />
       <Label x={200} y={130} className="dg-text-small dg-text-muted">Ideal wire: no energy loss</Label>
 
       {/* ==================== Resistor (load) ==================== */}
@@ -64,7 +64,7 @@ export function PotentialDifferenceEnergy() {
 
       {/* Voltage label */}
       <Arrow x1={350} y1={70} x2={450} y2={70} className="dg-accent" head={8} headClassName="dg-dot-accent" double={true} />
-      <MathLabel x={400} y={55} w={100} h={30} anchor="middle" tex="V = \\frac{W}{Q}" size="large" tone="accent" />
+      <MathLabel x={400} y={55} w={100} h={30} anchor="middle" tex="V = \frac{W}{Q}" size="large" tone="accent" />
       <Label x={400} y={160} className="dg-text-small dg-text-muted">V = 12 V → 12 J per coulomb</Label>
 
       {/* Energy transfer arrow DOWN */}
@@ -91,7 +91,7 @@ export function PotentialDifferenceEnergy() {
 
       {/* Conservation note */}
       <rect x={520} y={320} width={170} height={45} className="dg-fill-accent" rx={6} opacity={0.15} />
-      <MathLabel x={605} y={330} w={160} h={30} anchor="middle" tex="\varepsilon = \\sum V" size="large" tone="accent" />
+      <MathLabel x={605} y={330} w={160} h={30} anchor="middle" tex="\varepsilon = \sum V" size="large" tone="accent" />
       <Label x={605} y={355} className="dg-text-small dg-text-accent" anchor="middle">Energy conserved around loop</Label>
     </Svg>
   );
