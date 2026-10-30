@@ -77,7 +77,9 @@ export async function search(qRaw: string, f: SearchFilters = {}): Promise<Searc
 
   if (want('topic') && !f.difficulty && !f.format) {
     const where = code ? eq(t.topics.code, code.split('.').slice(0, 2).join('.')) : allTerms(t.topics.title);
-    const rows = await base.where(scope(where)).limit(30);
+    // Topics removed from the syllabus have no objectives left.
+    const live = sql`exists (select 1 from objectives o where o.topic_id = ${t.topics.id})`;
+    const rows = await base.where(scope(and(where, live))).limit(30);
     for (const r of rows) {
       const exactCode = !!code && code.split('.').length === 2;
       results.push({

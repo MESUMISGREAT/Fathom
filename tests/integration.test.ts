@@ -31,7 +31,7 @@ const study = await import('@/server/actions/study');
 const settings = await import('@/server/actions/settings');
 const editor = await import('@/server/actions/editor');
 const { getSessionUser } = await import('@/server/auth/session');
-const { listSubjects } = await import('@/server/queries/catalog');
+const { getSyllabusTree, listSubjects } = await import('@/server/queries/catalog');
 const { getSubjectProgress } = await import('@/server/queries/progress');
 const { getDashboard } = await import('@/server/queries/dashboard');
 const { search } = await import('@/server/queries/search');
@@ -219,6 +219,20 @@ describe('student flow', () => {
     await importContent(db, await loadContent(), 'test-hash-restored');
     const [restored] = await db.select().from(t.lessons).where(eq(t.lessons.id, 'fixture-squares'));
     expect(restored!.archivedAt).toBeNull();
+  });
+
+  it('hides a syllabus section once it and its lessons are removed', async () => {
+    const db = await getDb();
+    const bundle = await loadContent();
+    bundle.syllabi[0]!.data.sections = bundle.syllabi[0]!.data.sections.filter((s) => s.code !== '1');
+    bundle.lessons = [];
+    await importContent(db, bundle, 'test-hash-without-section-1');
+    const subject = (await listSubjects())[0]!;
+    expect(subject.counts).toMatchObject({ topics: 1, lessons: 0 });
+    expect((await getSyllabusTree(subject.version.id)).map((s) => s.code)).toEqual(['3']);
+    expect((await search('1.1')).some((r) => r.kind === 'topic')).toBe(false);
+    await importContent(db, await loadContent(), 'test-hash-section-1-restored');
+    expect((await getSyllabusTree(subject.version.id)).map((s) => s.code)).toEqual(['1', '3']);
   });
 
   it('logs out, rate-limits bad logins and logs back in', async () => {

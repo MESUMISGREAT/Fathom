@@ -1,7 +1,7 @@
 /** Read-only queries over syllabus and lesson content. */
 import 'server-only';
 import { cache } from 'react';
-import { and, asc, count, eq, inArray, isNull, sql } from 'drizzle-orm';
+import { and, asc, count, countDistinct, eq, inArray, isNull, sql } from 'drizzle-orm';
 import { getDb } from '@/server/db';
 import * as t from '@/server/db/schema';
 
@@ -31,7 +31,12 @@ export const listSubjects = cache(async (): Promise<SubjectSummary[]> => {
   const versionIds = rows.map((r) => r.v.id);
   if (!versionIds.length) return [];
   const [topicCounts, objectiveCounts, lessonCounts] = await Promise.all([
-    db.select({ v: t.topics.versionId, n: count() }).from(t.topics).where(inArray(t.topics.versionId, versionIds)).groupBy(t.topics.versionId),
+    // Count topics that still have objectives, so topics removed from the syllabus are not counted.
+    db
+      .select({ v: t.objectives.versionId, n: countDistinct(t.objectives.topicId) })
+      .from(t.objectives)
+      .where(inArray(t.objectives.versionId, versionIds))
+      .groupBy(t.objectives.versionId),
     db.select({ v: t.objectives.versionId, n: count() }).from(t.objectives).where(inArray(t.objectives.versionId, versionIds)).groupBy(t.objectives.versionId),
     db
       .select({ v: t.lessons.versionId, n: count() })
@@ -102,23 +107,27 @@ export const getSyllabusTree = cache(async (versionId: string): Promise<TreeSect
       .where(and(eq(t.lessons.versionId, versionId), isNull(t.lessons.archivedAt)))
       .orderBy(asc(t.lessons.position)),
   ]);
-  return sections.map((s) => ({
-    id: s.id,
-    code: s.code,
-    title: s.title,
-    level: s.level,
-    papers: s.papers,
-    strand: s.strand,
-    topics: topics
-      .filter((tp) => tp.sectionId === s.id)
-      .map((tp) => ({
-        id: tp.id,
-        code: tp.code,
-        title: tp.title,
-        objectives: objectives.filter((o) => o.topicId === tp.id).map((o) => ({ id: o.id, code: o.code, text: o.text, guidance: o.guidance })),
-        lessons: lessons.filter((l) => l.topicId === tp.id),
-      })),
-  }));
+  // A topic removed from syllabus.yaml keeps its row while archived lessons still point at it, but has no objectives left; hide it.
+  return sections
+    .map((s) => ({
+      id: s.id,
+      code: s.code,
+      title: s.title,
+      level: s.level,
+      papers: s.papers,
+      strand: s.strand,
+      topics: topics
+        .filter((tp) => tp.sectionId === s.id)
+        .map((tp) => ({
+          id: tp.id,
+          code: tp.code,
+          title: tp.title,
+          objectives: objectives.filter((o) => o.topicId === tp.id).map((o) => ({ id: o.id, code: o.code, text: o.text, guidance: o.guidance })),
+          lessons: lessons.filter((l) => l.topicId === tp.id),
+        }))
+        .filter((tp) => tp.objectives.length > 0 || tp.lessons.length > 0),
+    }))
+    .filter((s) => s.topics.length > 0);
 });
 
 export async function getTopic(versionId: string, code: string) {
