@@ -33,6 +33,9 @@ import ForcesEquilibriumContactSmooth from './forces-equilibrium-contact-smooth'
 import ForcesEquilibriumForceDiagram from './forces-equilibrium-force-diagram';
 import ForcesEquilibriumFrictionThirdLaw from './forces-equilibrium-friction-third-law';
 import ForcesEquilibriumResolvingEquilibrium from './forces-equilibrium-resolving-equilibrium';
+import ForcesFrictionAngledPull from './forces-friction-angled-pull';
+import ForcesRingEquilibrium from './forces-ring-equilibrium';
+import ForcesThirdLawBook from './forces-third-law-book';
 import FunctionsCombinedInside from './functions-combined-inside';
 import FunctionsCombinedSequence from './functions-combined-sequence';
 import FunctionsCompositeMachines from './functions-composite-machines';
@@ -171,6 +174,9 @@ export const diagrams: DiagramRegistry = {
   'forces-equilibrium-force-diagram': ForcesEquilibriumForceDiagram,
   'forces-equilibrium-friction-third-law': ForcesEquilibriumFrictionThirdLaw,
   'forces-equilibrium-resolving-equilibrium': ForcesEquilibriumResolvingEquilibrium,
+  'forces-friction-angled-pull': ForcesFrictionAngledPull,
+  'forces-ring-equilibrium': ForcesRingEquilibrium,
+  'forces-third-law-book': ForcesThirdLawBook,
   'functions-combined-inside': FunctionsCombinedInside,
   'functions-combined-sequence': FunctionsCombinedSequence,
   'functions-composite-machines': FunctionsCompositeMachines,

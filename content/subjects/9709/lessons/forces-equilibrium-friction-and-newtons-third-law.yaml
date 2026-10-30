@@ -1,86 +1,175 @@
 id: forces-equilibrium-friction-and-newtons-third-law
 subject: "9709"
 topic: "4.1"
-title: Friction, limiting equilibrium and Newton's third law
-summary: Use $F\leq\mu R$ and $F=\mu R$ at limiting equilibrium, then identify Newton's third-law pairs.
+title: "Friction, limiting equilibrium and Newton's third law"
+summary: "How friction adjusts itself up to a maximum of μR, what 'about to slip' means, and why third-law force pairs never cancel each other."
 order: 5
-minutes: 8
+minutes: 10
 kind: core
 objectives: ["4.1.6", "4.1.7"]
 prerequisites: ["forces-equilibrium-contact-forces-and-smooth-surfaces", "forces-equilibrium-resolving-equilibrium"]
 provenance:
   origin: ai-drafted
-  status: ai-checked
+  status: draft
   notes: >-
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709
-    syllabus objectives 4.1.6 and 4.1.7. All questions and examples are original; numerical
-    values are illustrative. Use $g=10\text{ m s}^{-2}$ for 9709 mechanics. Not yet
-    independently reviewed or reviewed by a teacher.
+    Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
+    previous version 6/10 (formula stated without the idea behind it; one trivial example; a live diagram
+    with overlapping, unreadable labels). Written against the official Cambridge International AS & A Level
+    Mathematics 9709 syllabus for 2026-2027, objectives 4.1.6 (limiting friction, F = μR or F ≤ μR, "about to
+    slip") and 4.1.7 (Newton's third law). New diagrams forces-friction-angled-pull and forces-third-law-book.
+    The four original questions are kept and two were added. Every value was recomputed by hand. Awaiting
+    independent review; not reviewed by a teacher.
 blocks:
   - type: objective
-    body: By the end you can calculate friction in ordinary and limiting equilibrium, use the coefficient of friction, and identify Newton's third-law pairs.
-  - type: definition
-    term: Limiting friction
-    body: >-
-      Limiting friction is the greatest frictional force available between two surfaces, with
-      magnitude $F=\mu R$, where $\mu$ is the coefficient of friction and $R$ is the normal
-      reaction. Therefore, the coefficient of friction is the ratio of limiting friction to
-      normal reaction: $\mu=F/R$.
-  - type: explain
-    title: Friction is helpful, but not unlimited
-    body: |-
-      Friction acts to oppose the tendency for surfaces to slide. Before sliding starts, it adjusts to whatever value is needed for equilibrium, up to a maximum:
-      $$F\leq\mu R.$$
+    body: |
+      By the end you can work out the friction on an object at rest, recognise when it is "about to slip" and
+      use $F = \mu R$ then, and identify the Newton's third-law partner of any force.
 
-      If an object is **about to slip**, it is in limiting equilibrium. Then friction has reached its maximum and the equality applies:
-      $$F=\mu R.$$
-  - type: example
-    title: A box just about to move
-    problem: A $6\text{ kg}$ box is on a rough horizontal floor with coefficient of friction $\mu=0.4$. Find the limiting friction.
-    steps:
-      - |-
-        There are no other vertical forces, so vertical equilibrium gives $R=mg=6(10)=60\text{ N}$.
-      - |-
-        At limiting equilibrium, use equality: $F=\mu R$.
-      - |-
-        Therefore $F=0.4(60)=24\text{ N}$.
-    answer: The limiting friction is $24\text{ N}$.
-  - type: check
-    questions: [friction-inequality, limiting-friction, third-law-pair, third-law-direction]
   - type: explain
-    title: "Newton's third law: pairs live on different objects"
-    body: |-
-      Newton's third law says that when object A exerts a force on object B, object B exerts a force of equal magnitude and opposite direction on object A.
+    title: Key to the symbols
+    body: |
+      | Symbol | Meaning |
+      | --- | --- |
+      | $F$ | the **friction** force, acting along the surface |
+      | $R$ | the **normal reaction**: the push of the surface on the object, at right angles to the surface |
+      | $\mu$ | the **coefficient of friction** (the Greek letter "mu"), a number describing how grippy the two surfaces are |
+      | $m$ | mass in kg; $mg$ is the weight in newtons, with $g = 10\ \text{m s}^{-2}$ |
 
-      The two forces are a **pair**: they are the same type of interaction, act at the same time, and act on different objects. That last point is why they do not cancel on one force diagram.
+  - type: explain
+    title: What friction does
+    body: |
+      Push gently on a heavy box and it doesn't move. Something is pushing back exactly as hard as you push.
+      That is **friction**: a force from the floor, along the surface, that **opposes sliding**.
+
+      The key fact about friction is that **it adjusts itself**. Imagine a box whose friction can reach at most
+      24 N:
+
+      | You push with | Friction pushes back with | What happens |
+      | --- | --- | --- |
+      | 5 N | 5 N | stays still |
+      | 15 N | 15 N | stays still |
+      | 24 N | 24 N | stays still, but only just: **about to slip** |
+      | 30 N | can't go above 24 N | slides |
+
+      So friction is **only as big as it needs to be** to stop sliding, up to a maximum. When an object is at
+      rest but would start to slide if pushed any harder, friction is at its maximum and the object is in
+      **limiting equilibrium**. Exam questions say this as "about to slip", "on the point of sliding" or
+      "in limiting equilibrium".
+
+  - type: explain
+    title: The maximum friction is μR
+    body: |
+      What decides the maximum? Two things:
+
+      - **How hard the surfaces are pressed together.** That is the normal reaction $R$. A heavier box presses
+        harder and grips more.
+      - **How grippy the surfaces are.** Rubber on concrete grips far better than ice on steel. This is
+        measured by the **coefficient of friction** $\mu$. It has no units, and it is usually between 0 and 1.
+
+      Multiply them to get the maximum:
+
+      $$F_{\max} = \mu R$$
+
+      So the rule is:
+
+      - Whenever an object is at rest, $F \leqslant \mu R$. Work out $F$ from equilibrium (it is whatever
+        is needed), not from $\mu R$.
+      - **Only** when it is about to slip (or already sliding), $F = \mu R$.
+
+      Rearranging gives the definition of the coefficient of friction: in limiting equilibrium,
+      $\mu = \dfrac{F}{R}$.
+
   - type: example
-    title: The table and the book
-    problem: A book rests on a table. Describe the Newton's third-law pair associated with the table's normal reaction on the book.
+    title: Not slipping, so friction is just what is needed
+    problem: |
+      A $6$ kg box rests on a rough horizontal floor with $\mu = 0.4$. A horizontal force of $15$ N pushes it,
+      and it does not move. Find the friction, and the largest horizontal push it could withstand.
     steps:
-      - |-
-        The table exerts an upward normal reaction on the book.
-      - |-
-        The matching force is the book's downward force on the table.
-      - |-
-        They are equal in magnitude and opposite in direction, but one acts on the book and the other acts on the table.
-    answer: Table on book and book on table form the third-law pair.
+      - "Vertically, the floor's push balances the weight: $R = mg = 6 \\times 10 = 60$ N."
+      - "The maximum friction is $\\mu R = 0.4 \\times 60 = 24$ N."
+      - "The box is not moving, so horizontally the forces cancel: friction $= 15$ N. That is less than 24 N, so it holds ✓"
+      - "The largest push it can withstand is the maximum friction, $24$ N. Any more and it slides."
+    answer: |
+      Friction is $15$ N (not $24$ N). The box is on the point of slipping when the push reaches $24$ N.
+
+  - type: example
+    title: A pull at an angle, about to move
+    problem: |
+      A $5$ kg box on a rough horizontal floor, with $\mu = 0.3$, is pulled by a force $P$ at $20°$ above the
+      horizontal. It is about to move. Find $P$.
+    steps:
+      - "Draw the forces (see the diagram): $P$ at $20°$, the weight $50$ N down, the normal reaction $R$ up, and friction $F$ backwards, opposing the motion it is about to make."
+      - "About to move means limiting equilibrium, so $F = \\mu R = 0.3R$, and the forces still cancel."
+      - "Vertically: $R + P\\sin 20° = 50$, so $R = 50 - P\\sin 20°$. Notice the pull lifts the box slightly, so $R$ is **less** than the weight."
+      - "Horizontally: $P\\cos 20° = F = 0.3(50 - P\\sin 20°)$."
+      - "Put in the values: $0.9397P = 15 - 0.1026P$. Collect the $P$ terms: $1.0423P = 15$, so $P \\approx 14.4$ N."
+    answer: |
+      $P \approx 14.4$ N.
+
   - type: diagram
-    diagram: forces-equilibrium-friction-third-law
-    alt: A book on a table showing the normal reaction of the table on the book and the equal and opposite force of the book on the table as a Newton third-law pair
+    diagram: forces-friction-angled-pull
+    alt: "A 5 kg box on a rough horizontal floor. A force P pulls up and to the right at 20 degrees above the horizontal. The normal reaction R points up from the top of the box, the 50 N weight points down, and friction F points left along the floor."
+    caption: |
+      Friction points opposite to the way the box would move. Because $P$ pulls partly upwards, the floor has to
+      push up less, so $R$ is smaller than 50 N.
+
+  - type: check
+    title: Check friction
+    questions: [friction-inequality, limiting-friction, friction-not-limiting, friction-find-mu]
+
+  - type: explain
+    title: "Newton's third law: forces come in pairs"
+    body: |
+      **Newton's third law:** if object A pushes or pulls on object B, then B pushes or pulls on A with a force
+      of the **same size** in the **opposite direction**.
+
+      When you lean on a wall, the wall pushes back on you. When a book rests on a table, the book pushes down
+      on the table and the table pushes up on the book.
+
+      Here is the part that confuses people: **the two forces in a pair act on different objects**. One acts
+      on A and the other on B. That is why they never cancel each other out. To cancel, two forces must act
+      on the **same** object.
+
+      **How to find a force's partner.** Swap the two objects in its description. "The table pushing up on the
+      book" has the partner "the book pushing down on the table". "The Earth pulling the book down (its weight)"
+      has the partner "the book pulling the Earth up".
+
+  - type: diagram
+    diagram: forces-third-law-book
+    alt: "Two separate force diagrams. Left: the book, with R (table on book) pointing up and W (Earth on book) pointing down. Right: the table, with R (book on table) pointing down onto its top."
+    caption: |
+      The book's weight $W$ and the table's push $R$ both act on the book, and they balance because the book is
+      at rest. But they are **not** a third-law pair. The true partner of "table on book" is "book on table",
+      which acts on the table.
+
+  - type: check
+    title: Check the third law
+    questions: [third-law-pair, third-law-direction]
+
   - type: misconceptions
     items:
-      - wrong: Friction always equals $\mu R$.
-        right: It equals $\mu R$ only at limiting equilibrium; otherwise $F$ can be smaller.
-      - wrong: Weight and normal reaction on a resting book are a third-law pair.
-        right: They act on the same book, so they can balance but are not a third-law pair.
+      - wrong: "Friction always equals $\\mu R$."
+        right: "Only when the object is about to slip (or sliding). Otherwise friction is just what is needed to balance the other forces, which can be less than $\\mu R$."
+      - wrong: "The normal reaction always equals the weight."
+        right: "Only when nothing else pushes up or down. A pull at an angle above the horizontal reduces $R$; a push down at an angle increases it."
+      - wrong: "The weight of a book and the table's push on it are a third-law pair."
+        right: "Both act on the book, so they can balance, but they are not a pair. Third-law partners always act on different objects."
+      - wrong: "Third-law pairs cancel, so nothing can ever move."
+        right: "They act on different objects, so they never cancel each other. Whether an object moves depends only on the forces acting on it."
+
   - type: exam
-    body: Look for “about to slip”, “on the point of moving” or “limiting equilibrium” before using $F=\mu R$. For Newton's third law, name both objects and the interaction direction.
+    body: |
+      - Only write $F = \mu R$ when the question says the object is about to slip, on the point of moving, in limiting equilibrium, or moving. Otherwise find $F$ from the equilibrium equations.
+      - Find $R$ by resolving perpendicular to the surface first. Don't assume $R = mg$ if any force is slanted.
+      - For a third-law question, name both objects and say "equal in size and opposite in direction".
+
   - type: takeaways
     items:
-      - In ordinary equilibrium, $F\leq\mu R$.
-      - At impending slip, $F=\mu R$.
-      - The coefficient of friction is $\mu=F/R$ at the limiting value.
-      - Third-law forces are equal and opposite, same interaction, and act on different objects.
+      - "Friction opposes sliding and adjusts itself: $F \\leqslant \\mu R$ while at rest."
+      - "About to slip (limiting equilibrium) or moving: $F = \\mu R$."
+      - "$\\mu = \\dfrac{F}{R}$ at the limit; find $R$ by resolving, it is not always $mg$."
+      - "Newton's third law: A on B and B on A are equal and opposite, and act on different objects, so they never cancel each other."
+
 questions:
   - id: friction-inequality
     format: mcq
@@ -141,3 +230,28 @@ questions:
         correct: false
         why: Motion is not a force, and the reaction is a force exerted by the wall.
     explanation: The wall exerts an equal and opposite force on the student.
+
+  - id: friction-not-limiting
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.6"]
+    prompt: |
+      A $10$ kg crate rests on a rough horizontal floor with $\mu = 0.5$. A horizontal force of $30$ N pushes it, and it does not move. Find the friction force, in newtons. Use $g = 10\ \text{m s}^{-2}$.
+    fields:
+      - label: "F ="
+        answer: 30
+        unit: N
+    explanation: |
+      The maximum friction is $\mu R = 0.5 \times 100 = 50$ N, but the crate isn't about to slip. Friction only has to balance the push, so $F = 30$ N.
+
+  - id: friction-find-mu
+    format: numeric
+    difficulty: 2
+    objectives: ["4.1.6"]
+    prompt: |
+      An $8$ kg block on a rough horizontal floor is about to slip when a horizontal force of $20$ N pushes it. Find the coefficient of friction. Use $g = 10\ \text{m s}^{-2}$.
+    fields:
+      - label: "μ ="
+        answer: 0.25
+    explanation: |
+      $R = 8 \times 10 = 80$ N. About to slip, so friction is at its maximum and equals the push: $F = 20$ N. Then $\mu = \dfrac{F}{R} = \dfrac{20}{80} = 0.25$.

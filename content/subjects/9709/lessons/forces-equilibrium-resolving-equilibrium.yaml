@@ -1,87 +1,166 @@
 id: forces-equilibrium-resolving-equilibrium
 subject: "9709"
 topic: "4.1"
-title: Equilibrium by resolving forces
-summary: Use zero resultant and zero component sums to solve balanced-force problems.
+title: "Equilibrium: when the forces cancel out"
+summary: "What equilibrium means, why it lets you write 'components add to zero' in two directions, and how to use that to find unknown forces."
 order: 3
-minutes: 7
+minutes: 10
 kind: core
 objectives: ["4.1.3"]
 prerequisites: ["forces-equilibrium-components-and-resultants"]
 provenance:
   origin: ai-drafted
-  status: ai-checked
+  status: draft
   notes: >-
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709
-    syllabus objective 4.1.3. All questions and examples are original; numerical values are
-    illustrative. Use $g=10\text{ m s}^{-2}$ for 9709 mechanics. Not yet independently
-    reviewed or reviewed by a teacher.
+    Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
+    previous version 6/10 (its worked example handed over the components already resolved, and its diagram
+    rendered garbled maths). Written against the official Cambridge International AS & A Level Mathematics
+    9709 syllabus for 2026-2027, objective 4.1.3 (equilibrium: vector sum of forces zero, or components in
+    any direction sum to zero). New diagram forces-ring-equilibrium. The four original questions are kept
+    and two were added. Every value was recomputed by hand. Awaiting independent review; not reviewed by a
+    teacher.
 blocks:
   - type: objective
-    body: By the end you can recognise equilibrium and use the equations that the sum of the horizontal and vertical components is zero.
-  - type: explain
-    title: Key to the symbols
     body: |
-      The main symbols used in this lesson:
+      By the end you can explain what it means for a particle to be in equilibrium, and find unknown forces
+      by resolving every force in two perpendicular directions and setting each total to zero.
 
-      | Symbol | Meaning |
+  - type: explain
+    title: What equilibrium means
+    body: |
+      A **particle** is an object treated as a single point, so we don't worry about its size or about it
+      spinning. A particle is in **equilibrium** when all the forces on it **cancel out completely**. The total
+      force, called the **resultant**, is zero.
+
+      This does **not** mean that no forces act. A book resting on a table has its weight pulling down and the
+      table pushing up. Both forces are real; they just cancel.
+
+      **Why does this matter?** Newton's first law says that with no resultant force, an object doesn't speed
+      up, slow down or change direction. So a particle in equilibrium is either **at rest** or moving at a
+      **constant velocity**. Whenever a question says a particle is "at rest", "hangs", "is held" or "moves
+      with constant speed in a straight line", you know the forces cancel, and that gives you equations.
+
+  - type: explain
+    title: Cancelling in two directions
+    body: |
+      Forces can point in any direction, so "they cancel" is hard to use directly. The trick is to split
+      every force into two pieces at right angles, usually **horizontal** and **vertical**. These pieces are
+      called **components**, and splitting a force up is called **resolving** it.
+
+      Forces cancel overall only if they cancel **in every direction**. So equilibrium gives two separate
+      equations:
+
+      - the horizontal components add to zero (everything pushing right balances everything pushing left),
+      - the vertical components add to zero (everything up balances everything down).
+
+      Two equations means you can find **two** unknowns.
+
+  - type: explain
+    title: Resolving a force — a quick reminder
+    body: |
+      A force of size $F$ at an angle $\theta$ to a direction has these components:
+
+      | Component | Size |
       | --- | --- |
-      | $F_x$ | the x-component of the force $F$ |
-      | $F_y$ | the y-component of the force $F$ |
+      | along the direction the angle is measured **from** | $F\cos\theta$ |
+      | at right angles to that direction | $F\sin\theta$ |
 
-  - type: definition
-    term: Equilibrium
-    body: A particle is in equilibrium when the vector sum of all the forces acting on it is zero, so its acceleration is zero.
+      **Why?** Draw the force as the long side (hypotenuse) of a right-angled triangle whose other two sides
+      are the components. The side next to the angle is $F\cos\theta$ and the side opposite the angle is
+      $F\sin\theta$, straight from SOH CAH TOA.
+
+      The easy way to remember it: **cos goes with the side touching the angle.** If the angle is measured
+      from the horizontal, the horizontal component uses $\cos$. If the angle is measured from the
+      **vertical**, the vertical component uses $\cos$ instead.
+
   - type: explain
-    title: Balanced in every direction
-    body: |-
-      “Balanced” does not mean that no forces act. It means that the forces cancel as vectors. A particle can have a large upward force and a large downward force, provided their totals match.
+    title: The method
+    body: |
+      1. **Draw a force diagram.** Mark every force with an arrow and a label, including the weight.
+      2. **Choose directions.** Usually right is positive and up is positive.
+      3. **Resolve** every slanted force into horizontal and vertical components.
+      4. **Write two equations:** horizontal components total zero, and vertical components total zero.
+      5. **Solve** them, then check the answers are sensible (tensions in strings must come out positive).
 
-      Choose positive directions and write one equation per perpendicular direction:
-      $$\sum F_x=0,\qquad \sum F_y=0.$$
-      The signs matter because they record direction.
   - type: example
-    title: A hanging junction
-    problem: Two strings pull a small ring with tensions $T_1$ and $T_2$. Their components are $T_1$ left and $T_2\cos40^\circ$ right horizontally; vertically they are $T_2\sin40^\circ$ upwards and a $30\text{ N}$ load downwards. Find $T_1$ and $T_2$.
+    title: A ring held by two strings
+    problem: |
+      A small ring of weight $20$ N hangs at rest from two strings. One string pulls with tension $T_1$ at
+      $30°$ above the horizontal to the left. The other pulls with tension $T_2$ at $60°$ above the horizontal
+      to the right. Find $T_1$ and $T_2$.
     steps:
-      - |-
-        Horizontal equilibrium gives $T_2\cos40^\circ-T_1=0$, so $T_1=T_2\cos40^\circ$.
-      - |-
-        Vertical equilibrium gives $T_2\sin40^\circ-30=0$, so $T_2=30/\sin40^\circ$.
-      - |-
-        Calculate $T_2\approx46.7\text{ N}$.
-      - |-
-        Substitute into the horizontal equation: $T_1\approx46.7\cos40^\circ\approx35.8\text{ N}$.
-    answer: $T_2\approx46.7\text{ N}$ and $T_1\approx35.8\text{ N}$.
-  - type: diagram
-    diagram: forces-equilibrium-resolving-equilibrium
-    alt: A small ring pulled by two strings at angles showing horizontal and vertical force components for equilibrium
-  - type: check
-    questions: [equilibrium-condition, equilibrium-equation, equilibrium-load, balancing-resultant]
-  - type: explain
-    title: A reliable routine
-    body: |-
-      1. Draw and label every force.
-      2. Choose axes that make the components simple.
-      3. Resolve each slanted force.
-      4. Set the signed component sum to zero in each direction.
-      5. Solve and check that the answers have sensible signs and sizes.
+      - "The diagram below shows the three forces. The ring is at rest, so it is in equilibrium."
+      - "Both angles are measured from the horizontal, so each horizontal component uses $\\cos$ and each vertical component uses $\\sin$."
+      - "Horizontal (right positive): $T_2$ pulls right by $T_2\\cos 60°$ and $T_1$ pulls left by $T_1\\cos 30°$. They cancel: $T_2\\cos 60° - T_1\\cos 30° = 0$."
+      - "Vertical (up positive): both strings pull up, the weight pulls down. $T_1\\sin 30° + T_2\\sin 60° - 20 = 0$."
+      - "From the horizontal equation, using $\\cos 60° = \\tfrac12$ and $\\cos 30° = \\tfrac{\\sqrt3}{2}$: $\\tfrac12 T_2 = \\tfrac{\\sqrt3}{2}T_1$, so $T_2 = \\sqrt3\\,T_1$."
+      - "Substitute into the vertical equation, using $\\sin 30° = \\tfrac12$ and $\\sin 60° = \\tfrac{\\sqrt3}{2}$: $\\tfrac12 T_1 + \\tfrac{\\sqrt3}{2}\\times\\sqrt3\\,T_1 = 20$, which is $\\tfrac12 T_1 + \\tfrac32 T_1 = 20$, so $2T_1 = 20$ and $T_1 = 10$."
+      - "Then $T_2 = \\sqrt3 \\times 10 \\approx 17.3$."
+      - "Sense check: the steeper string ($60°$) carries more of the weight, so it should have the larger tension ✓"
+    answer: |
+      $T_1 = 10$ N and $T_2 = 10\sqrt3 \approx 17.3$ N.
 
-      If a result is negative, it usually means the force acts opposite to the direction you assumed. Do not silently change a sign halfway through.
+  - type: diagram
+    diagram: forces-ring-equilibrium
+    alt: "A ring with three forces: T1 pulling up and to the left at 30 degrees above the horizontal, T2 pulling up and to the right at 60 degrees above the horizontal, and the 20 N weight pulling straight down. Dashed lines show T1 cos 30 and T2 cos 60 along the horizontal, and T1 sin 30 and T2 sin 60 vertically."
+    caption: |
+      Each string's pull splits into a horizontal piece and a vertical piece. The horizontal pieces cancel
+      each other; the two vertical pieces together hold up the 20 N weight.
+
+  - type: check
+    title: Check the idea
+    questions: [equilibrium-condition, equilibrium-equation, equilibrium-load]
+
+  - type: example
+    title: An angle measured from the vertical
+    problem: |
+      A particle of weight $40$ N hangs on a string. A horizontal force $P$ pushes it sideways until it rests
+      with the string at $25°$ to the **vertical**. Find the tension $T$ in the string and the force $P$.
+    steps:
+      - "Forces: the weight $40$ N down, $P$ horizontally, and the tension $T$ along the string, up and to the side."
+      - "This time the angle is measured from the vertical, so the **vertical** component of $T$ uses $\\cos$: it is $T\\cos 25°$. The horizontal component is $T\\sin 25°$."
+      - "Vertical: $T\\cos 25° - 40 = 0$, so $T = \\dfrac{40}{\\cos 25°} \\approx 44.1$ N."
+      - "Horizontal: the string pulls back against $P$, so $P - T\\sin 25° = 0$, giving $P = 44.1... \\times \\sin 25° \\approx 18.7$ N."
+      - "Sense check: $P$ only has to hold the particle a little to the side, so it should be much less than the weight ✓"
+    answer: |
+      $T \approx 44.1$ N and $P \approx 18.7$ N.
+
+  - type: explain
+    title: The force that restores balance
+    body: |
+      Sometimes you are told that some forces have a resultant, and asked what extra force would bring the
+      particle into equilibrium. That extra force must **exactly cancel** the resultant: the same size, in the
+      **opposite** direction. For example, if the other forces add up to 6 N right and 8 N up, the extra force
+      must be 6 N left and 8 N down. Its size is $\sqrt{6^2 + 8^2} = 10$ N by Pythagoras.
+
+  - type: check
+    title: Check resolving
+    questions: [balancing-resultant, equilibrium-from-vertical, equilibrium-which-trig]
+
   - type: misconceptions
     items:
-      - wrong: Equilibrium means every individual force is zero.
-        right: Equilibrium means the vector sum is zero; individual forces can be non-zero.
-      - wrong: Set the magnitudes of all forces equal in one equation.
-        right: Resolve into directions first, then set the signed component totals to zero.
+      - wrong: "Equilibrium means there are no forces acting."
+        right: "Forces act, but they cancel: the resultant is zero."
+      - wrong: "The horizontal component always uses $\\cos$."
+        right: "$\\cos$ goes with the direction the angle is measured from. If the angle is from the vertical, the vertical component uses $\\cos$."
+      - wrong: "I can write one equation saying all the forces add up, ignoring directions."
+        right: "Forces in different directions can't just be added. Resolve first, then write one equation for each direction."
+      - wrong: "Equilibrium only applies to things at rest."
+        right: "A particle moving at constant velocity is also in equilibrium, because it isn't accelerating."
+
   - type: exam
-    body: Write both component equations clearly. A correct answer with no equations can lose method marks because the balance of forces is the key idea.
+    body: |
+      - Write both resolving equations clearly, saying which direction each one is for ("Resolving horizontally: ..."). Method marks are given for each equation.
+      - Exam questions use $g = 10\ \text{m s}^{-2}$ when you need to turn a mass into a weight ($W = mg$), unless told otherwise.
+      - Give final answers to 3 significant figures, and keep full accuracy in the middle of the working.
+
   - type: takeaways
     items:
-      - Equilibrium means zero resultant force.
-      - The sum of horizontal components is zero.
-      - The sum of vertical components is zero.
-      - Choose signs once and keep them consistently.
+      - "Equilibrium means the forces cancel (zero resultant): the particle is at rest or moving at constant velocity."
+      - "Resolve every force into two perpendicular directions, usually horizontal and vertical."
+      - "In each direction, the components add to zero. That gives two equations, so you can find two unknowns."
+      - "$\\cos$ goes with the side touching the angle; $\\sin$ with the side opposite it."
+
 questions:
   - id: equilibrium-condition
     format: text
@@ -129,3 +208,36 @@ questions:
       - answer: 10
         unit: N
     explanation: The first two forces have resultant magnitude $\sqrt{6^2+8^2}=10\text{ N}$. The third force must be equal and opposite, so its magnitude is $10\text{ N}$.
+
+  - id: equilibrium-from-vertical
+    format: numeric
+    difficulty: 3
+    objectives: ["4.1.3"]
+    prompt: |
+      A particle of weight $30$ N hangs on a string. A horizontal force $P$ holds it at rest with the string at $40°$ to the vertical. Find $P$, in newtons, to 3 significant figures.
+    fields:
+      - label: "P ="
+        answer: 25.17
+        unit: N
+        tolerance: { abs: 0.05 }
+    explanation: |
+      The angle is from the vertical, so the vertical component of the tension is $T\cos 40°$. Vertically: $T\cos 40° = 30$, so $T = 39.16...$ N. Horizontally: $P = T\sin 40° = 39.16... \times 0.6428 = 25.2$ N. (In one step: $P = 30\tan 40°$.)
+
+  - id: equilibrium-which-trig
+    format: mcq
+    difficulty: 2
+    objectives: ["4.1.3"]
+    prompt: |
+      A force of $12$ N acts at $35°$ to the **vertical**. What is its vertical component?
+    options:
+      - text: "$12\\cos 35°$"
+        correct: true
+        why: "The angle is measured from the vertical, so the vertical side touches the angle and uses $\\cos$."
+      - text: "$12\\sin 35°$"
+        why: "That is the horizontal component, the side opposite the $35°$ angle."
+      - text: "$12\\tan 35°$"
+        why: "A component of a force is never $F\\tan\\theta$; components are $F\\cos\\theta$ and $F\\sin\\theta$."
+      - text: "$12$"
+        why: "Only a force pointing straight up or down has all of its size in the vertical direction."
+    explanation: |
+      Cos goes with the side touching the angle. The angle is measured from the vertical, so the vertical component is $12\cos 35° \approx 9.83$ N.
