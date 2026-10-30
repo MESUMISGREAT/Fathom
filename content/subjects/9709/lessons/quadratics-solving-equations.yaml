@@ -27,11 +27,31 @@ blocks:
       By the end you can solve any quadratic equation $ax^2 + bx + c = 0$ in three ways (factorising, completing the square, the formula) and choose the quickest one for the job.
 
   - type: explain
+    title: What "solving a quadratic" means
+    body: |-
+      A **quadratic equation** is one where the highest power of $x$ is $x^2$. Every quadratic can be written in the standard form
+
+      $$ax^2 + bx + c = 0$$
+
+      | Symbol | Meaning |
+      | --- | --- |
+      | $x$ | the unknown number we are trying to find |
+      | $a$ | the number in front of $x^2$ (it can't be 0, or there would be no $x^2$) |
+      | $b$ | the number in front of $x$ |
+      | $c$ | the number on its own (the **constant**) |
+
+      For example, in $2x^2 + 5x - 3 = 0$ we have $a = 2$, $b = 5$ and $c = -3$. Notice that $c$ keeps its minus sign.
+
+      **Solving** means finding every value of $x$ that makes the equation true. These values are called the **roots**. A quadratic usually has **two** roots, sometimes one, sometimes none. On a graph, the roots are where the curve $y = ax^2 + bx + c$ crosses the $x$-axis, because that is where $y = 0$.
+
+  - type: explain
     title: First, get a zero
     body: |-
       Every method starts the same way: rearrange so one side is **0**.
 
       Why? If two things multiply to give 0, at least one of them **must** be 0. That only works for zero. If $AB = 6$, then $A$ could be any non-zero number at all.
+
+      So if we can rewrite the quadratic as (one bracket) $\times$ (another bracket) $= 0$, we can split it into two easy equations. Writing an expression as brackets multiplied together is called **factorising**.
 
       | Method | Reach for it when |
       | --- | --- |
@@ -39,21 +59,52 @@ blocks:
       | Completing the square | the question says *hence* after a completed-square part |
       | The formula | always works; your go-to when the roots are surds or decimals |
 
+  - type: explain
+    title: Factorising when a = 1
+    body: |-
+      Start by expanding two brackets and watching what happens:
+
+      $$(x + 2)(x + 5) = x^2 + 5x + 2x + 10 = x^2 + 7x + 10$$
+
+      The two numbers in the brackets, $2$ and $5$, **add** to give the middle number ($7$) and **multiply** to give the last number ($10$). That is always true when there is a plain $x^2$ at the front.
+
+      So factorising is that process run backwards. To factorise $x^2 + bx + c$, look for **two numbers that multiply to $c$ and add to $b$**. Then those numbers go in the brackets.
+
+  - type: example
+    title: Factorising when a = 1
+    problem: |-
+      Solve $x^2 - x - 12 = 0$.
+    steps:
+      - |-
+        Here $b = -1$ and $c = -12$. We need two numbers that multiply to $-12$ and add to $-1$.
+      - |-
+        List pairs that multiply to $-12$: $1$ and $-12$, $-1$ and $12$, $2$ and $-6$, $-2$ and $6$, $3$ and $-4$, $-3$ and $4$. Only $3$ and $-4$ add to $-1$.
+      - |-
+        So $x^2 - x - 12 = (x + 3)(x - 4)$. Check by expanding: $x^2 - 4x + 3x - 12 = x^2 - x - 12$ ✓.
+      - |-
+        Now $(x + 3)(x - 4) = 0$, so one bracket is zero: $x + 3 = 0$ or $x - 4 = 0$.
+      - |-
+        Solve each: $x = -3$ or $x = 4$. Check $x = 4$: $16 - 4 - 12 = 0$ ✓.
+    answer: |-
+      $x = -3$ or $x = 4$
+
   - type: example
     title: Factorising when a is not 1
     problem: |-
       Solve $2x^2 + 5x - 3 = 0$.
     steps:
       - |-
-        It's already $= 0$. Multiply $a \times c$: $2 \times (-3) = -6$.
+        Now there is a $2$ in front of $x^2$, so the simple "add to $b$, multiply to $c$" trick doesn't work directly. Instead, multiply $a \times c$: $2 \times (-3) = -6$.
       - |-
         Find two numbers with product $-6$ and sum $b = 5$: they are $6$ and $-1$.
       - |-
-        Split the middle term with them: $2x^2 + 6x - x - 3 = 0$.
+        Use them to split the middle term $5x$ into two pieces, $6x$ and $-x$ (they still add to $5x$, so the equation hasn't changed): $2x^2 + 6x - x - 3 = 0$.
       - |-
-        Factorise in pairs: $2x(x + 3) - 1(x + 3) = 0$, so $(2x - 1)(x + 3) = 0$.
+        Now factorise the first pair and the second pair separately. $2x^2 + 6x = 2x(x + 3)$ and $-x - 3 = -1(x + 3)$. Both pairs contain the same bracket $(x + 3)$. That is exactly why we chose numbers multiplying to $ac$: it guarantees a matching bracket appears.
       - |-
-        One bracket must be zero: $2x - 1 = 0$ or $x + 3 = 0$.
+        Take out the common bracket: $2x(x + 3) - 1(x + 3) = (2x - 1)(x + 3) = 0$.
+      - |-
+        One bracket must be zero: $2x - 1 = 0$ gives $x = \tfrac12$, and $x + 3 = 0$ gives $x = -3$.
     answer: |-
       $x = \tfrac12$ or $x = -3$
 
@@ -63,7 +114,11 @@ blocks:
   - type: explain
     title: Completing the square
     body: |-
-      Use the completed-square form, then undo the square with a square root:
+      Lots of quadratics don't factorise with nice numbers. The next method always works.
+
+      **Completing the square** means rewriting $x^2 + bx + c$ as $(x + \text{something})^2 + \text{a number}$. The trick is that $(x + \tfrac{b}{2})^2$ expands to $x^2 + bx + \tfrac{b^2}{4}$, so it already contains the $x^2 + bx$ part. You only need to fix up the constant. For example, $(x + 3)^2 = x^2 + 6x + 9$, so $x^2 + 6x - 2 = (x + 3)^2 - 9 - 2 = (x + 3)^2 - 11$.
+
+      Once $x$ appears only **once** (inside the square), you can get it on its own by undoing each operation in turn:
 
       $$x^2 + 6x - 2 = 0 \;\Rightarrow\; (x + 3)^2 - 11 = 0 \;\Rightarrow\; (x + 3)^2 = 11$$
 

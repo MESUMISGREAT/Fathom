@@ -1,147 +1,146 @@
 id: complex-numbers-regions-loci
 subject: "9709"
 topic: "3.9"
-title: Regions and loci on the Argand diagram
-summary: "Sketching and interpreting loci defined by equations and inequalities involving modulus and argument."
+title: "Loci and regions on the Argand diagram"
+summary: "Reading |z − a| as a distance and arg(z − a) as a direction, so that circles, perpendicular bisectors, half-lines and shaded regions make sense instead of being memorised."
 order: 8
-minutes: 5
+minutes: 10
 kind: core
 objectives: ["3.9.8"]
 prerequisites: ["complex-numbers-argand-diagram", "complex-numbers-geometric-effects"]
 provenance:
   origin: ai-drafted
-  status: ai-checked
+  status: draft
   notes: >-
-    Written against the official Cambridge International AS & A Level Mathematics 9709 syllabus
-    for 2026-2027 (Version 4, December 2025): topic 3.9 learning outcome 8 (loci and regions).
-    Examples and questions are original; all arithmetic checked in Python. Not yet teacher-reviewed.
-    Independently re-checked line by line (facts, worked examples, every answer key) in a separate
-    AI review on 2026-10-29. Not yet reviewed by a teacher.
+    Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
+    previous version 4.5-6/10 (a list of shapes to memorise, a wrong statement about arg(z − a) = arg(z − b),
+    an off-syllabus ellipse, and an ambiguous shaded-region example). Written against the official Cambridge
+    International AS & A Level Mathematics 9709 syllabus for 2026-2027, topic 3.9 learning outcome 8 (loci
+    such as |z − a| < k, |z − a| = |z − b|, arg(z − a) = α). The four original questions are kept and one was
+    added. Every equation was rechecked by hand. Awaiting independent review; not reviewed by a teacher.
 blocks:
   - type: objective
     body: |
-      By the end you can sketch and describe loci given by equations like $|z - a| = r$, $|z - a| = |z - b|$,
-      $\arg(z - a) = \theta$, and inequalities like $|z - a| < r$ on the Argand diagram.
+      By the end you can sketch, on an Argand diagram, the sets of points described by
+      $\lvert z - a \rvert = r$, $\lvert z - a \rvert = \lvert z - b \rvert$ and $\arg(z - a) = \theta$, and shade
+      regions described by inequalities such as $\lvert z - a \rvert \leqslant r$.
 
   - type: explain
-    title: Key to the symbols
+    title: What a locus is
     body: |
-      The main symbols used in this lesson:
+      A **locus** (plural **loci**) is the set of all points that obey a rule. "All the points 3 cm from this
+      dot" is a locus: it's a circle. In this lesson the points are complex numbers $z$ on an Argand diagram, and
+      the rules are written with modulus and argument.
 
       | Symbol | Meaning |
       | --- | --- |
-      | $\theta$ | the argument (angle) of a complex number |
-      | $\theta_1$ | the argument of $z_1$ |
-      | $\theta_2$ | the argument of $z_2$ |
-      | $\alpha$ | an angle |
-      | $\beta$ | an angle |
+      | $z$ | the moving point: any complex number $x + iy$ that obeys the rule |
+      | $a$, $b$ | **fixed** complex numbers, i.e. fixed points on the diagram |
+      | $r$ | a fixed distance (a positive real number) |
+      | $\theta$ | a fixed angle, in radians |
+      | $\lvert \ldots \rvert$ | modulus; $\arg$ means argument |
 
   - type: explain
-    title: Loci — the building blocks
+    title: The one idea that unlocks everything
     body: |
-      A **locus** is the set of all points $z$ satisfying a given condition.
+      Take two points on the Argand diagram, $a$ and $z$. The complex number $z - a$ is the **journey from $a$
+      to $z$**: to get from $a$ to $z$ you have to add $z - a$.
 
-      | Condition | Locus | Description |
-      |-----------|-------|-------------|
-      | $\lvert z - a\rvert  = r$ | **Circle** | Centre $a$, radius $r$ |
-      | $\lvert z - a\rvert  < r$ | **Open disc** | Inside the circle (boundary not included) |
-      | $\lvert z - a\rvert  \le r$ | **Closed disc** | Inside + boundary |
-      | $\lvert z - a\rvert  > r$ | **Exterior** | Outside the circle |
-      | $\lvert z - a\rvert  = \lvert z - b\rvert $ | **Perpendicular bisector** | Line of points equidistant from $a$ and $b$ |
-      | $\arg(z - a) = \theta$ | **Half-line (ray)** | From $a$ (excluded) at angle $\theta$ to positive real axis |
-      | $\arg(z - a) = \arg(z - b)$ | **Line segment** or **ray** | Points $z$ such that $a$, $z$, $b$ are collinear with $z$ between or beyond |
+      For example, if $a = 1 + i$ and $z = 4 + 5i$, then $z - a = 3 + 4i$: go 3 across and 4 up.
+
+      So the two things you already know about a complex number now mean:
+
+      - $\lvert z - a \rvert$ is the **length** of that journey: **the distance between $z$ and $a$**. (Here
+        $\lvert 3 + 4i \rvert = 5$.)
+      - $\arg(z - a)$ is the **direction** of that journey: **the angle you travel at to get from $a$ to $z$**,
+        measured from the positive real direction.
+
+      Read every locus out loud using these words and the shape becomes obvious.
+
+      **Watch the signs.** The rule always has the form $z$ **minus** the fixed point. So
+      $\lvert z + 1 - 2i \rvert$ must be rewritten as $\lvert z - (-1 + 2i) \rvert$: it is the distance from the
+      point $-1 + 2i$, which is $(-1, 2)$.
 
   - type: explain
-    title: Circle $|z - a| = r$
+    title: Circles — fixed distance from a point
     body: |
-      Distance from $z$ to fixed point $a$ is constant $r$.
-      - Centre: $a$ (plot on Argand diagram).
-      - Radius: $r$.
-      - $|z - a| < r$: interior (shaded).
-      - $|z - a| \le r$: interior + boundary (solid circle).
-      - $|z - a| > r$: exterior (shaded outside, dashed circle boundary).
+      $\lvert z - a \rvert = r$ says: **the distance from $z$ to $a$ is always $r$.** Every point a fixed distance
+      from a centre lies on a circle, so this is the **circle with centre $a$ and radius $r$**.
+
+      Inequalities give the inside or outside:
+
+      - $\lvert z - a \rvert < r$: distance **less than** $r$, so the inside of the circle.
+      - $\lvert z - a \rvert > r$: the outside of the circle.
+
+      **Boundaries.** If the boundary itself is allowed ($\leqslant$ or $\geqslant$), draw it as a **solid**
+      line. If it is not allowed ($<$ or $>$), draw it **dashed**.
 
   - type: example
-    title: Circle locus
-    problem: 'Sketch the locus $|z - (2 - 3i)| = 4$.'
+    title: A circle and a disc
+    problem: |
+      (a) Describe the locus $\lvert z - (2 - 3i) \rvert = 4$.
+      (b) Describe the region $\lvert z + 1 - 2i \rvert \leqslant 3$.
     steps:
-      - "Centre: $2 - 3i$ → point $(2, -3)$."
-      - "Radius: 4."
-      - "Draw circle centred at $(2, -3)$ with radius 4."
-      - "Indicate centre and radius on sketch."
+      - "(a) Read it as \"the distance from $z$ to $2 - 3i$ is 4\". So it is the circle with centre $(2, -3)$ and radius 4."
+      - "(b) First get it into the form $z$ minus a point: $z + 1 - 2i = z - (-1 + 2i)$. So the rule says \"the distance from $z$ to $(-1, 2)$ is at most 3\"."
+      - "That is the inside of the circle with centre $(-1, 2)$ and radius 3. Because of $\\leqslant$, the circle itself is included: draw it solid and shade inside."
     answer: |
-      Circle centre $(2, -3)$, radius 4.
+      (a) The circle with centre $(2, -3)$, radius 4. (b) The disc with centre $(-1, 2)$, radius 3, including its
+      boundary circle.
 
   - type: explain
-    title: Perpendicular bisector $|z - a| = |z - b|$
+    title: Perpendicular bisectors — equally far from two points
     body: |
-      Points equidistant from $a$ and $b$.
-      - This is the **perpendicular bisector** of the line segment joining $a$ and $b$.
-      - Midpoint: $\frac{a+b}{2}$.
-      - Slope: perpendicular to the line through $a$ and $b$.
-      - Example: $|z - 3i| = |z - 5|$ is the perpendicular bisector of the segment from $(0, 3)$ to $(5, 0)$.
+      $\lvert z - a \rvert = \lvert z - b \rvert$ says: **$z$ is the same distance from $a$ as from $b$.**
+
+      Which points are equally far from two given points? Picture standing exactly halfway between two friends,
+      then stepping sideways at right angles to the line joining them: you stay equally far from both. The locus
+      is the straight line through the **midpoint** of $a$ and $b$, at **right angles** to the line joining them.
+      It is called the **perpendicular bisector** ("perpendicular" means at right angles, "bisector" means it
+      cuts the segment in half).
+
+      For an inequality, ask which side is closer: $\lvert z - a \rvert < \lvert z - b \rvert$ is the side of the
+      line **nearer to $a$**.
 
   - type: example
-    title: Perpendicular bisector
-    problem: 'Sketch $|z - 4| = |z + 2i|$.'
+    title: A perpendicular bisector and its equation
+    problem: |
+      Sketch the locus $\lvert z - 4 \rvert = \lvert z + 2i \rvert$ and find its Cartesian equation.
     steps:
-      - "Point $a = 4$ → $(4, 0)$. Point $b = -2i$ → $(0, -2)$."
-      - 'Midpoint: $\frac{4 + (-2i)}{2} = 2 - i$ → $(2, -1)$.'
-      - 'Line through $a$ and $b$: slope $\frac{-2 - 0}{0 - 4} = \frac{1}{2}$.'
-      - "Perpendicular slope: $-2$."
-      - "Equation: $y + 1 = -2(x - 2)$ or $y = -2x + 3$."
-      - "Draw line through $(2, -1)$ with slope $-2$ (dashed if strict equality)."
+      - "Rewrite as $\\lvert z - 4 \\rvert = \\lvert z - (-2i) \\rvert$. So $z$ is equally far from the points $(4, 0)$ and $(0, -2)$."
+      - "The midpoint of those two points is $\\left(\\dfrac{4 + 0}{2}, \\dfrac{0 + (-2)}{2}\\right) = (2, -1)$."
+      - "The line joining them has gradient $\\dfrac{-2 - 0}{0 - 4} = \\dfrac{1}{2}$. A perpendicular line has gradient $-2$ (gradients of perpendicular lines multiply to $-1$)."
+      - "So the locus is the line through $(2, -1)$ with gradient $-2$: $y + 1 = -2(x - 2)$, which simplifies to $y = 3 - 2x$."
+      - "Check by algebra. Put $z = x + iy$: $\\lvert (x - 4) + iy \\rvert = \\lvert x + i(y + 2) \\rvert$. Square both sides (squared moduli are $x^2 + y^2$ style sums): $(x - 4)^2 + y^2 = x^2 + (y + 2)^2$."
+      - "Expand: $x^2 - 8x + 16 + y^2 = x^2 + y^2 + 4y + 4$. The $x^2$ and $y^2$ cancel, leaving $-8x + 12 = 4y$, so $y = 3 - 2x$ ✓"
     answer: |
-      Straight line through $(2, -1)$ with gradient $-2$ (perpendicular bisector of segment from $4$ to $-2i$).
+      The perpendicular bisector of the points $(4, 0)$ and $(0, -2)$: the line $y = 3 - 2x$.
 
   - type: explain
-    title: Half-line (ray) $\arg(z - a) = \theta$
+    title: Half-lines — a fixed direction from a point
     body: |
-      $\arg(z - a)$ is the angle from $a$ to $z$ measured from the positive real axis.
-      - $\arg(z - a) = \theta$ gives a **half-line** starting at $a$ (but **not including** $a$ itself).
-      - Direction: anticlockwise angle $\theta$ from positive real axis.
-      - Example: $\arg(z - (1 + i)) = \pi/4$ — ray from $(1, 1)$ at $45^\circ$.
-      - $\arg(z - a) = \text{constant}$ always describes a half-line.
-      - If the condition is $\arg(z - a) = \theta_1$ **or** $\arg(z - a) = \theta_2$, you get two rays.
+      $\arg(z - a) = \theta$ says: **to get from $a$ to $z$ you always travel in the direction $\theta$.**
+      Starting at $a$ and heading off at angle $\theta$ traces out a straight line that starts at $a$ and goes on
+      forever in one direction. This is a **half-line** (or **ray**).
+
+      - The angle is measured from the positive real direction (pointing right), anticlockwise positive, just
+        like an ordinary argument.
+      - The starting point $a$ itself is **not** included, because when $z = a$ there is no journey and
+        $\arg 0$ has no value. Mark it with an open circle.
+      - It goes in **one** direction only. The opposite direction would be $\theta \pm \pi$, a different
+        argument.
 
   - type: example
-    title: Half-line locus
-    problem: 'Sketch $\arg(z - 2i) = \pi/3$.'
+    title: A half-line
+    problem: |
+      Sketch the locus $\arg(z - 2i) = \dfrac{\pi}{3}$.
     steps:
-      - "Point $a = 2i$ → $(0, 2)$."
-      - 'Angle: $\pi/3 = 60^\circ$ anticlockwise from positive real axis.'
-      - 'Draw ray from $(0, 2)$ at $60^\circ$.'
-      - "Use open circle at $(0, 2)$ (point excluded)."
-      - "Arrow indicates infinite extent."
+      - "The fixed point is $2i$, which is $(0, 2)$."
+      - "The direction is $\\dfrac{\\pi}{3}$, which is $60°$ anticlockwise from the rightward direction: up and to the right, quite steep."
+      - "Draw a ray from $(0, 2)$ at $60°$ to the horizontal, going up to the right. Put an open circle at $(0, 2)$."
     answer: |
-      Half-line (ray) from $(0, 2)$ at $60^\circ$ to the positive real axis. Point $(0, 2)$ excluded.
-
-  - type: explain
-    title: Regions — combining inequalities
-    body: |
-      A **region** is a set defined by one or more inequalities.
-      - $|z - a| < r$: open disc.
-      - $|z - a| \le r$: closed disc.
-      - Intersection: shade the overlap.
-      - Union: shade everything satisfying at least one.
-      - Boundaries: **solid line** for $\le, \ge$, **dashed line** for $<, >$.
-      - Test a point (e.g., origin) to check which side to shade.
-
-  - type: example
-    title: Shaded region
-    problem: 'Shade the region satisfying $|z - 2| < 3$ and $\arg(z - 2) \ge -\pi/4$.'
-    steps:
-      - '$|z - 2| < 3$: open disc centre $(2, 0)$, radius 3. Dashed circle.'
-      - '$\arg(z - 2) \ge -\pi/4$: region on/above the ray from $(2, 0)$ at $-45^\circ$.'
-      - '$\arg(z - 2) = -\pi/4$ is boundary (solid ray since $\ge$).'
-      - 'Shade intersection: part of disc above the ray.'
-      - 'Include boundary of ray, exclude boundary of circle.'
-    answer: |
-      The sector of the open disc centre $(2, 0)$ radius 3, bounded by the ray at $-45^\circ$ from $(2, 0)$. Ray solid, circle dashed.
-
-  - type: check
-    title: Identify the locus
-    questions: [cn-locus-circle, cn-locus-bisector, cn-locus-ray, cn-locus-region]
+      The half-line starting at (but not including) $(0, 2)$, going up and to the right at $60°$ to the positive
+      real direction.
 
   - type: diagram
     diagram: complex-numbers-loci-summary
@@ -149,56 +148,63 @@ blocks:
       Four Argand diagrams: (1) circle |z-a|=r, (2) perpendicular bisector |z-a|=|z-b|, (3) half-line
       arg(z-a)=theta, (4) shaded region |z-a|<r and arg(z-a)>=theta.
     caption: |
-      The four fundamental loci: circle, perpendicular bisector, half-line, and a combined region.
+      The three basic loci, read as distance and direction: a fixed distance from one point (circle), equal
+      distances from two points (perpendicular bisector), and a fixed direction from one point (half-line). The
+      last panel combines two rules into a region.
 
-  - type: intuition
-    title: Quick recognition table
+  - type: check
+    title: Check the basic loci
+    questions: [cn-locus-circle, cn-locus-bisector, cn-locus-ray]
+
+  - type: explain
+    title: Regions — when several rules apply at once
     body: |
-      | Expression | Shape | Key features |
-      |------------|-------|--------------|
-      | $\lvert z - a\rvert  = r$ | Circle | Centre $a$, radius $r$ |
-      | $\lvert z - a\rvert  < r$ | Open disc | Dashed circle, shade inside |
-      | $\lvert z - a\rvert  \le r$ | Closed disc | Solid circle, shade inside |
-      | $\lvert z - a\rvert  = \lvert z - b\rvert $ | Perp. bisector | Midpoint $\frac{a+b}{2}$, perp. to $ab$ |
-      | $\arg(z - a) = \theta$ | Half-line | From $a$ (excluded) at angle $\theta$ |
-      | $\alpha \le \arg(z - a) \le \beta$ | Sector | Wedge between two rays from $a$ |
+      When a question says that $z$ satisfies two inequalities, $z$ must obey **both** at once. Draw each
+      boundary, decide which side each rule keeps, and shade only the part where **both** are true (the overlap).
+
+      To decide which side a rule keeps, **test a point**. Pick an easy point not on the boundary, such as the
+      origin, and see whether it obeys the rule.
+
+  - type: example
+    title: Shading a region
+    problem: |
+      Shade the region where $\lvert z - 2 - 2i \rvert \leqslant 2$ and $\lvert z \rvert \leqslant \lvert z - 4 \rvert$.
+    steps:
+      - "First rule: $\\lvert z - (2 + 2i) \\rvert \\leqslant 2$ means \"at most 2 from $(2, 2)$\": the disc with centre $(2, 2)$ and radius 2, boundary solid."
+      - "Second rule: $\\lvert z - 0 \\rvert \\leqslant \\lvert z - 4 \\rvert$ means \"at least as close to $0$ as to $4$\". The boundary is the perpendicular bisector of $(0, 0)$ and $(4, 0)$, which is the vertical line $x = 2$."
+      - "Which side? Test the origin: it is distance 0 from $0$ and distance 4 from $4$, and $0 \\leqslant 4$ ✓. So the rule keeps the side containing the origin: $x \\leqslant 2$."
+      - "Shade where both hold: the part of the disc on or to the left of $x = 2$. The line $x = 2$ passes through the centre $(2, 2)$, so this is exactly the **left half** of the disc, with both boundaries solid."
+    answer: |
+      The left half of the disc with centre $(2, 2)$ and radius 2, boundaries included.
+
+  - type: check
+    title: Check regions
+    questions: [cn-locus-region, cn-locus-closer]
 
   - type: misconceptions
     items:
-      - wrong: '$\arg(z - a) = \theta$ includes the point $a$'
-        right: '$\arg(0)$ is undefined — the point $a$ is always **excluded** (open circle).'
-      - wrong: '$|z - a| < r$ has a solid boundary.'
-        right: 'Strict inequality $<$ means **dashed** boundary. $\le$ gives solid.'
-      - wrong: 'The perpendicular bisector of $a$ and $b$ passes through the origin.'
-        right: 'Only if $a = -b$. The bisector passes through the midpoint $\frac{a+b}{2}$.'
-      - wrong: '$\arg(z - a) = \arg(z - b)$ is always a full line.'
-        right: "It's the line through $a$ and $b$, but only the segment between them if you require the arguments to be equal (same direction)."
-
-  - type: deeper
-    title: Apollonius circles
-    body: |
-      $|z - a| = k|z - b|$ with $k > 0, k \neq 1$ is a **circle** (not a line).
-      - Called an **Apollonius circle**.
-      - For $k = 1$ it reduces to the perpendicular bisector.
-      - Centre and radius can be found algebraically by squaring and completing the square.
+      - wrong: "$\\lvert z + 3 \\rvert = 2$ is a circle with centre $3$."
+        right: "Rewrite as $\\lvert z - (-3) \\rvert = 2$. The centre is $-3$, the point $(-3, 0)$."
+      - wrong: "$\\arg(z - a) = \\theta$ is a whole straight line through $a$."
+        right: "It is a half-line: it starts at $a$ (not included) and goes in one direction only."
+      - wrong: "$\\lvert z - a \\rvert < r$ is drawn with a solid circle."
+        right: "A strict inequality ($<$) leaves the boundary out, so draw it dashed. Use solid for $\\leqslant$."
+      - wrong: "The perpendicular bisector of $a$ and $b$ passes through the origin."
+        right: "It passes through the **midpoint** of $a$ and $b$. That is only the origin when $b = -a$."
 
   - type: exam
     body: |
-      - "Sketch on an Argand diagram the region satisfying $|z - 3 - 4i| \le 5$ and $\arg(z - 3 - 4i) \ge 0$." —
-        disc centre $(3, 4)$ radius 5, intersected with upper half-plane from centre (solid boundaries).
-      - "Find the Cartesian equation of the locus $|z - 1| = |z + i|$." — answer: $y = -x$.
-      - "The point $z$ satisfies $\arg(z - 2) = \pi/4$. Find the least value of $|z|$." —
-        distance from origin to the ray. Drop perpendicular from origin to the ray.
-      - "Describe the locus $|z - 1| + |z + 1| = 4$." — ellipse with foci $\pm 1$ (not in syllabus but good extension).
+      - Label centres, radii, midpoints and angles on your sketch, and use solid or dashed lines correctly.
+      - Questions often ask for the Cartesian equation of a perpendicular bisector: put $z = x + iy$, square both moduli, and simplify. The squared terms always cancel.
+      - For shaded regions, state clearly which region you have shaded (for example, by a label).
 
   - type: takeaways
     items:
-      - "$|z - a| = r$ → circle centre $a$, radius $r$."
-      - '$|z - a| < r$ → open disc (dashed boundary); $\le$ → closed disc (solid boundary).'
-      - "$|z - a| = |z - b|$ → perpendicular bisector of segment $ab$; passes through midpoint, perpendicular to $ab$."
-      - '$\arg(z - a) = \theta$ → half-line from $a$ at angle $\theta$; $a$ excluded.'
-      - "Regions: combine inequalities; test a point to decide shading; solid vs dashed boundaries."
-      - "Intersection = overlap; Union = all shaded areas."
+      - "$\\lvert z - a \\rvert$ is the distance from $z$ to $a$; $\\arg(z - a)$ is the direction from $a$ to $z$."
+      - "$\\lvert z - a \\rvert = r$ is a circle, centre $a$, radius $r$. Rewrite $z + \\ldots$ as $z - (\\ldots)$ to find the centre."
+      - "$\\lvert z - a \\rvert = \\lvert z - b \\rvert$ is the perpendicular bisector of $a$ and $b$."
+      - "$\\arg(z - a) = \\theta$ is a half-line from $a$ (not included) in direction $\\theta$."
+      - "Regions: draw each boundary (solid for $\\leqslant$, dashed for $<$), test a point, shade the overlap."
 
 questions:
   - id: cn-locus-circle
@@ -206,75 +212,92 @@ questions:
     difficulty: 1
     objectives: ["3.9.8"]
     prompt: |
-      The locus $|z - (-2 + i)| = 3$ is a:
+      The locus $\lvert z - (-2 + i) \rvert = 3$ is a:
     options:
-      - text: "Circle centre $(-2, 1)$, radius 3"
+      - text: "circle with centre $(-2, 1)$ and radius 3"
         correct: true
-        why: "$a = -2 + i = (-2, 1)$, $r = 3$."
-      - text: "Circle centre $(2, -1)$, radius 3"
-        why: "Sign error."
-      - text: "Circle centre $(-2, 1)$, radius 9"
-        why: "Radius is 3, not $3^2$."
-      - text: "Line through $(-2, 1)$"
-        why: "That would be an argument condition."
+        why: "It says the distance from $z$ to $-2 + i$, the point $(-2, 1)$, is always 3."
+      - text: "circle with centre $(2, -1)$ and radius 3"
+        why: "The fixed point is $-2 + i$ itself, because the rule is already in the form $z$ minus the point."
+      - text: "circle with centre $(-2, 1)$ and radius 9"
+        why: "The modulus is a distance, so the radius is 3, not $3^2$."
+      - text: "half-line starting at $(-2, 1)$"
+        why: "A half-line comes from an argument rule. A modulus rule fixes a distance, giving a circle."
     explanation: |
-      Standard form $|z - a| = r$. Here $a = -2 + i$ (centre $(-2, 1)$) and $r = 3$.
+      $\lvert z - a \rvert = r$ is the circle with centre $a$ and radius $r$. Here $a = -2 + i$, the point $(-2, 1)$, and $r = 3$.
 
   - id: cn-locus-bisector
     format: mcq
     difficulty: 2
     objectives: ["3.9.8"]
     prompt: |
-      The locus $|z - 3| = |z + 4i|$ is the perpendicular bisector of the segment joining:
+      The locus $\lvert z - 3 \rvert = \lvert z + 4i \rvert$ is the perpendicular bisector of the segment joining:
     options:
-      - text: $(3, 0)$ and $(0, -4)$
+      - text: "$(3, 0)$ and $(0, -4)$"
         correct: true
-        why: '$3 \equiv (3, 0)$, $-4i \equiv (0, -4)$.'
-      - text: $(-3, 0)$ and $(0, 4)$
-        why: "Sign errors on both."
-      - text: $(3, 0)$ and $(0, 4)$
-        why: "$+4i$ not $-4i$."
-      - text: $(0, 3)$ and $(4, 0)$
-        why: "Confused real/imaginary parts."
+        why: "$\\lvert z + 4i \\rvert = \\lvert z - (-4i) \\rvert$, so the two fixed points are $3$ and $-4i$."
+      - text: "$(-3, 0)$ and $(0, 4)$"
+        why: "Both signs are wrong. Read each as $z$ minus a point."
+      - text: "$(3, 0)$ and $(0, 4)$"
+        why: "$z + 4i = z - (-4i)$, so the second point is $-4i$, which is $(0, -4)$."
+      - text: "$(0, 3)$ and $(4, 0)$"
+        why: "$3$ is real, so it is on the real (horizontal) axis; $-4i$ is on the imaginary axis."
     explanation: |
-      $|z - a| = |z - b|$ with $a = 3$ (point $(3, 0)$) and $b = -4i$ (point $(0, -4)$).
+      Rewrite as $\lvert z - 3 \rvert = \lvert z - (-4i) \rvert$: $z$ is equally far from $3$, the point $(3, 0)$, and $-4i$, the point $(0, -4)$.
 
   - id: cn-locus-ray
     format: mcq
     difficulty: 2
     objectives: ["3.9.8"]
     prompt: |
-      Which describes the locus $\arg(z - 1) = \pi/2$?
+      Which describes the locus $\arg(z - 1) = \dfrac{\pi}{2}$?
     options:
-      - text: "Half-line from $(1, 0)$ going vertically upwards"
+      - text: "A half-line from $(1, 0)$ going straight up"
         correct: true
-        why: '$\pi/2 = 90^\circ$ anticlockwise from positive real axis = vertical up.'
-      - text: "Half-line from $(1, 0)$ going vertically downwards"
-        why: 'That would be $\arg(z - 1) = -\pi/2$.'
-      - text: "Circle centre $(1, 0)$"
-        why: "That's a modulus condition."
-      - text: "Full vertical line through $x = 1$"
-        why: "Argument gives a ray, not a full line. The point $(1, 0)$ is excluded."
+        why: "The direction from $1$ to $z$ is always $\\dfrac{\\pi}{2}$, which is straight up."
+      - text: "A half-line from $(1, 0)$ going straight down"
+        why: "Straight down would be $\\arg(z - 1) = -\\dfrac{\\pi}{2}$."
+      - text: "A circle with centre $(1, 0)$"
+        why: "A circle comes from a modulus (distance) rule, not an argument (direction) rule."
+      - text: "The whole vertical line $x = 1$"
+        why: "An argument rule gives one direction only, starting at $(1, 0)$, which is itself excluded."
     explanation: |
-      $\arg(z - 1) = \pi/2$ means the ray from $1$ at $90^\circ$ — straight up the imaginary axis from $(1, 0)$.
+      $\arg(z - 1) = \dfrac{\pi}{2}$ means the journey from $1$ to $z$ always points straight up: the half-line going up from $(1, 0)$, not including $(1, 0)$.
 
   - id: cn-locus-region
     format: mcq
     difficulty: 3
     objectives: ["3.9.8"]
     prompt: |
-      The region $|z - 2i| \le 2$ and $\arg(z - 2i) \ge 0$ is:
+      Which region satisfies both $\lvert z - 2i \rvert \leqslant 2$ and $\arg(z - 2i) \geqslant 0$?
     options:
-      - text: "Upper half of the closed disc centre $(0, 2)$ radius 2"
+      - text: "The upper half of the disc with centre $(0, 2)$ and radius 2"
         correct: true
-        why: 'Disc centre $(0, 2)$, radius 2 (solid boundary). $\arg \ge 0$ means upper half-plane from centre (including real axis).'
-      - text: "Lower half of the open disc centre $(0, 2)$ radius 2"
-        why: 'Inequality is $\le$ (closed) and $\arg \ge 0$ (upper half).'
-      - text: "Right half of the closed disc centre $(2, 0)$ radius 2"
-        why: "Centre is $(0, 2)$, not $(2, 0)$."
-      - text: "The entire closed disc centre $(0, 2)$ radius 2"
-        why: '$\arg \ge 0$ restricts to upper half only.'
+        why: "The disc rule gives centre $(0, 2)$, radius 2. The argument rule keeps directions from $0$ up to $\\pi$ from the centre: everything on or above the horizontal line through the centre."
+      - text: "The lower half of the disc with centre $(0, 2)$ and radius 2"
+        why: "Directions below the horizontal have negative arguments, which $\\arg \\geqslant 0$ rules out."
+      - text: "The right half of the disc with centre $(2, 0)$ and radius 2"
+        why: "$2i$ is the point $(0, 2)$, not $(2, 0)$."
+      - text: "The whole disc with centre $(0, 2)$ and radius 2"
+        why: "The argument rule removes everything below the centre."
     explanation: |
-      $|z - 2i| \le 2$: closed disc centre $2i = (0, 2)$, radius 2 (solid boundary).
-      $\arg(z - 2i) \ge 0$: points on/above the horizontal ray from centre (since $\arg = 0$ is positive real axis).
-      Intersection = upper half of the disc.
+      $\lvert z - 2i \rvert \leqslant 2$ is the disc with centre $(0, 2)$ and radius 2. $\arg(z - 2i) \geqslant 0$ keeps the directions from the centre between $0$ and $\pi$, which is everything on or above the horizontal line through $(0, 2)$. Together: the upper half of the disc.
+
+  - id: cn-locus-closer
+    format: mcq
+    difficulty: 2
+    objectives: ["3.9.8"]
+    prompt: |
+      Which region is described by $\lvert z \rvert < \lvert z - 6 \rvert$?
+    options:
+      - text: "The points to the left of the line $x = 3$"
+        correct: true
+        why: "These are the points closer to $0$ than to $6$. The boundary is the perpendicular bisector of $(0, 0)$ and $(6, 0)$, which is $x = 3$, and the origin's side is the left."
+      - text: "The points to the right of the line $x = 3$"
+        why: "Those points are closer to $6$. Test the origin: $0 < 6$, so the origin's side is the one kept."
+      - text: "The inside of the circle with centre $0$ and radius 6"
+        why: "Comparing two distances gives a straight boundary, not a circle."
+      - text: "The points to the left of the line $x = 6$"
+        why: "The boundary is halfway between $0$ and $6$, at $x = 3$."
+    explanation: |
+      $\lvert z \rvert$ is the distance to $0$ and $\lvert z - 6 \rvert$ the distance to $6$. Points closer to $0$ lie on the origin's side of the perpendicular bisector $x = 3$, so the region is $x < 3$ (boundary dashed).

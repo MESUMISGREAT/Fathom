@@ -27,6 +27,21 @@ blocks:
       By the end you can find the values of an unknown constant $k$ that give a quadratic two distinct, equal or no real roots. That usually means solving a quadratic inequality **in $k$**.
 
   - type: explain
+    title: What is going on here?
+    body: |-
+      Sometimes a quadratic contains a letter like $k$ that stands for an **unknown constant**: a fixed number we haven't been told. For example, $x^2 + kx + 9 = 0$ is really a whole family of equations, one for each value of $k$. Some members of the family have two roots, some have one, some have none. The question asks: **which values of $k$ give the kind of roots we want?**
+
+      The tool for this is the **discriminant**, $b^2 - 4ac$, from the last lesson. Here is a reminder of why it decides everything. The quadratic formula is
+
+      $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+      - If $b^2 - 4ac > 0$, the square root is a positive number. The $\pm$ gives two different answers: **two distinct real roots**.
+      - If $b^2 - 4ac = 0$, the square root is $0$. Adding or subtracting $0$ gives the same answer twice: **one repeated root** (also called **equal roots**).
+      - If $b^2 - 4ac < 0$, we would need the square root of a negative number, which isn't a real number: **no real roots**.
+
+      So instead of solving for $x$, we write the discriminant in terms of $k$, and solve for $k$.
+
+  - type: explain
     title: The recipe
     body: |-
       1. Get the equation into the form $ax^2 + bx + c = 0$ and write down $a$, $b$ and $c$ **in terms of $k$**. Use brackets.
@@ -42,13 +57,17 @@ blocks:
       Find the set of values of $k$ for which $x^2 + kx + k + 3 = 0$ has two distinct real roots.
     steps:
       - |-
-        $a = 1$, $b = k$, $c = k + 3$.
+        Match it to $ax^2 + bx + c = 0$. The number in front of $x^2$ is $a = 1$. The number in front of $x$ is $b = k$. Everything without an $x$ is the constant: $c = k + 3$.
       - |-
-        Two distinct real roots: $b^2 - 4ac > 0$, so $k^2 - 4(k + 3) > 0$.
+        "Two distinct real roots" means $b^2 - 4ac > 0$. Substitute: $k^2 - 4 \times 1 \times (k + 3) > 0$, which is $k^2 - 4(k + 3) > 0$.
       - |-
-        Simplify: $k^2 - 4k - 12 > 0$, so $(k - 6)(k + 2) > 0$.
+        Expand the bracket: $k^2 - 4k - 12 > 0$. This is now a quadratic **inequality in $k$**. Factorise it like any quadratic (two numbers multiplying to $-12$ and adding to $-4$ are $-6$ and $2$): $(k - 6)(k + 2) > 0$.
       - |-
-        Critical values $k = -2$ and $k = 6$. Sketch: a ∪-shaped graph in $k$ is positive **outside** them.
+        The **critical values** (where the expression equals zero) are $k = 6$ and $k = -2$. These split the number line into three parts.
+      - |-
+        The graph of $y = k^2 - 4k - 12$ is a ∪ shape (the $k^2$ is positive), crossing the axis at $-2$ and $6$. It is **above** the axis (positive) to the left of $-2$ and to the right of $6$, and below the axis in between. We want positive, so we want the two outside parts.
+      - |-
+        Test a value to be sure: $k = 10$ gives $(10 - 6)(10 + 2) = 48 > 0$ ✓, while $k = 0$ gives $(-6)(2) = -12$, not $> 0$ ✓.
     answer: |-
       $k < -2$ or $k > 6$.
 
@@ -92,9 +111,11 @@ blocks:
       Find the set of values of $k$ for which the line $y = kx - 2$ meets the curve $y = x^2 - 2x + 2$.
     steps:
       - |-
-        Set the $y$'s equal: $x^2 - 2x + 2 = kx - 2$.
+        At a point where the line meets the curve, both equations are true with the **same** $x$ and the **same** $y$. So the two expressions for $y$ must be equal: $x^2 - 2x + 2 = kx - 2$.
       - |-
-        Rearrange: $x^2 - (k + 2)x + 4 = 0$. So $a = 1$, $b = -(k + 2)$, $c = 4$.
+        Move everything to the left so one side is zero: $x^2 - 2x - kx + 2 + 2 = 0$, which is $x^2 - 2x - kx + 4 = 0$.
+      - |-
+        Collect the two $x$ terms into one. Both have a minus sign, so take the minus outside a bracket: $-2x - kx = -(2 + k)x = -(k + 2)x$. The equation is $x^2 - (k + 2)x + 4 = 0$, so $a = 1$, $b = -(k + 2)$ and $c = 4$.
       - |-
         "Meets" means one or two points: $b^2 - 4ac \geqslant 0$, so $(k + 2)^2 - 16 \geqslant 0$.
       - |-
