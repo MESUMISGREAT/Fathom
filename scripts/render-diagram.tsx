@@ -39,7 +39,7 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PAT
 const page = await browser.newPage({ viewport: { width: 760, height: 600 }, deviceScaleFactor: 2 });
 for (const key of keys) {
   const file = byKey.get(key);
-  const D = file ? ((await import(file)) as { default: () => React.ReactElement }).default : undefined;
+  const D = file ? ((await import(pathToFileURL(file).href)) as { default: () => React.ReactElement }).default : undefined;
   if (!D) {
     console.error(`unknown diagram "${key}"`);
     process.exitCode = 1;

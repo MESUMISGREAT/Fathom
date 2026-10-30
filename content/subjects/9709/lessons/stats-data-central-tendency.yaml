@@ -1,8 +1,8 @@
 id: stats-data-central-tendency
 subject: "9709"
 topic: "5.1"
-title: Measures of central tendency and variation
-summary: Understand and use mean, median, mode, range, interquartile range, and standard deviation to summarise and compare data sets.
+title: "Averages and spread: mean, median, mode, range, IQR and standard deviation"
+summary: "What each average and each measure of spread tells you, how to calculate them, and how to use them to compare two sets of data."
 order: 3
 minutes: 10
 kind: core
@@ -10,274 +10,431 @@ objectives: ["5.1.3"]
 prerequisites: ["stats-data-drawing-displays"]
 provenance:
   origin: ai-drafted
-  status: ai-checked
+  status: draft
   notes: >-
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709
-    syllabus (2026–2027), topic 5.1 outcome "Understand and use different measures of
-    central tendency (mean, median, mode) and of variation (range, interquartile range,
-    standard deviation)." All examples, questions and diagrams are original. Validated for accuracy and syllabus alignment. Independent review recomputed every worked figure (Σx = 148, Σx² = 2396, σ = 6.07; Q₁ = 8, Q₃ = 18, IQR = 10) and all five answer keys, confirmed the 9709 population-SD convention is stated explicitly, and narrowed an over-strong claim that the mode is the only measure for all non-numeric data to label (nominal) data.
+    Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
+    previous version 5/10 (plain-text formula walls, no reasoning). Written against the official
+    Cambridge International AS & A Level Mathematics 9709 syllabus for 2026-2027, topic 5.1 outcome 3
+    (measures of central tendency and variation). Standard deviation uses the divisor n, as in Paper 5.
+    Examples and questions are original. Every worked figure was recomputed by hand. Awaiting independent
+    review; not reviewed by a teacher.
 blocks:
   - type: objective
-    body: |-
-      By the end you can calculate and interpret the mean, median, mode, range,
-      interquartile range, and standard deviation for raw and grouped data,
-      and use them to compare two or more data sets.
-
-  - type: definition
-    term: Central tendency
-    body: |-
-      A single value that represents the "centre" or "typical value" of a data set.
-      The three common measures are **mean** (arithmetic average), **median** (middle value),
-      and **mode** (most frequent value).
-
-  - type: definition
-    term: Variation (dispersion)
-    body: |-
-      A measure of how spread out the data values are. Common measures are **range**
-      (max − min), **interquartile range** (Q₃ − Q₁), and **standard deviation**
-      (root-mean-square deviation from the mean).
+    body: |
+      By the end you can work out the mean, median, mode, range, interquartile range and standard
+      deviation of a list of numbers, explain what each one tells you, and use them to compare two
+      data sets in words.
 
   - type: explain
-    title: Mean (arithmetic mean)
-    body: |-
-      For raw data x₁, x₂, …, xₙ:
-      **Mean = Σx / n**
+    title: Why summarise data at all?
+    body: |
+      Imagine two classes sit the same test. Class A has 30 students and Class B has 28. You are given
+      all 58 marks and asked, "Which class did better?"
 
-      For grouped data with class midpoints xᵢ and frequencies fᵢ:
-      **Mean = Σfᵢxᵢ / Σfᵢ**
+      Staring at 58 numbers will not help. You need to **squash the list down to a few numbers** that
+      capture what it is like. Two questions matter:
 
-      The mean uses every value, so it is sensitive to outliers. It is the only measure
-      that can be used in further algebraic calculations (e.g. combining data sets).
+      - **Where is the middle?** What is a typical mark? Numbers that answer this are called
+        **averages**, or **measures of central tendency** ("central tendency" just means "where the
+        data tends to sit").
+      - **How spread out is it?** Are the marks all bunched together, or scattered from very low to
+        very high? Numbers that answer this are called **measures of variation** (or **spread**).
+
+      You need both. Two classes can have the same typical mark but one can be very consistent while the
+      other has some top scores and some very low ones. This lesson gives you the standard tools for both
+      questions.
+
+  - type: explain
+    title: Key to the symbols
+    body: |
+      Here is the notation we will use. Each one is also explained again where it first appears.
+
+      | Symbol | Meaning |
+      | --- | --- |
+      | $x$ | one data value (one mark, one height, one time...) |
+      | $n$ | how many data values there are |
+      | $\Sigma$ | "add up all of these". So $\Sigma x$ means "add up all the $x$ values" |
+      | $\bar{x}$ | the **mean** (read "x bar"). Some books write $\mu$ instead; it means the same here |
+      | $Q_1$, $Q_3$ | the lower quartile and upper quartile (explained below) |
+      | $\sigma$ | the **standard deviation** (the Greek letter sigma) |
+
+  - type: explain
+    title: The mean — share it out equally
+    body: |
+      The **mean** is what most people mean by "the average". Add up all the values, then divide by how
+      many there are:
+
+      $$\bar{x} = \frac{\Sigma x}{n}$$
+
+      **Why does this make sense?** Imagine five friends with £2, £4, £6, £8 and £10 in their pockets. If they
+      pooled all the money (£30) and shared it out equally, each would get £6. The mean is that "fair share"
+      value. It is also the **balance point** of the data: if each value were a weight on a ruler, the ruler
+      would balance on the mean.
+
+      Because the mean uses **every** value, it reacts to every value. That is a strength (nothing is
+      ignored) and a weakness (one extreme value can drag it a long way). We will see that in a moment.
 
   - type: example
-    title: "Example 1: mean from raw data"
-    problem: |-
-      Find the mean of: 4, 7, 8, 10, 12, 13, 14, 15, 18, 22, 25
+    title: Finding a mean
+    problem: |
+      Five friends scored these marks in a quiz: 7, 9, 4, 10, 5. Find the mean mark.
     steps:
-      - |-
-        Sum = 4+7+8+10+12+13+14+15+18+22+25 = 148.
-      - |-
-        n = 11.
-      - |-
-        Mean = 148 / 11 ≈ 13.45.
-    answer: "13.45 (to 2 d.p.)"
-
-  - type: check
-    questions: [sc-mean-raw]
+      - "Add up all the values: $\\Sigma x = 7 + 9 + 4 + 10 + 5 = 35$."
+      - "Count them: $n = 5$."
+      - "Divide the total by the count: $\\bar{x} = \\dfrac{35}{5} = 7$."
+      - "Sense check: the marks run from 4 to 10, and 7 sits comfortably between them, so it is believable."
+    answer: |
+      The mean mark is $7$.
 
   - type: explain
-    title: Median
-    body: |-
-      The **median** is the middle value when the data is ordered.
-      - If n is odd: median = value at position (n+1)/2.
-      - If n is even: median = average of values at positions n/2 and n/2 + 1.
+    title: The median — the middle one
+    body: |
+      The **median** is the middle value once the data is **in order**. Half the values are below it and
+      half are above it.
 
-      For grouped data, the median is estimated using linear interpolation on the cumulative
-      frequency graph (see lesson 5.1.4) or the formula:
-      **Median = L + ((n/2 − CF) / f) × w**
-      where L = lower boundary of median class, CF = cumulative frequency before median class,
-      f = frequency of median class, w = class width.
+      **Step 1: put the values in order, smallest to largest.** (Skip this and the answer is wrong.)
 
-      The median is resistant to outliers.
+      **Step 2: find the middle.**
+
+      - If $n$ is **odd** there is exactly one middle value. It is in position $\dfrac{n+1}{2}$.
+      - If $n$ is **even** there are two middle values. The median is **halfway between** them, which means
+        you add them and divide by 2.
+
+      **Why bother with the median when we have the mean?** Because the median ignores how extreme the
+      biggest and smallest values are. Think of the wages in a small shop: four staff earn about £20 000
+      and the owner takes £220 000. The mean wage is £60 000, which describes nobody. The median is
+      £20 000, which describes a typical worker. When a few values are unusually large or small
+      (**outliers**), the median is the fairer "typical" value.
 
   - type: example
-    title: "Example 2: median from raw data"
-    problem: |-
-      Find the median of: 4, 7, 8, 10, 12, 13, 14, 15, 18, 22, 25
+    title: The median, and why outliers matter
+    problem: |
+      The times, in minutes, for six students to get to school are 12, 25, 9, 15, 11, 120 (one student's bus
+      broke down). Find the mean and the median, and say which describes a typical journey better.
     steps:
-      - |-
-        n = 11 (odd). Position = (11+1)/2 = 6th value.
-      - |-
-        Ordered data: 4, 7, 8, 10, 12, **13**, 14, 15, 18, 22, 25.
-      - |-
-        Median = 13.
-    answer: "13"
+      - "Put the values in order: $9, 11, 12, 15, 25, 120$."
+      - "There are $n = 6$ values, which is even, so the median is halfway between the 3rd and 4th values: $\\dfrac{12 + 15}{2} = 13.5$."
+      - "For the mean, add everything: $9 + 11 + 12 + 15 + 25 + 120 = 192$. Then divide by 6: $\\bar{x} = 32$."
+      - "Compare: five of the six students got to school in 25 minutes or less, yet the mean says 32 minutes. The 120 has dragged the mean up. The median of 13.5 minutes is much closer to a typical journey."
+    answer: |
+      The median is $13.5$ minutes and the mean is $32$ minutes. The median describes a typical journey better,
+      because the outlier (120) pulls the mean up but barely touches the median.
 
   - type: check
-    questions: [sc-median-raw]
+    title: Check the mean and the median
+    questions: [sc-mean-raw, sc-median-raw, sc-outlier-effect]
 
   - type: explain
-    title: Mode
-    body: |-
-      The **mode** is the value that occurs most frequently.
-      - A data set can have **no mode** (all values occur once), **one mode** (unimodal),
-        or **multiple modes** (bimodal, trimodal, etc.).
-      - For grouped data, the **modal class** is the class with the highest frequency.
-        The mode can be estimated by interpolation, but this is rarely required.
+    title: The mode — the most popular
+    body: |
+      The **mode** is the value that appears **most often**. Count how many times each value occurs and pick
+      the winner.
 
-      The mode is the only measure of central tendency that works for data which are simply
-      **labels** (nominal data): you cannot add labels, so there is no mean, and they have no
-      natural order, so there is no median.
+      - Some data sets have **no mode** (every value appears once). Some have **two modes** ("bimodal").
+      - The mode is the only average that works when the data are **labels** rather than numbers. If you
+        ask 20 people their favourite pizza topping, you cannot add "pepperoni" and "mushroom" to find a mean,
+        and you cannot put them in order to find a median. But you can say which was named most often.
+      - When data are grouped into classes, we talk about the **modal class**: the class with the highest
+        frequency.
+
+  - type: explain
+    title: Range, quartiles and the IQR — measuring spread
+    body: |
+      The simplest measure of spread is the **range**:
+
+      $$\text{range} = \text{largest value} - \text{smallest value}$$
+
+      It is easy, but it only uses the two extreme values, so one outlier can make it huge.
+
+      A better idea is to **ignore the extremes** and look at the middle half of the data. To do that, split
+      the ordered data into four equal-sized chunks. The three cut points are the **quartiles**:
+
+      - $Q_2$ is the **median** (the middle of everything).
+      - $Q_1$, the **lower quartile**, is the median of the **lower half**.
+      - $Q_3$, the **upper quartile**, is the median of the **upper half**.
+
+      (If $n$ is odd, leave the overall median out of both halves. If $n$ is even, split the list exactly
+      in two.)
+
+      The **interquartile range** is the width of the middle half of the data:
+
+      $$\text{IQR} = Q_3 - Q_1$$
+
+      A **small** IQR means the middle half of the data is tightly bunched. A **big** IQR means it is spread
+      out. Because the IQR ignores the top quarter and bottom quarter, outliers cannot distort it.
 
   - type: example
-    title: "Example 3: mode"
-    problem: |-
-      Find the mode of: 4, 7, 8, 10, 12, 13, 13, 14, 15, 18, 22, 25
+    title: Range and IQR
+    problem: |
+      Find the range and the interquartile range of 4, 7, 8, 10, 12, 13, 14, 15, 18, 22, 25.
     steps:
-      - |-
-        13 occurs twice; all others occur once.
-      - |-
-        Mode = 13.
-    answer: "13"
+      - "These are already in order, and $n = 11$."
+      - "Range $= 25 - 4 = 21$."
+      - "The median is the 6th value, $13$. Because $n$ is odd, leave it out of both halves."
+      - "Lower half: $4, 7, 8, 10, 12$. Its middle (3rd) value is $8$, so $Q_1 = 8$."
+      - "Upper half: $14, 15, 18, 22, 25$. Its middle (3rd) value is $18$, so $Q_3 = 18$."
+      - "$\\text{IQR} = Q_3 - Q_1 = 18 - 8 = 10$."
+    answer: |
+      The range is $21$ and the IQR is $10$.
 
   - type: check
-    questions: [sc-mode]
+    title: Check range and IQR
+    questions: [sc-mode, sc-range-iqr]
 
   - type: explain
-    title: Range
-    body: |-
-      **Range = Maximum − Minimum**
-      Uses only the two extreme values. Very sensitive to outliers.
+    title: Standard deviation — the typical distance from the mean
+    body: |
+      The range and IQR only look at a couple of values. The **standard deviation** uses **every** value, and
+      it is the measure of spread you will use most. The idea is easy to state:
+
+      > The standard deviation is the **typical distance** of the data values from the mean.
+
+      Small standard deviation: values huddle close to the mean. Large standard deviation: values are far
+      from the mean. Here is how it is built, one sensible step at a time. We will use the data
+      $2, 4, 4, 4, 5, 5, 7, 9$, whose mean is $\bar{x} = 5$.
+
+      **Step 1: how far is each value from the mean?** Subtract the mean. These are called **deviations**.
+      Some are negative (below the mean) and some positive (above it). If you just add them they cancel out
+      to zero, which is useless.
+
+      **Step 2: square each deviation.** Squaring makes every number positive, so nothing cancels. (It also
+      makes big deviations count extra.)
+
+      **Step 3: average the squares.** Add them up and divide by $n$. This is called the **variance**.
+
+      **Step 4: square root.** Squaring changed the units (metres became metres squared), so square root to
+      get back to the original units. That is the standard deviation.
+
+      | $x$ | $x - \bar{x}$ | $(x - \bar{x})^2$ |
+      | --- | --- | --- |
+      | 2 | -3 | 9 |
+      | 4 | -1 | 1 |
+      | 4 | -1 | 1 |
+      | 4 | -1 | 1 |
+      | 5 | 0 | 0 |
+      | 5 | 0 | 0 |
+      | 7 | 2 | 4 |
+      | 9 | 4 | 16 |
+      | **Total** | 0 | **32** |
+
+      The squares add to 32. Divide by $n = 8$ to get the variance, $32 \div 8 = 4$. The square root is
+      $\sigma = \sqrt{4} = 2$. So the values are typically about 2 away from the mean.
+
+      In symbols, the whole recipe is
+
+      $$\sigma = \sqrt{\frac{\Sigma (x - \bar{x})^2}{n}}$$
 
   - type: explain
-    title: Interquartile range (IQR)
-    body: |-
-      **IQR = Q₃ − Q₁**
-      Uses the middle 50% of the data. Resistant to outliers.
-      Q₁ is the median of the lower half; Q₃ is the median of the upper half.
-      (If n is odd, exclude the overall median from both halves; if even, split exactly in half.)
+    title: A quicker formula for standard deviation
+    body: |
+      Subtracting the mean from every value is slow, especially when the mean is not a whole number. There is
+      an algebraically equivalent shortcut that only needs two totals, $\Sigma x$ and $\Sigma x^2$:
+
+      $$\sigma^2 = \frac{\Sigma x^2}{n} - \bar{x}^2$$
+
+      In words: **the mean of the squares, minus the square of the mean.** Then take the square root.
+
+      Be careful about the difference. $\Sigma x^2$ means "square each value, **then** add". It is not the
+      same as $(\Sigma x)^2$, which means "add first, then square".
+
+      Check it on the same data: $\Sigma x^2 = 4 + 16 + 16 + 16 + 25 + 25 + 49 + 81 = 232$. So
+      $\sigma^2 = \dfrac{232}{8} - 5^2 = 29 - 25 = 4$, and $\sigma = 2$. The same answer as before.
+
+      **Which "n"?** Fathom, and Paper 5, use the divisor $n$. (In Paper 6 you will meet a version that
+      divides by $n - 1$ for samples; do not use it here.)
 
   - type: example
-    title: "Example 4: range and IQR"
-    problem: |-
-      Data: 4, 7, 8, 10, 12, 13, 14, 15, 18, 22, 25
-      Find the range and IQR.
+    title: Standard deviation using the shortcut
+    problem: |
+      Find the standard deviation of 4, 7, 8, 10, 12, 13, 14, 15, 18, 22, 25.
     steps:
-      - |-
-        Range = 25 − 4 = 21.
-      - |-
-        n = 11. Median = 13 (6th value).
-      - |-
-        Lower half: 4, 7, 8, 10, 12 → Q₁ = 8.
-      - |-
-        Upper half: 14, 15, 18, 22, 25 → Q₃ = 18.
-      - |-
-        IQR = 18 − 8 = 10.
-    answer: "Range = 21, IQR = 10"
+      - "Count the values: $n = 11$."
+      - "Add them: $\\Sigma x = 148$, so the mean is $\\bar{x} = \\dfrac{148}{11} \\approx 13.4545$."
+      - "Square each value and add: $\\Sigma x^2 = 16 + 49 + 64 + 100 + 144 + 169 + 196 + 225 + 324 + 484 + 625 = 2396$."
+      - "Use the shortcut: $\\sigma^2 = \\dfrac{2396}{11} - \\left(\\dfrac{148}{11}\\right)^2 \\approx 217.818 - 181.025 = 36.794$."
+      - "Square root: $\\sigma = \\sqrt{36.794} \\approx 6.07$."
+      - "Sense check: the data run from 4 to 25, and the typical distance from the mean (about 13.5) is 6, which fits."
+    answer: |
+      $\sigma \approx 6.07$ (to 3 significant figures).
 
   - type: check
-    questions: [sc-range-iqr]
+    title: Check standard deviation
+    questions: [sc-sd-raw, sc-sd-shortcut]
 
   - type: explain
-    title: Standard deviation
-    body: |-
-      The **standard deviation** (σ for population, s for sample) measures the typical
-      distance of values from the mean. It uses every data point.
+    title: Comparing two data sets
+    body: |
+      A comparison needs **two** statements: one about the **middle** and one about the **spread**. Use the
+      mean and standard deviation together, or the median and IQR together. If either data set has
+      outliers, prefer the median and IQR, because they are not dragged around.
 
-      **Population formula (when data = entire population):**
-      σ = √[ Σ(x − μ)² / n ] = √[ Σx²/n − μ² ]
-
-      **Sample formula (when data = sample from a larger population):**
-      s = √[ Σ(x − x̄)² / (n−1) ] = √[ (Σx² − n·x̄²) / (n−1) ]
-
-      In A Level exams, **always use the population formula** unless the question explicitly
-      says "sample" and asks for the sample standard deviation. The syllabus uses σ notation
-      and expects the population version.
-
-      For grouped data with midpoints xᵢ and frequencies fᵢ:
-      σ = √[ Σfᵢ(xᵢ − μ)² / Σfᵢ ] = √[ Σfᵢxᵢ²/Σfᵢ − μ² ]
-
-      **Coded data:** If data is coded as u = (x − a)/b, then:
-      - Mean of x: μₓ = a + b·μᵤ
-      - SD of x: σₓ = |b|·σᵤ
+      Always say what the numbers **mean in the situation**, not just which is bigger. A good sentence has
+      three parts: *the comparison, the numbers, the context.*
 
   - type: example
-    title: "Example 5: standard deviation from raw data"
-    problem: |-
-      Find the standard deviation of: 4, 7, 8, 10, 12, 13, 14, 15, 18, 22, 25
+    title: Comparing two sets
+    problem: |
+      Two archers each fire five arrows. The scores are
+      Archer A: 40, 50, 60, 70, 80. Archer B: 56, 58, 60, 62, 64.
+      Find the mean and standard deviation of each, and compare them.
     steps:
-      - |-
-        n = 11, Σx = 148, μ = 148/11 ≈ 13.4545.
-      - |-
-        Σx² = 16+49+64+100+144+169+196+225+324+484+625 = 2396.
-      - |-
-        σ² = Σx²/n − μ² = 2396/11 − (148/11)² = 217.818... − 181.024... = 36.794...
-      - |-
-        σ = √36.794... ≈ 6.066.
-    answer: "6.07 (to 2 d.p.)"
+      - "Archer A: $\\Sigma x = 300$, so $\\bar{x} = 60$. Deviations: $-20, -10, 0, 10, 20$. Squares: $400, 100, 0, 100, 400$, which add to $1000$. Variance $= 1000 \\div 5 = 200$, so $\\sigma = \\sqrt{200} \\approx 14.1$."
+      - "Archer B: $\\Sigma x = 300$, so $\\bar{x} = 60$. Deviations: $-4, -2, 0, 2, 4$. Squares: $16, 4, 0, 4, 16$, which add to $40$. Variance $= 40 \\div 5 = 8$, so $\\sigma = \\sqrt{8} \\approx 2.83$."
+      - "Compare the middle: both archers have the **same mean** of 60, so on average they score the same."
+      - "Compare the spread: Archer B's standard deviation (2.83) is far smaller than Archer A's (14.1)."
+    answer: |
+      Both archers average 60, but Archer B is much more **consistent**: B's scores stay within about 3 of
+      the mean, whereas A's are typically about 14 away from it.
 
   - type: check
-    questions: [sc-sd-raw]
+    title: Check comparing
+    questions: [sc-compare-spread]
 
-  - type: explain
-    title: Comparing data sets
-    body: |-
-      Use measures of central tendency **and** variation together:
-      - **Centre**: compare means (or medians if skewed/outliers).
-      - **Spread**: compare standard deviations (or IQRs if outliers).
-      - **Shape**: mean > median → right skew; mean < median → left skew; mean ≈ median → symmetric.
-      - Always interpret in context: "Class A has a higher mean but also a larger spread,
-        so while they scored higher on average, their performance was less consistent."
+  - type: misconceptions
+    items:
+      - wrong: "To find the median, I take the middle of the list as it was given to me."
+        right: "You must **put the values in order first**. The median is the middle of the *ordered* list."
+      - wrong: "The mean is always the best average to quote."
+        right: "The mean is dragged by outliers. When there are a few extreme values, the median is a fairer typical value."
+      - wrong: "A bigger standard deviation means a bigger mean."
+        right: "Standard deviation measures **spread**, not size. Two data sets can have the same mean and very different standard deviations (like the two archers)."
+      - wrong: "$\\Sigma x^2$ and $(\\Sigma x)^2$ are the same thing."
+        right: "$\\Sigma x^2$ squares each value **then** adds. $(\\Sigma x)^2$ adds **then** squares. They give different numbers."
+      - wrong: "Standard deviation can be negative."
+        right: "It is a square root of a variance, which is never negative, so $\\sigma \\ge 0$. It is $0$ only when every value is identical."
+
+  - type: exam
+    body: |
+      - "Compare" questions want **two** comments: one on the average, one on the spread, each with the
+        numbers and the context (for example, "Archer B is more consistent").
+      - If a calculator gives you $\sigma$ directly, use it, but show $\Sigma x$ and $\Sigma x^2$ or the working in case of slips.
+      - A negative variance is impossible. If you get one, you probably subtracted the wrong way round in $\dfrac{\Sigma x^2}{n} - \bar{x}^2$.
+      - Give final answers to 3 significant figures unless told otherwise.
 
   - type: takeaways
     items:
-      - "Mean = Σx/n (raw) or Σfx/Σf (grouped). Uses all data; sensitive to outliers."
-      - "Median = middle value (ordered). Resistant to outliers. For grouped data, interpolate."
-      - "Mode = most frequent value. Can be none, one, or many. Modal class for grouped data."
-      - "Range = max − min. IQR = Q₃ − Q₁ (middle 50%). IQR resistant to outliers."
-      - "Standard deviation = √[Σ(x−μ)²/n] (population). Uses all data; sensitive to outliers."
-      - "Coded data: μₓ = a + b·μᵤ, σₓ = |b|·σᵤ."
-      - "Compare data sets using both centre and spread; interpret in context."
+      - "Mean = total divided by count. It uses every value, so outliers pull it."
+      - "Median = middle of the **ordered** values. Mode = most frequent value."
+      - "Range = largest minus smallest. IQR = $Q_3 - Q_1$, the width of the middle half. The IQR ignores outliers."
+      - "Standard deviation is the typical distance from the mean: $\\sigma = \\sqrt{\\dfrac{\\Sigma x^2}{n} - \\bar{x}^2}$."
+      - "To compare data sets, comment on the average **and** the spread, in context."
 
 questions:
   - id: sc-mean-raw
     format: numeric
     difficulty: 1
     objectives: ["5.1.3"]
-    prompt: "Find the mean of the data set 5, 8, 9, 12, 16."
+    prompt: |
+      Find the mean of the data set $5, 8, 9, 12, 16$.
     fields:
-      - answer: 10
+      - label: "mean ="
+        answer: 10
     explanation: |
-      Mean = (5 + 8 + 9 + 12 + 16) / 5 = 50 / 5 = 10.
+      Add the values and divide by how many there are: $\dfrac{5 + 8 + 9 + 12 + 16}{5} = \dfrac{50}{5} = 10$.
 
   - id: sc-median-raw
     format: numeric
     difficulty: 1
     objectives: ["5.1.3"]
-    prompt: "Find the median of 3, 7, 9, 12, 15, 18."
+    prompt: |
+      Find the median of $3, 7, 9, 12, 15, 18$.
     fields:
-      - answer: 10.5
+      - label: "median ="
+        answer: 10.5
     explanation: |
-      n = 6 (even), so median = average of 3rd and 4th values = (9 + 12) / 2 = 10.5.
+      The list is already in order and $n = 6$ is even, so the median is halfway between the 3rd and 4th values: $\dfrac{9 + 12}{2} = 10.5$.
+
+  - id: sc-outlier-effect
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.3"]
+    prompt: |
+      The values $4, 5, 6, 7, 8$ have mean $6$ and median $6$. The $8$ is replaced by $48$. What happens?
+    options:
+      - text: "The mean becomes $14$ and the median stays $6$."
+        correct: true
+        why: "The new total is $4 + 5 + 6 + 7 + 48 = 70$, and $70 \\div 5 = 14$. The middle value of the ordered list $4, 5, 6, 7, 48$ is still $6$."
+      - text: "Both the mean and the median become $14$."
+        why: "The median is the middle value, which is still $6$. Only the extreme value changed."
+      - text: "The mean stays $6$ and the median becomes $14$."
+        why: "It is the other way round: the mean uses every value so it moves; the median stays at the middle."
+      - text: "Neither changes."
+        why: "The mean uses every value, so changing one value changes the total and therefore the mean."
+    explanation: |
+      The mean uses every value, so one extreme value drags it up (to $14$). The median only depends on the middle position, so it stays at $6$.
 
   - id: sc-mode
     format: mcq
     difficulty: 1
     objectives: ["5.1.3"]
-    prompt: "What is the mode of the data set: 2, 5, 5, 7, 9, 9, 9, 11?"
+    prompt: |
+      What is the mode of the data set $2, 5, 5, 7, 9, 9, 9, 11$?
     options:
       - text: "5"
-        why: 5 appears twice, but 9 appears three times.
-        correct: false
+        why: "$5$ appears twice, but $9$ appears three times."
       - text: "7"
-        why: 7 appears once.
-        correct: false
+        why: "$7$ appears only once. The mode is about how often a value appears, not where it sits."
       - text: "9"
-        why: 9 appears three times, more than any other value.
         correct: true
-      - text: "No mode"
-        why: There is a clear mode (9).
-        correct: false
+        why: "$9$ appears three times, more than any other value."
+      - text: "There is no mode"
+        why: "Some values repeat, so there is a clear mode."
     explanation: |
-      The mode is the value that occurs most frequently. In this data set, 9 appears three times, which is more than any other value.
+      The mode is the value that occurs most often. $9$ appears three times, which beats everything else.
 
   - id: sc-range-iqr
     format: numeric
     difficulty: 2
     objectives: ["5.1.3"]
-    prompt: "For the data 2, 4, 6, 8, 10, 12, 14, find the IQR."
+    prompt: |
+      For the data $2, 4, 6, 8, 10, 12, 14$, find the interquartile range.
     fields:
-      - answer: 8
+      - label: "IQR ="
+        answer: 8
     explanation: |
-      n = 7. Median = 8 (4th value). Lower half: 2, 4, 6 → Q₁ = 4. Upper half: 10, 12, 14 → Q₃ = 12. IQR = 12 - 4 = 8.
+      $n = 7$, so the median is the 4th value, $8$. Leave it out of both halves. The lower half is $2, 4, 6$, so $Q_1 = 4$. The upper half is $10, 12, 14$, so $Q_3 = 12$. $\text{IQR} = 12 - 4 = 8$.
 
   - id: sc-sd-raw
     format: numeric
     difficulty: 2
     objectives: ["5.1.3"]
-    prompt: "Find the population standard deviation of 2, 4, 4, 4, 5, 5, 7, 9. Give your answer to 2 decimal places."
+    prompt: |
+      Find the standard deviation of $2, 4, 4, 4, 5, 5, 7, 9$.
     fields:
-      - answer: 2
+      - label: "σ ="
+        answer: 2
         tolerance: { abs: 0.01 }
     explanation: |
-      n = 8. Mean = (2+4+4+4+5+5+7+9)/8 = 40/8 = 5. Variance = [(2-5)²+3×(4-5)²+2×(5-5)²+(7-5)²+(9-5)²]/8 = [9+3+0+4+16]/8 = 32/8 = 4. SD = √4 = 2.
+      The mean is $\dfrac{40}{8} = 5$. The squared deviations are $9, 1, 1, 1, 0, 0, 4, 16$, which add to $32$. The variance is $\dfrac{32}{8} = 4$, so $\sigma = \sqrt{4} = 2$.
+
+  - id: sc-sd-shortcut
+    format: numeric
+    difficulty: 2
+    objectives: ["5.1.3"]
+    prompt: |
+      Five values have $\Sigma x = 30$ and $\Sigma x^2 = 200$. Find the standard deviation.
+    fields:
+      - label: "σ ="
+        answer: 2
+        tolerance: { abs: 0.01 }
+    explanation: |
+      The mean is $\bar{x} = \dfrac{30}{5} = 6$. Then $\sigma^2 = \dfrac{200}{5} - 6^2 = 40 - 36 = 4$, so $\sigma = 2$.
+
+  - id: sc-compare-spread
+    format: mcq
+    difficulty: 2
+    objectives: ["5.1.3"]
+    prompt: |
+      Machine A fills bags with a mean mass of $500$ g and a standard deviation of $2$ g. Machine B has a mean of $500$ g and a standard deviation of $9$ g. Which statement is correct?
+    options:
+      - text: "Machine A is more consistent, because its standard deviation is smaller."
+        correct: true
+        why: "Both average $500$ g, but A's bags stay much closer to $500$ g (typically about $2$ g away rather than $9$ g)."
+      - text: "Machine B fills bags with more mass, because its standard deviation is larger."
+        why: "Standard deviation measures spread, not size. Both machines have the same mean mass."
+      - text: "Machine A is better because $2$ is smaller than $500$."
+        why: "Comparing $2$ with $500$ is meaningless. The standard deviation is compared with the other machine's standard deviation."
+      - text: "The machines are identical because the means are equal."
+        why: "The means match but the spreads differ a lot, so the machines behave differently."
+    explanation: |
+      The means are equal, so the difference is in the spread. A smaller standard deviation means the values stay closer to the mean, so Machine A is the more consistent.

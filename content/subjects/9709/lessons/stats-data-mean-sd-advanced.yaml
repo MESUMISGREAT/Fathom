@@ -1,8 +1,8 @@
 id: stats-data-mean-sd-advanced
 subject: "9709"
 topic: "5.1"
-title: Mean and standard deviation — grouped data and summary totals
-summary: Calculate mean and standard deviation from grouped data, from summary totals Σx and Σx², and from coded totals Σ(x−a) and Σ(x−a)². Solve problems involving up to two data sets.
+title: "Mean and standard deviation from tables, totals and coded data"
+summary: "Finding the mean and standard deviation when you are given a grouped table, only the totals, or coded totals, and combining two data sets."
 order: 5
 minutes: 10
 kind: core
@@ -10,279 +10,274 @@ objectives: ["5.1.5"]
 prerequisites: ["stats-data-central-tendency"]
 provenance:
   origin: ai-drafted
-  status: ai-checked
+  status: draft
   notes: >-
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709
-    syllabus (2026–2027), topic 5.1 outcome "Calculate and use the mean and standard
-    deviation of a set of data (including grouped data), either from the data itself or
-    from given totals Σx and Σx², or coded totals Σ(x−a) and Σ(x−a)², and use such
-    totals in solving problems that may involve up to two data sets." All examples,
-    questions and diagrams are original. Validated for accuracy and syllabus alignment.
-    Independent review recomputed all five worked examples (grouped: Σfx = 1230, Σfx² = 36450,
-    σ = 11.13; totals: σ = √21; coded: σₓ = √14.21; combined: Σx² = 151368, σ = 9.46) and all
-    five answer keys, and confirmed the Σx² = n(σ² + μ²) identity, the coded-data shifts and the
-    population-SD convention are each stated consistently; no changes were needed.
+    Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
+    previous version 5.5/10 (plain-text formula walls, steps without reasons). Written against the official
+    Cambridge International AS & A Level Mathematics 9709 syllabus for 2026-2027, topic 5.1 outcome 5
+    (mean and standard deviation from data, from totals, from coded totals of the form x - a, and for up to
+    two data sets). Standard deviation uses the divisor n. Examples and questions are original; every worked
+    figure was recomputed by hand. Awaiting independent review; not reviewed by a teacher.
 blocks:
   - type: objective
-    body: |-
-      By the end you can compute the mean and standard deviation from grouped frequency
-      tables, from given Σx and Σx² totals, from coded totals Σ(x−a) and Σ(x−a)², and
-      combine results from two data sets.
+    body: |
+      By the end you can find the mean and standard deviation of data given in a grouped frequency table,
+      from the totals $\Sigma x$ and $\Sigma x^2$, and from coded totals $\Sigma(x - a)$ and $\Sigma(x - a)^2$,
+      and you can combine two data sets into one.
 
   - type: explain
-    title: Mean and SD from grouped data
-    body: |-
-      For grouped data with class midpoints xᵢ and frequencies fᵢ:
+    title: Where we are starting from
+    body: |
+      In the last lesson you found the mean and standard deviation of a short list of numbers:
 
-      **Mean: μ = Σfᵢxᵢ / Σfᵢ**
+      $$\bar{x} = \frac{\Sigma x}{n} \qquad \sigma = \sqrt{\frac{\Sigma x^2}{n} - \bar{x}^2}$$
 
-      **Standard deviation (population):**
-      σ = √[ Σfᵢ(xᵢ − μ)² / Σfᵢ ]
-       = √[ Σfᵢxᵢ² / Σfᵢ − μ² ]
+      Look closely at those two formulas. **Everything they need is three numbers:** how many values there
+      are ($n$), their total ($\Sigma x$), and the total of their squares ($\Sigma x^2$). You never need the
+      individual values themselves.
 
-      **Steps:**
-      1. Find midpoint xᵢ for each class.
-      2. Calculate fᵢxᵢ and fᵢxᵢ² for each class.
-      3. Sum the columns: Σfᵢ, Σfᵢxᵢ, Σfᵢxᵢ².
-      4. μ = Σfᵢxᵢ / Σfᵢ
-      5. σ = √[ Σfᵢxᵢ²/Σfᵢ − μ² ]
-
-  - type: example
-    title: "Example 1: mean and SD from grouped data"
-    problem: |-
-      Time (minutes) | Frequency
-      0–10           | 5
-      10–20          | 12
-      20–30          | 18
-      30–40          | 10
-      40–50          | 5
-      Estimate the mean and standard deviation.
-    steps:
-      - |-
-        Midpoints: 5, 15, 25, 35, 45.
-      - |-
-        fᵢxᵢ: 25, 180, 450, 350, 225. Σfᵢxᵢ = 1230.
-      - |-
-        fᵢxᵢ²: 125, 2700, 11250, 12250, 10125. Σfᵢxᵢ² = 36450.
-      - |-
-        Σfᵢ = 50. μ = 1230 / 50 = 24.6.
-      - |-
-        Σfᵢxᵢ²/Σfᵢ = 36450 / 50 = 729.
-      - |-
-        σ = √(729 − 24.6²) = √(729 − 605.16) = √123.84 ≈ 11.13.
-    answer: "Mean = 24.6, SD = 11.1 (1 d.p.)"
-
-  - type: check
-    questions: [sc-mean-sd-grouped]
+      That one observation is the key to this whole lesson. Exam questions often hide the data and give you
+      something else instead: a frequency table, the totals, or "coded" totals. Each time, the job is the
+      same: **get hold of $n$, $\Sigma x$ and $\Sigma x^2$ (or something equivalent), then use the two formulas.**
 
   - type: explain
-    title: Using summary totals Σx and Σx²
-    body: |-
-      Often the raw data is not given, only the **summary totals**:
-      - n = number of values
-      - Σx = sum of values
-      - Σx² = sum of squared values
-
-      **Mean: μ = Σx / n**
-
-      **Standard deviation (population):**
-      σ = √[ Σx²/n − (Σx/n)² ]
-       = √[ (Σx² − (Σx)²/n) / n ]
-
-      This is algebraically identical to √[ Σ(x−μ)² / n ] but avoids calculating each
-      deviation. It is faster and less prone to rounding error.
-
-  - type: example
-    title: "Example 2: mean and SD from Σx and Σx²"
-    problem: |-
-      For a data set of 20 values, Σx = 340 and Σx² = 6200.
-      Find the mean and standard deviation.
-    steps:
-      - |-
-        n = 20, Σx = 340, Σx² = 6200.
-      - |-
-        μ = 340 / 20 = 17.
-      - |-
-        Σx²/n = 6200 / 20 = 310.
-      - |-
-        μ² = 289.
-      - |-
-        σ = √(310 − 289) = √21 ≈ 4.583.
-    answer: "Mean = 17, SD = √21 ≈ 4.58"
-
-  - type: check
-    questions: [sc-mean-sd-sums]
+    title: Key to the symbols
+    body: |
+      | Symbol | Meaning |
+      | --- | --- |
+      | $n$ | the number of data values |
+      | $f$ | the **frequency**: how many values are in a class (a row of a table) |
+      | $x$ | a data value; in a grouped table, the **midpoint** of a class |
+      | $\Sigma x$ | the total of the values |
+      | $\Sigma x^2$ | the total of the **squares** of the values (square each, then add) |
+      | $\Sigma f x$, $\Sigma f x^2$ | the same totals worked out from a frequency table |
+      | $\bar{x}$ | the mean |
+      | $\sigma$ | the standard deviation |
+      | $a$ | a convenient number subtracted from every value when data are **coded** |
 
   - type: explain
-    title: "Coded data: Σ(x−a) and Σ(x−a)²"
-    body: |-
-      Sometimes data is **coded** as u = (x − a) / b, where a and b are constants (b ≠ 0).
-      You may be given totals for the coded values:
-      - Σu or Σ(x − a)
-      - Σu² or Σ(x − a)²
+    title: Grouped data — use the midpoints
+    body: |
+      Sometimes the data come as a table of **classes** like "10 to 20 minutes: 12 people". You do not know
+      exactly where each of those 12 values is, only that each is somewhere between 10 and 20.
 
-      **If given Σ(x − a) and Σ(x − a)²:**
-      Let d = x − a. Then Σd and Σd² are given.
-      - Mean of x: μₓ = a + Σd / n
-      - SD of x: σₓ = √[ Σd²/n − (Σd/n)² ]  (since adding constant a doesn't change spread)
+      The standard trick is to **pretend every value in a class sits at the class midpoint** (15 here).
+      Some are really above the midpoint and some below, so the errors roughly cancel. Because we have
+      guessed, the answers are **estimates**, and you should say so.
 
-      **If given Σu and Σu² (where u = (x−a)/b):**
-      - Mean of u: μᵤ = Σu / n
-      - SD of u: σᵤ = √[ Σu²/n − (Σu/n)² ]
-      - Mean of x: μₓ = a + b·μᵤ
-      - SD of x: σₓ = |b|·σᵤ
+      Now the 12 people in that class behave like the value 15 written down 12 times. Their total is
+      $12 \times 15$, which is $f x$. Their squares total $12 \times 15^2$, which is $f x^2$. Adding these up over
+      every class gives:
 
-      **Key principle:** Adding a constant shifts the mean but not the SD.
-      Multiplying by a constant scales both mean and SD (SD by absolute value).
+      $$\bar{x} = \frac{\Sigma f x}{\Sigma f} \qquad \sigma = \sqrt{\frac{\Sigma f x^2}{\Sigma f} - \bar{x}^2}$$
+
+      These are exactly the old formulas. The only change is that $n$ is now $\Sigma f$ (the total frequency)
+      and each total is built row by row. Set your working out as a table with columns $x$, $f$, $fx$ and $fx^2$.
 
   - type: example
-    title: "Example 3: coded data with Σ(x−a) and Σ(x−a)²"
-    problem: |-
-      For 10 values, Σ(x − 50) = 23 and Σ(x − 50)² = 195.
-      Find the mean and standard deviation of x.
+    title: Mean and standard deviation from a grouped table
+    problem: |
+      The times taken by 50 people to finish a puzzle are shown below. Estimate the mean and standard deviation.
+
+      | Time ($t$ minutes) | $0 \le t < 10$ | $10 \le t < 20$ | $20 \le t < 30$ | $30 \le t < 40$ | $40 \le t < 50$ |
+      | --- | --- | --- | --- | --- | --- |
+      | Frequency | 5 | 12 | 18 | 10 | 5 |
     steps:
-      - |-
-        n = 10, a = 50. Let d = x − 50.
-      - |-
-        Σd = 23, Σd² = 195.
-      - |-
-        μₓ = 50 + 23/10 = 50 + 2.3 = 52.3.
-      - |-
-        σₓ = √[ 195/10 − (23/10)² ] = √[ 19.5 − 5.29 ] = √14.21 ≈ 3.77.
-    answer: "Mean = 52.3, SD = 3.77 (2 d.p.)"
+      - "Find each midpoint by averaging the class ends: $5, 15, 25, 35, 45$."
+      - "Multiply each midpoint by its frequency to get $fx$: $25, 180, 450, 350, 225$. Add them: $\\Sigma fx = 1230$."
+      - "The total frequency is $\\Sigma f = 5 + 12 + 18 + 10 + 5 = 50$. So $\\bar{x} = \\dfrac{1230}{50} = 24.6$."
+      - "For $fx^2$, square the midpoint first, then multiply by $f$: $5 \\times 25 = 125$, $12 \\times 225 = 2700$, $18 \\times 625 = 11250$, $10 \\times 1225 = 12250$, $5 \\times 2025 = 10125$. Add them: $\\Sigma fx^2 = 36450$."
+      - "Variance: $\\dfrac{36450}{50} - 24.6^2 = 729 - 605.16 = 123.84$."
+      - "Standard deviation: $\\sigma = \\sqrt{123.84} \\approx 11.1$."
+    answer: |
+      The mean is about $24.6$ minutes and the standard deviation is about $11.1$ minutes. Both are estimates,
+      because we used midpoints instead of the real times.
+
+  - type: explain
+    title: When you are only given the totals
+    body: |
+      Sometimes the question just says something like "$n = 20$, $\Sigma x = 340$, $\Sigma x^2 = 6200$". That is
+      not a trick. As we saw at the start, those three numbers are all the formulas need, so substitute
+      straight in.
+
+      You can also run this **backwards**. If you know $n$, the mean and the standard deviation, you can
+      rebuild the totals:
+
+      $$\Sigma x = n\bar{x} \qquad \Sigma x^2 = n(\sigma^2 + \bar{x}^2)$$
+
+      The second one comes from rearranging $\sigma^2 = \dfrac{\Sigma x^2}{n} - \bar{x}^2$: add $\bar{x}^2$ to both
+      sides, then multiply both sides by $n$. You will need these when combining two data sets.
+
+  - type: example
+    title: Mean and standard deviation from totals
+    problem: |
+      For 20 values, $\Sigma x = 340$ and $\Sigma x^2 = 6200$. Find the mean and the standard deviation.
+    steps:
+      - "Mean: $\\bar{x} = \\dfrac{\\Sigma x}{n} = \\dfrac{340}{20} = 17$."
+      - "Variance: $\\dfrac{\\Sigma x^2}{n} - \\bar{x}^2 = \\dfrac{6200}{20} - 17^2 = 310 - 289 = 21$."
+      - "Standard deviation: $\\sigma = \\sqrt{21} \\approx 4.58$."
+    answer: |
+      $\bar{x} = 17$ and $\sigma = \sqrt{21} \approx 4.58$.
 
   - type: check
+    title: Check grouped data and totals
+    questions: [sc-mean-sd-grouped, sc-mean-sd-sums]
+
+  - type: explain
+    title: Coded data — subtract a handy number first
+    body: |
+      Suppose you weigh 20 bags of flour and every mass is close to 50 kg: 52.1, 49.8, 53.0 and so on. Adding
+      and squaring numbers like these is tedious. So people often **subtract 50 from every value first** and
+      work with the small leftovers (2.1, -0.2, 3.0...). This is called **coding**, and the number you subtract
+      (50 here) is $a$. The question then gives you the coded totals $\Sigma(x - a)$ and $\Sigma(x - a)^2$.
+
+      What does subtracting $a$ from every value do?
+
+      - **The mean goes down by exactly $a$.** Every value dropped by 50, so the average dropped by 50 too.
+        To get back to the real mean, **add $a$ on again**.
+      - **The standard deviation does not change at all.** Sliding every value down by the same amount does
+        not move them closer together or further apart. The spread is identical.
+
+      So the method is:
+
+      1. Find the mean and standard deviation of the coded values $x - a$, using the coded totals in the
+         usual formulas (with $\Sigma(x-a)$ in place of $\Sigma x$, and $\Sigma(x-a)^2$ in place of $\Sigma x^2$).
+      2. Real mean $=$ coded mean $+ a$.
+      3. Real standard deviation $=$ coded standard deviation. Do nothing to it.
+
+  - type: example
+    title: Working from coded totals
+    problem: |
+      The masses $x$ kg of 20 bags are summarised by $\Sigma(x - 50) = 46$ and $\Sigma(x - 50)^2 = 390$.
+      Find the mean and standard deviation of the masses.
+    steps:
+      - "Here $a = 50$ and $n = 20$. Work with the coded values first."
+      - "Coded mean: $\\dfrac{\\Sigma(x - 50)}{n} = \\dfrac{46}{20} = 2.3$."
+      - "Coded variance: $\\dfrac{\\Sigma(x - 50)^2}{n} - 2.3^2 = \\dfrac{390}{20} - 5.29 = 19.5 - 5.29 = 14.21$."
+      - "Coded standard deviation: $\\sqrt{14.21} \\approx 3.77$."
+      - "Undo the coding for the mean: the real mean is $2.3 + 50 = 52.3$ kg."
+      - "The standard deviation is unchanged by subtracting 50, so it is $3.77$ kg."
+    answer: |
+      Mean $= 52.3$ kg and standard deviation $\approx 3.77$ kg.
+
+  - type: check
+    title: Check coded data
     questions: [sc-mean-sd-coded]
 
   - type: explain
     title: Combining two data sets
-    body: |-
-      When a problem involves **two data sets** (e.g. boys and girls, before and after),
-      you often need the combined mean and/or SD.
+    body: |
+      Suppose you know the mean and standard deviation of two separate groups, and you want them for **everyone
+      together**. You **cannot** just average the two means (unless the groups are the same size), and you
+      definitely cannot average the two standard deviations.
 
-      **Combined mean:**
-      If set 1 has n₁, mean μ₁ and set 2 has n₂, mean μ₂:
-      **Combined mean = (n₁μ₁ + n₂μ₂) / (n₁ + n₂)**
+      Instead, go back to totals, because **totals just add up**:
 
-      **Combined standard deviation:**
-      You need the combined Σx and Σx²:
-      - Σx_combined = n₁μ₁ + n₂μ₂
-      - Σx²_combined = n₁(σ₁² + μ₁²) + n₂(σ₂² + μ₂²)  [since σ² = Σx²/n − μ² → Σx² = n(σ² + μ²)]
-      - n_combined = n₁ + n₂
-      Then use the formula σ = √[ Σx²/n − μ² ].
+      1. For each group, rebuild $\Sigma x = n\bar{x}$ and $\Sigma x^2 = n(\sigma^2 + \bar{x}^2)$.
+      2. Add the two $n$'s, add the two $\Sigma x$'s, and add the two $\Sigma x^2$'s.
+      3. Use the usual formulas on the combined totals.
 
   - type: example
-    title: "Example 4: combining two data sets"
-    problem: |-
-      Class A: 12 students, mean 68, SD 8.
-      Class B: 18 students, mean 72, SD 10.
-      Find the combined mean and standard deviation for all 30 students.
+    title: Combining two groups
+    problem: |
+      A class of 12 students has a mean test mark of 64 and standard deviation 6. Another class of 8 students
+      has mean 80 and standard deviation 10. Find the mean and standard deviation of all 20 marks.
     steps:
-      - |-
-        n₁ = 12, μ₁ = 68, σ₁ = 8. n₂ = 18, μ₂ = 72, σ₂ = 10.
-      - |-
-        Combined mean = (12×68 + 18×72) / 30 = (816 + 1296) / 30 = 2112 / 30 = 70.4.
-      - |-
-        Σx²₁ = 12×(8² + 68²) = 12×(64 + 4624) = 12×4688 = 56256.
-      - |-
-        Σx²₂ = 18×(10² + 72²) = 18×(100 + 5184) = 18×5284 = 95112.
-      - |-
-        Σx²_combined = 56256 + 95112 = 151368.
-      - |-
-        Combined σ = √[ 151368/30 − 70.4² ] = √[ 5045.6 − 4956.16 ] = √89.44 ≈ 9.46.
-    answer: "Combined mean = 70.4, combined SD = 9.46"
+      - "Class 1 totals: $\\Sigma x = 12 \\times 64 = 768$ and $\\Sigma x^2 = 12(6^2 + 64^2) = 12 \\times 4132 = 49584$."
+      - "Class 2 totals: $\\Sigma x = 8 \\times 80 = 640$ and $\\Sigma x^2 = 8(10^2 + 80^2) = 8 \\times 6500 = 52000$."
+      - "Combine: $n = 20$, $\\Sigma x = 768 + 640 = 1408$, $\\Sigma x^2 = 49584 + 52000 = 101584$."
+      - "Combined mean: $\\dfrac{1408}{20} = 70.4$. (Notice it is closer to 64 than to 80, because the first class is bigger.)"
+      - "Combined variance: $\\dfrac{101584}{20} - 70.4^2 = 5079.2 - 4956.16 = 123.04$."
+      - "Combined standard deviation: $\\sqrt{123.04} \\approx 11.1$. It is bigger than either class's own, because the two classes sit at different levels."
+    answer: |
+      The combined mean is $70.4$ and the combined standard deviation is about $11.1$.
 
   - type: check
-    questions: [sc-mean-sd-combined]
+    title: Check combining
+    questions: [sc-mean-sd-combined, sc-mean-sd-missing]
 
-  - type: explain
-    title: Solving problems with unknown values
-    body: |-
-      You may be given the mean and SD of a combined set and asked to find a missing
-      value or the parameters of one set. Set up equations using the formulas above and
-      solve algebraically.
+  - type: misconceptions
+    items:
+      - wrong: "For $fx^2$ I multiply $f$ by $x$ and then square the answer."
+        right: "Square the midpoint **first**, then multiply by $f$. $fx^2$ means $f \\times x^2$, not $(fx)^2$."
+      - wrong: "With coded data I should also add $a$ back onto the standard deviation."
+        right: "Subtracting the same number from every value does not change the spread. Only the mean shifts back by $a$."
+      - wrong: "The combined mean is the average of the two means."
+        right: "Only when the groups are the same size. Otherwise combine the totals: the bigger group pulls the mean towards itself."
+      - wrong: "Answers from a grouped table are exact."
+        right: "They are **estimates**, because every value was assumed to sit at its class midpoint."
 
-      **Common patterns:**
-      - Given combined mean, find n₂ or μ₂.
-      - Given combined SD, find σ₂ or n₂.
-      - Use Σx² = n(σ² + μ²) to convert between SD and Σx².
-
-  - type: example
-    title: "Example 5: finding a missing frequency"
-    problem: |-
-      Two data sets: Set 1 has 15 values, mean 20, SD 4. Combined set has 25 values,
-      mean 22. Find the mean of Set 2.
-    steps:
-      - |-
-        n₁ = 15, μ₁ = 20. n_total = 25, μ_total = 22. n₂ = 10.
-      - |-
-        Combined mean = (n₁μ₁ + n₂μ₂) / (n₁ + n₂)
-      - |-
-        22 = (15×20 + 10×μ₂) / 25
-      - |-
-        550 = 300 + 10μ₂ → 10μ₂ = 250 → μ₂ = 25.
-    answer: "Mean of Set 2 = 25."
-
-  - type: check
-    questions: [sc-mean-sd-missing]
+  - type: exam
+    body: |
+      - Lay grouped data out as a table with columns $x$ (midpoint), $f$, $fx$, $fx^2$, and show the column totals.
+      - Say "estimate" for answers from grouped data.
+      - For coded data, write down the coded mean and coded standard deviation first, then convert.
+      - When combining sets, write the rebuilt totals $\Sigma x$ and $\Sigma x^2$ for each set clearly: method marks are given for them.
 
   - type: takeaways
     items:
-      - "Grouped data: use midpoints; μ = Σfx/Σf; σ = √[Σfx²/Σf − μ²]."
-      - "From totals: μ = Σx/n; σ = √[Σx²/n − (Σx/n)²]."
-      - "Coded data (d = x−a): μₓ = a + Σd/n; σₓ = √[Σd²/n − (Σd/n)²]."
-      - "Coded data (u = (x−a)/b): μₓ = a + b·μᵤ; σₓ = |b|·σᵤ."
-      - "Combined mean = (n₁μ₁ + n₂μ₂)/(n₁+n₂)."
-      - "Combined Σx² = n₁(σ₁²+μ₁²) + n₂(σ₂²+μ₂²); then σ = √[Σx²/n − μ²]."
-      - "Use Σx² = n(σ² + μ²) to convert between SD and sum of squares."
+      - "The mean and standard deviation only need $n$, $\\Sigma x$ and $\\Sigma x^2$."
+      - "Grouped data: use class midpoints, $\\bar{x} = \\dfrac{\\Sigma fx}{\\Sigma f}$ and $\\sigma^2 = \\dfrac{\\Sigma fx^2}{\\Sigma f} - \\bar{x}^2$. The results are estimates."
+      - "Coded data $x - a$: add $a$ back to the mean; the standard deviation is unchanged."
+      - "To combine two sets, rebuild $\\Sigma x = n\\bar{x}$ and $\\Sigma x^2 = n(\\sigma^2 + \\bar{x}^2)$ for each, add the totals, then use the formulas."
 
 questions:
   - id: sc-mean-sd-grouped
     format: numeric
-    difficulty: 2
+    difficulty: 1
     objectives: ["5.1.5"]
-    prompt: "Grouped data: class 0-10 freq 4, 10-20 freq 6, 20-30 freq 10. Find the estimated mean."
+    prompt: |
+      A grouped table has classes $0$–$10$ (frequency $4$), $10$–$20$ (frequency $6$) and $20$–$30$ (frequency $10$). Estimate the mean.
     fields:
-      - answer: 18
+      - label: "mean ≈"
+        answer: 18
     explanation: |
-      Midpoints: 5, 15, 25. Σfx = 4×5 + 6×15 + 10×25 = 20 + 90 + 250 = 360. Σf = 20. Mean = 360/20 = 18.
+      The midpoints are $5, 15, 25$. $\Sigma fx = 4 \times 5 + 6 \times 15 + 10 \times 25 = 20 + 90 + 250 = 360$ and $\Sigma f = 20$, so the mean is about $\dfrac{360}{20} = 18$.
 
   - id: sc-mean-sd-sums
     format: numeric
     difficulty: 2
     objectives: ["5.1.5"]
-    prompt: n=8, Σx=72, Σx²=720. Find the population standard deviation.
+    prompt: |
+      For $8$ values, $\Sigma x = 72$ and $\Sigma x^2 = 720$. Find the standard deviation.
     fields:
-      - answer: 3
+      - label: "σ ="
+        answer: 3
     explanation: |
-      Mean = 72/8 = 9. Σx²/n = 720/8 = 90. Variance = 90 - 9² = 90 - 81 = 9. SD = √9 = 3.
+      The mean is $\dfrac{72}{8} = 9$. The variance is $\dfrac{720}{8} - 9^2 = 90 - 81 = 9$, so $\sigma = 3$.
 
   - id: sc-mean-sd-coded
     format: numeric
     difficulty: 2
     objectives: ["5.1.5"]
-    prompt: n=12, Σ(x−30)=36, Σ(x−30)²=540. Find the mean of x.
+    prompt: |
+      For $12$ values of $x$, $\Sigma(x - 30) = 36$ and $\Sigma(x - 30)^2 = 540$. Find the mean of $x$.
     fields:
-      - answer: 33
+      - label: "mean ="
+        answer: 33
     explanation: |
-      Let d = x - 30. Σd = 36, n = 12. Mean of d = 36/12 = 3. Mean of x = 30 + 3 = 33.
+      The coded mean is $\dfrac{36}{12} = 3$. Every value had $30$ subtracted, so add it back: the mean of $x$ is $3 + 30 = 33$.
 
   - id: sc-mean-sd-combined
     format: numeric
     difficulty: 2
     objectives: ["5.1.5"]
-    prompt: "Set A: n=10, mean=50, SD=5. Set B: n=15, mean=60, SD=8. Find the combined mean."
+    prompt: |
+      Set A has $10$ values with mean $50$. Set B has $15$ values with mean $60$. Find the mean of all $25$ values.
     fields:
-      - answer: 56
+      - label: "mean ="
+        answer: 56
     explanation: |
-      Combined mean = (n₁μ₁ + n₂μ₂)/(n₁+n₂) = (10×50 + 15×60)/25 = (500 + 900)/25 = 1400/25 = 56.
+      Rebuild the totals: Set A totals $10 \times 50 = 500$ and Set B totals $15 \times 60 = 900$. Altogether $\dfrac{500 + 900}{25} = \dfrac{1400}{25} = 56$. It is nearer $60$ because Set B is bigger.
 
   - id: sc-mean-sd-missing
     format: numeric
     difficulty: 2
     objectives: ["5.1.5"]
-    prompt: "Set 1: n=8, mean=15. Combined: n=20, mean=18. Find mean of Set 2."
+    prompt: |
+      Set 1 has $8$ values with mean $15$. When Set 2 is added, there are $20$ values altogether with mean $18$. Find the mean of Set 2.
     fields:
-      - answer: 20
+      - label: "mean ="
+        answer: 20
     explanation: |
-      n₂ = 20 - 8 = 12. Combined mean = (n₁μ₁ + n₂μ₂)/(n₁+n₂). 18 = (8×15 + 12×μ₂)/20. 360 = 120 + 12μ₂. 12μ₂ = 240. μ₂ = 20.
+      The combined total is $20 \times 18 = 360$ and Set 1's total is $8 \times 15 = 120$, so Set 2's total is $360 - 120 = 240$. Set 2 has $20 - 8 = 12$ values, so its mean is $\dfrac{240}{12} = 20$.
