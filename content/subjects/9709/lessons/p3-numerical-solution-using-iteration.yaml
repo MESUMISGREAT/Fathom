@@ -1,10 +1,10 @@
 id: p3-numerical-solution-using-iteration
 subject: "9709"
 topic: "3.6"
-title: Running a given iteration to find a root
-summary: Use a given iterative formula xₙ₊₁ = F(xₙ) to compute successive approximations and state the root to a prescribed accuracy.
+title: "Running an iteration to find a root"
+summary: "What an iteration formula is, why its values home in on a root, and how to run one to the accuracy a question asks for."
 order: 3
-minutes: 8
+minutes: 10
 kind: core
 objectives: ["3.6.3"]
 prerequisites: [p3-numerical-solution-approximations]
@@ -12,124 +12,156 @@ provenance:
   origin: ai-drafted
   status: draft
   notes: >-
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709
-    syllabus (2026–2027), topic 3.6 outcome "Understand how a given simple iterative formula
-    of the form xₙ₊₁ = F(xₙ) relates to the equation being solved, and use a given iteration...
-    to determine a root to a prescribed degree of accuracy". All examples, questions and
-    diagrams are original; every value and answer key was computed in Python.
+    Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
+    previous version 6/10. The previous worked examples had wrong iterates (x₄ to x₆ in Example 1 and x₅ to x₇
+    in Example 2) and the wrong root for x³ − 3x − 4 = 0 (2.193 instead of 2.196); its flowchart diagram
+    rendered as garbled text. Written against the official Cambridge International AS & A Level Mathematics
+    9709 syllabus for 2026-2027, topic 3.6 outcome 3 (how a given iterative formula relates to the equation,
+    and using it to find a root to a prescribed accuracy; convergence conditions are not required). Every
+    iterate was recomputed in Python. New diagram p3-iteration-staircase-cubic. Awaiting independent review;
+    not reviewed by a teacher.
 blocks:
   - type: objective
-    body: |-
-      By the end you can take a given iteration formula, carry out the calculations accurately, and state the root to the requested number of decimal places or significant figures.
+    body: |
+      By the end you can explain how an iteration formula is connected to the equation it solves, run the
+      iteration accurately, and state the root to the number of decimal places a question asks for.
 
   - type: explain
-    title: The routine
-    body: |-
-      Exam questions give you everything: the equation, the iteration formula xₙ₊₁ = F(xₙ), and the starting value x₁. Your job is to execute it.
+    title: Why we need this
+    body: |
+      Some equations, such as $x^3 - 3x - 4 = 0$, can't be solved exactly with algebra you know. But we can
+      still find the root as accurately as we like, by **improving a guess over and over**. That is what an
+      **iteration** does.
 
-      Standard steps:
+  - type: explain
+    title: Key to the symbols
+    body: |
+      | Symbol | Meaning |
+      | --- | --- |
+      | $x_1$ | the first guess (the question gives it to you) |
+      | $x_2, x_3, x_4, \ldots$ | the second, third, fourth... approximations |
+      | $x_n$ | the approximation at step $n$ (any step) |
+      | $x_{n+1}$ | the **next** approximation, worked out from $x_n$ |
+      | $F$ | the function in the iteration formula |
+      | $\alpha$ | the true root we are aiming for (the Greek letter alpha) |
 
-      1. **Substitute** x₁ into F(xₙ) to get x₂. Write it down.
-      2. **Substitute** x₂ to get x₃. Write it down.
-      3. **Continue** until two consecutive values agree to the required accuracy (usually 2–4 d.p. or 3–4 s.f.).
-      4. **State the root** clearly: "The root is 1.414 (3 d.p.)" or "α = 2.09 (2 d.p.)".
+  - type: explain
+    title: How an iteration formula works
+    body: |
+      An iteration formula looks like
 
-      **Tip:** keep 5–6 decimal places in your working, even if the answer only needs 2–3. Rounding too early accumulates error.
+      $$x_{n+1} = F(x_n)$$
+
+      Read it as: **"to get the next value, put the current value into $F$."** Start with $x_1$, put it in to get
+      $x_2$, put $x_2$ in to get $x_3$, and so on. Each output becomes the next input.
+
+      **Where does $F$ come from?** From rearranging the equation into the form $x = F(x)$. For example:
+
+      $$x^3 - 3x - 4 = 0 \;\Rightarrow\; x^3 = 3x + 4 \;\Rightarrow\; x = \sqrt[3]{3x + 4}$$
+
+      So the iteration $x_{n+1} = \sqrt[3]{3x_n + 4}$ comes from this equation.
+
+      **Why does it find the root?** If the values settle down to a single number $\alpha$, then for large $n$
+      both $x_n$ and $x_{n+1}$ are (almost exactly) $\alpha$. Putting that into the formula gives
+      $\alpha = F(\alpha)$, which is the rearranged equation. So the number the values settle at **is a root
+      of the equation**.
+
+      The diagram shows this as a "staircase". Each step goes up to the curve $y = F(x)$ (working out the next
+      value) and across to the line $y = x$ (making that output the next input). The steps shrink as they close
+      in on the point where the curve meets the line, and that point is the root.
 
   - type: diagram
-    diagram: p3-numerical-solution-iteration-steps
-    alt: >-
-      Flow chart: Start with equation f(x) = 0 → rearrange to x = F(x) → choose x₁ → iterate
-      x₂ = F(x₁), x₃ = F(x₂)… → check if consecutive values agree to required accuracy → state root.
-    caption: |-
-      The standard workflow: given the iteration, just compute until the values settle.
+    diagram: p3-iteration-staircase-cubic
+    alt: "Graph of y = x and of y equals the cube root of 3x + 4 for x between 1.95 and 2.25, crossing at alpha about 2.196. A staircase starts at x1 = 2, goes up to the curve, across to the line at x2 about 2.154, up to the curve, across to x3 about 2.187, and so on, with the steps shrinking towards the crossing point."
+    caption: |
+      Up to the curve, across to the line: each step lands on the next value. The steps get smaller and close
+      in on $\alpha$, where $x = \sqrt[3]{3x + 4}$.
+
+  - type: explain
+    title: Running it, and knowing when to stop
+    body: |
+      1. Put $x_1$ into $F$ to get $x_2$. Write it down. Use your calculator's **Ans** key so you never retype a
+         rounded number: type $x_1$, press equals, then type the formula using Ans and press equals repeatedly.
+      2. Write down each value to **more** decimal places than the final answer needs (two extra is plenty).
+      3. **Stop when two values in a row round to the same answer** at the accuracy asked for. That rounded
+         value is the root.
+
+      Why does that rule work? Once two successive values agree to, say, 3 decimal places, the steps have
+      become smaller than the size of that rounding, so later values won't change the 3-decimal-place answer.
 
   - type: example
-    title: "Example 1: basic cubic"
-    problem: |-
-      The iteration xₙ₊₁ = ∛(3xₙ + 4) with x₁ = 2 is used to find a root of x³ − 3x − 4 = 0.
-      Find x₂, x₃, x₄ and state the root correct to 3 decimal places.
+    title: Running a cube-root iteration
+    problem: |
+      Use the iteration $x_{n+1} = \sqrt[3]{3x_n + 4}$ with $x_1 = 2$ to find the root of $x^3 - 3x - 4 = 0$
+      correct to 3 decimal places. Give each iterate to 5 decimal places.
     steps:
-      - |-
-        x₂ = ∛(3×2 + 4) = ∛10 = 2.15443469…
-      - |-
-        x₃ = ∛(3×2.15443469… + 4) = ∛10.463304… = 2.186833…
-      - |-
-        x₄ = ∛(3×2.186833… + 4) = ∛10.5605… = 2.19237…
-      - |-
-        x₅ = ∛(3×2.19237… + 4) = ∛10.5771… = 2.19307…
-      - |-
-        x₆ = ∛(3×2.19307… + 4) = ∛10.5792… = 2.19315…
-      - |-
-        x₅ and x₆ both round to 2.193 (3 d.p.). The root is 2.193.
-    answer: |-
-      x₂ ≈ 2.15443, x₃ ≈ 2.18683, x₄ ≈ 2.19237. The root is 2.193 (3 d.p.).
+      - "$x_2 = \\sqrt[3]{3(2) + 4} = \\sqrt[3]{10} = 2.15443$."
+      - "$x_3 = \\sqrt[3]{3(2.15443) + 4} = 2.18721$. (On a calculator, the value used is the unrounded Ans.)"
+      - "$x_4 = 2.19404$, then $x_5 = 2.19545$, $x_6 = 2.19575$, $x_7 = 2.19581$."
+      - "Round each to 3 d.p.: $x_5 \\to 2.195$, $x_6 \\to 2.196$, $x_7 \\to 2.196$. $x_6$ and $x_7$ agree, so stop."
+      - "Check it really is a root: $2.196^3 - 3(2.196) - 4 = 10.590 - 6.588 - 4 \\approx 0.002$, very close to $0$ ✓"
+    answer: |
+      The root is $2.196$ to 3 decimal places.
 
   - type: check
+    title: Check running an iteration
     questions: [iter-compute, iter-stop-rule]
 
   - type: example
-    title: "Example 2: finding a negative root"
-    problem: |-
-      The equation x³ + 2x + 1 = 0 has a root near x = −0.5. The iteration xₙ₊₁ = −(xₙ³ + 1)/2 with x₁ = −0.5 is used. Find the root to 3 d.p.
+    title: A root that is negative
+    problem: |
+      The equation $x^3 + 2x + 1 = 0$ has a root near $-0.5$. Show that the equation can be rearranged as
+      $x = -\dfrac{x^3 + 1}{2}$, and use the iteration $x_{n+1} = -\dfrac{x_n^3 + 1}{2}$ with $x_1 = -0.5$ to find
+      the root correct to 3 decimal places.
     steps:
-      - |-
-        x₂ = −((−0.5)³ + 1)/2 = −(−0.125 + 1)/2 = −0.875/2 = −0.4375
-      - |-
-        x₃ = −((−0.4375)³ + 1)/2 = −(−0.08374… + 1)/2 = −0.91626…/2 = −0.45813…
-      - |-
-        x₄ = −((−0.45813…)³ + 1)/2 = −(−0.09617… + 1)/2 = −0.45191…
-      - |-
-        x₅ = −0.45340…, x₆ = −0.45316…, x₇ = −0.45320…
-      - |-
-        x₆ and x₇ agree to 3 d.p. (−0.453). The root is −0.453.
-    answer: |-
-      x₂ = −0.4375, x₃ ≈ −0.45813, x₄ ≈ −0.45191. The root is −0.453 (3 d.p.).
+      - "Rearrange: $x^3 + 2x + 1 = 0$ gives $2x = -(x^3 + 1)$, so $x = -\\dfrac{x^3 + 1}{2}$ ✓"
+      - "$x_2 = -\\dfrac{(-0.5)^3 + 1}{2} = -\\dfrac{-0.125 + 1}{2} = -0.4375$. Brackets around the negative number matter: $(-0.5)^3 = -0.125$."
+      - "$x_3 = -0.45813$, $x_4 = -0.45192$, $x_5 = -0.45385$, $x_6 = -0.45326$, $x_7 = -0.45344$."
+      - "Notice the values go up and down alternately, but each swing is smaller: they are closing in from both sides."
+      - "To 3 d.p.: $x_5 \\to -0.454$, $x_6 \\to -0.453$, $x_7 \\to -0.453$. $x_6$ and $x_7$ agree, so stop."
+    answer: |
+      The root is $-0.453$ to 3 decimal places.
 
   - type: intuition
-    title: What if it doesn't settle?
-    body: |-
-      Sometimes the values bounce or drift away. The syllabus says: "candidates are expected to understand that an iteration may fail to converge." If the question gives you the formula, it will converge. If you're rearranging yourself (next lesson), you need to pick a form that does.
-
-      **Exam hint:** if your values are getting larger in magnitude, or alternating wildly without closing in, check your algebra. You may have mis-copied the formula or the starting value.
+    title: What if the values don't settle?
+    body: |
+      Not every rearrangement works. Sometimes the values wander off or jump about more and more wildly. That
+      is called **failing to converge** (to **converge** means to settle down to a single value). If that
+      happens with a formula an exam gives you, first check your typing, especially brackets around negative
+      numbers. The next lesson shows how one equation can have several rearrangements, some that settle and
+      some that don't.
 
   - type: misconceptions
     items:
-      - wrong: |-
-          The iteration always gives the root exactly after a few steps.
-        right: |-
-          The sequence approaches the root. You stop when consecutive terms agree to the requested accuracy. You never get the "exact" root in finitely many steps (unless the root is rational and the iteration hits it exactly, which is rare).
-      - wrong: |-
-          Round each step to the final accuracy (e.g., 3 d.p.) as you go.
-        right: |-
-          Rounding early creates rounding error. Keep 5–6 d.p. in working; only round the final answer.
-      - wrong: |-
-          xₙ₊₁ = F(xₙ) means xₙ = F(xₙ₊₁) (reversing the formula).
-        right: |-
-          The subscript order matters. xₙ₊₁ is the *next* value, computed from xₙ. You cannot run it backwards.
-      - wrong: |-
-          If x₁ = 2 and x₂ = 2.15, the root is roughly 2.15.
-        right: |-
-          x₂ is just the second approximation. You need several more steps to see where it settles. x₂ can be quite far from the true root.
+      - wrong: "I'll round each value to 3 d.p. before putting it back in."
+        right: "Keep full accuracy (use Ans). Rounding as you go adds errors that can change the final digit."
+      - wrong: "I stop as soon as one value looks right."
+        right: "Stop when **two successive** values round to the same answer at the required accuracy."
+      - wrong: "$x_2$ is already a good estimate of the root."
+        right: "$x_2$ is just the first improvement. It can still be well away from the root; keep going until the values settle."
+      - wrong: "The value the iteration settles on might not be a root of the equation."
+        right: "If it settles at $\\alpha$, then $\\alpha = F(\\alpha)$, and $x = F(x)$ is just the equation rearranged. So $\\alpha$ is a root."
+
+  - type: exam
+    body: |
+      - Show every iterate, written to the number of decimal places the question asks for (often 4 or 5).
+      - State the final answer clearly to the required accuracy, for example "$\alpha = 2.196$ (3 d.p.)".
+      - Questions often ask you to "show that" an equation rearranges to the iteration formula first. Show each algebra step.
 
   - type: takeaways
     items:
-      - |-
-        Follow the recipe: compute x₂, x₃, x₄… until consecutive values agree to the required accuracy.
-      - |-
-        Keep 5–6 decimal places in working; round only the final answer.
-      - |-
-        Write down every value you compute — it shows the examiner the sequence is converging.
-      - |-
-        State the root clearly with the requested precision and units if applicable.
+      - "An iteration $x_{n+1} = F(x_n)$ feeds each output back in as the next input."
+      - "$F$ comes from rearranging the equation into $x = F(x)$, so the value the iteration settles at is a root."
+      - "Keep full accuracy in working (use Ans); stop when two successive values agree to the required accuracy."
+      - "Some rearrangements don't settle (they fail to converge)."
 
 questions:
   - id: iter-compute
     format: numeric
     difficulty: 1
     objectives: ["3.6.3"]
-    prompt: |-
-      xₙ₊₁ = √(2xₙ + 5) with x₁ = 2. Find x₂ and x₃.
+    prompt: |
+      Use the iteration $x_{n+1} = \sqrt{2x_n + 5}$ with $x_1 = 2$ to find $x_2$ and $x_3$.
     fields:
       - label: "x₂ ="
         answer: 3
@@ -137,28 +169,24 @@ questions:
       - label: "x₃ ="
         answer: 3.31662479
         tolerance: { rel: 0.001 }
-    explanation: |-
-      x₂ = √(2×2 + 5) = √9 = 3. x₃ = √(2×3 + 5) = √11 ≈ 3.31662479.
+    explanation: |
+      $x_2 = \sqrt{2(2) + 5} = \sqrt9 = 3$. Then $x_3 = \sqrt{2(3) + 5} = \sqrt{11} \approx 3.3166$.
 
   - id: iter-stop-rule
     format: mcq
     difficulty: 1
     objectives: ["3.6.3"]
-    prompt: |-
-      You are using an iteration to find a root correct to 2 decimal places. You have x₄ = 1.41421 and x₅ = 1.41421. What should you do?
+    prompt: |
+      You are finding a root correct to 2 decimal places. You have $x_4 = 1.41421$ and $x_5 = 1.41421$. What should you do?
     options:
-      - text: Stop and state the root as 1.41 (2 d.p.)
+      - text: "Stop, and state the root as $1.41$"
         correct: true
-        why: |-
-          Consecutive values agree to at least 4 d.p., which guarantees they agree to 2 d.p. The root is 1.41.
-      - text: Continue to x₆ to be safe
-        why: |-
-          Unnecessary. If consecutive values agree to the required accuracy (and a couple more places), you can stop.
-      - text: State the root as 1.41421
-        why: |-
-          The question asks for 2 d.p., not the full calculator display.
-      - text: Check x₃ to see if it was different
-        why: |-
-          The convergence check is between consecutive terms. If x₄ and x₅ agree, you're done.
+        why: "Two successive values agree to 5 decimal places, which is more than the 2 needed. The root is $1.41$ to 2 d.p."
+      - text: "Work out $x_6$ to be safe"
+        why: "There's no need: two successive values already agree to the required accuracy."
+      - text: "State the root as $1.41421$"
+        why: "The question asks for 2 decimal places, so round to $1.41$."
+      - text: "Go back and check $x_3$"
+        why: "The stopping test only compares successive values, and $x_4$ and $x_5$ already agree."
     explanation: |
-      When two successive iterates agree to more decimal places than required, the root is stable to that accuracy: $1.41421$ is $1.41$ to 2 decimal places.
+      When two successive iterates agree to the required accuracy, stop: $1.41421$ is $1.41$ to 2 decimal places.

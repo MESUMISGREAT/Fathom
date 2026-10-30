@@ -36,7 +36,7 @@ export function P3AlgebraBinomialValidity() {
         <g key={t}>
           <line x1={sx(t)} y1={AXIS_Y} x2={sx(t)} y2={AXIS_Y + 6} className="dg-muted" />
           <Label x={sx(t)} y={AXIS_Y + 22} className="dg-text-small dg-text-muted">
-            {t < 0 ? `\u2212${Math.abs(t)}` : t}
+            {t < 0 ? `\−${Math.abs(t)}` : t}
           </Label>
         </g>
       ))}

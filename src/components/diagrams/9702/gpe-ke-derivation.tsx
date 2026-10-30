@@ -21,7 +21,7 @@ const steps = [
   },
   {
     tex: 'F = ma \\Rightarrow W = mas',
-    note: 'Newton\u2019s second law replaces the force',
+    note: 'Newton\’s second law replaces the force',
     h: 62,
   },
   {

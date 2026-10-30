@@ -12,8 +12,8 @@ const H = 330;
 const states = [
   { x: 96, name: 'carbon', form: 'graphite' },
   { x: 236, name: 'water', form: 'liquid' },
-  { x: 376, name: 'oxygen', form: 'O\u2082 gas' },
-  { x: 516, name: 'bromine', form: 'Br\u2082 liquid' },
+  { x: 376, name: 'oxygen', form: 'O\₂ gas' },
+  { x: 516, name: 'bromine', form: 'Br\₂ liquid' },
 ];
 
 export function EnthalpyChangeStandardState() {

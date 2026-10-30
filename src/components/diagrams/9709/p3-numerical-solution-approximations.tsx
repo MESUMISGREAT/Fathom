@@ -1,6 +1,6 @@
 /**
- * Number line showing successive approximations converging to \u221a2.
- * x\u2081 = 1, x\u2082 = 1.5, x\u2083 \u2248 1.4167, x\u2084 \u2248 1.4142 cluster around \u03b1 = \u221a2 \u2248 1.41421356.
+ * Number line showing successive approximations converging to \√2.
+ * x\₁ = 1, x\₂ = 1.5, x\₃ \≈ 1.4167, x\₄ \≈ 1.4142 cluster around \α = \√2 \≈ 1.41421356.
  */
 import { Label, MathLabel, Svg } from '../primitives';
 
@@ -65,7 +65,7 @@ export default function P3NumericalSolutionApproximations() {
         tiny
       </Label>
       <Label x={W / 2} y={H - 20} className="dg-text-small dg-bold">
-        The sequence x\u2081, x\u2082, x\u2083, x\u2084 \u2026 closes in on \u03b1.
+        The sequence x\₁, x\₂, x\₃, x\₄ \… closes in on \α.
       </Label>
     </Svg>
   );

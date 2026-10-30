@@ -1,5 +1,5 @@
 /**
- * Flow diagram: equation \u2192 rearrangement \u2192 choose x\u2081 \u2192 iterate \u2192 check convergence \u2192 state root.
+ * Flow diagram: equation \→ rearrangement \→ choose x\₁ \→ iterate \→ check convergence \→ state root.
  */
 import { Label, MathLabel, Svg, Arrow } from '../primitives';
 
@@ -15,10 +15,10 @@ const Y = 60;
 const steps = [
   { id: 0, text: 'Equation\\\\nf(x) = 0' },
   { id: 1, text: 'Rearrange to\\\\nx = F(x)' },
-  { id: 2, text: 'Choose\\\\nx\u2081' },
-  { id: 3, text: 'Iterate\\\\nx\u2082 = F(x\u2081)\\\\nx\u2083 = F(x\u2082)\u2026' },
-  { id: 4, text: 'Check\\\\n|x\u2099 \u2212 x\u2099\u208a\u2081| < tol' },
-  { id: 5, text: 'State root\\\\n\u03b1 = \u2026' },
+  { id: 2, text: 'Choose\\\\nx\₁' },
+  { id: 3, text: 'Iterate\\\\nx\₂ = F(x\₁)\\\\nx\₃ = F(x\₂)\…' },
+  { id: 4, text: 'Check\\\\n|x\ₙ \− x\ₙ\₊\₁| < tol' },
+  { id: 5, text: 'State root\\\\n\α = \…' },
 ];
 
 function ArrowRight({ x, y, length = 20, className = 'dg-accent' }: { x: number; y: number; length?: number; className?: string }) {
@@ -72,7 +72,7 @@ export default function P3NumericalSolutionIterationSteps() {
         })}
       </g>
       <Label x={W / 2} y={H - 14} className="dg-text-small dg-bold">
-        Given the iteration formula, you only run steps 3\u20135.
+        Given the iteration formula, you only run steps 3\–5.
       </Label>
     </Svg>
   );

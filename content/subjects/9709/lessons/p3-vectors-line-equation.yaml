@@ -1,10 +1,10 @@
 id: p3-vectors-line-equation
 subject: "9709"
 topic: "3.7"
-title: The vector equation of a line — r = a + tb
-summary: Understand every symbol in the line equation r = a + tb. Learn to write the equation given a point and direction, or two points, and find points on the line.
+title: "The vector equation of a line: r = a + tb"
+summary: "What each symbol in r = a + tb means, how to write the equation of a line from a point and a direction or from two points, and how to test whether a point is on a line."
 order: 4
-minutes: 8
+minutes: 10
 kind: core
 objectives: ["3.7.4"]
 prerequisites: [p3-vectors-magnitude-unit]
@@ -12,226 +12,224 @@ provenance:
   origin: ai-drafted
   status: draft
   notes: >-
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709
-    syllabus (2026–2027), topic 3.7 outcome "Understand the significance of all the symbols
-    used when the equation of a straight line is written in the form r = a + tb, and find
-    the equation of a line given sufficient information. For example, finding the equation
-    of a line given the position vector of a point on it and a direction vector, or given
-    the position vectors of two points on it." All examples, questions and diagrams are original.
+    Redrafted from scratch on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the
+    previous version 6/10 (vectors in plain text, the letter b used both for the direction vector and for the
+    position vector of point B, and off-syllabus material on planes and distances). Written against the
+    official Cambridge International AS & A Level Mathematics 9709 syllabus for 2026-2027, topic 3.7 outcome 4
+    (the significance of every symbol in r = a + tb, and finding the equation of a line from sufficient
+    information). The three questions were kept and typeset. Awaiting independent review; not reviewed by a
+    teacher.
 blocks:
   - type: objective
-    body: |-
-      By the end you can write the vector equation of a line in the form r = a + tb, identify what a, b, and t represent, and find the equation from a point and direction or from two points.
+    body: |
+      By the end you can say what $\mathbf{r}$, $\mathbf{a}$, $\mathbf{b}$ and $t$ each mean in
+      $\mathbf{r} = \mathbf{a} + t\mathbf{b}$, write the equation of a line from a point and a direction or from
+      two points, and check whether a point lies on a line.
 
   - type: explain
-    title: The equation r = a + tb unpacked
-    body: |-
-      The vector equation of a straight line in 2D or 3D is:
+    title: Describing a line with vectors
+    body: |
+      In 2D you describe a line with $y = mx + c$. In 3D that doesn't work: there is no single "gradient",
+      because a line can tilt in two ways at once. Vectors solve this neatly.
 
-      **r = a + tb**
+      To pin down a line you need two things:
 
-      Here:
-      - **r** = the position vector of *any point* on the line. It's the "running variable" — as t changes, r traces out the whole line.
-      - **a** = the position vector of a **specific known point** on the line (often called the "base point" or "anchor point"). This fixes where the line is in space.
-      - **b** = a **direction vector** for the line. Any non-zero vector parallel to the line works. This fixes the line's orientation.
-      - **t** = a **scalar parameter** (real number). As t varies from -∞ to +∞, the point r moves along the entire line.
+      1. **A point it passes through.** That tells you **where** the line is.
+      2. **A direction.** That tells you **which way** it goes.
 
-      **Think of it as:** Start at point A (position vector a). Walk in the direction of b. The distance you walk is controlled by t. When t = 0, you're at A. When t = 1, you're at A + b. When t = -1, you're at A - b (backwards along the line).
+      Think of giving directions to a friend: "Start at the post office, then walk north-east. Every place you
+      can reach that way, forwards or backwards, is on the line."
+
+  - type: explain
+    title: What each symbol means
+    body: |
+      The vector equation of a line is
+
+      $$\mathbf{r} = \mathbf{a} + t\mathbf{b}$$
+
+      | Symbol | Meaning |
+      | --- | --- |
+      | $\mathbf{a}$ | the **position vector** of one fixed point $A$ on the line: the arrow from the origin $O$ to $A$ |
+      | $\mathbf{b}$ | a **direction vector**: any non-zero vector pointing along the line |
+      | $t$ | a **parameter**: an ordinary number that you are free to choose, positive, negative or zero |
+      | $\mathbf{r}$ | the position vector of the point you reach for that choice of $t$ |
+
+      Bold letters are vectors (in handwriting, underline them). A vector in 3D has three components, written as
+      a column, such as $\begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$, or as $2\mathbf{i} - \mathbf{j} + 3\mathbf{k}$.
+
+      **How to read it:** start at $A$ (that's $\mathbf{a}$), then travel $t$ lots of $\mathbf{b}$.
+
+      - $t = 0$ gives $\mathbf{r} = \mathbf{a}$: you stay at $A$.
+      - $t = 1$ gives $\mathbf{a} + \mathbf{b}$: one step along the direction.
+      - $t = 2$ is two steps; $t = -1$ is one step **backwards**; $t = 0.5$ is half a step.
+
+      As $t$ runs through every real number, $\mathbf{r}$ visits **every point on the line**, and no others.
 
   - type: diagram
     diagram: p3-vectors-line-equation
     alt: >-
-      A line in 3D space. Point A with position vector a is marked. A direction vector b is shown
-      along the line. The running point r = a + tb is shown for t = 0, t = 1, t = 2, t = -1.
-    caption: |-
-      The line r = a + tb. The parameter t slides the point r along the line. a is the anchor; b gives the direction.
+      A straight line with an anchor point marked a at t = 0. A direction arrow b points along the line.
+      Further points along the line are labelled t = 1 and t = 2 in the direction of b, and t = -1 in the
+      opposite direction.
+    caption: |
+      Start at $\mathbf{a}$ and move along $\mathbf{b}$. Each value of $t$ picks out one point; together they
+      make up the whole line.
 
   - type: example
-    title: "Example 1: from point and direction"
-    problem: |-
-      Find the vector equation of the line through the point A(2, -1, 3) with direction vector b = 4i - 2j + k.
+    title: From a point and a direction
+    problem: |
+      Find a vector equation of the line through the point $A(2, -1, 3)$ that is parallel to the vector
+      $4\mathbf{i} - 2\mathbf{j} + \mathbf{k}$.
     steps:
-      - |-
-        The position vector of A is a = (2, -1, 3) or 2i - j + 3k.
-      - |-
-        The direction vector is b = (4, -2, 1) or 4i - 2j + k.
-      - |-
-        Equation: r = (2i - j + 3k) + t(4i - 2j + k).
-    answer: |-
-      r = (2i - j + 3k) + t(4i - 2j + k)  or  r = ((2, -1, 3) + t(4, -2, 1))
+      - |
+        The point gives the position vector $\mathbf{a} = \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$ (coordinates become components).
+      - |
+        "Parallel to" means "going in the same direction as", so the direction vector is $\mathbf{b} = \begin{pmatrix} 4 \\ -2 \\ 1 \end{pmatrix}$.
+      - |
+        Put them into $\mathbf{r} = \mathbf{a} + t\mathbf{b}$: $\mathbf{r} = \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix} + t\begin{pmatrix} 4 \\ -2 \\ 1 \end{pmatrix}$.
+    answer: |
+      $\mathbf{r} = \begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix} + t\begin{pmatrix} 4 \\ -2 \\ 1 \end{pmatrix}$, or equally
+      $\mathbf{r} = (2\mathbf{i} - \mathbf{j} + 3\mathbf{k}) + t(4\mathbf{i} - 2\mathbf{j} + \mathbf{k})$.
 
   - type: check
+    title: Check point and direction
     questions: [vec-line-from-point-dir]
 
   - type: explain
-    title: From two points on the line
-    body: |-
-      If you know two points A and B on the line, their position vectors are a and b. Then:
+    title: From two points
+    body: |
+      If you know two points $P$ and $Q$ on the line, you have everything you need:
 
-      **Direction vector** = b - a (or a - b, either works — it just reverses the direction).
+      - **A point:** use either one, say $P$.
+      - **A direction:** the journey from $P$ to $Q$ points along the line. In vectors, the journey from $P$ to
+        $Q$ is $\overrightarrow{PQ} = \mathbf{q} - \mathbf{p}$ ("where you end minus where you start"), where
+        $\mathbf{p}$ and $\mathbf{q}$ are the position vectors of $P$ and $Q$.
 
-      **Base point** = a (or b, either works).
+      So the line is $\mathbf{r} = \mathbf{p} + t(\mathbf{q} - \mathbf{p})$.
 
-      So the equation can be:
-      - r = a + t(b - a)  (using A as base, AB as direction)
-      - r = b + t(a - b)  (using B as base, BA as direction)
-
-      Both describe the same line. The parameter t will have different values for the same point, but the set of points is identical.
+      **One line, many equations.** You could start at $Q$ instead, or use $\overrightarrow{QP}$, or double the
+      direction vector. All of these describe the same line; only the value of $t$ at each point changes. So
+      don't panic if your answer looks different from someone else's.
 
   - type: example
-    title: "Example 2: from two points"
-    problem: |-
-      Find the vector equation of the line through A(1, 2, -1) and B(4, 0, 3).
+    title: From two points
+    problem: |
+      Find a vector equation of the line through $P(1, 2, -1)$ and $Q(4, 0, 3)$.
     steps:
-      - |-
-        a = (1, 2, -1), b = (4, 0, 3).
-      - |-
-        Direction = b - a = (3, -2, 4).
-      - |-
-        Using A as base: r = (1, 2, -1) + t(3, -2, 4).
-    answer: |-
-      r = (1, 2, -1) + t(3, -2, 4)  or equivalently  r = (4, 0, 3) + t(-3, 2, -4)
+      - |
+        Position vectors: $\mathbf{p} = \begin{pmatrix} 1 \\ 2 \\ -1 \end{pmatrix}$ and $\mathbf{q} = \begin{pmatrix} 4 \\ 0 \\ 3 \end{pmatrix}$.
+      - |
+        Direction: $\overrightarrow{PQ} = \mathbf{q} - \mathbf{p} = \begin{pmatrix} 4 - 1 \\ 0 - 2 \\ 3 - (-1) \end{pmatrix} = \begin{pmatrix} 3 \\ -2 \\ 4 \end{pmatrix}$.
+      - |
+        Start at $P$: $\mathbf{r} = \begin{pmatrix} 1 \\ 2 \\ -1 \end{pmatrix} + t\begin{pmatrix} 3 \\ -2 \\ 4 \end{pmatrix}$.
+      - |
+        Check: $t = 1$ should give $Q$. $\begin{pmatrix} 1 + 3 \\ 2 - 2 \\ -1 + 4 \end{pmatrix} = \begin{pmatrix} 4 \\ 0 \\ 3 \end{pmatrix}$ ✓
+    answer: |
+      $\mathbf{r} = \begin{pmatrix} 1 \\ 2 \\ -1 \end{pmatrix} + t\begin{pmatrix} 3 \\ -2 \\ 4 \end{pmatrix}$
 
   - type: check
+    title: Check two points
     questions: [vec-line-from-two-points]
 
   - type: explain
-    title: Finding points on the line
-    body: |-
-      Once you have r = a + tb, finding points is just substitution:
-      - For a given t, compute r = a + tb → that's the position vector of the point.
-      - For a given point P, check if there exists a t such that p = a + tb (solve for t in each component; all must give the same t).
+    title: Is a point on the line?
+    body: |
+      A point is on the line only if **one single value of $t$** takes you there. Write the line's general point
+      as a column, set it equal to the point, and solve for $t$ from each row:
 
-      **Special values of t:**
-      - t = 0 → r = a (the base point)
-      - t = 1 → r = a + b (one "step" in the direction of b)
-      - The midpoint of AB (if b = B - A) is at t = 1/2.
+      - If **every row gives the same $t$**, the point is on the line.
+      - If the rows disagree, there is no single $t$ that works, so the point is **not** on the line.
 
   - type: example
-    title: "Example 3: checking if a point lies on a line"
-    problem: |-
-      The line L has equation r = (i + 2j - k) + t(2i - j + 3k). Does the point P(5, 0, 5) lie on L?
+    title: Testing a point
+    problem: |
+      Does the point $(5, 0, 5)$ lie on the line $\mathbf{r} = \begin{pmatrix} 1 \\ 2 \\ -1 \end{pmatrix} + t\begin{pmatrix} 2 \\ -1 \\ 3 \end{pmatrix}$?
+      What about $(5, 1, 5)$?
     steps:
-      - |-
-        We need p = a + tb for some t. p = (5, 0, 5), a = (1, 2, -1), b = (2, -1, 3).
-      - |-
-        Solve for t in each component:
-        5 = 1 + 2t  →  2t = 4  →  t = 2
-        0 = 2 - t  →  t = 2
-        5 = -1 + 3t  →  3t = 6  →  t = 2
-      - |-
-        All three give t = 2. Consistent! So P lies on L (at parameter t = 2).
-    answer: |-
-      Yes, P lies on L with t = 2.
+      - |
+        The general point on the line is $\begin{pmatrix} 1 + 2t \\ 2 - t \\ -1 + 3t \end{pmatrix}$.
+      - |
+        For $(5, 0, 5)$: first row $1 + 2t = 5$ gives $t = 2$. Second row $2 - t = 0$ gives $t = 2$. Third row $-1 + 3t = 5$ gives $t = 2$. All agree, so $(5, 0, 5)$ **is** on the line.
+      - |
+        For $(5, 1, 5)$: the first row still gives $t = 2$, but the second row $2 - t = 1$ gives $t = 1$. They disagree, so $(5, 1, 5)$ is **not** on the line.
+    answer: |
+      $(5, 0, 5)$ is on the line (at $t = 2$); $(5, 1, 5)$ is not.
 
   - type: check
+    title: Check testing a point
     questions: [vec-point-on-line]
-
-  - type: intuition
-    title: Why this form is so useful
-    body: |-
-      The parametric form r = a + tb is perfect for:
-      - **Intersections:** Set two line equations equal and solve for parameters.
-      - **Distances:** The perpendicular distance from a point to a line uses the direction vector b.
-      - **Angles:** The angle between two lines is the angle between their direction vectors.
-      - **3D geometry:** It extends naturally to planes (r = a + λb + μc).
-
-      In Cartesian form (y = mx + c or ax + by + c = 0), vertical lines are a problem. In vector form, **every line works the same way** — including lines parallel to the z-axis, or lines in 3D.
 
   - type: misconceptions
     items:
-      - wrong: |-
-          a is the direction vector and b is the point.
-        right: |-
-          a is the position vector of a point on the line (the anchor). b is the direction vector. The letters are conventional; what matters is their role.
-      - wrong: |-
-          t must be between 0 and 1.
-        right: |-
-          t is any real number: -∞ < t < ∞. t = 0 gives the base point; t = 1 gives one step in direction b; negative t goes backwards.
-      - wrong: |-
-          The direction vector must be a unit vector.
-        right: |-
-          Any non-zero vector parallel to the line works. Using a unit vector makes t equal the distance from the base point, but it's not required.
-      - wrong: |-
-          r = a + tb and r = b + ta are different lines.
-        right: |-
-          If you swap the roles, you get the same line but with a different parameterisation. The set of points is identical.
-      - wrong: |-
-          The vector b is the position vector of a point on the line.
-        right: |-
-          b is a direction vector. It has no fixed position — it just says "go this way". Its tail is conceptually at the origin, but it represents a direction, not a location.
+      - wrong: "$t$ has to be between 0 and 1."
+        right: "$t$ can be any real number. Values between 0 and 1 only give the points between $A$ and the end of one step of $\\mathbf{b}$."
+      - wrong: "In $\\mathbf{r} = \\mathbf{a} + t\\mathbf{b}$, $\\mathbf{b}$ is the position vector of a second point $B$."
+        right: "$\\mathbf{b}$ is a **direction**. If you know a second point $Q$, the direction is $\\mathbf{q} - \\mathbf{p}$, not $\\mathbf{q}$ itself."
+      - wrong: "A point is on the line if one row of the working gives a value of $t$."
+        right: "Every row must give the **same** $t$."
+      - wrong: "My equation is wrong because it doesn't match the answer in the book."
+        right: "A line has many correct equations: any point on it, and any multiple of the direction vector, will do."
 
   - type: exam
-    body: |-
-      - "Find the vector equation of the line through... and parallel to..." → a = point, b = given direction.
-      - "Find the vector equation of the line through A and B" → a = A, b = B - A (or vice versa).
-      - "Show that the point P lies on the line r = a + tb" → solve p = a + tb for t; check consistency.
-      - "Find the coordinates of the point on the line where t = 3" → substitute t = 3 into r = a + tb.
-      - Always write your final answer clearly as r = a + tb with a and b in component or i/j/k form.
+    body: |
+      - Always write "$\mathbf{r} =$" at the start of a line's equation; without it, it's just an expression.
+      - When a question names a parameter (such as $\lambda$ or $\mu$), use that letter.
+      - To show a point lies on a line, write out the value of $t$ from every row and state that they agree.
 
   - type: takeaways
     items:
-      - |-
-        r = a + tb: r = running point, a = anchor point, b = direction, t = parameter.
-      - |-
-        From point A and direction d: r = a + td.
-      - |-
-        From two points A, B: r = a + t(b - a) or r = b + t(a - b).
-      - |-
-        t ∈ ℝ. t = 0 gives the anchor point a.
-      - |-
-        This form works for all lines in 2D and 3D, including vertical/horizontal/skew lines.
+      - "$\\mathbf{r} = \\mathbf{a} + t\\mathbf{b}$: start at the point $\\mathbf{a}$ and move $t$ lots of the direction $\\mathbf{b}$."
+      - "$t$ is any real number; each value gives one point on the line."
+      - "Through two points $P$ and $Q$: use $\\mathbf{p}$ as the point and $\\mathbf{q} - \\mathbf{p}$ as the direction."
+      - "A point lies on the line only if every row gives the same $t$."
 
 questions:
   - id: vec-line-from-point-dir
     format: text
     difficulty: 1
     objectives: ["3.7.4"]
-    prompt: |-
-      Write the vector equation of the line through the point with position vector 3i - 2j + k and parallel to the vector 2i + j - 4k.
+    prompt: |
+      Write a vector equation of the line through the point with position vector $3\mathbf{i} - 2\mathbf{j} + \mathbf{k}$, parallel to the vector $2\mathbf{i} + \mathbf{j} - 4\mathbf{k}$. Type it like `r = (3, -2, 1) + t(2, 1, -4)`.
     accept:
       - r = (3i - 2j + k) + t(2i + j - 4k)
       - r = 3i - 2j + k + t(2i + j - 4k)
       - r = (3, -2, 1) + t(2, 1, -4)
-    model: |-
-      r = (3i - 2j + k) + t(2i + j - 4k)
-    explanation: |-
-      The anchor point is a = 3i - 2j + k. The direction vector is b = 2i + j - 4k. Plug into r = a + tb.
+    model: |
+      $\mathbf{r} = (3\mathbf{i} - 2\mathbf{j} + \mathbf{k}) + t(2\mathbf{i} + \mathbf{j} - 4\mathbf{k})$
+    explanation: |
+      The point gives $\mathbf{a} = 3\mathbf{i} - 2\mathbf{j} + \mathbf{k}$ and the direction is $\mathbf{b} = 2\mathbf{i} + \mathbf{j} - 4\mathbf{k}$. Put them into $\mathbf{r} = \mathbf{a} + t\mathbf{b}$.
 
   - id: vec-line-from-two-points
     format: text
     difficulty: 2
     objectives: ["3.7.4"]
-    prompt: |-
-      Find the vector equation of the line through A(2, -1, 4) and B(-1, 3, 2).
+    prompt: |
+      Find a vector equation of the line through $A(2, -1, 4)$ and $B(-1, 3, 2)$, starting from $A$. Type it like `r = (2, -1, 4) + t(…, …, …)`.
     accept:
       - r = (2, -1, 4) + t(-3, 4, -2)
       - r = (2i - j + 4k) + t(-3i + 4j - 2k)
-      - r = (-1, 3, 2) + t(3, -4, 2)
-    model: |-
-      r = (2i - j + 4k) + t(-3i + 4j - 2k)
-    explanation: |-
-      Direction = B - A = (-3, 4, -2). Using A as anchor: r = (2, -1, 4) + t(-3, 4, -2).
+      - r = (2, -1, 4) + t(3, -4, 2)
+      - r = (2i - j + 4k) + t(3i - 4j + 2k)
+    model: |
+      $\mathbf{r} = (2\mathbf{i} - \mathbf{j} + 4\mathbf{k}) + t(-3\mathbf{i} + 4\mathbf{j} - 2\mathbf{k})$
+    explanation: |
+      The direction from $A$ to $B$ is $\overrightarrow{AB} = (-1 - 2, 3 - (-1), 2 - 4) = (-3, 4, -2)$. Starting from $A$: $\mathbf{r} = (2, -1, 4) + t(-3, 4, -2)$. Using the opposite direction $(3, -4, 2)$ describes the same line.
 
   - id: vec-point-on-line
     format: mcq
     difficulty: 2
     objectives: ["3.7.4"]
-    prompt: |-
-      The line L has equation r = (2i + j - k) + t(i - 2j + 3k). Which of these points does NOT lie on L?
+    prompt: |
+      The line $L$ has equation $\mathbf{r} = (2\mathbf{i} + \mathbf{j} - \mathbf{k}) + t(\mathbf{i} - 2\mathbf{j} + 3\mathbf{k})$. Which of these points does **not** lie on $L$?
     options:
-      - text: (3, -1, 2)
-        why: |-
-          For t = 1: r = (3, -1, 2). This point IS on the line.
-      - text: (1, 3, -4)
-        why: |-
-          For t = -1: r = (1, 3, -4). This point IS on the line.
-      - text: (4, -3, 5)
-        why: |-
-          For t = 2: r = (4, -3, 5). This point IS on the line.
-      - text: (0, 0, 0)
+      - text: "$(3, -1, 2)$"
+        why: "$t = 1$ gives $(2 + 1, 1 - 2, -1 + 3) = (3, -1, 2)$, so it is on the line."
+      - text: "$(1, 3, -4)$"
+        why: "$t = -1$ gives $(1, 3, -4)$, so it is on the line."
+      - text: "$(4, -3, 5)$"
+        why: "$t = 2$ gives $(4, -3, 5)$, so it is on the line."
+      - text: "$(0, 0, 0)$"
         correct: true
-        why: |-
-          Would need 2+t=0 → t=-2, then y = 1-2(-2)=5≠0. Not on the line.
+        why: "The first row needs $2 + t = 0$, so $t = -2$. But then the second row is $1 - 2(-2) = 5$, not $0$."
     explanation: |
-      For $(0, 0, 0)$ the $x$-coordinate requires $t = -2$, which gives $y = 1 - 2(-2) = 5$, not $0$. The other three points each come from a single $t$: $1$, $-1$ and $2$.
+      For $(0, 0, 0)$ the first row needs $t = -2$, which makes the second row $5$ instead of $0$. The rows disagree, so it is not on the line. Each of the other points comes from a single value of $t$ ($1$, $-1$ and $2$).

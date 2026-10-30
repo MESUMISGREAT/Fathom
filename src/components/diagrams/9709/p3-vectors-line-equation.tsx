@@ -156,7 +156,7 @@ export default function P3VectorsLineEquation() {
         {dot3D(0, 0, 0, 3, "dg-dot-muted")}
       </g>
       <Label x={W / 2} y={H - 24} className="dg-text-small dg-bold">
-        a = anchor point, b = direction, t \u2208 \u211d slides along the line
+        a = anchor point, b = direction, t \∈ \ℝ slides along the line
       </Label>
       <Label x={W / 2} y={H - 8} className="dg-text-small dg-text-muted">
         t = 0 gives a; t = 1 gives a + b; negative t goes backwards

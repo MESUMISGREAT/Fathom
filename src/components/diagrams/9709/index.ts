@@ -110,6 +110,7 @@ import P3AlgebraBinomialValidity from './p3-algebra-binomial-validity';
 import P3AlgebraLongDivision from './p3-algebra-long-division';
 import P3AlgebraModulusGraph from './p3-algebra-modulus-graph';
 import P3AlgebraModulusInequality from './p3-algebra-modulus-inequality';
+import P3IterationStaircaseCubic from './p3-iteration-staircase-cubic';
 import P3LogarithmicExponentialIndexGraph from './p3-logarithmic-exponential-index-graph';
 import P3LogarithmicExponentialInverseGraphs from './p3-logarithmic-exponential-inverse-graphs';
 import P3LogarithmicExponentialLinearFormPlot from './p3-logarithmic-exponential-linear-form-plot';
@@ -254,6 +255,7 @@ export const diagrams: DiagramRegistry = {
   'p2-numerical-solution-staircase': P2NumericalSolutionStaircase,
   'p2-trigonometry-r-form': P2TrigonometryRForm,
   'p2-trigonometry-reciprocal-graphs': P2TrigonometryReciprocalGraphs,
+  'p3-iteration-staircase-cubic': P3IterationStaircaseCubic,
   'p3-numerical-solution-approximations': P3NumericalSolutionApproximations,
   'p3-numerical-solution-iteration-steps': P3NumericalSolutionIterationSteps,
   'p3-numerical-solution-rearranging-cobweb': P3NumericalSolutionRearrangingCobweb,

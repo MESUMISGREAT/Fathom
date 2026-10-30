@@ -131,7 +131,7 @@ export function ForcesEquilibriumFrictionThirdLaw() {
       <MathLabel x={165 - 25} y={355} tex="R_{\text{book on table}}" w={120} h={32} anchor="end" tone="accent-2" size="small" />
 
       <Label x={165} y={395} className="dg-text-small dg-text-muted">
-        Pair: table\u2192book (up) and book\u2192table (down). Equal, opposite, different objects.
+        Pair: table\→book (up) and book\→table (down). Equal, opposite, different objects.
       </Label>
 
       {/* Student pushing wall - right */}
@@ -158,7 +158,7 @@ export function ForcesEquilibriumFrictionThirdLaw() {
       <Label x={432} y={345} className="dg-text-small dg-text-muted">pushes left</Label>
 
       <Label x={495} y={395} className="dg-text-small dg-text-muted">
-        Pair: student\u2192wall (right) and wall\u2192student (left). Same contact, opposite directions.
+        Pair: student\→wall (right) and wall\→student (left). Same contact, opposite directions.
       </Label>
 
       <Label x={330} y={460} className="dg-text-small dg-text-muted">
