@@ -2,195 +2,170 @@ id: work-energy-power-car-hill
 subject: "9709"
 topic: "4.5"
 title: "Car on a hill: power, force and acceleration"
-summary: "Applying P = Fv and Newton's second law to a car moving on a slope against resistance."
+summary: "Combining P = Fv with Newton's second law to find the acceleration, resistance or top speed of a vehicle going up or down a slope."
 order: 5
-minutes: 7
+minutes: 10
 kind: core
 objectives: ["4.5.5"]
 prerequisites: ["work-energy-power-power", "work-energy-power-gpe-ke", "work-energy-power-work-energy-principle"]
 provenance:
   origin: ai-drafted
-  status: ai-checked
-  notes: >
-    Drafted against the official Cambridge International AS & A Level Mathematics 9709 syllabus,
-    topic 4.5 Energy, work and power, learning outcome 4.5.5 (solve problems involving, for example, the
-    instantaneous acceleration of a car moving on a hill against a resistance). All questions and
-    examples are original. AI-reviewed for syllabus alignment and mathematical accuracy.
-    Independently re-checked line by line (facts, worked examples, every answer key) in a separate
-    AI review on 2026-10-29. Not yet reviewed by a teacher.
+  status: draft
+  notes: >-
+    Redrafted on 2026-10-30 by Claude Opus 5.5 after a first-time-student read scored the previous version
+    6/10 (all maths in plain text, steps without reasons, a symbol key with wrong meanings, and a slightly
+    wrong intermediate value, 1668 N for 12000 sin 8°, which is 1670 N). Written against the official
+    Cambridge International AS & A Level Mathematics 9709 syllabus for 2026-2027, topic 4.5 outcome 5
+    (problems such as the instantaneous acceleration of a car on a hill against a resistance). The worked
+    examples and the six questions were kept, typeset and rechecked. Awaiting independent review; not
+    reviewed by a teacher.
 blocks:
   - type: objective
     body: |
-      By the end you can solve problems involving a car (or other vehicle) moving on a hill,
-      using the engine power P, driving force F = P/v, resistive forces, the weight component
-      along the slope, and Newton's second law to find instantaneous acceleration.
+      By the end you can find the acceleration, the resistance or the top speed of a vehicle moving up or down
+      a hill, by combining $D = \dfrac{P}{v}$ with Newton's second law.
 
   - type: explain
     title: Key to the symbols
     body: |
-      The main symbols used in this lesson:
-
       | Symbol | Meaning |
       | --- | --- |
-      | $F$ | force |
-      | $P$ | power |
-      | $v$ | final velocity |
-      | $\alpha$ | an angle |
-      | $R$ | resistance to motion |
+      | $m$ | mass of the vehicle, in kg |
+      | $P$ | power of the engine, in watts (convert kW by multiplying by 1000) |
+      | $v$ | the speed **at the moment we are interested in**, in $\text{m s}^{-1}$ |
+      | $D$ | the engine's driving force at that moment, $D = \dfrac{P}{v}$ |
+      | $R$ | the resistance to motion, opposing the direction the vehicle moves |
+      | $\alpha$ | the angle of the slope to the horizontal |
+      | $a$ | the acceleration, in $\text{m s}^{-2}$ |
 
   - type: explain
-    title: Engine force from power
+    title: The three forces along the slope
     body: |
-      The engine produces a power output P. At a given instantaneous speed v, the driving force
-      (tractive force) exerted by the engine at the wheels is
+      In the last lesson you saw that an engine working at power $P$ while moving at speed $v$ pushes with a
+      driving force
 
-      $$F_{\text{engine}} = \frac{P}{v}.$$
+      $$D = \frac{P}{v}$$
 
-      This comes from P = Fv. Note: as speed increases, the driving force for a given power
-      decreases. This is why cars accelerate less quickly at high speed.
+      On a slope, three forces act **along** the road:
+
+      1. **The driving force** $D = \dfrac{P}{v}$, forwards.
+      2. **The resistance** $R$, always against the direction of motion.
+      3. **Part of the weight**, $mg\sin\alpha$, always pointing **down** the slope.
+
+      Why $mg\sin\alpha$? Split the weight $mg$ into a part along the slope and a part pressing into it. The
+      angle between the weight (straight down) and the line at right angles to the slope is $\alpha$, so the
+      part along the slope is the side opposite that angle: $mg\sin\alpha$. On a flat road $\alpha = 0$ and
+      $\sin 0 = 0$, so this force disappears, as it should.
+
+      (The other part of the weight, $mg\cos\alpha$, presses into the road and is balanced by the road's push.
+      It doesn't affect motion along the slope.)
 
   - type: explain
-    title: Forces on a car on a slope
+    title: Newton's second law along the slope
     body: |
-      A car of mass m on a hill inclined at angle α. Taking up the slope as positive:
+      Newton's second law says **resultant force $=$ mass $\times$ acceleration**. Pick the direction of motion as
+      positive, add up the forces along the slope with signs, and set the total equal to $ma$.
 
-      - Driving force: F = P/v (up the slope)
-      - Weight component: mg sin α (down the slope)
-      - Resistive forces: R (down the slope, usually given as a constant or function of speed)
+      **Going up the hill:** the driving force is forwards (up), while the resistance and the weight component
+      both point down the slope:
 
-      Net force up the slope:
-      $$F_{\text{net}} = \frac{P}{v} - mg\sin\alpha - R.$$
+      $$\frac{P}{v} - mg\sin\alpha - R = ma$$
 
-      Newton's second law:
-      $$ma = \frac{P}{v} - mg\sin\alpha - R.$$
+      **Going down the hill:** now the weight component points the same way as the motion, so it **helps**.
+      Only the resistance opposes:
 
-      This gives the instantaneous acceleration a.
+      $$\frac{P}{v} + mg\sin\alpha - R = ma$$
 
-  - type: example
-    title: Car climbing a hill at constant speed
-    problem: |
-      A car of mass 1200 kg travels up a hill at 15° at a constant speed of 25 m/s.
-      The engine power is 80 kW. Find the total resistive force. (Use g = 10 m/s².)
-    steps:
-      - |
-        Constant speed → a = 0 → net force = 0.
-      - |
-        F_engine = P/v = 80000/25 = 3200 N (up the slope).
-      - |
-        Weight component = mg sin 15° = 1200 × 10 × sin 15° = 3106 N (down).
-      - |
-        F_engine = mg sin 15° + R → 3200 = 3106 + R → R = 94 N.
-    answer: |
-      94 N (3 s.f.)
+      If the engine is off (the car **coasts**), $P = 0$ and the first term disappears.
+
+      **Constant speed or top speed** means $a = 0$, so the forces balance: put $0$ on the right-hand side.
 
   - type: example
-    title: Car accelerating up a hill
+    title: Finding the resistance at constant speed
     problem: |
-      A car of mass 1000 kg is travelling at 20 m/s up a hill at 10°.
-      The engine power is 60 kW and the total resistance is 400 N.
-      Find the instantaneous acceleration. (Use g = 10 m/s².)
+      A car of mass $1200$ kg travels up a hill inclined at $15°$ at a constant speed of $25\ \text{m s}^{-1}$.
+      The engine's power is $80$ kW. Find the resistance to motion. Use $g = 10\ \text{m s}^{-2}$.
     steps:
-      - |
-        F_engine = P/v = 60000/20 = 3000 N (up).
-      - |
-        Weight component = 1000 × 10 × sin 10° = 1736 N (down).
-      - |
-        Net force = 3000 − 1736 − 400 = 864 N (up).
-      - |
-        a = F_net/m = 864/1000 = 0.864 m/s².
+      - "Driving force: $D = \\dfrac{P}{v} = \\dfrac{80\\,000}{25} = 3200$ N, up the slope."
+      - "Weight component down the slope: $mg\\sin 15° = 1200 \\times 10 \\times 0.2588 \\approx 3106$ N."
+      - "Constant speed, so $a = 0$: $3200 - 3106 - R = 0$."
+      - "So $R \\approx 94$ N."
     answer: |
-      0.864 m/s² up the slope (3 s.f.)
+      The resistance is about $94$ N.
 
   - type: example
-    title: Maximum speed on a hill
+    title: Acceleration going up a hill
     problem: |
-      A car of mass 1500 kg has maximum engine power 90 kW. It climbs a hill at 12°
-      against a constant resistance of 600 N. Find its maximum steady speed up the hill. (Use g = 10 m/s².)
+      A car of mass $1000$ kg is travelling at $20\ \text{m s}^{-1}$ up a hill inclined at $10°$. The engine's
+      power is $60$ kW and the resistance is $400$ N. Find the acceleration at this instant. Use
+      $g = 10\ \text{m s}^{-2}$.
     steps:
-      - |
-        At maximum steady speed, a = 0, so F_engine = mg sin α + R.
-      - |
-        P/v_max = mg sin α + R.
-      - |
-        mg sin 12° = 1500 × 10 × sin 12° = 3119 N.
-      - |
-        90000/v_max = 3119 + 600 = 3719.
-      - |
-        v_max = 90000/3719 ≈ 24.2 m/s.
+      - "Driving force at this speed: $D = \\dfrac{60\\,000}{20} = 3000$ N up the slope."
+      - "Weight component: $1000 \\times 10 \\times \\sin 10° = 10\\,000 \\times 0.1736 \\approx 1736$ N down the slope."
+      - "Newton's second law, up the slope positive: $3000 - 1736 - 400 = 1000a$."
+      - "So $864 = 1000a$ and $a = 0.864\\ \\text{m s}^{-2}$."
+      - "It's called the acceleration **at this instant** because as the car speeds up, $D = \\dfrac{P}{v}$ falls, so the acceleration falls too."
     answer: |
-      24.2 m/s (3 s.f.)
-
-  - type: explain
-    title: Car going downhill
-    body: |
-      If the car is moving **down** the slope, the weight component helps the motion.
-      Taking down the slope as positive:
-
-      - Driving force: F = P/v (down the slope, if engine is driving the wheels)
-      - Weight component: mg sin α (down the slope)
-      - Resistive forces: R (up the slope, opposing motion)
-
-      Net force: F_net = P/v + mg sin α − R.
-      (If the engine is not providing power, P = 0 and the car coasts.)
+      $a \approx 0.864\ \text{m s}^{-2}$, up the slope.
 
   - type: example
-    title: Car coasting downhill
+    title: Top speed up a hill
     problem: |
-      A car of mass 1200 kg coasts down a hill at 8° (engine off, P = 0).
-      The resistance is 300 N. Find the acceleration when the speed is 15 m/s. (Use g = 10 m/s².)
+      A car of mass $1500$ kg has a maximum power of $90$ kW. It climbs a hill inclined at $12°$ against a
+      constant resistance of $600$ N. Find its greatest possible steady speed up the hill. Use
+      $g = 10\ \text{m s}^{-2}$.
     steps:
-      - |
-        P = 0, so no driving force.
-      - |
-        Weight component = 1200 × 10 × sin 8° = 1668 N (down).
-      - |
-        Net force = 1668 − 300 = 1368 N (down).
-      - |
-        a = 1368/1200 = 1.14 m/s².
+      - "At top speed the car can't accelerate, so $a = 0$ and the forces balance: $\\dfrac{P}{v} = mg\\sin 12° + R$."
+      - "Weight component: $1500 \\times 10 \\times \\sin 12° = 15\\,000 \\times 0.2079 \\approx 3119$ N."
+      - "So $\\dfrac{90\\,000}{v} = 3119 + 600 = 3719$."
+      - "Rearrange: $v = \\dfrac{90\\,000}{3719} \\approx 24.2\\ \\text{m s}^{-1}$."
     answer: |
-      1.14 m/s² down the slope (3 s.f.)
+      The greatest steady speed is about $24.2\ \text{m s}^{-1}$.
 
-  - type: misconceptions
-    items:
-      - wrong: "The driving force F = P/v is constant."
-        right: |
-          F = P/v varies with speed. For constant power, force decreases as speed increases.
-          Only if the question says "constant driving force" is F constant.
-      - wrong: "At maximum speed, acceleration is maximum."
-        right: |
-          At maximum steady speed, acceleration is ZERO. Maximum speed is when net force = 0.
-      - wrong: "Resistance always acts up the slope."
-        right: |
-          Resistance always opposes the **direction of motion**. If the car moves up, R is down.
-          If the car moves down, R is up.
-      - wrong: "Use g = 9.8 unless told otherwise, even in mechanics."
-        right: |
-          In Paper 4 (Mechanics), the syllabus says g = 10 m/s² is expected. Check the paper.
-
-  - type: exam
-    body: |
-      - Write the force equation clearly: ma = P/v − mg sin α − R (for up the slope).
-      - State the direction you are taking as positive.
-      - At constant speed: a = 0, so P/v = mg sin α + R.
-      - At maximum speed: a = 0, same equation.
-      - If speed is changing, use instantaneous v in P/v.
-      - In Paper 4, use g = 10 m/s² unless the question specifies g = 9.8.
+  - type: example
+    title: Coasting down a hill
+    problem: |
+      A car of mass $1200$ kg coasts down a hill inclined at $8°$ with its engine off. The resistance is
+      $300$ N. Find its acceleration. Use $g = 10\ \text{m s}^{-2}$.
+    steps:
+      - "Engine off, so $P = 0$: no driving force."
+      - "Moving down the slope, so take down as positive. The weight component helps: $1200 \\times 10 \\times \\sin 8° = 12\\,000 \\times 0.1392 \\approx 1670$ N."
+      - "The resistance opposes the motion, so it points up the slope: $-300$ N."
+      - "Newton's second law: $1670 - 300 = 1200a$, so $a = \\dfrac{1370}{1200} \\approx 1.14\\ \\text{m s}^{-2}$."
+    answer: |
+      $a \approx 1.14\ \text{m s}^{-2}$, down the slope.
 
   - type: check
-    title: Check yourself
+    title: Check the set-up
     questions: [car-hill-force-equation, max-speed-cloze, downhill-signs]
 
   - type: check
-    title: Calculations
+    title: Check the calculations
     questions: [car-accelerating-hill, car-max-speed-hill, car-coasting-down]
+
+  - type: misconceptions
+    items:
+      - wrong: "The driving force stays the same as the car speeds up."
+        right: "At constant power, $D = \\dfrac{P}{v}$ gets **smaller** as $v$ grows. Only treat it as constant if the question says the driving force is constant."
+      - wrong: "At top speed the acceleration is at its biggest."
+        right: "At top speed the acceleration is **zero**: the driving force has fallen until the forces balance."
+      - wrong: "Resistance always acts down the slope."
+        right: "Resistance opposes the **motion**. Going up, it points down the slope; going down, it points up the slope."
+      - wrong: "The weight component is $mg\\cos\\alpha$."
+        right: "Along the slope it is $mg\\sin\\alpha$. The $mg\\cos\\alpha$ part presses into the road."
+
+  - type: exam
+    body: |
+      - Say which direction is positive, then write the full equation, such as $\dfrac{P}{v} - mg\sin\alpha - R = ma$, before putting numbers in.
+      - Use the speed **at that instant** in $\dfrac{P}{v}$.
+      - Use $g = 10\ \text{m s}^{-2}$ in Paper 4 unless the question says otherwise.
 
   - type: takeaways
     items:
-      - "Driving force: F = P/v (from P = Fv)."
-      - "Up the slope: ma = P/v − mg sin α − R."
-      - "Down the slope: ma = P/v + mg sin α − R (if engine driving)."
-      - "At max steady speed: a = 0, so P/v_max = mg sin α + R."
-      - "Paper 4 uses g = 10 m/s² unless stated otherwise."
+      - "Driving force $D = \\dfrac{P}{v}$, using the speed at that instant."
+      - "Along the slope: the weight component $mg\\sin\\alpha$ always points down the slope; resistance opposes the motion."
+      - "Up the slope: $\\dfrac{P}{v} - mg\\sin\\alpha - R = ma$. Down the slope: $\\dfrac{P}{v} + mg\\sin\\alpha - R = ma$."
+      - "Constant or top speed means $a = 0$, so the forces balance."
 
 questions:
   - id: car-hill-force-equation
@@ -198,88 +173,81 @@ questions:
     difficulty: 1
     objectives: ["4.5.5"]
     prompt: |
-      For a car of mass m moving UP a slope at angle α with engine power P, speed v,
-      and resistance R, the net force up the slope is F_net = P/v − {{1}} − R.
+      A car of mass $m$ moves **up** a slope at angle $\alpha$ with engine power $P$, speed $v$ and resistance $R$. The resultant force up the slope is $\dfrac{P}{v}$ minus {{1}} minus $R$.
     blanks:
-      - accept: ["mg sin α", "mg sin a", "mg sin alpha", "weight component"]
+      - accept: ["mg sin α", "mg sin a", "mg sin alpha", "mgsinα", "mg sinα", "weight component"]
     explanation: |
-      Weight component down the slope is mg sin α. Resistance R also acts down the slope
-      (opposing motion up).
+      The part of the weight along the slope is $mg\sin\alpha$, pointing down the slope. The resistance also points down the slope, because the car is moving up. So the resultant is $\dfrac{P}{v} - mg\sin\alpha - R$.
 
   - id: max-speed-cloze
     format: cloze
     difficulty: 1
     objectives: ["4.5.5"]
     prompt: |
-      At maximum steady speed up a hill, the acceleration is {{1}}, so the net force is {{2}}.
+      At the greatest steady speed up a hill, the acceleration is {{1}}, so the resultant force is {{2}}.
     blanks:
       - accept: ["zero", "0"]
       - accept: ["zero", "0"]
     explanation: |
-      Maximum steady speed means constant velocity → a = 0 → F_net = 0.
+      A steady (constant) speed means no acceleration, and by Newton's second law no acceleration means no resultant force.
 
   - id: downhill-signs
     format: mcq
     difficulty: 2
     objectives: ["4.5.5"]
     prompt: |
-      A car moves DOWN a slope at angle α. The engine provides power P (driving the wheels).
-      Resistance R opposes motion. Taking DOWN the slope as positive, what is the net force?
+      A car moves **down** a slope at angle $\alpha$ with its engine working at power $P$. Resistance $R$ opposes the motion. Taking down the slope as positive, what is the resultant force?
     options:
-      - text: "P/v + mg sin α − R"
+      - text: "$\\dfrac{P}{v} + mg\\sin\\alpha - R$"
         correct: true
-        why: "Weight component and driving force are down (+), resistance is up (−)."
-      - text: "P/v − mg sin α − R"
-        why: "That is for moving UP the slope."
-      - text: "P/v − mg sin α + R"
-        why: "Wrong signs for weight and resistance."
-      - text: "mg sin α − P/v − R"
-        why: "Engine force is in the direction of motion, so it adds to the net force."
+        why: "The driving force and the weight component both point down the slope (positive); the resistance points up the slope (negative)."
+      - text: "$\\dfrac{P}{v} - mg\\sin\\alpha - R$"
+        why: "That is the equation for going **up** the slope, where the weight component opposes the motion."
+      - text: "$\\dfrac{P}{v} - mg\\sin\\alpha + R$"
+        why: "The resistance opposes the motion, so it is negative here, and the weight component helps, so it is positive."
+      - text: "$mg\\sin\\alpha - \\dfrac{P}{v} - R$"
+        why: "The engine drives the car in the direction it moves, so the driving force is positive."
     explanation: |
-      Down the slope positive: weight component (mg sin α) and driving force (P/v) are positive.
-      Resistance opposes motion, so it is negative.
+      Down the slope is positive. The driving force $\dfrac{P}{v}$ and the weight component $mg\sin\alpha$ point down the slope; the resistance points up the slope.
 
   - id: car-accelerating-hill
     format: numeric
     difficulty: 2
     objectives: ["4.5.5"]
     prompt: |
-      A car of mass 800 kg travels at 15 m/s up a hill at 10°. Engine power is 40 kW.
-      Resistance is 250 N. Find the instantaneous acceleration. (Use g = 10 m/s².)
+      A car of mass $800$ kg travels at $15\ \text{m s}^{-1}$ up a hill inclined at $10°$. The engine's power is $40$ kW and the resistance is $250$ N. Find the acceleration at this instant. Use $g = 10\ \text{m s}^{-2}$.
     fields:
-      - answer: 1.29
+      - label: "a ="
+        answer: 1.29
         tolerance: { abs: 0.05 }
-        unit: m/s²
+        unit: "m s⁻²"
     explanation: |
-      F_engine = 40000/15 = 2667 N. Weight component = 800 × 10 × sin 10° = 1389 N.
-      Net force = 2667 − 1389 − 250 = 1028 N. a = 1028/800 = 1.285 m/s² ≈ 1.29 m/s².
+      $D = \dfrac{40\,000}{15} \approx 2667$ N. Weight component $= 800 \times 10 \times \sin 10° \approx 1389$ N. Resultant $= 2667 - 1389 - 250 = 1028$ N, so $a = \dfrac{1028}{800} \approx 1.29\ \text{m s}^{-2}$.
 
   - id: car-max-speed-hill
     format: numeric
     difficulty: 3
     objectives: ["4.5.5"]
     prompt: |
-      A car of mass 1200 kg has maximum power 70 kW. It climbs a 15° hill against 500 N
-      resistance. Find its maximum steady speed. (Use g = 10 m/s².)
+      A car of mass $1200$ kg has a maximum power of $70$ kW. It climbs a hill inclined at $15°$ against a resistance of $500$ N. Find its greatest steady speed. Use $g = 10\ \text{m s}^{-2}$.
     fields:
-      - answer: 19.4
+      - label: "v ="
+        answer: 19.4
         tolerance: { abs: 0.5 }
-        unit: m/s
+        unit: "m s⁻¹"
     explanation: |
-      At max speed: 70000/v = 1200 × 10 × sin 15° + 500 = 3106 + 500 = 3606.
-      v = 70000/3606 ≈ 19.4 m/s.
+      At top speed $\dfrac{70\,000}{v} = 1200 \times 10 \times \sin 15° + 500 \approx 3106 + 500 = 3606$, so $v = \dfrac{70\,000}{3606} \approx 19.4\ \text{m s}^{-1}$.
 
   - id: car-coasting-down
     format: numeric
     difficulty: 2
     objectives: ["4.5.5"]
     prompt: |
-      A 1000 kg car coasts down a 12° hill (engine off). Resistance is 350 N.
-      Find the acceleration when speed is 20 m/s. (Use g = 10 m/s².)
+      A car of mass $1000$ kg coasts down a hill inclined at $12°$ with its engine off. The resistance is $350$ N. Find its acceleration. Use $g = 10\ \text{m s}^{-2}$.
     fields:
-      - answer: 1.73
+      - label: "a ="
+        answer: 1.73
         tolerance: { abs: 0.05 }
-        unit: m/s²
+        unit: "m s⁻²"
     explanation: |
-      P = 0. Weight component = 1000 × 10 × sin 12° = 2079 N (down).
-      Net force = 2079 − 350 = 1729 N. a = 1729/1000 = 1.73 m/s².
+      No driving force. Weight component $= 1000 \times 10 \times \sin 12° \approx 2079$ N down the slope, resistance $350$ N up the slope. $a = \dfrac{2079 - 350}{1000} \approx 1.73\ \text{m s}^{-2}$.
