@@ -15,7 +15,7 @@ Live site: https://fathom-steel-ten.vercel.app
 Repository: https://github.com/MESUMISGREAT/Fathom
 **Every push to `main` deploys to production.** Never push, merge, deploy, or change production configuration unless the user explicitly authorizes it.
 
-For project history and the current lesson pipeline, consult `docs/HANDOFF.md` selectively. Treat its older multi-agent instructions as obsolete; this project now uses a single-agent Claude workflow unless the user explicitly requests otherwise.
+For the current state, the lesson workflow and the publishing recipe, read `docs/HANDOFF.md` (it is short).
 
 ## First steps
 
@@ -27,7 +27,7 @@ For project history and the current lesson pipeline, consult `docs/HANDOFF.md` s
 
 ## Working style and efficiency
 
-- Work as one agent by default. Do not spawn workers, create agent mailboxes, poll heartbeats, or use the old coordination protocol.
+- Work as one agent by default. Do not spawn workers, create agent mailboxes, poll heartbeats, or use the old coordination protocol. The one exception: `ai-checked` needs an independent review, so use one reviewer subagent per lesson batch, told to report findings without editing.
 - Search before reading. Find headings, symbols, callers, and relevant tests, then read the smallest sufficient range.
 - Prefer diffs and targeted commands over dumping entire files or directories.
 - Batch independent read-only operations. Do not repeat successful searches without a reason.
@@ -37,22 +37,17 @@ For project history and the current lesson pipeline, consult `docs/HANDOFF.md` s
 
 ## Educational content: highest priority
 
-The authoritative content contract is `docs/CONTENT_GUIDE.md`. Lesson structure and writing/review prompts are in `scripts/lessons/templates.mjs`. Read the relevant sections before creating or substantially editing lessons.
+The authoritative content contract is `docs/CONTENT_GUIDE.md`; the working method (write, independent review, publish) is `docs/HANDOFF.md` §3–4. Read the relevant sections before creating or substantially editing lessons.
 
 ### Teaching standard
 
-Fathom teaches students who may be meeting a concept for the first time. Teach for understanding, not minimum length.
+A 15-year-old meeting the idea for the first time must be able to learn it from the lesson alone, without looking anything up. Long is fine; hard to read is not.
 
-- Default to one main concept and one lesson per syllabus objective. Combine objectives only when they are tightly connected and a single lesson genuinely teaches them better.
-- Explain unfamiliar terms, notation, variables, units, prerequisites, conditions, and limits before relying on them.
-- Explain both what to do and why it works. Include necessary intermediate steps in mathematical, scientific, and logical reasoning.
-- Use worked examples, diagrams, tables, analogies, misconceptions, and exam guidance when they materially improve understanding.
-- Define every variable in an equation. Never leave a chain of unexplained symbols or skip steps as “obvious”.
-- Keep language accessible and conversational without sacrificing Cambridge accuracy or technical precision.
-- Use official syllabus terminology and match the applicable syllabus version. Label enrichment beyond the syllabus.
-- Write original explanations and questions. Never copy past-paper questions or substantial source wording.
-- A 2–5 minute reading time is a guideline, not a cap. Do not cut teaching to meet a word count or token target.
-- Avoid repetition and filler, but preserve everything a beginner needs to understand and apply the concept independently.
+- Follow "Teaching standard" and "Layout for easy reading" in `docs/CONTENT_GUIDE.md` §2. They are the rules; this is the summary.
+- Define every term, symbol and unit before using it. Explain what to do and why it works, with every step a beginner needs.
+- Layout: one idea per short paragraph, blank lines between, bullets for lists, numbered steps for methods, each formula on its own line with its symbols explained.
+- Cambridge terminology and syllabus scope. Original content only. Label enrichment.
+- 2–5 minutes is a guide, not a cap. Cut repetition, never teaching.
 
 ### Content audits requested by the user
 

@@ -32,7 +32,7 @@ Use the smallest sufficient context and fewest useful operations. Optimize waste
 - Avoid recursive directory dumps, repeated full-file reads, and unnecessary dependency exploration.
 - Use focused commands and bounded output (`head`, `tail`, `sed`, `rg`, `git diff --stat`).
 - Do not print secrets, environment values, credentials, private keys, or entire lockfiles.
-- Do not create workers or multi-agent coordination infrastructure by default. Work independently unless the user explicitly asks for a multi-agent workflow.
+- Do not create workers or multi-agent coordination infrastructure by default. Work independently unless the user explicitly asks for a multi-agent workflow. The exception is the independent lesson review: one reviewer subagent per batch, which reports findings and doesn't edit.
 
 ## 4. Make the smallest safe change
 
@@ -52,7 +52,7 @@ Use the smallest sufficient context and fewest useful operations. Optimize waste
 
 ## 6. Educational content is not a token-saving target
 
-When creating or reviewing Fathom lessons, follow `docs/CONTENT_GUIDE.md` and the lesson prompts in `scripts/lessons/templates.mjs`.
+When creating or reviewing Fathom lessons, follow `docs/CONTENT_GUIDE.md` §2 (teaching standard and layout rules) and the workflow in `docs/HANDOFF.md` §3.
 
 - Teach a beginner, not an expert. Define new terms, symbols, variables, units, and prerequisites before using them.
 - Explain why methods work and show necessary intermediate steps.

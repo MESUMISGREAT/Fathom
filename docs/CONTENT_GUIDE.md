@@ -61,131 +61,76 @@ Rules:
 * `deeper` is for detail a strong student needs but that would interrupt the main flow
   (an extra derivation, an edge case). Do not hide required content in `enrichment`.
 
-### Teaching philosophy: understanding before brevity
+### Teaching standard
 
-**Core principle:** It is better to write a longer lesson that genuinely teaches a beginner than a shorter lesson that leaves them confused. Never sacrifice understanding to reduce tokens, word count, lesson duration or the number of explanation blocks. Aim for the clearest, most complete explanation without unnecessary repetition.
+The reader is a 15-year-old meeting the idea for the first time. They must be able to learn it
+**from this lesson alone**, without a textbook, a teacher or a search. Long is fine; confusing is not.
 
-Assume the student is encountering the concept for the first time. They may know syllabus prerequisites, but do not assume they understand the new concept, its notation, its reasoning or steps an expert considers obvious.
+1. **Teach from zero.** Define every new word, symbol, subscript and unit *before* it is used.
+   Never explain one unexplained formula with another.
+2. **Show the reasoning.** Say what to do and **why** it works. Show every intermediate step a
+   beginner needs. Ban "obviously", "simply", "clearly", "just".
+3. **Concrete first.** Easy numbers or a familiar situation → plain-language idea → picture or
+   table → worked example → the general rule. Where possible, give a first example the student
+   can check another way.
+4. **State limits.** When a rule applies, when it doesn't, and what must be true.
+5. **Examples that teach.** Start simple. Add another example only for a genuinely new
+   difficulty. Show a common wrong approach and why it fails when that helps.
+6. **Rigour.** Cambridge terminology and mark-scheme definitions. Keep intuition separate from
+   the formal definition. Label anything beyond the syllabus as `enrichment`.
+7. **Verify** every calculation and answer key (python, not mental arithmetic).
+8. **Save effort, not teaching.** Cut repetition and filler, never steps, examples, definitions
+   or syllabus detail.
 
-#### 1. Teach from zero
+**Self-check before submitting:** could a student who knows only the prerequisites follow every
+line? Is every symbol defined before use? Does each example step say why? Could they now do a
+new question on their own?
 
-- Introduce unfamiliar terminology and notation before relying on them.
-- Explain what each symbol represents, what it means and why it is being used.
-- Break complicated equations, expressions and processes into manageable steps. Never jump from the starting expression to the final answer without explaining necessary intermediate reasoning.
-- Explain both **what** to do and **why** it works.
-- Briefly explain prerequisites when the student cannot reasonably follow the current step without them.
-- Do not use an unexplained formula to explain another unexplained formula.
-- State when a rule applies, when it does not, and which conditions must hold.
+### Layout for easy reading (required)
 
-#### 2. Prefer complete explanations over artificial concision
+Depth stays. Walls of text go. Every block follows these rules:
 
-- Do not impose arbitrary word limits or remove reasoning to fit a preferred lesson length.
-- A lesson may exceed the typical 2–5 minute reading time when needed. Split it if that improves learning, never merely to enforce brevity.
-- Add examples, intermediate steps, comparisons, diagrams, tables or alternative explanations when they materially improve understanding.
-- Do not compress several unfamiliar ideas into one sentence just because it is technically correct.
-- Avoid “obvious”, “simply”, “clearly” or “just do this” when those words conceal reasoning the student needs.
-- Concise writing is not incomplete teaching. Include every necessary step even if the lesson becomes longer.
+* **One idea per paragraph,** at most 2 short sentences, with a **blank line** between paragraphs.
+* **Short sentences** (about 20 words or fewer). Split "…, and …, so …, which …" chains.
+* **Lead with the point.** The first sentence of a block says what the block is about.
+* **Lists:** 3+ parallel items → bullets. A method → numbered steps. Conditions → bullets.
+* **Formulas get their own line** (`$$…$$`), then a bullet list saying what each symbol means
+  (with units), then one line "In words: …".
+* **One calculation move per line.** Never chain three or more `=` inside a sentence. Put the
+  working on its own lines.
+* **Worked-example steps:** each step is one move. The maths goes on its own line, then a short
+  reason ("This works because …").
+* **Bold** a key term the first time it appears. Use a table to compare cases or symbols.
+* **Symbol key:** a lesson with several symbols has a "Key to the symbols" table near the top.
+* Light humour and analogies are welcome. Say where an analogy breaks.
 
-#### 3. Make difficult ideas accessible
+Before (hard to read):
 
-Use whichever techniques suit the concept; this is not a mandatory template:
+> To find $\overrightarrow{AB}$ take $\mathbf{b} - \mathbf{a}$ because going from $A$ to $B$ is the same as going from $A$ to $O$ and then $O$ to $B$, which is $-\mathbf{a} + \mathbf{b}$, so with $A(1, 2)$ and $B(4, 6)$ you get $(3, 4)$.
 
-1. **Concrete example:** Start with an easy case using familiar numbers or a relatable situation.
-2. **Plain-language intuition:** Explain what is happening and why it makes sense before adding unnecessary formalism.
-3. **Analogy:** Compare the concept with something familiar and explain where the analogy stops being accurate.
-4. **Visual representation:** Use a diagram, table, labelled equation or sequence of boxes when it helps.
-5. **Step-by-step method:** Work through the example without skipping algebraic, mathematical, scientific or logical steps.
-6. **General rule:** Introduce the formal formula, terminology or method once the student has some intuition.
-7. **Independent application:** Ask the student to solve a new question without copying the worked example, then explain the answer's reasoning.
+After:
 
-#### 4. Never assume unfamiliar notation is self-explanatory
-
-- Identify unfamiliar variables, constants, subscripts, superscripts, operators and functions.
-- Explain how an expression is constructed and how its parts relate.
-- Show intermediate transformations and explain why each is valid.
-- Explain why a formula or method applies before substituting values.
-- Introduce multiple unfamiliar variables or terms separately before combining them.
-- Explain rearranging, substitution, differentiation, integration, resolving, balancing and other manipulations at the level required by the stated prerequisites.
-- Do not skip steps merely because an expert would perform them mentally.
-- Apply the same principle to pseudocode, programming logic, circuit diagrams, chemical mechanisms, physical models and scientific terminology.
-
-#### 5. Use formatting to make depth manageable
-
-**Longer explanations are acceptable. Walls of text are not.**
-
-- Keep paragraphs short, but never delete information just to shorten a paragraph. Divide it into multiple paragraphs or blocks.
-- Use numbered steps for procedures and worked examples.
-- Use tables to compare concepts, symbols, cases and common mistakes.
-- Use bullets for parallel ideas, assumptions, conditions and key points.
-- Use labelled diagrams and visual breakdowns when they reduce cognitive load.
-- Place a recall question immediately after the material it tests.
-- Use progressive disclosure for optional detail, but never hide essential syllabus content in an optional section.
-- Give each block one clear purpose and use as many blocks as necessary.
-
-#### 6. Use examples that reveal the reasoning
-
-- Start with the simplest useful example before increasing complexity.
-- Explain the reasoning behind each important step, not just the operations performed.
-- Where useful, show a common incorrect approach, explain why it fails and demonstrate the correct method.
-- Use another example when the first does not establish independent application.
-- Avoid repetitive examples that test exactly the same skill without adding insight.
-- Ensure examples and practice questions cover syllabus objectives and relevant edge cases.
-
-#### 7. Preserve academic rigour
-
-- Use precise Cambridge terminology and mark-scheme-worthy definitions.
-- Do not replace technical definitions with loose analogies; explain intuition separately from the formal definition.
-- Preserve examinable conditions, exceptions, units, assumptions and syllabus guidance.
-- Keep enrichment clearly labelled as not examinable.
-- Write original examples and questions; never copy past papers or mark schemes.
-- Verify every worked calculation and answer key.
-
-#### 8. Optimise tokens without reducing learning quality
-
-Reduce wasted tokens by avoiding repeated instructions, redundant research, duplicated explanations, unnecessary rewrites and repeated tool calls.
-
-Do **not** reduce tokens by omitting essential explanations, skipping intermediate steps, removing helpful examples, making language more advanced, assuming unknown prior knowledge, reducing coverage or weakening verification.
-
-**Optimise for minimum wasted effort per student who successfully learns the concept, not minimum tokens per lesson.** When choosing between a shorter incomplete explanation and a longer explanation that enables a beginner to understand and apply the concept, choose the longer explanation.
-
-#### Final self-check
-
-Before submitting a lesson, ask:
-
-- Could a student who knows only the stated prerequisites follow every step?
-- Are all new terms, symbols and formulas explained before use?
-- Does every worked example explain why the method works, not merely what to write?
-- Have any steps been skipped because they seemed obvious to the author?
-- Would an analogy, diagram, comparison or additional example resolve a likely confusion?
-- Can the student apply the idea independently after the lesson?
-- Is any content genuinely redundant, or is it merely longer than expected?
-
-If a beginner would be confused, improve the teaching before trying to shorten the lesson.
+> To get from $A$ to $B$, take **end minus start**:
+>
+> $$\overrightarrow{AB} = \mathbf{b} - \mathbf{a}$$
+>
+> - $\mathbf{a}$ is the position vector of $A$ (the arrow from the origin $O$ to $A$).
+> - $\mathbf{b}$ is the position vector of $B$.
+>
+> **Why?** Going $A \to B$ is the same trip as $A \to O$, then $O \to B$.
+>
+> - $A \to O$ is $\mathbf{a}$ reversed: $-\mathbf{a}$.
+> - $O \to B$ is $\mathbf{b}$.
+>
+> So the trip is $-\mathbf{a} + \mathbf{b} = \mathbf{b} - \mathbf{a}$.
 
 ### Writing style
 
-* **Make the material easy to navigate, not artificially short.** Readability rules control
-  presentation, never how much teaching a student receives:
-  * Keep paragraphs to at most 2 sentences, with a blank line between chunks.
-  * Use bullets for parallel points, steps or conditions; use numbered steps for methods.
-  * Keep each block focused on one idea, but use as many connected blocks as needed to
-    explain the concept fully.
-  * Never cut an explanation because it takes up screen space. If a block is hard to scan,
-    add structure or split it at a natural teaching boundary; preserve every necessary
-    definition, link in the reasoning, intermediate step and example.
-  * A lesson may be long when the concept requires it. Do not confuse short paragraphs or
-    visual whitespace with a requirement for short lessons.
-* Teach a first-timer: start from the simplest concrete case, then the general rule. Where
-  you can, give an easy first example the student can check another way (e.g. the chain
-  rule on $(2x + 1)^2$, checked by expanding) before the harder ones.
 * Conversational, warm, occasionally funny. Never at the expense of accuracy.
-* Lead with the idea, not a preamble. No "In this lesson we will…" filler.
-* Tables and bold key terms help scanning; use them.
-* **Bold** key terms the first time they appear. Use exact Cambridge terminology.
-* Analogies only when they genuinely clarify; say where the analogy breaks down.
-* State conditions and limits precisely ("for $a \neq 0$", "at constant temperature").
-* British spelling (ionisation, colour, analyse), SI units with the Cambridge style
-  `m s⁻¹` written in KaTeX as `$\text{m s}^{-1}$`.
+* No "In this lesson we will…" preamble. Start with the idea or a hook.
+* British spelling (ionisation, colour, analyse). SI units in Cambridge style, written in
+  KaTeX as `$\text{m s}^{-1}$`.
+* `minutes` is a realistic reading time (about words ÷ 200). 2–5 minutes is a guide, not a cap.
 
 ### Maths and markdown
 
@@ -193,6 +138,13 @@ If a beginner would be confused, improve the teaching before trying to shorten t
   field containing backslashes so they don't need escaping.
 * A literal dollar sign must be escaped as `\$`.
 * GFM tables are supported. Raw HTML is not (it is stripped).
+* Write display maths on one line of its own: `$$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$`.
+  Don't split one `$$…$$` across several lines.
+* Block `title:` fields are plain text: no `$…$` in titles.
+* Never put LaTeX in a double-quoted YAML string (`"\frac"` becomes a form feed). Quote any
+  plain scalar that contains `: `.
+* Column vectors need `\\` between rows: `\begin{pmatrix} 3 \\ 2 \end{pmatrix}`.
+
 
 ## 3. Recall questions
 
@@ -260,18 +212,11 @@ Every lesson records where it came from and how it has been checked:
 AI-drafted content is never labelled as teacher-reviewed. Review happens in code review
 (pull requests); the reviewer updates `provenance` in the same change.
 
-## 6. Completion cycle: write, review, publish, repeat
+## 6. Completion cycle
 
-Lesson creation is not complete when a writer finishes a draft or when a batch passes review.
-For the full syllabus queue, repeat this cycle until every in-scope unit is published:
-
-1. **Write or complete** lessons for every objective, including missing objectives in partial units.
-2. **Validate and independently review** every lesson, question, answer key and diagram. Fix findings and re-run the required checks until clean.
-3. **Publish** only eligible `ai-checked` content using the repository's publishing workflow.
-4. **Verify deployment** and confirm the published content is live.
-5. **Update status and snapshot** remaining drafts, then inspect the queue and repeat.
-
-Use `node scripts/lessons/status.mjs` as the source of truth. Completion means every in-scope unit is `published`, with no `todo`, `partial`, `drafted` or `reviewed` units left. A finished batch or subject is not proof that the whole queue is done. Never bypass independent review, validation, publication checks or honest provenance to finish faster. If progress is blocked by usage limits or external dependencies, record the exact remaining states and resume from there.
+Write → validate → independent review → fix and revalidate → publish → verify live. Repeat
+until every in-scope lesson is done. The working method is in `docs/HANDOFF.md` §3–4. Never
+bypass review, validation or honest provenance to go faster.
 
 ## 7. Copyright
 
