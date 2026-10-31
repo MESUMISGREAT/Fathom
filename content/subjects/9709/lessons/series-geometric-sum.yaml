@@ -4,7 +4,7 @@ topic: "1.6"
 title: Summing a geometric progression
 summary: Use Sₙ = a(1 − rⁿ)/(1 − r) to add the first n terms of a GP, see why it works, and work backwards to find n or r.
 order: 6
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.6.3"]
 prerequisites: [series-geometric-nth-term]
@@ -19,6 +19,7 @@ provenance:
     such. All examples and questions are original; all arithmetic checked in Python. Not yet
     teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -32,27 +33,44 @@ blocks:
 
       | Symbol | Meaning |
       | --- | --- |
-      | $S_{10}$ | the sum of the first 10 terms |
-      | $S_8$ | the sum of the first 8 terms |
-      | $S_3$ | the sum of the first 3 terms |
+      | $S_n$ | the sum of the first $n$ terms, e.g. $S_{10}$ is the sum of the first 10 |
+      | $a$ | the first term |
+      | $r$ | the common ratio (what you multiply by each time) |
+      | $\lvert r \rvert$ | the size of $r$, ignoring its sign: $\lvert -\tfrac12 \rvert = \tfrac12$ |
 
   - type: explain
     title: The rice that broke the bank
     body: |-
-      An old legend: a king offers a reward, and the clever inventor of chess asks for 1 grain of rice on the first square, 2 on the second, 4 on the third, doubling across all 64 squares. The king laughs. Then his accountants do the sum.
+      An old legend: a king offers a reward. The clever inventor of chess asks for 1 grain of rice on the first square, 2 on the second, 4 on the third, doubling across all 64 squares.
 
-      $1 + 2 + 4 + \dots + 2^{63} = 2^{64} - 1 \approx 1.8 \times 10^{19}$ grains. That's far more rice than has ever been grown. GP sums get huge fast, and there's a neat formula for them.
+      The king laughs. Then his accountants do the sum:
+
+      $$1 + 2 + 4 + \dots + 2^{63} = 2^{64} - 1 \approx 1.8 \times 10^{19} \text{ grains}$$
+
+      That's roughly a thousand years of today's entire world rice harvest. GP sums get huge fast, and there's a neat formula for them.
 
   - type: intuition
     title: Multiply, shift, subtract
     body: |-
-      Write the sum, then multiply every term by $r$:
+      **With numbers first.** Take $S = 1 + 2 + 4 + 8$ (so $a = 1$, $r = 2$).
+
+      - Multiply every term by 2: $2S = 2 + 4 + 8 + 16$.
+      - Subtract: $2S - S = 16 - 1$, because $2$, $4$ and $8$ appear in both and cancel.
+      - So $S = 15$. Check: $1 + 2 + 4 + 8 = 15$ ✓
+
+      **Now in general.** Write the sum, then multiply every term by $r$:
 
       $$\begin{aligned} S_n &= a + ar + ar^2 + \dots + ar^{n-1} \\ rS_n &= \phantom{a + {}} ar + ar^2 + \dots + ar^{n-1} + ar^n \end{aligned}$$
 
       Almost everything appears in both lines. Subtract and it all cancels except the two ends:
 
-      $$S_n - rS_n = a - ar^n \quad\Longrightarrow\quad S_n(1 - r) = a(1 - r^n).$$
+      $$S_n - rS_n = a - ar^n$$
+
+      Factorise both sides ($S_n$ on the left, $a$ on the right):
+
+      $$S_n(1 - r) = a(1 - r^n)$$
+
+      Divide by $(1 - r)$, which is allowed as long as $r \neq 1$, and you have the formula below.
 
   - type: diagram
     diagram: series-gp-sum-shift
@@ -73,7 +91,12 @@ blocks:
 
       $$S_n = \frac{a(1 - r^n)}{1 - r} = \frac{a(r^n - 1)}{r - 1}.$$
 
-      The two forms are equal (multiply top and bottom by $-1$). Use the first when $|r| < 1$ and the second when $r > 1$, so you aren't juggling negatives.
+      The two forms are equal: multiply top and bottom of the first by $-1$ to get the second.
+
+      - Use the first when $r < 1$, including any negative $r$ (e.g. $r = \tfrac12$, $r = -\tfrac13$ or $r = -2$).
+      - Use the second when $r > 1$.
+
+      That way you aren't juggling negatives.
 
   - type: check
     questions: [sum-six, spot-subtract]
@@ -86,7 +109,11 @@ blocks:
       - |-
         $a = 2$, $r = 3$, $n = 10$. Since $r > 1$, use $S_n = \dfrac{a(r^n - 1)}{r - 1}$.
       - |-
-        $S_{10} = \dfrac{2(3^{10} - 1)}{3 - 1} = 3^{10} - 1$.
+        Substitute:
+
+        $$S_{10} = \frac{2(3^{10} - 1)}{3 - 1}$$
+
+        The bottom is 2, which cancels the 2 on top: $S_{10} = 3^{10} - 1$.
       - |-
         $3^{10} = 59\,049$, so $S_{10} = 59\,048$.
     answer: |-
@@ -102,7 +129,11 @@ blocks:
       - |-
         $(-\tfrac12)^8 = \tfrac{1}{256}$ (even power, so positive), and $1 - (-\tfrac12) = \tfrac32$.
       - |-
-        $S_8 = \dfrac{64 \times \tfrac{255}{256}}{\tfrac32} = \dfrac{63.75}{1.5} = 42.5$.
+        The top: $1 - \tfrac{1}{256} = \tfrac{255}{256}$, and $64 \times \tfrac{255}{256} = 63.75$.
+      - |-
+        Divide by the bottom:
+
+        $$S_8 = \frac{63.75}{1.5} = 42.5$$
     answer: |-
       $S_8 = 42.5$. Sanity check by adding: $64 - 32 + 16 - 8 + 4 - 2 + 1 - 0.5 = 42.5$ ✓
 
@@ -114,7 +145,10 @@ blocks:
       - |-
         $a = 3$, $r = 2$: $\;S_n = \dfrac{3(2^n - 1)}{2 - 1} = 3(2^n - 1)$.
       - |-
-        $3(2^n - 1) = 3069$, so $2^n - 1 = 1023$ and $2^n = 1024$.
+        Set it equal to 3069 and undo each step:
+
+        - divide by 3: $2^n - 1 = 1023$
+        - add 1: $2^n = 1024$
       - |-
         $2^{10} = 1024$, so $n = 10$.
     answer: |-
@@ -128,9 +162,20 @@ blocks:
     body: |-
       *A GP has first term 9 and the sum of its first three terms is 19. Find the possible values of $r$.*
 
-      $S_3 = a + ar + ar^2$, so $9 + 9r + 9r^2 = 19$, giving $9r^2 + 9r - 10 = 0$.
+      Write out the three terms: $S_3 = a + ar + ar^2$. With $a = 9$:
 
-      This factorises: $(3r - 2)(3r + 5) = 0$, so $r = \tfrac23$ or $r = -\tfrac53$. Both give valid GPs: $9, 6, 4$ and $9, -15, 25$. Each sums to 19 ✓
+      $$9 + 9r + 9r^2 = 19$$
+
+      Subtract 19 and reorder:
+
+      $$9r^2 + 9r - 10 = 0$$
+
+      This factorises: $(3r - 2)(3r + 5) = 0$, so $r = \tfrac23$ or $r = -\tfrac53$.
+
+      Both give valid GPs, and each sums to 19 ✓
+
+      - $r = \tfrac23$: $9, 6, 4$
+      - $r = -\tfrac53$: $9, -15, 25$
 
       Also note the case the formula excludes: if $r = 1$, every term is $a$ and $S_n = na$.
 

@@ -4,7 +4,7 @@ topic: "1.6"
 title: "Arithmetic progressions: the nth term"
 summary: Recognise an arithmetic progression by its common difference, use uₙ = a + (n − 1)d, and test whether three numbers are in AP.
 order: 3
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.6.2", "1.6.3"]
 prerequisites: []
@@ -19,6 +19,7 @@ provenance:
     the condition 2b = a + c for three numbers in arithmetic progression. All examples and
     questions are original; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -32,14 +33,22 @@ blocks:
 
       | Symbol | Meaning |
       | --- | --- |
-      | $u_4$ | the fourth term |
+      | $n$ | the position of a term: 1st, 2nd, 3rd, … |
+      | $u_n$ | the $n$th term, e.g. $u_4$ is the fourth term |
+      | $u_{n+1}$ | the term straight after $u_n$ |
+      | $a$ | the first term, $u_1$ |
+      | $d$ | the **common difference**: the amount added each time |
 
   - type: explain
     title: Same step, every step
     body: |-
-      A staircase where every step is the same height. A taxi meter that adds the same fare every kilometre. A savings jar that gets \$5 every week.
+      - A staircase where every step is the same height.
+      - A taxi meter that adds the same fare every kilometre.
+      - A savings jar that gets \$5 every week.
 
-      That's an **arithmetic progression** (AP): you get each term by **adding the same number** to the one before. Cambridge calls the first term $a$ and the fixed step $d$.
+      That's an **arithmetic progression** (AP): you get each term by **adding the same number** to the one before.
+
+      Cambridge calls the first term $a$ and the fixed step $d$. Example: $3, 7, 11, 15, \dots$ has $a = 3$ and $d = 4$.
 
   - type: definition
     term: Arithmetic progression
@@ -68,7 +77,16 @@ blocks:
 
       $$u_n = a + (n - 1)d$$
 
-      Why $n - 1$? Same reason a 10 m fence with posts every metre needs 11 posts: the first term is already there before you take any steps.
+      **See it with numbers.** In $3, 7, 11, 15, \dots$ (so $a = 3$, $d = 4$):
+
+      - $u_1 = 3$ (no steps yet)
+      - $u_2 = 3 + 4$ (one step)
+      - $u_3 = 3 + 4 + 4 = 3 + 2 \times 4$ (two steps)
+      - $u_4 = 3 + 3 \times 4 = 15$ (three steps)
+
+      The number of steps is always one less than the position. So $u_n = a + (n - 1)d$.
+
+      Same reason a 10 m fence with posts every metre needs 11 posts: the first post is already there before you take any steps.
 
       To **recognise** an AP, check that the difference between consecutive terms is the same *all the way along*, not just for the first pair.
 
@@ -81,11 +99,20 @@ blocks:
       The 4th term of an arithmetic progression is 17 and the 10th term is 41. Find the first term and the common difference.
     steps:
       - |-
-        Translate each fact with $u_n = a + (n - 1)d$: $\;a + 3d = 17$ and $a + 9d = 41$.
+        Turn each fact into an equation using $u_n = a + (n - 1)d$:
+
+        - 4th term: $u_4 = a + 3d$, so $a + 3d = 17$
+        - 10th term: $u_{10} = a + 9d$, so $a + 9d = 41$
       - |-
-        Subtract the first equation from the second: $6d = 24$, so $d = 4$.
+        Subtract the first equation from the second. The $a$'s cancel:
+
+        $$(a + 9d) - (a + 3d) = 41 - 17$$
+
+        $$6d = 24, \quad\text{so}\quad d = 4$$
       - |-
-        Substitute back: $a + 12 = 17$, so $a = 5$.
+        Put $d = 4$ back into $a + 3d = 17$:
+
+        $$a + 12 = 17, \quad\text{so}\quad a = 5$$
     answer: |-
       $a = 5$ and $d = 4$. Check: $u_4 = 5 + 12 = 17$ ✓ and $u_{10} = 5 + 36 = 41$ ✓
 
@@ -95,11 +122,17 @@ blocks:
       How many terms are there in the arithmetic progression $7, 11, 15, \dots, 203$?
     steps:
       - |-
-        $a = 7$, $d = 4$, and the last term is $u_n = 203$.
+        Read off: $a = 7$, $d = 11 - 7 = 4$. The last term is 203, so we want the $n$ with $u_n = 203$.
       - |-
-        $7 + (n - 1) \times 4 = 203$, so $(n - 1) \times 4 = 196$.
+        Write the equation:
+
+        $$7 + (n - 1) \times 4 = 203$$
+
+        Subtract 7: $\;(n - 1) \times 4 = 196$
       - |-
-        $n - 1 = 49$, so $n = 50$.
+        Divide by 4: $\;n - 1 = 49$
+
+        Add 1: $\;n = 50$
     answer: |-
       There are 50 terms. (Not 49: that's the number of steps.)
 
@@ -109,9 +142,15 @@ blocks:
   - type: explain
     title: Three numbers in AP
     body: |-
-      $a$, $b$, $c$ are **in arithmetic progression** when the two gaps are equal: $b - a = c - b$. Rearranged:
+      $a$, $b$, $c$ are **in arithmetic progression** when the two gaps are equal:
+
+      $$b - a = c - b$$
+
+      Add $b$ and $a$ to both sides:
 
       $$2b = a + c$$
+
+      Example: $4, 7, 10$. Check: $2 \times 7 = 14$ and $4 + 10 = 14$ ✓
 
       In words: the middle number is the **mean** of the other two. This is the fastest way to set up an equation when the terms contain an unknown.
 
@@ -121,9 +160,17 @@ blocks:
       Find $x$ given that $x$, $2x + 3$ and $5x - 4$ are consecutive terms of an arithmetic progression.
     steps:
       - |-
-        Middle term doubled equals the sum of the outer two: $2(2x + 3) = x + (5x - 4)$.
+        Middle term doubled equals the sum of the outer two:
+
+        $$2(2x + 3) = x + (5x - 4)$$
       - |-
-        $4x + 6 = 6x - 4$, so $10 = 2x$ and $x = 5$.
+        Expand the left and collect the right:
+
+        $$4x + 6 = 6x - 4$$
+      - |-
+        Subtract $4x$ and add 4 to both sides: $\;10 = 2x$
+
+        So $x = 5$.
       - |-
         The terms are $5, 13, 21$.
     answer: |-
@@ -149,9 +196,9 @@ blocks:
 
   - type: exam
     body: |-
-      - AP questions are usually 3–5 marks and almost always become **simultaneous equations** in $a$ and $d$. Write the two equations clearly before solving.
+      - AP questions are usually 3–5 marks and almost always become **simultaneous equations** in $a$ and $d$. Write the two equations out in full before solving.
       - "Find $n$" answers must be **positive whole numbers**. If you get $n = 49.5$, the number isn't a term of the AP.
-      - Questions can say "arithmetic series" or "arithmetic sequence"; the formulae are the same.
+      - "Arithmetic sequence" means the same as arithmetic progression. An "arithmetic series" is the sum of its terms (next lesson).
 
   - type: takeaways
     items:

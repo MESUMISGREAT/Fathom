@@ -4,7 +4,7 @@ topic: "1.6"
 title: Summing an arithmetic progression
 summary: Add up the first n terms of an AP with Sₙ = ½n(2a + (n − 1)d) = ½n(a + l), and solve for n when the sum is given.
 order: 4
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["1.6.3"]
 prerequisites: [series-arithmetic-nth-term, quadratics-solving-equations]
@@ -19,6 +19,7 @@ provenance:
     told as such. All examples and questions are original; all arithmetic checked in Python. Not
     yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -32,26 +33,40 @@ blocks:
 
       | Symbol | Meaning |
       | --- | --- |
-      | $S_{40}$ | the sum of the first 40 terms |
-      | $S_{21}$ | the sum of the first 21 terms |
-      | $u_1$ | the first term of the sequence |
-      | $S_1$ | the sum of the first 1 term |
+      | $S_n$ | the sum of the first $n$ terms, e.g. $S_{40}$ is the sum of the first 40 |
+      | $a$ | the first term ($u_1$) |
+      | $d$ | the common difference (the amount added each time) |
+      | $l$ | the last term in the sum |
+      | $u_n$ | the $n$th term |
+      | $\{\ \}$ | curly brackets: ordinary brackets, used so you can see which bracket is which |
 
   - type: explain
     title: The 5050 trick
     body: |-
-      The story goes that a teacher told young Carl Friedrich Gauss's class to add up $1 + 2 + \dots + 100$, hoping for a quiet hour. Gauss had the answer in moments: **5050**. (The details are probably embellished. The trick is real.)
+      The story goes that a teacher told young Carl Friedrich Gauss's class to add up $1 + 2 + \dots + 100$, hoping for a quiet hour. Gauss had the answer in moments: **5050**.
+
+      (The details are probably embellished. The trick is real.)
 
       His idea: pair the first term with the last, the second with the second-last, and so on. Every pair makes $101$, and there are 50 pairs.
 
   - type: intuition
     title: Forwards plus backwards
     body: |-
-      Write the sum twice, once forwards and once backwards, and add the columns:
+      **With small numbers first.** Take $S = 2 + 5 + 8 + 11 + 14$. Write it forwards, then backwards underneath:
+
+      - forwards: $2, 5, 8, 11, 14$
+      - backwards: $14, 11, 8, 5, 2$
+      - add each column: $16, 16, 16, 16, 16$
+
+      Five columns of 16 make 80. That's two copies of the sum, so $2S = 80$ and $S = 40$.
+
+      **Now in general**, with first term $a$, last term $l$ and $n$ terms. Write the sum twice, once forwards and once backwards, and add the columns:
 
       $$\begin{aligned} S &= a + (a + d) + \dots + (l - d) + l \\ S &= l + (l - d) + \dots + (a + d) + a \\ 2S &= (a + l) + (a + l) + \dots + (a + l) + (a + l) \end{aligned}$$
 
-      That's $n$ copies of $(a + l)$, so $2S = n(a + l)$. Every column has the same total because one row goes up by $d$ exactly as fast as the other goes down.
+      That's $n$ copies of $(a + l)$, so $2S = n(a + l)$. Halve it: $S = \tfrac12 n(a + l)$.
+
+      Every column has the same total because one row goes up by $d$ exactly as fast as the other goes down.
 
   - type: diagram
     diagram: series-ap-sum-pairing
@@ -70,7 +85,12 @@ blocks:
 
       $$S_n = \tfrac12 n(a + l) = \tfrac12 n\{2a + (n - 1)d\}.$$
 
-      The second form comes from substituting $l = a + (n - 1)d$. Use it when you don't know the last term.
+      **Where the second form comes from.** The last term is the $n$th term, so $l = a + (n - 1)d$. Substitute:
+
+      $$\tfrac12 n(a + l) = \tfrac12 n\{a + a + (n - 1)d\} = \tfrac12 n\{2a + (n - 1)d\}$$
+
+      - Use $\tfrac12 n(a + l)$ when you know the last term.
+      - Use $\tfrac12 n\{2a + (n - 1)d\}$ when you don't.
 
   - type: check
     questions: [sum-200, sum-25]
@@ -81,11 +101,18 @@ blocks:
       Find the sum of the first 40 terms of the arithmetic progression $3 + 7 + 11 + \dots$
     steps:
       - |-
-        $a = 3$, $d = 4$, $n = 40$.
+        Read off: $a = 3$, $d = 7 - 3 = 4$, $n = 40$. We don't know the last term, so use the $\{2a + (n - 1)d\}$ form.
       - |-
-        $S_{40} = \tfrac12 \times 40 \times \{2(3) + 39(4)\} = 20 \times (6 + 156)$.
+        Substitute. Note $n - 1 = 39$:
+
+        $$S_{40} = \tfrac12 \times 40 \times \{2(3) + 39(4)\}$$
       - |-
-        $= 20 \times 162 = 3240$.
+        Work out each piece:
+
+        - $\tfrac12 \times 40 = 20$
+        - $2(3) + 39(4) = 6 + 156 = 162$
+
+        $$S_{40} = 20 \times 162 = 3240$$
     answer: |-
       $S_{40} = 3240$
 
@@ -95,11 +122,20 @@ blocks:
       Find the sum of all the multiples of 7 between 100 and 300.
     steps:
       - |-
-        First multiple of 7 above 100: $7 \times 15 = 105$. Last below 300: $7 \times 42 = 294$.
+        The multiples of 7 form an AP with $d = 7$. Find its ends:
+
+        - first multiple above 100: $100 \div 7 = 14.28\ldots$, so $7 \times 15 = 105$
+        - last multiple below 300: $300 \div 7 = 42.85\ldots$, so $7 \times 42 = 294$
       - |-
-        Number of terms: $105 + 7(n - 1) = 294$, so $n - 1 = 27$ and $n = 28$.
+        Count the terms with $u_n = a + (n - 1)d$:
+
+        $$105 + 7(n - 1) = 294$$
+
+        Subtract 105: $7(n - 1) = 189$. Divide by 7: $n - 1 = 27$, so $n = 28$.
       - |-
-        $S = \tfrac12 \times 28 \times (105 + 294) = 14 \times 399 = 5586$.
+        We know the last term, so use $S = \tfrac12 n(a + l)$:
+
+        $$S = \tfrac12 \times 28 \times (105 + 294) = 14 \times 399 = 5586$$
     answer: |-
       The sum is 5586.
 
@@ -112,11 +148,28 @@ blocks:
       Find the least number of terms of $5 + 9 + 13 + \dots$ needed for the sum to exceed 1000.
     steps:
       - |-
-        $S_n = \tfrac12 n\{10 + 4(n - 1)\} = \tfrac12 n(4n + 6) = n(2n + 3)$.
+        Here $a = 5$ and $d = 4$, so $2a = 10$. Write $S_n$ in terms of $n$:
+
+        $$S_n = \tfrac12 n\{10 + 4(n - 1)\}$$
       - |-
-        We need $2n^2 + 3n > 1000$. Solve $2n^2 + 3n - 1000 = 0$: $\;n = \dfrac{-3 + \sqrt{9 + 8000}}{4} = 21.6$ (3 s.f.), ignoring the negative root.
+        Simplify the bracket: $10 + 4n - 4 = 4n + 6$. Then halve it:
+
+        $$S_n = \tfrac12 n(4n + 6) = n(2n + 3) = 2n^2 + 3n$$
       - |-
-        $n$ must be a whole number bigger than 21.6, so try $n = 22$. Check both sides of the boundary: $S_{21} = 21 \times 45 = 945$ and $S_{22} = 22 \times 47 = 1034$.
+        We need $2n^2 + 3n > 1000$. Find where it equals 1000 by solving
+
+        $$2n^2 + 3n - 1000 = 0$$
+      - |-
+        Use the quadratic formula with $a = 2$, $b = 3$, $c = -1000$ (these are the formula's letters, not the AP's):
+
+        $$n = \frac{-3 + \sqrt{9 + 8000}}{4} = 21.6 \text{ (3 s.f.)}$$
+
+        The other root is negative, and $n$ can't be negative, so ignore it.
+      - |-
+        $n$ must be a whole number bigger than 21.6, so try $n = 22$. Check both sides of the boundary:
+
+        - $S_{21} = 21 \times 45 = 945$ (not enough)
+        - $S_{22} = 22 \times 47 = 1034$ (passes 1000)
     answer: |-
       22 terms are needed. (Rounding 21.6 *down* would give a sum of only 945.)
 
@@ -130,7 +183,14 @@ blocks:
 
       $$u_n = S_n - S_{n-1}.$$
 
-      Example: if $S_n = 3n^2 + 2n$, then $u_1 = S_1 = 5$ and $u_n = (3n^2 + 2n) - \{3(n - 1)^2 + 2(n - 1)\} = 6n - 1$. That's an AP with $a = 5$ and $d = 6$.
+      Example: $S_n = 3n^2 + 2n$.
+
+      - First term: $u_1 = S_1 = 3 + 2 = 5$.
+      - General term: $u_n = (3n^2 + 2n) - \{3(n - 1)^2 + 2(n - 1)\}$.
+      - Expand the curly bracket: $3(n^2 - 2n + 1) + 2n - 2 = 3n^2 - 4n + 1$.
+      - Subtract: $u_n = 3n^2 + 2n - 3n^2 + 4n - 1 = 6n - 1$.
+
+      That's an AP with $a = 5$ and $d = 6$.
 
   - type: misconceptions
     items:

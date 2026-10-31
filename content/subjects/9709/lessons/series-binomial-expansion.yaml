@@ -4,7 +4,7 @@ topic: "1.6"
 title: The binomial expansion of (a + b)ⁿ
 summary: Expand (a + b)ⁿ for a positive integer n using Pascal's triangle or the binomial coefficients ⁿCᵣ = n!/(r!(n − r)!).
 order: 1
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.6.1"]
 prerequisites: []
@@ -19,6 +19,7 @@ provenance:
     All examples and questions are original; all arithmetic checked in Python. Not yet
     teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -26,9 +27,11 @@ blocks:
       By the end you can expand $(a + b)^n$ for any positive integer $n$, using **Pascal's triangle** or the **binomial coefficients** $\binom{n}{r}$, and you know what $n!$ means.
 
   - type: explain
-    title: Five brackets? No thanks
+    title: Four brackets? No thanks
     body: |-
-      You *could* expand $(3 + 2x)^4$ by multiplying out four brackets. It works. It also takes ages and one slip wrecks everything.
+      You *could* expand $(3 + 2x)^4$ by multiplying out four brackets. It works.
+
+      It also takes ages and one slip wrecks everything.
 
       Look at the first few powers instead and a pattern jumps out:
 
@@ -62,13 +65,25 @@ blocks:
   - type: definition
     term: Factorial and binomial coefficient
     body: |-
-      For a positive integer $n$, **$n$ factorial** is $n! = n \times (n - 1) \times \dots \times 2 \times 1$, and $0! = 1$.
+      For a positive integer $n$, **$n$ factorial** means multiply all the whole numbers from $n$ down to 1:
 
-      The **binomial coefficient** $\binom{n}{r}$, also written ${}^n\mathrm{C}_r$, is
+      $$n! = n \times (n - 1) \times \dots \times 2 \times 1$$
 
-      $$\binom{n}{r} = \frac{n!}{r!\,(n - r)!}, \qquad r = 0, 1, \dots, n.$$
+      - $3! = 3 \times 2 \times 1 = 6$
+      - $5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$
+      - $0! = 1$, by definition (it makes the formulas below work)
 
-      It is entry $r$ of row $n$ of Pascal's triangle (counting from $r = 0$). For example $\binom{5}{2} = \dfrac{5!}{2!\,3!} = \dfrac{120}{2 \times 6} = 10$.
+      The **binomial coefficient** $\binom{n}{r}$, read "$n$ choose $r$" and also written ${}^n\mathrm{C}_r$, is
+
+      $$\binom{n}{r} = \frac{n!}{r!\,(n - r)!}, \qquad r = 0, 1, \dots, n$$
+
+      It is entry $r$ of row $n$ of Pascal's triangle, counting from $r = 0$.
+
+      **Example:** $\binom{5}{2}$. Here $n = 5$ and $r = 2$, so $n - r = 3$:
+
+      $$\binom{5}{2} = \frac{5!}{2!\,3!} = \frac{120}{2 \times 6} = 10$$
+
+      Check with the triangle: row 5 is $1, 5, 10, 10, 5, 1$, and entry 2 (counting the first 1 as entry 0) is 10 ✓
 
   - type: explain
     title: The binomial expansion
@@ -77,14 +92,26 @@ blocks:
 
       $$(a + b)^n = a^n + \binom{n}{1}a^{n-1}b + \binom{n}{2}a^{n-2}b^2 + \dots + \binom{n}{r}a^{n-r}b^r + \dots + b^n$$
 
+      Read the general term $\binom{n}{r}a^{n-r}b^r$ like this:
+
+      - $b$ is raised to the power $r$;
+      - $a$ gets whatever power is left over, $n - r$, so the powers add to $n$;
+      - the coefficient in front is $\binom{n}{r}$.
+
       Pascal's triangle is quickest for small $n$. For bigger $n$, or when you only need one coefficient, use $\binom{n}{r}$ (your calculator's ${}^n\mathrm{C}_r$ button).
 
   - type: intuition
     title: Why n choose r?
     body: |-
-      $(a + b)^4 = (a + b)(a + b)(a + b)(a + b)$. Every term in the expansion comes from picking either $a$ or $b$ from **each** of the four brackets and multiplying.
+      $(a + b)^4 = (a + b)(a + b)(a + b)(a + b)$.
 
-      To get $a^2b^2$ you pick $b$ from 2 of the 4 brackets. The number of ways to choose those 2 brackets is $\binom{4}{2} = 6$. So 6 copies of $a^2b^2$ turn up, and the coefficient is 6.
+      Every term in the expansion comes from picking either $a$ or $b$ from **each** of the four brackets and multiplying.
+
+      To get $a^2b^2$, you pick $b$ from 2 of the 4 brackets (and $a$ from the other 2). The number of ways to choose those 2 brackets is $\binom{4}{2} = 6$:
+
+      - brackets 1 & 2, 1 & 3, 1 & 4, 2 & 3, 2 & 4, 3 & 4
+
+      So 6 copies of $a^2b^2$ turn up, and the coefficient is 6.
 
   - type: example
     title: A full expansion
@@ -94,11 +121,23 @@ blocks:
       - |-
         Row 4 of Pascal's triangle: $1, 4, 6, 4, 1$. Here $a = 3$ and $b = 2x$.
       - |-
-        Write each term with brackets round the whole of $b$: $\;1(3)^4 + 4(3)^3(2x) + 6(3)^2(2x)^2 + 4(3)(2x)^3 + 1(2x)^4$.
+        Write each term with brackets round the whole of $b$. Powers of 3 go down, powers of $(2x)$ go up:
+
+        $$1(3)^4 + 4(3)^3(2x) + 6(3)^2(2x)^2 + 4(3)(2x)^3 + 1(2x)^4$$
       - |-
-        Square and cube the **whole** bracket: $(2x)^2 = 4x^2$, $(2x)^3 = 8x^3$, $(2x)^4 = 16x^4$.
+        Raise the **whole** bracket to each power (the 2 gets powered too):
+
+        - $(2x)^2 = 4x^2$
+        - $(2x)^3 = 8x^3$
+        - $(2x)^4 = 16x^4$
       - |-
-        Multiply out: $81 + 4 \times 27 \times 2x + 6 \times 9 \times 4x^2 + 4 \times 3 \times 8x^3 + 16x^4$.
+        Now simplify one term at a time:
+
+        - $1 \times 81 = 81$
+        - $4 \times 27 \times 2x = 216x$
+        - $6 \times 9 \times 4x^2 = 216x^2$
+        - $4 \times 3 \times 8x^3 = 96x^3$
+        - $1 \times 16x^4 = 16x^4$
     answer: |-
       $(3 + 2x)^4 = 81 + 216x + 216x^2 + 96x^3 + 16x^4$. Quick check: put $x = 1$. The left side is $5^4 = 625$ and the right side is $81 + 216 + 216 + 96 + 16 = 625$ ✓
 
@@ -110,7 +149,11 @@ blocks:
     body: |-
       $(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4$ and $(1 - x)^4 = 1 - 4x + 6x^2 - 4x^3 + x^4$.
 
-      Add them and the odd powers cancel: $(1 + x)^4 + (1 - x)^4 = 2 + 12x^2 + 2x^4$. Subtract them and the *even* powers cancel instead. Spotting this saves half the work.
+      Add them and the odd powers cancel:
+
+      $$(1 + x)^4 + (1 - x)^4 = 2 + 12x^2 + 2x^4$$
+
+      Subtract them and the *even* powers cancel instead. Spotting this saves half the work.
 
   - type: check
     questions: [sum-of-expansions]

@@ -4,7 +4,7 @@ topic: "1.6"
 title: Sum to infinity of a geometric progression
 summary: A geometric progression converges exactly when |r| < 1, and then its sum to infinity is a/(1 − r).
 order: 7
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.6.4"]
 prerequisites: [series-geometric-sum]
@@ -19,6 +19,7 @@ provenance:
     examples and questions are original; all arithmetic checked in Python. Not yet
     teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -33,11 +34,17 @@ blocks:
       | Symbol | Meaning |
       | --- | --- |
       | $S_n$ | the sum of the first $n$ terms |
+      | $S_\infty$ | the **sum to infinity**: what $S_n$ settles down to as you add more and more terms |
+      | $a$, $r$ | the first term and the common ratio |
+      | $\lvert r \rvert$ | the size of $r$, ignoring its sign; $\lvert r \rvert < 1$ means $-1 < r < 1$ |
+      | $\to$ | "gets closer and closer to" |
 
   - type: explain
     title: Infinitely many slices, one pizza
     body: |-
-      Eat half a pizza. Then half of what's left. Then half of *that*. You'll go on forever (in theory), but you'll never eat more than one pizza:
+      Eat half a pizza. Then half of what's left. Then half of *that*.
+
+      You'll go on forever (in theory), but you'll never eat more than one pizza:
 
       $$\tfrac12 + \tfrac14 + \tfrac18 + \tfrac1{16} + \dots = 1$$
 
@@ -48,11 +55,16 @@ blocks:
     body: |-
       You already know $S_n = \dfrac{a(1 - r^n)}{1 - r}$.
 
-      If $-1 < r < 1$, then $r^n$ gets closer and closer to 0 as $n$ grows: $0.5^{10} \approx 0.001$, $0.5^{20} \approx 0.000\,001$. So the $r^n$ in the formula fades away and
+      If $-1 < r < 1$, then $r^n$ gets closer and closer to 0 as $n$ grows. For example:
+
+      - $0.5^{10} \approx 0.001$
+      - $0.5^{20} \approx 0.000\,001$
+
+      So the $r^n$ in the formula fades away, and
 
       $$S_n \to \frac{a(1 - 0)}{1 - r} = \frac{a}{1 - r}.$$
 
-      If $|r| \geqslant 1$, $r^n$ doesn't fade, so there's no finite limit.
+      If $|r| \geqslant 1$, $r^n$ doesn't fade (try $2^{10} = 1024$), so there's no finite limit.
 
   - type: diagram
     diagram: series-sum-to-infinity
@@ -69,7 +81,7 @@ blocks:
   - type: definition
     term: Convergent GP and sum to infinity
     body: |-
-      A geometric progression is **convergent** if and only if $|r| < 1$, that is $-1 < r < 1$ (with $r \neq 0$). Its **sum to infinity** is
+      A geometric progression is **convergent** if and only if $|r| < 1$, that is $-1 < r < 1$. Its **sum to infinity** is
 
       $$S_\infty = \frac{a}{1 - r}.$$
 
@@ -96,7 +108,13 @@ blocks:
       - |-
         $a = 24$, $r = \dfrac{-12}{24} = -\tfrac12$. Since $|r| = \tfrac12 < 1$, the GP is convergent.
       - |-
-        $S_\infty = \dfrac{24}{1 - (-\tfrac12)} = \dfrac{24}{\tfrac32} = 16$.
+        Substitute into $S_\infty = \dfrac{a}{1 - r}$, bracketing the negative ratio:
+
+        $$S_\infty = \frac{24}{1 - (-\tfrac12)}$$
+      - |-
+        The bottom: subtracting a negative adds, so $1 + \tfrac12 = \tfrac32$.
+
+        $$S_\infty = \frac{24}{\tfrac32} = 24 \times \frac23 = 16$$
     answer: |-
       $S_\infty = 16$
 
@@ -106,7 +124,13 @@ blocks:
       A convergent geometric progression has first term 15 and sum to infinity 45. Find the common ratio.
     steps:
       - |-
-        $\dfrac{15}{1 - r} = 45$, so $1 - r = \dfrac{15}{45} = \tfrac13$.
+        Put $a = 15$ and $S_\infty = 45$ into the formula:
+
+        $$\frac{15}{1 - r} = 45$$
+      - |-
+        Multiply both sides by $(1 - r)$, then divide by 45:
+
+        $$1 - r = \frac{15}{45} = \frac13$$
       - |-
         $r = \tfrac23$, which satisfies $|r| < 1$ ✓
     answer: |-
@@ -120,7 +144,17 @@ blocks:
     body: |-
       *For which values of $x$ is $1 + 2x + 4x^2 + 8x^3 + \dots$ convergent?*
 
-      Here $a = 1$ and $r = 2x$. Convergent means $|2x| < 1$, i.e. $-1 < 2x < 1$, so $-\tfrac12 < x < \tfrac12$. For those values, $S_\infty = \dfrac{1}{1 - 2x}$.
+      Find the ratio: each term is the one before times $2x$. So $a = 1$ and $r = 2x$.
+
+      Convergent means $|r| < 1$:
+
+      $$-1 < 2x < 1$$
+
+      Divide all three parts by 2:
+
+      $$-\tfrac12 < x < \tfrac12$$
+
+      For those values, $S_\infty = \dfrac{1}{1 - 2x}$.
 
   - type: deeper
     title: Recurring decimals are GPs in disguise
@@ -129,7 +163,7 @@ blocks:
 
       $$S_\infty = \frac{0.27}{1 - 0.01} = \frac{0.27}{0.99} = \frac{27}{99} = \frac{3}{11}.$$
 
-      So $0.\dot{2}\dot{7} = \tfrac{3}{11}$. (Try it on your calculator.)
+      So $0.\dot{2}\dot{7} = \tfrac{3}{11}$. (The dots over 2 and 7 mean "these digits repeat forever". Try $3 \div 11$ on your calculator.)
 
   - type: check
     questions: [x-range, recurring]

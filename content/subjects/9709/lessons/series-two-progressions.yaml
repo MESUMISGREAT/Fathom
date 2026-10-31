@@ -4,7 +4,7 @@ topic: "1.6"
 title: Problems with two progressions
 summary: Solve problems where an arithmetic and a geometric progression share terms, or race each other, by turning every condition into an equation.
 order: 8
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.6.3", "1.6.2", "1.6.4"]
 prerequisites: [series-arithmetic-sum, series-geometric-sum, series-sum-to-infinity]
@@ -20,6 +20,7 @@ provenance:
     appears). All examples and questions are original; the running and training scenarios use
     made-up illustrative numbers. All arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -34,14 +35,19 @@ blocks:
       | Symbol | Meaning |
       | --- | --- |
       | $u_n$ | the $n$th term |
+      | $a$, $d$ | the first term and common difference of the AP (arithmetic progression: add $d$ each time) |
+      | $r$ | the common ratio of the GP (geometric progression: multiply by $r$ each time) |
+      | $S_\infty$ | the sum to infinity of a convergent GP, $\dfrac{a}{1 - r}$ |
 
   - type: explain
     title: The crossover episode
     body: |-
-      Cambridge loves a crossover: the same numbers are terms of an AP *and* a GP. It looks scary. It isn't, if you follow a routine:
+      Cambridge loves a crossover: the same numbers are terms of an AP *and* a GP.
+
+      It looks scary. It isn't, if you follow a routine:
 
       1. **Name the unknowns**: usually $a$ and $d$ for the AP, $r$ for the GP.
-      2. **Translate** every fact into an equation, using $u_n = a + (n - 1)d$ and $b^2 = ac$.
+      2. **Translate** every fact into an equation, using $u_n = a + (n - 1)d$ and (middle)² = product of the outer two.
       3. **Solve**, then use any condition like "$d \neq 0$" or "$|r| < 1$" to reject roots.
 
   - type: explain
@@ -51,8 +57,8 @@ blocks:
       | --- | --- |
       | the 3rd term of the AP | $a + 2d$ |
       | the 1st, 3rd and 7th terms of an AP are in GP | $(a + 2d)^2 = a(a + 6d)$ |
-      | $p$, $q$, $r$ are in AP | $2q = p + r$ |
-      | $p$, $q$, $r$ are in GP | $q^2 = pr$ |
+      | $p$, $q$, $s$ are in AP | $2q = p + s$ |
+      | $p$, $q$, $s$ are in GP | $q^2 = ps$ |
       | the GP is convergent | $\lvert r \rvert < 1$ |
 
       The key move is the second row: write each **term** of the AP in terms of $a$ and $d$, *then* apply the GP condition to those expressions.
@@ -74,13 +80,27 @@ blocks:
       An arithmetic progression has first term 3 and common difference $d$, where $d \neq 0$. Its 1st, 2nd and 5th terms are the first three terms of a geometric progression. Find $d$ and the common ratio of the geometric progression.
     steps:
       - |-
-        The terms are $3$, $3 + d$ and $3 + 4d$.
+        Write each AP term with $u_n = a + (n - 1)d$ and $a = 3$:
+
+        - 1st: $3$
+        - 2nd: $3 + d$
+        - 5th: $3 + 4d$
       - |-
-        GP condition (middle squared = product of the outer two): $(3 + d)^2 = 3(3 + 4d)$.
+        These three form a GP, so (middle)² = product of the outer two:
+
+        $$(3 + d)^2 = 3(3 + 4d)$$
       - |-
-        $9 + 6d + d^2 = 9 + 12d$, so $d^2 - 6d = 0$, i.e. $d(d - 6) = 0$.
+        Expand both sides:
+
+        $$9 + 6d + d^2 = 9 + 12d$$
       - |-
-        $d \neq 0$, so $d = 6$. The terms are $3, 9, 27$, so $r = 3$.
+        Subtract $9 + 12d$ from both sides: $d^2 - 6d = 0$.
+
+        Factorise (don't divide by $d$): $d(d - 6) = 0$, so $d = 0$ or $d = 6$.
+      - |-
+        The question says $d \neq 0$, so $d = 6$.
+
+        The terms are $3$, $9$, $27$. Each is 3 times the one before, so $r = 3$.
     answer: |-
       $d = 6$ and $r = 3$. (The rejected root $d = 0$ gives $3, 3, 3$: technically a GP with $r = 1$, which is why questions say $d \neq 0$.)
 
@@ -93,13 +113,29 @@ blocks:
       An arithmetic progression has first term 16 and common difference $d \neq 0$. Its 1st, 3rd and 4th terms are the first three terms of a geometric progression. Find $d$ and the sum to infinity of the geometric progression.
     steps:
       - |-
-        Terms: $16$, $16 + 2d$, $16 + 3d$. GP condition: $(16 + 2d)^2 = 16(16 + 3d)$.
+        The AP terms, with $a = 16$:
+
+        - 1st: $16$
+        - 3rd: $16 + 2d$
+        - 4th: $16 + 3d$
       - |-
-        $256 + 64d + 4d^2 = 256 + 48d$, so $4d^2 + 16d = 0$, i.e. $4d(d + 4) = 0$.
+        GP condition, (middle)² = product of the outer two:
+
+        $$(16 + 2d)^2 = 16(16 + 3d)$$
       - |-
-        $d \neq 0$, so $d = -4$. The GP is $16, 8, 4, \dots$ with $r = \tfrac12$.
+        Expand both sides:
+
+        $$256 + 64d + 4d^2 = 256 + 48d$$
+
+        Subtract $256 + 48d$: $\;4d^2 + 16d = 0$
       - |-
-        $|r| < 1$, so it converges: $S_\infty = \dfrac{16}{1 - \tfrac12} = 32$.
+        Factorise: $4d(d + 4) = 0$. Since $d \neq 0$, $d = -4$.
+      - |-
+        The AP is $16, 12, 8, 4, \dots$, so the GP is $16, 8, 4, \dots$ with $r = \tfrac{8}{16} = \tfrac12$.
+      - |-
+        $|r| < 1$, so the GP converges:
+
+        $$S_\infty = \frac{16}{1 - \tfrac12} = \frac{16}{\tfrac12} = 32$$
     answer: |-
       $d = -4$ and $S_\infty = 32$.
 
@@ -114,7 +150,19 @@ blocks:
       - **Priya** runs 3 km on day 1 and adds 0.5 km each day (an AP).
       - **Tom** runs 3 km on day 1 and adds 10% each day (a GP with $r = 1.1$).
 
-      After 10 days, Priya's total is $S_{10} = \tfrac12 \times 10 \times (6 + 9 \times 0.5) = 52.5$ km and Tom's is $\dfrac{3(1.1^{10} - 1)}{0.1} = 47.8$ km. Priya leads for now, but a GP with $r > 1$ always overtakes an AP eventually. Steady beats explosive... until it doesn't.
+      Totals after 10 days:
+
+      - Priya (AP, $a = 3$, $d = 0.5$):
+
+        $$S_{10} = \tfrac12 \times 10 \times (2 \times 3 + 9 \times 0.5) = 52.5 \text{ km}$$
+
+      - Tom (GP, $a = 3$, $r = 1.1$):
+
+        $$S_{10} = \frac{3(1.1^{10} - 1)}{1.1 - 1} = 47.8 \text{ km (3 s.f.)}$$
+
+      Priya leads for now. But a GP with $r > 1$ (and a positive first term) always overtakes an AP eventually.
+
+      Steady beats explosive... until it doesn't.
 
   - type: check
     questions: [race-totals, race-overtake]
@@ -225,19 +273,25 @@ questions:
     difficulty: 2
     objectives: ["1.6.3", "1.6.2"]
     prompt: |-
-      Using the Priya and Tom example: Priya runs 3 km on day 1 and 0.5 km more each day; Tom runs 3 km on day 1 and 10% more each day. Find each runner's total distance over the first 10 days. Give Tom's to 3 significant figures.
+      Using the Priya and Tom example: Priya runs 3 km on day 1 and 0.5 km more each day; Tom runs 3 km on day 1 and 10% more each day. Find each runner's total distance over the first 15 days. Give Tom's to 3 significant figures.
     fields:
       - label: "Priya ="
-        answer: 52.5
+        answer: 97.5
         unit: km
       - label: "Tom ="
-        answer: 47.81227380
+        answer: 95.31744508
         sigFigs: 3
         unit: km
     explanation: |-
-      Priya (AP, $a = 3$, $d = 0.5$): $\;S_{10} = \tfrac12 \times 10 \times (6 + 9 \times 0.5) = 5 \times 10.5 = 52.5$ km.
+      Priya (AP, $a = 3$, $d = 0.5$):
 
-      Tom (GP, $a = 3$, $r = 1.1$): $\;S_{10} = \dfrac{3(1.1^{10} - 1)}{1.1 - 1} = 30(1.1^{10} - 1) = 47.812\ldots = 47.8$ km.
+      $$S_{15} = \tfrac12 \times 15 \times (6 + 14 \times 0.5) = 7.5 \times 13 = 97.5 \text{ km}$$
+
+      Tom (GP, $a = 3$, $r = 1.1$):
+
+      $$S_{15} = \frac{3(1.1^{15} - 1)}{1.1 - 1} = 30(1.1^{15} - 1) = 95.3 \text{ km (3 s.f.)}$$
+
+      Priya is still just ahead after 15 days.
 
   - id: race-overtake
     format: numeric

@@ -4,7 +4,7 @@ topic: "1.6"
 title: "Geometric progressions: the nth term"
 summary: Recognise a geometric progression by its common ratio, use uₙ = arⁿ⁻¹, and test whether three numbers are in GP with b² = ac.
 order: 5
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.6.2", "1.6.3"]
 prerequisites: [series-arithmetic-nth-term]
@@ -21,6 +21,7 @@ provenance:
     examples and questions are original; all arithmetic checked in Python. Not yet
     teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -34,18 +35,19 @@ blocks:
 
       | Symbol | Meaning |
       | --- | --- |
-      | $u_n$ | the $n$th term |
-      | $u_1$ | the first term of the sequence |
-      | $u_2$ | the second term |
-      | $u_3$ | the third term |
-      | $u_4$ | the fourth term |
+      | $u_n$ | the $n$th term (so $u_1$ is the first, $u_2$ the second, …) |
+      | $u_{n+1}$ | the term straight after $u_n$ |
+      | $a$ | the first term, $u_1$ |
+      | $r$ | the **common ratio**: the number you multiply by each time |
 
   - type: explain
     title: Multiply, don't add
     body: |-
       Fold a sheet of paper in half: 2 layers. Again: 4. Again: 8. Each fold **doubles** the layers.
 
-      A **geometric progression** (GP) works like that: you get each term by **multiplying** the previous one by the same number. That number is the **common ratio** $r$. The first term is $a$, as before.
+      A **geometric progression** (GP) works like that: you get each term by **multiplying** the previous one by the same number.
+
+      That number is the **common ratio** $r$. The first term is $a$, as before. Example: $2, 4, 8, 16, \dots$ has $a = 2$ and $r = 2$.
 
       APs grow at a steady pace. GPs explode (or shrink away to nothing). That's the whole drama of this topic.
 
@@ -72,7 +74,14 @@ blocks:
   - type: explain
     title: Why the power is n − 1
     body: |-
-      $u_1 = a$, $\;u_2 = ar$, $\;u_3 = ar^2$, $\;u_4 = ar^3$. To reach the $n$th term you multiply by $r$ exactly $n - 1$ times, the same "steps, not terms" idea as in an AP.
+      Write out the first few terms:
+
+      - $u_1 = a$ (no multiplying yet)
+      - $u_2 = ar$ (multiplied by $r$ once)
+      - $u_3 = ar \times r = ar^2$ (twice)
+      - $u_4 = ar^3$ (three times)
+
+      To reach the $n$th term you multiply by $r$ exactly $n - 1$ times. It's the same "steps, not terms" idea as in an AP.
 
       To **recognise** a GP, divide each term by the one before. If the ratio is the same every time, it's geometric.
 
@@ -85,11 +94,18 @@ blocks:
       The 3rd term of a geometric progression is 12 and the 6th term is 96. Find the first term and the common ratio.
     steps:
       - |-
-        $ar^2 = 12$ and $ar^5 = 96$.
+        Turn each fact into an equation using $u_n = ar^{n-1}$:
+
+        - 3rd term: $ar^2 = 12$
+        - 6th term: $ar^5 = 96$
       - |-
-        **Divide** (not subtract) to cancel $a$: $\;\dfrac{ar^5}{ar^2} = \dfrac{96}{12}$, so $r^3 = 8$.
+        **Divide** (not subtract) the second by the first. The $a$'s cancel, and $r^5 \div r^2 = r^3$:
+
+        $$\frac{ar^5}{ar^2} = \frac{96}{12} \quad\Rightarrow\quad r^3 = 8$$
       - |-
-        $r = 2$, and then $a = \dfrac{12}{r^2} = \dfrac{12}{4} = 3$.
+        Cube-root: $r = 2$ (since $2^3 = 8$).
+      - |-
+        Put $r = 2$ into $ar^2 = 12$: $\;4a = 12$, so $a = 3$.
     answer: |-
       $a = 3$, $r = 2$. The GP is $3, 6, 12, 24, 48, 96, \dots$ ✓
 
@@ -106,11 +122,17 @@ blocks:
   - type: explain
     title: Three numbers in GP
     body: |-
-      $a$, $b$, $c$ (all non-zero) are **in geometric progression** when the two ratios are equal: $\dfrac{b}{a} = \dfrac{c}{b}$. Cross-multiplied:
+      $a$, $b$, $c$ (all non-zero) are **in geometric progression** when the two ratios are equal:
+
+      $$\frac{b}{a} = \frac{c}{b}$$
+
+      Multiply both sides by $ab$ to clear the fractions:
 
       $$b^2 = ac$$
 
       The middle term squared equals the product of the outer two.
+
+      Example: $2, 6, 18$. Check: $6^2 = 36$ and $2 \times 18 = 36$ ✓
 
   - type: example
     title: Using b² = ac
@@ -118,11 +140,20 @@ blocks:
       Find $x$ given that $x + 1$, $x + 4$ and $x + 13$ are consecutive terms of a geometric progression.
     steps:
       - |-
-        $(x + 4)^2 = (x + 1)(x + 13)$.
+        Middle term squared equals the product of the outer two:
+
+        $$(x + 4)^2 = (x + 1)(x + 13)$$
       - |-
-        $x^2 + 8x + 16 = x^2 + 14x + 13$.
+        Expand both sides:
+
+        - left: $(x + 4)^2 = x^2 + 8x + 16$
+        - right: $(x + 1)(x + 13) = x^2 + 13x + x + 13 = x^2 + 14x + 13$
+
+        $$x^2 + 8x + 16 = x^2 + 14x + 13$$
       - |-
-        The $x^2$ terms cancel: $3 = 6x$, so $x = \tfrac12$.
+        The $x^2$ terms cancel, leaving $8x + 16 = 14x + 13$.
+
+        Subtract $8x$ and 13 from both sides: $3 = 6x$, so $x = \tfrac12$.
     answer: |-
       $x = \tfrac12$, giving $1.5, 4.5, 13.5$ with common ratio 3 ✓
 
@@ -134,7 +165,16 @@ blocks:
     body: |-
       *Which is the first term of $3, 6, 12, \dots$ to exceed 1000?*
 
-      You need $3 \times 2^{n-1} > 1000$, i.e. $2^{n-1} > 333.3\ldots$. Try powers of 2: $2^8 = 256$ (too small), $2^9 = 512$ (big enough). So $n - 1 = 9$, $n = 10$, and the term is $3 \times 2^9 = 1536$.
+      Here $a = 3$ and $r = 2$, so you need $3 \times 2^{n-1} > 1000$.
+
+      Divide by 3: $2^{n-1} > 333.3\ldots$
+
+      Try powers of 2:
+
+      - $2^8 = 256$: too small
+      - $2^9 = 512$: big enough
+
+      So $n - 1 = 9$, giving $n = 10$. The term is $3 \times 2^9 = 1536$.
 
       Paper 1 doesn't use logarithms, so trial with a calculator is the expected method. Always show the value just below and just above the target.
 
@@ -154,7 +194,7 @@ blocks:
       - wrong: |-
           $r^2 = 9$, so $r = 3$.
         right: |-
-          $r = \pm 3$. A negative ratio is allowed; it just makes the signs alternate.
+          $r = \pm 3$. A negative ratio is allowed; it makes the signs alternate.
 
   - type: exam
     body: |-
@@ -186,7 +226,7 @@ questions:
       - text: $48, -24, 12, -6, \dots$
         correct: true
         why: |-
-          Constant ratio $r = -\tfrac12$. Negative ratios are fine: the signs just alternate.
+          Constant ratio $r = -\tfrac12$. Negative ratios are fine: the signs alternate.
       - text: $2, 4, 6, 8, \dots$
         why: |-
           The *differences* are constant (2), so this is an AP. The ratios are $2, 1.5, 1.33\ldots$
