@@ -4,7 +4,7 @@ topic: "1.1"
 title: "Solving quadratic equations: three methods"
 summary: Solve ax² + bx + c = 0 by factorising, by completing the square or with the quadratic formula, and pick the quickest method.
 order: 2
-minutes: 5
+minutes: 10
 kind: core
 objectives: ["1.1.3"]
 prerequisites: [quadratics-completing-the-square]
@@ -20,91 +20,173 @@ provenance:
     and questions are original; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key)
     in a separate AI review on 2026-10-19. Expanded on 2026-10-30 by Claude Opus 5.5 with the missing reasoning, and independently reviewed again that day by a separate Claude agent. Not reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
     body: |-
-      By the end you can solve any quadratic equation $ax^2 + bx + c = 0$ in three ways (factorising, completing the square, the formula) and choose the quickest one for the job.
+      By the end you can solve any quadratic equation $ax^2 + bx + c = 0$ in three ways (factorising, completing the square, the formula) and pick the quickest one for the job.
 
   - type: explain
     title: What "solving a quadratic" means
     body: |-
-      A **quadratic equation** is one where the highest power of $x$ is $x^2$. Every quadratic can be written in the standard form
+      A **quadratic equation** is one where the highest power of $x$ is $x^2$.
+
+      Every quadratic can be rearranged into the **standard form**:
 
       $$ax^2 + bx + c = 0$$
 
       | Symbol | Meaning |
       | --- | --- |
-      | $x$ | the unknown number we are trying to find |
-      | $a$ | the number in front of $x^2$ (it can't be 0, or there would be no $x^2$) |
+      | $x$ | the unknown number we want to find |
+      | $a$ | the number in front of $x^2$ (it can't be 0, or there'd be no $x^2$) |
       | $b$ | the number in front of $x$ |
-      | $c$ | the number on its own (the **constant**) |
+      | $c$ | the number on its own, called the **constant** |
 
-      For example, in $2x^2 + 5x - 3 = 0$ we have $a = 2$, $b = 5$ and $c = -3$. Notice that $c$ keeps its minus sign.
+      Example: in $2x^2 + 5x - 3 = 0$, we have $a = 2$, $b = 5$ and $c = -3$.
 
-      **Solving** means finding every value of $x$ that makes the equation true. These values are called the **roots**. A quadratic usually has **two** roots, sometimes one, sometimes none. On a graph, the roots are where the curve $y = ax^2 + bx + c$ crosses the $x$-axis, because that is where $y = 0$.
+      Notice that $c$ keeps its minus sign. Signs are where most mistakes happen.
+
+      **Solving** means finding every value of $x$ that makes the equation true. These values are the **roots**.
+
+      - A quadratic usually has **two** roots.
+      - Sometimes it has one, and sometimes none.
+      - On a graph, the roots are where $y = ax^2 + bx + c$ crosses the $x$-axis. That's because $y = 0$ on the $x$-axis.
 
   - type: explain
-    title: First, get a zero
+    title: Step zero for every method - get a 0 on one side
     body: |-
-      Every method starts the same way: rearrange so one side is **0**.
+      Before anything else, rearrange so that one side is **0**.
 
-      Why? If two things multiply to give 0, at least one of them **must** be 0. That only works for zero. If $AB = 6$, then $A$ could be any non-zero number at all.
+      **Why zero?** Because of this fact:
 
-      So if we can rewrite the quadratic as (one bracket) $\times$ (another bracket) $= 0$, we can split it into two easy equations. Writing an expression as brackets multiplied together is called **factorising**.
+      > If two numbers multiply to give 0, at least one of them **must** be 0.
 
-      | Method | Reach for it when |
+      Zero is special here.
+
+      If $A \times B = 6$, then $A$ could be almost anything ($1$, $2$, $0.5$, …).
+
+      But if $A \times B = 0$, then $A = 0$ or $B = 0$. Nothing else works.
+
+      So if we can write the quadratic as (bracket) $\times$ (bracket) $= 0$, it splits into two easy equations.
+
+      Writing an expression as brackets multiplied together is called **factorising**.
+
+      Here's when to use each method:
+
+      | Method | Use it when |
       | --- | --- |
       | Factorising | it factorises with whole numbers (spot it in about 20 seconds, or move on) |
       | Completing the square | the question says *hence* after a completed-square part |
-      | The formula | always works; your go-to when the roots are surds or decimals |
+      | The formula | always works; best when the roots are surds or decimals |
 
   - type: explain
-    title: Factorising when a = 1
+    title: How factorising works when a = 1
     body: |-
-      Start by expanding two brackets and watching what happens:
+      Start by **expanding** (multiplying out) two brackets, and watch what happens:
 
-      $$(x + 2)(x + 5) = x^2 + 5x + 2x + 10 = x^2 + 7x + 10$$
+      $$(x + 2)(x + 5) = x^2 + 5x + 2x + 10$$
 
-      The two numbers in the brackets, $2$ and $5$, **add** to give the middle number ($7$) and **multiply** to give the last number ($10$). That is always true when there is a plain $x^2$ at the front.
+      $$= x^2 + 7x + 10$$
 
-      So factorising is that process run backwards. To factorise $x^2 + bx + c$, look for **two numbers that multiply to $c$ and add to $b$**. Then those numbers go in the brackets.
+      Look at the two numbers in the brackets, $2$ and $5$:
+
+      - they **add** to give the middle number: $2 + 5 = 7$
+      - they **multiply** to give the last number: $2 \times 5 = 10$
+
+      This always happens when the $x^2$ has no number in front of it ($a = 1$).
+
+      **Factorising is the same thing run backwards.** To factorise $x^2 + bx + c$:
+
+      1. Find two numbers that **multiply to $c$** and **add to $b$**.
+      2. Put them in the brackets: $(x + \text{first})(x + \text{second})$.
 
   - type: example
-    title: Factorising when a = 1
+    title: "Example 1: factorising when a = 1"
     problem: |-
       Solve $x^2 - x - 12 = 0$.
     steps:
       - |-
-        Here $b = -1$ and $c = -12$. We need two numbers that multiply to $-12$ and add to $-1$.
+        Read off the numbers: $b = -1$ and $c = -12$.
+
+        So we need two numbers that **multiply to $-12$** and **add to $-1$**.
       - |-
-        List pairs that multiply to $-12$: $1$ and $-12$, $-1$ and $12$, $2$ and $-6$, $-2$ and $6$, $3$ and $-4$, $-3$ and $4$. Only $3$ and $-4$ add to $-1$.
+        List the pairs that multiply to $-12$:
+
+        $1$ and $-12$, $\;-1$ and $12$, $\;2$ and $-6$, $\;-2$ and $6$, $\;3$ and $-4$, $\;-3$ and $4$.
+
+        Only $3$ and $-4$ add to $-1$.
       - |-
-        So $x^2 - x - 12 = (x + 3)(x - 4)$. Check by expanding: $x^2 - 4x + 3x - 12 = x^2 - x - 12$ ✓.
+        So the brackets are:
+
+        $$x^2 - x - 12 = (x + 3)(x - 4)$$
+
+        Check by expanding: $x^2 - 4x + 3x - 12 = x^2 - x - 12$ ✓
       - |-
-        Now $(x + 3)(x - 4) = 0$, so one bracket is zero: $x + 3 = 0$ or $x - 4 = 0$.
+        Now the equation is $(x + 3)(x - 4) = 0$.
+
+        Two things multiply to 0, so one of them is 0:
+
+        $$x + 3 = 0 \quad \text{or} \quad x - 4 = 0$$
       - |-
-        Solve each: $x = -3$ or $x = 4$. Check $x = 4$: $16 - 4 - 12 = 0$ ✓.
+        Solve each one: $x = -3$ or $x = 4$.
+
+        Check $x = 4$ in the original: $16 - 4 - 12 = 0$ ✓
     answer: |-
       $x = -3$ or $x = 4$
 
+  - type: explain
+    title: When a is not 1 - splitting the middle term
+    body: |-
+      With a number in front of $x^2$, like $2x^2 + 5x - 3$, the "add to $b$, multiply to $c$" trick no longer works on its own.
+
+      The fix is called **splitting the middle term**:
+
+      1. Multiply $a \times c$.
+      2. Find two numbers that **multiply to $ac$** and **add to $b$**.
+      3. Use them to split $bx$ into two terms.
+      4. Factorise the first two terms, then the last two. A **matching bracket** appears.
+      5. Take out that matching bracket.
+
+      **Why does a matching bracket appear?** The two numbers are chosen so that the second pair of terms is the first pair scaled down. That's why the same bracket appears in both. You'll see it happen in the example.
+
   - type: example
-    title: Factorising when a is not 1
+    title: "Example 2: factorising when a is not 1"
     problem: |-
       Solve $2x^2 + 5x - 3 = 0$.
     steps:
       - |-
-        Now there is a $2$ in front of $x^2$, so the simple "add to $b$, multiply to $c$" trick doesn't work directly. Instead, multiply $a \times c$: $2 \times (-3) = -6$.
+        Here $a = 2$, $b = 5$, $c = -3$.
+
+        Multiply: $ac = 2 \times (-3) = -6$.
       - |-
-        Find two numbers with product $-6$ and sum $b = 5$: they are $6$ and $-1$.
+        Find two numbers with **product $-6$** and **sum $5$**.
+
+        They are $6$ and $-1$, because $6 \times (-1) = -6$ and $6 + (-1) = 5$.
       - |-
-        Use them to split the middle term $5x$ into two pieces, $6x$ and $-x$ (they still add to $5x$, so the equation hasn't changed): $2x^2 + 6x - x - 3 = 0$.
+        Split the middle term $5x$ into $6x$ and $-x$:
+
+        $$2x^2 + 6x - x - 3 = 0$$
+
+        This hasn't changed the equation, because $6x - x$ is still $5x$.
       - |-
-        Now factorise the first pair and the second pair separately. $2x^2 + 6x = 2x(x + 3)$ and $-x - 3 = -1(x + 3)$. Both pairs contain the same bracket $(x + 3)$. That is exactly why we chose numbers multiplying to $ac$: it guarantees a matching bracket appears.
+        Factorise the first pair and the second pair separately:
+
+        - $2x^2 + 6x = 2x(x + 3)$
+        - $-x - 3 = -1(x + 3)$
+
+        Both pairs contain the **same bracket**, $(x + 3)$. That's the matching bracket.
       - |-
-        Take out the common bracket: $2x(x + 3) - 1(x + 3) = (2x - 1)(x + 3) = 0$.
+        Take out the common bracket:
+
+        $$2x(x + 3) - 1(x + 3) = (2x - 1)(x + 3)$$
+
+        So the equation is $(2x - 1)(x + 3) = 0$.
       - |-
-        One bracket must be zero: $2x - 1 = 0$ gives $x = \tfrac12$, and $x + 3 = 0$ gives $x = -3$.
+        One bracket must be zero:
+
+        - $2x - 1 = 0$ gives $x = \tfrac12$
+        - $x + 3 = 0$ gives $x = -3$
     answer: |-
       $x = \tfrac12$ or $x = -3$
 
@@ -112,19 +194,54 @@ blocks:
     questions: [solve-factorise, zero-product-spot]
 
   - type: explain
-    title: Completing the square
+    title: Method 2 - completing the square
     body: |-
-      Lots of quadratics don't factorise with nice numbers. The next method always works.
+      Lots of quadratics don't factorise with nice numbers. Completing the square always works.
 
-      **Completing the square** means rewriting $x^2 + bx + c$ as $(x + \text{something})^2 + \text{a number}$. The trick is that $(x + \tfrac{b}{2})^2$ expands to $x^2 + bx + \tfrac{b^2}{4}$, so it already contains the $x^2 + bx$ part. You only need to fix up the constant. For example, $(x + 3)^2 = x^2 + 6x + 9$, so $x^2 + 6x - 2 = (x + 3)^2 - 9 - 2 = (x + 3)^2 - 11$.
+      The idea: rewrite the quadratic so that $x$ appears **only once**. Then you can get $x$ on its own by undoing each step.
 
-      Once $x$ appears only **once** (inside the square), you can get it on its own by undoing each operation in turn:
+      **The key fact.** Expand a bracket squared:
 
-      $$x^2 + 6x - 2 = 0 \;\Rightarrow\; (x + 3)^2 - 11 = 0 \;\Rightarrow\; (x + 3)^2 = 11$$
+      $$(x + 3)^2 = x^2 + 6x + 9$$
 
-      $$x + 3 = \pm\sqrt{11} \;\Rightarrow\; x = -3 \pm \sqrt{11}$$
+      It contains $x^2 + 6x$, plus an extra $9$.
 
-      The $\pm$ is not decoration. A positive number has **two** square roots, so you get two roots.
+      So to write $x^2 + 6x - 2$ using $(x + 3)^2$:
+
+      - $(x + 3)^2$ gives us $x^2 + 6x$, but also an extra $+9$ we don't want.
+      - Take that 9 away again, then put in the $-2$ we do want.
+
+      $$x^2 + 6x - 2 = (x + 3)^2 - 9 - 2$$
+
+      $$= (x + 3)^2 - 11$$
+
+      The number in the bracket is always **half of $b$** (here half of 6 is 3).
+
+  - type: example
+    title: "Example 3: solving by completing the square"
+    problem: |-
+      Solve $x^2 + 6x - 2 = 0$, giving exact answers.
+    steps:
+      - |-
+        Complete the square (as above):
+
+        $$(x + 3)^2 - 11 = 0$$
+      - |-
+        Add 11 to both sides:
+
+        $$(x + 3)^2 = 11$$
+      - |-
+        Square-root both sides. A positive number has **two** square roots, one positive and one negative, so write $\pm$:
+
+        $$x + 3 = \pm\sqrt{11}$$
+      - |-
+        Subtract 3 from both sides:
+
+        $$x = -3 \pm \sqrt{11}$$
+    answer: |-
+      $x = -3 + \sqrt{11}$ or $x = -3 - \sqrt{11}$.
+
+      The $\pm$ is not decoration: forgetting it loses a root.
 
   - type: definition
     term: The quadratic formula
@@ -133,38 +250,71 @@ blocks:
 
       $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
+      - $a$, $b$, $c$ are the numbers from the standard form, **with their signs**.
+      - $\pm$ means "do it once with $+$ and once with $-$". That gives the two roots.
+      - The **whole top** is divided by $2a$, not just the square root.
+
       It's printed in the formula list (MF19), but learn it anyway: it's quicker than looking it up.
 
   - type: example
-    title: Using the formula
+    title: "Example 4: using the formula"
     problem: |-
       Solve $2x^2 - 3x - 4 = 0$, giving your answers correct to 3 significant figures.
     steps:
       - |-
-        Identify $a = 2$, $b = -3$, $c = -4$. Write the signs in; that's where most errors live.
+        Identify the numbers, signs included:
+
+        $$a = 2, \quad b = -3, \quad c = -4$$
       - |-
-        $b^2 - 4ac = (-3)^2 - 4(2)(-4) = 9 + 32 = 41$.
+        Work out the part under the square root first:
+
+        $$b^2 - 4ac = (-3)^2 - 4(2)(-4)$$
+
+        $$= 9 + 32 = 41$$
+
+        Note $(-3)^2 = 9$, and $-4 \times 2 \times (-4) = +32$.
       - |-
-        $x = \dfrac{3 \pm \sqrt{41}}{4}$, because $-b = 3$ and $2a = 4$.
+        Put everything into the formula. Here $-b = -(-3) = 3$ and $2a = 4$:
+
+        $$x = \frac{3 \pm \sqrt{41}}{4}$$
       - |-
-        $x = \dfrac{3 + 6.403\ldots}{4} = 2.3507\ldots$ or $x = \dfrac{3 - 6.403\ldots}{4} = -0.8507\ldots$
+        Now the two roots. $\sqrt{41} = 6.403\ldots$
+
+        - With $+$: $x = \dfrac{3 + 6.403\ldots}{4} = 2.3507\ldots$
+        - With $-$: $x = \dfrac{3 - 6.403\ldots}{4} = -0.8507\ldots$
       - |-
-        Round only at the end: $x = 2.35$ or $x = -0.851$.
+        Round only at the very end: $x = 2.35$ or $x = -0.851$.
     answer: |-
-      $x = 2.35$ or $x = -0.851$ (3 s.f.). Exact form: $x = \dfrac{3 \pm \sqrt{41}}{4}$.
+      $x = 2.35$ or $x = -0.851$ (3 s.f.).
+
+      Exact form: $x = \dfrac{3 \pm \sqrt{41}}{4}$.
 
   - type: deeper
     title: Where the formula comes from
     body: |-
-      It's just completing the square on the general quadratic. Divide by $a$, then complete the square:
+      The formula is just completing the square on the general quadratic $ax^2 + bx + c = 0$.
 
-      $$\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a^2} + \frac{c}{a} = 0 \;\Rightarrow\; \left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}$$
+      **Step 1.** Divide everything by $a$, so $x^2$ has no number in front:
 
-      Square-root both sides (the $\pm$ also takes care of the sign of $a$):
+      $$x^2 + \frac{b}{a}x + \frac{c}{a} = 0$$
 
-      $$x + \frac{b}{2a} = \pm\frac{\sqrt{b^2 - 4ac}}{2a} \;\Rightarrow\; x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+      **Step 2.** Complete the square. Half of $\frac{b}{a}$ is $\frac{b}{2a}$. Squaring that bracket adds an extra $\frac{b^2}{4a^2}$, so take it away:
 
-      Notice the square root is only real if $b^2 - 4ac \geqslant 0$. That quantity gets its own lesson next.
+      $$\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a^2} + \frac{c}{a} = 0$$
+
+      **Step 3.** Move the two numbers to the right. Write $\frac{c}{a}$ as $\frac{4ac}{4a^2}$ so the fractions match:
+
+      $$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}$$
+
+      **Step 4.** Square-root both sides. The square root of $4a^2$ is $2a$ (the $\pm$ covers its sign):
+
+      $$x + \frac{b}{2a} = \pm\frac{\sqrt{b^2 - 4ac}}{2a}$$
+
+      **Step 5.** Subtract $\frac{b}{2a}$:
+
+      $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+      The square root only gives a real number if $b^2 - 4ac \geqslant 0$. That quantity gets its own lesson next.
 
   - type: check
     questions: [cts-solve, plus-minus-mcq]
@@ -174,21 +324,27 @@ blocks:
       - wrong: |-
           $x^2 = 5x$, so divide both sides by $x$: $x = 5$.
         right: |-
-          Dividing by $x$ throws away the root $x = 0$. Rearrange instead: $x^2 - 5x = 0$, so $x(x - 5) = 0$, giving $x = 0$ or $x = 5$.
+          Dividing by $x$ throws away the root $x = 0$.
+
+          Rearrange instead: $x^2 - 5x = 0$, so $x(x - 5) = 0$, giving $x = 0$ or $x = 5$.
       - wrong: |-
           With $b = -3$: $-b = -3$ and $b^2 = -9$.
         right: |-
-          $-b = 3$ and $b^2 = (-3)^2 = 9$. Put negative values in brackets when you substitute.
+          $-b = 3$ and $b^2 = (-3)^2 = 9$.
+
+          Put negative values in brackets when you substitute.
       - wrong: |-
           Only the square root is divided by $2a$.
         right: |-
-          The **whole** numerator $-b \pm \sqrt{b^2 - 4ac}$ is divided by $2a$. On a calculator, use brackets or the fraction key.
+          The **whole** top, $-b \pm \sqrt{b^2 - 4ac}$, is divided by $2a$.
+
+          On a calculator, use brackets or the fraction key.
 
   - type: exam
     body: |-
-      - Give non-exact answers to **3 significant figures** unless the question says otherwise, and don't round until the end. (That's the syllabus rule.)
-      - **Exact** means keep surds: $x = -3 \pm \sqrt{11}$, not $0.317$ and $-6.32$.
-      - The syllabus says no marks are given for unsupported answers from a calculator. Even if your calculator solves quadratics, show the factorisation or the substituted formula.
+      - Give non-exact answers to **3 significant figures** unless told otherwise. Don't round until the end.
+      - **Exact** means keep the surds: $x = -3 \pm \sqrt{11}$, not $0.317$ and $-6.32$.
+      - No marks for unsupported calculator answers. Even if your calculator solves quadratics, show the factorisation or the substituted formula.
       - If a question says *hence* after completing the square, solve using that completed-square form.
 
   - type: check
@@ -197,13 +353,13 @@ blocks:
   - type: takeaways
     items:
       - |-
-        Always rearrange to $= 0$ first; never divide through by $x$.
+        Always rearrange to $= 0$ first. Never divide through by $x$.
       - |-
-        Factorise if it's quick; otherwise use the formula $x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+        Factorise if it's quick. Otherwise use the formula $x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
       - |-
-        Undoing a square gives $\pm$: two roots.
+        Undoing a square gives $\pm$, so two roots.
       - |-
-        Exact answers keep surds; otherwise give 3 s.f., rounding only at the end.
+        Exact answers keep surds. Otherwise give 3 s.f., rounding only at the end.
 
 questions:
   - id: solve-factorise

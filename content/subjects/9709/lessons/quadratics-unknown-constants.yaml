@@ -4,7 +4,7 @@ topic: "1.1"
 title: Finding the set of values of k
 summary: Turn a condition on the roots into an inequality in k with the discriminant, then solve it, including when a line meets a curve.
 order: 6
-minutes: 5
+minutes: 9
 kind: core
 objectives: ["1.1.2", "1.1.3"]
 prerequisites: [quadratics-discriminant, quadratics-inequalities, quadratics-simultaneous-equations]
@@ -20,54 +20,104 @@ provenance:
     questions are original; all values checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key)
     in a separate AI review on 2026-10-19. Expanded on 2026-10-30 by Claude Opus 5.5 with the missing reasoning, and independently reviewed again that day by a separate Claude agent. Not reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
     body: |-
-      By the end you can find the values of an unknown constant $k$ that give a quadratic two distinct, equal or no real roots. That usually means solving a quadratic inequality **in $k$**.
+      By the end you can find the values of an unknown constant $k$ that give a quadratic two distinct, equal or no real roots.
+
+      That usually means solving a quadratic inequality **in $k$**.
 
   - type: explain
     title: What is going on here?
     body: |-
-      Sometimes a quadratic contains a letter like $k$ that stands for an **unknown constant**: a fixed number we haven't been told. For example, $x^2 + kx + 9 = 0$ is really a whole family of equations, one for each value of $k$. Some members of the family have two roots, some have one, some have none. The question asks: **which values of $k$ give the kind of roots we want?**
+      Sometimes a quadratic contains a letter like $k$. It stands for an **unknown constant**: a fixed number we haven't been told.
 
-      The tool for this is the **discriminant**, $b^2 - 4ac$, from the last lesson. Here is a reminder of why it decides everything. The quadratic formula is
+      So $x^2 + kx + 9 = 0$ is really a whole **family** of equations, one for each value of $k$:
+
+      - $k = 10$ gives $x^2 + 10x + 9 = 0$
+      - $k = 6$ gives $x^2 + 6x + 9 = 0$
+      - $k = 0$ gives $x^2 + 9 = 0$
+
+      Some members of the family have two roots, some one, some none.
+
+      The question is always: **which values of $k$ give the kind of roots we want?**
+
+  - type: explain
+    title: The tool - the discriminant
+    body: |-
+      The **discriminant** is $b^2 - 4ac$, the part under the square root in the quadratic formula:
 
       $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
-      - If $b^2 - 4ac > 0$, the square root is a positive number. The $\pm$ gives two different answers: **two distinct real roots**.
-      - If $b^2 - 4ac = 0$, the square root is $0$. Adding or subtracting $0$ gives the same answer twice: **one repeated root** (also called **equal roots**).
-      - If $b^2 - 4ac < 0$, we would need the square root of a negative number, which isn't a real number: **no real roots**.
+      It decides how many roots there are:
 
-      So instead of solving for $x$, we write the discriminant in terms of $k$, and solve for $k$.
+      | Discriminant | What the $\pm$ does | Roots |
+      | --- | --- | --- |
+      | $b^2 - 4ac > 0$ | $\pm$ a positive number gives two different answers | **two distinct real roots** |
+      | $b^2 - 4ac = 0$ | $\pm 0$ gives the same answer twice | **one repeated root** (also called **equal roots**) |
+      | $b^2 - 4ac < 0$ | needs the square root of a negative, which isn't real | **no real roots** |
+
+      So here's the plan. Instead of solving for $x$, write the discriminant **in terms of $k$**, then solve for $k$.
 
   - type: explain
     title: The recipe
     body: |-
-      1. Get the equation into the form $ax^2 + bx + c = 0$ and write down $a$, $b$ and $c$ **in terms of $k$**. Use brackets.
-      2. Translate the wording into a condition on $b^2 - 4ac$: $> 0$, $= 0$, $\geqslant 0$ or $< 0$.
-      3. Simplify. You'll usually get a quadratic in $k$.
-      4. Solve it: an equation if the condition is $= 0$, an inequality (sketch!) otherwise.
+      1. Get the equation into the form $ax^2 + bx + c = 0$.
+      2. Write down $a$, $b$ and $c$ **in terms of $k$**. Use brackets.
+      3. Turn the wording into a condition on $b^2 - 4ac$: $> 0$, $= 0$, $\geqslant 0$ or $< 0$.
+      4. Simplify. You'll usually get a quadratic in $k$.
+      5. Solve it. An equation if the condition is $= 0$; an inequality (with a sketch) otherwise.
 
-      Same skills as before, just stacked. Like a lasagne.
+      These are skills you already have, just stacked on top of each other. Like a lasagne.
 
   - type: example
-    title: Two distinct real roots
+    title: "Example 1: two distinct real roots"
     problem: |-
       Find the set of values of $k$ for which $x^2 + kx + k + 3 = 0$ has two distinct real roots.
     steps:
       - |-
-        Match it to $ax^2 + bx + c = 0$. The number in front of $x^2$ is $a = 1$. The number in front of $x$ is $b = k$. Everything without an $x$ is the constant: $c = k + 3$.
+        Match it to $ax^2 + bx + c = 0$:
+
+        - the number in front of $x^2$: $a = 1$
+        - the number in front of $x$: $b = k$
+        - everything without an $x$: $c = k + 3$
       - |-
-        "Two distinct real roots" means $b^2 - 4ac > 0$. Substitute: $k^2 - 4 \times 1 \times (k + 3) > 0$, which is $k^2 - 4(k + 3) > 0$.
+        "Two distinct real roots" means the discriminant is positive:
+
+        $$b^2 - 4ac > 0$$
       - |-
-        Expand the bracket: $k^2 - 4k - 12 > 0$. This is now a quadratic **inequality in $k$**. Factorise it like any quadratic (two numbers multiplying to $-12$ and adding to $-4$ are $-6$ and $2$): $(k - 6)(k + 2) > 0$.
+        Substitute $a$, $b$ and $c$:
+
+        $$k^2 - 4 \times 1 \times (k + 3) > 0$$
+
+        Expand the bracket:
+
+        $$k^2 - 4k - 12 > 0$$
+
+        This is a quadratic **inequality in $k$**.
       - |-
-        The **critical values** (where the expression equals zero) are $k = 6$ and $k = -2$. These split the number line into three parts.
+        Factorise it like any quadratic. We need two numbers that multiply to $-12$ and add to $-4$: they are $-6$ and $2$.
+
+        $$(k - 6)(k + 2) > 0$$
       - |-
-        The graph of $y = k^2 - 4k - 12$ is a ∪ shape (the $k^2$ is positive), crossing the axis at $-2$ and $6$. It is **above** the axis (positive) to the left of $-2$ and to the right of $6$, and below the axis in between. We want positive, so we want the two outside parts.
+        The **critical values** are where the expression equals zero: $k = 6$ and $k = -2$.
+
+        They split the number line into three parts.
       - |-
-        Test a value to be sure: $k = 10$ gives $(10 - 6)(10 + 2) = 48 > 0$ ✓, while $k = 0$ gives $(-6)(2) = -12$, not $> 0$ ✓.
+        Sketch $y = k^2 - 4k - 12$. It's a ∪ shape (the $k^2$ is positive) crossing the axis at $-2$ and $6$.
+
+        - It is **above** the axis (positive) to the left of $-2$ and to the right of $6$.
+        - It is below the axis in between.
+
+        We want positive, so we want the two outside parts.
+      - |-
+        Test a value in each region to be sure:
+
+        - $k = -5$: $(-5 - 6)(-5 + 2) = 33 > 0$ ✓ (included)
+        - $k = 10$: $(10 - 6)(10 + 2) = 48 > 0$ ✓ (included)
+        - $k = 0$: $(0 - 6)(0 + 2) = -12$, not $> 0$ ✓ (excluded)
     answer: |-
       $k < -2$ or $k > 6$.
 
@@ -77,7 +127,17 @@ blocks:
   - type: explain
     title: Does a line meet a curve?
     body: |-
-      Same idea, one extra step at the start: **substitute** the line into the curve to get a single quadratic in $x$. Each real root is an intersection point, so its discriminant counts them:
+      Same idea, with one extra step at the start.
+
+      **Step 1: substitute.**
+
+      - Where a line meets a curve, both have the same $x$ and the same $y$.
+      - So set the two $y$-expressions equal. That gives one quadratic in $x$.
+
+      **Step 2: count roots.**
+
+      - Each real root is an $x$-coordinate where they meet.
+      - So the discriminant counts the meeting points:
 
       | $b^2 - 4ac$ | The line… |
       | --- | --- |
@@ -85,12 +145,18 @@ blocks:
       | $= 0$ | touches the curve at one point: it's a **tangent** |
       | $< 0$ | doesn't meet the curve |
 
-      Plain "meets" (with no mention of two distinct points) includes the tangent case, so it means $\geqslant 0$. If the question says "at two distinct points", or sets *intersects* against *touches* (as in "intersects, touches or does not meet"), it means $> 0$.
+      **Watch the wording:**
+
+      - Plain "meets" includes touching, so it means $\geqslant 0$.
+      - "At two distinct points" means $> 0$.
+      - In "intersects, touches or does not meet", *intersects* means two points: $> 0$.
 
   - type: definition
     term: Tangent condition
     body: |-
-      When a line is substituted into a quadratic curve, a **repeated root** ($b^2 - 4ac = 0$) means the line touches the curve at exactly one point without crossing it: the line is a **tangent** to the curve. The repeated root is the $x$-coordinate of the point of contact.
+      When a line is substituted into a quadratic curve, a **repeated root** ($b^2 - 4ac = 0$) means the line touches the curve at exactly one point without crossing it.
+
+      The line is then a **tangent** to the curve. The repeated root is the $x$-coordinate of the point where they touch.
 
   - type: diagram
     diagram: line-curve-pivot
@@ -106,22 +172,48 @@ blocks:
     questions: [k-tangent-name, k-wording]
 
   - type: example
-    title: The set of values for which a line meets a curve
+    title: "Example 2: when a line meets a curve"
     problem: |-
       Find the set of values of $k$ for which the line $y = kx - 2$ meets the curve $y = x^2 - 2x + 2$.
     steps:
       - |-
-        At a point where the line meets the curve, both equations are true with the **same** $x$ and the **same** $y$. So the two expressions for $y$ must be equal: $x^2 - 2x + 2 = kx - 2$.
+        Where they meet, the two $y$-values are equal:
+
+        $$x^2 - 2x + 2 = kx - 2$$
       - |-
-        Move everything to the left so one side is zero: $x^2 - 2x - kx + 2 + 2 = 0$, which is $x^2 - 2x - kx + 4 = 0$.
+        Move everything to the left so one side is zero. Subtract $kx$ and add 2 to both sides:
+
+        $$x^2 - 2x - kx + 4 = 0$$
       - |-
-        Collect the two $x$ terms into one. Both have a minus sign, so take the minus outside a bracket: $-2x - kx = -(2 + k)x = -(k + 2)x$. The equation is $x^2 - (k + 2)x + 4 = 0$, so $a = 1$, $b = -(k + 2)$ and $c = 4$.
+        Collect the two $x$ terms into one. Both have a minus sign, so take the minus outside a bracket:
+
+        $$-2x - kx = -(k + 2)x$$
+
+        So the equation is $x^2 - (k + 2)x + 4 = 0$.
       - |-
-        "Meets" means one or two points: $b^2 - 4ac \geqslant 0$, so $(k + 2)^2 - 16 \geqslant 0$.
+        Read off the numbers:
+
+        $$a = 1, \quad b = -(k + 2), \quad c = 4$$
       - |-
-        Expand: $k^2 + 4k - 12 \geqslant 0$, so $(k + 6)(k - 2) \geqslant 0$.
+        "Meets" means one or two points, so $b^2 - 4ac \geqslant 0$:
+
+        $$(k + 2)^2 - 4 \times 1 \times 4 \geqslant 0$$
+
+        $$(k + 2)^2 - 16 \geqslant 0$$
+
+        (Squaring $-(k + 2)$ gives $(k + 2)^2$: the minus sign disappears.)
       - |-
-        Critical values $-6$ and $2$. $\geqslant 0$ is outside them, endpoints included.
+        Expand and factorise:
+
+        $$k^2 + 4k + 4 - 16 \geqslant 0$$
+
+        $$k^2 + 4k - 12 \geqslant 0$$
+
+        $$(k + 6)(k - 2) \geqslant 0$$
+      - |-
+        Critical values: $-6$ and $2$.
+
+        It's a ∪ shape, and we want $\geqslant 0$, so we want the outside parts, **endpoints included**.
       - |-
         Sense check with the diagram: $k = 2$ and $k = -6$ give the tangents, and $k = 0$ (between them) misses ✓
     answer: |-
@@ -132,30 +224,56 @@ blocks:
       - wrong: |-
           From $x^2 - (k + 2)x + 4 = 0$: $b = -k + 2$.
         right: |-
-          $b = -(k + 2) = -k - 2$. Keep the bracket; then $b^2 = (k + 2)^2$.
+          $b = -(k + 2) = -k - 2$. The minus applies to both terms in the bracket.
+
+          Keep the bracket, then $b^2 = (k + 2)^2$.
       - wrong: |-
           "The line meets the curve" means $b^2 - 4ac > 0$.
         right: |-
-          A tangent meets the curve too, so it's $\geqslant 0$. Only "at two distinct points" gives $> 0$.
+          A tangent meets the curve too, so it's $\geqslant 0$.
+
+          Only "at two distinct points" gives $> 0$.
       - wrong: |-
           $-4k^2 + 12k + 16 \geqslant 0$; divide by $-4$: $k^2 - 3k - 4 \geqslant 0$.
         right: |-
-          Dividing by a negative number reverses the inequality: $k^2 - 3k - 4 \leqslant 0$.
+          Dividing by a negative number **reverses** the inequality: $k^2 - 3k - 4 \leqslant 0$.
 
   - type: deeper
-    title: When k is the coefficient of x²
+    title: When k is the number in front of x²
     body: |-
-      In $kx^2 + 4x + k - 3 = 0$, $a = k$. For real roots:
+      Take $kx^2 + 4x + k - 3 = 0$. Now $a = k$, $b = 4$ and $c = k - 3$.
 
-      $$16 - 4k(k - 3) \geqslant 0 \iff k^2 - 3k - 4 \leqslant 0 \iff (k - 4)(k + 1) \leqslant 0 \iff -1 \leqslant k \leqslant 4$$
+      For real roots, $b^2 - 4ac \geqslant 0$:
 
-      But if $k = 0$ the equation isn't quadratic at all: it's $4x - 3 = 0$, which still has a real root. So for "the equation has real roots" the answer $-1 \leqslant k \leqslant 4$ stands. If a question insists on a *quadratic* equation, exclude $k = 0$. Always ask: can $a$ be zero?
+      $$16 - 4k(k - 3) \geqslant 0$$
+
+      Expand:
+
+      $$16 - 4k^2 + 12k \geqslant 0$$
+
+      Divide by $-4$. Dividing by a negative **flips** the sign:
+
+      $$k^2 - 3k - 4 \leqslant 0$$
+
+      Factorise:
+
+      $$(k - 4)(k + 1) \leqslant 0$$
+
+      A ∪ shape is $\leqslant 0$ **between** its roots, so $-1 \leqslant k \leqslant 4$.
+
+      **One more check: can $a$ be zero?** If $k = 0$, the equation is $4x - 3 = 0$. That isn't a quadratic at all, but it still has a real root.
+
+      - For "the equation has real roots", the answer $-1 \leqslant k \leqslant 4$ stands.
+      - If the question insists on a *quadratic* equation, exclude $k = 0$.
 
   - type: exam
     body: |-
-      - A Paper 1 favourite, often phrased as *intersects*, *touches* or *does not meet*. Translate the wording into $>$, $=$, $\geqslant$ or $<$ before doing anything else.
-      - Marks typically go on: the substituted quadratic, the discriminant condition, the critical values, and the final set.
-      - The final set needs the right shape: "$k < -2$ or $k > 6$" (two pieces) or "$-3 < k < 5$" (a sandwich). Check it with one test value.
+      - A Paper 1 favourite, often phrased as *intersects*, *touches* or *does not meet*. Turn the wording into $>$, $=$, $\geqslant$ or $<$ before doing anything else.
+      - Marks typically go on the substituted quadratic, the discriminant condition, the critical values and the final set.
+      - The final set needs the right shape:
+        - two pieces, like "$k < -2$ or $k > 6$", or
+        - a sandwich, like "$-3 < k < 5$".
+      - Check your set with one test value.
 
   - type: check
     questions: [k-tangent, k-sign-spot]
@@ -163,13 +281,13 @@ blocks:
   - type: takeaways
     items:
       - |-
-        Write $a$, $b$, $c$ in terms of $k$ with brackets, then translate the wording into a condition on $b^2 - 4ac$.
+        Write $a$, $b$, $c$ in terms of $k$ with brackets. Then turn the wording into a condition on $b^2 - 4ac$.
       - |-
-        Line and curve: substitute first; the discriminant counts intersection points ($= 0$ means tangent).
+        Line and curve: substitute first. The discriminant counts meeting points, and $= 0$ means tangent.
       - |-
-        "Meets" is $\geqslant 0$; "two distinct points" is $> 0$; "does not meet" is $< 0$.
+        "Meets" is $\geqslant 0$. "Two distinct points" is $> 0$. "Does not meet" is $< 0$.
       - |-
-        Solve the inequality in $k$ with a sketch, and flip the sign if you divide by a negative.
+        Solve the inequality in $k$ with a sketch. Flip the sign if you divide by a negative.
 
 questions:
   - id: k-disc-expression

@@ -21,6 +21,7 @@ provenance:
     all roots checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key)
     in a separate AI review on 2026-10-19. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -30,7 +31,11 @@ blocks:
   - type: explain
     title: Spot the disguise
     body: |-
-      A quadratic in $u$ looks like $au^2 + bu + c = 0$. If one term contains the **square** of what another term contains, you've got a quadratic in that thing.
+      A quadratic doesn't have to be in $x$. A **quadratic in $u$** looks like $au^2 + bu + c = 0$, where $u$ can stand for anything.
+
+      **The test:** if one term contains the **square** of what another term contains, you've got a quadratic in that thing.
+
+      For example, $x^4 = (x^2)^2$. So $x^4 - 13x^2 + 36$ has "$x^2$" and "$x^2$ squared". It's a quadratic in $x^2$.
 
       | Equation | Let | It becomes |
       | --- | --- | --- |
@@ -40,7 +45,11 @@ blocks:
       | $x^6 - 7x^3 - 8 = 0$ | $u = x^3$ | $u^2 - 7u - 8 = 0$ |
       | $2\tan^2 x + \tan x - 3 = 0$ | $u = \tan x$ | $2u^2 + u - 3 = 0$ |
 
-      The tell: powers in the ratio **2 : 1**, such as $x^4$ and $x^2$, or $x$ and $x^{\frac12}$.
+      **The tell:** powers in the ratio **2 : 1**.
+
+      - $x^4$ and $x^2$: the power 4 is twice 2.
+      - $x$ and $\sqrt{x}$: a power of $\tfrac12$ means a square root, so $\sqrt{x} = x^{\frac12}$. The power 1 is twice $\tfrac12$.
+      - $\tan^2 x$ and $\tan x$: here $\tan^2 x$ means $(\tan x)^2$.
 
   - type: example
     title: A quartic in disguise
@@ -48,13 +57,26 @@ blocks:
       Solve $x^4 - 13x^2 + 36 = 0$.
     steps:
       - |-
-        Let $u = x^2$, so $x^4 = u^2$: $\;u^2 - 13u + 36 = 0$.
+        Let $u = x^2$.
+
+        Then $x^4 = (x^2)^2 = u^2$, so the equation becomes
+
+        $$u^2 - 13u + 36 = 0$$
       - |-
-        Factorise: $(u - 4)(u - 9) = 0$, so $u = 4$ or $u = 9$.
+        Factorise. Two numbers that multiply to 36 and add to $-13$ are $-4$ and $-9$:
+
+        $$(u - 4)(u - 9) = 0$$
+
+        So $u = 4$ or $u = 9$.
       - |-
-        Convert back, because the question is about $x$: $x^2 = 4$ or $x^2 = 9$.
+        Convert back, because the question is about $x$, not $u$. Since $u = x^2$:
+
+        $$x^2 = 4 \quad \text{or} \quad x^2 = 9$$
       - |-
-        Each gives two values: $x = \pm 2$ or $x = \pm 3$.
+        Each gives **two** values, because a negative number squared is positive too:
+
+        - $x^2 = 4$ gives $x = 2$ or $x = -2$
+        - $x^2 = 9$ gives $x = 3$ or $x = -3$
     answer: |-
       $x = -3, -2, 2, 3$ (four solutions).
 
@@ -67,13 +89,23 @@ blocks:
       Solve $x - \sqrt{x} - 6 = 0$.
     steps:
       - |-
-        Let $u = \sqrt{x}$, so $x = u^2$: $\;u^2 - u - 6 = 0$.
+        Let $u = \sqrt{x}$.
+
+        Then $x = (\sqrt{x})^2 = u^2$, so the equation becomes
+
+        $$u^2 - u - 6 = 0$$
       - |-
-        $(u - 3)(u + 2) = 0$, so $u = 3$ or $u = -2$.
+        Factorise. Two numbers that multiply to $-6$ and add to $-1$ are $-3$ and $2$:
+
+        $$(u - 3)(u + 2) = 0$$
+
+        So $u = 3$ or $u = -2$.
       - |-
-        $\sqrt{x} = 3$ gives $x = 9$.
+        Convert back. $\sqrt{x} = 3$: undo the square root by squaring, so $x = 9$.
       - |-
-        $\sqrt{x} = -2$ is impossible: $\sqrt{x}$ means the **non-negative** square root. Reject it, and say why.
+        $\sqrt{x} = -2$ is **impossible**. The symbol $\sqrt{x}$ always means the root that is **not negative**.
+
+        So reject it, and write down why.
       - |-
         Check in the original: $9 - \sqrt9 - 6 = 9 - 3 - 6 = 0$ ✓
     answer: |-
@@ -84,7 +116,11 @@ blocks:
     body: |-
       Substitution is just renaming. The equation never stopped being a quadratic; it was wearing a hat.
 
-      The only new job is the last step, translating each $u$ back into $x$. One value of $u$ might give **two** values of $x$ ($x^2 = 4$), **one** ($\sqrt{x} = 3$) or **none** ($x^2 = -4$, $\sqrt{x} = -2$).
+      The only new job is the last step: turning each $u$ back into $x$. One value of $u$ might give:
+
+      - **two** values of $x$, like $x^2 = 4$ giving $\pm 2$
+      - **one** value, like $\sqrt{x} = 3$ giving $9$
+      - **none**, like $x^2 = -4$ or $\sqrt{x} = -2$
 
   - type: misconceptions
     items:
@@ -110,10 +146,17 @@ blocks:
     body: |-
       Solve $2\tan^2 x + \tan x - 3 = 0$ for $0^\circ \leqslant x \leqslant 180^\circ$.
 
-      Let $u = \tan x$: $(2u + 3)(u - 1) = 0$, so $\tan x = 1$ or $\tan x = -\tfrac32$.
+      Let $u = \tan x$. The equation becomes $2u^2 + u - 3 = 0$.
+
+      Factorise:
+
+      $$(2u + 3)(u - 1) = 0$$
+
+      So $\tan x = 1$ or $\tan x = -\tfrac32$.
 
       - $\tan x = 1$ gives $x = 45^\circ$.
-      - $\tan x = -\tfrac32$: the calculator gives $-56.3^\circ$, which is outside the interval; add $180^\circ$ to get $x = 123.7^\circ$ (1 d.p.).
+      - $\tan x = -\tfrac32$: the calculator gives $-56.3^\circ$, which is outside the interval.
+      - The tan graph repeats every $180^\circ$, so add $180^\circ$: $x = 123.7^\circ$ (1 d.p.).
 
       Finding every angle in an interval is covered in Trigonometry (topic 1.5). The quadratic part is exactly what you've just done.
 

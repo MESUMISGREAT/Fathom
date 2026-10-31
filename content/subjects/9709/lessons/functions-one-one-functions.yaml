@@ -18,6 +18,7 @@ provenance:
     is one-one". All examples and questions are original; every value checked in Python. Not yet
     reviewed by a teacher.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -37,7 +38,11 @@ blocks:
   - type: definition
     term: One-one function
     body: |-
-      A function $f$ is **one-one** if each value in its range comes from **exactly one** value in its domain. Equivalently: if $f(a) = f(b)$, then $a = b$. A function that is not one-one is called **many-one**.
+      A function $f$ is **one-one** if each value in its range comes from **exactly one** value in its domain.
+
+      Another way to say it: if two inputs $a$ and $b$ give the same output, $f(a) = f(b)$, then they must be the same input, $a = b$.
+
+      A function that is not one-one is called **many-one**.
 
   - type: explain
     title: The horizontal line test
@@ -84,11 +89,17 @@ blocks:
       The function $f$ is defined by $f(x) = x^2 - 6x + 5$ for $x \geqslant k$. Find the least value of $k$ for which $f$ is one-one.
     steps:
       - |-
-        Complete the square: $x^2 - 6x + 5 = (x - 3)^2 - 4$. The vertex is at $x = 3$.
+        Find the vertex by completing the square. Half of $-6$ is $-3$, and $(x - 3)^2 = x^2 - 6x + 9$, so take away the extra 9:
+
+        $$x^2 - 6x + 5 = (x - 3)^2 - 9 + 5 = (x - 3)^2 - 4$$
       - |-
-        For $x \geqslant 3$ the graph only rises, so every output appears once. $k = 3$ works.
+        The smallest value of $(x - 3)^2$ is 0, at $x = 3$. So the vertex (the bottom of the ∪) is at $(3, -4)$.
       - |-
-        Any $k < 3$ lets in points on **both** sides of the vertex. For example, with $k = 2$: $f(2) = -3$ and $f(4) = -3$. Two inputs, one output.
+        For $x \geqslant 3$, the graph only rises. Every output appears once, so $k = 3$ works.
+      - |-
+        Any $k < 3$ lets in points on **both** sides of the vertex.
+
+        For example, with $k = 2$: $f(2) = -3$ and $f(4) = -3$. Two inputs give one output, so it's many-one.
       - |-
         So the domain can start at the vertex, but no further left.
     answer: |-
@@ -102,7 +113,11 @@ blocks:
     body: |-
       Next up: **inverse functions**, which run a function backwards (output → input).
 
-      With $x \mapsto x^2$ on $\mathbb{R}$, the output 9 came from both 3 and $-3$. Running it backwards, 9 would need *two* answers, and a function can't do that. So only **one-one** functions have inverses. That's why exam questions keep asking you to restrict domains.
+      With $x \mapsto x^2$ on $\mathbb{R}$, the output 9 came from both 3 and $-3$.
+
+      Running it backwards, 9 would need *two* answers. A function can't do that.
+
+      So only **one-one** functions have inverses. That's why exam questions keep asking you to restrict domains.
 
   - type: misconceptions
     items:

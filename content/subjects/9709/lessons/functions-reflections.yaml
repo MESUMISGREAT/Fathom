@@ -4,7 +4,7 @@ topic: "1.2"
 title: "Transformations: reflections"
 summary: y = −f(x) reflects the graph in the x-axis; y = f(−x) reflects it in the y-axis. A minus outside flips y, a minus inside flips x.
 order: 8
-minutes: 4
+minutes: 5
 kind: core
 objectives: ["1.2.5"]
 prerequisites: [functions-translations]
@@ -18,6 +18,7 @@ provenance:
     a = −1, including the note on using the term 'reflection'. All examples and questions are
     original; every transformed equation checked in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -27,14 +28,22 @@ blocks:
   - type: explain
     title: Two mirrors
     body: |-
-      Same rule as last time: outside the bracket acts on $y$, inside acts on $x$.
+      Same rule as for translations:
+
+      - a change **outside** the bracket, like $-f(x)$, acts on the output $y$;
+      - a change **inside** the bracket, like $f(-x)$, acts on the input $x$.
+
+      Here the change is a minus sign. A minus sign flips things, so both are **reflections** (mirror images):
 
       | Equation | What changes | Transformation | Point $(p, q)$ goes to |
       | --- | --- | --- | --- |
       | $y = -f(x)$ | every height changes sign | **reflection in the $x$-axis** | $(p,\ -q)$ |
       | $y = f(-x)$ | every input changes sign | **reflection in the $y$-axis** | $(-p,\ q)$ |
 
-      Points **on the mirror line** stay put: $x$-intercepts don't move under $y = -f(x)$, and the $y$-intercept doesn't move under $y = f(-x)$.
+      Points **on the mirror line** stay put:
+
+      - under $y = -f(x)$, the $x$-intercepts don't move (their height is 0, and $-0 = 0$);
+      - under $y = f(-x)$, the $y$-intercept doesn't move (its $x$ is 0, and $-0 = 0$).
 
   - type: diagram
     diagram: functions-reflections
@@ -51,9 +60,11 @@ blocks:
   - type: intuition
     title: Why the minus inside flips sideways
     body: |-
-      $y = f(-x)$ at $x = -3$ shows what $f$ did at $x = 3$. Whatever happened on the right now happens on the left, at the same height. That's a mirror standing on the $y$-axis.
+      Put $x = -3$ into $y = f(-x)$. You get $f(3)$: the height $f$ had at $x = 3$.
 
-      $y = -f(x)$ keeps every input where it was but turns each height upside down: a mirror lying along the $x$-axis.
+      So whatever happened on the right now happens on the left, at the same height. That's a mirror standing on the $y$-axis.
+
+      $y = -f(x)$ is different. It keeps every input where it was, but turns each height upside down. That's a mirror lying along the $x$-axis.
 
   - type: check
     questions: [rf-which, rf-point]
@@ -64,13 +75,27 @@ blocks:
       $f(x) = x^2 - 2x$. Find the equations of $y = -f(x)$ and $y = f(-x)$, and the vertex of each.
     steps:
       - |-
-        $-f(x) = -(x^2 - 2x) = -x^2 + 2x$. Every term changes sign.
+        **$-f(x)$:** put a minus in front of the whole of $f(x)$. Every term changes sign:
+
+        $$-f(x) = -(x^2 - 2x) = -x^2 + 2x$$
       - |-
-        $f(-x) = (-x)^2 - 2(-x) = x^2 + 2x$. Replace **every** $x$ with $-x$, in brackets. Note $(-x)^2 = x^2$.
+        **$f(-x)$:** replace **every** $x$ with $(-x)$, in brackets:
+
+        $$f(-x) = (-x)^2 - 2(-x)$$
+
+        Now simplify. $(-x)^2 = x^2$ (a negative squared is positive), and $-2(-x) = +2x$:
+
+        $$f(-x) = x^2 + 2x$$
       - |-
-        The vertex of $f$ is $(1, -1)$. Reflect in the $x$-axis: $(1, 1)$. Reflect in the $y$-axis: $(-1, -1)$.
+        **Vertices.** The vertex of $f$ is $(1, -1)$. Push it through each reflection:
+
+        - in the $x$-axis, $(p, q) \to (p, -q)$: $(1, 1)$
+        - in the $y$-axis, $(p, q) \to (-p, q)$: $(-1, -1)$
       - |-
-        Check: $-x^2 + 2x = -(x - 1)^2 + 1$ has vertex $(1, 1)$ ✓, and $x^2 + 2x = (x + 1)^2 - 1$ has vertex $(-1, -1)$ ✓
+        **Check by completing the square:**
+
+        - $-x^2 + 2x = -(x - 1)^2 + 1$, vertex $(1, 1)$ ✓
+        - $x^2 + 2x = (x + 1)^2 - 1$, vertex $(-1, -1)$ ✓
     answer: |-
       $y = -x^2 + 2x$ with maximum point $(1, 1)$; $\;y = x^2 + 2x$ with minimum point $(-1, -1)$.
 

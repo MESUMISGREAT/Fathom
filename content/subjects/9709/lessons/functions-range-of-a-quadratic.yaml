@@ -4,7 +4,7 @@ topic: "1.2"
 title: The range of a quadratic function
 summary: Complete the square to find the vertex, then check whether it lies inside the domain before reading off the range.
 order: 2
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.2.2"]
 prerequisites: [functions-domain-and-range, quadratics-completing-the-square]
@@ -18,6 +18,7 @@ provenance:
     domains, using the completed-square form from topic 1.1. All examples and questions are
     original; every value checked in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -27,12 +28,23 @@ blocks:
   - type: explain
     title: The vertex is the boss
     body: |-
-      A quadratic graph is a ∪ or a ∩, so its most extreme output is at the **vertex**. Completing the square hands you the vertex for free.
+      A quadratic graph is a ∪ or a ∩. It's a ∪ when the $x^2$ term is positive, and a ∩ when it's negative.
+
+      Its most extreme output (lowest for ∪, highest for ∩) is at the turning point, called the **vertex**.
+
+      Completing the square hands you the vertex for free. Take $f(x) = (x - 3)^2 + 2$:
+
+      - $(x - 3)^2$ is a square, so it's never negative. Its smallest value is 0, when $x = 3$.
+      - So the smallest value of $f(x)$ is $0 + 2 = 2$. The vertex is $(3, 2)$.
+
+      In general, with $a > 0$:
 
       | Form | Vertex | Range on $\mathbb{R}$ |
       | --- | --- | --- |
-      | $a(x + p)^2 + q$, $a > 0$ | $(-p, q)$, minimum | $f(x) \geqslant q$ |
-      | $q - a(x + p)^2$, $a > 0$ | $(-p, q)$, maximum | $f(x) \leqslant q$ |
+      | $a(x + p)^2 + q$ | $(-p, q)$, a minimum (∪) | $f(x) \geqslant q$ |
+      | $q - a(x + p)^2$ | $(-p, q)$, a maximum (∩) | $f(x) \leqslant q$ |
+
+      Why $-p$? The bracket $(x + p)$ is zero when $x = -p$. So $(x - 3)^2$ has $p = -3$ and the vertex is at $x = 3$.
 
   - type: example
     title: Domain is every real number
@@ -40,9 +52,15 @@ blocks:
       Find the range of $f(x) = x^2 - 6x + 11$ for $x \in \mathbb{R}$.
     steps:
       - |-
-        Complete the square: $x^2 - 6x + 11 = (x - 3)^2 - 9 + 11 = (x - 3)^2 + 2$.
+        Complete the square. Half of $-6$ is $-3$, and $(x - 3)^2 = x^2 - 6x + 9$ has an extra 9, so take it away:
+
+        $$x^2 - 6x + 11 = (x - 3)^2 - 9 + 11$$
+
+        $$= (x - 3)^2 + 2$$
       - |-
-        $(x - 3)^2 \geqslant 0$, so $f(x) \geqslant 2$, with equality at $x = 3$.
+        A square is never negative: $(x - 3)^2 \geqslant 0$.
+
+        Add 2 to both sides: $f(x) \geqslant 2$. It equals 2 exactly when $x = 3$.
       - |-
         The ∪ goes up forever on both sides, so there's no upper limit.
     answer: |-
@@ -54,11 +72,22 @@ blocks:
   - type: explain
     title: Restricted domain? Three quick checks
     body: |-
-      When the domain is an interval, the graph is only a **piece** of the parabola. Check:
+      When the domain is an interval, the graph is only a **piece** of the parabola. Run three checks.
 
-      1. **Is the vertex inside the domain?** If yes, its $y$-value is the minimum (or maximum).
-      2. **Evaluate both ends** of the domain. With the vertex inside, one end gives the other extreme: the bigger end value for a ∪, the smaller one for a ∩. With the vertex outside, the piece only rises or only falls, so the extremes sit at the ends (and if the domain goes on forever, the range does too on that side).
-      3. **Is that end included?** If an extreme value comes from an end of the domain, an included end ($\leqslant$) means the value is reached ($\leqslant$ in the range). An excluded end ($<$) means it's only approached ($<$).
+      **Check 1: is the vertex inside the domain?**
+
+      - Yes: the vertex's $y$-value is the minimum (for a ∪) or the maximum (for a ∩).
+      - No: the piece only rises or only falls, so both extremes are at the ends.
+
+      **Check 2: evaluate both ends of the domain.**
+
+      - With the vertex inside, the other extreme is at one of the ends. For a ∪, it's the **bigger** end value. For a ∩, the **smaller** one.
+      - If the domain goes on forever on one side, the range does too on that side.
+
+      **Check 3: if an extreme comes from an end, is that end included?**
+
+      - An included end ($\leqslant$ in the domain) means that value is reached: use $\leqslant$ in the range.
+      - An excluded end ($<$ in the domain) means it's only approached: use $<$ in the range.
 
   - type: example
     title: The endpoint trap
@@ -95,7 +124,17 @@ blocks:
       Find the range of $f(x) = 2x^2 + 8x - 1$ for $x \geqslant 0$.
     steps:
       - |-
-        $2x^2 + 8x - 1 = 2(x^2 + 4x) - 1 = 2\left[(x + 2)^2 - 4\right] - 1 = 2(x + 2)^2 - 9$.
+        Complete the square. First take the 2 out of the $x$ terms:
+
+        $$2x^2 + 8x - 1 = 2(x^2 + 4x) - 1$$
+      - |-
+        Inside the bracket, half of 4 is 2, and $(x + 2)^2 = x^2 + 4x + 4$. So $x^2 + 4x = (x + 2)^2 - 4$:
+
+        $$= 2\left[(x + 2)^2 - 4\right] - 1$$
+      - |-
+        Multiply the 2 back in. Note the $-4$ becomes $-8$:
+
+        $$= 2(x + 2)^2 - 8 - 1 = 2(x + 2)^2 - 9$$
       - |-
         The vertex is at $x = -2$, which is **not** in the domain $x \geqslant 0$.
       - |-
@@ -112,7 +151,9 @@ blocks:
       - wrong: |-
           The range of a quadratic is always "$f(x) \geqslant$ the $y$-coordinate of the vertex".
         right: |-
-          Only when the vertex is in the domain (and $a > 0$). If the domain stops short of the vertex, the extreme value is at an end of the domain.
+          Only for a ∪-shaped quadratic ($a > 0$) whose domain contains the vertex and has no ends, such as $x \in \mathbb{R}$.
+
+          On an interval, the top of the range comes from an end. If the vertex is outside the domain, both extremes come from the ends.
       - wrong: |-
           $f(x) = 11 - (x - 2)^2$ has minimum value 11.
         right: |-

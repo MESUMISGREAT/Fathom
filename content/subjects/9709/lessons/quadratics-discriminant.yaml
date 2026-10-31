@@ -4,7 +4,7 @@ topic: "1.1"
 title: The discriminant and the nature of roots
 summary: Use b² − 4ac to decide whether ax² + bx + c = 0 has two distinct real roots, a repeated root or no real roots.
 order: 3
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["1.1.2"]
 prerequisites: [quadratics-solving-equations]
@@ -19,6 +19,7 @@ provenance:
     are original; all arithmetic checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key)
     in a separate AI review on 2026-10-19. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -41,11 +42,19 @@ blocks:
   - type: definition
     term: Discriminant
     body: |-
-      The **discriminant** of the quadratic $ax^2 + bx + c$ (where $a \neq 0$) is $b^2 - 4ac$. Its sign determines the **nature of the roots** of $ax^2 + bx + c = 0$.
+      The **discriminant** of the quadratic $ax^2 + bx + c$ (where $a \neq 0$) is
+
+      $$b^2 - 4ac$$
+
+      Its sign (positive, zero or negative) decides the **nature of the roots** of $ax^2 + bx + c = 0$.
+
+      "Nature of the roots" is exam-speak for "how many real roots, and are they different or the same?"
 
   - type: explain
     title: Three cases
     body: |-
+      The sign of $b^2 - 4ac$ tells you which of three pictures you get:
+
       | $b^2 - 4ac$ | Roots of $ax^2 + bx + c = 0$ | Graph of $y = ax^2 + bx + c$ |
       | --- | --- | --- |
       | $> 0$ | two distinct real roots | crosses the $x$-axis twice |
@@ -65,9 +74,20 @@ blocks:
   - type: definition
     term: Repeated root
     body: |-
-      When $b^2 - 4ac = 0$ the two roots coincide: $ax^2 + bx + c = a(x - \alpha)^2$, and $x = \alpha = -\dfrac{b}{2a}$ is called a **repeated root**. Questions also say **equal roots**.
+      When $b^2 - 4ac = 0$, the two roots land on the same number.
 
-      Example: $4x^2 - 12x + 9 = (2x - 3)^2$ has the repeated root $x = \tfrac32$.
+      That number is called a **repeated root**. Questions also say **equal roots**.
+
+      The quadratic is then a perfect square:
+
+      $$ax^2 + bx + c = a(x - \alpha)^2$$
+
+      - $\alpha$ (the Greek letter "alpha") is just a name for the repeated root.
+      - From the formula with $\sqrt{0} = 0$, it is $\alpha = -\dfrac{b}{2a}$.
+
+      Example: $4x^2 - 12x + 9 = (2x - 3)^2$. Setting $2x - 3 = 0$ gives the repeated root $x = \tfrac32$.
+
+      Check with the formula: $-\dfrac{b}{2a} = -\dfrac{-12}{8} = \tfrac32$ ✓
 
   - type: check
     questions: [disc-name, repeated-cloze]
@@ -79,7 +99,15 @@ blocks:
 
       $$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}$$
 
-      The left side is a square. A square can equal a positive number in two ways ($\pm$), zero in exactly one way, and a negative number in **no** way. Since $4a^2 > 0$, the right side always has the same sign as $b^2 - 4ac$.
+      The left side is something **squared**. Think about what a square can equal:
+
+      - a positive number, in two ways (e.g. $3^2 = 9$ and $(-3)^2 = 9$)
+      - zero, in exactly one way ($0^2 = 0$)
+      - a negative number, in **no** way (no real number squares to $-9$)
+
+      On the right, the bottom $4a^2$ is always positive (it's a square too).
+
+      So the right side has the same sign as $b^2 - 4ac$. That sign alone decides: two roots, one root or none.
 
   - type: check
     questions: [disc-value, nature-mcq]
@@ -102,15 +130,37 @@ blocks:
       Find the values of $k$ for which $x^2 + kx + 9 = 0$ has a repeated root, and find the root in each case.
     steps:
       - |-
-        $a = 1$, $b = k$, $c = 9$. A repeated root means $b^2 - 4ac = 0$.
+        Read off the numbers: $a = 1$, $b = k$, $c = 9$.
+
+        A repeated root means the discriminant is zero:
+
+        $$b^2 - 4ac = 0$$
       - |-
-        $k^2 - 4(1)(9) = 0$, so $k^2 = 36$.
+        Substitute:
+
+        $$k^2 - 4 \times 1 \times 9 = 0$$
+
+        $$k^2 - 36 = 0$$
+
+        $$k^2 = 36$$
       - |-
-        $k = 6$ or $k = -6$. Don't lose the negative one.
+        Square-root both sides, remembering $\pm$:
+
+        $$k = 6 \quad \text{or} \quad k = -6$$
+
+        Don't lose the negative one.
       - |-
-        $k = 6$: $x^2 + 6x + 9 = (x + 3)^2$, so the repeated root is $x = -3$.
+        Find the root for $k = 6$. The equation is $x^2 + 6x + 9 = 0$, which is a perfect square:
+
+        $$(x + 3)^2 = 0$$
+
+        So the repeated root is $x = -3$.
       - |-
-        $k = -6$: $x^2 - 6x + 9 = (x - 3)^2$, so the repeated root is $x = 3$.
+        Find the root for $k = -6$. The equation is $x^2 - 6x + 9 = 0$:
+
+        $$(x - 3)^2 = 0$$
+
+        So the repeated root is $x = 3$.
     answer: |-
       $k = \pm 6$, with repeated roots $x = -3$ (for $k = 6$) and $x = 3$ (for $k = -6$).
 
@@ -136,11 +186,23 @@ blocks:
   - type: deeper
     title: Quadratics that are always positive
     body: |-
-      If $a > 0$ and $b^2 - 4ac < 0$, the ∪-shaped graph never reaches the $x$-axis, so $ax^2 + bx + c > 0$ for **every** real $x$.
+      If $a > 0$, the graph is ∪-shaped (it opens upwards).
 
-      Example: $x^2 - 4x + 7$ has $a = 1 > 0$ and $b^2 - 4ac = 16 - 28 = -12 < 0$, so it's always positive. Completing the square says it even more clearly: $x^2 - 4x + 7 = (x - 2)^2 + 3 \geqslant 3$.
+      If also $b^2 - 4ac < 0$, the graph never reaches the $x$-axis. So it stays above it, and $ax^2 + bx + c > 0$ for **every** real $x$.
 
-      Similarly, $a < 0$ with $b^2 - 4ac < 0$ means always negative.
+      Example: $x^2 - 4x + 7$.
+
+      - $a = 1 > 0$, so ∪-shaped.
+      - $b^2 - 4ac = 16 - 28 = -12 < 0$, so it never touches the axis.
+      - So it's always positive.
+
+      Completing the square shows it even more clearly:
+
+      $$x^2 - 4x + 7 = (x - 2)^2 + 3$$
+
+      A square is never negative, so this is always at least 3.
+
+      In the same way, $a < 0$ with $b^2 - 4ac < 0$ means always negative.
 
   - type: exam
     body: |-
