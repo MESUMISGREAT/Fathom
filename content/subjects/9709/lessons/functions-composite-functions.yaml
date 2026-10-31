@@ -4,7 +4,7 @@ topic: "1.2"
 title: Composite functions
 summary: gf(x) means g(f(x)), so f acts first; the composite exists only when the range of f fits inside the domain of g.
 order: 3
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["1.2.1", "1.2.2"]
 prerequisites: [functions-domain-and-range]
@@ -19,6 +19,7 @@ provenance:
     examples and questions are original; every value and expression checked in Python. Not yet
     reviewed by a teacher.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained, maths typeset). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -31,6 +32,12 @@ blocks:
       Socks then shoes: normal. Shoes then socks: a fashion statement. Same two actions, different order, different result.
 
       Functions work the same way. A **composite function** feeds the output of one function straight into another.
+
+      Two words you'll need:
+
+      - The **domain** of a function is the set of inputs it's allowed to take. "$x \in \mathbb{R}$" means "$x$ can be any real number" ($\in$ means "belongs to", $\mathbb{R}$ is the set of all real numbers).
+      - The **range** is the set of outputs it actually produces.
+      - In the diagram, $x \mapsto x + 3$ is read "$x$ is sent to $x + 3$". It's just another way of writing $f(x) = x + 3$.
 
   - type: definition
     term: Composite function
@@ -54,9 +61,11 @@ blocks:
       $f(x) = 2x - 1$ and $g(x) = x^2 + 3$, both for $x \in \mathbb{R}$. Find $gf(x)$, $fg(x)$ and $f^2(x)$.
     steps:
       - |-
-        $gf(x) = g(f(x)) = g(2x - 1) = (2x - 1)^2 + 3 = 4x^2 - 4x + 4$.
+        $gf(x) = g(f(x)) = g(2x - 1)$. Now $g$ squares its input and adds 3, so replace the $x$ in $x^2 + 3$ with the whole bracket $(2x - 1)$: $(2x - 1)^2 + 3$.
       - |-
-        $fg(x) = f(g(x)) = f(x^2 + 3) = 2(x^2 + 3) - 1 = 2x^2 + 5$.
+        Expand: $(2x - 1)^2 = (2x - 1)(2x - 1) = 4x^2 - 2x - 2x + 1 = 4x^2 - 4x + 1$. Add 3: $gf(x) = 4x^2 - 4x + 4$.
+      - |-
+        $fg(x) = f(g(x)) = f(x^2 + 3)$. $f$ doubles its input and subtracts 1: $2(x^2 + 3) - 1 = 2x^2 + 6 - 1 = 2x^2 + 5$.
       - |-
         $f^2(x)$ means $ff(x)$, not $[f(x)]^2$: $ff(x) = f(2x - 1) = 2(2x - 1) - 1 = 4x - 3$.
     answer: |-
@@ -78,13 +87,17 @@ blocks:
       $f(x) = \dfrac{1}{x}$ for $x \geqslant 1$, and $g(x) = 2x + 3$ for $x \in \mathbb{R}$. Explain why $gf$ exists but $fg$ does not, and find the range of $gf$.
     steps:
       - |-
-        Range of $f$: $0 < f(x) \leqslant 1$. Domain of $g$: all real numbers. Every output of $f$ is a real number, so $gf$ exists.
+        Range of $f$: $f(1) = 1$, and as $x$ increases $\tfrac1x$ gets smaller, getting close to 0 but never reaching it. So $0 < f(x) \leqslant 1$. Domain of $g$: all real numbers. Every output of $f$ is a real number, so $gf$ exists.
       - |-
         Range of $g$: all real numbers (a non-horizontal straight line covers every $y$). Domain of $f$: $x \geqslant 1$. Outputs of $g$ such as $0$ are not allowed into $f$, so $fg$ cannot be formed.
       - |-
         $gf(x) = g\left(\tfrac1x\right) = \dfrac{2}{x} + 3$.
       - |-
-        Feed the **range of $f$** into $g$: $0 < \tfrac1x \leqslant 1$, so $0 < \tfrac2x \leqslant 2$, so $3 < \tfrac2x + 3 \leqslant 5$.
+        Feed the **range of $f$** into $g$. The values going into $g$ are $0 < \tfrac1x \leqslant 1$.
+      - |-
+        $g$ doubles them: doubling every value in "$0 <$ something $\leqslant 1$" gives $0 < \tfrac2x \leqslant 2$. (Multiplying by a positive number keeps the inequality signs the same way round.)
+      - |-
+        Then $g$ adds 3 to everything: $3 < \tfrac2x + 3 \leqslant 5$. Check the ends: $x = 1$ gives $\tfrac21 + 3 = 5$ (included), and as $x$ gets huge $\tfrac2x$ shrinks towards 0, so $gf(x)$ gets close to 3 but never reaches it.
     answer: |-
       $gf$ exists, $fg$ doesn't, and the range of $gf$ is $3 < gf(x) \leqslant 5$.
 

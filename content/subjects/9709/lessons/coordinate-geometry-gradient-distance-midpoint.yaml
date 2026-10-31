@@ -4,7 +4,7 @@ topic: "1.3"
 title: Gradient, distance and midpoint
 summary: One right-angled triangle gives you all three. Rise over run is the gradient, Pythagoras is the distance, and averaging is the midpoint.
 order: 1
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.3.2"]
 prerequisites: []
@@ -18,6 +18,7 @@ provenance:
     includes calculating distances, gradients and midpoints. All examples and questions are
     original; every value checked in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained, maths typeset). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -25,9 +26,25 @@ blocks:
       By the end you can find the **gradient**, the **distance** and the **midpoint** for any two points, leave lengths as exact surds, and run the midpoint formula backwards.
 
   - type: explain
-    title: One triangle, three formulas
+    title: Start with two real points
     body: |-
-      Pick two points $A(x_1, y_1)$ and $B(x_2, y_2)$. Walk from $A$ to $B$ the lazy way: straight across, then straight up. You've just drawn a right-angled triangle, and it holds everything:
+      Take $A(1, 1)$ and $B(4, 5)$ (see the diagram). Walk from $A$ to $B$ the lazy way: straight across, then straight up. You've drawn a right-angled triangle:
+
+      - **across** (the "run"): from $x = 1$ to $x = 4$, that's $4 - 1 = 3$;
+      - **up** (the "rise"): from $y = 1$ to $y = 5$, that's $5 - 1 = 4$.
+
+      That triangle answers three questions:
+
+      - **How steep is $AB$?** The **gradient** is rise ÷ run $= \tfrac43$: you go up $\tfrac43$ for every 1 across.
+      - **How long is $AB$?** $AB$ is the hypotenuse, so by Pythagoras $AB = \sqrt{3^2 + 4^2} = \sqrt{25} = 5$.
+      - **Where's the middle?** Halfway across from 1 to 4 is $\tfrac{1 + 4}{2} = 2.5$; halfway up from 1 to 5 is $\tfrac{1 + 5}{2} = 3$. The **midpoint** is $(2.5, 3)$: just average the $x$'s and average the $y$'s.
+
+  - type: explain
+    title: The same thing for any two points
+    body: |-
+      To write rules that work for every pair of points, call them $A(x_1, y_1)$ and $B(x_2, y_2)$. The little 1 and 2 are labels, not powers: $x_1$ means "the $x$-coordinate of the first point", $y_2$ means "the $y$-coordinate of the second point". In the example, $x_1 = 1$, $y_1 = 1$, $x_2 = 4$, $y_2 = 5$.
+
+      Then the run is $x_2 - x_1$ and the rise is $y_2 - y_1$, and the three rules are exactly what we just did with numbers:
 
       | You want | Formula | Where it comes from |
       | --- | --- | --- |

@@ -1,72 +1,59 @@
 /**
- * Number line showing successive approximations converging to \√2.
- * x\₁ = 1, x\₂ = 1.5, x\₃ \≈ 1.4167, x\₄ \≈ 1.4142 cluster around \α = \√2 \≈ 1.41421356.
+ * Successive approximations to √2 from x_{n+1} = ½(x_n + 2/x_n), x_1 = 1, on a number line from 0.95 to
+ * 1.55. Curved arrows show each step: x_1 = 1 → x_2 = 1.5 → x_3 ≈ 1.4167 → x_4 ≈ 1.4142. The steps shrink,
+ * and x_4 is too close to α = √2 to tell apart at this scale.
  */
 import { Label, MathLabel, Svg } from '../primitives';
 
 export const diagramKey = 'p3-numerical-solution-approximations';
 
-const W = 520;
-const H = 220;
-const LEFT = 1.0;
+const W = 600;
+const H = 250;
+const LEFT = 0.95;
 const RIGHT = 1.55;
-const ALPHA = Math.sqrt(2);
+const sx = (x: number) => 40 + ((x - LEFT) / (RIGHT - LEFT)) * 520;
+const Y = 160;
 
-const x1 = 1.0;
-const x2 = 1.5;
-const x3 = 1.4166666667;
-const x4 = 1.4142156863;
+const pts = [1, 1.5, 1.4166666667, 1.4142156863];
+const ALPHA = Math.SQRT2;
 
-const scaleX = (x: number) => 40 + ((x - LEFT) / (RIGHT - LEFT)) * 440;
-const yBase = 120;
+function Hop({ from, to, lift, n }: { from: number; to: number; lift: number; n: number }) {
+  const a = sx(from);
+  const b = sx(to);
+  const mid = (a + b) / 2;
+  const top = Y - lift;
+  // small arrowhead at the landing point, pointing down along the end of the curve
+  const dir = b > a ? 1 : -1;
+  return (
+    <g>
+      <path d={`M${a},${Y - 8} Q${mid},${top} ${b},${Y - 8}`} className="dg-accent" fill="none" strokeWidth={2} />
+      <polygon points={`${b},${Y - 6} ${b - dir * 9},${Y - 14} ${b - dir * 2},${Y - 17}`} className="dg-dot-accent" />
+      <Label x={mid} y={Y - lift / 2 - 18} className="dg-text-small dg-text-accent">{`step ${n}`}</Label>
+    </g>
+  );
+}
 
 export default function P3NumericalSolutionApproximations() {
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={W / 2} y={28} tex="x_{n+1} = \tfrac{1}{2}(x_n + 2/x_n),\quad x_1 = 1" w={380} h={32} />
-      {/* number line */}
-      <line x1={scaleX(LEFT)} y1={yBase} x2={scaleX(RIGHT)} y2={yBase} className="dg-line" />
-      {/* ticks */}
-      <g>
-        {[1.0, 1.1, 1.2, 1.3, 1.4, 1.5].map(v => (
-          <g key={v}>
-            <line x1={scaleX(v)} y1={yBase - 6} x2={scaleX(v)} y2={yBase + 6} className="dg-line" />
-            <Label x={scaleX(v)} y={yBase + 22} anchor="middle" className="dg-text-xs dg-text-muted">{v.toFixed(1)}</Label>
-          </g>
-        ))}
-      </g>
-      {/* alpha marker */}
-      <line x1={scaleX(ALPHA)} y1={yBase - 16} x2={scaleX(ALPHA)} y2={yBase + 16} className="dg-accent-2" strokeWidth={2} />
-      <MathLabel x={scaleX(ALPHA)} y={yBase - 32} tex="\alpha = \sqrt{2}" anchor="middle" w={100} h={24} size="small" tone="accent-2" />
-      {/* points */}
-      {[
-        { x: x1, label: 'x_1', yOffset: -60 },
-        { x: x2, label: 'x_2', yOffset: -60 },
-        { x: x3, label: 'x_3', yOffset: -60 },
-        { x: x4, label: 'x_4', yOffset: -60 },
-      ].map(({ x, label, yOffset }) => (
-        <g key={label}>
-          <circle cx={scaleX(x)} cy={yBase} r={5} className="dg-fill-surface dg-accent" />
-          <MathLabel x={scaleX(x)} y={yBase + yOffset} tex={label} anchor="middle" w={50} h={24} size="small" tone="accent" />
+      <MathLabel x={W / 2} y={24} tex="x_{n+1} = \tfrac{1}{2}\left(x_n + \tfrac{2}{x_n}\right),\quad x_1 = 1" w={380} h={36} />
+      <line x1={sx(LEFT)} y1={Y} x2={sx(RIGHT)} y2={Y} className="dg-line" strokeWidth={2} />
+      {[1.0, 1.1, 1.2, 1.3, 1.4, 1.5].map((t) => (
+        <g key={t}>
+          <line x1={sx(t)} y1={Y - 5} x2={sx(t)} y2={Y + 5} className="dg-line" />
+          <Label x={sx(t)} y={Y + 20} className="dg-text-small dg-text-muted">{t.toFixed(1)}</Label>
         </g>
       ))}
-      {/* convergence arrows */}
-      <MathLabel x={scaleX((x1 + x2) / 2)} y={yBase - 52} tex="\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
-      <MathLabel x={scaleX((x2 + x3) / 2)} y={yBase - 52} tex="\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
-      <MathLabel x={scaleX((x3 + x4) / 2)} y={yBase - 52} tex="\downarrow" anchor="middle" w={20} h={20} size="large" tone="muted" />
-      {/* distance labels */}
-      <Label x={scaleX((x1 + x2) / 2)} y={yBase + 50} anchor="middle" className="dg-text-xs dg-text-muted">
-        large step
-      </Label>
-      <Label x={scaleX((x2 + x3) / 2)} y={yBase + 50} anchor="middle" className="dg-text-xs dg-text-muted">
-        smaller
-      </Label>
-      <Label x={scaleX((x3 + x4) / 2)} y={yBase + 50} anchor="middle" className="dg-text-xs dg-text-muted">
-        tiny
-      </Label>
-      <Label x={W / 2} y={H - 20} className="dg-text-small dg-bold">
-        The sequence x\₁, x\₂, x\₃, x\₄ \… closes in on \α.
-      </Label>
+      <Hop from={pts[0]!} to={pts[1]!} lift={120} n={1} />
+      <Hop from={pts[1]!} to={pts[2]!} lift={60} n={2} />
+      <line x1={sx(ALPHA)} y1={Y - 14} x2={sx(ALPHA)} y2={Y + 14} className="dg-accent-2" strokeWidth={3} />
+      {pts.map((p, i) => (
+        <circle key={i} cx={sx(p)} cy={Y} r={5} className="dg-dot" />
+      ))}
+      <MathLabel x={sx(1)} y={Y + 44} tex="x_1 = 1" w={80} size="small" />
+      <MathLabel x={sx(1.5)} y={Y + 44} tex="x_2 = 1.5" w={90} size="small" />
+      <MathLabel x={sx(ALPHA) - 50} y={Y + 44} tex="x_3 \approx 1.4167" w={110} size="small" />
+      <MathLabel x={sx(ALPHA) - 40} y={Y + 70} tex="x_4 \approx 1.4142 \approx \alpha = \sqrt2" w={200} size="small" tone="accent-2" />
     </Svg>
   );
 }

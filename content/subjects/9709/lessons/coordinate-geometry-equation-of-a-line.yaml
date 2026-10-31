@@ -4,7 +4,7 @@ topic: "1.3"
 title: The equation of a straight line
 summary: Find a line from a point and a gradient, or from two points, and switch between y = mx + c, y − y₁ = m(x − x₁) and ax + by + c = 0.
 order: 2
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["1.3.1", "1.3.2"]
 prerequisites: [coordinate-geometry-gradient-distance-midpoint]
@@ -19,6 +19,7 @@ provenance:
     All examples and questions are original; every equation checked in Python by substituting
     the given points.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained, maths typeset). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -39,6 +40,21 @@ blocks:
       The middle one is the workhorse. It's just the gradient formula rearranged: $\dfrac{y - y_1}{x - x_1} = m$.
 
       One kind of line can't wear the $y = mx + c$ outfit: a **vertical** line. Every point on it has the same $x$-coordinate, so its equation is $x = k$, and its gradient is undefined. (A **horizontal** line is $y = k$, gradient 0.)
+
+  - type: intuition
+    title: Why y − y₁ = m(x − x₁) works, with numbers
+    body: |-
+      Say a line goes through $(1, 2)$ with gradient 3. Which points $(x, y)$ are on it?
+
+      A point is on the line exactly when the gradient from $(1, 2)$ to it is 3. Using rise ÷ run from $(1, 2)$ to $(x, y)$:
+
+      $$\frac{y - 2}{x - 1} = 3.$$
+
+      Multiply both sides by $(x - 1)$: $\;y - 2 = 3(x - 1)$. (This multiplied-out form also includes the point $(1, 2)$ itself, where the fraction would have been $\tfrac00$.) That's the whole formula: here $x_1 = 1$, $y_1 = 2$ (the known point) and $m = 3$ (the gradient).
+
+      Test it on a point you can find by hand. From $(1, 2)$ go 1 across and 3 up to $(2, 5)$. Put it in: $5 - 2 = 3$ and $3(2 - 1) = 3$ ✓. Now a point that's **not** on the line, $(2, 4)$: $4 - 2 = 2$ but $3(2 - 1) = 3$. They don't match, so it isn't on the line ✓.
+
+      Tidying up, $y - 2 = 3x - 3$, so $y = 3x - 1$: the same line in $y = mx + c$ form.
 
   - type: diagram
     diagram: coordinate-geometry-line-forms

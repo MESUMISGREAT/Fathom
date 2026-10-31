@@ -4,7 +4,7 @@ topic: "1.2"
 title: "Transformations: translations"
 summary: y = f(x) + a slides the graph up by a; y = f(x + a) slides it left by a. Outside the bracket does what it says, inside does the opposite.
 order: 7
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["1.2.5"]
 prerequisites: [functions-domain-and-range, quadratics-completing-the-square]
@@ -19,6 +19,7 @@ provenance:
     original; every transformed equation and point checked in Python. Not yet reviewed by a
     teacher.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained, maths typeset). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -29,6 +30,10 @@ blocks:
     title: Slide, don't bend
     body: |-
       A **translation** picks the whole graph up and slides it, without stretching, flipping or bending it. Every point moves the same distance in the same direction.
+
+      **How a slide is written.** Cambridge describes a translation with a **column vector** $\begin{pmatrix} h \\ k \end{pmatrix}$: two numbers stacked in a bracket. The top number $h$ is how far every point moves **right** (a negative number means left). The bottom number $k$ is how far it moves **up** (negative means down). So $\begin{pmatrix} 4 \\ 0 \end{pmatrix}$ is "4 right, no vertical move", and $\begin{pmatrix} 0 \\ -2 \end{pmatrix}$ is "2 down".
+
+      Below, $f(x)$ is the original function, $a$ is a number, and $(p, q)$ is any point on the original graph $y = f(x)$.
 
       The one rule to tattoo on your brain:
 
@@ -61,7 +66,9 @@ blocks:
   - type: intuition
     title: Why does + inside move it left?
     body: |-
-      In $y = f(x + 2)$, the new graph at $x = 1$ shows what $f$ was doing at $x = 3$. Everything happens **2 units earlier**, so the whole picture appears 2 units further left.
+      Try a number. Suppose $f(3) = 10$, so $(3, 10)$ is on $y = f(x)$. Where does height 10 appear on $y = f(x + 2)$? We need the bracket to be 3, so $x + 2 = 3$, which means $x = 1$. The point has moved from $x = 3$ to $x = 1$: **2 to the left**.
+
+      Every point does the same, so the new graph shows everything $f$ did, **2 units earlier**, and the whole picture appears 2 units further left.
 
       Think of a song that starts 2 seconds early: every beat lands 2 seconds sooner on the timeline. The analogy breaks a bit for $f(x) + a$, which isn't about timing at all: it simply adds $a$ to every height.
 
@@ -86,6 +93,15 @@ blocks:
 
   - type: check
     questions: [tr-vector-from-square, tr-point]
+
+  - type: explain
+    title: Any translation in one rule
+    body: |-
+      Put the two rows of the table together. A translation by $\begin{pmatrix} h \\ k \end{pmatrix}$ ($h$ right, $k$ up) turns $y = f(x)$ into
+
+      $$y = f(x - h) + k.$$
+
+      In words: replace every $x$ with $(x - h)$, then add $k$. The minus inside is the "inside does the opposite" rule: moving **right** by $h$ means $x - h$.
 
   - type: example
     title: Finding the new equation

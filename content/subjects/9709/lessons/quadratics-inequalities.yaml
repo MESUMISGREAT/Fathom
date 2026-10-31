@@ -4,7 +4,7 @@ topic: "1.1"
 title: Quadratic inequalities
 summary: Solve quadratic inequalities by finding the critical values, sketching the parabola and choosing the right region.
 order: 4
-minutes: 5
+minutes: 7
 kind: core
 objectives: ["1.1.3"]
 prerequisites: [quadratics-solving-equations]
@@ -19,6 +19,7 @@ provenance:
     regions checked in Python. Not yet teacher-reviewed.
     Independently re-checked line by line (facts, worked examples, every answer key)
     in a separate AI review on 2026-10-19. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained, maths typeset). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -26,14 +27,13 @@ blocks:
       By the end you can solve quadratic inequalities such as $x^2 - x - 6 > 0$ by finding the **critical values** and reading the answer off a quick sketch.
 
   - type: explain
-    title: Key to the symbols
-    body: |
-      The main symbols used in this lesson:
+    title: What you're looking for
+    body: |-
+      An equation like $x^2 - x - 6 = 0$ has a couple of answers. An **inequality** like $x^2 - x - 6 > 0$ asks a different question: *for which values of $x$ is the left side positive?* The answer is a whole range of numbers, not just one or two.
 
-      | Symbol | Meaning |
-      | --- | --- |
-      | $\alpha$ | one root of the quadratic |
-      | $\beta$ | the other root of the quadratic |
+      The trick is to think of $y = x^2 - x - 6$ as a graph. "$> 0$" means "where is the graph **above** the $x$-axis?" and "$< 0$" means "where is it **below**?"
+
+      The graph can only switch from above to below by crossing the axis, at the roots. Those roots are called the **critical values**: they are the boundaries of the answer. (Below, $\alpha$ and $\beta$, the Greek letters alpha and beta, stand for the smaller and larger critical value.)
 
   - type: explain
     title: The three-step method
@@ -91,11 +91,15 @@ blocks:
     body: |-
       **Strict or not.** $<$ and $>$ exclude the critical values; $\leqslant$ and $\geqslant$ include them. So $x^2 - 2x - 8 \leqslant 0$, i.e. $(x + 2)(x - 4) \leqslant 0$, gives $-2 \leqslant x \leqslant 4$.
 
-      **A negative $x^2$ coefficient.** Multiply through by $-1$ and **reverse the inequality sign**:
+      **A negative $x^2$ coefficient.** Solve $12 + x - x^2 > 0$. The $x^2$ term is negative, so the graph is ∩-shaped. It's easier to work with a ∪ shape, so multiply both sides by $-1$.
 
-      $$12 + x - x^2 > 0 \iff x^2 - x - 12 < 0 \iff (x - 4)(x + 3) < 0 \iff -3 < x < 4$$
+      Multiplying an inequality by a negative number **reverses the sign** (just as $2 < 3$ becomes $-2 > -3$). So:
 
-      (Or sketch the ∩ shape directly. Same answer, as it should be.)
+      1. $12 + x - x^2 > 0$ becomes $x^2 - x - 12 < 0$ (sign flipped from $>$ to $<$).
+      2. Factorise: $(x - 4)(x + 3) < 0$. Critical values $-3$ and $4$.
+      3. $< 0$ on a ∪ shape is the middle piece: $-3 < x < 4$.
+
+      (Or sketch the ∩ shape of $y = 12 + x - x^2$ directly: it's above the axis between its roots. Same answer, as it should be.)
 
   - type: check
     questions: [ineq-closed, ineq-negative-a]
@@ -117,12 +121,12 @@ blocks:
       - wrong: |-
           Divide $x^2 < 5x$ by $x$ to get $x < 5$.
         right: |-
-          If $x$ is negative, dividing flips the sign, so you can't safely divide by $x$. Rearrange: $x(x - 5) < 0$, so $0 < x < 5$.
+          If $x$ is negative, dividing flips the sign (and if $x = 0$ you can't divide at all), so you can't safely divide by $x$. Rearrange: $x(x - 5) < 0$, so $0 < x < 5$.
 
   - type: deeper
     title: When there are no critical values (or just one)
     body: |-
-      If $b^2 - 4ac < 0$ the curve never meets the axis:
+      If the discriminant $b^2 - 4ac$ of $ax^2 + bx + c$ is negative the curve never meets the axis:
 
       - $x^2 + 2x + 5 > 0$ is true for **all** real $x$, because $(x + 1)^2 + 4 \geqslant 4$.
       - $x^2 + 2x + 5 < 0$ has **no** real solutions.

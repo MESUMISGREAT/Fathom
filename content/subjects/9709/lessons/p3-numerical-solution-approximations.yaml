@@ -10,93 +10,105 @@ objectives: ["3.6.2"]
 prerequisites: [p3-numerical-solution-sign-change]
 provenance:
   origin: ai-drafted
-  status: draft
+  status: ai-checked
   notes: >-
     Drafted against the official Cambridge International AS & A Level Mathematics 9709
     syllabus (2026–2027), topic 3.6 outcome "Understand the idea of, and use the notation for,
     a sequence of approximations that converges to a root of an equation". All examples,
     questions and diagrams are original; every value and answer key was computed in Python.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained, maths typeset). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 blocks:
   - type: objective
     body: |-
-      By the end you can read and write the notation for a sequence of approximations (x₁, x₂, x₃, …) and recognise when the values are closing in on a root.
+      By the end you can read and write the notation for a **sequence of approximations** ($x_1, x_2, x_3, \dots$), work out its terms, and tell when the terms have settled down to a root.
 
   - type: explain
-    title: The idea
+    title: Guess, improve, repeat
     body: |-
-      The sign-change method tells you *where* a root is. An **iterative sequence** is a practical way to *find* it.
+      Many equations, like $x^3 - 2x - 5 = 0$, have no neat algebraic way to solve them. The previous lesson used a **sign change** to show roughly *where* a root is. This lesson is about *closing in* on it.
 
-      You start with a guess x₁, then apply a formula to get a better guess x₂, then x₃, and so on. If the formula is well chosen, the values x₁, x₂, x₃, … get closer and closer to the actual root. We say the sequence **converges**.
+      The plan:
 
-      In Cambridge notation:
+      1. Make a first guess.
+      2. Feed it into a formula that produces a better guess.
+      3. Feed that back into the same formula. Repeat.
 
-      - x₁ is your starting value (sometimes called the "initial approximation").
-      - x₂, x₃, … are the successive approximations.
-      - The formula linking them is written as **xₙ₊₁ = F(xₙ)**.
-      - The true root is often denoted α (alpha).
+      Each pass is called an **iteration**. If the formula is a good one, the guesses get closer and closer to the root.
 
-      **Convergence** means: as n gets larger, xₙ gets arbitrarily close to α. The differences |xₙ − α| shrink toward zero.
+  - type: explain
+    title: The notation
+    body: |-
+      - $x_1$ is the **first guess** (the starting value). The small number underneath is just a counter: $x_1$ is "guess number 1".
+      - $x_2, x_3, x_4, \dots$ are the next guesses, in order.
+      - $x_n$ means "guess number $n$", any one of them, and $x_{n+1}$ is the guess straight after it.
+      - The formula is written $x_{n+1} = F(x_n)$: "the next guess is $F$ of the current guess". So $x_2 = F(x_1)$, $x_3 = F(x_2)$, and so on.
+      - The exact root is usually called $\alpha$ (the Greek letter "alpha").
+
+      If the guesses get as close to $\alpha$ as you like, the sequence **converges** to $\alpha$.
+
+  - type: example
+    title: "Example 1: an iteration for √2"
+    problem: |-
+      The iteration $x_{n+1} = \dfrac12\left(x_n + \dfrac{2}{x_n}\right)$ with $x_1 = 1$ converges to $\sqrt2$. Find $x_2$, $x_3$ and $x_4$.
+    steps:
+      - |-
+        Put $x_1 = 1$ into the formula: $x_2 = \tfrac12\left(1 + \tfrac21\right) = \tfrac12 \times 3 = 1.5$.
+      - |-
+        Now put $x_2 = 1.5$ in: $x_3 = \tfrac12\left(1.5 + \tfrac{2}{1.5}\right) = \tfrac12(1.5 + 1.3333\ldots) = 1.416666\ldots$
+      - |-
+        Now put $x_3 = 1.416666\ldots$ in: $x_4 = \tfrac12\left(1.416666\ldots + \tfrac{2}{1.416666\ldots}\right) = \tfrac12(1.416666\ldots + 1.411764\ldots) = 1.414215\ldots$
+      - |-
+        Compare with $\sqrt2 = 1.414213\ldots$: after only three steps, $x_4$ differs from $\sqrt2$ by about $0.000002$.
+    answer: |-
+      $x_2 = 1.5$, $x_3 = 1.416667$, $x_4 = 1.414216$ (6 d.p.). **Calculator tip:** type 1, press =, then type the formula using Ans in place of $x_n$. Each press of = gives the next term.
 
   - type: diagram
     diagram: p3-numerical-solution-approximations
     alt: >-
-      Number line from 1.0 to 1.5 showing the sequence of approximations for √2. Points marked
-      at 1.0 (x₁), 1.5 (x₂), 1.4167 (x₃), 1.4142 (x₄) with arrows showing them clustering
-      around the true value √2 ≈ 1.4142. The gap between successive points shrinks visibly.
+      A number line from 0.95 to 1.55 with the formula x(n+1) = ½(x(n) + 2/x(n)), x1 = 1, above it.
+      Points are marked at x1 = 1, x2 = 1.5 and x3 ≈ 1.4167, and a coloured mark shows α = √2. A long
+      curved arrow labelled step 1 jumps from 1 to 1.5, and a much shorter one labelled step 2 jumps
+      back from 1.5 to 1.4167. A note says x4 ≈ 1.4142, too close to α = √2 to tell apart.
     caption: |-
-      The approximations x₁, x₂, x₃, x₄ close in on the root α. The distance between successive terms shrinks.
-
-  - type: example
-    title: "Example 1: the classic iteration for √2"
-    problem: |-
-      The iteration xₙ₊₁ = ½(xₙ + 2/xₙ) with x₁ = 1 is used to find √2. Find x₂, x₃ and x₄.
-    steps:
-      - |-
-        x₂ = ½(1 + 2/1) = ½(3) = 1.5
-      - |-
-        x₃ = ½(1.5 + 2/1.5) = ½(1.5 + 1.3333…) = ½(2.8333…) = 1.41666…
-      - |-
-        x₄ = ½(1.41666… + 2/1.41666…) = ½(1.41666… + 1.41176…) = 1.41421…
-    answer: |-
-      x₂ = 1.5, x₃ ≈ 1.4167, x₄ ≈ 1.4142. The values are converging to √2 ≈ 1.41421356…
+      The steps shrink fast: from 1 to 1.5, back to about 1.4167, and then so close to $\sqrt2$ that the next point can't be seen separately.
 
   - type: intuition
-    title: Why does it work?
+    title: Why this formula works
     body: |-
-      The formula xₙ₊₁ = ½(xₙ + 2/xₙ) is just the average of xₙ and 2/xₙ. If xₙ is an underestimate of √2, then 2/xₙ is an overestimate, and vice versa. Their average is always *closer* to √2 than either one. The errors cancel out.
+      $\tfrac12\left(x_n + \tfrac{2}{x_n}\right)$ is the **average** of $x_n$ and $\tfrac{2}{x_n}$.
 
-      This is the essence of a good iterative formula: the errors shrink at each step.
+      If $x_n$ is a bit too small, then $\tfrac{2}{x_n}$ is a bit too big, because their product is always exactly 2, just like $\sqrt2 \times \sqrt2$. So one is below $\sqrt2$ and the other is above. Their average lands in between. For a reasonable guess it lands much closer to $\sqrt2$ than either of them, which is why the errors shrink so fast.
+
+      You don't need to invent formulas like this; exam questions give them to you. You just need to use them correctly.
 
   - type: check
     questions: [approx-notation, approx-compute]
 
   - type: explain
-    title: What the syllabus asks you to do
+    title: When to stop, and what to write
     body: |-
-      1. **Recognise the notation** xₙ₊₁ = F(xₙ) and the subscript pattern x₁, x₂, x₃…
-      2. **Compute successive values** accurately, keeping enough decimal places (usually 4–6 d.p. is safe).
-      3. **Decide when to stop**: typically when xₙ and xₙ₊₁ agree to the required decimal places, or when the question says "hence find the root correct to 3 d.p."
-      4. **Say it converges** (or not) and state the root to the requested accuracy.
+      1. **Keep plenty of decimal places** while working (at least 2 more than the answer needs). Use Ans on your calculator so nothing gets rounded early.
+      2. **Write down each term** you calculate, e.g. $x_2 = 2.0801$, $x_3 = 2.0924$. These are your method marks.
+      3. **Stop** when two terms in a row round to the same value at the accuracy asked for.
+      4. **State the root** to that accuracy.
 
-      You are **not** asked to prove convergence or derive the iteration formula — that comes in the next lesson.
+      This is the standard exam convention. (Why it's reasonable: once the terms stop changing at that accuracy, the later ones are even closer to $\alpha$ and almost always round the same way. If a value sits right on a rounding boundary, a sign-change check settles it.)
 
   - type: example
     title: "Example 2: using a given iteration"
     problem: |-
-      The iteration xₙ₊₁ = ∛(2xₙ + 5) with x₁ = 2 is used to find a root of x³ − 2x − 5 = 0. Find x₂, x₃, x₄ and state the root correct to 2 decimal places.
+      The iteration $x_{n+1} = \sqrt[3]{2x_n + 5}$ with $x_1 = 2$ converges to a root of $x^3 - 2x - 5 = 0$. Find the root correct to 2 decimal places, showing each iterate.
     steps:
       - |-
-        x₂ = ∛(2×2 + 5) = ∛9 = 2.08008…
+        $x_2 = \sqrt[3]{2(2) + 5} = \sqrt[3]{9} = 2.0801$
       - |-
-        x₃ = ∛(2×2.08008… + 5) = ∛9.16016… = 2.0929…
+        $x_3 = \sqrt[3]{2(2.0801) + 5} = 2.0924$ (keep using the unrounded value from your calculator)
       - |-
-        x₄ = ∛(2×2.0929… + 5) = ∛9.1858… = 2.0943…
+        $x_4 = 2.0942$
       - |-
-        x₅ = ∛(2×2.0943… + 5) = ∛9.1887… = 2.0945…
-      - |-
-        x₄ and x₅ both round to 2.09 (2 d.p.), so the root is 2.09.
+        $x_3$ and $x_4$ both round to $2.09$, so by our rule we can stop here. ($x_5 = 2.0945$ also rounds to $2.09$, which confirms it.)
     answer: |-
-      x₂ ≈ 2.0801, x₃ ≈ 2.0929, x₄ ≈ 2.0943. The values settle at 2.09 (2 d.p.).
+      The root is $2.09$ to 2 d.p. (Check it's a root: rearranging $x = \sqrt[3]{2x + 5}$ gives $x^3 = 2x + 5$, i.e. $x^3 - 2x - 5 = 0$ ✓)
 
   - type: check
     questions: [approx-given-iteration, approx-stop]
@@ -104,32 +116,38 @@ blocks:
   - type: misconceptions
     items:
       - wrong: |-
-          x₁ is the root.
+          $x_1$ is the root.
         right: |-
-          x₁ is just a starting guess. The root is the limit of the sequence, denoted α (or sometimes x∞). You only reach it after many iterations, or in theory after infinitely many.
+          $x_1$ is only the starting guess. The root $\alpha$ is what the guesses close in on.
       - wrong: |-
-          The sequence must strictly decrease (or increase).
+          The terms must go steadily up (or steadily down).
         right: |-
-          A convergent sequence can bounce above and below the root (oscillate), or approach from one side. What matters is that the *distance to the root* shrinks.
+          They can land on either side of the root: in Example 1 the first guess, 1, is below $\sqrt2$ and the later ones are above it. What matters is that the distance from the root keeps shrinking.
       - wrong: |-
-          Stop when xₙ = xₙ₊₁ on the calculator.
+          Round each term before working out the next.
         right: |-
-          Calculators have finite precision. Stop when the values agree to the *required accuracy* (e.g., 3 d.p.), not when the display looks identical. Write down the intermediate values to show your working.
+          Rounding early lets errors build up. Keep the full calculator value (Ans) and only round what you write down.
       - wrong: |-
           Every iteration formula converges.
         right: |-
-          Some formulas diverge (the values fly away) or oscillate forever. The next lesson covers this.
+          Some formulas send the terms flying away from the root. A later lesson in this topic shows how to spot this.
+
+  - type: exam
+    body: |-
+      - Typical wording: *Use the iterative formula … with $x_1 = 2$ to determine the root correct to 2 decimal places. Give the result of each iteration to 4 decimal places.*
+      - Show **each** iterate to the number of decimal places asked for, then the final answer.
+      - The answer is the root, rounded, not the last iterate written to 4 d.p.
 
   - type: takeaways
     items:
       - |-
-        Notation: x₁, x₂, x₃, … are successive approximations; xₙ₊₁ = F(xₙ) is the recurrence.
+        $x_1$ is the starting guess; $x_{n+1} = F(x_n)$ makes each new guess from the last one.
       - |-
-        Convergence means the terms get closer and closer to a limit α (the root).
+        Converging means the guesses get closer and closer to the root $\alpha$.
       - |-
-        Compute each step with enough decimal places; stop when the required accuracy is reached.
+        Keep full accuracy with Ans; write each term down.
       - |-
-        Show your working: write down x₂, x₃, x₄ explicitly.
+        Stop when two successive terms agree to the accuracy required, then state the root.
 
 questions:
   - id: approx-notation
@@ -137,30 +155,30 @@ questions:
     difficulty: 1
     objectives: ["3.6.2"]
     prompt: |-
-      In the iteration xₙ₊₁ = F(xₙ), what does the subscript n+1 represent?
+      In the iteration $x_{n+1} = F(x_n)$, what is $x_{n+1}$?
     options:
-      - text: The next approximation after xₙ
+      - text: The next approximation after $x_n$
         correct: true
         why: |-
-          xₙ₊₁ is the value obtained by applying the formula to xₙ. The sequence is x₁, x₂ = F(x₁), x₃ = F(x₂), …
-      - text: The previous approximation before xₙ
+          You get $x_{n+1}$ by putting $x_n$ into $F$. So $x_2 = F(x_1)$, $x_3 = F(x_2)$, and so on.
+      - text: The previous approximation before $x_n$
         why: |-
-          That would be xₙ₋₁.
-      - text: The true root α
+          That would be $x_{n-1}$.
+      - text: The exact root $\alpha$
         why: |-
-          The root is the limit, not a specific term in the sequence.
-      - text: The derivative of xₙ
+          The root is what the sequence closes in on, not a particular term.
+      - text: $x_n$ plus 1
         why: |-
-          The subscript is just an index, not a derivative.
-    explanation: |
-      $x_n$ is the current estimate and $x_{n+1}$ is the next one produced by applying $F$. The sequence $x_1, x_2, \dots$ closes in on the root.
+          The $n + 1$ is a label (which guess it is), not something added to the value.
+    explanation: |-
+      $x_n$ is the current guess and $x_{n+1}$ is the next one, made by applying $F$ to $x_n$.
 
   - id: approx-compute
     format: numeric
     difficulty: 1
     objectives: ["3.6.2"]
     prompt: |-
-      xₙ₊₁ = ½(xₙ + 10/xₙ) with x₁ = 3. Find x₂ and x₃.
+      $x_{n+1} = \dfrac12\left(x_n + \dfrac{10}{x_n}\right)$ with $x_1 = 3$. Find $x_2$ and $x_3$.
     fields:
       - label: "x₂ ="
         answer: 3.1666666667
@@ -169,46 +187,48 @@ questions:
         answer: 3.1622807018
         tolerance: { rel: 0.001 }
     explanation: |-
-      x₂ = ½(3 + 10/3) = ½(6.3333…) = 3.16666…; x₃ = ½(3.16666… + 10/3.16666…) = ½(6.32456…) = 3.16228…. This sequence converges to √10 ≈ 3.16227766…
+      $x_2 = \tfrac12\left(3 + \tfrac{10}{3}\right) = 3.16667$ and $x_3 = \tfrac12\left(3.16667 + \tfrac{10}{3.16667}\right) = 3.16228$. The sequence converges to $\sqrt{10} = 3.16228\ldots$
 
   - id: approx-given-iteration
     format: numeric
     difficulty: 2
     objectives: ["3.6.2"]
     prompt: |-
-      The iteration xₙ₊₁ = √(2xₙ + 3) with x₁ = 2 is used to solve x² − 2x − 3 = 0. Find x₂, x₃, x₄ and state the root to 2 d.p.
+      The iteration $x_{n+1} = \sqrt{2x_n + 3}$ with $x_1 = 2$ converges to a root of $x^2 - 2x - 3 = 0$. Find $x_2$, $x_3$ and $x_4$.
     fields:
       - label: "x₂ ="
         answer: 2.645751311
         tolerance: { rel: 0.001 }
       - label: "x₃ ="
-        answer: 2.853664795
+        answer: 2.879496939
         tolerance: { rel: 0.001 }
       - label: "x₄ ="
-        answer: 2.925171621
+        answer: 2.959559744
         tolerance: { rel: 0.001 }
     explanation: |-
-      x₂ = √(2×2 + 3) = √7 ≈ 2.64575; x₃ = √(2×2.64575 + 3) = √8.2915 ≈ 2.85366; x₄ = √(2×2.85366 + 3) = √8.7073 ≈ 2.92517. The values are converging to 3.00 (the positive root of x² − 2x − 3 = 0 is x = 3). Continue to x₅ ≈ 2.962, x₆ ≈ 2.981, x₇ ≈ 2.990… to see it settle at 3.00.
+      $x_2 = \sqrt{2(2) + 3} = \sqrt7 = 2.64575$, $x_3 = \sqrt{2(2.64575) + 3} = 2.87950$, $x_4 = \sqrt{2(2.87950) + 3} = 2.95956$.
+
+      They are creeping up towards 3, which is the positive root: $x^2 - 2x - 3 = (x - 3)(x + 1) = 0$.
 
   - id: approx-stop
     format: mcq
     difficulty: 2
     objectives: ["3.6.2"]
     prompt: |-
-      You have x₄ = 1.41421 and x₅ = 1.41421 from an iteration. The question asks for the root correct to 3 decimal places. What should you write?
+      An iteration gives $x_4 = 1.41421$ and $x_5 = 1.41421$. The question asks for the root correct to 3 decimal places. What should you write?
     options:
       - text: The root is 1.414 (3 d.p.)
         correct: true
         why: |-
-          x₄ and x₅ agree to at least 4 d.p., so they certainly agree to 3 d.p. The root is 1.414.
+          The two terms agree well beyond 3 d.p., so the root rounds to 1.414.
       - text: The root is 1.41 (2 d.p.)
         why: |-
-          You can give more precision, not less, than requested.
+          The question asked for 3 decimal places; give exactly that.
       - text: The root is 1.41421
         why: |-
-          The question asks for 3 d.p., not the full calculator display.
-      - text: Keep iterating until x₆
+          That's 5 decimal places. Round to the accuracy asked for.
+      - text: Keep iterating until $x_6$
         why: |-
-          If consecutive values already agree to the required accuracy, you can stop. More iterations add no marks.
-    explanation: |
-      Once two successive iterates agree beyond the accuracy asked for, the value has settled: $1.41421$ rounds to $1.414$ to 3 decimal places.
+          Two successive terms already agree to the required accuracy, so you can stop.
+    explanation: |-
+      Once two successive terms agree at the accuracy asked for, stop and round: $1.41421$ is $1.414$ to 3 d.p.

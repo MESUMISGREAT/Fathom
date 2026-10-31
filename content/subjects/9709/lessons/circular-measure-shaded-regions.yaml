@@ -4,7 +4,7 @@ topic: "1.4"
 title: Shaded regions with tangents and triangles
 summary: Find angles and lengths in the triangles that come with circle diagrams (tangents, chords, radii), then add and subtract areas to find shaded regions.
 order: 4
-minutes: 5
+minutes: 8
 kind: core
 objectives: ["1.4.2"]
 prerequisites: [circular-measure-segments-and-triangles]
@@ -19,6 +19,7 @@ provenance:
     examples, figures and questions are original; all arithmetic checked in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a
     separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners (terms defined, steps explained, maths typeset). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -32,7 +33,7 @@ blocks:
 
       $$\text{shaded} = \text{(shape you know)} \pm \text{(another shape you know)}$$
 
-      Your shapes: sectors ($\tfrac12 r^2\theta$), triangles ($\tfrac12 ab\sin C$ or $\tfrac12 \times$ base $\times$ height) and segments. The skill is finding the missing angle or length first.
+      Your shapes: sectors ($\tfrac12 r^2\theta$), triangles ($\tfrac12 ab\sin C$, using two sides $a$, $b$ and the angle $C$ between them, or $\tfrac12 \times$ base $\times$ height) and segments (sector minus triangle, from the previous lesson). The skill is finding the missing angle or length first.
 
   - type: explain
     title: Clues and what they unlock
@@ -42,7 +43,7 @@ blocks:
       | a **tangent** at $A$ | angle $OAT = \tfrac{\pi}{2}$ (tangent $\perp$ radius) |
       | a right angle | Pythagoras and SOH CAH TOA |
       | two radii $OA$, $OB$ | triangle $OAB$ is isosceles |
-      | a chord of known length | half-angle: $\sin\tfrac{\theta}{2} = \dfrac{\tfrac12 AB}{r}$ |
+      | a chord of known length | split the isosceles triangle in half to make two right-angled triangles: $\sin\tfrac{\theta}{2} = \dfrac{\tfrac12 AB}{r}$ |
       | any two sides and the angle between | $\tfrac12 ab\sin C$, cosine rule |
 
       Find angles **in radians** (radian mode), because they'll go straight into $r\theta$ and $\tfrac12 r^2\theta$.
@@ -63,13 +64,17 @@ blocks:
       A circle has centre $O$ and radius $5$ cm. A point $T$ is $13$ cm from $O$. The tangent from $T$ touches the circle at $A$, and $OT$ meets the circle at $B$. Find the area and the perimeter of the region bounded by $AT$, $TB$ and the arc $AB$.
     steps:
       - |-
-        Tangent $\perp$ radius, so triangle $OAT$ has a right angle at $A$. Pythagoras: $AT = \sqrt{13^2 - 5^2} = 12$ cm.
+        **Plan first.** Look at the diagram: the shaded region is the triangle $OAT$ with the sector $OAB$ cut out of it. So we need the triangle's sides and the angle $\theta$ at $O$.
       - |-
-        Angle: $\cos\theta = \dfrac{OA}{OT} = \dfrac{5}{13}$, so $\theta = \cos^{-1}\tfrac{5}{13} = 1.1760\ldots$ rad (radian mode).
+        Tangent $\perp$ radius, so triangle $OAT$ has a right angle at $A$. Its hypotenuse is $OT = 13$ and one side is $OA = 5$. Pythagoras: $AT = \sqrt{13^2 - 5^2} = \sqrt{169 - 25} = \sqrt{144} = 12$ cm.
       - |-
-        Area: triangle $OAT = \tfrac12 \times 5 \times 12 = 30$. Sector $OAB = \tfrac12 \times 25 \times 1.1760\ldots = 14.700\ldots$ So shaded $= 30 - 14.700\ldots = 15.30\ldots$
+        Angle: from $O$, side $OA$ is next to $\theta$ (adjacent) and $OT$ is the hypotenuse, so use cos (CAH): $\cos\theta = \dfrac{OA}{OT} = \dfrac{5}{13}$, and $\theta = \cos^{-1}\tfrac{5}{13} = 1.1760\ldots$ rad (radian mode).
       - |-
-        Perimeter: $AT + TB + \text{arc } AB$. $TB = OT - OB = 13 - 5 = 8$, arc $= 5 \times 1.1760\ldots = 5.880\ldots$
+        Area of triangle $OAT$: it's right-angled at $A$, so use the two shorter sides as base and height: $\tfrac12 \times 5 \times 12 = 30$.
+      - |-
+        Area of sector $OAB$: $\tfrac12 r^2\theta = \tfrac12 \times 25 \times 1.1760\ldots = 14.700\ldots$ So shaded $= 30 - 14.700\ldots = 15.30\ldots$
+      - |-
+        Perimeter: walk round the edge of the shaded region: $AT$, then $TB$, then the arc back to $A$. $TB$ is the part of $OT$ outside the circle: $TB = OT - OB = 13 - 5 = 8$. Arc $AB = r\theta = 5 \times 1.1760\ldots = 5.880\ldots$
       - |-
         Total $= 12 + 8 + 5.880\ldots = 25.88\ldots$
     answer: |-

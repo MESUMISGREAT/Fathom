@@ -1,65 +1,51 @@
 /**
- * Two cobweb diagrams side by side.
- * Left: x = ∛(2x + 5) converges (staircase/spiral in).
- * Right: x = (x³ - 5)/2 diverges (spiral out).
+ * Two rearrangements of x³ − 2x − 5 = 0, both started at x₁ = 2, plotted as value against step number.
+ * x = ∛(2x + 5) settles at the root 2.095 (a dashed line); x = (x³ − 5)/2 goes 2, 1.5, −0.81, −2.77 and then
+ * off the chart to −13.1.
  */
-import { Label, MathLabel, Svg, graph } from '../primitives';
-import { AxesXY, Grid, makePlot } from './kit';
+import { Label, MathLabel, Svg } from '../primitives';
 
 export const diagramKey = 'p3-numerical-solution-rearranging-cobweb';
 
-const W = 560;
-const H = 320;
-const X: [number, number] = [-0.5, 3.5];
-const Y: [number, number] = [-0.5, 3.5];
+const W = 600;
+const H = 330;
+const sx = (n: number) => 90 + (n - 1) * 90;
+const sy = (v: number) => 40 + (3 - v) * (240 / 7);
 
-const F1 = (x: number) => Math.cbrt(2 * x + 5);
-const F2 = (x: number) => (x ** 3 - 5) / 2;
-
-function cobwebPoints(F: (x: number) => number, x0: number, steps: number): Array<[number, number]> {
-  const pts: Array<[number, number]> = [];
-  let x = x0;
-  pts.push([x, 0]);
-  for (let i = 0; i < steps; i++) {
-    const y = F(x);
-    pts.push([x, y]);
-    pts.push([y, y]);
-    x = y;
-  }
-  return pts;
-}
+const settle = [2, 2.0801, 2.0924, 2.0942, 2.0945, 2.0945];
+const runaway = [2, 1.5, -0.8125, -2.7682];
+const pts = (vals: number[]) => vals.map((v, i) => `${sx(i + 1)},${sy(v)}`).join(' ');
 
 export default function P3NumericalSolutionRearrangingCobweb() {
-  const p = makePlot({ width: 240, height: 240, pad: 16, x: X, y: Y });
-
-  const conv = cobwebPoints(F1, 2.0, 6);
-  const div = cobwebPoints(F2, 2.0, 4);
-
   return (
     <Svg width={W} height={H}>
-      <MathLabel x={140} y={24} tex="x = \sqrt[3]{2x + 5}" w={200} h={28} size="small" tone="accent" />
-      <MathLabel x={420} y={24} tex="x = (x^3 - 5)/2" w={200} h={28} size="small" tone="muted" />
-      {/* Converging */}
-      <g transform="translate(20, 50)">
-        <Grid p={p} />
-        <AxesXY p={p} xTicks={[1, 2, 3]} yTicks={[1, 2, 3]} yTicksRight={[]} />
-        <line x1={p.sx(-0.5)} y1={p.sy(-0.5)} x2={p.sx(3.5)} y2={p.sy(3.5)} className="dg-line" />
-        <path d={graph(F1, X, p, Y)} className="dg-accent" />
-        <polyline points={conv.map(([x, y]) => `${p.sx(x)},${p.sy(y)}`).join(' ')} fill="none" className="dg-accent-2" strokeWidth={2} />
-        <circle cx={p.sx(2.095)} cy={p.sy(2.095)} r={4} className="dg-dot-accent-2" />
-      </g>
-      {/* Diverging */}
-      <g transform="translate(300, 50)">
-        <Grid p={p} />
-        <AxesXY p={p} xTicks={[1, 2, 3]} yTicks={[1, 2, 3]} yTicksRight={[]} />
-        <line x1={p.sx(-0.5)} y1={p.sy(-0.5)} x2={p.sx(3.5)} y2={p.sy(3.5)} className="dg-line" />
-        <path d={graph(F2, X, p, Y)} className="dg-accent" />
-        <polyline points={div.map(([x, y]) => `${p.sx(x)},${p.sy(y)}`).join(' ')} fill="none" className="dg-accent-2" strokeWidth={2} />
-        <circle cx={p.sx(2.095)} cy={p.sy(2.095)} r={4} className="dg-dot" />
-      </g>
-      <Label x={W / 2} y={H - 16} className="dg-text-small dg-bold">
-        Same equation, two rearrangements. Left converges; right diverges.
-      </Label>
+      {[-4, -3, -2, -1, 0, 1, 2, 3].map((v) => (
+        <g key={v}>
+          <line x1={sx(1) - 20} y1={sy(v)} x2={sx(6) + 20} y2={sy(v)} className="dg-grid" />
+          <Label x={sx(1) - 32} y={sy(v)} anchor="end" className="dg-text-small dg-text-muted">{String(v).replace('-', '−')}</Label>
+        </g>
+      ))}
+      <line x1={sx(1) - 20} y1={sy(0)} x2={sx(6) + 20} y2={sy(0)} className="dg-line" />
+      {[1, 2, 3, 4, 5, 6].map((n) => (
+        <MathLabel key={n} x={sx(n)} y={sy(-4) + 22} tex={`x_${n}`} w={30} h={24} size="small" />
+      ))}
+      <Label x={sx(1) - 70} y={sy(-0.5)} className="dg-text-small dg-text-muted">value</Label>
+      <line x1={sx(1) - 20} y1={sy(2.095)} x2={sx(6) + 20} y2={sy(2.095)} className="dg-muted dg-dashed" />
+      <Label x={sx(6) + 24} y={sy(2.095) - 14} anchor="end" className="dg-text-small dg-text-muted">root 2.095</Label>
+
+      <polyline points={pts(settle)} fill="none" className="dg-accent" strokeWidth={2.5} />
+      {settle.map((v, i) => (
+        <circle key={`s${i}`} cx={sx(i + 1)} cy={sy(v)} r={4.5} className="dg-dot-accent" />
+      ))}
+      <polyline points={pts(runaway)} fill="none" className="dg-accent-2" strokeWidth={2.5} />
+      <line x1={sx(4)} y1={sy(-2.7682)} x2={sx(4.6)} y2={sy(-4.1)} className="dg-accent-2" strokeWidth={2.5} strokeDasharray="5,4" />
+      {runaway.map((v, i) => (
+        <circle key={`r${i}`} cx={sx(i + 1)} cy={sy(v)} r={4.5} className="dg-dot-accent-2" />
+      ))}
+      <Label x={sx(4.6) + 8} y={sy(-3.8)} anchor="start" className="dg-text-small dg-text-accent-2">next: −13.1, off the chart</Label>
+
+      <MathLabel x={sx(4.3)} y={sy(2.6) - 4} tex="x = \sqrt[3]{2x + 5}\ \text{settles}" w={220} h={28} size="small" tone="accent" />
+      <MathLabel x={sx(1.7)} y={sy(-1.4)} tex="x = \tfrac{x^3 - 5}{2}\ \text{runs away}" w={220} h={32} size="small" tone="accent-2" />
     </Svg>
   );
 }
