@@ -4,7 +4,7 @@ topic: "1.7"
 title: Sketching curves with stationary points
 summary: Sketch a curve in four steps (stationary points, axes, ends, join), then use the sketch to count the roots of an equation or find a range.
 order: 8
-minutes: 5
+minutes: 8
 kind: core
 objectives: ["1.7.4"]
 prerequisites: [p1-differentiation-stationary-points]
@@ -20,6 +20,7 @@ provenance:
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
     Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -48,16 +49,18 @@ blocks:
   - type: explain
     title: Step 3 at a glance
     body: |-
-      For large $x$ (positive or negative), the highest power wins:
+      For large $x$ (positive or negative), the highest power wins. Only the sign of the number in front matters: $3x^3$ behaves like $+x^3$.
 
-      | Highest power | Far left | Far right |
+      | Highest-power term (sign of its number) | Far left | Far right |
       | --- | --- | --- |
       | $+x^2$ | up | up |
       | $-x^2$ | down | down |
       | $+x^3$ | down | up |
       | $-x^3$ | up | down |
 
-      In symbols, "as $x \to \infty$, $y \to -\infty$" just means: on the far right, the curve heads down forever.
+      In symbols, "as $x \to \infty$, $y \to -\infty$" means: on the far right, the curve heads down forever. ($\infty$ is "infinity", and $\to$ is "heads towards".)
+
+      **Why does the highest power win?** Try $y = x^3 - 6x^2$ at $x = 100$: $x^3 = 1\,000\,000$ but $6x^2$ is only $60\,000$. The biggest power swamps the rest.
 
   - type: example
     title: "Example 1: the easiest case"
@@ -65,9 +68,15 @@ blocks:
       Sketch $y = x^2 - 2x - 3$, showing the stationary point and where the curve meets the axes.
     steps:
       - |-
-        Stationary points: $\dfrac{dy}{dx} = 2x - 2 = 0$, so $x = 1$ and $y = 1 - 2 - 3 = -4$. Then $\dfrac{d^2y}{dx^2} = 2 > 0$, so $(1, -4)$ is a minimum.
+        Stationary points: $\dfrac{dy}{dx} = 2x - 2 = 0$, so $x = 1$.
+
+        Then $y = 1 - 2 - 3 = -4$.
       - |-
-        Axes: $x = 0$ gives $y = -3$. For $y = 0$: $(x - 3)(x + 1) = 0$, so $x = 3$ or $x = -1$.
+        Nature: $\dfrac{d^2y}{dx^2} = 2 > 0$, so $(1, -4)$ is a minimum.
+      - |-
+        Axes: $x = 0$ gives $y = -3$.
+
+        For $y = 0$, factorise: $(x - 3)(x + 1) = 0$, so $x = 3$ or $x = -1$.
       - |-
         Ends: the highest power is $+x^2$, so the curve goes **up** at both ends.
       - |-
@@ -75,7 +84,7 @@ blocks:
     answer: |-
       A ∪-shaped curve with minimum point $(1, -4)$. It meets the $y$-axis at $(0, -3)$ and the $x$-axis at $(-1, 0)$ and $(3, 0)$.
 
-      Check: the minimum is halfway between the two roots, at $x = 1$, just as it should be for a quadratic.
+      Check: the minimum is halfway between the two roots, at $x = 1$, as it should be for a quadratic.
 
   - type: check
     questions: [sketch-min]
@@ -86,15 +95,26 @@ blocks:
       Sketch $y = x^3 - 6x^2 + 9x$, showing the coordinates of the stationary points and where the curve meets the axes.
     steps:
       - |-
-        Stationary points: $\dfrac{dy}{dx} = 3x^2 - 12x + 9 = 3(x - 1)(x - 3) = 0$, so $x = 1$ or $x = 3$. That gives $(1, 4)$ and $(3, 0)$.
+        Stationary points. Differentiate and set to 0:
+
+        $$\frac{dy}{dx} = 3x^2 - 12x + 9 = 0$$
+
+        Take out 3 and factorise: $3(x - 1)(x - 3) = 0$, so $x = 1$ or $x = 3$.
+      - |-
+        Find each $y$ from the original equation:
+
+        - $x = 1$: $y = 1 - 6 + 9 = 4$, giving $(1, 4)$
+        - $x = 3$: $y = 27 - 54 + 27 = 0$, giving $(3, 0)$
       - |-
         Stationary points, nature: $\dfrac{d^2y}{dx^2} = 6x - 12$. It's $-6$ at $x = 1$ (maximum) and $6$ at $x = 3$ (minimum).
       - |-
-        Axes: $x = 0$ gives $y = 0$, so it goes through the origin. For $y = 0$: $x(x - 3)^2 = 0$, so $x = 0$ or $x = 3$.
+        Axes. $x = 0$ gives $y = 0$, so it goes through the origin.
+
+        For $y = 0$, take out $x$: $x(x^2 - 6x + 9) = x(x - 3)^2 = 0$, so $x = 0$ or $x = 3$.
       - |-
         Ends: the highest power is $+x^3$, so it starts bottom left and ends top right.
       - |-
-        Join: up from the bottom left through $O$, over the maximum $(1, 4)$, down to **touch** the $x$-axis at the minimum $(3, 0)$, then up to the top right.
+        Join: up from the bottom left through the origin $O$, over the maximum $(1, 4)$, down to **touch** the $x$-axis at the minimum $(3, 0)$, then up to the top right.
     answer: |-
       See the sketch below.
 
@@ -161,7 +181,7 @@ blocks:
 
       Here the curve stops at both ends. So check the **endpoints** as well as the stationary points.
 
-      - Stationary points: $f'(x) = 3x^2 - 3 = 0$ at $x = \pm 1$. $\;f(-1) = 2$ (maximum) and $f(1) = -2$ (minimum).
+      - Stationary points: $f'(x) = 3x^2 - 3 = 0$ at $x = \pm 1$. $\;f(-1) = 2$ (maximum) and $f(1) = -2$ (minimum), since $f''(x) = 6x$ is $-6$ and $6$ there.
       - Endpoints: $f(-2) = -8 + 6 = -2$ and $f(3) = 27 - 9 = 18$.
       - Compare: the greatest value is $18$, at an endpoint, not at the maximum. The least is $-2$.
 
@@ -175,7 +195,7 @@ blocks:
       - wrong: |-
           A sketch needs lots of plotted points.
         right: |-
-          It needs the right shape and the labelled points from steps 1 and 2. Extra points just waste time.
+          It needs the right shape and the labelled points from steps 1 and 2. Extra points waste time.
       - wrong: |-
           Every cubic starts bottom left and ends top right.
         right: |-

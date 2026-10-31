@@ -4,7 +4,7 @@ topic: "1.7"
 title: Stationary points and their nature
 summary: Find where a curve is flat (gradient zero), then use the second derivative to say whether each point is a maximum or a minimum. Five steps, the same every time.
 order: 7
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.7.4"]
 prerequisites: [p1-differentiation-increasing-decreasing]
@@ -21,6 +21,7 @@ provenance:
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
     Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -38,7 +39,10 @@ blocks:
 
       - A **maximum** is the top of a hill.
       - A **minimum** is the bottom of a valley.
-      - "Nature" just means: which one is it?
+      - "Nature" means: which one is it?
+      - (A third kind, a stationary point of inflexion like $y = x^3$ at $x = 0$, is beyond this syllabus.)
+
+      $\dfrac{d^2y}{dx^2}$ is the **second derivative**: differentiate $\dfrac{dy}{dx}$ again. It tells you how the gradient is changing.
 
   - type: explain
     title: The method
@@ -52,6 +56,8 @@ blocks:
       5. Decide: negative means **maximum**, positive means **minimum**.
 
       Memory hook for step 5: negative is a frown ∩ (a hilltop). Positive is a smile ∪ (a valley).
+
+      **Why?** A positive second derivative means the gradient is increasing, from $-$ to $+$: the curve went down, then up. A negative one means the gradient goes from $+$ to $-$: up, then down.
 
   - type: diagram
     diagram: p1-differentiation-stationary-points
@@ -95,13 +101,23 @@ blocks:
       - |-
         Differentiate: $\dfrac{dy}{dx} = 6x^2 - 6x - 12$.
       - |-
-        Solve: $6x^2 - 6x - 12 = 0$. Divide by 6 and factorise: $(x - 2)(x + 1) = 0$, so $x = 2$ or $x = -1$.
+        Solve $6x^2 - 6x - 12 = 0$. Divide every term by 6:
+
+        $$x^2 - x - 2 = 0$$
+
+        Factorise: $(x - 2)(x + 1) = 0$, so $x = 2$ or $x = -1$.
       - |-
-        Find y: at $x = 2$, $y = 16 - 12 - 24 + 7 = -13$. At $x = -1$, $y = -2 - 3 + 12 + 7 = 14$.
+        Find y, using the **original** equation:
+
+        - $x = 2$: $y = 2(8) - 3(4) - 12(2) + 7 = 16 - 12 - 24 + 7 = -13$
+        - $x = -1$: $y = 2(-1) - 3(1) - 12(-1) + 7 = -2 - 3 + 12 + 7 = 14$
       - |-
         Differentiate again: $\dfrac{d^2y}{dx^2} = 12x - 6$.
       - |-
-        Decide: at $x = 2$ it's $18 > 0$, so $(2, -13)$ is a **minimum**. At $x = -1$ it's $-18 < 0$, so $(-1, 14)$ is a **maximum**.
+        Decide, one point at a time:
+
+        - $x = 2$: $12(2) - 6 = 18 > 0$, so $(2, -13)$ is a **minimum**.
+        - $x = -1$: $12(-1) - 6 = -18 < 0$, so $(-1, 14)$ is a **maximum**.
     answer: |-
       Maximum point $(-1, 14)$. Minimum point $(2, -13)$.
 
@@ -116,7 +132,7 @@ blocks:
       Write it with powers first: $y = x + 4x^{-1}$. Then the same five steps:
 
       - Differentiate: $\dfrac{dy}{dx} = 1 - 4x^{-2} = 1 - \dfrac{4}{x^2}$.
-      - Solve: $\dfrac{4}{x^2} = 1$, so $x^2 = 4$ and $x = 2$ or $x = -2$.
+      - Solve: $1 - \dfrac{4}{x^2} = 0$ means $\dfrac{4}{x^2} = 1$. Multiply by $x^2$: $x^2 = 4$, so $x = 2$ or $x = -2$.
       - Find y: $y = 2 + 2 = 4$ and $y = -2 - 2 = -4$.
       - Differentiate again: $\dfrac{d^2y}{dx^2} = 8x^{-3} = \dfrac{8}{x^3}$.
       - Decide: at $x = 2$ it's $1 > 0$, a minimum $(2, 4)$. At $x = -2$ it's $-1 < 0$, a maximum $(-2, -4)$.
@@ -149,7 +165,7 @@ blocks:
       - wrong: |-
           Stationary points are where $y = 0$.
         right: |-
-          They're where the **gradient** is zero: $\dfrac{dy}{dx} = 0$. Where $y = 0$ is just where the curve meets the $x$-axis.
+          They're where the **gradient** is zero: $\dfrac{dy}{dx} = 0$. Where $y = 0$ is where the curve meets the $x$-axis.
       - wrong: |-
           Put the $x$-value into $\dfrac{dy}{dx}$ to get the $y$-coordinate.
         right: |-
@@ -168,7 +184,7 @@ blocks:
       - Usually 5–6 marks, roughly one for each step.
       - Show the derivative, the factorised equation and both $x$-values.
       - Give **coordinates**: both $x$ and $y$ for each point.
-      - For step 5, write the value, the sign and the conclusion: "$\dfrac{d^2y}{dx^2} = 18 > 0$, so minimum". Just "minimum" can lose the mark.
+      - For step 5, write the value, the sign and the conclusion: "$\dfrac{d^2y}{dx^2} = 18 > 0$, so minimum". Writing only "minimum" can lose the mark.
       - If the question doesn't name a method, the sign test is accepted too.
 
   - type: takeaways

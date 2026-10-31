@@ -4,7 +4,7 @@ topic: "1.7"
 title: Differentiating powers of x
 summary: Differentiate any sum of powers of x, roots and fractions included. Rewrite each term as a power, bring the power down and take one off, then do it all again for the second derivative.
 order: 2
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.7.2", "1.7.1"]
 prerequisites: [p1-differentiation-gradient-of-a-curve]
@@ -24,6 +24,7 @@ provenance:
     Changes of 2026-10-23 independently re-checked line by line in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
     Rewritten on 2026-10-24 at the student's request in a one-question-type, one-method style; needs a fresh independent review.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -33,7 +34,7 @@ blocks:
   - type: explain
     title: What they ask
     body: |-
-      *Find $\dfrac{dy}{dx}$*, *find $f'(x)$*, *differentiate with respect to $x$*, or *find $\dfrac{d^2y}{dx^2}$*.
+      *Find $\dfrac{dy}{dx}$*, *find $f'(x)$*, *differentiate with respect to $x$* ("with respect to $x$" means $x$ is the letter that changes), or *find $\dfrac{d^2y}{dx^2}$*.
 
       The function is a mix of powers, roots and fractions, like $y = 4x^3 - 6\sqrt{x} + \dfrac{2}{x^2}$.
 
@@ -46,7 +47,13 @@ blocks:
       2. Power down, one off: multiply by the power, then take 1 off the power.
       3. Tidy up: a number on its own disappears, and you can turn negative powers back into fractions.
 
-      In symbols: $y = kx^n$ gives $\dfrac{dy}{dx} = knx^{n-1}$, for any rational $n$ (negative and fraction powers too).
+      In symbols: $y = kx^n$ gives $\dfrac{dy}{dx} = knx^{n-1}$.
+
+      - $k$ is the number in front.
+      - $n$ is the power. It can be any **rational** number: a whole number, a negative or a fraction.
+      - $\dfrac{dy}{dx}$ (read "d y by d x") is the gradient function from the last lesson.
+
+      **Why trust it?** Last lesson the chords gave the gradient of $y = x^3$ at $x = 2$ as $12$. The rule gives $3x^2 = 3(4) = 12$. The same match happens for every power (see the gradient-function picture below).
 
   - type: diagram
     diagram: p1-differentiation-power-rule
@@ -69,7 +76,10 @@ blocks:
       - |-
         **Rewrite:** it's already powers. Think of it as $2x^3 - 5x^1 + 4$.
       - |-
-        **Power down, one off:** $\;2x^3 \to 2 \times 3x^{2} = 6x^2$, and $\;-5x^1 \to -5 \times 1x^{0} = -5$.
+        **Power down, one off**, one term at a time:
+
+        - $2x^3 \to 2 \times 3x^{2} = 6x^2$
+        - $-5x^1 \to -5 \times 1x^{0} = -5$, because $x^0 = 1$
       - |-
         **Tidy up:** the $4$ on its own disappears. (On its own, $y = 4$ is a flat line with gradient 0.)
     answer: |-
@@ -89,6 +99,12 @@ blocks:
       | $\dfrac{x^2 + 3}{x}$ | $x + 3x^{-1}$ (split the fraction) |
       | $(x + 2)(x - 5)$ | $x^2 - 3x - 10$ (expand) |
 
+      The index laws behind the table:
+
+      - $\sqrt{x} = x^{\frac12}$ (a power of $\tfrac12$ is a square root)
+      - $\dfrac{1}{x^n} = x^{-n}$ (a negative power means "one over")
+      - $\dfrac{x^a}{x^b} = x^{a-b}$, e.g. $\dfrac{x^3}{x^2} = x$
+
       There's **no** rule here for a product or a fraction as a whole. Expand it or split it first.
 
   - type: example
@@ -97,7 +113,13 @@ blocks:
       Find $\dfrac{dy}{dx}$ when $y = \dfrac{x^3 - 4}{x^2} + 6\sqrt{x}$.
     steps:
       - |-
-        **Rewrite:** split the fraction, $\;\dfrac{x^3}{x^2} - \dfrac{4}{x^2} = x - 4x^{-2}$, and $\;6\sqrt{x} = 6x^{\frac12}$. So $y = x - 4x^{-2} + 6x^{\frac12}$.
+        **Rewrite the fraction.** Split it into two fractions over $x^2$:
+
+        $$\frac{x^3 - 4}{x^2} = \frac{x^3}{x^2} - \frac{4}{x^2} = x - 4x^{-2}$$
+      - |-
+        **Rewrite the root:** $6\sqrt{x} = 6x^{\frac12}$.
+
+        So $y = x - 4x^{-2} + 6x^{\frac12}$.
       - |-
         **Power down, one off:** $\;x \to 1$.
       - |-
@@ -141,7 +163,9 @@ blocks:
       - |-
         **Power down, one off again:** $\;f''(x) = 12x^2 - 12x$. The $5$ on its own disappears.
       - |-
-        **Then put the number in:** $\;f''(2) = 12(4) - 12(2) = 48 - 24 = 24$.
+        **Then put the number in.** With $x = 2$, $x^2 = 4$:
+
+        $$f''(2) = 12(4) - 12(2) = 48 - 24 = 24$$
     answer: |-
       $f''(2) = 24$
 
