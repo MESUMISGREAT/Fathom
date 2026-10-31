@@ -20,6 +20,7 @@ provenance:
     examples and questions are original; all arithmetic checked in Python. Written in the
     one-question-type, one-method style.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -51,6 +52,8 @@ blocks:
       2. Name the radii: $R$ is the graph **farther** from the axis (the outer edge), $r$ the **nearer** one (the hole).
       3. **Square each radius on its own, never $(R - r)^2$:** $\;V = \pi\displaystyle\int_a^b \big(R^2 - r^2\big)\,dx$. This is the step people get wrong.
       4. Integrate, then top limit minus bottom limit.
+
+      This only works when the whole region is on one side of the axis. Both radii are then distances measured from the axis.
 
   - type: example
     title: "The easiest one: a tube"
@@ -85,11 +88,21 @@ blocks:
       - |-
         **Radii:** the curve is farther from the axis, so $R = 5 - x^2$; the line gives $r = 1$.
       - |-
-        **Square each:** $R^2 - r^2 = (5 - x^2)^2 - 1 = 25 - 10x^2 + x^4 - 1 = x^4 - 10x^2 + 24$.
+        **Square each radius on its own.** Expand the outer one first:
+
+        $$(5 - x^2)^2 = 25 - 10x^2 + x^4$$
+
+        Then subtract $r^2 = 1$:
+
+        $$R^2 - r^2 = x^4 - 10x^2 + 24$$
       - |-
         **Integrate:** $\Big[\dfrac{x^5}{5} - \dfrac{10x^3}{3} + 24x\Big]_{-2}^{2}$.
       - |-
-        **Top minus bottom limit:** $\left(\dfrac{32}{5} - \dfrac{80}{3} + 48\right) - \left(-\dfrac{32}{5} + \dfrac{80}{3} - 48\right) = \dfrac{416}{15} + \dfrac{416}{15} = \dfrac{832}{15}$.
+        **Top limit in ($x = 2$):** $\dfrac{32}{5} - \dfrac{80}{3} + 48$. Over 15: $\dfrac{96}{15} - \dfrac{400}{15} + \dfrac{720}{15} = \dfrac{416}{15}$.
+      - |-
+        **Bottom limit in ($x = -2$):** every term has an odd power, so each sign flips: $-\dfrac{416}{15}$.
+      - |-
+        **Subtract:** $\dfrac{416}{15} - \left(-\dfrac{416}{15}\right) = \dfrac{832}{15}$. Then multiply by $\pi$.
     answer: |-
       $V = \dfrac{832\pi}{15}$ (about $174$)
 

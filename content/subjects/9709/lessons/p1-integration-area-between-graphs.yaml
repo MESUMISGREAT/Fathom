@@ -20,6 +20,7 @@ provenance:
     examples and questions are original; all arithmetic checked in Python. Written in the
     one-question-type, one-method style.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -48,7 +49,7 @@ blocks:
     body: |-
       1. Find where they meet: set the two equations equal and solve. These $x$-values are your limits.
       2. Decide which graph is on top between the limits. A sketch, or one test value in between, settles it.
-      3. **Subtract first: integrate (top − bottom) in one go.**
+      3. **Subtract first: integrate (top − bottom) in one go.** This works because the area between them is (area under the top graph) − (area under the bottom graph), and you can do both in one integral.
       4. Top limit minus bottom limit, as usual.
 
       Bonus: top − bottom is positive even if the region dips below the $x$-axis, so no splitting is needed.
@@ -65,7 +66,15 @@ blocks:
       - |-
         **Integrate top − bottom:** $\displaystyle\int_{-2}^{2} (4 - x^2)\,dx = \Big[4x - \dfrac{x^3}{3}\Big]_{-2}^{2}$.
       - |-
-        **Top minus bottom limit:** $\left(8 - \dfrac83\right) - \left(-8 + \dfrac83\right) = \dfrac{16}{3} + \dfrac{16}{3} = \dfrac{32}{3}$.
+        **Top limit in ($x = 2$):** $8 - \dfrac83$
+
+        $$= \frac{24}{3} - \frac83 = \frac{16}{3}$$
+      - |-
+        **Bottom limit in ($x = -2$):** $-8 - \dfrac{(-8)}{3}$
+
+        $$= -8 + \frac83 = -\frac{16}{3}$$
+      - |-
+        **Subtract:** $\dfrac{16}{3} - \left(-\dfrac{16}{3}\right) = \dfrac{32}{3}$.
     answer: |-
       $\dfrac{32}{3}$
 
@@ -82,15 +91,31 @@ blocks:
       Find the area of the region enclosed by $y = x^2 - 4x + 5$ and $y = x + 1$.
     steps:
       - |-
-        **Where they meet:** $x^2 - 4x + 5 = x + 1$ gives $x^2 - 5x + 4 = 0$, so $(x - 1)(x - 4) = 0$: $x = 1$ and $x = 4$.
+        **Where they meet:** set them equal.
+
+        $$x^2 - 4x + 5 = x + 1$$
+
+        Subtract $x + 1$: $x^2 - 5x + 4 = 0$, so $(x - 1)(x - 4) = 0$. The limits are $x = 1$ and $x = 4$.
       - |-
         **Which is on top?** At $x = 2$: the line gives 3, the curve gives 1. The line is on top.
       - |-
-        **Top − bottom:** $(x + 1) - (x^2 - 4x + 5) = -x^2 + 5x - 4$.
+        **Top − bottom.** Bracket the bottom graph so the minus hits every term:
+
+        $$(x + 1) - (x^2 - 4x + 5) = x + 1 - x^2 + 4x - 5 = -x^2 + 5x - 4$$
       - |-
         **Integrate:** $\Big[-\dfrac{x^3}{3} + \dfrac{5x^2}{2} - 4x\Big]_1^4$.
       - |-
-        **Top minus bottom limit:** $\left(-\dfrac{64}{3} + 40 - 16\right) - \left(-\dfrac13 + \dfrac52 - 4\right) = \dfrac83 - \left(-\dfrac{11}{6}\right) = \dfrac{16}{6} + \dfrac{11}{6} = \dfrac{27}{6} = \dfrac92$.
+        **Top limit in ($x = 4$):** $-\dfrac{64}{3} + 40 - 16$
+
+        $$= -\frac{64}{3} + 24 = \frac83$$
+      - |-
+        **Bottom limit in ($x = 1$):** $-\dfrac13 + \dfrac52 - 4$. Over 6:
+
+        $$-\frac26 + \frac{15}{6} - \frac{24}{6} = -\frac{11}{6}$$
+      - |-
+        **Subtract**, over a common denominator of 6:
+
+        $$\frac{16}{6} - \left(-\frac{11}{6}\right) = \frac{27}{6} = \frac92$$
     answer: |-
       Area $= \dfrac92$
 

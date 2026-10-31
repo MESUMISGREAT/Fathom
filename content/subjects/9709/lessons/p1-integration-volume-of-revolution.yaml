@@ -21,6 +21,7 @@ provenance:
     questions are original; all arithmetic checked in Python. Written in the one-question-type,
     one-method style.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -55,6 +56,10 @@ blocks:
 
       $$V = \pi\int_a^b y^2\,dx$$
 
+      - $V$ is the volume.
+      - $y$ is the curve's equation, in terms of $x$; it is the radius of each disc.
+      - $a$ and $b$ are the $x$-limits.
+
       About the $y$-axis, between $y = c$ and $y = d$:
 
       $$V = \pi\int_c^d x^2\,dy$$
@@ -77,13 +82,15 @@ blocks:
       - |-
         **Square $y$:** $y^2 = x^2$.
       - |-
-        **Integrate:** $\displaystyle\int_0^3 x^2\,dx = \Big[\dfrac{x^3}{3}\Big]_0^3 = 9$.
+        **Integrate:** $\displaystyle\int_0^3 x^2\,dx = \Big[\dfrac{x^3}{3}\Big]_0^3$.
+
+        Top minus bottom: $\dfrac{27}{3} - 0 = 9$.
       - |-
         **Times $\pi$:** $V = 9\pi$.
     answer: |-
       $V = 9\pi$
 
-      Check: spinning that triangle makes a cone with radius 3 and height 3. The cone formula gives $\dfrac13\pi r^2 h = \dfrac13 \pi \times 9 \times 3 = 9\pi$ ✓.
+      Check: the region is a triangle, and spinning it makes a cone with radius 3 and height 3. The cone formula gives $\dfrac13\pi r^2 h = \dfrac13 \pi \times 9 \times 3 = 9\pi$ ✓.
 
   - type: check
     questions: [vol-sqrt, vol-square-mcq]
@@ -98,7 +105,15 @@ blocks:
       - |-
         **Square $y$ and expand:** $(x^2 + 1)^2 = x^4 + 2x^2 + 1$.
       - |-
-        **Integrate:** $\Big[\dfrac{x^5}{5} + \dfrac{2x^3}{3} + x\Big]_0^1 = \dfrac15 + \dfrac23 + 1 = \dfrac{3 + 10 + 15}{15} = \dfrac{28}{15}$.
+        **Integrate:**
+
+        $$\Big[\frac{x^5}{5} + \frac{2x^3}{3} + x\Big]_0^1$$
+      - |-
+        **Top minus bottom.** At $x = 0$ every term is 0. At $x = 1$:
+
+        $$\frac15 + \frac23 + 1$$
+
+        Over a common denominator of 15: $\dfrac{3}{15} + \dfrac{10}{15} + \dfrac{15}{15} = \dfrac{28}{15}$.
       - |-
         **Times $\pi$:** $V = \dfrac{28\pi}{15}$.
     answer: |-
@@ -115,7 +130,9 @@ blocks:
       *The region between $y = x^2$ ($x \geq 0$), the $y$-axis, and $y = 1$ to $y = 4$ is rotated about the $y$-axis.*
 
       - Rearrange for $x^2$: here $x^2 = y$. (You need $x^2$, not $x$, so there's no square root to take.)
-      - $V = \pi\displaystyle\int_1^4 y\,dy = \pi\Big[\dfrac{y^2}{2}\Big]_1^4 = \pi\left(8 - \dfrac12\right) = \dfrac{15\pi}{2}$.
+      - Integrate: $V = \pi\displaystyle\int_1^4 y\,dy = \pi\Big[\dfrac{y^2}{2}\Big]_1^4$.
+      - Limits: $\dfrac{16}{2} - \dfrac12 = \dfrac{15}{2}$.
+      - So $V = \dfrac{15\pi}{2}$.
 
   - type: check
     questions: [vol-y-axis]

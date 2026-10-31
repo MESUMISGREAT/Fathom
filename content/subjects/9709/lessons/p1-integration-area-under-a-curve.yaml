@@ -20,6 +20,7 @@ provenance:
     y-axis). All examples and questions are original; all arithmetic checked in Python. Written in
     the one-question-type, one-method style.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-24. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -40,6 +41,16 @@ blocks:
 
       $$\text{Area} = \int_a^b y\,dx$$
 
+      - $y$ is the curve's equation, written in terms of $x$.
+      - $a$ and $b$ are the $x$-values where the region starts and stops (the limits).
+
+  - type: intuition
+    title: Why an integral gives area
+    body: |-
+      Slice the region into very thin vertical strips. Each strip is almost a rectangle: height $y$, width a tiny bit of $x$.
+
+      Adding up all the strips gives the area. As the strips get thinner, that sum becomes exactly $\displaystyle\int_a^b y\,dx$.
+
   - type: explain
     title: The method
     body: |-
@@ -56,7 +67,11 @@ blocks:
       - |-
         **Limits:** given, $x = 1$ and $x = 3$.
       - |-
-        **Integrate:** $\displaystyle\int_1^3 (2x + 1)\,dx = \Big[x^2 + x\Big]_1^3 = (9 + 3) - (1 + 1) = 10$.
+        **Integrate:** $2x + 1 \to x^2 + x$.
+
+        $$\int_1^3 (2x + 1)\,dx = \Big[x^2 + x\Big]_1^3$$
+      - |-
+        **Top minus bottom:** $(9 + 3) - (1 + 1) = 12 - 2 = 10$.
       - |-
         **Which side?** The line is above the axis here, so the area is $10$.
     answer: |-
@@ -89,9 +104,17 @@ blocks:
       - |-
         **Integrate:** $\Big[\dfrac{x^3}{3} - \dfrac{5x^2}{2} + 4x\Big]_1^4$.
       - |-
-        **Top in:** $\dfrac{64}{3} - 40 + 16 = -\dfrac83$. **Bottom in:** $\dfrac13 - \dfrac52 + 4 = \dfrac{11}{6}$.
+        **Top in ($x = 4$):** $\dfrac{64}{3} - 40 + 16$
+
+        $$= \frac{64}{3} - 24 = -\frac83$$
       - |-
-        **Subtract:** $-\dfrac83 - \dfrac{11}{6} = -\dfrac{16}{6} - \dfrac{11}{6} = -\dfrac{27}{6} = -\dfrac92$.
+        **Bottom in ($x = 1$):** $\dfrac13 - \dfrac52 + 4$. Over 6:
+
+        $$\frac{2}{6} - \frac{15}{6} + \frac{24}{6} = \frac{11}{6}$$
+      - |-
+        **Subtract.** Put both over 6 first ($-\dfrac83 = -\dfrac{16}{6}$):
+
+        $$-\frac{16}{6} - \frac{11}{6} = -\frac{27}{6} = -\frac92$$
       - |-
         **Which side?** Negative, because the region is below the axis. The area is $\dfrac92$.
     answer: |-
@@ -105,14 +128,17 @@ blocks:
   - type: deeper
     title: "Against the y-axis instead"
     body: |-
-      Sometimes the region is bounded by the curve, the **$y$-axis** and lines like $y = 1$ and $y = 4$. Swap the roles of $x$ and $y$:
+      Sometimes the region is bounded by the curve, the **$y$-axis** and lines like $y = 1$ and $y = 4$.
+
+      Swap the roles of $x$ and $y$:
 
       $$\text{Area} = \int_c^d x\,dy$$
 
       *Example: $y = x^2$ for $x \geq 0$, the $y$-axis, and $y = 1$ to $y = 4$.*
 
       - Rearrange: $x = \sqrt{y} = y^{\frac12}$.
-      - $\displaystyle\int_1^4 y^{\frac12}\,dy = \Big[\dfrac23 y^{\frac32}\Big]_1^4 = \dfrac23(8 - 1) = \dfrac{14}{3}$.
+      - Integrate: $\displaystyle\int_1^4 y^{\frac12}\,dy = \Big[\dfrac23 y^{\frac32}\Big]_1^4$.
+      - Limits: $4^{\frac32} = 8$ and $1^{\frac32} = 1$, so $\dfrac23(8 - 1) = \dfrac{14}{3}$.
 
       The limits are now $y$-values.
 
@@ -124,7 +150,7 @@ blocks:
       - wrong: |-
           The area between $y = x^2 - 2x$, the axis, $x = 0$ and $x = 3$ is $\displaystyle\int_0^3 (x^2 - 2x)\,dx = 0$.
         right: |-
-          The region crosses the axis at $x = 2$. Split it: $\left|-\dfrac43\right| + \dfrac43 = \dfrac83$.
+          The region crosses the axis at $x = 2$. Split it and add the sizes: $\dfrac43 + \dfrac43 = \dfrac83$.
       - wrong: |-
           Area $= -\dfrac92$.
         right: |-
@@ -212,7 +238,7 @@ questions:
           Split at $x = 0$: $\displaystyle\int_0^1 x^3\,dx = \dfrac14$, and the part below the axis has the same size by symmetry.
       - text: $0$
         why: |-
-          The two parts cancel in the integral, but there's clearly area there. Split at the crossing.
+          The two parts cancel in the integral, but the shaded region still has area. Split at the crossing.
       - text: $\dfrac14$
         why: |-
           That's only one of the two parts.
