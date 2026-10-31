@@ -4,7 +4,7 @@ topic: "1.5"
 title: The graphs of sin, cos and tan
 summary: Sketch y = sin x, y = cos x and y = tan x for any interval in degrees or radians, and use their period, range, symmetry and asymptotes.
 order: 2
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.5.1"]
 prerequisites: [p1-trigonometry-angles-of-any-size]
@@ -19,6 +19,7 @@ provenance:
     functions and solution counts checked in Python. Independently re-checked line by line
     (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet
     reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -28,13 +29,21 @@ blocks:
   - type: explain
     title: Unroll the circle
     body: |-
-      Walk a point $P$ round the unit circle and plot what happens as the angle $x$ grows:
+      The **unit circle** is the circle with centre $(0, 0)$ and radius 1.
 
-      - its **height** ($y$-coordinate) traces out $y = \sin x$
-      - its **sideways position** ($x$-coordinate) traces out $y = \cos x$
-      - the ratio height $\div$ sideways traces $y = \tan x$, which blows up whenever the sideways position is zero
+      Put a point $P$ on it. Measure the angle $x$ anticlockwise from the positive $x$-axis to the radius $OP$. (Here $x$ is the angle, so we call the $x$-coordinate the "sideways position" to avoid a clash.) For that point:
 
-      Every lap of the circle repeats the pattern. That repeat length is the **period**.
+      - its **height** ($y$-coordinate) is $\sin x$
+      - its **sideways position** ($x$-coordinate) is $\cos x$
+      - height $\div$ sideways position is $\tan x$
+
+      Now walk $P$ round the circle and plot each of these as the angle $x$ grows:
+
+      - the height traces out the wave $y = \sin x$
+      - the sideways position traces out the wave $y = \cos x$
+      - the ratio traces $y = \tan x$, which blows up whenever the sideways position is zero (you can't divide by 0)
+
+      Every lap of the circle repeats the pattern. That repeat length is called the **period**.
 
   - type: diagram
     diagram: p1-trigonometry-basic-graphs
@@ -50,6 +59,14 @@ blocks:
   - type: explain
     title: Key features
     body: |-
+      Words you need for the table:
+
+      - **Range**: all the $y$-values the graph reaches.
+      - **Zeros**: where the graph crosses the $x$-axis ($y = 0$).
+      - **Asymptote**: a line the graph gets closer and closer to but never touches. For tan, these are vertical lines where $\cos x = 0$.
+
+      Read the table one column at a time:
+
       | | $y = \sin x$ | $y = \cos x$ | $y = \tan x$ |
       | --- | --- | --- | --- |
       | Period | $360^\circ$ ($2\pi$) | $360^\circ$ ($2\pi$) | $180^\circ$ ($\pi$) |
@@ -67,9 +84,12 @@ blocks:
   - type: intuition
     title: Symmetry you get for free
     body: |-
-      - $y = \sin x$ is symmetric about $x = 90^\circ$, so $\sin(180^\circ - x) = \sin x$.
-      - $y = \cos x$ is symmetric about the $y$-axis, so $\cos(-x) = \cos x$, and about $x = 180^\circ$, so $\cos(360^\circ - x) = \cos x$.
-      - $y = \cos x$ is just $y = \sin x$ slid $90^\circ$ to the left: $\cos x = \sin(x + 90^\circ)$.
+      Look at the graphs for mirror lines:
+
+      - $y = \sin x$ is symmetric about the line $x = 90^\circ$. So $\sin(180^\circ - x) = \sin x$. Example: $\sin 30^\circ = \sin 150^\circ = 0.5$.
+      - $y = \cos x$ is symmetric about the $y$-axis. So $\cos(-x) = \cos x$. Example: $\cos(-60^\circ) = \cos 60^\circ = 0.5$.
+      - $y = \cos x$ is also symmetric about $x = 180^\circ$. So $\cos(360^\circ - x) = \cos x$.
+      - $y = \cos x$ is just $y = \sin x$ slid $90^\circ$ to the left. So $\cos x = \sin(x + 90^\circ)$. Check a point: at $x = 0$, $\sin(0 + 90^\circ) = 1 = \cos 0$.
 
       These mirror lines are exactly why trig equations have more than one solution. Hold that thought for later in this topic.
 
@@ -87,9 +107,38 @@ blocks:
   - type: explain
     title: Counting solutions with a graph
     body: |-
-      The solutions of $\sin x = k$ are the $x$-values where $y = \sin x$ meets the horizontal line $y = k$. So the number of solutions in an interval is just the number of crossings you can see.
+      The solutions of $\sin x = k$ are the $x$-values where $y = \sin x$ meets the horizontal line $y = k$.
 
-      For $-1 < k < 1$, sin and cos give **two crossings per period**, and tan gives **one per period** (for any $k$).
+      So the number of solutions in an interval is just the number of crossings you can see.
+
+      - For $-1 < k < 1$, sin and cos give **two crossings per period**.
+      - If $k = 1$ or $k = -1$, sin and cos give **one** per period: the line just touches a peak or a trough.
+      - tan gives **one crossing per period**, for any $k$.
+      - If $k > 1$ or $k < -1$, sin and cos give **none**: the wave never gets that high or low.
+
+  - type: example
+    title: "Example: count and locate with a sketch"
+    problem: |-
+      How many solutions does $\cos x = -0.5$ have for $0^\circ \leqslant x \leqslant 360^\circ$? Use the graph's symmetry to find them, given that $\cos 60^\circ = 0.5$.
+    steps:
+      - |-
+        Sketch $y = \cos x$ from $0^\circ$ to $360^\circ$: it starts at 1, falls to $-1$ at $180^\circ$, and climbs back to 1 at $360^\circ$.
+      - |-
+        Draw the horizontal line $y = -0.5$. It sits below the axis but above $-1$.
+
+        It crosses the falling part once and the rising part once. So there are **2 solutions**.
+      - |-
+        Locate them. $\cos 60^\circ = 0.5$, so $60^\circ$ is where cos is $+0.5$.
+
+        Cos is negative in quadrants 2 and 3, and the basic angle is $60^\circ$ (because $\cos 60^\circ = 0.5$).
+
+        The graph agrees: it is symmetric about $x = 180^\circ$, so the two crossings are the same distance either side of $180^\circ$:
+
+        $$x = 180^\circ - 60^\circ = 120^\circ \quad \text{and} \quad x = 180^\circ + 60^\circ = 240^\circ$$
+      - |-
+        Check one on a calculator: $\cos 120^\circ = -0.5$ ✓
+    answer: |-
+      Two solutions: $x = 120^\circ$ and $x = 240^\circ$.
 
   - type: check
     questions: [count-sin, count-tan]

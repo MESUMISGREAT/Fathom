@@ -4,7 +4,7 @@ topic: "1.5"
 title: sin⁻¹, cos⁻¹, tan⁻¹ and principal values
 summary: Understand sin⁻¹x, cos⁻¹x and tan⁻¹x as inverse functions of restricted trig functions, and know the range of principal values each one returns.
 order: 5
-minutes: 4
+minutes: 5
 kind: core
 objectives: ["1.5.3"]
 prerequisites: [p1-trigonometry-exact-values, functions-inverse-functions]
@@ -19,6 +19,7 @@ provenance:
     understood as examples of inverse functions. All examples and questions are original; values
     checked in Python. Independently re-checked line by line (facts, worked examples, every
     answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -28,20 +29,31 @@ blocks:
   - type: explain
     title: The undo button has a problem
     body: |-
-      Ask "which angle has sine $\tfrac12$?" and the honest answer is: loads. $30^\circ$, $150^\circ$, $390^\circ$, $-210^\circ$… Sine isn't **one-one**, so it can't have an inverse as it stands.
+      Ask "which angle has sine $\tfrac12$?" and the honest answer is: loads. $30^\circ$, $150^\circ$, $390^\circ$, $-210^\circ$…
 
-      The fix is the same trick as in topic 1.2: **restrict the domain** to a piece of the graph that is one-one, then invert that piece. The calculator's $\sin^{-1}$ button returns the one answer from that piece: the **principal value**.
+      Sine isn't **one-one** (many inputs give the same output). So it can't have an inverse as it stands.
+
+      The fix is the same trick as in the inverse-functions lesson:
+
+      1. **Restrict the domain** to a piece of the graph that is one-one.
+      2. Invert just that piece.
+
+      The calculator's $\sin^{-1}$ button returns the one answer from that piece. It's called the **principal value**.
 
   - type: definition
     term: Principal value
     body: |-
       $\sin^{-1}x$, $\cos^{-1}x$ and $\tan^{-1}x$ denote the **principal values**: the single angle in a fixed range whose sine, cosine or tangent is $x$.
 
+      Read $\sin^{-1}x$ as "the angle whose sine is $x$". (Calculators and some books call it arcsin.)
+
       | | Domain of $x$ | Principal values (radians) | (degrees) |
       | --- | --- | --- | --- |
       | $\sin^{-1}x$ | $-1 \leqslant x \leqslant 1$ | $-\tfrac{\pi}{2} \leqslant \sin^{-1}x \leqslant \tfrac{\pi}{2}$ | $-90^\circ$ to $90^\circ$ |
       | $\cos^{-1}x$ | $-1 \leqslant x \leqslant 1$ | $0 \leqslant \cos^{-1}x \leqslant \pi$ | $0^\circ$ to $180^\circ$ |
       | $\tan^{-1}x$ | all real $x$ | $-\tfrac{\pi}{2} < \tan^{-1}x < \tfrac{\pi}{2}$ | $-90^\circ$ to $90^\circ$ (not included) |
+
+      Short-hand you'll see below: $[-1, 1]$ means "from $-1$ to $1$, ends included". Round brackets, like $\left(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\right)$, mean the ends are **not** included.
 
   - type: diagram
     diagram: p1-trigonometry-inverse-sine
@@ -72,11 +84,23 @@ blocks:
       Find the exact values, in radians, of (a) $\sin^{-1}\left(-\tfrac12\right)$ (b) $\cos^{-1}\left(-\tfrac12\right)$ (c) $\tan^{-1}(-1)$
     steps:
       - |-
-        (a) $\sin\tfrac{\pi}{6} = \tfrac12$. The input is negative, so go into the 4th quadrant (right half): $\sin^{-1}\left(-\tfrac12\right) = -\tfrac{\pi}{6}$.
+        **(a) $\sin^{-1}\left(-\tfrac12\right)$**
+
+        - Ignore the sign first: $\sin\tfrac{\pi}{6} = \tfrac12$, so the basic angle is $\tfrac{\pi}{6}$.
+        - $\sin^{-1}$ answers in the right half. A negative input means the 4th quadrant, below the axis.
+        - In the 4th quadrant we measure clockwise, so the answer is $-\tfrac{\pi}{6}$ (not $\tfrac{11\pi}{6}$, which is outside the range).
       - |-
-        (b) $\cos\tfrac{\pi}{3} = \tfrac12$. Negative input, so go into the 2nd quadrant (top half): $\pi - \tfrac{\pi}{3} = \tfrac{2\pi}{3}$.
+        **(b) $\cos^{-1}\left(-\tfrac12\right)$**
+
+        - Basic angle: $\cos\tfrac{\pi}{3} = \tfrac12$, so $\tfrac{\pi}{3}$.
+        - $\cos^{-1}$ answers in the top half. A negative input means the 2nd quadrant.
+        - The 2nd-quadrant angle with basic angle $\tfrac{\pi}{3}$ is $\pi - \tfrac{\pi}{3} = \tfrac{2\pi}{3}$.
       - |-
-        (c) $\tan\tfrac{\pi}{4} = 1$. Negative input, right half: $\tan^{-1}(-1) = -\tfrac{\pi}{4}$.
+        **(c) $\tan^{-1}(-1)$**
+
+        - Basic angle: $\tan\tfrac{\pi}{4} = 1$, so $\tfrac{\pi}{4}$.
+        - $\tan^{-1}$ answers in the right half. Negative input, so the 4th quadrant.
+        - So the answer is $-\tfrac{\pi}{4}$.
     answer: |-
       $-\tfrac{\pi}{6}$, $\;\tfrac{2\pi}{3}$, $\;-\tfrac{\pi}{4}$. Notice (b) is **not** $-\tfrac{\pi}{3}$: that's outside the range of $\cos^{-1}$.
 
@@ -105,11 +129,16 @@ blocks:
   - type: deeper
     title: Undo, then redo (carefully)
     body: |-
-      $\sin\left(\sin^{-1}x\right) = x$ for every $x$ in $[-1, 1]$. But the other way round only works inside the principal range:
+      $\sin\left(\sin^{-1}x\right) = x$ for every $x$ in $[-1, 1]$.
 
-      $$\sin^{-1}\left(\sin\tfrac{5\pi}{6}\right) = \sin^{-1}\left(\tfrac12\right) = \tfrac{\pi}{6}, \text{ not } \tfrac{5\pi}{6}.$$
+      But the other way round only works inside the principal range. Try $\tfrac{5\pi}{6}$, which is outside it:
 
-      The inverse can only hand back angles from its own range. Same logic as $\sqrt{x^2} = \lvert x \rvert$, not always $x$.
+      - $\sin\tfrac{5\pi}{6} = \tfrac12$
+      - $\sin^{-1}\left(\tfrac12\right) = \tfrac{\pi}{6}$
+
+      So $\sin^{-1}\left(\sin\tfrac{5\pi}{6}\right) = \tfrac{\pi}{6}$, **not** $\tfrac{5\pi}{6}$.
+
+      The inverse can only hand back angles from its own range. Same logic as $\sqrt{x^2} = \lvert x \rvert$, the size of $x$ ignoring its sign (for example $\sqrt{(-3)^2} = 3$, not $-3$).
 
   - type: check
     questions: [arccos-of-cos]

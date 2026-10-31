@@ -18,6 +18,7 @@ provenance:
     are not included)". All examples and questions are original; every solution set found by a
     brute-force search in Python. Independently re-checked line by line (facts, worked examples,
     every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -27,7 +28,11 @@ blocks:
   - type: explain
     title: The calculator only tells you half the story
     body: |-
-      $\sin^{-1}0.4 = 23.6^\circ$. Great, but $\sin 156.4^\circ$ is also $0.4$, and so is $\sin 383.6^\circ$. The calculator gives one answer (the principal value); the question wants **every** answer in the interval.
+      $\sin^{-1}0.4 = 23.6^\circ$. Great, but $\sin 156.4^\circ$ is also $0.4$, and so is $\sin 383.6^\circ$.
+
+      The calculator gives one answer (the **principal value**). The question wants **every** answer in the **interval** (the set of $x$-values allowed, like $0^\circ \leqslant x \leqslant 360^\circ$).
+
+      Below, $k$ is a given number (for sin and cos it must be between $-1$ and $1$), and $\alpha$ is the principal value.
 
       The recipe:
 
@@ -53,6 +58,12 @@ blocks:
       | $\sin x = k$ | $\alpha = \sin^{-1}k$ | $180^\circ - \alpha$ | $\pi - \alpha$ | $360^\circ$ ($2\pi$) |
       | $\cos x = k$ | $\alpha = \cos^{-1}k$ | $360^\circ - \alpha$ (or $-\alpha$) | $2\pi - \alpha$ | $360^\circ$ ($2\pi$) |
       | $\tan x = k$ | $\alpha = \tan^{-1}k$ | $180^\circ + \alpha$ | $\pi + \alpha$ | $180^\circ$ ($\pi$) |
+
+      **Why these?** They come from the mirror lines of the graphs:
+
+      - The sine wave is symmetric about $x = 90^\circ$. So whatever height it has at $\alpha$, it has again at $180^\circ - \alpha$.
+      - The cosine wave is symmetric about $x = 0^\circ$ (and $360^\circ$). So $-\alpha$ and $360^\circ - \alpha$ give the same value as $\alpha$.
+      - Tan simply repeats every $180^\circ$.
 
       These rules work even when $\alpha$ is negative. Or use CAST: the solutions are in the quadrants where the ratio has the sign of $k$.
 
@@ -83,7 +94,7 @@ blocks:
       - |-
         $\alpha = \tan^{-1}(-2) = -63.43\ldots^\circ$. In the interval ✓
       - |-
-        Tan repeats every $180^\circ$: $-63.43^\circ + 180^\circ = 116.57^\circ$ ✓. And $-63.43^\circ - 180^\circ = -243.4^\circ$ is too far.
+        Tan repeats every $180^\circ$: $-63.43^\circ + 180^\circ = 116.57^\circ$ ✓. And $-63.43^\circ - 180^\circ = -243.43^\circ$ is too far.
     answer: |-
       $x = -63.4^\circ$ or $116.6^\circ$.
 
@@ -96,13 +107,28 @@ blocks:
       (a) Solve $\cos x = 0.6$ for $-\pi \leqslant x \leqslant \pi$. (b) Solve $2\sin x + \sqrt3 = 0$ for $0 \leqslant x \leqslant 2\pi$, giving exact answers.
     steps:
       - |-
-        (a) Radian mode: $\alpha = \cos^{-1}0.6 = 0.9272\ldots$ The second value $-\alpha$ (cos is symmetric about the $y$-axis) is in the interval too.
+        **(a)** Put the calculator in radian mode:
+
+        $$\alpha = \cos^{-1}0.6 = 0.9272\ldots$$
       - |-
+        The second value is $-\alpha$, because cos is symmetric about the $y$-axis. Is $-0.927$ in $-\pi \leqslant x \leqslant \pi$? Yes ($\pi \approx 3.14$).
+
+        The other cos value, $2\pi - \alpha = 5.36$, is outside $-\pi \leqslant x \leqslant \pi$.
+
         So $x = \pm 0.927$ (3 s.f.).
       - |-
-        (b) Rearrange first: $\sin x = -\tfrac{\sqrt3}{2}$. The basic angle is $\tfrac{\pi}{3}$ (exact value), and sine is negative in quadrants 3 and 4.
+        **(b)** Rearrange first. Subtract $\sqrt3$, then divide by 2:
+
+        $$\sin x = -\frac{\sqrt3}{2}$$
       - |-
-        Quadrant 3: $\pi + \tfrac{\pi}{3} = \tfrac{4\pi}{3}$. Quadrant 4: $2\pi - \tfrac{\pi}{3} = \tfrac{5\pi}{3}$.
+        Ignore the sign to get the basic angle: $\sin\tfrac{\pi}{3} = \tfrac{\sqrt3}{2}$, so it's $\tfrac{\pi}{3}$.
+
+        Sine is negative in quadrants 3 and 4.
+      - |-
+        Build each angle from the basic angle:
+
+        - Quadrant 3: $\pi + \tfrac{\pi}{3} = \tfrac{4\pi}{3}$
+        - Quadrant 4: $2\pi - \tfrac{\pi}{3} = \tfrac{5\pi}{3}$
     answer: |-
       (a) $x = -0.927$ or $0.927$. (b) $x = \tfrac{4\pi}{3}$ or $\tfrac{5\pi}{3}$.
 

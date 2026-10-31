@@ -23,6 +23,7 @@ provenance:
     by the user; independently reviewed below.
     Independently re-checked this revision line by line, including identity steps and every answer
     key, in a separate AI review on 2026-10-25. Clarified safe division and the quadratic variable.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -36,7 +37,8 @@ blocks:
 
       | Symbol | Meaning |
       | --- | --- |
-      | $\alpha$ | an angle |
+      | $\alpha$ | the principal value: the angle your calculator gives |
+      | $\theta$, $x$ | the unknown angle we're solving for |
 
   - type: explain
     title: Three moves
@@ -55,9 +57,19 @@ blocks:
       Solve $3\sin x = 2\cos x$ for $0^\circ \leqslant x \leqslant 360^\circ$.
     steps:
       - |-
-        First check the case $\cos x=0$ in the original equation. Then $\sin x=\pm1$, so $3\sin x=2\cos x$ would require $3(\pm1)=0$, which is impossible. So $\cos x$ cannot be zero here; divide both sides by $3\cos x$ to get $\tan x=\tfrac23$.
+        We want to divide by $\cos x$. First check it can't be zero.
+
+        If $\cos x = 0$, then $\sin^2 x = 1 - 0 = 1$, so $\sin x = \pm1$.
+
+        The equation would then say $3(\pm1) = 0$, which is impossible. So $\cos x \neq 0$ here.
       - |-
-        $\alpha = \tan^{-1}\tfrac23 = 33.69^\circ$. Tan repeats every $180^\circ$: $213.69^\circ$.
+        Divide both sides by $3\cos x$. On the left, $\dfrac{\sin x}{\cos x} = \tan x$:
+
+        $$\tan x = \frac23$$
+      - |-
+        Principal value: $\alpha = \tan^{-1}\tfrac23 = 33.69^\circ$.
+
+        Tan repeats every $180^\circ$, so the other solution is $33.69^\circ + 180^\circ = 213.69^\circ$.
     answer: |-
       $x = 33.7^\circ$ or $213.7^\circ$.
 
@@ -71,15 +83,31 @@ blocks:
       (b) Hence solve the equation for $0^\circ \leqslant \theta \leqslant 360^\circ$.
     steps:
       - |-
-        (a) Replace $\sin^2\theta$ with $1 - \cos^2\theta$: $2(1 - \cos^2\theta) = 3\cos\theta$, so $2 - 2\cos^2\theta = 3\cos\theta$.
+        **(a)** The equation mixes $\sin^2\theta$ and $\cos\theta$. Replace $\sin^2\theta$ with $1 - \cos^2\theta$, keeping the bracket:
+
+        $$2(1 - \cos^2\theta) = 3\cos\theta$$
+
+        Expand: $\;2 - 2\cos^2\theta = 3\cos\theta$
       - |-
-        Rearrange: $2\cos^2\theta + 3\cos\theta - 2 = 0$, as required.
+        Move everything to the right-hand side, so the $\cos^2\theta$ term is positive:
+
+        $$0 = 2\cos^2\theta + 3\cos\theta - 2$$
+
+        That's $2\cos^2\theta + 3\cos\theta - 2 = 0$, as required.
       - |-
-        (b) It's a quadratic in $\cos\theta$ (think $2c^2 + 3c - 2 = 0$). Factorise: $(2\cos\theta - 1)(\cos\theta + 2) = 0$.
+        **(b)** It's a quadratic in $\cos\theta$. Writing $c$ for $\cos\theta$ makes it look familiar: $2c^2 + 3c - 2 = 0$.
+
+        Factorise ($ac = -4$; the numbers $4$ and $-1$ multiply to $-4$ and add to $3$):
+
+        $$2c^2 + 4c - c - 2 = 2c(c + 2) - 1(c + 2) = (2c - 1)(c + 2)$$
+
+        So $(2c - 1)(c + 2) = 0$.
+
+        So $(2\cos\theta - 1)(\cos\theta + 2) = 0$.
       - |-
         So $\cos\theta = \tfrac12$ or $\cos\theta = -2$. **Reject** $\cos\theta = -2$: cosine can't be less than $-1$.
       - |-
-        $\cos\theta = \tfrac12$: $\theta = 60^\circ$ or $360^\circ - 60^\circ = 300^\circ$.
+        $\cos\theta = \tfrac12$: the basic angle is $60^\circ$, and cos is positive in quadrants 1 and 4. So $\theta = 60^\circ$ or $360^\circ - 60^\circ = 300^\circ$.
     answer: |-
       $\theta = 60^\circ$ or $300^\circ$.
 
@@ -99,13 +127,17 @@ blocks:
   - type: explain
     title: "Move 3: never divide by something that could be zero"
     body: |-
-      Dividing both sides by $\sin x$ silently throws away every solution of $\sin x = 0$. Instead, move everything to one side and **factorise**.
+      Dividing both sides by $\sin x$ silently throws away every solution of $\sin x = 0$.
+
+      Instead, move everything to one side and **factorise**.
 
       Solve $\sin^2 x = \sin x\cos x$ for $0 \leqslant x \leqslant 2\pi$:
 
-      - $\sin^2 x - \sin x\cos x = 0$, so $\sin x(\sin x - \cos x) = 0$.
-      - $\sin x = 0$: $x = 0, \pi, 2\pi$.
-      - $\sin x = \cos x$, i.e. $\tan x = 1$: $x = \tfrac{\pi}{4}, \tfrac{5\pi}{4}$.
+      - Move everything to the left: $\sin^2 x - \sin x\cos x = 0$.
+      - Both terms contain $\sin x$, so take it out: $\sin x(\sin x - \cos x) = 0$.
+      - Two things multiply to 0, so one of them is 0. Solve each:
+        - $\sin x = 0$: $x = 0, \pi, 2\pi$.
+        - $\sin x = \cos x$. Here $\cos x \neq 0$ (if $\cos x = 0$ then $\sin x = \pm1$, not 0), so divide by $\cos x$: $\tan x = 1$, giving $x = \tfrac{\pi}{4}, \tfrac{5\pi}{4}$.
 
       Five solutions. Divide by $\sin x$ at the start and you'd find only two.
 

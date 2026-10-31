@@ -19,6 +19,7 @@ provenance:
     questions are original; every value checked in Python. Independently re-checked line by line
     (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet
     reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -33,16 +34,29 @@ blocks:
       | Symbol | Meaning |
       | --- | --- |
       | $\theta$ | an angle |
+      | exact | written with fractions and surds like $\sqrt3$, never a rounded decimal |
 
   - type: explain
     title: Two triangles you can draw in 10 seconds
     body: |-
       No memorising a wall of surds. Everything comes from two triangles:
 
-      - **Half an equilateral triangle:** an equilateral triangle of side 2 cut down the middle gives sides $1$, $\sqrt3$, $2$ and angles $30^\circ$, $60^\circ$, $90^\circ$. (Pythagoras: $\sqrt{2^2 - 1^2} = \sqrt3$.)
-      - **Half a square:** a square of side 1 cut along a diagonal gives sides $1$, $1$, $\sqrt2$ and angles $45^\circ$, $45^\circ$, $90^\circ$.
+      **Half an equilateral triangle.**
 
-      Then it's just SOH CAH TOA.
+      - Take an equilateral triangle with every side 2. All its angles are $60^\circ$.
+      - Cut it down the middle. You get a right-angled triangle with hypotenuse 2 and base 1.
+      - The top angle is halved, to $30^\circ$. The bottom angle stays $60^\circ$.
+      - The height, by Pythagoras: $\sqrt{2^2 - 1^2} = \sqrt{4 - 1} = \sqrt3$.
+
+      **Half a square.**
+
+      - Take a square with sides 1. Cut it along a diagonal.
+      - You get a right-angled triangle with two sides of 1 and two $45^\circ$ angles.
+      - The hypotenuse, by Pythagoras: $\sqrt{1^2 + 1^2} = \sqrt2$.
+
+      Then it's just SOH CAH TOA. For example, in the first triangle the side opposite $30^\circ$ is 1 and the hypotenuse is 2:
+
+      $$\sin 30^\circ = \frac{\text{opposite}}{\text{hypotenuse}} = \frac12$$
 
   - type: diagram
     diagram: p1-trigonometry-exact-triangles
@@ -63,7 +77,17 @@ blocks:
       | $45^\circ = \tfrac{\pi}{4}$ | $\tfrac{1}{\sqrt2} = \tfrac{\sqrt2}{2}$ | $\tfrac{1}{\sqrt2} = \tfrac{\sqrt2}{2}$ | $1$ |
       | $60^\circ = \tfrac{\pi}{3}$ | $\tfrac{\sqrt3}{2}$ | $\tfrac12$ | $\sqrt3$ |
 
-      Also handy from the unit circle: $\sin 0 = 0$, $\cos 0 = 1$, $\sin 90^\circ = 1$, $\cos 90^\circ = 0$, and $\tan 90^\circ$ is undefined.
+      Why two forms like $\tfrac{1}{\sqrt3} = \tfrac{\sqrt3}{3}$? Multiply top and bottom by $\sqrt3$:
+
+      $$\frac{1 \times \sqrt3}{\sqrt3 \times \sqrt3} = \frac{\sqrt3}{3}$$
+
+      Same number, no root on the bottom. Either form is exact.
+
+      Also handy, from the unit circle:
+
+      - $\sin 0 = 0$ and $\cos 0 = 1$
+      - $\sin 90^\circ = 1$ and $\cos 90^\circ = 0$
+      - $\tan 90^\circ$ is undefined (it would mean dividing by $\cos 90^\circ = 0$)
 
   - type: intuition
     title: The memory hack
@@ -90,11 +114,29 @@ blocks:
       Find the exact values of (a) $\cos 210^\circ$ (b) $\sin\tfrac{2\pi}{3}$ (c) $\tan\tfrac{7\pi}{4}$
     steps:
       - |-
-        (a) $210^\circ$: 3rd quadrant, basic angle $30^\circ$, cos negative there. $\cos 210^\circ = -\cos 30^\circ = -\tfrac{\sqrt3}{2}$.
+        **(a) $\cos 210^\circ$**
+
+        - Quadrant: 3rd ($210^\circ$ is between $180^\circ$ and $270^\circ$).
+        - Basic angle: $210^\circ - 180^\circ = 30^\circ$.
+        - Sign: cos is negative in the 3rd quadrant.
+
+        $$\cos 210^\circ = -\cos 30^\circ = -\frac{\sqrt3}{2}$$
       - |-
-        (b) $\tfrac{2\pi}{3} = \pi - \tfrac{\pi}{3}$: 2nd quadrant, basic angle $\tfrac{\pi}{3}$, sin positive there. $\sin\tfrac{2\pi}{3} = \sin\tfrac{\pi}{3} = \tfrac{\sqrt3}{2}$.
+        **(b) $\sin\tfrac{2\pi}{3}$**
+
+        - Quadrant: $\tfrac{2\pi}{3} = \pi - \tfrac{\pi}{3}$, a bit short of a half turn, so the 2nd.
+        - Basic angle: $\tfrac{\pi}{3}$ (that's $60^\circ$).
+        - Sign: sin is positive in the 2nd quadrant.
+
+        $$\sin\frac{2\pi}{3} = \sin\frac{\pi}{3} = \frac{\sqrt3}{2}$$
       - |-
-        (c) $\tfrac{7\pi}{4} = 2\pi - \tfrac{\pi}{4}$: 4th quadrant, basic angle $\tfrac{\pi}{4}$, tan negative there. $\tan\tfrac{7\pi}{4} = -\tan\tfrac{\pi}{4} = -1$.
+        **(c) $\tan\tfrac{7\pi}{4}$**
+
+        - Quadrant: $\tfrac{7\pi}{4} = 2\pi - \tfrac{\pi}{4}$, a bit short of a full turn, so the 4th.
+        - Basic angle: $\tfrac{\pi}{4}$ (that's $45^\circ$).
+        - Sign: tan is negative in the 4th quadrant.
+
+        $$\tan\frac{7\pi}{4} = -\tan\frac{\pi}{4} = -1$$
     answer: |-
       $-\tfrac{\sqrt3}{2}$, $\;\tfrac{\sqrt3}{2}$, $\;-1$.
 
@@ -107,11 +149,17 @@ blocks:
       Find the exact value of $\sin 240^\circ + \cos 300^\circ$.
     steps:
       - |-
-        $240^\circ$: 3rd quadrant, basic angle $60^\circ$, sin negative. $\sin 240^\circ = -\tfrac{\sqrt3}{2}$.
+        **$\sin 240^\circ$:** 3rd quadrant, basic angle $240^\circ - 180^\circ = 60^\circ$, and sin is negative there.
+
+        $$\sin 240^\circ = -\frac{\sqrt3}{2}$$
       - |-
-        $300^\circ$: 4th quadrant, basic angle $60^\circ$, cos positive. $\cos 300^\circ = \tfrac12$.
+        **$\cos 300^\circ$:** 4th quadrant, basic angle $360^\circ - 300^\circ = 60^\circ$, and cos is positive there.
+
+        $$\cos 300^\circ = \frac12$$
       - |-
-        Add: $-\tfrac{\sqrt3}{2} + \tfrac12 = \dfrac{1 - \sqrt3}{2}$.
+        Add them. Both have a denominator of 2, so put them over one fraction:
+
+        $$-\frac{\sqrt3}{2} + \frac12 = \frac{1 - \sqrt3}{2}$$
     answer: |-
       $\dfrac{1 - \sqrt3}{2}$ (about $-0.366$, which a calculator confirms).
 
@@ -124,7 +172,7 @@ blocks:
       - wrong: |-
           $\tan 30^\circ = \sqrt3$
         right: |-
-          That's $\tan 60^\circ$. $\tan 30^\circ = \tfrac{\sin 30^\circ}{\cos 30^\circ} = \tfrac{1/2}{\sqrt3/2} = \tfrac{1}{\sqrt3}$.
+          That's $\tan 60^\circ$. In the half-equilateral triangle, opposite $30^\circ$ is 1 and adjacent is $\sqrt3$, so $\tan 30^\circ = \tfrac{1}{\sqrt3}$.
       - wrong: |-
           $\tfrac{1}{\sqrt2}$ and $\tfrac{\sqrt2}{2}$ are different values.
         right: |-

@@ -4,7 +4,7 @@ topic: "1.5"
 title: Sine, cosine and tangent of any angle
 summary: Define sin, cos and tan for any angle with the unit circle, read their signs from the CAST diagram, and rewrite them using an acute basic angle.
 order: 1
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.5.1"]
 prerequisites: [circular-measure-radians]
@@ -19,6 +19,7 @@ provenance:
     quadrant, basic angles) that the graph lessons use. All examples and questions are original;
     values checked in Python. Independently re-checked line by line (facts, worked examples,
     every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -32,7 +33,9 @@ blocks:
 
       | Symbol | Meaning |
       | --- | --- |
-      | $\alpha$ | an angle |
+      | $\theta$ | "theta": the angle we want the sin, cos or tan of |
+      | $\alpha$ | "alpha": the **basic angle**, an acute angle (between $0^\circ$ and $90^\circ$) linked to $\theta$ |
+      | quadrant | one of the four quarters the axes split the plane into, numbered 1 to 4 anticlockwise from top right |
 
   - type: explain
     title: SOH CAH TOA has a 90° problem
@@ -44,9 +47,20 @@ blocks:
   - type: definition
     term: Sine and cosine of any angle
     body: |-
-      Start at $(1, 0)$ on the **unit circle** $x^2 + y^2 = 1$ and turn through angle $\theta$ (anticlockwise for positive $\theta$, clockwise for negative). You land at the point $P$, and
+      The **unit circle** is the circle $x^2 + y^2 = 1$: centre $(0, 0)$, radius 1.
 
-      $$P = (\cos\theta, \sin\theta), \qquad \tan\theta = \frac{\sin\theta}{\cos\theta} \;\; (\cos\theta \neq 0).$$
+      Start at the point $(1, 0)$ on it. Turn through the angle $\theta$:
+
+      - anticlockwise if $\theta$ is positive
+      - clockwise if $\theta$ is negative
+
+      You land at a point $P$. Then, by definition:
+
+      $$P = (\cos\theta, \sin\theta)$$
+
+      - $\cos\theta$ is the $x$-coordinate of $P$.
+      - $\sin\theta$ is the $y$-coordinate of $P$.
+      - $\tan\theta = \dfrac{\sin\theta}{\cos\theta}$, as long as $\cos\theta \neq 0$.
 
   - type: diagram
     diagram: p1-trigonometry-unit-circle
@@ -63,9 +77,16 @@ blocks:
   - type: intuition
     title: Why this agrees with triangles
     body: |-
-      For an acute angle, drop a perpendicular from $P$: you get a right-angled triangle with hypotenuse $1$. Then "opposite over hypotenuse" is just the height $y$, and "adjacent over hypotenuse" is the width $x$. Same answers as GCSE, but now the definition keeps working past $90^\circ$.
+      For an acute angle, drop a line straight down from $P$ to the $x$-axis. You get a right-angled triangle with hypotenuse $1$ (the radius).
 
-      Turning through more than $360^\circ$ just goes round again, so $\sin 400^\circ = \sin 40^\circ$.
+      - "Opposite over hypotenuse" is $\dfrac{y}{1} = y$: the height. That's $\sin\theta$.
+      - "Adjacent over hypotenuse" is $\dfrac{x}{1} = x$: the width. That's $\cos\theta$.
+
+      And $\tan\theta = \dfrac{y}{x}$ is opposite over adjacent: TOA again.
+
+      Same answers as GCSE. But now the definition keeps working past $90^\circ$.
+
+      Turning through more than $360^\circ$ just goes round again. So $\sin 400^\circ = \sin 40^\circ$, because $400^\circ = 360^\circ + 40^\circ$.
 
   - type: check
     questions: [unit-circle-cloze]
@@ -73,7 +94,14 @@ blocks:
   - type: explain
     title: Signs by quadrant (CAST)
     body: |-
-      Because $\cos\theta$ is the $x$-coordinate and $\sin\theta$ the $y$-coordinate, the signs depend only on the quadrant. Going anticlockwise from the first quadrant, the positive ones are **A**ll, **S**in, **T**an, **C**os. Start in the fourth quadrant instead and the letters spell **CAST**.
+      $\cos\theta$ is the $x$-coordinate and $\sin\theta$ is the $y$-coordinate. So their signs depend only on which quadrant $P$ is in.
+
+      - In the 2nd quadrant (top left), $x < 0$ and $y > 0$. So cos is negative, sin is positive, and tan $= \frac{+}{-}$ is negative.
+      - In the 1st quadrant $x > 0$ and $y > 0$, so all three are positive.
+      - In the 3rd quadrant $x < 0$ and $y < 0$, so sin and cos are negative, but tan $= \frac{-}{-}$ is positive.
+      - In the 4th quadrant $x > 0$ and $y < 0$, so cos is positive, and sin and tan are negative.
+
+      Going anticlockwise from the first quadrant, the positive ones are **A**ll, **S**in, **T**an, **C**os. Start in the fourth quadrant instead and the letters spell **CAST**.
 
       | Quadrant | Angles (degrees) | Angles (radians) | Positive |
       | --- | --- | --- | --- |
@@ -111,11 +139,29 @@ blocks:
       Write each in terms of an acute angle: (a) $\sin 200^\circ$ (b) $\cos(-70^\circ)$ (c) $\cos\tfrac{5\pi}{4}$
     steps:
       - |-
-        (a) $200^\circ$ is in the 3rd quadrant. Basic angle $200^\circ - 180^\circ = 20^\circ$. Only tan is positive there, so sine is negative: $\sin 200^\circ = -\sin 20^\circ$.
+        **(a) $\sin 200^\circ$**
+
+        - Quadrant: $200^\circ$ is between $180^\circ$ and $270^\circ$, so the 3rd.
+        - Basic angle: the gap to the $x$-axis is $200^\circ - 180^\circ = 20^\circ$.
+        - Sign: in the 3rd quadrant only tan is positive, so sin is negative.
+
+        So $\sin 200^\circ = -\sin 20^\circ$.
       - |-
-        (b) $-70^\circ$ means turn $70^\circ$ clockwise: 4th quadrant, basic angle $70^\circ$. Cos is positive there: $\cos(-70^\circ) = \cos 70^\circ$.
+        **(b) $\cos(-70^\circ)$**
+
+        - Quadrant: $-70^\circ$ means turn $70^\circ$ clockwise, into the 4th.
+        - Basic angle: $70^\circ$.
+        - Sign: in the 4th quadrant cos is positive.
+
+        So $\cos(-70^\circ) = \cos 70^\circ$.
       - |-
-        (c) $\tfrac{5\pi}{4} = \pi + \tfrac{\pi}{4}$: 3rd quadrant, basic angle $\tfrac{\pi}{4}$. Cos is negative there: $\cos\tfrac{5\pi}{4} = -\cos\tfrac{\pi}{4}$.
+        **(c) $\cos\tfrac{5\pi}{4}$** (radians: $\pi$ is a half turn)
+
+        - Quadrant: $\tfrac{5\pi}{4} = \pi + \tfrac{\pi}{4}$, a bit past a half turn, so the 3rd.
+        - Basic angle: $\tfrac{\pi}{4}$.
+        - Sign: in the 3rd quadrant cos is negative.
+
+        So $\cos\tfrac{5\pi}{4} = -\cos\tfrac{\pi}{4}$.
     answer: |-
       $-\sin 20^\circ$, $\;\cos 70^\circ$, $\;-\cos\tfrac{\pi}{4}$. Check each on a calculator: they match.
 

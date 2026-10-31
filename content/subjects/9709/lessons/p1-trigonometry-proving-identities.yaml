@@ -18,6 +18,7 @@ provenance:
     identities, proofs and questions are original; every identity verified numerically at
     several angles in Python. Independently re-checked line by line (facts, worked examples,
     every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -27,13 +28,15 @@ blocks:
   - type: explain
     title: The rules of the game
     body: |-
-      A proof is a chain, not an equation to solve:
+      A proof is a chain, not an equation to solve. (LHS means the **left-hand side** of the identity; RHS is the **right-hand side**.)
 
       1. **Pick the messier side** (usually the left) and work on it alone.
       2. Transform it one step at a time, each line identical to the last.
       3. Stop when it looks exactly like the other side, and say so: "$=$ RHS".
 
-      What you must **not** do: write the identity down and start doing things to both sides (cross-multiplying, squaring, moving terms across). That assumes the thing you're trying to prove.
+      What you must **not** do: write the identity down and start doing things to both sides (cross-multiplying, squaring, moving terms across).
+
+      That assumes the thing you're trying to prove is already true.
 
   - type: explain
     title: The toolbox
@@ -53,13 +56,22 @@ blocks:
       Prove that $(\sin\theta + \cos\theta)^2 + (\sin\theta - \cos\theta)^2 \equiv 2$.
     steps:
       - |-
-        Start with the LHS and expand both brackets: $\left(\sin^2\theta + 2\sin\theta\cos\theta + \cos^2\theta\right) + \left(\sin^2\theta - 2\sin\theta\cos\theta + \cos^2\theta\right)$
+        Start with the LHS. Expand each bracket the way you'd expand $(a + b)^2 = a^2 + 2ab + b^2$:
+
+        - $(\sin\theta + \cos\theta)^2 = \sin^2\theta + 2\sin\theta\cos\theta + \cos^2\theta$
+        - $(\sin\theta - \cos\theta)^2 = \sin^2\theta - 2\sin\theta\cos\theta + \cos^2\theta$
       - |-
-        The $\pm 2\sin\theta\cos\theta$ terms cancel: $= 2\sin^2\theta + 2\cos^2\theta$
+        Add them. The $+2\sin\theta\cos\theta$ and $-2\sin\theta\cos\theta$ cancel:
+
+        $$= 2\sin^2\theta + 2\cos^2\theta$$
       - |-
         Factorise: $= 2\left(\sin^2\theta + \cos^2\theta\right)$
       - |-
-        Use the identity: $= 2 \times 1 = 2 = $ RHS ✓
+        Use $\sin^2\theta + \cos^2\theta \equiv 1$:
+
+        $$= 2 \times 1 = 2$$
+
+        That's the RHS ✓
     answer: |-
       LHS $\equiv$ RHS. Every line follows from the one before; nothing was done to the right-hand side.
 
@@ -72,22 +84,39 @@ blocks:
       Prove that $\tan\theta + \dfrac{1}{\tan\theta} \equiv \dfrac{1}{\sin\theta\cos\theta}$.
     steps:
       - |-
-        LHS $= \dfrac{\sin\theta}{\cos\theta} + \dfrac{\cos\theta}{\sin\theta}$ (flipping $\tfrac{\sin}{\cos}$ gives $\tfrac{\cos}{\sin}$).
+        Convert to sin and cos. $\tan\theta = \dfrac{\sin\theta}{\cos\theta}$, and $\dfrac{1}{\tan\theta}$ flips it upside down:
+
+        $$\text{LHS} = \frac{\sin\theta}{\cos\theta} + \frac{\cos\theta}{\sin\theta}$$
       - |-
-        Common denominator $\sin\theta\cos\theta$: $= \dfrac{\sin^2\theta + \cos^2\theta}{\sin\theta\cos\theta}$
+        Add the fractions over the common denominator $\sin\theta\cos\theta$. Multiply the first fraction top and bottom by $\sin\theta$, and the second by $\cos\theta$:
+
+        $$= \frac{\sin^2\theta}{\sin\theta\cos\theta} + \frac{\cos^2\theta}{\sin\theta\cos\theta} = \frac{\sin^2\theta + \cos^2\theta}{\sin\theta\cos\theta}$$
       - |-
-        Top is 1: $= \dfrac{1}{\sin\theta\cos\theta} = $ RHS ✓
+        The top is $\sin^2\theta + \cos^2\theta = 1$: $= \dfrac{1}{\sin\theta\cos\theta} = $ RHS ✓
     answer: |-
       Proved. The pattern "convert to sin and cos, combine fractions, spot $\sin^2 + \cos^2$" cracks most P1 identities.
 
   - type: deeper
     title: The difference-of-two-squares trick
     body: |-
-      Prove $\dfrac{\sin^2\theta}{1 - \cos\theta} \equiv 1 + \cos\theta$:
+      Prove $\dfrac{\sin^2\theta}{1 - \cos\theta} \equiv 1 + \cos\theta$.
 
-      $$\text{LHS} = \frac{1 - \cos^2\theta}{1 - \cos\theta} = \frac{(1 - \cos\theta)(1 + \cos\theta)}{1 - \cos\theta} = 1 + \cos\theta = \text{RHS}$$
+      1. Replace $\sin^2\theta$ with $1 - \cos^2\theta$:
 
-      Whenever you see $1 - \cos\theta$ or $1 + \sin\theta$ next to a square, think difference of two squares: $1 - \cos^2\theta = (1 - \cos\theta)(1 + \cos\theta)$ and $1 - \sin^2\theta = (1 - \sin\theta)(1 + \sin\theta)$.
+         $$\text{LHS} = \frac{1 - \cos^2\theta}{1 - \cos\theta}$$
+
+      2. Factorise the top as a **difference of two squares**, $a^2 - b^2 = (a - b)(a + b)$, with $a = 1$ and $b = \cos\theta$:
+
+         $$= \frac{(1 - \cos\theta)(1 + \cos\theta)}{1 - \cos\theta}$$
+
+      3. Cancel the common factor $(1 - \cos\theta)$:
+
+         $$= 1 + \cos\theta = \text{RHS}$$
+
+      Whenever you see $1 - \cos\theta$ or $1 + \sin\theta$ next to a square, think difference of two squares:
+
+      - $1 - \cos^2\theta = (1 - \cos\theta)(1 + \cos\theta)$
+      - $1 - \sin^2\theta = (1 - \sin\theta)(1 + \sin\theta)$
 
   - type: misconceptions
     items:
@@ -113,7 +142,7 @@ blocks:
 
   - type: exam
     body: |-
-      - Wording: *Prove that …* or *Show that …*, usually 3–4 marks. Every step needs to be visible; a jump to the answer scores the first mark at most.
+      - Wording: *Prove that …* or *Show that …*, usually 3–4 marks. Every step needs to be visible; a jump to the answer loses marks.
       - Write "LHS $=$" at the start and "$=$ RHS" at the end. It shows the examiner you know the structure of a proof.
       - Stuck? Convert everything to sin and cos, put it over one denominator, and look for $\sin^2 + \cos^2$.
       - Often part (a) is an identity and part (b) says *hence solve…*: the identity is your simplification for the equation.

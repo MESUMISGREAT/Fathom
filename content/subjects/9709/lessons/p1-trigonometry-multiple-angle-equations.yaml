@@ -19,6 +19,7 @@ provenance:
     equations and intervals; all solution sets found by a brute-force search in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a
     separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -57,13 +58,27 @@ blocks:
       Solve $5\sin 2x = 2$ for $-180^\circ < x < 180^\circ$.
     steps:
       - |-
-        $\sin 2x = 0.4$. Let $u = 2x$; the interval becomes $-360^\circ < u < 360^\circ$.
+        Divide by 5: $\sin 2x = 0.4$.
       - |-
-        $\alpha = \sin^{-1}0.4 = 23.58^\circ$, and $180^\circ - \alpha = 156.42^\circ$.
+        Let $u = 2x$. Double the interval's ends too:
+
+        $$-180^\circ < x < 180^\circ \quad\Rightarrow\quad -360^\circ < u < 360^\circ$$
       - |-
-        Subtract $360^\circ$ from each to fill the negative half: $-336.42^\circ$ and $-203.58^\circ$. All four are inside $(-360^\circ, 360^\circ)$.
+        Solve $\sin u = 0.4$. The principal value and the second value are:
+
+        - $\alpha = \sin^{-1}0.4 = 23.58^\circ$
+        - $180^\circ - \alpha = 156.42^\circ$
       - |-
-        Halve them all: $x = 11.79^\circ, 78.21^\circ, -168.21^\circ, -101.79^\circ$.
+        The interval for $u$ also has a negative half. Sine repeats every $360^\circ$, so subtract $360^\circ$ from each value to fill it (adding $360^\circ$ would go past $360^\circ$):
+
+        - $23.58^\circ - 360^\circ = -336.42^\circ$
+        - $156.42^\circ - 360^\circ = -203.58^\circ$
+
+        All four values are inside $-360^\circ < u < 360^\circ$.
+      - |-
+        Convert back: $x = \tfrac{u}{2}$. Halve them all:
+
+        $$x = 11.79^\circ,\ 78.21^\circ,\ -168.21^\circ,\ -101.79^\circ$$
     answer: |-
       $x = -168.2^\circ, -101.8^\circ, 11.8^\circ, 78.2^\circ$.
 
@@ -87,11 +102,19 @@ blocks:
       Solve $4\cos 2x + 1 = 0$ for $0 < x < \pi$, giving answers to 3 significant figures.
     steps:
       - |-
-        $\cos 2x = -\tfrac14$. Let $u = 2x$, so $0 < u < 2\pi$.
+        Rearrange: subtract 1, then divide by 4.
+
+        $$\cos 2x = -\tfrac14$$
       - |-
-        Radian mode: $\alpha = \cos^{-1}\left(-\tfrac14\right) = 1.8234\ldots$, and $2\pi - \alpha = 4.4597\ldots$
+        Let $u = 2x$. Double the interval: $0 < u < 2\pi$.
       - |-
-        Halve: $x = 0.9117\ldots$ or $2.2298\ldots$
+        Radian mode. Principal value:
+
+        $$\alpha = \cos^{-1}\left(-\tfrac14\right) = 1.8234\ldots$$
+
+        Second value for cos: $2\pi - \alpha = 4.4597\ldots$ Both are inside $0 < u < 2\pi$.
+      - |-
+        Convert back by halving: $x = 0.9117\ldots$ or $x = 2.2298\ldots$
     answer: |-
       $x = 0.912$ or $2.23$.
 
@@ -116,7 +139,7 @@ blocks:
   - type: exam
     body: |-
       - Write the transformed interval as a line of working: "$0 \leqslant 2x \leqslant 4\pi$". Examiners look for it, and it stops you losing solutions.
-      - Count before you write: $\sin bx = k$ over an interval of length $L$ has about $b \times \tfrac{L}{360^\circ} \times 2$ solutions (for $-1 < k < 1$).
+      - Count before you write. $\sin bx$ fits $b$ full waves into every $360^\circ$, and each wave gives 2 solutions (for $-1 < k < 1$). So over $0^\circ$ to $360^\circ$, expect $2b$ solutions (for whole-number $b$).
       - Final answers are values of $x$, not $u$. Lots of scripts stop one step early.
 
   - type: takeaways
