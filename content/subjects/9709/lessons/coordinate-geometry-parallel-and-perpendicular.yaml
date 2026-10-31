@@ -4,7 +4,7 @@ topic: "1.3"
 title: Parallel and perpendicular lines
 summary: Parallel lines share a gradient; perpendicular gradients multiply to −1. Use them to build parallel lines, perpendicular lines and perpendicular bisectors.
 order: 3
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.3.1", "1.3.2"]
 prerequisites: [coordinate-geometry-equation-of-a-line]
@@ -19,6 +19,7 @@ provenance:
     perpendicular lines. All examples and questions are original; every equation checked in
     Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -34,6 +35,10 @@ blocks:
       | --- | --- |
       | $m_1$ | gradient of the first line |
       | $m_2$ | gradient of the second line |
+      | $m_{AB}$ | gradient of the line through points $A$ and $B$ |
+      | $\perp$ | "is perpendicular to" (meets at a right angle) |
+
+      Reminder: the **gradient** is the steepness, $\dfrac{\text{rise}}{\text{run}}$ (how far up for each 1 across). A line through $(x_1, y_1)$ with gradient $m$ is $y - y_1 = m(x - x_1)$.
 
   - type: explain
     title: Two rules, one of them sneaky
@@ -65,9 +70,18 @@ blocks:
   - type: intuition
     title: Why it's −1
     body: |-
-      A line with gradient $\tfrac{\text{rise}}{\text{run}}$ turned through 90° has its run and rise swapped, and one of them reversed. So its gradient is $-\tfrac{\text{run}}{\text{rise}}$.
+      Take a line with gradient $\dfrac{\text{rise}}{\text{run}}$. Turn it through 90°:
 
-      Multiply the two: $\dfrac{\text{rise}}{\text{run}} \times \left(-\dfrac{\text{run}}{\text{rise}}\right) = -1$. Everything cancels except the minus sign.
+      - the run and the rise swap places, and
+      - one of them reverses direction (gets a minus sign).
+
+      So the turned line has gradient $-\dfrac{\text{run}}{\text{rise}}$.
+
+      Multiply the two gradients:
+
+      $$\frac{\text{rise}}{\text{run}} \times \left(-\frac{\text{run}}{\text{rise}}\right) = -1$$
+
+      Everything cancels except the minus sign.
 
   - type: check
     questions: [pp-cloze, pp-perp-gradient]
@@ -78,11 +92,27 @@ blocks:
       Find the equation of the line through $(2, -1)$ that is parallel to $3x + 2y = 5$.
     steps:
       - |-
-        Gradient of $3x + 2y = 5$: $y = -\tfrac32 x + \tfrac52$, so $m = -\tfrac32$.
+        Find the gradient of $3x + 2y = 5$ by making $y$ the subject.
+
+        Subtract $3x$: $\;2y = -3x + 5$
+
+        Divide by 2: $\;y = -\tfrac32 x + \tfrac52$
+
+        The number in front of $x$ is the gradient: $m = -\tfrac32$.
       - |-
-        Same gradient through $(2, -1)$: $y + 1 = -\tfrac32(x - 2)$.
+        Parallel means the same gradient. Use $y - y_1 = m(x - x_1)$ with the point $(2, -1)$:
+
+        $$y - (-1) = -\tfrac32(x - 2)$$
+
+        $$y + 1 = -\tfrac32(x - 2)$$
       - |-
-        Multiply by 2: $2y + 2 = -3x + 6$, so $3x + 2y = 4$.
+        Multiply both sides by 2 to clear the fraction:
+
+        $$2y + 2 = -3(x - 2) = -3x + 6$$
+
+        Move the $x$ term to the left and the number to the right:
+
+        $$3x + 2y = 4$$
     answer: |-
       $3x + 2y = 4$. Shortcut: a parallel line keeps the **same $x$ and $y$ coefficients**, $3x + 2y = k$. Substitute the point to get $k = 3(2) + 2(-1) = 4$.
 
@@ -94,9 +124,17 @@ blocks:
       - |-
         The given gradient is 2, so the perpendicular gradient is $-\tfrac12$. Check: $2 \times \left(-\tfrac12\right) = -1$ ✓
       - |-
-        $y - 1 = -\tfrac12(x - 4)$.
+        Use $y - y_1 = m(x - x_1)$ with the point $(4, 1)$ and $m = -\tfrac12$:
+
+        $$y - 1 = -\tfrac12(x - 4)$$
       - |-
-        Multiply by 2: $2y - 2 = -x + 4$, so $x + 2y - 6 = 0$.
+        Multiply both sides by 2:
+
+        $$2y - 2 = -(x - 4) = -x + 4$$
+
+        Move everything to the left:
+
+        $$x + 2y - 6 = 0$$
     answer: |-
       $x + 2y - 6 = 0$.
 
@@ -114,13 +152,27 @@ blocks:
       Find the equation of the perpendicular bisector of $A(-1, 2)$ and $B(5, 6)$.
     steps:
       - |-
-        **Midpoint:** $M = \left(\dfrac{-1 + 5}{2}, \dfrac{2 + 6}{2}\right) = (2, 4)$.
+        **Midpoint** (average the $x$'s, average the $y$'s):
+
+        $$M = \left(\frac{-1 + 5}{2}, \frac{2 + 6}{2}\right) = (2, 4)$$
       - |-
-        **Gradient of $AB$:** $\dfrac{6 - 2}{5 - (-1)} = \dfrac46 = \dfrac23$.
+        **Gradient of $AB$** (change in $y$ over change in $x$):
+
+        $$\frac{6 - 2}{5 - (-1)} = \frac46 = \frac23$$
       - |-
-        **Perpendicular gradient:** $-\dfrac32$.
+        **Perpendicular gradient:** flip $\tfrac23$ to $\tfrac32$ and change the sign: $-\tfrac32$.
+
+        Check: $\tfrac23 \times \left(-\tfrac32\right) = -1$ ✓
       - |-
-        **Line through $M$:** $y - 4 = -\tfrac32(x - 2)$. Multiply by 2: $2y - 8 = -3x + 6$, so $3x + 2y = 14$.
+        **Line through $M(2, 4)$** with gradient $-\tfrac32$:
+
+        $$y - 4 = -\tfrac32(x - 2)$$
+      - |-
+        Multiply by 2 and tidy up:
+
+        $$2y - 8 = -3x + 6$$
+
+        $$3x + 2y = 14$$
     answer: |-
       $3x + 2y = 14$. Check that $M$ fits: $3(2) + 2(4) = 14$ ✓
 
@@ -132,7 +184,7 @@ blocks:
       An orange line through M, labelled 3x + 2y = 14 with gradient −3/2, crosses AB at right
       angles, shown by a right-angle mark at M.
     caption: |-
-      Through the **midpoint**, at **right angles**. Miss either one and it's just "a line".
+      Through the **midpoint**, at **right angles**. Miss either one and it's only "a line".
 
   - type: misconceptions
     items:

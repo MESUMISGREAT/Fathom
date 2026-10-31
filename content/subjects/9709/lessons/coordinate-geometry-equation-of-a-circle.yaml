@@ -4,7 +4,7 @@ topic: "1.3"
 title: The equation of a circle
 summary: (x − a)² + (y − b)² = r² is Pythagoras in disguise. Read off the centre and radius, and write the equation from a centre and a point, or from a diameter.
 order: 5
-minutes: 5
+minutes: 6
 kind: core
 objectives: ["1.3.3"]
 prerequisites: [coordinate-geometry-gradient-distance-midpoint]
@@ -19,6 +19,7 @@ provenance:
     questions are original; every centre, radius and point checked in Python. Not yet reviewed by
     a teacher.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -30,7 +31,9 @@ blocks:
     body: |-
       Tie a goat to a post with a 5 m rope and let it wander to the very end in every direction. The path it traces is a circle: every point exactly 5 m from the post.
 
-      That's the definition. A **circle** is the set of all points at a fixed distance $r$ (the **radius**) from a fixed point (the **centre**). Where the goat analogy breaks: real goats wander *inside* the circle too. The circle is only the edge.
+      That's the definition. A **circle** is the set of all points at a fixed distance $r$ (the **radius**) from a fixed point (the **centre**).
+
+      Where the goat analogy breaks: real goats wander *inside* the circle too. The circle is only the edge.
 
   - type: diagram
     diagram: coordinate-geometry-circle-pythagoras
@@ -42,14 +45,38 @@ blocks:
     caption: |-
       For any point $P(x, y)$ on the circle, the triangle has legs $x - 2$ and $y - 1$ and hypotenuse 5. Pythagoras does the rest: $(x - 2)^2 + (y - 1)^2 = 25$.
 
+  - type: explain
+    title: Turning the rule into an equation
+    body: |-
+      Take the circle with centre $C(2, 1)$ and radius 5. Let $P(x, y)$ be **any** point on it.
+
+      Draw a right-angled triangle with $CP$ as the long side (the hypotenuse):
+
+      - across: from $x = 2$ to $x$, a distance of $x - 2$
+      - up: from $y = 1$ to $y$, a distance of $y - 1$
+      - hypotenuse: $CP = 5$, the radius
+
+      Pythagoras says (across)² + (up)² = (hypotenuse)²:
+
+      $$(x - 2)^2 + (y - 1)^2 = 5^2$$
+
+      If $P$ is to the left of or below $C$, these come out negative. Squaring makes them positive, so the equation still works.
+
+      This is true for every point on the circle, and for no other point. So it **is** the equation of the circle.
+
   - type: definition
     term: Equation of a circle
     body: |-
       The circle with **centre $(a, b)$** and **radius $r$** has equation
 
-      $$(x - a)^2 + (y - b)^2 = r^2.$$
+      $$(x - a)^2 + (y - b)^2 = r^2$$
 
-      A point lies on the circle exactly when its coordinates satisfy the equation. A circle centred at the origin is simply $x^2 + y^2 = r^2$.
+      - $(x, y)$ is any point on the circle.
+      - $x - a$ and $y - b$ are how far across and up that point is from the centre.
+
+      A point lies on the circle exactly when its coordinates satisfy the equation.
+
+      A circle centred at the origin $(0, 0)$ has equation $x^2 + y^2 = r^2$.
 
   - type: explain
     title: Reading one off
@@ -70,11 +97,21 @@ blocks:
       A circle has centre $(-1, 2)$ and passes through $(3, 5)$. Find its equation.
     steps:
       - |-
-        The radius is the distance from the centre to the point: $r^2 = (3 - (-1))^2 + (5 - 2)^2 = 16 + 9 = 25$.
+        The radius is the distance from the centre $(-1, 2)$ to the point $(3, 5)$ on the circle.
+
+        By Pythagoras, $r^2$ = (difference in $x$)² + (difference in $y$)²:
+
+        $$r^2 = (3 - (-1))^2 + (5 - 2)^2$$
+
+        $$= 4^2 + 3^2 = 16 + 9 = 25$$
       - |-
-        You need $r^2$, not $r$, so there's no need to square-root. (Here $r = 5$ anyway.)
+        The equation needs $r^2$, not $r$, so there's no need to square-root. (Here $r = 5$ anyway.)
       - |-
-        Substitute: $(x - (-1))^2 + (y - 2)^2 = 25$.
+        Substitute $a = -1$, $b = 2$ and $r^2 = 25$:
+
+        $$(x - (-1))^2 + (y - 2)^2 = 25$$
+
+        And $x - (-1) = x + 1$.
     answer: |-
       $(x + 1)^2 + (y - 2)^2 = 25$.
 
@@ -84,9 +121,19 @@ blocks:
       $A(-2, 1)$ and $B(4, 9)$ are the ends of a diameter of a circle. Find the equation of the circle.
     steps:
       - |-
-        The centre is the **midpoint** of the diameter: $\left(\dfrac{-2 + 4}{2}, \dfrac{1 + 9}{2}\right) = (1, 5)$.
+        A **diameter** is a line through the centre from one side of the circle to the other. So the centre is its **midpoint**:
+
+        $$\left(\frac{-2 + 4}{2}, \frac{1 + 9}{2}\right) = (1, 5)$$
       - |-
-        The radius is **half** the diameter: $AB = \sqrt{6^2 + 8^2} = 10$, so $r = 5$.
+        The radius is **half** the diameter. First find the length $AB$. Across: $4 - (-2) = 6$. Up: $9 - 1 = 8$.
+
+        $$AB = \sqrt{6^2 + 8^2} = \sqrt{100} = 10$$
+
+        So $r = 5$ and $r^2 = 25$.
+      - |-
+        Substitute $a = 1$, $b = 5$, $r^2 = 25$ into $(x - a)^2 + (y - b)^2 = r^2$:
+
+        $$(x - 1)^2 + (y - 5)^2 = 25$$
       - |-
         (Or find the distance from the centre to $A$: $\sqrt{3^2 + 4^2} = 5$ ✓)
     answer: |-
@@ -126,7 +173,10 @@ blocks:
       - Typical wording: *Find the equation of the circle with centre $C$ which passes through $A$*, or with $AB$ as a diameter. About 3 marks: centre, $r^2$, equation.
       - Leave $r^2$ as a number (often not a perfect square): $(x - 2)^2 + (y + 1)^2 = 13$ is perfect. No need for $(\sqrt{13})^2$.
       - Insider hack: plug the given point into your final equation. If it doesn't satisfy it, recheck your signs.
-      - "The circle **touches** the $x$-axis" is a radius in disguise: the axis is a tangent, so the radius is the distance from the centre straight down (or up) to it. Centre $(a, b)$ means $r = |b|$. Touching the $y$-axis means $r = |a|$.
+      - "The circle **touches** the $x$-axis" is a radius in disguise. The axis touches the circle at exactly one point (it is a **tangent**), so the radius is the distance from the centre straight down (or up) to it.
+        - Centre $(a, b)$ touching the $x$-axis: $r = |b|$.
+        - Touching the $y$-axis: $r = |a|$.
+        - The bars $|\;|$ mean "size, ignoring the sign", e.g. $|-3| = 3$. A distance can't be negative.
 
   - type: check
     questions: [ce-inside, ce-spot, ce-touches]

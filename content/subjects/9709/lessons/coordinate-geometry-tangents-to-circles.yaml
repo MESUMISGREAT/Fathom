@@ -19,6 +19,7 @@ provenance:
     included. All examples and questions are original; every point, gradient and equation checked
     in Python.
     Independently re-checked line by line (facts, worked examples, every answer key) in a separate AI review on 2026-10-23. Not yet reviewed by a teacher.
+    Revised on 2026-10-31 for beginners to the Fathom layout rules (short paragraphs, one step per line, every symbol explained). Independently re-checked in a separate AI review on 2026-10-31 (every worked step and answer key recomputed); its findings were applied. Not yet reviewed by a teacher.
 
 blocks:
   - type: objective
@@ -32,15 +33,23 @@ blocks:
 
       | Symbol | Meaning |
       | --- | --- |
-      | $y_1$ | y-coordinate of a known point on the line |
-      | $x_1$ | x-coordinate of a known point on the line |
+      | $C$ | centre of the circle |
+      | $P$ | point of contact (where the tangent touches) |
+      | $r$ | radius |
+      | $m$ | gradient of the tangent |
+      | $(x_1, y_1)$ | a known point on the line (here $P$) |
 
   - type: explain
     title: The one fact you need
     body: |-
-      Spin a weight on a string, then let go. It flies off **at right angles to the string**, along the tangent. (Strictly, real physics adds gravity and wobble. The geometry is the point.)
+      Spin a weight on a string, then let go. It flies off **at right angles to the string**, along the tangent.
 
-      For a circle, that's exact: the **tangent** at a point $P$ touches the circle only at $P$, and it is **perpendicular to the radius** $CP$.
+      Where the analogy breaks: real physics adds gravity and wobble. The geometry is the point.
+
+      For a circle, that's exact. Let $C$ be the centre and $P$ a point on the circle.
+
+      - The **tangent** at $P$ touches the circle only at $P$.
+      - It is **perpendicular to the radius** $CP$ (meets it at a right angle).
 
   - type: definition
     term: Tangent to a circle
@@ -62,7 +71,7 @@ blocks:
     body: |-
       1. **Centre.** Get it from the equation (complete the square if it's expanded).
       2. **Radius gradient.** Gradient of $CP$.
-      3. **Flip it.** Tangent gradient $= -\dfrac{1}{\text{radius gradient}}$.
+      3. **Flip and change the sign.** Tangent gradient $= -\dfrac{1}{\text{radius gradient}}$.
       4. **Line through $P$.** $y - y_1 = m(x - x_1)$.
 
       Optional step 0: check that $P$ really is on the circle by substituting it.
@@ -76,15 +85,40 @@ blocks:
       The point $P(5, 1)$ lies on the circle $x^2 + y^2 - 4x + 6y - 12 = 0$. Find the equation of the tangent to the circle at $P$.
     steps:
       - |-
-        **Check $P$:** $25 + 1 - 20 + 6 - 12 = 0$ ✓
+        **Check $P(5, 1)$ is on the circle.** Substitute $x = 5$, $y = 1$:
+
+        $$25 + 1 - 20 + 6 - 12 = 0$$
+
+        ✓ So $P$ is on the circle.
       - |-
-        **Centre:** $(x - 2)^2 + (y + 3)^2 = 4 + 9 + 12 = 25$, so $C$ is $(2, -3)$.
+        **Centre.** Complete the square on the $x$ terms and on the $y$ terms:
+
+        - $x^2 - 4x = (x - 2)^2 - 4$
+        - $y^2 + 6y = (y + 3)^2 - 9$
       - |-
-        **Radius gradient:** $\dfrac{1 - (-3)}{5 - 2} = \dfrac43$.
+        Put those in:
+
+        $$(x - 2)^2 - 4 + (y + 3)^2 - 9 - 12 = 0$$
+
+        Move the numbers to the right: $4 + 9 + 12 = 25$.
+
+        $$(x - 2)^2 + (y + 3)^2 = 25$$
+
+        So the centre is $C(2, -3)$ (opposite signs to the brackets).
       - |-
-        **Tangent gradient:** $-\dfrac34$.
+        **Radius gradient** (from $C(2, -3)$ to $P(5, 1)$):
+
+        $$\frac{1 - (-3)}{5 - 2} = \frac43$$
       - |-
-        **Line:** $y - 1 = -\tfrac34(x - 5)$. Multiply by 4: $4y - 4 = -3x + 15$, so $3x + 4y - 19 = 0$.
+        **Tangent gradient.** Flip and change the sign: $-\dfrac34$.
+      - |-
+        **Line through $P(5, 1)$:**
+
+        $$y - 1 = -\tfrac34(x - 5)$$
+
+        Multiply by 4: $\;4y - 4 = -3x + 15$
+
+        Rearrange: $\;3x + 4y - 19 = 0$
     answer: |-
       $3x + 4y - 19 = 0$. Check: $3(5) + 4(1) - 19 = 0$ ✓
 
@@ -100,7 +134,11 @@ blocks:
       - wrong: |-
           For $x^2 + y^2 - 4x + 6y - 12 = 0$ the centre is $(-2, 3)$.
         right: |-
-          Halve and flip: $g = -2$, $f = 3$, so the centre is $(2, -3)$. A wrong centre ruins the radius gradient and everything after it.
+          Complete the square: $(x - 2)^2 + (y + 3)^2 = 25$, so the centre is $(2, -3)$.
+
+          Shortcut: halve the numbers in front of $x$ and $y$ ($-4$ and $6$ give $-2$ and $3$), then flip both signs.
+
+          A wrong centre ruins the radius gradient and everything after it.
       - wrong: |-
           A line that meets the circle at one point I can see on my sketch must be a tangent.
         right: |-
@@ -111,11 +149,20 @@ blocks:
     body: |-
       From an external point $T$ you can draw **two** tangents, and they're the same length (symmetry).
 
-      The radius to the point of contact is perpendicular to the tangent, so you get a right-angled triangle: hypotenuse $CT$, legs $r$ and the tangent length. So
+      The radius to the point of contact is perpendicular to the tangent. So you get a right-angled triangle:
 
-      $$\text{tangent length}^2 = CT^2 - r^2.$$
+      - hypotenuse: $CT$ (centre to the outside point)
+      - one leg: the radius $r$
+      - other leg: the tangent length
 
-      Example: circle $(x - 2)^2 + (y + 3)^2 = 36$ and $T(8, 5)$. $CT^2 = 6^2 + 8^2 = 100$, so the tangent length is $\sqrt{100 - 36} = 8$.
+      Pythagoras gives
+
+      $$\text{tangent length}^2 = CT^2 - r^2$$
+
+      **Example:** circle $(x - 2)^2 + (y + 3)^2 = 36$ (centre $(2, -3)$, $r = 6$) and $T(8, 5)$.
+
+      - $CT^2 = (8 - 2)^2 + (5 - (-3))^2 = 36 + 64 = 100$
+      - tangent length $= \sqrt{100 - 36} = \sqrt{64} = 8$
 
   - type: exam
     body: |-
